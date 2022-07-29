@@ -1,9 +1,16 @@
+export const APP_ENV = {
+  SANDBOX: 'sbx',
+  STAGING: 'stg',
+  PRODUCTION: 'pro',
+};
+
 const appConfig = {
-  dataMode: 'mock',
   defaultLanguage: 'en',
   recordsPerPage: 25,
   maxFileSize: {
     video: 300 * 1024 * 1000, // kb => byte = 300Mb
+    image: 5 * 1024 * 1000, // kb => byte = 5Mb
+
   },
   searchTriggerTime: 200,
   defaultScreenOptions: {

@@ -1,15 +1,14 @@
-import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
 
-import {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import modalActions from '~/store/modal/actions';
-import {IGroup} from '~/interfaces/IGroup';
+import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
 export interface GroupStructureMenuProps {
@@ -24,27 +23,31 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   disableReorder,
 }: GroupStructureMenuProps) => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme || {};
+  const { colors } = theme || {};
 
   const onPressReorderGroup = () => {
-    rootNavigation.navigate(groupStack.reorderGroup, {group});
+    rootNavigation.navigate(
+      groupStack.reorderGroup, { group },
+    );
     dispatch(modalActions.hideModal());
   };
 
   const onPressMoveGroup = () => {
-    rootNavigation.navigate(groupStack.moveGroup, {group});
+    rootNavigation.navigate(
+      groupStack.moveGroup, { group },
+    );
     dispatch(modalActions.hideModal());
   };
 
   return (
     <View style={styles.container}>
       <PrimaryItem
-        testID={'group_structure_menu.reorder'}
+        testID="group_structure_menu.reorder"
         style={styles.item}
-        leftIcon={'LayerGroup'}
+        leftIcon="LayerGroup"
         leftIconProps={{
           icon: 'LayerGroup',
           size: 24,
@@ -57,9 +60,9 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
         onPress={disableReorder || !group ? undefined : onPressReorderGroup}
       />
       <PrimaryItem
-        testID={'group_structure_menu.reorder'}
+        testID="group_structure_menu.reorder"
         style={styles.item}
-        leftIcon={'ObjectExclude'}
+        leftIcon="ObjectExclude"
         leftIconProps={{
           icon: 'ObjectExclude',
           size: 24,

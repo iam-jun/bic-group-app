@@ -1,53 +1,58 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import actions from '~/screens/Auth/redux/actions';
 import * as validation from '~/constants/commonRegex';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import useAuth from '~/hooks/auth';
-import {IObject} from '~/interfaces/common';
-import {IForgotPasswordError} from '~/interfaces/IAuth';
+import { IObject } from '~/interfaces/common';
+import { IForgotPasswordError } from '~/interfaces/IAuth';
 
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
-import {getEnv} from '~/utils/env';
+import getEnv from '~/utils/env';
 import spacing from '~/theme/spacing';
+import { APP_ENV } from '~/configs/appConfig';
 
 interface Props {
   useFormData: IObject<any>;
 }
 
-const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
+const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const styles = themeStyles(theme);
 
-  const {forgotPasswordError, forgotPasswordLoading} = useAuth();
-  const {errConfirm}: IForgotPasswordError = forgotPasswordError || {};
+  const { forgotPasswordError, forgotPasswordLoading } = useAuth();
+  const { errConfirm }: IForgotPasswordError = forgotPasswordError || {};
 
-  useEffect(() => {
-    if (errConfirm) {
-      setError('code', {
-        type: 'manual',
-        message: errConfirm,
-      });
-    } else {
-      clearErrors('code');
-    }
-  }, [errConfirm]);
+  useEffect(
+    () => {
+      if (errConfirm) {
+        setError(
+          'code', {
+            type: 'manual',
+            message: errConfirm,
+          },
+        );
+      } else {
+        clearErrors('code');
+      }
+    }, [errConfirm],
+  );
 
   const {
     getValues,
     setError,
     clearErrors,
     setValue,
-    formState: {errors},
+    formState: { errors },
     trigger,
   } = useFormData;
 
@@ -58,13 +63,13 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
     const confirmPassword = getValues('confirmPassword');
     const passwordMatched = newPassword === confirmPassword;
     return (
-      !isEmpty(errors) ||
-      !email ||
-      !code ||
-      !newPassword ||
-      !confirmPassword ||
-      !passwordMatched ||
-      forgotPasswordLoading
+      !isEmpty(errors)
+      || !email
+      || !code
+      || !newPassword
+      || !confirmPassword
+      || !passwordMatched
+      || forgotPasswordLoading
     );
   };
   const disableConfirm = checkDisableConfirm();
@@ -81,23 +86,23 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
     const newPassword = getValues('newPassword');
     const confirmPassword = getValues('confirmPassword');
     if (
-      email &&
-      code &&
-      newPassword &&
-      confirmPassword &&
-      newPassword === confirmPassword &&
-      !disableConfirm
+      email
+      && code
+      && newPassword
+      && confirmPassword
+      && newPassword === confirmPassword
+      && !disableConfirm
     ) {
-      dispatch(
-        actions.forgotPasswordConfirm({email, code, password: newPassword}),
-      );
+      dispatch(actions.forgotPasswordConfirm({ email, code, password: newPassword }));
     }
   };
 
   const onRequestForgotPassword = () => {
     const email = getValues('email');
     if (email && !disableRequest) {
-      setValue('code', '', {shouldValidate: false});
+      setValue(
+        'code', '', { shouldValidate: false },
+      );
       clearErrors('code');
       dispatch(actions.forgotPasswordRequest(email));
     }
@@ -114,10 +119,12 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   const validateConfirmPassword = async () => {
     await trigger('confirmPassword');
     if (getValues('newPassword') !== getValues('confirmPassword')) {
-      setError('confirmPassword', {
-        type: 'manual',
-        message: t('auth:text_err_confirm_password_not_matched'),
-      });
+      setError(
+        'confirmPassword', {
+          type: 'manual',
+          message: t('auth:text_err_confirm_password_not_matched'),
+        },
+      );
     }
   };
 
@@ -146,14 +153,16 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           }}
           validateValue={validateCode}
           placeholder={t('auth:input_label_code')}
-          keyboardType={'numeric'}
+          keyboardType="numeric"
         />
         <Text.BodyS>
-          {t('auth:text_request_new_code')}{' '}
+          {t('auth:text_request_new_code')}
+          {' '}
           <Text.BodySMedium
             onPress={onRequestForgotPassword}
             suppressHighlighting
-            style={styles.highlightText}>
+            style={styles.highlightText}
+          >
             {t('auth:btn_resend_code')}
           </Text.BodySMedium>
         </Text.BodyS>
@@ -164,7 +173,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         </Text.H6>
         <PasswordInputController
           useFormData={useFormData}
-          name={'newPassword'}
+          name="newPassword"
           rules={{
             required: t('auth:text_err_password_blank'),
             maxLength: {
@@ -176,10 +185,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               message: t('auth:text_err_password_characters'),
             },
             validate: () => {
-              if (
-                !getEnv('SELF_DOMAIN')?.includes('sbx') &&
-                !getEnv('SELF_DOMAIN')?.includes('stg')
-              ) {
+              if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
                 const value = getValues('newPassword');
                 if (!/(?=.*?[A-Z])/.test(value)) {
                   return t('auth:text_err_password_required_upper_case');
@@ -197,7 +203,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
             },
           }}
           loading={forgotPasswordLoading}
-          testID={'inputNewPassword'}
+          testID="inputNewPassword"
           placeholder={t('auth:input_label_new_password')}
           validateValue={validateNewPassword}
           textContentType="oneTimeCode"
@@ -205,12 +211,12 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
 
         <PasswordInputController
           useFormData={useFormData}
-          name={'confirmPassword'}
+          name="confirmPassword"
           rules={{
             required: t('auth:text_err_password_blank'),
           }}
           loading={forgotPasswordLoading}
-          testID={'inputConfirmPassword'}
+          testID="inputConfirmPassword"
           placeholder={t('auth:input_label_confirm_new_password')}
           validateValue={validateConfirmPassword}
           textContentType="oneTimeCode"
@@ -220,7 +226,8 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         testID="btnChangePassword"
         disabled={disableConfirm}
         loading={forgotPasswordLoading}
-        onPress={onConfirmForgotPassword}>
+        onPress={onConfirmForgotPassword}
+      >
         {t('auth:btn_submit')}
       </Button.Primary>
     </View>
@@ -228,7 +235,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

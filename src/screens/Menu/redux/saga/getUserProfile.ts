@@ -1,10 +1,10 @@
-import {call, put} from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 
-import {IResponseData} from '~/interfaces/common';
-import {IGetUserProfile} from '~/interfaces/IAuth';
+import { IResponseData } from '~/interfaces/common';
+import { IGetUserProfile } from '~/interfaces/IAuth';
 import menuDataHelper from '../../helper/MenuDataHelper';
 import menuActions from '../actions';
-import {mapProfile} from '../helper';
+import { mapProfile } from '../helper';
 
 export default function* getUserProfile({
   payload,
@@ -12,7 +12,7 @@ export default function* getUserProfile({
   type: string;
   payload: IGetUserProfile;
 }) {
-  const {userId, params} = payload;
+  const { userId, params } = payload;
   try {
     const response: IResponseData = yield call(
       menuDataHelper.getUserProfile,
@@ -24,6 +24,8 @@ export default function* getUserProfile({
   } catch (err) {
     yield put(menuActions.setUserProfile(null));
     yield put(menuActions.setShowUserNotFound());
-    console.log('getUserProfile error:', err);
+    console.log(
+      'getUserProfile error:', err,
+    );
   }
 }

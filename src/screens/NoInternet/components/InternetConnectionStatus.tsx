@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {StyleSheet} from 'react-native';
-import {useKeySelector} from '~/hooks/selector';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet } from 'react-native';
+import { useKeySelector } from '~/hooks/selector';
 
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 
@@ -17,59 +17,63 @@ const InternetConnectionStatus = () => {
     setShowBanner(true);
     if (isInternetReachable) {
       timeoutRef.current && clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        setShowBanner(false);
-      }, 2000);
+      timeoutRef.current = setTimeout(
+        () => {
+          setShowBanner(false);
+        }, 2000,
+      );
     }
   };
 
-  useEffect(() => {
-    if (firstRender.current) {
-      if (!isInternetReachable) doShowBanner();
+  useEffect(
+    () => {
+      if (firstRender.current) {
+        if (!isInternetReachable) doShowBanner();
 
-      firstRender.current = false;
-      return;
-    }
+        firstRender.current = false;
+        return;
+      }
 
-    doShowBanner();
-  }, [isInternetReachable]);
+      doShowBanner();
+    }, [isInternetReachable],
+  );
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       timeoutRef.current && clearTimeout(timeoutRef.current);
-    };
-  }, []);
+    }, [],
+  );
 
   if (!showBanner) return null;
 
   return isInternetReachable ? (
     <BannerMessage
       style={styles.banner}
-      type={'success'}
-      leftIcon={'Check'}
-      textProps={{useI18n: true}}>
+      type="success"
+      leftIcon="Check"
+      textProps={{ useI18n: true }}
+    >
       internet_connection:online
     </BannerMessage>
   ) : (
     <BannerMessage
       style={styles.banner}
-      leftIcon={'WifiSlash'}
-      textProps={{useI18n: true}}>
+      leftIcon="WifiSlash"
+      textProps={{ useI18n: true }}
+    >
       internet_connection:offline
     </BannerMessage>
   );
 };
 
-const createStyle = () => {
-  return StyleSheet.create({
-    banner: {
-      position: 'absolute',
-      bottom: 110,
-      alignSelf: 'center',
-      marginHorizontal: 12,
-      marginBottom: 4,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  banner: {
+    position: 'absolute',
+    bottom: 110,
+    alignSelf: 'center',
+    marginHorizontal: 12,
+    marginBottom: 4,
+  },
+});
 
 export default InternetConnectionStatus;

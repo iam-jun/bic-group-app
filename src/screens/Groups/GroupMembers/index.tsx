@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, StyleSheet, Pressable} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {IGroupMembers} from '~/interfaces/IGroup';
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { IGroupMembers } from '~/interfaces/IGroup';
 
 import Text from '~/beinComponents/Text';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
@@ -21,28 +21,31 @@ import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import MembersContent from './components/MembersContent';
 import spacing from '~/theme/spacing';
+import { useMyPermissions } from '~/hooks/permissions';
 
 const _GroupMembers = (props: any) => {
-  const params = props.route.params;
-  const {groupId} = params || {};
+  const { params } = props.route;
+  const { groupId } = params || {};
 
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
 
-  const [needReloadWhenReconnected, setNeedReloadWhenReconnected] =
-    useState(false);
+  const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
 
-  const {offset} = useKeySelector(groupsKeySelector.groupMembers);
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
+  const { offset } = useKeySelector(groupsKeySelector.groupMembers);
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const canAddMember = hasPermissionsOnScopeWithId(
+    'groups',
+    groupId,
+    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
   );
 
   const getGroupProfile = () => {
@@ -51,23 +54,25 @@ const _GroupMembers = (props: any) => {
 
   const getMembers = () => {
     if (groupId) {
-      dispatch(groupsActions.getGroupMembers({groupId}));
+      dispatch(groupsActions.getGroupMembers({ groupId }));
     }
   };
 
-  useEffect(() => {
-    if (!isInternetReachable) {
-      setNeedReloadWhenReconnected(true);
-      return;
-    }
+  useEffect(
+    () => {
+      if (!isInternetReachable) {
+        setNeedReloadWhenReconnected(true);
+        return;
+      }
 
-    const isDataEmpty = offset === 0;
-    if (needReloadWhenReconnected && isDataEmpty) {
-      getMembers();
-      getGroupProfile();
-      setNeedReloadWhenReconnected(false);
-    }
-  }, [isInternetReachable]);
+      const isDataEmpty = offset === 0;
+      if (needReloadWhenReconnected && isDataEmpty) {
+        getMembers();
+        getGroupProfile();
+        setNeedReloadWhenReconnected(false);
+      }
+    }, [isInternetReachable],
+  );
 
   const clearSelectedMember = () => setSelectedMember(undefined);
 
@@ -86,41 +91,42 @@ const _GroupMembers = (props: any) => {
     setIsOpen(false);
   };
 
-  const renderInviteMemberButton = () => {
-    // only admin or moderator can see this button
-    return (
-      can_manage_member && (
-        <ButtonWrapper
-          testID="group_members.invite"
-          style={styles.inviteButton}
-          onPress={goInviteMembers}>
-          <Icon
-            style={styles.iconSmall}
-            icon={'UserPlus'}
-            size={22}
-            tintColor={theme.colors.purple60}
-          />
-          <Text.ButtonM color={theme.colors.purple60} useI18n>
-            common:text_invite
-          </Text.ButtonM>
-        </ButtonWrapper>
-      )
-    );
-  };
-
+  // only admin or moderator can see this button
+  const renderInviteMemberButton = () => (
+    canAddMember && (
+    <ButtonWrapper
+      testID="group_members.invite"
+      style={styles.inviteButton}
+      onPress={goInviteMembers}
+    >
+      <Icon
+        style={styles.iconSmall}
+        icon="UserPlus"
+        size={22}
+        tintColor={theme.colors.purple60}
+      />
+      <Text.ButtonM color={theme.colors.purple60} useI18n>
+        common:text_invite
+      </Text.ButtonM>
+    </ButtonWrapper>
+    )
+  );
   const goInviteMembers = () => {
     dispatch(groupsActions.clearSelectedUsers());
-    rootNavigation.navigate(groupStack.inviteMembers, {groupId});
+    rootNavigation.navigate(
+      groupStack.inviteMembers, { groupId },
+    );
   };
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.white}>
-      <Header titleTextProps={{useI18n: true}} title={'groups:title_members'} />
+      <Header titleTextProps={{ useI18n: true }} title="groups:title_members" />
       <View style={styles.searchBar}>
         <Pressable
           testID="group_members.search"
           onPress={onPressSearch}
-          style={styles.searchBtn}>
+          style={styles.searchBtn}
+        >
           <View pointerEvents="none">
             <SearchInput placeholder={i18next.t('groups:text_search_member')} />
           </View>
@@ -149,7 +155,7 @@ const _GroupMembers = (props: any) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     searchBtn: {
       flex: 1,

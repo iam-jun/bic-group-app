@@ -1,7 +1,9 @@
-import React, {FC, useEffect, useState} from 'react';
-import {View, StyleSheet, Dimensions, FlatList} from 'react-native';
+import React, { FC, useEffect, useState } from 'react';
+import {
+  View, StyleSheet, Dimensions, FlatList,
+} from 'react-native';
 
-import {ReactionType} from '~/constants/reactions';
+import { ReactionType } from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import spacing from '~/theme/spacing';
@@ -33,7 +35,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const getData = () => {
     if (getDataPromise && getDataParam) {
       setLoading(true);
-      const param = {...getDataParam, reactionName: reactionType, limit};
+      const param = { ...getDataParam, reactionName: reactionType, limit };
       getDataPromise?.(param)
         ?.then?.((data: any) => {
           setData(data || []);
@@ -46,27 +48,27 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
     }
   };
 
-  useEffect(() => {
-    setData([]);
-    getData();
-  }, [reactionType]);
+  useEffect(
+    () => {
+      setData([]);
+      getData();
+    }, [reactionType],
+  );
 
   const _onPressItem = (item: any) => {
     onPressItem?.(item);
   };
 
-  const renderItem = (item: any) => {
-    return (
-      <PrimaryItem
-        testID={`reaction_detail_bottomSheet.${item?.item?.fullname}`}
-        showAvatar
-        height={44}
-        onPress={() => _onPressItem(item)}
-        avatar={item?.item?.avatar}
-        title={item?.item?.fullname}
-      />
-    );
-  };
+  const renderItem = (item: any) => (
+    <PrimaryItem
+      testID={`reaction_detail_bottomSheet.${item?.item?.fullname}`}
+      showAvatar
+      height={44}
+      onPress={() => _onPressItem(item)}
+      avatar={item?.item?.avatar}
+      title={item?.item?.fullname}
+    />
+  );
 
   const renderFooter = () => {
     if (loading) {
@@ -75,12 +77,10 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
     return null;
   };
 
-  const renderHeader = () => {
-    return <View style={styles.header} />;
-  };
+  const renderHeader = () => <View style={styles.header} />;
 
   return (
-    <View style={{height}}>
+    <View style={{ height }}>
       <FlatList
         testID="reaction_detail_bottomSheet.list_user"
         style={styles.listContainer}

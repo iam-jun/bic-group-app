@@ -7,17 +7,23 @@ import getTokenTypeByToken from './getTokenTypeByToken';
  * @param {number} tokenIndex
  * @return {{type: string, content, tokenIndex: *, index: number, attributes: {}, children: *}}
  */
-function createNode(token, tokenIndex) {
+function createNode(
+  token, tokenIndex,
+) {
   const type = getTokenTypeByToken(token);
-  const content = token.content;
+  const { content } = token;
 
   let attributes = {};
 
   if (token.attrs) {
-    attributes = token.attrs.reduce((prev, curr) => {
-      const [name, value] = curr;
-      return {...prev, [name]: value};
-    }, {});
+    attributes = token.attrs.reduce(
+      (
+        prev, curr,
+      ) => {
+        const [name, value] = curr;
+        return { ...prev, [name]: value };
+      }, {},
+    );
   }
 
   return {
@@ -27,7 +33,7 @@ function createNode(token, tokenIndex) {
     sourceMeta: token.meta,
     block: token.block,
     markup: token.markup,
-    key: getUniqueID() + '_' + type,
+    key: `${getUniqueID()}_${type}`,
     content,
     tokenIndex,
     index: 0,
@@ -42,7 +48,7 @@ function createNode(token, tokenIndex) {
  * @return {Array}
  */
 export default function tokensToAST(tokens) {
-  let stack = [];
+  const stack = [];
   let children = [];
 
   if (!tokens || tokens.length === 0) {
@@ -51,13 +57,15 @@ export default function tokensToAST(tokens) {
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
-    const astNode = createNode(token, i);
+    const astNode = createNode(
+      token, i,
+    );
 
     if (
       !(
-        astNode.type === 'text' &&
-        astNode.children.length === 0 &&
-        astNode.content === ''
+        astNode.type === 'text'
+        && astNode.children.length === 0
+        && astNode.content === ''
       )
     ) {
       astNode.index = children.length;

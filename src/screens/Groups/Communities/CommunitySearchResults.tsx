@@ -6,18 +6,18 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
 import groupsKeySelector from '../redux/keySelector';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import CommunityItem from '../components/CommunityItem';
 import spacing from '~/theme/spacing';
 
 interface CommunitySearchResultsProps {
   onLoadMore?: () => void;
-  onPressCommunity: (id: number) => void;
+  onPressCommunity: (id: string) => void;
   onRefresh?: () => void;
 }
 
@@ -28,11 +28,11 @@ const CommunitySearchResults = ({
 }: CommunitySearchResultsProps) => {
   const theme: ExtendedTheme = useTheme();
 
-  const {loading, canLoadMore, ids, items} = useKeySelector(
-    groupsKeySelector.communitySearch,
-  );
+  const {
+    loading, canLoadMore, ids, items,
+  } = useKeySelector(groupsKeySelector.communitySearch);
 
-  const renderItem = ({item}: {item: number}) => {
+  const renderItem = ({ item }: {item: number}) => {
     const currentItem = items[item];
     return (
       <CommunityItem item={currentItem} onPressCommunities={onPressCommunity} />
@@ -47,28 +47,28 @@ const CommunitySearchResults = ({
           style={styles.noResultText}
           color={theme.colors.gray50}
           useI18n
-          testID="community_search_results.no_results">
+          testID="community_search_results.no_results"
+        >
           common:text_search_no_results
         </Text.BodyS>
       </View>
     );
   };
 
-  const renderHeaderComponent = () => {
-    return (
-      <View style={styles.textSearchResults}>
-        <Text.BodyM useI18n>common:text_search_results</Text.BodyM>
-      </View>
-    );
-  };
+  const renderHeaderComponent = () => (
+    <View style={styles.textSearchResults}>
+      <Text.BodyM useI18n>common:text_search_results</Text.BodyM>
+    </View>
+  );
 
   const renderListFooter = () => {
-    if (!loading && canLoadMore && ids.length > 0)
+    if (!loading && canLoadMore && ids.length > 0) {
       return (
         <View style={styles.listFooter}>
           <ActivityIndicator testID="community_search_results.loading_more" />
         </View>
       );
+    }
 
     return null;
   };
@@ -78,7 +78,9 @@ const CommunitySearchResults = ({
       testID="flatlist"
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `search_item_${item}?.id_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `search_item_${item}?.id_${index}`}
       ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  noResultText: {textAlign: 'center'},
+  noResultText: { textAlign: 'center' },
 });
 
 export default CommunitySearchResults;

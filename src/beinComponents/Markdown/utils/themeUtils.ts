@@ -56,7 +56,9 @@ export function getComponents(inColor: string): {
   };
 }
 export function changeOpacity(oldColor: string, opacity: number): string {
-  const {red, green, blue, alpha} = getComponents(oldColor);
+  const {
+    red, green, blue, alpha,
+  } = getComponents(oldColor);
 
   return `rgba(${red},${green},${blue},${alpha * opacity})`;
 }
@@ -107,13 +109,13 @@ export function blendColors(
     let b = blue.toString(16);
 
     if (r.length === 1) {
-      r = '0' + r;
+      r = `0${r}`;
     }
     if (g.length === 1) {
-      g = '0' + g;
+      g = `0${g}`;
     }
     if (b.length === 1) {
-      b = '0' + b;
+      b = `0${b}`;
     }
 
     return `#${r + g + b}`;

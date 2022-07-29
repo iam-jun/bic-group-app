@@ -1,13 +1,15 @@
-import React, {FC, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useState } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
+import { useDispatch } from 'react-redux';
+import { useBaseHook } from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useRootNavigation } from '~/hooks/navigation';
 
 import {
   IPayloadGetDraftPosts,
@@ -18,9 +20,9 @@ import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
 import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
 import Button from '~/beinComponents/Button';
-import modalActions, {showHideToastMessage} from '~/store/modal/actions';
+import modalActions, { showHideToastMessage } from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 
@@ -38,10 +40,10 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const [publishing, setPublishing] = useState(false);
 
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
@@ -58,29 +60,26 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     createdAt,
   } = data || {};
 
-  const {images, videos} = media || {};
-  const {isImportant, importantExpiredAt} = setting || {};
+  const { images, videos } = media || {};
+  const { isImportant, importantExpiredAt } = setting || {};
 
-  const disableButtonPost =
-    publishing ||
-    !content ||
-    (audience?.groups?.length === 0 && audience?.users?.length === 0);
+  const disableButtonPost = publishing
+    || !content
+    || (audience?.groups?.length === 0 && audience?.users?.length === 0);
 
   const showError = (e: any) => {
-    dispatch(
-      showHideToastMessage({
-        content:
-          e?.meta?.message ||
-          e?.meta?.errors?.[0]?.message ||
-          'common:text_error_message',
-        props: {textProps: {useI18n: true}, type: 'error'},
-      }),
-    );
+    dispatch(showHideToastMessage({
+      content:
+          e?.meta?.message
+          || e?.meta?.errors?.[0]?.message
+          || 'common:text_error_message',
+      props: { textProps: { useI18n: true }, type: 'error' },
+    }));
   };
 
   const refreshDraftPosts = () => {
     if (userId) {
-      const payload: IPayloadGetDraftPosts = {isRefresh: true};
+      const payload: IPayloadGetDraftPosts = { isRefresh: true };
       dispatch(postActions.getDraftPosts(payload));
     }
   };
@@ -91,12 +90,10 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         onSuccess: () => {
-          dispatch(
-            showHideToastMessage({
-              content: 'post:draft:text_draft_published',
-              props: {textProps: {useI18n: true}, type: 'success'},
-            }),
-          );
+          dispatch(showHideToastMessage({
+            content: 'post:draft:text_draft_published',
+            props: { textProps: { useI18n: true }, type: 'success' },
+          }));
           refreshDraftPosts();
         },
         onError: () => setPublishing(false),
@@ -106,29 +103,31 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   };
 
   const onPressEdit = () => {
-    rootNavigation.navigate(homeStack.createPost, {
-      draftPostId: id,
-      replaceWithDetail: !isPostDetail,
-    });
+    rootNavigation.navigate(
+      homeStack.createPost, {
+        draftPostId: id,
+        replaceWithDetail: !isPostDetail,
+      },
+    );
   };
 
   const onDelete = () => {
     dispatch(modalActions.hideModal());
     if (id) {
       postDataHelper
-        .deletePost(id, isDraft)
-        .then(response => {
+        .deletePost(
+          id, isDraft,
+        )
+        .then((response) => {
           if (response?.data) {
-            dispatch(
-              showHideToastMessage({
-                content: 'post:draft:text_draft_deleted',
-                props: {textProps: {useI18n: true}, type: 'success'},
-              }),
-            );
+            dispatch(showHideToastMessage({
+              content: 'post:draft:text_draft_deleted',
+              props: { textProps: { useI18n: true }, type: 'success' },
+            }));
             refreshDraftPosts();
           }
         })
-        .catch(e => {
+        .catch((e) => {
           showError(e);
         });
     }
@@ -136,17 +135,15 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 
   const onPressDelete = () => {
     dispatch(modalActions.hideModal());
-    dispatch(
-      modalActions.showAlert({
-        title: t('post:draft:title_delete_draft_post'),
-        content: t('post:draft:text_delete_draft_post'),
-        showCloseButton: true,
-        cancelBtn: true,
-        cancelLabel: t('common:btn_cancel'),
-        confirmLabel: t('common:btn_delete'),
-        onConfirm: onDelete,
-      }),
-    );
+    dispatch(modalActions.showAlert({
+      title: t('post:draft:title_delete_draft_post'),
+      content: t('post:draft:text_delete_draft_post'),
+      showCloseButton: true,
+      cancelBtn: true,
+      cancelLabel: t('common:btn_cancel'),
+      confirmLabel: t('common:btn_delete'),
+      onConfirm: onDelete,
+    }));
   };
 
   const onPressCalendar = () => {
@@ -155,29 +152,27 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   };
 
   const onPressMenu = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <View>
-            <PrimaryItem
-              height={48}
-              leftIconProps={{icon: 'Calendar', size: 20}}
-              leftIcon={'Calendar'}
-              title={t('post:draft:btn_menu_schedule')}
-              onPress={onPressCalendar}
-            />
-            <PrimaryItem
-              height={48}
-              leftIconProps={{icon: 'TrashCan', size: 20}}
-              leftIcon={'TrashCan'}
-              title={t('post:draft:btn_menu_delete')}
-              onPress={onPressDelete}
-            />
-          </View>
-        ),
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <View>
+          <PrimaryItem
+            height={48}
+            leftIconProps={{ icon: 'Calendar', size: 20 }}
+            leftIcon="Calendar"
+            title={t('post:draft:btn_menu_schedule')}
+            onPress={onPressCalendar}
+          />
+          <PrimaryItem
+            height={48}
+            leftIconProps={{ icon: 'TrashCan', size: 20 }}
+            leftIcon="TrashCan"
+            title={t('post:draft:btn_menu_delete')}
+            onPress={onPressDelete}
+          />
+        </View>
+      ),
+    }));
   };
 
   const renderFooter = () => {
@@ -194,7 +189,8 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           loading={publishing}
           disabled={disableButtonPost}
           style={styles.footerButton}
-          onPress={onPressPost}>
+          onPress={onPressPost}
+        >
           {t('post:draft:btn_post_now')}
         </Button.Secondary>
         <Button.Secondary style={styles.footerButton} onPress={onPressEdit}>
@@ -232,7 +228,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.white,

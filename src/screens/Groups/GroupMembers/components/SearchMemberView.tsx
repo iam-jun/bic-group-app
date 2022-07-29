@@ -1,20 +1,20 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { debounce } from 'lodash';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import actions from '~/screens/Groups/redux/actions';
-import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {IGroupMembers} from '~/interfaces/IGroup';
+import { IGroupMembers } from '~/interfaces/IGroup';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import MemberSearchResult from '../../components/MemberSearchResult';
 
 interface SearchMemberViewProps {
-  groupId: number;
+  groupId: string;
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;
@@ -34,17 +34,15 @@ const SearchMemberView = ({
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles(theme);
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
+  const canManageMember = useKeySelector(
+    groupsKeySelector.groupDetail.canManageMember,
   );
   const groupSearchMembers = useKeySelector(
     groupsKeySelector.groupSearchMembers,
   );
 
   const getGroupSearchMembers = (searchText: string) => {
-    dispatch(
-      actions.getGroupSearchMembers({groupId, params: {key: searchText}}),
-    );
+    dispatch(actions.getGroupSearchMembers({ groupId, params: { key: searchText } }));
   };
 
   const onLoadMore = () => {
@@ -58,7 +56,9 @@ const SearchMemberView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchMembers, appConfig.searchTriggerTime),
+    debounce(
+      searchMembers, appConfig.searchTriggerTime,
+    ),
     [],
   );
 
@@ -71,10 +71,11 @@ const SearchMemberView = ({
       isOpen={isOpen}
       placeholder={placeholder}
       onClose={onClose}
-      onChangeText={onSearchMembers}>
-      {!!searchText ? (
+      onChangeText={onSearchMembers}
+    >
+      {searchText ? (
         <MemberSearchResult
-          canManageMember={can_manage_member}
+          canManageMember={canManageMember}
           memberSearchData={groupSearchMembers}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}
@@ -84,7 +85,8 @@ const SearchMemberView = ({
           <Text.BodyS
             color={theme.colors.gray50}
             testID="search_member_view.type_search"
-            useI18n>
+            useI18n
+          >
             common:text_type_search_keyword
           </Text.BodyS>
         </View>
@@ -93,13 +95,11 @@ const SearchMemberView = ({
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => {
-  return StyleSheet.create({
-    text: {
-      marginTop: 33,
-      alignItems: 'center',
-    },
-  });
-};
+const createStyles = () => StyleSheet.create({
+  text: {
+    marginTop: 33,
+    alignItems: 'center',
+  },
+});
 
 export default SearchMemberView;

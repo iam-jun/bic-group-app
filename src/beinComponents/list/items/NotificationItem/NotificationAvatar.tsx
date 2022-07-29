@@ -1,9 +1,9 @@
-import _, {parseInt} from 'lodash';
+import _, { parseInt } from 'lodash';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Avatar from '~/beinComponents/Avatar';
-import {useUserIdAuth} from '~/hooks/auth';
-import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
+import { useUserIdAuth } from '~/hooks/auth';
+import { IGetStreamNotificationActivity } from '~/interfaces/INotification';
 import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
@@ -36,37 +36,37 @@ const NotificationAvatar = ({
         // Reply to your child comment
         if (activities[0]?.comment?.child?.reaction) {
           const _listNoti = _.uniqBy(
-            activities.map(item => ({
+            activities.map((item) => ({
               ...item.comment?.child?.reaction?.actor,
             })),
             'username',
           );
-          return _listNoti.filter(item => item?.id !== parseInt(userId));
+          return _listNoti.filter((item) => item?.id !== userId);
         }
         // Reaction to your comment
         if (activities[0]?.comment?.reaction) {
           const _listNoti1 = _.uniqBy(
-            activities.map(item => ({
+            activities.map((item) => ({
               ...item.comment?.reaction?.actor,
             })),
             'username',
           );
-          return _listNoti1.filter(item => item?.id !== parseInt(userId));
+          return _listNoti1.filter((item) => item?.id !== userId);
         }
         // Reaction to your Post
         // eslint-disable-next-line no-case-declarations
         const _listNoti2 = _.uniqBy(
-          activities.map(item => ({
+          activities.map((item) => ({
             ...item.reaction?.actor,
           })),
           'username',
         );
-        return _listNoti2.filter(item => item?.id !== parseInt(userId));
+        return _listNoti2.filter((item) => item?.id !== userId);
       case 'COMMENT':
         // Mention to your comments
         if (
-          activities[0]?.comment?.mentions &&
-          activities[0]?.comment?.mentions?.length > 0
+          activities[0]?.comment?.mentions
+          && activities[0]?.comment?.mentions?.length > 0
         ) {
           const _listNoti = _.uniqBy(
             activities[0]?.comment?.mentions.map((item: any) => ({
@@ -74,12 +74,13 @@ const NotificationAvatar = ({
             })),
             'username',
           );
-          return _listNoti.filter(item => item?.id !== parseInt(userId));
+          // @ts-ignore
+          return _listNoti.filter((item) => item?.id !== userId);
         }
         // Mention to your reply comments
         if (
-          activities[0]?.comment?.child?.mentions &&
-          activities[0]?.comment?.child.mentions?.length > 0
+          activities[0]?.comment?.child?.mentions
+          && activities[0]?.comment?.child.mentions?.length > 0
         ) {
           const _listNoti = _.uniqBy(
             activities[0]?.comment?.child?.mentions.map((item: any) => ({
@@ -87,27 +88,28 @@ const NotificationAvatar = ({
             })),
             'username',
           );
-          return _listNoti.filter(item => item?.id !== parseInt(userId));
+          // @ts-ignore
+          return _listNoti.filter((item) => item?.id !== userId);
         }
         // Reply to your comments
         if (activities[0]?.comment?.child) {
           const _listNoti = _.uniqBy(
-            activities.map(item => ({
+            activities.map((item) => ({
               ...item.comment?.child?.actor,
             })),
             'username',
           );
-          return _listNoti.filter(item => item?.id !== parseInt(userId));
+          return _listNoti.filter((item) => item?.id !== parseInt(userId));
         }
         // Comments to your post
         // eslint-disable-next-line no-case-declarations
         const _listNoti3 = _.uniqBy(
-          activities.map(item => ({
+          activities.map((item) => ({
             ...item.comment?.actor,
           })),
           'username',
         );
-        return _listNoti3.filter(item => item?.id !== parseInt(userId));
+        return _listNoti3.filter((item) => item?.id !== parseInt(userId));
 
       case 'POST':
         // Mention to your post
@@ -118,7 +120,9 @@ const NotificationAvatar = ({
             })),
             'username',
           );
-          return _listNoti.filter(item => item?.id !== parseInt(userId));
+
+          // @ts-ignore
+          return _listNoti.filter((item) => item?.id !== parseInt(userId));
         }
         return [actor];
       default:
@@ -126,18 +130,19 @@ const NotificationAvatar = ({
     }
   };
 
-  const listAvatarWidth =
-    dimension.deviceWidth - 16 * 2 - timerWidth - (isRead ? 0 : 16);
+  const listAvatarWidth = dimension.deviceWidth - 16 * 2 - timerWidth - (isRead ? 0 : 16);
 
   const listActor = handleActorNotification();
 
   let _listAvatarWidth = 0;
-  const listAvatar = listActor?.map?.((item: any, index: number) => {
+  const listAvatar = listActor?.map?.((
+    item: any, index: number,
+  ) => {
     if (index < MAX_AVATAR && _listAvatarWidth <= listAvatarWidth) {
       _listAvatarWidth = (index + 1) * (AVATAR_WIDTH + 8);
       if (
-        index < MAX_AVATAR - 1 &&
-        listAvatarWidth - _listAvatarWidth >= AVATAR_WIDTH + 8
+        index < MAX_AVATAR - 1
+        && listAvatarWidth - _listAvatarWidth >= AVATAR_WIDTH + 8
       ) {
         return (
           <View key={item?.id} style={styles.item}>
@@ -159,7 +164,7 @@ const NotificationAvatar = ({
           />
         </View>
       );
-    } else return null;
+    } return null;
   });
   return <View style={styles.container}>{listAvatar}</View>;
 };

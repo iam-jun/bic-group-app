@@ -95,7 +95,7 @@ describe('UserEditProfile screen', () => {
     });
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 
@@ -163,7 +163,7 @@ describe('UserEditProfile screen', () => {
     });
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 
@@ -238,7 +238,7 @@ describe('UserEditProfile screen', () => {
 
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 
@@ -290,7 +290,7 @@ describe('UserEditProfile screen', () => {
     const props = {route: {params: {userId: USER_PROFILE.id}}};
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 
@@ -336,7 +336,7 @@ describe('UserEditProfile screen', () => {
 
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 
@@ -387,7 +387,7 @@ describe('UserEditProfile screen', () => {
 
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 
@@ -436,7 +436,7 @@ describe('UserEditProfile screen', () => {
 
   //   const user = {
   //     signInUserSession: {
-  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //       idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
   //     },
   //   };
 
@@ -457,7 +457,7 @@ describe('UserEditProfile screen', () => {
   // it(`should checkPermission when click edit cover photo`, async () => {
   //   const user = {
   //     signInUserSession: {
-  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //       idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
   //     },
   //   };
 
@@ -527,7 +527,7 @@ describe('UserEditProfile screen', () => {
   //     .mockImplementation(mockActionGetMyProfile as any);
   //   const user = {
   //     signInUserSession: {
-  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //       idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
   //     },
   //   };
   //   //@ts-ignore
@@ -559,7 +559,7 @@ describe('UserEditProfile screen', () => {
       .mockImplementation(mockActionGetMyProfile as any);
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 

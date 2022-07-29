@@ -1,6 +1,9 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  ImageStyle,
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import AvatarComponent, {
   AvatarProps,
   AvatarType,
@@ -9,13 +12,13 @@ import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
 import dimension from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 
 import spacing from '~/theme/spacing';
 
 export interface AvatarGroupProps extends AvatarProps {
   variant?: AvatarType;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ImageStyle>;
   source?: any;
   totalMember?: number;
 }
@@ -28,7 +31,7 @@ const AvatarGroup = ({
   ...props
 }: AvatarGroupProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   const containerSize = dimension?.avatarSizes?.[variant] || 36;
   const border = 2;
@@ -47,37 +50,36 @@ const AvatarGroup = ({
     index: number,
     source?: string,
     style?: StyleProp<ViewStyle>,
-  ) => {
-    return (
-      <View
-        testID={`avatar_group.item_${index}`}
-        style={StyleSheet.flatten([
-          {
-            width: itemContainerSize,
-            height: itemContainerSize,
-            borderWidth: border,
-            borderColor: colors.white,
-            borderRadius: spacing.borderRadius.small,
-            backgroundColor: colors.white,
-            overflow: 'hidden',
-          },
-          style,
-        ])}>
-        <Image
-          {...props}
-          style={{
-            width: itemSize,
-            height: itemSize,
-            backgroundColor: colors.violet1,
-          }}
-          source={source}
-        />
-      </View>
-    );
-  };
+  ) => (
+    <View
+      testID={`avatar_group.item_${index}`}
+      style={[
+        {
+          width: itemContainerSize,
+          height: itemContainerSize,
+          borderWidth: border,
+          borderColor: colors.white,
+          borderRadius: spacing.borderRadius.small,
+          backgroundColor: colors.white,
+          overflow: 'hidden',
+        },
+        style,
+      ]}
+    >
+      <Image
+        {...props}
+        style={{
+          width: itemSize,
+          height: itemSize,
+          backgroundColor: colors.violet1,
+        }}
+        source={source}
+      />
+    </View>
+  );
 
   const renderItems = () => {
-    if (!Array.isArray(source))
+    if (!Array.isArray(source)) {
       return (
         <AvatarComponent
           {...props}
@@ -85,66 +87,96 @@ const AvatarGroup = ({
           placeholderSource={images.img_group_avatar_default}
         />
       );
+    }
 
     switch (source?.length) {
       case 1:
-        return renderItem(0, source?.[0]);
+        return renderItem(
+          0, source?.[0],
+        );
       case 2:
         return (
-          <View testID="avatar_group.group_2" style={{flexDirection: 'row'}}>
-            {renderItem(0, source?.[0])}
-            {renderItem(1, source?.[1], {marginLeft: -6})}
+          <View testID="avatar_group.group_2" style={{ flexDirection: 'row' }}>
+            {renderItem(
+              0, source?.[0],
+            )}
+            {renderItem(
+              1, source?.[1], { marginLeft: -6 },
+            )}
           </View>
         );
       case 3:
         return (
           <View testID="avatar_group.group_3">
-            <View style={{flexDirection: 'row'}}>
-              {renderItem(0, source?.[0])}
-              {renderItem(1, source?.[1], {marginLeft: -6})}
+            <View style={{ flexDirection: 'row' }}>
+              {renderItem(
+                0, source?.[0],
+              )}
+              {renderItem(
+                1, source?.[1], { marginLeft: -6 },
+              )}
             </View>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 marginTop: -8,
-              }}>
-              {renderItem(2, source?.[2])}
+              }}
+            >
+              {renderItem(
+                2, source?.[2],
+              )}
             </View>
           </View>
         );
       case 4:
         return (
           <View testID="avatar_group.group_4">
-            <View style={{flexDirection: 'row'}}>
-              {renderItem(0, source?.[0])}
-              {renderItem(1, source?.[1], {marginLeft: -6})}
+            <View style={{ flexDirection: 'row' }}>
+              {renderItem(
+                0, source?.[0],
+              )}
+              {renderItem(
+                1, source?.[1], { marginLeft: -6 },
+              )}
             </View>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 marginTop: -8,
-              }}>
-              {renderItem(2, source?.[2])}
-              {renderItem(3, source?.[3], {marginLeft: -6})}
+              }}
+            >
+              {renderItem(
+                2, source?.[2],
+              )}
+              {renderItem(
+                3, source?.[3], { marginLeft: -6 },
+              )}
             </View>
           </View>
         );
       default:
         return (
           <View testID="avatar_group.group_4_plus">
-            <View style={{flexDirection: 'row'}}>
-              {renderItem(0, source?.[0])}
-              {renderItem(1, source?.[1], {marginLeft: -6})}
+            <View style={{ flexDirection: 'row' }}>
+              {renderItem(
+                0, source?.[0],
+              )}
+              {renderItem(
+                1, source?.[1], { marginLeft: -6 },
+              )}
             </View>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 marginTop: -8,
-              }}>
-              {renderItem(2, source?.[2])}
+              }}
+            >
+              {renderItem(
+                2, source?.[2],
+              )}
               <View
                 style={{
                   width: itemContainerSize,
@@ -154,7 +186,8 @@ const AvatarGroup = ({
                   marginLeft: -6,
                   justifyContent: 'center',
                   alignItems: 'center',
-                }}>
+                }}
+              >
                 {totalMember ? (
                   <Text
                     testID="avatar_group.total_member"
@@ -162,11 +195,16 @@ const AvatarGroup = ({
                       fontFamily: fontFamilies.BeVietnamProLight,
                       marginTop: 2,
                       fontSize: totalMemberFontSize,
-                    }}>
-                    {`+${Math.min(99, totalMember)}`}
+                    }}
+                  >
+                    {`+${Math.min(
+                      99, totalMember,
+                    )}`}
                   </Text>
                 ) : (
-                  renderItem(3, source?.[3])
+                  renderItem(
+                    3, source?.[3],
+                  )
                 )}
               </View>
             </View>
@@ -189,7 +227,8 @@ const AvatarGroup = ({
           padding: 1,
         },
         style,
-      ])}>
+      ])}
+    >
       {renderItems()}
     </View>
   );

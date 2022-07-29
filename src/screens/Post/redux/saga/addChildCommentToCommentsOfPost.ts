@@ -1,6 +1,6 @@
-import {ICommentData} from '~/interfaces/IPost';
-import {put, select} from 'redux-saga/effects';
-import {get, isEmpty} from 'lodash';
+import { put, select } from 'redux-saga/effects';
+import { get, isEmpty } from 'lodash';
+import { ICommentData } from '~/interfaces/IPost';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 
@@ -17,9 +17,10 @@ function* addChildCommentToCommentsOfPost({
   shouldAddChildrenCount?: boolean;
   meta?: any;
 }) {
-  const postComments: ICommentData[] = yield select(state =>
-    get(state, postKeySelector.commentsByParentId(postId)),
-  ) || [];
+  const postComments: ICommentData[] = yield select((state) => get(
+    state, postKeySelector
+      .commentsByParentId(postId),
+  )) || [];
   for (let i = 0; i < postComments.length; i++) {
     if (postComments[i].id === commentId) {
       const child = postComments[i].child?.list || [];
@@ -30,17 +31,19 @@ function* addChildCommentToCommentsOfPost({
         postComments[i].totalReply = (postComments[i].totalReply || 0) + 1;
       }
       if (!isEmpty(meta)) {
-        postComments[i].child.meta = {...postComments[i]?.child?.meta, ...meta};
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        postComments[i].child.meta = { ...postComments[i]?.child?.meta, ...meta };
       }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       postComments[i].child.list = newChild;
 
-      yield put(
-        postActions.updateAllCommentsByParentIdsWithComments({
-          id: postId,
-          comments: new Array(postComments[i]),
-          isMerge: true,
-        }),
-      );
+      yield put(postActions.updateAllCommentsByParentIdsWithComments({
+        id: postId,
+        comments: new Array(postComments[i]),
+        isMerge: true,
+      }));
       return;
     }
   }

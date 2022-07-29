@@ -6,7 +6,7 @@ import {
 } from './IPost';
 
 export interface IGetStreamNotificationActivity {
-  id: number;
+  id: string;
   actor: IGetStreamUser;
   content?: string;
   media: any;
@@ -38,6 +38,7 @@ export interface IParamGetNotifications {
   idLt?: string;
   flag?: 'ALL' | 'UNREAD' | 'MENTION' | 'IMPORTANT';
   keyValue?: string;
+  isRefresh?: boolean;
 }
 
 export interface INotiExtraData {

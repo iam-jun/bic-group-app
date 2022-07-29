@@ -5,11 +5,11 @@ import React, {
   useRef,
   useEffect,
 } from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export interface EmojiNameToastProps {
   toastRef: any;
@@ -23,25 +23,31 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
 
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       timeOutRef?.current && clearTimeout(timeOutRef?.current);
-    };
-  }, []);
+    }, [],
+  );
 
   const show = (name: string) => {
     timeOutRef?.current && clearTimeout(timeOutRef?.current);
     setName(name);
-    timeOutRef.current = setTimeout(() => {
-      setName('');
-    }, 3000);
+    timeOutRef.current = setTimeout(
+      () => {
+        setName('');
+      }, 3000,
+    );
   };
 
-  useImperativeHandle(toastRef, () => ({
-    show,
-  }));
+  useImperativeHandle(
+    toastRef, () => ({
+      show,
+    }),
+  );
 
   if (!name) {
     return null;
@@ -54,14 +60,14 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any) => {
-  return StyleSheet.create({
-    container: {
-      position: 'absolute',
-      alignSelf: 'center',
-      bottom: 100 + insets.bottom,
-    },
-  });
-};
+const createStyle = (
+  theme: ExtendedTheme, insets: any,
+) => StyleSheet.create({
+  container: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 100 + insets.bottom,
+  },
+});
 
 export default EmojiNameToast;

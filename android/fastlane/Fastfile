@@ -5,7 +5,7 @@ platform :android do
   lane :deploy_dev do
     Dotenv.overload('../../.env.sample', '../../.env')
 
-    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
@@ -24,21 +24,19 @@ platform :android do
       file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
       timeout: 600,
     )
-    mattermost(
-        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟣🤖 **Bein Dev Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n > **Git Branch**: #{git_branch}
-            \n **Git Author**: #{commit[:author]}
-            \n **Git Commit**: #{git_mess}",
-        username: "bein.bot",
-        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-    )
+    notice_to_bic("🟣🤖A lo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+                \n **BIC Group Dev Android**
+                \n Tải tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+                \n **Git Branch**: #{git_branch}
+                \n **Git Commit**: #{git_mess}",
+                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+                '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
   end
 
   lane :deploy_staging do
     Dotenv.overload('../../.env.sample', '../../.env.staging')
 
-    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
@@ -53,21 +51,18 @@ platform :android do
       file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
       timeout: 600,
     )
-    mattermost(
-        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟡🤖 **Bein Staging Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n > **Git Branch**: #{git_branch}
-            \n **Git Author**: #{commit[:author]}
-            \n **Git Commit**: #{git_mess}",
-        username: "bein.bot",
-        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-    )
-#     upload_to_play_store_internal_app_sharing
+    notice_to_bic("🟡🤖 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+                \n **BIC Group Staging Android**
+                \n Tải tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+                \n **Git Branch**: #{git_branch}
+                \n **Git Commit**: #{git_mess}",
+                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+                '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
   end
 
     lane :deploy_production do
         Dotenv.overload('../../.env.sample', '../../.env.production')
-        appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+        appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
         commit = last_git_commit
         git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
         gradle(task: "clean")
@@ -81,14 +76,12 @@ platform :android do
           file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
           timeout: 600,
         )
-        mattermost(
-            url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-            text: "@all\n🟢🤖 **Bein Production Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-                \n > **Git Branch**: #{git_branch}
-                \n **Git Author**: #{commit[:author]}
-                \n **Git Commit**: #{git_mess}",
-            username: "bein.bot",
-            icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-        )
+        notice_to_bic("🟢🤖 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+            \n **BIC Group Production Android**
+            \n Tải tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+            \n **Git Branch**: #{git_branch}
+            \n **Git Commit**: #{git_mess}",
+            ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+            '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
     end
 end

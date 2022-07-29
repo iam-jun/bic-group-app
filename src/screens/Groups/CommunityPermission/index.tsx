@@ -1,37 +1,38 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import SystemScheme from '~/screens/Groups/CommunityPermission/components/SystemScheme';
 import CommunityScheme from '~/screens/Groups/CommunityPermission/components/CommunityScheme';
 import GroupScheme from '~/screens/Groups/CommunityPermission/components/GroupScheme';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 
 const CommunityPermission = () => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const {id: communityId} =
-    useKeySelector(groupsKeySelector.communityDetail) || {};
+  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail) || {};
 
-  useEffect(() => {
-    if (communityId) {
-      dispatch(groupsActions.getSchemes({communityId}));
-      dispatch(groupsActions.getCommunityScheme({communityId}));
-    }
+  useEffect(
+    () => {
+      if (communityId) {
+        dispatch(groupsActions.getSchemes({ communityId }));
+        dispatch(groupsActions.getCommunityScheme({ communityId }));
+      }
 
-    return () => {
-      dispatch(groupsActions.setSchemes());
-      dispatch(groupsActions.setCommunityScheme());
-    };
-  }, [communityId]);
+      return () => {
+        dispatch(groupsActions.setSchemes());
+        dispatch(groupsActions.setCommunityScheme());
+      };
+    }, [communityId],
+  );
 
   return (
     <View style={styles.container}>
@@ -46,7 +47,7 @@ const CommunityPermission = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

@@ -1,8 +1,8 @@
 import React from 'react';
-import {useController} from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
-import {IObject} from '~/interfaces/common';
-import TextInput, {TextInputProps} from './TextInput';
+import { IObject } from '~/interfaces/common';
+import TextInput, { TextInputProps } from './TextInput';
 
 interface Props extends Partial<TextInputProps> {
   useFormData: IObject<any>;
@@ -36,26 +36,25 @@ const TextInputController: React.FC<Props> = ({
 }) => {
   const {
     control,
-    formState: {errors},
+    formState: { errors },
   } = useFormData;
 
   const {
-    field: {onChange, value},
+    field: { onChange, value },
   } = useController({
     control,
-    name: name,
-    rules: rules,
+    name,
+    rules,
     defaultValue: defaultValue || '',
   });
 
   return (
     <TextInput
       testID={testID}
-      label={label}
       placeholder={placeholder}
       error={errors?.code}
       value={value}
-      onChangeText={text => {
+      onChangeText={(text) => {
         onChange(text.trim());
         validateValue(text);
       }}

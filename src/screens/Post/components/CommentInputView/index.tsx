@@ -1,15 +1,15 @@
-import React, {FC, useEffect, useRef} from 'react';
-import {View} from 'react-native';
+import React, { FC, useEffect, useRef } from 'react';
+import { View } from 'react-native';
 import uuid from 'react-native-uuid';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
-import {useBaseHook} from '~/hooks';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useKeySelector} from '~/hooks/selector';
+import { useBaseHook } from '~/hooks';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useKeySelector } from '~/hooks/selector';
 import {
   IActivityDataImage,
   ICommentData,
@@ -49,18 +49,15 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const mentionInputRef = useRef<any>();
 
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
   const userId = useUserIdAuth();
   const myProfile = useKeySelector(menuKeySelector.myProfile);
-  const {fullname, avatar, username} = myProfile;
+  const { fullname, avatar, username } = myProfile;
 
-  const replying: IPayloadReplying = useKeySelector(
-    postKeySelector.replyingComment,
-  );
+  const replying: IPayloadReplying = useKeySelector(postKeySelector.replyingComment);
   const replyTargetId = replying?.parentComment?.id || replying?.comment?.id;
-  const replyTargetUser =
-    replying?.comment?.actor || replying?.parentComment?.actor;
+  const replyTargetUser = replying?.comment?.actor || replying?.parentComment?.actor;
   const replyTargetUserId = replyTargetUser?.id;
   let replyTargetName = replyTargetUser?.fullname;
   if (replyTargetUserId === userId) {
@@ -70,30 +67,34 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const content = useKeySelector(postKeySelector.createComment.content) || '';
   const loading = useKeySelector(postKeySelector.createComment.loading);
 
-  useEffect(() => {
-    // dispatch(postActions.setPostDetailReplyingComment());
-    return () => {
-      dispatch(postActions.setCreateComment({content: '', loading: false}));
+  useEffect(
+    () => () => {
+      dispatch(postActions.setCreateComment({ content: '', loading: false }));
       dispatch(postActions.setPostDetailReplyingComment());
-    };
-  }, []);
+    },
+    [],
+  );
 
-  useEffect(() => {
-    if (replyTargetUserId && replyTargetUser?.username) {
-      let content = `@${replyTargetUser?.username} `;
-      if (replyTargetUserId === Number(userId)) {
-        content = '';
+  useEffect(
+    () => {
+      if (replyTargetUserId && replyTargetUser?.username) {
+        let content = `@${replyTargetUser?.username} `;
+        if (replyTargetUserId === userId) {
+          content = '';
+        }
+        mentionInputRef?.current?.setContent(content);
       }
-      mentionInputRef?.current?.setContent(content);
-    }
-  }, [replyTargetName, replyTargetUserId]);
+    }, [replyTargetName, replyTargetUserId],
+  );
 
-  useEffect(() => {
-    if (!content) {
-      _commentInputRef?.current?.clear?.();
-      mentionInputRef?.current?.setContent?.('');
-    }
-  }, [content]);
+  useEffect(
+    () => {
+      if (!content) {
+        _commentInputRef?.current?.clear?.();
+        mentionInputRef?.current?.setContent?.('');
+      }
+    }, [content],
+  );
 
   const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
@@ -122,8 +123,8 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           avatar,
         },
         content: content?.trim(),
-        media: {images},
-        postId: postId,
+        media: { images },
+        postId,
         reactionsCount: {},
         ownerReactions: {},
         child: {},
@@ -134,10 +135,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       const payload: IPayloadCreateComment = {
         postId,
         parentCommentId: replyTargetId || defaultReplyTargetId,
-        commentData: {content: content?.trim(), media, giphy: sendData?.giphy},
-        userId: Number(userId),
+        commentData: { content: content?.trim(), media, giphy: sendData?.giphy },
+        userId,
         onSuccess: _onCommentSuccess,
-        isCommentLevel1Screen: isCommentLevel1Screen,
+        isCommentLevel1Screen,
         viewMore,
         preComment,
       };
@@ -148,22 +149,22 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const onChangeText = (value: string) => {
     _commentInputRef.current.setText(value);
-    dispatch(postActions.setCreateComment({content: value}));
+    dispatch(postActions.setCreateComment({ content: value }));
   };
 
   return (
     <View>
       <MentionInput
-        disableAutoComplete={true}
+        disableAutoComplete
         groupIds={groupIds}
         ComponentInput={CommentInput}
         mentionInputRef={mentionInputRef}
         componentInputProps={{
           commentInputRef: _commentInputRef,
           value: content,
-          autoFocus: autoFocus,
+          autoFocus,
           HeaderComponent: (!!showHeader && <ReplyingView />) || null,
-          loading: loading,
+          loading,
           isHandleUpload: true,
           placeholder: t('post:placeholder_write_comment'),
           onChangeText,

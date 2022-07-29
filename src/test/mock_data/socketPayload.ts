@@ -1,4 +1,4 @@
-import {POST_DETAIL_3} from './post';
+import { POST_DETAIL_3 } from './post';
 
 const actorIsCreator = {
   id: 33,
@@ -17,11 +17,11 @@ const actorNotIsCreator = {
   email: 'phuongkhanh@tgm.vn',
 };
 
-//User react to their post
+// User react to their post
 export const UPDATE_REACTION_TO_POST_DATA_1 = {
   ...POST_DETAIL_3,
   reactionsCount: {
-    '0': {thumbsup: 1},
+    0: { thumbsup: 1 },
   },
   reactionsOfActor: [
     {
@@ -39,11 +39,11 @@ export const UPDATE_REACTION_TO_POST_DATA_1 = {
   },
 };
 
-//Other users react to the user's post
+// Other users react to the user's post
 export const UPDATE_REACTION_TO_POST_DATA_2 = {
   ...POST_DETAIL_3,
   reactionsCount: {
-    '0': {thumbsup: 1},
+    0: { thumbsup: 1 },
   },
   reactionsOfActor: [
     {
@@ -61,7 +61,7 @@ export const UPDATE_REACTION_TO_POST_DATA_2 = {
   },
 };
 
-//Users react to their comments
+// Users react to their comments
 export const UPDATE_REACTION_TO_COMMENT_DATA_1 = {
   id: 490,
   actor: actorIsCreator,
@@ -94,7 +94,7 @@ export const UPDATE_REACTION_TO_COMMENT_DATA_1 = {
     media: {},
     mentions: [],
     reactionsCount: {
-      '0': {
+      0: {
         thumbsup: 1,
       },
     },
@@ -116,7 +116,7 @@ export const UPDATE_REACTION_TO_COMMENT_DATA_1 = {
   verb: 'REACT',
 };
 
-//Other users react to the user's comment
+// Other users react to the user's comment
 export const UPDATE_REACTION_TO_COMMENT_DATA_2 = {
   ...UPDATE_REACTION_TO_COMMENT_DATA_1,
   comment: {
@@ -141,7 +141,7 @@ export const UPDATE_REACTION_TO_COMMENT_DATA_2 = {
   },
 };
 
-//Users react to their child comments
+// Users react to their child comments
 export const UPDATE_REACTION_TO_CHILD_COMMENT_DATA_1 = {
   id: 505,
   actor: actorIsCreator,
@@ -180,7 +180,7 @@ export const UPDATE_REACTION_TO_CHILD_COMMENT_DATA_1 = {
         updatedAt: '2022-05-25T08:17:59.366Z',
       },
       reactionsCount: {
-        '0': {
+        0: {
           thumbsup: 1,
         },
       },
@@ -203,7 +203,7 @@ export const UPDATE_REACTION_TO_CHILD_COMMENT_DATA_1 = {
   verb: 'REACT',
 };
 
-//Other users react to the user's child comment
+// Other users react to the user's child comment
 export const UPDATE_REACTION_TO_CHILD_COMMENT_DATA_2 = {
   ...UPDATE_REACTION_TO_CHILD_COMMENT_DATA_1,
   comment: {

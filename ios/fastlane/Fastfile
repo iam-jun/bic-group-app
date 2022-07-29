@@ -17,50 +17,50 @@ platform :ios do
   lane :deploy_dev do
     Dotenv.overload('../../.env.sample', '../../.env')
 
-    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
-    match(git_private_key: "-----BEGIN OPENSSH PRIVATE KEY-----
-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
------END OPENSSH PRIVATE KEY-----
-",
+    private_key = "-----BEGIN OPENSSH PRIVATE KEY-----
+                  b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
+                  NhAAAAAwEAAQAAAYEAwE/iSE4LgND882LKnAvTijE0GH5s1po6P0h7Y3a+52eMRFvoGRjC
+                  KDqs9KwQrOE3FXQr09/O71ShjEF5hb484XSxDhPYNgKcSQ0AvdqrZar1+m2PUKGuogVCvK
+                  wiqkJefUN0vKUGSKYARdinE5uNXDD3FKrUvC8IzC1wAp8QNoXyyCkLUHguUWagWVZQ3bwm
+                  CXRlTLCN9q/PZCwse7IDSYOLX0fWYjSZp9psaTNwpNjQHnXZJjNMnQdDxXB3Pl2PK6o8PZ
+                  oVEVL4QV1eVqQt6e8OhCLrfypm+FFiyK2I/rhFvFynPgf5SrhgD1ydPrDxtV8cGNZbFG/c
+                  xx4e6OKV/FbJaYNFbkaJ8NU7rDHBQxaOkfZ00Vcjje3vwEdv9v0jjtJGlBJdlv/Ex3oFhP
+                  p1VocO0BjSqRCTAEWXlwEC+4x8yG+lC3L3aIhGBx43Egjh4Nf1CzatMsqDyeORYqUjcLpg
+                  /vCzoyy6vOSubbOzInbl8VG6GlVxb21geuf+ys9xAAAFmDdAC4E3QAuBAAAAB3NzaC1yc2
+                  EAAAGBAMBP4khOC4DQ/PNiypwL04oxNBh+bNaaOj9Ie2N2vudnjERb6BkYwig6rPSsEKzh
+                  NxV0K9Pfzu9UoYxBeYW+POF0sQ4T2DYCnEkNAL3aq2Wq9fptj1ChrqIFQrysIqpCXn1DdL
+                  ylBkimAEXYpxObjVww9xSq1LwvCMwtcAKfEDaF8sgpC1B4LlFmoFlWUN28Jgl0ZUywjfav
+                  z2QsLHuyA0mDi19H1mI0mafabGkzcKTY0B512SYzTJ0HQ8Vwdz5djyuqPD2aFRFS+EFdXl
+                  akLenvDoQi638qZvhRYsitiP64Rbxcpz4H+Uq4YA9cnT6w8bVfHBjWWxRv3MceHujilfxW
+                  yWmDRW5GifDVO6wxwUMWjpH2dNFXI43t78BHb/b9I47SRpQSXZb/xMd6BYT6dVaHDtAY0q
+                  kQkwBFl5cBAvuMfMhvpQty92iIRgceNxII4eDX9Qs2rTLKg8njkWKlI3C6YP7ws6Msurzk
+                  rm2zsyJ25fFRuhpVcW9tYHrn/srPcQAAAAMBAAEAAAGBAKQXhY0MiuQvbqZ99UORE78mnL
+                  0JovS6RFkbD62e9OWehSEPCsvfREvvRQTAjLn2sXms1njCz1+HZxC2DWsBGBGH8EuCw0nS
+                  kGgEoE1e+ECXz6sPMOosC0ZUFs3GUw3T86wOkt0kMmhqvHDcnDMu1z+CyFDqMvsfZvJREv
+                  Ippzver3n7C5xt75elaczQyc9pa0tF9emp/HgxK1TeHFavXf6sL4/tTBAfsbx3s2lQax09
+                  otda1x6xRv315O3jONwOF1ELpOJzKIy6huoRDA8Lj3tS6LypWNh52/nJG9sZwI5phoc437
+                  n7t33KIfLue/Df+F20Fqc/eQZFCyf43LgcKFN/HC7sYF0lN7ehow1EowhlHIh+AG4DYePv
+                  BAoULRlNP5jqImBD1zCFwOVFWSw7uv5ho3FV2FPdHg23uWcikaaX5dfgpXYR+DCvFj/9kG
+                  mbkYCCmI6KTQuD/j14QEAXvGqGO/RK35tIHE0AAxQu11sg9UsSPAiBiHpXY36v8o0pAQAA
+                  AMB8wmplUjY/vXnsoFxEycQ/sjLe1PmFmeoYKTx9CtYYlbo2Wt5BSp2IBcIheBelk26uco
+                  IlX9sMN2orjpzBvyEol84NOfvmsdygRlKpAzOmLfsuRWvCvxDuleglOdhluzh2zx0GkmB9
+                  f0ZCNMh+vXvNKhEtr1n7Ju1RMeTjqK1pS7/x9gmCXIZ6CSQyqgRjTmRBElGEm+TwjlsCpR
+                  BrtAeDJw18UT2et3p/o3KboKM9tl2xc6LC6Q6lr2JjZCRBXdwAAADBAODHZ7y9DgAPhMiz
+                  sFyTD6vrTuJtHZl96kb9G/Lw9U2wtWe1Z2HDH6t8ZhhodUbS2TR3NLq95ryXcB7uBIuuby
+                  /b38e1Yf+wMoVgxE4ITxy5B4MmvjEtzLLX2Xcpds0FrXySxot1tpkzLetG+/vj88uaWMBm
+                  QUIBKq2l9IxmBEt3zHSEwjggU/oajeNdtmhhn+ngHOMrn+SJgqhsriIDTTJPEre9zO3D6q
+                  5TJXULw5blynLumRExwucEKfVmzu48ZQAAAMEA2wYI9RICKQ4JdhANMrm9mOdiGLpSBv0v
+                  eSAGgRwvThlp31BF2ogoZI48DB7KlKLL0vWUxAcqs//l9++fq4mz4ADPfd+w2P2GYsTX1v
+                  wtdRGxoCjQktAf0D3S7fWngSg0DAz7HXWBB3tZ8OZar716K/AlPMaFMvTPVRZpZp9sOWBL
+                  6BFHqBKgyEUbwq57WyaCzoRKoxX8bp/jdXMW2o/VgEGr6dmq+9aTdTSCpx9sPXJqLgAQ30
+                  DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
+                  -----END OPENSSH PRIVATE KEY-----"
+    match(git_private_key: private_key,
         readonly: true,
         app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.development",
     )
@@ -79,21 +79,19 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
         timeout: 600,
         file: "./fastlane/development/#{ENV['SCHEME_NAME_IOS']}.ipa",
     )
-    mattermost(
-        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟣🍎 **Bein Dev iOS** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n > **Git Branch**: #{git_branch}
-            \n **Git Author**: #{commit[:author]}
-            \n **Git Commit**: #{git_mess}",
-        username: "bein.bot",
-        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-    )
+    notice_to_bic("🟣🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+        \n **Bein Dev iOS**
+        \n Tải tại: TestFlight.
+        \n **Git Branch**: #{git_branch}
+        \n **Git Commit**: #{git_mess}",
+        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+        '65864708-d4e6-4360-aa89-32fef3cd1b9a')
   end
 
   lane :deploy_staging do
     Dotenv.overload('../../.env.sample', '../../.env.staging')
 
-    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -114,20 +112,18 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
     )
-    mattermost(
-        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟡🍎 **Bein Staging iOS** New build #{appVersionText} available on TestFlight.}
-            \n > **Git Branch**: #{git_branch}
-            \n **Git Author**: #{commit[:author]}
-            \n **Git Commit**: #{git_mess}",
-        username: "bein.bot",
-        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-    )
+    notice_to_bic("🟡🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+        \n **BIC Group Staging iOS**
+        \n Tải tại: TestFlight.
+        \n **Git Branch**: #{git_branch}
+        \n **Git Commit**: #{git_mess}",
+        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+        '65864708-d4e6-4360-aa89-32fef3cd1b9a')
   end
 
     lane :deploy_production do
         Dotenv.overload('../../.env.sample', '../../.env.production')
-        appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+        appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
         commit = last_git_commit
         git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -147,15 +143,13 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
           ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
           changelog: "Production version #{ENV['APP_VERSION']}",
         )
-        mattermost(
-            url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-            text: "@all\n🟢🍎 **Bein Production iOS** New build #{appVersionText} available on TestFlight.}
-                \n > **Git Branch**: #{git_branch}
-                \n **Git Author**: #{commit[:author]}
-                \n **Git Commit**: #{git_mess}",
-            username: "bein.bot",
-            icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-        )
+        notice_to_bic("🟢🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+            \n **BIC Group Production iOS**
+            \n Tải tại: TestFlight.
+            \n **Git Branch**: #{git_branch}
+            \n **Git Commit**: #{git_mess}",
+            ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+            '65864708-d4e6-4360-aa89-32fef3cd1b9a')
     end
 
     lane :deploy_staging_ci do
@@ -176,7 +170,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
             verbose: true,
     )
 
-          appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+          appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
           commit = last_git_commit
           git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -197,15 +191,13 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
             ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
             changelog: "Staging version #{ENV['APP_VERSION']}",
           )
-          mattermost(
-              url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-              text: "@all\n🟡🍎 **Bein Staging iOS** New build #{appVersionText} available on TestFlight.}
-                  \n > **Git Branch**: #{git_branch}
-                  \n **Git Author**: #{commit[:author]}
-                  \n **Git Commit**: #{git_mess}",
-              username: "bein.bot",
-              icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-          )
+          notice_to_bic("🟡🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+              \n **BIC Group Staging iOS**
+              \n Tải tại: TestFlight.
+              \n **Git Branch**: #{git_branch}
+              \n **Git Commit**: #{git_mess}",
+              ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+              '65864708-d4e6-4360-aa89-32fef3cd1b9a')
         end
 
     lane :deploy_production_ci do
@@ -228,7 +220,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
     )
 
 
-              appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+              appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
               commit = last_git_commit
               git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -248,14 +240,12 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
                 ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
                 changelog: "Production version #{ENV['APP_VERSION']}",
               )
-              mattermost(
-                  url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-                  text: "@all\n🟢🍎 **Bein Production iOS** New build #{appVersionText} available on TestFlight.}
-                      \n > **Git Branch**: #{git_branch}
-                      \n **Git Author**: #{commit[:author]}
-                      \n **Git Commit**: #{git_mess}",
-                  username: "bein.bot",
-                  icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-              )
+              notice_to_bic("🟢🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+                  \n **BIC Group iOS**
+                  \n Tải tại: TestFlight.
+                  \n **Git Branch**: #{git_branch}
+                  \n **Git Commit**: #{git_mess}",
+                  ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+                  '65864708-d4e6-4360-aa89-32fef3cd1b9a')
   end
 end

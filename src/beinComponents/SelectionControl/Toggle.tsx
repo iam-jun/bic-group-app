@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,9 +6,9 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import commonActions, {IAction} from '~/constants/commonActions';
+import commonActions, { IAction } from '~/constants/commonActions';
 
 interface ToggleProps {
   style?: StyleProp<ViewStyle>;
@@ -25,11 +25,15 @@ const Toggle: React.FC<ToggleProps> = ({
 }: ToggleProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, checked);
+  const styles = createStyles(
+    theme, checked,
+  );
 
-  useEffect(() => {
-    setChecked(isChecked);
-  }, [isChecked]);
+  useEffect(
+    () => {
+      setChecked(isChecked);
+    }, [isChecked],
+  );
 
   const _onChangeValue = () => {
     const newValue = !checked;
@@ -46,15 +50,18 @@ const Toggle: React.FC<ToggleProps> = ({
     <TouchableOpacity style={style} onPress={_onChangeValue} testID={testID}>
       <View
         testID={testID ? `${testID}.out_side_view` : 'toggle.out_side_view'}
-        style={styles.outsideRectangle}>
+        style={styles.outsideRectangle}
+      >
         <View style={styles.insideCircle} />
       </View>
     </TouchableOpacity>
   );
 };
 
-const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
-  const {colors} = theme;
+const createStyles = (
+  theme: ExtendedTheme, isChecked: boolean,
+) => {
+  const { colors } = theme;
 
   return StyleSheet.create({
     outsideRectangle: {
@@ -70,7 +77,12 @@ const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
       height: 24,
       right: 0,
       borderRadius: 12,
-      backgroundColor: colors.gray10,
+      backgroundColor: colors.white,
+      shadowOffset: { width: 0, height: 1 },
+      shadowColor: colors.gray30,
+      shadowOpacity: 1,
+      shadowRadius: 1,
+      elevation: 4,
     },
   });
 };

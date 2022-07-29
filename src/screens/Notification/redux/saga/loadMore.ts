@@ -1,8 +1,8 @@
-import {get} from 'lodash';
-import {put, select, call} from 'redux-saga/effects';
+import { get } from 'lodash';
+import { put, select, call } from 'redux-saga/effects';
 
-import {IObject} from '~/interfaces/common';
-import {IParamGetNotifications} from '~/interfaces/INotification';
+import { IObject } from '~/interfaces/common';
+import { IParamGetNotifications } from '~/interfaces/INotification';
 import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
@@ -14,16 +14,15 @@ function* loadMore({
   payload: IParamGetNotifications;
   type: string;
 }): any {
-  const {flag = 'ALL', keyValue = 'tabAll'} = payload || {};
+  const { keyValue = 'tabAll' } = payload || {};
   try {
     // show loading more spinner, set isLoadingMore = true
-    yield put(notificationsActions.setIsLoadingMore({keyValue, value: true}));
+    yield put(notificationsActions.setIsLoadingMore({ keyValue, value: true }));
 
     // get all notifications from store
-    const notifications: any[] =
-      (yield select(state =>
-        get(state, notificationSelector.notificationByType(keyValue)),
-      )) || [];
+    const notifications: any[] = (yield select((state) => get(
+      state, notificationSelector.notificationByType(keyValue),
+    ))) || [];
 
     const response: IObject<any> = yield call(
       notificationsDataHelper.getNotificationList,
@@ -34,30 +33,30 @@ function* loadMore({
     );
 
     // hide loading more spinner, set isLoadingMore = false
-    yield put(notificationsActions.setIsLoadingMore({keyValue, value: false}));
+    yield put(notificationsActions.setIsLoadingMore({ keyValue, value: false }));
 
     // add loaded notification to bottom of current notification list
     // set noMoreNotification = true if loaded notification is empty
     if (response.results.length > 0) {
-      const newData: any[] = [],
-        newResponse: any = {};
+      const newData: any[] = [];
+      const newResponse: any = {};
       response.results.forEach((item: any) => {
         newData.push(item?.id);
-        newResponse[item.id] = {...item};
+        newResponse[item.id] = { ...item };
       });
-      yield put(
-        notificationsActions.concatNotifications({
-          notifications: newResponse,
-          keyValue,
-          data: newData,
-        }),
-      );
+      yield put(notificationsActions.concatNotifications({
+        notifications: newResponse,
+        keyValue,
+        data: newData,
+      }));
     } else {
-      yield put(notificationsActions.setNoMoreNoti({keyValue, value: true}));
+      yield put(notificationsActions.setNoMoreNoti({ keyValue, value: true }));
     }
   } catch (err) {
-    yield put(notificationsActions.setIsLoadingMore({keyValue, value: false}));
-    console.log('\x1b[33m', '--- load more : error', err, '\x1b[0m');
+    yield put(notificationsActions.setIsLoadingMore({ keyValue, value: false }));
+    console.error(
+      '\x1b[33m', '--- load more : error', err, '\x1b[0m',
+    );
   }
 }
 

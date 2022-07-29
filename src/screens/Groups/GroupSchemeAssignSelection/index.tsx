@@ -1,15 +1,17 @@
-import React, {FC, useEffect, useState} from 'react';
-import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import Animated, {ZoomIn} from 'react-native-reanimated';
+import React, { FC, useEffect, useState } from 'react';
+import {
+  View, StyleSheet, FlatList, TouchableOpacity,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import Animated, { ZoomIn } from 'react-native-reanimated';
 
 import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useBaseHook} from '~/hooks';
-import {IGroup} from '~/interfaces/IGroup';
-import {useKeySelector} from '~/hooks/selector';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useBaseHook } from '~/hooks';
+import { IGroup } from '~/interfaces/IGroup';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Icon from '~/beinComponents/Icon';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -33,32 +35,27 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const initGroup = route?.params?.group;
   const [selectingIndex, setSelectingIndex] = useState<number>();
 
-  const {data = [], currentAssignments} =
-    useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning) ||
-    {};
-  const {data: groupAssignments} =
-    useKeySelector(
-      groupsKeySelector.permission.assignGroupScheme.assignments,
-    ) || {};
+  const { data = [], currentAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning)
+    || {};
+  const { data: groupAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
 
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
-  const {data: schemes} =
-    useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const {groupSchemes = []} = schemes || {};
+  const { data: schemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
+  const { groupSchemes = [] } = schemes || {};
 
   // @ts-ignore
   const selectingSchemeId = groupSchemes?.[selectingIndex]?.id;
-  const disableSave = initGroup?.scheme_id === selectingSchemeId;
+  const disableSave = initGroup?.schemeId === selectingSchemeId;
 
   useEffect(() => {
     const index = groupSchemes?.findIndex(
-      (item: any) => item?.id === initGroup?.scheme_id,
+      (item: any) => item?.id === initGroup?.schemeId,
     );
     if (index !== -1) {
       setSelectingIndex(index);
@@ -68,7 +65,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const onPressSave = () => {
     // @ts-ignore
     const schemeId = groupSchemes?.[selectingIndex]?.id || null;
-    const groupId = initGroup?.group_id;
+    const groupId = initGroup?.groupId;
     if (groupId) {
       const newData = handleSelectNewGroupScheme(
         groupId,
@@ -81,17 +78,17 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         schemeId,
         currentAssignments,
       );
-      dispatch(
-        groupsActions.setGroupSchemeAssigning({
-          data: newData,
-          currentAssignments: newAssignments,
-        }),
-      );
+      dispatch(groupsActions.setGroupSchemeAssigning({
+        data: newData,
+        currentAssignments: newAssignments,
+      }));
       rootNavigation.goBack();
     }
   };
 
-  const onPressItem = (item: IGroup, index: number) => {
+  const onPressItem = (
+    item: IGroup, index: number,
+  ) => {
     if (selectingIndex !== index) {
       setSelectingIndex(index);
     } else {
@@ -99,7 +96,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
     }
   };
 
-  const renderItem = ({item, index}: {item: IGroup; index: number}) => {
+  const renderItem = ({ item, index }: {item: IGroup; index: number}) => {
     const isActive = selectingIndex === index;
     return (
       <TouchableOpacity
@@ -107,12 +104,15 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
           styles.itemContainer,
           isActive ? styles.itemContainerActive : {},
         ]}
-        onPress={() => onPressItem(item, index)}>
+        onPress={() => onPressItem(
+          item, index,
+        )}
+      >
         <Text style={styles.flex1}>{item?.name}</Text>
-        <View style={{minWidth: 20, minHeight: 20}}>
+        <View style={{ minWidth: 20, minHeight: 20 }}>
           {isActive && (
             <Animated.View entering={ZoomIn}>
-              <Icon icon={'Check'} tintColor={colors.purple50} />
+              <Icon icon="Check" tintColor={colors.purple50} />
             </Animated.View>
           )}
         </View>
@@ -120,21 +120,19 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
     );
   };
 
-  const renderHeader = () => {
-    return <Text.H5 style={styles.textHeader}>{initGroup?.name}</Text.H5>;
-  };
+  const renderHeader = () => <Text.H5 style={styles.textHeader}>{initGroup?.name}</Text.H5>;
 
   return (
     <View style={styles.container}>
       <Header
         title={t('communities:permission:title_group_scheme_assign_selection')}
         onPressButton={onPressSave}
-        buttonText={'common:btn_save'}
+        buttonText="common:btn_save"
         buttonProps={{
           disabled: disableSave,
           useI18n: true,
           highEmphasis: true,
-          style: {borderWidth: 0},
+          style: { borderWidth: 0 },
           testID: 'group_scheme_assignments.btn_assign',
         }}
       />
@@ -142,19 +140,19 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         data={groupSchemes}
         renderItem={renderItem}
         ListHeaderComponent={renderHeader}
-        keyExtractor={item => `group_scheme_assignments_item_${item.id}`}
+        keyExtractor={(item) => `group_scheme_assignments_item_${item.id}`}
       />
     </View>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     container: {
       flex: 1,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
     },
     itemContainer: {
       flexDirection: 'row',

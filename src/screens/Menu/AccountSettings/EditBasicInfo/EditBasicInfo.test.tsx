@@ -106,7 +106,7 @@ describe('EditDescription screen', () => {
   it(`should render language option bottom sheet and enable Save button when click language item`, () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     Keyboard.dismiss = jest.fn();
@@ -147,7 +147,7 @@ describe('EditDescription screen', () => {
     Keyboard.dismiss = jest.fn();
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 

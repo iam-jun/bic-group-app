@@ -1,71 +1,80 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useEffect} from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import Text from '~/beinComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/store/modal/actions';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '../redux/actions';
 import spacing from '~/theme/spacing';
-import {useMyPermissions} from '~/hooks/permissions';
+import { useMyPermissions } from '~/hooks/permissions';
 
 const CommunityAdmin = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const {
     id: communityId,
     name,
     icon,
-    can_manage_scheme,
-    can_edit_info,
+    canManageScheme,
+    canEditInfo,
   } = useKeySelector(groupsKeySelector.communityDetail);
-  const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const { total } = useKeySelector(groupsKeySelector.communityMemberRequests);
 
-  const {hasPermissions, PERMISSION_KEY} = useMyPermissions(
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const canManageJoiningRequests = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
-  );
-  const canManageJoiningRequests = hasPermissions(
     PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
   );
-  const canEditCommunityInfo = hasPermissions([
-    PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
-    PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
-  ]);
+  const canEditProfileInfo = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    [
+      PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
+      PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+    ],
+  );
 
-  useEffect(() => {
-    canManageJoiningRequests &&
-      dispatch(groupsActions.getCommunityMemberRequests({communityId}));
+  useEffect(
+    () => {
+      canManageJoiningRequests
+      && dispatch(groupsActions.getCommunityMemberRequests({ communityId }));
 
-    return () => {
-      dispatch(groupsActions.resetCommunityMemberRequests());
-    };
-  }, [communityId]);
+      return () => {
+        dispatch(groupsActions.resetCommunityMemberRequests());
+      };
+    }, [communityId],
+  );
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const onPressPendingMembers = () => {
-    rootNavigation.navigate(groupStack.communityPendingMembers, {
-      id: communityId,
-    });
+    rootNavigation.navigate(
+      groupStack.communityPendingMembers, {
+        id: communityId,
+      },
+    );
   };
 
   const onPressGeneralInfo = () => {
-    rootNavigation.navigate(groupStack.generalInfo, {
-      id: communityId,
-      type: 'community',
-    });
+    rootNavigation.navigate(
+      groupStack.generalInfo, {
+        id: communityId,
+        type: 'community',
+      },
+    );
   };
 
   const onPressPermission = () => {
@@ -82,34 +91,35 @@ const CommunityAdmin = () => {
         style={styles.headerTitle}
         color={theme.colors.neutral80}
         variant="bodyM"
-        useI18n>
+        useI18n
+      >
         settings:title_community_moderating
       </Text.BodyM>
       {!!canManageJoiningRequests && (
         <MenuItem
-          testID={'community_admin.pending_members'}
-          title={'settings:title_pending_members'}
-          icon={'UserCheck'}
+          testID="community_admin.pending_members"
+          title="settings:title_pending_members"
+          icon="UserCheck"
           iconProps={{
             icon: 'UserCheck',
             tintColor: theme.colors.purple50,
           }}
           notificationsBadgeNumber={total}
-          notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
+          notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
           rightSubIcon="AngleRightSolid"
           onPress={onPressPendingMembers}
         />
       )}
       <MenuItem
-        testID={'community_admin.pending_posts'}
-        title={'settings:title_pending_posts'}
-        icon={'FileExclamation'}
+        testID="community_admin.pending_posts"
+        title="settings:title_pending_posts"
+        icon="FileExclamation"
         iconProps={{
           icon: 'FileExclamation',
           tintColor: theme.colors.purple50,
         }}
         notificationsBadgeNumber={999}
-        notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
+        notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
         rightSubIcon="AngleRightSolid"
         onPress={displayNewFeature}
       />
@@ -122,35 +132,36 @@ const CommunityAdmin = () => {
         style={styles.headerTitle}
         color={theme.colors.neutral80}
         variant="bodyM"
-        useI18n>
+        useI18n
+      >
         settings:title_community_settings
       </Text.BodyM>
-      {!!canEditCommunityInfo && (
+      {!!canEditProfileInfo && (
         <MenuItem
           testID="community_admin.profile_info"
           title="settings:title_profile_info"
           icon="Gear"
-          iconProps={{icon: 'Gear', tintColor: theme.colors.purple50}}
+          iconProps={{ icon: 'Gear', tintColor: theme.colors.purple50 }}
           rightSubIcon="AngleRightSolid"
           onPress={onPressGeneralInfo}
         />
       )}
-      {!!can_edit_info && ( //todo temp use can edit info, should use correct permission when BE update
+      {!!canEditInfo && ( // todo temp use can edit info, should use correct permission when BE update
         <MenuItem
           testID="community_admin.group_structure_settings"
           title="settings:title_group_structure"
           icon="CodeBranch"
-          iconProps={{icon: 'CodeBranch', tintColor: theme.colors.purple50}}
+          iconProps={{ icon: 'CodeBranch', tintColor: theme.colors.purple50 }}
           rightSubIcon="AngleRightSolid"
           onPress={onPressGroupStructure}
         />
       )}
-      {!!can_manage_scheme && (
+      {!!canManageScheme && (
         <MenuItem
           testID="community_admin.permission_settings"
           title="settings:title_permission_settings"
           icon="FileLock"
-          iconProps={{icon: 'FileLock', tintColor: theme.colors.purple50}}
+          iconProps={{ icon: 'FileLock', tintColor: theme.colors.purple50 }}
           rightSubIcon="AngleRightSolid"
           onPress={onPressPermission}
         />
@@ -159,7 +170,7 @@ const CommunityAdmin = () => {
         testID="community_admin.post_settings"
         title="settings:title_post_settings"
         icon="Copy"
-        iconProps={{icon: 'Copy', tintColor: theme.colors.purple50}}
+        iconProps={{ icon: 'Copy', tintColor: theme.colors.purple50 }}
         rightSubIcon="AngleRightSolid"
         onPress={displayNewFeature}
       />
@@ -170,7 +181,7 @@ const CommunityAdmin = () => {
     <ScreenWrapper testID="CommunityAdmin" isFullView>
       <Header
         title={name}
-        titleTextProps={{color: theme.colors.neutral80}}
+        titleTextProps={{ color: theme.colors.neutral80 }}
         avatar={icon}
       />
       <Divider size={4} />
@@ -182,16 +193,14 @@ const CommunityAdmin = () => {
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => {
-  return StyleSheet.create({
-    container: {
-      paddingTop: spacing.padding.large,
-    },
-    headerTitle: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.base,
-    },
-  });
-};
+const createStyles = (theme: ExtendedTheme) => StyleSheet.create({
+  container: {
+    paddingTop: spacing.padding.large,
+  },
+  headerTitle: {
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.base,
+  },
+});
 
 export default CommunityAdmin;

@@ -6,12 +6,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import Text from '~/beinComponents/Text';
 import MemberItem from './MemberItem';
-import {getMembersSection} from '../redux/selectors';
+import { getMembersSection } from '../redux/selectors';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 
@@ -31,34 +31,34 @@ const MemberList = ({
   onRefresh,
 }: MemberListProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyles(theme);
 
   const memberSectionData = getMembersSection(type);
-  const {loading, canLoadMore, sectionList} = memberSectionData;
+  const { loading, canLoadMore, sectionList } = memberSectionData;
 
-  const renderEmpty = () => {
-    return !loading ? <NoSearchResult /> : null;
-  };
+  const renderEmpty = () => (!loading ? <NoSearchResult /> : null);
 
-  const renderSectionHeader = ({section: {title, user_count}}: any) => {
-    return (
-      <View style={styles.sectionHeader}>
-        <Text.BodyM
-          color={colors.neutral80}>{`${title} • ${user_count}`}</Text.BodyM>
-      </View>
-    );
-  };
+  const renderSectionHeader = ({ section: { title, userCount } }: any) => (
+    <View style={styles.sectionHeader}>
+      <Text.BodyM
+        color={colors.neutral80}
+      >
+        {`${title} • ${userCount}`}
+      </Text.BodyM>
+    </View>
+  );
 
   const renderListFooter = () => {
     if (
-      canLoadMore &&
-      sectionList[0]?.data?.length + sectionList[1]?.data?.length > 0
+      canLoadMore
+      && (sectionList[0]?.data?.length || 0) + (sectionList[1]?.data?.length || 0) > 0
     ) {
       return (
         <View
           testID="member_list.loading_more_indicator"
-          style={styles.listFooter}>
+          style={styles.listFooter}
+        >
           <ActivityIndicator />
         </View>
       );
@@ -67,22 +67,22 @@ const MemberList = ({
     return null;
   };
 
-  const renderItem = ({item}: {item: any}) => {
-    return (
-      <MemberItem
-        item={item}
-        canManageMember={canManageMember}
-        onPressMenu={onPressMenu}
-      />
-    );
-  };
+  const renderItem = ({ item }: {item: any}) => (
+    <MemberItem
+      item={item}
+      canManageMember={canManageMember}
+      onPressMenu={onPressMenu}
+    />
+  );
 
   return (
     <SectionList
       testID="member_list"
       style={styles.content}
       sections={sectionList}
-      keyExtractor={(item, index) => `member_list_${item.id}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `member_list_${item.id}_${index}`}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
       ListEmptyComponent={renderEmpty}
@@ -107,7 +107,7 @@ const MemberList = ({
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     content: {
       backgroundColor: colors.white,

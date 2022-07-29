@@ -80,7 +80,7 @@ describe('UserProfile screen', () => {
       .mockImplementation(mockActionGetMyProfile as any);
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 
@@ -134,7 +134,7 @@ describe('UserProfile screen', () => {
       .mockImplementation(mockActionGetMyProfile as any);
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     //@ts-ignore
@@ -170,7 +170,7 @@ describe('UserProfile screen', () => {
       .mockImplementation(mockActionGetUserProfile as any);
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     //@ts-ignore
@@ -208,7 +208,7 @@ describe('UserProfile screen', () => {
       .mockImplementation(mockActionGeUserProfile as any);
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     //@ts-ignore
@@ -242,7 +242,7 @@ describe('UserProfile screen', () => {
       .mockImplementation(mockActionGetMyProfile as any);
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     //@ts-ignore
@@ -280,7 +280,7 @@ describe('UserProfile screen', () => {
     storeData.menu.loadingUserProfile = true;
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     storeData.auth.user = user as any;
@@ -317,7 +317,7 @@ describe('UserProfile screen', () => {
   //     .mockImplementation(mockActionGetMyProfile as any);
   //   const user = {
   //     signInUserSession: {
-  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //       idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
   //     },
   //   };
   //   //@ts-ignore

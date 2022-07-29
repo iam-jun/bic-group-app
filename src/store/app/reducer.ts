@@ -13,9 +13,11 @@ export const appInitState = {
  * @param action
  * @returns {*}
  */
-function reducer(state = appInitState, action: any = {}) {
-  const {type, payload} = action;
-  const {configs} = state;
+function reducer(
+  state = appInitState, action: any = {},
+) {
+  const { type, payload } = action;
+  const { configs } = state;
 
   switch (type) {
     case types.SET_CONFIGS:

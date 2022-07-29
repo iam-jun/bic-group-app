@@ -1,34 +1,35 @@
-import React, {useRef} from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useRef } from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 
-import modalActions, {clearToastMessage} from '~/store/modal/actions';
+import modalActions, { clearToastMessage } from '~/store/modal/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
-import {IToastMessage} from '~/interfaces/common';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { useRootNavigation } from '~/hooks/navigation';
+import { IToastMessage } from '~/interfaces/common';
 import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonApproveDeclineAllRequests';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 
 const GroupApproveDeclineAllRequests = () => {
   const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const timeOutRef = useRef<any>();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
-  const {id: groupId, name} =
-    useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { id: groupId, name } = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const { total } = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const navigateToGroupMembers = () => {
     dispatch(clearToastMessage());
-    rootNavigation.navigate(groupStack.groupMembers, {groupId});
+    rootNavigation.navigate(
+      groupStack.groupMembers, { groupId },
+    );
   };
 
   const alertAction = (
@@ -37,8 +38,8 @@ const GroupApproveDeclineAllRequests = () => {
     doAction: () => void,
   ) => {
     const alertPayload = {
-      title: title,
-      content: content,
+      title,
+      content,
       ContentComponent: Text.BodyS,
       cancelBtn: true,
       cancelBtnProps: {
@@ -47,7 +48,7 @@ const GroupApproveDeclineAllRequests = () => {
       onConfirm: () => doAction(),
       confirmLabel: t('common:btn_confirm'),
       ConfirmBtnComponent: Button.Secondary,
-      confirmBtnProps: {highEmphasis: true},
+      confirmBtnProps: { highEmphasis: true },
     };
 
     dispatch(modalActions.showAlert(alertPayload));
@@ -56,28 +57,32 @@ const GroupApproveDeclineAllRequests = () => {
   const onPressApproveAll = () => {
     alertAction(
       t('groups:text_respond_all_member_requests:title:approve'),
-      t('groups:text_respond_all_member_requests:content:approve', {
-        count: total,
-      }).replace('{0}', name),
+      t(
+        'groups:text_respond_all_member_requests:content:approve', {
+          count: total,
+        },
+      ).replace(
+        '{0}', name,
+      ),
       doApproveAll,
     );
   };
 
   const doApproveAll = () => {
-    dispatch(
-      groupsActions.approveAllGroupMemberRequests({
-        groupId,
-        callback: navigateToGroupMembers,
-      }),
-    );
+    dispatch(groupsActions.approveAllGroupMemberRequests({
+      groupId,
+      callback: navigateToGroupMembers,
+    }));
   };
 
   const onPressDeclineAll = () => {
     alertAction(
       t('groups:text_respond_all_member_requests:title:decline'),
-      t('groups:text_respond_all_member_requests:content:decline', {
-        count: total,
-      }),
+      t(
+        'groups:text_respond_all_member_requests:content:decline', {
+          count: total,
+        },
+      ),
       doDeclineAll,
     );
   };
@@ -95,7 +100,7 @@ const GroupApproveDeclineAllRequests = () => {
     const toastMessage: IToastMessage = {
       content: `${t('groups:text_declining_all')}`,
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'informative',
         rightText: 'Undo',
         onPressRight: onPressUndo,
@@ -105,9 +110,11 @@ const GroupApproveDeclineAllRequests = () => {
     };
     dispatch(modalActions.showHideToastMessage(toastMessage));
 
-    timeOutRef.current = setTimeout(() => {
-      dispatch(groupsActions.declineAllGroupMemberRequests({groupId}));
-    }, 4500);
+    timeOutRef.current = setTimeout(
+      () => {
+        dispatch(groupsActions.declineAllGroupMemberRequests({ groupId }));
+      }, 4500,
+    );
   };
 
   return (

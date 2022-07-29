@@ -3,7 +3,7 @@ import React from 'react';
 import SchemeItem from './SchemeItem';
 import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import {groupScheme} from '~/test/mock_data/scheme';
 
 describe('SchemeItem component', () => {

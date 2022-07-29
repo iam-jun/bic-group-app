@@ -1,8 +1,8 @@
 import i18next from 'i18next';
-import {put, call} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import {IToastMessage} from '~/interfaces/common';
+import { IToastMessage } from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -12,26 +12,26 @@ export default function* cancelJoinCommunity({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; communityName: string};
+  payload: {communityId: string; communityName: string};
 }) {
-  const {communityId, communityName} = payload;
+  const { communityId, communityName } = payload;
   try {
-    yield call(groupsDataHelper.cancelJoinCommunity, communityId);
+    yield call(
+      groupsDataHelper.cancelJoinCommunity, communityId,
+    );
 
     // update button Join/Cancel/View status on Discover communities
     yield put(
       groupsActions.editDiscoverCommunityItem({
         id: communityId,
-        data: {join_status: groupJoinStatus.visitor},
+        data: { joinStatus: groupJoinStatus.visitor },
       }),
     );
 
-    yield put(groupsActions.getCommunityDetail({communityId}));
+    yield put(groupsActions.getCommunityDetail({ communityId }));
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t(
-        'groups:text_cancel_join_community',
-      )} ${communityName}`,
+      content: `${i18next.t('groups:text_cancel_join_community')} ${communityName}`,
       props: {
         type: 'success',
       },
@@ -39,20 +39,24 @@ export default function* cancelJoinCommunity({
 
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('cancelJoinCommunity catch', err);
+    console.log(
+      'cancelJoinCommunity catch', err,
+    );
 
     if (err?.code === approveDeclineCode.APPROVED) {
       yield put(
         groupsActions.editDiscoverCommunityItem({
           id: communityId,
-          data: {join_status: groupJoinStatus.member},
+          data: { joinStatus: groupJoinStatus.member },
         }),
       );
       yield put(
-        groupsActions.getCommunityDetail({communityId, loadingPage: true}),
+        groupsActions.getCommunityDetail({ communityId, loadingPage: true }),
       );
     }
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

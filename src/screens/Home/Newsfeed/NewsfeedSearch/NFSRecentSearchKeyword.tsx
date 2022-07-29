@@ -1,10 +1,10 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 
 import Icon from '~/beinComponents/Icon';
@@ -25,44 +25,46 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   onDeleteKeyword,
   onClearAllKeyword,
 }: NFSRecentSearchKeywordProps) => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const {loading, data} =
-    useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
+  const { loading, data } = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
 
   const onPressClear = () => {
     onClearAllKeyword?.();
   };
 
   const onPressDeleteItem = (item: any) => {
-    onDeleteKeyword?.(item?.id, item?.keyword);
+    onDeleteKeyword?.(
+      item?.id, item?.keyword,
+    );
   };
 
   const onPressItem = (item: any) => {
     onSelectKeyword?.(item?.keyword);
   };
 
-  const renderItem = (item: any, index: number) => {
-    return (
-      <PrimaryItem
-        testID={`recent_search_keyword.item_${index}`}
-        key={`recent_item_${item.id}`}
-        subTitle={item?.keyword}
-        style={styles.item}
-        onPress={() => onPressItem(item)}
-        height={null}
-        RightComponent={
-          <TouchableOpacity
-            testID={`recent_search_keyword.btn_delete_item_${index}`}
-            onPress={() => onPressDeleteItem(item)}>
-            <Icon icon={'iconCloseSmall'} size={16} />
-          </TouchableOpacity>
-        }
-      />
-    );
-  };
+  const renderItem = (
+    item: any, index: number,
+  ) => (
+    <PrimaryItem
+      testID={`recent_search_keyword.item_${index}`}
+      key={`recent_item_${item.id}`}
+      subTitle={item?.keyword}
+      style={styles.item}
+      onPress={() => onPressItem(item)}
+      height={null}
+      RightComponent={(
+        <TouchableOpacity
+          testID={`recent_search_keyword.btn_delete_item_${index}`}
+          onPress={() => onPressDeleteItem(item)}
+        >
+          <Icon icon="iconCloseSmall" size={16} />
+        </TouchableOpacity>
+        )}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -72,9 +74,10 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
         </Text.H6>
         {data?.length > 0 && (
           <Button
-            testID={'recent_search_keyword.btn_clear'}
+            testID="recent_search_keyword.btn_clear"
             onPress={onPressClear}
-            style={{justifyContent: 'center', alignSelf: 'center'}}>
+            style={{ justifyContent: 'center', alignSelf: 'center' }}
+          >
             <Text.ButtonS style={styles.btnClear}>
               {t('home:newsfeed_search:clear').toUpperCase()}
             </Text.ButtonS>
@@ -93,9 +96,9 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     container: {
       paddingHorizontal: spacing.padding.base,
     },

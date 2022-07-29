@@ -1,13 +1,11 @@
 const groupsKeySelector = {
   groupDetail: {
     group: 'groups.groupDetail.group',
-    can_setting: 'groups.groupDetail.can_setting',
-    can_edit_info: 'groups.groupDetail.can_edit_info',
-    can_edit_privacy: 'groups.groupDetail.can_edit_privacy',
-    can_manage_member: 'groups.groupDetail.can_manage_member',
-    can_manage_scheme: 'groups.groupDetail.can_manage_scheme',
-    join_status: 'groups.groupDetail.join_status',
-    total_pending_members: 'groups.groupDetail.total_pending_members',
+    canEditInfo: 'groups.groupDetail.canEditInfo',
+    canEditPrivacy: 'groups.groupDetail.canEditPrivacy',
+    canManageMember: 'groups.groupDetail.canManageMember',
+    canManageScheme: 'groups.groupDetail.canManageScheme',
+    joinStatus: 'groups.groupDetail.joinStatus',
   },
   yourGroupsSearchData: 'groups.yourGroupsSearch',
   yourGroupsTreeData: 'groups.yourGroupsTree',
@@ -64,8 +62,9 @@ const groupsKeySelector = {
   },
   communitySearch: 'groups.communitySearch',
   myPermissions: 'groups.myPermissions',
-  permissionsByScopeAndId: (scope: 'communities' | 'groups', id: number) =>
-    `groups.myPermissions.data.${scope}.${id}`,
+  permissionsByScopeAndId: (
+    scope: 'communities' | 'groups', id: number,
+  ) => `groups.myPermissions.data.${scope}.${id}`,
 };
 
 export default groupsKeySelector;

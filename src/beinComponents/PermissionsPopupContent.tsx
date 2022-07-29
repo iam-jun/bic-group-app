@@ -1,17 +1,19 @@
 import React from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
-import {useBaseHook} from '~/hooks';
+import { openSettings } from 'react-native-permissions';
+import { useBaseHook } from '~/hooks';
 
 import Button from '~/beinComponents/Button';
-import Text, {TextProps} from '~/beinComponents/Text';
+import Text, { TextProps } from '~/beinComponents/Text';
 import PrimaryItem, {
   PrimaryItemProps,
 } from '~/beinComponents/list/items/PrimaryItem';
 import ViewSpacing from './ViewSpacing';
-import {openSettings} from 'react-native-permissions';
 import modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
@@ -36,9 +38,9 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
   onClose,
   goToSetting,
 }: PermissionsPopupContentProps) => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const dispatch = useDispatch();
@@ -63,15 +65,17 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
           {description}
         </Text.BodyS>
       </View>
-      {(steps || []).map((item: PrimaryItemProps, index: number) => (
+      {(steps || []).map((
+        item: PrimaryItemProps, index: number,
+      ) => (
         <View key={`${index}_${item.title}`} style={styles.itemContainer}>
           <PrimaryItem
             title={item.title}
-            titleProps={{variant: 'bodyS'}}
+            titleProps={{ variant: 'bodyS' }}
             leftIcon={item.leftIcon}
-            leftIconProps={{style: styles.iconStyle, ...item.leftIconProps}}
+            leftIconProps={{ style: styles.iconStyle, ...item.leftIconProps }}
             height={28}
-            style={{paddingLeft: 0}}
+            style={{ paddingLeft: 0 }}
           />
         </View>
       ))}
@@ -83,7 +87,8 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
         <Button.Secondary
           color={colors.violet1}
           textColor={colors.purple50}
-          onPress={_onClose}>
+          onPress={_onClose}
+        >
           {t('common:text_not_now')}
         </Button.Secondary>
       </View>
@@ -92,7 +97,7 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.white,

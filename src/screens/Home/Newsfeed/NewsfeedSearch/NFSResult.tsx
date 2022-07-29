@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, FlatList, RefreshControl} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import {
+  View, StyleSheet, FlatList, RefreshControl,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
-import {useKeySelector} from '~/hooks/selector';
-import {IPayloadGetSearchPosts} from '~/interfaces/IHome';
+import { useKeySelector } from '~/hooks/selector';
+import { IPayloadGetSearchPosts } from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import homeActions from '~/screens/Home/redux/actions';
 
@@ -12,14 +14,14 @@ import PostView from '~/screens/Post/components/PostView';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
-import {scaleSize} from '~/theme/dimension';
+import { scaleSize } from '~/theme/dimension';
 import NFSFilterToolbar from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterToolbar';
 import spacing from '~/theme/spacing';
 
 const NFSResult = () => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const {
@@ -27,23 +29,19 @@ const NFSResult = () => {
     searchResults = [],
     searchText = '',
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
-  const filterCreatedBy = useKeySelector(
-    homeKeySelector.newsfeedSearchFilterCreatedBy,
-  );
+  const filterCreatedBy = useKeySelector(homeKeySelector.newsfeedSearchFilterCreatedBy);
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
-  const renderItem = ({item, index}: any) => {
-    return (
-      <PostView
-        style={styles.itemContainer}
-        postId={item?.id}
-        isLite
-        pressNavigateToDetail
-        postData={item}
-        isUseReduxState={false}
-      />
-    );
-  };
+  const renderItem = ({ item }: any) => (
+    <PostView
+      style={styles.itemContainer}
+      postId={item?.id}
+      isLite
+      pressNavigateToDetail
+      postData={item}
+      isUseReduxState={false}
+    />
+  );
 
   const getData = (isLoadMore = false) => {
     if (searchText) {
@@ -58,12 +56,14 @@ const NFSResult = () => {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate]);
+  useEffect(
+    () => {
+      getData();
+    }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate],
+  );
 
   const onRefresh = () => {
-    console.log(`\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m`);
+    // console.log('\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m');
   };
 
   const onEndReached = () => {
@@ -77,7 +77,7 @@ const NFSResult = () => {
     return (
       <View style={styles.emptyContainer}>
         <Image
-          resizeMode={'contain'}
+          resizeMode="contain"
           style={styles.imgEmpty}
           source={images.img_empty_search_post}
         />
@@ -88,9 +88,7 @@ const NFSResult = () => {
     );
   };
 
-  const renderFooter = () => {
-    return <View style={styles.footer}></View>;
-  };
+  const renderFooter = () => <View style={styles.footer} />;
 
   return (
     <View style={styles.container}>
@@ -101,25 +99,25 @@ const NFSResult = () => {
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty()}
         ListFooterComponent={renderFooter()}
-        keyExtractor={item => `newsfeed_item_${item?.id}`}
+        keyExtractor={(item) => `newsfeed_item_${item?.id}`}
         onEndReached={onEndReached}
-        refreshControl={
+        refreshControl={(
           <RefreshControl
             refreshing={loadingResult}
             onRefresh={onRefresh}
             tintColor={colors.purple50}
             colors={[colors.purple50 || 'grey']}
           />
-        }
+        )}
       />
     </View>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     container: {
       flex: 1,
       backgroundColor: colors.neutral1,

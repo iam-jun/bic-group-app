@@ -1,8 +1,10 @@
-import {View, StyleProp, ViewStyle, StyleSheet} from 'react-native';
+import {
+  View, StyleProp, ViewStyle, StyleSheet,
+} from 'react-native';
 import React from 'react';
 import i18next from 'i18next';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
@@ -12,7 +14,7 @@ import spacing from '~/theme/spacing';
 interface HeaderMenuProps {
   type: 'community' | 'group';
   isMember: boolean;
-  can_setting: boolean;
+  canSetting: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   onPressAdminTools?: () => void;
   onPressCopyLink?: () => void;
@@ -26,7 +28,7 @@ interface HeaderMenuProps {
 const HeaderMenu = ({
   type,
   isMember,
-  can_setting,
+  canSetting,
   containerStyle,
   onPressAdminTools,
   onPressCopyLink,
@@ -46,7 +48,7 @@ const HeaderMenu = ({
 
   return (
     <View style={containerStyle}>
-      {can_setting && (
+      {canSetting && (
         <PrimaryItem
           testID="header_menu.admin_tools"
           height={48}
@@ -56,16 +58,16 @@ const HeaderMenu = ({
             tintColor: theme.colors.purple50,
             style: styles.iconLeftStyle,
           }}
-          leftIcon={'iconShieldStar'}
+          leftIcon="iconShieldStar"
           title={i18next.t('groups:group_menu:label_admin_tools')}
           onPress={onPressAdminTools || onPressNewFeature}
-          RightComponent={
+          RightComponent={(
             <Icon
-              icon={'ArrowRight'}
+              icon="ArrowRight"
               size={12}
               tintColor={theme.colors.gray50}
             />
-          }
+          )}
         />
       )}
       <PrimaryItem
@@ -77,7 +79,7 @@ const HeaderMenu = ({
           tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
-        leftIcon={'Link'}
+        leftIcon="Link"
         title={i18next.t('groups:group_menu:label_copy_group_link')}
         onPress={onPressCopyLink || onPressNewFeature}
       />
@@ -90,7 +92,7 @@ const HeaderMenu = ({
           tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
-        leftIcon={'ShareNodes'}
+        leftIcon="ShareNodes"
         title={i18next.t('groups:group_menu:label_share_group')}
         onPress={onPressShare || onPressNewFeature}
       />
@@ -103,7 +105,7 @@ const HeaderMenu = ({
           tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
-        leftIcon={'iconAddSquareDone'}
+        leftIcon="iconAddSquareDone"
         title={i18next.t('groups:group_menu:label_following')}
         onPress={onPressFollowing || onPressNewFeature}
       />
@@ -116,7 +118,7 @@ const HeaderMenu = ({
           tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
-        leftIcon={'iconMapPin'}
+        leftIcon="iconMapPin"
         title={i18next.t(`groups:group_menu:label_pin_${type}`)}
         onPress={onPressPin || onPressNewFeature}
       />
@@ -129,7 +131,7 @@ const HeaderMenu = ({
           tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
-        leftIcon={'Bell'}
+        leftIcon="Bell"
         title={i18next.t('groups:group_menu:label_notifications')}
         onPress={onPressNotification || onPressNewFeature}
       />
@@ -143,9 +145,9 @@ const HeaderMenu = ({
             tintColor: theme.colors.red60,
             style: styles.iconLeftStyle,
           }}
-          leftIcon={'ArrowRightFromArc'}
+          leftIcon="ArrowRightFromArc"
           title={i18next.t(`groups:group_menu:label_leave_${type}`)}
-          titleProps={{color: theme.colors.red60}}
+          titleProps={{ color: theme.colors.red60 }}
           onPress={onPressLeave || onPressNewFeature}
         />
       )}
@@ -154,7 +156,7 @@ const HeaderMenu = ({
 };
 
 const styles = StyleSheet.create({
-  iconLeftStyle: {marginRight: spacing.margin.base},
+  iconLeftStyle: { marginRight: spacing.margin.base },
 });
 
 export default HeaderMenu;

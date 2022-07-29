@@ -1,6 +1,8 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle, TextStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  StyleProp, StyleSheet, View, ViewStyle, TextStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
@@ -16,30 +18,33 @@ export interface NotificationsBadgeComponentProps {
   testID?: string;
 }
 
-const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
-  ({
-    style,
-    variant = 'default',
-    number,
-    maxNumber = 9,
-    textStyle = {},
-    testID,
-  }: NotificationsBadgeComponentProps) => {
-    if (!number) return null;
+const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> = ({
+  style,
+  variant = 'default',
+  number,
+  maxNumber = 9,
+  textStyle = {},
+  testID,
+}: NotificationsBadgeComponentProps) => {
+  if (!number) return null;
 
-    const theme: ExtendedTheme = useTheme();
-    const styles = themeStyles(theme, variant);
-    const numberInText = number > maxNumber ? `${maxNumber}+` : `${number}`;
+  const theme: ExtendedTheme = useTheme();
+  const styles = themeStyles(
+    theme, variant,
+  );
+  const numberInText = number > maxNumber ? `${maxNumber}+` : `${number}`;
 
-    return (
-      <View style={[styles.dot, style]} testID={testID}>
-        <Text.BodyS style={[styles.text, textStyle]}>{numberInText}</Text.BodyS>
-      </View>
-    );
-  };
+  return (
+    <View style={[styles.dot, style]} testID={testID}>
+      <Text.BodyS style={[styles.text, textStyle]}>{numberInText}</Text.BodyS>
+    </View>
+  );
+};
 
-const themeStyles = (theme: ExtendedTheme, variant: NotificationsBadgeType) => {
-  const {colors} = theme;
+const themeStyles = (
+  theme: ExtendedTheme, variant: NotificationsBadgeType,
+) => {
+  const { colors } = theme;
   const defaultWidth = 20;
 
   const dotColors = {

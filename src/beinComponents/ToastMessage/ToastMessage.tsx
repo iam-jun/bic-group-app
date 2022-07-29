@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import BannerMessage from './BannerMessage';
 import NormalToastMessage from './NormalToastMessage';
 import SimpleToastMessage from './SimpleToastMessage';
@@ -11,7 +11,7 @@ const ToastMessage = () => {
 
   if (!toastMessage?.content) return null;
 
-  const {style = {}, ...restProps} = toastMessage?.props || {};
+  const { style = {}, ...restProps } = toastMessage?.props || {};
 
   let ToastMessageComponent;
 

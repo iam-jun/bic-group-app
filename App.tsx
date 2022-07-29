@@ -1,15 +1,17 @@
+/* eslint-disable no-unused-expressions */
 import 'intl-pluralrules';
-import React, {useEffect} from 'react';
-import {LogBox} from 'react-native';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
+import React, { useEffect } from 'react';
+import { LogBox } from 'react-native';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import i18Next from '~/localization';
 import Root from '~/Root';
 import rootSaga from '~/store/sagas';
 import Store from './src/store';
-import {initFatalErrorHandler} from '~/services/fatalErrorHandler';
-import {initFirebaseMessaging} from '~/services/firebase';
-import {initAmplify} from '~/services/amplify';
+import initFatalErrorHandler from '~/services/fatalErrorHandler';
+import { initFirebaseMessaging } from '~/services/firebase';
+import { initAmplify } from '~/services/amplify';
+import { initSentry, wrapWithSentry } from '~/services/sentry';
 
 LogBox.ignoreLogs([
   'EventEmitter.removeListener',
@@ -19,13 +21,16 @@ LogBox.ignoreLogs([
 i18Next.language;
 i18Next.options.resources;
 
+initSentry();
 initFatalErrorHandler();
 
-export default () => {
-  useEffect(() => {
-    initAmplify();
-    initFirebaseMessaging();
-  }, []);
+const App = () => {
+  useEffect(
+    () => {
+      initAmplify();
+      initFirebaseMessaging();
+    }, [],
+  );
 
   Store.sagaMiddleware.run(rootSaga);
 
@@ -37,3 +42,5 @@ export default () => {
     </Provider>
   );
 };
+
+export default wrapWithSentry(App);

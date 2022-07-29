@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,10 +6,10 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
-import commonActions, {IAction} from '~/constants/commonActions';
+import commonActions, { IAction } from '~/constants/commonActions';
 
 export interface CheckboxProps {
   testID?: string;
@@ -28,19 +28,23 @@ const Checkbox: React.FC<CheckboxProps> = ({
 }: CheckboxProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, checked);
-  React.useEffect(() => {
-    setChecked(isChecked);
-  }, [isChecked]);
+  const styles = createStyles(
+    theme, checked,
+  );
+  React.useEffect(
+    () => {
+      setChecked(isChecked);
+    }, [isChecked],
+  );
 
   const _onChangeValue = () => {
     const newValue = !checked;
     setChecked(newValue);
 
     if (newValue) {
-      onActionPress(commonActions.checkBox as IAction);
+      onActionPress?.(commonActions.checkBox as IAction);
     } else {
-      onActionPress(commonActions.uncheckBox as IAction);
+      onActionPress?.(commonActions.uncheckBox as IAction);
     }
   };
 
@@ -48,7 +52,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
     <TouchableOpacity
       testID={checkboxTestID}
       style={style}
-      onPress={_onChangeValue}>
+      onPress={_onChangeValue}
+    >
       <View style={styles.checkbox} testID={testID}>
         <Icon icon="iconCheckbox" size={18} tintColor={theme.colors.white} />
       </View>
@@ -56,8 +61,10 @@ const Checkbox: React.FC<CheckboxProps> = ({
   );
 };
 
-const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
-  const {colors} = theme;
+const createStyles = (
+  theme: ExtendedTheme, isChecked: boolean,
+) => {
+  const { colors } = theme;
 
   return StyleSheet.create({
     checkbox: {

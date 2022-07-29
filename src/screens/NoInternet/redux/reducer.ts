@@ -16,8 +16,10 @@ export const noInternetInitState = {
   systemIssue: false,
 };
 
-function noInternetReducer(state = noInternetInitState, action: any = {}) {
-  const {type, payload} = action;
+function noInternetReducer(
+  state = noInternetInitState, action: any = {},
+) {
+  const { type, payload } = action;
   switch (type) {
     case types.SET_IS_INTERNET_REACHABLE:
       return {

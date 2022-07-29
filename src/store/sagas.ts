@@ -1,4 +1,4 @@
-import {all} from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
 import appSaga from './app/saga';
 import modalSaga from './modal/saga';
 import authSaga from '../screens/Auth/redux/saga';

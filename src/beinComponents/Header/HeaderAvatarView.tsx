@@ -9,7 +9,7 @@ import {
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
 interface HeaderAvatarViewProps {
@@ -34,9 +34,10 @@ const HeaderAvatarView = ({
       testID="header_avatar_view"
       disabled={!isInternetReachable}
       style={StyleSheet.flatten([styles.container, containerStyle])}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <Avatar.Large source={avatar} style={styles.avatar} />
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Text.H6 testID="header_avatar_view.first_label">{firstLabel}</Text.H6>
         <Text.BodyS testID="header_avatar_view.second_label">
           {secondLabel}

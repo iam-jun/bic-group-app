@@ -1,18 +1,18 @@
-import React, {FC, useContext, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { FC, useContext, useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
-import {formatDateTime} from '~/beinComponents/TimeView';
+import { formatDateTime } from '~/beinComponents/TimeView/helper';
 
-import {AppContext} from '~/contexts/AppContext';
-import {useBaseHook} from '~/hooks';
-import {useUserIdAuth} from '~/hooks/auth';
-import {ISelectedFilterUser} from '~/interfaces/IHome';
+import { AppContext } from '~/contexts/AppContext';
+import { useBaseHook } from '~/hooks';
+import { useUserIdAuth } from '~/hooks/auth';
+import { ISelectedFilterUser } from '~/interfaces/IHome';
 import NFSFilterCreateBySpecific from './NFSFilterCreateBySpecific';
 import NFSFilterCreatedBy from './NFSFilterCreatedBy';
 import NFSFilterDate from './NFSFilterDate';
@@ -41,14 +41,14 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
   const [date, setDate] = useState(filterDate);
 
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
-  const {language} = useContext(AppContext);
+  const { language } = useContext(AppContext);
 
-  const {startDate, endDate} = date || {};
+  const { startDate, endDate } = date || {};
 
   const textCreatedBy = createdBy
     ? createdBy?.id === userId
@@ -57,24 +57,28 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
     : t('home:newsfeed_search:label_anyone');
 
   const textDate = date
-    ? `${formatDateTime(startDate, language)} - ${formatDateTime(
-        endDate,
-        language,
-      )}`
+    ? `${formatDateTime(
+      startDate, language,
+    )} - ${formatDateTime(
+      endDate,
+      language,
+    )}`
     : t('home:newsfeed_search:label_anytime');
 
   const _onPressApply = () => {
     dispatch(modalActions.hideModal());
-    dispatch(homeActions.setNewsfeedSearchFilter({date, createdBy}));
+    dispatch(homeActions.setNewsfeedSearchFilter({ date, createdBy }));
   };
 
   const _onPressDate = () => {
     setStage(Stage.FILTER_DATE);
   };
 
-  const _onSelectDate = (startDate?: string, endDate?: string) => {
+  const _onSelectDate = (
+    startDate?: string, endDate?: string,
+  ) => {
     if (startDate && endDate) {
-      setDate({startDate, endDate});
+      setDate({ startDate, endDate });
     }
     setStage(Stage.MENU);
   };
@@ -105,7 +109,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         onPressSelectSpecific={_onPressSelectSpecific}
       />
     );
-  } else if (stage === Stage.FILTER_DATE) {
+  } if (stage === Stage.FILTER_DATE) {
     return (
       <NFSFilterDate
         startDate={startDate}
@@ -113,7 +117,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         onSelect={_onSelectDate}
       />
     );
-  } else if (stage === Stage.FILTER_CREATOR_SPECIFIC) {
+  } if (stage === Stage.FILTER_CREATOR_SPECIFIC) {
     return <NFSFilterCreateBySpecific onSelect={_onSelectCreatedBy} />;
   }
 
@@ -125,7 +129,8 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         </Text.ButtonS>
         <Button
           onPress={_onPressReset}
-          style={{justifyContent: 'center', alignSelf: 'center'}}>
+          style={{ justifyContent: 'center', alignSelf: 'center' }}
+        >
           <Text.ButtonS style={styles.btnReset}>
             {t('home:newsfeed_search:btn_reset').toUpperCase()}
           </Text.ButtonS>
@@ -138,13 +143,14 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         style={styles.itemContainer}
         title={t('home:newsfeed_search:label_creator')}
         subTitle={textCreatedBy}
-        subTitleProps={{color: colors.purple50}}
+        subTitleProps={{ color: colors.purple50 }}
         RightComponent={
           createdBy && (
             <Button.Secondary
               onPress={() => setCreatedBy(undefined)}
               color={colors.neutral1}
-              style={styles.buttonRight}>
+              style={styles.buttonRight}
+            >
               {t('home:newsfeed_search:btn_reset')}
             </Button.Secondary>
           )
@@ -156,13 +162,14 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         style={styles.itemContainer}
         title={t('home:newsfeed_search:label_creation_date')}
         subTitle={textDate}
-        subTitleProps={{color: colors.purple50}}
+        subTitleProps={{ color: colors.purple50 }}
         RightComponent={
           date && (
             <Button.Secondary
               onPress={() => setDate(undefined)}
               color={colors.neutral1}
-              style={styles.buttonRight}>
+              style={styles.buttonRight}
+            >
               {t('home:newsfeed_search:btn_reset')}
             </Button.Secondary>
           )
@@ -171,7 +178,8 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
       <Button.Primary
         onPress={_onPressApply}
         style={styles.buttonApply}
-        color={colors.purple50}>
+        color={colors.purple50}
+      >
         {t('home:newsfeed_search:btn_show_results')}
       </Button.Primary>
     </TouchableOpacity>
@@ -179,7 +187,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.extraLarge,

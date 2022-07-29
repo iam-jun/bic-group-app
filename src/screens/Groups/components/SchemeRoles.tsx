@@ -1,12 +1,12 @@
-import React, {FC} from 'react';
-import {StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import RoleItem from '~/screens/Groups/CreatePermissionScheme/components/RoleItem';
-import {IPermission, IRole} from '~/interfaces/IGroup';
+import { IPermission, IRole } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
 export interface SchemeRolesProps {
@@ -29,13 +29,9 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const permissionCategories = useKeySelector(
-    groupsKeySelector.permission.categories,
-  );
+  const permissionCategories = useKeySelector(groupsKeySelector.permission.categories);
 
-  const memberRoleIndex = useKeySelector(
-    groupsKeySelector.permission.creatingScheme.memberRoleIndex,
-  );
+  const memberRoleIndex = useKeySelector(groupsKeySelector.permission.creatingScheme.memberRoleIndex);
 
   if (!roles || !permissionCategories) {
     return null;
@@ -48,7 +44,9 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   return (
     <>
       {!!title && <Text.BodyM style={styles.title}>{title}</Text.BodyM>}
-      {roles?.map?.((role: any, roleIndex: number) => (
+      {roles?.map?.((
+        role: any, roleIndex: number,
+      ) => (
         <RoleItem
           key={`role_${role?.id || `${role?.type}_${role?.scope}`}`}
           categories={categories}
@@ -59,15 +57,17 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
             !useRoleInherited
               ? undefined
               : roleIndex !== memberRoleIndex
-              ? memberRole
-              : undefined
+                ? memberRole
+                : undefined
           }
           onLayout={({
             nativeEvent: {
-              layout: {y: anchor},
+              layout: { y: anchor },
             },
           }: any) => {
-            onAnchorRole?.(roleIndex, role?.name, anchor);
+            onAnchorRole?.(
+              roleIndex, role?.name, anchor,
+            );
           }}
           onPressPermission={onPressPermission}
         />
@@ -77,7 +77,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     title: {
       paddingHorizontal: spacing.padding.large,

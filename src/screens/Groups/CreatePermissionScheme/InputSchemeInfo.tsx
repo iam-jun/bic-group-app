@@ -1,14 +1,18 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, {
+  FC, useEffect, useRef, useState,
+} from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
 export interface InputSchemeInfoProps {
@@ -20,22 +24,20 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
 }: InputSchemeInfoProps) => {
   const [isFocusDesc, setIsFocusDesc] = useState(false);
 
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
-  const description = useKeySelector(
-    groupsKeySelector.permission.creatingScheme.description,
-  );
+  const description = useKeySelector(groupsKeySelector.permission.creatingScheme.description);
 
   const onChangeName = (value: string) => {
-    dispatch(groupsActions.setCreatingSchemeData({name: value, description}));
+    dispatch(groupsActions.setCreatingSchemeData({ name: value, description }));
   };
 
   const onChangeDesc = (value: string) => {
-    dispatch(groupsActions.setCreatingSchemeData({name, description: value}));
+    dispatch(groupsActions.setCreatingSchemeData({ name, description: value }));
   };
 
   const onFocusDesc = () => {
@@ -72,13 +74,14 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
         style={[
           styles.textInput,
           isFocusDesc ? styles.textInputActive : styles.textInputInactive,
-        ]}>
+        ]}
+      >
         <TextInput
           value={description}
           testID="input_scheme_info.input_desc"
           onChangeText={onChangeDesc}
           multiline
-          style={{marginTop: 0}}
+          style={{ marginTop: 0 }}
           placeholder={t('communities:permission:text_create_scheme_desc')}
           activeOutlineColor={theme.colors.white}
           outlineColor={theme.colors.white}
@@ -87,7 +90,8 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           onBlur={onBlurDesc}
         />
         <Text.BodyS style={styles.textCount}>
-          {description?.length || 0}/255
+          {description?.length || 0}
+          /255
         </Text.BodyS>
       </View>
     </View>
@@ -95,7 +99,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.white,
@@ -103,13 +107,13 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
     },
-    textTitle: {marginTop: spacing.margin.large},
-    textInputName: {marginBottom: spacing.margin.small, marginTop: 0},
+    textTitle: { marginTop: spacing.margin.large },
+    textInputName: { marginBottom: spacing.margin.small, marginTop: 0 },
     textInput: {
       marginTop: spacing.margin.small,
       borderRadius: spacing.borderRadius.small,
       paddingBottom: spacing.padding.extraLarge,
-      height: 120, //fixed height to avoid callback layout another components below this in scrollview
+      height: 120, // fixed height to avoid callback layout another components below this in scrollview
     },
     textInputActive: {
       borderWidth: 2,

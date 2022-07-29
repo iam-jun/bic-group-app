@@ -4,7 +4,6 @@ import {cleanup, waitFor} from '@testing-library/react-native';
 import React from 'react';
 
 import initialState from '~/store/initialState';
-import colors from '~/theme/theme';
 import {
   configureStore,
   createTestStore,
@@ -20,6 +19,7 @@ import {formatDate} from '~/utils/formatData';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '../../redux/actions';
 import menuTypes from '../../redux/types';
+import {light} from "~/theme/theme";
 
 afterEach(cleanup);
 
@@ -34,16 +34,12 @@ describe('AddWork screen', () => {
   const workItem = {
     company: 'test 1',
     currentlyWorkHere: true,
-    currently_work_here: true,
     description: '',
     endDate: null,
-    end_date: null,
     id: 77,
     location: 'test 1',
     startDate: '2022-03-07T07:58:05.436Z',
-    start_date: '2022-03-07T07:58:05.436Z',
     titlePosition: 'test 1',
-    title_position: 'test 1',
   };
 
   // const setState = jest.fn();
@@ -82,7 +78,7 @@ describe('AddWork screen', () => {
     );
     expect(component.props.accessibilityState.disabled).toBeTruthy();
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.success,
+      light.colors.success,
     );
     expect(endDateComponent).toBeNull();
     expect(startDateTitle.props.children).toBe(
@@ -144,7 +140,7 @@ describe('AddWork screen', () => {
     );
     expect(buttonSaveComponent.props.accessibilityState.disabled).toBeFalsy();
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.success,
+      light.colors.success,
     );
     expect(endDateComponent).toBeNull();
     expect(startDateTitle.props.children).toBe(
@@ -179,8 +175,6 @@ describe('AddWork screen', () => {
       ...workItem,
       endDate: endDate,
       currentlyWorkHere: false,
-      //@ts-ignore
-      currently_work_here: false,
     };
 
     const store = mockStore(storeData);
@@ -203,7 +197,7 @@ describe('AddWork screen', () => {
     expect(buttonSaveComponent.props.accessibilityState.disabled).toBeFalsy();
 
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.gray40,
+      light.colors.gray40,
     );
     expect(endDateComponent).toBeDefined();
     expect(endDateValueComponent?.props?.children).toBe(
@@ -224,7 +218,7 @@ describe('AddWork screen', () => {
 
     expect(Keyboard.dismiss).toBeCalled();
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.success,
+      light.colors.success,
     );
     expect(startDateTitle.props.children).toBe(
       i18next.t('settings:text_since'),
@@ -254,7 +248,7 @@ describe('AddWork screen', () => {
     );
     expect(component.props.accessibilityState.disabled).toBeTruthy();
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.success,
+      light.colors.success,
     );
     expect(endDateComponent).toBeNull();
     expect(startDateTitle.props.children).toBe(
@@ -273,7 +267,7 @@ describe('AddWork screen', () => {
     fireEvent.press(toggleComponent);
     const buttonEndDate = wrapper.getByTestId('add_work.end_date.button');
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.gray40,
+      light.colors.gray40,
     );
     expect(buttonEndDate).toBeDefined();
 
@@ -321,7 +315,7 @@ describe('AddWork screen', () => {
     );
     expect(btnSaveComponent.props.accessibilityState.disabled).toBeTruthy();
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.success,
+      light.colors.success,
     );
     expect(endDateComponent).toBeNull();
     expect(startDateTitle.props.children).toBe(
@@ -428,28 +422,28 @@ describe('AddWork screen', () => {
     );
 
     expect(textInputCompany.props.outlineColor).toBe(
-      colors.light.colors.gray40,
+      light.colors.gray40,
     );
     expect(textInputCompany.props.activeOutlineColor).toBe(
-      colors.light.colors.purple50,
+      light.colors.purple50,
     );
     expect(textInputPosition.props.outlineColor).toBe(
-      colors.light.colors.gray40,
+      light.colors.gray40,
     );
     expect(textInputPosition.props.activeOutlineColor).toBe(
-      colors.light.colors.purple50,
+      light.colors.purple50,
     );
     expect(textInputLocation.props.outlineColor).toBe(
-      colors.light.colors.gray40,
+      light.colors.gray40,
     );
     expect(textInputLocation.props.activeOutlineColor).toBe(
-      colors.light.colors.purple50,
+      light.colors.purple50,
     );
 
     fireEvent.changeText(textInputLocation);
 
     expect(textInputDescriptionView.props.style[0].borderColor).toBe(
-      colors.light.colors.gray40,
+      light.colors.gray40,
     );
     fireEvent.changeText(textInputDescription, 'abc');
     //can't

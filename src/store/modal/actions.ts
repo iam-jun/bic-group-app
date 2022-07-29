@@ -10,7 +10,7 @@ import {
   IToastMessage,
   IUserPreview,
 } from '~/interfaces/common';
-import {ReactionType} from '~/constants/reactions';
+import { ReactionType } from '~/constants/reactions';
 
 export function setModal(payload: IPayloadShowModal) {
   return {
@@ -88,9 +88,7 @@ export const focusSearchInput = (payload: string) => ({
   payload,
 });
 
-export const showReactionDetailBottomSheet = (
-  payload: IPayloadReactionDetailBottomSheet,
-) => ({
+export const showReactionDetailBottomSheet = (payload: IPayloadReactionDetailBottomSheet) => ({
   type: Actions.SHOW_REACTION_DETAIL_BOTTOM_SHEET,
   payload,
 });
@@ -116,7 +114,7 @@ export const setUserProfilePreviewBottomSheet = (payload: IUserPreview) => ({
 });
 
 export const showUserProfilePreviewBottomSheet = (payload: {
-  userId?: number | string;
+  userId?: string;
   params?: IObject<any>;
   position?: {x: number; y: number};
 }) => ({

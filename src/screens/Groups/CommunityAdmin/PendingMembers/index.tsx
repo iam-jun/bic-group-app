@@ -1,34 +1,32 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import groupsActions from '../../redux/actions';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import CommunityApproveDeclineAllRequests from './CommunityApproveDeclineAllRequests';
 import MemberRequestList from '../../components/MemberRequestList';
 
 const CommunityPendingMembers = (props: any) => {
   const dispatch = useDispatch();
-  const params = props.route.params;
-  const {id: communityId} = params || {};
-  const {canLoadMore, ids} = useKeySelector(
-    groupsKeySelector.communityMemberRequests,
+  const { params } = props.route;
+  const { id: communityId } = params || {};
+  const { canLoadMore, ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
+
+  useEffect(
+    () => {
+      onRefresh();
+
+      return () => {
+        onRefresh(); // to update the total member requests again on press back
+      };
+    }, [communityId],
   );
 
-  useEffect(() => {
-    onRefresh();
-
-    return () => {
-      onRefresh(); // to update the total member requests again on press back
-    };
-  }, [communityId]);
-
   const getData = (isRefreshing?: boolean) => {
-    dispatch(
-      groupsActions.getCommunityMemberRequests({communityId, isRefreshing}),
-    );
+    dispatch(groupsActions.getCommunityMemberRequests({ communityId, isRefreshing }));
   };
 
   const onLoadMore = () => {
@@ -43,7 +41,7 @@ const CommunityPendingMembers = (props: any) => {
     <ScreenWrapper testID="CommunityPendingMembers" isFullView>
       <Header
         title="settings:title_pending_members"
-        titleTextProps={{useI18n: true}}
+        titleTextProps={{ useI18n: true }}
       />
 
       <MemberRequestList

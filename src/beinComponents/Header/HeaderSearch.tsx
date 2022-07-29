@@ -5,8 +5,8 @@ import React, {
   useState,
   useImperativeHandle,
 } from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -60,38 +60,48 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
     opacity: showValue.value,
   }));
   const searchContainerStyle = useAnimatedStyle(() => ({
-    width: `${interpolate(showValue.value, [0, 1], [0, 100])}%`,
+    width: `${interpolate(
+      showValue.value, [0, 1], [0, 100],
+    )}%`,
   }));
 
   const show = () => {
     setIsShow(true);
-    showValue.value = withSpring(1, {mass: 0.8});
+    showValue.value = withSpring(
+      1, { mass: 0.8 },
+    );
   };
 
   const hide = () => {
     const onHideDone = () => {
       setIsShow(false);
     };
-    showValue.value = withTiming(0, undefined, () => {
-      runOnJS(onHideDone)();
-    });
+    showValue.value = withTiming(
+      0, undefined, () => {
+        runOnJS(onHideDone)();
+      },
+    );
   };
 
-  useEffect(() => {
-    if (isShowSearch) {
-      show();
-    } else {
-      hide();
-    }
-  }, [isShowSearch]);
+  useEffect(
+    () => {
+      if (isShowSearch) {
+        show();
+      } else {
+        hide();
+      }
+    }, [isShowSearch],
+  );
 
   const setSearchText = (searchText: string) => {
     searchInputRef?.current?.setText?.(searchText);
   };
 
-  useImperativeHandle(_headerSearchRef, () => ({
-    setSearchText,
-  }));
+  useImperativeHandle(
+    _headerSearchRef, () => ({
+      setSearchText,
+    }),
+  );
 
   if (!isShow) {
     return null;
@@ -112,7 +122,9 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
           icon="iconBack"
           onPress={_onPressBack}
           size={24}
-          hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+          hitSlop={{
+            top: 20, bottom: 20, left: 20, right: 20,
+          }}
           style={styles.icon}
         />
       </Animated.View>
@@ -136,7 +148,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       height: dimension?.headerHeight || 44,
@@ -154,7 +166,7 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       alignItems: 'flex-end',
     },
-    searchInput: {flex: 1, backgroundColor: undefined},
+    searchInput: { flex: 1, backgroundColor: undefined },
     searchContainer: {
       height: 40,
       overflow: 'hidden',

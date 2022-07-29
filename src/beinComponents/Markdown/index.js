@@ -1,25 +1,26 @@
 import React from 'react';
-import {Dimensions, Platform, TouchableOpacity} from 'react-native';
+import { Dimensions, Platform, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Md from './Md';
 import colors from '~/theme/theme';
-import {mmTheme} from './utils/config';
+import { mmTheme } from './utils/config';
 
 import Header from '~/beinComponents/Header';
 import modalActions from '~/store/modal/actions';
-import {fontFamilies} from '~/theme/fonts';
-import {sizes} from '~/theme/dimension';
+import { fontFamilies } from '~/theme/fonts';
+import { sizes } from '~/theme/dimension';
 
 const DeviceHeight = Dimensions.get('window').height;
 
-const Markdown = ({value, ...rest}) => {
+const Markdown = ({ value, ...rest }) => {
   const dispatch = useDispatch();
   const theme = mmTheme;
   const baseTextStyle = {
     color: '#282E53',
     fontFamily: fontFamilies.BeVietnamProLight,
+    fontSize: sizes.paragraphM,
   };
   const textStyles = {
     code: {
@@ -126,7 +127,8 @@ const Markdown = ({value, ...rest}) => {
               flex: 1,
               backgroundColor: theme.centerChannelBg,
               maxHeight: DeviceHeight,
-            }}>
+            }}
+          >
             <Header
               disableInsetTop={Platform.OS === 'android'}
               onPressBack={hideModal}

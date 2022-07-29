@@ -1,35 +1,33 @@
-import {put, call, select} from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
-import {IParamGetCommunities} from '~/interfaces/ICommunity';
+import { IParamGetCommunities } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
-import {mapItems} from '../../helper/mapper';
+import { mapItems } from '../../helper/mapper';
 
 export default function* getDiscoverCommunities({
   payload,
 }: {
   type: string;
-  payload: {isRefreshing?: boolean};
+  payload: {isRefreshing?: boolean; refreshNoLoading?: boolean};
 }): any {
   try {
-    const {groups} = yield select();
+    const { groups } = yield select();
 
-    const {isRefreshing} = payload;
-    const {ids, items, canLoadMore} = groups.discoverCommunities;
+    const { isRefreshing, refreshNoLoading } = payload;
+    const { ids, items, canLoadMore } = groups.discoverCommunities;
 
-    yield put(
-      groupsActions.setDiscoverCommunities({
-        loading: isRefreshing ? true : ids.length === 0,
-      }),
-    );
+    yield put(groupsActions.setDiscoverCommunities({
+      loading: isRefreshing ? true : ids.length === 0,
+    }));
 
-    if (!isRefreshing && !canLoadMore) return;
+    if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
 
     const params: IParamGetCommunities = {
       limit: appConfig.recordsPerPage,
-      offset: isRefreshing ? 0 : ids.length,
+      offset: isRefreshing || refreshNoLoading ? 0 : ids.length,
     };
 
     const response = yield call(
@@ -44,14 +42,21 @@ export default function* getDiscoverCommunities({
     const newData = {
       loading: false,
       canLoadMore: newIds.length === appConfig.recordsPerPage,
-      ids: isRefreshing ? [...newIds] : [...ids, ...newIds],
-      items: isRefreshing ? {...newItems} : {...items, ...newItems},
+      ids: isRefreshing || refreshNoLoading ? [...newIds] : [...ids, ...newIds],
+      items:
+        isRefreshing || refreshNoLoading
+          ? { ...newItems }
+          : { ...items, ...newItems },
     };
 
     yield put(groupsActions.setDiscoverCommunities(newData));
   } catch (err) {
-    console.log('\x1b[33m', 'getDiscoverCommunities : error', err, '\x1b[0m');
-    yield put(groupsActions.setDiscoverCommunities({loading: false}));
-    yield call(showError, err);
+    console.error(
+      '\x1b[33m', 'getDiscoverCommunities : error', err, '\x1b[0m',
+    );
+    yield put(groupsActions.setDiscoverCommunities({ loading: false }));
+    yield call(
+      showError, err,
+    );
   }
 }

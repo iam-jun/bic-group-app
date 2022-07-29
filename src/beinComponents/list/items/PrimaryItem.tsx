@@ -6,19 +6,20 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import Text, {TextProps} from '~/beinComponents/Text';
-import Icon, {IconProps} from '~/beinComponents/Icon';
+import Text, { TextProps } from '~/beinComponents/Text';
+import Icon, { IconProps } from '~/beinComponents/Icon';
 import Checkbox, {
   CheckboxProps,
 } from '~/beinComponents/SelectionControl/Checkbox';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
-import {IAction} from '~/constants/commonActions';
-import {IconType} from '~/resources/icons';
+import { IAction } from '~/constants/commonActions';
+import { IconType } from '~/resources/icons';
 import Avatar from '~/beinComponents/Avatar';
-import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
-import {primaryItemHeight} from '~/theme/dimension';
+import { AvatarProps } from '~/beinComponents/Avatar/AvatarComponent';
+import { primaryItemHeight } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
+type ItemIconProps = Omit<IconProps, 'icon'>
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
   testID?: string;
@@ -31,7 +32,7 @@ export interface PrimaryItemProps {
   avatar?: string;
   avatarProps?: AvatarProps;
   leftIcon?: IconType;
-  leftIconProps?: IconProps;
+  leftIconProps?: ItemIconProps;
   isChecked?: boolean;
   checkboxProps?: CheckboxProps;
   toggleChecked?: boolean;
@@ -76,7 +77,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   const containerStyle: ViewStyle = StyleSheet.flatten([
     {
       flexDirection: 'row',
-      height: height,
+      height,
       alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
     } as ViewStyle,
@@ -91,7 +92,8 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         style={containerStyle}
         testID={testID}
         disabled={disabled}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         {LeftComponent}
         {(showAvatar || !!avatar) && (
           <Avatar.Medium
@@ -139,7 +141,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         {onPressEdit && (
           <Icon
             style={styles.iconMarginLeft}
-            icon={'edit'}
+            icon="edit"
             onPress={onPressEdit}
           />
         )}
@@ -147,7 +149,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Icon
             style={styles.iconMarginLeft}
             onPress={onPressMenu}
-            icon={'menu'}
+            icon="menu"
             testID={menuIconTestID}
           />
         )}
@@ -158,7 +160,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
 };
 
 const styles = StyleSheet.create({
-  contentContainer: {flex: 1},
+  contentContainer: { flex: 1 },
   iconMarginRight: {
     marginRight: spacing?.margin.extraLarge,
   },

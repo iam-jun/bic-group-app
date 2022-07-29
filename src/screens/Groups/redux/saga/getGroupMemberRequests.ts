@@ -1,32 +1,31 @@
-import {call, put, select} from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 import memberRequestStatus from '~/constants/memberRequestStatus';
-import {IJoiningMember} from '~/interfaces/IGroup';
+import { IJoiningMember } from '~/interfaces/IGroup';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
-import {mapItems} from '../../helper/mapper';
+import { mapItems } from '../../helper/mapper';
 import groupsActions from '../actions';
 
 export default function* getGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; isRefreshing?: boolean; params?: any};
+  payload: {groupId: string; isRefreshing?: boolean; params?: any};
 }) {
   try {
-    const {groups} = yield select();
+    const { groups } = yield select();
 
-    const {groupId, isRefreshing, params} = payload;
-    const {ids, canLoadMore, items} = groups.groupMemberRequests || {};
+    const { groupId, isRefreshing, params } = payload;
+    const { ids, canLoadMore, items } = groups.groupMemberRequests || {};
 
-    yield put(
-      groupsActions.setGroupMemberRequests({
-        loading: isRefreshing ? true : ids.length === 0,
-      }),
-    );
+    yield put(groupsActions.setGroupMemberRequests({
+      loading: isRefreshing ? true : ids.length === 0,
+    }));
 
     if (!isRefreshing && !canLoadMore) return;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const response = yield call(
       groupsDataHelper.getGroupMemberRequests,
@@ -39,20 +38,23 @@ export default function* getGroupMemberRequests({
       },
     );
 
-    const requestIds = response.data.map((item: IJoiningMember) => item.id);
-    const requestItems = mapItems(response.data);
+    const { data } = response;
+    const requestIds = data.map((item: IJoiningMember) => item.id);
+    const requestItems = mapItems(data);
 
-    yield put(
-      groupsActions.setGroupMemberRequests({
-        total: response?.meta?.total,
-        loading: false,
-        canLoadMore: requestIds.length === appConfig.recordsPerPage,
-        ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
-        items: isRefreshing ? {...requestItems} : {...items, ...requestItems},
-      }),
-    );
+    yield put(groupsActions.setGroupMemberRequests({
+      total: response?.meta?.total,
+      loading: false,
+      canLoadMore: requestIds.length === appConfig.recordsPerPage,
+      ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
+      items: isRefreshing ? { ...requestItems } : { ...items, ...requestItems },
+    }));
   } catch (err) {
-    console.log('getGroupMemberRequests: ', err);
-    yield call(showError, err);
+    console.error(
+      'getGroupMemberRequests: ', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

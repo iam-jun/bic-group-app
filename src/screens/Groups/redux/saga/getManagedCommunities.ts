@@ -1,51 +1,65 @@
+import { put, call, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
-import {put, call, select} from 'redux-saga/effects';
 
 import actions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
-import {mapItems} from '../../helper/mapper';
-import {ICommunity} from '~/interfaces/ICommunity';
+import { mapItems } from '../../helper/mapper';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 export default function* getManagedCommunities({
   payload,
 }: {
   type: string;
-  payload?: {managed: boolean; preview_members: boolean};
+  payload: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+    params?: {managed: boolean; previewMembers: boolean};
+  };
 }) {
   try {
-    const {groups} = yield select();
-    const {data, items, canLoadMore} = groups.managedCommunities;
+    const { isRefreshing, refreshNoLoading, params } = payload;
+    const { groups } = yield select();
+    const { ids, items, canLoadMore } = groups.managedCommunities;
 
-    yield put(actions.setManagedCommunities({loading: data.length === 0}));
+    yield put(actions.setManagedCommunities({
+      loading: isRefreshing ? true : ids.length === 0,
+    }));
 
-    if (!canLoadMore) return;
+    if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getJoinedCommunities, {
       managed: true,
-      preview_members: true,
+      previewMembers: true,
       limit: appConfig.recordsPerPage,
-      offset: data.length,
-      ...payload,
+      offset: isRefreshing || refreshNoLoading ? 0 : ids.length,
+      ...params,
     });
 
-    const newIds = resp?.map((item: ICommunity) => item.id);
-    const newItems = mapItems(resp);
+    const communities = resp.data
+    const newIds = communities?.map((item: ICommunity) => item.id);
+    const newItems = mapItems(communities);
 
     const newData = {
       loading: false,
-      data: [...data, ...newIds],
-      items: {
-        ...items,
-        ...newItems,
-      },
+      ids: isRefreshing || refreshNoLoading ? [...newIds] : [...ids, ...newIds],
+      items:
+        isRefreshing || refreshNoLoading
+          ? { ...newItems }
+          : { ...items, ...newItems },
       canLoadMore: newIds.length === appConfig.recordsPerPage,
     };
 
     yield put(actions.setManagedCommunities(newData));
   } catch (err) {
-    console.log('getManagedCommunities error:', err);
-    yield call(showError, err);
+    console.error(
+      'getManagedCommunities error:', err,
+    );
+    yield put(actions.setManagedCommunities({ loading: false }));
+    yield call(
+      showError, err,
+    );
   }
 }

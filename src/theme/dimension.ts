@@ -1,5 +1,5 @@
 /* Declare Dimensions */
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const guidelineBaseWidth = 375;
 
@@ -11,7 +11,7 @@ export const scaleCoverHeight = (widthSize: number) => (widthSize / 25) * 11;
 
 export const groupProfileImageCropRatio = {
   // image crop ratio for cover photo: 25:11
-  background_img_url: {
+  backgroundImgUrl: {
     width: 1080,
     height: 475,
   },
@@ -21,7 +21,7 @@ export const groupProfileImageCropRatio = {
 
 export const userProfileImageCropRatio = {
   // image crop ratio for cover photo: 25:11
-  background_img_url: {
+  backgroundImgUrl: {
     width: 1080,
     height: 475,
   },
@@ -31,12 +31,12 @@ export const userProfileImageCropRatio = {
 
 /* Size config used for Text */
 export const sizes = {
-  h1: 32,
-  h2: 28,
-  h3: 24,
-  h4: 20,
-  h5: 17,
-  h6: 15,
+  h1: 28,
+  h2: 24,
+  h3: 20,
+  h4: 17,
+  h5: 15,
+  h6: 13,
   subtitleL: 17,
   subtitleM: 15,
   subtitleS: 13,
@@ -45,6 +45,8 @@ export const sizes = {
   bodyMMedium: 15,
   bodyS: 13,
   bodySMedium: 13,
+  bodyXS: 11,
+  bodyXSMedium: 11,
   paragraphL: 17,
   paragraphM: 15,
   paragraphS: 13,
@@ -54,14 +56,16 @@ export const sizes = {
   tabL: 17,
   tabM: 15,
   tabS: 13,
+  tabXS: 11,
   linkM: 15,
   linkS: 13,
   badgeL: 15,
   badgeM: 13,
   badgeS: 11,
   badgeXS: 9,
-  labelL: 18,
+  labelL: 17,
   labelM: 15,
+  labelS: 13,
   dropdownM: 15,
   dropdownS: 13,
   numberM: 15,
@@ -169,8 +173,7 @@ export const maxNewsfeedWidth = 584;
 export const bottomBarHeight = 60;
 export const permissionRoleSectionHeaderHeight = 56;
 
-export const scaleSize = (size: number): number =>
-  (DeviceWidth / guidelineBaseWidth) * size;
+export const scaleSize = (size: number): number => (DeviceWidth / guidelineBaseWidth) * size;
 
 export default {
   sizes,

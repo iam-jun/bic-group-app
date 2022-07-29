@@ -1,73 +1,70 @@
-import React, {FC, useEffect} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useEffect } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle, ScrollView,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
+import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
-import {useBaseHook} from '~/hooks';
-import {useKeySelector} from '~/hooks/selector';
+import { useBaseHook } from '~/hooks';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
-import {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
+import { GroupItemProps } from '~/beinComponents/list/items/GroupItem';
 import modalActions from '~/store/modal/actions';
-import {useDispatch} from 'react-redux';
 import GroupStructureMenu from '~/screens/Groups/GroupStructureSettings/components/GroupStructureMenu';
 import groupsActions from '~/screens/Groups/redux/actions';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import {isEmpty} from 'lodash';
-import {getGroupFromTreeById} from '~/screens/Groups/helper';
-import {IGroup} from '~/interfaces/IGroup';
+import { getGroupFromTreeById } from '~/screens/Groups/helper';
+import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
 export interface GroupStructureSettingsProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
-  style,
-}: GroupStructureSettingsProps) => {
+const GroupStructureSettings: FC<GroupStructureSettingsProps> = () => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const {id: communityId} =
-    useKeySelector(groupsKeySelector.communityDetail) || {};
+  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail) || {};
 
-  const {data: communityTree, loading} = useKeySelector(
-    groupsKeySelector.groupStructure.communityTree,
+  const { data: communityTree, loading } = useKeySelector(groupsKeySelector.groupStructure.communityTree);
+
+  useEffect(
+    () => {
+      dispatch(groupsActions.getGroupStructureCommunityTree({ communityId }));
+    }, [],
   );
 
-  useEffect(() => {
-    dispatch(groupsActions.getGroupStructureCommunityTree({communityId}));
-  }, []);
-
   const onPressMenu = (group: GroupItemProps) => {
-    const {community_id, childrenUiIds, level = 0} = group || {};
+    const { communityId, childrenUiIds, level = 0 } = group || {};
     let groupLevel1NoSibling = false;
     if (level === 1 && group?.parents?.[0]) {
-      const groupParent = getGroupFromTreeById(communityTree, group.parents[0]);
-      groupLevel1NoSibling =
-        isEmpty(groupParent.children) || groupParent?.children?.length === 1;
+      const groupParent = getGroupFromTreeById(
+        communityTree, group.parents[0],
+      );
+      groupLevel1NoSibling = isEmpty(groupParent.children) || groupParent?.children?.length === 1;
     }
-    const disableMove = !!community_id || groupLevel1NoSibling;
-    const disableReorder =
-      isEmpty(childrenUiIds) || childrenUiIds?.length === 1; //props generated when render UI tree
+    const disableMove = !!communityId || groupLevel1NoSibling;
+    const disableReorder = isEmpty(childrenUiIds) || childrenUiIds?.length === 1; // props generated when render UI tree
     const groupFromTree: IGroup = getGroupFromTreeById(
       communityTree,
       group?.id,
     );
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <GroupStructureMenu
-            group={groupFromTree}
-            disableMove={disableMove}
-            disableReorder={disableReorder}
-          />
-        ),
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <GroupStructureMenu
+          group={groupFromTree}
+          disableMove={disableMove}
+          disableReorder={disableReorder}
+        />
+      ),
+    }));
   };
 
   return (
@@ -86,7 +83,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
               disableHorizontal
               showInfo={false}
               onPressMenu={onPressMenu}
-              iconVariant={'small'}
+              iconVariant="small"
               nameLines={1}
             />
           )
@@ -97,7 +94,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

@@ -1,4 +1,4 @@
-import {call} from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -7,9 +7,9 @@ export default function* putGroupStructureCollapseStatus({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; groupId: number; isCollapse: boolean};
+  payload: {communityId: string; groupId: string; isCollapse: boolean};
 }): any {
-  const {communityId, groupId, isCollapse} = payload || {};
+  const { communityId, groupId, isCollapse } = payload || {};
   try {
     yield call(
       groupsDataHelper.putGroupStructureCollapseStatus,
@@ -18,7 +18,11 @@ export default function* putGroupStructureCollapseStatus({
       isCollapse,
     );
   } catch (err: any) {
-    console.log('putGroupStructureMoveToTarget error:', err);
-    yield call(showError, err);
+    console.error(
+      'putGroupStructureMoveToTarget error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

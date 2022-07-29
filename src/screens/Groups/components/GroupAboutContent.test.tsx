@@ -5,7 +5,7 @@ import GroupAboutContent from './GroupAboutContent';
 import initialState from '~/store/initialState';
 import {groupDetailData} from '~/test/mock_data/group';
 import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 describe('GroupAboutContent component', () => {
   it('should LoadingIndicator correctly when there is no group info', () => {

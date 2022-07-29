@@ -1,15 +1,14 @@
-import {useNavigation} from '@react-navigation/core';
+import { ExtendedTheme, useNavigation, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import dimension from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 
 import spacing from '~/theme/spacing';
 import groupsActions from '../redux/actions';
@@ -31,30 +30,28 @@ const EditDescription = (props: any) => {
     setText(value);
   };
 
-  useEffect(() => {
-    !text && setText(description);
-  }, [description]);
+  useEffect(
+    () => {
+      !text && setText(description);
+    }, [description],
+  );
 
   const onSave = () => {
     if (type === 'group') {
-      dispatch(
-        groupsActions.editGroupDetail({
-          data: {
-            id,
-            description: text?.trim() ? text?.trim() : null,
-          },
-          editFieldName: i18next.t('common:text_description'),
-          callback: onNavigateBack,
-        }),
-      );
+      dispatch(groupsActions.editGroupDetail({
+        data: {
+          id,
+          description: text?.trim() ? text?.trim() : null,
+        },
+        editFieldName: i18next.t('common:text_description'),
+        callback: onNavigateBack,
+      }));
     } else {
-      dispatch(
-        groupsActions.editCommunityDetail({
-          data: {id, description: text?.trim() ? text.trim() : null},
-          editFieldName: i18next.t('common:text_description'),
-          callback: onNavigateBack,
-        }),
-      );
+      dispatch(groupsActions.editCommunityDetail({
+        data: { id, description: text?.trim() ? text.trim() : null },
+        editFieldName: i18next.t('common:text_description'),
+        callback: onNavigateBack,
+      }));
     }
   };
 
@@ -64,11 +61,12 @@ const EditDescription = (props: any) => {
     <ScreenWrapper
       testID="EditGroupDescription"
       style={styles.container}
-      isFullView>
+      isFullView
+    >
       <Header
         title={`settings:title_${type}_description`}
-        titleTextProps={{useI18n: true}}
-        buttonText={'common:btn_save'}
+        titleTextProps={{ useI18n: true }}
+        buttonText="common:btn_save"
         buttonProps={{
           useI18n: true,
         }}
@@ -100,7 +98,7 @@ const EditDescription = (props: any) => {
 export default EditDescription;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

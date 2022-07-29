@@ -1,16 +1,16 @@
-import React, {FC} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { FC } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
-import {useUserIdAuth} from '~/hooks/auth';
-import {ISelectedFilterUser} from '~/interfaces/IHome';
+import { useBaseHook } from '~/hooks';
+import { useUserIdAuth } from '~/hooks/auth';
+import { ISelectedFilterUser } from '~/interfaces/IHome';
 import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
 import modalActions from '~/store/modal/actions';
 
@@ -30,9 +30,9 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   dismissModalOnPress,
 }: NFSFilterCreatedByProps) => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
 
@@ -46,31 +46,28 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
       onPressSelectSpecific?.();
     } else {
       dismissModalOnPress && dispatch(modalActions.hideModal());
-      dispatch(
-        modalActions.showModal({
-          isOpen: true,
-          ContentComponent: (
-            <NFSFilterCreateBySpecific
-              onSelect={_onSelect}
-              dismissModalOnPress
-            />
-          ),
-        }),
-      );
+      dispatch(modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <NFSFilterCreateBySpecific
+            onSelect={_onSelect}
+            dismissModalOnPress
+          />
+        ),
+      }));
     }
   };
 
-  const renderSpecificRightComponent = () => {
-    return (
-      <Button.Secondary
-        onPress={_onPressSelectSpecific}
-        style={styles.buttonSpecificRight}
-        textColor={colors.purple50}
-        rightIcon={selectedCreatedBy?.name && 'PenLine'}>
-        {selectedCreatedBy?.name || t('home:newsfeed_search:choose_creator')}
-      </Button.Secondary>
-    );
-  };
+  const renderSpecificRightComponent = () => (
+    <Button.Secondary
+      onPress={_onPressSelectSpecific}
+      style={styles.buttonSpecificRight}
+      textColor={colors.purple50}
+      rightIcon={selectedCreatedBy?.name && 'PenLine'}
+    >
+      {selectedCreatedBy?.name || t('home:newsfeed_search:choose_creator')}
+    </Button.Secondary>
+  );
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
@@ -85,18 +82,18 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
         title={t('home:newsfeed_search:filter_created_by_all')}
         RightComponent={
           !selectedCreatedBy && (
-            <Icon icon={'Check'} size={20} tintColor={colors.purple60} />
+            <Icon icon="Check" size={20} tintColor={colors.purple60} />
           )
         }
       />
       <PrimaryItem
         height={40}
-        onPress={() => _onSelect({id: userId, name: ''})}
+        onPress={() => _onSelect({ id: userId, name: '' })}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:filter_created_by_me')}
         RightComponent={
           selectedCreatedBy?.id === userId ? (
-            <Icon icon={'Check'} size={20} tintColor={colors.purple60} />
+            <Icon icon="Check" size={20} tintColor={colors.purple60} />
           ) : undefined
         }
       />
@@ -111,7 +108,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.extraLarge,

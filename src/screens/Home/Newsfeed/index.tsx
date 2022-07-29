@@ -1,23 +1,21 @@
-import {useIsFocused} from '@react-navigation/core';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import {
-  DeviceEventEmitter,
-  InteractionManager,
-  StyleSheet,
+  DeviceEventEmitter, StyleSheet,
   View,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
-import {appScreens} from '~/configs/navigator';
-import {useBaseHook} from '~/hooks';
-import {useAuthToken, useUserIdAuth} from '~/hooks/auth';
-import {useBackPressListener, useTabPressListener} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
-import {ITabTypes} from '~/interfaces/IRouter';
+import { useBaseHook } from '~/hooks';
+import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
+import { useBackPressListener, useTabPressListener } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { IPayloadSetNewsfeedSearch } from '~/interfaces/IHome';
+import { ITabTypes } from '~/interfaces/IRouter';
 import images from '~/resources/images';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
@@ -26,10 +24,9 @@ import homeKeySelector from '~/screens/Home/redux/keySelector';
 import menuActions from '~/screens/Menu/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import appActions from '~/store/app/actions';
-import {deviceDimensions} from '~/theme/dimension';
 import spacing from '~/theme/spacing';
-import {openLink} from '~/utils/common';
-import {getEnv} from '~/utils/env';
+import { openUrl } from '~/utils/link';
+import getEnv from '~/utils/env';
 
 const Newsfeed = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -37,11 +34,8 @@ const Newsfeed = () => {
   const headerRef = useRef<any>();
 
   const theme: ExtendedTheme = useTheme();
-  const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
-    deviceDimensions.phone,
-  );
   const styles = createStyle(theme);
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
 
   const token = useAuthToken();
@@ -56,58 +50,65 @@ const Newsfeed = () => {
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    const taskId = requestAnimationFrame(() => {
-      if (isFocused) {
-        dispatch(appActions.setRootScreenName(appScreens.newsfeed));
-      } else {
-        DeviceEventEmitter.emit('showHeader', true);
-      }
-    });
-    return () => cancelAnimationFrame(taskId);
-  }, [isFocused]);
+  useEffect(
+    () => {
+      const taskId = requestAnimationFrame(() => {
+        if (!isFocused) {
+          DeviceEventEmitter.emit(
+            'showHeader', true,
+          );
+        }
+      });
+      return () => cancelAnimationFrame(taskId);
+    }, [isFocused],
+  );
 
   const getData = (isRefresh?: boolean) => {
-    dispatch(homeActions.getHomePosts({isRefresh}));
+    dispatch(homeActions.getHomePosts({ isRefresh }));
   };
 
   useTabPressListener(
     (tabName: ITabTypes) => {
       if (tabName === 'home') {
-        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+        listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
         headerRef?.current?.hideSearch?.();
       }
     },
     [listRef],
   );
 
-  useEffect(() => {
-    if (
-      isInternetReachable &&
-      token &&
-      (!homePosts || homePosts?.length === 0) &&
-      !refreshing
-    ) {
-      getData(true);
-      dispatch(postActions.getAllPostContainingVideoInProgress());
-    }
-  }, [token, isInternetReachable, homePosts]);
-
-  useEffect(() => {
-    if (isInternetReachable) {
-      if (lossInternet && homePosts?.length > 0) {
-        setLossInternet(false);
-        getData();
+  useEffect(
+    () => {
+      if (
+        isInternetReachable
+      && token
+      && (!homePosts || homePosts?.length === 0)
+      && !refreshing
+      ) {
+        getData(true);
+        dispatch(postActions.getAllPostContainingVideoInProgress());
       }
-    } else {
-      setLossInternet(true);
-    }
-  }, [isInternetReachable]);
+    }, [token, isInternetReachable, homePosts],
+  );
 
-  useEffect(() => {
-    if (!!currentUserId)
-      dispatch(menuActions.getMyProfile({userId: currentUserId}));
-  }, []);
+  useEffect(
+    () => {
+      if (isInternetReachable) {
+        if (lossInternet && homePosts?.length > 0) {
+          setLossInternet(false);
+          getData();
+        }
+      } else {
+        setLossInternet(true);
+      }
+    }, [isInternetReachable],
+  );
+
+  useEffect(
+    () => {
+      if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
+    }, [],
+  );
 
   const handleBackPress = () => {
     headerRef?.current?.goBack?.();
@@ -115,18 +116,24 @@ const Newsfeed = () => {
 
   useBackPressListener(handleBackPress);
 
-  const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
+  const onShowSearch = (
+    isShow: boolean, searchInputRef?: any,
+  ) => {
     if (isShow) {
-      DeviceEventEmitter.emit('showHeader', true);
-      dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
+      DeviceEventEmitter.emit(
+        'showHeader', true,
+      );
+      dispatch(homeActions.setNewsfeedSearch({ isShow, searchInputRef }));
     } else {
       dispatch(homeActions.clearAllNewsfeedSearch());
     }
   };
 
-  const onSearchText = (text: string, searchInputRef: any) => {
+  const onSearchText = (
+    text: string, searchInputRef: any,
+  ) => {
     const searchText = text?.trim?.() || '';
-    const payload: IPayloadSetNewsfeedSearch = {searchText};
+    const payload: IPayloadSetNewsfeedSearch = { searchText };
     if (!searchText) {
       payload.isSuggestion = true;
       searchInputRef?.current?.focus?.();
@@ -135,50 +142,48 @@ const Newsfeed = () => {
   };
 
   const onFocusSearch = () => {
-    dispatch(
-      homeActions.setNewsfeedSearch({isSuggestion: true, searchResults: []}),
-    );
+    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [] }));
   };
 
   const onSubmitSearch = () => {
-    dispatch(
-      homeActions.setNewsfeedSearch({isSuggestion: false, searchResults: []}),
-    );
+    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [] }));
   };
 
-  const renderHeader = () => {
-    return (
-      <View style={styles.headerMobile}>
-        <Header
-          headerRef={headerRef}
-          avatar={images.logo_beincomm}
-          hideBack
-          searchPlaceholder={t('input:search_post')}
-          autoFocusSearch
-          onPressChat={navigateToChat}
-          onShowSearch={onShowSearch}
-          onSearchText={onSearchText}
-          onFocusSearch={onFocusSearch}
-          onSubmitSearch={onSubmitSearch}
-          title={'post:news_feed'}
-          titleTextProps={{useI18n: true}}
-        />
-      </View>
-    );
-  };
+  const renderHeader = () => (
+    <View style={styles.headerMobile}>
+      <Header
+        headerRef={headerRef}
+        avatar={images.logo_beincomm}
+        hideBack
+        searchPlaceholder={t('input:search_post')}
+        autoFocusSearch
+        onPressChat={navigateToChat}
+        onShowSearch={onShowSearch}
+        onSearchText={onSearchText}
+        onFocusSearch={onFocusSearch}
+        onSubmitSearch={onSubmitSearch}
+        title="post:news_feed"
+        titleTextProps={{ useI18n: true }}
+      />
+    </View>
+  );
 
   const navigateToChat = () => {
-    openLink(getEnv('BEIN_CHAT_DEEPLINK'));
+    openUrl(getEnv('BEIN_CHAT_DEEPLINK'));
   };
 
-  const onEndReach = useCallback(() => getData(), []);
+  const onEndReach = useCallback(
+    () => getData(), [],
+  );
 
-  const onRefresh = useCallback(() => getData(true), []);
+  const onRefresh = useCallback(
+    () => getData(true), [],
+  );
 
   return (
     <View
       style={styles.container}
-      onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
+    >
       {renderHeader()}
       <View style={styles.flex1}>
         <NewsfeedList
@@ -196,10 +201,10 @@ const Newsfeed = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     container: {
       flex: 1,
       backgroundColor: colors.neutral1,

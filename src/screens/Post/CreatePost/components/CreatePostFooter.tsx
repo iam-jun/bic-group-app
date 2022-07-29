@@ -1,14 +1,14 @@
-import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import PostToolbar from '~/screens/Post/components/PostToolbar';
-import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import PostToolbar from '~/screens/Post/components/PostToolbar';
+import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 
 export interface CreatePostFooterProps {
   toolbarRef?: any;
@@ -58,10 +58,11 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
         onPressBack={onPressBack}
       />
       <Animated.View
-        testID={'create_post_footer.mention_bar_container'}
-        style={mentionContainerStyle}>
+        testID="create_post_footer.mention_bar_container"
+        style={mentionContainerStyle}
+      >
         <MentionBar
-          testID={'mention_bar'}
+          testID="mention_bar"
           onVisible={onVisibleMentionBar}
           style={styles.mentionBar}
         />
@@ -71,7 +72,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     mentionBar: {
       borderColor: colors.neutral5,

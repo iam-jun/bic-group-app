@@ -1,7 +1,7 @@
-import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
 import i18next from 'i18next';
-import {call, put} from 'redux-saga/effects';
-import {IToastMessage} from '~/interfaces/common';
+import { call, put } from 'redux-saga/effects';
+import { ToastMessageProps } from '~/beinComponents/ToastMessage/NormalToastMessage';
+import { IToastMessage } from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -11,21 +11,23 @@ export default function* approveAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; callback?: () => void};
+  payload: {communityId: string; callback?: () => void};
 }) {
-  const {communityId, callback} = payload;
+  const { communityId, callback } = payload;
   try {
     yield put(groupsActions.resetCommunityMemberRequests());
 
-    yield call(groupsDataHelper.approveAllCommunityMemberRequests, communityId);
+    yield call(
+      groupsDataHelper.approveAllCommunityMemberRequests, communityId,
+    );
 
-    // to update user_count
-    yield put(groupsActions.getCommunityDetail({communityId}));
+    // to update userCount
+    yield put(groupsActions.getCommunityDetail({ communityId }));
 
     let toastProps: ToastMessageProps;
     if (callback) {
       toastProps = {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
         rightIcon: 'UserGroup',
         rightText: 'Members',
@@ -33,7 +35,7 @@ export default function* approveAllCommunityMemberRequests({
       };
     } else {
       toastProps = {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
       };
     }
@@ -45,8 +47,10 @@ export default function* approveAllCommunityMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('approveAllCommunityMemberRequest: ', err);
+    console.error('approveAllCommunityMemberRequest: ', err);
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

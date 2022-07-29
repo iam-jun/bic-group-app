@@ -1,6 +1,6 @@
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -37,14 +37,16 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   const showMentionValue = useSharedValue(0);
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const mentionContainerStyle = useAnimatedStyle(() => ({
     position: 'absolute',
     left: 0,
     right: 0,
-    opacity: interpolate(showMentionValue.value, [0, 1], [0, 1]),
+    opacity: interpolate(
+      showMentionValue.value, [0, 1], [0, 1],
+    ),
   }));
 
   const onVisibleMentionBar = (isVisible: boolean) => {
@@ -55,73 +57,77 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
     }
   };
 
-  const renderButtons = () => {
-    return (
-      <View style={styles.buttonsContainer}>
-        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-          <Button
-            testID={useTestID ? 'comment_input.btn_file' : undefined}
-            disabled={!onPressFile}
-            onPress={onPressFile}>
-            <Icon
-              style={styles.icon}
-              tintColor={colors.gray50}
-              icon={'Paperclip'}
-            />
-          </Button>
-          <Button
-            testID={useTestID ? 'comment_input.btn_image' : undefined}
-            disabled={!onPressImage}
-            onPress={onPressImage}>
-            <Icon
-              size={18}
-              style={styles.icon}
-              tintColor={colors.gray50}
-              icon={'Image'}
-            />
-          </Button>
-          <Button
-            testID={useTestID ? 'comment_input.btn_camera' : undefined}
-            disabled={!onPressCamera}
-            onPress={onPressCamera}>
-            <Icon
-              style={styles.icon}
-              tintColor={colors.gray50}
-              icon={'Camera'}
-            />
-          </Button>
-          <Button
-            testID={useTestID ? 'comment_input.btn_emoji' : undefined}
-            disabled={!onPressEmoji}
-            onPress={onPressEmoji}>
-            <Icon
-              style={styles.icon}
-              tintColor={colors.gray50}
-              icon="iconAddGif"
-            />
-          </Button>
-        </View>
-        <Button.Secondary
-          testID={useTestID ? 'comment_input.send' : undefined}
-          onPress={onPressSend}
-          style={styles.buttonSend}
-          rightIcon={'iconSendComment'}
-          loading={loading}
-          disabled={disabledBtnSend}
-          useI18n
-          highEmphasis>
-          common:text_send
-        </Button.Secondary>
+  const renderButtons = () => (
+    <View style={styles.buttonsContainer}>
+      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+        <Button
+          testID={useTestID ? 'comment_input.btn_file' : undefined}
+          disabled={!onPressFile}
+          onPress={onPressFile}
+        >
+          <Icon
+            style={styles.icon}
+            tintColor={colors.gray50}
+            icon="Paperclip"
+          />
+        </Button>
+        <Button
+          testID={useTestID ? 'comment_input.btn_image' : undefined}
+          disabled={!onPressImage}
+          onPress={onPressImage}
+        >
+          <Icon
+            size={18}
+            style={styles.icon}
+            tintColor={colors.gray50}
+            icon="Image"
+          />
+        </Button>
+        <Button
+          testID={useTestID ? 'comment_input.btn_camera' : undefined}
+          disabled={!onPressCamera}
+          onPress={onPressCamera}
+        >
+          <Icon
+            style={styles.icon}
+            tintColor={colors.gray50}
+            icon="Camera"
+          />
+        </Button>
+        <Button
+          testID={useTestID ? 'comment_input.btn_emoji' : undefined}
+          disabled={!onPressEmoji}
+          onPress={onPressEmoji}
+        >
+          <Icon
+            style={styles.icon}
+            tintColor={colors.gray50}
+            icon="iconAddGif"
+          />
+        </Button>
       </View>
-    );
-  };
+      <Button.Secondary
+        testID={useTestID ? 'comment_input.send' : undefined}
+        onPress={onPressSend}
+        style={styles.buttonSend}
+        rightIcon="iconSendComment"
+        loading={loading}
+        disabled={disabledBtnSend}
+        useI18n
+        highEmphasis
+      >
+        common:text_send
+      </Button.Secondary>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
       {renderButtons()}
       <Animated.View
-        testID={'comment_input_footer.mention_bar_container'}
-        style={mentionContainerStyle}>
+        testID="comment_input_footer.mention_bar_container"
+        style={mentionContainerStyle}
+      >
         <MentionBar onVisible={onVisibleMentionBar} style={styles.mentionBar} />
       </Animated.View>
     </View>
@@ -129,7 +135,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       borderTopWidth: 1,
@@ -149,8 +155,8 @@ const createStyle = (theme: ExtendedTheme) => {
       justifyContent: 'center',
       backgroundColor: colors.white,
     },
-    icon: {marginRight: spacing.margin.large},
-    buttonSend: {paddingLeft: spacing.padding.large},
+    icon: { marginRight: spacing.margin.large },
+    buttonSend: { paddingLeft: spacing.padding.large },
   });
 };
 

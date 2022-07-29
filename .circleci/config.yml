@@ -17,6 +17,7 @@ jobs:
           name: Import environment variables from Contexts
           command: |
             cat >.env.staging \<<EOL
+            APP_ENV=${APP_ENV}
             SELF_DOMAIN=${SELF_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
@@ -75,6 +76,7 @@ jobs:
           name: Import environment variables from Contexts
           command: |
             cat >.env.production \<<EOL
+            APP_ENV=${APP_ENV}
             SELF_DOMAIN=${SELF_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
@@ -127,6 +129,7 @@ jobs:
           name: Import environment variables from Contexts into .env.staging
           command: |
             cat >.env.staging \<<EOL
+            APP_ENV=${APP_ENV}
             SELF_DOMAIN=${SELF_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
@@ -173,6 +176,7 @@ jobs:
           name: Import environment variables from Contexts into .env.production
           command: |
             cat >.env.production \<<EOL
+            APP_ENV=${APP_ENV}
             SELF_DOMAIN=${SELF_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}

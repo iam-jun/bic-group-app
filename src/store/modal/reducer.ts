@@ -1,3 +1,4 @@
+import React from 'react';
 import * as actions from './constants';
 
 export const modalInitState = {
@@ -43,7 +44,7 @@ export const modalInitState = {
   reactionBottomSheet: {
     show: false,
     title: '',
-    position: {x: -1, y: -1},
+    position: { x: -1, y: -1 },
     callback: undefined,
   },
 
@@ -51,12 +52,14 @@ export const modalInitState = {
     isOpen: false,
     userId: undefined,
     params: {},
-    position: {x: -1, y: -1},
+    position: { x: -1, y: -1 },
   },
 };
 
-function commonReducer(state = modalInitState, action: any = {}) {
-  const {type, payload} = action;
+function commonReducer(
+  state = modalInitState, action: any = {},
+) {
+  const { type, payload } = action;
   switch (type) {
     case actions.SET_MODAL:
       return {

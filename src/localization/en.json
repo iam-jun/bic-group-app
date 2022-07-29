@@ -145,7 +145,8 @@
     "text_go_to_settings": "Go to Settings",
     "text_help": "Help",
     "text_type_search_keyword": "Type search keyword to see the search results",
-    "text_no_results_found": "No results found"
+    "text_no_results_found": "No results found",
+    "text_more": "+(number) more"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -446,6 +447,10 @@
     "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you really want to delete this post?",
+    "title_delete_audiences_of_post": "You are deleting audiences of this post",
+    "content_delete_audiences_of_post": "You are not able to delete this post from these audiences below. Are you sure to continue?",
+    "content_not_able_delete_of_post":"You are not able to delete this post from these audiences below.",
+    "text_deleted_audiences":"Your post has been deleted audiences.",
     "alert_title_back_edit_post": "Discard changes",
     "alert_content_back_edit_post": "If you discard now, you’ll lose any changes you’ve made to this post.",
     "alert_title_back_create_post": "Discard new post",
@@ -461,6 +466,7 @@
     "save": "Save",
     "and": "and",
     "to": "to",
+    "more_group": "more",
     "edit_comment_success": "Edited comment successfully",
     "label_replying_to": "Replying to ",
     "label_yourself": "yourself",
@@ -585,7 +591,9 @@
       "title": "This page is not existing.",
       "description": "It might be deleted or you don't have permission to see it",
       "button_text": "Back to News Feed"
-    }
+    },
+    "text_important_warning_1": "Cannot set because you don't have this permission at",
+    "text_important_warning_2": ". Please remove them or contact your admin"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

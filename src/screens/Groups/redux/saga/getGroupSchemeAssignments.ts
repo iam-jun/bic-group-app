@@ -1,4 +1,4 @@
-import {put, call} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -9,14 +9,14 @@ export default function* getGroupSchemeAssignments({
 }: {
   type: string;
   payload: {
-    communityId: number;
+    communityId: string;
     showLoading?: boolean;
   };
 }): any {
-  const {communityId, showLoading = true} = payload || {};
+  const { communityId, showLoading = true } = payload || {};
   try {
     if (showLoading) {
-      yield put(groupsActions.setGroupSchemeAssignments({loading: true}));
+      yield put(groupsActions.setGroupSchemeAssignments({ loading: true }));
     }
 
     const response = yield call(
@@ -25,17 +25,15 @@ export default function* getGroupSchemeAssignments({
     );
 
     if (response?.data) {
-      yield put(
-        groupsActions.setGroupSchemeAssignments({
-          loading: false,
-          data: response.data,
-        }),
-      );
+      yield put(groupsActions.setGroupSchemeAssignments({
+        loading: false,
+        data: response.data,
+      }));
     } else {
-      yield put(groupsActions.setGroupSchemeAssignments({loading: false}));
+      yield put(groupsActions.setGroupSchemeAssignments({ loading: false }));
     }
   } catch (err) {
-    yield put(groupsActions.setGroupSchemeAssignments({loading: false}));
+    yield put(groupsActions.setGroupSchemeAssignments({ loading: false }));
     yield showError(err);
   }
 }

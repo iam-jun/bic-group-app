@@ -1,7 +1,7 @@
-import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
 import i18next from 'i18next';
-import {call, put} from 'redux-saga/effects';
-import {IToastMessage} from '~/interfaces/common';
+import { call, put } from 'redux-saga/effects';
+import { ToastMessageProps } from '~/beinComponents/ToastMessage/NormalToastMessage';
+import { IToastMessage } from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -11,21 +11,23 @@ export default function* approveAllGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; callback?: () => void};
+  payload: {groupId: string; callback?: () => void};
 }) {
-  const {groupId, callback} = payload;
+  const { groupId, callback } = payload;
   try {
     yield put(groupsActions.resetGroupMemberRequests());
 
-    yield call(groupsDataHelper.approveAllGroupMemberRequests, groupId);
+    yield call(
+      groupsDataHelper.approveAllGroupMemberRequests, groupId,
+    );
 
-    // to update user_count
+    // to update userCount
     yield put(groupsActions.getGroupDetail(groupId));
 
     let toastProps: ToastMessageProps;
     if (callback) {
       toastProps = {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
         rightIcon: 'UserGroup',
         rightText: 'Members',
@@ -33,7 +35,7 @@ export default function* approveAllGroupMemberRequests({
       };
     } else {
       toastProps = {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
       };
     }
@@ -45,8 +47,12 @@ export default function* approveAllGroupMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('approveAllGroupMemberRequests: ', err);
+    console.log(
+      'approveAllGroupMemberRequests: ', err,
+    );
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

@@ -1,6 +1,8 @@
-import React, {FC} from 'react';
-import {View, StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  View, StyleProp, ViewStyle, TextStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
@@ -25,7 +27,7 @@ const TextBadge: FC<TextBadgeProps> = ({
   useI18n = true,
 }: TextBadgeProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   if (!value) {
     return null;
