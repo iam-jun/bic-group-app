@@ -35,7 +35,16 @@ const TabButton = ({
 
   return (
     <TouchableOpacity style={[styles.container, isSelected && styles[type], styles[`${size}Padding`], style]}>
-      <Text variant={textVariant[size]} style={[styles.text, styles[`${type}Text`]]}>{children}</Text>
+      <Text
+        variant={textVariant[size]}
+        style={[
+          styles.text,
+          isSelected ? styles[`${type}Text`] : styles.neutralText,
+        ]}
+      >
+        {children}
+
+      </Text>
     </TouchableOpacity>
   )
 }
