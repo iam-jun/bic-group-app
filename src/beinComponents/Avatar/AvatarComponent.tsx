@@ -256,7 +256,7 @@ const creatStyle = (theme: ExtendedTheme) => {
     smallAlt: {
       width: dimension?.avatarSizes?.smallAlt,
       height: dimension?.avatarSizes?.smallAlt,
-      borderRadius: spacing?.borderRadius.large,
+      borderRadius: spacing?.borderRadius.pill,
     },
     medium: {
       width: dimension?.avatarSizes?.medium,

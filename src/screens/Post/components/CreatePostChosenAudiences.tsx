@@ -54,7 +54,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
               useI18n: true,
               color: theme.colors.purple60,
             }}
-            borderRadius={spacing?.borderRadius.large}
+            borderRadius={spacing?.borderRadius.pill}
             style={styles.buttonChoose}
             onPress={onPressSelectAudience}
             testID="create_post_chosen_audiences.choose_group"

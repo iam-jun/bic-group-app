@@ -95,12 +95,6 @@ export const groupInitState = {
   groupDetail: {
     group: {},
   } as IGroupDetail,
-  groupSearch: {
-    isShow: false,
-    loading: false,
-    searchKey: '',
-    result: [],
-  },
   loadingGroupMember: false,
   groupMembers: {
     loading: true,
@@ -581,14 +575,6 @@ function groupsReducer(
       return {
         ...state,
         loadingPage: payload,
-      };
-    case groupsTypes.SET_GROUP_SEARCH:
-      return {
-        ...state,
-        groupSearch: {
-          ...state.groupSearch,
-          ...payload,
-        },
       };
 
     // PENDING MEMBER REQUESTS

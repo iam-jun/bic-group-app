@@ -172,13 +172,6 @@ export interface IGroupRemoveAdmin {
   userId: string;
 }
 
-export interface IGroupSearchPayload {
-  isShow?: boolean;
-  loading?: boolean;
-  searchKey?: string;
-  result?: [];
-}
-
 export interface IGroupMembers {
   id?: string;
   username?: string;

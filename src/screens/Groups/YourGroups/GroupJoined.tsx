@@ -81,8 +81,8 @@ const GroupJoined: FC<GroupJoinedProps> = ({
       isOpen: true,
       props: {
         modalStyle: {
-          borderTopRightRadius: spacing.borderRadius.base,
-          borderTopLeftRadius: spacing.borderRadius.base,
+          borderTopRightRadius: spacing.borderRadius.large,
+          borderTopLeftRadius: spacing.borderRadius.large,
         },
       },
       ContentComponent: (
