@@ -172,6 +172,10 @@ export const maxNewsfeedWidth = 584;
 export const bottomBarHeight = 60;
 export const permissionRoleSectionHeaderHeight = 56;
 
+export const homeHeaderLogoHeight = 48;
+export const homeHeaderTabHeight = 44;
+export const homeHeaderHeight = homeHeaderLogoHeight + homeHeaderTabHeight;
+
 export const scaleSize = (size: number): number => (DeviceWidth / guidelineBaseWidth) * size;
 
 export default {
@@ -181,6 +185,7 @@ export default {
   sizeButton,
   letterSpacing,
   headerHeight,
+  homeHeaderHeight,
   primaryItemHeight,
   avatarSizes,
   commentBarHeight,

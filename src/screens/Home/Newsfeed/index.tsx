@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import Header from '~/beinComponents/Header';
+import { useSharedValue, withTiming } from 'react-native-reanimated';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
 import { useBaseHook } from '~/hooks';
 import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
@@ -16,22 +16,22 @@ import { useBackPressListener, useTabPressListener } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { IPayloadSetNewsfeedSearch } from '~/interfaces/IHome';
 import { ITabTypes } from '~/interfaces/IRouter';
-import images from '~/resources/images';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import menuActions from '~/screens/Menu/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
-import appActions from '~/store/app/actions';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
+import HomeHeader from '~/screens/Home/Newsfeed/components/HomeHeader';
 
 const Newsfeed = () => {
   const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
+  const yShared = useSharedValue(0);
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -149,25 +149,6 @@ const Newsfeed = () => {
     dispatch(homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [] }));
   };
 
-  const renderHeader = () => (
-    <View style={styles.headerMobile}>
-      <Header
-        headerRef={headerRef}
-        avatar={images.logo_beincomm}
-        hideBack
-        searchPlaceholder={t('input:search_post')}
-        autoFocusSearch
-        onPressChat={navigateToChat}
-        onShowSearch={onShowSearch}
-        onSearchText={onSearchText}
-        onFocusSearch={onFocusSearch}
-        onSubmitSearch={onSubmitSearch}
-        title="post:news_feed"
-        titleTextProps={{ useI18n: true }}
-      />
-    </View>
-  );
-
   const navigateToChat = () => {
     openUrl(getEnv('BEIN_CHAT_DEEPLINK'));
   };
@@ -180,11 +161,31 @@ const Newsfeed = () => {
     () => getData(true), [],
   );
 
+  const onScrollY = (y: number) => {
+    yShared.value = y
+  }
+
   return (
     <View
       style={styles.container}
     >
-      {renderHeader()}
+      <View style={styles.headerMobile}>
+        {/* <Header */}
+        {/*  headerRef={headerRef} */}
+        {/*  avatar={images.logo_beincomm} */}
+        {/*  hideBack */}
+        {/*  searchPlaceholder={t('input:search_post')} */}
+        {/*  autoFocusSearch */}
+        {/*  onPressChat={navigateToChat} */}
+        {/*  onShowSearch={onShowSearch} */}
+        {/*  onSearchText={onSearchText} */}
+        {/*  onFocusSearch={onFocusSearch} */}
+        {/*  onSubmitSearch={onSubmitSearch} */}
+        {/*  title="post:news_feed" */}
+        {/*  titleTextProps={{ useI18n: true }} */}
+        {/* /> */}
+        <HomeHeader yShared={yShared} onPressChat={navigateToChat} />
+      </View>
       <View style={styles.flex1}>
         <NewsfeedList
           data={homePosts}
@@ -192,6 +193,7 @@ const Newsfeed = () => {
           canLoadMore={!noMoreHomePosts}
           onEndReach={onEndReach}
           onRefresh={onRefresh}
+          onScrollY={onScrollY}
           HeaderComponent={<HeaderCreatePost style={styles.headerCreatePost} />}
         />
         <NewsfeedSearch headerRef={headerRef} />
@@ -201,7 +203,7 @@ const Newsfeed = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
 
   return StyleSheet.create({
     flex1: { flex: 1 },
