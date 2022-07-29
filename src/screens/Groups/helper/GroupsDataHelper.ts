@@ -12,7 +12,7 @@ import {
   IParamGetDiscoverGroups,
   ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
-import { makeHttpRequest, withHttpRequestPromise } from '~/services/httpApiRequest';
+import { withHttpRequestPromise } from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
@@ -173,13 +173,6 @@ export const groupsApiConfig = {
     url: `${ApiConfig.providers.beinFeed.url}feeds/timeline`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
-    useRetry: true,
-    params,
-  }),
-  getSearchGroups: (params?: any): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
     useRetry: true,
     params,
   }),
@@ -581,24 +574,11 @@ const groupsDataHelper = {
     }
     return withHttpRequestPromise(groupsApiConfig.updateGroupScheme, communityId, schemeId, schemeData)
   },
-  postCreateSchemePermission: async (communityId: string, scheme: IScheme) => {
+  postCreateSchemePermission: (communityId: string, scheme: IScheme) => {
     if (!communityId || !scheme) {
       return Promise.reject(new Error('postCreateSchemePermission invalid data'));
     }
     return withHttpRequestPromise(groupsApiConfig.postCreateSchemePermission, communityId, scheme)
-  },
-  getSearchGroups: async (params?: any) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getSearchGroups(params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
   },
   getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(
     groupsApiConfig.getUserInnerGroups, groupId, username,

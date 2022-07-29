@@ -38,10 +38,10 @@ const MemberRequestList = ({
     loading, total, ids, canLoadMore,
   } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
 
-  const renderItem = ({ item }: {item: string}) => {
-    if (id && type === 'community') return <CommunityMemberRequest requestId={id} organizationId={id} />
+  const renderItem = ({ item: requestId }: {item: string}) => {
+    if (id && type === 'community') return <CommunityMemberRequest requestId={requestId} organizationId={id} />
 
-    return <GroupMemberRequest requestId={item} />;
+    return <GroupMemberRequest requestId={requestId} />;
   };
 
   const renderEmpty = () => {

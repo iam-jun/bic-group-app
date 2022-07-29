@@ -3,7 +3,6 @@ import {
   call, put, select, takeLatest,
 } from 'redux-saga/effects';
 
-import { AxiosResponse } from 'axios';
 import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
@@ -178,9 +177,6 @@ export default function* groupsSaga() {
     groupsTypes.CANCEL_JOIN_GROUP, cancelJoinGroup,
   );
   yield takeLatest(
-    groupsTypes.GET_GROUP_SEARCH, getGroupSearch,
-  );
-  yield takeLatest(
     groupsTypes.REMOVE_MEMBER, removeMember,
   );
   yield takeLatest(
@@ -280,28 +276,6 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.EDIT_COMMUNITY_DETAIL, editCommunityDetail,
   );
-}
-
-function* getGroupSearch({ payload }: {type: string; payload: string}) {
-  try {
-    yield put(groupsActions.setGroupSearch({ loading: true }));
-    const params = { key: payload || '', discover: true };
-    const response: AxiosResponse = yield groupsDataHelper.getSearchGroups(params);
-
-    yield put(groupsActions.setGroupSearch({
-      result: response.data || [],
-      loading: false,
-    }));
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    if (response.code != 200 && response.code?.toUpperCase?.() !== 'OK') {
-      console.error(`\x1b[31m🐣️ saga getGroupSearch error: ${response}\x1b[0m`);
-    }
-  } catch (err) {
-    console.error(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
-    yield put(groupsActions.setGroupSearch({ loading: false, result: [] }));
-    // yield showError(err);
-  }
 }
 
 function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
