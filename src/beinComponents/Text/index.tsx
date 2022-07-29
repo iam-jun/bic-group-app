@@ -31,7 +31,6 @@ export type TextVariant =
   | 'tabL'
   | 'tabM'
   | 'tabS'
-  | 'tabXS'
   | 'linkM'
   | 'linkS'
   | 'badgeL'
@@ -171,9 +170,6 @@ const TabM = ({ ...props }: TextProps) => (
 const TabS = ({ ...props }: TextProps) => (
   <TextComponent variant="tabS" {...props} />
 );
-const TabXS = ({ ...props }: TextProps) => (
-  <TextComponent variant="tabXS" {...props} />
-);
 const LinkM = ({ ...props }: TextProps) => (
   <TextComponent variant="linkM" {...props} />
 );
@@ -244,7 +240,6 @@ const Text = Object.assign(
     TabL,
     TabM,
     TabS,
-    TabXS,
     LinkM,
     LinkS,
     BadgeL,

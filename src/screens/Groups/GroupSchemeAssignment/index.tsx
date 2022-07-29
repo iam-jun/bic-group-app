@@ -207,7 +207,7 @@ const createStyle = (theme: ExtendedTheme) => {
       marginVertical: 2,
       paddingHorizontal: spacing.padding.small,
       paddingVertical: spacing.padding.tiny,
-      borderRadius: spacing.borderRadius.large,
+      borderRadius: spacing.borderRadius.pill,
     },
   });
 };

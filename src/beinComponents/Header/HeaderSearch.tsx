@@ -171,7 +171,7 @@ const createStyle = (theme: ExtendedTheme) => {
       height: 40,
       overflow: 'hidden',
       backgroundColor: colors.neutral5,
-      borderRadius: spacing.borderRadius.large,
+      borderRadius: spacing.borderRadius.pill,
     },
     icon: {
       height: 48,

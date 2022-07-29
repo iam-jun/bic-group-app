@@ -175,14 +175,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     container: {
       paddingTop: spacing.padding.large,
     },
-    itemContainer: {
-      flexDirection: 'row',
-      backgroundColor: colors.white,
-      borderRadius: spacing.borderRadius.base,
-    },
-    settingsContainer: {
-      marginHorizontal: 0,
-    },
     headerTitle: {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.base,

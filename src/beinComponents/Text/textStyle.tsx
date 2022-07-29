@@ -150,11 +150,6 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontSize: sizes.tabS,
       color: colors.neutral80,
     },
-    tabXS: {
-      fontFamily: fontFamilies.BeVietnamProMedium,
-      fontSize: sizes.tabXS,
-      color: colors.neutral80,
-    },
     linkM: {
       fontFamily: fontFamilies.BeVietnamProMedium,
       fontSize: sizes.linkM,
