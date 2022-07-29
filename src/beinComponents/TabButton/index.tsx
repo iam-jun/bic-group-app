@@ -7,14 +7,18 @@ import Text, { TextVariant } from '../Text';
 import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 import elevation from '~/theme/elevations';
+import { useKeySelector } from '~/hooks/selector';
 
 interface TabButtonProps {
+  testID?: string;
   children?: string;
   style?: StyleProp<ViewStyle>;
   isSelected?: boolean;
   type?: 'primary' | 'secondary' | 'neutral';
   size?: 'large' | 'medium' | 'small';
-  onPress?: (e: any) => void;
+  useI18n?: boolean;
+  disabled?: boolean;
+  onPress?: () => void;
 }
 
 const textVariant = {
@@ -24,23 +28,34 @@ const textVariant = {
 };
 
 const TabButton = ({
+  testID,
   children,
   style,
   isSelected = true,
   type = 'neutral',
   size = 'medium',
+  useI18n,
+  disabled,
+  onPress,
 }: TabButtonProps) => {
   const theme = useTheme();
   const styles = createStyles(theme)
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   return (
-    <TouchableOpacity style={[styles.container, isSelected && styles[type], styles[`${size}Padding`], style]}>
+    <TouchableOpacity
+      testID={testID}
+      style={[styles.container, isSelected && styles[type], styles[`${size}Padding`], style]}
+      disabled={!isInternetReachable || disabled}
+      onPress={onPress}
+    >
       <Text
         variant={textVariant[size]}
         style={[
           styles.text,
           isSelected ? styles[`${type}Text`] : styles.neutralText,
         ]}
+        useI18n={useI18n}
       >
         {children}
 
