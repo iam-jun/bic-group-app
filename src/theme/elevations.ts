@@ -1,114 +1,126 @@
 export default {
   light: {
     e1: {
-      shadowColor: 'rgba(0, 0, 0, 0.08)',
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.08,
+      shadowRadius: 1,
+      elevation: 1,
+    },
+    e2: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOffset: {
         width: 0,
         height: 2,
       },
+      shadowRadius: 1.5,
+      shadowOpacity: 0.12,
+      elevation: 2,
+    },
+    e3: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
       shadowRadius: 3,
+      shadowOpacity: 0.12,
       elevation: 3,
     },
-    e2: {
-      shadowColor: 'rgba(0, 0, 0, 0.12)',
+    e4: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOffset: {
         width: 0,
         height: 4,
       },
-      shadowRadius: 6,
-      elevation: 6,
+      shadowRadius: 4,
+      shadowOpacity: 0.12,
+      elevation: 4,
     },
-    e3: {
-      shadowColor: 'rgba(0, 0, 0, 0.12)',
+    e5: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOffset: {
         width: 0,
         height: 6,
       },
-      shadowRadius: 14,
-      elevation: 14,
+      shadowRadius: 5,
+      shadowOpacity: 0.12,
+      elevation: 5,
     },
-    e4: {
-      shadowColor: 'rgba(0, 0, 0, 0.12)',
+    e6: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOffset: {
         width: 0,
         height: 8,
       },
-      shadowRadius: 24,
-      elevation: 24,
-    },
-    e5: {
-      shadowColor: 'rgba(0, 0, 0, 0.12)',
-      shadowOffset: {
-        width: 0,
-        height: 12,
-      },
-      shadowRadius: 32,
-      elevation: 32,
-    },
-    e6: {
-      shadowColor: 'rgba(0, 0, 0, 0.12)',
-      shadowOffset: {
-        width: 0,
-        height: 20,
-      },
-      shadowRadius: 36,
-      elevation: 36,
+      shadowRadius: 6,
+      shadowOpacity: 0.12,
+      elevation: 6,
     },
   },
   dark: {
     e1: {
-      shadowColor: 'rgba(0, 0, 0, 0.32)',
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.08,
+      shadowRadius: 1,
+      elevation: 1,
+    },
+    e2: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOffset: {
         width: 0,
         height: 2,
       },
+      shadowRadius: 1.5,
+      shadowOpacity: 0.48,
+      elevation: 2,
+    },
+    e3: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
       shadowRadius: 3,
+      shadowOpacity: 0.48,
       elevation: 3,
     },
-    e2: {
-      shadowColor: 'rgba(0, 0, 0, 0.48)',
+    e4: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOffset: {
         width: 0,
         height: 4,
       },
-      shadowRadius: 6,
-      elevation: 6,
+      shadowRadius: 4,
+      shadowOpacity: 0.48,
+      elevation: 4,
     },
-    e3: {
-      shadowColor: 'rgba(0, 0, 0, 0.48)',
+    e5: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOffset: {
         width: 0,
         height: 6,
       },
-      shadowRadius: 14,
-      elevation: 14,
+      shadowRadius: 5,
+      shadowOpacity: 0.48,
+      elevation: 5,
     },
-    e4: {
-      shadowColor: 'rgba(0, 0, 0, 0.48)',
+    e6: {
+      shadowColor: 'rgba(0, 0, 0, 1)',
       shadowOffset: {
         width: 0,
         height: 8,
       },
-      shadowRadius: 24,
-      elevation: 24,
-    },
-    e5: {
-      shadowColor: 'rgba(0, 0, 0, 0.48)',
-      shadowOffset: {
-        width: 0,
-        height: 12,
-      },
-      shadowRadius: 32,
-      elevation: 32,
-    },
-    e6: {
-      shadowColor: 'rgba(0, 0, 0, 0.48)',
-      shadowOffset: {
-        width: 0,
-        height: 20,
-      },
-      shadowRadius: 36,
-      elevation: 36,
+      shadowRadius: 6,
+      shadowOpacity: 0.48,
+      elevation: 6,
     },
   },
 }
