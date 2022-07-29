@@ -6,7 +6,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import ListView from '~/beinComponents/list/ListView';
-import Button from '~/beinComponents/Button';
 import InfoHeader from './InfoHeader';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import JoinCancelButton from './JoinCancelButton';
@@ -20,6 +19,7 @@ import PostItem from '~/beinComponents/list/items/PostItem';
 import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
+import TabButton from '~/beinComponents/TabButton';
 
 interface PageContentProps {
   communityId: string;
@@ -54,6 +54,12 @@ const _PageContent = ({
 
   const dispatch = useDispatch();
 
+  const onPressYourGroups = () => {
+    rootNavigation.navigate(
+      groupStack.yourGroups, { communityId },
+    );
+  };
+
   const onPressDiscover = () => {
     rootNavigation.navigate(
       groupStack.discoverGroups, { communityId },
@@ -76,12 +82,6 @@ const _PageContent = ({
     }
   };
 
-  const onPressYourGroups = () => {
-    rootNavigation.navigate(
-      groupStack.yourGroups, { communityId },
-    );
-  };
-
   const _onScroll = (e: any) => {
     onScroll && onScroll(e);
     DeviceEventEmitter.emit('stopAllVideo');
@@ -97,7 +97,7 @@ const _PageContent = ({
   const renderHeader = () => (
     <>
       <View onLayout={onButtonLayout}>
-        <InfoHeader />
+        <InfoHeader onPressGroupTree={onPressYourGroups} />
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -105,53 +105,21 @@ const _PageContent = ({
           style={styles.scrollViewBtn}
           contentContainerStyle={styles.buttonContainer}
         >
+          <TabButton useI18n testID="page_content.about_btn" size="medium" onPress={onPressAbout}>
+            groups:group_content:btn_about
+          </TabButton>
+          <ViewSpacing width={spacing.margin.small} />
           {isMember && (
           <>
-            <Button.Secondary
-              useI18n
-              color={colors.neutral5}
-              textColor={colors.neutral80}
-              borderRadius={spacing.borderRadius.small}
-              testID="page_content.your_groups_btn"
-              onPress={onPressYourGroups}
-            >
-              groups:group_content:btn_your_groups
-            </Button.Secondary>
-            <ViewSpacing width={spacing.margin.small} />
-            <Button.Secondary
-              useI18n
-              color={colors.neutral5}
-              textColor={colors.neutral80}
-              borderRadius={spacing.borderRadius.small}
-              testID="page_content.discover_btn"
-              onPress={onPressDiscover}
-            >
+            <TabButton useI18n testID="page_content.discover_btn" size="medium" onPress={onPressDiscover}>
               groups:group_content:btn_discover
-            </Button.Secondary>
+            </TabButton>
             <ViewSpacing width={spacing.margin.small} />
           </>
           )}
-          <Button.Secondary
-            useI18n
-            color={colors.neutral5}
-            textColor={colors.neutral80}
-            borderRadius={spacing.borderRadius.small}
-            testID="page_content.about_btn"
-            onPress={onPressAbout}
-          >
-            groups:group_content:btn_about
-          </Button.Secondary>
-          <ViewSpacing width={spacing.margin.small} />
-          <Button.Secondary
-            useI18n
-            color={colors.neutral5}
-            textColor={colors.neutral80}
-            borderRadius={spacing.borderRadius.small}
-            testID="page_content.members_btn"
-            onPress={onPressMembers}
-          >
+          <TabButton useI18n testID="page_content.members_btn" size="medium" onPress={onPressMembers}>
             groups:group_content:btn_members
-          </Button.Secondary>
+          </TabButton>
         </ScrollView>
         <JoinCancelButton />
       </View>
