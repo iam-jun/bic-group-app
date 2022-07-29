@@ -57,7 +57,7 @@ const themeStyles = (
 
   return StyleSheet.create({
     dot: {
-      borderRadius: spacing.borderRadius.large,
+      borderRadius: spacing.borderRadius.pill,
       paddingBottom: 2,
       paddingHorizontal: 5,
       minWidth: defaultWidth,

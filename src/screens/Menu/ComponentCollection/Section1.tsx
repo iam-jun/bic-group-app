@@ -15,6 +15,7 @@ import { IToastMessage } from '~/interfaces/common';
 import { showHideToastMessage } from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 import spacing from '~/theme/spacing';
+import TabButton from '~/beinComponents/TabButton';
 
 const Section1 = () => {
   const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
@@ -195,6 +196,72 @@ const Section1 = () => {
       <Icon icon="iconReact" size={36} label="Svg Icon (iconReact)" />
     </View>,
   );
+
+  const renderTab = () => renderSection('Tab Button', 
+  <View style={{marginHorizontal: spacing?.margin.base }}>
+    <View style={{marginVertical: spacing?.margin.tiny}}>
+      <Text.H5>{`<TabButton size='large'></TabButton>`}</Text.H5>
+      <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <TabButton type='primary' size='large'>
+          Tab button
+        </TabButton>
+        <TabButton type='secondary' size='large'>
+          Tab button
+        </TabButton>
+      </View>
+      
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
+        <TabButton size='large'>
+          Tab button
+        </TabButton>
+        <TabButton size='large' isSelected={false}>
+          Tab button
+        </TabButton>
+      </View>
+    </View>
+
+    <View style={{marginVertical: spacing?.margin.tiny}}>
+      <Text.H5>{`<TabButton size='medium'></TabButton>`}</Text.H5>
+      <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <TabButton type='primary' size='medium'>
+          Tab button
+        </TabButton>
+        <TabButton type='secondary' size='medium'>
+          Tab button
+        </TabButton>
+      </View>
+      
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
+        <TabButton size='medium'>
+          Tab button
+        </TabButton>
+        <TabButton size='medium' isSelected={false}>
+          Tab button
+        </TabButton>
+      </View>
+    </View>
+
+    <View style={{marginVertical: spacing?.margin.tiny}}>
+      <Text.H5>{`<TabButton size='small'></TabButton>`}</Text.H5>
+      <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <TabButton type='primary' size='small'>
+          Tab button
+        </TabButton>
+        <TabButton type='secondary' size='small'>
+          Tab button
+        </TabButton>
+      </View>
+      
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
+        <TabButton size='small'>
+          Tab button
+        </TabButton>
+        <TabButton size='small' isSelected={false}>
+          Tab button
+        </TabButton>
+      </View>
+    </View>
+  </View>);
 
   const renderButton = () => renderSection(
     'Button',
@@ -413,6 +480,7 @@ const Section1 = () => {
       >
         Crash Native!
       </Button.Danger>
+      {renderTab()}
       {renderButton()}
       {renderFlashMessage()}
       {renderToastMessage()}
