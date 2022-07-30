@@ -19,7 +19,7 @@ import PostItem from '~/beinComponents/list/items/PostItem';
 import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
-import TabButton from '~/beinComponents/TabButton';
+import TabButtonHeader from './TabButtonHeader';
 
 interface PageContentProps {
   communityId: string;
@@ -98,29 +98,7 @@ const _PageContent = ({
     <>
       <View onLayout={onButtonLayout}>
         <InfoHeader onPressGroupTree={onPressYourGroups} />
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          alwaysBounceHorizontal={false}
-          style={styles.scrollViewBtn}
-          contentContainerStyle={styles.buttonContainer}
-        >
-          <TabButton useI18n testID="page_content.about_btn" size="medium" onPress={onPressAbout}>
-            groups:group_content:btn_about
-          </TabButton>
-          <ViewSpacing width={spacing.margin.small} />
-          {isMember && (
-          <>
-            <TabButton useI18n testID="page_content.discover_btn" size="medium" onPress={onPressDiscover}>
-              groups:group_content:btn_discover
-            </TabButton>
-            <ViewSpacing width={spacing.margin.small} />
-          </>
-          )}
-          <TabButton useI18n testID="page_content.members_btn" size="medium" onPress={onPressMembers}>
-            groups:group_content:btn_members
-          </TabButton>
-        </ScrollView>
+        <TabButtonHeader communityId={communityId} isMember={isMember} />
         <JoinCancelButton />
       </View>
       {isMember && canCreatePostArticle && (

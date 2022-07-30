@@ -17,7 +17,7 @@ import { useBaseHook } from '~/hooks';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 
 interface InfoHeaderProps {
-  onPressGroupTree: () => void
+  onPressGroupTree?: () => void
 }
 
 const InfoHeader = ({ onPressGroupTree }: InfoHeaderProps) => {
@@ -131,11 +131,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      marginTop: spacing.margin.small,
     },
     info: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical: spacing.margin.large,
     },
     privacyText: {
       marginLeft: spacing.margin.small,

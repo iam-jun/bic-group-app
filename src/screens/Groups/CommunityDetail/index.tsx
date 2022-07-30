@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useRef, Fragment, useCallback,
+  useState, useEffect, useRef, useCallback,
 } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -7,9 +7,11 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   interpolate,
+  Extrapolate,
 } from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -33,6 +35,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
+import TabButtonHeader from './components/TabButtonHeader';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -65,6 +68,7 @@ const CommunityDetail = (props: any) => {
   );
 
   const buttonShow = useSharedValue(0);
+  const tabButtonShow = useSharedValue(0);
 
   const getCommunityDetail = (loadingPage = false) => {
     dispatch(actions.getCommunityDetail({ communityId, loadingPage, showLoading: true }));
@@ -187,6 +191,7 @@ const CommunityDetail = (props: any) => {
       const offsetY = e?.nativeEvent?.contentOffset?.y;
       headerRef?.current?.setScrollY?.(offsetY);
       buttonShow.value = offsetY;
+      tabButtonShow.value = offsetY;
     }, [],
   );
 
@@ -204,6 +209,24 @@ const CommunityDetail = (props: any) => {
     [buttonHeight],
   );
 
+  const tabButtonHeaderStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      tabButtonShow.value,
+      [0, buttonHeight - 5, buttonHeight],
+      [0, 0, 1],
+    ),
+    transform: [
+      {
+        translateY: interpolate(
+          tabButtonShow.value,
+          [0, buttonHeight - 20, buttonHeight],
+          [-150, -50, 50],
+          Extrapolate.CLAMP,
+        ),
+      },
+    ],
+  }), [buttonHeight]);
+
   const renderCommunityDetail = () => (
     <>
       <Header
@@ -215,12 +238,16 @@ const CommunityDetail = (props: any) => {
         rightIconProps={{ backgroundColor: theme.colors.white }}
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
+        onSearchText={{}} // temp add here to display search icon
       />
       <View testID="community_detail.content" style={styles.contentContainer}>
         {renderCommunityContent()}
       </View>
       <Animated.View style={buttonStyle}>
         <JoinCancelButton style={styles.joinBtn} />
+      </Animated.View>
+      <Animated.View style={[styles.tabButtonHeader, tabButtonHeaderStyle]}>
+        <TabButtonHeader communityId={communityId} isMember={isMember} />
       </Animated.View>
     </>
   );
@@ -236,6 +263,7 @@ export default CommunityDetail;
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
+  const insets = useSafeAreaInsets();
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.neutral5,
@@ -249,6 +277,11 @@ const themeStyles = (theme: ExtendedTheme) => {
     headerCreatePost: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
+    },
+    tabButtonHeader: {
+      position: 'absolute',
+      width: '100%',
+      top: insets.top,
     },
   });
 };
