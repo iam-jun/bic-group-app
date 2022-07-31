@@ -371,10 +371,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       files,
     };
     const setting: any = {};
-    if (important?.active) {
-      setting.isImportant = important?.active;
-      setting.importantExpiredAt = important?.expires_time;
-    }
+    // if (important?.active) {
+    setting.isImportant = important?.active;
+    setting.importantExpiredAt = important?.expires_time || 0;
+    // }
 
     const newMentions = getMentionsFromContent(
       _content, tempMentions,
@@ -449,6 +449,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
           postId: sPostId,
           data,
         };
+
         await postDataHelper.putEditPost(newPayload);
         refIsRefresh.current = true;
       } else if (isEdit && sPostId) {

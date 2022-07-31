@@ -3,39 +3,39 @@ import React, {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import {
+  BackHandler,
   DeviceEventEmitter, StyleSheet,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import Header from '~/beinComponents/Header';
+import { useSharedValue } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
-import { useBaseHook } from '~/hooks';
 import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
-import { useBackPressListener, useTabPressListener } from '~/hooks/navigation';
+import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import { IPayloadSetNewsfeedSearch } from '~/interfaces/IHome';
 import { ITabTypes } from '~/interfaces/IRouter';
-import images from '~/resources/images';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import menuActions from '~/screens/Menu/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
-import appActions from '~/store/app/actions';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
+import HomeHeader from '~/screens/Home/Newsfeed/components/HomeHeader';
 
 const Newsfeed = () => {
   const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
+  const yShared = useSharedValue(0);
 
+  const { rootNavigation } = useRootNavigation()
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const { t } = useBaseHook();
   const dispatch = useDispatch();
 
   const token = useAuthToken();
@@ -45,6 +45,9 @@ const Newsfeed = () => {
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
   const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
+  const isShowSearch = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
+
+  const searchViewRef = useRef(null);
 
   const currentUserId = useUserIdAuth();
 
@@ -111,62 +114,21 @@ const Newsfeed = () => {
   );
 
   const handleBackPress = () => {
-    headerRef?.current?.goBack?.();
+    if (isShowSearch) {
+      dispatch(homeActions.clearAllNewsfeedSearch());
+    } else if (rootNavigation.canGoBack) {
+      rootNavigation.goBack();
+    } else {
+      BackHandler.exitApp();
+    }
   };
 
   useBackPressListener(handleBackPress);
 
-  const onShowSearch = (
-    isShow: boolean, searchInputRef?: any,
-  ) => {
-    if (isShow) {
-      DeviceEventEmitter.emit(
-        'showHeader', true,
-      );
-      dispatch(homeActions.setNewsfeedSearch({ isShow, searchInputRef }));
-    } else {
-      dispatch(homeActions.clearAllNewsfeedSearch());
-    }
-  };
-
-  const onSearchText = (
-    text: string, searchInputRef: any,
-  ) => {
-    const searchText = text?.trim?.() || '';
-    const payload: IPayloadSetNewsfeedSearch = { searchText };
-    if (!searchText) {
-      payload.isSuggestion = true;
-      searchInputRef?.current?.focus?.();
-    }
-    dispatch(homeActions.setNewsfeedSearch(payload));
-  };
-
-  const onFocusSearch = () => {
-    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [] }));
-  };
-
-  const onSubmitSearch = () => {
-    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [] }));
-  };
-
-  const renderHeader = () => (
-    <View style={styles.headerMobile}>
-      <Header
-        headerRef={headerRef}
-        avatar={images.logo_beincomm}
-        hideBack
-        searchPlaceholder={t('input:search_post')}
-        autoFocusSearch
-        onPressChat={navigateToChat}
-        onShowSearch={onShowSearch}
-        onSearchText={onSearchText}
-        onFocusSearch={onFocusSearch}
-        onSubmitSearch={onSubmitSearch}
-        title="post:news_feed"
-        titleTextProps={{ useI18n: true }}
-      />
-    </View>
-  );
+  const onPressSearch = () => {
+    DeviceEventEmitter.emit('showHeader', true);
+    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+  }
 
   const navigateToChat = () => {
     openUrl(getEnv('BEIN_CHAT_DEEPLINK'));
@@ -180,34 +142,59 @@ const Newsfeed = () => {
     () => getData(true), [],
   );
 
+  const onScrollY = (y: number) => {
+    yShared.value = y
+  }
+
   return (
-    <View
-      style={styles.container}
-    >
-      {renderHeader()}
-      <View style={styles.flex1}>
-        <NewsfeedList
-          data={homePosts}
-          refreshing={refreshing}
-          canLoadMore={!noMoreHomePosts}
-          onEndReach={onEndReach}
-          onRefresh={onRefresh}
-          HeaderComponent={<HeaderCreatePost style={styles.headerCreatePost} />}
-        />
-        <NewsfeedSearch headerRef={headerRef} />
-      </View>
+    <View style={styles.container}>
+      <HomeHeader
+        style={styles.headerContainer}
+        yShared={yShared}
+        onPressSearch={onPressSearch}
+        onPressChat={navigateToChat}
+      />
+      <NewsfeedList
+        data={homePosts}
+        refreshing={refreshing}
+        canLoadMore={!noMoreHomePosts}
+        onEndReach={onEndReach}
+        onRefresh={onRefresh}
+        onScrollY={onScrollY}
+        HeaderComponent={<HeaderCreatePost style={styles.headerCreatePost} />}
+      />
+      <View style={styles.statusBar} />
+      <NewsfeedSearch searchViewRef={searchViewRef} style={styles.searchContainer} />
     </View>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
+  const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
     flex1: { flex: 1 },
+    statusBar: {
+      zIndex: 10,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      height: insets.top,
+      backgroundColor: colors.neutral,
+    },
     container: {
       flex: 1,
       backgroundColor: colors.neutral1,
+    },
+    searchContainer: {
+      zIndex: 2,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
     },
     headerOnLaptop: {
       backgroundColor: colors.neutral1,
@@ -233,10 +220,11 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.small,
     },
-    headerMobile: {
+    headerContainer: {
       position: 'absolute',
       top: 0,
-      width: '100%',
+      left: 0,
+      right: 0,
       zIndex: 1,
     },
   });

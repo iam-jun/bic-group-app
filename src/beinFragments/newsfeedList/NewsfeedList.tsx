@@ -42,6 +42,7 @@ export interface NewsfeedListProps {
   canLoadMore?: boolean;
   onEndReach?: () => void;
   onRefresh?: () => void;
+  onScrollY?: (y: number) => void;
   HeaderComponent?: any;
 }
 
@@ -60,6 +61,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   canLoadMore,
   onEndReach,
   onRefresh,
+  onScrollY,
   HeaderComponent,
 }: NewsfeedListProps) => {
   const [initializing, setInitializing] = useState(true);
@@ -108,7 +110,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         emit(
           'showFloatingCreatePost', false,
         );
-      } else if (isDown && offsetY > 20) {
+      } else if (isDown && offsetY > 92) {
         emit(
           'showHeader', false,
         );
@@ -146,6 +148,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     // this callback run on UI thread, so i have to use runOnJs for function handler and shared value
     // but flash list v1.1.0 has problem, when update state data, scroll stop working
     // so for now, i used normal function onScroll, maybe refactor in the future
+    onScrollY?.(e?.nativeEvent?.contentOffset?.y)
     handleScrollY(e?.nativeEvent?.contentOffset?.y);
   };
 
@@ -216,6 +219,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 
   const onLoaded = (info: {elapsedTimeInMs: number}) => {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m🐣️Newsfeed loaded ${info?.elapsedTimeInMs}ms\x1b[0m`);
     if (initializing) {
       setInitializing(false);
@@ -392,7 +396,7 @@ const createStyle = (
     placeholder: {
       opacity: 1,
       position: 'absolute',
-      top: insets.top + dimension.headerHeight,
+      top: insets.top + dimension.homeHeaderHeight,
       bottom: 0,
       left: 0,
       right: 0,
@@ -406,11 +410,11 @@ const createStyle = (
       marginBottom: spacing.margin.large,
     },
     headerContainer: {
-      marginTop: insets.top + dimension.headerHeight,
+      marginTop: insets.top + dimension.homeHeaderHeight,
       width: '100%',
     },
     emptyContainer: {
-      marginTop: insets.top + dimension.headerHeight,
+      marginTop: insets.top + dimension.homeHeaderHeight,
     },
     itemStyle: {
       marginBottom: spacing.margin.small,

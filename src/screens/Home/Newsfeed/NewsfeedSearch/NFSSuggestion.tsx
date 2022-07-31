@@ -35,7 +35,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   const { data: listRecentKeywords } = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
 
   const searchText = useKeySelector(homeKeySelector.newsfeedSearch.searchText);
-  const searchInputRef = useKeySelector(homeKeySelector.newsfeedSearch.searchInputRef);
+  const searchViewRef = useKeySelector(homeKeySelector.newsfeedSearch.searchViewRef);
 
   const ctaText = t('home:newsfeed_search:text_cta_see_result_for_search_text').replace(
     '%SEARCH_TEXT%', searchText,
@@ -79,7 +79,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   );
 
   const onPressCtaSearch = () => {
-    searchInputRef?.current?.blur?.();
+    searchViewRef?.current?.blur?.();
     dispatch(homeActions.setNewsfeedSearch({ isSuggestion: false }));
   };
 

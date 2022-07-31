@@ -329,6 +329,8 @@
     "newsfeed": "Bản tin",
     "saved_posts": "Bài viết đã lưu",
     "draft_post": "Bài nháp",
+    "title_timeline": "Dòng thời gian",
+    "title_important": "Quan trọng",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
       "clear": "Xoá hết",

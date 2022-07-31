@@ -1,7 +1,7 @@
 import {
-  StyleSheet, View, Platform, TextInput,
+  StyleSheet, View, TextInput, StyleProp, ViewStyle,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -11,26 +11,35 @@ import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
 interface SearchBaseViewProps {
+  style?: StyleProp<ViewStyle>;
   isOpen: boolean;
   children?: React.ReactNode;
   placeholder?: string;
   initSearch?: string;
   onClose?: () => void;
   onChangeText?: (text: string) => void;
+  onFocus?: () => void;
+  onSubmitEditing?: () => void;
+  searchViewRef?: any;
 }
 
 function SearchBaseView({
+  style,
   isOpen,
   children,
   placeholder,
   initSearch,
   onClose,
   onChangeText,
+  onFocus,
+  onSubmitEditing,
+  searchViewRef,
 }: SearchBaseViewProps) {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const [searchText, setSearchText] = useState(initSearch || '');
+  const textInputRef = useRef(null);
 
   const onPressBack = () => {
     setSearchText('');
@@ -43,8 +52,17 @@ function SearchBaseView({
     onChangeText?.(text);
   };
 
+  const focus = () => textInputRef.current?.focus?.();
+  const blur = () => textInputRef.current?.blur?.()
+
+  useImperativeHandle(searchViewRef, () => ({
+    setSearchText,
+    focus,
+    blur,
+  }))
+
   const renderHeader = () => (
-    <View style={[styles.headerContainer, styles.bottomBorderAndShadow]}>
+    <View style={styles.headerContainer}>
       <View style={styles.inputIconContainer}>
         <Icon
           icon="iconBack"
@@ -57,6 +75,7 @@ function SearchBaseView({
           buttonTestID="search_base_view.back_button"
         />
         <TextInput
+          ref={textInputRef}
           autoFocus
           testID="search_base_view.text_input"
           style={styles.textInput}
@@ -66,6 +85,8 @@ function SearchBaseView({
           placeholderTextColor={theme.colors.gray40}
           selectionColor={theme.colors.gray50}
           onChangeText={_onChangeText}
+          onFocus={onFocus}
+          onSubmitEditing={onSubmitEditing}
         />
         {!!searchText && (
         <Icon
@@ -82,7 +103,7 @@ function SearchBaseView({
   );
 
   return isOpen ? (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {renderHeader()}
       {children}
     </View>
@@ -90,7 +111,7 @@ function SearchBaseView({
 }
 
 const createStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
@@ -106,15 +127,7 @@ const createStyles = (theme: ExtendedTheme) => {
       alignItems: 'flex-end',
       flexDirection: 'row',
       backgroundColor: colors.white,
-    },
-    bottomBorderAndShadow: {
-      borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
-      borderColor: colors.neutral5,
-      shadowOffset: { width: 0, height: 1 },
-      shadowColor: '#000',
-      shadowOpacity: 0.1,
-      shadowRadius: 1,
-      elevation: 2,
+      ...elevations.e1,
     },
     iconBack: {
       height: 48,

@@ -15,7 +15,7 @@ export default function* putGroupStructureReorder({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; newOrder: number[]};
+  payload: {communityId: string; newOrder: any[]};
 }): any {
   const { communityId, newOrder } = payload || {};
   try {
