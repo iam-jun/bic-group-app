@@ -11,6 +11,7 @@ export const light: ExtendedTheme = {
     success: '#13B055',
     warning: '#FFBC1F',
 
+    neutral: '#FFFFFF',
     neutral1: '#F8F9FF',
     neutral2: '#F1F2F8',
     neutral5: '#E3E6F2',
@@ -118,6 +119,7 @@ export const dark: ExtendedTheme = {
     success: '#13B055',
     warning: '#FFBC1F',
 
+    neutral: '#FFFFFF',
     neutral1: '#F8F9FF',
     neutral2: '#F1F2F8',
     neutral5: '#E3E6F2',

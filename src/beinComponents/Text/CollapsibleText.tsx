@@ -112,7 +112,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
       )}
 
       {!!shortContent && (
-      <Text.BodyM
+      <Text.SubtitleS
         testID="collapsible_text.markdown.short_content"
         onPress={onToggleShowLess}
         color={colors.neutral50}
@@ -120,35 +120,29 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
         {contentShowAll
           ? t('common:text_see_less')
           : t('common:text_see_more')}
-      </Text.BodyM>
+      </Text.SubtitleS>
       )}
     </View>
   );
 
-  const renderContent = () => {
-    console.log(
-      'aloooo', textProps,
-    );
-
-    return (
-      <Text style={style}>
-        <Text testID="collapsible_text.content" {...textProps}>
-          {!shortContent ? content : contentShowAll ? content : shortContent}
-        </Text>
-        {!!shortContent && (
-          <Text.BodyM
-            testID="collapsible_text.show_text"
-            onPress={onToggleShowLess}
-            color={colors.neutral50}
-          >
-            {contentShowAll
-              ? t('common:text_see_less')
-              : t('common:text_see_more')}
-          </Text.BodyM>
-        )}
+  const renderContent = () => (
+    <Text style={style}>
+      <Text testID="collapsible_text.content" {...textProps}>
+        {!shortContent ? content : contentShowAll ? content : shortContent}
       </Text>
-    );
-  };
+      {!!shortContent && (
+      <Text.SubtitleS
+        testID="collapsible_text.show_text"
+        onPress={onToggleShowLess}
+        color={colors.neutral50}
+      >
+        {contentShowAll
+          ? t('common:text_see_less')
+          : t('common:text_see_more')}
+      </Text.SubtitleS>
+      )}
+    </Text>
+  );
 
   const WrapperComponent = copyEnabled
     ? CopyableView

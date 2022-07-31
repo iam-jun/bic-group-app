@@ -10,7 +10,7 @@ export interface IPayloadSetNewsfeedSearch {
   loadingResult?: boolean;
   suggestionResults?: any[];
   searchResults?: any[];
-  searchInputRef?: any;
+  searchViewRef?: any;
   totalResult?: number;
 }
 

@@ -14,6 +14,7 @@ declare module '@react-navigation/native' {
       success: string;
       warning: string;
 
+      neutral: string;
       neutral1: string;
       neutral2: string;
       neutral5: string;
@@ -117,7 +118,7 @@ declare module '@react-navigation/native' {
       e6: elevation
     }
   };
-  
+
   export type elevation = {
     shadowColor: string,
     shadowOffset: {

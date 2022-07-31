@@ -37,7 +37,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
     return null;
   }
 
-  const memberRole = roles?.[memberRoleIndex] || {};
+  const memberRole = roles?.[memberRoleIndex];
 
   const categories = permissionCategories?.data || [];
 

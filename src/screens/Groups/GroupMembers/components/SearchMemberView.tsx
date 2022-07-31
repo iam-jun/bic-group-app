@@ -33,7 +33,7 @@ const SearchMemberView = ({
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const canManageMember = useKeySelector(
     groupsKeySelector.groupDetail.canManageMember,
   );
