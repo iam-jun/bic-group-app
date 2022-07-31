@@ -59,7 +59,6 @@ const NewsfeedSearch = ({ style, searchViewRef }: NewsfeedSearchProps) => {
   }
 
   const onClose = () => {
-    dispatch(homeActions.setNewsfeedSearch({ isShow: false }));
     dispatch(homeActions.clearAllNewsfeedSearch());
   }
 

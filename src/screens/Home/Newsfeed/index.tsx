@@ -3,6 +3,7 @@ import React, {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import {
+  BackHandler,
   DeviceEventEmitter, StyleSheet,
   View,
 } from 'react-native';
@@ -12,7 +13,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
 import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
-import { useBackPressListener, useTabPressListener } from '~/hooks/navigation';
+import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ITabTypes } from '~/interfaces/IRouter';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
@@ -32,6 +33,7 @@ const Newsfeed = () => {
   const headerRef = useRef<any>();
   const yShared = useSharedValue(0);
 
+  const { rootNavigation } = useRootNavigation()
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const dispatch = useDispatch();
@@ -43,6 +45,7 @@ const Newsfeed = () => {
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
   const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
+  const isShowSearch = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
 
   const searchViewRef = useRef(null);
 
@@ -111,7 +114,13 @@ const Newsfeed = () => {
   );
 
   const handleBackPress = () => {
-    headerRef?.current?.goBack?.();
+    if (isShowSearch) {
+      dispatch(homeActions.clearAllNewsfeedSearch());
+    } else if (rootNavigation.canGoBack) {
+      rootNavigation.goBack();
+    } else {
+      BackHandler.exitApp();
+    }
   };
 
   useBackPressListener(handleBackPress);
