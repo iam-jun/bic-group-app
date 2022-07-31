@@ -450,8 +450,6 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
           data,
         };
 
-        console.log('newPayload', data);
-
         await postDataHelper.putEditPost(newPayload);
         refIsRefresh.current = true;
       } else if (isEdit && sPostId) {
