@@ -1,13 +1,15 @@
 import React, {
   useState, useEffect, useRef, useCallback,
 } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, DeviceEventEmitter } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   interpolate,
   Extrapolate,
+  useAnimatedScrollHandler,
+  runOnJS,
 } from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -155,7 +157,7 @@ const CommunityDetail = (props: any) => {
       return (
         <PrivateWelcome
           onRefresh={onRefresh}
-          onScroll={onScroll}
+          onScroll={onScrollHandler}
           onButtonLayout={onButtonLayout}
         />
       );
@@ -165,7 +167,7 @@ const CommunityDetail = (props: any) => {
       <PageContent
         communityId={communityId}
         getPosts={getPosts}
-        onScroll={onScroll}
+        onScroll={onScrollHandler}
         onButtonLayout={onButtonLayout}
       />
     );
@@ -186,14 +188,17 @@ const CommunityDetail = (props: any) => {
     }, [],
   );
 
-  const onScroll = useCallback(
-    (e: any) => {
-      const offsetY = e?.nativeEvent?.contentOffset?.y;
-      headerRef?.current?.setScrollY?.(offsetY);
-      buttonShow.value = offsetY;
-      tabButtonShow.value = offsetY;
-    }, [],
-  );
+  const scrollWrapper = (offsetY: number) => {
+    headerRef?.current?.setScrollY?.(offsetY);
+    DeviceEventEmitter.emit('stopAllVideo');
+  }
+
+  const onScrollHandler = useAnimatedScrollHandler((event: any) => {
+    const offsetY = event?.contentOffset?.y;
+    runOnJS(scrollWrapper)(offsetY);
+    buttonShow.value = offsetY;
+    tabButtonShow.value = offsetY;
+  });
 
   const buttonStyle = useAnimatedStyle(
     () => ({

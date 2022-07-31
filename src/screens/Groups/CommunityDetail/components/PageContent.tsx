@@ -1,11 +1,9 @@
-import {
-  View, ScrollView, StyleSheet, DeviceEventEmitter,
-} from 'react-native';
+import { View, StyleSheet, RefreshControl } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import Animated from 'react-native-reanimated';
 
-import ListView from '~/beinComponents/list/ListView';
 import InfoHeader from './InfoHeader';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import JoinCancelButton from './JoinCancelButton';
@@ -60,31 +58,10 @@ const _PageContent = ({
     );
   };
 
-  const onPressDiscover = () => {
-    rootNavigation.navigate(
-      groupStack.discoverGroups, { communityId },
-    );
-  };
-
-  const onPressAbout = () => {
-    rootNavigation.navigate(groupStack.communityAbout);
-  };
-
-  const onPressMembers = () => {
-    rootNavigation.navigate(
-      groupStack.communityMembers, { communityId },
-    );
-  };
-
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {
       dispatch(actions.mergeExtraGroupPosts(groupId));
     }
-  };
-
-  const _onScroll = (e: any) => {
-    onScroll && onScroll(e);
-    DeviceEventEmitter.emit('stopAllVideo');
   };
 
   const renderItem = ({ item }: any) => <PostItem postData={item} testID="page_content.post.item" />;
@@ -112,21 +89,26 @@ const _PageContent = ({
   );
 
   return (
-    <ListView
-      isFullView
+    <Animated.FlatList
+      testID="flatlist"
       style={styles.listContainer}
       data={posts.data}
       renderItem={renderItem}
-      onScroll={_onScroll}
+      onScroll={onScroll}
       scrollEventThrottle={16}
-      refreshing={refreshingGroupPosts}
-      onRefresh={_onRefresh}
-      onEndReached={loadMoreData}
-      onEndReachedThreshold={0.5}
       ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListFooterComponent={<ViewSpacing height={spacing.padding.base} />}
-      renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}
+      ItemSeparatorComponent={() => <ViewSpacing height={spacing.margin.base} />}
+      onEndReached={loadMoreData}
+      onEndReachedThreshold={0.5}
+      refreshControl={(
+        <RefreshControl
+          refreshing={refreshingGroupPosts}
+          onRefresh={_onRefresh}
+          tintColor={colors.gray40}
+        />
+      )}
     />
   );
 };
@@ -138,22 +120,11 @@ export default PageContent;
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    buttonContainer: {
-      flexDirection: 'row',
-      paddingTop: spacing.padding.tiny,
-      paddingBottom: spacing.padding.small,
-      paddingHorizontal: spacing.padding.base,
-      backgroundColor: colors.white,
-    },
     listContainer: {
       flex: 1,
     },
     listHeaderComponentStyle: {
       marginBottom: spacing.margin.base,
-    },
-    scrollViewBtn: {
-      paddingBottom: spacing.padding.tiny,
-      backgroundColor: colors.white,
     },
     createPost: {
       marginTop: spacing.margin.base,
