@@ -110,7 +110,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         emit(
           'showFloatingCreatePost', false,
         );
-      } else if (isDown && offsetY > 50) {
+      } else if (isDown && offsetY > 92) {
         emit(
           'showHeader', false,
         );

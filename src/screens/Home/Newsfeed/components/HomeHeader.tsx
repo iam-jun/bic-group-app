@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import {
-  DeviceEventEmitter,
-  StyleSheet, View,
+  DeviceEventEmitter, StyleProp,
+  StyleSheet, View, ViewStyle,
 } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -20,12 +20,15 @@ import HomeHeaderButton from '~/screens/Home/Newsfeed/components/HomeHeaderButto
 import { homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
 
 export interface HomeHeaderProps {
+  style?: StyleProp<ViewStyle>;
   yShared?: any,
   onPressSearch?: () => void;
   onPressChat?: () => void;
 }
 
-const HomeHeader: FC<HomeHeaderProps> = ({ yShared, onPressSearch, onPressChat }: HomeHeaderProps) => {
+const HomeHeader: FC<HomeHeaderProps> = ({
+  style, yShared, onPressSearch, onPressChat,
+}: HomeHeaderProps) => {
   const _yShared = yShared || useSharedValue(0)
   const showShared = useSharedValue(1)
 
@@ -75,7 +78,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({ yShared, onPressSearch, onPressChat }
   );
 
   return (
-    <View>
+    <View style={style}>
       <View style={styles.statusBar} />
       <Animated.View style={[styles.container, containerAnimatedStyle]}>
         <Animated.View style={[styles.logoContainer, logoAnimatedStyle]}>
