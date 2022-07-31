@@ -109,6 +109,8 @@ const _PageContent = ({
           tintColor={colors.gray40}
         />
       )}
+      showsVerticalScrollIndicator
+      keyExtractor={(item) => `list-item-${item}`}
     />
   );
 };
