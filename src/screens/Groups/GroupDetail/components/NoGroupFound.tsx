@@ -18,7 +18,7 @@ const NoGroupFound = () => {
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
 
-  const onPressBack = () => rootNavigation.navigate(groupStack.groups);
+  const onPressBack = () => rootNavigation.navigate(groupStack.communities);
 
   return (
     <ScreenWrapper style={styles.root} isFullView>
