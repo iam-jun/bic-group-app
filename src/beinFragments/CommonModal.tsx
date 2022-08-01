@@ -57,7 +57,6 @@ const CommonModal = () => {
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
-      isContextMenu={false}
       isOpen={isOpen}
       onClose={_onClose}
       ContentComponent={ContentComponent}

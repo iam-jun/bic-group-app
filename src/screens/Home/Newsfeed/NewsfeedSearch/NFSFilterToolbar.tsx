@@ -54,28 +54,20 @@ const NFSFilterToolbar = () => {
     )}`
     : t('home:newsfeed_search:filter_date');
 
-  const showModal = (
-    ContentComponent: any, event?: any,
-  ) => {
+  const showModal = (ContentComponent: any) => {
     dispatch(modalActions.showModal({
       isOpen: true,
       ContentComponent,
-      props: {
-        isContextMenu: true,
-        side: 'right',
-        position: { x: event?.pageX, y: event?.pageY },
-      },
     }));
   };
 
-  const onPressFilterCreatedBy = (event?: any) => {
+  const onPressFilterCreatedBy = () => {
     showModal(
       <NFSFilterCreatedBy
         selectedCreatedBy={filterCreatedBy}
         onSelect={onSelectCreatedBy}
         dismissModalOnPress
       />,
-      event,
     );
   };
 
@@ -87,7 +79,7 @@ const NFSFilterToolbar = () => {
     }
   };
 
-  const onPressFilterDate = (event?: any) => {
+  const onPressFilterDate = () => {
     showModal(
       <NFSFilterDate
         startDate={startDate}
@@ -95,17 +87,15 @@ const NFSFilterToolbar = () => {
         onSelect={onSelectDate}
         dismissModalOnPress
       />,
-      event,
     );
   };
 
-  const onPressFilterOptions = (event?: any) => {
+  const onPressFilterOptions = () => {
     showModal(
       <NFSFilterOptionMenu
         filterCreatedBy={filterCreatedBy}
         filterDate={filterDate}
       />,
-      event,
     );
   };
 
