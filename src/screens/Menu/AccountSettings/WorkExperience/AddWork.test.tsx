@@ -4,7 +4,6 @@ import {cleanup, waitFor} from '@testing-library/react-native';
 import React from 'react';
 
 import initialState from '~/store/initialState';
-import colors from '~/theme/theme';
 import {
   configureStore,
   createTestStore,

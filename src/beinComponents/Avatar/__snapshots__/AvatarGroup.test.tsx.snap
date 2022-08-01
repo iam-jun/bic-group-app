@@ -250,15 +250,18 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
   >
     <View
       style={
-        Object {
-          "backgroundColor": "#FFFFFF",
-          "borderColor": "#FFFFFF",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "height": 22,
-          "overflow": "hidden",
-          "width": 22,
-        }
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#FFFFFF",
+            "borderRadius": 4,
+            "borderWidth": 2,
+            "height": 22,
+            "overflow": "hidden",
+            "width": 22,
+          },
+          undefined,
+        ]
       }
       testID="avatar_group.item_0"
     >
@@ -335,16 +338,20 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
     </View>
     <View
       style={
-        Object {
-          "backgroundColor": "#FFFFFF",
-          "borderColor": "#FFFFFF",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "height": 22,
-          "marginLeft": -6,
-          "overflow": "hidden",
-          "width": 22,
-        }
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#FFFFFF",
+            "borderRadius": 4,
+            "borderWidth": 2,
+            "height": 22,
+            "overflow": "hidden",
+            "width": 22,
+          },
+          Object {
+            "marginLeft": -6,
+          },
+        ]
       }
       testID="avatar_group.item_1"
     >
@@ -450,15 +457,18 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            undefined,
+          ]
         }
         testID="avatar_group.item_0"
       >
@@ -535,16 +545,20 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
       </View>
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "marginLeft": -6,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            Object {
+              "marginLeft": -6,
+            },
+          ]
         }
         testID="avatar_group.item_1"
       >
@@ -631,15 +645,18 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            undefined,
+          ]
         }
         testID="avatar_group.item_2"
       >
@@ -746,15 +763,18 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            undefined,
+          ]
         }
         testID="avatar_group.item_0"
       >
@@ -831,16 +851,20 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
       </View>
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "marginLeft": -6,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            Object {
+              "marginLeft": -6,
+            },
+          ]
         }
         testID="avatar_group.item_1"
       >
@@ -927,15 +951,18 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            undefined,
+          ]
         }
         testID="avatar_group.item_2"
       >
@@ -1012,16 +1039,20 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
       </View>
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "marginLeft": -6,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            Object {
+              "marginLeft": -6,
+            },
+          ]
         }
         testID="avatar_group.item_3"
       >
@@ -1128,15 +1159,18 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            undefined,
+          ]
         }
         testID="avatar_group.item_0"
       >
@@ -1213,16 +1247,20 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
       </View>
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "marginLeft": -6,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            Object {
+              "marginLeft": -6,
+            },
+          ]
         }
         testID="avatar_group.item_1"
       >
@@ -1309,15 +1347,18 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            undefined,
+          ]
         }
         testID="avatar_group.item_2"
       >
@@ -1458,15 +1499,18 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            undefined,
+          ]
         }
         testID="avatar_group.item_0"
       >
@@ -1543,16 +1587,20 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
       </View>
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "marginLeft": -6,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            Object {
+              "marginLeft": -6,
+            },
+          ]
         }
         testID="avatar_group.item_1"
       >
@@ -1639,15 +1687,18 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 4,
-            "borderWidth": 2,
-            "height": 22,
-            "overflow": "hidden",
-            "width": 22,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#FFFFFF",
+              "borderRadius": 4,
+              "borderWidth": 2,
+              "height": 22,
+              "overflow": "hidden",
+              "width": 22,
+            },
+            undefined,
+          ]
         }
         testID="avatar_group.item_2"
       >
@@ -1737,15 +1788,18 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
       >
         <View
           style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#FFFFFF",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 22,
-              "overflow": "hidden",
-              "width": 22,
-            }
+            Array [
+              Object {
+                "backgroundColor": "#FFFFFF",
+                "borderColor": "#FFFFFF",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "height": 22,
+                "overflow": "hidden",
+                "width": 22,
+              },
+              undefined,
+            ]
           }
           testID="avatar_group.item_3"
         >

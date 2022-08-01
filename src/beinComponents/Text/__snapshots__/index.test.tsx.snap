@@ -57,7 +57,7 @@ exports[`Text component renders correctly variant 1`] = `
       Object {
         "color": "#181C32",
         "fontFamily": "BeVietnamPro-SemiBold",
-        "fontSize": 17,
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -76,7 +76,7 @@ exports[`Text component renders correctly variant H1 1`] = `
       Object {
         "color": "#181C32",
         "fontFamily": "BeVietnamPro-SemiBold",
-        "fontSize": 32,
+        "fontSize": 28,
       },
       Object {},
       undefined,
@@ -95,7 +95,7 @@ exports[`Text component renders correctly variant H2 1`] = `
       Object {
         "color": "#181C32",
         "fontFamily": "BeVietnamPro-SemiBold",
-        "fontSize": 28,
+        "fontSize": 24,
       },
       Object {},
       undefined,
@@ -114,7 +114,7 @@ exports[`Text component renders correctly variant H3 1`] = `
       Object {
         "color": "#181C32",
         "fontFamily": "BeVietnamPro-SemiBold",
-        "fontSize": 24,
+        "fontSize": 20,
       },
       Object {},
       undefined,
@@ -133,7 +133,7 @@ exports[`Text component renders correctly variant H4 1`] = `
       Object {
         "color": "#181C32",
         "fontFamily": "BeVietnamPro-SemiBold",
-        "fontSize": 20,
+        "fontSize": 17,
       },
       Object {},
       undefined,
@@ -152,7 +152,7 @@ exports[`Text component renders correctly variant H5 1`] = `
       Object {
         "color": "#181C32",
         "fontFamily": "BeVietnamPro-SemiBold",
-        "fontSize": 17,
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -171,7 +171,7 @@ exports[`Text component renders correctly variant H6 1`] = `
       Object {
         "color": "#181C32",
         "fontFamily": "BeVietnamPro-SemiBold",
-        "fontSize": 15,
+        "fontSize": 13,
       },
       Object {},
       undefined,
