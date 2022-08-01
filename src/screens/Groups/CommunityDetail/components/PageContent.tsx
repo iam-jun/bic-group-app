@@ -110,7 +110,7 @@ const _PageContent = ({
         />
       )}
       showsVerticalScrollIndicator
-      keyExtractor={(item) => `list-item-${item}`}
+      keyExtractor={(item: any, index: number) => `list-item-${item.id}-${index}`}
     />
   );
 };

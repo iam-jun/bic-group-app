@@ -7,7 +7,6 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   interpolate,
-  Extrapolate,
   useAnimatedScrollHandler,
   runOnJS,
 } from 'react-native-reanimated';
@@ -70,7 +69,6 @@ const CommunityDetail = (props: any) => {
   );
 
   const buttonShow = useSharedValue(0);
-  const tabButtonShow = useSharedValue(0);
 
   const getCommunityDetail = (loadingPage = false) => {
     dispatch(actions.getCommunityDetail({ communityId, loadingPage, showLoading: true }));
@@ -197,14 +195,10 @@ const CommunityDetail = (props: any) => {
     const offsetY = event?.contentOffset?.y;
     runOnJS(scrollWrapper)(offsetY);
     buttonShow.value = offsetY;
-    tabButtonShow.value = offsetY;
   });
 
   const buttonStyle = useAnimatedStyle(
     () => ({
-      position: 'absolute',
-      width: '100%',
-      bottom: 0,
       opacity: interpolate(
         buttonShow.value,
         [0, buttonHeight - 20, buttonHeight],
@@ -213,24 +207,6 @@ const CommunityDetail = (props: any) => {
     }),
     [buttonHeight],
   );
-
-  const tabButtonHeaderStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      tabButtonShow.value,
-      [0, buttonHeight - 5, buttonHeight],
-      [0, 0, 1],
-    ),
-    transform: [
-      {
-        translateY: interpolate(
-          tabButtonShow.value,
-          [0, buttonHeight - 20, buttonHeight],
-          [-150, -50, 50],
-          Extrapolate.CLAMP,
-        ),
-      },
-    ],
-  }), [buttonHeight]);
 
   const renderCommunityDetail = () => (
     <>
@@ -243,16 +219,14 @@ const CommunityDetail = (props: any) => {
         rightIconProps={{ backgroundColor: theme.colors.white }}
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
-        onSearchText={{}} // temp add here to display search icon
+        showStickyHeight={buttonHeight}
+        stickyHeaderComponent={<TabButtonHeader communityId={communityId} isMember={isMember} />}
       />
       <View testID="community_detail.content" style={styles.contentContainer}>
         {renderCommunityContent()}
       </View>
-      <Animated.View style={buttonStyle}>
+      <Animated.View style={[styles.button, buttonStyle]}>
         <JoinCancelButton style={styles.joinBtn} />
-      </Animated.View>
-      <Animated.View style={[styles.tabButtonHeader, tabButtonHeaderStyle]}>
-        <TabButtonHeader communityId={communityId} isMember={isMember} />
       </Animated.View>
     </>
   );
@@ -268,7 +242,6 @@ export default CommunityDetail;
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
-  const insets = useSafeAreaInsets();
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.neutral5,
@@ -283,10 +256,10 @@ const themeStyles = (theme: ExtendedTheme) => {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
     },
-    tabButtonHeader: {
+    button: {
       position: 'absolute',
       width: '100%',
-      top: insets.top,
+      bottom: 0,
     },
   });
 };
