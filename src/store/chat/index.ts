@@ -1,8 +1,7 @@
 import { AxiosResponse } from 'axios';
-import create from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
 import apiConfig from '~/configs/apiConfig';
 import { makeHttpRequest } from '~/services/httpApiRequest';
+import { createStore, withDevtools, withPersist } from '../utils';
 
 export interface ChatState {
   unreadChannels: any,
@@ -10,7 +9,7 @@ export interface ChatState {
   // setUnreadChannels: (payload: any) => void
 }
 
-const useChatStore = create(persist<ChatState>((set) => ({
+const useChatStore = (set, get) => ({
   unreadChannels: {},
   initChat: async () => {
     try {
@@ -31,6 +30,6 @@ const useChatStore = create(persist<ChatState>((set) => ({
       console.error('initChat', error)
     }
   },
-})));
+});
 
-export default useChatStore;
+export default createStore<ChatState>(withDevtools(withPersist(useChatStore, { name: 'chat-store' })));

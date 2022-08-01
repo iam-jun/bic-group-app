@@ -5,7 +5,7 @@ import useChatStore, { ChatState } from '~/store/chat'
 export const chatState = (state: any) => state.chat;
 
 export const getUnreadChannelCount = ():number => {
-  const { unreadChannels }: ChatState = useChatStore();
+  const { unreadChannels } = useChatStore();
 
   return useMemo(() => {
     let count = 0;

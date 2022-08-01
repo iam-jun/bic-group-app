@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
 import NetInfo from '@react-native-community/netinfo';
+import { Auth } from 'aws-amplify';
+import { debounce } from 'lodash';
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { debounce } from 'lodash';
-import { Auth } from 'aws-amplify';
 import { useAuthToken, useAuthTokenExpire, useUserIdAuth } from '~/hooks/auth';
 
 import chatSocketClient from '~/services/chatSocket';
-import chatAction from '~/store/chat/actions';
 import { getTokenAndCallBackBein } from '~/services/httpApiRequest';
+import useChatStore from '~/store/chat';
+import chatAction from '~/store/chat/actions';
 import getEnv from '~/utils/env';
-import useChatStore, { ChatState } from '~/store/chat'
 
 const useChatSocket = () => {
   const isConnectedRef = useRef(true);
@@ -19,7 +19,6 @@ const useChatSocket = () => {
   const token = useAuthToken();
   const tokenExp = useAuthTokenExpire();
   const dispatch = useDispatch();
-  // const initChat = useChatStore((state: ChatState) => state.initChat);
   const { initChat } = useChatStore();
 
   // use ref to avoid arrow function callback can't get the latest value of state
