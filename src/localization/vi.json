@@ -540,7 +540,7 @@
     "text_post_deleted": "Bài viết này đã bị xoá, không thể gửi bình luận trả lời của bạn",
     "deleted_post": {
       "title": "Trang này không tồn tại.",
-      "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "description": "Bài viết này có thể bị xóa hoặc bạn không có quyền xem bài viết này",
       "button_text": "Quay về News Feed"
     },
     "text_important_warning_1": "Không thể cài đặt Bài viết quan trọng vì bạn không có quyền trong",

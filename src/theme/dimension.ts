@@ -6,7 +6,7 @@ const guidelineBaseWidth = 375;
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
 
-// Cover image ratio -> 25:11
+// Cover image ratio -> 21:9
 export const scaleCoverHeight = (widthSize: number) => (widthSize / 21) * 9;
 
 export const groupProfileImageCropRatio = {
