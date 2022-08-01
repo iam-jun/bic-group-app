@@ -116,6 +116,7 @@ const createStyles = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     container: {
+      zIndex: 99,
       position: 'absolute',
       width: '100%',
       height: '100%',
