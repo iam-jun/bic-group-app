@@ -1,5 +1,7 @@
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { RefreshControl, View } from 'react-native';
 import React from 'react';
+import Animated from 'react-native-reanimated';
+
 import InfoHeader from './InfoHeader';
 import AboutContent from './AboutContent';
 import JoinCancelButton from './JoinCancelButton';
@@ -20,7 +22,7 @@ const PrivateWelcome = ({
   const isGettingInfoDetail = useKeySelector(groupsKeySelector.isGettingInfoDetail);
 
   return (
-    <ScrollView
+    <Animated.ScrollView
       testID="private_welcome"
       showsVerticalScrollIndicator={false}
       scrollEventThrottle={16}
@@ -40,7 +42,7 @@ const PrivateWelcome = ({
       </View>
 
       <AboutContent />
-    </ScrollView>
+    </Animated.ScrollView>
   );
 };
 

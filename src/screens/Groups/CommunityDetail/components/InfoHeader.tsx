@@ -2,71 +2,94 @@ import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import i18next from 'i18next';
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
+import Button from '~/beinComponents/Button';
 import images from '~/resources/images';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import privacyTypes from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
+import { useBaseHook } from '~/hooks';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
-const InfoHeader = () => {
+interface InfoHeaderProps {
+  onPressGroupTree?: () => void
+}
+
+const InfoHeader = ({ onPressGroupTree }: InfoHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
+  const { t } = useBaseHook()
   const styles = themeStyles(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
-    name, userCount, backgroundImgUrl, icon, privacy,
+    name, userCount, backgroundImgUrl, icon, privacy, joinStatus,
   } = infoDetail;
+  const isMember = joinStatus === groupJoinStatus.member;
   const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
 
   const renderCoverImage = () => (
-    <View testID="info_header.cover">
+    <View testID="info_header.cover" style={styles.coverAvatarContainer}>
       <Image
         style={styles.cover}
         source={backgroundImgUrl || images.img_cover_default}
+      />
+      <Avatar.LargeAlt
+        showBorder
+        source={icon || images.img_user_avatar_default}
+        style={styles.avatar}
       />
     </View>
   );
 
   const renderInfoHeader = () => (
     <View style={styles.infoContainer}>
-      <Avatar.Large
-        source={icon || images.img_user_avatar_default}
-        style={styles.avatar}
-      />
-      <View style={{ flex: 1 }}>
-        <Text.H6 testID="info_header.name">{name}</Text.H6>
-        <View style={styles.info}>
-          <Icon
-            icon={iconPrivacy}
-            size={16}
-            tintColor={theme.colors.neutral80}
-          />
-          <Text.BodyS
-            color={theme.colors.gray50}
-            testID="info_header.privacy"
+      <View style={styles.flex1}>
+        <Text.H4 numberOfLines={2} color={theme.colors.neutral80} testID="info_header.name">{name}</Text.H4>
+        <View style={styles.infoLine}>
+          <View style={styles.info}>
+            <Icon
+              icon={iconPrivacy}
+              size={16}
+              tintColor={theme.colors.neutral40}
+            />
+            <Text.BodySMedium
+              style={styles.privacyText}
+              color={theme.colors.neutral40}
+              testID="info_header.privacy"
+            >
+              {t(privacyTitle)}
+            </Text.BodySMedium>
+            <Text.BodySMedium
+              style={styles.memberCount}
+              color={theme.colors.neutral40}
+              testID="info_header.member_count"
+            >
+              {userCount}
+            </Text.BodySMedium>
+            <Text.BodyS color={theme.colors.neutral40}>
+              {`${t('groups:title_members', {
+                count: userCount,
+              })}`}
+            </Text.BodyS>
+          </View>
+          {isMember && (
+          <Button.Secondary
+            useI18n
+            color={theme.colors.blue2}
+            textColor={theme.colors.blue50}
+            borderRadius={spacing.borderRadius.base}
+            textVariant="buttonS"
+            testID="page_content.your_groups_btn"
+            onPress={onPressGroupTree}
           >
-            {` ${i18next.t(privacyTitle)}`}
-          </Text.BodyS>
-          <Text.BodyS color={theme.colors.gray50}> • </Text.BodyS>
-          <Icon
-            icon="UserGroup"
-            size={16}
-            tintColor={theme.colors.neutral80}
-          />
-          <Text.BodyS
-            color={theme.colors.gray50}
-            testID="info_header.member_count"
-          >
-            {` ${userCount} ${i18next.t('groups:text_members', {
-              count: userCount,
-            })}`}
-          </Text.BodyS>
+            groups:group_content:btn_group_tree
+          </Button.Secondary>
+          )}
         </View>
       </View>
     </View>
@@ -85,23 +108,41 @@ export default InfoHeader;
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
+    coverAvatarContainer: {
+      paddingBottom: spacing.padding.large,
+      backgroundColor: colors.white,
+    },
     cover: {
       width: dimension.deviceWidth,
       height: scaleCoverHeight(dimension.deviceWidth),
     },
     avatar: {
-      // top: -5,
-      marginRight: spacing.margin.base,
+      position: 'absolute',
+      bottom: 0,
+      left: 19,
     },
+    flex1: { flex: 1 },
     infoContainer: {
       backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.small,
+      paddingTop: spacing.padding.small,
+    },
+    infoLine: {
       flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: spacing.margin.small,
     },
     info: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    privacyText: {
+      marginLeft: spacing.margin.small,
+    },
+    memberCount: {
+      marginLeft: 40,
+      marginRight: spacing.margin.tiny,
     },
   });
 };
