@@ -12,6 +12,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Animated, {
+  Extrapolate,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -72,6 +73,8 @@ export interface HeaderProps {
   onRightPress?: () => void;
   onPressChat?: () => void;
   useAnimationTitle?: boolean;
+  showStickyHeight?: number;
+  stickyHeaderComponent?: React.ReactNode;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -111,6 +114,8 @@ const Header: React.FC<HeaderProps> = ({
   onRightPress,
   onPressChat,
   useAnimationTitle,
+  showStickyHeight,
+  stickyHeaderComponent,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const inputRef = useRef<any>();
@@ -124,6 +129,7 @@ const Header: React.FC<HeaderProps> = ({
 
   const showValue = useSharedValue(1);
   const scrollY = useSharedValue(0);
+  const stickyShow = useSharedValue(0);
 
   const { rootNavigation } = useRootNavigation();
 
@@ -248,7 +254,28 @@ const Header: React.FC<HeaderProps> = ({
     }))
     : {};
 
+  const stickyHeaderStyle = showStickyHeight ? useAnimatedStyle(() => ({
+    opacity: interpolate(stickyShow.value, [0, 1], [0, 1]),
+    transform: [
+      {
+        translateY: interpolate(
+          stickyShow.value,
+          [0, 1],
+          [-50, 60],
+          Extrapolate.CLAMP,
+        ),
+      },
+    ],
+  }), [showStickyHeight]) : {};
+
   const setScrollY = (offsetY: number) => {
+    if (offsetY > showStickyHeight && offsetY < scrollY.value) {
+      // show sticky header when scrolling up
+      stickyShow.value = withTiming(1);
+    } else {
+      stickyShow.value = withTiming(0);
+    }
+
     scrollY.value = offsetY;
   };
 
@@ -437,12 +464,19 @@ const Header: React.FC<HeaderProps> = ({
     </Animated.View>
   );
 
-  return <View testID="header">{children || renderContent()}</View>;
+  return (
+    <>
+      <View style={styles.header} testID="header">{children || renderContent()}</View>
+      <Animated.View style={[styles.stickyHeader, stickyHeaderStyle]}>{stickyHeaderComponent}</Animated.View>
+    </>
+  )
 };
 
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
+  const insets = useSafeAreaInsets();
   return StyleSheet.create({
+    header: { zIndex: 2 },
     bottomBorderAndShadow: {
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
       borderColor: colors.neutral5,
@@ -483,6 +517,12 @@ const createStyle = (theme: ExtendedTheme) => {
     subtitle: {
       height: 16,
       lineHeight: 16,
+    },
+    stickyHeader: {
+      zIndex: 1,
+      position: 'absolute',
+      top: insets.top,
+      width: '100%',
     },
   });
 };
