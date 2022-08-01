@@ -78,6 +78,10 @@ describe('Update Posts Containing Video In Progress Saga', () => {
       data: LIST_POST_CONTAINING_VIDEO_PROCESS_1,
     };
 
+    const newHomePosts = [
+      {...ATTACH_NOTIFICATION_PUBLISHED.activities[0]},
+    ] as any;
+
     return expectSaga(updatePostsContainingVideoInProgress, {
       type: 'test',
       payload: {...ATTACH_NOTIFICATION_PUBLISHED},
@@ -87,14 +91,15 @@ describe('Update Posts Containing Video In Progress Saga', () => {
         postActions.setAllPostContainingVideoInProgress({total: 0, data: []}),
       )
       .withState(storeData)
+      .put(homeActions.setHomePosts(newHomePosts))
       .put(
-        homeActions.setHomePosts([
-          ATTACH_NOTIFICATION_PUBLISHED.activities[0],
-        ] as any),
+        postActions.addToAllPosts({
+          data: {...ATTACH_NOTIFICATION_PUBLISHED.activities[0]} as any,
+        }),
       )
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(4);
+        expect(allEffects?.length).toEqual(5);
       });
   });
 });

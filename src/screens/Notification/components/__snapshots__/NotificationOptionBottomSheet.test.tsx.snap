@@ -2,58 +2,24 @@
 
 exports[`NotificationOptionBottomSheet component renders correctly 1`] = `
 <View>
-  <View
-    style={
-      Object {
-        "paddingVertical": 4,
+  <View>
+    <View
+      style={
+        Object {
+          "paddingVertical": 4,
+        }
       }
-    }
-  >
-    <View>
-      <View
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "height": 44,
-            "opacity": 1,
-            "paddingHorizontal": 16,
-          }
-        }
-        testID="notification.mark_notification_read_or_unread"
-      >
+    >
+      <View>
         <View
           accessibilityState={
             Object {
-              "disabled": true,
+              "disabled": false,
             }
           }
           accessible={true}
           collapsable={false}
-          focusable={false}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -63,156 +29,110 @@ exports[`NotificationOptionBottomSheet component renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": 44,
               "opacity": 1,
+              "paddingHorizontal": 16,
             }
           }
+          testID="notification.mark_notification_read_or_unread"
         >
           <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginRight": 24,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
+              Object {
+                "opacity": 1,
+              }
             }
           >
             <View
               style={
                 Array [
-                  undefined,
-                  undefined,
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginRight": 24,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View />
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              numberOfLines={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 15,
+                  },
+                  Object {},
                   undefined,
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  color={4281284933}
-                  focusable={false}
-                  height={24}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                  tintColor={4281284933}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M6.77 9.15l5.44-5.44a1 1 0 10-1.42-1.42L6.06 7 4.21 5.17a1 1 0 00-1.42 1.42l2.56 2.56a1 1 0 001.42 0zM18.5 6H13a1 1 0 000 2h5.5a1 1 0 011 1v9.72l-1.57-1.45a1 1 0 00-.68-.27H8.5a1 1 0 01-1-1v-3.5a1 1 0 00-2 0V16a3 3 0 003 3h8.36l3 2.73a1 1 0 00.68.27 1.1 1.1 0 00.4-.08 1 1 0 00.6-.92V9a3 3 0 00-3.04-3z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
-            </View>
+              Mark as unread
+            </Text>
           </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flex": 1,
-            }
-          }
-        >
-          <Text
-            numberOfLines={2}
-            style={
-              Array [
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
-                },
-                Object {},
-                undefined,
-              ]
-            }
-          >
-            Mark as unread
-          </Text>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "height": 44,
-            "opacity": 1,
-            "paddingHorizontal": 16,
-          }
-        }
-        testID="notification.off_notification_from_group"
-      >
+      <View>
         <View
           accessibilityState={
             Object {
-              "disabled": true,
+              "disabled": false,
             }
           }
           accessible={true}
           collapsable={false}
-          focusable={false}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -222,108 +142,98 @@ exports[`NotificationOptionBottomSheet component renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": 44,
               "opacity": 1,
+              "paddingHorizontal": 16,
             }
           }
+          testID="notification.off_notification_from_group"
         >
           <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginRight": 24,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
+              Object {
+                "opacity": 1,
+              }
             }
           >
             <View
               style={
                 Array [
-                  undefined,
-                  undefined,
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginRight": 24,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View />
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              numberOfLines={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 15,
+                  },
+                  Object {},
                   undefined,
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  color={4281284933}
-                  focusable={false}
-                  height={24}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                  tintColor={4281284933}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M12.43 4.1a1 1 0 00-1 .12L6.65 8H3a1 1 0 00-1 1v6a1 1 0 001 1h3.65l4.73 3.78A1 1 0 0012 20a.91.91 0 00.43-.1A1 1 0 0013 19V5a1 1 0 00-.57-.9zM11 16.92l-3.38-2.7A1 1 0 007 14H4v-4h3a1 1 0 00.62-.22L11 7.08zM19.91 12l1.8-1.79a1 1 0 00-1.42-1.42l-1.79 1.8-1.79-1.8a1 1 0 00-1.42 1.42l1.8 1.79-1.8 1.79a1 1 0 000 1.42 1 1 0 001.42 0l1.79-1.8 1.79 1.8a1 1 0 001.42 0 1 1 0 000-1.42z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
-            </View>
+              Turn off notifications from this group
+            </Text>
           </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flex": 1,
-            }
-          }
-        >
-          <Text
-            numberOfLines={2}
-            style={
-              Array [
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
-                },
-                Object {},
-                undefined,
-              ]
-            }
-          >
-            Turn off notifications from this group
-          </Text>
         </View>
       </View>
     </View>

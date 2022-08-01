@@ -17,194 +17,150 @@ exports[`StickerView component renders correctly 1`] = `
     }
   />
   <View>
-    <View
-      style={
-        Array [
-          Object {
-            "height": "100%",
-            "marginTop": 8,
-          },
-        ]
-      }
-    >
+    <View>
       <View
         style={
-          Object {
-            "marginHorizontal": 12,
-            "paddingVertical": 12,
-          }
+          Array [
+            Object {
+              "height": "100%",
+              "marginTop": 8,
+            },
+          ]
         }
       >
         <View
           style={
             Object {
-              "backgroundColor": "#EAEDF2",
-              "borderRadius": 20,
-              "height": 40,
-              "justifyContent": "center",
-              "paddingHorizontal": 16,
+              "marginHorizontal": 12,
+              "paddingVertical": 12,
             }
           }
         >
           <View
             style={
               Object {
-                "alignItems": "center",
-                "flexDirection": "row",
+                "backgroundColor": "#E3E6F2",
+                "borderRadius": 20,
+                "height": 40,
+                "justifyContent": "center",
+                "paddingHorizontal": 16,
               }
             }
           >
             <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              hitSlop={
-                Object {
-                  "bottom": 10,
-                  "left": 10,
-                  "right": 10,
-                  "top": 10,
-                }
-              }
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "opacity": 1,
+                  "alignItems": "center",
+                  "flexDirection": "row",
                 }
               }
             >
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={false}
+                hitSlop={
+                  Object {
+                    "bottom": 10,
+                    "left": 10,
+                    "right": 10,
+                    "top": 10,
+                  }
+                }
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                    },
-                    Object {
-                      "marginRight": 8,
-                    },
-                    Object {
-                      "backgroundColor": undefined,
-                    },
-                  ]
+                  Object {
+                    "opacity": 1,
+                  }
                 }
               >
                 <View
                   style={
                     Array [
-                      undefined,
-                      undefined,
-                      undefined,
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      },
+                      Object {
+                        "marginRight": 8,
+                      },
+                      Object {
+                        "backgroundColor": undefined,
+                      },
                     ]
                   }
                 >
-                  <View>
-                    <RNSVGSvgView
-                      align="xMidYMid"
-                      bbHeight={20}
-                      bbWidth={20}
-                      color={4284641926}
-                      focusable={false}
-                      height={20}
-                      meetOrSlice={0}
-                      minX={0}
-                      minY={0}
-                      style={
-                        Array [
-                          Object {
-                            "backgroundColor": "transparent",
-                            "borderWidth": 0,
-                          },
-                          Object {},
-                          Object {
-                            "flex": 0,
-                            "height": 20,
-                            "width": 20,
-                          },
-                        ]
-                      }
-                      tintColor={4284641926}
-                      vbHeight={24}
-                      vbWidth={24}
-                      width={20}
-                    >
-                      <RNSVGGroup>
-                        <RNSVGPath
-                          d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
-                          fill={
-                            Array [
-                              2,
-                            ]
-                          }
-                          propList={
-                            Array [
-                              "fill",
-                            ]
-                          }
-                        />
-                      </RNSVGGroup>
-                    </RNSVGSvgView>
+                  <View
+                    style={
+                      Array [
+                        undefined,
+                        undefined,
+                        undefined,
+                      ]
+                    }
+                  >
+                    <View />
                   </View>
                 </View>
               </View>
-            </View>
-            <TextInput
-              autoComplete="off"
-              onChangeText={[Function]}
-              onFocus={[Function]}
-              onSubmitEditing={[Function]}
-              placeholder="Search GIPHY"
-              placeholderTextColor="#627286"
-              returnKeyType="search"
-              selectionColor="#627286"
-              style={
-                Object {
-                  "color": "#2F3945",
-                  "flex": 1,
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 16,
-                  "height": "100%",
+              <TextInput
+                autoComplete="off"
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                onSubmitEditing={[Function]}
+                placeholder="Search GIPHY"
+                placeholderTextColor="#767D93"
+                returnKeyType="search"
+                selectionColor="#767D93"
+                style={
+                  Object {
+                    "color": "#181C32",
+                    "flex": 1,
+                    "fontFamily": "BeVietnamPro-Light",
+                    "fontSize": 15,
+                    "height": "100%",
+                  }
                 }
-              }
-              testID="sticker_view.search_input"
-              value=""
-            />
+                testID="sticker_view.search_input"
+                value=""
+              />
+            </View>
           </View>
         </View>
-      </View>
-      <View>
-        <GiphyReactNativeGridView
-          cellPadding={4}
-          content={
-            Object {
-              "mediaType": undefined,
-              "requestType": "trending",
-              "searchQuery": "",
-            }
-          }
-          onContentUpdate={[Function]}
-          onMediaSelect={[Function]}
-          style={
-            Array [
+        <View>
+          <GiphyReactNativeGridView
+            cellPadding={4}
+            content={
               Object {
-                "height": "100%",
-              },
-              false,
-            ]
-          }
-          testID="sticker_view.grid_view"
-        />
+                "mediaType": undefined,
+                "requestType": "trending",
+                "searchQuery": "",
+              }
+            }
+            onContentUpdate={[Function]}
+            onMediaSelect={[Function]}
+            style={
+              Array [
+                Object {
+                  "height": "100%",
+                },
+                false,
+              ]
+            }
+            testID="sticker_view.grid_view"
+          />
+        </View>
       </View>
     </View>
   </View>

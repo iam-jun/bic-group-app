@@ -130,6 +130,17 @@ jest.doMock('react-native-modalize', () => {
   return MockedModule;
 });
 
+jest.doMock('react-native-portalize', () => {
+  const RealModule = jest.requireActual('react-native-portalize');
+  // noinspection UnnecessaryLocalVariableJS
+  const MockedModule = {
+    ...RealModule,
+    // eslint-disable-next-line react/prop-types
+    Portal: ({children}) => <ReactNative.View>{children}</ReactNative.View>,
+  };
+  return MockedModule;
+});
+
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
@@ -274,3 +285,13 @@ jest.mock('react-hook-form', () => ({
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );
+
+jest.doMock('expo-av', () => {
+  // const {View} = ReactNative;
+  const Video = {
+    ...ReactNative.View,
+    onPlaybackStatusUpdate: jest.fn(),
+    onError: jest.fn(),
+  };
+  return {...jest.requireActual('expo-av'), Video};
+});

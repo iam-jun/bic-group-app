@@ -63,7 +63,7 @@ export default function* deleteReactToPost({
 //   });
 // }
 
-function* removeReactionLocal(id: number, reactionId: string): any {
+function* removeReactionLocal(id: string, reactionId: string): any {
   const post2 = yield select(s => get(s, postKeySelector.postById(id)));
   const cOwnerReactions2 = post2.ownerReactions || [];
   const cReactionCounts2 = post2.reactionsCount || {};

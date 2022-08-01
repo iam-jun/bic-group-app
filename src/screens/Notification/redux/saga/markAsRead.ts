@@ -7,7 +7,7 @@ import notificationSelector from '../selector';
 
 function* markAsRead({payload}: {payload: any; type: string}): any {
   try {
-    const {id, keyValue} = payload || {};
+    const {id} = payload || {};
     if (!id) return;
 
     yield call(notificationsDataHelper.markAsRead, id);
