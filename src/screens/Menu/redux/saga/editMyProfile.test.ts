@@ -80,7 +80,7 @@ describe('Update User Profile Saga', () => {
       type: 'test',
       payload: {
         id: 58,
-        background_img_url:
+        backgroundImgUrl:
           'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
       },
     };
@@ -88,7 +88,7 @@ describe('Update User Profile Saga', () => {
       code: 200,
       data: {
         id: 58,
-        background_img_url:
+        backgroundImgUrl:
           'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
       },
       meta: {},

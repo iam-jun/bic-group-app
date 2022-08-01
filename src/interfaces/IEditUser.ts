@@ -1,5 +1,5 @@
-import {IUploadType} from '~/configs/resourceConfig';
-import {IFilePicked} from './common';
+import { IUploadType } from '~/configs/resourceConfig';
+import { IFilePicked } from './common';
 
 export type GENDER_TYPE = 'MALE' | 'FEMALE' | 'OTHERS';
 export type RELATIONSHIP_TYPE =
@@ -9,8 +9,8 @@ export type RELATIONSHIP_TYPE =
   | 'MARRIED';
 
 export interface IUserImageUpload {
-  id: number;
-  fieldName: 'avatar' | 'background_img_url';
+  id: string;
+  fieldName: 'avatar' | 'backgroundImgUrl';
   file: IFilePicked;
   uploadType: IUploadType;
 }

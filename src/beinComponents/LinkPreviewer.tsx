@@ -1,44 +1,49 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import appActions from '~/store/app/actions';
-import {scaleSize} from '~/theme/dimension';
+import { scaleSize } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import {getUrlFromText, openLink} from '~/utils/common';
+import { getUrlFromText } from '~/utils/common';
+import { openUrl } from '~/utils/link';
 import ButtonWrapper from './Button/ButtonWrapper';
 
 interface Props {
   text?: string;
 }
 
-const LinkPreviewer = ({text}: Props) => {
+const LinkPreviewer = ({ text }: Props) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const [link, setLink] = useState<string | null | undefined>('');
-  const linkPreviews = useKeySelector(`app.linkPreviews`);
+  const linkPreviews = useKeySelector('app.linkPreviews');
 
-  useEffect(() => {
-    const url = getUrlFromText(text);
-    setLink(url);
-  }, [text]);
+  useEffect(
+    () => {
+      const url = getUrlFromText(text);
+      setLink(url);
+    }, [text],
+  );
 
-  useEffect(() => {
-    if (link && !linkPreviews?.[link]) {
-      dispatch(appActions.getLinkPreview(link));
-    }
-  }, [link]);
+  useEffect(
+    () => {
+      if (link && !linkPreviews?.[link]) {
+        dispatch(appActions.getLinkPreview(link));
+      }
+    }, [link],
+  );
 
   // link preview must have title at least
   if (!link || !linkPreviews?.[link]?.title) return null;
 
   const onPress = () => {
-    openLink(link);
+    openUrl(link);
   };
 
   return (
@@ -65,7 +70,7 @@ const LinkPreviewer = ({text}: Props) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'column',

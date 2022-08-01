@@ -1,4 +1,5 @@
-import {COMMUNITY_ROLE} from '~/interfaces/ICommunity';
+import { COMMUNITY_ROLE } from '~/interfaces/ICommunity';
+
 export const communities = [
   {
     id: 0,
@@ -32,7 +33,6 @@ export const communities = [
     ],
     createdAt: '2022-04-26T08:29:58.579Z',
     updatedAt: '2022-04-26T08:29:58.579Z',
-    ownerId: 0,
     userCount: 0,
     joinStatus: 0,
   },
@@ -40,22 +40,20 @@ export const communities = [
 
 export const communityDetailData = {
   id: 1,
-  group_id: 1,
+  groupId: 1,
   name: 'EVOL Community',
   slug: 'evol',
   privacy: 'PUBLIC',
   description: 'Description',
   icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
-  background_img_url:
+  backgroundImgUrl:
     'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
   teamId: 'string',
-  created_at: '2022-04-26T08:29:58.579Z',
-  updated_at: '2022-04-26T08:29:58.579Z',
-  user_count: 5,
-  can_setting: true,
-  can_manage_member: true,
-  can_leave: true,
-  join_status: 2,
+  createdAt: '2022-04-26T08:29:58.579Z',
+  updatedAt: '2022-04-26T08:29:58.579Z',
+  userCount: 5,
+  canManageMember: true,
+  joinStatus: 2,
 };
 
 export const previewMemberDetail = {
@@ -68,14 +66,14 @@ export const previewMemberDetail = {
 
 export const adminDetail = {
   ...previewMemberDetail,
-  roles: {name: 'COMMUNITY_ADMIN' as COMMUNITY_ROLE},
-  chat_user_id: 'tg6kmc6cmybgwpcif9znngyyebe',
+  roles: { name: 'COMMUNITY_ADMIN' as COMMUNITY_ROLE },
+  chatUserId: 'tg6kmc6cmybgwpcif9znngyyebe',
 };
 
 export const memberDetail = {
   ...previewMemberDetail,
-  roles: {name: 'MEMBER' as COMMUNITY_ROLE},
-  chat_user_id: 'tg6kmc6cmybgwpcif9znngyyebe',
+  roles: { name: 'MEMBER' as COMMUNITY_ROLE },
+  chatUserId: 'tg6kmc6cmybgwpcif9znngyyebe',
 };
 
 export const previewMemberData = [
@@ -94,7 +92,7 @@ export const previewMemberData = [
 export const memberData = {
   community_admin: {
     data: [adminDetail, adminDetail, adminDetail, adminDetail, adminDetail],
-    user_count: 5,
+    userCount: 5,
     name: 'COMMUNITY_ADMIN',
   },
   community_member: {
@@ -106,17 +104,17 @@ export const memberData = {
       memberDetail,
       memberDetail,
     ],
-    user_count: 6,
+    userCount: 6,
     name: 'COMMUNITY_MEMBER',
   },
 };
 
 export const memberRequestDetail = {
   id: 26,
-  user_id: 16,
-  created_at: '2022-05-21T08:09:22.320Z',
-  updated_at: '2022-06-06T08:12:53.483Z',
-  group_id: 2,
+  userId: 16,
+  createdAt: '2022-05-21T08:09:22.320Z',
+  updatedAt: '2022-06-06T08:12:53.483Z',
+  groupId: 2,
   status: 'waiting',
   user: {
     id: 16,
@@ -128,7 +126,7 @@ export const memberRequestDetail = {
     city: 'Hồ Chí Minh',
     email: 'usernametest@mail.com',
     phone: null,
-    country_code: null,
-    latest_work: null,
+    countryCode: null,
+    latestWork: null,
   },
 };

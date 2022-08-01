@@ -17,7 +17,7 @@ import {communities} from '~/test/mock_data/communities';
 import groupsActions from '../redux/actions';
 import groupsTypes from '../redux/types';
 import MockedNavigator from '~/test/MockedNavigator';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 afterEach(cleanup);
 

@@ -1,4 +1,4 @@
-import {ILinkPreview} from '~/interfaces/common';
+import { ILinkPreview } from '~/interfaces/common';
 import Actions from './constants';
 
 export default {

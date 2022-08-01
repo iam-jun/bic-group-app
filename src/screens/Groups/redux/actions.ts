@@ -7,7 +7,6 @@ import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
   IGroupGetMembers,
-  IGroupSearchPayload,
   IGroupSetAdmin,
   IGroupRemoveAdmin,
   IJoiningMember,
@@ -18,11 +17,10 @@ import {
   IGroupMembers,
   IPermission,
   IScheme,
-  ICommunityDetailEdit,
   IPayloadGroupSchemeAssignments,
 } from '~/interfaces/IGroup';
-import {IUser} from '~/interfaces/IAuth';
-import {IObject} from '~/interfaces/common';
+import { IUser } from '~/interfaces/IAuth';
+import { IObject } from '~/interfaces/common';
 import {
   ICommunity,
   IParamGetCommunityMembers,
@@ -30,6 +28,7 @@ import {
   ISetMembers,
   ISetCommunitySearchMembers,
   IParamGetCommunities,
+  ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
@@ -41,13 +40,13 @@ const groupsActions = {
     payload,
   }),
 
-  //group structure settings
+  // group structure settings
   setGroupStructure: (payload?: any) => ({
     type: groupsTypes.SET_GROUP_STRUCTURE,
     payload,
   }),
   getGroupStructureCommunityTree: (payload: {
-    communityId: number;
+    communityId: string;
     showLoading?: boolean;
   }) => ({
     type: groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
@@ -62,7 +61,7 @@ const groupsActions = {
     payload,
   }),
   putGroupStructureReorder: (payload: {
-    communityId: number;
+    communityId: string;
     newOrder: number[];
   }) => ({
     type: groupsTypes.PUT_GROUP_STRUCTURE_REORDER,
@@ -78,17 +77,17 @@ const groupsActions = {
     payload,
   }),
   getGroupStructureMoveTargets: (payload?: {
-    communityId: number;
-    groupId: number;
+    communityId: string;
+    groupId: string;
     key?: string;
   }) => ({
     type: groupsTypes.GET_GROUP_STRUCTURE_MOVE_TARGETS,
     payload,
   }),
   putGroupStructureMoveToTarget: (payload: {
-    communityId: number;
-    moveId: number;
-    targetId: number;
+    communityId: string;
+    moveId: string;
+    targetId: string;
   }) => ({
     type: groupsTypes.PUT_GROUP_STRUCTURE_MOVE_TO_TARGET,
     payload,
@@ -98,8 +97,8 @@ const groupsActions = {
     payload,
   }),
   putGroupStructureCollapseStatus: (payload: {
-    communityId: number;
-    groupId: number;
+    communityId: string;
+    groupId: string;
     isCollapse: boolean;
   }) => ({
     type: groupsTypes.PUT_GROUP_STRUCTURE_COLLAPSE_STATUS,
@@ -136,11 +135,11 @@ const groupsActions = {
     type: groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION,
     payload,
   }),
-  postCreateSchemePermission: (payload?: {communityId: number | string}) => ({
+  postCreateSchemePermission: (payload?: {communityId: string}) => ({
     type: groupsTypes.POST_CREATE_SCHEME_PERMISSION,
     payload,
   }),
-  getCommunityScheme: (payload?: {communityId: number | string}) => ({
+  getCommunityScheme: (payload?: {communityId: string}) => ({
     type: groupsTypes.GET_COMMUNITY_SCHEME,
     payload,
   }),
@@ -152,18 +151,15 @@ const groupsActions = {
     type: groupsTypes.SET_COMMUNITY_SCHEME,
     payload,
   }),
-  updateCommunityScheme: (payload?: {communityId: number | string}) => ({
+  updateCommunityScheme: (payload?: {communityId: string}) => ({
     type: groupsTypes.UPDATE_COMMUNITY_SCHEME,
     payload,
   }),
-  deleteCommunityScheme: (payload?: {communityId: number | string}) => ({
+  deleteCommunityScheme: (payload?: {communityId: string}) => ({
     type: groupsTypes.DELETE_COMMUNITY_SCHEME,
     payload,
   }),
-  getSchemes: (payload?: {
-    communityId: number | string;
-    isRefreshing?: boolean;
-  }) => ({
+  getSchemes: (payload?: {communityId: string; isRefreshing?: boolean}) => ({
     type: groupsTypes.GET_SCHEMES,
     payload,
   }),
@@ -175,10 +171,7 @@ const groupsActions = {
     type: groupsTypes.SET_SCHEMES,
     payload,
   }),
-  getGroupScheme: (payload: {
-    communityId: number | string;
-    schemeId: string;
-  }) => ({
+  getGroupScheme: (payload: {communityId: string; schemeId: string}) => ({
     type: groupsTypes.GET_GROUP_SCHEME,
     payload,
   }),
@@ -187,7 +180,7 @@ const groupsActions = {
     payload,
   }),
   getGroupSchemeAssignments: (payload: {
-    communityId: number;
+    communityId: string;
     showLoading?: boolean;
   }) => ({
     type: groupsTypes.GET_GROUP_SCHEME_ASSIGNMENTS,
@@ -209,49 +202,22 @@ const groupsActions = {
     type: groupsTypes.PUT_GROUP_SCHEME_ASSIGNMENTS,
     payload,
   }),
-  updateGroupScheme: (payload: {
-    communityId: number | string;
-    schemeId: string;
-  }) => ({
+  updateGroupScheme: (payload: {communityId: string; schemeId: string}) => ({
     type: groupsTypes.UPDATE_GROUP_SCHEME,
     payload,
   }),
 
-  setPrivacyModalOpen: (payload: boolean) => {
-    return {
-      type: groupsTypes.SET_PRIVACY_MODAL_OPEN,
-      payload,
-    };
-  },
-
-  setJoinedGroups: function (payload: IGroup[]) {
-    return {
-      type: groupsTypes.SET_JOINED_GROUPS,
-      payload,
-    };
-  },
-
-  setLoadingGroupMembers: (payload: boolean) => ({
-    type: groupsTypes.SET_LOADING_GROUP_MEMBER,
+  clearGroupMembers: () => ({
+    type: groupsTypes.CLEAR_GROUP_MEMBER,
+  }),
+  setGroupMembers: (payload: any) => ({
+    type: groupsTypes.SET_GROUP_MEMBER,
     payload,
   }),
-  clearGroupMembers: function () {
-    return {
-      type: groupsTypes.CLEAR_GROUP_MEMBER,
-    };
-  },
-  setGroupMembers: function (payload: any) {
-    return {
-      type: groupsTypes.SET_GROUP_MEMBER,
-      payload,
-    };
-  },
-  getGroupMembers: function (payload: IGroupGetMembers) {
-    return {
-      type: groupsTypes.GET_GROUP_MEMBER,
-      payload,
-    };
-  },
+  getGroupMembers: (payload: IGroupGetMembers) => ({
+    type: groupsTypes.GET_GROUP_MEMBER,
+    payload,
+  }),
 
   getGroupSearchMembers: (payload: IGroupGetMembers) => ({
     type: groupsTypes.GET_GROUP_SEARCH_MEMBERS,
@@ -269,25 +235,19 @@ const groupsActions = {
     type: groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS,
   }),
 
-  setGroupDetail: function (payload: IGroupDetail | null) {
-    return {
-      type: groupsTypes.SET_GROUP_DETAIL,
-      payload,
-    };
-  },
+  setGroupDetail: (payload: IGroupDetail | null) => ({
+    type: groupsTypes.SET_GROUP_DETAIL,
+    payload,
+  }),
 
-  getGroupPosts: (payload: string | number) => {
-    return {
-      type: groupsTypes.GET_GROUP_POSTS,
-      payload,
-    };
-  },
-  setGroupPosts: function (payload: IGroup[]) {
-    return {
-      type: groupsTypes.SET_GROUP_POSTS,
-      payload,
-    };
-  },
+  getGroupPosts: (payload: string) => ({
+    type: groupsTypes.GET_GROUP_POSTS,
+    payload,
+  }),
+  setGroupPosts: (payload: IGroup[]) => ({
+    type: groupsTypes.SET_GROUP_POSTS,
+    payload,
+  }),
   setExtraGroupPosts: (payload: IGroup[]) => ({
     type: groupsTypes.SET_EXTRA_GROUP_POSTS,
     payload,
@@ -326,44 +286,32 @@ const groupsActions = {
   clearSelectedUsers: () => ({
     type: groupsTypes.CLEAR_SELECTED_USERS,
   }),
-  setAddMembersMessage: (payload: number) => ({
-    type: groupsTypes.SET_ADD_MEMBERS_MESSAGE,
+
+  getGroupDetail: (
+    payload: string, loadingPage = false,
+  ) => ({
+    type: groupsTypes.GET_GROUP_DETAIL,
     payload,
-  }),
-  clearAddMembersMessage: () => ({
-    type: groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE,
+    loadingPage,
   }),
 
-  getGroupDetail: function (payload: number, loadingPage = false) {
-    return {
-      type: groupsTypes.GET_GROUP_DETAIL,
-      payload,
-      loadingPage,
-    };
-  },
-
-  editGroupDetail: function (payload: {
+  editGroupDetail: (payload: {
     data: IGroupDetailEdit;
     editFieldName?: string;
     callback?: () => void;
-  }) {
-    return {
-      type: groupsTypes.EDIT_GROUP_DETAIL,
-      payload,
-    };
-  },
-  uploadImage: function (payload: IGroupImageUpload) {
-    return {
-      type: groupsTypes.UPLOAD_IMAGE,
-      payload,
-    };
-  },
-  addMembers: function (payload: IGroupAddMembers) {
-    return {
-      type: groupsTypes.ADD_MEMBERS,
-      payload,
-    };
-  },
+  }) => ({
+    type: groupsTypes.EDIT_GROUP_DETAIL,
+    payload,
+  }),
+
+  uploadImage: (payload: IGroupImageUpload) => ({
+    type: groupsTypes.UPLOAD_IMAGE,
+    payload,
+  }),
+  addMembers: (payload: IGroupAddMembers) => ({
+    type: groupsTypes.ADD_MEMBERS,
+    payload,
+  }),
 
   setGroupAdmin: (payload: IGroupSetAdmin) => ({
     type: groupsTypes.SET_GROUP_ADMIN,
@@ -374,17 +322,15 @@ const groupsActions = {
     payload,
   }),
 
-  joinNewGroup: function (payload: {groupId: number; groupName: string}) {
-    return {
-      type: groupsTypes.JOIN_NEW_GROUP,
-      payload,
-    };
-  },
-  cancelJoinGroup: (payload: {groupId: number; groupName: string}) => ({
+  joinNewGroup: (payload: {groupId: string; groupName: string}) => ({
+    type: groupsTypes.JOIN_NEW_GROUP,
+    payload,
+  }),
+  cancelJoinGroup: (payload: {groupId: string; groupName: string}) => ({
     type: groupsTypes.CANCEL_JOIN_GROUP,
     payload,
   }),
-  leaveGroup: (payload: number) => ({
+  leaveGroup: (payload: string) => ({
     type: groupsTypes.LEAVE_GROUP,
     payload,
   }),
@@ -401,18 +347,10 @@ const groupsActions = {
     type: groupsTypes.SET_LOADING_PAGE,
     payload,
   }),
-  setGroupSearch: (payload: IGroupSearchPayload) => ({
-    type: groupsTypes.SET_GROUP_SEARCH,
-    payload,
-  }),
-  getGroupSearch: (payload: string) => ({
-    type: groupsTypes.GET_GROUP_SEARCH,
-    payload,
-  }),
 
   removeMember: (payload: {
-    groupId: number;
-    userId: number;
+    groupId: string;
+    userId: string;
     userFullname: string;
   }) => ({
     type: groupsTypes.REMOVE_MEMBER,
@@ -420,7 +358,7 @@ const groupsActions = {
   }),
 
   getGroupMemberRequests: (payload: {
-    groupId: number;
+    groupId: string;
     isRefreshing?: boolean;
     params?: any;
   }) => ({
@@ -431,7 +369,7 @@ const groupsActions = {
     total?: number;
     loading?: boolean;
     canLoadMore?: boolean;
-    ids?: number[];
+    ids?: string[];
     items?: IObject<IJoiningMember>;
   }) => ({
     type: groupsTypes.SET_GROUP_MEMBER_REQUESTS,
@@ -444,8 +382,8 @@ const groupsActions = {
     type: groupsTypes.UNDO_DECLINED_GROUP_MEMBER_REQUESTS,
   }),
   approveSingleGroupMemberRequest: (payload: {
-    groupId: number;
-    requestId: number;
+    groupId: string;
+    requestId: string;
     fullName: string;
     callback: () => void;
   }) => ({
@@ -453,22 +391,22 @@ const groupsActions = {
     payload,
   }),
   approveAllGroupMemberRequests: (payload: {
-    groupId: number;
+    groupId: string;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_GROUP_MEMBER_REQUESTS,
     payload,
   }),
   declineSingleGroupMemberRequest: (payload: {
-    groupId: number;
-    requestId: number;
+    groupId: string;
+    requestId: string;
     fullName: string;
   }) => ({
     type: groupsTypes.DECLINE_SINGLE_GROUP_MEMBER_REQUEST,
     payload,
   }),
   declineAllGroupMemberRequests: (payload: {
-    groupId: number;
+    groupId: string;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
@@ -477,7 +415,7 @@ const groupsActions = {
   storeUndoGroupMemberRequests: () => ({
     type: groupsTypes.STORE_UNDO_GROUP_MEMBER_REQUESTS,
   }),
-  editGroupMemberRequest: (payload: {id: number; data: any}) => ({
+  editGroupMemberRequest: (payload: {id: string; data: any}) => ({
     type: groupsTypes.EDIT_GROUP_MEMBER_REQUEST,
     payload,
   }),
@@ -494,7 +432,7 @@ const groupsActions = {
   getManagedCommunities: (payload: {
     isRefreshing?: boolean;
     refreshNoLoading?: boolean;
-    params?: {managed: boolean; preview_members: boolean};
+    params?: {managed: boolean; previewMembers: boolean};
   }) => ({
     type: groupsTypes.GET_MANAGED_COMMUNITIES,
     payload,
@@ -502,7 +440,7 @@ const groupsActions = {
   setManagedCommunities: (payload: {
     loading?: boolean;
     canLoadMore?: boolean;
-    ids?: number[];
+    ids?: string[];
     items?: IObject<any>;
   }) => ({
     type: groupsTypes.SET_MANAGED_COMMUNITIES,
@@ -527,7 +465,7 @@ const groupsActions = {
     type: groupsTypes.SET_YOUR_GROUPS_SEARCH,
     payload,
   }),
-  getYourGroupsTree: (payload: number) => ({
+  getYourGroupsTree: (payload: string) => ({
     type: groupsTypes.GET_YOUR_GROUPS_TREE,
     payload,
   }),
@@ -535,7 +473,7 @@ const groupsActions = {
     type: groupsTypes.SET_YOUR_GROUPS_TREE,
     payload,
   }),
-  getYourGroupsList: (payload: number) => ({
+  getYourGroupsList: (payload: string) => ({
     type: groupsTypes.GET_YOUR_GROUPS_LIST,
     payload,
   }),
@@ -543,7 +481,7 @@ const groupsActions = {
     type: groupsTypes.SET_YOUR_GROUPS_LIST,
     payload,
   }),
-  getCommunityGroups: (payload: {id: number; params?: IGetCommunityGroup}) => ({
+  getCommunityGroups: (payload: {id: string; params?: IGetCommunityGroup}) => ({
     type: groupsTypes.GET_COMMUNITY_GROUPS,
     payload,
   }),
@@ -552,7 +490,7 @@ const groupsActions = {
     payload,
   }),
   getCommunityDetail: (payload: {
-    communityId: number;
+    communityId: string;
     loadingPage?: boolean;
     showLoading?: boolean;
   }) => ({
@@ -568,7 +506,7 @@ const groupsActions = {
     payload,
   }),
   getCommunityMembers: (payload: {
-    communityId: number;
+    communityId: string;
     isRefreshing?: boolean;
     params?: IParamGetCommunityMembers;
   }) => ({
@@ -583,7 +521,7 @@ const groupsActions = {
     type: groupsTypes.RESET_COMMUNITY_MEMBERS,
   }),
   getCommunitySearchMembers: (payload: {
-    communityId: number;
+    communityId: string;
     params: IParamGetCommunityMembers;
   }) => ({
     type: groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,
@@ -597,7 +535,7 @@ const groupsActions = {
     type: groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS,
   }),
   getDiscoverGroups: (payload: {
-    communityId: number;
+    communityId: string;
     isRefreshing?: boolean;
     params?: IParamGetDiscoverGroups;
   }) => ({
@@ -607,34 +545,34 @@ const groupsActions = {
   setDiscoverGroups: (payload: {
     loading?: boolean;
     canLoadMore?: boolean;
-    ids?: number[];
+    ids?: string[];
     items?: IObject<IGroup>;
   }) => ({
     type: groupsTypes.SET_DISCOVER_GROUPS,
     payload,
   }),
-  editDiscoverGroupItem: (payload: {id: number; data: any}) => ({
+  editDiscoverGroupItem: (payload: {id: string; data: any}) => ({
     type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
     payload,
   }),
-  joinCommunity: (payload: {communityId: number; communityName: string}) => ({
+  joinCommunity: (payload: {communityId: string; communityName: string}) => ({
     type: groupsTypes.JOIN_COMMUNITY,
     payload,
   }),
   cancelJoinCommunity: (payload: {
-    communityId: number;
+    communityId: string;
     communityName: string;
   }) => ({
     type: groupsTypes.CANCEL_JOIN_COMMUNITY,
     payload,
   }),
-  editDiscoverCommunityItem: (payload: {id: number; data: any}) => ({
+  editDiscoverCommunityItem: (payload: {id: string; data: any}) => ({
     type: groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM,
     payload,
   }),
 
   getCommunityMemberRequests: (payload: {
-    communityId: number;
+    communityId: string;
     isRefreshing?: boolean;
     params?: any;
   }) => ({
@@ -645,7 +583,7 @@ const groupsActions = {
     total?: number;
     loading?: boolean;
     canLoadMore?: boolean;
-    ids?: number[];
+    ids?: string[];
     items?: IObject<IJoiningMember>;
   }) => ({
     type: groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS,
@@ -655,30 +593,30 @@ const groupsActions = {
     type: groupsTypes.RESET_COMMUNITY_MEMBER_REQUESTS,
   }),
   approveSingleCommunityMemberRequest: (payload: {
-    communityId: number;
-    requestId: number;
+    communityId: string;
+    requestId: string;
     fullName: string;
   }) => ({
     type: groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
     payload,
   }),
   declineSingleCommunityMemberRequest: (payload: {
-    communityId: number;
-    requestId: number;
+    communityId: string;
+    requestId: string;
     fullName: string;
   }) => ({
     type: groupsTypes.DECLINE_SINGLE_COMMUNITY_MEMBER_REQUEST,
     payload,
   }),
   approveAllCommunityMemberRequests: (payload: {
-    communityId: number;
+    communityId: string;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
     payload,
   }),
   declineAllCommunityMemberRequests: (payload: {
-    communityId: number;
+    communityId: string;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
@@ -690,7 +628,7 @@ const groupsActions = {
   undoDeclinedCommunityMemberRequests: () => ({
     type: groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS,
   }),
-  editCommunityMemberRequest: (payload: {id: number; data: any}) => ({
+  editCommunityMemberRequest: (payload: {id: string; data: any}) => ({
     type: groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST,
     payload,
   }),
@@ -702,7 +640,7 @@ const groupsActions = {
   setCommunitySearch: (payload: {
     loading?: boolean;
     canLoadMore?: boolean;
-    ids?: number[];
+    ids?: string[];
     items?: any;
   }) => ({
     type: groupsTypes.SET_COMMUNITY_SEARCH,
@@ -711,16 +649,14 @@ const groupsActions = {
   resetCommunitySearch: () => ({
     type: groupsTypes.RESET_COMMUNITY_SEARCH,
   }),
-  editCommunityDetail: function (payload: {
+  editCommunityDetail: (payload: {
     data: ICommunityDetailEdit;
     editFieldName?: string;
     callback?: () => void;
-  }) {
-    return {
-      type: groupsTypes.EDIT_COMMUNITY_DETAIL,
-      payload,
-    };
-  },
+  }) => ({
+    type: groupsTypes.EDIT_COMMUNITY_DETAIL,
+    payload,
+  }),
 };
 
 export default groupsActions;

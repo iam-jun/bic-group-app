@@ -1,9 +1,9 @@
-import {put, call} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
-import {IResponseData} from '~/interfaces/common';
+import { IResponseData } from '~/interfaces/common';
 import menuDataHelper from '../../helper/MenuDataHelper';
 import menuActions from '../actions';
-import {mapWorkExperience} from '../helper';
+import { mapWorkExperience } from '../helper';
 import showError from '~/store/commonSaga/showError';
 
 export default function* deleteWorkExperience({
@@ -11,7 +11,7 @@ export default function* deleteWorkExperience({
   callback,
 }: {
   type: string;
-  id: number;
+  id: string;
   callback?: () => void;
 }) {
   try {
@@ -20,14 +20,14 @@ export default function* deleteWorkExperience({
       id,
     );
 
-    if (!!response?.data) {
-      yield put(
-        menuActions.setMyWorkExperience(mapWorkExperience(response.data)),
-      );
+    if (response?.data) {
+      yield put(menuActions.setMyWorkExperience(mapWorkExperience(response.data)));
     }
     if (callback) return callback();
   } catch (err) {
-    console.log('deleteWorkExperience:', err);
+    console.error(
+      'deleteWorkExperience:', err,
+    );
     yield showError(err);
   }
 }

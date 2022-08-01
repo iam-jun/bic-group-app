@@ -12,7 +12,7 @@ import {
   Animated,
   Keyboard,
 } from 'react-native';
-import {useKeyboard} from '@react-native-community/hooks';
+import { useKeyboard } from '@react-native-community/hooks';
 
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import dimension from '~/theme/dimension';
@@ -41,40 +41,48 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
 
   const keyboard = useKeyboard();
 
-  useEffect(() => {
-    if (
-      keyboard?.keyboardHeight &&
-      keyboardHeight !== keyboard?.keyboardHeight
-    ) {
-      setKeyboardHeight(keyboard?.keyboardHeight);
-    }
-  }, [keyboard?.keyboardHeight]);
+  useEffect(
+    () => {
+      if (
+        keyboard?.keyboardHeight
+      && keyboardHeight !== keyboard?.keyboardHeight
+      ) {
+        setKeyboardHeight(keyboard?.keyboardHeight);
+      }
+    }, [keyboard?.keyboardHeight],
+  );
 
   const show = () => {
     setShowEmojiBoard(true);
     Keyboard.dismiss();
-    Animated.timing(visibleAnim, {
-      toValue: keyboardHeight,
-      duration: 200,
-      delay: 100,
-      useNativeDriver: false,
-    }).start();
+    Animated.timing(
+      visibleAnim, {
+        toValue: keyboardHeight,
+        duration: 200,
+        delay: 100,
+        useNativeDriver: false,
+      },
+    ).start();
   };
 
   const hide = () => {
     setShowEmojiBoard(false);
-    Animated.timing(visibleAnim, {
-      toValue: 0,
-      duration: 100,
-      delay: 0,
-      useNativeDriver: false,
-    }).start();
+    Animated.timing(
+      visibleAnim, {
+        toValue: 0,
+        duration: 100,
+        delay: 0,
+        useNativeDriver: false,
+      },
+    ).start();
   };
 
-  useImperativeHandle(_emojiBoardRef, () => ({
-    show,
-    hide,
-  }));
+  useImperativeHandle(
+    _emojiBoardRef, () => ({
+      show,
+      hide,
+    }),
+  );
 
   const height = visibleAnim.interpolate({
     inputRange: [0, keyboardHeight],
@@ -86,7 +94,7 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
   }
 
   return (
-    <Animated.View style={[styles.container, {height}]}>
+    <Animated.View style={[styles.container, { height }]}>
       <EmojiBoard
         width={dimension.deviceWidth}
         height={keyboardHeight}

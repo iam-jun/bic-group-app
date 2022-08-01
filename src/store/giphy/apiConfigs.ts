@@ -1,6 +1,6 @@
-import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {IParamGetGroupPosts} from '~/interfaces/IGroup';
-import {makeHttpRequest} from '~/services/httpApiRequest';
+import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
+import { IParamGetGroupPosts } from '~/interfaces/IGroup';
+import { makeHttpRequest } from '~/services/httpApiRequest';
 
 export const giphyApiConfig = {
   getAPIKey: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
@@ -15,14 +15,11 @@ export const giphyApiConfig = {
 const giphyDataHelper = {
   getAPIKey: async (params?: any) => {
     try {
-      const response: any = await makeHttpRequest(
-        giphyApiConfig.getAPIKey(params),
-      );
+      const response: any = await makeHttpRequest(giphyApiConfig.getAPIKey(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }

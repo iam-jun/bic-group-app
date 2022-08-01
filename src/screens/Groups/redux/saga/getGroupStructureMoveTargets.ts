@@ -1,4 +1,4 @@
-import {put, call, select} from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -9,23 +9,20 @@ export default function* getGroupStructureMoveTargets({
 }: {
   type: string;
   payload: {
-    communityId: number;
-    groupId: number;
+    communityId: string;
+    groupId: string;
     key?: string;
   };
 }): any {
-  const {communityId, groupId, key} = payload || {};
-  const {targetGroups, movingGroup} =
-    (yield select(state => state.groups?.groupStructure?.move)) || {};
+  const { communityId, groupId, key } = payload || {};
+  const { targetGroups, movingGroup } = (yield select((state) => state.groups?.groupStructure?.move)) || {};
   try {
-    yield put(
-      groupsActions.setGroupStructureMove({
-        loading: true,
-        key,
-        targetGroups,
-        movingGroup,
-      }),
-    );
+    yield put(groupsActions.setGroupStructureMove({
+      loading: true,
+      key,
+      targetGroups,
+      movingGroup,
+    }));
 
     const response = yield call(
       groupsDataHelper.getCommunityStructureMoveTargets,
@@ -35,36 +32,30 @@ export default function* getGroupStructureMoveTargets({
     );
 
     if (response?.data) {
-      const newTargetGroups: any = response.data?.target_groups || {};
-      const newMovingGroup = response.data?.moving_group || {};
+      const newTargetGroups: any = response.data?.targetGroups || {};
+      const newMovingGroup = response.data?.movingGroup || {};
 
-      yield put(
-        groupsActions.setGroupStructureMove({
-          loading: false,
-          key,
-          targetGroups: newTargetGroups,
-          movingGroup: newMovingGroup,
-        }),
-      );
+      yield put(groupsActions.setGroupStructureMove({
+        loading: false,
+        key,
+        targetGroups: newTargetGroups,
+        movingGroup: newMovingGroup,
+      }));
     } else {
-      yield put(
-        groupsActions.setGroupStructureMove({
-          loading: false,
-          key,
-          targetGroups,
-          movingGroup,
-        }),
-      );
-    }
-  } catch (err) {
-    yield put(
-      groupsActions.setGroupStructureMove({
-        loading: true,
+      yield put(groupsActions.setGroupStructureMove({
+        loading: false,
         key,
         targetGroups,
         movingGroup,
-      }),
-    );
+      }));
+    }
+  } catch (err) {
+    yield put(groupsActions.setGroupStructureMove({
+      loading: true,
+      key,
+      targetGroups,
+      movingGroup,
+    }));
     yield showError(err);
   }
 }

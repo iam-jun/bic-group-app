@@ -1,19 +1,21 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useKeySelector} from '~/hooks/selector';
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Icon from '~/beinComponents/Icon';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import modalActions from '~/store/modal/actions';
-import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import groupsActions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 
@@ -24,12 +26,12 @@ export interface CommunitySchemeProps {
 const CommunityScheme: FC<CommunitySchemeProps> = ({
   style,
 }: CommunitySchemeProps) => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const {colors} = theme || {};
+  const { colors } = theme || {};
 
   const {
     loading,
@@ -37,30 +39,28 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
     data: communityScheme,
   } = useKeySelector(groupsKeySelector.permission.communityScheme) || {};
 
-  const {name = '', description = ''} = communityScheme || {};
-  const {id: communityId} =
-    useKeySelector(groupsKeySelector.communityDetail) || {};
+  const { name = '', description = '' } = communityScheme || {};
+  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail) || {};
 
   const onPressEdit = () => {
-    rootNavigation.navigate(groupStack.createPermissionScheme, {
-      isEdit: true,
-      initScheme: communityScheme,
-    });
+    rootNavigation.navigate(
+      groupStack.createPermissionScheme, {
+        isEdit: true,
+        initScheme: communityScheme,
+      },
+    );
   };
 
   const onPressDelete = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: t('communities:permission:text_title_delete_community_scheme'),
-        content: t('communities:permission:text_desc_delete_community_scheme'),
-        showCloseButton: true,
-        cancelBtn: true,
-        cancelLabel: t('common:btn_cancel'),
-        confirmLabel: t('common:btn_delete'),
-        onConfirm: () =>
-          dispatch(groupsActions.deleteCommunityScheme({communityId})),
-      }),
-    );
+    dispatch(modalActions.showAlert({
+      title: t('communities:permission:text_title_delete_community_scheme'),
+      content: t('communities:permission:text_desc_delete_community_scheme'),
+      showCloseButton: true,
+      cancelBtn: true,
+      cancelLabel: t('common:btn_cancel'),
+      confirmLabel: t('common:btn_delete'),
+      onConfirm: () => dispatch(groupsActions.deleteCommunityScheme({ communityId })),
+    }));
   };
 
   const renderButtons = () => {
@@ -71,13 +71,13 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
       return (
         <View style={styles.row}>
           <Button style={styles.buttonEdit} onPress={onPressEdit}>
-            <Icon size={16} icon={'PenLine'} />
+            <Icon size={16} icon="PenLine" />
           </Button>
           <Button style={styles.buttonDelete} onPress={onPressDelete}>
             {deleting ? (
               <LoadingIndicator size={16} />
             ) : (
-              <Icon size={16} tintColor={colors.red40} icon={'TrashCan'} />
+              <Icon size={16} tintColor={colors.red40} icon="TrashCan" />
             )}
           </Button>
         </View>
@@ -97,7 +97,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
           {!loading && communityScheme && (
             <TextBadge
               useI18n
-              value={'common:text_activated'}
+              value="common:text_activated"
               style={styles.activatedText}
             />
           )}
@@ -118,9 +118,9 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     container: {
       padding: spacing.padding.large,
       backgroundColor: colors.white,
@@ -155,7 +155,7 @@ const createStyle = (theme: ExtendedTheme) => {
       borderRadius: spacing.borderRadius.small,
       marginLeft: spacing.margin.small,
     },
-    buttonContainer: {minHeight: 30, justifyContent: 'center'},
+    buttonContainer: { minHeight: 30, justifyContent: 'center' },
     activatedText: {
       marginLeft: spacing.margin.base,
       marginRight: spacing.margin.small,

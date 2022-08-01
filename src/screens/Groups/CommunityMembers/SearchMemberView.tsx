@@ -1,20 +1,20 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { debounce } from 'lodash';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import actions from '~/screens/Groups/redux/actions';
-import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import {ICommunityMembers} from '~/interfaces/ICommunity';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberSearchResult from '../components/MemberSearchResult';
 
 interface SearchMemberViewProps {
-  communityId: number;
+  communityId: string;
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;
@@ -34,18 +34,16 @@ const SearchMemberView = ({
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
-  const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
+  const { canManageMember } = useKeySelector(groupsKeySelector.communityDetail);
   const communitySearchMembers = useKeySelector(
     groupsKeySelector.communitySearchMembers,
   );
 
   const getCommunitySearchMembers = (searchText: string) => {
-    dispatch(
-      actions.getCommunitySearchMembers({
-        communityId,
-        params: {key: searchText},
-      }),
-    );
+    dispatch(actions.getCommunitySearchMembers({
+      communityId,
+      params: { key: searchText },
+    }));
   };
 
   const onLoadMore = () => {
@@ -59,7 +57,9 @@ const SearchMemberView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchMember, appConfig.searchTriggerTime),
+    debounce(
+      searchMember, appConfig.searchTriggerTime,
+    ),
     [],
   );
 
@@ -72,10 +72,11 @@ const SearchMemberView = ({
       isOpen={isOpen}
       placeholder={placeholder}
       onClose={onClose}
-      onChangeText={onSearchMember}>
-      {!!searchText ? (
+      onChangeText={onSearchMember}
+    >
+      {searchText ? (
         <MemberSearchResult
-          canManageMember={can_manage_member}
+          canManageMember={canManageMember}
           memberSearchData={communitySearchMembers}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}
@@ -85,7 +86,8 @@ const SearchMemberView = ({
           <Text.BodyS
             color={theme.colors.gray50}
             testID="search_member_view.type_search"
-            useI18n>
+            useI18n
+          >
             common:text_type_search_keyword
           </Text.BodyS>
         </View>
@@ -96,11 +98,9 @@ const SearchMemberView = ({
 
 export default SearchMemberView;
 
-const createStyles = () => {
-  return StyleSheet.create({
-    text: {
-      marginTop: 33,
-      alignItems: 'center',
-    },
-  });
-};
+const createStyles = () => StyleSheet.create({
+  text: {
+    marginTop: 33,
+    alignItems: 'center',
+  },
+});

@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 
@@ -31,17 +31,15 @@ const MemberSearchResult = ({
 }: MemberSearchResultProps) => {
   const theme: ExtendedTheme = useTheme();
 
-  const {loading, canLoadMore, data} = memberSearchData;
+  const { loading, canLoadMore, data } = memberSearchData;
 
-  const renderItem = ({item}: {item: any}) => {
-    return (
-      <MemberItem
-        item={item}
-        canManageMember={canManageMember}
-        onPressMenu={onPressMenu}
-      />
-    );
-  };
+  const renderItem = ({ item }: {item: any}) => (
+    <MemberItem
+      item={item}
+      canManageMember={canManageMember}
+      onPressMenu={onPressMenu}
+    />
+  );
 
   const renderEmptyComponent = () => {
     if (loading) return null;
@@ -50,28 +48,28 @@ const MemberSearchResult = ({
         <Text.BodyM
           color={theme.colors.gray50}
           useI18n
-          testID="member_search_result.no_results">
+          testID="member_search_result.no_results"
+        >
           common:text_no_results_found
         </Text.BodyM>
       </View>
     );
   };
 
-  const renderHeaderComponent = () => {
-    return (
-      <View style={styles.textSearchResults}>
-        <Text.BodyM useI18n>common:text_search_results</Text.BodyM>
-      </View>
-    );
-  };
+  const renderHeaderComponent = () => (
+    <View style={styles.textSearchResults}>
+      <Text.BodyM useI18n>common:text_search_results</Text.BodyM>
+    </View>
+  );
 
   const renderListFooter = () => {
-    if (!loading && canLoadMore && data.length > 0)
+    if (!loading && canLoadMore && data.length > 0) {
       return (
         <View style={styles.listFooter}>
           <ActivityIndicator testID="member_search_result.loading_more" />
         </View>
       );
+    }
 
     return null;
   };
@@ -81,7 +79,9 @@ const MemberSearchResult = ({
       testID="flatlist"
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `search_item_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `search_item_${item}_${index}`}
       ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}

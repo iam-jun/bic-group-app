@@ -1,71 +1,71 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import modalActions from '~/store/modal/actions';
-import {IApplyingGroups, IGroupScheme} from '~/interfaces/IGroup';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import { IApplyingGroups, IGroupScheme } from '~/interfaces/IGroup';
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 
 interface SchemeItemProps {
   item: IGroupScheme;
 }
 
-const SchemeItem = ({item}: SchemeItemProps) => {
+const SchemeItem = ({ item }: SchemeItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const {colors} = theme;
+  const { colors } = theme;
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
-  const {name, description, applyingGroups} = item;
+  const { name, description, applyingGroups } = item;
   const isActivated = applyingGroups?.length > 0;
 
   const onPressEdit = () => {
-    rootNavigation.navigate(groupStack.createPermissionScheme, {
-      isEdit: true,
-      initScheme: item,
-      schemeId: item.id,
-    });
+    rootNavigation.navigate(
+      groupStack.createPermissionScheme, {
+        isEdit: true,
+        initScheme: item,
+        schemeId: item.id,
+      },
+    );
   };
 
   const onPressDelete = () => {
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const renderButtons = () => {
-    return (
-      <View style={styles.row}>
-        <Button
-          style={styles.buttonEdit}
-          onPress={onPressEdit}
-          testID="scheme_item.btn_edit">
-          <Icon size={16} icon={'PenLine'} />
-        </Button>
-        <Button
-          style={styles.buttonDelete}
-          onPress={onPressDelete}
-          testID="scheme_item.btn_delete">
-          <Icon size={16} tintColor={colors.red40} icon={'TrashCan'} />
-        </Button>
-      </View>
-    );
-  };
+  const renderButtons = () => (
+    <View style={styles.row}>
+      <Button
+        style={styles.buttonEdit}
+        onPress={onPressEdit}
+        testID="scheme_item.btn_edit"
+      >
+        <Icon size={16} icon="PenLine" />
+      </Button>
+      <Button
+        style={styles.buttonDelete}
+        onPress={onPressDelete}
+        testID="scheme_item.btn_delete"
+      >
+        <Icon size={16} tintColor={colors.red40} icon="TrashCan" />
+      </Button>
+    </View>
+  );
 
-  const renderItem = (item: IApplyingGroups) => {
-    return (
-      <View key={item.id} style={styles.nameTag} testID="scheme_item.group_tag">
-        <Text.BodyS>{item.name}</Text.BodyS>
-      </View>
-    );
-  };
+  const renderItem = (item: IApplyingGroups) => (
+    <View key={item.id} style={styles.nameTag} testID="scheme_item.group_tag">
+      <Text.BodyS>{item.name}</Text.BodyS>
+    </View>
+  );
 
   return (
     <View>
@@ -74,13 +74,14 @@ const SchemeItem = ({item}: SchemeItemProps) => {
           <Text.BodySMedium
             numberOfLines={3}
             style={styles.flex1}
-            testID="scheme_item.name">
+            testID="scheme_item.name"
+          >
             {name}
           </Text.BodySMedium>
           {isActivated && (
             <TextBadge
               useI18n
-              value={'common:text_activated'}
+              value="common:text_activated"
               style={styles.activatedText}
             />
           )}
@@ -100,9 +101,9 @@ const SchemeItem = ({item}: SchemeItemProps) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     titleContainer: {
       flexDirection: 'row',
       marginBottom: spacing.margin.small,

@@ -1,17 +1,16 @@
-import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { FC } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 
+import i18n from 'i18next';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../redux/actions';
-import i18n from 'i18next';
 import * as modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
 export interface NotificationOptionBottomSheetProps {
-  modalize: any;
+  modalizeRef: any;
   keyValue: string;
   data: any;
 }
@@ -21,13 +20,11 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   data,
   keyValue,
 }: NotificationOptionBottomSheetProps) => {
-  const theme: ExtendedTheme = useTheme();
-
   const dispatch = useDispatch();
 
   const handleMarkNotification = () => {
     if (!data?.isRead) {
-      dispatch(notificationsActions.markAsRead({id: data?.id || '', keyValue}));
+      dispatch(notificationsActions.markAsRead({ id: data?.id || '', keyValue }));
     } else {
       dispatch(notificationsActions.markAsUnRead(data));
     }
@@ -39,32 +36,28 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const renderContent = () => {
-    return (
-      <View style={styles.container}>
-        <PrimaryItem
-          testID="notification.mark_notification_read_or_unread"
-          style={styles.item}
-          leftIcon={'MessageCheck'}
-          leftIconProps={{icon: 'MessageCheck', size: 24}}
-          title={i18n.t(
-            !data?.isRead
-              ? 'notification:mark_as_read'
-              : 'notification:mark_as_unread',
-          )}
-          onPress={handleMarkNotification}
-        />
-        <PrimaryItem
-          testID="notification.off_notification_from_group"
-          style={styles.item}
-          leftIcon={'VolumeXmark'}
-          leftIconProps={{icon: 'VolumeXmark', size: 24}}
-          title={i18n.t('notification:off_notification_from_group')}
-          onPress={showUpcommingFeature}
-        />
-      </View>
-    );
-  };
+  const renderContent = () => (
+    <View style={styles.container}>
+      <PrimaryItem
+        testID="notification.mark_notification_read_or_unread"
+        style={styles.item}
+        leftIcon="MessageCheck"
+        leftIconProps={{ icon: 'MessageCheck', size: 24 }}
+        title={i18n.t(!data?.isRead
+          ? 'notification:mark_as_read'
+          : 'notification:mark_as_unread')}
+        onPress={handleMarkNotification}
+      />
+      <PrimaryItem
+        testID="notification.off_notification_from_group"
+        style={styles.item}
+        leftIcon="VolumeXmark"
+        leftIconProps={{ icon: 'VolumeXmark', size: 24 }}
+        title={i18n.t('notification:off_notification_from_group')}
+        onPress={showUpcommingFeature}
+      />
+    </View>
+  );
 
   return (
     <BottomSheet modalizeRef={modalizeRef} ContentComponent={renderContent()} />

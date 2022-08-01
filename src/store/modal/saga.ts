@@ -1,5 +1,5 @@
-import {put, select, takeLatest} from 'redux-saga/effects';
-import {get} from 'lodash';
+import { put, select, takeLatest } from 'redux-saga/effects';
+import { get } from 'lodash';
 
 import {
   IPayloadShowModal,
@@ -13,14 +13,15 @@ import modalActions, {
 } from './actions';
 import * as types from './constants';
 import modalKeySelector from '~/store/modal/keySelector';
-
-function timeOut(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { timeOut } from '~/utils/common';
 
 export default function* commonSaga() {
-  yield takeLatest(types.SHOW_MODAL, showModal);
-  yield takeLatest(types.SHOW_HIDE_TOAST_MESSAGE, showAndHideToastMessage);
+  yield takeLatest(
+    types.SHOW_MODAL, showModal,
+  );
+  yield takeLatest(
+    types.SHOW_HIDE_TOAST_MESSAGE, showAndHideToastMessage,
+  );
   yield takeLatest(
     types.SHOW_USER_PROFILE_PREVIEW_BOTTOM_SHEET,
     showUserProfilePreviewBottomSheet,
@@ -37,10 +38,12 @@ function* showModal({
   type: string;
   payload: IPayloadShowModal;
 }): any {
-  const modal = yield select(state => get(state, modalKeySelector.modal));
-  const {isOpen} = modal || {};
+  const modal = yield select((state) => get(
+    state, modalKeySelector.modal,
+  ));
+  const { isOpen } = modal || {};
   if (isOpen) {
-    const payload = {isOpen: false, ContentComponent: undefined};
+    const payload = { isOpen: false, ContentComponent: undefined };
     yield put(modalActions.setModal(payload));
     yield timeOut(200);
   }
@@ -75,7 +78,7 @@ function* hideUserProfilePreviewBottomSheet() {
   const payload = {
     isOpen: false,
     useId: undefined,
-    position: {x: -1, y: -1},
+    position: { x: -1, y: -1 },
   };
   yield put(setUserProfilePreviewBottomSheet(payload));
 }

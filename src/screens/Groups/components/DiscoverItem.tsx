@@ -1,21 +1,21 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ButtonDiscoverItemAction from './ButtonDiscoverItemAction';
 import privacyTypes from '~/constants/privacyTypes';
 import Icon from '~/beinComponents/Icon';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
 interface DiscoverItemProps {
   item: any;
   testID?: string;
-  onPressJoin: (id: number, name: string) => void;
-  onPressCancel: (id: number, name: string) => void;
-  onPressView?: (id: number) => void;
+  onPressJoin: (id: string, name: string) => void;
+  onPressCancel: (id: string, name: string) => void;
+  onPressView?: (id: string) => void;
 }
 
 const DiscoverItem = ({
@@ -26,36 +26,42 @@ const DiscoverItem = ({
   onPressCancel,
 }: DiscoverItemProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
-  const {t} = useBaseHook();
+  const { colors } = theme;
+  const { t } = useBaseHook();
 
-  const {id, name, icon, user_count, privacy, join_status} = item || {};
-  const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
-  const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
+  const {
+    id, name, icon, userCount, privacy, joinStatus,
+  } = item || {};
+  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
 
   const onView = () => {
     onPressView?.(id);
   };
 
   const onJoin = () => {
-    onPressJoin(id, name);
+    onPressJoin(
+      id, name,
+    );
   };
 
   const onCancel = () => {
-    onPressCancel(id, name);
+    onPressCancel(
+      id, name,
+    );
   };
 
   return (
     <PrimaryItem
       showAvatar
       avatar={icon}
-      avatarProps={{variant: 'largeAlt'}}
+      avatarProps={{ variant: 'largeAlt' }}
       style={styles.item}
       title={name}
-      titleProps={{variant: 'h5'}}
+      titleProps={{ variant: 'h5' }}
       testID={testID}
       onPress={onView}
-      ContentComponent={
+      ContentComponent={(
         <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
@@ -66,30 +72,30 @@ const DiscoverItem = ({
           <Text.BodyS color={colors.gray50} useI18n>
             {privacyTitle}
           </Text.BodyS>
-          <Text.BodyS color={colors.gray50}>{`  •  `}</Text.BodyS>
+          <Text.BodyS color={colors.gray50}>{'  •  '}</Text.BodyS>
           <Icon
             style={styles.iconSmall}
-            icon={'UserGroup'}
+            icon="UserGroup"
             size={16}
             tintColor={colors.gray50}
           />
-          <Text.BodyS color={colors.gray50}>{user_count}</Text.BodyS>
+          <Text.BodyS color={colors.gray50}>{userCount}</Text.BodyS>
           <Text.BodyS color={colors.gray50}>
             {` ${t('groups:text_members', {
-              count: user_count,
+              count: userCount,
             })}`}
           </Text.BodyS>
         </View>
-      }
-      RightComponent={
+      )}
+      RightComponent={(
         <ButtonDiscoverItemAction
           data={item}
-          joinStatus={join_status}
+          joinStatus={joinStatus}
           onView={onView}
           onJoin={onJoin}
           onCancel={onCancel}
         />
-      }
+      )}
     />
   );
 };

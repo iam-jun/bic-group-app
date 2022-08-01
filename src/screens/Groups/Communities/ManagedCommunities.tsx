@@ -5,13 +5,13 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import CommunityItem from '../components/CommunityItem';
 
@@ -19,7 +19,7 @@ import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 
 interface ManagedCommunitiesProps {
-  onPressCommunities?: (communityId: number) => void;
+  onPressCommunities?: (communityId: string) => void;
   onPressMenu?: (community?: any) => void;
 }
 
@@ -31,42 +31,44 @@ const ManagedCommunities = ({
   const styles = createStyles(theme);
   const dispatch = useDispatch();
 
-  const {loading, ids, items, canLoadMore} = useKeySelector(
-    groupsKeySelector.managedCommunities,
-  );
+  const {
+    loading, ids, items, canLoadMore,
+  } = useKeySelector(groupsKeySelector.managedCommunities);
 
   const getManagedCommunities = (params?: {
     isRefreshing?: boolean;
     refreshNoLoading?: boolean;
   }) => {
-    const {isRefreshing, refreshNoLoading} = params || {};
-    dispatch(actions.getManagedCommunities({isRefreshing, refreshNoLoading}));
+    const { isRefreshing, refreshNoLoading } = params || {};
+    dispatch(actions.getManagedCommunities({ isRefreshing, refreshNoLoading }));
   };
 
-  useEffect(() => {
-    getManagedCommunities({refreshNoLoading: true});
-  }, []);
+  useEffect(
+    () => {
+      getManagedCommunities({ refreshNoLoading: true });
+    }, [],
+  );
 
   const onLoadMore = () => {
     canLoadMore && getManagedCommunities();
   };
 
   const onRefresh = () => {
-    getManagedCommunities({isRefreshing: true});
+    getManagedCommunities({ isRefreshing: true });
   };
 
   const renderEmptyComponent = () => {
     if (loading) return null;
     return (
       <EmptyScreen
-        source={'addUsers'}
+        source="addUsers"
         title="communities:empty_communities:title"
         description="communities:empty_communities:manage_description"
       />
     );
   };
 
-  const renderItem = ({item}: {item: number}) => {
+  const renderItem = ({ item }: {item: number}) => {
     const currentItem = items[item];
 
     return (
@@ -79,12 +81,13 @@ const ManagedCommunities = ({
   };
 
   const renderListFooter = () => {
-    if (!loading && canLoadMore && ids.length > 0)
+    if (!loading && canLoadMore && ids.length > 0) {
       return (
         <View style={styles.listFooter}>
           <ActivityIndicator testID="managed_communites.loading_more" />
         </View>
       );
+    }
 
     return null;
   };
@@ -94,18 +97,20 @@ const ManagedCommunities = ({
       testID="flatlist"
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `community_item_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `community_item_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
       ListFooterComponent={renderListFooter}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
-      refreshControl={
+      refreshControl={(
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
         />
-      }
+      )}
       ItemSeparatorComponent={() => (
         <Divider
           style={{
@@ -118,14 +123,12 @@ const ManagedCommunities = ({
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => {
-  return StyleSheet.create({
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-};
+const createStyles = (theme: ExtendedTheme) => StyleSheet.create({
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default ManagedCommunities;

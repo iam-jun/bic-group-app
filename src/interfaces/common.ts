@@ -1,7 +1,7 @@
-import {languages} from '~/configs';
-import {IconType} from '~/resources/icons';
-import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
-import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
+import { languages } from '~/configs';
+import { IconType } from '~/resources/icons';
+import { ToastMessageProps } from '~/beinComponents/ToastMessage/NormalToastMessage';
+import { BaseBottomSheetProps } from '~/beinComponents/BottomSheet/BaseBottomSheet';
 
 export interface IObject<T> {
   [key: string | number]: T;
@@ -65,7 +65,7 @@ export interface IPayloadShowModal {
 
 export interface IUserPreview {
   isOpen?: boolean;
-  userId?: number | string;
+  userId?: string;
   params?: IObject<any>;
   position?: {x: number; y: number};
 }

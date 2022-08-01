@@ -1,15 +1,15 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import Button from '~/beinComponents/Button';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {IAudience} from '~/interfaces/IPost';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import { IAudience } from '~/interfaces/IPost';
 import Icon from '~/beinComponents/Icon';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import spacing from '~/theme/spacing';
 
@@ -20,16 +20,16 @@ interface CreatePostChosenAudiencesProps {
 const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   disabled,
 }: CreatePostChosenAudiencesProps) => {
-  const {t} = useBaseHook();
-  const {rootNavigation} = useRootNavigation();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
 
   const theme: ExtendedTheme = useTheme();
 
-  const chosenAudiences = useKeySelector(
-    postKeySelector.createPost.chosenAudiences,
-  );
+  const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
-  const names = getNames(chosenAudiences, t);
+  const names = getNames(
+    chosenAudiences, t,
+  );
 
   const onPressSelectAudience = () => {
     rootNavigation.navigate(homeStack.postSelectAudience);
@@ -38,9 +38,10 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   return (
     <TouchableOpacity
       disabled={disabled}
-      style={[styles.container, {opacity: disabled ? 0.5 : 1}]}
+      style={[styles.container, { opacity: disabled ? 0.5 : 1 }]}
       onPress={onPressSelectAudience}
-      testID="create_post_chosen_audiences">
+      testID="create_post_chosen_audiences"
+    >
       <View style={styles.contentContainer}>
         <Text.BodyS color={theme.colors.gray50} style={styles.textSendTo}>
           {`${t('post:send_to')} `}
@@ -53,28 +54,29 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
               useI18n: true,
               color: theme.colors.purple60,
             }}
-            borderRadius={spacing?.borderRadius.large}
+            borderRadius={spacing?.borderRadius.pill}
             style={styles.buttonChoose}
             onPress={onPressSelectAudience}
-            testID="create_post_chosen_audiences.choose_group">
+            testID="create_post_chosen_audiences.choose_group"
+          >
             post:choose_group_people
           </Button.Secondary>
         )}
       </View>
-      <Icon icon={'AngleRightSolid'} />
+      <Icon icon="AngleRightSolid" />
     </TouchableOpacity>
   );
 };
 
-const getNames = (chosenAudiences: IAudience[], t: any) => {
+const getNames = (
+  chosenAudiences: IAudience[], t: any,
+) => {
   let result = '';
   if (chosenAudiences?.length > 0) {
     result = chosenAudiences?.[0]?.name || '';
     const countLeft = chosenAudiences.length - 1;
     if (countLeft > 0) {
-      result = `${result} ${t('post:and')} ${countLeft} ${t(
-        'post:other_places',
-      )}`;
+      result = `${result} ${t('post:and')} ${countLeft} ${t('post:other_places')}`;
     }
   }
   return result;
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing?.padding.small,
     alignItems: 'center',
   },
-  contentContainer: {flex: 1, flexDirection: 'row', alignItems: 'center'},
+  contentContainer: { flex: 1, flexDirection: 'row', alignItems: 'center' },
   textSendTo: {
     marginRight: spacing?.margin.tiny,
     marginVertical: spacing.margin.small,

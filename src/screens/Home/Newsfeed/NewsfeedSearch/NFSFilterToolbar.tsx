@@ -1,45 +1,43 @@
-import React, {FC, useContext, useRef} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { useContext, useRef } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
-import {useBaseHook} from '~/hooks';
-import {useKeySelector} from '~/hooks/selector';
-import homeKeySelector from '~/screens/Home/redux/keySelector';
-import {useDispatch} from 'react-redux';
-import homeActions from '~/screens/Home/redux/actions';
-import * as modalActions from '~/store/modal/actions';
+import { formatDateTime } from '~/beinComponents/TimeView/helper';
+import { AppContext } from '~/contexts/AppContext';
+import { useBaseHook } from '~/hooks';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useKeySelector } from '~/hooks/selector';
+import { ISelectedFilterUser } from '~/interfaces/IHome';
 import NFSFilterCreatedBy from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreatedBy';
-import {useUserIdAuth} from '~/hooks/auth';
 import NFSFilterDate from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterDate';
-import {AppContext} from '~/contexts/AppContext';
-import {formatDateTime} from '~/beinComponents/TimeView';
-import {ISelectedFilterUser} from '~/interfaces/IHome';
 import NFSFilterOptionMenu from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterOptionMenu';
+import homeActions from '~/screens/Home/redux/actions';
+import homeKeySelector from '~/screens/Home/redux/keySelector';
+import * as modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
 const NFSFilterToolbar = () => {
   const scrollRef = useRef<any>();
   const dispatch = useDispatch();
-  const {language} = useContext(AppContext);
+  const { language } = useContext(AppContext);
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
-  const {colors} = theme;
+  const { t } = useBaseHook();
+  const { colors } = theme;
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
 
-  const filterCreatedBy = useKeySelector(
-    homeKeySelector.newsfeedSearchFilterCreatedBy,
-  );
+  const filterCreatedBy = useKeySelector(homeKeySelector.newsfeedSearchFilterCreatedBy);
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
-  const {startDate, endDate} = filterDate || {};
+  const { startDate, endDate } = filterDate || {};
 
   let countFilter = 0;
   if (filterCreatedBy) {
-    countFilter++;
+    countFilter += 1;
   }
   if (filterDate) {
-    countFilter++;
+    countFilter += 1;
   }
 
   const textCreatedBy = filterCreatedBy
@@ -48,24 +46,26 @@ const NFSFilterToolbar = () => {
       : `${filterCreatedBy?.name}`
     : t('home:newsfeed_search:filter_created_by');
   const textDate = filterDate
-    ? `${formatDateTime(startDate, language)} - ${formatDateTime(
-        endDate,
-        language,
-      )}`
+    ? `${formatDateTime(
+      startDate, language,
+    )} - ${formatDateTime(
+      endDate,
+      language,
+    )}`
     : t('home:newsfeed_search:filter_date');
 
-  const showModal = (ContentComponent: any, event?: any) => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: ContentComponent,
-        props: {
-          isContextMenu: true,
-          side: 'right',
-          position: {x: event?.pageX, y: event?.pageY},
-        },
-      }),
-    );
+  const showModal = (
+    ContentComponent: any, event?: any,
+  ) => {
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent,
+      props: {
+        isContextMenu: true,
+        side: 'right',
+        position: { x: event?.pageX, y: event?.pageY },
+      },
+    }));
   };
 
   const onPressFilterCreatedBy = (event?: any) => {
@@ -79,11 +79,11 @@ const NFSFilterToolbar = () => {
     );
   };
 
-  const onSelectDate = (startDate?: string, endDate?: string) => {
+  const onSelectDate = (
+    startDate?: string, endDate?: string,
+  ) => {
     if (startDate && endDate) {
-      dispatch(
-        homeActions.setNewsfeedSearchFilter({date: {startDate, endDate}}),
-      );
+      dispatch(homeActions.setNewsfeedSearchFilter({ date: { startDate, endDate } }));
     }
   };
 
@@ -110,12 +110,12 @@ const NFSFilterToolbar = () => {
   };
 
   const onSelectCreatedBy = (selected?: ISelectedFilterUser) => {
-    dispatch(homeActions.setNewsfeedSearchFilter({createdBy: selected}));
+    dispatch(homeActions.setNewsfeedSearchFilter({ createdBy: selected }));
   };
 
   const onPressClear = () => {
     dispatch(homeActions.clearNewsfeedSearchFilter());
-    scrollRef?.current?.scrollTo?.({y: 0, animated: true});
+    scrollRef?.current?.scrollTo?.({ y: 0, animated: true });
   };
 
   return (
@@ -124,7 +124,7 @@ const NFSFilterToolbar = () => {
         <View style={styles.container}>
           <Button.Secondary
             onPress={onPressFilterOptions}
-            leftIcon={'SlidersUp'}
+            leftIcon="SlidersUp"
             leftIconProps={{
               icon: 'SlidersUp',
               style: {
@@ -133,7 +133,8 @@ const NFSFilterToolbar = () => {
               },
             }}
             color={countFilter > 0 ? colors.purple50 : colors.violet1}
-            textColor={countFilter > 0 ? colors.white : colors.purple50}>
+            textColor={countFilter > 0 ? colors.white : colors.purple50}
+          >
             {countFilter > 0
               ? `${countFilter}`
               : t('home:newsfeed_search:filter')}
@@ -142,14 +143,16 @@ const NFSFilterToolbar = () => {
             onPress={onPressFilterCreatedBy}
             style={styles.button}
             color={filterCreatedBy ? colors.purple10 : colors.violet1}
-            textColor={colors.purple50}>
+            textColor={colors.purple50}
+          >
             {textCreatedBy}
           </Button.Secondary>
           <Button.Secondary
             onPress={onPressFilterDate}
             style={styles.button}
             color={filterDate ? colors.purple10 : colors.violet1}
-            textColor={colors.purple50}>
+            textColor={colors.purple50}
+          >
             {textDate}
           </Button.Secondary>
           {countFilter > 0 && (
@@ -157,11 +160,12 @@ const NFSFilterToolbar = () => {
               style={styles.button}
               textColor={colors.purple50}
               onPress={onPressClear}
-              rightIcon={'iconCloseSmall'}
+              rightIcon="iconCloseSmall"
               rightIconProps={{
                 icon: 'iconCloseSmall',
-                style: {marginRight: 0, marginLeft: spacing.margin.base},
-              }}>
+                style: { marginRight: 0, marginLeft: spacing.margin.base },
+              }}
+            >
               {t('home:newsfeed_search:clear')}
             </Button.Secondary>
           )}
@@ -172,7 +176,7 @@ const NFSFilterToolbar = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     scrollContainer: {
       backgroundColor: colors.white,

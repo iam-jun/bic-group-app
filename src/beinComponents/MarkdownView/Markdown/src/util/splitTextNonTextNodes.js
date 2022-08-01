@@ -1,6 +1,8 @@
 export default function splitTextNonTextNodes(children) {
   return children.reduce(
-    (acc, curr) => {
+    (
+      acc, curr,
+    ) => {
       if (curr.type.displayName === 'Text') {
         acc.textNodes.push(curr);
       } else {
@@ -9,6 +11,6 @@ export default function splitTextNonTextNodes(children) {
 
       return acc;
     },
-    {textNodes: [], nonTextNodes: []},
+    { textNodes: [], nonTextNodes: [] },
   );
 }

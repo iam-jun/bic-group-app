@@ -1,4 +1,4 @@
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import {
   StyleProp,
@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
+import { ButtonPrimaryProps } from '~/beinComponents/Button/ButtonPrimary';
 import spacing from '~/theme/spacing';
 import ButtonWrapper from './ButtonWrapper';
 
@@ -29,7 +29,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   highEmphasis = false,
   ...props
 }: ButtonSecondaryProps) => {
-  const {colors}: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
 
   let _colorHover = colorHover || colors.purple5;
   let _backgroundColor = color || colors.white;
@@ -64,7 +64,8 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
       underlayColor={_colorHover}
       TouchableComponent={TouchableHighlight}
       {...props}
-      textProps={{color: _textColor, useI18n, ...props?.textProps}}>
+      textProps={{ color: _textColor, useI18n, ...props?.textProps }}
+    >
       {children}
     </ButtonWrapper>
   );

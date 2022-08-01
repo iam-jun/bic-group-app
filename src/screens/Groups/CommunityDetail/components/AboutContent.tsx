@@ -1,14 +1,14 @@
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import i18next from 'i18next';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import privacyTypes, {groupPrivacy} from '~/constants/privacyTypes';
+import privacyTypes, { groupPrivacy } from '~/constants/privacyTypes';
 import PreviewMembers from '../../components/PreviewMembers';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import spacing from '~/theme/spacing';
@@ -17,10 +17,12 @@ const AboutContent = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {description, user_count, privacy, join_status} = infoDetail;
-  const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
-  const {icon: iconPrivacy, privacyTitle}: any = privacyData || {};
-  const isMember = join_status === groupJoinStatus.member;
+  const {
+    description, userCount, privacy, joinStatus,
+  } = infoDetail;
+  const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
+  const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
+  const isMember = joinStatus === groupJoinStatus.member;
 
   return (
     <View style={styles.container} testID="about_content">
@@ -30,7 +32,7 @@ const AboutContent = () => {
             common:text_description
           </Text.ButtonM>
           <CollapsibleText
-            textProps={{variant: 'bodyM'}}
+            textProps={{ variant: 'bodyM' }}
             content={description}
           />
         </View>
@@ -44,9 +46,9 @@ const AboutContent = () => {
       />
       <MenuItem
         testID="about_content.members"
-        icon={'UserGroup'}
-        title={`${user_count} ${i18next.t('groups:text_members', {
-          count: user_count,
+        icon="UserGroup"
+        title={`${userCount} ${i18next.t('groups:text_members', {
+          count: userCount,
         })}`}
         disabled
         rightSubIcon={
@@ -63,7 +65,7 @@ const AboutContent = () => {
 export default AboutContent;
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

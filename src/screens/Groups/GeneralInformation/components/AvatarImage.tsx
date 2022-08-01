@@ -1,12 +1,12 @@
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import React from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Image from '~/beinComponents/Image';
 
-import {scaleSize} from '~/theme/dimension';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useKeySelector} from '~/hooks/selector';
+import { scaleSize } from '~/theme/dimension';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
@@ -18,11 +18,13 @@ interface Props {
   canEditInfo: boolean;
 }
 
-const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
+const AvatarImage = ({
+  testID, onEditAvatar, avatar, canEditInfo,
+}: Props) => {
   const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = themeStyles(theme);
 
   const textColor = !loadingAvatar ? colors.purple60 : colors.gray40;
@@ -37,7 +39,8 @@ const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
           <ButtonWrapper
             testID="avatar.button_edit"
             onPress={onEditAvatar}
-            disabled={loadingAvatar}>
+            disabled={loadingAvatar}
+          >
             <Text.H6 testID="avatar.text_edit" color={textColor} useI18n>
               settings:title_edit
             </Text.H6>
@@ -54,7 +57,8 @@ const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
         ) : (
           <View
             testID="avatar.loading"
-            style={[styles.avatar, styles.imageLoading]}>
+            style={[styles.avatar, styles.imageLoading]}
+          >
             <ActivityIndicator />
           </View>
         )}
@@ -64,7 +68,7 @@ const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     avatarHeader: {
       flexDirection: 'row',

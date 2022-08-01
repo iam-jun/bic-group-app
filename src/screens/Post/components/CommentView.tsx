@@ -1,12 +1,12 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, { useState, useEffect, useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
@@ -16,17 +16,16 @@ import ReactionView from '~/beinComponents/ReactionView';
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import TimeView from '~/beinComponents/TimeView';
-import {ReactionType} from '~/constants/reactions';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import { ReactionType } from '~/constants/reactions';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
   ICommentData,
   IMarkdownAudience,
   IPayloadDeleteComment,
   IPayloadReactToComment,
-  IReaction,
 } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
@@ -35,8 +34,8 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
-import {showReactionDetailBottomSheet} from '~/store/modal/actions';
-import {useBaseHook} from '~/hooks';
+import { showReactionDetailBottomSheet } from '~/store/modal/actions';
+import { useBaseHook } from '~/hooks';
 import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
@@ -46,7 +45,7 @@ export interface CommentViewProps {
   groupIds: string;
   parentCommentId?: string;
   commentData: ICommentData;
-  onPressReply: (data: IReaction) => void;
+  onPressReply: (data: ICommentData) => void;
   contentBackgroundColor?: string;
 }
 
@@ -58,11 +57,11 @@ const _CommentView: React.FC<CommentViewProps> = ({
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const currentUserId = useUserIdAuth();
@@ -80,41 +79,46 @@ const _CommentView: React.FC<CommentViewProps> = ({
     updatedAt,
     edited,
   } = _commentData;
-  const giphy =
-    _commentData.giphy ||
-    (_commentData.giphyId
+  const giphy = _commentData.giphy
+    || (_commentData.giphyId
       ? {
-          id: _commentData.giphyId,
-          url: _commentData.giphyUrl,
-        }
+        id: _commentData.giphyId,
+        url: _commentData.giphyUrl,
+      }
       : null);
 
-  const {fullname, avatar} = actor || {};
+  const { fullname, avatar } = actor || {};
 
-  const isActor = Number(currentUserId) === actor?.id;
+  const isActor = currentUserId === actor?.id;
 
-  const [commentStatus, setCommentStatus] = useState(
-    commentData?.status || null,
-  );
+  const [commentStatus, setCommentStatus] = useState(commentData?.status || null);
   const isActive = commentStatus === 'success' || commentStatus === null;
 
   const progress = useSharedValue(1);
-  const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
+  const animatedStyle = useAnimatedStyle(() => ({ opacity: progress.value }));
 
-  useEffect(() => {
-    if (isActive) {
-      showComment(1);
-    } else if (commentStatus === 'pending') {
-      showComment(0.5);
-    }
-  }, [commentStatus]);
+  useEffect(
+    () => {
+      if (isActive) {
+        showComment(1);
+      } else if (commentStatus === 'pending') {
+        showComment(0.5);
+      }
+    }, [commentStatus],
+  );
 
-  useEffect(() => {
-    setCommentStatus(commentData?.status || null);
-  }, [commentData?.status]);
+  useEffect(
+    () => {
+      setCommentStatus(commentData?.status || null);
+    }, [commentData?.status],
+  );
 
-  const showComment = (value: number, duration = 300) => {
-    progress.value = withTiming(value, {duration});
+  const showComment = (
+    value: number, duration = 300,
+  ) => {
+    progress.value = withTiming(
+      value, { duration },
+    );
   };
 
   const onPressUser = (e?: any) => {
@@ -123,15 +127,19 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
     const payload = {
       userId: id,
-      position: {x: e?.pageX, y: e?.pageY},
+      position: { x: e?.pageX, y: e?.pageY },
     };
     dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
-  const onPressAudience = useCallback((audience: IMarkdownAudience) => {
-    if (!audience) return;
-    rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
-  }, []);
+  const onPressAudience = useCallback(
+    (audience: IMarkdownAudience) => {
+      if (!audience) return;
+      rootNavigation.navigate(
+        mainStack.userProfile, { userId: audience.id },
+      );
+    }, [],
+  );
 
   const onAddReaction = (reactionId: ReactionType) => {
     if (id) {
@@ -140,9 +148,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
         comment: comment || commentData,
         postId,
         parentCommentId,
-        reactionId: reactionId,
-        ownerReactions: ownerReactions,
-        reactionsCount: reactionsCount,
+        reactionId,
+        ownerReactions,
+        reactionsCount,
       };
       dispatch(postActions.postReactToComment(payload));
     }
@@ -155,15 +163,17 @@ const _CommentView: React.FC<CommentViewProps> = ({
         comment: comment || commentData,
         postId,
         parentCommentId,
-        reactionId: reactionId,
-        ownerReactions: ownerReactions,
-        reactionsCount: reactionsCount,
+        reactionId,
+        ownerReactions,
+        reactionsCount,
       };
       dispatch(postActions.deleteReactToComment(payload));
     }
   };
 
-  const onEmojiSelected = (emoji: string, key?: string) => {
+  const onEmojiSelected = (
+    emoji: string, key?: string,
+  ) => {
     dispatch(modalActions.hideModal());
     if (key) {
       onAddReaction?.(key);
@@ -182,7 +192,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       ),
       props: {
         isContextMenu: true,
-        position: {x: event?.pageX, y: event?.pageY},
+        position: { x: event?.pageX, y: event?.pageY },
         side: 'center',
       },
     };
@@ -192,11 +202,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const _onPressReply = () => {
     const actor: any = commentData?.actor || {};
     const username = actor?.data?.username || actor?.username || '';
-    dispatch(
-      actions.addTempSelected({
-        [username]: {id: actor?.id, ...actor},
-      }),
-    );
+    dispatch(actions.addTempSelected({
+      [username]: { id: actor?.id, ...actor },
+    }));
     onPressReply?.(commentData);
   };
 
@@ -212,8 +220,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
       onConfirm: () => {
         const payload: IPayloadDeleteComment = {
           commentId: id,
-          parentCommentId: parentCommentId,
-          postId: postId,
+          parentCommentId,
+          postId,
         };
         dispatch(postActions.deleteComment(payload));
       },
@@ -224,29 +232,27 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onLongPress = (event?: any) => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <CommentViewMenu
-            commentId={id}
-            parentCommentId={parentCommentId}
-            content={content}
-            groupIds={groupIds}
-            postId={postId}
-            isActor={isActor}
-            onPressMoreReaction={onPressReact}
-            onAddReaction={onAddReaction}
-            onPressReply={_onPressReply}
-            onPressDelete={_onPressDelete}
-          />
-        ),
-        props: {
-          isContextMenu: true,
-          position: {x: event?.pageX, y: event?.pageY},
-        },
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <CommentViewMenu
+          commentId={id}
+          parentCommentId={parentCommentId}
+          content={content}
+          groupIds={groupIds}
+          postId={postId}
+          isActor={isActor}
+          onPressMoreReaction={onPressReact}
+          onAddReaction={onAddReaction}
+          onPressReply={_onPressReply}
+          onPressDelete={_onPressDelete}
+        />
+      ),
+      props: {
+        isContextMenu: true,
+        position: { x: event?.pageX, y: event?.pageY },
+      },
+    }));
   };
 
   const getReactionStatistics = async (param: any) => {
@@ -270,33 +276,31 @@ const _CommentView: React.FC<CommentViewProps> = ({
       isOpen: true,
       reactionCounts: reactionsCount,
       initReaction: reactionType,
-      getDataParam: {target: 'COMMENT', targetId: id},
+      getDataParam: { target: 'COMMENT', targetId: id },
       getDataPromise: getReactionStatistics,
     };
     dispatch(showReactionDetailBottomSheet(payload));
   };
 
-  const renderReactionsReplyView = () => {
-    return (
-      isActive && (
-        <View style={styles.buttonContainer}>
-          <ReactionView
-            ownerReactions={ownerReactions}
-            reactionsCount={reactionsCount}
-            onAddReaction={onAddReaction}
-            onRemoveReaction={onRemoveReaction}
-            onPressSelectReaction={onPressReact}
-            onLongPressReaction={onLongPressReaction}
-          />
-          <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
-            <Text.ButtonS style={styles.buttonReply} color={colors.gray50}>
-              Reply
-            </Text.ButtonS>
-          </ButtonWrapper>
-        </View>
-      )
-    );
-  };
+  const renderReactionsReplyView = () => (
+    isActive && (
+    <View style={styles.buttonContainer}>
+      <ReactionView
+        ownerReactions={ownerReactions}
+        reactionsCount={reactionsCount}
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressReact}
+        onLongPressReaction={onLongPressReaction}
+      />
+      <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
+        <Text.ButtonS style={styles.buttonReply} color={colors.gray50}>
+          Reply
+        </Text.ButtonS>
+      </ButtonWrapper>
+    </View>
+    )
+  );
 
   const onPressRetry = () => {
     dispatch(postActions.postRetryAddComment(commentData));
@@ -306,25 +310,23 @@ const _CommentView: React.FC<CommentViewProps> = ({
     dispatch(postActions.postCancelFailedComment(commentData));
   };
 
-  const renderErrorState = () => {
-    return (
-      commentStatus === 'failed' && (
-        <View style={styles.errorLine}>
-          <Text.BodySMedium color={colors.red60} useI18n>
-            common:text_failed_to_upload
-          </Text.BodySMedium>
-          <Text.BodySMedium>{`  • `}</Text.BodySMedium>
-          <Button onPress={onPressRetry}>
-            <Text.BodySMedium useI18n>common:text_retry</Text.BodySMedium>
-          </Button>
-          <Text.BodySMedium>{`  • `}</Text.BodySMedium>
-          <Button onPress={onPressCancel}>
-            <Text.BodySMedium useI18n>common:btn_cancel</Text.BodySMedium>
-          </Button>
-        </View>
-      )
-    );
-  };
+  const renderErrorState = () => (
+    commentStatus === 'failed' && (
+    <View style={styles.errorLine}>
+      <Text.BodySMedium color={colors.red60} useI18n>
+        common:text_failed_to_upload
+      </Text.BodySMedium>
+      <Text.BodySMedium>{'  • '}</Text.BodySMedium>
+      <Button onPress={onPressRetry}>
+        <Text.BodySMedium useI18n>common:text_retry</Text.BodySMedium>
+      </Button>
+      <Text.BodySMedium>{'  • '}</Text.BodySMedium>
+      <Button onPress={onPressCancel}>
+        <Text.BodySMedium useI18n>common:btn_cancel</Text.BodySMedium>
+      </Button>
+    </View>
+    )
+  );
 
   return (
     <View>
@@ -332,19 +334,21 @@ const _CommentView: React.FC<CommentViewProps> = ({
         <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
           <Avatar isRounded source={avatar} />
         </ButtonWrapper>
-        <View style={{flex: 1, marginLeft: spacing?.margin.small}}>
+        <View style={{ flex: 1, marginLeft: spacing?.margin.small }}>
           <Button
             onLongPress={onLongPress}
             disabled={!isActive}
-            testID="comment_view.comment_content">
-            <View style={{flex: 1}}>
+            testID="comment_view.comment_content"
+          >
+            <View style={{ flex: 1 }}>
               <View
                 style={StyleSheet.flatten([
                   styles.contentContainer,
                   contentBackgroundColor
-                    ? {backgroundColor: contentBackgroundColor}
+                    ? { backgroundColor: contentBackgroundColor }
                     : {},
-                ])}>
+                ])}
+              >
                 <View style={styles.header}>
                   <View style={styles.userName}>
                     <ButtonWrapper onPress={onPressUser}>
@@ -354,20 +358,26 @@ const _CommentView: React.FC<CommentViewProps> = ({
                           parentCommentId
                             ? 'comment_view.level_2.user_name'
                             : 'comment_view.level_1.user_name'
-                        }>{`${fullname}`}</Text.H6>
+                        }
+                      >
+                        {`${fullname}`}
+                      </Text.H6>
                     </ButtonWrapper>
                   </View>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     {edited && (
                       <Text.H6 color={colors.gray50}>
-                        {t('post:comment:text_edited')} •{' '}
+                        {t('post:comment:text_edited')}
+                        {' '}
+                        •
+                        {' '}
                       </Text.H6>
                     )}
                     <TimeView
                       time={edited ? updatedAt : createdAt}
                       style={styles.textTime}
                       type="short"
-                      textProps={{variant: 'h6'}}
+                      textProps={{ variant: 'h6' }}
                     />
                   </View>
                 </View>
@@ -398,7 +408,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -416,8 +426,7 @@ const createStyle = (theme: ExtendedTheme) => {
     errorLine: {
       flexDirection: 'row',
       paddingTop: spacing.padding.base,
-      // @ts-ignore
-      marginLeft: dimension.avatarSizes['medium'] + spacing.margin.small,
+      marginLeft: dimension.avatarSizes.medium + spacing.margin.small,
     },
     buttonReply: {
       marginRight: spacing?.margin.tiny,

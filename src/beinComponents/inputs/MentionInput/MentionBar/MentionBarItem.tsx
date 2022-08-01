@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {IMentionUser} from '~/interfaces/IPost';
+import { IMentionUser } from '~/interfaces/IPost';
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
@@ -26,7 +26,8 @@ const MentionBarItem: FC<MentionbarItemProps> = ({
       testID="mention_bar_item"
       disabled={!onPress}
       onPress={() => onPress?.(data)}
-      style={styles.container}>
+      style={styles.container}
+    >
       <Avatar.Small
         testID="mention_bar_item.avatar"
         isRounded
@@ -40,7 +41,7 @@ const MentionBarItem: FC<MentionbarItemProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

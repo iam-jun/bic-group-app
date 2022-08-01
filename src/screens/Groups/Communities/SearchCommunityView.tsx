@@ -1,15 +1,15 @@
-import {View, StyleSheet} from 'react-native';
-import React, {useCallback, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {debounce} from 'lodash';
+import { View, StyleSheet } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { debounce } from 'lodash';
 
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import Text from '~/beinComponents/Text';
 import actions from '~/screens/Groups/redux/actions';
 import appConfig from '~/configs/appConfig';
 import CommunitySearchResults from './CommunitySearchResults';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 
 interface SearchCommunityViewProps {
@@ -17,7 +17,7 @@ interface SearchCommunityViewProps {
   placeholder?: string;
   initSearch?: string;
   onClose?: () => void;
-  onPressCommunity: (id: number) => void;
+  onPressCommunity: (id: string) => void;
 }
 
 const SearchCommunityView = ({
@@ -32,10 +32,10 @@ const SearchCommunityView = ({
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
 
-  const {canLoadMore} = useKeySelector(groupsKeySelector.communitySearch);
+  const { canLoadMore } = useKeySelector(groupsKeySelector.communitySearch);
 
   const getCommunitySearch = (searchText: string) => {
-    dispatch(actions.getCommunitySearch({key: searchText}));
+    dispatch(actions.getCommunitySearch({ key: searchText }));
   };
 
   const onLoadMore = () => {
@@ -49,7 +49,9 @@ const SearchCommunityView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchCommunities, appConfig.searchTriggerTime),
+    debounce(
+      searchCommunities, appConfig.searchTriggerTime,
+    ),
     [],
   );
 
@@ -62,8 +64,9 @@ const SearchCommunityView = ({
       isOpen={isOpen}
       placeholder={placeholder}
       onClose={onClose}
-      onChangeText={onSearchCommunities}>
-      {!!searchText ? (
+      onChangeText={onSearchCommunities}
+    >
+      {searchText ? (
         <CommunitySearchResults
           onLoadMore={onLoadMore}
           onPressCommunity={onPressCommunity}
@@ -73,7 +76,8 @@ const SearchCommunityView = ({
           <Text.BodyS
             color={theme.colors.gray50}
             testID="search_community_view.type_search"
-            useI18n>
+            useI18n
+          >
             common:text_type_search_keyword
           </Text.BodyS>
         </View>
@@ -82,13 +86,11 @@ const SearchCommunityView = ({
   );
 };
 
-const createStyles = () => {
-  return StyleSheet.create({
-    text: {
-      marginTop: 33,
-      alignItems: 'center',
-    },
-  });
-};
+const createStyles = () => StyleSheet.create({
+  text: {
+    marginTop: 33,
+    alignItems: 'center',
+  },
+});
 
 export default SearchCommunityView;

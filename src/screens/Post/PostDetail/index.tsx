@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {InteractionManager, StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
@@ -13,20 +13,24 @@ const PostDetail = (props: any) => {
   const [showLoading, setShowLoading] = useState(true);
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
-  useEffect(() => {
-    const taskId = requestAnimationFrame(() => {
-      setShowContent(true);
-    });
+  useEffect(
+    () => {
+      const taskId = requestAnimationFrame(() => {
+        setShowContent(true);
+      });
 
-    return () => cancelAnimationFrame(taskId);
-  }, []);
+      return () => cancelAnimationFrame(taskId);
+    }, [],
+  );
 
-  const onContentLayout = useCallback(() => {
-    setShowLoading(false);
-  }, []);
+  const onContentLayout = useCallback(
+    () => {
+      setShowLoading(false);
+    }, [],
+  );
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5}>
@@ -36,11 +40,11 @@ const PostDetail = (props: any) => {
       {showLoading && (
         <View style={styles.loadingContainer}>
           <Header
-            titleTextProps={{useI18n: true}}
-            title={'post:title_post_detail'}
+            titleTextProps={{ useI18n: true }}
+            title="post:title_post_detail"
             avatar={images.logo_bein}
           />
-          <PostViewPlaceholder testID={'post_detail.post_view_placeholder'} />
+          <PostViewPlaceholder testID="post_detail.post_view_placeholder" />
         </View>
       )}
     </ScreenWrapper>
@@ -48,7 +52,7 @@ const PostDetail = (props: any) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {},
     loadingContainer: {

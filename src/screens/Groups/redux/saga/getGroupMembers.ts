@@ -1,6 +1,6 @@
-import {put, select, call} from 'redux-saga/effects';
+import { put, select, call } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
-import {IGroupGetMembers} from '~/interfaces/IGroup';
+import { IGroupGetMembers } from '~/interfaces/IGroup';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import actions from '../actions';
 import showError from '~/store/commonSaga/showError';
@@ -12,37 +12,39 @@ export default function* getGroupMembers({
   payload: IGroupGetMembers;
 }) {
   try {
-    const {groups} = yield select();
-    const {groupId, params, isRefreshing} = payload;
-    const groupMembers = groups.groupMembers;
-    const {canLoadMore, offset} = groupMembers;
+    const { groups } = yield select();
+    const { groupId, params, isRefreshing } = payload;
+    const { groupMembers } = groups;
+    const { canLoadMore, offset } = groupMembers;
 
-    yield put(
-      actions.setGroupMembers({loading: isRefreshing ? true : offset === 0}),
-    );
+    yield put(actions.setGroupMembers({ loading: isRefreshing ? true : offset === 0 }));
 
     if (!isRefreshing && !canLoadMore) return;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const resp = yield call(groupsDataHelper.getGroupMembers, groupId, {
-      limit: appConfig.recordsPerPage,
-      offset: isRefreshing ? 0 : offset,
-      ...params,
-    });
+    const resp = yield call(
+      groupsDataHelper.getGroupMembers, groupId, {
+        limit: appConfig.recordsPerPage,
+        offset: isRefreshing ? 0 : offset,
+        ...params,
+      },
+    );
 
     let newDataCount = 0;
     let newDataObj = {};
-    Object.keys(resp)?.map?.((role: string) => {
-      newDataCount += resp[role]?.data?.length;
+    const members = resp.data;
+    Object.keys(members)?.forEach?.((role: string) => {
+      newDataCount += members[role]?.data?.length || 0;
       newDataObj = {
         ...newDataObj,
         [role]: {
-          name: resp[role]?.name,
-          user_count: resp[role]?.user_count,
+          name: members[role]?.name,
+          userCount: members[role]?.userCount,
           data:
             isRefreshing || !groupMembers?.[role]?.data
-              ? [...resp[role]?.data]
-              : [...groupMembers?.[role]?.data, ...resp[role]?.data],
+              ? [...members[role]?.data || []]
+              : [...groupMembers?.[role]?.data || [], ...members[role]?.data || []],
         },
       };
     });
@@ -56,7 +58,9 @@ export default function* getGroupMembers({
 
     yield put(actions.setGroupMembers(newData));
   } catch (err) {
-    console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${err} \x1b[0m`);
-    yield call(showError, err);
+    console.error(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${err} \x1b[0m`);
+    yield call(
+      showError, err,
+    );
   }
 }

@@ -34,8 +34,10 @@ export const homeInitState = {
   },
 };
 
-const homeReducer = (state = homeInitState, action: any = {}) => {
-  const {type, payload} = action;
+const homeReducer = (
+  state = homeInitState, action: any = {},
+) => {
+  const { type, payload } = action;
 
   switch (type) {
     case homeTypes.SET_LOADING_HOME_POSTS:

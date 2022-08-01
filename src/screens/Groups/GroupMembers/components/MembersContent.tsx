@@ -1,44 +1,48 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import {IGroupMembers} from '~/interfaces/IGroup';
+import { IGroupMembers } from '~/interfaces/IGroup';
 import MemberList from '../../components/MemberList';
 import actions from '~/screens/Groups/redux/actions';
-import {useMyPermissions} from '~/hooks/permissions';
+import { useMyPermissions } from '~/hooks/permissions';
 
 interface MembersContentProps {
-  groupId: number;
+  groupId: string;
   onPressMenu: (item: IGroupMembers) => void;
 }
 
-const MembersContent = ({groupId, onPressMenu}: MembersContentProps) => {
+const MembersContent = ({ groupId, onPressMenu }: MembersContentProps) => {
   const dispatch = useDispatch();
-  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
-  const canManageMember = hasPermissionsOnScopeWithId('groups', groupId, [
-    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
-    PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
-  ]);
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const canManageMember = hasPermissionsOnScopeWithId(
+    'groups', groupId, [
+      PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
+      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
+    ],
+  );
 
   const getGroupProfile = () => {
-    // to update can_manage_member when member role changes
+    // to update canManageMember when member role changes
     dispatch(actions.getGroupDetail(groupId));
   };
 
   const getMembers = (isRefreshing?: boolean) => {
     if (groupId) {
-      dispatch(actions.getGroupMembers({groupId, isRefreshing}));
+      dispatch(actions.getGroupMembers({ groupId, isRefreshing }));
     }
   };
 
-  useEffect(() => {
-    dispatch(actions.clearGroupMembers());
-    getMembers();
-    getGroupProfile();
-
-    return () => {
+  useEffect(
+    () => {
       dispatch(actions.clearGroupMembers());
-    };
-  }, [groupId]);
+      getMembers();
+      getGroupProfile();
+
+      return () => {
+        dispatch(actions.clearGroupMembers());
+      };
+    }, [groupId],
+  );
 
   const onLoadMore = () => {
     getMembers();

@@ -1,8 +1,8 @@
-import React, {useEffect, useRef} from 'react';
-import {Modal, StyleSheet, TouchableOpacity} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useRef } from 'react';
+import { Modal, StyleSheet, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 import BottomSheet from '~/beinComponents/BottomSheet';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import modalActions from '~/store/modal/actions';
 import modalKeySelector from '~/store/modal/keySelector';
 
@@ -21,11 +21,13 @@ const CommonModal = () => {
     closeOutSide = true,
   } = modal || {};
 
-  useEffect(() => {
-    if (!isOpen) {
-      modalizeRef?.current?.close?.();
-    }
-  }, [isOpen]);
+  useEffect(
+    () => {
+      if (!isOpen) {
+        modalizeRef?.current?.close?.();
+      }
+    }, [isOpen],
+  );
 
   const _onClose = () => {
     closeOutSide && dispatch(modalActions.hideModal());
@@ -35,15 +37,17 @@ const CommonModal = () => {
     return (
       <Modal
         visible={isOpen}
-        transparent={true}
+        transparent
         onRequestClose={() => {
           dispatch(modalActions.hideModal());
-        }}>
+        }}
+      >
         <TouchableOpacity
           testID="common_modal.center"
           activeOpacity={1}
           style={StyleSheet.flatten([appModalStyle, styles.appModalContainer])}
-          onPress={_onClose}>
+          onPress={_onClose}
+        >
           {ContentComponent}
         </TouchableOpacity>
       </Modal>

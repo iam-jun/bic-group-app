@@ -7,16 +7,16 @@ import {GROUP_ASSIGNMENTS} from '~/test/mock_data/group';
 describe('group scheme assign selection helper', () => {
   it('handleSelectNewGroupScheme should add new item if has change with current assignments', () => {
     const data: any = [];
-    const groupId = 1;
+    const groupId = '1';
     const schemeId = 'abcd';
     expect(
       handleSelectNewGroupScheme(groupId, schemeId, data, GROUP_ASSIGNMENTS),
-    ).toEqual([{group_id: groupId, scheme_id: schemeId}]);
+    ).toEqual([{groupId: groupId, schemeId: schemeId}]);
   });
 
   it('handleSelectNewGroupScheme should not add new item if not has change with current assignments', () => {
     const data: any = [];
-    const groupId = 1;
+    const groupId = '1';
     const schemeId = 'efgh';
     expect(
       handleSelectNewGroupScheme(groupId, schemeId, data, GROUP_ASSIGNMENTS),
@@ -24,11 +24,11 @@ describe('group scheme assign selection helper', () => {
   });
 
   it('changeSchemeIdOfGroup should update schemeId of group by groupId', () => {
-    const groupId = 1;
+    const groupId = '1';
     const schemeId = 'abcd';
     const expectResult = {
-      group_id: 1,
-      scheme_id: 'abcd',
+      groupId: '1',
+      schemeId: 'abcd',
       name: 'Town Square',
       level: 0,
       privacy: 'PUBLIC',
@@ -36,8 +36,8 @@ describe('group scheme assign selection helper', () => {
       description: 'The greatest community ever yeahhhhhhhhhh 123',
       children: [
         {
-          group_id: 2,
-          scheme_id: null,
+          groupId: '2',
+          schemeId: null,
           name: 'Crypto Inner Circle',
           level: 1,
           privacy: 'PUBLIC',
@@ -52,11 +52,11 @@ describe('group scheme assign selection helper', () => {
   });
 
   it('changeSchemeIdOfGroup should update schemeId of child group by groupId', () => {
-    const groupId = 2;
+    const groupId = '2';
     const schemeId = 'efgh';
     const expectResult = {
-      group_id: 1,
-      scheme_id: 'efgh',
+      groupId: '1',
+      schemeId: 'efgh',
       name: 'Town Square',
       level: 0,
       privacy: 'PUBLIC',
@@ -64,8 +64,8 @@ describe('group scheme assign selection helper', () => {
       description: 'The greatest community ever yeahhhhhhhhhh 123',
       children: [
         {
-          group_id: 2,
-          scheme_id: 'efgh',
+          groupId: '2',
+          schemeId: 'efgh',
           name: 'Crypto Inner Circle',
           level: 1,
           privacy: 'PUBLIC',
@@ -80,7 +80,7 @@ describe('group scheme assign selection helper', () => {
   });
 
   it('changeSchemeIdOfGroup should not update any thing', () => {
-    const groupId = 99;
+    const groupId = '99';
     const schemeId = 'efgh';
     expect(changeSchemeIdOfGroup(groupId, schemeId, GROUP_ASSIGNMENTS)).toEqual(
       GROUP_ASSIGNMENTS,

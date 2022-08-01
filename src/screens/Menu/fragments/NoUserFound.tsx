@@ -1,8 +1,7 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation, ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
 
 import NoUserFoundImg from '~/../assets/images/no_user_found.svg';
 import Button from '~/beinComponents/Button';
@@ -22,11 +21,11 @@ const NoUserFound = () => {
     <ScreenWrapper
       testID="user_profile.not_found"
       style={styles.root}
-      isFullView>
+      isFullView
+    >
       <Header title={i18next.t('error:no_profile_found_title')} />
       <View style={styles.mainContainer}>
         <SVGIcon
-          // @ts-ignore
           source={NoUserFoundImg}
           width={250}
           height={200}
@@ -45,7 +44,7 @@ const NoUserFound = () => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     root: {
       backgroundColor: colors.neutral5,

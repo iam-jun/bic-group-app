@@ -1,7 +1,9 @@
 import i18next from 'i18next';
-import {debounce} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Controller} from 'react-hook-form';
+import { debounce } from 'lodash';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
+import { Controller } from 'react-hook-form';
 import {
   Keyboard,
   ScrollView,
@@ -9,8 +11,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
@@ -21,11 +23,11 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 import appConfig from '~/configs/appConfig';
 import * as validation from '~/constants/commonRegex';
-import {useKeySelector} from '~/hooks/selector';
-import {ICountryCodeList} from '~/interfaces/common';
+import { useKeySelector } from '~/hooks/selector';
+import { ICountryCodeList } from '~/interfaces/common';
 
 import spacing from '~/theme/spacing';
-import {formatTextRemoveSpace} from '~/utils/formatData';
+import { formatTextRemoveSpace } from '~/utils/formatData';
 import menuActions from '../../../redux/actions';
 import menuKeySelector from '../../../redux/keySelector';
 import TitleComponent from '../../fragments/TitleComponent';
@@ -50,26 +52,32 @@ const EditPhoneNumber = ({
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, screenHeight);
+  const styles = createStyles(
+    theme, screenHeight,
+  );
   const dispatch = useDispatch();
 
   const countryCodeList = useKeySelector(menuKeySelector.countryCodeList);
-  const {data, searchResult} = countryCodeList || {};
+  const { data, searchResult } = countryCodeList || {};
 
   const [codeValue, setCodeValue] = useState<string>(countryCode);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const countryCodeSheetRef = useRef<any>();
 
-  useEffect(() => {
-    clearAllErrors();
-  }, []);
+  useEffect(
+    () => {
+      clearAllErrors();
+    }, [],
+  );
 
   const doSearch = (searchQuery: string) => {
     searchQuery && dispatch(menuActions.searchCountryCode(searchQuery));
   };
 
   const searchHandler = useCallback(
-    debounce(doSearch, appConfig.searchTriggerTime),
+    debounce(
+      doSearch, appConfig.searchTriggerTime,
+    ),
     [],
   );
 
@@ -90,112 +98,106 @@ const EditPhoneNumber = ({
     onChangeCountryCode(item.code);
   };
 
-  const renderItem = ({item}: {item: ICountryCodeList}) => {
-    return (
-      <PrimaryItem
-        testID={'edit_phone_number.country_code.item'}
-        height={34}
-        title={`${item.name} (+${item.code})`}
-        leftIcon={item.flag}
-        titleProps={{variant: 'bodyM'}}
-        onPress={() => onSelectCountryCode(item)}
-      />
-    );
-  };
+  const renderItem = ({ item }: {item: ICountryCodeList}) => (
+    <PrimaryItem
+      testID="edit_phone_number.country_code.item"
+      height={34}
+      title={`${item.name} (+${item.code})`}
+      leftIcon={item.flag}
+      titleProps={{ variant: 'bodyM' }}
+      onPress={() => onSelectCountryCode(item)}
+    />
+  );
 
-  const renderCountryCodeList = () => {
-    return (
-      <BottomSheet
-        modalizeRef={countryCodeSheetRef}
-        modalStyle={styles.modalStyle}
-        onClose={onCloseModal}
-        ContentComponent={
-          <View style={styles.contentComponent}>
-            <SearchInput
-              testID="edit_phone_number.country_code.search"
-              onChangeText={onQueryChanged}
-              placeholder={i18next.t('input:search_country')}
-              style={styles.searchInput}
-            />
-            <Divider style={styles.divider} />
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.listView}>
-              {(searchQuery ? searchResult : data || []).map(
-                (item: ICountryCodeList) => renderItem({item}),
-              )}
-            </ScrollView>
-          </View>
-        }
-      />
-    );
-  };
+  const renderCountryCodeList = () => (
+    <BottomSheet
+      modalizeRef={countryCodeSheetRef}
+      modalStyle={styles.modalStyle}
+      onClose={onCloseModal}
+      ContentComponent={(
+        <View style={styles.contentComponent}>
+          <SearchInput
+            testID="edit_phone_number.country_code.search"
+            onChangeText={onQueryChanged}
+            placeholder={i18next.t('input:search_country')}
+            style={styles.searchInput}
+          />
+          <Divider style={styles.divider} />
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.listView}
+          >
+            {(searchQuery ? searchResult : data || []).map((item: ICountryCodeList) => renderItem({ item }))}
+          </ScrollView>
+        </View>
+        )}
+    />
+  );
 
   const onOpenCountryCode = (e: any) => {
     Keyboard.dismiss();
-    countryCodeSheetRef?.current?.open?.(e?.pageX, e?.pageY);
-  };
-
-  const renderCountryCodeInput = () => {
-    return (
-      <Button
-        testID="edit_phone_number.country_code"
-        textProps={{color: theme.colors.neutral80, variant: 'bodyM'}}
-        style={styles.buttonDropDown}
-        contentStyle={styles.buttonDropDownContent}
-        rightIcon={'AngleDown'}
-        onPress={e => onOpenCountryCode(e)}>
-        {`+${codeValue || '84'}`}
-      </Button>
+    countryCodeSheetRef?.current?.open?.(
+      e?.pageX, e?.pageY,
     );
   };
 
-  const renderPhoneNumberInput = () => {
-    return (
-      <View style={styles.phoneNumberView}>
-        <Controller
-          name="phoneNumber"
-          defaultValue={phoneNumber}
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <TextInput
-              value={value}
-              testID="edit_phone_number.phone"
-              onChangeText={(text: string) => {
-                if (!!text && text?.trim?.()?.length > 0) {
-                  onChange(formatTextRemoveSpace(text));
-                  clearAllErrors();
-                }
-              }}
-              error={errorsState?.phoneNumber}
-              helperContent={errorsState?.phoneNumber?.message}
-              keyboardType="numeric"
-              autoCapitalize="none"
-              activeOutlineColor={theme.colors.purple50}
-              outlineColor={theme.colors.gray40}
-              style={styles.inputStyle}
-            />
-          )}
-          rules={{
-            required: false,
-            maxLength: {
-              value: 12,
-              message: i18next.t('settings:text_invalid_phone_length'),
-            },
-            minLength: {
-              value: 7,
-              message: i18next.t('settings:text_invalid_phone_length'),
-            },
-            pattern: {
-              value: validation.phoneNumberRegex,
-              message: i18next.t('settings:text_wrong_phone_number_format'),
-            },
-          }}
-        />
-      </View>
-    );
-  };
+  const renderCountryCodeInput = () => (
+    <Button
+      testID="edit_phone_number.country_code"
+      textProps={{ color: theme.colors.neutral80, variant: 'bodyM' }}
+      style={styles.buttonDropDown}
+      contentStyle={styles.buttonDropDownContent}
+      rightIcon="AngleDown"
+      onPress={(e) => onOpenCountryCode(e)}
+    >
+      {`+${codeValue || '84'}`}
+    </Button>
+  );
+
+  const renderPhoneNumberInput = () => (
+    <View style={styles.phoneNumberView}>
+      <Controller
+        name="phoneNumber"
+        defaultValue={phoneNumber}
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            value={value}
+            testID="edit_phone_number.phone"
+            onChangeText={(text: string) => {
+              if (!!text && text?.trim?.()?.length > 0) {
+                onChange(formatTextRemoveSpace(text));
+                clearAllErrors();
+              }
+            }}
+            error={errorsState?.phoneNumber}
+            helperContent={errorsState?.phoneNumber?.message}
+            keyboardType="numeric"
+            autoCapitalize="none"
+            activeOutlineColor={theme.colors.purple50}
+            outlineColor={theme.colors.gray40}
+            style={styles.inputStyle}
+          />
+        )}
+        rules={{
+          required: false,
+          maxLength: {
+            value: 12,
+            message: i18next.t('settings:text_invalid_phone_length'),
+          },
+          minLength: {
+            value: 7,
+            message: i18next.t('settings:text_invalid_phone_length'),
+          },
+          pattern: {
+            value: validation.phoneNumberRegex,
+            message: i18next.t('settings:text_wrong_phone_number_format'),
+          },
+        }}
+      />
+    </View>
+  );
 
   return (
     <>
@@ -211,8 +213,10 @@ const EditPhoneNumber = ({
 
 export default EditPhoneNumber;
 
-const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
-  const {colors} = theme;
+const createStyles = (
+  theme: ExtendedTheme, screenHeight: number,
+) => {
+  const { colors } = theme;
 
   return StyleSheet.create({
     inputsView: {

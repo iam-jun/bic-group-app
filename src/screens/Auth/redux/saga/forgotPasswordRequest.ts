@@ -1,10 +1,10 @@
-import {put} from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import i18n from 'i18next';
-import {Auth} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 
 import actions from '../actions';
-import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
-import {showErrorWithDefinedMessage} from '.';
+import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
+import { showErrorWithDefinedMessage } from '.';
 
 export default function* forgotPasswordRequest({
   payload,
@@ -13,21 +13,17 @@ export default function* forgotPasswordRequest({
   payload: string;
 }) {
   try {
-    yield put(
-      actions.setForgotPasswordError({
-        errBox: '',
-        errConfirm: '',
-        errRequest: '',
-      }),
-    );
+    yield put(actions.setForgotPasswordError({
+      errBox: '',
+      errConfirm: '',
+      errRequest: '',
+    }));
     yield put(actions.setForgotPasswordLoading(true));
 
     yield Auth.forgotPassword(payload);
 
     yield put(actions.setForgotPasswordLoading(false));
-    yield put(
-      actions.setForgotPasswordStage(forgotPasswordStages.INPUT_CODE_PW),
-    );
+    yield put(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_CODE_PW));
   } catch (error: any) {
     let errBox: string;
     const errRequest = '';
@@ -39,19 +35,15 @@ export default function* forgotPasswordRequest({
         errBox = error.message;
     }
 
-    if (error?.['code'] === authErrors.USER_NOT_FOUND_EXCEPTION) {
-      yield put(
-        actions.setForgotPasswordError({
-          errBox: '',
-          errRequest: i18n.t('auth:text_forgot_password_email_not_found'),
-          errConfirm: '',
-        }),
-      );
+    if (error?.code === authErrors.USER_NOT_FOUND_EXCEPTION) {
+      yield put(actions.setForgotPasswordError({
+        errBox: '',
+        errRequest: i18n.t('auth:text_forgot_password_email_not_found'),
+        errConfirm: '',
+      }));
     } else {
       yield showErrorWithDefinedMessage(errBox);
-      yield put(
-        actions.setForgotPasswordError({errBox, errRequest, errConfirm: ''}),
-      );
+      yield put(actions.setForgotPasswordError({ errBox, errRequest, errConfirm: '' }));
     }
 
     yield put(actions.setForgotPasswordLoading(false));

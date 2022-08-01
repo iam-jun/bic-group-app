@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
-import {IconType} from '~/resources/icons';
-import {IUserProfile} from '~/interfaces/IAuth';
+import { IconType } from '~/resources/icons';
+import { IUserProfile } from '~/interfaces/IAuth';
 import speakingLanguages from '~/constants/speakingLanguages';
-import {formatDate} from '~/utils/formatData';
+import { formatDate } from '~/utils/formatData';
 import genders from '~/constants/genders';
-import relationshipStatus from '~/constants/relationshipStatus';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import spacing from '~/theme/spacing';
+import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 
 interface ProfileBlockProps {
   profileData: IUserProfile;
@@ -31,19 +32,17 @@ const ProfileBlock = ({
     country,
     language,
     phone,
-    country_code,
-    relationship_status,
+    countryCode,
+    relationshipStatus,
     gender,
     birthday,
-    latest_work,
+    latestWork,
   } = profileData;
 
   const theme: ExtendedTheme = useTheme();
 
-  const userLanguageList = language?.map(
-    // @ts-ignore
-    (code: string) => speakingLanguages[code].name,
-  );
+  // @ts-ignore
+  const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
   const userLanguages = userLanguageList?.join(', ');
 
   const renderItem = ({
@@ -54,40 +53,40 @@ const ProfileBlock = ({
     icon: IconType;
     title?: string;
     TitleComponent?: React.ReactNode;
-  }) => {
-    return (
-      (!!title || !!TitleComponent) && (
-        <View style={styles.itemComponent}>
-          <Icon icon={icon} tintColor={theme.colors.neutral80} size={20} />
-          <Text style={styles.text} useI18n>
-            {title}
-          </Text>
-          {TitleComponent}
-        </View>
-      )
-    );
-  };
+  }) => (
+    (!!title || !!TitleComponent) && (
+    <View style={styles.itemComponent}>
+      <Icon icon={icon} tintColor={theme.colors.neutral80} size={20} />
+      <Text style={styles.text} useI18n>
+        {title}
+      </Text>
+      {TitleComponent}
+    </View>
+    )
+  );
 
   return (
     <View style={styles.container}>
-      {!!gender || !!birthday || !!relationship_status || !!userLanguages ? (
+      {!!gender || !!birthday || !!relationshipStatus || !!userLanguages ? (
         <>
           <Text.BodyS color={theme.colors.gray50}>
             {i18next.t('settings:title_about')}
           </Text.BodyS>
           {/* @ts-ignore */}
-          {gender && renderItem({icon: 'SquareUser', title: genders[gender]})}
-          {birthday &&
-            renderItem({
+          {gender && renderItem({ icon: 'SquareUser', title: genders[gender] })}
+          {birthday
+            && renderItem({
               icon: 'Calendar',
-              title: formatDate(birthday, 'MMM Do, YYYY'),
+              title: formatDate(
+                birthday, 'MMM Do, YYYY',
+              ),
             })}
-          {renderItem({icon: 'Comments', title: userLanguages})}
-          {relationship_status &&
-            renderItem({
+          {renderItem({ icon: 'Comments', title: userLanguages })}
+          {relationshipStatus
+            && renderItem({
               icon: 'Heart',
               // @ts-ignore
-              title: relationshipStatus[relationship_status],
+              title: RELATIONSHIP_STATUS[relationshipStatus],
             })}
         </>
       ) : null}
@@ -96,7 +95,8 @@ const ProfileBlock = ({
           testID="user_profile.view_more"
           onPress={onSeeMore}
           activeOpacity={1}
-          style={styles.buttonWrapper}>
+          style={styles.buttonWrapper}
+        >
           <Text.H6 testID="add_work.start_date" color={theme.colors.purple50}>
             {i18next.t('settings:text_view_more_info')}
           </Text.H6>
@@ -108,12 +108,16 @@ const ProfileBlock = ({
             {i18next.t('settings:title_contact')}
           </Text.BodyS>
 
-          {renderItem({icon: 'Envelope', title: email})}
+          {renderItem({ icon: 'Envelope', title: email })}
           {renderItem({
             icon: 'Phone',
             TitleComponent:
-              country_code && phone ? (
-                <Text.BodyM> {`(+${country_code}) ${phone}`} </Text.BodyM>
+              countryCode && phone ? (
+                <Text.BodyM>
+                  {' '}
+                  {`(+${countryCode}) ${phone}`}
+                  {' '}
+                </Text.BodyM>
               ) : null,
           })}
           {renderItem({
@@ -123,7 +127,7 @@ const ProfileBlock = ({
         </>
       ) : null}
 
-      {!!latest_work && hideSeeMore ? (
+      {!!latestWork && hideSeeMore ? (
         <>
           <Text.BodyS style={styles.title} color={theme.colors.gray50}>
             {i18next.t('settings:text_work')}
@@ -132,9 +136,9 @@ const ProfileBlock = ({
             icon: 'iconSuitcase',
             TitleComponent: (
               <Text.BodyM>
-                {`${latest_work?.title_position} `}
+                {`${latestWork?.titlePosition} `}
                 <Text useI18n>common:text_at</Text>
-                <Text.BodyM>{` ${latest_work?.company}`}</Text.BodyM>
+                <Text.BodyM>{` ${latestWork?.company}`}</Text.BodyM>
               </Text.BodyM>
             ),
           })}
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
     marginRight: spacing.margin.base,
   },
   icon: {},
-  text: {marginLeft: spacing.margin.base},
+  text: { marginLeft: spacing.margin.base },
   title: {
     marginTop: spacing.margin.base,
   },

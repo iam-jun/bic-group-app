@@ -1,5 +1,7 @@
-import React, {useCallback, useRef} from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable radix */
+import React, { useCallback, useRef } from 'react';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -9,7 +11,7 @@ import Filter from '~/beinComponents/Filter';
 import NotificationList from './NotificationList';
 import spacing from '~/theme/spacing';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +45,7 @@ const ScrollableTabBar = ({
   const _onChangeTab = useCallback(
     (i: number) => {
       onChangeTab(i);
-      if (!!scrollViewRef.current) {
+      if (scrollViewRef.current) {
         scrollViewRef.current?.scrollTo?.({
           x: screenWidth * i,
           animated: true,
@@ -61,19 +63,22 @@ const ScrollableTabBar = ({
   );
 
   const _onPressItemOption = useCallback(
-    ({item, e}: any) => {
-      onPressItemOption?.({item, e});
+    ({ item, e }: any) => {
+      onPressItemOption?.({ item, e });
     },
     [onPressItemOption],
   );
 
   const onMomentumScrollEnd = (e: any) => {
-    const contentOffset = e.nativeEvent.contentOffset;
+    const { contentOffset } = e.nativeEvent;
     const viewSize = e.nativeEvent.layoutMeasurement;
     let pageNum = contentOffset.x / viewSize.width;
+    // @ts-ignore
     if ((pageNum - parseInt(pageNum)) * 10 >= 5) {
+      // @ts-ignore
       pageNum = parseInt(pageNum) + 1;
     } else {
+      // @ts-ignore
       pageNum = parseInt(pageNum);
     }
     if (activeIndex !== pageNum) {
@@ -81,7 +86,7 @@ const ScrollableTabBar = ({
     }
   };
 
-  const scrollHandler = useAnimatedScrollHandler(event => {
+  const scrollHandler = useAnimatedScrollHandler((event) => {
     translateX.value = event.contentOffset.x;
   });
 
@@ -91,37 +96,40 @@ const ScrollableTabBar = ({
         ref={filterRef}
         activeIndex={activeIndex}
         translateX={translateX}
-        testID={'notification.filter'}
-        itemTestID={'notification.filter.item'}
+        testID="notification.filter"
+        itemTestID="notification.filter.item"
         style={styles.filterStyle}
         data={data}
-        onPress={(item: any, index: number) => {
+        onPress={(
+          item: any, index: number,
+        ) => {
           _onChangeTab(index);
         }}
       />
       <Animated.ScrollView
         ref={scrollViewRef}
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         horizontal
         pagingEnabled
         scrollEnabled={false}
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
         onMomentumScrollEnd={onMomentumScrollEnd}
-        scrollEventThrottle={16}>
-        {data?.length > 0 &&
-          data?.map((item: any, index: number) => {
-            return (
-              <NotificationList
-                key={'NOTI_ITEM_SCREEN_' + index + item?.type}
-                onItemPress={_onItemPress}
-                type={item?.type}
-                keyValue={item?.key}
-                onPressItemOption={_onPressItemOption}
-                activeIndex={activeIndex === index}
-              />
-            );
-          })}
+        scrollEventThrottle={16}
+      >
+        {(data?.length || 0) > 0
+          && data?.map((
+            item: any, index: number,
+          ) => (
+            <NotificationList
+              key={`NOTI_ITEM_SCREEN_${index}${item?.type}`}
+              onItemPress={_onItemPress}
+              type={item?.type}
+              keyValue={item?.key}
+              onPressItemOption={_onPressItemOption}
+              activeIndex={activeIndex === index}
+            />
+          ))}
       </Animated.ScrollView>
     </View>
   );

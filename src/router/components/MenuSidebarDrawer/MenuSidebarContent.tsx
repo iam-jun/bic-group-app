@@ -1,22 +1,24 @@
-import React, {FC} from 'react';
-import {Platform, ScrollView, StyleSheet, View} from 'react-native';
+import React, { FC } from 'react';
+import {
+  Platform, ScrollView, StyleSheet, View,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
 import MenuSidebarItem from './MenuSidebarItem';
 import Divider from '~/beinComponents/Divider';
 
-import {useKeySelector} from '~/hooks/selector';
-import {useRootNavigation} from '~/hooks/navigation';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { useKeySelector } from '~/hooks/selector';
+import { useRootNavigation } from '~/hooks/navigation';
 
 import images from '~/resources/images';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import mainStack from '~/router/navigator/MainStack/stack';
-import {useBaseHook} from '~/hooks';
-import {useDispatch} from 'react-redux';
+import { useBaseHook } from '~/hooks';
 import authActions from '~/screens/Auth/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 import settings, {
   settingsMenu,
@@ -33,25 +35,26 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
   onCloseSidebar,
 }: MenuSidebarContentProps) => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme || {};
+  const { colors } = theme || {};
   const styles = themeStyles(theme);
 
   const Container = Platform.OS === 'ios' ? View : ScrollView;
   // ScrollView not work with GestureHandler on iOS, in future if menu setting add more item, should test UI
 
-  const {id, fullname, avatar} =
-    useKeySelector(menuKeySelector.myProfile) || {};
+  const { id, fullname, avatar } = useKeySelector(menuKeySelector.myProfile) || {};
 
   const onPressItem = (type: string) => () => {
     onCloseSidebar?.();
     switch (type) {
       case 'myProfile':
-        return rootNavigation.navigate(mainStack.userProfile, {userId: id});
+        return rootNavigation.navigate(
+          mainStack.userProfile, { userId: id },
+        );
       case 'draftPost':
         return rootNavigation.navigate(homeStack.draftPost);
       case 'accountSettings':
@@ -65,8 +68,10 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
           iconName: 'ArrowRightFromArc',
           cancelBtn: true,
           onConfirm: () => {
-            //waiting for close alert success before clear data
-            setTimeout(() => dispatch(authActions.signOut()), 100);
+            // waiting for close alert success before clear data
+            setTimeout(
+              () => dispatch(authActions.signOut()), 100,
+            );
           },
           confirmLabel: t('auth:text_sign_out'),
         };
@@ -86,33 +91,31 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
   }: {
     data: Array<any>;
     itemTestID?: string;
-  }) => {
-    return (
-      <>
-        {data.map((item, index) => {
-          return (
-            <MenuSidebarItem
-              key={`${index}_menu_${item?.type}`}
-              icon={item?.icon}
-              testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
-              title={item?.title}
-              rightIcon={item?.rightIcon}
-              rightTitle={item?.rightTitle}
-              onPress={onPressItem(item?.type)}
-              disabled={item?.disabled}
-            />
-          );
-        })}
-      </>
-    );
-  };
+  }) => (
+    <>
+      {data.map((
+        item, index,
+      ) => (
+        <MenuSidebarItem
+          key={`${index}_menu_${item?.type}`}
+          icon={item?.icon}
+          testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
+          title={item?.title}
+          rightIcon={item?.rightIcon}
+          rightTitle={item?.rightTitle}
+          onPress={onPressItem(item?.type)}
+          disabled={item?.disabled}
+        />
+      ))}
+    </>
+  );
 
   return (
     <Container style={styles.container}>
       <HeaderAvatar
         firstLabel={fullname}
         secondLabel="profile:title_view_profile"
-        secondLabelProps={{useI18n: true}}
+        secondLabelProps={{ useI18n: true }}
         avatar={avatar || images.img_user_avatar_default}
         onPress={onPressItem('myProfile')}
       />
@@ -134,7 +137,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
         icon="ArrowRightFromArc"
         tintColor={colors.red60}
         title="auth:text_sign_out"
-        titleProps={{style: {color: colors.red60}}}
+        titleProps={{ style: { color: colors.red60 } }}
         onPress={onPressItem('logOut')}
         testID="menu.logout.item.0"
       />
@@ -146,7 +149,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

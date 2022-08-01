@@ -2,7 +2,9 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Keyboard, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Keyboard, StyleSheet, Text, TouchableOpacity, View,
+} from 'react-native';
 
 import {
   changeOpacity,
@@ -32,7 +34,7 @@ export default class MdCodeBlock extends React.PureComponent {
   };
 
   handlePress = preventDoubleTap(() => {
-    const {language, content} = this.props;
+    const { language, content } = this.props;
     const languageDisplayName = getDisplayNameForLanguage(language);
     let title;
     if (languageDisplayName) {
@@ -68,7 +70,7 @@ export default class MdCodeBlock extends React.PureComponent {
     // }
   };
 
-  trimContent = content => {
+  trimContent = (content) => {
     const lines = content.split('\n');
     const numberOfLines = lines.length;
 
@@ -103,13 +105,13 @@ export default class MdCodeBlock extends React.PureComponent {
       }
     }
 
-    const {content, numberOfLines} = this.trimContent(this.props.content);
+    const { content, numberOfLines } = this.trimContent(this.props.content);
 
     let lineNumbers = '1';
     for (let i = 1; i < Math.min(numberOfLines, MAX_LINES); i++) {
       const line = (i + 1).toString();
 
-      lineNumbers += '\n' + line;
+      lineNumbers += `\n${line}`;
     }
 
     let plusMoreLines = null;
@@ -126,7 +128,8 @@ export default class MdCodeBlock extends React.PureComponent {
         activeOpacity={1}
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
-        type={'opacity'}>
+        type="opacity"
+      >
         <View style={style.container}>
           <View style={style.lineNumbers}>
             <Text style={style.lineNumbersText}>{lineNumbers}</Text>
@@ -146,63 +149,61 @@ export default class MdCodeBlock extends React.PureComponent {
   }
 }
 
-const getStyleSheet = makeStyleSheetFromTheme(theme => {
-  return {
-    container: {
-      overflow: 'hidden',
-      borderColor: changeOpacity(theme.centerChannelColor, 0.15),
-      borderRadius: 3,
-      borderWidth: StyleSheet.hairlineWidth,
-      flexDirection: 'row',
-    },
-    lineNumbers: {
-      alignItems: 'center',
-      backgroundColor: changeOpacity(theme.centerChannelColor, 0.05),
-      borderRightColor: changeOpacity(theme.centerChannelColor, 0.15),
-      borderRightWidth: StyleSheet.hairlineWidth,
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      paddingVertical: 4,
-      width: 21,
-    },
-    lineNumbersText: {
-      color: changeOpacity(theme.centerChannelColor, 0.5),
-      fontSize: 12,
-      lineHeight: 18,
-    },
-    rightColumn: {
-      flexDirection: 'column',
-      flex: 1,
-      paddingHorizontal: 6,
-      paddingVertical: 4,
-    },
-    code: {
-      flexDirection: 'row',
-      overflow: 'scroll', // Doesn't actually cause a scrollbar, but stops text from wrapping
-    },
-    codeText: {
-      color: changeOpacity(theme.centerChannelColor, 0.65),
-      fontSize: 12,
-      lineHeight: 18,
-    },
-    plusMoreLinesText: {
-      color: changeOpacity(theme.centerChannelColor, 0.4),
-      fontSize: 11,
-      marginTop: 2,
-    },
-    language: {
-      alignItems: 'center',
-      backgroundColor: theme.sidebarHeaderBg,
-      justifyContent: 'center',
-      opacity: 0.8,
-      padding: 6,
-      position: 'absolute',
-      right: 0,
-      top: 0,
-    },
-    languageText: {
-      color: theme.sidebarHeaderTextColor,
-      fontSize: 12,
-    },
-  };
-});
+const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
+  container: {
+    overflow: 'hidden',
+    borderColor: changeOpacity(theme.centerChannelColor, 0.15),
+    borderRadius: 3,
+    borderWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
+  },
+  lineNumbers: {
+    alignItems: 'center',
+    backgroundColor: changeOpacity(theme.centerChannelColor, 0.05),
+    borderRightColor: changeOpacity(theme.centerChannelColor, 0.15),
+    borderRightWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    paddingVertical: 4,
+    width: 21,
+  },
+  lineNumbersText: {
+    color: changeOpacity(theme.centerChannelColor, 0.5),
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  rightColumn: {
+    flexDirection: 'column',
+    flex: 1,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+  },
+  code: {
+    flexDirection: 'row',
+    overflow: 'scroll', // Doesn't actually cause a scrollbar, but stops text from wrapping
+  },
+  codeText: {
+    color: changeOpacity(theme.centerChannelColor, 0.65),
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  plusMoreLinesText: {
+    color: changeOpacity(theme.centerChannelColor, 0.4),
+    fontSize: 11,
+    marginTop: 2,
+  },
+  language: {
+    alignItems: 'center',
+    backgroundColor: theme.sidebarHeaderBg,
+    justifyContent: 'center',
+    opacity: 0.8,
+    padding: 6,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  languageText: {
+    color: theme.sidebarHeaderTextColor,
+    fontSize: 12,
+  },
+}));

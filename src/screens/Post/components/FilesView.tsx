@@ -1,8 +1,8 @@
-import {isEmpty, isNumber} from 'lodash';
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { isEmpty, isNumber } from 'lodash';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
@@ -12,12 +12,12 @@ import UploadingFile, {
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import appConfig from '~/configs/appConfig';
-import {useBaseHook} from '~/hooks';
-import {IActivityDataFile} from '~/interfaces/IPost';
-import {IGetFile} from '~/services/fileUploader';
+import { useBaseHook } from '~/hooks';
+import { IActivityDataFile } from '~/interfaces/IPost';
+import { IGetFile } from '~/services/fileUploader';
 
 import spacing from '~/theme/spacing';
-import {formatBytes} from '~/utils/formatData';
+import { formatBytes } from '~/utils/formatData';
 
 interface Props extends Partial<UploadingFileProps> {
   files: IGetFile[] | IActivityDataFile[];
@@ -36,41 +36,51 @@ const FilesView = ({
   if (isEmpty(files)) return null;
 
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const styles = themeStyles(theme);
   const [collapsed, setCollaped] = useState(true);
-  const topData = files.slice(0, 5);
+  const topData = files.slice(
+    0, 5,
+  );
 
-  const bottomData = files.length > 5 ? files.slice(5, files.length - 1) : [];
+  const bottomData = files.length > 5 ? files.slice(
+    5, files.length - 1,
+  ) : [];
 
   const toggleCollapse = () => {
     setCollaped(!collapsed);
   };
 
-  const renderFiles = (data: any[], position: 'top' | 'bottom') => {
-    return data.map((item: any, index: number) => (
-      <View key={`create-post-file-${position}-${index}`}>
-        <UploadingFile
-          file={item}
-          onClose={() => onRemoveFile?.(item)}
-          {...props}
-        />
-        {index < files.length - 1 && (
-          <ViewSpacing height={spacing.margin.small} />
-        )}
-      </View>
-    ));
-  };
+  const renderFiles = (
+    data: any[], position: 'top' | 'bottom',
+  ) => data.map((
+    item: any, index: number,
+  ) => (
+    <View key={`create-post-file-${position}-${index}`}>
+      <UploadingFile
+        file={item}
+        onClose={() => onRemoveFile?.(item)}
+        {...props}
+      />
+      {index < files.length - 1 && (
+      <ViewSpacing height={spacing.margin.small} />
+      )}
+    </View>
+  ));
 
   const data = collapsible ? topData : files;
 
   return (
-    <View style={{flex: 1}}>
-      {renderFiles(data, 'top')}
+    <View style={{ flex: 1 }}>
+      {renderFiles(
+        data, 'top',
+      )}
       {collapsible && files.length > 5 && (
         <View style={{}}>
           <Collapsible collapsed={collapsed}>
-            {renderFiles(bottomData, 'bottom')}
+            {renderFiles(
+              bottomData, 'bottom',
+            )}
           </Collapsible>
 
           <ButtonWrapper onPress={toggleCollapse}>
@@ -83,10 +93,12 @@ const FilesView = ({
 
       {isNumber(remainingSize) && (
         <Text.BodyS style={styles.remainingText}>
-          {t('upload:text_file_remainning', {
-            max_files: appConfig.maxFiles,
-            remaining_size: formatBytes(remainingSize),
-          })}
+          {t(
+            'upload:text_file_remainning', {
+              max_files: appConfig.maxFiles,
+              remaining_size: formatBytes(remainingSize),
+            },
+          )}
         </Text.BodyS>
       )}
     </View>
@@ -94,7 +106,7 @@ const FilesView = ({
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     remainingText: {
       marginHorizontal: spacing.margin.large,

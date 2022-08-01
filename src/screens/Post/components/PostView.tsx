@@ -1,18 +1,20 @@
-import {isEqual} from 'lodash';
-import React, {FC, memo} from 'react';
-import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { isEqual } from 'lodash';
+import React, { FC, memo } from 'react';
+import {
+  Keyboard, StyleSheet, TouchableOpacity, View,
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
 import ReactionView from '~/beinComponents/ReactionView';
 import Text from '~/beinComponents/Text';
-import {ReactionType} from '~/constants/reactions';
-import {useBaseHook} from '~/hooks';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import { ReactionType } from '~/constants/reactions';
+import { useBaseHook } from '~/hooks';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
   IAudienceUser,
   IOwnReaction,
@@ -23,7 +25,7 @@ import {
   IReactionCounts,
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import ButtonMarkAsRead from '~/screens/Post/components/ButtonMarkAsRead';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
 import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
@@ -36,7 +38,7 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
-import {formatLargeNumber} from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatData';
 import SeenCountsView from './SeenCountsView';
 import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';
 
@@ -74,25 +76,25 @@ const _PostView: FC<PostViewProps> = ({
   btnCommentTestID,
 }: PostViewProps) => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  let actor: IAudienceUser | undefined,
-    audience: IPostAudience | undefined,
-    deleted: boolean,
-    markedReadPost: boolean,
-    ownerReactions: IOwnReaction,
-    reactionsCount: IReactionCounts,
-    isDraft: boolean,
-    createdAt: string | undefined,
-    media: any,
-    content: string,
-    highlight: string,
-    setting: IPostSetting,
-    commentsCount: number,
-    totalUsersSeen: number;
+  let actor: IAudienceUser | undefined;
+  let audience: IPostAudience | undefined;
+  let deleted: boolean;
+  let markedReadPost: boolean;
+  let ownerReactions: IOwnReaction;
+  let reactionsCount: IReactionCounts;
+  let isDraft: boolean;
+  let createdAt: string | undefined;
+  let media: any;
+  let content: string;
+  let highlight: string;
+  let setting: IPostSetting;
+  let commentsCount: number;
+  let totalUsersSeen: number;
 
   if (isUseReduxState) {
     actor = useKeySelector(postKeySelector.postActorById(postId));
@@ -105,19 +107,11 @@ const _PostView: FC<PostViewProps> = ({
     setting = useKeySelector(postKeySelector.postSettingById(postId));
     deleted = useKeySelector(postKeySelector.postDeletedById(postId));
     markedReadPost = useKeySelector(postKeySelector.postMarkedReadById(postId));
-    commentsCount = useKeySelector(
-      postKeySelector.postCommentsCountById(postId),
-    );
+    commentsCount = useKeySelector(postKeySelector.postCommentsCountById(postId));
 
-    ownerReactions = useKeySelector(
-      postKeySelector.postOwnerReactionById(postId),
-    );
-    reactionsCount = useKeySelector(
-      postKeySelector.postReactionCountsById(postId),
-    );
-    totalUsersSeen = useKeySelector(
-      postKeySelector.postTotalUsersSeenById(postId),
-    );
+    ownerReactions = useKeySelector(postKeySelector.postOwnerReactionById(postId));
+    reactionsCount = useKeySelector(postKeySelector.postReactionCountsById(postId));
+    totalUsersSeen = useKeySelector(postKeySelector.postTotalUsersSeenById(postId));
   } else {
     actor = postData?.actor;
     audience = postData?.audience;
@@ -135,8 +129,8 @@ const _PostView: FC<PostViewProps> = ({
     totalUsersSeen = postData?.totalUsersSeen || 0;
   }
 
-  const {images, videos, files} = media || {};
-  const {isImportant, importantExpiredAt} = setting || {};
+  const { images, videos, files } = media || {};
+  const { isImportant, importantExpiredAt } = setting || {};
 
   const userId = useUserIdAuth();
 
@@ -146,31 +140,30 @@ const _PostView: FC<PostViewProps> = ({
   }`;
 
   const onPressShowAudiences = () => {
-    const payload = {postId, fromStack: 'somewhere'};
+    const payload = { postId, fromStack: 'somewhere' };
     dispatch(postActions.showPostAudiencesBottomSheet(payload));
   };
 
   const onPressMenu = () => {
     Keyboard.dismiss();
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <PostViewMenu
-            postId={postId}
-            isPostDetail={isPostDetail}
-            isActor={actor?.id == userId}
-            isDraftPost={isDraft}
-          />
-        ),
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <PostViewMenu
+          postId={postId}
+          isPostDetail={isPostDetail}
+          isActor={actor?.id == userId}
+          isDraftPost={isDraft}
+          getDataPromise={getReactionStatistics}
+        />
+      ),
+    }));
   };
 
   const onAddReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {
       id: postId,
-      reactionId: reactionId,
+      reactionId,
       ownReaction: ownerReactions,
       reactionCounts: reactionsCount,
     };
@@ -180,7 +173,7 @@ const _PostView: FC<PostViewProps> = ({
   const onRemoveReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {
       id: postId,
-      reactionId: reactionId,
+      reactionId,
       ownReaction: ownerReactions,
       reactionCounts: reactionsCount,
     };
@@ -195,6 +188,7 @@ const _PostView: FC<PostViewProps> = ({
         id: item?.actor?.id,
         avatar: item?.actor?.avatar,
         fullname: item?.actor?.fullname,
+        reactionId: item?.id,
       }));
 
       return Promise.resolve(users || []);
@@ -204,30 +198,29 @@ const _PostView: FC<PostViewProps> = ({
   };
 
   const onLongPressReaction = (reactionType: ReactionType) => {
-    console.log(`\x1b[36m🐣️ PostView onLongPressReaction\x1b[0m`);
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
       reactionCounts: reactionsCount,
       initReaction: reactionType,
-      getDataParam: {target: 'POST', targetId: postId},
+      getDataParam: { target: 'POST', targetId: postId },
       getDataPromise: getReactionStatistics,
     };
     dispatch(modalActions.showReactionDetailBottomSheet(payload));
   };
 
   const onPressSeenBy = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
+    }));
   };
   const _onPressHeader = () => {
     if (onPressHeader) {
       onPressHeader?.(postId);
     } else {
-      rootNavigation.navigate(homeStack.postDetail, {post_id: postId});
+      rootNavigation.navigate(
+        homeStack.postDetail, { post_id: postId },
+      );
     }
   };
 
@@ -235,16 +228,20 @@ const _PostView: FC<PostViewProps> = ({
     if (onPressComment) {
       onPressComment?.(postId);
     } else {
-      rootNavigation.navigate(homeStack.postDetail, {
-        post_id: postId,
-        focus_comment: true,
-      });
+      rootNavigation.navigate(
+        homeStack.postDetail, {
+          post_id: postId,
+          focus_comment: true,
+        },
+      );
     }
   };
 
   const _onPress = () => {
     if (pressNavigateToDetail) {
-      rootNavigation.navigate(homeStack.postDetail, {post_id: postId});
+      rootNavigation.navigate(
+        homeStack.postDetail, { post_id: postId },
+      );
     } else {
       onPress?.();
     }
@@ -254,7 +251,7 @@ const _PostView: FC<PostViewProps> = ({
     return (
       <View style={StyleSheet.flatten([styles.deletedContainer, style])}>
         <Image style={styles.imageDelete} source={resourceImages.img_delete} />
-        <Text.H6 testID={'post_view.label_deleted'} useI18n>
+        <Text.H6 testID="post_view.label_deleted" useI18n>
           post:label_post_deleted
         </Text.H6>
       </View>
@@ -267,7 +264,8 @@ const _PostView: FC<PostViewProps> = ({
       activeOpacity={0.8}
       disabled={!onPress && !pressNavigateToDetail}
       onPress={_onPress}
-      style={style}>
+      style={style}
+    >
       <PostViewImportant
         isLite={isLite}
         isImportant={!!isImportant}
@@ -335,9 +333,9 @@ const _PostView: FC<PostViewProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    rowCenter: {flexDirection: 'row', alignItems: 'center'},
+    rowCenter: { flexDirection: 'row', alignItems: 'center' },
     container: {
       backgroundColor: colors.white,
     },
@@ -350,14 +348,20 @@ const createStyle = (theme: ExtendedTheme) => {
       padding: spacing.padding.large,
       backgroundColor: colors.white,
     },
-    imageDelete: {width: 35, height: 35, marginRight: spacing.margin.large},
+    imageDelete: { width: 35, height: 35, marginRight: spacing.margin.large },
   });
 };
 
-function propsAreEqual(prev: any, next: any) {
-  return isEqual(prev, next);
+function propsAreEqual(
+  prev: any, next: any,
+) {
+  return isEqual(
+    prev, next,
+  );
 }
 
-const PostView = memo(_PostView, propsAreEqual);
+const PostView = memo(
+  _PostView, propsAreEqual,
+);
 PostView.whyDidYouRender = true;
 export default PostView;

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {Platform, ScrollView} from 'react-native';
+import { Platform, ScrollView } from 'react-native';
 
-import {makeStyleSheetFromTheme} from '../utils/utils';
+import { makeStyleSheetFromTheme } from '../utils/utils';
 
 export default class TableDetail extends React.PureComponent {
   static propTypes = {
@@ -16,7 +16,7 @@ export default class TableDetail extends React.PureComponent {
     const content = this.props.renderRows(true);
     const viewStyle = this.props.renderAsFlex
       ? style.displayFlex
-      : {width: this.props.tableWidth};
+      : { width: this.props.tableWidth };
 
     let container;
     if (Platform.OS === 'android') {
@@ -24,8 +24,9 @@ export default class TableDetail extends React.PureComponent {
         <ScrollView testID="table.screen">
           <ScrollView
             contentContainerStyle={viewStyle}
-            horizontal={true}
-            testID="table.scroll_view">
+            horizontal
+            testID="table.scroll_view"
+          >
             {content}
           </ScrollView>
         </ScrollView>
@@ -35,7 +36,8 @@ export default class TableDetail extends React.PureComponent {
         <ScrollView
           style={style.fullHeight}
           contentContainerStyle={viewStyle}
-          testID="table.scroll_view">
+          testID="table.scroll_view"
+        >
           {content}
         </ScrollView>
       );
@@ -44,23 +46,21 @@ export default class TableDetail extends React.PureComponent {
   }
 }
 
-const getStyleSheet = makeStyleSheetFromTheme(() => {
-  return {
-    container: {
-      flex: 1,
-    },
-    fullHeight: {
-      height: '100%',
-    },
-    displayFlex: {
-      ...Platform.select({
-        android: {
-          flex: 1,
-        },
-        ios: {
-          flex: 0,
-        },
-      }),
-    },
-  };
-});
+const getStyleSheet = makeStyleSheetFromTheme(() => ({
+  container: {
+    flex: 1,
+  },
+  fullHeight: {
+    height: '100%',
+  },
+  displayFlex: {
+    ...Platform.select({
+      android: {
+        flex: 1,
+      },
+      ios: {
+        flex: 0,
+      },
+    }),
+  },
+}));

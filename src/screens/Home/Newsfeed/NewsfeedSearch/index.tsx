@@ -1,72 +1,85 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, Keyboard} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleProp, ViewStyle, Keyboard } from 'react-native';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
-import {useKeySelector} from '~/hooks/selector';
+import SearchBaseView from '~/beinComponents/SearchBaseView';
+import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
+import homeActions from '~/screens/Home/redux/actions';
 import NFSSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSSuggestion';
 import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
-import {useDispatch} from 'react-redux';
-import homeActions from '~/screens/Home/redux/actions';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import dimension from '~/theme/dimension';
+import { useBaseHook } from '~/hooks';
+import { IPayloadSetNewsfeedSearch } from '~/interfaces/IHome';
 
-export interface NewsfeedSearchProps {
-  headerRef?: any;
+interface NewsfeedSearchProps {
+  style?: StyleProp<ViewStyle>;
+  onClose?: () => void;
+  searchViewRef?: any;
 }
 
-const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
-  headerRef,
-}: NewsfeedSearchProps) => {
+const NewsfeedSearch = ({ style, searchViewRef }: NewsfeedSearchProps) => {
+  const _searchViewRef = searchViewRef || useRef(null);
+
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme();
-  const insets = useSafeAreaInsets();
-  const styles = createStyle(theme, insets);
+  const { t } = useBaseHook();
 
   const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
-  const isSuggestion = useKeySelector(
-    homeKeySelector.newsfeedSearch.isSuggestion,
-  );
+  const isSuggestion = useKeySelector(homeKeySelector.newsfeedSearch.isSuggestion);
 
   const onSelectKeyword = (keyword: string) => {
-    headerRef?.current?.setSearchText?.(keyword);
-    dispatch(
-      homeActions.setNewsfeedSearch({
-        isSuggestion: false,
-        searchResults: [],
-        searchText: keyword,
-      }),
-    );
+    _searchViewRef?.current?.setSearchText?.(keyword);
+    dispatch(homeActions.setNewsfeedSearch({
+      isSuggestion: false,
+      searchResults: [],
+      searchText: keyword,
+    }));
     Keyboard.dismiss();
+  };
+
+  const onSearchText = (text: string) => {
+    const searchText = text?.trim?.() || '';
+    const payload: IPayloadSetNewsfeedSearch = { searchText };
+    if (!searchText) {
+      payload.isSuggestion = true;
+      _searchViewRef?.current?.focus?.();
+    }
+    dispatch(homeActions.setNewsfeedSearch(payload));
+  };
+
+  const onFocusSearch = () => {
+    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [] }));
+  };
+
+  const onSubmitSearch = () => {
+    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [] }));
   };
 
   if (!isShow) {
     return null;
   }
 
+  const onClose = () => {
+    dispatch(homeActions.clearAllNewsfeedSearch());
+  }
+
   return (
-    <View style={styles.container}>
+    <SearchBaseView
+      style={style}
+      isOpen={isShow}
+      searchViewRef={_searchViewRef}
+      placeholder={t('input:search_post')}
+      onClose={onClose}
+      onChangeText={onSearchText}
+      onFocus={onFocusSearch}
+      onSubmitEditing={onSubmitSearch}
+    >
       {isSuggestion ? (
         <NFSSuggestion onSelectKeyword={onSelectKeyword} />
       ) : (
         <NFSResult />
       )}
-    </View>
+    </SearchBaseView>
   );
-};
-
-const createStyle = (theme: ExtendedTheme, insets: any) => {
-  const {colors} = theme;
-  return StyleSheet.create({
-    container: {
-      position: 'absolute',
-      top: insets.top + dimension.headerHeight,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: colors.white,
-    },
-  });
 };
 
 export default NewsfeedSearch;

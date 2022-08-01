@@ -1,6 +1,8 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import {
   ShineOverlay,
@@ -10,7 +12,7 @@ import {
 } from 'rn-placeholder';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import {getRandomInt} from '~/utils/generator';
+import { getRandomInt } from '~/utils/generator';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 
@@ -38,32 +40,41 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
       </View>
       <Placeholder
         Animation={ShineOverlay}
-        Left={p => <PlaceholderMedia style={[p.style, styles.avatar]} />}
-        style={styles.infoContainer}>
+        Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}
+        style={styles.infoContainer}
+      >
         <PlaceholderLine
-          width={disableRandom ? 50 : getRandomInt(30, 60)}
+          width={disableRandom ? 50 : getRandomInt(
+            30, 60,
+          )}
           style={styles.marginBottomSmall}
         />
         <PlaceholderLine
-          width={disableRandom ? 60 : getRandomInt(30, 80)}
+          width={disableRandom ? 60 : getRandomInt(
+            30, 80,
+          )}
           style={styles.marginBottomSmall}
         />
         <PlaceholderLine
-          width={disableRandom ? 40 : getRandomInt(30, 50)}
+          width={disableRandom ? 40 : getRandomInt(
+            30, 50,
+          )}
           style={styles.margin0}
         />
       </Placeholder>
       <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
-        {Array.from(Array(disableRandom ? 3 : getRandomInt(1, 5)).keys()).map(
-          item => (
-            <PlaceholderLine
-              key={`line_${item}`}
-              style={styles.marginBottomSmall}
-            />
-          ),
-        )}
+        {Array.from(Array(disableRandom ? 3 : getRandomInt(
+          1, 5,
+        )).keys()).map((item) => (
+          <PlaceholderLine
+            key={`line_${item}`}
+            style={styles.marginBottomSmall}
+          />
+        ))}
         <PlaceholderLine
-          width={disableRandom ? 45 : getRandomInt(20, 80)}
+          width={disableRandom ? 45 : getRandomInt(
+            20, 80,
+          )}
           style={styles.margin0}
         />
       </Placeholder>
@@ -75,7 +86,8 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
           <Placeholder
             Animation={ShineOverlay}
             style={styles.buttonContent}
-            Left={p => <PlaceholderMedia style={[p.style, styles.icon]} />}>
+            Left={(p) => <PlaceholderMedia style={[p.style, styles.icon]} />}
+          >
             <PlaceholderLine style={styles.margin0} height={14} />
           </Placeholder>
         </View>
@@ -84,7 +96,8 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
           <Placeholder
             Animation={ShineOverlay}
             style={styles.buttonContent}
-            Left={p => <PlaceholderMedia style={[p.style, styles.icon]} />}>
+            Left={(p) => <PlaceholderMedia style={[p.style, styles.icon]} />}
+          >
             <PlaceholderLine style={styles.margin0} height={14} />
           </Placeholder>
         </View>
@@ -94,11 +107,11 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
-    margin0: {marginTop: 0, marginBottom: 0},
-    marginBottomSmall: {marginBottom: spacing.margin.small},
+    flex1: { flex: 1 },
+    margin0: { marginTop: 0, marginBottom: 0 },
+    marginBottomSmall: { marginBottom: spacing.margin.small },
     container: {
       backgroundColor: colors.white,
       marginBottom: spacing.margin.base,
@@ -115,7 +128,7 @@ const createStyle = (theme: ExtendedTheme) => {
       width: 135,
       height: 15,
     },
-    iconStar: {width: 28, height: 28},
+    iconStar: { width: 28, height: 28 },
     infoContainer: {
       paddingTop: spacing.padding.small,
       paddingHorizontal: spacing.padding.base,
@@ -146,7 +159,7 @@ const createStyle = (theme: ExtendedTheme) => {
       width: 16,
       height: 16,
     },
-    buttonWrapper: {height: 40, flexDirection: 'row', alignItems: 'center'},
+    buttonWrapper: { height: 40, flexDirection: 'row', alignItems: 'center' },
     buttonContainer: {
       flexDirection: 'row',
       flex: 1,
@@ -158,7 +171,7 @@ const createStyle = (theme: ExtendedTheme) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-    divider: {height: '65%', alignSelf: 'center'},
+    divider: { height: '65%', alignSelf: 'center' },
   });
 };
 

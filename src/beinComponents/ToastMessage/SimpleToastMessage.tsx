@@ -6,14 +6,14 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Icon from '~/beinComponents/Icon';
 
-import Text, {TextProps} from '~/beinComponents/Text';
-import {IconType} from '~/resources/icons';
-import {useDispatch} from 'react-redux';
-import {clearToastMessage} from '~/store/modal/actions';
+import Text, { TextProps } from '~/beinComponents/Text';
+import { IconType } from '~/resources/icons';
+import { clearToastMessage } from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
 interface SimpleToastMessageProps {
@@ -46,12 +46,14 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
     <TouchableOpacity
       disabled={disabled}
       onPress={_onPress}
-      testID="simple_toast_message">
+      testID="simple_toast_message"
+    >
       <View style={StyleSheet.flatten([styles.container, style])}>
         <Text.BodyS
           {...textProps}
           color={theme.colors.purple60}
-          testID="simple_toast_message.children">
+          testID="simple_toast_message.children"
+        >
           {children}
         </Text.BodyS>
         {!!icon && (
@@ -68,7 +70,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

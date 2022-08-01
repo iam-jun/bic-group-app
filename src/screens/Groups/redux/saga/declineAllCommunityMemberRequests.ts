@@ -1,4 +1,4 @@
-import {call} from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
@@ -7,14 +7,18 @@ export default function* declineAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; callback?: () => void};
+  payload: {communityId: string; callback?: () => void};
 }) {
-  const {communityId} = payload;
+  const { communityId } = payload;
   try {
-    yield call(groupsDataHelper.declineAllCommunityMemberRequests, communityId);
+    yield call(
+      groupsDataHelper.declineAllCommunityMemberRequests, communityId,
+    );
   } catch (err: any) {
-    console.log('declineAllCommunityMemberRequests: ', err);
+    console.error('declineAllCommunityMemberRequests: ', err);
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

@@ -1,13 +1,13 @@
-import React, {FC, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import PermissionItem from '~/screens/Groups/CreatePermissionScheme/components/PermissionItem';
-import {ICategory, IPermission, IRole} from '~/interfaces/IGroup';
-import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
-import {CATEGORY_KEY, ROLE_TYPE} from '~/constants/permissionScheme';
+import { ICategory, IPermission, IRole } from '~/interfaces/IGroup';
+import { permissionRoleSectionHeaderHeight } from '~/theme/dimension';
+import { CATEGORY_KEY, ROLE_TYPE } from '~/constants/permissionScheme';
 import spacing from '~/theme/spacing';
 
 export interface RoleItemProps {
@@ -46,37 +46,33 @@ const RoleItem: FC<RoleItemProps> = ({
         <Text style={styles.roleName}>{role?.name}</Text>
         <Icon icon={isExpand ? 'AngleDown' : 'AngleRight'} />
       </TouchableOpacity>
-      {isExpand &&
-        categories?.map?.((cat: ICategory) => {
+      {isExpand
+        && categories?.map?.((cat: ICategory) => {
           if (
-            role?.type === ROLE_TYPE.GROUP_ADMIN &&
-            cat?.key === CATEGORY_KEY.COMMUNITY
-          )
-            return null;
+            role?.type === ROLE_TYPE.GROUP_ADMIN
+            && cat?.key === CATEGORY_KEY.COMMUNITY
+          ) return null;
 
           return (
             <View key={`role_${keyRoleId}_cat_${cat?.key}`}>
               <Text.ButtonS style={styles.catName}>{cat?.name}</Text.ButtonS>
               {cat?.subCategories?.map((subCat: any) => (
                 <View
-                  key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}`}>
+                  key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}`}
+                >
                   <Text.H5 style={styles.subCatName}>{subCat?.name}</Text.H5>
                   {subCat?.permissions?.map((per: IPermission) => {
                     const isChecked = role?.permissions?.includes(per?.key);
-                    const isInherited = inheritedRole?.permissions?.includes(
-                      per?.key,
-                    );
-                    const {fixedForRoles = []} = per;
+                    const isInherited = inheritedRole?.permissions?.includes(per?.key);
+                    const { fixedForRoles = [] } = per;
                     const isFixed = fixedForRoles?.includes?.(role.type);
-                    const isFixedForCreator = fixedForRoles?.includes?.(
-                      ROLE_TYPE.CREATOR,
-                    );
+                    const isFixedForCreator = fixedForRoles?.includes?.(ROLE_TYPE.CREATOR);
                     if (
-                      selectedRolesOnly &&
-                      !isChecked &&
-                      !isInherited &&
-                      !isFixed &&
-                      !isFixedForCreator
+                      selectedRolesOnly
+                      && !isChecked
+                      && !isInherited
+                      && !isFixed
+                      && !isFixedForCreator
                     ) {
                       return null;
                     }
@@ -105,7 +101,7 @@ const RoleItem: FC<RoleItemProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.margin.small,

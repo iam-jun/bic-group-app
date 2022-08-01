@@ -1,20 +1,20 @@
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import modalActions from '~/store/modal/actions';
 import groupsActions from '../../redux/actions';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 
-import {handleLeaveInnerGroups} from '../../helper';
+import { handleLeaveInnerGroups } from '../../helper';
 
 interface IUseLeaveGroup {
-  groupId: number;
+  groupId: string;
   username: string;
 }
 
-const useLeaveGroup = ({groupId, username}: IUseLeaveGroup) => {
+const useLeaveGroup = ({ groupId, username }: IUseLeaveGroup) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
 
@@ -38,9 +38,8 @@ const useLeaveGroup = ({groupId, username}: IUseLeaveGroup) => {
 
   const getInnerGroupsText = (innerGroups: any) => {
     if (innerGroups.length > 0) {
-      alertPayload.content =
-        alertPayload.content +
-        ` ${i18next.t('groups:modal_confirm_leave_group:leave_inner_groups')}`;
+      alertPayload.content
+        += ` ${i18next.t('groups:modal_confirm_leave_group:leave_inner_groups')}`;
 
       const groupsLeaveToString = innerGroups.join(', ');
       alertPayload.content = alertPayload.content.replace(
@@ -52,7 +51,9 @@ const useLeaveGroup = ({groupId, username}: IUseLeaveGroup) => {
   };
 
   const alertLeaveGroup = () => {
-    handleLeaveInnerGroups(groupId, username, dispatch, getInnerGroupsText);
+    handleLeaveInnerGroups(
+      groupId, username, dispatch, getInnerGroupsText,
+    );
   };
 
   return alertLeaveGroup;

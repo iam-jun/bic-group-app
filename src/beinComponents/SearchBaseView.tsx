@@ -1,34 +1,45 @@
-import {StyleSheet, View, Platform, TextInput} from 'react-native';
-import React, {useState} from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {
+  StyleSheet, View, TextInput, StyleProp, ViewStyle,
+} from 'react-native';
+import React, { useImperativeHandle, useRef, useState } from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Icon from './Icon';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
 interface SearchBaseViewProps {
+  style?: StyleProp<ViewStyle>;
   isOpen: boolean;
   children?: React.ReactNode;
   placeholder?: string;
   initSearch?: string;
   onClose?: () => void;
   onChangeText?: (text: string) => void;
+  onFocus?: () => void;
+  onSubmitEditing?: () => void;
+  searchViewRef?: any;
 }
 
-const SearchBaseView = ({
+function SearchBaseView({
+  style,
   isOpen,
   children,
   placeholder,
   initSearch,
   onClose,
   onChangeText,
-}: SearchBaseViewProps) => {
+  onFocus,
+  onSubmitEditing,
+  searchViewRef,
+}: SearchBaseViewProps) {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const [searchText, setSearchText] = useState(initSearch || '');
+  const textInputRef = useRef(null);
 
   const onPressBack = () => {
     setSearchText('');
@@ -41,54 +52,66 @@ const SearchBaseView = ({
     onChangeText?.(text);
   };
 
-  const renderHeader = () => {
-    return (
-      <View style={[styles.headerContainer, styles.bottomBorderAndShadow]}>
-        <View style={styles.inputIconContainer}>
-          <Icon
-            icon="iconBack"
-            onPress={onPressBack}
-            size={24}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-            style={styles.iconBack}
-            buttonTestID="search_base_view.back_button"
-          />
-          <TextInput
-            autoFocus
-            testID={'search_base_view.text_input'}
-            style={styles.textInput}
-            value={searchText}
-            autoComplete={'off'}
-            placeholder={placeholder}
-            placeholderTextColor={theme.colors.gray40}
-            selectionColor={theme.colors.gray50}
-            onChangeText={_onChangeText}
-          />
-          {!!searchText && (
-            <Icon
-              style={styles.iconClose}
-              icon="iconClose"
-              size={20}
-              tintColor={theme.colors.neutral80}
-              onPress={() => _onChangeText('')}
-              buttonTestID="search_base_view.reset_button"
-            />
-          )}
-        </View>
+  const focus = () => textInputRef.current?.focus?.();
+  const blur = () => textInputRef.current?.blur?.()
+
+  useImperativeHandle(searchViewRef, () => ({
+    setSearchText,
+    focus,
+    blur,
+  }))
+
+  const renderHeader = () => (
+    <View style={styles.headerContainer}>
+      <View style={styles.inputIconContainer}>
+        <Icon
+          icon="iconBack"
+          onPress={onPressBack}
+          size={24}
+          hitSlop={{
+            top: 20, bottom: 20, left: 20, right: 20,
+          }}
+          style={styles.iconBack}
+          buttonTestID="search_base_view.back_button"
+        />
+        <TextInput
+          ref={textInputRef}
+          autoFocus
+          testID="search_base_view.text_input"
+          style={styles.textInput}
+          value={searchText}
+          autoComplete="off"
+          placeholder={placeholder}
+          placeholderTextColor={theme.colors.gray40}
+          selectionColor={theme.colors.gray50}
+          onChangeText={_onChangeText}
+          onFocus={onFocus}
+          onSubmitEditing={onSubmitEditing}
+        />
+        {!!searchText && (
+        <Icon
+          style={styles.iconClose}
+          icon="iconClose"
+          size={20}
+          tintColor={theme.colors.neutral80}
+          onPress={() => _onChangeText('')}
+          buttonTestID="search_base_view.reset_button"
+        />
+        )}
       </View>
-    );
-  };
+    </View>
+  );
 
   return isOpen ? (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {renderHeader()}
       {children}
     </View>
   ) : null;
-};
+}
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors, elevations } = theme;
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
@@ -104,15 +127,7 @@ const createStyles = (theme: ExtendedTheme) => {
       alignItems: 'flex-end',
       flexDirection: 'row',
       backgroundColor: colors.white,
-    },
-    bottomBorderAndShadow: {
-      borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
-      borderColor: colors.neutral5,
-      shadowOffset: {width: 0, height: 1},
-      shadowColor: '#000',
-      shadowOpacity: 0.1,
-      shadowRadius: 1,
-      elevation: 2,
+      ...elevations.e1,
     },
     iconBack: {
       height: 48,

@@ -1,13 +1,13 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import * as modalActions from '~/store/modal/actions';
-import {useRootNavigation} from '~/hooks/navigation';
-import {IconType} from '~/resources/icons';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useKeySelector} from '~/hooks/selector';
+import { useRootNavigation } from '~/hooks/navigation';
+import { IconType } from '~/resources/icons';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '../../redux/actions';
 
@@ -17,47 +17,55 @@ import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
-import {useMyPermissions} from '~/hooks/permissions';
+import { useMyPermissions } from '~/hooks/permissions';
 
 const GroupAdministration = (props: any) => {
-  const params = props.route.params;
-  const {groupId} = params || {};
+  const { params } = props.route;
+  const { groupId } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
-  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { rootNavigation } = useRootNavigation();
+  const { name, icon } = useKeySelector(groupsKeySelector.groupDetail.group);
+  const { total } = useKeySelector(groupsKeySelector.groupMemberRequests);
 
-  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageJoiningRequests = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
   );
-  const canEditProfileInfo = hasPermissionsOnScopeWithId('groups', groupId, [
-    PERMISSION_KEY.GROUP.EDIT_INFORMATION,
-    PERMISSION_KEY.GROUP.EDIT_PRIVACY,
-  ]);
+  const canEditProfileInfo = hasPermissionsOnScopeWithId(
+    'groups', groupId, [
+      PERMISSION_KEY.GROUP.EDIT_INFORMATION,
+      PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+    ],
+  );
 
-  useEffect(() => {
-    canManageJoiningRequests &&
-      dispatch(groupsActions.getGroupMemberRequests({groupId}));
+  useEffect(
+    () => {
+      canManageJoiningRequests
+      && dispatch(groupsActions.getGroupMemberRequests({ groupId }));
 
-    return () => {
-      dispatch(groupsActions.resetGroupMemberRequests());
-    };
-  }, [groupId]);
+      return () => {
+        dispatch(groupsActions.resetGroupMemberRequests());
+      };
+    }, [groupId],
+  );
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.groupPendingMembers, {id: groupId});
+    rootNavigation.navigate(
+      groupStack.groupPendingMembers, { id: groupId },
+    );
   };
 
   const goToGeneralInfo = () => {
-    rootNavigation.navigate(groupStack.generalInfo, {id: groupId});
+    rootNavigation.navigate(
+      groupStack.generalInfo, { id: groupId },
+    );
   };
 
   const renderItem = (
@@ -66,20 +74,18 @@ const GroupAdministration = (props: any) => {
     onPress?: () => void,
     notificationsBadgeNumber?: number,
     testID?: string,
-  ) => {
-    return (
-      <MenuItem
-        testID={testID}
-        title={title}
-        icon={icon}
-        iconProps={{icon: icon, tintColor: theme.colors.purple50}}
-        notificationsBadgeNumber={notificationsBadgeNumber}
-        notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
-        rightSubIcon="AngleRightSolid"
-        onPress={onPress}
-      />
-    );
-  };
+  ) => (
+    <MenuItem
+      testID={testID}
+      title={title}
+      icon={icon}
+      iconProps={{ icon, tintColor: theme.colors.purple50 }}
+      notificationsBadgeNumber={notificationsBadgeNumber}
+      notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
+      rightSubIcon="AngleRightSolid"
+      onPress={onPress}
+    />
+  );
 
   const renderGroupModerating = () => (
     <>
@@ -87,11 +93,12 @@ const GroupAdministration = (props: any) => {
         style={styles.headerTitle}
         color={theme.colors.neutral80}
         variant="bodyM"
-        useI18n>
+        useI18n
+      >
         settings:title_group_moderating
       </Text.H5>
-      {!!canManageJoiningRequests &&
-        renderItem(
+      {!!canManageJoiningRequests
+        && renderItem(
           'UserCheck',
           'settings:title_pending_members',
           goToPendingMembers,
@@ -114,11 +121,12 @@ const GroupAdministration = (props: any) => {
         style={styles.headerTitle}
         color={theme.colors.neutral80}
         variant="bodyM"
-        useI18n>
+        useI18n
+      >
         settings:title_group_settings
       </Text.H5>
-      {canEditProfileInfo &&
-        renderItem(
+      {canEditProfileInfo
+        && renderItem(
           'Gear',
           'settings:title_profile_info',
           goToGeneralInfo,
@@ -146,7 +154,7 @@ const GroupAdministration = (props: any) => {
     <ScreenWrapper testID="GroupAdministration" isFullView>
       <Header
         title={name}
-        titleTextProps={{color: theme.colors.neutral80}}
+        titleTextProps={{ color: theme.colors.neutral80 }}
         avatar={icon}
       />
       <Divider style={styles.divider} />
@@ -161,19 +169,11 @@ const GroupAdministration = (props: any) => {
 export default GroupAdministration;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {
       paddingTop: spacing.padding.large,
-    },
-    itemContainer: {
-      flexDirection: 'row',
-      backgroundColor: colors.white,
-      borderRadius: spacing.borderRadius.base,
-    },
-    settingsContainer: {
-      marginHorizontal: 0,
     },
     headerTitle: {
       marginHorizontal: spacing.margin.large,

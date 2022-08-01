@@ -1,5 +1,5 @@
-import {makeHttpRequest} from '~/services/httpApiRequest';
-import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
+import { makeHttpRequest } from '~/services/httpApiRequest';
+import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
 import {
   IParamGetFeed,
   IParamGetRecentSearchKeywords,
@@ -7,8 +7,7 @@ import {
   IParamPostNewRecentSearchKeyword,
   IRecentSearchTarget,
 } from '~/interfaces/IHome';
-import apiConfig from '~/configs/apiConfig';
-import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
+import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 
 const homeApiConfig = {
   getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
@@ -31,29 +30,23 @@ const homeApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {...param},
+    params: { ...param },
   }),
-  getRecentSearchKeyword: (
-    param: IParamGetRecentSearchKeywords,
-  ): HttpApiRequestConfig => ({
+  getRecentSearchKeyword: (param: IParamGetRecentSearchKeywords): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}recent-searches`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {...param},
+    params: { ...param },
   }),
-  postNewRecentSearchKeyword: (
-    data: IParamPostNewRecentSearchKeyword,
-  ): HttpApiRequestConfig => ({
+  postNewRecentSearchKeyword: (data: IParamPostNewRecentSearchKeyword): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}recent-searches`,
     method: 'post',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     data,
   }),
-  deleteClearRecentSearch: (
-    target: IRecentSearchTarget,
-  ): HttpApiRequestConfig => ({
+  deleteClearRecentSearch: (target: IRecentSearchTarget): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}recent-searches/${target}/clean`,
     method: 'delete',
     provider: ApiConfig.providers.beinFeed,
@@ -70,100 +63,77 @@ const homeApiConfig = {
 const homeDataHelper = {
   getNewsfeed: async (param: IParamGetFeed) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.getNewsfeed(param),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.getNewsfeed(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   getSearchPost: async (param: IParamGetSearchPost) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.getSearchPost(param),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.getSearchPost(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   getUsers: async (params: IParamsGetUsers) => {
     try {
-      const response: any = await makeHttpRequest(
-        apiConfig.App.getUsers(params),
-      );
+      const response: any = await makeHttpRequest(ApiConfig.App.getUsers(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   getRecentSearchKeywords: async (param: IParamGetRecentSearchKeywords) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.getRecentSearchKeyword(param),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.getRecentSearchKeyword(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
-  postNewRecentSearchKeyword: async (
-    param: IParamPostNewRecentSearchKeyword,
-  ) => {
+  postNewRecentSearchKeyword: async (param: IParamPostNewRecentSearchKeyword) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.postNewRecentSearchKeyword(param),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.postNewRecentSearchKeyword(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   deleteCleanRecentSearch: async (target: IRecentSearchTarget) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.deleteClearRecentSearch(target),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.deleteClearRecentSearch(target));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   deleteRecentSearchById: async (id: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.deleteRecentSearchById(id),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.deleteRecentSearchById(id));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }

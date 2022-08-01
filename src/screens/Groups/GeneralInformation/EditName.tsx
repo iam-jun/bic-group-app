@@ -1,21 +1,20 @@
-import {useNavigation} from '@react-navigation/core';
+import { ExtendedTheme, useNavigation, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import dimension from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 
 import spacing from '~/theme/spacing';
 import groupsActions from '../redux/actions';
 
 const EditName = (props: any) => {
-  const {type = 'group', id = '', name = ''} = props?.route?.params || {};
+  const { type = 'group', id = '', name = '' } = props?.route?.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -27,31 +26,29 @@ const EditName = (props: any) => {
     setText(value);
   };
 
-  useEffect(() => {
-    !text && setText(name);
-  }, [name]);
+  useEffect(
+    () => {
+      !text && setText(name);
+    }, [name],
+  );
 
   const onSave = () => {
     if (!text?.trim?.()) return;
     if (type === 'group') {
-      dispatch(
-        groupsActions.editGroupDetail({
-          data: {
-            id,
-            name: text.trim(),
-          },
-          editFieldName: i18next.t('settings:Name'),
-          callback: onNavigateBack,
-        }),
-      );
+      dispatch(groupsActions.editGroupDetail({
+        data: {
+          id,
+          name: text.trim(),
+        },
+        editFieldName: i18next.t('settings:Name'),
+        callback: onNavigateBack,
+      }));
     } else {
-      dispatch(
-        groupsActions.editCommunityDetail({
-          data: {id, name: text.trim()},
-          editFieldName: i18next.t('settings:Name'),
-          callback: onNavigateBack,
-        }),
-      );
+      dispatch(groupsActions.editCommunityDetail({
+        data: { id, name: text.trim() },
+        editFieldName: i18next.t('settings:Name'),
+        callback: onNavigateBack,
+      }));
     }
   };
 
@@ -61,11 +58,12 @@ const EditName = (props: any) => {
     <ScreenWrapper
       testID="EditGroupDescription"
       style={styles.container}
-      isFullView>
+      isFullView
+    >
       <Header
         title={`settings:title_${type}_name`}
-        titleTextProps={{useI18n: true}}
-        buttonText={'common:btn_save'}
+        titleTextProps={{ useI18n: true }}
+        buttonText="common:btn_save"
         buttonProps={{
           useI18n: true,
         }}
@@ -97,7 +95,7 @@ const EditName = (props: any) => {
 export default EditName;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

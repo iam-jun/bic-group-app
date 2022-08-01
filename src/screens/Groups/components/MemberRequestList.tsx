@@ -6,50 +6,49 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import Divider from '~/beinComponents/Divider';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import GroupMemberRequest from '../GroupDetail/groupModerating/components/GroupMemberRequest';
 import CommunityMemberRequest from '../CommunityAdmin/PendingMembers/CommunityMemberRequest';
 import spacing from '~/theme/spacing';
 
 interface MemberRequestListProps {
+  id?: string;
   type: 'community' | 'group';
   onLoadMore: () => void;
   onRefresh: () => void;
-  id: number;
 }
 
 const MemberRequestList = ({
+  id,
   type,
   onLoadMore,
   onRefresh,
-  id,
 }: MemberRequestListProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
-  const {loading, total, ids, canLoadMore} = useKeySelector(
-    groupsKeySelector[`${type}MemberRequests`],
-  );
+  const {
+    loading, total, ids, canLoadMore,
+  } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
 
-  const renderItem = ({item}: {item: number}) => {
-    const ItemComponent =
-      type === 'community' ? CommunityMemberRequest : GroupMemberRequest;
+  const renderItem = ({ item: requestId }: {item: string}) => {
+    if (id && type === 'community') return <CommunityMemberRequest requestId={requestId} organizationId={id} />
 
-    return <ItemComponent requestId={item} organizationId={id} />;
+    return <GroupMemberRequest requestId={requestId} />;
   };
 
   const renderEmpty = () => {
     if (loading) return null;
     return (
       <EmptyScreen
-        source={'addUsers'}
+        source="addUsers"
         title="groups:text_no_pending_members_notice"
         description={`groups:text_pending_request_notice_${type}`}
       />
@@ -60,29 +59,30 @@ const MemberRequestList = ({
     if (!total) return null;
     return (
       <View style={styles.requestHeader}>
-        <Text.H5 testID="member_request_list.request_title">{`${total} ${t(
-          'common:text_request',
-          {
-            count: total,
-          },
-        )}`}</Text.H5>
+        <Text.H5 testID="member_request_list.request_title">
+          {`${total} ${t(
+            'common:text_request',
+            {
+              count: total,
+            },
+          )}`}
+        </Text.H5>
       </View>
     );
   };
 
-  const renderListFooter = () => {
-    return (
-      !loading &&
-      canLoadMore &&
-      ids.length > 0 && (
+  const renderListFooter = () => (
+    !loading
+      && canLoadMore
+      && ids.length > 0 && (
         <View
           style={styles.listFooter}
-          testID="member_request_list.loading_more_indicator">
+          testID="member_request_list.loading_more_indicator"
+        >
           <ActivityIndicator />
         </View>
-      )
-    );
-  };
+    )
+  );
 
   return (
     <FlatList
@@ -90,7 +90,9 @@ const MemberRequestList = ({
       style={styles.flatList}
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `requests_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `requests_${item}_${index}`}
       ListEmptyComponent={renderEmpty}
       ListHeaderComponent={renderListHeader}
       ListFooterComponent={renderListFooter}
@@ -98,13 +100,13 @@ const MemberRequestList = ({
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
-      refreshControl={
+      refreshControl={(
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
         />
-      }
+      )}
     />
   );
 };

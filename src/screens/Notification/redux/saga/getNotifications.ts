@@ -1,9 +1,9 @@
-import {call, put, select} from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 
-import {IObject} from '~/interfaces/common';
-import {IParamGetNotifications} from '~/interfaces/INotification';
+import { IObject } from '~/interfaces/common';
+import { IParamGetNotifications } from '~/interfaces/INotification';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {timeOut} from '~/utils/common';
+import { timeOut } from '~/utils/common';
 import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 
@@ -13,13 +13,12 @@ function* getNotifications({
   payload: IParamGetNotifications;
   type: string;
 }) {
-  const {flag = 'ALL', keyValue = 'tabAll', isRefresh = false} = payload || {};
+  const { flag = 'ALL', keyValue = 'tabAll', isRefresh = false } = payload || {};
   try {
-    if (!isRefresh)
-      yield put(
-        notificationsActions.setLoadingNotifications({keyValue, value: true}),
-      );
-    yield put(notificationsActions.setNoMoreNoti({keyValue, value: false}));
+    if (!isRefresh) {
+      yield put(notificationsActions.setLoadingNotifications({ keyValue, value: true }));
+    }
+    yield put(notificationsActions.setNoMoreNoti({ keyValue, value: false }));
 
     const response: IObject<any> = yield call(
       notificationsDataHelper.getNotificationList,
@@ -27,51 +26,44 @@ function* getNotifications({
     );
 
     if (flag === 'UNREAD' && response?.results?.length < 1) {
-      const joinedCommunities: IObject<any> = yield select(
-        (state: any) => state.groups.joinedCommunities.data,
-      );
+      const joinedCommunities: IObject<any> = yield select((state: any) => state.groups.joinedCommunities.data);
       if (joinedCommunities?.length > 0) {
         const _response: IObject<any> = yield call(
           notificationsDataHelper.getNotificationList,
-          {flag: 'ALL'},
+          { flag: 'ALL' },
         );
         if (_response?.results?.length > 1) {
-          yield put(
-            notificationsActions.setNoMoreNoti({keyValue, value: true}),
-          );
+          yield put(notificationsActions.setNoMoreNoti({ keyValue, value: true }));
         }
       }
     }
 
     if (response?.results?.length > 0) {
-      const newData: any[] = [],
-        newResponse: any = {};
+      const newData: any[] = [];
+      const newResponse: any = {};
       response.results.forEach((item: any) => {
         newData.push(item?.id);
-        newResponse[item.id] = {...item};
+        newResponse[item.id] = { ...item };
       });
-      yield put(
-        notificationsActions.setNotifications({
-          notifications: newResponse,
-          keyValue: keyValue,
-          data: newData,
-          unseen: response.unseen,
-        }),
-      );
+      yield put(notificationsActions.setNotifications({
+        notifications: newResponse,
+        keyValue,
+        data: newData,
+        unseen: response.unseen,
+      }));
     }
 
-    if (!isRefresh)
-      yield put(
-        notificationsActions.setLoadingNotifications({keyValue, value: false}),
-      );
+    if (!isRefresh) {
+      yield put(notificationsActions.setLoadingNotifications({ keyValue, value: false }));
+    }
   } catch (err) {
-    yield put(
-      notificationsActions.setLoadingNotifications({
-        keyValue,
-        value: false,
-      }),
+    yield put(notificationsActions.setLoadingNotifications({
+      keyValue,
+      value: false,
+    }));
+    console.error(
+      '\x1b[31m🐣️ saga getNotifications err: ', err, '\x1b[0m',
     );
-    console.log(`\x1b[31m🐣️ saga getNotifications err: `, err, `\x1b[0m`);
   }
 }
 

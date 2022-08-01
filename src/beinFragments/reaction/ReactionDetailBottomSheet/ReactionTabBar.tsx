@@ -1,12 +1,14 @@
-import React, {FC, useState, useEffect, useRef} from 'react';
-import {FlatList, View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, {
+  FC, useState, useEffect, useRef,
+} from 'react';
+import { FlatList, View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {blacklistReactions, ReactionType} from '~/constants/reactions';
+import NodeEmoji from 'node-emoji';
+import { blacklistReactions, ReactionType } from '~/constants/reactions';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import NodeEmoji from 'node-emoji';
 
 export interface ReactionTabBarProps {
   initReaction?: ReactionType;
@@ -26,71 +28,86 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   const flatListRef = useRef<any>();
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
-  useEffect(() => {
-    onChangeTab?.(data?.[activeIndex], activeIndex);
-  }, [activeIndex]);
+  useEffect(
+    () => {
+      onChangeTab?.(
+        data?.[activeIndex], activeIndex,
+      );
+    }, [activeIndex],
+  );
 
   const _onPressTab = (index: number) => {
     setActiveIndex(index);
     if (data.length > index) {
       flatListRef?.current?.scrollToIndex?.({
-        index: index,
+        index,
         animated: true,
         viewPosition: 0.5,
       });
     }
   };
 
-  useEffect(() => {
-    //wait for set data finish, avoid scroll wrong position of tab
-    setTimeout(() => {
-      if (data?.length > 0 && initReaction) {
-        data.map((item: any, index) => {
-          if (item?.reactionType === initReaction) {
-            _onPressTab(index);
+  useEffect(
+    () => {
+    // wait for set data finish, avoid scroll wrong position of tab
+      setTimeout(
+        () => {
+          if (data?.length > 0 && initReaction) {
+            data.forEach((
+              item: any, index,
+            ) => {
+              if (item?.reactionType === initReaction) {
+                _onPressTab(index);
+              }
+            });
+          }
+        }, 300,
+      );
+    }, [data, initReaction],
+  );
+
+  useEffect(
+    () => {
+      if (reactionCounts) {
+        const reaactionCountMap = new Map();
+        const newData: any = [];
+        Object.values(reactionCounts || {})?.forEach((reaction: any) => {
+          const key = Object.keys(reaction || {})?.[0];
+          if (key) {
+            reaactionCountMap.set(
+              key, reaction?.[key],
+            );
           }
         });
-      }
-    }, 300);
-  }, [data, initReaction]);
 
-  useEffect(() => {
-    if (reactionCounts) {
-      const reaactionCountMap = new Map();
-      const newData: any = [];
-      Object.values(reactionCounts || {})?.map((reaction: any) => {
-        const key = Object.keys(reaction || {})?.[0];
-        if (key) {
-          reaactionCountMap.set(key, reaction?.[key]);
+        // eslint-disable-next-line no-restricted-syntax
+        for (const [key, value] of reaactionCountMap) {
+          const reactionType = key as ReactionType;
+          if (!blacklistReactions?.[reactionType] && value > 0) {
+            newData.push({
+              reactionType,
+              count: value,
+            });
+          }
         }
-      });
-
-      for (const [key, value] of reaactionCountMap) {
-        const reactionType = key as ReactionType;
-        if (!blacklistReactions?.[reactionType] && value > 0) {
-          newData.push({
-            reactionType,
-            count: value,
-          });
-        }
+        setData(newData);
+      } else {
+      // reset
+        setData([]);
+        setActiveIndex(-1);
       }
-      setData(newData);
-    } else {
-      //reset
-      setData([]);
-      setActiveIndex(-1);
-    }
-  }, [reactionCounts]);
+    }, [reactionCounts],
+  );
 
   const onScrollToIndexFailed = () => {
-    console.log(`\x1b[31m🐣️ ReactionTabBar onScrollToIndexFailed\x1b[0m`);
+    console.log('\x1b[31m🐣️ ReactionTabBar onScrollToIndexFailed\x1b[0m');
   };
 
-  const renderItem = ({item, index}: any) => {
-    const {reactionType, count} = item || {};
+  const renderItem = ({ item, index }: any) => {
+    const { reactionType, count } = item || {};
     const isActive = activeIndex === index;
     const emoji = NodeEmoji.find(reactionType)?.emoji || '';
     return (
@@ -98,7 +115,8 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
         <Button
           testID={`reaction_detail_bottomSheet.${reactionType}`}
           style={styles.tabItem}
-          onPress={() => _onPressTab(index)}>
+          onPress={() => _onPressTab(index)}
+        >
           <Text.H5 color={isActive ? colors.purple60 : colors.neutral80}>
             {emoji}
           </Text.H5>
@@ -123,7 +141,9 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       data={data}
       // snapToAlignment={'center'}
       showsHorizontalScrollIndicator={false}
-      getItemLayout={(data, index) => ({
+      getItemLayout={(
+        data, index,
+      ) => ({
         length: itemWidth,
         offset: itemWidth * index,
         index,
@@ -132,13 +152,15 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       snapToInterval={itemWidth}
       style={styles.container}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `reaction_tab_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `reaction_tab_${index}`}
     />
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       borderBottomWidth: 1,

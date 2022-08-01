@@ -1,8 +1,8 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
-import {useSharedValue} from 'react-native-reanimated';
+import { ScrollView } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 
-import {SortableItem} from './SortableItem';
+import { SortableItem } from './SortableItem';
 
 interface SortableListProps {
   children: any;
@@ -12,28 +12,33 @@ interface SortableListProps {
 
 export const SortableList = ({
   children,
-  item: {height, width},
+  item: { height, width },
   onChange,
 }: SortableListProps) => {
-  const offsets = children.map((item: any, index: number) => ({
+  const offsets = children.map((
+    item: any, index: number,
+  ) => ({
     y: useSharedValue(index * height),
     index,
   }));
 
   const onEnd = () => {
-    const sortedOffsets = offsets.sort(
-      (a: any, b: any) => a.y?.value - b.y?.value,
-    );
+    const sortedOffsets = offsets.sort((
+      a: any, b: any,
+    ) => (a.y?.value || 0) - (b.y?.value || 0));
     const newIndex = sortedOffsets.map((o: any) => o.index);
     onChange?.(newIndex);
   };
   return (
-    <ScrollView contentContainerStyle={{height: height * children.length}}>
-      {children.map((child: any, index: number) => (
+    <ScrollView contentContainerStyle={{ height: height * children.length }}>
+      {children.map((
+        child: any, index: number,
+      ) => (
         <SortableItem
           key={index}
-          {...{offsets, index, item: {height, width}}}
-          onEnd={onEnd}>
+          {...{ offsets, index, item: { height, width } }}
+          onEnd={onEnd}
+        >
           {child}
         </SortableItem>
       ))}

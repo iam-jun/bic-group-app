@@ -49,10 +49,10 @@ export const POST_DETAIL = {
   },
   commentsCount: 5,
   reactionsCount: {
-    '0': {
+    0: {
       wink: 1,
     },
-    '1': {
+    1: {
       thinking_face: 1,
     },
   },
@@ -225,23 +225,21 @@ export const POST_DETAIL_2 = {
 
 export const GROUP_AUDIENCE = {
   id: 1,
-  parent_id: null,
+  parentId: null,
   name: 'EVOL Community',
   slug: 'evol-community-1641809088',
   description: 'The greatest community ever',
   level: 0,
   parents: null,
-  owner_id: 1,
   icon: '',
-  background_img_url: null,
-  group_type: 'COMPANY',
+  backgroundImgUrl: null,
   privacy: 'PUBLIC',
-  chat_id: 'rpq3unai7i8ztprmoz97rdjr7w',
-  created_at: '2022-01-10T10:04:48.685Z',
-  updated_at: '2022-01-10T10:04:48.928Z',
-  deleted_at: null,
+  chatId: 'rpq3unai7i8ztprmoz97rdjr7w',
+  createdAt: '2022-01-10T10:04:48.685Z',
+  updatedAt: '2022-01-10T10:04:48.928Z',
+  deletedAt: null,
   children: [],
-  user_count: '25',
+  userCount: '25',
   unique: '7bcef9a5-3474-45b9-a167-a68e7ebcfe9a',
   testID: 'post_select_audience.groups.item',
   isChecked: false,
@@ -313,7 +311,7 @@ export const allCommentsByParentIds = {
           },
           CHILD_COMMENT,
         ],
-        meta: {hasPreviousPage: true, hasNextPage: false},
+        meta: { hasPreviousPage: true, hasNextPage: false },
       },
     },
     {
@@ -375,12 +373,12 @@ export const allCommentsByParentIdsWith1ChildComment = {
 };
 
 export const allCommentsArray = [
-  {...allCommentsByParentIdsWith1ChildComment[302][0]},
-  {...allCommentsByParentIdsWith1ChildComment[302][0].child[0]},
-  {...allCommentsByParentIdsWith1ChildComment[302][0].child[1]},
-  {...allCommentsByParentIdsWith1ChildComment[302][0].child[2]},
-  {...allCommentsByParentIdsWith1ChildComment[302][1]},
-  {...allCommentsByParentIdsWith1ChildComment[302][2]},
+  { ...allCommentsByParentIdsWith1ChildComment[302][0] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][0].child[0] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][0].child[1] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][0].child[2] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][1] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][2] },
 ];
 
 export const baseCommentData = {
@@ -395,7 +393,7 @@ export const baseCommentData = {
         updatedAt: '2022-04-27T03:54:38.962Z',
       },
     ],
-    meta: {hasPreviousPage: false, hasNextPage: false},
+    meta: { hasPreviousPage: false, hasNextPage: false },
   },
   content: '.',
   createdAt: '2022-04-26T09:25:02.870Z',
@@ -512,10 +510,10 @@ export const COMMENT_HAS_REACTION = {
     },
   ],
   reactionsCount: {
-    '0': {
+    0: {
       wink: 1,
     },
-    '1': {
+    1: {
       thinking_face: 1,
     },
   },

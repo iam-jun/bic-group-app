@@ -1,8 +1,10 @@
-import React, {FC} from 'react';
-import {StyleSheet, Text as RNText, View, TouchableOpacity} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  StyleSheet, View, TouchableOpacity,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 
@@ -15,9 +17,9 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
   seenPeopleCount,
   onPress,
 }: SeenCountsViewProps) => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   const _onPress = () => {
     onPress?.();
@@ -27,11 +29,13 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
       <TouchableOpacity
         onPress={() => _onPress()}
         activeOpacity={1}
-        testID={'seen_counts_view.touchable_opacity'}>
+        testID="seen_counts_view.touchable_opacity"
+      >
         <Text.SubtitleS
           color={colors.gray50}
           numberOfLines={1}
-          testID={'seen_counts_view.show_text'}>
+          testID="seen_counts_view.show_text"
+        >
           {t('post:label_seen_by')}
           {seenPeopleCount}
         </Text.SubtitleS>
