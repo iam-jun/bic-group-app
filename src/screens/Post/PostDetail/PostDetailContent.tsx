@@ -234,12 +234,12 @@ const _PostDetailContent = (props: any) => {
 
   useEffect(
     () => {
-      if (deleted) {
+      if (deleted && isFocused) {
         if (noti_id) {
           rootNavigation.goBack();
         } else showNotice();
       }
-    }, [deleted],
+    }, [deleted, isFocused],
   );
 
   useEffect(
