@@ -4,7 +4,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Animated from 'react-native-reanimated';
 
-import InfoHeader from './InfoHeader';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import JoinCancelButton from './JoinCancelButton';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -17,7 +16,8 @@ import PostItem from '~/beinComponents/list/items/PostItem';
 import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
-import TabButtonHeader from './TabButtonHeader';
+import CommunityTabHeader from './CommunityTabHeader';
+import InfoHeader from '../../components/InfoHeader';
 
 interface PageContentProps {
   communityId: string;
@@ -74,8 +74,8 @@ const _PageContent = ({
   const renderHeader = () => (
     <>
       <View onLayout={onButtonLayout}>
-        <InfoHeader onPressGroupTree={onPressYourGroups} />
-        <TabButtonHeader communityId={communityId} isMember={isMember} />
+        <InfoHeader infoDetail={infoDetail} isMember={isMember} onPressGroupTree={onPressYourGroups} />
+        <CommunityTabHeader communityId={communityId} isMember={isMember} />
         <JoinCancelButton />
       </View>
       {isMember && canCreatePostArticle && (

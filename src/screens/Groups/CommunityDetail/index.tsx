@@ -12,7 +12,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -36,7 +35,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
-import TabButtonHeader from './components/TabButtonHeader';
+import CommunityTabHeader from './components/CommunityTabHeader';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -52,7 +51,7 @@ const CommunityDetail = (props: any) => {
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
-    name, icon, joinStatus, privacy, groupId,
+    name, joinStatus, privacy, groupId,
   } = infoDetail;
   const isMember = joinStatus === groupJoinStatus.member;
   const isGettingInfoDetail = useKeySelector(
@@ -83,9 +82,7 @@ const CommunityDetail = (props: any) => {
     /* Avoid getting group posts of the nonexisting group,
     which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
-      const privilegeToFetchPost = isMember
-      || privacy === groupPrivacy.public
-      || privacy === groupPrivacy.open;
+      const privilegeToFetchPost = isMember || privacy === groupPrivacy.public
 
       if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
         return;
@@ -213,14 +210,13 @@ const CommunityDetail = (props: any) => {
       <Header
         headerRef={headerRef}
         title={name}
-        avatar={icon}
         useAnimationTitle
         rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
         rightIconProps={{ backgroundColor: theme.colors.white }}
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
         showStickyHeight={buttonHeight}
-        stickyHeaderComponent={<TabButtonHeader communityId={communityId} isMember={isMember} />}
+        stickyHeaderComponent={<CommunityTabHeader communityId={communityId} isMember={isMember} />}
       />
       <View testID="community_detail.content" style={styles.contentContainer}>
         {renderCommunityContent()}
