@@ -10,7 +10,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
     Array [
       Object {
         "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
-        "chat_user_id": "tg6kmc6cmybgwpcif9znngyyebe",
+        "chatUserId": "tg6kmc6cmybgwpcif9znngyyebe",
         "fullname": "Test Name",
         "id": 1,
         "roles": Object {
@@ -20,7 +20,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
       },
       Object {
         "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
-        "chat_user_id": "tg6kmc6cmybgwpcif9znngyyebe",
+        "chatUserId": "tg6kmc6cmybgwpcif9znngyyebe",
         "fullname": "Test Name",
         "id": 1,
         "roles": Object {
@@ -294,7 +294,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                     "width": 36,
                   },
                   Object {
-                    "backgroundColor": "#F1F2F8",
+                    "backgroundColor": "#F8F9FF",
                   },
                 ]
               }
@@ -601,7 +601,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                     "width": 36,
                   },
                   Object {
-                    "backgroundColor": "#F1F2F8",
+                    "backgroundColor": "#F8F9FF",
                   },
                 ]
               }

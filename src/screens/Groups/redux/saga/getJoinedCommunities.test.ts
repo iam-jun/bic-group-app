@@ -1,41 +1,33 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import getJoinedCommunities from './getJoinedCommunities';
-import {communities} from '~/test/mock_data/communities';
+import { communities } from '~/test/mock_data/communities';
 
-describe('Get Communities saga', () => {
-  const storeData = {
-    groups: {
-      communities: {
-        data: [],
-      },
-    },
-  };
+describe('Get Joined Communities saga', () => {
 
   it('should get communities successfully with response has list with element ', () => {
     const action = {
       type: 'test',
       payload: {},
     };
-    const resp = communities as any;
+    const resp = { data: communities as any };
     return (
       // @ts-ignorets
       expectSaga(getJoinedCommunities, action)
-        .withState(storeData)
-        .put(groupsActions.setMyCommunities({data: [], loading: true}))
+        .put(groupsActions.setMyCommunities({ loading: true }))
         .provide([
           [matchers.call.fn(groupsDataHelper.getJoinedCommunities), resp],
         ])
         .put(
-          groupsActions.setMyCommunities({data: communities, loading: false}),
+          groupsActions.setMyCommunities({ data: resp.data, loading: false }),
         )
         .run()
-        .then(({allEffects}: any) => {
-          expect(allEffects?.length).toEqual(4);
+        .then(({ allEffects }: any) => {
+          expect(allEffects?.length).toEqual(3);
         })
     );
   });
@@ -45,20 +37,19 @@ describe('Get Communities saga', () => {
       type: 'test',
       payload: {},
     };
-    const resp = [] as any;
+    const resp = { data: [] as any };
 
     return (
       // @ts-ignorets
       expectSaga(getJoinedCommunities, action)
-        .withState(storeData)
-        .put(groupsActions.setMyCommunities({data: [], loading: true}))
+        .put(groupsActions.setMyCommunities({ loading: true }))
         .provide([
           [matchers.call.fn(groupsDataHelper.getJoinedCommunities), resp],
         ])
-        .put(groupsActions.setMyCommunities({data: [], loading: false}))
+        .put(groupsActions.setMyCommunities({ data: [], loading: false }))
         .run()
-        .then(({allEffects}: any) => {
-          expect(allEffects?.length).toEqual(4);
+        .then(({ allEffects }: any) => {
+          expect(allEffects?.length).toEqual(3);
         })
     );
   });
@@ -78,27 +69,26 @@ describe('Get Communities saga', () => {
 
     //@ts-ignore
     return expectSaga(getJoinedCommunities, action)
-      .withState(storeData)
-      .put(groupsActions.setMyCommunities({data: [], loading: true}))
+      .put(groupsActions.setMyCommunities({ loading: true }))
       .provide([
         [
           matchers.call.fn(groupsDataHelper.getJoinedCommunities),
           Promise.reject(resp),
         ],
       ])
-      .put(groupsActions.setMyCommunities({data: [], loading: false}))
+      .put(groupsActions.setMyCommunities({ loading: false }))
       .put(
         modalActions.showHideToastMessage({
           content: resp.meta.message,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(5);
+      .then(({ allEffects }: any) => {
+        expect(allEffects?.length).toEqual(4);
       });
   });
 });

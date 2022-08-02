@@ -318,7 +318,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
                 Object {
                   "alignItems": "center",
                   "backgroundColor": "#E90C22",
-                  "borderRadius": 20,
+                  "borderRadius": 100,
                   "height": 20,
                   "justifyContent": "center",
                   "minWidth": 20,

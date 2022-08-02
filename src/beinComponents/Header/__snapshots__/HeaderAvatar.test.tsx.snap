@@ -20,7 +20,7 @@ exports[`Header Avatar component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#E8E9ED",
+      "backgroundColor": "#EAEDF2",
       "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
@@ -140,7 +140,7 @@ exports[`Header Avatar component renders correctly 1`] = `
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,
@@ -191,7 +191,7 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#E8E9ED",
+      "backgroundColor": "#EAEDF2",
       "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
@@ -314,7 +314,7 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,
@@ -487,7 +487,7 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,
@@ -538,7 +538,7 @@ exports[`Header Avatar component renders correctly with props First Label Props 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#E8E9ED",
+      "backgroundColor": "#EAEDF2",
       "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
@@ -658,7 +658,7 @@ exports[`Header Avatar component renders correctly with props First Label Props 
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           Object {
@@ -712,7 +712,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#E8E9ED",
+      "backgroundColor": "#EAEDF2",
       "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
@@ -832,7 +832,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,
@@ -910,31 +910,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
                   ]
                 }
               >
-                <View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "justifyContent": "center",
-                        },
-                        Object {
-                          "height": 15.600000000000001,
-                          "width": 15.600000000000001,
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      style={
-                        Object {
-                          "fontSize": 11.700000000000001,
-                          "textAlignVertical": "bottom",
-                        }
-                      }
-                    />
-                  </View>
-                </View>
+                <View />
               </View>
             </View>
           </View>
@@ -981,7 +957,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#E8E9ED",
+      "backgroundColor": "#EAEDF2",
       "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
@@ -1101,7 +1077,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,
@@ -1212,7 +1188,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#E8E9ED",
+      "backgroundColor": "#EAEDF2",
       "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
@@ -1332,7 +1308,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,
@@ -1443,7 +1419,7 @@ exports[`Header Avatar component renders correctly with props Second Label Props
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#E8E9ED",
+      "backgroundColor": "#EAEDF2",
       "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
@@ -1563,7 +1539,7 @@ exports[`Header Avatar component renders correctly with props Second Label Props
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,

@@ -23,7 +23,7 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 15,
+            "fontSize": 13,
           },
           Object {},
           Object {
@@ -80,7 +80,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 15,
+            "fontSize": 13,
           },
           Object {},
           Object {
@@ -300,7 +300,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 15,
+            "fontSize": 13,
           },
           Object {},
           Object {

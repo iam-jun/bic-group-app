@@ -50,7 +50,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               undefined,
@@ -102,7 +102,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               undefined,
@@ -154,7 +154,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               undefined,

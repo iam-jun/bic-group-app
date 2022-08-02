@@ -3,7 +3,6 @@ import {render, cleanup} from '@testing-library/react-native';
 
 import NotificationsBadgeComponent from './NotificationsBadgeComponent';
 import colors from '~/theme/theme';
-import {ReactTestInstance} from 'react-test-renderer';
 
 afterEach(cleanup);
 

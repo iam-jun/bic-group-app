@@ -262,7 +262,7 @@ exports[`Group Item component renders correctly 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               Object {
@@ -638,7 +638,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               Object {
@@ -885,7 +885,7 @@ exports[`Group Item component should render default prop 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               Object {
@@ -1250,7 +1250,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               Object {

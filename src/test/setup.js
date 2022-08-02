@@ -73,6 +73,7 @@ jest.doMock('react-i18next', () => ({
 }));
 
 jest.doMock('i18next', () => ({
+  ...jest.requireActual('i18next'),
   t: (str, params) => {
     let suffix = '';
     if (params?.count) {
@@ -100,6 +101,7 @@ jest.doMock('@react-navigation/native', () => ({
   useIsFocused: jest.fn(),
   useTheme: () => ({
     colors: colors.light.colors,
+    elevations: colors.light.elevations
   }),
 }));
 
@@ -266,17 +268,15 @@ jest.mock('react-hook-form', () => ({
   }),
 }));
 
-jest.mock('react-native-reanimated', () =>
-  require('react-native-reanimated/mock'),
-);
-
-jest.doMock('expo-av', () => {
+jest.doMock('expo-av', () => 'Video'
+// () => {
   // const {View} = ReactNative;
-  const Video = {
-    ...ReactNative.View,
-    onPlaybackStatusUpdate: jest.fn(),
-    onError: jest.fn(),
-  };
-  return {...jest.requireActual('expo-av'), Video};
-});
+  // const Video = {
+  //   ...ReactNative.View,
+  //   onPlaybackStatusUpdate: jest.fn(),
+  //   onError: jest.fn(),
+  // };
+  // return {...jest.requireActual('expo-av'), Video};
+// }
+);
 jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));

@@ -17,7 +17,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
         Object {
           "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
-          "fontSize": 17,
+          "fontSize": 15,
         },
         Object {},
         Object {
@@ -435,7 +435,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
         Object {
           "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
-          "fontSize": 17,
+          "fontSize": 15,
         },
         Object {},
         Object {

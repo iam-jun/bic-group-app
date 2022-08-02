@@ -20,7 +20,7 @@ exports[`MentionBarItem component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F1F2F8",
+      "backgroundColor": "#F8F9FF",
       "borderRadius": 16,
       "flexDirection": "row",
       "marginHorizontal": 8,

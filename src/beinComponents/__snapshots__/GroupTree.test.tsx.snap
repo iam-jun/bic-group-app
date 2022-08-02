@@ -468,7 +468,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     Object {
@@ -1001,7 +1001,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     Object {
@@ -1474,7 +1474,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     Object {
@@ -2014,7 +2014,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     Object {
@@ -2547,7 +2547,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     Object {
@@ -3020,7 +3020,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     Object {
@@ -3400,7 +3400,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     Object {

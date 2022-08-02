@@ -75,7 +75,7 @@ exports[`EditName conponent renders correctly 1`] = `
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,
@@ -219,7 +219,7 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 17,
+            "fontSize": 15,
           },
           Object {},
           undefined,

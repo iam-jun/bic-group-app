@@ -330,7 +330,7 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -609,7 +609,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -799,7 +799,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                 },
                 Object {
                   "backgroundColor": "#E3E6F2",
-                  "borderRadius": 20,
+                  "borderRadius": 100,
                   "height": 40,
                   "overflow": "hidden",
                 },
@@ -2611,7 +2611,7 @@ exports[`Header component renders correctly with props icon 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -3457,7 +3457,7 @@ exports[`Header component renders correctly with props on focus search 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -3736,7 +3736,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -3926,7 +3926,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                 },
                 Object {
                   "backgroundColor": "#E3E6F2",
-                  "borderRadius": 20,
+                  "borderRadius": 100,
                   "height": 40,
                   "overflow": "hidden",
                 },
@@ -4432,7 +4432,7 @@ exports[`Header component renders correctly with props on press chat 1`] = `
                   "width": 40,
                 },
                 Object {
-                  "backgroundColor": "#F1F2F8",
+                  "backgroundColor": "#F8F9FF",
                 },
               ]
             }
@@ -4993,7 +4993,7 @@ exports[`Header component renders correctly with props on press icon 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -5417,7 +5417,7 @@ exports[`Header component renders correctly with props on right press 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -5653,7 +5653,7 @@ exports[`Header component renders correctly with props on show search 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -5932,7 +5932,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -6122,7 +6122,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
                 },
                 Object {
                   "backgroundColor": "#E3E6F2",
-                  "borderRadius": 20,
+                  "borderRadius": 100,
                   "height": 40,
                   "overflow": "hidden",
                 },
@@ -6427,7 +6427,7 @@ exports[`Header component renders correctly with props on submit search 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -6706,7 +6706,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -6896,7 +6896,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                 },
                 Object {
                   "backgroundColor": "#E3E6F2",
-                  "borderRadius": 20,
+                  "borderRadius": 100,
                   "height": 40,
                   "overflow": "hidden",
                 },
@@ -7201,7 +7201,7 @@ exports[`Header component renders correctly with props on text search 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -7480,7 +7480,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -7670,7 +7670,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
                 },
                 Object {
                   "backgroundColor": "#E3E6F2",
-                  "borderRadius": 20,
+                  "borderRadius": 100,
                   "height": 40,
                   "overflow": "hidden",
                 },
@@ -8108,7 +8108,7 @@ exports[`Header component renders correctly with props right icon 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -8320,7 +8320,7 @@ exports[`Header component renders correctly with props right icon props 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -8532,7 +8532,7 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -8811,7 +8811,7 @@ exports[`Header component renders correctly with props search input test ID 1`] 
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -9090,7 +9090,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -9280,7 +9280,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                 },
                 Object {
                   "backgroundColor": "#E3E6F2",
-                  "borderRadius": 20,
+                  "borderRadius": 100,
                   "height": 40,
                   "overflow": "hidden",
                 },
@@ -9585,7 +9585,7 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -9864,7 +9864,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F1F2F8",
+                "backgroundColor": "#F8F9FF",
               },
             ]
           }
@@ -10054,7 +10054,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                 },
                 Object {
                   "backgroundColor": "#E3E6F2",
-                  "borderRadius": 20,
+                  "borderRadius": 100,
                   "height": 40,
                   "overflow": "hidden",
                 },
@@ -10862,7 +10862,7 @@ exports[`Header component renders correctly with props title 1`] = `
                 Object {
                   "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
-                  "fontSize": 17,
+                  "fontSize": 15,
                 },
                 Object {},
                 Object {
@@ -11050,7 +11050,7 @@ exports[`Header component renders correctly with props title props 1`] = `
                 Object {
                   "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
-                  "fontSize": 17,
+                  "fontSize": 15,
                 },
                 Object {
                   "color": "#421187",

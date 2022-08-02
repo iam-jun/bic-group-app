@@ -1,8 +1,8 @@
-import {validateImages, validateVideo} from '~/screens/Post/CreatePost/helper';
-import {get} from 'lodash';
-import {languages} from '~/test/testUtils';
+import { validateImages, validateVideo } from '~/screens/Post/CreatePost/helper';
+import { get } from 'lodash';
+import { languages } from '~/test/testUtils';
 import FileUploader from '~/services/fileUploader';
-import {imagePicked, videoSelected, videoUploaded} from '~/test/mock_data/file';
+import { imagePicked, videoSelected, videoUploaded } from '~/test/mock_data/file';
 
 describe('CreatePost helper', () => {
   // @ts-ignore
@@ -28,20 +28,23 @@ describe('CreatePost helper', () => {
 
   it('validateImages: validate empty array', () => {
     const result = validateImages([], t);
-    expect(result).toEqual({images: [], imageError: '', imageUploading: false});
+    expect(result).toEqual({ images: [], imageError: '', imageUploading: false });
   });
 
   it('validateImages: validate picked 1 image upload success', () => {
     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
       return {
-        getFile: jest.fn().mockImplementation(() => ({url: imageUrl})),
+        getFile: jest.fn().mockImplementation(() => ({ url: imageUrl })),
       } as any;
     });
 
     const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
-      images: [imageValidated],
-      imageError: '',
+      images: [{
+        ...imageValidated, id: undefined,
+        name: '',
+      }],
+      imageError: languages.post.error_upload_failed,
       imageUploading: false,
     });
   });
@@ -51,15 +54,18 @@ describe('CreatePost helper', () => {
       return {
         getFile: jest
           .fn()
-          .mockImplementation(() => ({url: imageUrl, uploading: true})),
+          .mockImplementation(() => ({ url: imageUrl, uploading: true })),
       } as any;
     });
 
     const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
-      images: [imageValidated],
-      imageError: languages.post.error_wait_uploading,
-      imageUploading: true,
+      images: [{
+        ...imageValidated, id: undefined,
+        name: '',
+      }],
+      imageError: languages.post.error_upload_failed,
+      imageUploading: false,
     });
   });
 
@@ -72,7 +78,7 @@ describe('CreatePost helper', () => {
 
     const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
-      images: [{...imageValidated, name: ''}],
+      images: [{ ...imageValidated, name: '' }],
       imageError: languages.post.error_upload_failed,
       imageUploading: false,
     });
@@ -117,7 +123,7 @@ describe('CreatePost helper', () => {
       return {
         getFile: jest
           .fn()
-          .mockImplementation(() => ({uploading: true, result: videoUploaded})),
+          .mockImplementation(() => ({ uploading: true, result: videoUploaded })),
       } as any;
     });
 
@@ -134,7 +140,7 @@ describe('CreatePost helper', () => {
       return {
         getFile: jest
           .fn()
-          .mockImplementation(() => ({uploading: false, result: {}})),
+          .mockImplementation(() => ({ uploading: false, result: {} })),
       } as any;
     });
 

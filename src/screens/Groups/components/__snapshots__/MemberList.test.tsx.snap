@@ -10,15 +10,15 @@ exports[`MemberList component should render data correctly 1`] = `
         "data": Array [
           Object {
             "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
-            "chat_user_id": "mdp9rococ3d83qk9nbrybxay3e",
-            "custom_role_ids": Array [],
+            "chatUserId": "mdp9rococ3d83qk9nbrybxay3e",
+            "customRoleIds": Array [],
             "fullname": "Test Name Admin",
-            "id": 1,
-            "is_admin": true,
+            "id": "1",
+            "isAdmin": true,
             "roles": Array [
               Object {
                 "changed": Object {},
-                "data_values": Object {
+                "dataValues": Object {
                   "id": "23a07c64-27d7-4438-a17d-9aae7bbbd4df",
                   "name": "Admin",
                   "permissions": Array [
@@ -50,7 +50,7 @@ exports[`MemberList component should render data correctly 1`] = `
                   ],
                   "type": "GROUP_ADMIN",
                 },
-                "is_new_record": false,
+                "isNewRecord": false,
                 "options": Object {
                   "attributes": Array [
                     "id",
@@ -58,13 +58,13 @@ exports[`MemberList component should render data correctly 1`] = `
                     "type",
                     "permissions",
                   ],
-                  "include_validated": true,
-                  "is_new_record": false,
+                  "includeValidated": true,
+                  "isNewRecord": false,
                   "raw": true,
                   "schema": "bein",
-                  "schema_delimiter": "",
+                  "schemaDelimiter": "",
                 },
-                "previous_data_values": Object {
+                "previousDataValues": Object {
                   "id": "23a07c64-27d7-4438-a17d-9aae7bbbd4df",
                   "name": "Admin",
                   "permissions": Array [
@@ -102,43 +102,43 @@ exports[`MemberList component should render data correctly 1`] = `
           },
         ],
         "title": "COMMUNITY_ADMINs",
-        "user_count": 1,
+        "userCount": 1,
       },
       Object {
         "data": Array [
           Object {
             "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
-            "chat_user_id": "4bkzernmdtgb7eiy9yspw3n4ra",
-            "custom_role_ids": Array [],
+            "chatUserId": "4bkzernmdtgb7eiy9yspw3n4ra",
+            "customRoleIds": Array [],
             "fullname": "Test Name Member",
-            "id": 2,
-            "is_admin": false,
+            "id": "2",
+            "isAdmin": false,
             "roles": Array [],
             "username": "testmember",
           },
           Object {
             "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
-            "chat_user_id": "4bkzernmdtgb7eiy9yspw3n4ra",
-            "custom_role_ids": Array [],
+            "chatUserId": "4bkzernmdtgb7eiy9yspw3n4ra",
+            "customRoleIds": Array [],
             "fullname": "Test Name Member",
-            "id": 2,
-            "is_admin": false,
+            "id": "2",
+            "isAdmin": false,
             "roles": Array [],
             "username": "testmember",
           },
           Object {
             "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
-            "chat_user_id": "4bkzernmdtgb7eiy9yspw3n4ra",
-            "custom_role_ids": Array [],
+            "chatUserId": "4bkzernmdtgb7eiy9yspw3n4ra",
+            "customRoleIds": Array [],
             "fullname": "Test Name Member",
-            "id": 2,
-            "is_admin": false,
+            "id": "2",
+            "isAdmin": false,
             "roles": Array [],
             "username": "testmember",
           },
         ],
         "title": "COMMUNITY_MEMBERs",
-        "user_count": 3,
+        "userCount": 3,
       },
     ]
   }
@@ -423,7 +423,7 @@ exports[`MemberList component should render data correctly 1`] = `
                     "width": 36,
                   },
                   Object {
-                    "backgroundColor": "#F1F2F8",
+                    "backgroundColor": "#F8F9FF",
                   },
                 ]
               }
@@ -757,7 +757,7 @@ exports[`MemberList component should render data correctly 1`] = `
                       "width": 36,
                     },
                     Object {
-                      "backgroundColor": "#F1F2F8",
+                      "backgroundColor": "#F8F9FF",
                     },
                   ]
                 }
@@ -1059,7 +1059,7 @@ exports[`MemberList component should render data correctly 1`] = `
                       "width": 36,
                     },
                     Object {
-                      "backgroundColor": "#F1F2F8",
+                      "backgroundColor": "#F8F9FF",
                     },
                   ]
                 }
@@ -1360,7 +1360,7 @@ exports[`MemberList component should render data correctly 1`] = `
                     "width": 36,
                   },
                   Object {
-                    "backgroundColor": "#F1F2F8",
+                    "backgroundColor": "#F8F9FF",
                   },
                 ]
               }

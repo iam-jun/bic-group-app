@@ -207,7 +207,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                 Object {
                   "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
-                  "fontSize": 20,
+                  "fontSize": 17,
                 },
                 Object {},
                 Object {},

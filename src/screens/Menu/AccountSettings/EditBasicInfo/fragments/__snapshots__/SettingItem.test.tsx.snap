@@ -121,7 +121,7 @@ exports[`SettingItem conponent renders correctly 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               undefined,
@@ -274,7 +274,7 @@ exports[`SettingItem conponent renders correctly testID 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               undefined,
@@ -426,7 +426,7 @@ exports[`SettingItem conponent should render left, right component 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {},
               undefined,

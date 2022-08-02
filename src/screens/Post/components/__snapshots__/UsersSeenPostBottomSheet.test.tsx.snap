@@ -17,7 +17,7 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
         Object {
           "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
-          "fontSize": 15,
+          "fontSize": 13,
         },
         Object {
           "color": "#7335C0",
@@ -96,7 +96,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
         Object {
           "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
-          "fontSize": 15,
+          "fontSize": 13,
         },
         Object {
           "color": "#7335C0",
@@ -313,7 +313,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     undefined,
@@ -467,7 +467,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                     Object {
                       "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "fontSize": 13,
                     },
                     Object {},
                     undefined,

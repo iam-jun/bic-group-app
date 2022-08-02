@@ -443,7 +443,7 @@ exports[`MemberItem component should render icon member option correctly when us
               "width": 36,
             },
             Object {
-              "backgroundColor": "#F1F2F8",
+              "backgroundColor": "#F8F9FF",
             },
           ]
         }

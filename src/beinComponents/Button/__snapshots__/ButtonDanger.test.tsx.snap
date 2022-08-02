@@ -14,7 +14,7 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#FEECED",
+      "backgroundColor": "#FEF3F4",
       "borderRadius": 4,
       "padding": 8,
     }

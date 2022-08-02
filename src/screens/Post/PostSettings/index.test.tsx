@@ -43,7 +43,7 @@ describe('Post Setting Screen', () => {
       'post_settings.toggle_important.out_side_view',
     );
     expect(toggleImportant?.props?.style?.backgroundColor).toEqual(
-      colors.light.colors.gray40,
+      colors.light.colors.gray10,
     );
   });
 
@@ -58,7 +58,7 @@ describe('Post Setting Screen', () => {
       'post_settings.toggle_important.out_side_view',
     );
     expect(toggleImportantView?.props?.style?.backgroundColor).toEqual(
-      colors.light.colors.gray40,
+      colors.light.colors.gray10,
     );
 
     //active important
@@ -105,7 +105,7 @@ describe('Post Setting Screen', () => {
 
     expect(btnSave?.props?.accessibilityState?.disabled).toBe(false);
     expect(toggleImportantView?.props?.style?.backgroundColor).toEqual(
-      colors.light.colors.gray40,
+      colors.light.colors.gray10,
     );
   });
 
@@ -143,12 +143,11 @@ describe('Post Setting Screen', () => {
     expect(spy).toBeCalled();
   });
 
-  it('should dispatch setCreatePostSettings then go back when press back with changed', () => {
+  it('should dispatch setCreatePostSettings then go back when press back with changed',async () => {
     const spy = jest.spyOn(postActions, 'setCreatePostSettings');
 
-    const navigate = jest.fn();
-    const goBack = jest.fn();
-    const rootNavigation = {navigate, goBack};
+   const goBack = jest.fn();
+    const rootNavigation = {goBack};
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
       return {rootNavigation} as any;
     });
