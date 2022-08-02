@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import Animated from 'react-native-reanimated';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import JoinCancelButton from './JoinCancelButton';
+import CommunityJoinCancelButton from './CommunityJoinCancelButton';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
@@ -66,7 +66,7 @@ const _PageContent = ({
     <View onLayout={onButtonLayout}>
       <InfoHeader infoDetail={infoDetail} isMember={isMember} onPressGroupTree={onPressYourGroups} />
       <CommunityTabHeader communityId={communityId} isMember={isMember} />
-      <JoinCancelButton />
+      <CommunityJoinCancelButton />
     </View>
   );
 
