@@ -11,11 +11,9 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
 import CommunityTabHeader from './CommunityTabHeader';
 import InfoHeader from '../../components/InfoHeader';
 
@@ -43,13 +41,6 @@ const _PageContent = ({
   const posts = useKeySelector(groupsKeySelector.posts);
   const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canCreatePostArticle = hasPermissionsOnScopeWithId(
-    'groups',
-    groupId,
-    PERMISSION_KEY.GROUP.CREATE_POST_ARTICLE,
-  );
-
   const dispatch = useDispatch();
 
   const onPressYourGroups = () => {
@@ -72,20 +63,11 @@ const _PageContent = ({
   };
 
   const renderHeader = () => (
-    <>
-      <View onLayout={onButtonLayout}>
-        <InfoHeader infoDetail={infoDetail} isMember={isMember} onPressGroupTree={onPressYourGroups} />
-        <CommunityTabHeader communityId={communityId} isMember={isMember} />
-        <JoinCancelButton />
-      </View>
-      {isMember && canCreatePostArticle && (
-      <HeaderCreatePost
-        style={styles.createPost}
-        audience={{ ...infoDetail, id: groupId }}
-        createFromGroupId={groupId}
-      />
-      )}
-    </>
+    <View onLayout={onButtonLayout}>
+      <InfoHeader infoDetail={infoDetail} isMember={isMember} onPressGroupTree={onPressYourGroups} />
+      <CommunityTabHeader communityId={communityId} isMember={isMember} />
+      <JoinCancelButton />
+    </View>
   );
 
   return (
