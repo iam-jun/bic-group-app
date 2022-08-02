@@ -746,7 +746,8 @@
         "approve": "Do you want to accept **All pending member requests** in order to change the group privacy to Public now?",
         "decline": "Do you want to decline **All pending member requests** in order to change the group privacy to Secret now?"
       }
-    }
+    },
+    "text_in": "in"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

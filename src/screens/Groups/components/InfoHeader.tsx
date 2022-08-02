@@ -9,30 +9,33 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import images from '~/resources/images';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
 import privacyTypes from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import { ICommunity } from '~/interfaces/ICommunity';
+import { IGroup } from '~/interfaces/IGroup';
 
 interface InfoHeaderProps {
+  infoDetail: ICommunity | IGroup;
+  isMember: boolean;
+  insideCommunityName?: string;
   onPressGroupTree?: () => void
 }
 
-const InfoHeader = ({ onPressGroupTree }: InfoHeaderProps) => {
+const InfoHeader = ({
+  infoDetail, isMember, insideCommunityName, onPressGroupTree,
+}: InfoHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook()
   const styles = themeStyles(theme);
-  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
+
   const {
-    name, userCount, backgroundImgUrl, icon, privacy, joinStatus,
+    name, userCount, backgroundImgUrl, icon, privacy,
   } = infoDetail;
-  const isMember = joinStatus === groupJoinStatus.member;
   const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
 
-  const renderCoverImage = () => (
+  const renderCoverAvatar = () => (
     <View testID="info_header.cover" style={styles.coverAvatarContainer}>
       <Image
         style={styles.cover}
@@ -45,6 +48,16 @@ const InfoHeader = ({ onPressGroupTree }: InfoHeaderProps) => {
       />
     </View>
   );
+
+  const renderCommunityText = () => (
+    !!insideCommunityName && (
+    <View style={styles.communityText}>
+      <Text.SubtitleXS color={theme.colors.blue50} numberOfLines={1}>
+        {insideCommunityName}
+      </Text.SubtitleXS>
+    </View>
+    )
+  )
 
   const renderInfoHeader = () => (
     <View style={styles.infoContainer}>
@@ -97,7 +110,8 @@ const InfoHeader = ({ onPressGroupTree }: InfoHeaderProps) => {
 
   return (
     <View testID="info_header">
-      {renderCoverImage()}
+      {renderCoverAvatar()}
+      {renderCommunityText()}
       {renderInfoHeader()}
     </View>
   );
@@ -120,6 +134,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       position: 'absolute',
       bottom: 0,
       left: 19,
+    },
+    communityText: {
+      backgroundColor: colors.white,
+      paddingHorizontal: spacing.margin.large,
+      paddingTop: spacing.margin.small,
     },
     flex1: { flex: 1 },
     infoContainer: {
