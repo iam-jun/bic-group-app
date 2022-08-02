@@ -12,6 +12,7 @@ import { COMMUNITY_PRIVACY_TYPE, groupPrivacy, GROUP_PRIVACY_TYPE } from '~/cons
 
 interface JoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
+  type: 'community' | 'group';
   joinStatus: number;
   privacy: GROUP_PRIVACY_TYPE | COMMUNITY_PRIVACY_TYPE;
   onPressJoin: () => void;
@@ -19,7 +20,7 @@ interface JoinCancelButtonProps {
 }
 
 const JoinCancelButton = ({
-  style, joinStatus, privacy, onPressJoin, onPressCancelRequest,
+  style, type, joinStatus, privacy, onPressJoin, onPressCancelRequest,
 }: JoinCancelButtonProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -52,7 +53,7 @@ const JoinCancelButton = ({
           onPress={onPressJoin}
           useI18n
         >
-          communities:text_join_community_button
+          {`communities:text_join_${type}_button`}
         </Button.Secondary>
       )}
 
@@ -63,7 +64,7 @@ const JoinCancelButton = ({
           useI18n
           testID="join_cancel_button.description"
         >
-          communities:text_join_community_description
+          {`communities:text_join_${type}_description`}
         </Text.BodyS>
       </View>
       )}

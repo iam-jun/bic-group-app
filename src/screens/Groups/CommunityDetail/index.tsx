@@ -246,7 +246,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       flex: 1,
     },
     joinBtn: {
-      paddingTop: spacing.padding.tiny,
+      paddingVertical: spacing.padding.tiny,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,

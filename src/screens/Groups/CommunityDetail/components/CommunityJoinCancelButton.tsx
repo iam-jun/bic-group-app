@@ -35,6 +35,7 @@ const CommunityJoinCancelButton = ({ style }: CommunityJoinCancelButtonProps) =>
 
   return (
     <JoinCancelButton
+      type="community"
       style={style}
       joinStatus={joinStatus}
       privacy={privacy}
