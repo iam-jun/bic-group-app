@@ -6,36 +6,27 @@ import {
 import { useDispatch } from 'react-redux';
 
 import { isEmpty } from 'lodash';
-import Avatar from '~/beinComponents/Avatar';
 import Header from '~/beinComponents/Header';
-import Image from '~/beinComponents/Image';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
 
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
-import Icon from '~/beinComponents/Icon';
-import ImagePicker from '~/beinComponents/ImagePicker';
-import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
+import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import { IFilePicked } from '~/interfaces/common';
-import images from '~/resources/images';
 import mainStack from '~/router/navigator/MainStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import homeActions from '~/screens/Home/redux/actions';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
-import { scaleCoverHeight, userProfileImageCropRatio } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 import { formatDMLink, openUrl } from '~/utils/link';
-import { checkPermission, permissionTypes } from '~/utils/permission';
 import menuActions from '../redux/actions';
 import menuKeySelector from '../redux/keySelector';
-import ProfileBlock from './components/ProfileBlock';
-import WorkInfo from './components/WorkInfo';
-import { BasicInfo, Contact, Experiences } from './fragments'
+import { BasicInfo, Contact, Experiences } from './fragments';
+import CoverHeader from './fragments/CoverHeader';
+import UserHeader from './fragments/UserHeader';
 
 const UserProfile = (props: any) => {
   const { userId, params } = props?.route?.params || {};
@@ -65,13 +56,13 @@ const UserProfile = (props: any) => {
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
   const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
-  const [coverHeight, setCoverHeight] = useState<number>(210);
   const [avatarState, setAvatarState] = useState<string>(avatar);
   const [bgImgState, setBgImgState] = useState<string>(backgroundImgUrl);
   const [isChangeImg, setIsChangeImg] = useState<string>('');
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
@@ -124,66 +115,6 @@ const UserProfile = (props: any) => {
     mainStack.userEdit, { userId },
   );
 
-  const uploadFile = (
-    file: IFilePicked,
-    fieldName: 'avatar' | 'backgroundImgUrl',
-    uploadType: IUploadType,
-  ) => {
-    dispatch(menuActions.uploadImage(
-      {
-        id,
-        file,
-        fieldName,
-        uploadType,
-      },
-      () => {
-        setIsChangeImg(fieldName);
-      },
-    ));
-  };
-
-  const _openImagePicker = async (
-    fieldName: 'avatar' | 'backgroundImgUrl',
-    uploadType: IUploadType,
-  ) => {
-    checkPermission(
-      permissionTypes.photo, dispatch, (canOpenPicker) => {
-        if (canOpenPicker) {
-          ImagePicker.openPickerSingle({
-            ...userProfileImageCropRatio[fieldName],
-            cropping: true,
-            mediaType: 'photo',
-          }).then((file) => {
-            uploadFile(
-              file, fieldName, uploadType,
-            );
-          });
-        }
-      },
-    );
-  };
-
-  const onEditAvatar = () => _openImagePicker(
-    'avatar', uploadTypes.userAvatar,
-  );
-
-  const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
-
-  const onCoverLayout = (e: any) => {
-    if (!e?.nativeEvent?.layout?.width) return;
-    const coverWidth = e.nativeEvent.layout.width;
-    const coverHeight = scaleCoverHeight(coverWidth);
-    setCoverHeight(coverHeight);
-  };
-
-  const onSeeMore = () => {
-    rootNavigation.navigate(
-      mainStack.userEdit, {
-        userId,
-      },
-    );
-  };
-
   const onPressChat = () => {
     if (!isEmpty(joinedCommunities)) {
       const link = formatDMLink(
@@ -196,95 +127,22 @@ const UserProfile = (props: any) => {
     }
   };
 
-  const renderEditButton = (
-    style: any, onPress: any, testID: string,
-  ) => (userId == currentUserId || userId == currentUsername ? (
-    <ButtonWrapper
-      testID={testID}
-      style={[styles.editButton, style]}
-      activeOpacity={0.9}
-      onPress={onPress}
-    >
-      <Icon size={16} tintColor={theme.colors.purple60} icon="Camera" />
-    </ButtonWrapper>
-  ) : null);
+  const renderButton = () => {
+    if (userId !== currentUserId && userId !== currentUsername) return null;
 
-  const renderCoverImage = () => (
-    <View
-      testID="user_profile.cover_image"
-      style={{ height: coverHeight }}
-      onLayout={onCoverLayout}
-    >
-      <Image
-        style={[styles.cover, { height: (coverHeight * 2) / 3 }]}
-        source={bgImgState || images.img_cover_default}
-      />
-      {renderEditButton(
-        styles.editCoverPhoto,
-        onEditCover,
-        'user_profile.edit.cover_image',
-      )}
-      {renderAvatar()}
-    </View>
-  );
-
-  const renderAvatar = () => (
-    <View style={styles.imageButton}>
-      <View>
-        <Avatar.UltraSuperLarge
-          source={avatarState || images.img_user_avatar_default}
-          isRounded
-          showBorder
-        />
-        {renderEditButton(
-          styles.editAvatar,
-          onEditAvatar,
-          'user_profile.edit.avatar',
-        )}
-      </View>
-    </View>
-  );
-
-  const renderUserHeader = () => (
-    <View style={styles.headerName}>
-      <Text>
-        <Text.H4>{fullname}</Text.H4>
-      </Text>
-      {!!username && <Text.BodyS>{`@${username}`}</Text.BodyS>}
-      <WorkInfo latestWork={latestWork} />
-      {!!description && (
-      <Text>
-        <Text style={styles.subtitleText}>{description}</Text>
-      </Text>
-      )}
-    </View>
-  );
-
-  // const renderButton = () => (userId == currentUserId || userId == currentUsername ? (
-  //   <Button.Secondary
-  //     testID="user_profile.edit"
-  //     textColor={theme.colors.purple50}
-  //     style={styles.buttonEdit}
-  //     leftIcon="PenLine"
-  //     onPress={onEditProfileButton}
-  //     borderRadius={spacing.borderRadius.small}
-  //   >
-  //     {i18next.t('profile:title_edit_profile')}
-  //   </Button.Secondary>
-  // ) : (
-  //   <Button.Secondary
-  //     testID="user_profile.message"
-  //     style={styles.button}
-  //     textColor={theme.colors.neutral1}
-  //     color={theme.colors.purple50}
-  //     colorHover={theme.colors.purple30}
-  //     rightIcon="Message"
-  //     borderRadius={spacing.borderRadius.small}
-  //     onPress={onPressChat}
-  //   >
-  //     {i18next.t('profile:title_direct_message')}
-  //   </Button.Secondary>
-  // ));
+    return (
+      <Button.Secondary
+        testID="user_profile.edit"
+        textColor={theme.colors.purple50}
+        style={styles.buttonEdit}
+        leftIcon="PenLine"
+        onPress={onEditProfileButton}
+        borderRadius={spacing.borderRadius.small}
+      >
+        {t('profile:title_edit_profile')}
+      </Button.Secondary>
+    )
+  };
 
   const renderLoading = () => (
     <View testID="user_profile.loading" style={styles.loadingProfile}>
@@ -297,7 +155,6 @@ const UserProfile = (props: any) => {
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header />
-
       {loadingUserProfile ? (
         renderLoading()
       ) : (
@@ -305,9 +162,20 @@ const UserProfile = (props: any) => {
           style={styles.container}
           showsVerticalScrollIndicator={false}
         >
-          {renderCoverImage()}
-          {renderUserHeader()}
-          {/* {renderButton()} */}
+          <CoverHeader
+            id={id}
+            userId={userId}
+            currentUsername={currentUsername}
+            bgImg={bgImgState}
+            avatar={avatarState}
+          />
+          <UserHeader
+            fullname={fullname}
+            username={username}
+            latestWork={latestWork}
+            description={description}
+          />
+          {renderButton()}
           <View style={styles.infoContainer}>
             <BasicInfo
               fullname={fullname}
@@ -345,46 +213,8 @@ const themeStyles = (
     infoContainer: {
       paddingHorizontal: spacing.padding.extraLarge,
     },
-    cover: {
-      width: '100%',
-    },
-    imageButton: {
-      alignItems: 'center',
-      marginTop: -44,
-    },
-    headerName: {
-      alignItems: 'center',
-      paddingVertical: spacing.margin.base,
-      paddingHorizontal: spacing.margin.large,
-    },
-    subtitleText: {
-      marginTop: spacing.margin.small,
-      textAlign: 'center',
-    },
-    button: {
-      marginHorizontal: spacing.margin.large,
-    },
     loadingProfile: {
       marginTop: spacing.margin.extraLarge,
-    },
-    editButton: {
-      backgroundColor: colors.violet1,
-      width: 24,
-      height: 24,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: spacing?.borderRadius.small,
-      marginLeft: spacing?.padding.small,
-    },
-    editCoverPhoto: {
-      position: 'absolute',
-      top: spacing?.margin.small,
-      right: spacing?.margin.small,
-    },
-    editAvatar: {
-      position: 'absolute',
-      bottom: 0,
-      right: spacing?.margin.small,
     },
     buttonEdit: {
       marginHorizontal: spacing.margin.large,
