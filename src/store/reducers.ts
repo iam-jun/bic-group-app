@@ -15,7 +15,6 @@ import { ActionTypes } from '~/utils';
 import auth from '../screens/Auth/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
 import app from './app/reducer';
-import chatReducer from './chat/reducer';
 import giphyReducer from './giphy/reducer';
 import modal from './modal/reducer';
 import { initPushTokenMessage } from '~/services/firebase';
@@ -55,7 +54,6 @@ export const appReducer = combineReducers({
   menu: menuReducer,
   noInternet: noInternetReducer,
   mentionInput: mentionInputReducer,
-  chat: chatReducer,
   giphy: giphyReducer,
 });
 

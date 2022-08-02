@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { StyleSheet } from 'react-native';
 import { getUnreadChannelCount } from '~/selectors/chat';
 
 import spacing from '~/theme/spacing';
 import NotificationsBadge from '../Badge/NotificationsBadge';
+import Button from '../Button';
 import Icon from '../Icon';
 
 interface Props {
@@ -13,17 +12,14 @@ interface Props {
 }
 
 const IconChat = ({ onPress }: Props) => {
-  const theme: ExtendedTheme = useTheme();
-  const count = useSelector((state) => getUnreadChannelCount(state));
+  const count = getUnreadChannelCount();
 
   return (
-    <View>
+    <Button onPress={onPress}>
       <Icon
         icon="iconBeinChat"
         size={24}
         style={styles.icon}
-        onPress={onPress}
-        backgroundColor={theme.colors.neutral1}
         buttonTestID="header.iconChat.button"
         testID="header.iconChat"
       />
@@ -32,14 +28,14 @@ const IconChat = ({ onPress }: Props) => {
         number={count}
         maxNumber={99}
       />
-    </View>
+    </Button>
   );
 };
 
 const styles = StyleSheet.create({
   icon: {
-    height: 40,
-    width: 40,
+    // height: 40,
+    // width: 40,
     justifyContent: 'center',
     alignItems: 'center',
     padding: spacing.padding.small,

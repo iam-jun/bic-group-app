@@ -286,7 +286,7 @@ const interceptorsResponseSuccess = (response: AxiosResponse) => {
 
 const interceptorsResponseError = async (error: AxiosError) => handleResponseError(error);
 
-const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
+const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<AxiosResponse<any, any>> => {
   let interceptorRequestSuccess;
   let interceptorResponseSuccess;
   let interceptorResponseError;
@@ -318,7 +318,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       requestConfig.headers = beinHeaders;
       break;
     default:
-      return Promise.resolve(false);
+      return Promise.resolve(null);
   }
 
   const axiosInstance = axios.create();
