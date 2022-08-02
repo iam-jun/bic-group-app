@@ -451,8 +451,8 @@
     "content_delete_post": "Do you really want to delete this post?",
     "title_delete_audiences_of_post": "You are deleting audiences of this post",
     "content_delete_audiences_of_post": "You are not able to delete this post from these audiences below. Are you sure to continue?",
-    "content_not_able_delete_of_post":"You are not able to delete this post from these audiences below.",
-    "text_deleted_audiences":"Your post has been deleted audiences.",
+    "content_not_able_delete_of_post": "You are not able to delete this post from these audiences below.",
+    "text_deleted_audiences": "Your post has been deleted audiences.",
     "alert_title_back_edit_post": "Discard changes",
     "alert_content_back_edit_post": "If you discard now, you’ll lose any changes you’ve made to this post.",
     "alert_title_back_create_post": "Discard new post",
@@ -634,8 +634,8 @@
   },
   "groups": {
     "group_content": {
-      "btn_your_groups": "Your Groups",
-      "btn_discover": "Discover",
+      "btn_group_tree": "Group Tree",
+      "btn_discover": "Discover Groups",
       "btn_post": "Post",
       "btn_channel": "Channel",
       "btn_about": "About",
@@ -746,7 +746,8 @@
         "approve": "Do you want to accept **All pending member requests** in order to change the group privacy to Public now?",
         "decline": "Do you want to decline **All pending member requests** in order to change the group privacy to Secret now?"
       }
-    }
+    },
+    "text_in": "in"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",

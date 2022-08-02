@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
 import NetInfo from '@react-native-community/netinfo';
-import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { debounce } from 'lodash';
 import { Auth } from 'aws-amplify';
+import { debounce } from 'lodash';
+import { useEffect, useRef } from 'react';
 import { useAuthToken, useAuthTokenExpire, useUserIdAuth } from '~/hooks/auth';
+import menuKeySelector from '~/screens/Menu/redux/keySelector';
 
 import chatSocketClient from '~/services/chatSocket';
-import chatAction from '~/store/chat/actions';
 import { getTokenAndCallBackBein } from '~/services/httpApiRequest';
+import useChatStore from '~/store/chat';
 import getEnv from '~/utils/env';
+import { useKeySelector } from './selector';
 
 const useChatSocket = () => {
   const isConnectedRef = useRef(true);
@@ -17,7 +18,8 @@ const useChatSocket = () => {
   const userId = useUserIdAuth();
   const token = useAuthToken();
   const tokenExp = useAuthTokenExpire();
-  const dispatch = useDispatch();
+  const myProfile: any = useKeySelector(menuKeySelector.myProfile);
+  const { initChat, handleChatEvent } = useChatStore();
 
   // use ref to avoid arrow function callback can't get the latest value of state
   const tokenRef = useRef(token);
@@ -73,9 +75,10 @@ const useChatSocket = () => {
   useEffect(
     () => {
       if (userId) {
-        dispatch(chatAction.initChat());
+        // dispatch(chatAction.initChat());
+        initChat()
       }
-      chatSocketClient.setEventCallback((evt: any) => dispatch(chatAction.handleChatEvent(evt)));
+      chatSocketClient.setEventCallback((evt: any) => handleChatEvent(myProfile.chatUserId, evt));
       // chatSocketClient.setErrorCallback(async (evt: any) => {}); //error callback not work on iOS
       chatSocketClient.setCloseCallback(() => {
         if (!isConnectedRef.current) {

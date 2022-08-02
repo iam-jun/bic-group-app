@@ -1,12 +1,14 @@
 import React, {
-  useState, useEffect, useRef, Fragment, useCallback,
+  useState, useEffect, useRef, useCallback,
 } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, DeviceEventEmitter } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   interpolate,
+  useAnimatedScrollHandler,
+  runOnJS,
 } from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -33,6 +35,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
+import CommunityTabHeader from './components/CommunityTabHeader';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -48,7 +51,7 @@ const CommunityDetail = (props: any) => {
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
-    name, icon, joinStatus, privacy, groupId,
+    name, joinStatus, privacy, groupId,
   } = infoDetail;
   const isMember = joinStatus === groupJoinStatus.member;
   const isGettingInfoDetail = useKeySelector(
@@ -79,9 +82,7 @@ const CommunityDetail = (props: any) => {
     /* Avoid getting group posts of the nonexisting group,
     which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
-      const privilegeToFetchPost = isMember
-      || privacy === groupPrivacy.public
-      || privacy === groupPrivacy.open;
+      const privilegeToFetchPost = isMember || privacy === groupPrivacy.public
 
       if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
         return;
@@ -151,7 +152,7 @@ const CommunityDetail = (props: any) => {
       return (
         <PrivateWelcome
           onRefresh={onRefresh}
-          onScroll={onScroll}
+          onScroll={onScrollHandler}
           onButtonLayout={onButtonLayout}
         />
       );
@@ -161,7 +162,7 @@ const CommunityDetail = (props: any) => {
       <PageContent
         communityId={communityId}
         getPosts={getPosts}
-        onScroll={onScroll}
+        onScroll={onScrollHandler}
         onButtonLayout={onButtonLayout}
       />
     );
@@ -182,19 +183,19 @@ const CommunityDetail = (props: any) => {
     }, [],
   );
 
-  const onScroll = useCallback(
-    (e: any) => {
-      const offsetY = e?.nativeEvent?.contentOffset?.y;
-      headerRef?.current?.setScrollY?.(offsetY);
-      buttonShow.value = offsetY;
-    }, [],
-  );
+  const scrollWrapper = (offsetY: number) => {
+    headerRef?.current?.setScrollY?.(offsetY);
+    DeviceEventEmitter.emit('stopAllVideo');
+  }
+
+  const onScrollHandler = useAnimatedScrollHandler((event: any) => {
+    const offsetY = event?.contentOffset?.y;
+    runOnJS(scrollWrapper)(offsetY);
+    buttonShow.value = offsetY;
+  });
 
   const buttonStyle = useAnimatedStyle(
     () => ({
-      position: 'absolute',
-      width: '100%',
-      bottom: 0,
       opacity: interpolate(
         buttonShow.value,
         [0, buttonHeight - 20, buttonHeight],
@@ -209,17 +210,18 @@ const CommunityDetail = (props: any) => {
       <Header
         headerRef={headerRef}
         title={name}
-        avatar={icon}
         useAnimationTitle
         rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
         rightIconProps={{ backgroundColor: theme.colors.white }}
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
+        showStickyHeight={buttonHeight}
+        stickyHeaderComponent={<CommunityTabHeader communityId={communityId} isMember={isMember} />}
       />
       <View testID="community_detail.content" style={styles.contentContainer}>
         {renderCommunityContent()}
       </View>
-      <Animated.View style={buttonStyle}>
+      <Animated.View style={[styles.button, buttonStyle]}>
         <JoinCancelButton style={styles.joinBtn} />
       </Animated.View>
     </>
@@ -249,6 +251,11 @@ const themeStyles = (theme: ExtendedTheme) => {
     headerCreatePost: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
+    },
+    button: {
+      position: 'absolute',
+      width: '100%',
+      bottom: 0,
     },
   });
 };

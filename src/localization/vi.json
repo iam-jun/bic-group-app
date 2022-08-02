@@ -398,8 +398,8 @@
     "content_delete_post": "Bạn thực sự muốn xoá bài viết này?",
     "title_delete_audiences_of_post": "Bạn đang xóa đối tượng của bài viết này",
     "content_delete_audiences_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
-    "content_not_able_delete_of_post":"Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây.",
-    "text_deleted_audiences":"Bài đăng của bạn đã được xoá khỏi các nhóm đối tượng.",
+    "content_not_able_delete_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây.",
+    "text_deleted_audiences": "Bài đăng của bạn đã được xoá khỏi các nhóm đối tượng.",
     "alert_title_back_edit_post": "Huỷ sửa bài viết",
     "alert_content_back_edit_post": "Nếu huỷ, bạn sẽ mất những nội dung đã chỉnh sửa trên bài viết.",
     "alert_title_back_create_post": "Huỷ đăng bài",
@@ -540,7 +540,7 @@
     "text_post_deleted": "Bài viết này đã bị xoá, không thể gửi bình luận trả lời của bạn",
     "deleted_post": {
       "title": "Trang này không tồn tại.",
-      "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "description": "Bài viết này có thể bị xóa hoặc bạn không có quyền xem bài viết này",
       "button_text": "Quay về News Feed"
     },
     "text_important_warning_1": "Không thể cài đặt Bài viết quan trọng vì bạn không có quyền trong",
@@ -583,8 +583,8 @@
   },
   "groups": {
     "group_content": {
-      "btn_your_groups": "Nhóm của bạn",
-      "btn_discover": "Khám phá",
+      "btn_group_tree": "Cấu trúc nhóm",
+      "btn_discover": "Khám phá nhóm",
       "btn_post": "Bài đăng",
       "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
@@ -649,7 +649,8 @@
     "text_approved_user": "Phê duyệt người dùng",
     "text_approved_all": "Phê duyệt tất cả yêu cầu thành viên",
     "text_declining_all": "Từ chối tất cả yêu cầu thành viên",
-    "text_request_been_canceled": "Yêu cầu này đã bị hủy"
+    "text_request_been_canceled": "Yêu cầu này đã bị hủy",
+    "text_in": "thuộc"
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
