@@ -9,7 +9,6 @@ import notifications from '~/screens/Notification/redux/saga';
 import menuSaga from '~/screens/Menu/redux/saga';
 import noInternetSaga from '~/screens/NoInternet/redux/saga';
 import mentionInputSaga from '~/beinComponents/inputs/MentionInput/redux/saga';
-import chatSaga from './chat/saga';
 import giphySaga from './giphy/saga';
 
 export default function* rootSagas() {
@@ -24,7 +23,6 @@ export default function* rootSagas() {
     menuSaga(),
     noInternetSaga(),
     mentionInputSaga(),
-    chatSaga(),
     giphySaga(),
   ]);
 }

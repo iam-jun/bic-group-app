@@ -2,6 +2,8 @@ import create, { StateCreator } from 'zustand';
 import {
   devtools, DevtoolsOptions, persist, PersistOptions,
 } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Persist = (
     config: StateCreator<any>,
@@ -18,8 +20,8 @@ const withPersist = (
   options: PersistOptions<any>,
 ) => (persist as unknown as Persist)(
   payload,
-  options,
-)
+  { ...options, getStorage: () => AsyncStorage },
+);
 
 const withDevtools = (
   payload: any,
@@ -27,10 +29,17 @@ const withDevtools = (
 ) => (devtools as unknown as Devtools)(
   payload,
   options,
+);
+
+const withImmer = (
+  payload: any,
+) => (immer)(
+  payload,
 )
 
 export {
   create as createStore,
   withPersist,
   withDevtools,
+  withImmer,
 };
