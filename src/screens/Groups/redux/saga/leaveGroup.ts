@@ -60,7 +60,7 @@ export default function* leaveGroup({
 }
 
 export function* navigationReplace() {
-  yield navigation.replace(groupStack.groups);
+  yield navigation.replace(groupStack.yourGroups);
 }
 
 export function* navigateToGroup(groupId: string) {
