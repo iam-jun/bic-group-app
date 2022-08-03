@@ -12,6 +12,7 @@ import SearchBaseView from '~/beinComponents/SearchBaseView';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import MemberSearchResult from '../../components/MemberSearchResult';
+import { useMyPermissions } from '~/hooks/permissions';
 
 interface SearchMemberViewProps {
   groupId: string;
@@ -34,8 +35,12 @@ const SearchMemberView = ({
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
-  const canManageMember = useKeySelector(
-    groupsKeySelector.groupDetail.canManageMember,
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const canManageMember = hasPermissionsOnScopeWithId(
+    'groups', groupId, [
+      PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
+      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
+    ],
   );
   const groupSearchMembers = useKeySelector(
     groupsKeySelector.groupSearchMembers,

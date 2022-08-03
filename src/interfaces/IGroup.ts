@@ -112,10 +112,6 @@ export interface IGroupDetailEdit {
 
 export interface IGroupDetail {
   group: IGroup;
-  canEditInfo?: boolean;
-  canEditPrivacy?: boolean;
-  canManageMember?: boolean;
-  canSetting?: boolean;
   joinStatus: number;
 }
 

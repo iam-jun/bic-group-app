@@ -312,7 +312,7 @@ const Header: React.FC<HeaderProps> = ({
           testID="header.back"
           icon="iconBack"
           onPress={_onPressBack}
-          size={24}
+          size={20}
           hitSlop={{
             top: 20, bottom: 20, left: 20, right: 20,
           }}
@@ -509,8 +509,7 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       height: '100%',
       justifyContent: 'center',
-      paddingTop: 1.5,
-      marginLeft: spacing.padding.large,
+      marginLeft: spacing.padding.tiny,
     },
     title: {},
     subtitle: {},
