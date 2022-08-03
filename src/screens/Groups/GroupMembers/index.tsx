@@ -45,7 +45,7 @@ const _GroupMembers = (props: any) => {
   const canAddMember = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
-    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
+    PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
   );
 
   const getGroupProfile = () => {
@@ -120,7 +120,7 @@ const _GroupMembers = (props: any) => {
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.white}>
-      <Header titleTextProps={{ useI18n: true }} title="groups:title_members" />
+      <Header titleTextProps={{ useI18n: true }} title="groups:title_members_other" />
       <View style={styles.searchBar}>
         <Pressable
           testID="group_members.search"

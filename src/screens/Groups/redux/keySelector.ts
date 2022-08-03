@@ -1,10 +1,6 @@
 const groupsKeySelector = {
   groupDetail: {
     group: 'groups.groupDetail.group',
-    canEditInfo: 'groups.groupDetail.canEditInfo',
-    canEditPrivacy: 'groups.groupDetail.canEditPrivacy',
-    canManageMember: 'groups.groupDetail.canManageMember',
-    canManageScheme: 'groups.groupDetail.canManageScheme',
     joinStatus: 'groups.groupDetail.joinStatus',
   },
   yourGroupsSearchData: 'groups.yourGroupsSearch',

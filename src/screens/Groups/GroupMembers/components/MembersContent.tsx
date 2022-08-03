@@ -16,15 +16,10 @@ const MembersContent = ({ groupId, onPressMenu }: MembersContentProps) => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
     'groups', groupId, [
-      PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
-      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
+      PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
+      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
     ],
   );
-
-  const getGroupProfile = () => {
-    // to update canManageMember when member role changes
-    dispatch(actions.getGroupDetail(groupId));
-  };
 
   const getMembers = (isRefreshing?: boolean) => {
     if (groupId) {
@@ -36,7 +31,6 @@ const MembersContent = ({ groupId, onPressMenu }: MembersContentProps) => {
     () => {
       dispatch(actions.clearGroupMembers());
       getMembers();
-      getGroupProfile();
 
       return () => {
         dispatch(actions.clearGroupMembers());
@@ -49,7 +43,6 @@ const MembersContent = ({ groupId, onPressMenu }: MembersContentProps) => {
   };
 
   const onRefresh = () => {
-    getGroupProfile();
     getMembers(true);
   };
 

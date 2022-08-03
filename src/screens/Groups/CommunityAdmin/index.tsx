@@ -25,10 +25,9 @@ const CommunityAdmin = () => {
   const { rootNavigation } = useRootNavigation();
   const {
     id: communityId,
+    groupId,
     name,
     icon,
-    canManageScheme,
-    canEditInfo,
   } = useKeySelector(groupsKeySelector.communityDetail);
   const { total } = useKeySelector(groupsKeySelector.communityMemberRequests);
 
@@ -36,16 +35,26 @@ const CommunityAdmin = () => {
   const canManageJoiningRequests = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
-    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
+    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
   );
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
     [
-      PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
-      PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
+      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
     ],
   );
+  const canManageGroupStructure = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
+  )
+  const canManageScheme = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
+  )
 
   useEffect(
     () => {
@@ -146,7 +155,7 @@ const CommunityAdmin = () => {
           onPress={onPressGeneralInfo}
         />
       )}
-      {!!canEditInfo && ( // todo temp use can edit info, should use correct permission when BE update
+      {!!canManageGroupStructure && (
         <MenuItem
           testID="community_admin.group_structure_settings"
           title="settings:title_group_structure"

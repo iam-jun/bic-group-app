@@ -26,6 +26,7 @@ import CoverImage from './components/CoverImage';
 import InfoView from './components/InfoView';
 import { alertAction, _openImagePicker } from './helper';
 import spacing from '~/theme/spacing';
+import { useMyPermissions } from '~/hooks/permissions';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -34,6 +35,7 @@ const GeneralInformation = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const dispatch = useDispatch();
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
 
   const baseSheetRef: any = useRef();
   let avatar: string;
@@ -45,8 +47,8 @@ const GeneralInformation = (props: any) => {
   let canEditPrivacy: boolean;
   let total: number;
   if (type === 'group') {
-    canEditInfo = useKeySelector(groupsKeySelector.groupDetail.canEditInfo) || {};
-    canEditPrivacy = useKeySelector(groupsKeySelector.groupDetail.canEditPrivacy) || {};
+    canEditInfo = hasPermissionsOnScopeWithId('groups', id, PERMISSION_KEY.GROUP.EDIT_GROUP_INFO);
+    canEditPrivacy = hasPermissionsOnScopeWithId('groups', id, PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY);
     const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
     avatar = groupDetail?.icon || '';
     backgroundUrl = groupDetail?.backgroundImgUrl || '';
@@ -58,11 +60,11 @@ const GeneralInformation = (props: any) => {
     const communityDetail = useKeySelector(groupsKeySelector.communityDetail) || {};
     avatar = communityDetail?.icon || '';
     backgroundUrl = communityDetail?.backgroundImgUrl || '';
-    canEditInfo = communityDetail?.canEditInfo || false;
+    canEditInfo = hasPermissionsOnScopeWithId('communities', id, PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO);
     organizationName = communityDetail?.name || '';
     organizationDescription = communityDetail?.description || '';
     organizationPrivacy = communityDetail?.privacy || '';
-    canEditPrivacy = communityDetail?.canEditPrivacy || false;
+    canEditPrivacy = hasPermissionsOnScopeWithId('communities', id, PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY);
     total = useKeySelector(groupsKeySelector.communityMemberRequests)?.total || 0;
   }
 
