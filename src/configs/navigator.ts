@@ -27,10 +27,10 @@ export const bottomTabIcons = {
 };
 
 export const bottomTabIconsFocused = {
-  home: 'iconTabHomeBein',
-  communities: 'iconTabCommunitiesBein',
-  notification: 'iconTabNotificationBein',
-  menus: 'iconTabMenuBein',
+  home: 'iconTabHomeActive',
+  communities: 'iconTabCommunitiesActive',
+  notification: 'iconTabNotificationActive',
+  menus: 'iconTabMenuActive',
 };
 
 export const linkingConfig = {

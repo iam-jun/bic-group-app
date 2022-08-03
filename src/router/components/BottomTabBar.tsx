@@ -14,7 +14,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
@@ -23,12 +22,9 @@ import Text from '~/beinComponents/Text';
 import { bottomTabIcons, bottomTabIconsFocused } from '~/configs/navigator';
 import { useBaseHook } from '~/hooks';
 import useTabBadge from '~/hooks/tabBadge';
-import appActions from '~/store/app/actions';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
-import Image from '~/beinComponents/Image';
-import images from '~/resources/images';
-import { useKeySelector } from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -36,9 +32,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   navigation,
 }: BottomTabBarProps) => {
   const tabBarVisible = useRef(true).current;
-  const dispatch = useDispatch();
   const showValue = useSharedValue(1);
-  const avatar = useKeySelector('menu.myProfile.avatar');
 
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
@@ -52,9 +46,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;
 
   const heightStyle = useAnimatedStyle(() => ({
-    height: interpolate(
-      showValue.value, [0, 1], [0, bottomBarHeight],
-    ),
+    height: interpolate(showValue.value, [0, 1], [0, bottomBarHeight]),
     overflow: 'hidden',
   }));
 
@@ -62,15 +54,11 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     if (!tabBarVisible) {
       return;
     }
-    showValue.value = withTiming(
-      1, { duration },
-    );
+    showValue.value = withTiming(1, { duration });
   };
 
   const hide = (duration = 150) => {
-    showValue.value = withTiming(
-      0, { duration },
-    );
+    showValue.value = withTiming(0, { duration });
   };
 
   const getActiveRouteName = (state: any): any => {
@@ -110,14 +98,13 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   const renderItem = (
     route: any, index: any,
   ) => {
-    const { key, name, params } = route || {};
+    const { key, name } = route || {};
 
     const { options } = descriptors[route.key];
 
     const isFocused = state.index === index;
     const unreadCount = tabBadge[name] || undefined;
     const icon = isFocused ? bottomTabIconsFocused : bottomTabIcons;
-    // @ts-ignore
     const iconName = icon[name];
     const textColor = isFocused ? colors.purple50 : colors.gray50;
     const styles = tabBarIconStyles(
@@ -125,31 +112,17 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     );
 
     const onPress = () => {
-      if (name === 'menus') {
-        dispatch(appActions.setDrawerVisible(true));
-      } else {
-        DeviceEventEmitter.emit(
-          'onTabPress', name,
-        );
-        const event: any = navigation.emit({
-          type: 'tabPress',
-          target: route.key,
-        } as any);
+      DeviceEventEmitter.emit('onTabPress', name);
+      const event: any = navigation.emit({ type: 'tabPress', target: route.key } as any);
 
-        if (!isFocused && !event.defaultPrevented) {
-          navigation.navigate(route.name);
-        }
+      if (!isFocused && !event.defaultPrevented) {
+        navigation.navigate(route.name);
       }
     };
 
     const onLongPress = () => {
-      DeviceEventEmitter.emit(
-        'onTabPress', name,
-      );
-      navigation.emit({
-        type: 'tabLongPress',
-        target: route.key,
-      });
+      DeviceEventEmitter.emit('onTabPress', name);
+      navigation.emit({ type: 'tabLongPress', target: route.key });
     };
 
     return (
@@ -162,14 +135,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
         onLongPress={onLongPress}
         style={styles.container}
       >
-        {!!name && t(`tabs:${name}`) !== t('tabs:menus') ? (
-          <Icon icon={iconName} size={20} tintColor="none" />
-        ) : (
-          <Image
-            style={styles.avatarStyle}
-            source={avatar || images.img_user_avatar_default}
-          />
-        )}
+        <Icon icon={iconName} size={24} tintColor={isFocused ? colors.purple50 : colors.neutral40} />
         <Text.BadgeXS style={styles.label}>{t(`tabs:${name}`)}</Text.BadgeXS>
         {!!unreadCount && (
           <NotificationsBadge.Alert
@@ -199,14 +165,13 @@ const tabBarIconStyles = (
     container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
+      paddingTop: spacing.margin.small,
       backgroundColor: colors.white,
-      borderTopWidth: focused ? 2 : 0,
-      borderTopColor: colors.purple50,
     },
     label: {
       color,
       textAlign: 'center',
+      marginTop: 2,
     },
     badge: {
       position: 'absolute',
@@ -214,11 +179,6 @@ const tabBarIconStyles = (
       left: '54%',
     },
     textBadge: { fontFamily: fontFamilies.BeVietnamProLight },
-    avatarStyle: {
-      width: 20,
-      height: 20,
-      borderRadius: 20 / 2,
-    },
   });
 };
 

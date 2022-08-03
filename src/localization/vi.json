@@ -195,10 +195,10 @@
     "text_err_password_required_symbols": "Vui lòng sử dụng ít nhất một ký tự đặc biệt bao gồm dấu câu và ký hiệu thông thường!"
   },
   "tabs": {
-    "home": "Bản tin",
+    "home": "Trang chủ",
     "communities": "Cộng đồng",
     "notification": "Thông báo",
-    "menus": "Bạn"
+    "menus": "Cài đặt"
   },
   "settings": {
     "title_app_language": "Ngôn ngữ",
