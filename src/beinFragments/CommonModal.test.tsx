@@ -40,22 +40,4 @@ describe('CommonModal component', () => {
     const customModalComponent = rendered.getByTestId('common_modal.center');
     expect(customModalComponent).toBeDefined();
   });
-
-  it(`renders correctly style with appModalStyle`, () => {
-    const storeData = {...initialState};
-    // @ts-ignore
-    storeData.modal.modal = {
-      ...fake_data,
-      useAppBottomSheet: false,
-      appModalStyle: {height: 200},
-    };
-    const store = mockStore(storeData);
-    const rendered = renderWithRedux(<CommonModal />, store);
-
-    expect(rendered.toJSON()).toMatchSnapshot();
-
-    const customModalComponent = rendered.getByTestId('common_modal.center');
-    expect(customModalComponent).toBeDefined();
-    expect(customModalComponent.props.style?.height).toBe(200);
-  });
 });

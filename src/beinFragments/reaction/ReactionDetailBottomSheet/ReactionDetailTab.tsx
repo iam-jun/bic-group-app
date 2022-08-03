@@ -30,7 +30,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   getDataPromise,
   getDataParam,
 }: ReactionDetailTabProps) => {
-  const [data, setData] = useState<IReaction[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   const getData = () => {

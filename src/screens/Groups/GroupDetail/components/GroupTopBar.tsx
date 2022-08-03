@@ -126,8 +126,6 @@ const GroupTopBar = () => {
         />
       ),
       props: {
-        isContextMenu: true,
-        menuMinWidth: 280,
         modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
       },
     }));

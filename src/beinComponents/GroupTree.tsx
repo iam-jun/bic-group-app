@@ -20,6 +20,7 @@ export interface GroupTreeProps {
   onPressMenu?: (item: GroupItemProps) => void;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
+  showPrivacyAvatar?: boolean;
   showInfo?: boolean;
   disableOnPressItem?: boolean;
   disableHorizontal?: boolean;
@@ -43,6 +44,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   toggleOnPress,
   showPrivacy,
   showPrivacyName,
+  showPrivacyAvatar,
   showInfo,
   disableOnPressItem,
   disableHorizontal,
@@ -263,6 +265,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       {...group}
       showPrivacy={showPrivacy}
       showPrivacyName={showPrivacyName}
+      showPrivacyAvatar={showPrivacyAvatar}
       showInfo={showInfo}
       onPressItem={_onPressGroup}
       onToggleItem={onToggleGroup}
