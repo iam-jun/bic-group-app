@@ -76,6 +76,7 @@ const GroupDetail = (props: any) => {
       PERMISSION_KEY.GROUP.EDIT_PRIVACY,
     ],
   );
+  const showPrivate = !isMember && privacy === groupPrivacy.private;
 
   const buttonShow = useSharedValue(0);
 
@@ -214,7 +215,7 @@ const GroupDetail = (props: any) => {
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
 
-    if (!isMember && privacy === groupPrivacy.private) {
+    if (showPrivate) {
       return (
         <GroupPrivateWelcome
           onScroll={onScrollHandler}
@@ -289,7 +290,7 @@ const GroupDetail = (props: any) => {
           onPressChat={isMember ? onPressChat : undefined}
           onRightPress={onPressMenu}
           showStickyHeight={groupInfoHeight}
-          stickyHeaderComponent={<GroupTabHeader groupId={groupId} isMember={isMember} />}
+          stickyHeaderComponent={!showPrivate && <GroupTabHeader groupId={groupId} isMember={isMember} />}
         />
         <View testID="group_detail.content" style={styles.contentContainer}>
           {renderGroupContent()}

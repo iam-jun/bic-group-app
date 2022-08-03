@@ -54,7 +54,6 @@ const GroupAboutContent = () => {
       )}
       <MenuItem
         testID="group_about_content.members"
-        style={styles.memberItem}
         icon="UserGroup"
         onPress={isMember ? onPressMembers : undefined}
         disabled={!isMember}
@@ -65,7 +64,6 @@ const GroupAboutContent = () => {
       />
       <MenuItem
         testID="group_about_content.privacy"
-        style={styles.privacyItem}
         icon={icon}
         title={i18next.t(title)}
         subTitle={i18next.t(subtitle)}
@@ -89,18 +87,13 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.small,
+      paddingBottom: 100, // to avoid Join button at the bottom
     },
     labelDescription: {
       paddingVertical: spacing.padding.small,
     },
     descriptionContainer: {
       paddingBottom: spacing.padding.small,
-    },
-    memberItem: {
-      height: 44,
-    },
-    privacyItem: {
-      height: 56,
     },
   });
 };
