@@ -45,12 +45,12 @@ const MemberOptionsMenu = ({
   const canRemoveMember = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
-    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
+    PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
   );
   const canManageRole = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
-    PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
+    PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
   );
   const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const { getInnerGroupsNames } = useRemoveMember({

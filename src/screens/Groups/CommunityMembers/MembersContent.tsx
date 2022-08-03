@@ -18,14 +18,13 @@ const MembersContent = ({ communityId, onPressMenu }: MembersContentProps) => {
     'communities',
     communityId,
     [
-      PERMISSION_KEY.COMMUNITY.ADD_REMOVE_MEMBERS,
-      PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE,
+      PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
+      PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE_IN_COMMUNITY,
     ],
   );
 
   useEffect(
     () => {
-      getCommunityDetail();
       getCommunityMembers();
 
       return () => {
@@ -42,17 +41,11 @@ const MembersContent = ({ communityId, onPressMenu }: MembersContentProps) => {
     dispatch(actions.resetCommunityMembers());
   };
 
-  const getCommunityDetail = () => {
-    // to update canManageMember when member role changes
-    dispatch(actions.getCommunityDetail({ communityId }));
-  };
-
   const onLoadMore = () => {
     getCommunityMembers();
   };
 
   const onRefresh = () => {
-    getCommunityDetail();
     getCommunityMembers(true);
   };
 

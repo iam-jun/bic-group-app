@@ -12,10 +12,6 @@ export interface ICommunity {
   createdAt: string;
   updatedAt: string;
   userCount: number;
-  canEditInfo?: boolean;
-  canEditPrivacy?: boolean;
-  canManageMember?: boolean;
-  canManageScheme?: boolean;
   joinStatus?: number;
   members?: IPreviewMember[];
 }

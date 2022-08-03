@@ -1,4 +1,4 @@
-import { IGroupDetail } from '~/interfaces/IGroup';
+import { IGroupDetail } from '../../interfaces/IGroup';
 import { POST_DETAIL } from './post';
 
 export const groupDetailData: IGroupDetail = {
@@ -20,7 +20,6 @@ export const groupDetailData: IGroupDetail = {
     userCount: 25,
   },
   joinStatus: 2,
-  canManageMember: false,
 };
 
 export const adminDetail = {
