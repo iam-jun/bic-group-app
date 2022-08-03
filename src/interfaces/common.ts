@@ -56,10 +56,11 @@ export interface IToastMessage {
 
 export interface IPayloadShowModal {
   isOpen: boolean;
+  isFullScreen?: boolean;
+  titleFullScreen?: string;
   ContentComponent: any;
   props?: BaseBottomSheetProps | any;
   useAppBottomSheet?: boolean;
-  appModalStyle?: any;
   closeOutSide?: boolean;
 }
 

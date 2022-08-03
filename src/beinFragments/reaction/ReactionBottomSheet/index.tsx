@@ -39,7 +39,6 @@ const ReactionBottomSheet = () => {
       modalizeRef={reactionSheetRef}
       isOpen={show}
       position={position}
-      menuMinWidth={375}
       onClose={_onClose}
       ContentComponent={(
         <View>

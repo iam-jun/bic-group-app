@@ -32,6 +32,7 @@ export interface GroupItemProps extends IParsedGroup {
   disableOnPressItem?: boolean;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
+  showPrivacyAvatar?: boolean;
   disableHorizontal?: boolean;
   showInfo?: boolean;
   iconVariant?: AvatarType;
@@ -63,6 +64,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     privacy,
     showPrivacy = false,
     showPrivacyName = true,
+    showPrivacyAvatar = false,
     showInfo = true,
     disableHorizontal,
     iconVariant = 'medium',
@@ -126,7 +128,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     <View
       testID="group_item.ui_level"
       key={generateUniqueId()}
-      style={styles.line}
+      style={[styles.line, uiLevel === 0 && { backgroundColor: 'transparent' }]}
     />
   );
 
@@ -145,14 +147,14 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         hitSlop={{
           top: 10, bottom: 10, left: 10, right: 10,
         }}
-        style={styles.toggleContainer}
+        style={[styles.toggleContainer, (hasChild || uiLevel === 0) && { backgroundColor: 'transparent' }]}
       >
         {hasChild && (
           <View style={styles.toggleContent}>
             <Icon
               testID="group_item.button_wrapper.icon"
               size={18}
-              icon={isCollapsing ? 'AngleRight' : 'AngleDown'}
+              icon={isCollapsing ? 'CirclePlus' : 'CircleMinus'}
             />
           </View>
         )}
@@ -178,7 +180,18 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         {renderToggle()}
         <View style={styles.itemContainer}>
           <View>
-            <Avatar variant={iconVariant} source={icon} />
+            <View>
+              <Avatar variant={iconVariant} source={icon} />
+              {!!showPrivacyAvatar && (
+              <View style={styles.privacyAvatar}>
+                <Icon
+                  icon={privacyIcon}
+                  size={14}
+                  tintColor={theme.colors.gray50}
+                />
+              </View>
+              )}
+            </View>
             {onCheckedItem && (
               <Checkbox
                 testID="group_item.check_box"
@@ -295,6 +308,17 @@ const themeStyles = (theme: IObject<any>) => {
     },
     privacyTitle: {
       marginLeft: spacing.margin.tiny,
+    },
+    privacyAvatar: {
+      width: 16,
+      height: 16,
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.neutral,
+      borderRadius: spacing.borderRadius.small,
     },
     btnMenu: { marginRight: 8 },
   });

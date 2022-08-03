@@ -748,7 +748,8 @@
         "approve": "Do you want to accept **All pending member requests** in order to change the group privacy to Public now?",
         "decline": "Do you want to decline **All pending member requests** in order to change the group privacy to Secret now?"
       }
-    }
+    },
+    "text_in": "in"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
@@ -844,7 +845,9 @@
       "discover_text": "Discover"
     },
     "text_join_community_button": "Join this community",
+    "text_join_group_button": "Join this group",
     "text_join_community_description": "Join this community to view or participate on discussions",
+    "text_join_group_description": "Join this group to view or participate on discussions",
     "text_other_member_one": "{{count}} other are members",
     "text_other_member_other": "{{count}} others are members",
     "text_is_member": "is a member",

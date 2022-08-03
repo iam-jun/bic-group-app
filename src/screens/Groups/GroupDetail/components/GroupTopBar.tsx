@@ -48,8 +48,7 @@ const GroupTopBar = () => {
     ],
   );
 
-  const { unreadChannels } = useChatStore();
-  const count = unreadChannels[chatId]?.mentionCountRoot;
+  const count = useChatStore().unreadChannels[chatId]?.mentionCountRoot;
 
   const alertLeaveGroup = useLeaveGroup({
     groupId,
@@ -127,8 +126,6 @@ const GroupTopBar = () => {
         />
       ),
       props: {
-        isContextMenu: true,
-        menuMinWidth: 280,
         modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
       },
     }));
