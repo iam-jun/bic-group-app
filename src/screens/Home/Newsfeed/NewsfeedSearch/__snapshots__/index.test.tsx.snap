@@ -11,6 +11,7 @@ exports[`NewsfeedSearch component should render search 1`] = `
         "height": "100%",
         "position": "absolute",
         "width": "100%",
+        "zIndex": 99,
       },
       undefined,
     ]
@@ -218,6 +219,7 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
         "height": "100%",
         "position": "absolute",
         "width": "100%",
+        "zIndex": 99,
       },
       undefined,
     ]

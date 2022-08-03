@@ -53,7 +53,7 @@ exports[`Group Item component renders correctly 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#E3E6F2",
+          "backgroundColor": "transparent",
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -155,93 +155,95 @@ exports[`Group Item component renders correctly 1`] = `
       }
     >
       <View>
-        <View
-          style={
-            Object {
-              "borderRadius": 4,
-              "height": 40,
-              "width": 40,
-            }
-          }
-          testID="avatar"
-        >
+        <View>
           <View
             style={
               Object {
-                "backgroundColor": "#A4A9B7",
                 "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               }
             }
-            testID="avatar_container"
+            testID="avatar"
           >
             <View
-              onLayout={[Function]}
               style={
                 Object {
-                  "backgroundColor": "transparent",
-                  "position": "relative",
+                  "backgroundColor": "#A4A9B7",
+                  "borderRadius": 4,
+                  "height": 40,
+                  "width": 40,
                 }
               }
+              testID="avatar_container"
             >
               <View
-                collapsable={false}
+                onLayout={[Function]}
                 style={
                   Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
+                    "backgroundColor": "transparent",
+                    "position": "relative",
                   }
                 }
               >
                 <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "backgroundColor": "#f9f9f9",
-                      "borderRadius": 4,
-                      "height": 40,
-                      "justifyContent": "center",
-                      "width": 40,
-                    }
-                  }
-                  testID="Image__placeholder"
-                />
-              </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
-                  ]
-                }
-              >
-                <FastImageView
-                  onFastImageError={[Function]}
-                  onFastImageLoadEnd={[Function]}
-                  resizeMode="cover"
-                  source={null}
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
                       "left": 0,
+                      "opacity": 1,
                       "position": "absolute",
                       "right": 0,
                       "top": 0,
                     }
                   }
-                  testID="avatar.image"
-                />
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "borderRadius": 4,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "width": 40,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    source={null}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                    testID="avatar.image"
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -394,12 +396,17 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
   >
     <View
       style={
-        Object {
-          "backgroundColor": "#E3E6F2",
-          "height": "100%",
-          "marginHorizontal": 12,
-          "width": 1,
-        }
+        Array [
+          Object {
+            "backgroundColor": "#E3E6F2",
+            "height": "100%",
+            "marginHorizontal": 12,
+            "width": 1,
+          },
+          Object {
+            "backgroundColor": "transparent",
+          },
+        ]
       }
       testID="group_item.ui_level"
     />
@@ -429,7 +436,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#E3E6F2",
+          "backgroundColor": "transparent",
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -531,93 +538,95 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       }
     >
       <View>
-        <View
-          style={
-            Object {
-              "borderRadius": 4,
-              "height": 40,
-              "width": 40,
-            }
-          }
-          testID="avatar"
-        >
+        <View>
           <View
             style={
               Object {
-                "backgroundColor": "#A4A9B7",
                 "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               }
             }
-            testID="avatar_container"
+            testID="avatar"
           >
             <View
-              onLayout={[Function]}
               style={
                 Object {
-                  "backgroundColor": "transparent",
-                  "position": "relative",
+                  "backgroundColor": "#A4A9B7",
+                  "borderRadius": 4,
+                  "height": 40,
+                  "width": 40,
                 }
               }
+              testID="avatar_container"
             >
               <View
-                collapsable={false}
+                onLayout={[Function]}
                 style={
                   Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
+                    "backgroundColor": "transparent",
+                    "position": "relative",
                   }
                 }
               >
                 <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "backgroundColor": "#f9f9f9",
-                      "borderRadius": 4,
-                      "height": 40,
-                      "justifyContent": "center",
-                      "width": 40,
-                    }
-                  }
-                  testID="Image__placeholder"
-                />
-              </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
-                  ]
-                }
-              >
-                <FastImageView
-                  onFastImageError={[Function]}
-                  onFastImageLoadEnd={[Function]}
-                  resizeMode="cover"
-                  source={null}
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
                       "left": 0,
+                      "opacity": 1,
                       "position": "absolute",
                       "right": 0,
                       "top": 0,
                     }
                   }
-                  testID="avatar.image"
-                />
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "borderRadius": 4,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "width": 40,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    source={null}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                    testID="avatar.image"
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -778,93 +787,95 @@ exports[`Group Item component should render default prop 1`] = `
       }
     >
       <View>
-        <View
-          style={
-            Object {
-              "borderRadius": 4,
-              "height": 40,
-              "width": 40,
-            }
-          }
-          testID="avatar"
-        >
+        <View>
           <View
             style={
               Object {
-                "backgroundColor": "#A4A9B7",
                 "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               }
             }
-            testID="avatar_container"
+            testID="avatar"
           >
             <View
-              onLayout={[Function]}
               style={
                 Object {
-                  "backgroundColor": "transparent",
-                  "position": "relative",
+                  "backgroundColor": "#A4A9B7",
+                  "borderRadius": 4,
+                  "height": 40,
+                  "width": 40,
                 }
               }
+              testID="avatar_container"
             >
               <View
-                collapsable={false}
+                onLayout={[Function]}
                 style={
                   Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
+                    "backgroundColor": "transparent",
+                    "position": "relative",
                   }
                 }
               >
                 <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "backgroundColor": "#f9f9f9",
-                      "borderRadius": 4,
-                      "height": 40,
-                      "justifyContent": "center",
-                      "width": 40,
-                    }
-                  }
-                  testID="Image__placeholder"
-                />
-              </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
-                  ]
-                }
-              >
-                <FastImageView
-                  onFastImageError={[Function]}
-                  onFastImageLoadEnd={[Function]}
-                  resizeMode="cover"
-                  source={null}
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
                       "left": 0,
+                      "opacity": 1,
                       "position": "absolute",
                       "right": 0,
                       "top": 0,
                     }
                   }
-                  testID="avatar.image"
-                />
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "borderRadius": 4,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "width": 40,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    source={null}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                    testID="avatar.image"
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -1041,7 +1052,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#E3E6F2",
+          "backgroundColor": "transparent",
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -1143,93 +1154,95 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
       }
     >
       <View>
-        <View
-          style={
-            Object {
-              "borderRadius": 4,
-              "height": 40,
-              "width": 40,
-            }
-          }
-          testID="avatar"
-        >
+        <View>
           <View
             style={
               Object {
-                "backgroundColor": "#A4A9B7",
                 "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               }
             }
-            testID="avatar_container"
+            testID="avatar"
           >
             <View
-              onLayout={[Function]}
               style={
                 Object {
-                  "backgroundColor": "transparent",
-                  "position": "relative",
+                  "backgroundColor": "#A4A9B7",
+                  "borderRadius": 4,
+                  "height": 40,
+                  "width": 40,
                 }
               }
+              testID="avatar_container"
             >
               <View
-                collapsable={false}
+                onLayout={[Function]}
                 style={
                   Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
+                    "backgroundColor": "transparent",
+                    "position": "relative",
                   }
                 }
               >
                 <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "backgroundColor": "#f9f9f9",
-                      "borderRadius": 4,
-                      "height": 40,
-                      "justifyContent": "center",
-                      "width": 40,
-                    }
-                  }
-                  testID="Image__placeholder"
-                />
-              </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "overflow": "hidden",
-                    },
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
-                  ]
-                }
-              >
-                <FastImageView
-                  onFastImageError={[Function]}
-                  onFastImageLoadEnd={[Function]}
-                  resizeMode="cover"
-                  source={null}
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
                       "left": 0,
+                      "opacity": 1,
                       "position": "absolute",
                       "right": 0,
                       "top": 0,
                     }
                   }
-                  testID="avatar.image"
-                />
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "borderRadius": 4,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "width": 40,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    source={null}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                    testID="avatar.image"
+                  />
+                </View>
               </View>
             </View>
           </View>

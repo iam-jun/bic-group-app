@@ -11,6 +11,11 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
   testID="CommunityAdmin"
 >
   <View
+    style={
+      Object {
+        "zIndex": 2,
+      }
+    }
     testID="header"
   >
     <View
@@ -151,6 +156,19 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       />
     </View>
   </View>
+  <View
+    style={
+      Array [
+        Object {
+          "position": "absolute",
+          "top": 0,
+          "width": "100%",
+          "zIndex": 1,
+        },
+        Object {},
+      ]
+    }
+  />
   <View
     style={
       Array [

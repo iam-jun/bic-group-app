@@ -52,7 +52,7 @@ describe('AtMentionItem component', () => {
     const component = wrapper.getByTestId('at_mention_item');
     expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
-    expect(flattenedStyle.backgroundColor).toBe(colors.light.colors.neutral5);
+    expect(flattenedStyle.backgroundColor).toBe(colors.light.colors.white);
   });
 
   it(`should show "AtMentionItem" with item all`, async () => {

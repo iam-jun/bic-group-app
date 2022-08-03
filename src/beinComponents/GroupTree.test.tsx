@@ -79,7 +79,7 @@ describe('GroupTree component', () => {
     expect(group).toBeDefined();
     fireEvent.press(group);
     expect(navigate).toBeCalledWith(groupStack.groupDetail, {
-      groupId: 1,
+      groupId: "1",
       initial: true,
     });
   });

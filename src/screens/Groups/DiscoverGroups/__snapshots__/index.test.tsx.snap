@@ -11,9 +11,20 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
   <RNSScreen
     collapsable={false}
     forwardedRef={[Function]}
+    gestureResponseDistance={
+      Object {
+        "bottom": -1,
+        "end": -1,
+        "start": -1,
+        "top": -1,
+      }
+    }
+    nativeBackButtonDismissalEnabled={false}
     onAppear={[Function]}
     onDisappear={[Function]}
     onDismissed={[Function]}
+    onHeaderBackButtonClicked={[Function]}
+    onTransitionProgress={[Function]}
     onWillAppear={[Function]}
     onWillDisappear={[Function]}
     replaceAnimation="pop"
@@ -27,11 +38,14 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
         "top": 0,
       }
     }
+    swipeDirection="horizontal"
   >
     <RNSScreenStackHeaderConfig
       backgroundColor="rgb(255, 255, 255)"
       color="rgb(0, 122, 255)"
       hidden={false}
+      onAttached={[Function]}
+      onDetached={[Function]}
       title="MockedScreen"
       titleColor="rgb(28, 28, 30)"
       topInsetEnabled={true}
@@ -60,6 +74,11 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
         }
       >
         <View
+          style={
+            Object {
+              "zIndex": 2,
+            }
+          }
           testID="header"
         >
           <View
@@ -377,6 +396,19 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
             />
           </View>
         </View>
+        <View
+          style={
+            Array [
+              Object {
+                "position": "absolute",
+                "top": 0,
+                "width": "100%",
+                "zIndex": 1,
+              },
+              Object {},
+            ]
+          }
+        />
         <RCTScrollView
           ItemSeparatorComponent={[Function]}
           ListEmptyComponent={[Function]}

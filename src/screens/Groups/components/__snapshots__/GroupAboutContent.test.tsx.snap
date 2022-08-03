@@ -16,7 +16,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
       Array [
         Object {
           "color": "#181C32",
-          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 15,
         },
         Object {},
@@ -73,7 +73,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
           "style": Object {
             "paddingBottom": 8,
           },
-          "variant": "h4",
+          "variant": "bodyM",
         }
       }
     >
@@ -434,7 +434,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
       Array [
         Object {
           "color": "#181C32",
-          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 15,
         },
         Object {},
@@ -491,7 +491,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
           "style": Object {
             "paddingBottom": 8,
           },
-          "variant": "h4",
+          "variant": "bodyM",
         }
       }
     >
