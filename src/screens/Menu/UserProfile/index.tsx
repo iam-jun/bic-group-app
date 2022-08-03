@@ -73,6 +73,7 @@ const UserProfile = (props: any) => {
     dispatch(menuActions.clearUserProfile());
     if (userId) {
       dispatch(menuActions.getUserProfile({ userId, params }));
+      dispatch(menuActions.getUserWorkExperience(userId));
     }
   };
 

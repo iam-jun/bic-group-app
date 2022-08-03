@@ -1,8 +1,6 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
 import { View } from 'react-native';
-import Text from '~/beinComponents/Text';
-import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import menuKeySelector from '../../redux/keySelector';
@@ -10,7 +8,6 @@ import InfoSection from '../components/InfoSection';
 import ItemExperience from '../components/ItemExperience';
 
 const Experiences = () => {
-  const { t } = useBaseHook();
   const userWorkExperience = useKeySelector(menuKeySelector.userWorkExperience);
 
   if (isEmpty(userWorkExperience)) return null;

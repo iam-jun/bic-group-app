@@ -24,6 +24,7 @@ const ItemExperience = ({
   return (
     <View style={styles.container}>
       <View style={styles.titleCompany}>
+        <View style={styles.titleLine} />
         <Text.SubtitleL color={theme.colors.neutral20}>
           {`${t('settings:text_work')} ${t('common:text_at')} `}
           <Text.SubtitleL>{company}</Text.SubtitleL>
@@ -65,10 +66,15 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingBottom: spacing.padding.extraLarge,
     },
     titleCompany: {
-      borderLeftColor: colors.neutral20,
-      borderLeftWidth: 1,
-      paddingLeft: spacing.padding.base,
+      flexDirection: 'row',
       paddingBottom: spacing.padding.large,
+    },
+    titleLine: {
+      width: 1,
+      height: 22,
+      backgroundColor: colors.neutral20,
+      marginRight: spacing.padding.base,
+
     },
     infoItem: {
       paddingBottom: spacing.padding.large,
