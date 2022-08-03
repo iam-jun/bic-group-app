@@ -3,7 +3,7 @@ import {
   memberData,
   memberDetail,
 } from '~/test/mock_data/communities';
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getCommunityMembers from './getCommunityMembers';
@@ -14,11 +14,11 @@ import showError from '~/store/commonSaga/showError';
 describe('get Community members', () => {
   const action = {
     type: 'test',
-    payload: {communityId: 1, params: {}},
+    payload: { communityId: "1", params: {} },
   };
 
   it('getCommunityMembers: should get data correctly', async () => {
-    const resp = {...memberData};
+    const resp = { data: { ...memberData } };
 
     const state = {
       groups: {
@@ -32,7 +32,7 @@ describe('get Community members', () => {
 
     return expectSaga(getCommunityMembers, action)
       .withState(state)
-      .put(actions.setCommunityMembers({loading: true}))
+      .put(actions.setCommunityMembers({ loading: true }))
       .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
       .put(
         actions.setCommunityMembers({
@@ -65,7 +65,7 @@ describe('get Community members', () => {
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
@@ -77,37 +77,37 @@ describe('get Community members', () => {
           loading: false,
           canLoadMore: false,
           offset: 0,
-          community_admin: {data: [], userCount: 0},
-          community_member: {data: [], userCount: 0},
+          community_admin: { data: [], userCount: 0 },
+          community_member: { data: [], userCount: 0 },
         },
       },
     };
     return expectSaga(getCommunityMembers, action)
       .withState(state)
-      .put(actions.setCommunityMembers({loading: true}))
+      .put(actions.setCommunityMembers({ loading: true }))
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
 
   it('getCommunityMembers: should call server and throws error', async () => {
-    const error = {code: 1};
+    const error = { code: 1 };
     const state = {
       groups: {
         communityMembers: {
           loading: false,
           canLoadMore: true,
           offset: 0,
-          community_admin: {data: [], userCount: 0},
-          community_member: {data: [], userCount: 0},
+          community_admin: { data: [], userCount: 0 },
+          community_member: { data: [], userCount: 0 },
         },
       },
     };
 
     return expectSaga(getCommunityMembers, action)
       .withState(state)
-      .put(actions.setCommunityMembers({loading: true}))
+      .put(actions.setCommunityMembers({ loading: true }))
       .provide([
         [
           matchers.call.fn(groupsDataHelper.getCommunityMembers),
@@ -116,7 +116,7 @@ describe('get Community members', () => {
       ])
       .call(showError, error)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(6);
       });
   });
@@ -124,10 +124,10 @@ describe('get Community members', () => {
   it('should refresh data correctly', async () => {
     const action = {
       type: 'test',
-      payload: {communityId: 1, params: {}, isRefreshing: true},
+      payload: { communityId: 1, params: {}, isRefreshing: true },
     };
 
-    const resp = {...memberData};
+    const resp = { data: { ...memberData } };
 
     const state = {
       groups: {
@@ -162,7 +162,7 @@ describe('get Community members', () => {
 
     return expectSaga(getCommunityMembers, action)
       .withState(state)
-      .put(actions.setCommunityMembers({loading: true}))
+      .put(actions.setCommunityMembers({ loading: true }))
       .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
       .put(
         actions.setCommunityMembers({
@@ -195,7 +195,7 @@ describe('get Community members', () => {
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });

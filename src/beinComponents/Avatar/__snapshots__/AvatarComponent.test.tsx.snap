@@ -803,7 +803,7 @@ exports[`Avatar component should call props onPressAction 1`] = `
 <View
   style={
     Object {
-      "borderRadius": 6,
+      "borderRadius": 4,
       "height": 48,
       "width": 48,
     }
@@ -813,7 +813,7 @@ exports[`Avatar component should call props onPressAction 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -847,7 +847,7 @@ exports[`Avatar component should call props onPressAction 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "justifyContent": "center",
               "width": 48,
@@ -863,7 +863,7 @@ exports[`Avatar component should call props onPressAction 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "width": 48,
             },
@@ -963,53 +963,7 @@ exports[`Avatar component should call props onPressAction 1`] = `
           >
             <View
               testID="avatar.action_icon.button"
-            >
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={12}
-                bbWidth={12}
-                color={4281284933}
-                focusable={false}
-                height={12}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 12,
-                      "width": 12,
-                    },
-                  ]
-                }
-                tintColor={4281284933}
-                vbHeight={24}
-                vbWidth={24}
-                width={12}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M13.41 12l6.3-6.29a1 1 0 10-1.42-1.42L12 10.59l-6.29-6.3a1 1 0 00-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 000 1.42 1 1 0 001.42 0l6.29-6.3 6.29 6.3a1 1 0 001.42 0 1 1 0 000-1.42z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            />
           </View>
         </View>
       </View>

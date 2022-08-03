@@ -7,7 +7,7 @@ import { NOTIFICATIONS_RESPONSE } from '~/test/mock_data/notifications';
 
 afterEach(cleanup);
 
-describe('NotificationBottomSheet component', () => {
+describe('VideoPlayer component', () => {
 
     const videoData = NOTIFICATIONS_RESPONSE.data.list[1].activities[0].media.videos[0];
   const postId =  NOTIFICATIONS_RESPONSE.data.list[1].activities[0].id ||'';

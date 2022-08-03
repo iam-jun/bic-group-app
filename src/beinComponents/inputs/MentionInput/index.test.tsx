@@ -129,33 +129,4 @@ describe('MentionInput component', () => {
     const comonentInput = wrapper.queryByTestId('_mention_input.input.web');
     expect(comonentInput).toBeNull();
   });
-
-  it(`should show "ComponentInput" with hidden style on web`, async () => {
-    Platform.OS = 'web';
-    const wrapper = renderWithRedux(<MentionInput {...baseProps} />, store);
-
-    const comonentInput = wrapper.getByTestId('_mention_input.input.web');
-    const flattenedStyle = StyleSheet.flatten(comonentInput.props.style);
-    expect(flattenedStyle.height).toBe(0);
-  });
-
-  it(`should show "ComponentInput" with multiline on web`, async () => {
-    Platform.OS = 'web';
-    const wrapper = renderWithRedux(<MentionInput {...baseProps} />, store);
-
-    const comonentInput = wrapper.getByTestId('_mention_input.input.web');
-    expect(comonentInput.props.multiline).toBe(true);
-  });
-
-  it(`should show "MentionInput" with disabled input on web`, async () => {
-    Platform.OS = 'web';
-    const props = {
-      ...baseProps,
-      disabled: true,
-    };
-    const wrapper = renderWithRedux(<MentionInput {...props} />, store);
-
-    const commentInput = wrapper.getByTestId('_mention_input.input.web');
-    expect(commentInput.props.editable).toBeFalsy();
-  });
 });

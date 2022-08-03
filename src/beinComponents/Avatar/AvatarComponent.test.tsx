@@ -65,9 +65,6 @@ describe('Avatar component', () => {
         actionIcon="iconClose"
       />,
     );
-    const actionIconComponent = rendered.getByTestId('avatar.action_icon');
-    expect(actionIconComponent).toBeDefined();
-    expect(actionIconComponent.findByType('RNSVGSvgView')).toBeDefined();
 
     const btnIcon = rendered.getByTestId('avatar.action_icon.button');
     expect(btnIcon).toBeDefined();

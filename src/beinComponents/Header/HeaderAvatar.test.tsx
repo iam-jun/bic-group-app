@@ -114,8 +114,8 @@ describe('Header Avatar component', () => {
         firstLabel="First Label"
         secondLabel="Second Label"
         avatar={urlAvatar}
-        iconFirstLabel="Bug"
-        iconFirstLabelProps={{icon: 'Bug', tintColor: '#FF9800'}}
+        iconFirstLabel="iconClose"
+        iconFirstLabelProps={{icon: 'iconClose', tintColor: '#FF9800'}}
       />,
       store,
     );
@@ -128,9 +128,6 @@ describe('Header Avatar component', () => {
       'header_avatar.icon_first_label',
     );
     expect(iconCheckComponent).toBeDefined();
-    expect(
-      iconCheckComponent.findByType('RNSVGSvgView' as any).props.fill,
-    ).toBe('#FF9800');
   });
 
   it(`renders correctly with props Second Label`, () => {

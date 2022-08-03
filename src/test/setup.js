@@ -122,7 +122,7 @@ jest.doMock('react-native-portalize', () => {
   const MockedModule = {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
-    Portal: ({children}) => <ReactNative.View>{children}</ReactNative.View>,
+    Portal: ({ children }) => <ReactNative.View>{children}</ReactNative.View>,
   };
   return MockedModule;
 });
@@ -268,15 +268,15 @@ jest.mock('react-hook-form', () => ({
   }),
 }));
 
-jest.doMock('expo-av', () => 'Video'
-// () => {
-  // const {View} = ReactNative;
-  // const Video = {
-  //   ...ReactNative.View,
-  //   onPlaybackStatusUpdate: jest.fn(),
-  //   onError: jest.fn(),
-  // };
-  // return {...jest.requireActual('expo-av'), Video};
-// }
+jest.doMock('expo-av', () => {
+  return {
+    Video: {
+      ...ReactNative.View,
+      onPlaybackStatusUpdate: jest.fn(),
+      onError: jest.fn(),
+    },
+    ResizeMode: { CONTAIN: 'CONTAIN' }
+  };
+}
 );
 jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
