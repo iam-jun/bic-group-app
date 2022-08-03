@@ -9,7 +9,9 @@ import {
 import { useDispatch } from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
 
-import { runOnJS, useAnimatedScrollHandler } from 'react-native-reanimated';
+import Animated, {
+  interpolate, runOnJS, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue,
+} from 'react-native-reanimated';
 import Header from '~/beinComponents/Header';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
@@ -38,6 +40,7 @@ import GroupPrivateWelcome from './components/GroupPrivateWelcome';
 import useLeaveGroup from '../GroupMembers/components/useLeaveGroup';
 import GroupTabHeader from './components/GroupTabHeader';
 import { useBaseHook } from '~/hooks';
+import GroupJoinCancelButton from './components/GroupJoinCancelButton';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -73,6 +76,8 @@ const GroupDetail = (props: any) => {
       PERMISSION_KEY.GROUP.EDIT_PRIVACY,
     ],
   );
+
+  const buttonShow = useSharedValue(0);
 
   useFocusEffect(() => {
     if (!userId) {
@@ -192,16 +197,41 @@ const GroupDetail = (props: any) => {
   const onScrollHandler = useAnimatedScrollHandler((event: any) => {
     const offsetY = event?.contentOffset?.y;
     runOnJS(scrollWrapper)(offsetY);
+    buttonShow.value = offsetY;
   });
+
+  const buttonStyle = useAnimatedStyle(
+    () => ({
+      opacity: interpolate(
+        buttonShow.value,
+        [0, groupInfoHeight - 20, groupInfoHeight],
+        [0, 0, 1],
+      ),
+    }),
+    [groupInfoHeight],
+  );
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
 
     if (!isMember && privacy === groupPrivacy.private) {
-      return <GroupPrivateWelcome infoDetail={groupInfo} isMember={isMember} />;
+      return (
+        <GroupPrivateWelcome
+          onScroll={onScrollHandler}
+          onGetInfoLayout={onGetInfoLayout}
+          infoDetail={groupInfo}
+          isMember={isMember}
+        />
+      );
     }
 
-    return <GroupContent getGroupPosts={getGroupPosts} onScroll={onScrollHandler} onGetInfoLayout={onGetInfoLayout} />;
+    return (
+      <GroupContent
+        getGroupPosts={getGroupPosts}
+        onScroll={onScrollHandler}
+        onGetInfoLayout={onGetInfoLayout}
+      />
+    );
   };
 
   const renderPlaceholder = () => (
@@ -264,6 +294,9 @@ const GroupDetail = (props: any) => {
         <View testID="group_detail.content" style={styles.contentContainer}>
           {renderGroupContent()}
         </View>
+        <Animated.View style={[styles.button, buttonStyle]}>
+          <GroupJoinCancelButton style={styles.joinBtn} />
+        </Animated.View>
       </>
     );
   };
@@ -283,11 +316,18 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     contentContainer: {
       flex: 1,
-      backgroundColor: colors.neutral1,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
+    },
+    button: {
+      position: 'absolute',
+      width: '100%',
+      bottom: 0,
+    },
+    joinBtn: {
+      paddingVertical: spacing.padding.tiny,
     },
   });
 };

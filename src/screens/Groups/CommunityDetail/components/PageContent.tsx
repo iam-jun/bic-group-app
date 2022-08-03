@@ -5,19 +5,18 @@ import { useDispatch } from 'react-redux';
 import Animated from 'react-native-reanimated';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import JoinCancelButton from './JoinCancelButton';
+import CommunityJoinCancelButton from './CommunityJoinCancelButton';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
 import CommunityTabHeader from './CommunityTabHeader';
 import InfoHeader from '../../components/InfoHeader';
+import CommunityJoinedGroupTree from '~/screens/Groups/components/CommunityJoinedGroupTree';
+import modalActions from '~/store/modal/actions';
 
 interface PageContentProps {
   communityId: string;
@@ -38,24 +37,25 @@ const _PageContent = ({
   const styles = createStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { joinStatus, groupId } = infoDetail;
+  const {
+    name, teamName, joinStatus, groupId,
+  } = infoDetail;
   const isMember = joinStatus === groupJoinStatus.member;
   const posts = useKeySelector(groupsKeySelector.posts);
   const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canCreatePostArticle = hasPermissionsOnScopeWithId(
-    'groups',
-    groupId,
-    PERMISSION_KEY.GROUP.CREATE_POST_ARTICLE,
-  );
-
   const dispatch = useDispatch();
 
   const onPressYourGroups = () => {
-    rootNavigation.navigate(
-      groupStack.yourGroups, { communityId },
-    );
+    // rootNavigation.navigate(
+    //   groupStack.yourGroups, { communityId },
+    // );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: name,
+      ContentComponent: (<CommunityJoinedGroupTree communityId={communityId} teamName={teamName} />),
+    }));
   };
 
   const loadMoreData = () => {
@@ -72,20 +72,11 @@ const _PageContent = ({
   };
 
   const renderHeader = () => (
-    <>
-      <View onLayout={onButtonLayout}>
-        <InfoHeader infoDetail={infoDetail} isMember={isMember} onPressGroupTree={onPressYourGroups} />
-        <CommunityTabHeader communityId={communityId} isMember={isMember} />
-        <JoinCancelButton />
-      </View>
-      {isMember && canCreatePostArticle && (
-      <HeaderCreatePost
-        style={styles.createPost}
-        audience={{ ...infoDetail, id: groupId }}
-        createFromGroupId={groupId}
-      />
-      )}
-    </>
+    <View onLayout={onButtonLayout}>
+      <InfoHeader infoDetail={infoDetail} isMember={isMember} onPressGroupTree={onPressYourGroups} />
+      <CommunityTabHeader communityId={communityId} isMember={isMember} />
+      <CommunityJoinCancelButton />
+    </View>
   );
 
   return (
