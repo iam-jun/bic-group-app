@@ -25,6 +25,7 @@ import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 import { checkLastAdmin } from '../../helper';
 import groupsKeySelector from '../../redux/keySelector';
 import { useMyPermissions } from '~/hooks/permissions';
+import useChatStore from '~/store/chat'
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const GroupTopBar = () => {
     ],
   );
 
-  const count = useKeySelector(`chat.unreadChannels.${chatId}.mention_count_root`);
+  const count = useChatStore().unreadChannels[chatId]?.mentionCountRoot;
 
   const alertLeaveGroup = useLeaveGroup({
     groupId,
@@ -125,8 +126,6 @@ const GroupTopBar = () => {
         />
       ),
       props: {
-        isContextMenu: true,
-        menuMinWidth: 280,
         modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
       },
     }));

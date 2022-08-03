@@ -62,6 +62,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   initShowTree = true,
   showPrivacy,
   showPrivacyName,
+  showPrivacyAvatar,
   showInfo,
   disableOnPressItem,
   disableHorizontal,
@@ -220,6 +221,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onPressGroup={onPressGroup}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          showPrivacyAvatar={showPrivacyAvatar}
           showInfo={showInfo}
           onPressMenu={onPressMenu}
           disableOnPressItem={disableOnPressItem}
@@ -238,6 +240,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          showPrivacyAvatar={showPrivacyAvatar}
           showInfo={showInfo}
           onPressMenu={onPressMenu}
           disableOnPressItem={disableOnPressItem}

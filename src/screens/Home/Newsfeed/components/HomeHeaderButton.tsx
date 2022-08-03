@@ -6,6 +6,7 @@ import {
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import Icon from '~/beinComponents/Icon';
+import IconChat from '~/beinComponents/IconChat';
 
 export interface HomeHeaderButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -22,9 +23,7 @@ const HomeHeaderButton: FC<HomeHeaderButtonProps> = ({ style, onPressSearch, onP
         <Button onPress={onPressSearch} style={{ marginRight: spacing.margin.large }}>
           <Icon size={24} icon="iconSearch" />
         </Button>
-        <Button onPress={onPressChat}>
-          <Icon size={24} icon="iconBeinChat" />
-        </Button>
+        {onPressChat && <IconChat onPress={onPressChat} />}
       </View>
     </View>
   );
@@ -36,6 +35,8 @@ const createStyle = () => StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginHorizontal: spacing.margin.large,
   },
 });

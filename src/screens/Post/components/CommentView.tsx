@@ -180,7 +180,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
     }
   };
 
-  const onPressReact = (event: any) => {
+  const onPressReact = () => {
     const payload = {
       isOpen: true,
       ContentComponent: (
@@ -190,11 +190,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
           onEmojiSelected={onEmojiSelected}
         />
       ),
-      props: {
-        isContextMenu: true,
-        position: { x: event?.pageX, y: event?.pageY },
-        side: 'center',
-      },
     };
     dispatch(modalActions.showModal(payload));
   };
@@ -231,7 +226,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
     dispatch(modalActions.showAlert(alertPayload));
   };
 
-  const onLongPress = (event?: any) => {
+  const onLongPress = () => {
     dispatch(modalActions.showModal({
       isOpen: true,
       ContentComponent: (
@@ -248,10 +243,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
           onPressDelete={_onPressDelete}
         />
       ),
-      props: {
-        isContextMenu: true,
-        position: { x: event?.pageX, y: event?.pageY },
-      },
     }));
   };
 

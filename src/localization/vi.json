@@ -649,7 +649,9 @@
     "text_approved_user": "Phê duyệt người dùng",
     "text_approved_all": "Phê duyệt tất cả yêu cầu thành viên",
     "text_declining_all": "Từ chối tất cả yêu cầu thành viên",
-    "text_request_been_canceled": "Yêu cầu này đã bị hủy"
+    "text_request_been_canceled": "Yêu cầu này đã bị hủy",
+    "title_members": "Thành viên",
+    "text_in": "thuộc"
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
@@ -745,7 +747,9 @@
       "discover_text": "Khám phá"
     },
     "text_join_community_button": "Tham gia ngay",
+    "text_join_group_button": "Tham gia ngay",
     "text_join_community_description": "Tham gia ngay để xem và thảo luận",
+    "text_join_group_description": "Tham gia ngay để xem và thảo luận",
     "text_other_member_one": "{{count}} người khác là thành viên",
     "text_other_member_other": "{{count}} người khác là thành viên",
     "text_is_member": "là thành viên",
