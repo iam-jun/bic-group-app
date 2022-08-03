@@ -68,6 +68,7 @@ const UserProfile = (props: any) => {
 
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
+  const isCurrentUser = userId === currentUserId || userId === currentUsername;
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
@@ -120,7 +121,7 @@ const UserProfile = (props: any) => {
     mainStack.userEdit, { userId },
   );
 
-  const onPressChat = () => {
+  const onPressChat = isCurrentUser ? undefined : () => {
     if (!isEmpty(joinedCommunities)) {
       const link = formatDMLink(
         joinedCommunities?.[0]?.slug,
@@ -133,7 +134,7 @@ const UserProfile = (props: any) => {
   };
 
   const renderButton = () => {
-    if (userId !== currentUserId && userId !== currentUsername) return null;
+    if (!isCurrentUser) return null;
 
     return (
       <Button.Secondary
@@ -197,6 +198,7 @@ const UserProfile = (props: any) => {
               city={city}
               country={country}
             />
+            <Divider />
             <Experiences />
           </View>
         </ScrollView>

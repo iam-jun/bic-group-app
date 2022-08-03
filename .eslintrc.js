@@ -43,7 +43,7 @@ module.exports = {
     'react/function-component-definition': 0,
     'react/jsx-props-no-spreading': 0,
     'no-restricted-globals': 0,
-    'no-param-reassign': 0,
+    'no-param-reassign': 1,
     'consistent-return': 0,
     'import/prefer-default-export': 0,
     'react/destructuring-assignment': 0,

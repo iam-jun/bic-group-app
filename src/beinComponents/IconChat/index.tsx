@@ -8,22 +8,26 @@ import Button from '../Button';
 import Icon from '../Icon';
 
 interface Props {
+  testID?: string;
   onPress: () => void;
 }
 
-const IconChat = ({ onPress }: Props) => {
+const IconChat = ({ testID, onPress }: Props) => {
   const count = getUnreadChannelCount();
 
   return (
-    <Button onPress={onPress}>
+    <Button
+      testID={testID || 'icon_chat.button'}
+      onPress={onPress}
+    >
       <Icon
+        testID="icon_chat.icon"
         icon="iconBeinChat"
         size={24}
         style={styles.icon}
-        buttonTestID="header.iconChat.button"
-        testID="header.iconChat"
       />
       <NotificationsBadge.Alert
+        testID="icon_chat.badge"
         style={styles.badge}
         number={count}
         maxNumber={99}

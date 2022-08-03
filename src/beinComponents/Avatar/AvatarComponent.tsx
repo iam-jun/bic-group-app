@@ -66,10 +66,10 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   const borderStyle = showBorder ? styles.border : {};
 
   if (isRounded) {
-    avatarStyle = StyleSheet.flatten([
+    avatarStyle = [
       avatarStyle,
       { borderRadius: avatarSize / 2 },
-    ]);
+    ];
   }
 
   const renderAction = () => {
@@ -207,14 +207,14 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   return (
     <View
       testID="avatar"
-      style={StyleSheet.flatten([avatarContainerStyle, style])}
+      style={[avatarContainerStyle, style]}
     >
       <View
         testID="avatar_container"
-        style={StyleSheet.flatten([
+        style={[
           avatarStyle,
           source ? {} : { backgroundColor: colors.gray40 },
-        ])}
+        ]}
       >
         <Image
           testID="avatar.image"

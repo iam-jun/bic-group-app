@@ -399,7 +399,7 @@ const Header: React.FC<HeaderProps> = ({
           buttonTestID="header.searchIcon.button"
         />
         )}
-        {onPressChat && <IconChat onPress={onPressChat} />}
+        {onPressChat && <IconChat testID="header.icon_chat" onPress={onPressChat} />}
         {onPressMenu && (
         <Icon
           icon={menuIcon || 'menu'}
