@@ -19,6 +19,7 @@ import spacing from '~/theme/spacing';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
+  groupStyle?: StyleProp<ViewStyle>;
   groupItemTestID?: string;
   showSmallestChild?: boolean;
   selectingData?: OnChangeCheckedGroupsData;
@@ -49,6 +50,7 @@ const limitLengthShort = 35;
 
 const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   style,
+  groupStyle,
   groupItemTestID,
   showSmallestChild,
   onChangeCheckedGroups,
@@ -213,6 +215,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
       {!hidePath && renderPath()}
       {showTree ? (
         <GroupTree
+          groupStyle={groupStyle}
           data={props}
           selectingData={selectingData}
           onChangeCheckedGroups={onChangeCheckedGroups}
@@ -234,6 +237,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
       ) : (
         <GroupItem
           {...(group as GroupItemProps)}
+          groupStyle={groupStyle}
           testID={groupItemTestID}
           isChecked={!!selectingData?.[group.id]}
           onPressItem={_onPressGroup}

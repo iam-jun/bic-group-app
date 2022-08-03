@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import {
+  View, StyleSheet, ScrollView, StyleProp, ViewStyle,
+} from 'react-native';
 import { isArray, isObject } from 'lodash';
 
 import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
@@ -11,6 +13,7 @@ import { AvatarType } from '~/beinComponents/Avatar/AvatarComponent';
 import { IconType } from '~/resources/icons';
 
 export interface GroupTreeProps {
+  groupStyle?: StyleProp<ViewStyle>;
   data?: IGroup[] | IGroup;
   selectingData?: OnChangeCheckedGroupsData;
   onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
@@ -35,6 +38,7 @@ type TreeData = {[x: string]: IParsedGroup};
 export type OnChangeCheckedGroupsData = {[x: string]: IGroup | false};
 
 const GroupTree: React.FC<GroupTreeProps> = ({
+  groupStyle,
   data,
   selectingData,
   onChangeCheckedGroups,
@@ -261,6 +265,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     Object.values(treeData).map((
       group, index,
     ) => tree.push(<GroupItem
+      groupStyle={groupStyle}
       key={`tree_item_${index}_${group?.id}`}
       {...group}
       showPrivacy={showPrivacy}
