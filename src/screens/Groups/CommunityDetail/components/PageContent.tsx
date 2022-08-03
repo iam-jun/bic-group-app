@@ -7,7 +7,6 @@ import Animated from 'react-native-reanimated';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import CommunityJoinCancelButton from './CommunityJoinCancelButton';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -16,6 +15,8 @@ import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 import CommunityTabHeader from './CommunityTabHeader';
 import InfoHeader from '../../components/InfoHeader';
+import CommunityJoinedGroupTree from '~/screens/Groups/components/CommunityJoinedGroupTree';
+import modalActions from '~/store/modal/actions';
 
 interface PageContentProps {
   communityId: string;
@@ -36,7 +37,9 @@ const _PageContent = ({
   const styles = createStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { joinStatus, groupId } = infoDetail;
+  const {
+    name, teamName, joinStatus, groupId,
+  } = infoDetail;
   const isMember = joinStatus === groupJoinStatus.member;
   const posts = useKeySelector(groupsKeySelector.posts);
   const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
@@ -44,9 +47,15 @@ const _PageContent = ({
   const dispatch = useDispatch();
 
   const onPressYourGroups = () => {
-    rootNavigation.navigate(
-      groupStack.yourGroups, { communityId },
-    );
+    // rootNavigation.navigate(
+    //   groupStack.yourGroups, { communityId },
+    // );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: name,
+      ContentComponent: (<CommunityJoinedGroupTree communityId={communityId} teamName={teamName} />),
+    }));
   };
 
   const loadMoreData = () => {
