@@ -66,6 +66,7 @@ const CommunityDetail = (props: any) => {
       PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
     ],
   );
+  const showPrivate = !isMember && privacy === groupPrivacy.private;
 
   const buttonShow = useSharedValue(0);
 
@@ -146,7 +147,7 @@ const CommunityDetail = (props: any) => {
   );
 
   const renderCommunityContent = () => {
-    if (!isMember && privacy === groupPrivacy.private) {
+    if (showPrivate) {
       return (
         <PrivateWelcome
           onRefresh={onRefresh}
@@ -214,7 +215,7 @@ const CommunityDetail = (props: any) => {
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
         showStickyHeight={buttonHeight}
-        stickyHeaderComponent={<CommunityTabHeader communityId={communityId} isMember={isMember} />}
+        stickyHeaderComponent={!showPrivate && <CommunityTabHeader communityId={communityId} isMember={isMember} />}
       />
       <View testID="community_detail.content" style={styles.contentContainer}>
         {renderCommunityContent()}

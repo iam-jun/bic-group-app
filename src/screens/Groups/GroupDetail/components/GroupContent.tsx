@@ -15,9 +15,9 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import spacing from '~/theme/spacing';
 import GroupTabHeader from './GroupTabHeader';
 import InfoHeader from '../../components/InfoHeader';
-import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
+import modalActions from '~/store/modal/actions';
+import CommunityJoinedGroupTree from '~/screens/Groups/components/CommunityJoinedGroupTree';
 
 interface GroupContentProps {
   getGroupPosts: () => void;
@@ -32,15 +32,14 @@ const GroupContent = ({
 }: GroupContentProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme || {};
-  const styles = themeStyles(theme);
+  const styles = themeStyles();
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
 
   const posts = useKeySelector(groupsKeySelector.posts);
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
-  const { id: groupId } = groupData;
+  const { id: groupId, teamName } = groupData;
   const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
   const { id: communityId, name: communityName } = useKeySelector(groupsKeySelector.communityDetail)
 
@@ -50,11 +49,14 @@ const GroupContent = ({
     }
   };
 
-  const onPressYourGroups = () => {
-    rootNavigation.navigate(
-      groupStack.yourGroups, { communityId },
-    );
-  };
+  const onPressGroupTree = () => {
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: communityName,
+      ContentComponent: (<CommunityJoinedGroupTree communityId={communityId} teamName={teamName} />),
+    }));
+  }
 
   const renderItem = ({ item }: any) => <PostItem postData={item} testID="group_content.post.item" />;
 
@@ -68,7 +70,7 @@ const GroupContent = ({
         infoDetail={groupData}
         isMember={isMember}
         insideCommunityName={communityName}
-        onPressGroupTree={onPressYourGroups}
+        onPressGroupTree={onPressGroupTree}
       />
       <GroupTabHeader groupId={groupId} isMember={isMember} />
       <GroupJoinCancelButton />
@@ -102,20 +104,16 @@ const GroupContent = ({
   );
 };
 
-const themeStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    listContainer: {
-      flex: 1,
-    },
-    listHeaderComponentStyle: {
-      marginBottom: spacing.margin.base,
-    },
-    createPost: {
-      marginTop: spacing.margin.small,
-    },
-  });
-};
+const themeStyles = () => StyleSheet.create({
+  listContainer: {
+    flex: 1,
+  },
+  listHeaderComponentStyle: {
+    marginBottom: spacing.margin.base,
+  },
+  createPost: {
+    marginTop: spacing.margin.small,
+  },
+});
 
 export default GroupContent;

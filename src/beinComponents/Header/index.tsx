@@ -467,7 +467,9 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <View style={styles.header} testID="header">{children || renderContent()}</View>
-      <Animated.View style={[styles.stickyHeader, stickyHeaderStyle]}>{stickyHeaderComponent}</Animated.View>
+      {!!stickyHeaderComponent && (
+        <Animated.View style={[styles.stickyHeader, stickyHeaderStyle]}>{stickyHeaderComponent}</Animated.View>
+      )}
     </>
   )
 };
@@ -510,14 +512,8 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingTop: 1.5,
       marginLeft: spacing.padding.large,
     },
-    title: {
-      height: 24,
-      lineHeight: 24,
-    },
-    subtitle: {
-      height: 16,
-      lineHeight: 16,
-    },
+    title: {},
+    subtitle: {},
     stickyHeader: {
       zIndex: 1,
       position: 'absolute',

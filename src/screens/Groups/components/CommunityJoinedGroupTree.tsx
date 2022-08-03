@@ -1,8 +1,9 @@
 import React, { FC, useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import useJoinedGroupTreeStore from '~/store/communities/joinedGroupTree';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
@@ -11,6 +12,9 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { IGroup } from '~/interfaces/IGroup';
 import { useRootNavigation } from '~/hooks/navigation';
+import spacing from '~/theme/spacing';
+import Text from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
 
 export interface CommunityJoinedGroupsProps {
   communityId?: string;
@@ -20,8 +24,13 @@ export interface CommunityJoinedGroupsProps {
 const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
   { communityId, teamName = 'bein' }: CommunityJoinedGroupsProps,
 ) => {
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
+
+  const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
+  const styles = createStyle(theme);
 
   const id = communityId || teamName;
 
@@ -55,23 +64,41 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
       showPrivacyAvatar
       showInfo={false}
       onPressGroup={onPressGroup}
-      style={{ marginHorizontal: 16 }}
+      groupStyle={{ paddingVertical: spacing.padding.small }}
+      style={{ marginHorizontal: spacing.padding.large }}
     />
   )
 
+  const renderEmpty = () => {
+    if (loading) {
+      return <LoadingIndicator />
+    }
+    return (
+      <View style={styles.emptyContainer}>
+        <Text.SubtitleS color={colors.neutral40}>{t('error:no_group_found_title')}</Text.SubtitleS>
+      </View>
+    );
+  }
+
   return (
-    <View>
-      {loading
-        ? <LoadingIndicator />
-        : (
-          <FlatList
-            keyExtractor={(item) => `joined_group_${item?.id}`}
-            data={joinedGroups || []}
-            renderItem={renderItem}
-          />
-        )}
-    </View>
+    <FlatList
+      keyExtractor={(item) => `joined_group_${item?.id}`}
+      data={joinedGroups || []}
+      renderItem={renderItem}
+      ListEmptyComponent={renderEmpty}
+    />
   );
+};
+
+const createStyle = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    emptyContainer: {
+      alignItems: 'center',
+      paddingHorizontal: spacing.padding.large,
+      backgroundColor: colors.neutral,
+    },
+  });
 };
 
 export default CommunityJoinedGroupTree;
