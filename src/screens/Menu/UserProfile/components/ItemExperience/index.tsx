@@ -6,7 +6,8 @@ import { useBaseHook } from '~/hooks';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import { spacing } from '~/theme';
 import { formatDate } from '~/utils/formatData';
-import InfoItem from './InfoItem';
+import { getEndDateText } from '../../helper';
+import InfoItem from '../InfoItem';
 
 const ItemExperience = ({
   company,
@@ -14,7 +15,6 @@ const ItemExperience = ({
   startDate,
   currentlyWorkHere,
   endDate,
-  description,
   location,
 }: IUserWorkExperience) => {
   const { t } = useBaseHook();
@@ -22,7 +22,7 @@ const ItemExperience = ({
   const styles = themeStyles(theme);
 
   return (
-    <View style={styles.container}>
+    <View testID="item_experience" style={styles.container}>
       <View style={styles.titleCompany}>
         <View style={styles.titleLine} />
         <Text.SubtitleL color={theme.colors.neutral20}>
@@ -46,14 +46,7 @@ const ItemExperience = ({
       />
       <InfoItem
         title="common:text_end_date"
-        value={currentlyWorkHere
-          ? `${t('common:text_to')} ${t('common:text_present')}`
-          : endDate
-            ? `${t('common:text_to')} ${formatDate(
-              endDate,
-              'MMM D, YYYY',
-            )}`
-            : ''}
+        value={getEndDateText(t, currentlyWorkHere, endDate)}
       />
     </View>
   )

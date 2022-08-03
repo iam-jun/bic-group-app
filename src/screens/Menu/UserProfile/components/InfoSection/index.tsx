@@ -4,13 +4,14 @@ import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 
 interface Props {
+  testID?:string;
   title: string;
   children: React.ReactNode
 }
 
-const InfoSection = ({ title, children }: Props) => (
-  <View style={styles.container}>
-    <Text.H4 useI18n style={styles.title}>{title}</Text.H4>
+const InfoSection = ({ testID, title, children }: Props) => (
+  <View testID={testID || 'info_section'} style={styles.container}>
+    <Text.H4 testID="info_section.title" useI18n style={styles.title}>{title}</Text.H4>
     {children}
   </View>
 )

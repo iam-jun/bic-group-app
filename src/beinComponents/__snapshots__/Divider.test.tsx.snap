@@ -6,7 +6,7 @@ exports[`Divider component renders correctly 1`] = `
     Array [
       Object {
         "alignSelf": "stretch",
-        "backgroundColor": "#EAEDF2",
+        "backgroundColor": undefined,
         "height": 1,
         "marginHorizontal": 0,
         "width": undefined,

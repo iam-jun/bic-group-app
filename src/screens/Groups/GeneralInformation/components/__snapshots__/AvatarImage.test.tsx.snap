@@ -16,13 +16,11 @@ exports[`AvatarImage component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 15,
           },
-          Object {
-            "color": "#2F3945",
-          },
+          Object {},
           undefined,
         ]
       }

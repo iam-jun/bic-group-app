@@ -3,7 +3,7 @@ import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
-import WorkInfo from '../components/WorkInfo';
+import WorkInfo from '../../components/WorkInfo';
 
 interface Props {
 fullname: string;
@@ -22,16 +22,16 @@ const UserHeader = ({
   const styles = themeStyles(theme);
 
   return (
-    <View style={styles.headerName}>
-      <Text>
-        <Text.H4>{fullname}</Text.H4>
-      </Text>
-      {!!username && <Text.BodyS>{`@${username}`}</Text.BodyS>}
+    <View testID="user_profile" style={styles.headerName}>
+      <Text.H4 testID="user_profile.fullname">{fullname}</Text.H4>
+      {!!username && (
+      <Text.BodyS testID="user_profile.username">
+        {`@${username}`}
+      </Text.BodyS>
+      )}
       <WorkInfo latestWork={latestWork} />
       {!!description && (
-      <Text>
-        <Text style={styles.subtitleText}>{description}</Text>
-      </Text>
+        <Text testID="user_profile.description" style={styles.subtitleText}>{description}</Text>
       )}
     </View>
   )

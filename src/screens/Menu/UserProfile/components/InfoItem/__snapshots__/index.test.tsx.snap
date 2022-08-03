@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoItem component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "paddingBottom": 8,
+      },
+      undefined,
+    ]
+  }
+  testID="info_item"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="info_item.title"
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 15,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="info_item.value"
+  />
+</View>
+`;

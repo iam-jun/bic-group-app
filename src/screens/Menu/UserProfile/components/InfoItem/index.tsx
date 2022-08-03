@@ -17,9 +17,11 @@ const InfoItem = ({ style, title, value }: Props) => {
   if (isEmpty(value)) _value = 'settings:text_not_set'
 
   return (
-    <View style={[styles.container, style]}>
-      <Text.BodyM useI18n>{title}</Text.BodyM>
-      <Text.BodyMMedium useI18n>{_value}</Text.BodyMMedium>
+    <View testID="info_item" style={[styles.container, style]}>
+      <Text.BodyM testID="info_item.title" useI18n>{title}</Text.BodyM>
+      <Text.BodyMMedium testID="info_item.value" useI18n>
+        {_value}
+      </Text.BodyMMedium>
     </View>
   )
 }

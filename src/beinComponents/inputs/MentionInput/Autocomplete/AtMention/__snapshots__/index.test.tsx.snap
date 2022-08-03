@@ -34,13 +34,13 @@ exports[`AtMention component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 13,
             },
             Object {},
             Object {
-              "color": "#B2BDCD",
+              "color": undefined,
               "margin": 8,
               "padding": 4,
             },

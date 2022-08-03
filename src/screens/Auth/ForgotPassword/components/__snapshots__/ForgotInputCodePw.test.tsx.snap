@@ -20,9 +20,9 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -35,9 +35,9 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 14,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 13,
           },
           Object {},
           Object {
@@ -60,72 +60,57 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       }
       testID="text_input"
     >
-      <RCTSinglelineTextInputView
-        accessible={true}
-        allowFontScaling={true}
-        blurOnSubmit={true}
-        dense={true}
-        focusable={true}
-        forwardedRef={null}
-        keyboardType="numeric"
-        mode="outlined"
-        mostRecentEventCount={0}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onChangeSync={null}
-        onChangeText={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onScroll={[Function]}
-        onSelectionChange={[Function]}
-        onSelectionChangeShouldSetResponder={[Function]}
-        onStartShouldSetResponder={[Function]}
-        outlineColor="#2F3945"
-        placeholder="6-digit code"
-        placeholderTextColor="#627286"
-        rejectResponderTermination={true}
-        selection={null}
-        selectionColor="#627286"
+      <View
         style={
           Array [
-            Object {},
+            Object {
+              "alignItems": "center",
+              "borderColor": undefined,
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minHeight": 44,
+              "paddingRight": 12,
+            },
+            Object {
+              "borderColor": undefined,
+            },
             undefined,
           ]
         }
-        testID="inputCode"
-        text=""
-        theme={
-          Object {
-            "colors": Object {
-              "background": "#FFFFFF",
-              "placeholder": "#627286",
-              "primary": "#B2BDCD",
-              "text": "#2F3945",
-            },
-            "fonts": Object {
-              "regular": Object {
-                "fontFamily": "OpenSans-Regular",
+      >
+        <TextInput
+          keyboardType="numeric"
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="6-digit code"
+          style={
+            Array [
+              Object {
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "minHeight": 44,
+                "paddingHorizontal": 12,
               },
-            },
-            "roundness": 6,
+              Object {
+                "color": undefined,
+              },
+            ]
           }
-        }
-        underlineColorAndroid="transparent"
-        value=""
-      />
+          testID="inputCode"
+          value=""
+        />
+      </View>
     </View>
     <Text
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 14,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -139,13 +124,13 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
             },
             Object {},
             Object {
-              "color": "#627286",
+              "color": undefined,
             },
           ]
         }
@@ -166,9 +151,9 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 13,
           },
           Object {},
           Object {
@@ -190,73 +175,109 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       }
       testID="text_input"
     >
-      <RCTSinglelineTextInputView
-        accessible={true}
-        allowFontScaling={true}
-        autoCapitalize="none"
-        blurOnSubmit={true}
-        dense={true}
-        editable={true}
-        focusable={true}
-        forwardedRef={null}
-        mode="outlined"
-        mostRecentEventCount={0}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onChangeSync={null}
-        onChangeText={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onScroll={[Function]}
-        onSelectionChange={[Function]}
-        onSelectionChangeShouldSetResponder={[Function]}
-        onStartShouldSetResponder={[Function]}
-        outlineColor="#2F3945"
-        placeholder="New password"
-        placeholderTextColor="#627286"
-        rejectResponderTermination={true}
-        right={
-          <View
-            name={[Function]}
-            testID="password_input.eye_icon"
-          />
-        }
-        secureTextEntry={true}
-        selection={null}
-        selectionColor="#627286"
+      <View
         style={
           Array [
-            Object {},
+            Object {
+              "alignItems": "center",
+              "borderColor": undefined,
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minHeight": 44,
+              "paddingRight": 12,
+            },
+            Object {
+              "borderColor": undefined,
+            },
             undefined,
           ]
         }
-        testID="inputNewPassword"
-        text=""
-        textContentType="oneTimeCode"
-        theme={
-          Object {
-            "colors": Object {
-              "background": "#FFFFFF",
-              "placeholder": "#627286",
-              "primary": "#B2BDCD",
-              "text": "#2F3945",
-            },
-            "fonts": Object {
-              "regular": Object {
-                "fontFamily": "OpenSans-Regular",
+      >
+        <TextInput
+          autoCapitalize="none"
+          editable={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="New password"
+          secureTextEntry={true}
+          style={
+            Array [
+              Object {
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "minHeight": 44,
+                "paddingHorizontal": 12,
               },
-            },
-            "roundness": 6,
+              Object {
+                "color": undefined,
+              },
+            ]
           }
-        }
-        underlineColorAndroid="transparent"
-        value=""
-      />
+          testID="inputNewPassword"
+          textContentType="oneTimeCode"
+          value=""
+        />
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
     <View
       style={
@@ -269,73 +290,109 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       }
       testID="text_input"
     >
-      <RCTSinglelineTextInputView
-        accessible={true}
-        allowFontScaling={true}
-        autoCapitalize="none"
-        blurOnSubmit={true}
-        dense={true}
-        editable={true}
-        focusable={true}
-        forwardedRef={null}
-        mode="outlined"
-        mostRecentEventCount={0}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onChangeSync={null}
-        onChangeText={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onScroll={[Function]}
-        onSelectionChange={[Function]}
-        onSelectionChangeShouldSetResponder={[Function]}
-        onStartShouldSetResponder={[Function]}
-        outlineColor="#2F3945"
-        placeholder="Confirm new password"
-        placeholderTextColor="#627286"
-        rejectResponderTermination={true}
-        right={
-          <View
-            name={[Function]}
-            testID="password_input.eye_icon"
-          />
-        }
-        secureTextEntry={true}
-        selection={null}
-        selectionColor="#627286"
+      <View
         style={
           Array [
-            Object {},
+            Object {
+              "alignItems": "center",
+              "borderColor": undefined,
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minHeight": 44,
+              "paddingRight": 12,
+            },
+            Object {
+              "borderColor": undefined,
+            },
             undefined,
           ]
         }
-        testID="inputConfirmPassword"
-        text=""
-        textContentType="oneTimeCode"
-        theme={
-          Object {
-            "colors": Object {
-              "background": "#FFFFFF",
-              "placeholder": "#627286",
-              "primary": "#B2BDCD",
-              "text": "#2F3945",
-            },
-            "fonts": Object {
-              "regular": Object {
-                "fontFamily": "OpenSans-Regular",
+      >
+        <TextInput
+          autoCapitalize="none"
+          editable={true}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          placeholder="Confirm new password"
+          secureTextEntry={true}
+          style={
+            Array [
+              Object {
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "minHeight": 44,
+                "paddingHorizontal": 12,
               },
-            },
-            "roundness": 6,
+              Object {
+                "color": undefined,
+              },
+            ]
           }
-        }
-        underlineColorAndroid="transparent"
-        value=""
-      />
+          testID="inputConfirmPassword"
+          textContentType="oneTimeCode"
+          value=""
+        />
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   </View>
   <View
@@ -356,8 +413,8 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#D5DCE5",
-        "borderRadius": 6,
+        "backgroundColor": undefined,
+        "borderRadius": 4,
         "paddingHorizontal": 12,
         "paddingVertical": 8,
       }
@@ -366,11 +423,14 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -378,13 +438,11 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
             },
-            Object {
-              "color": "#B2BDCD",
-            },
+            Object {},
             Object {
               "textAlign": "center",
             },

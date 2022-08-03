@@ -5,10 +5,9 @@ import React from 'react';
 import Avatar from '~/beinComponents/Avatar';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
-import EditButton from './EditButton';
+import EditButton from '../EditButton';
 
 interface Props {
-    id: string;
     userId: string;
     currentUsername: string;
     avatar: any;
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const AvatarImage = ({
-  id, avatar, userId, currentUsername, onEdit,
+  avatar, userId, currentUsername, onEdit,
 }: Props) => {
   const theme:ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -30,7 +29,7 @@ const AvatarImage = ({
           showBorder
         />
         <EditButton
-          testID="user_profile.edit.avatar"
+          testID="user_profile.avatar_image.edit_button"
           style={styles.editAvatar}
           userId={userId}
           currentUsername={currentUsername}

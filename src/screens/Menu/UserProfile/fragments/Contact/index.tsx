@@ -1,6 +1,6 @@
 import React from 'react';
-import { InfoItem } from '../components';
-import InfoSection from '../components/InfoSection';
+import { InfoItem } from '../../components';
+import InfoSection from '../../components/InfoSection';
 
 interface Props {
     email: string;
@@ -10,14 +10,14 @@ interface Props {
 }
 
 const Contact = ({
-  email, phone, city, country,
+  email, phone, city,
 }: Props) => (
-  <InfoSection title="settings:title_contact">
+  <InfoSection testID="user_profile.contact" title="settings:title_contact">
     <InfoItem title="settings:title_email" value={email} />
     <InfoItem title="settings:title_phone_number" value={phone} />
     <InfoItem
       title="settings:title_location"
-      value={city && country ? `${city}, ${country}` : undefined}
+      value={city ? `${city}` : undefined}
     />
   </InfoSection>
 )

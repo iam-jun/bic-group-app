@@ -21,7 +21,9 @@ const EditButton = ({
   const styles = themeStyles(theme);
   const currentUserId = useUserIdAuth();
 
-  if (userId !== currentUserId && userId !== currentUsername) return null;
+  const isCurrentUser = userId === currentUserId || userId === currentUsername;
+
+  if (!isCurrentUser) return null;
 
   return (
     <ButtonWrapper

@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { uploadTypes } from '~/configs/resourceConfig';
 import { scaleCoverHeight } from '~/theme/dimension';
-import AvatarImage from '../components/AvatarImage';
-import CoverImage from '../components/CoverImage';
-import { _openImagePicker } from '../utils';
+import AvatarImage from '../../components/AvatarImage';
+import CoverImage from '../../components/CoverImage';
+import { _openImagePicker } from '../../helper';
 
 interface Props {
     id: string;
@@ -52,7 +52,6 @@ const CoverHeader = ({
       onLayout={onCoverLayout}
     >
       <CoverImage
-        id={id}
         bgImg={bgImg}
         userId={userId}
         currentUsername={currentUsername}
@@ -60,7 +59,6 @@ const CoverHeader = ({
         onEdit={onEditCover}
       />
       <AvatarImage
-        id={id}
         avatar={avatar}
         userId={userId}
         currentUsername={currentUsername}
