@@ -22,7 +22,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import { groupPrivacy } from '~/constants/privacyTypes';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import JoinCancelButton from './components/JoinCancelButton';
+import CommunityJoinCancelButton from './components/CommunityJoinCancelButton';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
@@ -220,7 +220,7 @@ const CommunityDetail = (props: any) => {
         {renderCommunityContent()}
       </View>
       <Animated.View style={[styles.button, buttonStyle]}>
-        <JoinCancelButton style={styles.joinBtn} />
+        <CommunityJoinCancelButton style={styles.joinBtn} />
       </Animated.View>
     </>
   );
@@ -244,7 +244,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       flex: 1,
     },
     joinBtn: {
-      paddingTop: spacing.padding.tiny,
+      paddingVertical: spacing.padding.tiny,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,

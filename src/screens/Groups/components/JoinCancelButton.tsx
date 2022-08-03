@@ -1,45 +1,32 @@
-import React, { Fragment } from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
-import { useDispatch } from 'react-redux';
+import {
+  View, StyleProp, ViewStyle, StyleSheet,
+} from 'react-native'
+import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
+import { spacing } from '~/theme';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import { groupPrivacy } from '~/constants/privacyTypes';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
-import groupsActions from '~/screens/Groups/redux/actions';
-import spacing from '~/theme/spacing';
+import { COMMUNITY_PRIVACY_TYPE, groupPrivacy, GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
 
 interface JoinCancelButtonProps {
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
+  type: 'community' | 'group';
+  joinStatus: number;
+  privacy: GROUP_PRIVACY_TYPE | COMMUNITY_PRIVACY_TYPE;
+  onPressJoin: () => void;
+  onPressCancelRequest: () => void;
 }
 
-const JoinCancelButton = ({ style }: JoinCancelButtonProps) => {
+const JoinCancelButton = ({
+  style, type, joinStatus, privacy, onPressJoin, onPressCancelRequest,
+}: JoinCancelButtonProps) => {
   const theme: ExtendedTheme = useTheme();
-  const styles = themeStyles(theme);
-  const dispatch = useDispatch();
-  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {
-    privacy,
-    joinStatus,
-    id: communityId,
-    name: communityName,
-  } = infoDetail;
-  const isPrivate = privacy === groupPrivacy.private;
-  const isMember = joinStatus === groupJoinStatus.member;
+  const styles = createStyles(theme);
+
   const hasRequested = joinStatus === groupJoinStatus.requested;
-
-  if (isMember) return null;
-
-  const onPressJoin = () => {
-    dispatch(groupsActions.joinCommunity({ communityId, communityName }));
-  };
-
-  const onPressCancelRequest = () => {
-    dispatch(groupsActions.cancelJoinCommunity({ communityId, communityName }));
-  };
+  const isPrivate = privacy === groupPrivacy.private;
 
   return (
     <View style={[styles.buttonView, style]} testID="join_cancel_button">
@@ -66,7 +53,7 @@ const JoinCancelButton = ({ style }: JoinCancelButtonProps) => {
           onPress={onPressJoin}
           useI18n
         >
-          communities:text_join_community_button
+          {`communities:text_join_${type}_button`}
         </Button.Secondary>
       )}
 
@@ -77,17 +64,17 @@ const JoinCancelButton = ({ style }: JoinCancelButtonProps) => {
           useI18n
           testID="join_cancel_button.description"
         >
-          communities:text_join_community_description
+          {`communities:text_join_${type}_description`}
         </Text.BodyS>
       </View>
       )}
     </View>
   );
-};
+}
 
-export default JoinCancelButton;
+export default JoinCancelButton
 
-const themeStyles = (theme: ExtendedTheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     btnAction: {
