@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import initialState from '~/store/initialState';
-import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
+import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
 import colors from '~/theme/theme';
 import AvatarImage from './AvatarImage';
 
@@ -12,7 +12,7 @@ describe('AvatarImage component', () => {
 
   const mockStore = configureStore([]);
 
-  const storeData = {...initialState};
+  const storeData = { ...initialState };
 
   it('renders correctly', () => {
     const store = mockStore(storeData);
@@ -49,7 +49,7 @@ describe('AvatarImage component', () => {
     storeData.groups.loadingAvatar = true;
     const store = mockStore(storeData);
 
-    const rendered = renderWithRedux(<AvatarImage {...baseProps} />, store);
+    const rendered = renderWithRedux(<AvatarImage {...baseProps} canEditInfo />, store);
 
     const buttonComponent = rendered.getByTestId('avatar.button_edit');
     const textComponent = rendered.getByTestId('avatar.text_edit');
@@ -65,7 +65,7 @@ describe('AvatarImage component', () => {
     const onEditAvatar = jest.fn();
 
     const rendered = renderWithRedux(
-      <AvatarImage onEditAvatar={onEditAvatar} />,
+      <AvatarImage onEditAvatar={onEditAvatar} canEditInfo />,
       store,
     );
 

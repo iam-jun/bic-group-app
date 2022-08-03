@@ -61,7 +61,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 17,
+                "fontSize": 15,
               },
               Object {},
               undefined,

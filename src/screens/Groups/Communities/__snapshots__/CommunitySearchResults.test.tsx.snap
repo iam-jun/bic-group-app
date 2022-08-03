@@ -8,7 +8,7 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
   ListHeaderComponent={[Function]}
   data={
     Array [
-      1,
+      "1",
     ]
   }
   getItem={[Function]}

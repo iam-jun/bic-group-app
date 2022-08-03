@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import initialState from '~/store/initialState';
-import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
+import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
 import colors from '~/theme/theme';
 import CoverImage from './CoverImage';
 
@@ -12,7 +12,7 @@ describe('CoverImage component', () => {
 
   const mockStore = configureStore([]);
 
-  const storeData = {...initialState};
+  const storeData = { ...initialState };
 
   it('renders correctly', () => {
     const store = mockStore(storeData);
@@ -49,7 +49,7 @@ describe('CoverImage component', () => {
     storeData.groups.loadingCover = true;
     const store = mockStore(storeData);
 
-    const rendered = renderWithRedux(<CoverImage {...baseProps} />, store);
+    const rendered = renderWithRedux(<CoverImage {...baseProps} canEditInfo />, store);
 
     const buttonComponent = rendered.getByTestId('cover.button_edit');
     const textComponent = rendered.getByTestId('cover.text_edit');
@@ -65,7 +65,7 @@ describe('CoverImage component', () => {
     const onEditCover = jest.fn();
 
     const rendered = renderWithRedux(
-      <CoverImage onEditCover={onEditCover} />,
+      <CoverImage onEditCover={onEditCover} canEditInfo />,
       store,
     );
 

@@ -56,7 +56,26 @@ exports[`GroupInfoView component renders correctly 1`] = `
               undefined,
             ]
           }
-        />
+        >
+          Community Name
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+          testID="info_view.name.sub_title"
+        >
+          Name
+        </Text>
       </View>
     </View>
   </View>
@@ -108,7 +127,26 @@ exports[`GroupInfoView component renders correctly 1`] = `
               undefined,
             ]
           }
-        />
+        >
+          Community Description
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+          testID="info_view.description.sub_title"
+        >
+          Description
+        </Text>
       </View>
     </View>
   </View>
@@ -155,6 +193,22 @@ exports[`GroupInfoView component renders correctly 1`] = `
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Privacy
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {},
               undefined,
