@@ -133,7 +133,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     <View
       testID="group_item.ui_level"
       key={generateUniqueId()}
-      style={[styles.line, uiLevel === 0 && { backgroundColor: 'transparent' }]}
+      style={[styles.line]}
     />
   );
 
@@ -152,7 +152,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         hitSlop={{
           top: 10, bottom: 10, left: 10, right: 10,
         }}
-        style={[styles.toggleContainer, (hasChild || uiLevel === 0) && { backgroundColor: 'transparent' }]}
+        style={styles.toggleContainer}
       >
         {hasChild && (
           <View style={styles.toggleContent}>
@@ -289,7 +289,7 @@ const themeStyles = (theme: IObject<any>) => {
     toggleContainer: {
       width: 1,
       height: '100%',
-      backgroundColor: colors.neutral5,
+      backgroundColor: colors.transparent,
       marginHorizontal: spacing?.margin.small,
       flexDirection: 'row',
     },
