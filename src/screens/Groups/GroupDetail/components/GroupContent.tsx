@@ -17,6 +17,7 @@ import GroupTabHeader from './GroupTabHeader';
 import InfoHeader from '../../components/InfoHeader';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import GroupJoinCancelButton from './GroupJoinCancelButton';
 
 interface GroupContentProps {
   getGroupPosts: () => void;
@@ -70,6 +71,7 @@ const GroupContent = ({
         onPressGroupTree={onPressYourGroups}
       />
       <GroupTabHeader groupId={groupId} isMember={isMember} />
+      <GroupJoinCancelButton />
     </View>
   );
 

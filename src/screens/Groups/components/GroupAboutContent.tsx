@@ -41,13 +41,13 @@ const GroupAboutContent = () => {
     <>
       {!!description && (
         <>
-          <Text.H5 useI18n style={styles.labelDescription}>
+          <Text.ButtonM useI18n style={styles.labelDescription}>
             common:text_description
-          </Text.H5>
+          </Text.ButtonM>
           <CollapsibleText
             limitLength={500}
             shortLength={500}
-            textProps={{ variant: 'h4', style: styles.descriptionContainer }}
+            textProps={{ variant: 'bodyM', style: styles.descriptionContainer }}
             content={description}
           />
         </>

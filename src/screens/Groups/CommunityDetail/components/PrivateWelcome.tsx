@@ -4,7 +4,7 @@ import Animated from 'react-native-reanimated';
 
 import InfoHeader from '../../components/InfoHeader';
 import AboutContent from './AboutContent';
-import JoinCancelButton from './JoinCancelButton';
+import CommunityJoinCancelButton from './CommunityJoinCancelButton';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -42,7 +42,7 @@ const PrivateWelcome = ({
     >
       <View onLayout={onButtonLayout}>
         <InfoHeader infoDetail={infoDetail} isMember={isMember} />
-        <JoinCancelButton />
+        <CommunityJoinCancelButton />
       </View>
 
       <AboutContent />
