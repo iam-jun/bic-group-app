@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  Modal, StyleSheet, TouchableOpacity, View,
+  Modal, Platform, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -117,6 +117,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.neutral,
       justifyContent: 'center',
       paddingHorizontal: spacing.padding.small,
+      paddingTop: Platform.OS === 'android' ? 0 : insets.top,
       paddingBottom: insets.bottom + spacing.padding.small,
     },
     fullScreenHeader: {

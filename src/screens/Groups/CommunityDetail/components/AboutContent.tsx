@@ -72,7 +72,7 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.white,
       paddingVertical: spacing.padding.large,
-      paddingBottom: 80, // to avoid Join button at the bottom
+      paddingBottom: 100, // to avoid Join button at the bottom
     },
     titleDescription: {
       marginBottom: spacing.margin.large,
