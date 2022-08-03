@@ -12,29 +12,18 @@ interface Props {
     userId: string;
     currentUsername: string;
     bgImg: any;
+    coverHeight: number;
     onEdit: () => void;
 }
 
 const CoverImage = ({
-  id, bgImg, userId, currentUsername, onEdit,
+  id, bgImg, userId, currentUsername, coverHeight, onEdit,
 }: Props) => {
   const theme:ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const [coverHeight, setCoverHeight] = useState<number>(210);
-
-  const onCoverLayout = (e: any) => {
-    if (!e?.nativeEvent?.layout?.width) return;
-    const coverWidth = e.nativeEvent.layout.width;
-    const coverHeight = scaleCoverHeight(coverWidth);
-    setCoverHeight(coverHeight);
-  };
 
   return (
-    <View
-      testID="user_profile.cover_image"
-      style={{ height: coverHeight }}
-      onLayout={onCoverLayout}
-    >
+    <View testID="user_profile.cover_image">
       <Image
         style={[styles.cover, { height: (coverHeight * 2) / 3 }]}
         source={bgImg || images.img_cover_default}

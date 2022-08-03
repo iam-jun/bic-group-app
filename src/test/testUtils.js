@@ -12,10 +12,12 @@ import {
   getAnimatedStyle,
 } from 'react-native-reanimated/src/reanimated2/jestUtils';
 
+import '~/store'
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import initialState from '~/store/initialState';
 import { appReducer } from '~/store/reducers';
+
 
 const languages = require('~/localization/en.json');
 

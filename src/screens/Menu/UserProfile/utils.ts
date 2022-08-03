@@ -19,6 +19,8 @@ export const _openImagePicker = async (
   fieldName: 'avatar' | 'backgroundImgUrl',
   uploadType: IUploadType,
   dispatch:any,
+  callback?: (fieldName: string) => void,
+
 ) => {
   checkPermission(
     permissionTypes.photo, dispatch, (canOpenPicker) => {
@@ -34,6 +36,7 @@ export const _openImagePicker = async (
             fieldName,
             uploadType,
             dispatch,
+            callback,
           );
         });
       }

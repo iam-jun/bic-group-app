@@ -111,6 +111,10 @@ const UserProfile = (props: any) => {
     }, [myProfileData],
   );
 
+  const uploadCallback = (fieldName:string) => {
+    setIsChangeImg(fieldName)
+  }
+
   const onEditProfileButton = () => rootNavigation.navigate(
     mainStack.userEdit, { userId },
   );
@@ -154,7 +158,7 @@ const UserProfile = (props: any) => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header />
+      <Header onPressChat={onPressChat} />
       {loadingUserProfile ? (
         renderLoading()
       ) : (
@@ -168,6 +172,7 @@ const UserProfile = (props: any) => {
             currentUsername={currentUsername}
             bgImg={bgImgState}
             avatar={avatarState}
+            uploadCallback={uploadCallback}
           />
           <UserHeader
             fullname={fullname}

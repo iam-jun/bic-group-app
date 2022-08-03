@@ -33,7 +33,7 @@ describe('UserProfile screen', () => {
     storeData.menu.loadingUserProfile = false;
   });
 
-  it(`should hide edit profile button, show Direct Message button if is not current user`, () => {
+  it(`should hide avatar edit button, cover image edit button add edit profile button if is not current user`, () => {
     const mockActionGetMyProfile = () => {
       return {
         type: menuTypes.SET_USER_PROFILE,
@@ -51,6 +51,14 @@ describe('UserProfile screen', () => {
     const store = mockStore(storeData);
     const props = {route: {params: {userId: 1}}};
     const wrapper = renderWithRedux(<UserProfile {...props} />, store);
+
+    const buttonEditAvatar = wrapper.queryByTestId('user_profile.edit.avatar');
+    expect(buttonEditAvatar).toBeNull();
+
+    const buttonCoverImage = wrapper.queryByTestId(
+      'user_profile.edit.cover_image',
+    );
+    expect(buttonCoverImage).toBeNull();
 
     const buttonEditUserProfile = wrapper.queryByTestId('user_profile.edit');
     expect(buttonEditUserProfile).toBeNull();

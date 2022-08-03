@@ -22,7 +22,7 @@ const AvatarImage = ({
   const styles = themeStyles(theme);
 
   return (
-    <View style={styles.imageButton}>
+    <View testID="user_profile.avatar_image" style={styles.container}>
       <View>
         <Avatar.UltraSuperLarge
           source={avatar || images.img_user_avatar_default}
@@ -47,14 +47,14 @@ const themeStyles = (
   const { colors } = theme;
 
   return StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      marginTop: -44,
+    },
     editAvatar: {
       position: 'absolute',
       bottom: 0,
       right: spacing?.margin.small,
-    },
-    imageButton: {
-      alignItems: 'center',
-      marginTop: -44,
     },
   });
 }
