@@ -7,6 +7,10 @@ import useJoinedGroupTreeStore from '~/store/communities/joinedGroupTree';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import modalActions from '~/store/modal/actions';
+import mainStack from '~/router/navigator/MainStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { IGroup } from '~/interfaces/IGroup';
+import { useRootNavigation } from '~/hooks/navigation';
 
 export interface CommunityJoinedGroupsProps {
   communityId?: string;
@@ -17,6 +21,7 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
   { communityId, teamName = 'bein' }: CommunityJoinedGroupsProps,
 ) => {
   const dispatch = useDispatch();
+  const { rootNavigation } = useRootNavigation();
 
   const id = communityId || teamName;
 
@@ -28,11 +33,31 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
     getJoinedGroupTree(communityId)
   }, [communityId])
 
-  const onPressGroup = () => {
+  const onPressGroup = (group: IGroup) => {
     dispatch(modalActions.hideModal())
+    if (group.communityId) {
+      rootNavigation.navigate(mainStack.communityDetail, {
+        communityId: group.communityId,
+      });
+    } else {
+      rootNavigation.navigate(
+        groupStack.groupDetail, {
+          groupId: group.id,
+          initial: true,
+        },
+      );
+    }
   }
 
-  const renderItem = ({ item }: any) => <FlatGroupItem {...item} onPressGroup={onPressGroup} />
+  const renderItem = ({ item }: any) => (
+    <FlatGroupItem
+      {...item}
+      showPrivacyAvatar
+      showInfo={false}
+      onPressGroup={onPressGroup}
+      style={{ marginHorizontal: 16 }}
+    />
+  )
 
   return (
     <View>
