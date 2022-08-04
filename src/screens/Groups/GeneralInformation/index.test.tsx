@@ -12,7 +12,7 @@ import * as helper from './helper';
 
 describe('GeneralInformation component', () => {
   const component = () => (
-    <GeneralInformation route={{params: {groupId: groupDetailData.group.id}}} />
+    <GeneralInformation route={{params: {id: groupDetailData.group.id, type: 'group'}}} />
   );
   const mockStore = configureStore([]);
   const storeData = {...initialState};
@@ -41,6 +41,7 @@ describe('GeneralInformation component', () => {
       groupDetailData.group.id,
       'icon',
       'group_avatar',
+      'group'
     );
   });
 
@@ -55,6 +56,7 @@ describe('GeneralInformation component', () => {
       groupDetailData.group.id,
       'backgroundImgUrl',
       'group_cover',
+      "group"
     );
   });
 

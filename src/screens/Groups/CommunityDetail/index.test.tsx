@@ -32,7 +32,7 @@ describe('CommunityDetail', () => {
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
-      join_status: 1,
+      joinStatus: 1,
       privacy: 'PRIVATE',
     };
     const store = createTestStore(state);
@@ -56,7 +56,7 @@ describe('CommunityDetail', () => {
       <MockedNavigator component={component} />,
       store,
     );
-    const listView = wrapper.getByTestId('list_view');
+    const listView = wrapper.getByTestId('flatlist');
     expect(listView).toBeDefined();
     const chatIcon = wrapper.getByTestId('header.iconChat');
     expect(chatIcon).toBeDefined();
@@ -66,7 +66,7 @@ describe('CommunityDetail', () => {
     const state = {...initialState};
     state.groups.loadingPage = false;
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, join_status: 1};
+    state.groups.communityDetail = {...communityDetailData, joinStatus: 1};
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -75,7 +75,7 @@ describe('CommunityDetail', () => {
     );
 
     // should render PageContent component
-    const listView = wrapper.getByTestId('list_view');
+    const listView = wrapper.getByTestId('flatlist');
     expect(listView).toBeDefined();
   });
 
@@ -84,7 +84,7 @@ describe('CommunityDetail', () => {
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
-      join_status: 1,
+      joinStatus: 1,
       privacy: 'PRIVATE',
     };
     const store = createTestStore(state);

@@ -77,7 +77,13 @@ describe('GroupTopBar component', () => {
     // @ts-ignore
     state.auth.user = { username: 'testname1' };
     state.groups.groupDetail.joinStatus = groupJoinStatus.member;
-    state.groups.groupDetail.canSetting = false;
+    state.groups.myPermissions = {
+      data: {
+        groups: {
+        }
+      }
+    };
+
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -86,7 +92,8 @@ describe('GroupTopBar component', () => {
     );
     const component = wrapper.queryByTestId('group_top_bar.admin_button');
     expect(component).toBeNull();
-    const optionMenu = wrapper.getByTestId('group_top_bar.option_menu');
+    
+    const optionMenu = wrapper.queryByTestId('group_top_bar.option_menu');
     expect(optionMenu).toBeDefined();
     fireEvent.press(optionMenu);
   });
