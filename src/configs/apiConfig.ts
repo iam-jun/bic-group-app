@@ -79,7 +79,7 @@ const Upload = {
       url = `${providers.beinFeed.url}media`;
       provider = providers.beinFeed;
       data.append(
-        'uploadType', type,
+        'upload_type', type,
       );
     }
 

@@ -120,10 +120,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           {renderIndicator(styles.indicatorMargin)}
           <NotificationContent
             description={extra?.description || ''}
-            defaultContent={extra?.content || ''}
-            activities={activities}
-            verb={verb}
-            actorCount={actorCount}
+            content={extra?.content || ''}
           />
         </View>
       ) : (
@@ -135,20 +132,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           <View style={[styles.row, { flex: 1, justifyContent: 'flex-start' }]}>
             {renderIndicator()}
             <NotificationAvatar
-              actor={extra.actor}
-              activities={activities}
+              actors={extra.actors}
               actorCount={actorCount}
-              verb={verb}
               isRead={isRead}
               timerWidth={timerWidth}
             />
           </View>
           <NotificationContent
             description={extra?.description || ''}
-            defaultContent={extra?.content || ''}
-            activities={activities}
-            verb={verb}
-            actorCount={actorCount}
+            content={extra?.content || ''}
           />
         </View>
       )}
