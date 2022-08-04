@@ -7,19 +7,16 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 
 export default function* getGroupDetail({
   payload,
-  loadingPage,
 }: {
   type: string;
-  payload: string;
-  loadingPage: boolean;
+  payload: {groupId: string; loadingPage?: boolean;}
 }) {
   try {
+    const { groupId, loadingPage } = payload;
+
     if (loadingPage) yield put(groupsActions.setLoadingPage(true));
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const resp = yield call(
-      groupsDataHelper.getGroupDetail, payload,
-    );
+
+    const resp = yield call(groupsDataHelper.getGroupDetail, groupId);
     yield put(groupsActions.setGroupDetail(resp?.data));
 
     const { groups } = yield select();
@@ -31,9 +28,7 @@ export default function* getGroupDetail({
 
     if (!isMember && !isPublic) yield put(groupsActions.setLoadingPage(false));
   } catch (e) {
-    console.error(
-      '[getGroupDetail]', e,
-    );
+    console.error('[getGroupDetail]', e);
     yield put(groupsActions.setLoadingPage(false));
     yield put(groupsActions.setGroupDetail(null));
   }

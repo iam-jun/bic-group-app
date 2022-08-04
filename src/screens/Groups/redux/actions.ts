@@ -235,8 +235,20 @@ const groupsActions = {
     type: groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS,
   }),
 
+  getGroupDetail: (payload: {groupId: string; loadingPage?: boolean}) => ({
+    type: groupsTypes.GET_GROUP_DETAIL,
+    payload,
+  }),
   setGroupDetail: (payload: IGroupDetail | null) => ({
     type: groupsTypes.SET_GROUP_DETAIL,
+    payload,
+  }),
+  editGroupDetail: (payload: {
+    data: IGroupDetailEdit;
+    editFieldName?: string;
+    callback?: () => void;
+  }) => ({
+    type: groupsTypes.EDIT_GROUP_DETAIL,
     payload,
   }),
 
@@ -285,23 +297,6 @@ const groupsActions = {
   }),
   clearSelectedUsers: () => ({
     type: groupsTypes.CLEAR_SELECTED_USERS,
-  }),
-
-  getGroupDetail: (
-    payload: string, loadingPage = false,
-  ) => ({
-    type: groupsTypes.GET_GROUP_DETAIL,
-    payload,
-    loadingPage,
-  }),
-
-  editGroupDetail: (payload: {
-    data: IGroupDetailEdit;
-    editFieldName?: string;
-    callback?: () => void;
-  }) => ({
-    type: groupsTypes.EDIT_GROUP_DETAIL,
-    payload,
   }),
 
   uploadImage: (payload: IGroupImageUpload) => ({

@@ -52,11 +52,9 @@ export default function* approveSingleGroupMemberRequest({
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getGroupDetail(groupId)); // to update userCount
+    yield put(groupsActions.getGroupDetail({ groupId })); // to update userCount
   } catch (err: any) {
-    console.log(
-      'approveSingleGroupMemberRequest: ', err,
-    );
+    console.error('approveSingleGroupMemberRequest: ', err);
 
     if (err?.code === approveDeclineCode.CANCELED) {
       yield put(groupsActions.editGroupMemberRequest({

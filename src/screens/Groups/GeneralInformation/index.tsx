@@ -71,7 +71,7 @@ const GeneralInformation = (props: any) => {
   useEffect(
     () => {
       if (type === 'group') {
-        dispatch(groupsActions.getGroupDetail(id));
+        dispatch(groupsActions.getGroupDetail({ groupId: id }));
       } else {
         dispatch(groupsActions.getCommunityDetail({ communityId: id }));
       }

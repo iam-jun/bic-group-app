@@ -39,9 +39,7 @@ export default function* cancelJoinCommunity({
 
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log(
-      'cancelJoinCommunity catch', err,
-    );
+    console.error('cancelJoinCommunity catch', err);
 
     if (err?.code === approveDeclineCode.APPROVED) {
       yield put(
@@ -55,8 +53,6 @@ export default function* cancelJoinCommunity({
       );
     }
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

@@ -22,7 +22,7 @@ export default function* approveAllGroupMemberRequests({
     );
 
     // to update userCount
-    yield put(groupsActions.getGroupDetail(groupId));
+    yield put(groupsActions.getGroupDetail({ groupId }));
 
     let toastProps: ToastMessageProps;
     if (callback) {
@@ -47,12 +47,8 @@ export default function* approveAllGroupMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log(
-      'approveAllGroupMemberRequests: ', err,
-    );
+    console.error('approveAllGroupMemberRequests: ', err);
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

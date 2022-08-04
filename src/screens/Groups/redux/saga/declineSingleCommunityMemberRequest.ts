@@ -47,9 +47,7 @@ export default function* declineSingleCommunityMemberRequest({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log(
-      'declineSingleCommunityMemberRequest: ', err,
-    );
+    console.error('declineSingleCommunityMemberRequest: ', err);
 
     if (err?.code === approveDeclineCode.CANCELED) {
       yield put(groupsActions.editCommunityMemberRequest({
@@ -59,8 +57,6 @@ export default function* declineSingleCommunityMemberRequest({
       return;
     }
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }
