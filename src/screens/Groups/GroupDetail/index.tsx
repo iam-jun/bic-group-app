@@ -87,9 +87,10 @@ const GroupDetail = (props: any) => {
   });
 
   const getGroupDetail = () => {
-    dispatch(groupsActions.getGroupDetail(
-      groupId, true,
-    ));
+    dispatch(groupsActions.getGroupDetail({
+      groupId,
+      loadingPage: true,
+    }));
   };
 
   const getGroupPosts = useCallback(() => {

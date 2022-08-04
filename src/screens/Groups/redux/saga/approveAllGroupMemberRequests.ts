@@ -22,7 +22,7 @@ export default function* approveAllGroupMemberRequests({
     );
 
     // to update userCount
-    yield put(groupsActions.getGroupDetail(groupId));
+    yield put(groupsActions.getGroupDetail({ groupId }));
 
     let toastProps: ToastMessageProps;
     if (callback) {
