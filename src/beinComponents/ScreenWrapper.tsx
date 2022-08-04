@@ -22,11 +22,11 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   return (
     <View
       {...props}
-      style={StyleSheet.flatten([
+      style={[
         { backgroundColor: backgroundColor || theme.colors.white },
         isFullView && { flex: 1 },
         style && style,
-      ])}
+      ]}
     />
   );
 };

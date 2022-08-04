@@ -1,11 +1,11 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
 import getWorkExperience from './getWorkExperience';
 import menuActions from '../actions';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {mapWorkExperience} from '../helper';
+import { mapWorkExperience } from '../helper';
 
 afterEach(cleanup);
 
@@ -13,7 +13,7 @@ describe('Get User Work Experience Saga', () => {
   const action = {
     type: 'test',
 
-    payload: {id: 58},
+    payload: { payload: 58 },
   };
 
   const workItem = {
@@ -34,13 +34,13 @@ describe('Get User Work Experience Saga', () => {
       meta: {},
     };
 
-    // @ts-ignorets
-
+    // @ts-ignore
     return expectSaga(getWorkExperience, action)
       .provide([
         [matchers.call.fn(menuDataHelper.getWorkExperience), expectData],
       ])
       .put(
+        // @ts-ignore
         menuActions.setUserWorkExperience(mapWorkExperience(expectData.data)),
       )
       .run();
@@ -48,11 +48,10 @@ describe('Get User Work Experience Saga', () => {
 
   it('should request to get user work experience failure', () => {
     const error = {
-      meta: {message: 'Something went wrong'},
+      meta: { message: 'Something went wrong' },
     };
 
-    // @ts-ignorets
-
+    // @ts-ignore
     return expectSaga(getWorkExperience, action)
       .provide([
         [

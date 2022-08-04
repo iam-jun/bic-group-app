@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserHeader component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+  testID="user_profile"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 17,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="user_profile.fullname"
+  >
+    fullname
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 13,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="user_profile.username"
+  >
+    @username
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      titlePosition 
+      <Text
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+      >
+         • company
+      </Text>
+    </Text>
+  </View>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {},
+        Object {
+          "marginTop": 8,
+          "textAlign": "center",
+        },
+      ]
+    }
+    testID="user_profile.description"
+  >
+    description
+  </Text>
+</View>
+`;

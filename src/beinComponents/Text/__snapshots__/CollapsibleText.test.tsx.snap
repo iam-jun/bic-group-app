@@ -19,9 +19,9 @@ exports[`Collapsible Text component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
+        "color": undefined,
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -32,9 +32,9 @@ exports[`Collapsible Text component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
         },
         Object {},
         undefined,
@@ -49,13 +49,11 @@ exports[`Collapsible Text component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
         },
-        Object {
-          "color": "#627286",
-        },
+        Object {},
         undefined,
       ]
     }
@@ -85,9 +83,9 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
+        "color": undefined,
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -99,9 +97,9 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
         },
         Object {},
         undefined,
@@ -116,13 +114,11 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
         },
-        Object {
-          "color": "#627286",
-        },
+        Object {},
         undefined,
       ]
     }
@@ -168,7 +164,7 @@ exports[`Collapsible Text component renders correctly with markdown 1`] = `
           Array [
             Object {
               "color": "#386fe5",
-              "fontFamily": "OpenSans-SemiBold",
+              "fontFamily": "BeVietnamPro-SemiBold",
             },
           ]
         }
@@ -200,9 +196,9 @@ exports[`Collapsible Text component should render full text when click read more
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
+        "color": undefined,
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -213,9 +209,9 @@ exports[`Collapsible Text component should render full text when click read more
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
         },
         Object {},
         undefined,
@@ -231,13 +227,11 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
         },
-        Object {
-          "color": "#627286",
-        },
+        Object {},
         undefined,
       ]
     }
@@ -267,9 +261,9 @@ exports[`Collapsible Text component should render short text with a short length
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
+        "color": undefined,
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -280,9 +274,9 @@ exports[`Collapsible Text component should render short text with a short length
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
         },
         Object {},
         undefined,
@@ -297,13 +291,11 @@ exports[`Collapsible Text component should render short text with a short length
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
         },
-        Object {
-          "color": "#627286",
-        },
+        Object {},
         undefined,
       ]
     }

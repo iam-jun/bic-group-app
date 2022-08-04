@@ -12,6 +12,10 @@ import modalActions from '~/store/modal/actions';
 import TimeView from '~/beinComponents/TimeView';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
+import { IObject } from '~/interfaces/common';
+import { uuidRegex } from '~/constants/commonRegex';
+import { useRootNavigation } from '~/hooks/navigation';
+import mainTabStack from '~/router/navigator/MainStack/stack';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
@@ -33,24 +37,33 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { colors } = useTheme();
+  const { rootNavigation } = useRootNavigation();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const textAudiences = getAudiencesText(
-    audience, t,
-  );
+  const textAudiences = getAudiencesText(audience, t);
 
   const avatar = actor?.avatar;
   const actorName = actor?.fullname;
 
   const onPressActor = (e: any) => {
     if (!actor.id) return;
+    // Double check if userId is username, and lack of type in params
+    // const _params: IObject<unknown> = {
+    //   ...params,
+    // };
+    // if (!uuidRegex.test(actor.id) && _params?.type !== 'username') _params.type = 'username';
 
-    const payload = {
-      userId: actor.id,
-      position: { x: e?.pageX, y: e?.pageY },
-    };
-    dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
+    const payload = { userId: actor.id };
+    rootNavigation.navigate(
+      mainTabStack.userProfile, payload,
+    );
+
+    // const payload = {
+    //   userId: actor.id,
+    // };
+
+    // dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
   return (

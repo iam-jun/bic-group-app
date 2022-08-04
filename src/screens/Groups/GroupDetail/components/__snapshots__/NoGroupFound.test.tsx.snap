@@ -3,13 +3,25 @@
 exports[`NoGroupFound component should render correctly 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#EAEDF2",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": undefined,
+      },
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "backgroundColor": undefined,
+      },
+    ]
   }
 >
   <View
+    style={
+      Object {
+        "zIndex": 2,
+      }
+    }
     testID="header"
   >
     <View
@@ -20,14 +32,14 @@ exports[`NoGroupFound component should render correctly 1`] = `
           },
           Object {
             "alignItems": "flex-end",
-            "backgroundColor": "#FFFFFF",
+            "backgroundColor": undefined,
             "flexDirection": "row",
             "overflow": "hidden",
             "paddingTop": 0,
           },
           Object {
             "borderBottomWidth": 0.5,
-            "borderColor": "#EAEDF2",
+            "borderColor": undefined,
             "elevation": 2,
             "shadowColor": "#000",
             "shadowOffset": Object {
@@ -46,7 +58,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
         style={
           Object {
             "alignItems": "center",
-            "backgroundColor": "#FFFFFF",
+            "backgroundColor": undefined,
             "flex": 1,
             "flexDirection": "row",
             "height": 60,
@@ -118,53 +130,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
             >
               <View
                 testID="header.back"
-              >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  color={4281284933}
-                  focusable={false}
-                  height={24}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                  tintColor={4281284933}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              />
             </View>
           </View>
         </View>
@@ -209,9 +175,9 @@ exports[`NoGroupFound component should render correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
+                    "color": undefined,
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 15,
                   },
                   Object {},
                   Object {
@@ -230,7 +196,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
+            "backgroundColor": undefined,
             "height": 0,
             "position": "absolute",
             "top": 0,
@@ -240,6 +206,19 @@ exports[`NoGroupFound component should render correctly 1`] = `
       />
     </View>
   </View>
+  <View
+    style={
+      Array [
+        Object {
+          "position": "absolute",
+          "top": 0,
+          "width": "100%",
+          "zIndex": 1,
+        },
+        Object {},
+      ]
+    }
+  />
   <View
     style={
       Object {
@@ -267,9 +246,9 @@ exports[`NoGroupFound component should render correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 13,
             },
             Object {},
             undefined,
@@ -282,9 +261,9 @@ exports[`NoGroupFound component should render correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
             },
             Object {},
             undefined,
@@ -307,8 +286,8 @@ exports[`NoGroupFound component should render correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#7843DD",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderRadius": 4,
           "paddingHorizontal": 12,
           "paddingVertical": 8,
         }
@@ -317,11 +296,14 @@ exports[`NoGroupFound component should render correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -329,13 +311,11 @@ exports[`NoGroupFound component should render correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Object {},
               Object {
                 "textAlign": "center",
               },

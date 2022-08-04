@@ -32,9 +32,9 @@ exports[`NFSSuggestion component should render NFSResult 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
+                  "color": undefined,
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 13,
                 },
                 Object {},
                 Object {
@@ -47,7 +47,6 @@ exports[`NFSSuggestion component should render NFSResult 1`] = `
           </Text>
         </View>
         <ActivityIndicator
-          color="#B2BDCD"
           style={
             Object {
               "alignItems": "center",
@@ -158,53 +157,7 @@ exports[`NFSSuggestion component should render button search keyword 1`] = `
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={20}
-                  bbWidth={20}
-                  color={4286071773}
-                  focusable={false}
-                  height={20}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
-                  }
-                  tintColor={4286071773}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={20}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              <View />
             </View>
           </View>
         </View>
@@ -212,13 +165,13 @@ exports[`NFSSuggestion component should render button search keyword 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {},
               Object {
-                "color": "#7843DD",
+                "color": undefined,
                 "flex": 1,
                 "marginLeft": 16,
               },

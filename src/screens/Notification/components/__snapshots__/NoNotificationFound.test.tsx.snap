@@ -19,9 +19,9 @@ exports[`NoNotificationFound component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 14,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 13,
         },
         Object {},
         undefined,

@@ -1,10 +1,10 @@
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEqual } from 'lodash';
 import React, { FC, memo } from 'react';
 import {
   Keyboard, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
 import ReactionView from '~/beinComponents/ReactionView';
@@ -26,21 +26,23 @@ import {
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import ButtonMarkAsRead from '~/screens/Post/components/ButtonMarkAsRead';
-import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
-import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
-import PostViewFooterLite from '~/screens/Post/components/postView/PostViewFooterLite';
-import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
-import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
-import PostViewMenu from '~/screens/Post/components/PostViewMenu';
+import {
+  ButtonMarkAsRead,
+  PostViewContent,
+  PostViewFooter,
+  PostViewFooterLite,
+  PostViewHeader,
+  PostViewImportant,
+  PostViewMenu,
+} from '../PostViewComponents'
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
-import SeenCountsView from './SeenCountsView';
-import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';
+import SeenCountsView from '../SeenCountsView';
+import UsersSeenPostBottomSheet from '../UsersSeenPostBottomSheet';
 
 export interface PostViewProps {
   style?: any;

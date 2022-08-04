@@ -34,9 +34,9 @@ exports[`NotificationContent component renders correctly 1`] = `
           <Text
             style={
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
                 "fontWeight": "bold",
               }
             }
@@ -45,9 +45,9 @@ exports[`NotificationContent component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
+                    "color": undefined,
+                    "fontFamily": "BeVietnamPro-Light",
+                    "fontSize": 15,
                     "fontWeight": "bold",
                   },
                   Object {},
@@ -61,9 +61,9 @@ exports[`NotificationContent component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 16,
+                  "color": undefined,
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
                 },
                 Object {},
               ]
@@ -80,13 +80,13 @@ exports[`NotificationContent component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 14,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 13,
         },
         Object {},
         Object {
-          "color": "#627286",
+          "color": undefined,
         },
       ]
     }

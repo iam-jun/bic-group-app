@@ -16,9 +16,9 @@ import {
   IPayloadPublishDraftPost,
   IPostActivity,
 } from '~/interfaces/IPost';
-import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
-import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
-import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
+import PostViewHeader from '~/screens/Post/components/PostViewComponents/PostViewHeader';
+import PostViewContent from '~/screens/Post/components/PostViewComponents/PostViewContent';
+import PostViewImportant from '~/screens/Post/components/PostViewComponents/PostViewImportant';
 import Button from '~/beinComponents/Button';
 import modalActions, { showHideToastMessage } from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
