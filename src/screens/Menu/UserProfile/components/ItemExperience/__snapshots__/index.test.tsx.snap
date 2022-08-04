@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemExperience component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 24,
+    }
+  }
+  testID="item_experience"
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingBottom": 16,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#BAC0DE",
+          "height": 22,
+          "marginRight": 12,
+          "width": 1,
+        }
+      }
+    />
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 17,
+          },
+          Object {
+            "color": "#BAC0DE",
+          },
+          undefined,
+        ]
+      }
+    >
+      Work at 
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 17,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+      >
+        company
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Title/Position
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Division
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Start Date
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      End Date
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    />
+  </View>
+</View>
+`;

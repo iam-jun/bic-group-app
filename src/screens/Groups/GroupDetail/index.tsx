@@ -71,9 +71,9 @@ const GroupDetail = (props: any) => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
     'groups', groupId, [
-      PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
-      PERMISSION_KEY.GROUP.EDIT_INFORMATION,
-      PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
     ],
   );
   const showPrivate = !isMember && privacy === groupPrivacy.private;
@@ -87,9 +87,10 @@ const GroupDetail = (props: any) => {
   });
 
   const getGroupDetail = () => {
-    dispatch(groupsActions.getGroupDetail(
-      groupId, true,
-    ));
+    dispatch(groupsActions.getGroupDetail({
+      groupId,
+      loadingPage: true,
+    }));
   };
 
   const getGroupPosts = useCallback(() => {

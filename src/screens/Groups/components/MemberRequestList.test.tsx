@@ -3,7 +3,7 @@ import React from 'react';
 import {createTestStore, renderWithRedux} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import MemberRequestList from './MemberRequestList';
-import {memberRequestDetail} from '~/test/mock_data/communities';
+import {memberRequestDetail,communityDetailData} from '~/test/mock_data/communities';
 
 describe('MemberRequestList', () => {
   const onLoadMore = jest.fn();
@@ -99,6 +99,7 @@ describe('MemberRequestList', () => {
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberRequestList
+      id={communityDetailData.id}
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
@@ -123,6 +124,7 @@ describe('MemberRequestList', () => {
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberRequestList
+      id={communityDetailData.id}
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}

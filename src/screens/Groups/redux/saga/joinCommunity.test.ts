@@ -1,4 +1,4 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import i18next from 'i18next';
 
@@ -13,21 +13,21 @@ describe('joinCommuniity saga', () => {
   const communityName = 'Community Name Test';
   const action = {
     type: 'test',
-    payload: {communityId, communityName},
+    payload: { communityId, communityName },
   };
 
   it('should send join request to Private community correctly', () => {
-    const response = {data: {join_status: 3}};
+    const response = { data: { joinStatus: 3 } };
 
     return expectSaga(joinCommunity, action)
       .provide([[matchers.call.fn(groupsDataHelper.joinCommunity), response]])
       .put(
         groupsActions.editDiscoverCommunityItem({
           id: communityId,
-          data: {join_status: 3},
+          data: { joinStatus: 3 },
         }),
       )
-      .put(groupsActions.getCommunityDetail({communityId}))
+      .put(groupsActions.getCommunityDetail({ communityId }))
       .put(
         modalActions.showHideToastMessage({
           content: `${i18next.t(
@@ -39,20 +39,20 @@ describe('joinCommuniity saga', () => {
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
 
   it('should join PUBLIC/OPEN community correctly', () => {
-    const response = {data: {join_status: 2}};
+    const response = { data: { joinStatus: 2 } };
 
     return expectSaga(joinCommunity, action)
       .provide([[matchers.call.fn(groupsDataHelper.joinCommunity), response]])
       .put(
         groupsActions.editDiscoverCommunityItem({
           id: communityId,
-          data: {join_status: 2},
+          data: { joinStatus: 2 },
         }),
       )
       .put(
@@ -65,15 +65,15 @@ describe('joinCommuniity saga', () => {
           },
         }),
       )
-      .put(groupsActions.getCommunityDetail({communityId}))
+      .put(groupsActions.getCommunityDetail({ communityId }))
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
 
   it('should send join request and server throws error', () => {
-    const error = {code: 'error'};
+    const error = { code: 'error' };
     return expectSaga(joinCommunity, action)
       .provide([
         [
@@ -83,7 +83,7 @@ describe('joinCommuniity saga', () => {
       ])
       .call(showError, error)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });

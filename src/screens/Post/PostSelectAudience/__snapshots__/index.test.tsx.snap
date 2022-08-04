@@ -3,10 +3,15 @@
 exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      Object {},
+    ]
   }
 >
   <View
@@ -23,6 +28,11 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
     }
   >
     <View
+      style={
+        Object {
+          "zIndex": 2,
+        }
+      }
       testID="header"
     >
       <View
@@ -40,7 +50,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
             },
             Object {
               "borderBottomWidth": 0.5,
-              "borderColor": "#EAEDF2",
+              "borderColor": "#E3E6F2",
               "elevation": 2,
               "shadowColor": "#000",
               "shadowOffset": Object {
@@ -131,53 +141,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               >
                 <View
                   testID="header.back"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={24}
-                    bbWidth={24}
-                    color={4281284933}
-                    focusable={false}
-                    height={24}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 24,
-                          "width": 24,
-                        },
-                      ]
-                    }
-                    tintColor={4281284933}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={24}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                />
               </View>
             </View>
           </View>
@@ -188,8 +152,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                   "flex": 1,
                   "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 16,
-                  "paddingTop": 1.5,
+                  "marginLeft": 4,
                 },
                 Object {},
               ]
@@ -222,15 +185,12 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
-                    Object {
-                      "height": 24,
-                      "lineHeight": 24,
-                    },
+                    Object {},
                   ]
                 }
                 testID="header.text"
@@ -257,9 +217,9 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#D5DCE5",
-                "borderColor": "#7843DD",
-                "borderRadius": 6,
+                "backgroundColor": "#D1D4DB",
+                "borderColor": "#7335C0",
+                "borderRadius": 4,
                 "borderWidth": 0,
                 "height": 40,
                 "marginRight": 4,
@@ -270,11 +230,14 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -282,12 +245,12 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#B2BDCD",
+                      "color": "#A4A9B7",
                     },
                     Object {
                       "textAlign": "center",
@@ -317,7 +280,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
     <View
       style={
         Object {
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": "#E3E6F2",
           "borderRadius": 20,
           "height": 40,
           "justifyContent": "center",
@@ -389,53 +352,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={20}
-                  bbWidth={20}
-                  color={4284641926}
-                  focusable={false}
-                  height={20}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
-                  }
-                  tintColor={4284641926}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={20}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              <View />
             </View>
           </View>
         </View>
@@ -446,15 +363,15 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           onFocus={[Function]}
           onSubmitEditing={[Function]}
           placeholder="Search for groups or people"
-          placeholderTextColor="#627286"
+          placeholderTextColor="#767D93"
           returnKeyType="search"
-          selectionColor="#627286"
+          selectionColor="#767D93"
           style={
             Object {
-              "color": "#2F3945",
+              "color": "#181C32",
               "flex": 1,
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
               "height": "100%",
             }
           }
@@ -474,11 +391,11 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               Object {
                 "children": Array [
                   Object {
-                    "background_img_url": null,
-                    "chat_id": "rpq3unai7i8ztprmoz97rdjr7w",
+                    "backgroundImgUrl": null,
+                    "chatId": "rpq3unai7i8ztprmoz97rdjr7w",
                     "children": Array [],
-                    "created_at": "2022-01-10T10:04:48.685Z",
-                    "deleted_at": null,
+                    "createdAt": "2022-01-10T10:04:48.685Z",
+                    "deletedAt": null,
                     "description": "The greatest community ever",
                     "group_type": "COMPANY",
                     "icon": "",
@@ -486,25 +403,25 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     "isChecked": false,
                     "level": 0,
                     "name": "EVOL Community",
-                    "owner_id": 1,
-                    "parent_id": null,
+                    "ownerId": "1",
+                    "parentId": null,
                     "parents": null,
                     "privacy": "PUBLIC",
                     "slug": "evol-community-1641809088",
                     "testID": "post_select_audience.groups.item",
                     "unique": "5ef2593a-a47c-4419-a7ba-693e862418cb",
-                    "updated_at": "2022-01-10T10:04:48.928Z",
-                    "user_count": "25",
+                    "updatedAt": "2022-01-10T10:04:48.928Z",
+                    "userCount": "25",
                   },
                 ],
                 "description": "The greatest community ever",
                 "icon": "",
                 "id": 1,
                 "name": "EVOL Community",
-                "parent_id": null,
+                "parentId": null,
                 "parents": null,
                 "unique": "6f17969b-0776-47eb-8561-6992e4acb006",
-                "user_count": "25",
+                "userCount": "25",
               },
             ],
             "title": "Groups",
@@ -542,9 +459,9 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 13,
                 },
                 Object {},
                 Object {
@@ -571,9 +488,9 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               style={
                 Array [
                   Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 13,
                   },
                   Object {},
                   Object {
@@ -625,11 +542,14 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
                   }
                   testID="button_wrapper.content"
                 >
@@ -637,7 +557,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     style={
                       Object {
                         "alignItems": "center",
-                        "backgroundColor": "#EAEDF2",
+                        "backgroundColor": "#E3E6F2",
                         "borderRadius": 8,
                         "height": 16,
                         "justifyContent": "center",
@@ -699,53 +619,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                             ]
                           }
                         >
-                          <View>
-                            <RNSVGSvgView
-                              align="xMidYMid"
-                              bbHeight={12}
-                              bbWidth={12}
-                              color={4281284933}
-                              focusable={false}
-                              height={12}
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                Array [
-                                  Object {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  Object {},
-                                  Object {
-                                    "flex": 0,
-                                    "height": 12,
-                                    "width": 12,
-                                  },
-                                ]
-                              }
-                              tintColor={4281284933}
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={12}
-                            >
-                              <RNSVGGroup>
-                                <RNSVGPath
-                                  d="M15.54 11.29L9.88 5.64a1 1 0 00-1.42 0 1 1 0 000 1.41l4.95 5L8.46 17a1 1 0 000 1.41 1 1 0 00.71.3 1 1 0 00.71-.3l5.66-5.65a1 1 0 000-1.47z"
-                                  fill={
-                                    Array [
-                                      2,
-                                    ]
-                                  }
-                                  propList={
-                                    Array [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
+                          <View />
                         </View>
                       </View>
                     </View>
@@ -754,9 +628,9 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     style={
                       Array [
                         Object {
-                          "color": "#2F3945",
-                          "fontFamily": "OpenSans-Regular",
-                          "fontSize": 16,
+                          "color": "#353E6E",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 15,
                         },
                         Object {},
                         Object {
@@ -771,12 +645,12 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       style={
                         Array [
                           Object {
-                            "color": "#2F3945",
-                            "fontFamily": "OpenSans-Regular",
-                            "fontSize": 16,
+                            "color": "#353E6E",
+                            "fontFamily": "BeVietnamPro-Light",
+                            "fontSize": 15,
                           },
                           Object {
-                            "color": "#421187",
+                            "color": "#602CA0",
                           },
                           undefined,
                         ]
@@ -816,101 +690,114 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               >
                 <View
                   style={
-                    Object {
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "paddingVertical": 4,
-                    }
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "row",
+                        "paddingLeft": 8,
+                        "paddingVertical": 4,
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   <View>
-                    <View
-                      style={
-                        Object {
-                          "borderRadius": 6,
-                          "height": 40,
-                          "width": 40,
-                        }
-                      }
-                      testID="avatar"
-                    >
+                    <View>
                       <View
                         style={
-                          Object {
-                            "backgroundColor": "#B2BDCD",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          }
+                          Array [
+                            Object {
+                              "borderRadius": 4,
+                              "height": 40,
+                              "width": 40,
+                            },
+                            undefined,
+                          ]
                         }
-                        testID="avatar_container"
+                        testID="avatar"
                       >
                         <View
-                          onLayout={[Function]}
                           style={
-                            Object {
-                              "backgroundColor": "transparent",
-                              "position": "relative",
-                            }
+                            Array [
+                              Object {
+                                "borderRadius": 4,
+                                "height": 40,
+                                "width": 40,
+                              },
+                              Object {
+                                "backgroundColor": "#A4A9B7",
+                              },
+                            ]
                           }
+                          testID="avatar_container"
                         >
                           <View
-                            collapsable={false}
+                            onLayout={[Function]}
                             style={
                               Object {
-                                "bottom": 0,
-                                "left": 0,
-                                "opacity": 1,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
+                                "backgroundColor": "transparent",
+                                "position": "relative",
                               }
                             }
                           >
                             <View
-                              style={
-                                Object {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#f9f9f9",
-                                  "borderRadius": 6,
-                                  "height": 40,
-                                  "justifyContent": "center",
-                                  "width": 40,
-                                }
-                              }
-                              testID="Image__placeholder"
-                            />
-                          </View>
-                          <View
-                            style={
-                              Array [
-                                Object {
-                                  "overflow": "hidden",
-                                },
-                                Object {
-                                  "borderRadius": 6,
-                                  "height": 40,
-                                  "width": 40,
-                                },
-                              ]
-                            }
-                          >
-                            <FastImageView
-                              onFastImageError={[Function]}
-                              onFastImageLoadEnd={[Function]}
-                              resizeMode="cover"
-                              source={null}
+                              collapsable={false}
                               style={
                                 Object {
                                   "bottom": 0,
                                   "left": 0,
+                                  "opacity": 1,
                                   "position": "absolute",
                                   "right": 0,
                                   "top": 0,
                                 }
                               }
-                              testID="avatar.image"
-                            />
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "backgroundColor": "#f9f9f9",
+                                    "borderRadius": 4,
+                                    "height": 40,
+                                    "justifyContent": "center",
+                                    "width": 40,
+                                  }
+                                }
+                                testID="Image__placeholder"
+                              />
+                            </View>
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "overflow": "hidden",
+                                  },
+                                  Object {
+                                    "borderRadius": 4,
+                                    "height": 40,
+                                    "width": 40,
+                                  },
+                                ]
+                              }
+                            >
+                              <FastImageView
+                                onFastImageError={[Function]}
+                                onFastImageLoadEnd={[Function]}
+                                resizeMode="cover"
+                                source={null}
+                                style={
+                                  Object {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  }
+                                }
+                                testID="avatar.image"
+                              />
+                            </View>
                           </View>
                         </View>
                       </View>
@@ -938,8 +825,8 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#EAEDF2",
-                            "borderColor": "#B2BDCD",
+                            "backgroundColor": "#E3E6F2",
+                            "borderColor": "#A4A9B7",
                             "borderRadius": 6,
                             "borderWidth": 1,
                             "height": 20,
@@ -1080,6 +967,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     style={
                       Object {
                         "flex": 1,
+                        "justifyContent": "center",
                         "paddingHorizontal": 12,
                       }
                     }
@@ -1089,9 +977,9 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       style={
                         Array [
                           Object {
-                            "color": "#2F3945",
-                            "fontFamily": "OpenSans-SemiBold",
-                            "fontSize": 14,
+                            "color": "#181C32",
+                            "fontFamily": "BeVietnamPro-SemiBold",
+                            "fontSize": 15,
                           },
                           Object {},
                           Object {
@@ -1164,53 +1052,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                               ]
                             }
                           >
-                            <View>
-                              <RNSVGSvgView
-                                align="xMidYMid"
-                                bbHeight={16}
-                                bbWidth={16}
-                                color={4284641926}
-                                focusable={false}
-                                height={16}
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  Array [
-                                    Object {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    Object {},
-                                    Object {
-                                      "flex": 0,
-                                      "height": 16,
-                                      "width": 16,
-                                    },
-                                  ]
-                                }
-                                tintColor={4284641926}
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={16}
-                              >
-                                <RNSVGGroup>
-                                  <RNSVGPath
-                                    d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                                    fill={
-                                      Array [
-                                        2,
-                                      ]
-                                    }
-                                    propList={
-                                      Array [
-                                        "fill",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                            </View>
+                            <View />
                           </View>
                         </View>
                       </View>
@@ -1218,12 +1060,12 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                         style={
                           Array [
                             Object {
-                              "color": "#2F3945",
-                              "fontFamily": "OpenSans-Regular",
-                              "fontSize": 14,
+                              "color": "#181C32",
+                              "fontFamily": "BeVietnamPro-Light",
+                              "fontSize": 13,
                             },
                             Object {
-                              "color": "#627286",
+                              "color": "#767D93",
                             },
                             Object {
                               "marginHorizontal": 4,
@@ -1258,10 +1100,15 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
 exports[`PostSelectAudience screen render correctly with group item 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      Object {},
+    ]
   }
 >
   <View
@@ -1278,6 +1125,11 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
     }
   >
     <View
+      style={
+        Object {
+          "zIndex": 2,
+        }
+      }
       testID="header"
     >
       <View
@@ -1295,7 +1147,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
             },
             Object {
               "borderBottomWidth": 0.5,
-              "borderColor": "#EAEDF2",
+              "borderColor": "#E3E6F2",
               "elevation": 2,
               "shadowColor": "#000",
               "shadowOffset": Object {
@@ -1386,53 +1238,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               >
                 <View
                   testID="header.back"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={24}
-                    bbWidth={24}
-                    color={4281284933}
-                    focusable={false}
-                    height={24}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 24,
-                          "width": 24,
-                        },
-                      ]
-                    }
-                    tintColor={4281284933}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={24}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                />
               </View>
             </View>
           </View>
@@ -1443,8 +1249,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                   "flex": 1,
                   "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 16,
-                  "paddingTop": 1.5,
+                  "marginLeft": 4,
                 },
                 Object {},
               ]
@@ -1477,15 +1282,12 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
-                    Object {
-                      "height": 24,
-                      "lineHeight": 24,
-                    },
+                    Object {},
                   ]
                 }
                 testID="header.text"
@@ -1512,9 +1314,9 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#D5DCE5",
-                "borderColor": "#7843DD",
-                "borderRadius": 6,
+                "backgroundColor": "#D1D4DB",
+                "borderColor": "#7335C0",
+                "borderRadius": 4,
                 "borderWidth": 0,
                 "height": 40,
                 "marginRight": 4,
@@ -1525,11 +1327,14 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -1537,12 +1342,12 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#B2BDCD",
+                      "color": "#A4A9B7",
                     },
                     Object {
                       "textAlign": "center",
@@ -1572,7 +1377,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": "#E3E6F2",
           "borderRadius": 20,
           "height": 40,
           "justifyContent": "center",
@@ -1644,53 +1449,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={20}
-                  bbWidth={20}
-                  color={4284641926}
-                  focusable={false}
-                  height={20}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
-                  }
-                  tintColor={4284641926}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={20}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              <View />
             </View>
           </View>
         </View>
@@ -1701,15 +1460,15 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           onFocus={[Function]}
           onSubmitEditing={[Function]}
           placeholder="Search for groups or people"
-          placeholderTextColor="#627286"
+          placeholderTextColor="#767D93"
           returnKeyType="search"
-          selectionColor="#627286"
+          selectionColor="#767D93"
           style={
             Object {
-              "color": "#2F3945",
+              "color": "#181C32",
               "flex": 1,
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
               "height": "100%",
             }
           }
@@ -1729,11 +1488,11 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               Object {
                 "children": Array [
                   Object {
-                    "background_img_url": null,
-                    "chat_id": "rpq3unai7i8ztprmoz97rdjr7w",
+                    "backgroundImgUrl": null,
+                    "chatId": "rpq3unai7i8ztprmoz97rdjr7w",
                     "children": Array [],
-                    "created_at": "2022-01-10T10:04:48.685Z",
-                    "deleted_at": null,
+                    "createdAt": "2022-01-10T10:04:48.685Z",
+                    "deletedAt": null,
                     "description": "The greatest community ever",
                     "group_type": "COMPANY",
                     "icon": "",
@@ -1741,25 +1500,25 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     "isChecked": false,
                     "level": 0,
                     "name": "EVOL Community",
-                    "owner_id": 1,
-                    "parent_id": null,
+                    "ownerId": "1",
+                    "parentId": null,
                     "parents": null,
                     "privacy": "PUBLIC",
                     "slug": "evol-community-1641809088",
                     "testID": "post_select_audience.groups.item",
                     "unique": "5ef2593a-a47c-4419-a7ba-693e862418cb",
-                    "updated_at": "2022-01-10T10:04:48.928Z",
-                    "user_count": "25",
+                    "updatedAt": "2022-01-10T10:04:48.928Z",
+                    "userCount": "25",
                   },
                 ],
                 "description": "The greatest community ever",
                 "icon": "",
                 "id": 1,
                 "name": "EVOL Community",
-                "parent_id": null,
+                "parentId": null,
                 "parents": null,
                 "unique": "6f17969b-0776-47eb-8561-6992e4acb006",
-                "user_count": "25",
+                "userCount": "25",
               },
             ],
             "title": "Groups",
@@ -1797,9 +1556,9 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 13,
                 },
                 Object {},
                 Object {
@@ -1826,9 +1585,9 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 13,
                   },
                   Object {},
                   Object {
@@ -1880,11 +1639,14 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
                   }
                   testID="button_wrapper.content"
                 >
@@ -1892,7 +1654,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     style={
                       Object {
                         "alignItems": "center",
-                        "backgroundColor": "#EAEDF2",
+                        "backgroundColor": "#E3E6F2",
                         "borderRadius": 8,
                         "height": 16,
                         "justifyContent": "center",
@@ -1954,53 +1716,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                             ]
                           }
                         >
-                          <View>
-                            <RNSVGSvgView
-                              align="xMidYMid"
-                              bbHeight={12}
-                              bbWidth={12}
-                              color={4281284933}
-                              focusable={false}
-                              height={12}
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
-                              style={
-                                Array [
-                                  Object {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  Object {},
-                                  Object {
-                                    "flex": 0,
-                                    "height": 12,
-                                    "width": 12,
-                                  },
-                                ]
-                              }
-                              tintColor={4281284933}
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={12}
-                            >
-                              <RNSVGGroup>
-                                <RNSVGPath
-                                  d="M15.54 11.29L9.88 5.64a1 1 0 00-1.42 0 1 1 0 000 1.41l4.95 5L8.46 17a1 1 0 000 1.41 1 1 0 00.71.3 1 1 0 00.71-.3l5.66-5.65a1 1 0 000-1.47z"
-                                  fill={
-                                    Array [
-                                      2,
-                                    ]
-                                  }
-                                  propList={
-                                    Array [
-                                      "fill",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
-                          </View>
+                          <View />
                         </View>
                       </View>
                     </View>
@@ -2009,9 +1725,9 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#2F3945",
-                          "fontFamily": "OpenSans-Regular",
-                          "fontSize": 16,
+                          "color": "#353E6E",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 15,
                         },
                         Object {},
                         Object {
@@ -2026,12 +1742,12 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#2F3945",
-                            "fontFamily": "OpenSans-Regular",
-                            "fontSize": 16,
+                            "color": "#353E6E",
+                            "fontFamily": "BeVietnamPro-Light",
+                            "fontSize": 15,
                           },
                           Object {
-                            "color": "#421187",
+                            "color": "#602CA0",
                           },
                           undefined,
                         ]
@@ -2071,101 +1787,114 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "paddingVertical": 4,
-                    }
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "row",
+                        "paddingLeft": 8,
+                        "paddingVertical": 4,
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   <View>
-                    <View
-                      style={
-                        Object {
-                          "borderRadius": 6,
-                          "height": 40,
-                          "width": 40,
-                        }
-                      }
-                      testID="avatar"
-                    >
+                    <View>
                       <View
                         style={
-                          Object {
-                            "backgroundColor": "#B2BDCD",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          }
+                          Array [
+                            Object {
+                              "borderRadius": 4,
+                              "height": 40,
+                              "width": 40,
+                            },
+                            undefined,
+                          ]
                         }
-                        testID="avatar_container"
+                        testID="avatar"
                       >
                         <View
-                          onLayout={[Function]}
                           style={
-                            Object {
-                              "backgroundColor": "transparent",
-                              "position": "relative",
-                            }
+                            Array [
+                              Object {
+                                "borderRadius": 4,
+                                "height": 40,
+                                "width": 40,
+                              },
+                              Object {
+                                "backgroundColor": "#A4A9B7",
+                              },
+                            ]
                           }
+                          testID="avatar_container"
                         >
                           <View
-                            collapsable={false}
+                            onLayout={[Function]}
                             style={
                               Object {
-                                "bottom": 0,
-                                "left": 0,
-                                "opacity": 1,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
+                                "backgroundColor": "transparent",
+                                "position": "relative",
                               }
                             }
                           >
                             <View
-                              style={
-                                Object {
-                                  "alignItems": "center",
-                                  "backgroundColor": "#f9f9f9",
-                                  "borderRadius": 6,
-                                  "height": 40,
-                                  "justifyContent": "center",
-                                  "width": 40,
-                                }
-                              }
-                              testID="Image__placeholder"
-                            />
-                          </View>
-                          <View
-                            style={
-                              Array [
-                                Object {
-                                  "overflow": "hidden",
-                                },
-                                Object {
-                                  "borderRadius": 6,
-                                  "height": 40,
-                                  "width": 40,
-                                },
-                              ]
-                            }
-                          >
-                            <FastImageView
-                              onFastImageError={[Function]}
-                              onFastImageLoadEnd={[Function]}
-                              resizeMode="cover"
-                              source={null}
+                              collapsable={false}
                               style={
                                 Object {
                                   "bottom": 0,
                                   "left": 0,
+                                  "opacity": 1,
                                   "position": "absolute",
                                   "right": 0,
                                   "top": 0,
                                 }
                               }
-                              testID="avatar.image"
-                            />
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "backgroundColor": "#f9f9f9",
+                                    "borderRadius": 4,
+                                    "height": 40,
+                                    "justifyContent": "center",
+                                    "width": 40,
+                                  }
+                                }
+                                testID="Image__placeholder"
+                              />
+                            </View>
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "overflow": "hidden",
+                                  },
+                                  Object {
+                                    "borderRadius": 4,
+                                    "height": 40,
+                                    "width": 40,
+                                  },
+                                ]
+                              }
+                            >
+                              <FastImageView
+                                onFastImageError={[Function]}
+                                onFastImageLoadEnd={[Function]}
+                                resizeMode="cover"
+                                source={null}
+                                style={
+                                  Object {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  }
+                                }
+                                testID="avatar.image"
+                              />
+                            </View>
                           </View>
                         </View>
                       </View>
@@ -2193,8 +1922,8 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#EAEDF2",
-                            "borderColor": "#B2BDCD",
+                            "backgroundColor": "#E3E6F2",
+                            "borderColor": "#A4A9B7",
                             "borderRadius": 6,
                             "borderWidth": 1,
                             "height": 20,
@@ -2335,6 +2064,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     style={
                       Object {
                         "flex": 1,
+                        "justifyContent": "center",
                         "paddingHorizontal": 12,
                       }
                     }
@@ -2344,9 +2074,9 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#2F3945",
-                            "fontFamily": "OpenSans-SemiBold",
-                            "fontSize": 14,
+                            "color": "#181C32",
+                            "fontFamily": "BeVietnamPro-SemiBold",
+                            "fontSize": 15,
                           },
                           Object {},
                           Object {
@@ -2419,53 +2149,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                               ]
                             }
                           >
-                            <View>
-                              <RNSVGSvgView
-                                align="xMidYMid"
-                                bbHeight={16}
-                                bbWidth={16}
-                                color={4284641926}
-                                focusable={false}
-                                height={16}
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  Array [
-                                    Object {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    Object {},
-                                    Object {
-                                      "flex": 0,
-                                      "height": 16,
-                                      "width": 16,
-                                    },
-                                  ]
-                                }
-                                tintColor={4284641926}
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={16}
-                              >
-                                <RNSVGGroup>
-                                  <RNSVGPath
-                                    d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                                    fill={
-                                      Array [
-                                        2,
-                                      ]
-                                    }
-                                    propList={
-                                      Array [
-                                        "fill",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                            </View>
+                            <View />
                           </View>
                         </View>
                       </View>
@@ -2473,12 +2157,12 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#2F3945",
-                              "fontFamily": "OpenSans-Regular",
-                              "fontSize": 14,
+                              "color": "#181C32",
+                              "fontFamily": "BeVietnamPro-Light",
+                              "fontSize": 13,
                             },
                             Object {
-                              "color": "#627286",
+                              "color": "#767D93",
                             },
                             Object {
                               "marginHorizontal": 4,
@@ -2513,10 +2197,15 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
 exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      Object {},
+    ]
   }
 >
   <View
@@ -2533,6 +2222,11 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
     }
   >
     <View
+      style={
+        Object {
+          "zIndex": 2,
+        }
+      }
       testID="header"
     >
       <View
@@ -2550,7 +2244,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             },
             Object {
               "borderBottomWidth": 0.5,
-              "borderColor": "#EAEDF2",
+              "borderColor": "#E3E6F2",
               "elevation": 2,
               "shadowColor": "#000",
               "shadowOffset": Object {
@@ -2641,53 +2335,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
               >
                 <View
                   testID="header.back"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={24}
-                    bbWidth={24}
-                    color={4281284933}
-                    focusable={false}
-                    height={24}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 24,
-                          "width": 24,
-                        },
-                      ]
-                    }
-                    tintColor={4281284933}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={24}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                />
               </View>
             </View>
           </View>
@@ -2698,8 +2346,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                   "flex": 1,
                   "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 16,
-                  "paddingTop": 1.5,
+                  "marginLeft": 4,
                 },
                 Object {},
               ]
@@ -2732,15 +2379,12 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
-                    Object {
-                      "height": 24,
-                      "lineHeight": 24,
-                    },
+                    Object {},
                   ]
                 }
                 testID="header.text"
@@ -2767,9 +2411,9 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#D5DCE5",
-                "borderColor": "#7843DD",
-                "borderRadius": 6,
+                "backgroundColor": "#D1D4DB",
+                "borderColor": "#7335C0",
+                "borderRadius": 4,
                 "borderWidth": 0,
                 "height": 40,
                 "marginRight": 4,
@@ -2780,11 +2424,14 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -2792,12 +2439,12 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#B2BDCD",
+                      "color": "#A4A9B7",
                     },
                     Object {
                       "textAlign": "center",
@@ -2827,7 +2474,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
     <View
       style={
         Object {
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": "#E3E6F2",
           "borderRadius": 20,
           "height": 40,
           "justifyContent": "center",
@@ -2899,53 +2546,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={20}
-                  bbWidth={20}
-                  color={4284641926}
-                  focusable={false}
-                  height={20}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
-                  }
-                  tintColor={4284641926}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={20}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              <View />
             </View>
           </View>
         </View>
@@ -2956,15 +2557,15 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           onFocus={[Function]}
           onSubmitEditing={[Function]}
           placeholder="Search for groups or people"
-          placeholderTextColor="#627286"
+          placeholderTextColor="#767D93"
           returnKeyType="search"
-          selectionColor="#627286"
+          selectionColor="#767D93"
           style={
             Object {
-              "color": "#2F3945",
+              "color": "#181C32",
               "flex": 1,
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
               "height": "100%",
             }
           }
@@ -3006,7 +2607,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
         >
           <View>
             <ActivityIndicator
-              color="#EAEDF2"
+              color="#E3E6F2"
               size="large"
             />
           </View>

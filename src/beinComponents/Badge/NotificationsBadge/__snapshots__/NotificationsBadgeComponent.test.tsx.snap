@@ -6,8 +6,8 @@ exports[`NotificationsBadgeComponent renders correctly 1`] = `
     Array [
       Object {
         "alignItems": "center",
-        "backgroundColor": "#D5DCE5",
-        "borderRadius": 24,
+        "backgroundColor": "#D1D4DB",
+        "borderRadius": 100,
         "height": 20,
         "justifyContent": "center",
         "minWidth": 20,
@@ -22,14 +22,14 @@ exports[`NotificationsBadgeComponent renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 12,
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 13,
         },
         Object {},
         Array [
           Object {
-            "color": "#2F3945",
+            "color": "#181C32",
             "lineHeight": 16,
             "textAlign": "center",
           },

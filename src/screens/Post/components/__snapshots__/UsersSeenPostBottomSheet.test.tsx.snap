@@ -15,12 +15,12 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 13,
         },
         Object {
-          "color": "#7843DD",
+          "color": "#7335C0",
         },
         Object {
           "paddingBottom": 8,
@@ -36,7 +36,7 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
   <View
     style={
       Object {
-        "backgroundColor": "#7843DD",
+        "backgroundColor": "#7335C0",
         "height": 2,
         "marginBottom": 16,
         "marginLeft": 14,
@@ -70,7 +70,7 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
         onLayout={[Function]}
       >
         <ActivityIndicator
-          color="#B2BDCD"
+          color="#A4A9B7"
           testID="loading_indicator"
         />
       </View>
@@ -94,12 +94,12 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 13,
         },
         Object {
-          "color": "#7843DD",
+          "color": "#7335C0",
         },
         Object {
           "paddingBottom": 8,
@@ -115,7 +115,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
   <View
     style={
       Object {
-        "backgroundColor": "#7843DD",
+        "backgroundColor": "#7335C0",
         "height": 2,
         "marginBottom": 16,
         "marginLeft": 14,
@@ -206,22 +206,29 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
           >
             <View
               style={
-                Object {
-                  "borderRadius": 6,
-                  "height": 40,
-                  "marginRight": 12,
-                  "width": 40,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  Object {
+                    "marginRight": 12,
+                  },
+                ]
               }
               testID="avatar"
             >
               <View
                 style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {},
+                  ]
                 }
                 testID="avatar_container"
               >
@@ -252,7 +259,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                         Object {
                           "alignItems": "center",
                           "backgroundColor": "#f9f9f9",
-                          "borderRadius": 6,
+                          "borderRadius": 4,
                           "height": 40,
                           "justifyContent": "center",
                           "width": 40,
@@ -268,7 +275,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                           "overflow": "hidden",
                         },
                         Object {
-                          "borderRadius": 6,
+                          "borderRadius": 4,
                           "height": 40,
                           "width": 40,
                         },
@@ -311,9 +318,9 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 13,
                     },
                     Object {},
                     undefined,
@@ -360,22 +367,29 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
           >
             <View
               style={
-                Object {
-                  "borderRadius": 6,
-                  "height": 40,
-                  "marginRight": 12,
-                  "width": 40,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  Object {
+                    "marginRight": 12,
+                  },
+                ]
               }
               testID="avatar"
             >
               <View
                 style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {},
+                  ]
                 }
                 testID="avatar_container"
               >
@@ -406,7 +420,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                         Object {
                           "alignItems": "center",
                           "backgroundColor": "#f9f9f9",
-                          "borderRadius": 6,
+                          "borderRadius": 4,
                           "height": 40,
                           "justifyContent": "center",
                           "width": 40,
@@ -422,7 +436,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                           "overflow": "hidden",
                         },
                         Object {
-                          "borderRadius": 6,
+                          "borderRadius": 4,
                           "height": 40,
                           "width": 40,
                         },
@@ -465,9 +479,9 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 13,
                     },
                     Object {},
                     undefined,
@@ -484,7 +498,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
         onLayout={[Function]}
       >
         <ActivityIndicator
-          color="#B2BDCD"
+          color="#A4A9B7"
           testID="loading_indicator"
         />
       </View>

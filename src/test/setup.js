@@ -13,6 +13,7 @@ import { initReactI18next } from 'react-i18next';
 
 import mock from 'react-native-permissions/mock';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
+import colors from '~/theme/theme';
 
 configure({ adapter: new Adapter() });
 
@@ -72,6 +73,7 @@ jest.doMock('react-i18next', () => ({
 }));
 
 jest.doMock('i18next', () => ({
+  ...jest.requireActual('i18next'),
   t: (str, params) => {
     let suffix = '';
     if (params?.count) {
@@ -97,6 +99,10 @@ jest.doMock('@react-navigation/native', () => ({
     navigate: (screen, params) => ({ screen, params }),
   }),
   useIsFocused: jest.fn(),
+  useTheme: () => ({
+    colors: colors.light.colors,
+    elevations: colors.light.elevations
+  }),
 }));
 
 jest.doMock('react-native-modalize', () => {
@@ -106,6 +112,17 @@ jest.doMock('react-native-modalize', () => {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
     Modalize: ({ children }) => <ReactNative.View>{children}</ReactNative.View>,
+  };
+  return MockedModule;
+});
+
+jest.doMock('react-native-portalize', () => {
+  const RealModule = jest.requireActual('react-native-portalize');
+  // noinspection UnnecessaryLocalVariableJS
+  const MockedModule = {
+    ...RealModule,
+    // eslint-disable-next-line react/prop-types
+    Portal: ({ children }) => <ReactNative.View>{children}</ReactNative.View>,
   };
   return MockedModule;
 });
@@ -251,4 +268,15 @@ jest.mock('react-hook-form', () => ({
   }),
 }));
 
+jest.doMock('expo-av', () => {
+  return {
+    Video: {
+      ...ReactNative.View,
+      onPlaybackStatusUpdate: jest.fn(),
+      onError: jest.fn(),
+    },
+    ResizeMode: { CONTAIN: 'CONTAIN' }
+  };
+}
+);
 jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));

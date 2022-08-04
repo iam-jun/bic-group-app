@@ -116,7 +116,6 @@ export const getGroupFromTreeById = (
     tree, groupId,
   );
 
-  // @ts-ignore
   return group;
 };
 

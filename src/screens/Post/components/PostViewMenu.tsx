@@ -17,7 +17,6 @@ import { showHideToastMessage } from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 import { getLink, LINK_POST } from '~/utils/link';
 import postKeySelector from '../redux/keySelector';
-import Text from '~/beinComponents/Text';
 import AlertDeleteAudiencesConfirmContent from './AlertDeleteAudiencesConfirmContent';
 
 export interface PostViewMenuProps {

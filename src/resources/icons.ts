@@ -90,7 +90,7 @@ const icons = {
   iconSend: fontAwesomeIcons.PaperPlaneTop,
   iconSuitcase: fontAwesomeIcons.Suitcase,
   download: fontAwesomeIcons.CloudArrowDown,
-  iconBack: fontAwesomeIcons.AngleLeftSolid,
+  iconBack: fontAwesomeIcons.AngleLeft,
   iconEye: fontAwesomeIcons.Eye,
   iconEyeOff: fontAwesomeIcons.EyeSlash,
   iconClose: fontAwesomeIcons.XmarkLarge,

@@ -34,7 +34,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
           "paddingHorizontal": 12,
         }
       }
-      testID="group_info_view.name"
+      testID="info_view.name"
     >
       <View
         style={
@@ -48,16 +48,33 @@ exports[`GroupInfoView component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 13,
               },
               Object {},
               undefined,
             ]
           }
         >
-          Group Name
+          Community Name
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+          testID="info_view.name.sub_title"
+        >
+          Name
         </Text>
       </View>
     </View>
@@ -88,7 +105,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
           "paddingHorizontal": 12,
         }
       }
-      testID="group_info_view.description"
+      testID="info_view.description"
     >
       <View
         style={
@@ -102,16 +119,33 @@ exports[`GroupInfoView component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 13,
               },
               Object {},
               undefined,
             ]
           }
         >
-          Group Description
+          Community Description
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+          testID="info_view.description.sub_title"
+        >
+          Description
         </Text>
       </View>
     </View>
@@ -142,7 +176,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
           "paddingHorizontal": 12,
         }
       }
-      testID="group_info_view.privacy"
+      testID="info_view.privacy"
     >
       <View
         style={
@@ -156,9 +190,25 @@ exports[`GroupInfoView component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Privacy
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {},
               undefined,

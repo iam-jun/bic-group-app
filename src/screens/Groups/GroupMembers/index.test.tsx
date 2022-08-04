@@ -7,7 +7,7 @@ import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 describe('GroupMembers component', () => {
-  const groupId = 1;
+  const groupId = "1";
   const component = () => <GroupMembers route={{params: {groupId}}} />;
 
   it('should render search input correctly', () => {
@@ -34,12 +34,20 @@ describe('GroupMembers component', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'username'};
+    state.groups.myPermissions = {
+      data: {
+        groups: {
+          "1": [
+            'add_remove_group_members'
+          ]
+        }
+      }
+    };
     const navigate = jest.fn();
     const rootNavigation = {navigate};
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
       return {rootNavigation} as any;
     });
-    state.groups.groupDetail.can_manage_member = true;
 
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
     const inviteBtn = wrapper.getByTestId('group_members.invite');
@@ -52,8 +60,7 @@ describe('GroupMembers component', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'username'};
-    state.groups.groupDetail.can_manage_member = false;
-
+    state.groups.myPermissions = {data:{groups:{}}}
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
     const inviteBtn = wrapper.queryByTestId('group_members.invite');
     expect(inviteBtn).toBeNull();

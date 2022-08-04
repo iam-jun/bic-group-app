@@ -4,41 +4,111 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
-import {LIST_POST_CONTAINING_VIDEO_PROCESS_1} from '~/test/mock_data/draftPosts';
+import {LIST_POST_CONTAINING_VIDEO_PROCESS_1, POST_CONTAINING_VIDEO_PROCESS} from '~/test/mock_data/draftPosts';
 
 describe('Get Posts Containing Video In Progress Saga', () => {
-  it('should call the server and receive an empty list of data', async () => {
+   let storeData: any;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    storeData = {
+      post: {
+        allPostContainingVideoInProgress: {
+          total: 0,
+          data: [],
+        },
+      },
+    };
+  });
+
+  it('should call the server and receive an empty list of data and list video in progress in store is = 0', async () => {
     const response = {
       data: [],
       canLoadMore: false,
       total: 0,
     };
-    return expectSaga(getPostsContainingVideoInProgress, {
-      type: 'test',
-      payload: {},
-    })
+    return expectSaga(getPostsContainingVideoInProgress, {type: 'test'})
       .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .withState(storeData)
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(1);
+        expect(allEffects?.length).toEqual(2);
       });
   });
 
-  it('should call the server and receive an list of data', async () => {
+  it('should call the server and receive an list of data and list video in progress in store is = 0', async () => {
     const response = {
       data: LIST_POST_CONTAINING_VIDEO_PROCESS_1,
       canLoadMore: false,
       total: LIST_POST_CONTAINING_VIDEO_PROCESS_1.length,
     };
-    return expectSaga(getPostsContainingVideoInProgress, {
-      type: 'test',
-      payload: {},
-    })
+    return expectSaga(getPostsContainingVideoInProgress, {type: 'test'})
       .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .withState(storeData)
       .put(postActions.setAllPostContainingVideoInProgress(response))
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(2);
+        expect(allEffects?.length).toEqual(3);
+      });
+  });
+
+    it('should call the server and receive an empty list of data and list video in progress in store is > 0', async () => {
+    const response = {
+      data: [],
+      canLoadMore: false,
+      total: 0,
+    };
+
+    storeData.post.allPostContainingVideoInProgress.data = [{test:1}]
+    return expectSaga(getPostsContainingVideoInProgress, {type: 'test'})
+      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .withState(storeData)
+      .put(postActions.setAllPostContainingVideoInProgress({
+          total: 0,
+          data: [],
+        }))
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(3);
+      });
+  });
+
+  it('should call the server and receive an list of data and list video in progress in store is > 0', async () => {
+    const response = {
+      data: LIST_POST_CONTAINING_VIDEO_PROCESS_1,
+      canLoadMore: false,
+      total: LIST_POST_CONTAINING_VIDEO_PROCESS_1.length,
+    };
+
+    storeData.post.allPostContainingVideoInProgress.data = [{test:1}]
+
+    return expectSaga(getPostsContainingVideoInProgress, {type: 'test'})
+      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .withState(storeData)
+      .put(postActions.setAllPostContainingVideoInProgress(response))
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(3);
+      });
+  });
+
+    it('should call the server and receive an list of data and list video in progress in store is > 0 and total = 0', async () => {
+    const response = {
+      data: LIST_POST_CONTAINING_VIDEO_PROCESS_1,
+      canLoadMore: false,
+      total: LIST_POST_CONTAINING_VIDEO_PROCESS_1.length,
+    };
+
+    storeData.post.allPostContainingVideoInProgress.data = [{id: POST_CONTAINING_VIDEO_PROCESS.id}]
+
+    return expectSaga(getPostsContainingVideoInProgress, {type: 'test'})
+      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .withState(storeData)
+      .put(postActions.setAllPostContainingVideoInProgress({data: response.data, total: 0}))
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(3);
       });
   });
 
@@ -57,10 +127,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       },
     };
 
-    return expectSaga(getPostsContainingVideoInProgress, {
-      type: 'test',
-      payload: {},
-    })
+    return expectSaga(getPostsContainingVideoInProgress, {type: 'test',})
       .provide([
         [matchers.call.fn(postDataHelper.getDraftPosts), Promise.reject(error)],
       ])

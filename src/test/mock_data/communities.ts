@@ -1,4 +1,4 @@
-import { COMMUNITY_ROLE } from '~/interfaces/ICommunity';
+import { COMMUNITY_ROLE } from '../../interfaces/ICommunity';
 
 export const communities = [
   {
@@ -39,8 +39,8 @@ export const communities = [
 ];
 
 export const communityDetailData = {
-  id: 1,
-  groupId: 1,
+  id: "1",
+  groupId: "1",
   name: 'EVOL Community',
   slug: 'evol',
   privacy: 'PUBLIC',
@@ -52,7 +52,6 @@ export const communityDetailData = {
   createdAt: '2022-04-26T08:29:58.579Z',
   updatedAt: '2022-04-26T08:29:58.579Z',
   userCount: 5,
-  canManageMember: true,
   joinStatus: 2,
 };
 

@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import joinNewGroup from './joinNewGroup';
@@ -11,17 +11,17 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 describe('Join New Group Saga', () => {
   const action = {
     type: 'test',
-    payload: {groupId: 1, groupName: 'Testing group'},
+    payload: { groupId: 1, groupName: 'Testing group' },
   };
 
-  const {groupId, groupName} = action.payload;
+  const { groupId, groupName } = action.payload;
 
   it('should request to join group successfully', () => {
     return expectSaga(joinNewGroup, action)
       .provide([
         [
           matchers.call.fn(groupsDataHelper.joinGroup),
-          {data: {join_status: groupJoinStatus.requested}},
+          { data: { joinStatus: groupJoinStatus.requested } },
         ],
       ])
       .put(groupsActions.getGroupDetail(groupId))
@@ -43,13 +43,13 @@ describe('Join New Group Saga', () => {
       .provide([
         [
           matchers.call.fn(groupsDataHelper.joinGroup),
-          {data: {join_status: groupJoinStatus.member}},
+          { data: { joinStatus: groupJoinStatus.member } },
         ],
       ])
       .put(
         groupsActions.editDiscoverGroupItem({
           id: groupId,
-          data: {join_status: groupJoinStatus.member},
+          data: { joinStatus: groupJoinStatus.member },
         }),
       )
       .put(
@@ -67,7 +67,7 @@ describe('Join New Group Saga', () => {
   });
 
   it('should show error when calling server and error occurs', () => {
-    const error = {meta: {message: 'Some error occurs!'}};
+    const error = { meta: { message: 'Some error occurs!' } };
 
     return expectSaga(joinNewGroup, action)
       .provide([
@@ -77,7 +77,7 @@ describe('Join New Group Saga', () => {
         modalActions.showHideToastMessage({
           content: error.meta.message,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),

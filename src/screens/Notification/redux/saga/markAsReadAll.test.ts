@@ -8,9 +8,13 @@ import notificationsActions from '../actions';
 import markAsReadAll from './markAsReadAll';
 
 describe('Mark as read all notification saga', () => {
+  const _notificationList: any = {};
+  NOTIFICATIONS_RESPONSE.data.list.forEach((item: any) => {
+    _notificationList[item.id] = {...item};
+  });
   const storeData = {
     notifications: {
-      notificationList: NOTIFICATIONS_RESPONSE.data.list,
+      notificationList: _notificationList,
     },
   };
 
@@ -23,10 +27,10 @@ describe('Mark as read all notification saga', () => {
       code: 200,
     };
 
-    const newListNoti = [...storeData.notifications.notificationList];
-    newListNoti.forEach((notiItem: any) => {
-      notiItem.isRead = true;
-    });
+    const newListNoti = {...storeData.notifications.notificationList};
+    for (const [key, value] of Object.entries(newListNoti)) {
+      newListNoti[key as any] = {...((value as any) || {}), isRead: true};
+    }
 
     return (
       // @ts-ignorets
@@ -38,6 +42,8 @@ describe('Mark as read all notification saga', () => {
         .put(
           notificationsActions.setNotifications({
             notifications: newListNoti,
+            keyValue: 'tabUnread',
+            data: [],
             unseen: 0,
           }),
         )

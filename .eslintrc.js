@@ -8,6 +8,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'import',
+    'unused-imports',
   ],
   settings: {
     react: {
@@ -22,9 +23,9 @@ module.exports = {
     __DEV__: true,
   },
   ignorePatterns: [
-    '*.test.*',
+    // '*.test.*',
     '**/e2e/*',
-    '**/src/test/*',
+    // '**/src/test/*',
     '*mock.*',
     '*.d.*',
     '**/src/services/chatSocket.ts',
@@ -43,9 +44,10 @@ module.exports = {
     'react/function-component-definition': 0,
     'react/jsx-props-no-spreading': 0,
     'no-restricted-globals': 0,
-    'no-param-reassign': 0,
+    'no-param-reassign': 1,
     'consistent-return': 0,
     'import/prefer-default-export': 0,
+    'unused-imports/no-unused-imports': 'error',
     'react/destructuring-assignment': 0,
     'no-extra-boolean-cast': 0,
     eqeqeq: 0,

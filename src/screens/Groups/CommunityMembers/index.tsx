@@ -38,7 +38,7 @@ const CommunityMembers = ({ route }: any) => {
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.white}>
-      <Header titleTextProps={{ useI18n: true }} title="groups:title_members" />
+      <Header titleTextProps={{ useI18n: true }} title="groups:title_members_other" />
       <View style={styles.searchBar}>
         <Pressable
           testID="community_members.search"

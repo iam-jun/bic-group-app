@@ -15,12 +15,8 @@ export default function* declineAllGroupMemberRequests({
       groupsDataHelper.declineAllGroupMemberRequests, groupId,
     );
   } catch (err: any) {
-    console.log(
-      'declineAllGroupMemberRequests: ', err,
-    );
+    console.error('declineAllGroupMemberRequests: ', err);
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

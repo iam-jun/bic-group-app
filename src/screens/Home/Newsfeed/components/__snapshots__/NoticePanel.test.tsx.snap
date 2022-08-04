@@ -25,9 +25,9 @@ exports[`NoticePanel component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -41,13 +41,13 @@ exports[`NoticePanel component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 12,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 13,
           },
           Object {},
           Object {
-            "color": "#627286",
+            "color": "#767D93",
             "marginTop": 2,
           },
         ]
@@ -77,11 +77,14 @@ exports[`NoticePanel component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -138,53 +141,7 @@ exports[`NoticePanel component renders correctly 1`] = `
               ]
             }
           >
-            <View>
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={16}
-                bbWidth={16}
-                color={4284641926}
-                focusable={false}
-                height={16}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 16,
-                      "width": 16,
-                    },
-                  ]
-                }
-                tintColor={4284641926}
-                vbHeight={24}
-                vbWidth={24}
-                width={16}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M13.41 12l6.3-6.29a1 1 0 10-1.42-1.42L12 10.59l-6.29-6.3a1 1 0 00-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 000 1.42 1 1 0 001.42 0l6.29-6.3 6.29 6.3a1 1 0 001.42 0 1 1 0 000-1.42z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            <View />
           </View>
         </View>
       </View>

@@ -5,9 +5,9 @@ exports[`Text component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
+        "color": "#353E6E",
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -21,9 +21,9 @@ exports[`Text component renders correctly children 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
+        "color": "#353E6E",
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -39,9 +39,9 @@ exports[`Text component renders correctly children with useI18n 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
+        "color": "#353E6E",
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -55,9 +55,9 @@ exports[`Text component renders correctly variant 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 16,
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-SemiBold",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -74,9 +74,9 @@ exports[`Text component renders correctly variant H1 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 36,
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-SemiBold",
+        "fontSize": 28,
       },
       Object {},
       undefined,
@@ -93,9 +93,9 @@ exports[`Text component renders correctly variant H2 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 28,
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-SemiBold",
+        "fontSize": 24,
       },
       Object {},
       undefined,
@@ -112,9 +112,9 @@ exports[`Text component renders correctly variant H3 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 24,
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-SemiBold",
+        "fontSize": 20,
       },
       Object {},
       undefined,
@@ -131,9 +131,9 @@ exports[`Text component renders correctly variant H4 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 20,
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-SemiBold",
+        "fontSize": 17,
       },
       Object {},
       undefined,
@@ -150,9 +150,9 @@ exports[`Text component renders correctly variant H5 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 16,
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-SemiBold",
+        "fontSize": 15,
       },
       Object {},
       undefined,
@@ -169,34 +169,15 @@ exports[`Text component renders correctly variant H6 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 14,
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-SemiBold",
+        "fontSize": 13,
       },
       Object {},
       undefined,
     ]
   }
   testID="text.h6"
->
-  renders correctly children
-</Text>
-`;
-
-exports[`Text component renders correctly variant H6s 1`] = `
-<Text
-  style={
-    Array [
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 14,
-      },
-      Object {},
-      undefined,
-    ]
-  }
-  testID="text.h6s"
 >
   renders correctly children
 </Text>

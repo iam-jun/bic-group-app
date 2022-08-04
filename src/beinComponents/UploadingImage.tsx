@@ -135,7 +135,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
 
   return (
     <View
-      style={StyleSheet.flatten([styles.container, { width, height }, style])}
+      style={[styles.container, { width, height }, style]}
     >
       {imageUrl ? (
         <Image source={imageUrl} useOnLayoutSize={false} style={styles.image} />

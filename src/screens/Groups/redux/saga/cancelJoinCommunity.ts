@@ -12,7 +12,7 @@ export default function* cancelJoinCommunity({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; communityName: string};
+  payload: { communityId: string; communityName: string };
 }) {
   const { communityId, communityName } = payload;
   try {
@@ -39,9 +39,7 @@ export default function* cancelJoinCommunity({
 
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log(
-      'cancelJoinCommunity catch', err,
-    );
+    console.error('cancelJoinCommunity catch', err);
 
     if (err?.code === approveDeclineCode.APPROVED) {
       yield put(
@@ -55,8 +53,6 @@ export default function* cancelJoinCommunity({
       );
     }
 
-    yield call(
-      showError, err,
-    );
+    yield showError(err);
   }
 }

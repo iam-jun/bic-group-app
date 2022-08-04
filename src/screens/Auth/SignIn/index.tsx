@@ -300,7 +300,7 @@ const SignIn = () => {
   const renderLoading = () => {
     if (!loading) return null;
     return (
-      <Animated.View style={[styles.loading, optionsStyle]}>
+      <Animated.View testID="sign_in.loading" style={[styles.loading, optionsStyle]}>
         <LoadingIndicator size="large" color={theme.colors.purple50} />
       </Animated.View>
     );

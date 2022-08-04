@@ -3,187 +3,64 @@
 exports[`OptionMenu conponent renders correctly 1`] = `
 <View>
   <View>
-    <View
-      style={Object {}}
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 12,
-            },
-            Object {
-              "color": "#627286",
-            },
-            Object {
-              "margin": 12,
-            },
-          ]
-        }
-      >
-        Choose your gender
-      </Text>
+    <View>
       <View
-        style={
-          Array [
-            Object {
-              "alignSelf": "stretch",
-              "backgroundColor": "#EAEDF2",
-              "height": 1,
-              "marginHorizontal": 0,
-              "width": undefined,
-            },
-            Object {},
-          ]
-        }
-        testID="divider"
-      />
-      <View>
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+        style={Object {}}
+      >
+        <Text
           style={
-            Object {
-              "opacity": 1,
-            }
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#767D93",
+              },
+              Object {
+                "margin": 12,
+              },
+            ]
           }
-          testID="edit_user_info.option_menu.item_MALE"
         >
-          <View>
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "height": 36,
-                  "opacity": 1,
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              >
-                <Text
-                  numberOfLines={2}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 14,
-                      },
-                      Object {},
-                      undefined,
-                    ]
-                  }
-                >
-                  Male
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View>
+          Choose your gender
+        </Text>
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            Array [
+              Object {
+                "alignSelf": "stretch",
+                "backgroundColor": "#E3E6F2",
+                "height": 1,
+                "marginHorizontal": 0,
+                "width": undefined,
+              },
+              Object {},
+            ]
           }
-          testID="edit_user_info.option_menu.item_FEMALE"
-        >
-          <View>
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
+          testID="divider"
+        />
+        <View>
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
               }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "height": 36,
-                  "opacity": 1,
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              >
-                <Text
-                  numberOfLines={2}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 14,
-                      },
-                      Object {},
-                      undefined,
-                    ]
-                  }
-                >
-                  Female
-                </Text>
-              </View>
+            }
+            testID="edit_user_info.option_menu.item_MALE"
+          >
+            <View>
               <View
                 accessibilityState={
                   Object {
@@ -193,14 +70,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                 accessible={true}
                 collapsable={false}
                 focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -210,79 +79,166 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "height": 36,
                     "opacity": 1,
+                    "paddingHorizontal": 12,
                   }
                 }
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      undefined,
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    numberOfLines={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#181C32",
+                          "fontFamily": "BeVietnamPro-SemiBold",
+                          "fontSize": 13,
+                        },
+                        Object {},
+                        undefined,
+                      ]
+                    }
+                  >
+                    Male
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View>
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="edit_user_info.option_menu.item_FEMALE"
+          >
+            <View>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={false}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "height": 36,
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    numberOfLines={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#181C32",
+                          "fontFamily": "BeVietnamPro-SemiBold",
+                          "fontSize": 13,
+                        },
+                        Object {},
+                        undefined,
+                      ]
+                    }
+                  >
+                    Female
+                  </Text>
+                </View>
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
                   }
                 >
                   <View
                     style={
                       Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
                         undefined,
-                        undefined,
-                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
                       ]
                     }
                   >
-                    <View>
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={24}
-                        bbWidth={24}
-                        color={4282519943}
-                        focusable={false}
-                        height={24}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
-                            },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 24,
-                              "width": 24,
-                            },
-                          ]
-                        }
-                        tintColor={4282519943}
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={24}
-                      >
-                        <RNSVGGroup>
-                          <RNSVGPath
-                            d="M18.71 7.21a1 1 0 00-1.42 0l-7.45 7.46-3.13-3.14A1 1 0 105.29 13l3.84 3.84a1 1 0 001.42 0l8.16-8.16a1 1 0 000-1.47z"
-                            fill={
-                              Array [
-                                2,
-                              ]
-                            }
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
+                    <View
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -290,76 +246,76 @@ exports[`OptionMenu conponent renders correctly 1`] = `
             </View>
           </View>
         </View>
-      </View>
-      <View>
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
+        <View>
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
             }
-          }
-          testID="edit_user_info.option_menu.item_OTHERS"
-        >
-          <View>
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "height": 36,
-                  "opacity": 1,
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
+            testID="edit_user_info.option_menu.item_OTHERS"
+          >
+            <View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={false}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "flex": 1,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "height": 36,
+                    "opacity": 1,
+                    "paddingHorizontal": 12,
                   }
                 }
               >
-                <Text
-                  numberOfLines={2}
+                <View
                   style={
-                    Array [
-                      Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 14,
-                      },
-                      Object {},
-                      undefined,
-                    ]
+                    Object {
+                      "flex": 1,
+                    }
                   }
                 >
-                  Others
-                </Text>
+                  <Text
+                    numberOfLines={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#181C32",
+                          "fontFamily": "BeVietnamPro-SemiBold",
+                          "fontSize": 13,
+                        },
+                        Object {},
+                        undefined,
+                      ]
+                    }
+                  >
+                    Others
+                  </Text>
+                </View>
               </View>
             </View>
           </View>

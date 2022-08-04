@@ -1,18 +1,18 @@
 import React from 'react';
 import MockedNavigator from '~/test/MockedNavigator';
-import {renderWithRedux, createTestStore, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, createTestStore, fireEvent } from '~/test/testUtils';
 import GroupTopBar from './GroupTopBar';
 import initialState from '~/store/initialState';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { communityDetailData } from '~/test/mock_data/communities';
+
 
 describe('GroupTopBar component', () => {
   it('renders Search icon correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'testname1'};
-    state.groups.groupDetail.join_status = groupJoinStatus.member;
+    state.auth.user = { username: 'testname1' };
+    state.groups.groupDetail.joinStatus = groupJoinStatus.member;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -25,10 +25,10 @@ describe('GroupTopBar component', () => {
   });
 
   it('renders Chat icon correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'testname1'};
-    state.groups.groupDetail.join_status = groupJoinStatus.member;
+    state.auth.user = { username: 'testname1' };
+    state.groups.groupDetail.joinStatus = groupJoinStatus.member;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -41,11 +41,24 @@ describe('GroupTopBar component', () => {
   });
 
   it('renders Admin icon correctly when user is an admin', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'testname1'};
-    state.groups.groupDetail.join_status = groupJoinStatus.member;
-    state.groups.groupDetail.can_setting = true;
+    state.auth.user = { username: 'testname1' };
+    state.groups.groupDetail.joinStatus = groupJoinStatus.member;
+    state.groups.groupDetail.canSetting = true;
+    state.groups.groupDetail.group = { ...communityDetailData };
+    state.groups.myPermissions = {
+      data: {
+        groups: {
+          "1": [
+            "report_member_in_group",
+            'approve_reject_group_joining_requests',
+            'edit_group_information',
+            'edit_group_privacy'
+          ]
+        }
+      }
+    };
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -60,11 +73,17 @@ describe('GroupTopBar component', () => {
   });
 
   it('should render group option menu correctly when user is not an admin', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'testname1'};
-    state.groups.groupDetail.join_status = groupJoinStatus.member;
-    state.groups.groupDetail.can_setting = false;
+    state.auth.user = { username: 'testname1' };
+    state.groups.groupDetail.joinStatus = groupJoinStatus.member;
+    state.groups.myPermissions = {
+      data: {
+        groups: {
+        }
+      }
+    };
+
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -73,7 +92,8 @@ describe('GroupTopBar component', () => {
     );
     const component = wrapper.queryByTestId('group_top_bar.admin_button');
     expect(component).toBeNull();
-    const optionMenu = wrapper.getByTestId('group_top_bar.option_menu');
+    
+    const optionMenu = wrapper.queryByTestId('group_top_bar.option_menu');
     expect(optionMenu).toBeDefined();
     fireEvent.press(optionMenu);
   });

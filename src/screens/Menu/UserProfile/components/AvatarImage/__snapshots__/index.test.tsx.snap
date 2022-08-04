@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AvatarImage screen renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "marginTop": -44,
+    }
+  }
+  testID="user_profile.avatar_image"
+>
+  <View>
+    <View
+      style={
+        Array [
+          Object {
+            "borderRadius": 6,
+            "height": 96,
+            "width": 96,
+          },
+          undefined,
+        ]
+      }
+      testID="avatar"
+    >
+      <View
+        style={
+          Array [
+            Array [
+              Object {
+                "borderRadius": 6,
+                "height": 96,
+                "width": 96,
+              },
+              Object {
+                "borderRadius": 48,
+              },
+            ],
+            Object {},
+          ]
+        }
+        testID="avatar_container"
+      >
+        <View
+          onLayout={[Function]}
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "position": "relative",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#f9f9f9",
+                  "borderColor": "#FFFFFF",
+                  "borderRadius": 48,
+                  "borderWidth": 4,
+                  "height": 96,
+                  "justifyContent": "center",
+                  "width": 96,
+                }
+              }
+              testID="Image__placeholder"
+            />
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Object {
+                  "borderColor": "#FFFFFF",
+                  "borderRadius": 48,
+                  "borderWidth": 4,
+                  "height": 96,
+                  "width": 96,
+                },
+              ]
+            }
+          >
+            <FastImageView
+              onFastImageError={[Function]}
+              onFastImageLoadEnd={[Function]}
+              resizeMode="cover"
+              source={
+                Object {
+                  "testUri": "../../../assets/images/user_avatar_default.png",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              testID="avatar.image"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -3,7 +3,7 @@ import {cleanup} from '@testing-library/react-native';
 
 import {configureStore, renderWithRedux} from '~/test/testUtils';
 import initialState from '~/store/initialState';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 import MentionBar from '.';
 import {StyleSheet} from 'react-native';
 

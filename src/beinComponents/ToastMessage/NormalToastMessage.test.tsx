@@ -3,7 +3,7 @@ import {cleanup} from '@testing-library/react-native';
 
 import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import NormalToastMessage from './NormalToastMessage';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);

@@ -20,6 +20,6 @@ describe('NoGroupFound component', () => {
     const wrapper = renderWithRedux(<NoGroupFound />);
     const button = wrapper.getByTestId('no_group_found.back');
     fireEvent.press(button);
-    expect(navigate).toBeCalledWith(groupStack.groups);
+    expect(navigate).toBeCalledWith(groupStack.communities);
   });
 });
