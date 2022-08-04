@@ -26,7 +26,7 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": undefined,
+        "backgroundColor": "#F1F1F9",
         "borderRadius": 4,
         "height": 36,
         "justifyContent": "center",
@@ -141,7 +141,7 @@ exports[`ButtonDanger conponent renders label correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": undefined,
+        "backgroundColor": "#F1F1F9",
         "borderRadius": 4,
         "height": 36,
         "justifyContent": "center",
@@ -231,7 +231,7 @@ exports[`ButtonDanger conponent renders label correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },

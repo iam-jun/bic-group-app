@@ -4,7 +4,7 @@ exports[`AtMentionItem component renders correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
     }
   }
   testID="at_mention_item"
@@ -54,7 +54,7 @@ exports[`AtMentionItem component renders correctly 1`] = `
               "width": 40,
             },
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#A4A9B7",
             },
           ]
         }
@@ -138,7 +138,7 @@ exports[`AtMentionItem component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },

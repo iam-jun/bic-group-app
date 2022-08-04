@@ -14,7 +14,7 @@ exports[`InfoSection component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
           "fontSize": 17,
         },

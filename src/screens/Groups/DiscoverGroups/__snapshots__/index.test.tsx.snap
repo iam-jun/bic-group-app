@@ -69,7 +69,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
             },
             Object {
               "flex": 1,
@@ -94,14 +94,14 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                 },
                 Object {
                   "alignItems": "flex-end",
-                  "backgroundColor": undefined,
+                  "backgroundColor": "#FFFFFF",
                   "flexDirection": "row",
                   "overflow": "hidden",
                   "paddingTop": 0,
                 },
                 Object {
                   "borderBottomWidth": 0.5,
-                  "borderColor": undefined,
+                  "borderColor": "#E3E6F2",
                   "elevation": 2,
                   "shadowColor": "#000",
                   "shadowOffset": Object {
@@ -120,7 +120,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": undefined,
+                  "backgroundColor": "#FFFFFF",
                   "flex": 1,
                   "flexDirection": "row",
                   "height": 60,
@@ -203,8 +203,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                       "flex": 1,
                       "height": "100%",
                       "justifyContent": "center",
-                      "marginLeft": 16,
-                      "paddingTop": 1.5,
+                      "marginLeft": 4,
                     },
                     Object {},
                   ]
@@ -237,15 +236,12 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": undefined,
+                          "color": "#181C32",
                           "fontFamily": "BeVietnamPro-SemiBold",
                           "fontSize": 15,
                         },
                         Object {},
-                        Object {
-                          "height": 24,
-                          "lineHeight": 24,
-                        },
+                        Object {},
                       ]
                     }
                     testID="header.text"
@@ -302,7 +298,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         "width": 40,
                       },
                       Object {
-                        "backgroundColor": undefined,
+                        "backgroundColor": "#F8F9FF",
                       },
                     ]
                   }
@@ -391,7 +387,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
             <View
               style={
                 Object {
-                  "backgroundColor": undefined,
+                  "backgroundColor": "#FFFFFF",
                   "height": 0,
                   "position": "absolute",
                   "top": 0,
@@ -401,19 +397,6 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
             />
           </View>
         </View>
-        <View
-          style={
-            Array [
-              Object {
-                "position": "absolute",
-                "top": 0,
-                "width": "100%",
-                "zIndex": 1,
-              },
-              Object {},
-            ]
-          }
-        />
         <RCTScrollView
           ItemSeparatorComponent={[Function]}
           ListEmptyComponent={[Function]}
@@ -439,6 +422,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
             <RefreshControlMock
               onRefresh={[Function]}
               refreshing={false}
+              tintColor="#A4A9B7"
             />
           }
           removeClippedSubviews={false}
@@ -508,7 +492,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                             "width": 72,
                           },
                           Object {
-                            "backgroundColor": undefined,
+                            "backgroundColor": "#A4A9B7",
                           },
                         ]
                       }
@@ -596,7 +580,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": undefined,
+                            "color": "#181C32",
                             "fontFamily": "BeVietnamPro-SemiBold",
                             "fontSize": 15,
                           },
@@ -680,11 +664,13 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": undefined,
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
-                            Object {},
+                            Object {
+                              "color": "#767D93",
+                            },
                             undefined,
                           ]
                         }
@@ -695,11 +681,13 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": undefined,
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
-                            Object {},
+                            Object {
+                              "color": "#767D93",
+                            },
                             undefined,
                           ]
                         }
@@ -770,11 +758,13 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": undefined,
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
-                            Object {},
+                            Object {
+                              "color": "#767D93",
+                            },
                             undefined,
                           ]
                         }
@@ -785,11 +775,13 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": undefined,
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
-                            Object {},
+                            Object {
+                              "color": "#767D93",
+                            },
                             undefined,
                           ]
                         }
@@ -811,7 +803,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                     style={
                       Object {
                         "alignItems": "center",
-                        "backgroundColor": undefined,
+                        "backgroundColor": "#E3E6F2",
                         "borderRadius": 4,
                         "padding": 8,
                       }
@@ -895,11 +887,13 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": undefined,
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-SemiBold",
                               "fontSize": 15,
                             },
-                            Object {},
+                            Object {
+                              "color": "#181C32",
+                            },
                             Object {
                               "textAlign": "center",
                             },

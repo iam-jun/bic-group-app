@@ -8,7 +8,7 @@ export default function* getJoinedCommunities({
   payload,
 }: {
   type: string;
-  payload?: {callback?: () => void};
+  payload?: { callback?: () => void };
 }) {
   try {
     const { callback } = payload || {};
@@ -32,8 +32,6 @@ export default function* getJoinedCommunities({
       '\x1b[33m', 'getJoinedCommunities : error', err, '\x1b[0m',
     );
     yield put(groupsActions.setMyCommunities({ loading: false }));
-    yield call(
-      showError, err,
-    );
+    yield showError(err);
   }
 }

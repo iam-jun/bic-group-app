@@ -19,7 +19,7 @@ exports[`Collapsible Text component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": undefined,
+        "color": "#353E6E",
         "fontFamily": "BeVietnamPro-Light",
         "fontSize": 15,
       },
@@ -32,7 +32,7 @@ exports[`Collapsible Text component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -49,11 +49,13 @@ exports[`Collapsible Text component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },
-        Object {},
+        Object {
+          "color": "#2E3660",
+        },
         undefined,
       ]
     }
@@ -83,7 +85,7 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
   style={
     Array [
       Object {
-        "color": undefined,
+        "color": "#353E6E",
         "fontFamily": "BeVietnamPro-Light",
         "fontSize": 15,
       },
@@ -97,7 +99,7 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -114,11 +116,13 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },
-        Object {},
+        Object {
+          "color": "#2E3660",
+        },
         undefined,
       ]
     }
@@ -196,7 +200,7 @@ exports[`Collapsible Text component should render full text when click read more
   style={
     Array [
       Object {
-        "color": undefined,
+        "color": "#353E6E",
         "fontFamily": "BeVietnamPro-Light",
         "fontSize": 15,
       },
@@ -209,7 +213,7 @@ exports[`Collapsible Text component should render full text when click read more
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -227,11 +231,13 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },
-        Object {},
+        Object {
+          "color": "#2E3660",
+        },
         undefined,
       ]
     }
@@ -261,7 +267,7 @@ exports[`Collapsible Text component should render short text with a short length
   style={
     Array [
       Object {
-        "color": undefined,
+        "color": "#353E6E",
         "fontFamily": "BeVietnamPro-Light",
         "fontSize": 15,
       },
@@ -274,7 +280,7 @@ exports[`Collapsible Text component should render short text with a short length
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -291,11 +297,13 @@ exports[`Collapsible Text component should render short text with a short length
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },
-        Object {},
+        Object {
+          "color": "#2E3660",
+        },
         undefined,
       ]
     }

@@ -5,7 +5,7 @@ import {cleanup} from '@testing-library/react-native';
 import {configureStore, renderWithRedux, fireEvent} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import AtMentionItem from './AtMentionItem';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 
 afterEach(cleanup);
 
@@ -52,7 +52,7 @@ describe('AtMentionItem component', () => {
     const component = wrapper.getByTestId('at_mention_item');
     expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
-    expect(flattenedStyle.backgroundColor).toBe(colors.light.colors.neutral5);
+    expect(flattenedStyle.backgroundColor).toBe(colors.light.colors.white);
   });
 
   it(`should show "AtMentionItem" with item all`, async () => {

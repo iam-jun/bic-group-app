@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux, waitForUpdateRedux } from '~/test/testUtils';
 import NewsfeedList from './NewsfeedList';
 import MockedNavigator from '~/test/MockedNavigator';
-import {POST_DETAIL, POST_DETAIL_2} from '~/test/mock_data/post';
-import {View} from 'react-native';
+import { POST_DETAIL, POST_DETAIL_2 } from '~/test/mock_data/post';
+import { View } from 'react-native';
 import Text from '~/beinComponents/Text';
 
 describe('NewsfeedList component', () => {
@@ -25,7 +25,7 @@ describe('NewsfeedList component', () => {
         )}
       />,
     );
-
+    await waitForUpdateRedux();
     const indicator = wrapper.queryByTestId('newsfeed_list.activity_indicator');
     expect(indicator).not.toBeNull();
   });

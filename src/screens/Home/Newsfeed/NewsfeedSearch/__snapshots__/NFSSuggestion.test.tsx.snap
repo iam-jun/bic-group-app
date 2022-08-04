@@ -32,7 +32,7 @@ exports[`NFSSuggestion component should render NFSResult 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
                   "fontSize": 13,
                 },
@@ -47,6 +47,7 @@ exports[`NFSSuggestion component should render NFSResult 1`] = `
           </Text>
         </View>
         <ActivityIndicator
+          color="#A4A9B7"
           style={
             Object {
               "alignItems": "center",
@@ -165,13 +166,13 @@ exports[`NFSSuggestion component should render button search keyword 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
               Object {},
               Object {
-                "color": undefined,
+                "color": "#7335C0",
                 "flex": 1,
                 "marginLeft": 16,
               },

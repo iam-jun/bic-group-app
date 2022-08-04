@@ -145,7 +145,7 @@ exports[`CommunitItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "fontFamily": "BeVietnamPro-SemiBold",
               "fontSize": 15,
             },
@@ -229,11 +229,13 @@ exports[`CommunitItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }
@@ -244,11 +246,13 @@ exports[`CommunitItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }
@@ -259,11 +263,13 @@ exports[`CommunitItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }

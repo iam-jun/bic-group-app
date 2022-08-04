@@ -6,8 +6,8 @@ exports[`CommentToolbar component renders correctly 1`] = `
     Array [
       Object {
         "alignItems": "center",
-        "backgroundColor": undefined,
-        "borderColor": undefined,
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#A4A9B7",
         "borderTopWidth": 1,
         "flexDirection": "row",
         "height": 56,

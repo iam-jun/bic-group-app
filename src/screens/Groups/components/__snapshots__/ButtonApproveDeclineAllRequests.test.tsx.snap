@@ -5,7 +5,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
   style={
     Array [
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#FFFFFF",
       },
       undefined,
     ]
@@ -16,7 +16,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       Array [
         Object {
           "alignSelf": "stretch",
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "height": 1,
           "marginHorizontal": 0,
           "width": undefined,
@@ -47,7 +47,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#DDDFE4",
           "borderRadius": 4,
           "flex": 1,
           "marginRight": 8,
@@ -73,11 +73,13 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
-              Object {},
+              Object {
+                "color": "#181C32",
+              },
               Object {
                 "textAlign": "center",
               },
@@ -101,7 +103,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#9E6FD8",
           "borderRadius": 4,
           "flex": 1,
           "padding": 8,
@@ -126,11 +128,13 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
-              Object {},
+              Object {
+                "color": "#FFFFFF",
+              },
               Object {
                 "textAlign": "center",
               },

@@ -39,6 +39,6 @@ export default function* getGroupPosts({
       e,
       '\x1b[0m',
     );
-    yield call(showError, e)
+    yield showError(e);
   }
 }

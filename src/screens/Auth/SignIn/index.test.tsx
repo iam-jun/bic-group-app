@@ -49,17 +49,6 @@ describe('SignIn screen', () => {
     expect(Keyboard.dismiss).toBeCalled();
   });
 
-  it(`should not hide keyboard`, async () => {
-    Platform.OS = 'web';
-    Keyboard.dismiss = jest.fn();
-    const store = mockStore(initialState);
-    const wrapper = renderWithRedux(<SignIn />, store);
-    const component = wrapper.getByTestId('sign_in.button_hide_keyboard');
-    fireEvent.press(component);
-
-    expect(Keyboard.dismiss).not.toBeCalled();
-  });
-
   //bc change text input from Controller to useController so can not run this test
   // it(`should disable inputs when loading`, async () => {
   //   const store = mockStore({
@@ -98,36 +87,6 @@ describe('SignIn screen', () => {
   //   expect(inputEmail.props.disabled).toBeTruthy();
   // });
 
-  it(`should show label`, async () => {
-    const store = mockStore({
-      ...initialState,
-      auth: {
-        ...initialState.auth,
-        loading: false,
-      },
-    });
-    Platform.OS = 'ios';
-
-    const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('sign_in.input_email');
-    const inputPassword = wrapper.getByTestId('sign_in.input_password');
-
-    expect(inputEmail.props.label).toBe('Email Address');
-    expect(inputPassword.props.label).toBe('Password');
-  });
-
-  it(`should hide label on web`, async () => {
-    const store = mockStore(initialState);
-    Platform.OS = 'web';
-
-    const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('sign_in.input_email');
-    const inputPassword = wrapper.getByTestId('sign_in.input_password');
-
-    expect(inputEmail.props.label).toBe(undefined);
-    expect(inputPassword.props.label).toBe(undefined);
-  });
-
   it(`should show sample email placeholder on mobile`, async () => {
     const store = mockStore(initialState);
     Platform.OS = 'ios';
@@ -135,17 +94,7 @@ describe('SignIn screen', () => {
     const wrapper = renderWithRedux(<SignIn />, store);
     const inputEmail = wrapper.getByTestId('sign_in.input_email');
 
-    expect(inputEmail.props.placeholder).toBe('sample@email.com');
-  });
-
-  it(`should show placeholder the same label on web`, async () => {
-    const store = mockStore(initialState);
-    Platform.OS = 'web';
-
-    const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('sign_in.input_email');
-
-    expect(inputEmail.props.placeholder).toBe('Email Address');
+    expect(inputEmail.props.placeholder).toBe('example@gmail.com');
   });
 
   it(`Login button should be clickable`, async () => {
@@ -161,7 +110,7 @@ describe('SignIn screen', () => {
     expect(buttonLogin.props.disabled).toBeFalsy();
   });
 
-  it(`should disable inputs when loading`, async () => {
+  it(`should show modal loading when loading`, async () => {
     const store = mockStore({
       ...initialState,
       auth: {

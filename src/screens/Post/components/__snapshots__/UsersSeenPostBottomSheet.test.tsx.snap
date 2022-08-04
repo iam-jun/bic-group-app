@@ -15,11 +15,13 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
           "fontSize": 13,
         },
-        Object {},
+        Object {
+          "color": "#7335C0",
+        },
         Object {
           "paddingBottom": 8,
           "paddingLeft": 14,
@@ -34,7 +36,7 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
   <View
     style={
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#7335C0",
         "height": 2,
         "marginBottom": 16,
         "marginLeft": 14,
@@ -68,6 +70,7 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
         onLayout={[Function]}
       >
         <ActivityIndicator
+          color="#A4A9B7"
           testID="loading_indicator"
         />
       </View>
@@ -91,11 +94,13 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
           "fontSize": 13,
         },
-        Object {},
+        Object {
+          "color": "#7335C0",
+        },
         Object {
           "paddingBottom": 8,
           "paddingLeft": 14,
@@ -110,7 +115,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
   <View
     style={
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#7335C0",
         "height": 2,
         "marginBottom": 16,
         "marginLeft": 14,
@@ -313,7 +318,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
                       "fontSize": 13,
                     },
@@ -474,7 +479,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
                       "fontSize": 13,
                     },
@@ -493,6 +498,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
         onLayout={[Function]}
       >
         <ActivityIndicator
+          color="#A4A9B7"
           testID="loading_indicator"
         />
       </View>

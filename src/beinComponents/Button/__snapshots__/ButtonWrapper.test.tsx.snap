@@ -278,7 +278,7 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -290,38 +290,6 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
       }
     />
   </View>
-</View>
-`;
-
-exports[`Button Wrapper component renders correctly contentStyle 1`] = `
-<View
-  accessible={true}
-  collapsable={false}
-  focusable={false}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "opacity": 1,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "blue",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
-    }
-    testID="button_wrapper.content"
-  />
 </View>
 `;
 

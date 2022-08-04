@@ -34,7 +34,7 @@ exports[`NotificationContent component renders correctly 1`] = `
           <Text
             style={
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
                 "fontWeight": "bold",
@@ -45,7 +45,7 @@ exports[`NotificationContent component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                     "fontWeight": "bold",
@@ -61,7 +61,7 @@ exports[`NotificationContent component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 15,
                 },
@@ -75,24 +75,5 @@ exports[`NotificationContent component renders correctly 1`] = `
       </View>
     </View>
   </View>
-  <Text
-    numberOfLines={1}
-    style={
-      Array [
-        Object {
-          "color": undefined,
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 13,
-        },
-        Object {},
-        Object {
-          "color": undefined,
-        },
-      ]
-    }
-    testID="notification_content.content"
-  >
-    okie
-  </Text>
 </View>
 `;

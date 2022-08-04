@@ -4,7 +4,7 @@ exports[`NFSResult component should render empty search result 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "#F9FAFB",
+      "backgroundColor": "#F8F9FF",
       "flex": 1,
     }
   }
@@ -24,7 +24,7 @@ exports[`NFSResult component should render empty search result 1`] = `
             Object {
               "backgroundColor": "#FFFFFF",
               "borderBottomWidth": 1,
-              "borderColor": "#F9FAFB",
+              "borderColor": "#F8F9FF",
               "flexDirection": "row",
               "paddingBottom": 12,
               "paddingHorizontal": 12,
@@ -45,19 +45,22 @@ exports[`NFSResult component should render empty search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "padding": 8,
               }
             }
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -119,53 +122,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   >
                     <View
                       testID="button_wrapper.icon"
-                    >
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={20}
-                        bbWidth={20}
-                        color={4286071773}
-                        focusable={false}
-                        height={20}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
-                            },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 20,
-                              "width": 20,
-                            },
-                          ]
-                        }
-                        tintColor={4286071773}
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={20}
-                      >
-                        <RNSVGGroup>
-                          <RNSVGPath
-                            d="M20 8.18V3a1 1 0 00-2 0v5.18a3 3 0 000 5.64V21a1 1 0 002 0v-7.18a3 3 0 000-5.64zM19 12a1 1 0 111-1 1 1 0 01-1 1zm-6 2.18V3a1 1 0 00-2 0v11.18a3 3 0 000 5.64V21a1 1 0 002 0v-1.18a3 3 0 000-5.64zM12 18a1 1 0 111-1 1 1 0 01-1 1zM6 6.18V3a1 1 0 00-2 0v3.18a3 3 0 000 5.64V21a1 1 0 002 0v-9.18a3 3 0 000-5.64zM5 10a1 1 0 111-1 1 1 0 01-1 1z"
-                            fill={
-                              Array [
-                                2,
-                              ]
-                            }
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
-                    </View>
+                    />
                   </View>
                 </View>
               </View>
@@ -173,12 +130,12 @@ exports[`NFSResult component should render empty search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -203,8 +160,8 @@ exports[`NFSResult component should render empty search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "marginLeft": 4,
                 "padding": 8,
               }
@@ -212,11 +169,14 @@ exports[`NFSResult component should render empty search result 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -224,12 +184,12 @@ exports[`NFSResult component should render empty search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -254,8 +214,8 @@ exports[`NFSResult component should render empty search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "marginLeft": 4,
                 "padding": 8,
               }
@@ -263,11 +223,14 @@ exports[`NFSResult component should render empty search result 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -275,12 +238,12 @@ exports[`NFSResult component should render empty search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -325,7 +288,7 @@ exports[`NFSResult component should render empty search result 1`] = `
         <TextComponent
           style={
             Object {
-              "color": "#627286",
+              "color": "#767D93",
               "textAlign": "center",
             }
           }
@@ -360,12 +323,12 @@ exports[`NFSResult component should render empty search result 1`] = `
       <RefreshControlMock
         colors={
           Array [
-            "#7843DD",
+            "#7335C0",
           ]
         }
         onRefresh={[Function]}
         refreshing={false}
-        tintColor="#7843DD"
+        tintColor="#7335C0"
       />
     }
     removeClippedSubviews={false}
@@ -467,13 +430,13 @@ exports[`NFSResult component should render empty search result 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 16,
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {},
               Object {
-                "color": "#627286",
+                "color": "#767D93",
                 "textAlign": "center",
               },
             ]
@@ -503,7 +466,7 @@ exports[`NFSResult component should render list search result 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "#F9FAFB",
+      "backgroundColor": "#F8F9FF",
       "flex": 1,
     }
   }
@@ -523,7 +486,7 @@ exports[`NFSResult component should render list search result 1`] = `
             Object {
               "backgroundColor": "#FFFFFF",
               "borderBottomWidth": 1,
-              "borderColor": "#F9FAFB",
+              "borderColor": "#F8F9FF",
               "flexDirection": "row",
               "paddingBottom": 12,
               "paddingHorizontal": 12,
@@ -544,19 +507,22 @@ exports[`NFSResult component should render list search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "padding": 8,
               }
             }
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -618,53 +584,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   >
                     <View
                       testID="button_wrapper.icon"
-                    >
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={20}
-                        bbWidth={20}
-                        color={4286071773}
-                        focusable={false}
-                        height={20}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
-                            },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 20,
-                              "width": 20,
-                            },
-                          ]
-                        }
-                        tintColor={4286071773}
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={20}
-                      >
-                        <RNSVGGroup>
-                          <RNSVGPath
-                            d="M20 8.18V3a1 1 0 00-2 0v5.18a3 3 0 000 5.64V21a1 1 0 002 0v-7.18a3 3 0 000-5.64zM19 12a1 1 0 111-1 1 1 0 01-1 1zm-6 2.18V3a1 1 0 00-2 0v11.18a3 3 0 000 5.64V21a1 1 0 002 0v-1.18a3 3 0 000-5.64zM12 18a1 1 0 111-1 1 1 0 01-1 1zM6 6.18V3a1 1 0 00-2 0v3.18a3 3 0 000 5.64V21a1 1 0 002 0v-9.18a3 3 0 000-5.64zM5 10a1 1 0 111-1 1 1 0 01-1 1z"
-                            fill={
-                              Array [
-                                2,
-                              ]
-                            }
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
-                    </View>
+                    />
                   </View>
                 </View>
               </View>
@@ -672,12 +592,12 @@ exports[`NFSResult component should render list search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -702,8 +622,8 @@ exports[`NFSResult component should render list search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "marginLeft": 4,
                 "padding": 8,
               }
@@ -711,11 +631,14 @@ exports[`NFSResult component should render list search result 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -723,12 +646,12 @@ exports[`NFSResult component should render list search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -753,8 +676,8 @@ exports[`NFSResult component should render list search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "marginLeft": 4,
                 "padding": 8,
               }
@@ -762,11 +685,14 @@ exports[`NFSResult component should render list search result 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -774,12 +700,12 @@ exports[`NFSResult component should render list search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -824,7 +750,7 @@ exports[`NFSResult component should render list search result 1`] = `
         <TextComponent
           style={
             Object {
-              "color": "#627286",
+              "color": "#767D93",
               "textAlign": "center",
             }
           }
@@ -912,12 +838,12 @@ exports[`NFSResult component should render list search result 1`] = `
       <RefreshControlMock
         colors={
           Array [
-            "#7843DD",
+            "#7335C0",
           ]
         }
         onRefresh={[Function]}
         refreshing={false}
-        tintColor="#7843DD"
+        tintColor="#7335C0"
       />
     }
     removeClippedSubviews={false}
@@ -964,7 +890,7 @@ exports[`NFSResult component should render list search result 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": "#7843DD",
+                "backgroundColor": "#7335C0",
                 "borderBottomLeftRadius": 8,
                 "borderBottomRightRadius": 8,
                 "left": 0,
@@ -1029,7 +955,7 @@ exports[`NFSResult component should render list search result 1`] = `
                       undefined,
                       Object {
                         "backgroundColor": "#FFFFFF",
-                        "borderRadius": 6,
+                        "borderRadius": 4,
                         "padding": 2,
                       },
                     ]
@@ -1169,21 +1095,32 @@ exports[`NFSResult component should render list search result 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "borderRadius": 6,
-                      "height": 48,
-                      "width": 48,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 48,
+                        "width": 48,
+                      },
+                      undefined,
+                    ]
                   }
                   testID="avatar"
                 >
                   <View
                     style={
-                      Object {
-                        "borderRadius": 24,
-                        "height": 48,
-                        "width": 48,
-                      }
+                      Array [
+                        Array [
+                          Object {
+                            "borderRadius": 4,
+                            "height": 48,
+                            "width": 48,
+                          },
+                          Object {
+                            "borderRadius": 24,
+                          },
+                        ],
+                        Object {},
+                      ]
                     }
                     testID="avatar_container"
                   >
@@ -1296,9 +1233,9 @@ exports[`NFSResult component should render list search result 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#2F3945",
-                          "fontFamily": "OpenSans-SemiBold",
-                          "fontSize": 14,
+                          "color": "#181C32",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
                         },
                         Object {},
                         undefined,
@@ -1320,12 +1257,12 @@ exports[`NFSResult component should render list search result 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#2F3945",
-                          "fontFamily": "OpenSans-SemiBold",
-                          "fontSize": 14,
+                          "color": "#181C32",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
                         },
                         Object {
-                          "color": "#627286",
+                          "color": "#767D93",
                         },
                         Object {
                           "marginRight": 4,
@@ -1340,9 +1277,9 @@ exports[`NFSResult component should render list search result 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#2F3945",
-                          "fontFamily": "OpenSans-SemiBold",
-                          "fontSize": 14,
+                          "color": "#181C32",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
                         },
                         Object {},
                         undefined,
@@ -1365,12 +1302,12 @@ exports[`NFSResult component should render list search result 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#2F3945",
-                          "fontFamily": "OpenSans-SemiBold",
-                          "fontSize": 14,
+                          "color": "#181C32",
+                          "fontFamily": "BeVietnamPro-SemiBold",
+                          "fontSize": 13,
                         },
                         Object {
-                          "color": "#627286",
+                          "color": "#767D93",
                         },
                         Object {
                           "fontSize": 11,
@@ -1447,53 +1384,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     >
                       <View
                         testID="post_view_header.menu"
-                      >
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={20}
-                          bbWidth={20}
-                          color={4281284933}
-                          focusable={false}
-                          height={20}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 20,
-                                "width": 20,
-                              },
-                            ]
-                          }
-                          tintColor={4281284933}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={20}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M12 10a2 2 0 102 2 2 2 0 00-2-2zm-7 0a2 2 0 102 2 2 2 0 00-2-2zm14 0a2 2 0 102 2 2 2 0 00-2-2z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      />
                     </View>
                   </View>
                 </View>
@@ -1530,7 +1421,6 @@ exports[`NFSResult component should render list search result 1`] = `
                         }
                       }
                       accessible={true}
-                      collapsable={false}
                       focusable={true}
                       onClick={[Function]}
                       onResponderGrant={[Function]}
@@ -1539,82 +1429,75 @@ exports[`NFSResult component should render list search result 1`] = `
                       onResponderTerminate={[Function]}
                       onResponderTerminationRequest={[Function]}
                       onStartShouldSetResponder={[Function]}
-                      style={
-                        Object {
-                          "opacity": 1,
-                        }
-                      }
                       testID="post_view_content"
                     >
                       <View>
-                        <View>
+                        <View
+                          style={Object {}}
+                        >
                           <View
-                            style={Object {}}
-                          >
-                            <View
-                              style={
-                                Object {
-                                  "alignItems": "flex-start",
-                                  "flexDirection": "row",
-                                  "flexWrap": "wrap",
-                                  "justifyContent": "flex-start",
-                                  "marginBottom": 2,
-                                  "marginTop": 2,
-                                  "width": "100%",
-                                }
+                            style={
+                              Object {
+                                "alignItems": "flex-start",
+                                "flexDirection": "row",
+                                "flexWrap": "wrap",
+                                "justifyContent": "flex-start",
+                                "marginBottom": 2,
+                                "marginTop": 2,
+                                "width": "100%",
                               }
+                            }
+                          >
+                            <Text
+                              style={Object {}}
                             >
                               <Text
-                                style={Object {}}
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#353E6E",
+                                      "fontFamily": "BeVietnamPro-Light",
+                                      "fontSize": 15,
+                                    },
+                                    Object {},
+                                    Object {
+                                      "backgroundColor": "#F6EF79",
+                                      "borderRadius": 6,
+                                      "overflow": "hidden",
+                                    },
+                                  ]
+                                }
                               >
                                 <Text
                                   style={
                                     Array [
                                       Object {
-                                        "color": "#2F3945",
-                                        "fontFamily": "OpenSans-Regular",
-                                        "fontSize": 16,
-                                      },
-                                      Object {},
-                                      Object {
-                                        "backgroundColor": "#F6EF79",
-                                        "borderRadius": 6,
-                                        "overflow": "hidden",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  <Text
-                                    style={
-                                      Array [
-                                        Object {
-                                          "color": "#2F3945",
-                                          "fontFamily": "OpenSans-Regular",
-                                          "fontSize": 16,
-                                        },
-                                        Object {},
-                                      ]
-                                    }
-                                  >
-                                    Important
-                                  </Text>
-                                </Text>
-                                <Text
-                                  style={
-                                    Array [
-                                      Object {
-                                        "color": "#2F3945",
-                                        "fontFamily": "OpenSans-Regular",
-                                        "fontSize": 16,
+                                        "color": "#353E6E",
+                                        "fontFamily": "BeVietnamPro-Light",
+                                        "fontSize": 15,
                                       },
                                       Object {},
                                     ]
                                   }
                                 >
-                                   post
+                                  Important
                                 </Text>
                               </Text>
-                            </View>
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#353E6E",
+                                      "fontFamily": "BeVietnamPro-Light",
+                                      "fontSize": 15,
+                                    },
+                                    Object {},
+                                  ]
+                                }
+                              >
+                                 post
+                              </Text>
+                            </Text>
                           </View>
                         </View>
                       </View>
@@ -1646,7 +1529,7 @@ exports[`NFSResult component should render loading search result 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "#F9FAFB",
+      "backgroundColor": "#F8F9FF",
       "flex": 1,
     }
   }
@@ -1666,7 +1549,7 @@ exports[`NFSResult component should render loading search result 1`] = `
             Object {
               "backgroundColor": "#FFFFFF",
               "borderBottomWidth": 1,
-              "borderColor": "#F9FAFB",
+              "borderColor": "#F8F9FF",
               "flexDirection": "row",
               "paddingBottom": 12,
               "paddingHorizontal": 12,
@@ -1687,19 +1570,22 @@ exports[`NFSResult component should render loading search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "padding": 8,
               }
             }
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -1761,53 +1647,7 @@ exports[`NFSResult component should render loading search result 1`] = `
                   >
                     <View
                       testID="button_wrapper.icon"
-                    >
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={20}
-                        bbWidth={20}
-                        color={4286071773}
-                        focusable={false}
-                        height={20}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
-                            },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 20,
-                              "width": 20,
-                            },
-                          ]
-                        }
-                        tintColor={4286071773}
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={20}
-                      >
-                        <RNSVGGroup>
-                          <RNSVGPath
-                            d="M20 8.18V3a1 1 0 00-2 0v5.18a3 3 0 000 5.64V21a1 1 0 002 0v-7.18a3 3 0 000-5.64zM19 12a1 1 0 111-1 1 1 0 01-1 1zm-6 2.18V3a1 1 0 00-2 0v11.18a3 3 0 000 5.64V21a1 1 0 002 0v-1.18a3 3 0 000-5.64zM12 18a1 1 0 111-1 1 1 0 01-1 1zM6 6.18V3a1 1 0 00-2 0v3.18a3 3 0 000 5.64V21a1 1 0 002 0v-9.18a3 3 0 000-5.64zM5 10a1 1 0 111-1 1 1 0 01-1 1z"
-                            fill={
-                              Array [
-                                2,
-                              ]
-                            }
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
-                    </View>
+                    />
                   </View>
                 </View>
               </View>
@@ -1815,12 +1655,12 @@ exports[`NFSResult component should render loading search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -1845,8 +1685,8 @@ exports[`NFSResult component should render loading search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "marginLeft": 4,
                 "padding": 8,
               }
@@ -1854,11 +1694,14 @@ exports[`NFSResult component should render loading search result 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -1866,12 +1709,12 @@ exports[`NFSResult component should render loading search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -1896,8 +1739,8 @@ exports[`NFSResult component should render loading search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
+                "backgroundColor": "#F1F1F9",
+                "borderRadius": 4,
                 "marginLeft": 4,
                 "padding": 8,
               }
@@ -1905,11 +1748,14 @@ exports[`NFSResult component should render loading search result 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -1917,12 +1763,12 @@ exports[`NFSResult component should render loading search result 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
                     },
                     Object {
-                      "color": "#7843DD",
+                      "color": "#7335C0",
                     },
                     Object {
                       "textAlign": "center",
@@ -1965,12 +1811,12 @@ exports[`NFSResult component should render loading search result 1`] = `
       <RefreshControlMock
         colors={
           Array [
-            "#7843DD",
+            "#7335C0",
           ]
         }
         onRefresh={[Function]}
         refreshing={true}
-        tintColor="#7843DD"
+        tintColor="#7335C0"
       />
     }
     removeClippedSubviews={false}

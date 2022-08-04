@@ -145,7 +145,7 @@ exports[`DiscoverItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "fontFamily": "BeVietnamPro-SemiBold",
               "fontSize": 15,
             },
@@ -229,11 +229,13 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }
@@ -244,11 +246,13 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }
@@ -319,11 +323,13 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }
@@ -334,11 +340,13 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }
@@ -360,7 +368,7 @@ exports[`DiscoverItem component should render data correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "borderRadius": 4,
           "padding": 8,
         }
@@ -383,11 +391,13 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 15,
               },
-              Object {},
+              Object {
+                "color": "#181C32",
+              },
               Object {
                 "textAlign": "center",
               },

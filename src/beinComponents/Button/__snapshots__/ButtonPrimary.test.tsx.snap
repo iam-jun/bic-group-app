@@ -14,7 +14,7 @@ exports[`ButtonPrimary conponent renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": undefined,
+      "backgroundColor": "#7335C0",
       "borderRadius": 4,
       "paddingHorizontal": 12,
       "paddingVertical": 8,
@@ -39,11 +39,13 @@ exports[`ButtonPrimary conponent renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
-          Object {},
+          Object {
+            "color": "#FFFFFF",
+          },
           Object {
             "textAlign": "center",
           },

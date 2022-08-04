@@ -1,5 +1,5 @@
-import {adminDetail, memberData, memberDetail} from '~/test/mock_data/group';
-import {expectSaga} from 'redux-saga-test-plan';
+import { adminDetail, memberData, memberDetail } from '~/test/mock_data/group';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getGroupMembers from './getGroupMembers';
@@ -10,11 +10,11 @@ import showError from '~/store/commonSaga/showError';
 describe('getGroupMembers saga', () => {
   const action = {
     type: 'test',
-    payload: {groupId: '1', params: {}},
+    payload: { groupId: '1', params: {} },
   };
 
   it('should get data correctly', async () => {
-    const resp = {...memberData};
+    const resp = { data: { ...memberData } };
 
     const state = {
       groups: {
@@ -22,15 +22,15 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: true,
           offset: 0,
-          groupAdmin: {data: [], userCount: 0},
-          groupMember: {data: [], userCount: 0},
+          groupAdmin: { data: [], userCount: 0 },
+          groupMember: { data: [], userCount: 0 },
         },
       },
     };
 
     return expectSaga(getGroupMembers, action)
       .withState(state)
-      .put(actions.setGroupMembers({loading: true}))
+      .put(actions.setGroupMembers({ loading: true }))
       .provide([[matchers.call.fn(groupsDataHelper.getGroupMembers), resp]])
       .put(
         actions.setGroupMembers({
@@ -50,7 +50,7 @@ describe('getGroupMembers saga', () => {
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
@@ -62,37 +62,37 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 0,
-          groupAdmin: {data: [], userCount: 0},
-          groupMember: {data: [], userCount: 0},
+          groupAdmin: { data: [], userCount: 0 },
+          groupMember: { data: [], userCount: 0 },
         },
       },
     };
     return expectSaga(getGroupMembers, action)
       .withState(state)
-      .put(actions.setGroupMembers({loading: true}))
+      .put(actions.setGroupMembers({ loading: true }))
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
 
   it('should call server and throws error', () => {
-    const error = {code: 'error'};
+    const error = { code: 'error' };
     const state = {
       groups: {
         groupMembers: {
           loading: false,
           canLoadMore: true,
           offset: 0,
-          groupAdmin: {data: [], userCount: 0},
-          groupMember: {data: [], userCount: 0},
+          groupAdmin: { data: [], userCount: 0 },
+          groupMember: { data: [], userCount: 0 },
         },
       },
     };
 
     return expectSaga(getGroupMembers, action)
       .withState(state)
-      .put(actions.setGroupMembers({loading: true}))
+      .put(actions.setGroupMembers({ loading: true }))
       .provide([
         [
           matchers.call.fn(groupsDataHelper.getGroupMembers),
@@ -101,7 +101,7 @@ describe('getGroupMembers saga', () => {
       ])
       .call(showError, error)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(6);
       });
   });
@@ -109,10 +109,10 @@ describe('getGroupMembers saga', () => {
   it('should refresh data correctly', async () => {
     const action = {
       type: 'test',
-      payload: {groupId: '1', params: {}, isRefreshing: true},
+      payload: { groupId: '1', params: {}, isRefreshing: true },
     };
 
-    const resp = {...memberData};
+    const resp = { data: { ...memberData } };
     const state = {
       groups: {
         groupMembers: {
@@ -135,7 +135,7 @@ describe('getGroupMembers saga', () => {
 
     return expectSaga(getGroupMembers, action)
       .withState(state)
-      .put(actions.setGroupMembers({loading: true}))
+      .put(actions.setGroupMembers({ loading: true }))
       .provide([[matchers.call.fn(groupsDataHelper.getGroupMembers), resp]])
       .put(
         actions.setGroupMembers({
@@ -155,7 +155,7 @@ describe('getGroupMembers saga', () => {
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });

@@ -151,7 +151,7 @@ exports[`CoverHeader screen renders correctly 1`] = `
                   Object {
                     "alignItems": "center",
                     "backgroundColor": "#f9f9f9",
-                    "borderColor": undefined,
+                    "borderColor": "#FFFFFF",
                     "borderRadius": 48,
                     "borderWidth": 4,
                     "height": 96,
@@ -169,7 +169,7 @@ exports[`CoverHeader screen renders correctly 1`] = `
                     "overflow": "hidden",
                   },
                   Object {
-                    "borderColor": undefined,
+                    "borderColor": "#FFFFFF",
                     "borderRadius": 48,
                     "borderWidth": 4,
                     "height": 96,

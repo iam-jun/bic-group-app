@@ -5,9 +5,9 @@ exports[`Filter component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#FFFFFF",
         "borderBottomWidth": 1,
-        "borderColor": undefined,
+        "borderColor": "#E3E6F2",
         "borderTopWidth": 1,
         "paddingVertical": 12,
       },
@@ -64,8 +64,8 @@ exports[`Filter component renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "backgroundColor": undefined,
-              "borderColor": undefined,
+              "backgroundColor": "rgba(255,255,255,0)",
+              "borderColor": "#E3E6F2",
               "borderRadius": 100,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -80,7 +80,7 @@ exports[`Filter component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -116,8 +116,8 @@ exports[`Filter component renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "backgroundColor": undefined,
-              "borderColor": undefined,
+              "backgroundColor": "rgba(255,255,255,0)",
+              "borderColor": "#E3E6F2",
               "borderRadius": 100,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -132,7 +132,7 @@ exports[`Filter component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 15,
                 },
@@ -168,8 +168,8 @@ exports[`Filter component renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "backgroundColor": undefined,
-              "borderColor": undefined,
+              "backgroundColor": "rgba(255,255,255,0)",
+              "borderColor": "#E3E6F2",
               "borderRadius": 100,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -184,7 +184,7 @@ exports[`Filter component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#353E6E",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 15,
                 },
@@ -208,8 +208,8 @@ exports[`Filter component renders correctly 1`] = `
               "top": 0,
             },
             Object {
-              "backgroundColor": undefined,
-              "borderColor": undefined,
+              "backgroundColor": "#A4A9B7",
+              "borderColor": "#A4A9B7",
               "borderRadius": 100,
               "zIndex": -1,
             },

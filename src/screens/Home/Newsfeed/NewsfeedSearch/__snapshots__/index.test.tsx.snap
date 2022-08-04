@@ -5,16 +5,139 @@ exports[`NewsfeedSearch component should render null 1`] = `null`;
 exports[`NewsfeedSearch component should render search 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "bottom": 0,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 60,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "height": "100%",
+        "position": "absolute",
+        "width": "100%",
+        "zIndex": 99,
+      },
+      undefined,
+    ]
   }
 >
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#FFFFFF",
+        "elevation": 1,
+        "flexDirection": "row",
+        "overflow": "hidden",
+        "paddingTop": 0,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.08,
+        "shadowRadius": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": 60,
+          "overflow": "hidden",
+          "paddingLeft": 8,
+          "paddingRight": 8,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 20,
+            "left": 20,
+            "right": 20,
+            "top": 20,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="search_base_view.back_button"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "alignItems": "center",
+                "height": 48,
+                "justifyContent": "center",
+                "padding": 12,
+                "width": 48,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+      <TextInput
+        autoComplete="off"
+        autoFocus={true}
+        onChangeText={[Function]}
+        onFocus={[Function]}
+        onSubmitEditing={[Function]}
+        placeholder="Search for posts..."
+        placeholderTextColor="#A4A9B7"
+        selectionColor="#767D93"
+        style={
+          Object {
+            "color": "#181C32",
+            "flex": 1,
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+            "height": "100%",
+            "marginHorizontal": 12,
+          }
+        }
+        testID="search_base_view.text_input"
+        value=""
+      />
+    </View>
+  </View>
   <RCTScrollView
     keyboardShouldPersistTaps="always"
   >
@@ -46,9 +169,9 @@ exports[`NewsfeedSearch component should render search 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 13,
                   },
                   Object {},
                   Object {
@@ -61,7 +184,7 @@ exports[`NewsfeedSearch component should render search 1`] = `
             </Text>
           </View>
           <ActivityIndicator
-            color="#B2BDCD"
+            color="#A4A9B7"
             style={
               Object {
                 "alignItems": "center",
@@ -90,16 +213,139 @@ exports[`NewsfeedSearch component should render search 1`] = `
 exports[`NewsfeedSearch component should render suggestion 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "bottom": 0,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 60,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "height": "100%",
+        "position": "absolute",
+        "width": "100%",
+        "zIndex": 99,
+      },
+      undefined,
+    ]
   }
 >
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "backgroundColor": "#FFFFFF",
+        "elevation": 1,
+        "flexDirection": "row",
+        "overflow": "hidden",
+        "paddingTop": 0,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.08,
+        "shadowRadius": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": 60,
+          "overflow": "hidden",
+          "paddingLeft": 8,
+          "paddingRight": 8,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 20,
+            "left": 20,
+            "right": 20,
+            "top": 20,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="search_base_view.back_button"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "alignItems": "center",
+                "height": 48,
+                "justifyContent": "center",
+                "padding": 12,
+                "width": 48,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+      <TextInput
+        autoComplete="off"
+        autoFocus={true}
+        onChangeText={[Function]}
+        onFocus={[Function]}
+        onSubmitEditing={[Function]}
+        placeholder="Search for posts..."
+        placeholderTextColor="#A4A9B7"
+        selectionColor="#767D93"
+        style={
+          Object {
+            "color": "#181C32",
+            "flex": 1,
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+            "height": "100%",
+            "marginHorizontal": 12,
+          }
+        }
+        testID="search_base_view.text_input"
+        value=""
+      />
+    </View>
+  </View>
   <RCTScrollView
     keyboardShouldPersistTaps="always"
   >
@@ -131,9 +377,9 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 13,
                   },
                   Object {},
                   Object {
@@ -146,7 +392,7 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
             </Text>
           </View>
           <ActivityIndicator
-            color="#B2BDCD"
+            color="#A4A9B7"
             style={
               Object {
                 "alignItems": "center",

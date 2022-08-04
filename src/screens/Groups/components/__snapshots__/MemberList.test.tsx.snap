@@ -159,6 +159,7 @@ exports[`MemberList component should render data correctly 1`] = `
     <RefreshControlMock
       onRefresh={[MockFunction]}
       refreshing={false}
+      tintColor="#A4A9B7"
     />
   }
   renderItem={[Function]}
@@ -167,7 +168,7 @@ exports[`MemberList component should render data correctly 1`] = `
   stickyHeaderIndices={Array []}
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
     }
   }
   testID="member_list"
@@ -191,11 +192,13 @@ exports[`MemberList component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
-              Object {},
+              Object {
+                "color": "#181C32",
+              },
               undefined,
             ]
           }
@@ -356,7 +359,7 @@ exports[`MemberList component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                   },
@@ -370,11 +373,13 @@ exports[`MemberList component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -430,7 +435,7 @@ exports[`MemberList component should render data correctly 1`] = `
                     "width": 36,
                   },
                   Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#F8F9FF",
                   },
                 ]
               }
@@ -532,11 +537,13 @@ exports[`MemberList component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
-              Object {},
+              Object {
+                "color": "#181C32",
+              },
               undefined,
             ]
           }
@@ -698,7 +705,7 @@ exports[`MemberList component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#353E6E",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
@@ -712,11 +719,13 @@ exports[`MemberList component should render data correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#181C32",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
-                      Object {},
+                      Object {
+                        "color": "#767D93",
+                      },
                       undefined,
                     ]
                   }
@@ -772,7 +781,7 @@ exports[`MemberList component should render data correctly 1`] = `
                       "width": 36,
                     },
                     Object {
-                      "backgroundColor": undefined,
+                      "backgroundColor": "#F8F9FF",
                     },
                   ]
                 }
@@ -1010,7 +1019,7 @@ exports[`MemberList component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#353E6E",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
@@ -1024,11 +1033,13 @@ exports[`MemberList component should render data correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": undefined,
+                        "color": "#181C32",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
-                      Object {},
+                      Object {
+                        "color": "#767D93",
+                      },
                       undefined,
                     ]
                   }
@@ -1084,7 +1095,7 @@ exports[`MemberList component should render data correctly 1`] = `
                       "width": 36,
                     },
                     Object {
-                      "backgroundColor": undefined,
+                      "backgroundColor": "#F8F9FF",
                     },
                   ]
                 }
@@ -1321,7 +1332,7 @@ exports[`MemberList component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#353E6E",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                   },
@@ -1335,11 +1346,13 @@ exports[`MemberList component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -1395,7 +1408,7 @@ exports[`MemberList component should render data correctly 1`] = `
                     "width": 36,
                   },
                   Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#F8F9FF",
                   },
                 ]
               }

@@ -12,7 +12,7 @@ export default function* cancelJoinCommunity({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; communityName: string};
+  payload: { communityId: string; communityName: string };
 }) {
   const { communityId, communityName } = payload;
   try {
@@ -53,6 +53,6 @@ export default function* cancelJoinCommunity({
       );
     }
 
-    yield call(showError, err);
+    yield showError(err);
   }
 }

@@ -2,14 +2,16 @@
 
 exports[`CommonModal component renders correctly 1`] = `
 <View>
-  <View
-    style={
-      Object {
-        "backgroundColor": "blue",
-        "height": 100,
+  <View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "height": 100,
+        }
       }
-    }
-  />
+    />
+  </View>
 </View>
 `;
 

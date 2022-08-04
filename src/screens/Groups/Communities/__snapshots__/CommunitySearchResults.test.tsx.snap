@@ -8,7 +8,7 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
   ListHeaderComponent={[Function]}
   data={
     Array [
-      1,
+      "1",
     ]
   }
   getItem={[Function]}
@@ -46,7 +46,7 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -207,7 +207,7 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-SemiBold",
                     "fontSize": 15,
                   },
@@ -291,11 +291,13 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -306,11 +308,13 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -321,11 +325,13 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }

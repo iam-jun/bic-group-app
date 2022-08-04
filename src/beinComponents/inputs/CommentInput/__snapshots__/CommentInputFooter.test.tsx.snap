@@ -4,7 +4,7 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
 <View
   style={
     Object {
-      "borderColor": undefined,
+      "borderColor": "#E3E6F2",
       "borderTopWidth": 1,
     }
   }
@@ -12,7 +12,7 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
   <View
     style={
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#FFFFFF",
         "flexDirection": "row",
         "minHeight": 48,
         "paddingLeft": 16,
@@ -495,7 +495,7 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#9E6FD8",
           "borderRadius": 4,
           "padding": 8,
           "paddingLeft": 16,
@@ -519,11 +519,13 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
-              Object {},
+              Object {
+                "color": "#FFFFFF",
+              },
               Object {
                 "textAlign": "center",
               },
@@ -681,7 +683,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
 <View
   style={
     Object {
-      "borderColor": undefined,
+      "borderColor": "#E3E6F2",
       "borderTopWidth": 1,
     }
   }
@@ -689,7 +691,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
   <View
     style={
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#FFFFFF",
         "flexDirection": "row",
         "minHeight": 48,
         "paddingLeft": 16,
@@ -1172,7 +1174,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#9E6FD8",
           "borderRadius": 4,
           "padding": 8,
           "paddingLeft": 16,
@@ -1196,11 +1198,13 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
-              Object {},
+              Object {
+                "color": "#FFFFFF",
+              },
               Object {
                 "textAlign": "center",
               },
@@ -1355,13 +1359,13 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
       style={
         Array [
           Object {
-            "backgroundColor": undefined,
-            "borderColor": undefined,
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#A4A9B7",
             "borderTopWidth": 1,
             "minHeight": 44,
           },
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#FFFFFF",
             "borderTopWidth": 0,
             "justifyContent": "center",
             "minHeight": 48,
@@ -1433,7 +1437,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": undefined,
+                  "backgroundColor": "#F8F9FF",
                   "borderRadius": 16,
                   "flexDirection": "row",
                   "marginHorizontal": 8,
@@ -1552,7 +1556,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },

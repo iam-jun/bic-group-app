@@ -73,7 +73,7 @@ exports[`EditName conponent renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
             "fontSize": 15,
           },
@@ -101,7 +101,7 @@ exports[`EditName conponent renders correctly 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderColor": undefined,
+            "borderColor": "#A4A9B7",
             "borderRadius": 4,
             "borderWidth": 1,
             "flexDirection": "row",
@@ -110,7 +110,7 @@ exports[`EditName conponent renders correctly 1`] = `
             "paddingRight": 12,
           },
           Object {
-            "borderColor": undefined,
+            "borderColor": "#A4A9B7",
           },
           undefined,
         ]
@@ -121,6 +121,8 @@ exports[`EditName conponent renders correctly 1`] = `
         onBlur={[Function]}
         onChangeText={[Function]}
         onFocus={[Function]}
+        placeholderTextColor="#767D93"
+        selectionColor="#767D93"
         style={
           Array [
             Object {
@@ -130,7 +132,7 @@ exports[`EditName conponent renders correctly 1`] = `
               "paddingHorizontal": 12,
             },
             Object {
-              "color": undefined,
+              "color": "#181C32",
             },
           ]
         }
@@ -215,7 +217,7 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
             "fontSize": 15,
           },
@@ -243,7 +245,7 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderColor": undefined,
+            "borderColor": "#A4A9B7",
             "borderRadius": 4,
             "borderWidth": 1,
             "flexDirection": "row",
@@ -252,7 +254,7 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
             "paddingRight": 12,
           },
           Object {
-            "borderColor": undefined,
+            "borderColor": "#A4A9B7",
           },
           undefined,
         ]
@@ -263,6 +265,8 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
         onBlur={[Function]}
         onChangeText={[Function]}
         onFocus={[Function]}
+        placeholderTextColor="#767D93"
+        selectionColor="#767D93"
         style={
           Array [
             Object {
@@ -272,7 +276,7 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
               "paddingHorizontal": 12,
             },
             Object {
-              "color": undefined,
+              "color": "#E90C22",
             },
           ]
         }
@@ -284,11 +288,13 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 13,
           },
-          Object {},
+          Object {
+            "color": "#E90C22",
+          },
           undefined,
         ]
       }

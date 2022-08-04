@@ -4,8 +4,9 @@ exports[`GroupAboutContent component should render group privacy item correctly 
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
+      "paddingBottom": 100,
       "paddingHorizontal": 8,
     }
   }
@@ -15,7 +16,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 15,
         },
@@ -46,7 +47,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -59,7 +60,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -113,9 +114,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
               "paddingHorizontal": 16,
               "paddingVertical": 12,
             },
-            Object {
-              "height": 44,
-            },
+            undefined,
           ]
         }
       >
@@ -188,7 +187,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -304,9 +303,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
               "paddingHorizontal": 16,
               "paddingVertical": 12,
             },
-            Object {
-              "height": 56,
-            },
+            undefined,
           ]
         }
       >
@@ -379,7 +376,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -394,7 +391,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
@@ -422,8 +419,9 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
+      "paddingBottom": 100,
       "paddingHorizontal": 8,
     }
   }
@@ -433,7 +431,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 15,
         },
@@ -464,7 +462,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -477,7 +475,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -531,9 +529,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
               "paddingHorizontal": 16,
               "paddingVertical": 12,
             },
-            Object {
-              "height": 44,
-            },
+            undefined,
           ]
         }
       >
@@ -606,7 +602,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -722,9 +718,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
               "paddingHorizontal": 16,
               "paddingVertical": 12,
             },
-            Object {
-              "height": 56,
-            },
+            undefined,
           ]
         }
       >
@@ -797,7 +791,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -812,7 +806,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },

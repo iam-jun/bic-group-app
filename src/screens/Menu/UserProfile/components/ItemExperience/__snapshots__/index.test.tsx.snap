@@ -20,7 +20,7 @@ exports[`ItemExperience component renders correctly 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#BAC0DE",
           "height": 22,
           "marginRight": 12,
           "width": 1,
@@ -31,11 +31,13 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 17,
           },
-          Object {},
+          Object {
+            "color": "#BAC0DE",
+          },
           undefined,
         ]
       }
@@ -45,7 +47,7 @@ exports[`ItemExperience component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 17,
             },
@@ -73,7 +75,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -89,7 +91,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 15,
           },
@@ -115,7 +117,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -131,7 +133,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 15,
           },
@@ -157,7 +159,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -173,7 +175,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 15,
           },
@@ -199,7 +201,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -215,7 +217,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 15,
           },

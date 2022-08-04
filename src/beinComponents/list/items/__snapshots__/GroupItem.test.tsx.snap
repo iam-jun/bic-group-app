@@ -53,10 +53,10 @@ exports[`Group Item component renders correctly 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "transparent",
+          "backgroundColor": "rgba(255,255,255,0)",
           "flexDirection": "row",
           "height": "100%",
-          "marginHorizontal": 12,
+          "marginHorizontal": 8,
           "opacity": 1,
           "width": 1,
         }
@@ -80,8 +80,8 @@ exports[`Group Item component renders correctly 1`] = `
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": undefined,
-              "marginLeft": -7,
+              "backgroundColor": "#FFFFFF",
+              "marginLeft": -6,
               "paddingVertical": 4,
             }
           }
@@ -150,11 +150,15 @@ exports[`Group Item component renders correctly 1`] = `
     </View>
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "paddingVertical": 4,
-        }
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingLeft": 8,
+            "paddingVertical": 4,
+          },
+          undefined,
+        ]
       }
     >
       <View>
@@ -181,7 +185,7 @@ exports[`Group Item component renders correctly 1`] = `
                     "width": 40,
                   },
                   Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#A4A9B7",
                   },
                 ]
               }
@@ -263,6 +267,7 @@ exports[`Group Item component renders correctly 1`] = `
         style={
           Object {
             "flex": 1,
+            "justifyContent": "center",
             "paddingHorizontal": 12,
           }
         }
@@ -272,9 +277,9 @@ exports[`Group Item component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -355,11 +360,13 @@ exports[`Group Item component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
-                Object {},
+                Object {
+                  "color": "#767D93",
+                },
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -406,13 +413,10 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       style={
         Array [
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#E3E6F2",
             "height": "100%",
-            "marginHorizontal": 12,
+            "marginHorizontal": 8,
             "width": 1,
-          },
-          Object {
-            "backgroundColor": "transparent",
           },
         ]
       }
@@ -444,10 +448,10 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "transparent",
+          "backgroundColor": "rgba(255,255,255,0)",
           "flexDirection": "row",
           "height": "100%",
-          "marginHorizontal": 12,
+          "marginHorizontal": 8,
           "opacity": 1,
           "width": 1,
         }
@@ -471,8 +475,8 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": undefined,
-              "marginLeft": -7,
+              "backgroundColor": "#FFFFFF",
+              "marginLeft": -6,
               "paddingVertical": 4,
             }
           }
@@ -541,11 +545,15 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
     </View>
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "paddingVertical": 4,
-        }
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingLeft": 8,
+            "paddingVertical": 4,
+          },
+          undefined,
+        ]
       }
     >
       <View>
@@ -572,7 +580,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                     "width": 40,
                   },
                   Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#A4A9B7",
                   },
                 ]
               }
@@ -654,6 +662,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
         style={
           Object {
             "flex": 1,
+            "justifyContent": "center",
             "paddingHorizontal": 12,
           }
         }
@@ -663,9 +672,9 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -746,11 +755,13 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
-                Object {},
+                Object {
+                  "color": "#767D93",
+                },
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -795,11 +806,15 @@ exports[`Group Item component should render default prop 1`] = `
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "paddingVertical": 4,
-        }
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingLeft": 8,
+            "paddingVertical": 4,
+          },
+          undefined,
+        ]
       }
     >
       <View>
@@ -826,7 +841,7 @@ exports[`Group Item component should render default prop 1`] = `
                     "width": 40,
                   },
                   Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#A4A9B7",
                   },
                 ]
               }
@@ -908,6 +923,7 @@ exports[`Group Item component should render default prop 1`] = `
         style={
           Object {
             "flex": 1,
+            "justifyContent": "center",
             "paddingHorizontal": 12,
           }
         }
@@ -917,9 +933,9 @@ exports[`Group Item component should render default prop 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -1000,11 +1016,13 @@ exports[`Group Item component should render default prop 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
-                Object {},
+                Object {
+                  "color": "#767D93",
+                },
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -1073,10 +1091,10 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "transparent",
+          "backgroundColor": "rgba(255,255,255,0)",
           "flexDirection": "row",
           "height": "100%",
-          "marginHorizontal": 12,
+          "marginHorizontal": 8,
           "opacity": 1,
           "width": 1,
         }
@@ -1100,8 +1118,8 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": undefined,
-              "marginLeft": -7,
+              "backgroundColor": "#FFFFFF",
+              "marginLeft": -6,
               "paddingVertical": 4,
             }
           }
@@ -1170,11 +1188,15 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
     </View>
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "paddingVertical": 4,
-        }
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingLeft": 8,
+            "paddingVertical": 4,
+          },
+          undefined,
+        ]
       }
     >
       <View>
@@ -1201,7 +1223,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                     "width": 40,
                   },
                   Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#A4A9B7",
                   },
                 ]
               }
@@ -1283,6 +1305,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
         style={
           Object {
             "flex": 1,
+            "justifyContent": "center",
             "paddingHorizontal": 12,
           }
         }
@@ -1292,9 +1315,9 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -1375,11 +1398,13 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
-                Object {},
+                Object {
+                  "color": "#767D93",
+                },
                 Object {
                   "marginHorizontal": 4,
                 },
