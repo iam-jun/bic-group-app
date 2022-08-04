@@ -47,12 +47,8 @@ export default function* approveAllGroupMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log(
-      'approveAllGroupMemberRequests: ', err,
-    );
+    console.error('approveAllGroupMemberRequests: ', err);
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

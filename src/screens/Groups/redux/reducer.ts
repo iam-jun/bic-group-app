@@ -313,11 +313,7 @@ function groupsReducer(
           creatingScheme: {
             ...state.permissionScheme.creatingScheme,
             data: payload
-              ? Object.assign(
-                // @ts-ignore
-                cloneDeep(state.permissionScheme.creatingScheme.data),
-                payload,
-              )
+              ? Object.assign(cloneDeep(state.permissionScheme.creatingScheme.data), payload)
               : groupInitState.permissionScheme.creatingScheme.data,
           },
         },
@@ -325,7 +321,6 @@ function groupsReducer(
     case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
       const memberRoleIndex = state.permissionScheme.creatingScheme?.memberRoleIndex;
       const { permission, roleIndex } = payload || {};
-      // @ts-ignore
       const roles = state.permissionScheme.creatingScheme?.data?.roles || [];
       const newRoles = getNewSchemeRolesOnUpdatePermission(
         permission,
@@ -334,7 +329,6 @@ function groupsReducer(
         memberRoleIndex,
       );
       const newData = Object.assign(
-        // @ts-ignore
         cloneDeep(state.permissionScheme.creatingScheme.data),
         { roles: newRoles },
       );
@@ -615,7 +609,6 @@ function groupsReducer(
           items: {
             ...groupMemberRequests.items,
             [payload.id]: {
-              // @ts-ignore
               ...groupMemberRequests.items[payload.id],
               ...payload.data,
             },
@@ -736,7 +729,6 @@ function groupsReducer(
           items: {
             ...discoverGroups.items,
             [payload.id]: {
-              // @ts-ignore
               ...discoverGroups.items[payload.id],
               ...payload.data,
             },
@@ -760,7 +752,6 @@ function groupsReducer(
           items: {
             ...discoverCommunities.items,
             [payload.id]: {
-              // @ts-ignore
               ...discoverCommunities.items[payload.id],
               ...payload.data,
             },
@@ -805,7 +796,6 @@ function groupsReducer(
           items: {
             ...communityMemberRequests.items,
             [payload.id]: {
-              // @ts-ignore
               ...communityMemberRequests.items[payload.id],
               ...payload.data,
             },
