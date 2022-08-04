@@ -12,6 +12,9 @@ import {
   getAnimatedStyle,
 } from 'react-native-reanimated/src/reanimated2/jestUtils';
 
+// WARNING: Don't remove this import
+import '~/store';
+
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import initialState from '~/store/initialState';
@@ -41,6 +44,7 @@ export function rerenderWithRedux(
   return wrapper?.rerender?.(<Provider store={store}>{component}</Provider>);
 }
 
+// eslint-disable-next-line no-promise-executor-return
 const waitForUpdateRedux = (timeout = 500) => new Promise((r) => setTimeout(r, timeout));
 
 const getHookReduxWrapper = (store = createTestStore()) => {
@@ -50,8 +54,10 @@ const getHookReduxWrapper = (store = createTestStore()) => {
 
 // must use React.useState
 const setHookTestState = (newState) => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const setStateMockFn = () => {};
   return Object.keys(newState).reduce((acc, val) => {
+    // eslint-disable-next-line no-param-reassign
     acc = acc?.mockImplementationOnce(() => [newState[val], setStateMockFn]);
     return acc;
   }, jest.fn());

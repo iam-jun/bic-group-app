@@ -16,7 +16,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       Array [
         Object {
           "alignSelf": "stretch",
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": "#E3E6F2",
           "height": 1,
           "marginHorizontal": 0,
           "width": undefined,
@@ -47,8 +47,8 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#EAEDF2",
-          "borderRadius": 6,
+          "backgroundColor": "#DDDFE4",
+          "borderRadius": 4,
           "flex": 1,
           "marginRight": 8,
           "padding": 8,
@@ -58,11 +58,14 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -70,12 +73,12 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {
-                "color": "#2F3945",
+                "color": "#181C32",
               },
               Object {
                 "textAlign": "center",
@@ -100,8 +103,8 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#A17AF2",
-          "borderRadius": 6,
+          "backgroundColor": "#9E6FD8",
+          "borderRadius": 4,
           "flex": 1,
           "padding": 8,
         }
@@ -110,11 +113,14 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -122,9 +128,9 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {
                 "color": "#FFFFFF",

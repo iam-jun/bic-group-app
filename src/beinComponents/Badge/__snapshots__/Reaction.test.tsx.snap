@@ -15,8 +15,8 @@ exports[`Reaction component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#EAEDF2",
-      "borderColor": "#EAEDF2",
+      "backgroundColor": "#E3E6F2",
+      "borderColor": "#E3E6F2",
       "borderRadius": 6,
       "borderWidth": 1,
       "flexDirection": "row",
@@ -32,12 +32,12 @@ exports[`Reaction component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
         },
         Object {
-          "color": "#2F3945",
+          "color": "#181C32",
         },
         Object {
           "marginBottom": 2,
@@ -50,9 +50,9 @@ exports[`Reaction component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           Object {

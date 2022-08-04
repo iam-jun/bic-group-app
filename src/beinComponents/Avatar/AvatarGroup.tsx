@@ -216,7 +216,7 @@ const AvatarGroup = ({
   return (
     <View
       testID="avatar_group"
-      style={StyleSheet.flatten([
+      style={[
         {
           width: containerSize,
           height: containerSize,
@@ -227,7 +227,7 @@ const AvatarGroup = ({
           padding: 1,
         },
         style,
-      ])}
+      ]}
     >
       {renderItems()}
     </View>

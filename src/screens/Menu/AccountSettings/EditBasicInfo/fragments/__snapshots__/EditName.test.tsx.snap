@@ -65,54 +65,7 @@ exports[`EditName conponent renders correctly 1`] = `
             ]
           }
         >
-          <View>
-            <RNSVGSvgView
-              align="xMidYMid"
-              bbHeight={24}
-              bbWidth={24}
-              color={4286071773}
-              data-name="Layer 1"
-              focusable={false}
-              height={24}
-              meetOrSlice={0}
-              minX={0}
-              minY={0}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderWidth": 0,
-                  },
-                  Object {},
-                  Object {
-                    "flex": 0,
-                    "height": 24,
-                    "width": 24,
-                  },
-                ]
-              }
-              tintColor={4286071773}
-              vbHeight={24}
-              vbWidth={24}
-              width={24}
-            >
-              <RNSVGGroup>
-                <RNSVGPath
-                  d="M16 6a1 1 0 00-1-1H3a1 1 0 000 2h5v11a1 1 0 002 0V7h5a1 1 0 001-1zm5 5h-6a1 1 0 000 2h2v5a1 1 0 002 0v-5h2a1 1 0 000-2z"
-                  fill={
-                    Array [
-                      2,
-                    ]
-                  }
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                />
-              </RNSVGGroup>
-            </RNSVGSvgView>
-          </View>
+          <View />
         </View>
       </View>
     </View>
@@ -120,16 +73,16 @@ exports[`EditName conponent renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 15,
           },
           Object {},
           undefined,
         ]
       }
     >
-      Name
+      Full name
     </Text>
   </View>
   <View
@@ -143,65 +96,50 @@ exports[`EditName conponent renders correctly 1`] = `
     }
     testID="text_input"
   >
-    <RCTSinglelineTextInputView
-      accessible={true}
-      activeOutlineColor="#7843DD"
-      allowFontScaling={true}
-      blurOnSubmit={true}
-      dense={true}
-      error={false}
-      focusable={true}
-      forwardedRef={null}
-      maxLength={100}
-      mode="outlined"
-      mostRecentEventCount={0}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onChangeSync={null}
-      onChangeText={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onScroll={[Function]}
-      onSelectionChange={[Function]}
-      onSelectionChangeShouldSetResponder={[Function]}
-      onStartShouldSetResponder={[Function]}
-      outlineColor="#B2BDCD"
-      placeholderTextColor="#627286"
-      rejectResponderTermination={true}
-      selection={null}
-      selectionColor="#627286"
+    <View
       style={
         Array [
-          Object {},
+          Object {
+            "alignItems": "center",
+            "borderColor": "#A4A9B7",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "minHeight": 44,
+            "paddingRight": 12,
+          },
+          Object {
+            "borderColor": "#A4A9B7",
+          },
           undefined,
         ]
       }
-      testID="edit_name.text_input"
-      text="Test Name"
-      theme={
-        Object {
-          "colors": Object {
-            "background": "#FFFFFF",
-            "placeholder": "#627286",
-            "primary": "#B2BDCD",
-            "text": "#2F3945",
-          },
-          "fonts": Object {
-            "regular": Object {
-              "fontFamily": "OpenSans-Regular",
+    >
+      <TextInput
+        maxLength={100}
+        onBlur={[Function]}
+        onChangeText={[Function]}
+        onFocus={[Function]}
+        placeholderTextColor="#767D93"
+        selectionColor="#767D93"
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "fontFamily": "BeVietnamPro-Light",
+              "minHeight": 44,
+              "paddingHorizontal": 12,
             },
-          },
-          "roundness": 6,
+            Object {
+              "color": "#181C32",
+            },
+          ]
         }
-      }
-      underlineColorAndroid="transparent"
-      value="Test Name"
-    />
+        testID="edit_name.text_input"
+        value="Test Name"
+      />
+    </View>
   </View>
 </View>
 `;
@@ -271,54 +209,7 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
             ]
           }
         >
-          <View>
-            <RNSVGSvgView
-              align="xMidYMid"
-              bbHeight={24}
-              bbWidth={24}
-              color={4286071773}
-              data-name="Layer 1"
-              focusable={false}
-              height={24}
-              meetOrSlice={0}
-              minX={0}
-              minY={0}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderWidth": 0,
-                  },
-                  Object {},
-                  Object {
-                    "flex": 0,
-                    "height": 24,
-                    "width": 24,
-                  },
-                ]
-              }
-              tintColor={4286071773}
-              vbHeight={24}
-              vbWidth={24}
-              width={24}
-            >
-              <RNSVGGroup>
-                <RNSVGPath
-                  d="M16 6a1 1 0 00-1-1H3a1 1 0 000 2h5v11a1 1 0 002 0V7h5a1 1 0 001-1zm5 5h-6a1 1 0 000 2h2v5a1 1 0 002 0v-5h2a1 1 0 000-2z"
-                  fill={
-                    Array [
-                      2,
-                    ]
-                  }
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                />
-              </RNSVGGroup>
-            </RNSVGSvgView>
-          </View>
+          <View />
         </View>
       </View>
     </View>
@@ -326,16 +217,16 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 15,
           },
           Object {},
           undefined,
         ]
       }
     >
-      Name
+      Full name
     </Text>
   </View>
   <View
@@ -349,75 +240,60 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
     }
     testID="text_input"
   >
-    <RCTSinglelineTextInputView
-      accessible={true}
-      activeOutlineColor="#7843DD"
-      allowFontScaling={true}
-      blurOnSubmit={true}
-      dense={true}
-      error={true}
-      focusable={true}
-      forwardedRef={null}
-      maxLength={100}
-      mode="outlined"
-      mostRecentEventCount={0}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onChangeSync={null}
-      onChangeText={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onScroll={[Function]}
-      onSelectionChange={[Function]}
-      onSelectionChangeShouldSetResponder={[Function]}
-      onStartShouldSetResponder={[Function]}
-      outlineColor="#B2BDCD"
-      placeholderTextColor="#627286"
-      rejectResponderTermination={true}
-      selection={null}
-      selectionColor="#627286"
+    <View
       style={
         Array [
-          Object {},
+          Object {
+            "alignItems": "center",
+            "borderColor": "#A4A9B7",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "minHeight": 44,
+            "paddingRight": 12,
+          },
+          Object {
+            "borderColor": "#A4A9B7",
+          },
           undefined,
         ]
       }
-      testID="edit_name.text_input"
-      text="Test Name"
-      theme={
-        Object {
-          "colors": Object {
-            "background": "#FFFFFF",
-            "placeholder": "#627286",
-            "primary": "#B2BDCD",
-            "text": "#DD2C3E",
-          },
-          "fonts": Object {
-            "regular": Object {
-              "fontFamily": "OpenSans-Regular",
+    >
+      <TextInput
+        maxLength={100}
+        onBlur={[Function]}
+        onChangeText={[Function]}
+        onFocus={[Function]}
+        placeholderTextColor="#767D93"
+        selectionColor="#767D93"
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "fontFamily": "BeVietnamPro-Light",
+              "minHeight": 44,
+              "paddingHorizontal": 12,
             },
-          },
-          "roundness": 6,
+            Object {
+              "color": "#E90C22",
+            },
+          ]
         }
-      }
-      underlineColorAndroid="transparent"
-      value="Test Name"
-    />
+        testID="edit_name.text_input"
+        value="Test Name"
+      />
+    </View>
     <Text
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 12,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 13,
           },
           Object {
-            "color": "#DD2C3E",
+            "color": "#E90C22",
           },
           undefined,
         ]

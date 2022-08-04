@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkInfo component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    titlePosition 
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+       • company
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`WorkInfo component renders null 1`] = `null`;

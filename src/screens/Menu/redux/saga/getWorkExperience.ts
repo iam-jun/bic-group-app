@@ -4,11 +4,11 @@ import menuDataHelper from '../../helper/MenuDataHelper';
 import menuActions from '../actions';
 import { mapWorkExperience } from '../helper';
 
-export default function* getWorkExperience({ id }: {type: string; id: string}) {
+export default function* getWorkExperience({ payload }: {type: string; payload: string}) {
   try {
     const response: IResponseData = yield call(
       menuDataHelper.getWorkExperience,
-      id,
+      payload,
     );
     yield put(menuActions.setUserWorkExperience(mapWorkExperience(response.data)));
   } catch (err) {

@@ -9,7 +9,7 @@ export default function* getCommunityGroups({
   payload,
 }: {
   type: string;
-  payload: {id: string; params?: IGetCommunityGroup};
+  payload: { id: string; params?: IGetCommunityGroup };
 }) {
   try {
     const { id, params } = payload;

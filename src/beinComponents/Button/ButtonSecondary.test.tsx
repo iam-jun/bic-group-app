@@ -3,7 +3,7 @@ import {cleanup} from '@testing-library/react-native';
 
 import {renderWithRedux} from '~/test/testUtils';
 import ButtonSecondary from './ButtonSecondary';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 
 afterEach(cleanup);
 

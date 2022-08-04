@@ -8,9 +8,13 @@ import notificationsActions from '../actions';
 import markAsSeenAll from './markAsSeenAll';
 
 describe('Mark as seen all notification saga', () => {
+  const _notificationList: any = {};
+  NOTIFICATIONS_RESPONSE.data.list.forEach((item: any) => {
+    _notificationList[item.id] = {...item};
+  });
   const storeData = {
     notifications: {
-      notificationList: NOTIFICATIONS_RESPONSE.data.list,
+      notificationList: _notificationList,
     },
   };
 
@@ -23,10 +27,10 @@ describe('Mark as seen all notification saga', () => {
       code: 200,
     };
 
-    const newListNoti = [...storeData.notifications.notificationList];
-    newListNoti.forEach((notiItem: any) => {
-      notiItem.isSeen = true;
-    });
+    const newListNoti = {...storeData.notifications.notificationList};
+    for (const [key, value] of Object.entries(newListNoti)) {
+      newListNoti[key as any] = {...((value as any) || {}), isSeen: true};
+    }
 
     return (
       // @ts-ignorets
@@ -36,9 +40,9 @@ describe('Mark as seen all notification saga', () => {
         ])
         .withState(storeData)
         .put(
-          notificationsActions.setNotifications({
-            notifications: newListNoti,
-            unseen: 0,
+          notificationsActions.setAllNotifications({
+            notifications: {...newListNoti},
+            unseenNumber: 0,
           }),
         )
         .run()

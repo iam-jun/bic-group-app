@@ -7,27 +7,48 @@ import notificationsActions from '../actions';
 import markAsUnRead from './markAsUnRead';
 
 describe('Mark as unread notification saga', () => {
+  const _notificationList: any = {};
+  NOTIFICATIONS_RESPONSE.data.list.forEach((item: any) => {
+    _notificationList[item.id] = {...item};
+  });
   const storeData = {
     notifications: {
-      notificationList: NOTIFICATIONS_RESPONSE.data.list,
+      notificationList: _notificationList,
+      tabUnread: {
+        loading: false,
+        data: [],
+        isLoadingMore: false,
+        noMoreData: false,
+      },
     },
   };
+
+  it('should do nothing with params in the payload is undefined', () => {
+    const action = {
+      type: 'test',
+      payload: undefined,
+    };
+    return (
+      // @ts-ignorets
+      expectSaga(markAsUnRead, action)
+        .run()
+        .then(({allEffects}: any) => {
+          expect(allEffects?.length).toEqual(0);
+        })
+    );
+  });
 
   it('should mark as unread notification successfully with params in the payload', () => {
     const action = {
       type: 'test',
-      payload: '51898e32-f7a2-411e-beeb-2edd58299010',
+      payload: {id: '51898e32-f7a2-411e-beeb-2edd58299010'},
     };
     const response = {
       code: 200,
     };
 
-    const newListNoti = [...storeData.notifications.notificationList];
-    newListNoti.forEach((notificationGroup: any) => {
-      if (notificationGroup.id === action.payload) {
-        notificationGroup.isRead = false;
-      }
-    });
+    const newListNoti = {...storeData.notifications.notificationList};
+    newListNoti[action.payload.id as any].isRead = false;
 
     return (
       // @ts-ignorets
@@ -37,14 +58,19 @@ describe('Mark as unread notification saga', () => {
         ])
         .withState(storeData)
         .put(
-          notificationsActions.setNotifications({
+          notificationsActions.getNotifications({
+            flag: 'UNREAD',
+            keyValue: 'tabUnread',
+          }),
+        )
+        .put(
+          notificationsActions.setAllNotifications({
             notifications: newListNoti,
-            unseen: 0,
           }),
         )
         .run()
         .then(({allEffects}: any) => {
-          expect(allEffects?.length).toEqual(3);
+          expect(allEffects?.length).toEqual(4);
         })
     );
   });
@@ -52,7 +78,7 @@ describe('Mark as unread notification saga', () => {
   it('should call server and server throws an error this comment is delete', () => {
     const action = {
       type: 'test',
-      payload: '51898e32-f7a2-411e-beeb-2edd58299010',
+      payload: {id: '51898e32-f7a2-411e-beeb-2edd58299010'},
     };
 
     const resp = {

@@ -1,0 +1,246 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BasicInfo component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "marginTop": 16,
+      "paddingBottom": 12,
+    }
+  }
+  testID="user_profile.basic_info"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 17,
+        },
+        Object {},
+        Object {
+          "marginBottom": 16,
+        },
+      ]
+    }
+    testID="info_section.title"
+  >
+    Basic Info
+  </Text>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Full name
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Gender
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    >
+      Male
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Birthday
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Language
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Relationship Status
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_item.value"
+    >
+      Not set
+    </Text>
+  </View>
+</View>
+`;

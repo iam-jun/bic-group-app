@@ -73,7 +73,7 @@ describe('AboutContent component', () => {
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
-      join_status: 1,
+      joinStatus: 1,
       privacy: 'OPEN',
       members: [previewMemberDetail],
     };
@@ -93,7 +93,7 @@ describe('AboutContent component', () => {
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
-      join_status: 1,
+      joinStatus: 1,
       privacy: 'PRIVATE',
     };
     const store = createTestStore(state);
@@ -128,7 +128,7 @@ describe('AboutContent component', () => {
     state.groups.communityDetail = {
       ...communityDetailData,
       privacy: 'OPEN',
-      join_status: 1,
+      joinStatus: 1,
       members: [previewMemberDetail],
     };
     const store = createTestStore(state);
@@ -144,7 +144,7 @@ describe('AboutContent component', () => {
     state.groups.communityDetail = {
       ...communityDetailData,
       privacy: 'PRIVATE',
-      join_status: 1,
+      joinStatus: 1,
     };
     const store = createTestStore(state);
 

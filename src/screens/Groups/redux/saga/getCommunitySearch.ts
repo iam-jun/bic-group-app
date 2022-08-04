@@ -41,6 +41,6 @@ export default function* getCommunitySearch({
   } catch (err) {
     console.error('getCommunitySearch error:', err);
     yield put(groupsActions.setCommunitySearch({ loading: false }));
-    yield call(showError, err);
+    yield showError(err);
   }
 }

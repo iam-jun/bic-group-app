@@ -10,6 +10,7 @@ import {Platform, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Header from '~/beinComponents/Header';
 import initialState from '~/store/initialState';
 import images from '~/resources/images';
+import lodash from 'lodash';
 
 const TestComponent = ({onChange}: {onChange?: (refs?: any) => void}) => {
   const headerRefs = React.useRef<any>();
@@ -163,18 +164,6 @@ describe('Header component', () => {
     expect(leftIconComponent).toBeDefined();
   });
 
-  it(`renders correctly with props left icon props`, () => {
-    const rendered = render(
-      <Header leftIcon="Bug" leftIconProps={{tintColor: '#421187'}} />,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-    const leftIconComponent = rendered.getByTestId('header.leftIcon');
-    expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView' as any).props.fill).toBe(
-      '#421187',
-    );
-  });
-
   it(`renders correctly with props icon`, () => {
     const onPressIcon = jest.fn();
     const rendered = render(<Header icon="Bug" onPressIcon={onPressIcon} />);
@@ -188,18 +177,6 @@ describe('Header component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
-  });
-
-  it(`renders correctly with props right icon props`, () => {
-    const rendered = render(
-      <Header rightIcon="Bug" rightIconProps={{tintColor: '#421187'}} />,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-    const leftIconComponent = rendered.getByTestId('header.rightIcon');
-    expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView' as any).props.fill).toBe(
-      '#421187',
-    );
   });
 
   it(`renders correctly with props on press icon`, () => {
@@ -252,8 +229,9 @@ describe('Header component', () => {
     });
   });
 
-  it(`renders correctly with props on press button`, () => {
+  it(`renders correctly with props on press button`, async () => {
     const onPressButton = jest.fn();
+    const spy = jest.spyOn(lodash, 'debounce');
     const storeData = {...initialState};
     storeData.noInternet.isInternetReachable = true;
     const store = mockStore(storeData);
@@ -262,10 +240,11 @@ describe('Header component', () => {
       store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
-    const buttonComponent = rendered.getAllByTestId('header.button');
+    const buttonComponent = rendered.getByTestId('header.button');
     expect(buttonComponent).toBeDefined();
-    fireEvent.press(rendered.getByTestId('header.button'));
-    expect(onPressButton).toBeCalled();
+    fireEvent.press(buttonComponent);
+
+    expect(spy).toBeCalled();
   });
 
   it(`renders correctly with props menu icon`, () => {
@@ -297,13 +276,6 @@ describe('Header component', () => {
     expect(backIcon).toBeNull();
   });
 
-  it(`renders correctly with props hide back on laptop`, () => {
-    const rendered = render(<Header hideBackOnLaptop />);
-    expect(rendered.toJSON()).toMatchSnapshot();
-    const backIcon = rendered.queryByTestId('header.back');
-    expect(backIcon).toBeNull();
-  });
-
   it(`renders correctly with props on press back`, () => {
     const onPressBack = jest.fn();
     const rendered = render(<Header onPressBack={onPressBack} />);
@@ -322,7 +294,9 @@ describe('Header component', () => {
   it(`renders correctly with props style`, () => {
     const rendered = render(<Header style={{backgroundColor: '#F2F2F2'}} />);
     expect(rendered.toJSON()).toMatchSnapshot();
-    expect(rendered.getByTestId('header.content').props.style).toMatchObject({
+    const headerContentComponent = rendered.getByTestId('header.content');
+    expect(headerContentComponent).toBeDefined();    
+    expect(headerContentComponent.props?.style[headerContentComponent.props?.style?.length - 1]).toMatchObject({
       backgroundColor: '#F2F2F2',
     });
   });

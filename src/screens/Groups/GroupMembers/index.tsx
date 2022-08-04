@@ -49,7 +49,7 @@ const _GroupMembers = (props: any) => {
   );
 
   const getGroupProfile = () => {
-    dispatch(groupsActions.getGroupDetail(groupId));
+    dispatch(groupsActions.getGroupDetail({ groupId }));
   };
 
   const getMembers = () => {

@@ -1,20 +1,20 @@
 import i18next from 'i18next';
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import leaveGroup, {navigateToGroup, navigationReplace} from './leaveGroup';
+import leaveGroup, { navigateToGroup, navigationReplace } from './leaveGroup';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
-import {groupPrivacy} from '~/constants/privacyTypes';
-import {Platform as RNPlatform} from 'react-native';
+import { groupPrivacy } from '~/constants/privacyTypes';
+import { Platform as RNPlatform } from 'react-native';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 
 describe('Leave Group Saga', () => {
   let Platform: any;
   const action = {
     type: 'test',
-    payload: 1,
+    payload: "1",
   };
 
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe('Leave Group Saga', () => {
     Platform.OS = 'ios';
     const state = {
       groups: {
-        groupDetail: {group: {privacy: groupPrivacy.secret}},
+        groupDetail: { group: { privacy: groupPrivacy.secret } },
       },
     };
 
@@ -36,7 +36,7 @@ describe('Leave Group Saga', () => {
       .put(
         groupsActions.editDiscoverGroupItem({
           id: action.payload,
-          data: {join_status: groupJoinStatus.visitor},
+          data: { joinStatus: groupJoinStatus.visitor },
         }),
       )
       .call(navigationReplace)
@@ -56,7 +56,7 @@ describe('Leave Group Saga', () => {
 
   it('leaves non-secret group successfully', () => {
     const state = {
-      groups: {groupDetail: {group: {privacy: groupPrivacy.public}}},
+      groups: { groupDetail: { group: { privacy: groupPrivacy.public } } },
     };
 
     // @ts-ignore
@@ -66,7 +66,7 @@ describe('Leave Group Saga', () => {
       .put(
         groupsActions.editDiscoverGroupItem({
           id: action.payload,
-          data: {join_status: groupJoinStatus.visitor},
+          data: { joinStatus: groupJoinStatus.visitor },
         }),
       )
       .call(navigateToGroup, action.payload)
@@ -86,9 +86,9 @@ describe('Leave Group Saga', () => {
 
   it('should show error when calling server and error occurs', () => {
     const state = {
-      groups: {groupDetail: {group: {privacy: groupPrivacy.public}}},
+      groups: { groupDetail: { group: { privacy: groupPrivacy.public } } },
     };
-    const error = {meta: {message: 'Some error occurs!'}};
+    const error = { meta: { message: 'Some error occurs!' } };
 
     // @ts-ignore
     return expectSaga(leaveGroup, action)
@@ -100,7 +100,7 @@ describe('Leave Group Saga', () => {
         modalActions.showHideToastMessage({
           content: error.meta.message,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),

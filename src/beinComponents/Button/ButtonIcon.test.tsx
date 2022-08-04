@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {renderWithRedux, cleanup, fireEvent} from '~/test/testUtils';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 
 import ButtonIcon from './ButtonIcon';
 

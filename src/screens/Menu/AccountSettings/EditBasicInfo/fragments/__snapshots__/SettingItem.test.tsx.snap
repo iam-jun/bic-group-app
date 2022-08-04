@@ -103,54 +103,7 @@ exports[`SettingItem conponent renders correctly 1`] = `
           >
             <View
               testID="edit_user_info.setting_item.left_component"
-            >
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={24}
-                bbWidth={24}
-                color={4286071773}
-                data-name="Layer 1"
-                focusable={false}
-                height={24}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-                tintColor={4286071773}
-                vbHeight={24}
-                vbWidth={24}
-                width={24}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M16 6a1 1 0 00-1-1H3a1 1 0 000 2h5v11a1 1 0 002 0V7h5a1 1 0 001-1zm5 5h-6a1 1 0 000 2h2v5a1 1 0 002 0v-5h2a1 1 0 000-2z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -166,25 +119,25 @@ exports[`SettingItem conponent renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 13,
               },
               Object {},
               undefined,
             ]
           }
         >
-          Name
+          Full name
         </Text>
         <Text
           numberOfLines={2}
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
               Object {},
               undefined,
@@ -303,54 +256,7 @@ exports[`SettingItem conponent renders correctly testID 1`] = `
           >
             <View
               testID="edit_user_info.setting_item.left_component"
-            >
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={24}
-                bbWidth={24}
-                color={4286071773}
-                data-name="Layer 1"
-                focusable={false}
-                height={24}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-                tintColor={4286071773}
-                vbHeight={24}
-                vbWidth={24}
-                width={24}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M16 6a1 1 0 00-1-1H3a1 1 0 000 2h5v11a1 1 0 002 0V7h5a1 1 0 001-1zm5 5h-6a1 1 0 000 2h2v5a1 1 0 002 0v-5h2a1 1 0 000-2z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -366,25 +272,25 @@ exports[`SettingItem conponent renders correctly testID 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 13,
               },
               Object {},
               undefined,
             ]
           }
         >
-          Name
+          Full name
         </Text>
         <Text
           numberOfLines={2}
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
               Object {},
               undefined,
@@ -502,53 +408,7 @@ exports[`SettingItem conponent should render left, right component 1`] = `
           >
             <View
               testID="edit_user_info.setting_item.left_component"
-            >
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={24}
-                bbWidth={24}
-                color={4286071773}
-                focusable={false}
-                height={24}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-                tintColor={4286071773}
-                vbHeight={24}
-                vbWidth={24}
-                width={24}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -564,25 +424,25 @@ exports[`SettingItem conponent should render left, right component 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 13,
               },
               Object {},
               undefined,
             ]
           }
         >
-          Name
+          Full name
         </Text>
         <Text
           numberOfLines={2}
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
               Object {},
               undefined,
@@ -612,11 +472,14 @@ exports[`SettingItem conponent should render left, right component 1`] = `
       >
         <View
           style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
           }
           testID="button_wrapper.content"
         >
@@ -673,53 +536,7 @@ exports[`SettingItem conponent should render left, right component 1`] = `
                   ]
                 }
               >
-                <View>
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={20}
-                    bbWidth={20}
-                    color={4281284933}
-                    focusable={false}
-                    height={20}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 20,
-                          "width": 20,
-                        },
-                      ]
-                    }
-                    tintColor={4281284933}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={20}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                <View />
               </View>
             </View>
           </View>
@@ -778,53 +595,7 @@ exports[`SettingItem conponent should render left, right component 1`] = `
                   ]
                 }
               >
-                <View>
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={20}
-                    bbWidth={20}
-                    color={4281284933}
-                    focusable={false}
-                    height={20}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 20,
-                          "width": 20,
-                        },
-                      ]
-                    }
-                    tintColor={4281284933}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={20}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                <View />
               </View>
             </View>
           </View>

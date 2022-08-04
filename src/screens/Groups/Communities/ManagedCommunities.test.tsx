@@ -19,7 +19,7 @@ describe('ManagedCommunities component', () => {
     const state = {...initialState};
     state.groups.managedCommunities = {
       loading: false,
-      data: [communityDetailData.id],
+      ids: [communityDetailData.id],
       items: {[communityDetailData.id]: communityDetailData},
       canLoadMore: true,
     };
@@ -34,7 +34,7 @@ describe('ManagedCommunities component', () => {
     const state = {...initialState};
     state.groups.managedCommunities = {
       loading: false,
-      data: [],
+      ids: [],
       items: {},
       canLoadMore: true,
     };
@@ -49,7 +49,7 @@ describe('ManagedCommunities component', () => {
     const state = {...initialState};
     state.groups.managedCommunities = {
       loading: false,
-      data: [communityDetailData.id],
+      ids: [communityDetailData.id],
       items: {[communityDetailData.id]: communityDetailData},
       canLoadMore: true,
     };
@@ -65,7 +65,7 @@ describe('ManagedCommunities component', () => {
     const state = {...initialState};
     state.groups.managedCommunities = {
       loading: true,
-      data: [],
+      ids: [],
       items: {},
       canLoadMore: true,
     };
@@ -81,7 +81,7 @@ describe('ManagedCommunities component', () => {
     const state = {...initialState};
     state.groups.managedCommunities = {
       loading: false,
-      data: [communityDetailData.id],
+      ids: [communityDetailData.id],
       items: {[communityDetailData.id]: communityDetailData},
       canLoadMore: false,
     };

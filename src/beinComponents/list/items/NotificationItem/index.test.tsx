@@ -1,11 +1,12 @@
-import {cleanup, fireEvent} from '@testing-library/react-native';
+import { cleanup, fireEvent } from '@testing-library/react-native';
 import React from 'react';
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux, createTestStore } from '~/test/testUtils';
 import NotificationItem from '.';
 import {
   CHILD_COMMENT,
   LOAD_MORE_RESPONSE,
 } from '~/test/mock_data/notifications';
+import initialState from '~/store/initialState';
 
 afterEach(cleanup);
 
@@ -17,6 +18,10 @@ describe('NotificationItem component', () => {
   });
 
   it(`renders correctly`, async () => {
+    const state = { ...initialState };
+    // @ts-ignore
+    state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0] } };
+    const store = createTestStore(state);
     const onPress = jest.fn();
     const onPressOption = jest.fn();
     const wrapper = renderWithRedux(
@@ -25,7 +30,7 @@ describe('NotificationItem component', () => {
         testID={`testID`}
         onPress={onPress}
         onPressOption={onPressOption}
-      />,
+      />, store
     );
 
     const rendered = wrapper.toJSON();
@@ -33,6 +38,10 @@ describe('NotificationItem component', () => {
   });
 
   it(`should call prop onPress when click item`, async () => {
+    const state = { ...initialState };
+    // @ts-ignore
+    state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0] } };
+    const store = createTestStore(state);
     const onPress = jest.fn();
     const onPressOption = jest.fn();
     const wrapper = renderWithRedux(
@@ -41,7 +50,7 @@ describe('NotificationItem component', () => {
         testID={`testID`}
         onPress={onPress}
         onPressOption={onPressOption}
-      />,
+      />, store
     );
 
     const component = wrapper.getByTestId('testID');
@@ -52,6 +61,10 @@ describe('NotificationItem component', () => {
   });
 
   it(`should call prop onPressOption when click item option menu`, async () => {
+    const state = { ...initialState };
+    // @ts-ignore
+    state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0] } };
+    const store = createTestStore(state);
     const onPress = jest.fn();
     const onPressOption = jest.fn();
     const wrapper = renderWithRedux(
@@ -60,7 +73,7 @@ describe('NotificationItem component', () => {
         testID={`testID`}
         onPress={onPress}
         onPressOption={onPressOption}
-      />,
+      />, store
     );
 
     const menuComponent = wrapper.getByTestId(
@@ -88,6 +101,11 @@ describe('NotificationItem component', () => {
   });
 
   it(`should not show indicator when notification is read`, async () => {
+    const state = { ...initialState };
+    // @ts-ignore
+    state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0], isRead: true } };
+    const store = createTestStore(state);
+
     const onPress = jest.fn();
     const onPressOption = jest.fn();
     const wrapper = renderWithRedux(
@@ -96,7 +114,6 @@ describe('NotificationItem component', () => {
         testID={`testID`}
         onPress={onPress}
         onPressOption={onPressOption}
-        isRead={true}
       />,
     );
     const component = wrapper.queryByTestId('notification_item.indicator');

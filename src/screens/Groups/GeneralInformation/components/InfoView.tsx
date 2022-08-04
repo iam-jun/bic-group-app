@@ -34,20 +34,20 @@ const InfoView = ({
   const editDescription = () => {
     rootNavigation.navigate(
       groupStack.editDescription, {
-        id,
-        description,
-        type,
-      },
+      id,
+      description,
+      type,
+    },
     );
   };
 
   const editName = () => {
     rootNavigation.navigate(
       groupStack.editName, {
-        id,
-        name,
-        type,
-      },
+      id,
+      name,
+      type,
+    },
     );
   };
 
@@ -58,6 +58,7 @@ const InfoView = ({
         title={`settings:title_${type}_name`}
         titleProps={{ useI18n: true }}
         subTitle={name}
+        subTitleProps={{ testID: 'info_view.name.sub_title' }}
         onPress={canEditInfo ? editName : undefined}
         RightComponent={
           canEditInfo && (
@@ -71,6 +72,7 @@ const InfoView = ({
         title={`settings:title_${type}_description`}
         titleProps={{ useI18n: true }}
         subTitle={description}
+        subTitleProps={{ testID: 'info_view.description.sub_title' }}
         onPress={canEditInfo ? editDescription : undefined}
         RightComponent={
           canEditInfo && (

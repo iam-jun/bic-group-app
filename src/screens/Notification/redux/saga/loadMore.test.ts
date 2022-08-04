@@ -12,14 +12,43 @@ import loadMore from './loadMore';
 describe('Load more notifications saga', () => {
   const storeData = {
     notifications: {
-      notificationList: NOTIFICATIONS_RESPONSE.data.list,
+      notificationList: Object.assign({}, NOTIFICATIONS_RESPONSE.data.list),
+      tabAll: {
+        loading: false,
+        data: [
+          NOTIFICATIONS_RESPONSE.data.list[0].id,
+          NOTIFICATIONS_RESPONSE.data.list[1].id,
+          NOTIFICATIONS_RESPONSE.data.list[2].id,
+        ],
+        isLoadingMore: false,
+        noMoreData: false,
+      },
+      tabUnread: {
+        loading: false,
+        data: [],
+        isLoadingMore: false,
+        noMoreData: false,
+      },
+      tabMention: {
+        loading: false,
+        data: [],
+        isLoadingMore: false,
+        noMoreData: false,
+      },
+      tabImportant: {
+        loading: false,
+        data: [],
+        isLoadingMore: false,
+        noMoreData: false,
+      },
     },
   };
 
   it('should get list notification successfully with params in the payload and cant load more', () => {
+    const keyValue = 'tabAll';
     const action = {
       type: 'test',
-      payload: {flag: 'ALL'},
+      payload: {keyValue},
     };
     const response = {
       results: [],
@@ -29,7 +58,7 @@ describe('Load more notifications saga', () => {
     return (
       // @ts-ignorets
       expectSaga(loadMore, action)
-        .put(notificationsActions.setIsLoadingMore(true))
+        .put(notificationsActions.setIsLoadingMore({keyValue, value: true}))
         .withState(storeData)
         .provide([
           [
@@ -37,8 +66,8 @@ describe('Load more notifications saga', () => {
             response,
           ],
         ])
-        .put(notificationsActions.setIsLoadingMore(false))
-        .put(notificationsActions.setNoMoreNoti(true))
+        .put(notificationsActions.setIsLoadingMore({keyValue, value: false}))
+        .put(notificationsActions.setNoMoreNoti({keyValue, value: true}))
         .run()
         .then(({allEffects}: any) => {
           expect(allEffects?.length).toEqual(5);
@@ -47,19 +76,27 @@ describe('Load more notifications saga', () => {
   });
 
   it('should get list notification successfully with required params in the payload and can load more', () => {
+    const keyValue = 'tabAll';
     const action = {
       type: 'test',
-      payload: {flag: 'ALL'},
+      payload: {keyValue},
     };
     const response = {
       results: LOAD_MORE_RESPONSE,
       unseen: 0,
     };
 
+    const newData: any[] = [],
+      newResponse: any = {};
+    response.results.forEach((item: any) => {
+      newData.push(item?.id);
+      newResponse[item.id] = {...item};
+    });
+
     return (
       // @ts-ignorets
       expectSaga(loadMore, action)
-        .put(notificationsActions.setIsLoadingMore(true))
+        .put(notificationsActions.setIsLoadingMore({keyValue, value: true}))
         .withState(storeData)
         .provide([
           [
@@ -67,11 +104,12 @@ describe('Load more notifications saga', () => {
             response,
           ],
         ])
-        .put(notificationsActions.setIsLoadingMore(false))
+        .put(notificationsActions.setIsLoadingMore({keyValue, value: false}))
         .put(
           notificationsActions.concatNotifications({
-            notifications: response.results,
-            unseen: response.unseen,
+            notifications: newResponse,
+            keyValue,
+            data: newData,
           }),
         )
         .run()
@@ -82,9 +120,10 @@ describe('Load more notifications saga', () => {
   });
 
   it('should call server and server throws an error this comment is delete', () => {
+    const keyValue = 'TEST';
     const action = {
       type: 'test',
-      payload: {flag: 'TEST'},
+      payload: {keyValue},
     };
 
     const resp = {
@@ -97,7 +136,7 @@ describe('Load more notifications saga', () => {
 
     //@ts-ignore
     return expectSaga(loadMore, action)
-      .put(notificationsActions.setIsLoadingMore(true))
+      .put(notificationsActions.setIsLoadingMore({keyValue, value: true}))
       .withState(storeData)
       .provide([
         [
@@ -105,7 +144,7 @@ describe('Load more notifications saga', () => {
           Promise.reject(resp),
         ],
       ])
-      .put(notificationsActions.setIsLoadingMore(false))
+      .put(notificationsActions.setIsLoadingMore({keyValue, value: false}))
       .run()
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(4);

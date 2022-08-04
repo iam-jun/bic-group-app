@@ -193,20 +193,22 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   };
 
   const handlePressSave = () => {
+    rootNavigation.goBack();
+
     if (putUpdateSettings) {
       handlePutUpdateSettings();
       return 'putUpdateSettings';
     }
 
-    const dataDefault = [
-      sImportant.active === currentSettings?.important?.active
-        || sImportant.expires_time === currentSettings?.important?.expires_time,
-    ];
-    const newCount = dataDefault.filter((i) => !i);
-    dispatch(postActions.setCreatePostSettings({
-      important: sImportant,
-      count: newCount?.length || 0,
-    }));
+    // const dataDefault = [
+    //   sImportant.active === currentSettings?.important?.active
+    //     || sImportant.expires_time === currentSettings?.important?.expires_time,
+    // ];
+    // const newCount = dataDefault.filter((i) => !i);
+    // dispatch(postActions.setCreatePostSettings({
+    //   important: sImportant,
+    //   count: newCount?.length || 0,
+    // }));
     rootNavigation.goBack();
     return 'setCreatePostSettings';
   };

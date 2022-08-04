@@ -21,9 +21,9 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 13,
           },
           Object {},
           Object {
@@ -39,13 +39,13 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
+          "color": "#353E6E",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
         },
         Object {},
         Object {
-          "color": "#627286",
+          "color": "#767D93",
           "margin": 24,
           "textAlign": "center",
         },
@@ -78,9 +78,9 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 13,
           },
           Object {},
           Object {
@@ -113,11 +113,14 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -125,13 +128,13 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 12,
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
               },
               Object {},
               Object {
-                "color": "#7843DD",
+                "color": "#7335C0",
                 "marginRight": 4,
               },
             ]
@@ -184,9 +187,9 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 16,
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -267,53 +270,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={16}
-                  bbWidth={16}
-                  color={4281284933}
-                  focusable={false}
-                  height={16}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 16,
-                        "width": 16,
-                      },
-                    ]
-                  }
-                  tintColor={4281284933}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={16}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M13.41 12l4.3-4.29a1 1 0 10-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 00-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 000 1.42 1 1 0 001.42 0l4.29-4.3 4.29 4.3a1 1 0 001.42 0 1 1 0 000-1.42z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              <View />
             </View>
           </View>
         </View>
@@ -344,9 +301,9 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 13,
           },
           Object {},
           Object {
@@ -359,7 +316,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
     </Text>
   </View>
   <ActivityIndicator
-    color="#B2BDCD"
+    color="#A4A9B7"
     style={
       Object {
         "alignItems": "center",

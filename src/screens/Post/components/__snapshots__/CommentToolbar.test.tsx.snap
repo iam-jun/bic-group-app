@@ -7,7 +7,7 @@ exports[`CommentToolbar component renders correctly 1`] = `
       Object {
         "alignItems": "center",
         "backgroundColor": "#FFFFFF",
-        "borderColor": "#B2BDCD",
+        "borderColor": "#A4A9B7",
         "borderTopWidth": 1,
         "flexDirection": "row",
         "height": 56,
@@ -40,11 +40,14 @@ exports[`CommentToolbar component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -101,53 +104,7 @@ exports[`CommentToolbar component renders correctly 1`] = `
               ]
             }
           >
-            <View>
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={20}
-                bbWidth={20}
-                color={4281284933}
-                focusable={false}
-                height={20}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 20,
-                      "width": 20,
-                    },
-                  ]
-                }
-                tintColor={4281284933}
-                vbHeight={24}
-                vbWidth={24}
-                width={20}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M19 10a1 1 0 00-1 1v3.38l-1.48-1.48a2.79 2.79 0 00-3.93 0l-.7.71-2.48-2.49a2.79 2.79 0 00-3.93 0L4 12.61V7a1 1 0 011-1h8a1 1 0 000-2H5a3 3 0 00-3 3v12.22A2.79 2.79 0 004.78 22h12.44a2.88 2.88 0 00.8-.12 2.74 2.74 0 002-2.65V11A1 1 0 0019 10zM5 20a1 1 0 01-1-1v-3.57l2.89-2.89a.78.78 0 011.1 0L15.46 20zm13-1a1 1 0 01-.18.54L13.3 15l.71-.7a.77.77 0 011.1 0L18 17.21zm3-15h-1V3a1 1 0 00-2 0v1h-1a1 1 0 000 2h1v1a1 1 0 002 0V6h1a1 1 0 000-2z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            <View />
           </View>
         </View>
       </View>
@@ -175,11 +132,14 @@ exports[`CommentToolbar component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -236,53 +196,7 @@ exports[`CommentToolbar component renders correctly 1`] = `
               ]
             }
           >
-            <View>
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={20}
-                bbWidth={20}
-                color={4281284933}
-                focusable={false}
-                height={20}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 20,
-                      "width": 20,
-                    },
-                  ]
-                }
-                tintColor={4281284933}
-                vbHeight={24}
-                vbWidth={24}
-                width={20}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M10 17.55l-1.77 1.72a2.47 2.47 0 01-3.5-3.5l4.54-4.55a2.46 2.46 0 013.39-.09l.12.1a1 1 0 001.4-1.43 2.75 2.75 0 00-.18-.21 4.46 4.46 0 00-6.09.22l-4.6 4.55a4.48 4.48 0 006.33 6.33L11.37 19A1 1 0 0010 17.55zM20.69 3.31a4.49 4.49 0 00-6.33 0L12.63 5A1 1 0 0014 6.45l1.73-1.72a2.47 2.47 0 013.5 3.5l-4.54 4.55a2.46 2.46 0 01-3.39.09l-.12-.1a1 1 0 00-1.4 1.43 2.75 2.75 0 00.23.21 4.47 4.47 0 006.09-.22l4.55-4.55a4.49 4.49 0 00.04-6.33z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            <View />
           </View>
         </View>
       </View>
@@ -310,11 +224,14 @@ exports[`CommentToolbar component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -466,11 +383,14 @@ exports[`CommentToolbar component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -527,53 +447,7 @@ exports[`CommentToolbar component renders correctly 1`] = `
               ]
             }
           >
-            <View>
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={20}
-                bbWidth={20}
-                color={4281284933}
-                focusable={false}
-                height={20}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 20,
-                      "width": 20,
-                    },
-                  ]
-                }
-                tintColor={4281284933}
-                vbHeight={24}
-                vbWidth={24}
-                width={20}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M21.53 7.15a1 1 0 00-1 0L17 8.89A3 3 0 0014 6H5a3 3 0 00-3 3v6a3 3 0 003 3h9a3 3 0 003-2.89l3.56 1.78A1 1 0 0021 17a1 1 0 00.53-.15A1 1 0 0022 16V8a1 1 0 00-.47-.85zM15 15a1 1 0 01-1 1H5a1 1 0 01-1-1V9a1 1 0 011-1h9a1 1 0 011 1zm5-.62l-3-1.5v-1.76l3-1.5z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            <View />
           </View>
         </View>
       </View>
