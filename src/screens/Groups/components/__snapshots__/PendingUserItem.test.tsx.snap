@@ -17,21 +17,32 @@ exports[`PendingUserItem component should render data correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "borderRadius": 4,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Object {
+            "borderRadius": 4,
+            "height": 48,
+            "width": 48,
+          },
+          undefined,
+        ]
       }
       testID="avatar"
     >
       <View
         style={
-          Object {
-            "borderRadius": 24,
-            "height": 48,
-            "width": 48,
-          }
+          Array [
+            Array [
+              Object {
+                "borderRadius": 4,
+                "height": 48,
+                "width": 48,
+              },
+              Object {
+                "borderRadius": 24,
+              },
+            ],
+            Object {},
+          ]
         }
         testID="avatar_container"
       >
@@ -137,7 +148,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
             },
@@ -238,7 +249,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -323,7 +334,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -371,11 +382,14 @@ exports[`PendingUserItem component should render data correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -383,8 +397,8 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-Medium",
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
               Object {
@@ -423,11 +437,14 @@ exports[`PendingUserItem component should render data correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -435,8 +452,8 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-Medium",
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
               Object {

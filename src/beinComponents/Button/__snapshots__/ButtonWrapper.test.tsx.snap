@@ -17,11 +17,14 @@ exports[`Button Wrapper component render correctly TouchableComponent 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     />
@@ -58,11 +61,14 @@ exports[`Button Wrapper component render correctly hitSlop 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   />
@@ -89,11 +95,14 @@ exports[`Button Wrapper component renders correctly 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   />
@@ -126,11 +135,14 @@ exports[`Button Wrapper component renders correctly button disable 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   />
@@ -157,11 +169,14 @@ exports[`Button Wrapper component renders correctly children 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   >
@@ -248,11 +263,14 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   >
@@ -260,8 +278,8 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
       style={
         Array [
           Object {
-            "color": "#181C32",
-            "fontFamily": "BeVietnamPro-Medium",
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
           Object {},
@@ -272,38 +290,6 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
       }
     />
   </View>
-</View>
-`;
-
-exports[`Button Wrapper component renders correctly contentStyle 1`] = `
-<View
-  accessible={true}
-  collapsable={false}
-  focusable={false}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "opacity": 1,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "blue",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
-    }
-    testID="button_wrapper.content"
-  />
 </View>
 `;
 
@@ -329,11 +315,14 @@ exports[`Button Wrapper component renders correctly style 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   />
@@ -361,11 +350,14 @@ exports[`Button Wrapper component renders correctly testID 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   />
@@ -392,11 +384,14 @@ exports[`Button Wrapper component should render leftIcon 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   >
@@ -485,11 +480,14 @@ exports[`Button Wrapper component should render leftIcon with leftIconProps 1`] 
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   >
@@ -578,11 +576,14 @@ exports[`Button Wrapper component should render rightIcon 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   >
@@ -671,11 +672,14 @@ exports[`Button Wrapper component should render rightIcon with rightIconProps 1`
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   >

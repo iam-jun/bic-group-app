@@ -32,22 +32,34 @@ exports[`MemberItem component should render data correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "borderRadius": 4,
-          "height": 40,
-          "marginRight": 12,
-          "width": 40,
-        }
+        Array [
+          Object {
+            "borderRadius": 4,
+            "height": 40,
+            "width": 40,
+          },
+          Object {
+            "marginRight": 12,
+          },
+        ]
       }
       testID="avatar"
     >
       <View
         style={
-          Object {
-            "borderRadius": 20,
-            "height": 40,
-            "width": 40,
-          }
+          Array [
+            Array [
+              Object {
+                "borderRadius": 4,
+                "height": 40,
+                "width": 40,
+              },
+              Object {
+                "borderRadius": 20,
+              },
+            ],
+            Object {},
+          ]
         }
         testID="avatar_container"
       >
@@ -137,7 +149,7 @@ exports[`MemberItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
             },
@@ -262,22 +274,34 @@ exports[`MemberItem component should render icon member option correctly when us
   >
     <View
       style={
-        Object {
-          "borderRadius": 4,
-          "height": 40,
-          "marginRight": 12,
-          "width": 40,
-        }
+        Array [
+          Object {
+            "borderRadius": 4,
+            "height": 40,
+            "width": 40,
+          },
+          Object {
+            "marginRight": 12,
+          },
+        ]
       }
       testID="avatar"
     >
       <View
         style={
-          Object {
-            "borderRadius": 20,
-            "height": 40,
-            "width": 40,
-          }
+          Array [
+            Array [
+              Object {
+                "borderRadius": 4,
+                "height": 40,
+                "width": 40,
+              },
+              Object {
+                "borderRadius": 20,
+              },
+            ],
+            Object {},
+          ]
         }
         testID="avatar_container"
       >
@@ -367,7 +391,7 @@ exports[`MemberItem component should render icon member option correctly when us
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
             },

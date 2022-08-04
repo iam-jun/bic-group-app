@@ -112,11 +112,14 @@ exports[`SchemeItem component should render data correctly 1`] = `
       >
         <View
           style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
           }
           testID="button_wrapper.content"
         >
@@ -203,11 +206,14 @@ exports[`SchemeItem component should render data correctly 1`] = `
       >
         <View
           style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
           }
           testID="button_wrapper.content"
         >

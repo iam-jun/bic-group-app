@@ -34,12 +34,12 @@ const GroupAdministration = (props: any) => {
   const canManageJoiningRequests = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
-    PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
+    PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
   );
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
     'groups', groupId, [
-      PERMISSION_KEY.GROUP.EDIT_INFORMATION,
-      PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
     ],
   );
 

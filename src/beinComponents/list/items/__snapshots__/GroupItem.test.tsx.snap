@@ -53,10 +53,10 @@ exports[`Group Item component renders correctly 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "transparent",
+          "backgroundColor": "rgba(255,255,255,0)",
           "flexDirection": "row",
           "height": "100%",
-          "marginHorizontal": 12,
+          "marginHorizontal": 8,
           "opacity": 1,
           "width": 1,
         }
@@ -65,11 +65,14 @@ exports[`Group Item component renders correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -78,7 +81,7 @@ exports[`Group Item component renders correctly 1`] = `
             Object {
               "alignSelf": "center",
               "backgroundColor": "#FFFFFF",
-              "marginLeft": -7,
+              "marginLeft": -6,
               "paddingVertical": 4,
             }
           }
@@ -147,33 +150,44 @@ exports[`Group Item component renders correctly 1`] = `
     </View>
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "paddingVertical": 4,
-        }
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingLeft": 8,
+            "paddingVertical": 4,
+          },
+          undefined,
+        ]
       }
     >
       <View>
         <View>
           <View
             style={
-              Object {
-                "borderRadius": 4,
-                "height": 40,
-                "width": 40,
-              }
+              Array [
+                Object {
+                  "borderRadius": 4,
+                  "height": 40,
+                  "width": 40,
+                },
+                undefined,
+              ]
             }
             testID="avatar"
           >
             <View
               style={
-                Object {
-                  "backgroundColor": "#A4A9B7",
-                  "borderRadius": 4,
-                  "height": 40,
-                  "width": 40,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#A4A9B7",
+                  },
+                ]
               }
               testID="avatar_container"
             >
@@ -253,6 +267,7 @@ exports[`Group Item component renders correctly 1`] = `
         style={
           Object {
             "flex": 1,
+            "justifyContent": "center",
             "paddingHorizontal": 12,
           }
         }
@@ -264,7 +279,7 @@ exports[`Group Item component renders correctly 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -400,11 +415,8 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           Object {
             "backgroundColor": "#E3E6F2",
             "height": "100%",
-            "marginHorizontal": 12,
+            "marginHorizontal": 8,
             "width": 1,
-          },
-          Object {
-            "backgroundColor": "transparent",
           },
         ]
       }
@@ -436,10 +448,10 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "transparent",
+          "backgroundColor": "rgba(255,255,255,0)",
           "flexDirection": "row",
           "height": "100%",
-          "marginHorizontal": 12,
+          "marginHorizontal": 8,
           "opacity": 1,
           "width": 1,
         }
@@ -448,11 +460,14 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -461,7 +476,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
             Object {
               "alignSelf": "center",
               "backgroundColor": "#FFFFFF",
-              "marginLeft": -7,
+              "marginLeft": -6,
               "paddingVertical": 4,
             }
           }
@@ -530,33 +545,44 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
     </View>
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "paddingVertical": 4,
-        }
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingLeft": 8,
+            "paddingVertical": 4,
+          },
+          undefined,
+        ]
       }
     >
       <View>
         <View>
           <View
             style={
-              Object {
-                "borderRadius": 4,
-                "height": 40,
-                "width": 40,
-              }
+              Array [
+                Object {
+                  "borderRadius": 4,
+                  "height": 40,
+                  "width": 40,
+                },
+                undefined,
+              ]
             }
             testID="avatar"
           >
             <View
               style={
-                Object {
-                  "backgroundColor": "#A4A9B7",
-                  "borderRadius": 4,
-                  "height": 40,
-                  "width": 40,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#A4A9B7",
+                  },
+                ]
               }
               testID="avatar_container"
             >
@@ -636,6 +662,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
         style={
           Object {
             "flex": 1,
+            "justifyContent": "center",
             "paddingHorizontal": 12,
           }
         }
@@ -647,7 +674,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -779,33 +806,44 @@ exports[`Group Item component should render default prop 1`] = `
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "paddingVertical": 4,
-        }
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingLeft": 8,
+            "paddingVertical": 4,
+          },
+          undefined,
+        ]
       }
     >
       <View>
         <View>
           <View
             style={
-              Object {
-                "borderRadius": 4,
-                "height": 40,
-                "width": 40,
-              }
+              Array [
+                Object {
+                  "borderRadius": 4,
+                  "height": 40,
+                  "width": 40,
+                },
+                undefined,
+              ]
             }
             testID="avatar"
           >
             <View
               style={
-                Object {
-                  "backgroundColor": "#A4A9B7",
-                  "borderRadius": 4,
-                  "height": 40,
-                  "width": 40,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#A4A9B7",
+                  },
+                ]
               }
               testID="avatar_container"
             >
@@ -885,6 +923,7 @@ exports[`Group Item component should render default prop 1`] = `
         style={
           Object {
             "flex": 1,
+            "justifyContent": "center",
             "paddingHorizontal": 12,
           }
         }
@@ -896,7 +935,7 @@ exports[`Group Item component should render default prop 1`] = `
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -1052,10 +1091,10 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "transparent",
+          "backgroundColor": "rgba(255,255,255,0)",
           "flexDirection": "row",
           "height": "100%",
-          "marginHorizontal": 12,
+          "marginHorizontal": 8,
           "opacity": 1,
           "width": 1,
         }
@@ -1064,11 +1103,14 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -1077,7 +1119,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
             Object {
               "alignSelf": "center",
               "backgroundColor": "#FFFFFF",
-              "marginLeft": -7,
+              "marginLeft": -6,
               "paddingVertical": 4,
             }
           }
@@ -1146,33 +1188,44 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
     </View>
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-          "paddingVertical": 4,
-        }
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "paddingLeft": 8,
+            "paddingVertical": 4,
+          },
+          undefined,
+        ]
       }
     >
       <View>
         <View>
           <View
             style={
-              Object {
-                "borderRadius": 4,
-                "height": 40,
-                "width": 40,
-              }
+              Array [
+                Object {
+                  "borderRadius": 4,
+                  "height": 40,
+                  "width": 40,
+                },
+                undefined,
+              ]
             }
             testID="avatar"
           >
             <View
               style={
-                Object {
-                  "backgroundColor": "#A4A9B7",
-                  "borderRadius": 4,
-                  "height": 40,
-                  "width": 40,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  Object {
+                    "backgroundColor": "#A4A9B7",
+                  },
+                ]
               }
               testID="avatar_container"
             >
@@ -1252,6 +1305,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
         style={
           Object {
             "flex": 1,
+            "justifyContent": "center",
             "paddingHorizontal": 12,
           }
         }
@@ -1263,7 +1317,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
               Object {
                 "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
+                "fontSize": 15,
               },
               Object {},
               Object {

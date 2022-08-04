@@ -34,21 +34,32 @@ exports[`Header Avatar component renders correctly 1`] = `
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 24,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "borderRadius": 24,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -205,24 +216,36 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
 >
   <View
     style={
-      Object {
-        "backgroundColor": "#FF9800",
-        "borderColor": "#FFB74D",
-        "borderRadius": 4,
-        "borderWidth": 2,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        Object {
+          "backgroundColor": "#FF9800",
+          "borderColor": "#FFB74D",
+          "borderWidth": 2,
+        },
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 24,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "borderRadius": 24,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -381,21 +404,32 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 24,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "borderRadius": 24,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -552,21 +586,32 @@ exports[`Header Avatar component renders correctly with props First Label Props 
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 24,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "borderRadius": 24,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -726,21 +771,32 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 24,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "borderRadius": 24,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -971,21 +1027,32 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 24,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "borderRadius": 24,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -1202,21 +1269,32 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 24,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "borderRadius": 24,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -1433,21 +1511,32 @@ exports[`Header Avatar component renders correctly with props Second Label Props
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 24,
-          "height": 48,
-          "width": 48,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 48,
+              "width": 48,
+            },
+            Object {
+              "borderRadius": 24,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >

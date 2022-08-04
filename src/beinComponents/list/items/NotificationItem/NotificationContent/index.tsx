@@ -7,54 +7,18 @@ import Text from '~/beinComponents/Text';
 import MarkdownView from '~/beinComponents/MarkdownView';
 
 interface Props {
-  activities: IGetStreamNotificationActivity[];
   description: string;
-  verb: string;
-  actorCount: number;
-  defaultContent?: string;
+  content?: string;
 }
 
 // this function is used to determine type of each notification
 // then render them with defference content corresponding their type
 const NotificationContent = ({
   description,
-  activities,
-  verb,
-  actorCount,
-  defaultContent,
+  content,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-
-  const getContent = () => {
-    switch (verb) {
-      case 'COMMENT':
-        if (actorCount > 1) {
-          return false;
-        }
-        return (
-          activities[0]?.comment?.child?.content
-          || activities[0]?.comment?.content
-          || ''
-        );
-      case 'POST':
-      case 'CHANGE':
-        return defaultContent;
-      case 'REACT':
-        if (actorCount === 1) {
-          return (
-            activities[0]?.comment?.child?.content
-            || activities[0]?.comment?.content
-            || defaultContent
-          );
-        }
-        return defaultContent;
-      default:
-        return '';
-    }
-  };
-
-  const content = getContent();
 
   return (
     <View testID="notification_content" style={styles.container}>

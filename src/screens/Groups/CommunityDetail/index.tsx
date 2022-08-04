@@ -61,11 +61,14 @@ const CommunityDetail = (props: any) => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
     'communities', communityId, [
-      PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
-      PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
-      PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+      PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
+      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
+      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
+      PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
+      PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
     ],
   );
+  const showPrivate = !isMember && privacy === groupPrivacy.private;
 
   const buttonShow = useSharedValue(0);
 
@@ -146,7 +149,7 @@ const CommunityDetail = (props: any) => {
   );
 
   const renderCommunityContent = () => {
-    if (!isMember && privacy === groupPrivacy.private) {
+    if (showPrivate) {
       return (
         <PrivateWelcome
           onRefresh={onRefresh}
@@ -214,7 +217,7 @@ const CommunityDetail = (props: any) => {
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
         showStickyHeight={buttonHeight}
-        stickyHeaderComponent={<CommunityTabHeader communityId={communityId} isMember={isMember} />}
+        stickyHeaderComponent={!showPrivate && <CommunityTabHeader communityId={communityId} isMember={isMember} />}
       />
       <View testID="community_detail.content" style={styles.contentContainer}>
         {renderCommunityContent()}

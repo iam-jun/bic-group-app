@@ -3,21 +3,27 @@
 exports[`Avatar component renders correctly 1`] = `
 <View
   style={
-    Object {
-      "borderRadius": 4,
-      "height": 48,
-      "width": 48,
-    }
+    Array [
+      Object {
+        "borderRadius": 4,
+        "height": 48,
+        "width": 48,
+      },
+      undefined,
+    ]
   }
   testID="avatar"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        Object {},
+      ]
     }
     testID="avatar_container"
   >
@@ -100,21 +106,27 @@ exports[`Avatar component renders correctly 1`] = `
 exports[`Avatar component renders correctly badge 1`] = `
 <View
   style={
-    Object {
-      "borderRadius": 4,
-      "height": 48,
-      "width": 48,
-    }
+    Array [
+      Object {
+        "borderRadius": 4,
+        "height": 48,
+        "width": 48,
+      },
+      undefined,
+    ]
   }
   testID="avatar"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        Object {},
+      ]
     }
     testID="avatar_container"
   >
@@ -304,21 +316,27 @@ exports[`Avatar component renders correctly badge 1`] = `
 exports[`Avatar component renders correctly badge bottom 1`] = `
 <View
   style={
-    Object {
-      "borderRadius": 4,
-      "height": 48,
-      "width": 48,
-    }
+    Array [
+      Object {
+        "borderRadius": 4,
+        "height": 48,
+        "width": 48,
+      },
+      undefined,
+    ]
   }
   testID="avatar"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        Object {},
+      ]
     }
     testID="avatar_container"
   >
@@ -508,21 +526,27 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
 exports[`Avatar component renders correctly badge check 1`] = `
 <View
   style={
-    Object {
-      "borderRadius": 4,
-      "height": 48,
-      "width": 48,
-    }
+    Array [
+      Object {
+        "borderRadius": 4,
+        "height": 48,
+        "width": 48,
+      },
+      undefined,
+    ]
   }
   testID="avatar"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        Object {},
+      ]
     }
     testID="avatar_container"
   >
@@ -689,21 +713,27 @@ exports[`Avatar component renders correctly badge check 1`] = `
 exports[`Avatar component renders correctly status 1`] = `
 <View
   style={
-    Object {
-      "borderRadius": 4,
-      "height": 48,
-      "width": 48,
-    }
+    Array [
+      Object {
+        "borderRadius": 4,
+        "height": 48,
+        "width": 48,
+      },
+      undefined,
+    ]
   }
   testID="avatar"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        Object {},
+      ]
     }
     testID="avatar_container"
   >
@@ -802,21 +832,27 @@ exports[`Avatar component renders correctly status 1`] = `
 exports[`Avatar component should call props onPressAction 1`] = `
 <View
   style={
-    Object {
-      "borderRadius": 4,
-      "height": 48,
-      "width": 48,
-    }
+    Array [
+      Object {
+        "borderRadius": 4,
+        "height": 48,
+        "width": 48,
+      },
+      undefined,
+    ]
   }
   testID="avatar"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 48,
-        "width": 48,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 48,
+          "width": 48,
+        },
+        Object {},
+      ]
     }
     testID="avatar_container"
   >

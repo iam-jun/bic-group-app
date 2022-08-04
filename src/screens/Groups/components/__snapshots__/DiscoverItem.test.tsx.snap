@@ -33,22 +33,29 @@ exports[`DiscoverItem component should render data correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "borderRadius": 6,
-          "height": 72,
-          "marginRight": 12,
-          "width": 72,
-        }
+        Array [
+          Object {
+            "borderRadius": 6,
+            "height": 72,
+            "width": 72,
+          },
+          Object {
+            "marginRight": 12,
+          },
+        ]
       }
       testID="avatar"
     >
       <View
         style={
-          Object {
-            "borderRadius": 6,
-            "height": 72,
-            "width": 72,
-          }
+          Array [
+            Object {
+              "borderRadius": 6,
+              "height": 72,
+              "width": 72,
+            },
+            Object {},
+          ]
         }
         testID="avatar_container"
       >
@@ -369,11 +376,14 @@ exports[`DiscoverItem component should render data correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >

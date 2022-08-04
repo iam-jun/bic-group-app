@@ -28,7 +28,7 @@ export default function* joinNewGroup({
     );
 
     if (hasRequested) {
-      yield put(groupsActions.getGroupDetail(groupId));
+      yield put(groupsActions.getGroupDetail({ groupId }));
       const toastMessage: IToastMessage = {
         content: `${i18next.t('groups:text_request_join_group')} ${groupName}`,
         props: {
@@ -47,7 +47,7 @@ export default function* joinNewGroup({
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getGroupDetail(groupId));
+    yield put(groupsActions.getGroupDetail({ groupId }));
   } catch (err) {
     console.error('joinNewGroup catch', err);
     yield call(showError, err);

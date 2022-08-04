@@ -71,11 +71,12 @@ const GroupDetail = (props: any) => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
     'groups', groupId, [
-      PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
-      PERMISSION_KEY.GROUP.EDIT_INFORMATION,
-      PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
     ],
   );
+  const showPrivate = !isMember && privacy === groupPrivacy.private;
 
   const buttonShow = useSharedValue(0);
 
@@ -86,9 +87,10 @@ const GroupDetail = (props: any) => {
   });
 
   const getGroupDetail = () => {
-    dispatch(groupsActions.getGroupDetail(
-      groupId, true,
-    ));
+    dispatch(groupsActions.getGroupDetail({
+      groupId,
+      loadingPage: true,
+    }));
   };
 
   const getGroupPosts = useCallback(() => {
@@ -214,7 +216,7 @@ const GroupDetail = (props: any) => {
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
 
-    if (!isMember && privacy === groupPrivacy.private) {
+    if (showPrivate) {
       return (
         <GroupPrivateWelcome
           onScroll={onScrollHandler}
@@ -289,7 +291,7 @@ const GroupDetail = (props: any) => {
           onPressChat={isMember ? onPressChat : undefined}
           onRightPress={onPressMenu}
           showStickyHeight={groupInfoHeight}
-          stickyHeaderComponent={<GroupTabHeader groupId={groupId} isMember={isMember} />}
+          stickyHeaderComponent={!showPrivate && <GroupTabHeader groupId={groupId} isMember={isMember} />}
         />
         <View testID="group_detail.content" style={styles.contentContainer}>
           {renderGroupContent()}

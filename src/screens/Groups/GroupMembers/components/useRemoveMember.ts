@@ -39,7 +39,6 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
     cancelBtnProps: {
       textColor: theme.colors.purple60,
     },
-    // @ts-ignore
     onConfirm: () => removeMember(userId, fullname),
     confirmLabel: i18next.t('groups:modal_confirm_remove_member:button_remove'),
     ConfirmBtnComponent: Button.Danger,

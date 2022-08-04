@@ -312,7 +312,7 @@ const Header: React.FC<HeaderProps> = ({
           testID="header.back"
           icon="iconBack"
           onPress={_onPressBack}
-          size={24}
+          size={20}
           hitSlop={{
             top: 20, bottom: 20, left: 20, right: 20,
           }}
@@ -399,7 +399,7 @@ const Header: React.FC<HeaderProps> = ({
           buttonTestID="header.searchIcon.button"
         />
         )}
-        {onPressChat && <IconChat onPress={onPressChat} />}
+        {onPressChat && <IconChat testID="header.icon_chat" onPress={onPressChat} />}
         {onPressMenu && (
         <Icon
           icon={menuIcon || 'menu'}
@@ -467,7 +467,9 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <View style={styles.header} testID="header">{children || renderContent()}</View>
-      <Animated.View style={[styles.stickyHeader, stickyHeaderStyle]}>{stickyHeaderComponent}</Animated.View>
+      {!!stickyHeaderComponent && (
+        <Animated.View style={[styles.stickyHeader, stickyHeaderStyle]}>{stickyHeaderComponent}</Animated.View>
+      )}
     </>
   )
 };
@@ -507,17 +509,10 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       height: '100%',
       justifyContent: 'center',
-      paddingTop: 1.5,
-      marginLeft: spacing.padding.large,
+      marginLeft: spacing.padding.tiny,
     },
-    title: {
-      height: 24,
-      lineHeight: 24,
-    },
-    subtitle: {
-      height: 16,
-      lineHeight: 16,
-    },
+    title: {},
+    subtitle: {},
     stickyHeader: {
       zIndex: 1,
       position: 'absolute',

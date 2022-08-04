@@ -3,10 +3,15 @@
 exports[`CommunityAdmin component should render data correctly 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
   }
   testID="CommunityAdmin"
 >
@@ -135,8 +140,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
                 "flex": 1,
                 "height": "100%",
                 "justifyContent": "center",
-                "marginLeft": 16,
-                "paddingTop": 1.5,
+                "marginLeft": 4,
               },
               Object {},
             ]
@@ -156,19 +160,6 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       />
     </View>
   </View>
-  <View
-    style={
-      Array [
-        Object {
-          "position": "absolute",
-          "top": 0,
-          "width": "100%",
-          "zIndex": 1,
-        },
-        Object {},
-      ]
-    }
-  />
   <View
     style={
       Array [
@@ -195,7 +186,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -446,7 +437,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },

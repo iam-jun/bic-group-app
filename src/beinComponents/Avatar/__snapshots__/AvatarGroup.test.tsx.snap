@@ -3,36 +3,46 @@
 exports[`Avatar Group component renders correctly 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#F1F1F9",
-      "borderRadius": 4,
-      "height": 40,
-      "justifyContent": "center",
-      "padding": 1,
-      "width": 40,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 1,
+        "width": 40,
+      },
+      undefined,
+    ]
   }
   testID="avatar_group"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 40,
-        "width": 40,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "backgroundColor": "#A4A9B7",
-          "borderRadius": 4,
-          "height": 40,
-          "width": 40,
-        }
+        Array [
+          Object {
+            "borderRadius": 4,
+            "height": 40,
+            "width": 40,
+          },
+          Object {
+            "backgroundColor": "#A4A9B7",
+          },
+        ]
       }
       testID="avatar_container"
     >
@@ -116,35 +126,44 @@ exports[`Avatar Group component renders correctly 1`] = `
 exports[`Avatar Group component renders correctly avatar when call Avatar.Group 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#F1F1F9",
-      "borderRadius": 4,
-      "height": 40,
-      "justifyContent": "center",
-      "padding": 1,
-      "width": 40,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 1,
+        "width": 40,
+      },
+      undefined,
+    ]
   }
   testID="avatar_group"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 40,
-        "width": 40,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 4,
-          "height": 40,
-          "width": 40,
-        }
+        Array [
+          Object {
+            "borderRadius": 4,
+            "height": 40,
+            "width": 40,
+          },
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -228,15 +247,18 @@ exports[`Avatar Group component renders correctly avatar when call Avatar.Group 
 exports[`Avatar Group component renders correctly group with 2 member 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#F1F1F9",
-      "borderRadius": 4,
-      "height": 40,
-      "justifyContent": "center",
-      "padding": 1,
-      "width": 40,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 1,
+        "width": 40,
+      },
+      undefined,
+    ]
   }
   testID="avatar_group"
 >
@@ -433,15 +455,18 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
 exports[`Avatar Group component renders correctly group with 3 member 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#F1F1F9",
-      "borderRadius": 4,
-      "height": 40,
-      "justifyContent": "center",
-      "padding": 1,
-      "width": 40,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 1,
+        "width": 40,
+      },
+      undefined,
+    ]
   }
   testID="avatar_group"
 >
@@ -739,15 +764,18 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
 exports[`Avatar Group component renders correctly group with 4 member 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#F1F1F9",
-      "borderRadius": 4,
-      "height": 40,
-      "justifyContent": "center",
-      "padding": 1,
-      "width": 40,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 1,
+        "width": 40,
+      },
+      undefined,
+    ]
   }
   testID="avatar_group"
 >
@@ -1135,15 +1163,18 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
 exports[`Avatar Group component renders correctly group with 4+ member with totalMember 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#F1F1F9",
-      "borderRadius": 4,
-      "height": 40,
-      "justifyContent": "center",
-      "padding": 1,
-      "width": 40,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 1,
+        "width": 40,
+      },
+      undefined,
+    ]
   }
   testID="avatar_group"
 >
@@ -1450,7 +1481,7 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#353E6E",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -1475,15 +1506,18 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
 exports[`Avatar Group component renders correctly group with 4+ member without totalMember 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#F1F1F9",
-      "borderRadius": 4,
-      "height": 40,
-      "justifyContent": "center",
-      "padding": 1,
-      "width": 40,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 1,
+        "width": 40,
+      },
+      undefined,
+    ]
   }
   testID="avatar_group"
 >
@@ -1883,36 +1917,46 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
 exports[`Avatar Group component renders correctly group with no member 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#F1F1F9",
-      "borderRadius": 4,
-      "height": 40,
-      "justifyContent": "center",
-      "padding": 1,
-      "width": 40,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 1,
+        "width": 40,
+      },
+      undefined,
+    ]
   }
   testID="avatar_group"
 >
   <View
     style={
-      Object {
-        "borderRadius": 4,
-        "height": 40,
-        "width": 40,
-      }
+      Array [
+        Object {
+          "borderRadius": 4,
+          "height": 40,
+          "width": 40,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "backgroundColor": "#A4A9B7",
-          "borderRadius": 4,
-          "height": 40,
-          "width": 40,
-        }
+        Array [
+          Object {
+            "borderRadius": 4,
+            "height": 40,
+            "width": 40,
+          },
+          Object {
+            "backgroundColor": "#A4A9B7",
+          },
+        ]
       }
       testID="avatar_container"
     >

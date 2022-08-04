@@ -17,7 +17,7 @@ export const USER_PROFILE = {
   email: 'thuquyen@tgm.vn',
   fullname: 'Nguyen Thi Thu Quyền',
   gender: 'FEMALE',
-  id: 58,
+  id: '58',
   language: ['vi', 'en'],
   latestWork: { company: 'testqqqqq', titlePosition: 'test 145qw' },
   phone: '89871234',

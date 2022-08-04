@@ -89,21 +89,32 @@ exports[`MentionBar component renders correctly 1`] = `
         >
           <View
             style={
-              Object {
-                "borderRadius": 4,
-                "height": 24,
-                "width": 24,
-              }
+              Array [
+                Object {
+                  "borderRadius": 4,
+                  "height": 24,
+                  "width": 24,
+                },
+                undefined,
+              ]
             }
             testID="avatar"
           >
             <View
               style={
-                Object {
-                  "borderRadius": 12,
-                  "height": 24,
-                  "width": 24,
-                }
+                Array [
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 24,
+                      "width": 24,
+                    },
+                    Object {
+                      "borderRadius": 12,
+                    },
+                  ],
+                  Object {},
+                ]
               }
               testID="avatar_container"
             >

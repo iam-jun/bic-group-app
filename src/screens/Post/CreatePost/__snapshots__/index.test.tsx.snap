@@ -67,10 +67,15 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+            },
+            Object {
+              "flex": 1,
+            },
+            undefined,
+          ]
         }
         testID="CreatePostScreen"
       >
@@ -199,8 +204,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       "flex": 1,
                       "height": "100%",
                       "justifyContent": "center",
-                      "marginLeft": 16,
-                      "paddingTop": 1.5,
+                      "marginLeft": 4,
                     },
                     Object {},
                   ]
@@ -238,10 +242,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           "fontSize": 15,
                         },
                         Object {},
-                        Object {
-                          "height": 24,
-                          "lineHeight": 24,
-                        },
+                        Object {},
                       ]
                     }
                     testID="header.text"
@@ -278,11 +279,14 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
                   }
                   testID="button_wrapper.content"
                 >
@@ -290,8 +294,8 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
-                          "fontFamily": "BeVietnamPro-Medium",
+                          "color": "#353E6E",
+                          "fontFamily": "BeVietnamPro-Light",
                           "fontSize": 15,
                         },
                         Object {
@@ -322,19 +326,6 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
             />
           </View>
         </View>
-        <View
-          style={
-            Array [
-              Object {
-                "position": "absolute",
-                "top": 0,
-                "width": "100%",
-                "zIndex": 1,
-              },
-              Object {},
-            ]
-          }
-        />
         <View
           accessible={true}
           collapsable={false}
@@ -595,11 +586,14 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   >
                     <View
                       style={
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                          "justifyContent": "center",
-                        }
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                          },
+                          undefined,
+                        ]
                       }
                       testID="button_wrapper.content"
                     />
@@ -641,11 +635,14 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
             >
               <View
                 style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    undefined,
+                  ]
                 }
                 testID="button_wrapper.content"
               >
@@ -714,8 +711,8 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
-                        "fontFamily": "BeVietnamPro-Medium",
+                        "color": "#353E6E",
+                        "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 15,
                       },
                       Object {
@@ -1096,11 +1093,14 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                     >
                       <View
                         style={
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                            "justifyContent": "center",
-                          }
+                          Array [
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "center",
+                            },
+                            undefined,
+                          ]
                         }
                         testID="button_wrapper.content"
                       >
@@ -1108,8 +1108,8 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           style={
                             Array [
                               Object {
-                                "color": "#181C32",
-                                "fontFamily": "BeVietnamPro-Medium",
+                                "color": "#353E6E",
+                                "fontFamily": "BeVietnamPro-Light",
                                 "fontSize": 15,
                               },
                               Object {
@@ -1148,23 +1148,36 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                     >
                       <View
                         style={
-                          Object {
-                            "borderRadius": 4,
-                            "height": 48,
-                            "marginRight": 8,
-                            "width": 48,
-                          }
+                          Array [
+                            Object {
+                              "borderRadius": 4,
+                              "height": 48,
+                              "width": 48,
+                            },
+                            Object {
+                              "marginRight": 8,
+                            },
+                          ]
                         }
                         testID="avatar"
                       >
                         <View
                           style={
-                            Object {
-                              "backgroundColor": "#A4A9B7",
-                              "borderRadius": 24,
-                              "height": 48,
-                              "width": 48,
-                            }
+                            Array [
+                              Array [
+                                Object {
+                                  "borderRadius": 4,
+                                  "height": 48,
+                                  "width": 48,
+                                },
+                                Object {
+                                  "borderRadius": 24,
+                                },
+                              ],
+                              Object {
+                                "backgroundColor": "#A4A9B7",
+                              },
+                            ]
                           }
                           testID="avatar_container"
                         >

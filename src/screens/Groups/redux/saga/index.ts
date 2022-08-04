@@ -416,9 +416,8 @@ function* cancelJoinGroup({
   type: string;
   payload: {groupId: string; groupName: string};
 }) {
+  const { groupId, groupName } = payload;
   try {
-    const { groupId, groupName } = payload;
-
     yield call(groupsDataHelper.cancelJoinGroup, groupId);
 
     // update button Join/Cancel/View status on Discover groups
@@ -429,7 +428,7 @@ function* cancelJoinGroup({
       }),
     );
 
-    yield put(groupsActions.getGroupDetail(groupId));
+    yield put(groupsActions.getGroupDetail({ groupId }));
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_cancel_join_group')} ${groupName}`,
@@ -440,9 +439,7 @@ function* cancelJoinGroup({
 
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.error(
-      'cancelJoinGroup catch', err,
-    );
+    console.error('cancelJoinGroup catch', err);
 
     if (
       err?.meta?.message
@@ -455,9 +452,10 @@ function* cancelJoinGroup({
         },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
-      yield put(groupsActions.getGroupDetail(
-        payload.groupId, true,
-      ));
+      yield put(groupsActions.getGroupDetail({
+        groupId,
+        loadingPage: true,
+      }));
 
       return;
     }
@@ -480,5 +478,5 @@ function* updateLoadingImageState(
 export function* refreshGroupMembers(groupId: string) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({ groupId }));
-  yield put(groupsActions.getGroupDetail(groupId));
+  yield put(groupsActions.getGroupDetail({ groupId }));
 }

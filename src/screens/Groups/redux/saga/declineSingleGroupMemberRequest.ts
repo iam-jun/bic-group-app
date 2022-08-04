@@ -43,9 +43,7 @@ export default function* declineSingleGroupMemberRequest({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log(
-      'declineSingleGroupMemberRequest: ', err,
-    );
+    console.error('declineSingleGroupMemberRequest: ', err);
 
     if (err?.code === approveDeclineCode.CANCELED) {
       yield put(groupsActions.editGroupMemberRequest({
@@ -55,8 +53,6 @@ export default function* declineSingleGroupMemberRequest({
       return;
     }
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

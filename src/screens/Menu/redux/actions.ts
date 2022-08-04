@@ -121,9 +121,9 @@ const menuActions = {
     payload,
   }),
 
-  getUserWorkExperience: (id: string) => ({
+  getUserWorkExperience: (payload: string) => ({
     type: menuTypes.GET_USER_WORK_EXPERIENCE,
-    id,
+    payload,
   }),
   setUserWorkExperience: (payload: IUserWorkExperience[]) => ({
     type: menuTypes.SET_USER_WORK_EXPERIENCE,

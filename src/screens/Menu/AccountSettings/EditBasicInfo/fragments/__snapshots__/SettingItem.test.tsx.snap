@@ -128,7 +128,7 @@ exports[`SettingItem conponent renders correctly 1`] = `
             ]
           }
         >
-          Name
+          Full name
         </Text>
         <Text
           numberOfLines={2}
@@ -281,7 +281,7 @@ exports[`SettingItem conponent renders correctly testID 1`] = `
             ]
           }
         >
-          Name
+          Full name
         </Text>
         <Text
           numberOfLines={2}
@@ -433,7 +433,7 @@ exports[`SettingItem conponent should render left, right component 1`] = `
             ]
           }
         >
-          Name
+          Full name
         </Text>
         <Text
           numberOfLines={2}
@@ -472,11 +472,14 @@ exports[`SettingItem conponent should render left, right component 1`] = `
       >
         <View
           style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
           }
           testID="button_wrapper.content"
         >

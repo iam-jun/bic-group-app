@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme } from '@react-navigation/native';
 
-import { sizes } from '~/theme/dimension';
+import { lineHeights, sizes } from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 
 export const createTextStyle = (theme: ExtendedTheme) => {
@@ -72,7 +72,7 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.bodyM,
       // lineHeight: lineHeights.bodyM,
-      color: colors.neutral80,
+      color: colors.neutral40,
     },
     bodyMMedium: {
       fontFamily: fontFamilies.BeVietnamProMedium,

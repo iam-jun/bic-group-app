@@ -15,6 +15,7 @@ import Icon, { IconProps } from '~/beinComponents/Icon';
 import { createTextStyle } from '~/beinComponents/Text/textStyle';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
+import { lineHeights } from '~/theme/dimension';
 
 export interface ButtonWrapperProps {
   nativeID?: string;
@@ -65,8 +66,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 }: ButtonWrapperProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const textStyles = createTextStyle(theme);
-  textVariant = textVariant || 'buttonM';
+  const _textVariant = textVariant || 'buttonM';
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
@@ -74,8 +74,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     iconSource: any, iconProps: IconProps | undefined,
   ) => {
     if (iconSource) {
-      // @ts-ignore
-      const size = textStyles[textVariant].lineHeight;
+      const size = lineHeights[_textVariant];
 
       return (
         <Icon
@@ -109,7 +108,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     <TouchableComponent
       nativeID={nativeID}
       testID={testID}
-      style={StyleSheet.flatten([style])}
+      style={style}
       disabled={!isInternetReachable || disabled}
       underlayColor={underlayColor}
       hitSlop={hitSlop}
@@ -120,14 +119,14 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     >
       <View
         testID="button_wrapper.content"
-        style={StyleSheet.flatten([
+        style={[
           {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
           },
           contentStyle,
-        ])}
+        ]}
       >
         {renderLoading()}
         {renderIcon(

@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoSection component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "marginTop": 16,
+      "paddingBottom": 12,
+    }
+  }
+  testID="info_section"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 17,
+        },
+        Object {},
+        Object {
+          "marginBottom": 16,
+        },
+      ]
+    }
+    testID="info_section.title"
+  />
+</View>
+`;

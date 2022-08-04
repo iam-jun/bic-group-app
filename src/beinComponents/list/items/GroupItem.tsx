@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View, TouchableOpacity, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
@@ -22,6 +24,7 @@ import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
 export interface GroupItemProps extends IParsedGroup {
+  groupStyle?: StyleProp<ViewStyle>;
   testID?: string;
   uiLevel: number;
   isCollapsing: boolean;
@@ -43,6 +46,8 @@ export interface GroupItemProps extends IParsedGroup {
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const {
+    groupStyle,
+
     id,
     communityId,
     name,
@@ -128,7 +133,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     <View
       testID="group_item.ui_level"
       key={generateUniqueId()}
-      style={[styles.line, uiLevel === 0 && { backgroundColor: 'transparent' }]}
+      style={[styles.line]}
     />
   );
 
@@ -147,13 +152,13 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         hitSlop={{
           top: 10, bottom: 10, left: 10, right: 10,
         }}
-        style={[styles.toggleContainer, (hasChild || uiLevel === 0) && { backgroundColor: 'transparent' }]}
+        style={styles.toggleContainer}
       >
         {hasChild && (
           <View style={styles.toggleContent}>
             <Icon
               testID="group_item.button_wrapper.icon"
-              size={18}
+              size={14}
               icon={isCollapsing ? 'CirclePlus' : 'CircleMinus'}
             />
           </View>
@@ -178,7 +183,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
       <View style={{ flexDirection: 'row' }} testID={testID}>
         {renderUiLevelLines()}
         {renderToggle()}
-        <View style={styles.itemContainer}>
+        <View style={[styles.itemContainer, groupStyle]}>
           <View>
             <View>
               <Avatar variant={iconVariant} source={icon} />
@@ -202,14 +207,14 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             )}
           </View>
           <View style={styles.textContainer}>
-            <Text.H6
+            <Text.H5
               style={
                 disableHorizontal ? styles.textName : styles.textNameHorizontal
               }
               numberOfLines={nameLines}
             >
               {name}
-            </Text.H6>
+            </Text.H5>
             {showInfo && (
               <View style={styles.row}>
                 {showPrivacy && (
@@ -258,6 +263,7 @@ const themeStyles = (theme: IObject<any>) => {
     textContainer: {
       paddingHorizontal: spacing.padding.base,
       flex: 1,
+      justifyContent: 'center',
     },
     row: {
       flexDirection: 'row',
@@ -278,17 +284,17 @@ const themeStyles = (theme: IObject<any>) => {
       width: 1,
       height: '100%',
       backgroundColor: colors.neutral5,
-      marginHorizontal: spacing?.margin.base,
+      marginHorizontal: spacing?.margin.small,
     },
     toggleContainer: {
       width: 1,
       height: '100%',
-      backgroundColor: colors.neutral5,
-      marginHorizontal: spacing?.margin.base,
+      backgroundColor: colors.transparent,
+      marginHorizontal: spacing?.margin.small,
       flexDirection: 'row',
     },
     toggleContent: {
-      marginLeft: -7,
+      marginLeft: -6,
       alignSelf: 'center',
       backgroundColor: colors.white,
       paddingVertical: spacing?.padding.tiny,
@@ -296,6 +302,7 @@ const themeStyles = (theme: IObject<any>) => {
     itemContainer: {
       flex: 1,
       flexDirection: 'row',
+      paddingLeft: spacing.padding.small,
       paddingVertical: spacing?.padding.tiny,
     },
     avatarContainer: {

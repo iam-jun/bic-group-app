@@ -31,24 +31,32 @@ exports[`AtMentionItem component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "borderRadius": 4,
-          "height": 40,
-          "marginHorizontal": 12,
-          "marginVertical": 8,
-          "width": 40,
-        }
+        Array [
+          Object {
+            "borderRadius": 4,
+            "height": 40,
+            "width": 40,
+          },
+          Object {
+            "marginHorizontal": 12,
+            "marginVertical": 8,
+          },
+        ]
       }
       testID="avatar"
     >
       <View
         style={
-          Object {
-            "backgroundColor": "#A4A9B7",
-            "borderRadius": 4,
-            "height": 40,
-            "width": 40,
-          }
+          Array [
+            Object {
+              "borderRadius": 4,
+              "height": 40,
+              "width": 40,
+            },
+            Object {
+              "backgroundColor": "#A4A9B7",
+            },
+          ]
         }
         testID="avatar_container"
       >
@@ -130,7 +138,7 @@ exports[`AtMentionItem component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },

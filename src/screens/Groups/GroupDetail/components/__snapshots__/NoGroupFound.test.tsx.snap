@@ -3,10 +3,17 @@
 exports[`NoGroupFound component should render correctly 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#E3E6F2",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "backgroundColor": "#E3E6F2",
+      },
+    ]
   }
 >
   <View
@@ -134,8 +141,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
                 "flex": 1,
                 "height": "100%",
                 "justifyContent": "center",
-                "marginLeft": 16,
-                "paddingTop": 1.5,
+                "marginLeft": 4,
               },
               Object {},
             ]
@@ -173,10 +179,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
                     "fontSize": 15,
                   },
                   Object {},
-                  Object {
-                    "height": 24,
-                    "lineHeight": 24,
-                  },
+                  Object {},
                 ]
               }
               testID="header.text"
@@ -199,19 +202,6 @@ exports[`NoGroupFound component should render correctly 1`] = `
       />
     </View>
   </View>
-  <View
-    style={
-      Array [
-        Object {
-          "position": "absolute",
-          "top": 0,
-          "width": "100%",
-          "zIndex": 1,
-        },
-        Object {},
-      ]
-    }
-  />
   <View
     style={
       Object {
@@ -254,7 +244,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
             },
@@ -289,11 +279,14 @@ exports[`NoGroupFound component should render correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
         testID="button_wrapper.content"
       >
@@ -301,8 +294,8 @@ exports[`NoGroupFound component should render correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-Medium",
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
               Object {

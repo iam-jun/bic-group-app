@@ -429,11 +429,14 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -441,8 +444,8 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
             },
             Object {

@@ -206,22 +206,29 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
           >
             <View
               style={
-                Object {
-                  "borderRadius": 4,
-                  "height": 40,
-                  "marginRight": 12,
-                  "width": 40,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  Object {
+                    "marginRight": 12,
+                  },
+                ]
               }
               testID="avatar"
             >
               <View
                 style={
-                  Object {
-                    "borderRadius": 4,
-                    "height": 40,
-                    "width": 40,
-                  }
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {},
+                  ]
                 }
                 testID="avatar_container"
               >
@@ -360,22 +367,29 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
           >
             <View
               style={
-                Object {
-                  "borderRadius": 4,
-                  "height": 40,
-                  "marginRight": 12,
-                  "width": 40,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  Object {
+                    "marginRight": 12,
+                  },
+                ]
               }
               testID="avatar"
             >
               <View
                 style={
-                  Object {
-                    "borderRadius": 4,
-                    "height": 40,
-                    "width": 40,
-                  }
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {},
+                  ]
                 }
                 testID="avatar_container"
               >

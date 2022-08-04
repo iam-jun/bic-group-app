@@ -3,10 +3,15 @@
 exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      Object {},
+    ]
   }
 >
   <View
@@ -147,8 +152,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                   "flex": 1,
                   "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 16,
-                  "paddingTop": 1.5,
+                  "marginLeft": 4,
                 },
                 Object {},
               ]
@@ -186,10 +190,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       "fontSize": 15,
                     },
                     Object {},
-                    Object {
-                      "height": 24,
-                      "lineHeight": 24,
-                    },
+                    Object {},
                   ]
                 }
                 testID="header.text"
@@ -229,11 +230,14 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -241,8 +245,8 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-Medium",
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
                     Object {
@@ -273,19 +277,6 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
         />
       </View>
     </View>
-    <View
-      style={
-        Array [
-          Object {
-            "position": "absolute",
-            "top": 0,
-            "width": "100%",
-            "zIndex": 1,
-          },
-          Object {},
-        ]
-      }
-    />
     <View
       style={
         Object {
@@ -551,11 +542,14 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
                   }
                   testID="button_wrapper.content"
                 >
@@ -634,7 +628,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
+                          "color": "#353E6E",
                           "fontFamily": "BeVietnamPro-Light",
                           "fontSize": 15,
                         },
@@ -651,7 +645,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       style={
                         Array [
                           Object {
-                            "color": "#181C32",
+                            "color": "#353E6E",
                             "fontFamily": "BeVietnamPro-Light",
                             "fontSize": 15,
                           },
@@ -696,33 +690,44 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               >
                 <View
                   style={
-                    Object {
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "paddingVertical": 4,
-                    }
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "row",
+                        "paddingLeft": 8,
+                        "paddingVertical": 4,
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   <View>
                     <View>
                       <View
                         style={
-                          Object {
-                            "borderRadius": 4,
-                            "height": 40,
-                            "width": 40,
-                          }
+                          Array [
+                            Object {
+                              "borderRadius": 4,
+                              "height": 40,
+                              "width": 40,
+                            },
+                            undefined,
+                          ]
                         }
                         testID="avatar"
                       >
                         <View
                           style={
-                            Object {
-                              "backgroundColor": "#A4A9B7",
-                              "borderRadius": 4,
-                              "height": 40,
-                              "width": 40,
-                            }
+                            Array [
+                              Object {
+                                "borderRadius": 4,
+                                "height": 40,
+                                "width": 40,
+                              },
+                              Object {
+                                "backgroundColor": "#A4A9B7",
+                              },
+                            ]
                           }
                           testID="avatar_container"
                         >
@@ -962,6 +967,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     style={
                       Object {
                         "flex": 1,
+                        "justifyContent": "center",
                         "paddingHorizontal": 12,
                       }
                     }
@@ -973,7 +979,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                           Object {
                             "color": "#181C32",
                             "fontFamily": "BeVietnamPro-SemiBold",
-                            "fontSize": 13,
+                            "fontSize": 15,
                           },
                           Object {},
                           Object {
@@ -1094,10 +1100,15 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
 exports[`PostSelectAudience screen render correctly with group item 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      Object {},
+    ]
   }
 >
   <View
@@ -1238,8 +1249,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                   "flex": 1,
                   "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 16,
-                  "paddingTop": 1.5,
+                  "marginLeft": 4,
                 },
                 Object {},
               ]
@@ -1277,10 +1287,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       "fontSize": 15,
                     },
                     Object {},
-                    Object {
-                      "height": 24,
-                      "lineHeight": 24,
-                    },
+                    Object {},
                   ]
                 }
                 testID="header.text"
@@ -1320,11 +1327,14 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -1332,8 +1342,8 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-Medium",
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
                     Object {
@@ -1364,19 +1374,6 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
         />
       </View>
     </View>
-    <View
-      style={
-        Array [
-          Object {
-            "position": "absolute",
-            "top": 0,
-            "width": "100%",
-            "zIndex": 1,
-          },
-          Object {},
-        ]
-      }
-    />
     <View
       style={
         Object {
@@ -1642,11 +1639,14 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
                   }
                   testID="button_wrapper.content"
                 >
@@ -1725,7 +1725,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
+                          "color": "#353E6E",
                           "fontFamily": "BeVietnamPro-Light",
                           "fontSize": 15,
                         },
@@ -1742,7 +1742,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#181C32",
+                            "color": "#353E6E",
                             "fontFamily": "BeVietnamPro-Light",
                             "fontSize": 15,
                           },
@@ -1787,33 +1787,44 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "paddingVertical": 4,
-                    }
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "row",
+                        "paddingLeft": 8,
+                        "paddingVertical": 4,
+                      },
+                      undefined,
+                    ]
                   }
                 >
                   <View>
                     <View>
                       <View
                         style={
-                          Object {
-                            "borderRadius": 4,
-                            "height": 40,
-                            "width": 40,
-                          }
+                          Array [
+                            Object {
+                              "borderRadius": 4,
+                              "height": 40,
+                              "width": 40,
+                            },
+                            undefined,
+                          ]
                         }
                         testID="avatar"
                       >
                         <View
                           style={
-                            Object {
-                              "backgroundColor": "#A4A9B7",
-                              "borderRadius": 4,
-                              "height": 40,
-                              "width": 40,
-                            }
+                            Array [
+                              Object {
+                                "borderRadius": 4,
+                                "height": 40,
+                                "width": 40,
+                              },
+                              Object {
+                                "backgroundColor": "#A4A9B7",
+                              },
+                            ]
                           }
                           testID="avatar_container"
                         >
@@ -2053,6 +2064,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     style={
                       Object {
                         "flex": 1,
+                        "justifyContent": "center",
                         "paddingHorizontal": 12,
                       }
                     }
@@ -2064,7 +2076,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                           Object {
                             "color": "#181C32",
                             "fontFamily": "BeVietnamPro-SemiBold",
-                            "fontSize": 13,
+                            "fontSize": 15,
                           },
                           Object {},
                           Object {
@@ -2185,10 +2197,15 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
 exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`] = `
 <View
   style={
-    Object {
-      "backgroundColor": "#FFFFFF",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      Object {},
+    ]
   }
 >
   <View
@@ -2329,8 +2346,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                   "flex": 1,
                   "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 16,
-                  "paddingTop": 1.5,
+                  "marginLeft": 4,
                 },
                 Object {},
               ]
@@ -2368,10 +2384,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                       "fontSize": 15,
                     },
                     Object {},
-                    Object {
-                      "height": 24,
-                      "lineHeight": 24,
-                    },
+                    Object {},
                   ]
                 }
                 testID="header.text"
@@ -2411,11 +2424,14 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -2423,8 +2439,8 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-Medium",
+                      "color": "#353E6E",
+                      "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
                     Object {
@@ -2455,19 +2471,6 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
         />
       </View>
     </View>
-    <View
-      style={
-        Array [
-          Object {
-            "position": "absolute",
-            "top": 0,
-            "width": "100%",
-            "zIndex": 1,
-          },
-          Object {},
-        ]
-      }
-    />
     <View
       style={
         Object {

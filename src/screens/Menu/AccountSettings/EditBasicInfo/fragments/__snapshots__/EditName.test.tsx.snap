@@ -82,7 +82,7 @@ exports[`EditName conponent renders correctly 1`] = `
         ]
       }
     >
-      Name
+      Full name
     </Text>
   </View>
   <View
@@ -226,7 +226,7 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
         ]
       }
     >
-      Name
+      Full name
     </Text>
   </View>
   <View
