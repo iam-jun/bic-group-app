@@ -2,19 +2,17 @@
 
 import React from 'react';
 
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
+import i18next from 'i18next';
 import initialState from '~/store/initialState';
 import {
   configureStore,
-  createTestStore,
-  fireEvent,
   renderWithRedux,
 } from '~/test/testUtils';
 
 import DraftPost from '.';
-import {USER_PROFILE} from '~/test/mock_data/menu';
-import i18next from 'i18next';
-import {LIST_DRAFT_POST} from '~/test/mock_data/draftPosts';
+import { USER_PROFILE } from '~/test/mock_data/menu';
+import { LIST_DRAFT_POST } from '~/test/mock_data/draftPosts';
 
 afterEach(cleanup);
 
@@ -26,16 +24,16 @@ describe('UserEditProfile screen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    storeData = {...initialState};
+    storeData = { ...initialState };
 
     storeData.auth.user = {} as any;
     storeData.post.draftPosts = {} as any;
   });
 
-  it(`should render empty view if posts are empty`, async () => {
+  it('should render empty view if posts are empty', async () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
+        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
       },
     };
     storeData.auth.user = user as any;
@@ -57,10 +55,10 @@ describe('UserEditProfile screen', () => {
     expect(titleComponent.props.children).toBe(i18next.t('home:draft_post'));
   });
 
-  it(`should render title with list draft post < 9`, async () => {
+  it('should render title with list draft post < 9', async () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
+        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
       },
     };
     storeData.auth.user = user as any;
@@ -77,14 +75,14 @@ describe('UserEditProfile screen', () => {
     const titleComponent = wrapper.getByTestId('header.text');
     expect(titleComponent).toBeDefined();
     expect(titleComponent.props.children).toBe(
-      i18next.t('home:draft_post') + ` (${LIST_DRAFT_POST.length})`,
+      `${i18next.t('home:draft_post')} (${LIST_DRAFT_POST.length})`,
     );
   });
 
-  it(`should render title with list draft post > 9`, async () => {
+  it('should render title with list draft post > 9', async () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
+        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
       },
     };
     storeData.auth.user = user as any;
@@ -101,14 +99,14 @@ describe('UserEditProfile screen', () => {
     const titleComponent = wrapper.getByTestId('header.text');
     expect(titleComponent).toBeDefined();
     expect(titleComponent.props.children).toBe(
-      i18next.t('home:draft_post') + ' (9+)',
+      `${i18next.t('home:draft_post')} (9+)`,
     );
   });
 
-  it(`should render load more if canLoadMore && !refreshing`, async () => {
+  it('should render load more if canLoadMore && !refreshing', async () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
+        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
       },
     };
     storeData.auth.user = user as any;

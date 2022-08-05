@@ -1,6 +1,6 @@
 import React from 'react';
 import initialState from '~/store/initialState';
-import {configureStore, fireEvent, renderWithRedux} from '~/test/testUtils';
+import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import PrivacyItem from './PrivacyItem';
 
 describe('PrivacyItem component', () => {
@@ -17,7 +17,7 @@ describe('PrivacyItem component', () => {
 
   const mockStore = configureStore([]);
 
-  const storeData = {...initialState};
+  const storeData = { ...initialState };
 
   it('renders correctly', () => {
     const store = mockStore(storeData);
@@ -28,7 +28,7 @@ describe('PrivacyItem component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should show RightComponent`, () => {
+  it('should show RightComponent', () => {
     storeData.groups.groupDetail.group.privacy = 'PUBLIC';
     const store = mockStore(storeData);
 
@@ -36,12 +36,12 @@ describe('PrivacyItem component', () => {
     const component = rendered.getByTestId(
       `general_information.privacy.${baseProps.item.type}`.toLowerCase(),
     );
-    const itemComponent = component.findByProps({icon: 'Check'});
+    const itemComponent = component.findByProps({ icon: 'Check' });
 
     expect(itemComponent.instance).toBeDefined();
   });
 
-  it(`should hide RightComponent`, () => {
+  it('should hide RightComponent', () => {
     storeData.groups.groupDetail.group.privacy = 'PRIVATE';
     const store = mockStore(storeData);
 
@@ -53,7 +53,7 @@ describe('PrivacyItem component', () => {
     expect(component.props.RightComponent).not.toBeDefined();
   });
 
-  it(`should call onPressPrivacy when privacy button press`, () => {
+  it('should call onPressPrivacy when privacy button press', () => {
     storeData.groups.loadingCover = false;
     const store = mockStore(storeData);
 

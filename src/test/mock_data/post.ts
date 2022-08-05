@@ -1,21 +1,21 @@
 export const POST_DETAIL = {
   ownerReactions: [
     {
-      id: 23,
-      postId: 28,
+      id: '23',
+      postId: '28',
       reactionName: 'wink',
-      createdBy: 33,
+      createdBy: '33',
       createdAt: '2022-04-20T08:54:31.210Z',
     },
   ],
-  id: 28,
+  id: '28',
   content: 'Hello world @thanvanvan ',
   media: {
     files: [],
     videos: [],
     images: [
       {
-        id: 9,
+        id: '9',
         name: '79357605-a0f0-4b12-b0d5-91409ff5b085.jpeg',
         url: 'https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/79357605-a0f0-4b12-b0d5-91409ff5b085.jpeg',
         width: 640,
@@ -32,7 +32,7 @@ export const POST_DETAIL = {
   },
   isDraft: false,
   actor: {
-    id: 33,
+    id: '33',
     username: 'ngoclinh',
     fullname: 'Nguyễn Thị Ngọc Linh',
     avatar:
@@ -40,7 +40,7 @@ export const POST_DETAIL = {
   },
   mentions: {
     thanvanvan: {
-      id: 83,
+      id: '83',
       username: 'thanvanvan',
       fullname: 'Than Van Van',
       avatar:
@@ -57,14 +57,14 @@ export const POST_DETAIL = {
     },
   },
   createdAt: '2022-04-20T09:55:55.599Z',
-  createdBy: 33,
+  createdBy: '33',
   audience: {
     groups: [
       {
-        id: 1,
+        id: '1',
         name: 'EVOL Community',
         icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
-        child: [139, 2, 10, 152, 66, 67, 103, 2, 2],
+        child: ['139', '2', '10', '152', '66', '67', '103', '2', '2'],
       },
     ],
   },
@@ -73,16 +73,16 @@ export const POST_DETAIL = {
       {
         totalReply: 2,
         ownerReactions: [],
-        id: 10,
+        id: '10',
         actor: {
-          id: 33,
+          id: '33',
           username: 'ngoclinh',
           fullname: 'Nguyễn Thị Ngọc Linh',
           avatar:
             'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
         },
-        parentId: 0,
-        postId: 28,
+        parentId: '0',
+        postId: '28',
         content: 'Cmt1',
         createdAt: '2022-04-20T10:06:08.579Z',
         updatedAt: '2022-04-20T10:06:30.617Z',
@@ -93,16 +93,16 @@ export const POST_DETAIL = {
           {
             totalReply: 0,
             ownerReactions: [],
-            id: 13,
+            id: '13',
             actor: {
-              id: 33,
+              id: '33',
               username: 'ngoclinh',
               fullname: 'Nguyễn Thị Ngọc Linh',
               avatar:
                 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
             },
-            parentId: 10,
-            postId: 28,
+            parentId: '10',
+            postId: '28',
             content: 'Reply1',
             createdAt: '2022-04-20T10:06:24.367Z',
             updatedAt: '2022-04-20T10:06:24.367Z',
@@ -113,16 +113,16 @@ export const POST_DETAIL = {
           {
             totalReply: 0,
             ownerReactions: [],
-            id: 14,
+            id: '14',
             actor: {
-              id: 33,
+              id: '33',
               username: 'ngoclinh',
               fullname: 'Nguyễn Thị Ngọc Linh',
               avatar:
                 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
             },
-            parentId: 10,
-            postId: 28,
+            parentId: '10',
+            postId: '28',
             content: 'Reply2',
             createdAt: '2022-04-20T10:06:30.608Z',
             updatedAt: '2022-04-20T10:06:30.608Z',
@@ -135,16 +135,16 @@ export const POST_DETAIL = {
       {
         totalReply: 0,
         ownerReactions: [],
-        id: 11,
+        id: '11',
         actor: {
-          id: 33,
+          id: '33',
           username: 'ngoclinh',
           fullname: 'Nguyễn Thị Ngọc Linh',
           avatar:
             'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
         },
-        parentId: 0,
-        postId: 28,
+        parentId: '0',
+        postId: '28',
         content: 'Cmt2',
         createdAt: '2022-04-20T10:06:12.459Z',
         updatedAt: '2022-04-20T10:06:12.459Z',
@@ -156,16 +156,16 @@ export const POST_DETAIL = {
       {
         totalReply: 0,
         ownerReactions: [],
-        id: 12,
+        id: '12',
         actor: {
-          id: 33,
+          id: '33',
           username: 'ngoclinh',
           fullname: 'Nguyễn Thị Ngọc Linh',
           avatar:
             'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
         },
-        parentId: 0,
-        postId: 28,
+        parentId: '0',
+        postId: '28',
         content: 'Cmt3',
         createdAt: '2022-04-20T10:06:16.411Z',
         updatedAt: '2022-04-20T10:06:16.411Z',
@@ -184,7 +184,7 @@ export const POST_DETAIL = {
 
 export const POST_DETAIL_2 = {
   ownerReactions: [],
-  id: 29,
+  id: '29',
   content: 'Important post',
   media: {
     videos: [],
@@ -200,7 +200,7 @@ export const POST_DETAIL_2 = {
   },
   isDraft: false,
   actor: {
-    id: 33,
+    id: '33',
     username: 'ngoclinh',
     fullname: 'Nguyễn Thị Ngọc Linh',
     avatar:
@@ -214,17 +214,17 @@ export const POST_DETAIL_2 = {
   audience: {
     groups: [
       {
-        id: 1,
+        id: '1',
         name: 'EVOL Community',
         icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
-        child: [139, 2, 10, 152, 66, 67, 103, 2, 2],
+        child: ['139', '2', '10', '152', '66', '67', '103', '2', '2'],
       },
     ],
   },
 };
 
 export const GROUP_AUDIENCE = {
-  id: 1,
+  id: '1',
   parentId: null,
   name: 'EVOL Community',
   slug: 'evol-community-1641809088',
@@ -248,16 +248,16 @@ export const GROUP_AUDIENCE = {
 export const CHILD_COMMENT = {
   totalReply: 0,
   ownerReactions: [],
-  id: 494,
+  id: '494',
   actor: {
-    id: 58,
+    id: '58',
     username: 'thuquyen',
     fullname: 'Nguyen Thi Thu Quyền',
     avatar:
       'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
   },
-  parentId: 490,
-  postId: 302,
+  parentId: '490',
+  postId: '302',
   content: '@trannamanh alo',
   createdAt: '2022-04-27T03:38:21.809Z',
   updatedAt: '2022-04-27T03:38:21.809Z',
@@ -271,7 +271,7 @@ export const LIST_CHILD_COMMENT = [
   CHILD_COMMENT,
   {
     ...CHILD_COMMENT,
-    id: 495,
+    id: '495',
     content: 'Ola',
     createdAt: '2022-04-27T03:38:25.693Z',
     updatedAt: '2022-04-27T03:38:25.693Z',
@@ -283,8 +283,8 @@ export const allCommentsByParentIds = {
     {
       ...CHILD_COMMENT,
       totalReply: 3,
-      id: 490,
-      parentId: 0,
+      id: '490',
+      parentId: '0',
       content: '.',
       createdAt: '2022-04-26T09:25:02.870Z',
       updatedAt: '2022-04-27T03:38:29.471Z',
@@ -292,19 +292,19 @@ export const allCommentsByParentIds = {
         list: [
           {
             ...CHILD_COMMENT,
-            id: 505,
+            id: '505',
             content: '9',
             createdAt: '2022-04-27T03:54:38.962Z',
             updatedAt: '2022-04-27T03:54:38.962Z',
           },
           {
             ...CHILD_COMMENT,
-            id: 496,
+            id: '496',
             content: 'Hihi',
           },
           {
             ...CHILD_COMMENT,
-            id: 495,
+            id: '495',
             content: 'Ola',
             createdAt: '2022-04-27T03:38:25.693Z',
             updatedAt: '2022-04-27T03:38:25.693Z',
@@ -316,16 +316,16 @@ export const allCommentsByParentIds = {
     },
     {
       ...CHILD_COMMENT,
-      id: 485,
-      parentId: 0,
+      id: '485',
+      parentId: '0',
       content: '2',
       createdAt: '2022-04-26T07:02:25.251Z',
       updatedAt: '2022-04-26T07:02:25.251Z',
     },
     {
       ...CHILD_COMMENT,
-      parentId: 0,
-      id: 484,
+      parentId: '0',
+      id: '484',
       content: '1',
       createdAt: '2022-04-26T07:02:20.368Z',
       updatedAt: '2022-04-26T07:02:20.368Z',
@@ -338,7 +338,7 @@ export const allCommentsByParentIdsWith1ChildComment = {
     {
       ...CHILD_COMMENT,
       totalReply: 3,
-      id: 490,
+      id: '490',
       parentId: 0,
       content: '.',
       createdAt: '2022-04-26T09:25:02.870Z',
@@ -346,7 +346,7 @@ export const allCommentsByParentIdsWith1ChildComment = {
       child: [
         {
           ...CHILD_COMMENT,
-          id: 505,
+          id: '505',
           content: '9',
           createdAt: '2022-04-27T03:54:38.962Z',
           updatedAt: '2022-04-27T03:54:38.962Z',
@@ -355,16 +355,16 @@ export const allCommentsByParentIdsWith1ChildComment = {
     },
     {
       ...CHILD_COMMENT,
-      id: 485,
-      parentId: 0,
+      id: '485',
+      parentId: '0',
       content: '2',
       createdAt: '2022-04-26T07:02:25.251Z',
       updatedAt: '2022-04-26T07:02:25.251Z',
     },
     {
       ...CHILD_COMMENT,
-      id: 484,
-      parentId: 0,
+      id: '484',
+      parentId: '0',
       content: '1',
       createdAt: '2022-04-26T07:02:20.368Z',
       updatedAt: '2022-04-26T07:02:20.368Z',
@@ -387,7 +387,7 @@ export const baseCommentData = {
     list: [
       {
         ...CHILD_COMMENT,
-        id: 505,
+        id: '505',
         content: '9',
         createdAt: '2022-04-27T03:54:38.962Z',
         updatedAt: '2022-04-27T03:54:38.962Z',
@@ -397,15 +397,15 @@ export const baseCommentData = {
   },
   content: '.',
   createdAt: '2022-04-26T09:25:02.870Z',
-  id: 490,
-  parentId: 0,
+  id: '490',
+  parentId: '0',
   totalReply: 12,
   updatedAt: '2022-04-27T03:54:38.969Z',
 };
 
 export const POST_DETAIL_3 = {
   ownerReactions: [],
-  id: 302,
+  id: '302',
   content: 'Important post',
   media: {
     videos: [],
@@ -421,7 +421,7 @@ export const POST_DETAIL_3 = {
   },
   isDraft: false,
   actor: {
-    id: 33,
+    id: '33',
     username: 'ngoclinh',
     fullname: 'Nguyễn Thị Ngọc Linh',
     avatar:
@@ -437,16 +437,16 @@ export const POST_DETAIL_3 = {
       {
         totalReply: 3,
         ownerReactions: [],
-        id: 490,
+        id: '490',
         actor: {
-          id: 2,
+          id: '2',
           username: 'trannamanh',
           fullname: 'Trần Nam Anh',
           avatar:
             'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/acb214d0-ce96-41bb-aba6-fb5fc89f1afa.jpg',
         },
-        parentId: 0,
-        postId: 302,
+        parentId: '0',
+        postId: '302',
         content: '.',
         createdAt: '2022-04-26T09:25:02.870Z',
         updatedAt: '2022-04-27T03:38:29.471Z',
@@ -456,19 +456,19 @@ export const POST_DETAIL_3 = {
         child: [
           {
             ...CHILD_COMMENT,
-            id: 505,
+            id: '505',
             content: '9',
             createdAt: '2022-04-27T03:54:38.962Z',
             updatedAt: '2022-04-27T03:54:38.962Z',
           },
           {
             ...CHILD_COMMENT,
-            id: 496,
+            id: '496',
             content: 'Hihi',
           },
           {
             ...CHILD_COMMENT,
-            id: 495,
+            id: '495',
             content: 'Ola',
             createdAt: '2022-04-27T03:38:25.693Z',
             updatedAt: '2022-04-27T03:38:25.693Z',
@@ -485,10 +485,10 @@ export const POST_DETAIL_3 = {
   audience: {
     groups: [
       {
-        id: 1,
+        id: '1',
         name: 'EVOL Community',
         icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
-        child: [139, 2, 10, 152, 66, 67, 103, 2, 2],
+        child: ['139', '2', '10', '152', '66', '67', '103', '2', '2'],
       },
     ],
   },
@@ -502,10 +502,10 @@ export const COMMENT_HAS_REACTION = {
   ...CHILD_COMMENT,
   ownerReactions: [
     {
-      id: 23,
-      commentId: 28,
+      id: '23',
+      commentId: '28',
       reactionName: 'wink',
-      createdBy: 33,
+      createdBy: '33',
       createdAt: '2022-04-20T08:54:31.210Z',
     },
   ],
@@ -524,12 +524,12 @@ export const SEEN_POST = {
     {
       fullname:
         'Admin 1 Tên siêu dài saddd dddddddddddddddddddddddddddddddddddde',
-      id: 43,
+      id: '43',
       username: 'admin1',
       email: 'admin1@tgm.vn',
       avatar:
         'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/78442999-8f69-403e-afc7-d1a9e4083f7d.jpg',
-      groups: [1, 2, 3],
+      groups: ['1', '2', '3'],
     },
   ],
 };

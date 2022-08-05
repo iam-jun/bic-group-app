@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {cleanup, fireEvent} from '@testing-library/react-native';
+import { cleanup, fireEvent } from '@testing-library/react-native';
 import i18next from 'i18next';
 
 import NoticePanel from './NoticePanel';
-import {createTestStore, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import {
   LIST_POST_CONTAINING_VIDEO_PROCESS_1,
@@ -14,8 +14,8 @@ import postActions from '~/screens/Post/redux/actions';
 afterEach(cleanup);
 
 describe('NoticePanel component', () => {
-  it(`renders correctly`, () => {
-    const state = {...initialState};
+  it('renders correctly', () => {
+    const state = { ...initialState };
     state.post.allPostContainingVideoInProgress = {
       total: 1,
       data: LIST_POST_CONTAINING_VIDEO_PROCESS_1,
@@ -25,8 +25,8 @@ describe('NoticePanel component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly when a total of list posts containing video in progress is greater than 1`, () => {
-    const state = {...initialState};
+  it('renders correctly when a total of list posts containing video in progress is greater than 1', () => {
+    const state = { ...initialState };
     state.post.allPostContainingVideoInProgress = {
       total: LIST_POST_CONTAINING_VIDEO_PROCESS_2.length,
       data: LIST_POST_CONTAINING_VIDEO_PROCESS_2,
@@ -46,10 +46,10 @@ describe('NoticePanel component', () => {
     );
   });
 
-  it(`should render null when click close button`, () => {
+  it('should render null when click close button', () => {
     const spy = jest.spyOn(postActions, 'setAllPostContainingVideoInProgress');
 
-    const state = {...initialState};
+    const state = { ...initialState };
     state.post.allPostContainingVideoInProgress = {
       total: LIST_POST_CONTAINING_VIDEO_PROCESS_2.length,
       data: LIST_POST_CONTAINING_VIDEO_PROCESS_2,

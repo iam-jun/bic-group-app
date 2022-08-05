@@ -1,11 +1,11 @@
 import React from 'react';
 
 import PendingUserItem from './PendingUserItem';
-import {renderWithRedux, fireEvent} from '~/test/testUtils';
-import {memberRequestDetail} from '~/test/mock_data/communities';
+import { renderWithRedux, fireEvent } from '~/test/testUtils';
+import { memberRequestDetail } from '~/test/mock_data/communities';
 
 describe('PendingUserItem component', () => {
-  const requestItem = {...memberRequestDetail};
+  const requestItem = { ...memberRequestDetail };
   const onPressApprove = jest.fn();
   const onPressDecline = jest.fn();
 

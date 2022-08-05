@@ -1,5 +1,5 @@
 import React from 'react';
-import {renderWithRedux, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import HeaderMenu from './HeaderMenu';
 
 describe('HeaderMenu component', () => {

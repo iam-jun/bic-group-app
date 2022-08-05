@@ -43,7 +43,6 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
 
   if (disabled) {
     _backgroundColor = colorDisabled || colors.gray20;
-    // @ts-ignore
     _textColor = textColorDisabled || colors.gray40;
   }
 

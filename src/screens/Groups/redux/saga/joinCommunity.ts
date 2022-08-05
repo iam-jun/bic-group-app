@@ -1,7 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import i18next from 'i18next';
 
-import { AxiosResponse } from 'axios';
 import modalActions from '~/store/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
 import groupsActions from '~/screens/Groups/redux/actions';

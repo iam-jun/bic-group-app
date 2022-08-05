@@ -1,8 +1,8 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import modalActions from '~/store/modal/actions';
-import {NOTIFICATIONS_RESPONSE} from '~/test/mock_data/notifications';
+import { NOTIFICATIONS_RESPONSE } from '~/test/mock_data/notifications';
 import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 import markAsSeenAll from './markAsSeenAll';
@@ -10,7 +10,7 @@ import markAsSeenAll from './markAsSeenAll';
 describe('Mark as seen all notification saga', () => {
   const _notificationList: any = {};
   NOTIFICATIONS_RESPONSE.data.list.forEach((item: any) => {
-    _notificationList[item.id] = {...item};
+    _notificationList[item.id] = { ...item };
   });
   const storeData = {
     notifications: {
@@ -27,9 +27,10 @@ describe('Mark as seen all notification saga', () => {
       code: 200,
     };
 
-    const newListNoti = {...storeData.notifications.notificationList};
+    const newListNoti = { ...storeData.notifications.notificationList };
+    // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(newListNoti)) {
-      newListNoti[key as any] = {...((value as any) || {}), isSeen: true};
+      newListNoti[key as any] = { ...((value as any) || {}), isSeen: true };
     }
 
     return (
@@ -41,12 +42,12 @@ describe('Mark as seen all notification saga', () => {
         .withState(storeData)
         .put(
           notificationsActions.setAllNotifications({
-            notifications: {...newListNoti},
+            notifications: { ...newListNoti },
             unseenNumber: 0,
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);
         })
     );
@@ -66,7 +67,7 @@ describe('Mark as seen all notification saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(markAsSeenAll, action)
       .provide([
         [
@@ -78,13 +79,13 @@ describe('Mark as seen all notification saga', () => {
         modalActions.showHideToastMessage({
           content: resp.meta.message,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });

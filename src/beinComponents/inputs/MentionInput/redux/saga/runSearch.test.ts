@@ -1,10 +1,10 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
+import { throwError } from 'redux-saga-test-plan/providers';
 import runSearch from './runSearch';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import actions from '../actions';
-import {throwError} from 'redux-saga-test-plan/providers';
-import {MENTION_USER} from '~/test/mock_data/mention';
+import { MENTION_USER } from '~/test/mock_data/mention';
 
 describe('_MentionInput Saga', () => {
   it('runSearch should be called to server successfully with search content', () => {
@@ -12,13 +12,13 @@ describe('_MentionInput Saga', () => {
       type: 'test',
       payload: {},
     };
-    const state = {mentionInput: {fullContent: '@quyen'}};
+    const state = { mentionInput: { fullContent: '@quyen' } };
     return expectSaga(runSearch, action)
       .withState(state)
       .provide([
         [
           matchers.call.fn(postDataHelper.getSearchMentionAudiences),
-          {data: [MENTION_USER]},
+          { data: [MENTION_USER] },
         ],
       ])
       .put(actions.setData([MENTION_USER]))
@@ -30,13 +30,13 @@ describe('_MentionInput Saga', () => {
       type: 'test',
       payload: {},
     };
-    const state = {mentionInput: {fullContent: ''}};
+    const state = { mentionInput: { fullContent: '' } };
     return expectSaga(runSearch, action)
       .withState(state)
       .provide([
         [
           matchers.call.fn(postDataHelper.getSearchMentionAudiences),
-          {data: [MENTION_USER]},
+          { data: [MENTION_USER] },
         ],
       ])
       .put(actions.setData([]))

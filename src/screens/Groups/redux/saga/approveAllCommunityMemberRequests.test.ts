@@ -1,4 +1,4 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import i18next from 'i18next';
 
@@ -12,42 +12,40 @@ describe('approveAllCommunityMemberRequests saga', () => {
   const callback = jest.fn();
   const action = {
     type: 'test',
-    payload: {communityId, callback},
+    payload: { communityId, callback },
   };
 
-  it('should approve all member requests correctly with callback function', async () => {
-    return expectSaga(approveAllCommunityMemberRequests, action)
-      .put(groupsActions.resetCommunityMemberRequests())
-      .provide([
-        [
-          matchers.call.fn(groupsDataHelper.approveAllCommunityMemberRequests),
-          {},
-        ],
-      ])
-      .put(groupsActions.getCommunityDetail({communityId}))
-      .put(
-        modalActions.showHideToastMessage({
-          content: `${i18next.t('groups:text_approved_all')}`,
-          props: {
-            textProps: {useI18n: true},
-            type: 'success',
-            rightIcon: 'UserGroup',
-            rightText: 'Members',
-            onPressRight: callback,
-          },
-          toastType: 'normal',
-        }),
-      )
-      .run()
-      .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(4);
-      });
-  });
+  it('should approve all member requests correctly with callback function', async () => expectSaga(approveAllCommunityMemberRequests, action)
+    .put(groupsActions.resetCommunityMemberRequests())
+    .provide([
+      [
+        matchers.call.fn(groupsDataHelper.approveAllCommunityMemberRequests),
+        {},
+      ],
+    ])
+    .put(groupsActions.getCommunityDetail({ communityId }))
+    .put(
+      modalActions.showHideToastMessage({
+        content: `${i18next.t('groups:text_approved_all')}`,
+        props: {
+          textProps: { useI18n: true },
+          type: 'success',
+          rightIcon: 'UserGroup',
+          rightText: 'Members',
+          onPressRight: callback,
+        },
+        toastType: 'normal',
+      }),
+    )
+    .run()
+    .then(({ allEffects }: any) => {
+      expect(allEffects?.length).toEqual(4);
+    }));
 
   it('should approve all member requests correctly without callback function', async () => {
     const action = {
       type: 'test',
-      payload: {communityId},
+      payload: { communityId },
     };
     return expectSaga(approveAllCommunityMemberRequests, action)
       .put(groupsActions.resetCommunityMemberRequests())
@@ -57,25 +55,25 @@ describe('approveAllCommunityMemberRequests saga', () => {
           {},
         ],
       ])
-      .put(groupsActions.getCommunityDetail({communityId}))
+      .put(groupsActions.getCommunityDetail({ communityId }))
       .put(
         modalActions.showHideToastMessage({
           content: `${i18next.t('groups:text_approved_all')}`,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'success',
           },
           toastType: 'normal',
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
 
   it('should call API and server throws an error', async () => {
-    const error = {code: 'error'};
+    const error = { code: 'error' };
     return expectSaga(approveAllCommunityMemberRequests, action)
       .put(groupsActions.resetCommunityMemberRequests())
       .provide([
@@ -85,7 +83,7 @@ describe('approveAllCommunityMemberRequests saga', () => {
         ],
       ])
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(5);
       });
   });

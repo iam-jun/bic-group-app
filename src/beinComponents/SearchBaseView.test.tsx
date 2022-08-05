@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {renderWithRedux, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import SearchBaseView from './SearchBaseView';
 
 describe('SearchBaseView component', () => {

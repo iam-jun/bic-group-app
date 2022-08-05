@@ -1,11 +1,11 @@
 import React from 'react';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
-import {configureStore, renderWithRedux} from '~/test/testUtils';
+import { StyleSheet } from 'react-native';
+import { configureStore, renderWithRedux } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import AtMention from '.';
 import colors from '~/theme/theme';
-import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -19,7 +19,7 @@ describe('AtMention component', () => {
 
   const mockStore = configureStore([]);
 
-  it(`renders correctly`, async () => {
+  it('renders correctly', async () => {
     const store = mockStore(initialState);
     const wrapper = renderWithRedux(<AtMention {...baseProps} />, store);
 
@@ -27,8 +27,8 @@ describe('AtMention component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should hide "AtMention" with empty content when data is empty`, async () => {
-    const storeData = {...initialState};
+  it('should hide "AtMention" with empty content when data is empty', async () => {
+    const storeData = { ...initialState };
     storeData.mentionInput.data = [];
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<AtMention {...baseProps} />, store);
@@ -40,8 +40,8 @@ describe('AtMention component', () => {
     expect(flattenedStyle.color).toBe(colors.light.colors.gray40);
   });
 
-  it(`should show "AtMention" with loading`, async () => {
-    const storeData = {...initialState};
+  it('should show "AtMention" with loading', async () => {
+    const storeData = { ...initialState };
     storeData.mentionInput.data = [] as any;
     storeData.mentionInput.loading = true;
     const store = mockStore(storeData);
@@ -53,8 +53,8 @@ describe('AtMention component', () => {
     expect(component.props.color).toBe(colors.light.colors.gray30);
   });
 
-  it(`should hide loading`, async () => {
-    const storeData = {...initialState};
+  it('should hide loading', async () => {
+    const storeData = { ...initialState };
     storeData.mentionInput.data = [] as any;
     storeData.mentionInput.loading = false;
     const store = mockStore(storeData);
@@ -64,19 +64,19 @@ describe('AtMention component', () => {
     expect(component).toBeNull();
   });
 
-  it(`should show "AtMention" with item all`, async () => {
-    const storeData = {...initialState};
+  it('should show "AtMention" with item all', async () => {
+    const storeData = { ...initialState };
     const store = mockStore(storeData);
-    const props = {...baseProps, showSpectialItems: true};
+    const props = { ...baseProps, showSpectialItems: true };
     const wrapper = renderWithRedux(<AtMention {...props} />, store);
     const component = wrapper.getByTestId('at_mention');
 
     expect(component.props.data[0].username).toBe('all');
   });
 
-  it(`should show "AtMention" with items`, async () => {
-    const storeData = {...initialState};
-    const item = {username: 'test', name: 'test'};
+  it('should show "AtMention" with items', async () => {
+    const storeData = { ...initialState };
+    const item = { username: 'test', name: 'test' };
     storeData.mentionInput.data = [item] as any;
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<AtMention {...baseProps} />, store);

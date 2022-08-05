@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   ViewStyle,
-  Modal,
   TouchableOpacity,
 } from 'react-native';
 import { useDispatch } from 'react-redux';

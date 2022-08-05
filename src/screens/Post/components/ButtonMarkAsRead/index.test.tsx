@@ -1,19 +1,19 @@
 import React from 'react';
 
-import {renderWithRedux} from '~/test/testUtils';
+import { StyleSheet } from 'react-native';
+import { renderWithRedux } from '~/test/testUtils';
 import ButtonMarkAsRead from '~/screens/Post/components/ButtonMarkAsRead';
-import {StyleSheet} from 'react-native';
 
 describe('ButtonMarkAsRead', () => {
-  it(`renders correctly with prop style`, async () => {
+  it('renders correctly with prop style', async () => {
     const wrapper = renderWithRedux(
       <ButtonMarkAsRead
         postId={1}
         markedReadPost={false}
         isActor={false}
-        isImportant={true}
-        expireTime={'2032-05-04T08:30:00.000Z'}
-        style={{backgroundColor: 'tomato'}}
+        isImportant
+        expireTime="2032-05-04T08:30:00.000Z"
+        style={{ backgroundColor: 'tomato' }}
       />,
     );
     const container = wrapper.getByTestId('button_mark_as_read.container');
@@ -21,56 +21,56 @@ describe('ButtonMarkAsRead', () => {
     expect(flattenStyle.backgroundColor).toBe('tomato');
   });
 
-  it(`return null if isActor=true`, async () => {
+  it('return null if isActor=true', async () => {
     const wrapper = renderWithRedux(
       <ButtonMarkAsRead
         postId={1}
         markedReadPost={false}
-        isActor={true}
-        isImportant={true}
-        expireTime={'2032-05-04T08:30:00.000Z'}
+        isActor
+        isImportant
+        expireTime="2032-05-04T08:30:00.000Z"
       />,
     );
     const container = wrapper.queryByTestId('button_mark_as_read.container');
     expect(container).toBeNull();
   });
 
-  it(`return null if markedReadPost=true and mark as read success = false as default`, async () => {
+  it('return null if markedReadPost=true and mark as read success = false as default', async () => {
     const wrapper = renderWithRedux(
       <ButtonMarkAsRead
         postId={1}
-        markedReadPost={true}
+        markedReadPost
         isActor={false}
-        isImportant={true}
-        expireTime={'2032-05-04T08:30:00.000Z'}
+        isImportant
+        expireTime="2032-05-04T08:30:00.000Z"
       />,
     );
     const container = wrapper.queryByTestId('button_mark_as_read.container');
     expect(container).toBeNull();
   });
 
-  it(`return null if isImportant=true`, async () => {
-    const wrapper = renderWithRedux(
-      <ButtonMarkAsRead
-        postId={1}
-        markedReadPost={false}
-        isActor={false}
-        isImportant={false}
-        expireTime={'2032-05-04T08:30:00.000Z'}
-      />,
-    );
-    const container = wrapper.queryByTestId('button_mark_as_read.container');
-    expect(container).toBeNull();
-  });
-
-  it(`return null if not have expireTime`, async () => {
+  it('return null if isImportant=true', async () => {
     const wrapper = renderWithRedux(
       <ButtonMarkAsRead
         postId={1}
         markedReadPost={false}
         isActor={false}
         isImportant={false}
-        expireTime={''}
+        expireTime="2032-05-04T08:30:00.000Z"
+      />,
+    );
+    const container = wrapper.queryByTestId('button_mark_as_read.container');
+    expect(container).toBeNull();
+  });
+
+  it('return null if not have expireTime', async () => {
+    const wrapper = renderWithRedux(
+      <ButtonMarkAsRead
+        postId={1}
+        markedReadPost={false}
+        isActor={false}
+        isImportant={false}
+        expireTime=""
       />,
     );
     const container = wrapper.queryByTestId('button_mark_as_read.container');

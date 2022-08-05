@@ -1,9 +1,7 @@
-import {cleanup} from '@testing-library/react-native';
-import {checkLastAdmin, getAllChildrenName} from '.';
+import { cleanup } from '@testing-library/react-native';
+import { checkLastAdmin, getAllChildrenName, handleLeaveInnerGroups } from '.';
 import groupsDataHelper from './GroupsDataHelper';
-import {handleLeaveInnerGroups} from '.';
-import {IGroup} from '~/interfaces/IGroup';
-import {GROUP_TREE} from '~/test/mock_data/group';
+import { GROUP_TREE } from '~/test/mock_data/group';
 
 afterEach(cleanup);
 
@@ -32,7 +30,7 @@ describe('Group functions helper', () => {
   it('checkLastAdmin: should dispatch last admin of current group error correctly', async () => {
     jest
       .spyOn(groupsDataHelper, 'getInnerGroupsLastAdmin')
-      .mockImplementation(() => Promise.resolve([{id: groupId}]));
+      .mockImplementation(() => Promise.resolve([{ id: groupId }]));
     const result = await checkLastAdmin(
       groupId,
       userId,
@@ -47,7 +45,7 @@ describe('Group functions helper', () => {
   it('checkLastAdmin: should dispatch last admin of an inner group error correctly', async () => {
     jest
       .spyOn(groupsDataHelper, 'getInnerGroupsLastAdmin')
-      .mockImplementation(() => Promise.resolve([{id: 2}]));
+      .mockImplementation(() => Promise.resolve([{ id: 2 }]));
     const result = await checkLastAdmin(
       groupId,
       userId,
@@ -75,14 +73,12 @@ describe('Group functions helper', () => {
   });
 
   it('handleLeaveInnerGroups should call prop callback correctly', async () => {
-    jest.spyOn(groupsDataHelper, 'getUserInnerGroups').mockImplementation(() =>
-      Promise.resolve({
-        data: {
-          current_group: {},
-          inner_groups: [{name: 'group_1'}],
-        },
-      }),
-    );
+    jest.spyOn(groupsDataHelper, 'getUserInnerGroups').mockImplementation(() => Promise.resolve({
+      data: {
+        current_group: {},
+        inner_groups: [{ name: 'group_1' }],
+      },
+    }));
     const result = await handleLeaveInnerGroups(
       1,
       'username',
@@ -115,7 +111,7 @@ describe('Group functions helper', () => {
   });
 
   it('getAllChildrenName should return name of group has no child', () => {
-    const group: any = {...GROUP_TREE, children: []};
+    const group: any = { ...GROUP_TREE, children: [] };
     const result = getAllChildrenName(group);
     expect(result).toStrictEqual([]);
   });

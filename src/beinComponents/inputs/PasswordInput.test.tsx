@@ -1,16 +1,16 @@
 import React from 'react';
 
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import PasswordInput from './PasswordInput';
 
 describe('Password Input component', () => {
-  it(`renders correctly`, async () => {
+  it('renders correctly', async () => {
     const wrapper = renderWithRedux(<PasswordInput />);
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly with hide icon eye`, async () => {
+  it('renders correctly with hide icon eye', async () => {
     // @ts-ignore
     const wrapper = renderWithRedux(<PasswordInput hideEyeIcon />);
     const input = wrapper.getByTestId('password_input');

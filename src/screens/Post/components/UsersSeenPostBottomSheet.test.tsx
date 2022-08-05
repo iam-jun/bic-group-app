@@ -1,10 +1,9 @@
 import * as React from 'react';
-import {render, cleanup, waitFor} from '@testing-library/react-native';
+import { cleanup, waitFor } from '@testing-library/react-native';
 import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';
-import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
+import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import * as navigationHook from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
 
 afterEach(cleanup);
 
@@ -35,40 +34,32 @@ describe('UsersSeenPostBottomSheet component', () => {
   };
 
   const createTestStore = configureStore([]);
-  it(`renders correctly loading data users seen post bottom sheet view`, async () => {
-    const storeData = {...initialState};
+  it('renders correctly loading data users seen post bottom sheet view', async () => {
+    const storeData = { ...initialState };
     const store = createTestStore(storeData);
 
-    const rendered = await waitFor(() =>
-      renderWithRedux(<UsersSeenPostBottomSheet postId={'7'} />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<UsersSeenPostBottomSheet postId="7" />, store));
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('should render list users seen post', async () => {
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     // @ts-ignore
     storeData.post.seenPostList = fake_data;
     const store = createTestStore(storeData);
-    const rendered = await waitFor(() =>
-      renderWithRedux(<UsersSeenPostBottomSheet postId={'7'} />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<UsersSeenPostBottomSheet postId="7" />, store));
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should call navigate to user profile by id when click item`, async () => {
+  it('should call navigate to user profile by id when click item', async () => {
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
-    const storeData = {...initialState};
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    const storeData = { ...initialState };
     // @ts-ignore
     storeData.post.seenPostList = fake_data;
     const store = createTestStore(storeData);
-    const rendered = await waitFor(() =>
-      renderWithRedux(<UsersSeenPostBottomSheet postId={'7'} />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<UsersSeenPostBottomSheet postId="7" />, store));
     const itemComponent = rendered.getByTestId(
       'users_seen_post_bottom_sheet.item_username.hoangnhat',
     );
@@ -80,25 +71,21 @@ describe('UsersSeenPostBottomSheet component', () => {
     });
   });
 
-  it(`should call navigate to user profile by username when click item`, async () => {
+  it('should call navigate to user profile by username when click item', async () => {
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
-    const storeData = {...initialState};
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    const storeData = { ...initialState };
     // @ts-ignore
     const store = createTestStore(storeData);
-    const rendered = await waitFor(() =>
-      renderWithRedux(<UsersSeenPostBottomSheet postId={'7'} />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<UsersSeenPostBottomSheet postId="7" />, store));
     const itemComponent = rendered.getByTestId(
       'users_seen_post_bottom_sheet.item_username.anhthien',
     );
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
     expect(navigate).toBeCalledWith('user-profile', {
-      params: {type: 'username'},
+      params: { type: 'username' },
       userId: 'anhthien',
     });
   });

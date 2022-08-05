@@ -1,21 +1,21 @@
 import React from 'react';
 import MockedNavigator from '~/test/MockedNavigator';
-import {createTestStore, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import GroupDetail from '.';
 import initialState from '~/store/initialState';
-import {groupDetailData} from '~/test/mock_data/group';
+import { groupDetailData } from '~/test/mock_data/group';
 
 describe('GroupDetail component', () => {
   const component = () => (
-    <GroupDetail route={{params: {groupId: groupDetailData.group.id}}} />
+    <GroupDetail route={{ params: { groupId: groupDetailData.group.id } }} />
   );
 
   it('renders Placeholder  correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.loadingPage = true;
     const store = createTestStore(state);
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <MockedNavigator component={component} />,
       store,
     );
@@ -24,11 +24,11 @@ describe('GroupDetail component', () => {
   });
 
   it('renders group detail correctly when user is a group member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.loadingPage = false;
-    state.groups.groupDetail = {...groupDetailData};
+    state.groups.groupDetail = { ...groupDetailData };
     // @ts-ignore
-    state.auth.user = {username: 'testname'};
+    state.auth.user = { username: 'testname' };
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -44,11 +44,11 @@ describe('GroupDetail component', () => {
   });
 
   it('renders GroupPrivateWelcome when user is a visitor to a private group', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.groupDetail = {
       ...groupDetailData,
       join_status: 1,
-      group: {...groupDetailData.group, privacy: 'PRIVATE'},
+      group: { ...groupDetailData.group, privacy: 'PRIVATE' },
     };
     const store = createTestStore(state);
 
@@ -61,10 +61,10 @@ describe('GroupDetail component', () => {
   });
 
   it('renders NoGroupFound when there is no group info', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.loadingPage = false;
     // @ts-ignore
-    state.groups.groupDetail = {group: {}};
+    state.groups.groupDetail = { group: {} };
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -76,12 +76,12 @@ describe('GroupDetail component', () => {
   });
 
   it('renders NoGroupFound when user is not a member and the group is secret', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.loadingPage = false;
     state.groups.groupDetail = {
       ...groupDetailData,
       join_status: 1,
-      group: {...groupDetailData.group, privacy: 'SECRET'},
+      group: { ...groupDetailData.group, privacy: 'SECRET' },
     };
     const store = createTestStore(state);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {renderWithRedux, configureStore, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, configureStore, fireEvent } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
 
@@ -7,7 +7,7 @@ describe('NFSRecentSearchKeyword component', () => {
   const mockStore = configureStore([]);
 
   it('should render loading recent search keyword', () => {
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = true;
     storeData.home.newsfeedSearchRecentKeyword.data = [];
     const store = mockStore(storeData);
@@ -17,7 +17,7 @@ describe('NFSRecentSearchKeyword component', () => {
   });
 
   it('should render empty recent search keyword', () => {
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
     storeData.home.newsfeedSearchRecentKeyword.data = [];
     const store = mockStore(storeData);
@@ -27,9 +27,9 @@ describe('NFSRecentSearchKeyword component', () => {
   });
 
   it('should render list recent search keyword', () => {
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
-    const item = {id: 1, keyword: 'hello'};
+    const item = { id: 1, keyword: 'hello' };
     // @ts-ignore
     storeData.home.newsfeedSearchRecentKeyword.data = [item];
     const store = mockStore(storeData);
@@ -41,9 +41,9 @@ describe('NFSRecentSearchKeyword component', () => {
   it('should call props onClearAllKeyword', () => {
     const onClearAllKeyword = jest.fn();
 
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
-    const item = {id: 1, keyword: 'hello'};
+    const item = { id: 1, keyword: 'hello' };
     // @ts-ignore
     storeData.home.newsfeedSearchRecentKeyword.data = [item];
     const store = mockStore(storeData);
@@ -60,9 +60,9 @@ describe('NFSRecentSearchKeyword component', () => {
   it('should call props onSelectKeyword', () => {
     const onSelectKeyword = jest.fn();
 
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
-    const item = {id: 1, keyword: 'hello'};
+    const item = { id: 1, keyword: 'hello' };
     // @ts-ignore
     storeData.home.newsfeedSearchRecentKeyword.data = [item];
     const store = mockStore(storeData);
@@ -79,9 +79,9 @@ describe('NFSRecentSearchKeyword component', () => {
   it('should call props onDeleteKeyword', () => {
     const onDeleteKeyword = jest.fn();
 
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
-    const item = {id: 1, keyword: 'hello'};
+    const item = { id: 1, keyword: 'hello' };
     // @ts-ignore
     storeData.home.newsfeedSearchRecentKeyword.data = [item];
     const store = mockStore(storeData);

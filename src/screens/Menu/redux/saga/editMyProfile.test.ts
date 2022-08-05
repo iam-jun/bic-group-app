@@ -1,20 +1,20 @@
 import i18next from 'i18next';
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
 import editMyProfile from './editMyProfile';
 import menuActions from '../actions';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import * as modalActions from '~/store/modal/actions';
-import {mapProfile} from '../helper';
+import { mapProfile } from '../helper';
 
 afterEach(cleanup);
 
 describe('Update User Profile Saga', () => {
   const action = {
     type: 'test',
-    payload: {id: 58, description: 'Fake fake description'},
+    payload: { id: 58, description: 'Fake fake description' },
   };
 
   it('should request to update user profile successfully', () => {
@@ -33,7 +33,7 @@ describe('Update User Profile Saga', () => {
         modalActions.showHideToastMessage({
           content: 'common:text_edit_success',
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'success',
           },
         }),
@@ -66,7 +66,7 @@ describe('Update User Profile Saga', () => {
         modalActions.showHideToastMessage({
           content: 'common:avatar_changed',
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'success',
           },
         }),
@@ -99,7 +99,7 @@ describe('Update User Profile Saga', () => {
         modalActions.showHideToastMessage({
           content: 'common:cover_changed',
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'success',
           },
         }),
@@ -119,13 +119,13 @@ describe('Update User Profile Saga', () => {
     };
     const editFieldToastMessage = 'common:btn_update';
 
-    return expectSaga(editMyProfile, {...action, editFieldToastMessage})
+    return expectSaga(editMyProfile, { ...action, editFieldToastMessage })
       .provide([[matchers.call.fn(menuDataHelper.editMyProfile), expectData]])
       .put(
         modalActions.showHideToastMessage({
           content: editFieldToastMessage,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'success',
           },
         }),
@@ -135,7 +135,7 @@ describe('Update User Profile Saga', () => {
   });
 
   it('should request to update user profile fail', () => {
-    const error = {meta: {message: 'Something went wrong'}};
+    const error = { meta: { message: 'Something went wrong' } };
     return expectSaga(editMyProfile, action)
       .provide([
         [matchers.call.fn(menuDataHelper.editMyProfile), Promise.reject(error)],
@@ -144,7 +144,7 @@ describe('Update User Profile Saga', () => {
         modalActions.showHideToastMessage({
           content: error.meta.message,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),
@@ -155,7 +155,7 @@ describe('Update User Profile Saga', () => {
   });
 
   it('should request to update user profile fail bc This Email is used', () => {
-    const error = {meta: {message: 'This Email is used'}};
+    const error = { meta: { message: 'This Email is used' } };
     return expectSaga(editMyProfile, action)
       .provide([
         [matchers.call.fn(menuDataHelper.editMyProfile), Promise.reject(error)],
@@ -169,7 +169,7 @@ describe('Update User Profile Saga', () => {
   });
 
   it('should request to update user profile fail bc This phone number is used', () => {
-    const error = {meta: {message: 'This phone number is used'}};
+    const error = { meta: { message: 'This phone number is used' } };
     return expectSaga(editMyProfile, action)
       .provide([
         [matchers.call.fn(menuDataHelper.editMyProfile), Promise.reject(error)],

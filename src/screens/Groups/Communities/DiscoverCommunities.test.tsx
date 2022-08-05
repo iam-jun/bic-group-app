@@ -1,12 +1,12 @@
 import React from 'react';
 
-import {createTestStore, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunities';
-import {communityDetailData} from '~/test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 
 describe('DiscoverCommunities Screen', () => {
-  it(`renders empty screen when list is empty and loading false`, async () => {
+  it('renders empty screen when list is empty and loading false', async () => {
     const storeData: any = {
       ...initialState,
       groups: {
@@ -24,15 +24,15 @@ describe('DiscoverCommunities Screen', () => {
     expect(emptyScreen).not.toBeNull();
   });
 
-  it(`not renders empty screen with default state`, async () => {
-    const storeData: any = {...initialState};
+  it('not renders empty screen with default state', async () => {
+    const storeData: any = { ...initialState };
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<DiscoverCommunities />, store);
     const emptyScreen = wrapper.queryByTestId('empty_screen');
     expect(emptyScreen).toBeNull();
   });
 
-  it(`renders items with data`, async () => {
+  it('renders items with data', async () => {
     const storeData: any = {
       ...initialState,
       groups: {
@@ -40,17 +40,17 @@ describe('DiscoverCommunities Screen', () => {
           loading: false,
           canLoadMore: true,
           ids: [communityDetailData.id],
-          items: {[communityDetailData.id]: communityDetailData},
+          items: { [communityDetailData.id]: communityDetailData },
         },
       },
     };
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<DiscoverCommunities />, store);
-    const commItem = wrapper.queryByTestId(`discover_communities_item_0`);
+    const commItem = wrapper.queryByTestId('discover_communities_item_0');
     expect(commItem).not.toBeNull();
   });
 
-  it(`renders discover header`, async () => {
+  it('renders discover header', async () => {
     const storeData: any = {
       ...initialState,
       groups: {
@@ -58,7 +58,7 @@ describe('DiscoverCommunities Screen', () => {
           loading: false,
           canLoadMore: true,
           ids: [communityDetailData.id],
-          items: {[communityDetailData.id]: communityDetailData},
+          items: { [communityDetailData.id]: communityDetailData },
         },
       },
     };
@@ -68,7 +68,7 @@ describe('DiscoverCommunities Screen', () => {
     expect(header).not.toBeNull();
   });
 
-  it(`not renders discover header`, async () => {
+  it('not renders discover header', async () => {
     const storeData: any = {
       ...initialState,
       groups: {
@@ -94,7 +94,7 @@ describe('DiscoverCommunities Screen', () => {
           loading: false,
           canLoadMore: true,
           ids: [communityDetailData.id],
-          items: {[communityDetailData.id]: communityDetailData},
+          items: { [communityDetailData.id]: communityDetailData },
         },
       },
     };

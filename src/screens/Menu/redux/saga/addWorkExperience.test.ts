@@ -1,11 +1,10 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
 import addWorkExperience from './addWorkExperience';
 import menuActions from '../actions';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {mapWorkExperience} from '../helper';
 import modalActions from '~/store/modal/actions';
 
 afterEach(cleanup);
@@ -106,7 +105,7 @@ describe('Add Work Experience Saga', () => {
         modalActions.showHideToastMessage({
           content: error.meta.errors[0].message,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),

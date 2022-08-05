@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createTestStore, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import PreviewMembers from './PreviewMembers';
 import initialState from '~/store/initialState';
 import {
@@ -12,7 +12,7 @@ import {
 
 describe('PreviewMembers component', () => {
   it('should render avatar list correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -25,7 +25,7 @@ describe('PreviewMembers component', () => {
   });
 
   it('should render member description text correctly when there is only 1 member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -40,7 +40,7 @@ describe('PreviewMembers component', () => {
   });
 
   it('should render member description text correctly when there are only 2 members', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -56,7 +56,7 @@ describe('PreviewMembers component', () => {
   });
 
   it('should render member description text correctly when there are >2 members', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,

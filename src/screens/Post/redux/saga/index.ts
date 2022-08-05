@@ -16,7 +16,6 @@ import {
   IPayloadPutEditDraftPost,
   IPayloadUpdateCommentsById,
   IPostActivity,
-  IPostAudience,
   IReaction,
 } from '~/interfaces/IPost';
 import { rootNavigationRef } from '~/router/refs';

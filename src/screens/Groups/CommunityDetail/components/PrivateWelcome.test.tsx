@@ -1,15 +1,15 @@
 import React from 'react';
 import initialState from '~/store/initialState';
-import {communityDetailData} from '~/test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 
-import {createTestStore, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import PrivateWelcome from './PrivateWelcome';
 
 describe('PrivateWelcome component', () => {
   const onScroll = jest.fn();
   const onButtonLayout = jest.fn();
 
-  const state = {...initialState};
+  const state = { ...initialState };
   // @ts-ignore
   state.groups.communityDetail = {
     ...communityDetailData,

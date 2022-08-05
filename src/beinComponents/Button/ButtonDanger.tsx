@@ -32,7 +32,6 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
 
   if (disabled) {
     backgroundColor = colors.gray20;
-    // @ts-ignore
     textColor = colors.gray40;
   }
 

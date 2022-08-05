@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import MemberSearchResult from './MemberSearchResult';
-import {adminDetail, memberDetail} from '~/test/mock_data/communities';
+import { adminDetail, memberDetail } from '~/test/mock_data/communities';
 
 describe('MemberSearchResult component', () => {
   const onPressMenu = jest.fn();
@@ -10,8 +10,8 @@ describe('MemberSearchResult component', () => {
   it('should NOT render empty screen correctly when loading', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
-        canManageMember={true}
-        memberSearchData={{loading: true, canLoadMore: true, data: []}}
+        canManageMember
+        memberSearchData={{ loading: true, canLoadMore: true, data: [] }}
         onPressMenu={onPressMenu}
       />,
     );
@@ -22,7 +22,7 @@ describe('MemberSearchResult component', () => {
   it('should NOT render empty screen correctly when having data and NOT loading', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
-        canManageMember={true}
+        canManageMember
         memberSearchData={{
           loading: false,
           canLoadMore: true,
@@ -38,7 +38,7 @@ describe('MemberSearchResult component', () => {
   it('should render empty screen correctly when having NO data and NO loading', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
-        canManageMember={true}
+        canManageMember
         memberSearchData={{
           loading: false,
           canLoadMore: true,
@@ -54,7 +54,7 @@ describe('MemberSearchResult component', () => {
   it('should render loading more indicator correctly', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
-        canManageMember={true}
+        canManageMember
         memberSearchData={{
           loading: false,
           canLoadMore: true,
@@ -72,7 +72,7 @@ describe('MemberSearchResult component', () => {
   it('should NOT render loading more indicator correctly', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
-        canManageMember={true}
+        canManageMember
         memberSearchData={{
           loading: true,
           canLoadMore: true,
@@ -90,7 +90,7 @@ describe('MemberSearchResult component', () => {
   it('should render data correctly', () => {
     const wrapper = renderWithRedux(
       <MemberSearchResult
-        canManageMember={true}
+        canManageMember
         memberSearchData={{
           loading: false,
           canLoadMore: false,

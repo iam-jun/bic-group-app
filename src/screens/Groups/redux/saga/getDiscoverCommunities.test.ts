@@ -1,14 +1,14 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
 import getDiscoverCommunities from './getDiscoverCommunities';
 import groupsActions from '../actions';
-import {communityDetailData} from '~/test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 
 describe('getDiscoverCommunities saga', () => {
-  const action = {type: 'test', payload: {}};
+  const action = { type: 'test', payload: {} };
 
   it('should get data correctly', async () => {
     const state = {
@@ -21,11 +21,11 @@ describe('getDiscoverCommunities saga', () => {
         },
       },
     };
-    const resp = {data: [communityDetailData]};
+    const resp = { data: [communityDetailData] };
 
     return expectSaga(getDiscoverCommunities, action)
       .withState(state)
-      .put(groupsActions.setDiscoverCommunities({loading: true}))
+      .put(groupsActions.setDiscoverCommunities({ loading: true }))
       .provide([
         [matchers.call.fn(groupsDataHelper.getDiscoverCommunities), resp],
       ])
@@ -34,11 +34,11 @@ describe('getDiscoverCommunities saga', () => {
           loading: false,
           canLoadMore: false,
           ids: [communityDetailData.id],
-          items: {[communityDetailData.id]: communityDetailData},
+          items: { [communityDetailData.id]: communityDetailData },
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
@@ -57,13 +57,13 @@ describe('getDiscoverCommunities saga', () => {
     return expectSaga(getDiscoverCommunities, action)
       .withState(state)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
 
   it('should refresh data when isRefreshing = true', async () => {
-    const action = {type: 'test', payload: {isRefreshing: true}};
+    const action = { type: 'test', payload: { isRefreshing: true } };
     const state = {
       groups: {
         discoverCommunities: {
@@ -74,22 +74,22 @@ describe('getDiscoverCommunities saga', () => {
         },
       },
     };
-    const resp = {data: [communityDetailData]};
+    const resp = { data: [communityDetailData] };
 
     return expectSaga(getDiscoverCommunities, action)
       .withState(state)
-      .put(groupsActions.setDiscoverCommunities({loading: true}))
+      .put(groupsActions.setDiscoverCommunities({ loading: true }))
       .provide([
         [matchers.call.fn(groupsDataHelper.getDiscoverCommunities), resp],
       ])
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
 
   it('should call API and throws error', async () => {
-    const error = {code: 'error'};
+    const error = { code: 'error' };
     const state = {
       groups: {
         discoverCommunities: {
@@ -102,17 +102,17 @@ describe('getDiscoverCommunities saga', () => {
     };
     return expectSaga(getDiscoverCommunities, action)
       .withState(state)
-      .put(groupsActions.setDiscoverCommunities({loading: true}))
+      .put(groupsActions.setDiscoverCommunities({ loading: true }))
       .provide([
         [
           matchers.call.fn(groupsDataHelper.getDiscoverCommunities),
           Promise.reject(error),
         ],
       ])
-      .put(groupsActions.setDiscoverCommunities({loading: false}))
+      .put(groupsActions.setDiscoverCommunities({ loading: false }))
       .call(showError, error)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(7);
       });
   });

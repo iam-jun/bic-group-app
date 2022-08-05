@@ -1,20 +1,20 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
+import { throwError } from 'redux-saga-test-plan/providers';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
-import {throwError} from 'redux-saga-test-plan/providers';
-import {IPayloadPutMarkAsRead} from '~/interfaces/IPost';
+import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
 import putMarkAsRead from '~/screens/Post/redux/saga/putMarkAsRead';
-import {POST_DETAIL} from '~/test/mock_data/post';
+import { POST_DETAIL } from '~/test/mock_data/post';
 
 describe('Put Mark as read Saga', () => {
-  const storeData = {post: {allPosts: {[POST_DETAIL.id]: POST_DETAIL}}};
+  const storeData = { post: { allPosts: { [POST_DETAIL.id]: POST_DETAIL } } };
 
   it('should do nothing with invalid payload', async () => {
     const payload: IPayloadPutMarkAsRead = {} as any;
-    return expectSaga(putMarkAsRead, {type: 'test', payload})
+    return expectSaga(putMarkAsRead, { type: 'test', payload })
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(0);
       });
   });
@@ -28,13 +28,13 @@ describe('Put Mark as read Saga', () => {
       markedReadPost: true,
       markedReadSuccess: true,
     };
-    return expectSaga(putMarkAsRead, {type: 'test', payload})
+    return expectSaga(putMarkAsRead, { type: 'test', payload })
       .withState(storeData)
-      .provide([[matchers.call.fn(postDataHelper.putMarkAsRead), {data: true}]])
+      .provide([[matchers.call.fn(postDataHelper.putMarkAsRead), { data: true }]])
       .call(postDataHelper.putMarkAsRead, POST_DETAIL.id)
       .put(postActions.addToAllPosts(newPost))
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(3);
       });
   });
@@ -43,14 +43,14 @@ describe('Put Mark as read Saga', () => {
     const payload: IPayloadPutMarkAsRead = {
       postId: POST_DETAIL.id,
     };
-    return expectSaga(putMarkAsRead, {type: 'test', payload})
+    return expectSaga(putMarkAsRead, { type: 'test', payload })
       .withState(storeData)
       .provide([
-        [matchers.call.fn(postDataHelper.putMarkAsRead), {data: false}],
+        [matchers.call.fn(postDataHelper.putMarkAsRead), { data: false }],
       ])
       .call(postDataHelper.putMarkAsRead, POST_DETAIL.id)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);
       });
   });
@@ -59,7 +59,7 @@ describe('Put Mark as read Saga', () => {
     const payload: IPayloadPutMarkAsRead = {
       postId: POST_DETAIL.id,
     };
-    return expectSaga(putMarkAsRead, {type: 'test', payload})
+    return expectSaga(putMarkAsRead, { type: 'test', payload })
       .withState(storeData)
       .provide([
         [
@@ -69,7 +69,7 @@ describe('Put Mark as read Saga', () => {
       ])
       .call(postDataHelper.putMarkAsRead, POST_DETAIL.id)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);
       });
   });

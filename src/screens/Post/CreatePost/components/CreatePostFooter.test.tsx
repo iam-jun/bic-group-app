@@ -1,21 +1,21 @@
 import React from 'react';
 
-import {configureStore, renderWithRedux} from '~/test/testUtils';
+import { configureStore, renderWithRedux } from '~/test/testUtils';
 import CreatePostFooter from '~/screens/Post/CreatePost/components/CreatePostFooter';
 import initialState from '~/store/initialState';
 
 describe('CreatePostFooter component', () => {
   const mockStore = configureStore([]);
 
-  it(`renders correctly`, async () => {
+  it('renders correctly', async () => {
     const wrapper = renderWithRedux(<CreatePostFooter />);
 
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly mention bar with items`, async () => {
-    const storeData = {...initialState};
+  it('renders correctly mention bar with items', async () => {
+    const storeData = { ...initialState };
     storeData.mentionInput.data = [
       {
         id: 7,

@@ -1,3 +1,4 @@
+/* @ts-ignore */
 import * as React from 'react';
 import * as ReactNative from 'react-native';
 import { configure } from 'enzyme';
@@ -66,7 +67,7 @@ jest.doMock('react-i18next', () => ({
       )?.replace('{{count}}', params?.count);
     },
     i18n: {
-      changeLanguage: () => new Promise(() => undefined),
+      changeLanguage: () => new Promise(),
     },
   }),
   initReactI18next,
@@ -101,7 +102,7 @@ jest.doMock('@react-navigation/native', () => ({
   useIsFocused: jest.fn(),
   useTheme: () => ({
     colors: colors.light.colors,
-    elevations: colors.light.elevations
+    elevations: colors.light.elevations,
   }),
 }));
 
@@ -268,15 +269,12 @@ jest.mock('react-hook-form', () => ({
   }),
 }));
 
-jest.doMock('expo-av', () => {
-  return {
-    Video: {
-      ...ReactNative.View,
-      onPlaybackStatusUpdate: jest.fn(),
-      onError: jest.fn(),
-    },
-    ResizeMode: { CONTAIN: 'CONTAIN' }
-  };
-}
-);
+jest.doMock('expo-av', () => ({
+  Video: {
+    ...ReactNative.View,
+    onPlaybackStatusUpdate: jest.fn(),
+    onError: jest.fn(),
+  },
+  ResizeMode: { CONTAIN: 'CONTAIN' },
+}));
 jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));

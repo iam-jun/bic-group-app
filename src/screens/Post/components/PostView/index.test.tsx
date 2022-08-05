@@ -8,15 +8,15 @@ import {
 } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import PostView from '~/screens/Post/components/PostView';
-import {POST_DETAIL, POST_DETAIL_2} from '~/test/mock_data/post';
+import { POST_DETAIL, POST_DETAIL_2 } from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import modalActions from '~/store/modal/actions';
 
 describe('PostView Component', () => {
-  const state = {...initialState};
-  state.post.allPosts = {[POST_DETAIL.id]: POST_DETAIL} as any;
+  const state = { ...initialState };
+  state.post.allPosts = { [POST_DETAIL.id]: POST_DETAIL } as any;
 
   // it('renders correctly', () => {
   //   const store = createTestStore(state);
@@ -26,12 +26,12 @@ describe('PostView Component', () => {
   //   );
   //   expect(wrapper).toMatchSnapshot();
   // });
-  //reaction.button.wink
+  // reaction.button.wink
 
-  it(`renders deleted post`, async () => {
-    const stateData = {...state};
+  it('renders deleted post', async () => {
+    const stateData = { ...state };
     stateData.post.allPosts = {
-      [POST_DETAIL.id]: {...POST_DETAIL, deleted: true},
+      [POST_DETAIL.id]: { ...POST_DETAIL, deleted: true },
     } as any;
     const store = createTestStore(stateData);
     const wrapper = renderWithRedux(
@@ -43,8 +43,8 @@ describe('PostView Component', () => {
     expect(labelDeleted?.children?.[0]).toBe(languages.post.label_post_deleted);
   });
 
-  it(`renders important`, async () => {
-    const stateData = {...state};
+  it('renders important', async () => {
+    const stateData = { ...state };
     stateData.post.allPosts = {
       [POST_DETAIL.id]: {
         ...POST_DETAIL,
@@ -66,7 +66,7 @@ describe('PostView Component', () => {
     expect(importantStatus || importantStatusLite).not.toBeNull();
   });
 
-  it(`renders correctly post view lite`, async () => {
+  it('renders correctly post view lite', async () => {
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PostView isLite postId={POST_DETAIL.id} />,
@@ -99,7 +99,7 @@ describe('PostView Component', () => {
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PostView
-        testID={'postViewTestID'}
+        testID="postViewTestID"
         postId={POST_DETAIL.id}
         onPress={callback}
       />,
@@ -112,15 +112,13 @@ describe('PostView Component', () => {
 
   it('press container should navigate to detail', () => {
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
     const callback = jest.fn();
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PostView
-        testID={'postViewTestID'}
+        testID="postViewTestID"
         postId={POST_DETAIL.id}
         onPress={callback}
         pressNavigateToDetail
@@ -140,7 +138,7 @@ describe('PostView Component', () => {
     const wrapper = renderWithRedux(
       <PostView
         postId={POST_DETAIL.id}
-        btnCommentTestID={'btnCommentTestID'}
+        btnCommentTestID="btnCommentTestID"
         onPressComment={callback}
       />,
       store,
@@ -152,15 +150,13 @@ describe('PostView Component', () => {
 
   it('press comment should navigate to post detail', () => {
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PostView
         postId={POST_DETAIL.id}
-        btnCommentTestID={'btnCommentTestID'}
+        btnCommentTestID="btnCommentTestID"
       />,
       store,
     );
@@ -183,10 +179,8 @@ describe('PostView Component', () => {
 
   it('press header should call navigate to post detail', () => {
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PostView postId={POST_DETAIL.id} />,

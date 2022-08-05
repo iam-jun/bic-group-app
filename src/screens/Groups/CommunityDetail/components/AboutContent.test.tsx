@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {createTestStore, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import AboutContent from './AboutContent';
 import initialState from '~/store/initialState';
 import {
@@ -10,7 +10,7 @@ import {
 
 describe('AboutContent component', () => {
   it('should render member item correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -23,7 +23,7 @@ describe('AboutContent component', () => {
   });
 
   it('should render privacy item correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -36,7 +36,7 @@ describe('AboutContent component', () => {
   });
 
   it('should render description text correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -50,7 +50,7 @@ describe('AboutContent component', () => {
   });
 
   it('should render PreviewMembers when user is a member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -69,7 +69,7 @@ describe('AboutContent component', () => {
   });
 
   it('should render PreviewMembers when user is not a member and the privacy is OPEN', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -89,7 +89,7 @@ describe('AboutContent component', () => {
   });
 
   it('should NOT render PreviewMembers when user is not a member and the privacy is PRIVATE', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -108,7 +108,7 @@ describe('AboutContent component', () => {
   });
 
   it('should render right icon when user is a member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -123,7 +123,7 @@ describe('AboutContent component', () => {
   });
 
   it('should render right icon when user is not a member and the privacy is OPEN', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
@@ -139,7 +139,7 @@ describe('AboutContent component', () => {
   });
 
   it('should NOT render right icon when user is not a member and the privacy is PRIVATE', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,

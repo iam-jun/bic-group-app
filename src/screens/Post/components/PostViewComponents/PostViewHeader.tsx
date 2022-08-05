@@ -8,12 +8,9 @@ import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
-import modalActions from '~/store/modal/actions';
 import TimeView from '~/beinComponents/TimeView';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
-import { IObject } from '~/interfaces/common';
-import { uuidRegex } from '~/constants/commonRegex';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 
