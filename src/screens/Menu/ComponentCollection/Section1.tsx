@@ -16,6 +16,7 @@ import { showHideToastMessage } from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 import spacing from '~/theme/spacing';
 import TabButton from '~/beinComponents/TabButton';
+import BannerImportant from '~/beinComponents/Banner/BannerImportant';
 
 const Section1 = () => {
   const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
@@ -96,6 +97,14 @@ const Section1 = () => {
       )}
     </>,
   );
+
+  const renderBannerImportant = () => renderSection(
+    'Banner Important',
+    <>
+      <BannerImportant style={{margin: spacing.margin.small}} />
+      <BannerImportant markedAsRead={true} style={{margin: spacing.margin.small}} />
+    </>
+  )
 
   const renderBannerMessage = () => renderSection(
     'Banner Message',
@@ -484,6 +493,7 @@ const Section1 = () => {
       {renderButton()}
       {renderFlashMessage()}
       {renderToastMessage()}
+      {renderBannerImportant()}
       {renderBannerMessage()}
       {renderIcon()}
       {renderText()}
