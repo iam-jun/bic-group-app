@@ -14,14 +14,14 @@ import colors from '~/theme/theme';
 import * as navigationHook from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
 import postActions from '~/screens/Post/redux/actions';
-import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
-import {POST_DETAIL} from '~/test/mock_data/post';
+import { usePostSettings } from '~/screens/Post/PostSettings/usePostSettings';
+import { POST_DETAIL } from '~/test/mock_data/post';
 
 describe('Post Setting Screen', () => {
   let storeData: any;
 
   beforeEach(() => {
-    storeData = {...initialState};
+    storeData = { ...initialState };
     storeData.post.createPost.currentSettings = {
       active: false,
       expires_time: '',
@@ -32,7 +32,7 @@ describe('Post Setting Screen', () => {
     } as any;
   });
 
-  it(`renders correctly default setting`, async () => {
+  it('renders correctly default setting', async () => {
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<PostSettings />, store);
 
@@ -47,7 +47,7 @@ describe('Post Setting Screen', () => {
     );
   });
 
-  it(`renders correctly disable to enable important`, async () => {
+  it('renders correctly disable to enable important', async () => {
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<PostSettings />, store);
 
@@ -61,7 +61,7 @@ describe('Post Setting Screen', () => {
       colors.light.colors.gray10,
     );
 
-    //active important
+    // active important
     const toggleImportant = wrapper.getByTestId(
       'post_settings.toggle_important',
     );
@@ -73,8 +73,8 @@ describe('Post Setting Screen', () => {
     );
   });
 
-  it(`renders correctly enable to disable important`, async () => {
-    const storeData = {...initialState};
+  it('renders correctly enable to disable important', async () => {
+    const storeData = { ...initialState };
     storeData.post.createPost.currentSettings = {
       active: true,
       expires_time: '2059368665000',
@@ -97,7 +97,7 @@ describe('Post Setting Screen', () => {
       colors.light.colors.success,
     );
 
-    //inactive important
+    // inactive important
     const toggleImportant = wrapper.getByTestId(
       'post_settings.toggle_important',
     );
@@ -112,10 +112,8 @@ describe('Post Setting Screen', () => {
   it('should show navigate back when press back without changed', () => {
     const navigate = jest.fn();
     const goBack = jest.fn();
-    const rootNavigation = {navigate, goBack};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate, goBack };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<PostSettings />, store);
@@ -131,7 +129,7 @@ describe('Post Setting Screen', () => {
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<PostSettings />, store);
 
-    //active important
+    // active important
     const toggleImportant = wrapper.getByTestId(
       'post_settings.toggle_important',
     );
@@ -143,19 +141,17 @@ describe('Post Setting Screen', () => {
     expect(spy).toBeCalled();
   });
 
-  it('should dispatch setCreatePostSettings then go back when press back with changed',async () => {
+  it('should dispatch setCreatePostSettings then go back when press back with changed', async () => {
     const spy = jest.spyOn(postActions, 'setCreatePostSettings');
 
-   const goBack = jest.fn();
-    const rootNavigation = {goBack};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const goBack = jest.fn();
+    const rootNavigation = { goBack };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<PostSettings />, store);
 
-    //active important
+    // active important
     const toggleImportant = wrapper.getByTestId(
       'post_settings.toggle_important',
     );
@@ -164,8 +160,8 @@ describe('Post Setting Screen', () => {
     const btnSave = wrapper.getByTestId('post_settings.btn_save');
     fireEvent.press(btnSave);
 
-    //only 1 setting important active, update if has more setting in the future
-    expect(spy).toBeCalledWith(expect.objectContaining({count: 1}));
+    // only 1 setting important active, update if has more setting in the future
+    expect(spy).toBeCalledWith(expect.objectContaining({ count: 1 }));
     expect(goBack).toBeCalled();
   });
 
@@ -173,7 +169,7 @@ describe('Post Setting Screen', () => {
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<PostSettings />, store);
 
-    //active important
+    // active important
     const toggleImportant = wrapper.getByTestId(
       'post_settings.toggle_important',
     );
@@ -195,7 +191,7 @@ describe('Post Setting Screen', () => {
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<PostSettings />, store);
 
-    //active important
+    // active important
     const toggleImportant = wrapper.getByTestId(
       'post_settings.toggle_important',
     );
@@ -233,7 +229,7 @@ describe('Post Setting Screen', () => {
 
     const store = createTestStore(storeData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(() => usePostSettings(), {wrapper});
+    const { result } = renderHook(() => usePostSettings(), { wrapper });
     act(() => {
       result.current.handleChangeDatePicker(new Date(tomorrow));
     });
@@ -247,7 +243,7 @@ describe('Post Setting Screen', () => {
 
     const store = createTestStore(storeData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(() => usePostSettings(), {wrapper});
+    const { result } = renderHook(() => usePostSettings(), { wrapper });
     act(() => {
       result.current.handleChangeDatePicker(new Date(yesterday));
     });
@@ -261,7 +257,7 @@ describe('Post Setting Screen', () => {
 
     const store = createTestStore(storeData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(() => usePostSettings(), {wrapper});
+    const { result } = renderHook(() => usePostSettings(), { wrapper });
     act(() => {
       result.current.handleChangeDatePicker(new Date(tomorrow));
     });
@@ -286,7 +282,7 @@ describe('Post Setting Screen', () => {
 
     const store = createTestStore(storeData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(() => usePostSettings(), {wrapper});
+    const { result } = renderHook(() => usePostSettings(), { wrapper });
 
     act(() => {
       result.current.handleChangeTimePicker(new Date(night));
@@ -299,9 +295,9 @@ describe('Post Setting Screen', () => {
   it('should putUpdateSettings when press save', () => {
     const store = createTestStore(storeData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => usePostSettings({postId: POST_DETAIL.id}),
-      {wrapper},
+    const { result } = renderHook(
+      () => usePostSettings({ postId: POST_DETAIL.id }),
+      { wrapper },
     );
     let action;
     act(() => {
@@ -317,9 +313,9 @@ describe('Post Setting Screen', () => {
     };
     const store = createTestStore(storeData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => usePostSettings({postId: POST_DETAIL.id}),
-      {wrapper},
+    const { result } = renderHook(
+      () => usePostSettings({ postId: POST_DETAIL.id }),
+      { wrapper },
     );
     let actionResult;
     act(() => {
@@ -332,7 +328,7 @@ describe('Post Setting Screen', () => {
     const storeData: any = {
       ...initialState,
       post: {
-        allPosts: {[POST_DETAIL.id]: POST_DETAIL},
+        allPosts: { [POST_DETAIL.id]: POST_DETAIL },
         createPost: {
           currentSettings: {
             active: false,
@@ -347,9 +343,9 @@ describe('Post Setting Screen', () => {
     };
     const store = createTestStore(storeData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => usePostSettings({postId: POST_DETAIL.id}),
-      {wrapper},
+    const { result } = renderHook(
+      () => usePostSettings({ postId: POST_DETAIL.id }),
+      { wrapper },
     );
     let actionResult;
     act(() => {

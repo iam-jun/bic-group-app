@@ -2,25 +2,21 @@
 
 import React from 'react';
 
-import {act, cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 import initialState from '~/store/initialState';
 import {
   configureStore,
   createTestStore,
-  fireEvent,
   renderWithRedux,
-  rerenderWithRedux,
 } from '~/test/testUtils';
 
 import CommentDetailContent from './CommentDetailContent';
 import postActions from '../redux/actions';
 import {
-  allCommentsByParentIds,
   allCommentsByParentIdsWith1ChildComment,
   baseCommentData,
   POST_DETAIL_3,
 } from '~/test/mock_data/post';
-import modalActions from '~/store/modal/actions';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -34,13 +30,13 @@ describe('CommentDetail screen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    storeData = {...initialState};
+    storeData = { ...initialState };
 
     storeData.auth.user = {} as any;
     storeData.post.allPosts = {} as any;
     storeData.post.loadingGetPostDetail = false;
     storeData.post.allCommentsByParentIds = {};
-    storeData.post.allPosts = {[POST_DETAIL_3.id]: POST_DETAIL_3};
+    storeData.post.allPosts = { [POST_DETAIL_3.id]: POST_DETAIL_3 };
     storeData.post.commentErrorCode = '';
   });
 
@@ -66,7 +62,7 @@ describe('CommentDetail screen', () => {
     child: [],
   };
 
-  it(`should call backend to get comment detail with `, async () => {
+  it('should call backend to get comment detail with ', async () => {
     const spy = jest.spyOn(postActions, 'getCommentDetail');
 
     const props = {
@@ -80,15 +76,15 @@ describe('CommentDetail screen', () => {
       },
     };
 
-    storeData.post.allCommentsByParentIds =
-      allCommentsByParentIdsWith1ChildComment;
+    storeData.post.allCommentsByParentIds
+      = allCommentsByParentIdsWith1ChildComment;
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
 
     expect(spy).toBeCalledTimes(1);
   });
 
-  it(`should call showPrivacy prop when commentErrorCode = api.forbidden`, async () => {
+  it('should call showPrivacy prop when commentErrorCode = api.forbidden', async () => {
     const showPrivacy = jest.fn();
     const props = {
       route: {
@@ -111,12 +107,10 @@ describe('CommentDetail screen', () => {
     expect(showPrivacy).toBeCalledWith(true);
   });
 
-  it(`should replace screen post detail when this comment is deleted `, async () => {
+  it('should replace screen post detail when this comment is deleted ', async () => {
     const replace = jest.fn();
-    const rootNavigation = {replace};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { replace };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const props = {
       route: {
@@ -129,8 +123,8 @@ describe('CommentDetail screen', () => {
       },
     };
 
-    storeData.post.commentErrorCode =
-      API_ERROR_CODE.POST.copiedCommentIsDeleted;
+    storeData.post.commentErrorCode
+      = API_ERROR_CODE.POST.copiedCommentIsDeleted;
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
 

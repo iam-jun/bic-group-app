@@ -13,7 +13,7 @@ import {
 } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import CreatePost from '.';
-import {GROUP_AUDIENCE, POST_DETAIL} from '~/test/mock_data/post';
+import { GROUP_AUDIENCE, POST_DETAIL } from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/store/modal/actions';
@@ -31,13 +31,11 @@ describe('Create Post screen', () => {
 
   const navigate = jest.fn();
   const goBack = jest.fn();
-  const rootNavigation = {navigate, goBack};
-  jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-    return {rootNavigation} as any;
-  });
+  const rootNavigation = { navigate, goBack };
+  jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-  it(`renders correctly with 1 audience selected, empty content, button post disabled`, async () => {
-    const storeData = {...initialState};
+  it('renders correctly with 1 audience selected, empty content, button post disabled', async () => {
+    const storeData = { ...initialState };
     storeData.post.createPost.chosenAudiences = [GROUP_AUDIENCE] as any;
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(
@@ -49,8 +47,8 @@ describe('Create Post screen', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it(`should enable button post after change text content`, async () => {
-    const storeData = {...initialState};
+  it('should enable button post after change text content', async () => {
+    const storeData = { ...initialState };
     storeData.post.createPost.chosenAudiences = [GROUP_AUDIENCE] as any;
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(
@@ -65,14 +63,14 @@ describe('Create Post screen', () => {
     expect(btnPost.props?.accessibilityState?.disabled).toBe(false);
   });
 
-  it(`should navigate to screen post settings when press button settings`, async () => {
+  it('should navigate to screen post settings when press button settings', async () => {
     const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
     const btnSettings = wrapper.getByTestId('create_post.btn_post_settings');
     fireEvent.press(btnSettings);
     expect(navigate).toBeCalledWith(homeStack.postSettings);
   });
 
-  it(`should navigate to screen select audience when press chosen audience view`, async () => {
+  it('should navigate to screen select audience when press chosen audience view', async () => {
     const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
     const chosenAudienceView = wrapper.getByTestId(
       'create_post_chosen_audiences',
@@ -100,10 +98,10 @@ describe('Create Post screen', () => {
     spy.mockClear();
   });
 
-  //test hook for some case can't cover by interact to UI
+  // test hook for some case can't cover by interact to UI
   it('handlePressPost should done with newPost', async () => {
     const wrapper = getHookReduxWrapper();
-    const {result} = renderHook(() => useCreatePost({screenParams: {}}), {
+    const { result } = renderHook(() => useCreatePost({ screenParams: {} }), {
       wrapper,
     });
     let pressResult: handlePressPostResultType;
@@ -114,12 +112,12 @@ describe('Create Post screen', () => {
   });
 
   it('handlePressPost should done with loading', async () => {
-    const stateData = {...initialState};
-    stateData.post.createPost = {loading: true} as any;
+    const stateData = { ...initialState };
+    stateData.post.createPost = { loading: true } as any;
     const store = createTestStore(stateData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
+    const { result } = renderHook(
+      () => useCreatePost({ screenParams: { postId: POST_DETAIL.id } }),
       {
         wrapper,
       },
@@ -135,15 +133,15 @@ describe('Create Post screen', () => {
 describe('Edit Post screen', () => {
   const editPostStoreData = {
     ...initialState,
-    ...{post: {allPosts: {[POST_DETAIL.id]: POST_DETAIL}}},
+    ...{ post: { allPosts: { [POST_DETAIL.id]: POST_DETAIL } } },
   } as any;
 
   const editDraftStoreData = {
     ...initialState,
     ...{
       post: {
-        allPosts: {[POST_DETAIL.id]: {...POST_DETAIL, isDraft: true}},
-        draftPosts: {posts: [{...POST_DETAIL, isDraft: true}]},
+        allPosts: { [POST_DETAIL.id]: { ...POST_DETAIL, isDraft: true } },
+        draftPosts: { posts: [{ ...POST_DETAIL, isDraft: true }] },
       },
     },
   } as any;
@@ -154,7 +152,7 @@ describe('Edit Post screen', () => {
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
-          <CreatePost route={{params: {postId: POST_DETAIL.id}}} />
+          <CreatePost route={{ params: { postId: POST_DETAIL.id } }} />
         )}
       />,
       store,
@@ -172,7 +170,7 @@ describe('Edit Post screen', () => {
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
-          <CreatePost route={{params: {postId: POST_DETAIL.id}}} />
+          <CreatePost route={{ params: { postId: POST_DETAIL.id } }} />
         )}
       />,
       store,
@@ -189,8 +187,8 @@ describe('Edit Post screen', () => {
   it('handlePressPost should done with editPost', async () => {
     const store = createTestStore(editPostStoreData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
+    const { result } = renderHook(
+      () => useCreatePost({ screenParams: { postId: POST_DETAIL.id } }),
       {
         wrapper,
       },
@@ -205,8 +203,8 @@ describe('Edit Post screen', () => {
   it('handlePressPost should done with editDraft', async () => {
     const store = createTestStore(editDraftStoreData);
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => useCreatePost({screenParams: {draftPostId: POST_DETAIL.id}}),
+    const { result } = renderHook(
+      () => useCreatePost({ screenParams: { draftPostId: POST_DETAIL.id } }),
       {
         wrapper,
       },

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import CommentToolbar from './CommentToolbar';
-import {fireEvent, renderWithRedux, cleanup} from '~/test/testUtils';
+import { fireEvent, renderWithRedux, cleanup } from '~/test/testUtils';
 
 afterEach(cleanup);
 
 describe('CommentToolbar component', () => {
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const onSelectImage = jest.fn();
     const onSelectFile = jest.fn();
     const onSelectGif = jest.fn();
@@ -21,14 +21,14 @@ describe('CommentToolbar component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly null`, () => {
+  it('renders correctly null', () => {
     const rendered = renderWithRedux(<CommentToolbar />);
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should call prop onSelectImage`, () => {
+  it('should call prop onSelectImage', () => {
     const onSelect = jest.fn();
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <CommentToolbar onSelectImage={onSelect} />,
     );
     const btn = getByTestId('comment_toolbar.btn_image');
@@ -37,9 +37,9 @@ describe('CommentToolbar component', () => {
     expect(onSelect).toBeCalled();
   });
 
-  it(`should call prop onSelectFile`, () => {
+  it('should call prop onSelectFile', () => {
     const onSelect = jest.fn();
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <CommentToolbar onSelectFile={onSelect} />,
     );
     const btn = getByTestId('comment_toolbar.btn_file');
@@ -48,9 +48,9 @@ describe('CommentToolbar component', () => {
     expect(onSelect).toBeCalled();
   });
 
-  it(`should call prop onSelectGif`, () => {
+  it('should call prop onSelectGif', () => {
     const onSelect = jest.fn();
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <CommentToolbar onSelectGif={onSelect} />,
     );
     const btn = getByTestId('comment_toolbar.btn_gif');
@@ -59,9 +59,9 @@ describe('CommentToolbar component', () => {
     expect(onSelect).toBeCalled();
   });
 
-  it(`should call prop onSelectVideo`, () => {
+  it('should call prop onSelectVideo', () => {
     const onSelect = jest.fn();
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <CommentToolbar onSelectVideo={onSelect} />,
     );
     const btn = getByTestId('comment_toolbar.btn_video');

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {cleanup, fireEvent} from '@testing-library/react-native';
+import { cleanup, fireEvent } from '@testing-library/react-native';
 import ForgotInputCodePw from './ForgotInputCodePw';
 import {
   configureStore,
@@ -44,9 +44,7 @@ describe('ForgotInputCodePw component', () => {
       _formValues: ['test'],
       _defaultValues: ['test'],
     },
-    getValues: () => {
-      return '';
-    },
+    getValues: () => '',
     setValue: () => jest.fn(),
     formState: {
       errors: {},
@@ -54,13 +52,13 @@ describe('ForgotInputCodePw component', () => {
     watch: () => jest.fn(),
   };
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const forgotPasswordError = {
       errBox: '',
       errRequest: '',
       errConfirm: '',
     };
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
     storeData.auth.forgotPasswordLoading = false;
@@ -73,13 +71,13 @@ describe('ForgotInputCodePw component', () => {
     expect(wrapper.toJSON()).toMatchSnapshot();
   });
 
-  it(`show error text when typing an invalid code`, async () => {
+  it('show error text when typing an invalid code', async () => {
     const forgotPasswordError = {
       errBox: '',
       errRequest: 'ERRORS!!!!',
       errConfirm: '',
     };
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
     storeData.auth.forgotPasswordLoading = false;
@@ -90,29 +88,27 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //disable input new password
+    // disable input new password
     const newPassword = wrapper.getByTestId('inputNewPassword');
     expect(newPassword).toBeDefined();
 
-    //disable input confirm password
+    // disable input confirm password
     const confirmPassword = wrapper.getByTestId('inputConfirmPassword');
     expect(confirmPassword).toBeDefined();
 
-    //disable button change password
+    // disable button change password
     const btnChangePassword = wrapper.getByTestId('btnChangePassword');
     expect(btnChangePassword).toBeDefined();
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
-    //show error text when typing wrong format code
+    // show error text when typing wrong format code
     const textInputComponent = wrapper.getByTestId('inputCode');
     expect(textInputComponent).toBeDefined();
     fireEvent.changeText(textInputComponent, '3,');
 
     const newUseForm1 = {
       ...useForm,
-      getValues: () => {
-        return '3,';
-      },
+      getValues: () => '3,',
       formState: {
         errors: {
           code: {
@@ -129,20 +125,18 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //disable button change password
+    // disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
     const helperText = wrapper.queryByTestId('text_input.text_helper');
     expect(helperText).not.toBeNull();
     expect(helperText?.props?.children?.[0]).toBe('Error 1');
 
-    //update props when delete all code
+    // update props when delete all code
     fireEvent.changeText(textInputComponent, '');
     const newUseForm2 = {
       ...useForm,
-      getValues: () => {
-        return '';
-      },
+      getValues: () => '',
       formState: {
         errors: {
           code: {
@@ -159,17 +153,17 @@ describe('ForgotInputCodePw component', () => {
     );
     expect(helperText?.props?.children?.[0]).toBe('Error 2');
 
-    //disable button change password
+    // disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
   });
 
-  it(`show error text when typing an invalid new password`, async () => {
+  it('show error text when typing an invalid new password', async () => {
     const forgotPasswordError = {
       errBox: '',
       errRequest: '',
       errConfirm: '',
     };
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
     storeData.auth.forgotPasswordLoading = false;
@@ -180,25 +174,25 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //input new password
+    // input new password
     const newPassword = wrapper.getByTestId('inputNewPassword');
     expect(newPassword).toBeDefined();
 
-    //input confirm password
+    // input confirm password
     const confirmPassword = wrapper.getByTestId('inputConfirmPassword');
     expect(confirmPassword).toBeDefined();
 
-    //button change password
+    // button change password
     const btnChangePassword = wrapper.getByTestId('btnChangePassword');
     expect(btnChangePassword).toBeDefined();
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
-    //typing valid code
+    // typing valid code
     const textInputComponent = wrapper.getByTestId('inputCode');
     expect(textInputComponent).toBeDefined();
     fireEvent.changeText(textInputComponent, '123456');
 
-    //rerender component with valid code
+    // rerender component with valid code
     const newUseForm1 = {
       ...useForm,
       getValues: (input: string) => {
@@ -229,18 +223,18 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //disable button change password
+    // disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
-    //typing new password with invalid password
+    // typing new password with invalid password
     fireEvent.changeText(newPassword, '1');
 
-    //show error text
+    // show error text
     const helperText = wrapper.queryByTestId('text_input.text_helper');
     expect(helperText).not.toBeNull();
     expect(helperText?.props?.children?.[0]).toBe('Invalid password');
 
-    //update props when delete all code
+    // update props when delete all code
     fireEvent.changeText(newPassword, '');
 
     const newUseForm2 = {
@@ -274,13 +268,13 @@ describe('ForgotInputCodePw component', () => {
     expect(helperText?.props?.children?.[0]).toBe('Password is required');
   });
 
-  it(`show error text when typing an invalid confirm password`, async () => {
+  it('show error text when typing an invalid confirm password', async () => {
     const forgotPasswordError = {
       errBox: '',
       errRequest: '',
       errConfirm: '',
     };
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
     storeData.auth.forgotPasswordLoading = false;
@@ -291,25 +285,25 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //input new password
+    // input new password
     const newPassword = wrapper.getByTestId('inputNewPassword');
     expect(newPassword).toBeDefined();
 
-    //input confirm password
+    // input confirm password
     const confirmPassword = wrapper.getByTestId('inputConfirmPassword');
     expect(confirmPassword).toBeDefined();
 
-    //disable button change password
+    // disable button change password
     const btnChangePassword = wrapper.getByTestId('btnChangePassword');
     expect(btnChangePassword).toBeDefined();
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
-    //typing valid code
+    // typing valid code
     const textInputComponent = wrapper.getByTestId('inputCode');
     expect(textInputComponent).toBeDefined();
     fireEvent.changeText(textInputComponent, '123456');
 
-    //rerender component with valid code
+    // rerender component with valid code
     const newUseForm1 = {
       ...useForm,
       getValues: (input: string) => {
@@ -340,19 +334,19 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //still disable button change password
+    // still disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
-    //typing new password with invalid password
+    // typing new password with invalid password
     fireEvent.changeText(newPassword, '1234567890');
     fireEvent.changeText(confirmPassword, '1');
 
-    //show error text
+    // show error text
     const helperText = wrapper.queryByTestId('text_input.text_helper');
     expect(helperText).not.toBeNull();
     expect(helperText?.props?.children?.[0]).toBe('Invalid password');
 
-    //update props when delete all code
+    // update props when delete all code
     fireEvent.changeText(confirmPassword, '');
 
     const newUseForm2 = {
@@ -389,13 +383,13 @@ describe('ForgotInputCodePw component', () => {
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
   });
 
-  it(`enable button change password when filled valid data`, async () => {
+  it('enable button change password when filled valid data', async () => {
     const forgotPasswordError = {
       errBox: '',
       errRequest: '',
       errConfirm: '',
     };
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
     storeData.auth.forgotPasswordLoading = false;
@@ -406,25 +400,25 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //input new password
+    // input new password
     const newPassword = wrapper.getByTestId('inputNewPassword');
     expect(newPassword).toBeDefined();
 
-    //input confirm password
+    // input confirm password
     const confirmPassword = wrapper.getByTestId('inputConfirmPassword');
     expect(confirmPassword).toBeDefined();
 
-    //disable button change password
+    // disable button change password
     const btnChangePassword = wrapper.getByTestId('btnChangePassword');
     expect(btnChangePassword).toBeDefined();
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
-    //typing valid code
+    // typing valid code
     const textInputComponent = wrapper.getByTestId('inputCode');
     expect(textInputComponent).toBeDefined();
     fireEvent.changeText(textInputComponent, '123456');
 
-    //rerender component with valid code
+    // rerender component with valid code
     const newUseForm1 = {
       ...useForm,
       getValues: (input: string) => {
@@ -448,13 +442,13 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //still disable button change password
+    // still disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
-    //typing new password with invalid password
+    // typing new password with invalid password
     fireEvent.changeText(newPassword, '1234567890');
     fireEvent.changeText(confirmPassword, '1234567890');
-    //rerender component with updated props
+    // rerender component with updated props
     const getValues = jest.fn().mockImplementation((input: string) => {
       switch (input) {
         case 'email':
@@ -491,13 +485,13 @@ describe('ForgotInputCodePw component', () => {
     expect(getValues).toBeCalledWith('confirmPassword');
   });
 
-  it(`request forgot password when click help action`, () => {
+  it('request forgot password when click help action', () => {
     const forgotPasswordError = {
       errBox: '',
       errRequest: '',
       errConfirm: 'ERROR!!!',
     };
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     const setError = jest.fn();
     const newUseForm1 = {
       ...useForm,

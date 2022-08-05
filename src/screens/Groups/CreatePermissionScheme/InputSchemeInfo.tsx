@@ -1,5 +1,5 @@
 import React, {
-  FC, useEffect, useRef, useState,
+  FC, useState,
 } from 'react';
 import {
   View, StyleSheet, StyleProp, ViewStyle,

@@ -1,12 +1,12 @@
 import React from 'react';
 
+import { cleanup } from '@testing-library/react-native';
 import {
   configureStore,
   createTestStore,
   fireEvent,
   renderWithRedux,
 } from '~/test/testUtils';
-import {cleanup} from '@testing-library/react-native';
 import EditLocation from './EditLocation';
 import initialState from '~/store/initialState';
 

@@ -1,6 +1,6 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 
-import {POST_DETAIL_3} from '~/test/mock_data/post';
+import { POST_DETAIL_3 } from '~/test/mock_data/post';
 import postActions from '../actions';
 import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
@@ -16,7 +16,7 @@ describe('Update Reaction Of Post By Id saga', () => {
 
   it('should update reaction of post by id successfully with required params in the payload', () => {
     const action = {
-      reactionsCount: {'0': {smiley: 1}, '1': {grin: 1}},
+      reactionsCount: { 0: { smiley: 1 }, 1: { grin: 1 } },
       ownerReactions: [
         {
           id: 0,
@@ -43,17 +43,17 @@ describe('Update Reaction Of Post By Id saga', () => {
             createdBy: 0,
           },
         ],
-        {'0': {smiley: 1}, '1': {grin: 1}},
+        { 0: { smiley: 1 }, 1: { grin: 1 } },
       )
         .withState(storeData)
         .put(
           postActions.addToAllPosts({
-            //@ts-ignore
+            // @ts-ignore
             data: newPost,
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(2);
         })
     );

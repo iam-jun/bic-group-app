@@ -1,6 +1,6 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 
-import {baseCommentData} from '~/test/mock_data/post';
+import { baseCommentData } from '~/test/mock_data/post';
 import postActions from '../actions';
 import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
 
@@ -9,14 +9,14 @@ describe('Update Reaction Of Comment By Id saga', () => {
   const storeData = {
     post: {
       allComments: {
-        490: {...baseCommentData},
+        490: { ...baseCommentData },
       },
     },
   };
 
   it('should update reaction of comment by id successfully with required params in the payload', () => {
     const action = {
-      reactionsCount: {'0': {smiley: 1}, '1': {grin: 1}},
+      reactionsCount: { 0: { smiley: 1 }, 1: { grin: 1 } },
       ownerReactions: [
         {
           id: 0,
@@ -32,7 +32,7 @@ describe('Update Reaction Of Comment By Id saga', () => {
       ownerReactions: action.ownerReactions,
     };
     const newAllComments = {
-      490: {...newComment},
+      490: { ...newComment },
     };
 
     return (
@@ -47,12 +47,12 @@ describe('Update Reaction Of Comment By Id saga', () => {
             createdBy: 0,
           },
         ],
-        {'0': {smiley: 1}, '1': {grin: 1}},
+        { 0: { smiley: 1 }, 1: { grin: 1 } },
       )
         .withState(storeData)
         .put(postActions.setAllComments(newAllComments))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(2);
         })
     );
@@ -65,7 +65,7 @@ describe('Update Reaction Of Comment By Id saga', () => {
       },
     };
     const action = {
-      reactionsCount: {'0': {smiley: 1}, '1': {grin: 1}},
+      reactionsCount: { 0: { smiley: 1 }, 1: { grin: 1 } },
       ownerReactions: [
         {
           id: 0,
@@ -81,7 +81,7 @@ describe('Update Reaction Of Comment By Id saga', () => {
       ownerReactions: action.ownerReactions,
     };
     const newAllComments = {
-      490: {...newComment},
+      490: { ...newComment },
     };
 
     return (
@@ -96,13 +96,13 @@ describe('Update Reaction Of Comment By Id saga', () => {
             createdBy: 0,
           },
         ],
-        {'0': {smiley: 1}, '1': {grin: 1}},
+        { 0: { smiley: 1 }, 1: { grin: 1 } },
         baseCommentData,
       )
         .withState(newStore)
         .put(postActions.setAllComments(newAllComments))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(2);
         })
     );

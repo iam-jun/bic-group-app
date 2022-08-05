@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {cleanup, renderWithRedux, fireEvent} from '~/test/testUtils';
+import { StyleSheet } from 'react-native';
+import { cleanup, renderWithRedux, fireEvent } from '~/test/testUtils';
 import Reaction from './Reaction';
 import colors from '~/theme/theme';
-import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -26,7 +26,7 @@ describe('Reaction component', () => {
   });
 
   it('renders value correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
         selected={selected}
@@ -40,7 +40,7 @@ describe('Reaction component', () => {
   });
 
   it('renders icon correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
         selected={selected}
@@ -54,7 +54,7 @@ describe('Reaction component', () => {
   });
 
   it('renders selected = false correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
         selected={false}
@@ -76,10 +76,10 @@ describe('Reaction component', () => {
   });
 
   it('renders selected = true correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
-        selected={true}
+        selected
         icon={icon}
         onActionPress={onActionPress}
       />,
@@ -98,8 +98,8 @@ describe('Reaction component', () => {
     );
   });
 
-  it(`should call prop onActionPress to select Emoji correctly`, () => {
-    const {getByTestId} = renderWithRedux(
+  it('should call prop onActionPress to select Emoji correctly', () => {
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
         selected={selected}
@@ -113,11 +113,11 @@ describe('Reaction component', () => {
     expect(onActionPress).toBeCalled();
   });
 
-  it(`should call prop onActionPress to unselect Emoji correctly`, () => {
-    const {getByTestId} = renderWithRedux(
+  it('should call prop onActionPress to unselect Emoji correctly', () => {
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
-        selected={true}
+        selected
         icon={icon}
         onActionPress={onActionPress}
       />,
@@ -128,10 +128,10 @@ describe('Reaction component', () => {
     expect(onActionPress).toBeCalled();
   });
 
-  it(`should call prop onLongPress correctly`, () => {
+  it('should call prop onLongPress correctly', () => {
     const onLongPress = jest.fn();
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
         selected={selected}
@@ -147,12 +147,12 @@ describe('Reaction component', () => {
   });
 
   it('renders style correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
         selected={selected}
         icon={icon}
-        style={{margin: 12}}
+        style={{ margin: 12 }}
         onActionPress={onActionPress}
       />,
     );
@@ -162,7 +162,7 @@ describe('Reaction component', () => {
   });
 
   it('renders loading correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
         selected={selected}
@@ -181,7 +181,7 @@ describe('Reaction component', () => {
   });
 
   it('renders disableUpdateState with selected=false correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Reaction
         value={value}
         selected={selected}

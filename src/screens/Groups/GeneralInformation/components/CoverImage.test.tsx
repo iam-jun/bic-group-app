@@ -23,7 +23,7 @@ describe('CoverImage component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should show loading`, () => {
+  it('should show loading', () => {
     storeData.groups.loadingCover = true;
     const store = mockStore(storeData);
 
@@ -33,7 +33,7 @@ describe('CoverImage component', () => {
     expect(loadingComponent).not.toBeNull();
   });
 
-  it(`should show cover`, () => {
+  it('should show cover', () => {
     storeData.groups.loadingCover = false;
     const store = mockStore(storeData);
 
@@ -45,7 +45,7 @@ describe('CoverImage component', () => {
     expect(imageComponent).toBeDefined();
   });
 
-  it(`should disable button when loading`, () => {
+  it('should disable button when loading', () => {
     storeData.groups.loadingCover = true;
     const store = mockStore(storeData);
 
@@ -58,7 +58,7 @@ describe('CoverImage component', () => {
     expect(buttonComponent.props.accessibilityState.disabled).toBe(true);
   });
 
-  it(`should call onEditCover when edit button press`, () => {
+  it('should call onEditCover when edit button press', () => {
     storeData.groups.loadingCover = false;
     const store = mockStore(storeData);
 

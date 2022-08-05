@@ -1,10 +1,10 @@
+import { expectSaga } from 'redux-saga-test-plan';
+import * as matchers from 'redux-saga-test-plan/matchers';
 import {
   adminDetail,
   memberData,
   memberDetail,
 } from '~/test/mock_data/communities';
-import { expectSaga } from 'redux-saga-test-plan';
-import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import actions from '../actions';

@@ -1,11 +1,11 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import uploadImage from './uploadImage';
 import menuActions from '../actions';
 import * as modalActions from '~/store/modal/actions';
 import ImageUploader from '~/services/imageUploader';
-import {uploadTypes} from '~/configs/resourceConfig';
+import { uploadTypes } from '~/configs/resourceConfig';
 
 describe('Update User Profile Image Saga', () => {
   const action = {
@@ -28,19 +28,17 @@ describe('Update User Profile Image Saga', () => {
   };
 
   it('should request to upload avatar successfully', () => {
-    const avatar =
-      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
+    const avatar
+      = 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
     const expectData = {
       id: 58,
-      avatar: avatar,
+      avatar,
     };
 
-    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => {
-      return {upload: jest.fn().mockResolvedValue({url: avatar})} as any;
-    });
+    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => ({ upload: jest.fn().mockResolvedValue({ url: avatar }) } as any));
 
     const fileUploader = ImageUploader.getInstance();
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(uploadImage, action)
       .put(menuActions.setLoadingAvatar(true))
       .provide([[matchers.call.fn(fileUploader.upload), avatar]])
@@ -67,21 +65,19 @@ describe('Update User Profile Image Saga', () => {
         },
       },
     };
-    const backgroundImgUrl =
-      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
+    const backgroundImgUrl
+      = 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
     const expectData = {
       id: 58,
-      backgroundImgUrl: backgroundImgUrl,
+      backgroundImgUrl,
     };
 
-    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => {
-      return {
-        upload: jest.fn().mockResolvedValue({url: backgroundImgUrl}),
-      } as any;
-    });
+    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => ({
+      upload: jest.fn().mockResolvedValue({ url: backgroundImgUrl }),
+    } as any));
 
     const fileUploader = ImageUploader.getInstance();
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(uploadImage, coverPhotoAction)
       .put(menuActions.setLoadingCover(true))
       .provide([[matchers.call.fn(fileUploader.upload), backgroundImgUrl]])
@@ -90,16 +86,14 @@ describe('Update User Profile Image Saga', () => {
   });
 
   it('should request to upload image failure', () => {
-    const error = {meta: {message: 'Something went wrong'}};
+    const error = { meta: { message: 'Something went wrong' } };
 
-    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => {
-      return {
-        upload: jest.fn().mockRejectedValue(false),
-      } as any;
-    });
+    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => ({
+      upload: jest.fn().mockRejectedValue(false),
+    } as any));
 
     const fileUploader = ImageUploader.getInstance();
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(uploadImage, action)
       .put(menuActions.setLoadingAvatar(true))
       .provide([[matchers.call.fn(fileUploader.upload), Promise.reject(error)]])
@@ -108,7 +102,7 @@ describe('Update User Profile Image Saga', () => {
         modalActions.showHideToastMessage({
           content: 'common:text_error_message',
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),

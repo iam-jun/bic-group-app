@@ -2,8 +2,6 @@ import { call, put, select } from 'redux-saga/effects';
 
 import { IObject } from '~/interfaces/common';
 import { IParamGetNotifications } from '~/interfaces/INotification';
-import groupsActions from '~/screens/Groups/redux/actions';
-import { timeOut } from '~/utils/common';
 import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 

@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { IGetStreamNotificationActivity } from '~/interfaces/INotification';
 
 import Text from '~/beinComponents/Text';
 import MarkdownView from '~/beinComponents/MarkdownView';

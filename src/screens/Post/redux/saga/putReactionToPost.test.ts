@@ -1,9 +1,9 @@
-import {cloneDeep} from 'lodash';
-import {expectSaga} from 'redux-saga-test-plan';
+import { cloneDeep } from 'lodash';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import modalActions from '~/store/modal/actions';
 
-import {POST_DETAIL} from '~/test/mock_data/post';
+import { POST_DETAIL } from '~/test/mock_data/post';
 import postDataHelper from '../../helper/PostDataHelper';
 import postActions from '../actions';
 import putReactionToPost from './putReactionToPost';
@@ -245,10 +245,10 @@ describe('Update Reaction to Post By Id saga', () => {
 
     const newPost1 = {
       ...POST_DETAIL,
-      reactionsCount: {...POST_DETAIL.reactionsCount, '2': {smiley: 1}},
+      reactionsCount: { ...POST_DETAIL.reactionsCount, 2: { smiley: 1 } },
       ownerReactions: [
         ...newOwnReaction,
-        {reactionName: 'smiley', loading: true},
+        { reactionName: 'smiley', loading: true },
       ],
     };
 
@@ -256,22 +256,22 @@ describe('Update Reaction to Post By Id saga', () => {
       // @ts-ignorets
       expectSaga(putReactionToPost, actionTest)
         .withReducer(allCommentsReducer)
-        .put(postActions.addToAllPosts({data: newPost1 as any}))
+        .put(postActions.addToAllPosts({ data: newPost1 as any }))
         .provide([
           [matchers.call.fn(postDataHelper.putReaction), Promise.reject(resp)],
         ])
-        .put(postActions.addToAllPosts({data: storeData.post.allPosts[28]}))
+        .put(postActions.addToAllPosts({ data: storeData.post.allPosts[28] }))
         .put(
           modalActions.showHideToastMessage({
             content: resp.meta.message,
             props: {
-              textProps: {useI18n: true},
+              textProps: { useI18n: true },
               type: 'error',
             },
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(7);
         })
     );

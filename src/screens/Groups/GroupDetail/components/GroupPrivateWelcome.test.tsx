@@ -5,7 +5,9 @@ import GroupPrivateWelcome from './GroupPrivateWelcome';
 import { groupDetailData } from '~/test/mock_data/group';
 
 describe('GroupPrivateWelcome component', () => {
-  const baseProps = { infoDetail: groupDetailData, isMember: false, onScroll: jest.fn(), onGetInfoLayout: jest.fn() }
+  const baseProps = {
+    infoDetail: groupDetailData, isMember: false, onScroll: jest.fn(), onGetInfoLayout: jest.fn(),
+  }
   it('renders GroupInfoHeader component correctly', () => {
     const wrapper = renderWithRedux(<GroupPrivateWelcome {...baseProps} />);
     const component = wrapper.getByTestId('info_header');

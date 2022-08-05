@@ -16,55 +16,51 @@ describe('Join New Group Saga', () => {
 
   const { groupId, groupName } = action.payload;
 
-  it('should request to join group successfully', () => {
-    return expectSaga(joinNewGroup, action)
-      .provide([
-        [
-          matchers.call.fn(groupsDataHelper.joinGroup),
-          { data: { joinStatus: groupJoinStatus.requested } },
-        ],
-      ])
-      .put(groupsActions.getGroupDetail(groupId))
-      .put(
-        modalActions.showHideToastMessage({
-          content: `${i18next.t(
-            'groups:text_request_join_group',
-          )} ${groupName}`,
-          props: {
-            type: 'success',
-          },
-        }),
-      )
-      .run();
-  });
+  it('should request to join group successfully', () => expectSaga(joinNewGroup, action)
+    .provide([
+      [
+        matchers.call.fn(groupsDataHelper.joinGroup),
+        { data: { joinStatus: groupJoinStatus.requested } },
+      ],
+    ])
+    .put(groupsActions.getGroupDetail(groupId))
+    .put(
+      modalActions.showHideToastMessage({
+        content: `${i18next.t(
+          'groups:text_request_join_group',
+        )} ${groupName}`,
+        props: {
+          type: 'success',
+        },
+      }),
+    )
+    .run());
 
-  it('should join the group successfully', () => {
-    return expectSaga(joinNewGroup, action)
-      .provide([
-        [
-          matchers.call.fn(groupsDataHelper.joinGroup),
-          { data: { joinStatus: groupJoinStatus.member } },
-        ],
-      ])
-      .put(
-        groupsActions.editDiscoverGroupItem({
-          id: groupId,
-          data: { joinStatus: groupJoinStatus.member },
-        }),
-      )
-      .put(
-        modalActions.showHideToastMessage({
-          content: `${i18next.t(
-            'groups:text_successfully_join_group',
-          )} ${groupName}`,
-          props: {
-            type: 'success',
-          },
-        }),
-      )
-      .put(groupsActions.getGroupDetail(groupId))
-      .run();
-  });
+  it('should join the group successfully', () => expectSaga(joinNewGroup, action)
+    .provide([
+      [
+        matchers.call.fn(groupsDataHelper.joinGroup),
+        { data: { joinStatus: groupJoinStatus.member } },
+      ],
+    ])
+    .put(
+      groupsActions.editDiscoverGroupItem({
+        id: groupId,
+        data: { joinStatus: groupJoinStatus.member },
+      }),
+    )
+    .put(
+      modalActions.showHideToastMessage({
+        content: `${i18next.t(
+          'groups:text_successfully_join_group',
+        )} ${groupName}`,
+        props: {
+          type: 'success',
+        },
+      }),
+    )
+    .put(groupsActions.getGroupDetail(groupId))
+    .run());
 
   it('should show error when calling server and error occurs', () => {
     const error = { meta: { message: 'Some error occurs!' } };

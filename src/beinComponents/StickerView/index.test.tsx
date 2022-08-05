@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as RNCommunityHooks from '@react-native-community/hooks';
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
-import * as Animated from 'react-native-reanimated';
-import {render, setHookTestState} from '~/test/testUtils';
+import { StyleSheet } from 'react-native';
+import { render, setHookTestState } from '~/test/testUtils';
 import StickerView from '.';
 
 describe('StickerView component', () => {
@@ -18,19 +17,19 @@ describe('StickerView component', () => {
   };
 
   const reactMock = require('react');
-  let Platform = {OS: 'ios'};
+  let Platform = { OS: 'ios' };
 
   beforeEach(() => {
-    jest.spyOn(RNCommunityHooks, 'useKeyboard').mockImplementation(() => {
-      return {
-        keyboardShown: false,
-        coordinates: {
-          start: undefined,
-          end: {screenX: 0, screenY: 0, width: 0, height: 0},
+    jest.spyOn(RNCommunityHooks, 'useKeyboard').mockImplementation(() => ({
+      keyboardShown: false,
+      coordinates: {
+        start: undefined,
+        end: {
+          screenX: 0, screenY: 0, width: 0, height: 0,
         },
-        keyboardHeight: 0,
-      };
-    });
+      },
+      keyboardHeight: 0,
+    }));
 
     Platform = require('react-native').Platform;
   });

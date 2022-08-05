@@ -1,4 +1,4 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 
@@ -17,15 +17,15 @@ describe('Get comments detail saga', () => {
   const commentId = 505;
   const storeData = {
     post: {
-      allCommentsByParentIds: allCommentsByParentIds,
-      allPosts: allPosts,
+      allCommentsByParentIds,
+      allPosts,
     },
   };
 
   it('should get comments successfully with required params in the payload', () => {
     const action = {
       type: 'test',
-      payload: {commentId},
+      payload: { commentId },
     };
     const response = {
       list: [baseCommentData],
@@ -48,7 +48,7 @@ describe('Get comments detail saga', () => {
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(4);
         })
     );
@@ -58,7 +58,7 @@ describe('Get comments detail saga', () => {
     const callbackLoading = jest.fn();
     const action = {
       type: 'test',
-      payload: {commentId, callbackLoading},
+      payload: { commentId, callbackLoading },
     };
     const response = {
       list: [baseCommentData],
@@ -81,7 +81,7 @@ describe('Get comments detail saga', () => {
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(4);
         })
     );
@@ -90,7 +90,7 @@ describe('Get comments detail saga', () => {
   it('should call server and server throws an error', () => {
     const action = {
       type: 'test',
-      payload: {commentId, isMerge: false},
+      payload: { commentId, isMerge: false },
     };
 
     const resp = {
@@ -101,7 +101,7 @@ describe('Get comments detail saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(getCommentDetail, action)
       .provide([
         [
@@ -113,13 +113,13 @@ describe('Get comments detail saga', () => {
         modalActions.showHideToastMessage({
           content: resp.meta.message,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
@@ -127,7 +127,7 @@ describe('Get comments detail saga', () => {
   it('should call server and server throws an error this post is private', () => {
     const action = {
       type: 'test',
-      payload: {commentId},
+      payload: { commentId },
     };
 
     const resp = {
@@ -138,7 +138,7 @@ describe('Get comments detail saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(getCommentDetail, action)
       .provide([
         [
@@ -148,7 +148,7 @@ describe('Get comments detail saga', () => {
       ])
       .put(postActions.setCommentErrorCode(resp.code))
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
@@ -156,7 +156,7 @@ describe('Get comments detail saga', () => {
   it('should call server and server throws an error this comment is delete', () => {
     const action = {
       type: 'test',
-      payload: {commentId},
+      payload: { commentId },
     };
 
     const resp = {
@@ -167,7 +167,7 @@ describe('Get comments detail saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(getCommentDetail, action)
       .provide([
         [
@@ -177,7 +177,7 @@ describe('Get comments detail saga', () => {
       ])
       .put(postActions.setCommentErrorCode(resp.code))
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
@@ -185,14 +185,14 @@ describe('Get comments detail saga', () => {
   it('should get comments successfully with list comment is empty', () => {
     const action = {
       type: 'test',
-      payload: {commentId, isMerge: false},
+      payload: { commentId, isMerge: false },
     };
-    const response = {list: []};
+    const response = { list: [] };
     // @ts-ignorets
     return expectSaga(getCommentDetail, action)
       .provide([[matchers.call.fn(postDataHelper.getCommentDetail), response]])
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);
       });
   });

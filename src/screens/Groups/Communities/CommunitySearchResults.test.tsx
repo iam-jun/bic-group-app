@@ -1,20 +1,20 @@
 import React from 'react';
 
-import {createTestStore, fireEvent, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import CommunitySearchResults from './CommunitySearchResults';
-import {communityDetailData} from '~/test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 import initialState from '~/store/initialState';
 
 describe('CommunitySearchResults component', () => {
   const onPressCommunity = jest.fn();
 
   it('should render data correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communitySearch = {
       loading: false,
       canLoadMore: true,
       ids: [communityDetailData.id],
-      items: {[communityDetailData.id]: {...communityDetailData}},
+      items: { [communityDetailData.id]: { ...communityDetailData } },
     };
     const store = createTestStore(state);
 
@@ -34,7 +34,7 @@ describe('CommunitySearchResults component', () => {
   });
 
   it('should NOT render empty screen correctly when loading', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communitySearch.loading = true;
     const store = createTestStore(state);
 
@@ -49,12 +49,12 @@ describe('CommunitySearchResults component', () => {
   });
 
   it('should NOT render empty screen correctly when having data and NOT loading', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communitySearch = {
       loading: false,
       canLoadMore: true,
       ids: [communityDetailData.id],
-      items: {[communityDetailData.id]: {...communityDetailData}},
+      items: { [communityDetailData.id]: { ...communityDetailData } },
     };
     const store = createTestStore(state);
 
@@ -69,7 +69,7 @@ describe('CommunitySearchResults component', () => {
   });
 
   it('should render empty screen correctly when having NO data and NO loading', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communitySearch = {
       loading: false,
       canLoadMore: false,
@@ -89,12 +89,12 @@ describe('CommunitySearchResults component', () => {
   });
 
   it('should render loading more indicator correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communitySearch = {
       loading: false,
       canLoadMore: true,
       ids: [communityDetailData.id],
-      items: {[communityDetailData.id]: {...communityDetailData}},
+      items: { [communityDetailData.id]: { ...communityDetailData } },
     };
     const store = createTestStore(state);
 
@@ -110,12 +110,12 @@ describe('CommunitySearchResults component', () => {
   });
 
   it('should navigate to community profile correctly when pressing', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communitySearch = {
       loading: false,
       canLoadMore: false,
       ids: [communityDetailData.id],
-      items: {[communityDetailData.id]: {...communityDetailData}},
+      items: { [communityDetailData.id]: { ...communityDetailData } },
     };
     const store = createTestStore(state);
 

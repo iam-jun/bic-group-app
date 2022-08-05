@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
+import { Auth } from 'aws-amplify';
 import signIn from './signIn';
 import actions from '../actions';
-import {Auth} from 'aws-amplify';
 import notificationsActions from '~/screens/Notification/redux/actions';
-import {authErrors} from '~/constants/authConstants';
+import { authErrors } from '~/constants/authConstants';
 
 describe('signIn Saga', () => {
   let Platform: any;
@@ -22,11 +22,9 @@ describe('signIn Saga', () => {
   });
 
   it('signIn should be called to server failure', () => {
-    jest.spyOn(Auth, 'signIn').mockImplementation(() => {
-      return Promise.reject({
-        code: authErrors.NOT_AUTHORIZED_EXCEPTION,
-      });
-    });
+    jest.spyOn(Auth, 'signIn').mockImplementation(() => Promise.reject({
+      code: authErrors.NOT_AUTHORIZED_EXCEPTION,
+    }));
 
     return expectSaga(signIn, action)
       .put(actions.setLoading(true))
@@ -35,11 +33,11 @@ describe('signIn Saga', () => {
       .provide([
         [
           matchers.call.fn(Auth.signIn),
-          Promise.reject({code: authErrors.LIMIT_EXCEEDED_EXCEPTION}),
+          Promise.reject({ code: authErrors.LIMIT_EXCEEDED_EXCEPTION }),
         ],
       ])
       .put(actions.setLoading(false))
-      .put(actions.setSigningInError(`Email and password doesn't match.`))
+      .put(actions.setSigningInError('Email and password doesn\'t match.'))
       .run();
   });
 

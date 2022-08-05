@@ -23,7 +23,7 @@ describe('AvatarImage component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should show loading`, () => {
+  it('should show loading', () => {
     storeData.groups.loadingAvatar = true;
     const store = mockStore(storeData);
 
@@ -33,7 +33,7 @@ describe('AvatarImage component', () => {
     expect(loadingComponent).not.toBeNull();
   });
 
-  it(`should show avatar`, () => {
+  it('should show avatar', () => {
     storeData.groups.loadingAvatar = false;
     const store = mockStore(storeData);
 
@@ -45,7 +45,7 @@ describe('AvatarImage component', () => {
     expect(imageComponent).toBeDefined();
   });
 
-  it(`should disable button when loading`, () => {
+  it('should disable button when loading', () => {
     storeData.groups.loadingAvatar = true;
     const store = mockStore(storeData);
 
@@ -58,7 +58,7 @@ describe('AvatarImage component', () => {
     expect(buttonComponent.props.accessibilityState.disabled).toBe(true);
   });
 
-  it(`should call onEditAvatar when edit button press`, () => {
+  it('should call onEditAvatar when edit button press', () => {
     storeData.groups.loadingAvatar = false;
     const store = mockStore(storeData);
 

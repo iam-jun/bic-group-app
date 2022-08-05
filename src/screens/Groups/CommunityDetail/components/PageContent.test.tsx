@@ -1,12 +1,12 @@
 import React from 'react';
 
-import {renderWithRedux, createTestStore, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, createTestStore, fireEvent } from '~/test/testUtils';
 import PageContent from './PageContent';
 import initialState from '~/store/initialState';
-import {communityDetailData} from '~/test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import {groupPostData} from '~/test/mock_data/group';
+import { groupPostData } from '~/test/mock_data/group';
 
 describe('PageContent', () => {
   const communityId = communityDetailData.id;
@@ -42,10 +42,8 @@ describe('PageContent', () => {
 
   it('should navigate to About page correctly', () => {
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const wrapper = renderWithRedux(
       <PageContent
@@ -75,10 +73,8 @@ describe('PageContent', () => {
 
   it('should navigate to Members page correctly', () => {
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const wrapper = renderWithRedux(
       <PageContent
@@ -90,20 +86,18 @@ describe('PageContent', () => {
     );
     const memberBtn = wrapper.getByTestId('page_content.members_btn');
     fireEvent.press(memberBtn);
-    expect(navigate).toBeCalledWith(groupStack.communityMembers, {communityId});
+    expect(navigate).toBeCalledWith(groupStack.communityMembers, { communityId });
   });
 
   it('should render Your Groups button and can navigate to that screen correctly when user is a member and press that button', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData};
+    state.groups.communityDetail = { ...communityDetailData };
     const store = createTestStore(state);
 
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const wrapper = renderWithRedux(
       <PageContent
@@ -118,13 +112,13 @@ describe('PageContent', () => {
     expect(yourGroupsBtn).toBeDefined();
 
     fireEvent.press(yourGroupsBtn);
-    expect(navigate).toBeCalledWith(groupStack.yourGroups, {communityId});
+    expect(navigate).toBeCalledWith(groupStack.yourGroups, { communityId });
   });
 
   it('should not render Your Groups button correctly when user is not a member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, join_status: 1};
+    state.groups.communityDetail = { ...communityDetailData, join_status: 1 };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PageContent
@@ -140,9 +134,9 @@ describe('PageContent', () => {
   });
 
   it('should render Discover button correctly when user is a member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData};
+    state.groups.communityDetail = { ...communityDetailData };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PageContent
@@ -158,9 +152,9 @@ describe('PageContent', () => {
   });
 
   it('should not render Discover button correctly when user is not a member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, join_status: 1};
+    state.groups.communityDetail = { ...communityDetailData, join_status: 1 };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PageContent
@@ -176,9 +170,9 @@ describe('PageContent', () => {
   });
 
   it('should renders Join/Cancel button correctly when user is not a member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, join_status: 1};
+    state.groups.communityDetail = { ...communityDetailData, join_status: 1 };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PageContent
@@ -194,9 +188,9 @@ describe('PageContent', () => {
   });
 
   it('should render posts data and create post shortcut correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData};
+    state.groups.communityDetail = { ...communityDetailData };
     // @ts-ignore
     state.groups.posts.data = [...groupPostData];
     const store = createTestStore(state);
@@ -217,9 +211,9 @@ describe('PageContent', () => {
   });
 
   it('should not render create post shortcut, but still render post data when user is not a member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, join_status: 1};
+    state.groups.communityDetail = { ...communityDetailData, join_status: 1 };
     // @ts-ignore
     state.groups.posts.data = [...groupPostData];
     const store = createTestStore(state);

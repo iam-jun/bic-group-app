@@ -1,10 +1,10 @@
+import { expectSaga } from 'redux-saga-test-plan';
+import * as matchers from 'redux-saga-test-plan/matchers';
 import {
   adminDetail,
   memberData,
   memberDetail,
 } from '~/test/mock_data/communities';
-import { expectSaga } from 'redux-saga-test-plan';
-import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getCommunityMembers from './getCommunityMembers';
 import actions from '../actions';
@@ -14,7 +14,7 @@ import showError from '~/store/commonSaga/showError';
 describe('get Community members', () => {
   const action = {
     type: 'test',
-    payload: { communityId: "1", params: {} },
+    payload: { communityId: '1', params: {} },
   };
 
   it('getCommunityMembers: should get data correctly', async () => {

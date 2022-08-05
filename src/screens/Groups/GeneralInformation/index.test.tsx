@@ -5,17 +5,17 @@ import privacyTypes from '~/constants/privacyTypes';
 import groupsActions from '~/screens/Groups/redux/actions';
 import initialState from '~/store/initialState';
 import MockedNavigator from '~/test/MockedNavigator';
-import {groupDetailData} from '~/test/mock_data/group';
-import {configureStore, fireEvent, renderWithRedux} from '~/test/testUtils';
+import { groupDetailData } from '~/test/mock_data/group';
+import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import GeneralInformation from '.';
 import * as helper from './helper';
 
 describe('GeneralInformation component', () => {
   const component = () => (
-    <GeneralInformation route={{params: {id: groupDetailData.group.id, type: 'group'}}} />
+    <GeneralInformation route={{ params: { id: groupDetailData.group.id, type: 'group' } }} />
   );
   const mockStore = configureStore([]);
-  const storeData = {...initialState};
+  const storeData = { ...initialState };
   const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
   const mockDispatchFn = jest.fn();
 
@@ -34,14 +34,14 @@ describe('GeneralInformation component', () => {
     const _openImagePicker = jest.spyOn(helper, '_openImagePicker');
     const rendered = renderWithRedux(<MockedNavigator component={component} />);
     const avatarComponent = rendered.getByTestId('general_information.avatar');
-    const button = avatarComponent.findByProps({testID: 'avatar.button_edit'});
+    const button = avatarComponent.findByProps({ testID: 'avatar.button_edit' });
     fireEvent.press(button);
     expect(_openImagePicker).toBeCalledWith(
       mockDispatchFn,
       groupDetailData.group.id,
       'icon',
       'group_avatar',
-      'group'
+      'group',
     );
   });
 
@@ -49,18 +49,18 @@ describe('GeneralInformation component', () => {
     const _openImagePicker = jest.spyOn(helper, '_openImagePicker');
     const rendered = renderWithRedux(<MockedNavigator component={component} />);
     const coverComponent = rendered.getByTestId('general_information.cover');
-    const button = coverComponent.findByProps({testID: 'cover.button_edit'});
+    const button = coverComponent.findByProps({ testID: 'cover.button_edit' });
     fireEvent.press(button);
     expect(_openImagePicker).toBeCalledWith(
       mockDispatchFn,
       groupDetailData.group.id,
       'backgroundImgUrl',
       'group_cover',
-      "group"
+      'group',
     );
   });
 
-  it(`should call change privacy when group's privacy is public`, () => {
+  it('should call change privacy when group\'s privacy is public', () => {
     storeData.groups.groupDetail.group.privacy = 'PUBLIC';
     storeData.groups.groupDetail.total_pending_members = 0;
     const store = mockStore(storeData);
@@ -75,12 +75,12 @@ describe('GeneralInformation component', () => {
     );
     fireEvent.press(itemComponent);
     expect(spy).toBeCalledWith({
-      data: {id: groupDetailData.group.id, privacy: privacyTypes[1].type},
+      data: { id: groupDetailData.group.id, privacy: privacyTypes[1].type },
       editFieldName: i18next.t('common:text_privacy'),
     });
   });
 
-  it(`should call alert when change privacy to public`, () => {
+  it('should call alert when change privacy to public', () => {
     storeData.groups.groupDetail.group.privacy = 'PRIVATE';
     storeData.groups.groupDetail.total_pending_members = 3;
     const store = mockStore(storeData);
@@ -99,7 +99,7 @@ describe('GeneralInformation component', () => {
     expect(spy).toBeCalled();
   });
 
-  it(`should call alert when change privacy to secret`, () => {
+  it('should call alert when change privacy to secret', () => {
     storeData.groups.groupDetail.group.privacy = 'PRIVATE';
     storeData.groups.groupDetail.total_pending_members = 3;
     const store = mockStore(storeData);

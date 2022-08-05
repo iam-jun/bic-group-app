@@ -1,18 +1,18 @@
 import React from 'react';
 
-import {renderWithRedux, createTestStore} from '~/test/testUtils';
+import { renderWithRedux, createTestStore } from '~/test/testUtils';
 import MockedNavigator from '~/test/MockedNavigator';
 import CommunityDetail from '.';
 import initialState from '~/store/initialState';
-import {communityDetailData} from '~/test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 
 describe('CommunityDetail', () => {
   const component = () => (
-    <CommunityDetail route={{params: {communityId: communityDetailData.id}}} />
+    <CommunityDetail route={{ params: { communityId: communityDetailData.id } }} />
   );
 
   it('renders Placeholder  correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.loadingPage = true;
     const store = createTestStore(state);
 
@@ -27,7 +27,7 @@ describe('CommunityDetail', () => {
   });
 
   it('should render PrivateWelcome page for guest', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.loadingPage = false;
     // @ts-ignore
     state.groups.communityDetail = {
@@ -46,10 +46,10 @@ describe('CommunityDetail', () => {
   });
 
   it('should render PageContent page correctly when user is a member', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.loadingPage = false;
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData};
+    state.groups.communityDetail = { ...communityDetailData };
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -63,10 +63,10 @@ describe('CommunityDetail', () => {
   });
 
   it('should render PageContent page correctly when user is not a member for OPEN/PUBLIC privacy type', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.loadingPage = false;
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, joinStatus: 1};
+    state.groups.communityDetail = { ...communityDetailData, joinStatus: 1 };
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -80,7 +80,7 @@ describe('CommunityDetail', () => {
   });
 
   it('should not render chat icon correctly for PRIVATE privacy type when user is a guest', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,

@@ -163,8 +163,8 @@ export const discoverGroup = {
  *  -  - [x] Bein Product Team
  */
 export const GROUP_TREE_WITH_SELECTING = {
-  '1': false,
-  '10': {
+  1: false,
+  10: {
     id: '10',
     parentId: '1',
     name: 'Bein Community',
@@ -189,7 +189,7 @@ export const GROUP_TREE_WITH_SELECTING = {
     isChecked: true,
     childrenUiIds: ['tree_0_0_0'],
   },
-  '17': {
+  17: {
     id: '17',
     parentId: '10',
     name: 'Bein Product Team',

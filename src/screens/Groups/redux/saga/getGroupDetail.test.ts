@@ -1,4 +1,4 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getGroupDetail from './getGroupDetail';
@@ -54,7 +54,7 @@ describe('Get group detail saga', () => {
     };
 
     return (
-      expectSaga(getGroupDetail, {...action, loadingPage: true})
+      expectSaga(getGroupDetail, { ...action, loadingPage: true })
         .put(groupsActions.setLoadingPage(true))
         .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
         // @ts-ignore
@@ -117,13 +117,11 @@ describe('Get group detail saga', () => {
     );
   });
 
-  it('should call server and server throws an error', () => {
-    return expectSaga(getGroupDetail, action)
-      .provide([
-        [matchers.call.fn(groupsDataHelper.getGroupDetail), Promise.reject()],
-      ])
-      .put(groupsActions.setLoadingPage(false))
-      .put(groupsActions.setGroupDetail(null))
-      .run();
-  });
+  it('should call server and server throws an error', () => expectSaga(getGroupDetail, action)
+    .provide([
+      [matchers.call.fn(groupsDataHelper.getGroupDetail), Promise.reject()],
+    ])
+    .put(groupsActions.setLoadingPage(false))
+    .put(groupsActions.setGroupDetail(null))
+    .run());
 });

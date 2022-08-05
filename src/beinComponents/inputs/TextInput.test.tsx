@@ -1,6 +1,6 @@
-import {cleanup, fireEvent, render} from '@testing-library/react-native';
+import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import spacing from '~/theme/spacing';
 import TextInput from './TextInput';
 import colors from '~/theme/theme';
@@ -8,14 +8,14 @@ import colors from '~/theme/theme';
 afterEach(cleanup);
 
 describe('TextInput component', () => {
-  it(`renders correctly`, async () => {
+  it('renders correctly', async () => {
     const wrapper = render(<TextInput />);
 
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should show "TextInput" with right spacing`, async () => {
+  it('should show "TextInput" with right spacing', async () => {
     const wrapper = render(<TextInput />);
 
     const component = wrapper.getByTestId('text_input');
@@ -24,7 +24,7 @@ describe('TextInput component', () => {
     expect(flattenedStyle.marginVertical).toBe(spacing.margin.tiny);
   });
 
-  it(`should show "TextInput" disabled`, async () => {
+  it('should show "TextInput" disabled', async () => {
     const props = {
       disabled: true,
     };
@@ -33,9 +33,9 @@ describe('TextInput component', () => {
     const component = wrapper.getByTestId('text_input.input');
 
     expect(component.props.disabled).toBeTruthy();
-  }); 
+  });
 
-  it(`onChangeText should be called`, async () => {
+  it('onChangeText should be called', async () => {
     const onChangeText = jest.fn();
     const props = {
       onChangeText,
@@ -48,7 +48,7 @@ describe('TextInput component', () => {
     expect(onChangeText).toBeCalled();
   });
 
-  it(`should show "TextInput" with text helper`, async () => {
+  it('should show "TextInput" with text helper', async () => {
     const props = {
       value: 'test',
       helperContent: 'helperContent',
@@ -61,7 +61,7 @@ describe('TextInput component', () => {
     expect(flattenedStyle.color).toBe(colors.light.colors.gray50);
   });
 
-  it(`should show "TextInput" with text helper in error`, async () => {
+  it('should show "TextInput" with text helper in error', async () => {
     const props = {
       value: 'test',
       helperContent: 'helperContent',
@@ -76,7 +76,7 @@ describe('TextInput component', () => {
     expect(flattenedStyle.color).toBe(colors.light.colors.red60);
   });
 
-  it(`should show "TextInput" with text helper action`, async () => {
+  it('should show "TextInput" with text helper action', async () => {
     const helperActionOnPress = jest.fn();
     const props = {
       value: 'test',

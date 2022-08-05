@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {cleanup} from '@testing-library/react-native';
+import { StyleSheet } from 'react-native';
+import { cleanup } from '@testing-library/react-native';
 
-import {configureStore, renderWithRedux, fireEvent} from '~/test/testUtils';
+import { configureStore, renderWithRedux, fireEvent } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import AtMentionItem from './AtMentionItem';
 import colors from '~/theme/theme';
@@ -21,7 +21,7 @@ describe('AtMentionItem component', () => {
 
   const mockStore = configureStore([]);
 
-  it(`renders correctly`, async () => {
+  it('renders correctly', async () => {
     const store = mockStore(initialState);
     const wrapper = renderWithRedux(<AtMentionItem {...baseProps} />, store);
 
@@ -29,8 +29,8 @@ describe('AtMentionItem component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should show "AtMentionItem" with highlight item`, async () => {
-    const storeData = {...initialState};
+  it('should show "AtMentionItem" with highlight item', async () => {
+    const storeData = { ...initialState };
     const highlightItem: any = {
       username: 'test',
       name: 'test',
@@ -55,7 +55,7 @@ describe('AtMentionItem component', () => {
     expect(flattenedStyle.backgroundColor).toBe(colors.light.colors.white);
   });
 
-  it(`should show "AtMentionItem" with item all`, async () => {
+  it('should show "AtMentionItem" with item all', async () => {
     const store = mockStore(initialState);
     const props = {
       ...baseProps,
@@ -67,9 +67,9 @@ describe('AtMentionItem component', () => {
     expect(component).not.toBeNull();
   });
 
-  it(`should call "_onPressItem"`, async () => {
+  it('should call "_onPressItem"', async () => {
     const onPress = jest.fn();
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.mentionInput.data = [
       {
         username: 'test',

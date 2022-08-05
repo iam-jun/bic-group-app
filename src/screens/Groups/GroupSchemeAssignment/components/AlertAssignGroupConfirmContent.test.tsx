@@ -1,14 +1,14 @@
-import {GROUP_ASSIGNMENTS} from '~/test/mock_data/group';
+import { GROUP_ASSIGNMENTS } from '~/test/mock_data/group';
 import {
   findGroupInAssignmentsById,
   prepareData,
 } from '~/screens/Groups/GroupSchemeAssignment/components/AlertAssignGroupConfirmContent';
-import {languages} from '~/test/testUtils';
+import { languages } from '~/test/testUtils';
 
 describe('AlertAssignGroupConfirmContent', () => {
   it('findGroupInAssignmentsById should return group level 0', () => {
     const assignments = GROUP_ASSIGNMENTS;
-    const groupId = GROUP_ASSIGNMENTS.groupId;
+    const { groupId } = GROUP_ASSIGNMENTS;
     expect(findGroupInAssignmentsById(groupId, assignments)).toEqual(
       GROUP_ASSIGNMENTS,
     );
@@ -16,7 +16,7 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('findGroupInAssignmentsById should return child group', () => {
     const assignments = GROUP_ASSIGNMENTS;
-    const groupId = GROUP_ASSIGNMENTS.children[0].groupId;
+    const { groupId } = GROUP_ASSIGNMENTS.children[0];
     expect(findGroupInAssignmentsById(groupId, assignments)).toEqual(
       GROUP_ASSIGNMENTS.children[0],
     );
@@ -30,10 +30,10 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('prepareData should return correct result', () => {
     const initAssignments = GROUP_ASSIGNMENTS;
-    const assigningData = [{groupId: '1', schemeId: 'abcd'}];
+    const assigningData = [{ groupId: '1', schemeId: 'abcd' }];
     const allSchemes = {
-      abcd: {id: 'abcd', name: 'Scheme ABCD'},
-      efgh: {id: 'efgh', name: 'Scheme EFGH'},
+      abcd: { id: 'abcd', name: 'Scheme ABCD' },
+      efgh: { id: 'efgh', name: 'Scheme EFGH' },
     };
     expect(prepareData(initAssignments, assigningData, allSchemes)).toEqual([
       {
@@ -46,20 +46,20 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('prepareData should return empty result', () => {
     const initAssignments = GROUP_ASSIGNMENTS;
-    const assigningData = [{groupId: '111', schemeId: 'abcd'}];
+    const assigningData = [{ groupId: '111', schemeId: 'abcd' }];
     const allSchemes = {
-      abcd: {id: 'abcd', name: 'Scheme ABCD'},
-      efgh: {id: 'efgh', name: 'Scheme EFGH'},
+      abcd: { id: 'abcd', name: 'Scheme ABCD' },
+      efgh: { id: 'efgh', name: 'Scheme EFGH' },
     };
     expect(prepareData(initAssignments, assigningData, allSchemes)).toEqual([]);
   });
 
   it('prepareData should return correct result with default unknown scheme name', () => {
     const initAssignments = GROUP_ASSIGNMENTS;
-    const assigningData = [{groupId: '1', schemeId: 'ijkl'}];
+    const assigningData = [{ groupId: '1', schemeId: 'ijkl' }];
     const allSchemes = {
-      abcd: {id: 'abcd', name: 'Scheme ABCD'},
-      efgh: {id: 'efgh', name: 'Scheme EFGH'},
+      abcd: { id: 'abcd', name: 'Scheme ABCD' },
+      efgh: { id: 'efgh', name: 'Scheme EFGH' },
     };
     expect(prepareData(initAssignments, assigningData, allSchemes)).toEqual([
       {
@@ -71,11 +71,11 @@ describe('AlertAssignGroupConfirmContent', () => {
   });
 
   it('prepareData should return correct result with new none group', () => {
-    const initAssignments = {...GROUP_ASSIGNMENTS};
-    const assigningData = [{groupId: '1', schemeId: null}];
+    const initAssignments = { ...GROUP_ASSIGNMENTS };
+    const assigningData = [{ groupId: '1', schemeId: null }];
     const allSchemes = {
-      abcd: {id: 'abcd', name: 'Scheme ABCD'},
-      efgh: {id: 'efgh', name: 'Scheme EFGH'},
+      abcd: { id: 'abcd', name: 'Scheme ABCD' },
+      efgh: { id: 'efgh', name: 'Scheme EFGH' },
     };
     expect(prepareData(initAssignments, assigningData, allSchemes)).toEqual([
       {
@@ -87,13 +87,13 @@ describe('AlertAssignGroupConfirmContent', () => {
   });
 
   it('prepareData should return correct result with old none scheme', () => {
-    const initAssignments = {...GROUP_ASSIGNMENTS};
+    const initAssignments = { ...GROUP_ASSIGNMENTS };
     // @ts-ignore
     initAssignments.schemeId = null;
-    const assigningData = [{groupId: '1', schemeId: 'efgh'}];
+    const assigningData = [{ groupId: '1', schemeId: 'efgh' }];
     const allSchemes = {
-      abcd: {id: 'abcd', name: 'Scheme ABCD'},
-      efgh: {id: 'efgh', name: 'Scheme EFGH'},
+      abcd: { id: 'abcd', name: 'Scheme ABCD' },
+      efgh: { id: 'efgh', name: 'Scheme EFGH' },
     };
     expect(prepareData(initAssignments, assigningData, allSchemes)).toEqual([
       {

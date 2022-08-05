@@ -101,7 +101,7 @@ jest.doMock('@react-navigation/native', () => ({
   useIsFocused: jest.fn(),
   useTheme: () => ({
     colors: colors.light.colors,
-    elevations: colors.light.elevations
+    elevations: colors.light.elevations,
   }),
 }));
 
@@ -268,15 +268,12 @@ jest.mock('react-hook-form', () => ({
   }),
 }));
 
-jest.doMock('expo-av', () => {
-  return {
-    Video: {
-      ...ReactNative.View,
-      onPlaybackStatusUpdate: jest.fn(),
-      onError: jest.fn(),
-    },
-    ResizeMode: { CONTAIN: 'CONTAIN' }
-  };
-}
-);
+jest.doMock('expo-av', () => ({
+  Video: {
+    ...ReactNative.View,
+    onPlaybackStatusUpdate: jest.fn(),
+    onError: jest.fn(),
+  },
+  ResizeMode: { CONTAIN: 'CONTAIN' },
+}));
 jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));

@@ -1,6 +1,6 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 
-import {baseCommentData, POST_DETAIL_3} from '~/test/mock_data/post';
+import { baseCommentData, POST_DETAIL_3 } from '~/test/mock_data/post';
 import {
   UPDATE_REACTION_TO_POST_DATA_1,
   UPDATE_REACTION_TO_POST_DATA_2,
@@ -26,7 +26,7 @@ describe('Update Reaction by socket saga', () => {
           },
         },
         allPosts: {
-          302: {...POST_DETAIL_3},
+          302: { ...POST_DETAIL_3 },
         },
       },
     };
@@ -44,7 +44,7 @@ describe('Update Reaction by socket saga', () => {
     const newPost = {
       ...POST_DETAIL_3,
       reactionsCount: {
-        '0': {thumbsup: 1},
+        0: { thumbsup: 1 },
       },
       ownerReactions: UPDATE_REACTION_TO_POST_DATA_1.reactionsOfActor,
     };
@@ -60,7 +60,7 @@ describe('Update Reaction by socket saga', () => {
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);
         })
     );
@@ -94,7 +94,7 @@ describe('Update Reaction by socket saga', () => {
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);
         })
     );
@@ -128,13 +128,13 @@ describe('Update Reaction by socket saga', () => {
         .withState(storeData)
         .put(postActions.setAllComments(newAllComments))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);
         })
     );
   });
 
-  it(`should update reactionsCount when Other users react to the user's comment`, () => {
+  it('should update reactionsCount when Other users react to the user\'s comment', () => {
     const action = {
       type: 'test',
       payload: {
@@ -160,7 +160,7 @@ describe('Update Reaction by socket saga', () => {
         .withState(storeData)
         .put(postActions.setAllComments(newAllComments))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);
         })
     );
@@ -182,7 +182,7 @@ describe('Update Reaction by socket saga', () => {
           490: {
             ...baseCommentData,
           },
-          505: {...baseCommentData.child.list[0]},
+          505: { ...baseCommentData.child.list[0] },
         },
       },
     };
@@ -199,7 +199,7 @@ describe('Update Reaction by socket saga', () => {
       490: {
         ...baseCommentData,
       },
-      505: {...newComment},
+      505: { ...newComment },
     };
 
     return (
@@ -209,13 +209,13 @@ describe('Update Reaction by socket saga', () => {
         .withState(newStoreData)
         .put(postActions.setAllComments(newAllComments))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);
         })
     );
   });
 
-  it(`should update reactionsCount when Other users react to the user's child comment`, () => {
+  it('should update reactionsCount when Other users react to the user\'s child comment', () => {
     const action = {
       type: 'test',
       payload: {
@@ -232,7 +232,7 @@ describe('Update Reaction by socket saga', () => {
           490: {
             ...baseCommentData,
           },
-          505: {...baseCommentData.child.list[0]},
+          505: { ...baseCommentData.child.list[0] },
         },
       },
     };
@@ -247,7 +247,7 @@ describe('Update Reaction by socket saga', () => {
       490: {
         ...baseCommentData,
       },
-      505: {...newComment},
+      505: { ...newComment },
     };
 
     return (
@@ -257,7 +257,7 @@ describe('Update Reaction by socket saga', () => {
         .withState(newStoreData)
         .put(postActions.setAllComments(newAllComments))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);
         })
     );

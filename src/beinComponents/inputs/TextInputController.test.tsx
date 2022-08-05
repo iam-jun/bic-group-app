@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {cleanup, render, fireEvent} from '@testing-library/react-native';
-import TextInputController from './TextInputController';
+import { cleanup, render, fireEvent } from '@testing-library/react-native';
 import i18next from 'i18next';
+import TextInputController from './TextInputController';
 import * as validation from '~/constants/commonRegex';
 
 afterEach(cleanup);
@@ -38,21 +38,19 @@ describe('TextInputController component', () => {
       _formValues: ['test'],
       _defaultValues: ['test'],
     },
-    getValues: () => {
-      return '';
-    },
+    getValues: () => '',
     setValue: () => jest.fn(),
     formState: {},
     watch: () => jest.fn(),
   };
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const validateNewPassword = jest.fn();
 
     const wrapper = render(
       <TextInputController
         useFormData={useForm}
-        name={'newPassword'}
+        name="newPassword"
         rules={{
           required: i18next.t('auth:text_err_password_blank'),
           pattern: {
@@ -61,7 +59,7 @@ describe('TextInputController component', () => {
           },
         }}
         loading={false}
-        testID={'inputNewPassword'}
+        testID="inputNewPassword"
         label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
         validateValue={validateNewPassword}
@@ -70,7 +68,7 @@ describe('TextInputController component', () => {
     expect(wrapper.toJSON()).toMatchSnapshot();
   });
 
-  it(`should called validateValue and show error text when typing an invalid value by rule`, async () => {
+  it('should called validateValue and show error text when typing an invalid value by rule', async () => {
     const newUseForm = {
       ...useForm,
       formState: {
@@ -87,7 +85,7 @@ describe('TextInputController component', () => {
     const wrapper = render(
       <TextInputController
         useFormData={newUseForm}
-        name={'newPassword'}
+        name="newPassword"
         rules={{
           required: i18next.t('auth:text_err_password_blank'),
           pattern: {
@@ -96,7 +94,7 @@ describe('TextInputController component', () => {
           },
         }}
         loading={false}
-        testID={'testID'}
+        testID="testID"
         label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
         validateValue={validateNewPassword}
@@ -116,7 +114,7 @@ describe('TextInputController component', () => {
     );
   });
 
-  it(`should not show error text when typing an invalid value by rule with props helperContent`, async () => {
+  it('should not show error text when typing an invalid value by rule with props helperContent', async () => {
     const newUseForm = {
       ...useForm,
       formState: {
@@ -133,7 +131,7 @@ describe('TextInputController component', () => {
     const wrapper = render(
       <TextInputController
         useFormData={newUseForm}
-        name={'test'}
+        name="test"
         rules={{
           required: i18next.t('auth:text_err_password_blank'),
           pattern: {
@@ -142,7 +140,7 @@ describe('TextInputController component', () => {
           },
         }}
         loading={false}
-        testID={'testID'}
+        testID="testID"
         label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
         validateValue={validateNewPassword}

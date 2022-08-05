@@ -1,5 +1,6 @@
 import React from 'react';
 
+import i18next from 'i18next';
 import {
   renderWithRedux,
   fireEvent,
@@ -10,11 +11,10 @@ import {
 } from '~/test/testUtils';
 import MemberOptionsMenu from './MemberOptionsMenu';
 import initialState from '~/store/initialState';
-import {IGroupMembers} from '~/interfaces/IGroup';
+import { IGroupMembers } from '~/interfaces/IGroup';
 import useRemoveMember from './useRemoveMember';
 import * as helper from '../../helper';
 import modalActions from '~/store/modal/actions';
-import i18next from 'i18next';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
@@ -25,13 +25,13 @@ describe('MemberOptionsMenu component', () => {
   it('renders leave group option correctly', () => {
     const spy = jest.spyOn(helper, 'checkLastAdmin');
 
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'testname1'};
+    state.auth.user = { username: 'testname1' };
     const store = createTestStore(state);
 
-    const selectedMember = {id: '1', username: 'testname1'};
-    const {getByTestId} = renderWithRedux(
+    const selectedMember = { id: '1', username: 'testname1' };
+    const { getByTestId } = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
         selectedMember={selectedMember}
@@ -50,17 +50,17 @@ describe('MemberOptionsMenu component', () => {
   it('renders Remove member option correctly when admin clicks on another user', () => {
     const spy = jest.spyOn(helper, 'checkLastAdmin');
 
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.groupDetail.canManageMember = true;
     // @ts-ignore
-    state.auth.user = {username: 'testname1'};
+    state.auth.user = { username: 'testname1' };
     const store = createTestStore(state);
     const selectedMember = {
       id: '1',
       username: 'testname2',
     } as IGroupMembers;
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
@@ -77,17 +77,17 @@ describe('MemberOptionsMenu component', () => {
   });
 
   it('should not render Remove member option correctly when admins click on themselves', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.groupDetail.canManageMember = true;
     // @ts-ignore
-    state.auth.user = {username: 'testname1'};
+    state.auth.user = { username: 'testname1' };
     const store = createTestStore(state);
     const selectedMember = {
       id: '1',
       username: 'testname1',
     } as IGroupMembers;
 
-    const {queryByTestId} = renderWithRedux(
+    const { queryByTestId } = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
@@ -102,12 +102,12 @@ describe('MemberOptionsMenu component', () => {
 
   it('getInnerGroupsNames should be done when there is no inner groups', () => {
     const renderInnerGroupsAlert = jest.fn();
-    const state = {...initialState};
+    const state = { ...initialState };
     const store = createTestStore(state);
 
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => useRemoveMember({groupId, selectedMember}),
+    const { result } = renderHook(
+      () => useRemoveMember({ groupId, selectedMember }),
       {
         wrapper,
       },
@@ -124,12 +124,12 @@ describe('MemberOptionsMenu component', () => {
 
   it('getInnerGroupsNames should be done when there is 1 inner group', () => {
     const renderInnerGroupsAlert = jest.fn();
-    const state = {...initialState};
+    const state = { ...initialState };
     const store = createTestStore(state);
 
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => useRemoveMember({groupId, selectedMember}),
+    const { result } = renderHook(
+      () => useRemoveMember({ groupId, selectedMember }),
       {
         wrapper,
       },
@@ -146,12 +146,12 @@ describe('MemberOptionsMenu component', () => {
 
   it('getInnerGroupsNames should be done when there are at least 2 inner groups', () => {
     const renderInnerGroupsAlert = jest.fn();
-    const state = {...initialState};
+    const state = { ...initialState };
     const store = createTestStore(state);
 
     const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => useRemoveMember({groupId, selectedMember}),
+    const { result } = renderHook(
+      () => useRemoveMember({ groupId, selectedMember }),
       {
         wrapper,
       },
@@ -167,7 +167,7 @@ describe('MemberOptionsMenu component', () => {
   });
 
   it('should render Remove admin option correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.groupDetail.canSetting = true;
     const store = createTestStore(state);
 
@@ -176,7 +176,7 @@ describe('MemberOptionsMenu component', () => {
       isAdmin: true,
     } as IGroupMembers;
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
@@ -191,11 +191,11 @@ describe('MemberOptionsMenu component', () => {
   });
 
   it('should dispatch alertRemovingAdmin correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.groupDetail.canSetting = true;
     state.groups.groupMembers = {
       // @ts-ignore
-      groupAdmin: {userCount: 2},
+      groupAdmin: { userCount: 2 },
     };
     const store = createTestStore(state);
 
@@ -204,7 +204,7 @@ describe('MemberOptionsMenu component', () => {
       isAdmin: true,
     } as IGroupMembers;
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
@@ -222,10 +222,10 @@ describe('MemberOptionsMenu component', () => {
   it('should dispatch alert last admin error correctly', () => {
     const spy = jest.spyOn(modalActions, 'showHideToastMessage');
 
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.groupDetail.canSetting = true;
-    state.groups.groupMembers = {groupAdmin: {userCount: 1}} as any;
-    state.auth.user = {username: 'testname1'} as any;
+    state.groups.groupMembers = { groupAdmin: { userCount: 1 } } as any;
+    state.auth.user = { username: 'testname1' } as any;
     const store = createTestStore(state);
 
     const selectedMember = {
@@ -233,7 +233,7 @@ describe('MemberOptionsMenu component', () => {
       isAdmin: true,
     } as IGroupMembers;
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
@@ -253,9 +253,9 @@ describe('MemberOptionsMenu component', () => {
   it('should render set admin option correctly', () => {
     const spy = jest.spyOn(modalActions, 'showAlert');
 
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.groupDetail.canSetting = true;
-    state.auth.user = {username: 'testname1'} as any;
+    state.auth.user = { username: 'testname1' } as any;
     const store = createTestStore(state);
 
     const selectedMember = {
@@ -263,7 +263,7 @@ describe('MemberOptionsMenu component', () => {
       isAdmin: false,
     } as IGroupMembers;
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}

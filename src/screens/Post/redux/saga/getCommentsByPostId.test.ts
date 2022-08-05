@@ -1,4 +1,4 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import * as modalActions from '~/store/modal/actions';
@@ -16,19 +16,19 @@ describe('Get comments by postId saga', () => {
   const parentId = 490;
   const storeData = {
     post: {
-      allCommentsByParentIds: allCommentsByParentIds,
-      allPosts: allPosts,
+      allCommentsByParentIds,
+      allPosts,
     },
   };
 
   it('should get comments successfully with required params in the payload', () => {
     const action = {
       type: 'test',
-      payload: {postId, parentId, isMerge: true},
+      payload: { postId, parentId, isMerge: true },
     };
     const response = {
       list: LIST_CHILD_COMMENT,
-      meta: {hasPreviousPage: true, hasNextPage: false},
+      meta: { hasPreviousPage: true, hasNextPage: false },
     };
 
     return (
@@ -47,7 +47,7 @@ describe('Get comments by postId saga', () => {
         )
         .put(postActions.addToAllComments(response.list))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(4);
         })
     );
@@ -57,17 +57,17 @@ describe('Get comments by postId saga', () => {
     const callbackLoading = jest.fn();
     const action = {
       type: 'test',
-      payload: {postId, isMerge: true, callbackLoading},
+      payload: { postId, isMerge: true, callbackLoading },
     };
     const response = {
       list: LIST_CHILD_COMMENT,
-      meta: {hasPreviousPage: true, hasNextPage: false},
+      meta: { hasPreviousPage: true, hasNextPage: false },
     };
     const newAllPosts = storeData.post.allPosts;
     const post = newAllPosts[postId] || {};
     //
     post.comments.meta.hasNextPage = response.meta.hasNextPage;
-    newAllPosts[postId] = {...post};
+    newAllPosts[postId] = { ...post };
     return (
       // @ts-ignorets
       expectSaga(getCommentsByPostId, action)
@@ -85,7 +85,7 @@ describe('Get comments by postId saga', () => {
         )
         .put(postActions.setAllPosts(newAllPosts))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(5);
         })
     );
@@ -95,11 +95,13 @@ describe('Get comments by postId saga', () => {
     const callbackLoading = jest.fn();
     const action = {
       type: 'test',
-      payload: {postId, parentId, isMerge: true, callbackLoading},
+      payload: {
+        postId, parentId, isMerge: true, callbackLoading,
+      },
     };
     const response = {
       list: LIST_CHILD_COMMENT,
-      meta: {hasPreviousPage: true, hasNextPage: false},
+      meta: { hasPreviousPage: true, hasNextPage: false },
     };
 
     return (
@@ -118,7 +120,7 @@ describe('Get comments by postId saga', () => {
         )
         .put(postActions.addToAllComments(response.list))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(4);
         })
     );
@@ -127,7 +129,7 @@ describe('Get comments by postId saga', () => {
   it('should call server and server throws an error', () => {
     const action = {
       type: 'test',
-      payload: {postId, parentId, isMerge: true},
+      payload: { postId, parentId, isMerge: true },
     };
     const resp = {
       code: 'server_internal_error',
@@ -137,7 +139,7 @@ describe('Get comments by postId saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(getCommentsByPostId, action)
       .provide([
         [
@@ -149,13 +151,13 @@ describe('Get comments by postId saga', () => {
         modalActions.showHideToastMessage({
           content: resp.meta.message,
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'error',
           },
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
@@ -163,9 +165,9 @@ describe('Get comments by postId saga', () => {
   it('should get comments successfully with list comment is empty', () => {
     const action = {
       type: 'test',
-      payload: {postId, parentId, isMerge: true},
+      payload: { postId, parentId, isMerge: true },
     };
-    const response = {list: []};
+    const response = { list: [] };
 
     return (
       // @ts-ignorets
@@ -174,7 +176,7 @@ describe('Get comments by postId saga', () => {
           [matchers.call.fn(postDataHelper.getCommentsByPostId), response],
         ])
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(1);
         })
     );

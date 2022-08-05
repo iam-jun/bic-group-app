@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {cleanup, fireEvent} from '@testing-library/react-native';
+import { cleanup, fireEvent } from '@testing-library/react-native';
 
 import NotificationOptionBottomSheet from './NotificationOptionBottomSheet';
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import notificationsActions from '../redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {NOTIFICATIONS_RESPONSE} from '~/test/mock_data/notifications';
+import { NOTIFICATIONS_RESPONSE } from '~/test/mock_data/notifications';
 
 afterEach(cleanup);
 
@@ -13,7 +13,7 @@ describe('NotificationOptionBottomSheet component', () => {
   const baseSheetRef = jest.fn();
   const notificationData = NOTIFICATIONS_RESPONSE.data.list;
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[0]}
@@ -23,7 +23,7 @@ describe('NotificationOptionBottomSheet component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should called markAsUnRead action when click mark as unread item`, () => {
+  it('should called markAsUnRead action when click mark as unread item', () => {
     const spy = jest.spyOn(notificationsActions, 'markAsUnRead');
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
@@ -40,7 +40,7 @@ describe('NotificationOptionBottomSheet component', () => {
     expect(spy).toBeCalled();
   });
 
-  it(`should called markAsRead action when click mark as read item`, () => {
+  it('should called markAsRead action when click mark as read item', () => {
     const spy = jest.spyOn(notificationsActions, 'markAsRead');
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
@@ -57,7 +57,7 @@ describe('NotificationOptionBottomSheet component', () => {
     expect(spy).toBeCalled();
   });
 
-  it(`should called showAlertNewFeature action when click notification setting item`, () => {
+  it('should called showAlertNewFeature action when click notification setting item', () => {
     const spy = jest.spyOn(modalActions, 'showAlertNewFeature');
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet

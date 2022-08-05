@@ -1,10 +1,8 @@
-import {expectSaga} from 'redux-saga-test-plan';
-import * as matchers from 'redux-saga-test-plan/matchers';
+import { expectSaga } from 'redux-saga-test-plan';
 
 import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
-import {LIST_POST_CONTAINING_VIDEO_PROCESS_1} from '~/test/mock_data/draftPosts';
+import { LIST_POST_CONTAINING_VIDEO_PROCESS_1 } from '~/test/mock_data/draftPosts';
 import {
   ATTACH_NOTIFICATION_FAILED,
   ATTACH_NOTIFICATION_PUBLISHED,
@@ -24,7 +22,7 @@ describe('Update Posts Containing Video In Progress Saga', () => {
           data: [],
         },
       },
-      home: {homePosts: []},
+      home: { homePosts: [] },
     };
   });
 
@@ -32,26 +30,24 @@ describe('Update Posts Containing Video In Progress Saga', () => {
     storeData.allPostContainingVideoInProgress = null;
     return expectSaga(updatePostsContainingVideoInProgress, {
       type: 'test',
-      payload: {...ATTACH_NOTIFICATION_PUBLISHED},
+      payload: { ...ATTACH_NOTIFICATION_PUBLISHED },
     })
       .withState(storeData)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);
       });
   });
 
-  it('should do nothing if not found postId in notification item in list post containing video in progress', async () => {
-    return expectSaga(updatePostsContainingVideoInProgress, {
-      type: 'test',
-      payload: {...ATTACH_NOTIFICATION_PUBLISHED},
-    })
-      .withState(storeData)
-      .run()
-      .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(1);
-      });
-  });
+  it('should do nothing if not found postId in notification item in list post containing video in progress', async () => expectSaga(updatePostsContainingVideoInProgress, {
+    type: 'test',
+    payload: { ...ATTACH_NOTIFICATION_PUBLISHED },
+  })
+    .withState(storeData)
+    .run()
+    .then(({ allEffects }: any) => {
+      expect(allEffects?.length).toEqual(1);
+    }));
 
   it('should update list post containing video in progress when found postId in notification item in list post containing video in progress', async () => {
     storeData.post.allPostContainingVideoInProgress = {
@@ -60,14 +56,14 @@ describe('Update Posts Containing Video In Progress Saga', () => {
     };
     return expectSaga(updatePostsContainingVideoInProgress, {
       type: 'test',
-      payload: {...ATTACH_NOTIFICATION_FAILED},
+      payload: { ...ATTACH_NOTIFICATION_FAILED },
     })
       .withState(storeData)
       .put(
-        postActions.setAllPostContainingVideoInProgress({total: 0, data: []}),
+        postActions.setAllPostContainingVideoInProgress({ total: 0, data: [] }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
@@ -79,26 +75,26 @@ describe('Update Posts Containing Video In Progress Saga', () => {
     };
 
     const newHomePosts = [
-      {...ATTACH_NOTIFICATION_PUBLISHED.activities[0]},
+      { ...ATTACH_NOTIFICATION_PUBLISHED.activities[0] },
     ] as any;
 
     return expectSaga(updatePostsContainingVideoInProgress, {
       type: 'test',
-      payload: {...ATTACH_NOTIFICATION_PUBLISHED},
+      payload: { ...ATTACH_NOTIFICATION_PUBLISHED },
     })
       .withState(storeData)
       .put(
-        postActions.setAllPostContainingVideoInProgress({total: 0, data: []}),
+        postActions.setAllPostContainingVideoInProgress({ total: 0, data: [] }),
       )
       .withState(storeData)
       .put(homeActions.setHomePosts(newHomePosts))
       .put(
         postActions.addToAllPosts({
-          data: {...ATTACH_NOTIFICATION_PUBLISHED.activities[0]} as any,
+          data: { ...ATTACH_NOTIFICATION_PUBLISHED.activities[0] } as any,
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(5);
       });
   });

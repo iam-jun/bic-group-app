@@ -2,19 +2,19 @@ import i18next from 'i18next';
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
+import { Platform as RNPlatform } from 'react-native';
 import leaveGroup, { navigateToGroup, navigationReplace } from './leaveGroup';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import { groupPrivacy } from '~/constants/privacyTypes';
-import { Platform as RNPlatform } from 'react-native';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 
 describe('Leave Group Saga', () => {
   let Platform: any;
   const action = {
     type: 'test',
-    payload: "1",
+    payload: '1',
   };
 
   beforeEach(() => {

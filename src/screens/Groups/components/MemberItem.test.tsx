@@ -2,8 +2,8 @@ import React from 'react';
 
 import MemberItem from './MemberItem';
 import initialState from '~/store/initialState';
-import {renderWithRedux, createTestStore, fireEvent} from '~/test/testUtils';
-import {adminDetail} from '~/test/mock_data/communities';
+import { renderWithRedux, createTestStore, fireEvent } from '~/test/testUtils';
+import { adminDetail } from '~/test/mock_data/communities';
 import * as navigationHook from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 
@@ -12,10 +12,10 @@ describe('MemberItem component', () => {
   const onPressMenu = jest.fn();
 
   it('should render data correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'test'};
-    const item = {...adminDetail};
+    state.auth.user = { username: 'test' };
+    const item = { ...adminDetail };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberItem
@@ -29,10 +29,10 @@ describe('MemberItem component', () => {
   });
 
   it('should render icon member option correctly when user is an admin', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'anothertest'};
-    const item = {...adminDetail};
+    state.auth.user = { username: 'anothertest' };
+    const item = { ...adminDetail };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberItem
@@ -49,10 +49,10 @@ describe('MemberItem component', () => {
   });
 
   it('should NOT render icon member option correctly when user is NOT an admin', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'anothertest'};
-    const item = {...adminDetail};
+    state.auth.user = { username: 'anothertest' };
+    const item = { ...adminDetail };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberItem
@@ -67,16 +67,14 @@ describe('MemberItem component', () => {
   });
 
   it('should navigate to User profile correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     // @ts-ignore
-    state.auth.user = {username: 'test'};
-    const item = {...adminDetail};
+    state.auth.user = { username: 'test' };
+    const item = { ...adminDetail };
     const store = createTestStore(state);
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const wrapper = renderWithRedux(
       <MemberItem

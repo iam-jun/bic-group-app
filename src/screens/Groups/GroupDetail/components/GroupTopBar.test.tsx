@@ -6,7 +6,6 @@ import initialState from '~/store/initialState';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import { communityDetailData } from '~/test/mock_data/communities';
 
-
 describe('GroupTopBar component', () => {
   it('renders Search icon correctly', () => {
     const state = { ...initialState };
@@ -50,14 +49,14 @@ describe('GroupTopBar component', () => {
     state.groups.myPermissions = {
       data: {
         groups: {
-          "1": [
-            "report_member_in_group",
+          1: [
+            'report_member_in_group',
             'approve_reject_group_joining_requests',
             'edit_group_information',
-            'edit_group_privacy'
-          ]
-        }
-      }
+            'edit_group_privacy',
+          ],
+        },
+      },
     };
     const store = createTestStore(state);
 
@@ -80,8 +79,8 @@ describe('GroupTopBar component', () => {
     state.groups.myPermissions = {
       data: {
         groups: {
-        }
-      }
+        },
+      },
     };
 
     const store = createTestStore(state);
@@ -92,7 +91,7 @@ describe('GroupTopBar component', () => {
     );
     const component = wrapper.queryByTestId('group_top_bar.admin_button');
     expect(component).toBeNull();
-    
+
     const optionMenu = wrapper.queryByTestId('group_top_bar.option_menu');
     expect(optionMenu).toBeDefined();
     fireEvent.press(optionMenu);
