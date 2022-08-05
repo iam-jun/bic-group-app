@@ -25,6 +25,7 @@ describe('Delete React To Post Saga', () => {
     };
   });
 
+  // eslint-disable-next-line default-param-last
   function allPostReducer(state = storeData, action: {type: string}) {
     if (action.type === 'test') {
       return {
@@ -37,10 +38,10 @@ describe('Delete React To Post Saga', () => {
 
   it('call server delete react to post success then go back', () => {
     const payload: IPayloadReactToPost = {
-      id: 28,
+      id: '28',
       reactionId: 'wink',
       reactionCounts: POST_DETAIL.reactionsCount,
-      ownReaction: POST_DETAIL.ownerReactions,
+      ownReaction: POST_DETAIL.ownerReactions as any,
     };
     const action = { type: 'test', payload };
 
@@ -68,7 +69,7 @@ describe('Delete React To Post Saga', () => {
 
   it('do nothing when can not find react', () => {
     const payload: IPayloadReactToPost = {
-      id: 28,
+      id: '28',
       reactionId: 'test',
       reactionCounts: {},
       ownReaction: [],
@@ -84,10 +85,10 @@ describe('Delete React To Post Saga', () => {
 
   it('call server edit post failed', () => {
     const payload: IPayloadReactToPost = {
-      id: 28,
+      id: '28',
       reactionId: 'wink',
       reactionCounts: POST_DETAIL.reactionsCount,
-      ownReaction: POST_DETAIL.ownerReactions,
+      ownReaction: POST_DETAIL.ownerReactions as any,
     };
     const action = { type: 'test', payload };
 

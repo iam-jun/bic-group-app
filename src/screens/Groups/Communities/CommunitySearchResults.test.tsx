@@ -30,7 +30,7 @@ describe('CommunitySearchResults component', () => {
     const loadingMore = wrapper.getByTestId(
       'community_search_results.loading_more',
     );
-    expect(loadingMore).toBeDefined;
+    expect(loadingMore).toBeDefined();
   });
 
   it('should NOT render empty screen correctly when loading', () => {

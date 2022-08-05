@@ -28,6 +28,7 @@ describe('Mark as seen all notification saga', () => {
     };
 
     const newListNoti = { ...storeData.notifications.notificationList };
+    // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(newListNoti)) {
       newListNoti[key as any] = { ...((value as any) || {}), isSeen: true };
     }

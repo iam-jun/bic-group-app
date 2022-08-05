@@ -129,11 +129,6 @@ const FilterComponent: React.FC<FilterProps> = ({
   };
 
   const panGestureEvent = useAnimatedGestureHandler({
-    onStart(event: any) {
-      console.log(
-        '>>>>>>START>>>>>>>', panGestureValue.value,
-      );
-    },
     onActive(event: any) {
       if (panGestureValue.value > 0) {
         offsetValue.value = 0;
@@ -142,7 +137,7 @@ const FilterComponent: React.FC<FilterProps> = ({
         panGestureValue.value = event.translationX + offsetValue.value;
       }
     },
-    onFinish(event: any) {
+    onFinish() {
       offsetValue.value = panGestureValue.value;
     },
   });

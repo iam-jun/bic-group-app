@@ -291,16 +291,6 @@ describe('Header component', () => {
     ).toBeUndefined();
   });
 
-  it('renders correctly with props style', () => {
-    const rendered = render(<Header style={{ backgroundColor: '#F2F2F2' }} />);
-    expect(rendered.toJSON()).toMatchSnapshot();
-    const headerContentComponent = rendered.getByTestId('header.content');
-    expect(headerContentComponent).toBeDefined();
-    expect(headerContentComponent.props?.style[headerContentComponent.props?.style?.length - 1]).toMatchObject({
-      backgroundColor: '#F2F2F2',
-    });
-  });
-
   it('renders correctly with props remove border and shadow', () => {
     const rendered = render(<Header removeBorderAndShadow />);
     expect(rendered.toJSON()).toMatchSnapshot();
@@ -519,7 +509,7 @@ describe('Header component', () => {
   it('renders correctly with props on right press', () => {
     const onRightPress = jest.fn();
     const rendered = render(
-      <Header rightIcon="iconDot" onRightPress={onRightPress} />,
+      <Header rightIcon="menu" onRightPress={onRightPress} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');

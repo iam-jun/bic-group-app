@@ -27,11 +27,11 @@ describe('Delete React To Comment Saga', () => {
 
   it('call server delete react to comment success then go back', () => {
     const payload: IPayloadReactToComment = {
-      id: 494,
+      id: '494',
       reactionId: 'wink',
-      comment: {},
+      comment: {} as any,
       reactionsCount: COMMENT_HAS_REACTION.reactionsCount,
-      ownerReactions: COMMENT_HAS_REACTION.ownerReactions,
+      ownerReactions: COMMENT_HAS_REACTION.ownerReactions as any,
     };
     const action = { type: 'test', payload };
     const response = { data: {}, meta: { message: 'OK' } };
@@ -57,6 +57,7 @@ describe('Delete React To Comment Saga', () => {
       },
     };
 
+    // eslint-disable-next-line default-param-last
     function allCommentsReducer(state = storeData, action: {type: string}) {
       if (action.type === 'test') {
         return {
@@ -70,15 +71,15 @@ describe('Delete React To Comment Saga', () => {
     return expectSaga(deleteReactToComment, action)
       .provide([[matchers.call.fn(postDataHelper.deleteReaction), response]])
       .withReducer(allCommentsReducer)
-      .put(postActions.setAllComments(newAllComments))
+      .put(postActions.setAllComments(newAllComments as any))
       .run();
   });
 
   it('do nothing when can not find react', () => {
     const payload: IPayloadReactToComment = {
-      id: 0,
+      id: '0',
       reactionId: 'wink',
-      comment: {},
+      comment: {} as any,
       reactionsCount: {},
       ownerReactions: [],
     };
@@ -92,11 +93,11 @@ describe('Delete React To Comment Saga', () => {
 
   it('call server edit post failed', () => {
     const payload: IPayloadReactToComment = {
-      id: 494,
+      id: '494',
       reactionId: 'wink',
-      comment: {},
+      comment: {} as any,
       reactionsCount: COMMENT_HAS_REACTION.reactionsCount,
-      ownerReactions: COMMENT_HAS_REACTION.ownerReactions,
+      ownerReactions: COMMENT_HAS_REACTION.ownerReactions as any,
     };
     const action = { type: 'test', payload };
 
@@ -113,7 +114,7 @@ describe('Delete React To Comment Saga', () => {
         ],
       ])
       .withState(storeData)
-      .put(postActions.setAllComments(newAllComments))
+      .put(postActions.setAllComments(newAllComments as any))
       .put(
         modalActions.showHideToastMessage({
           content: 'common:text_error_message',

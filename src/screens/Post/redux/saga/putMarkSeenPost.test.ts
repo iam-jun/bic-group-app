@@ -10,13 +10,13 @@ import modalActions from '~/store/modal/actions';
 
 describe('Put Mark seen post Saga', () => {
   const storeData = { post: { allPosts: { [POST_DETAIL.id]: POST_DETAIL } } };
-  it('should do nothing with null payload', async () =>
-    // @ts-ignore
-    expectSaga(putMarkSeenPost, { type: 'test' })
-      .run()
-      .then(({ allEffects }: any) => {
-        expect(allEffects?.length).toEqual(0);
-      }));
+  it('should do nothing with null payload', async () => expectSaga(
+    putMarkSeenPost, { type: 'test' } as any,
+  )
+    .run()
+    .then(({ allEffects }: any) => {
+      expect(allEffects?.length).toEqual(0);
+    }));
   it('should do nothing with invalid payload', async () => {
     const payload: IPayloadPutMarkSeenPost = {} as any;
     return expectSaga(putMarkSeenPost, { type: 'test', payload })
@@ -26,7 +26,6 @@ describe('Put Mark seen post Saga', () => {
       });
   });
   it('call server mark as seen success', () => {
-    // @ts-ignore
     const payload: IPayloadPutMarkSeenPost = { postId: POST_DETAIL.id };
     const newPost: any = { ...POST_DETAIL };
     return expectSaga(putMarkSeenPost, { type: 'test', payload })
@@ -42,7 +41,6 @@ describe('Put Mark seen post Saga', () => {
       });
   });
   it('call server mark as seen failed', () => {
-    // @ts-ignore
     const payload: IPayloadPutMarkSeenPost = {
       postId: POST_DETAIL.id,
     };
@@ -58,7 +56,6 @@ describe('Put Mark seen post Saga', () => {
       });
   });
   it('call server mark as seen api exception', () => {
-    // @ts-ignore
     const showAlert = jest.spyOn(modalActions, 'showAlert');
     const payload: IPayloadPutMarkSeenPost = {
       postId: POST_DETAIL.id,

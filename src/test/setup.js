@@ -1,3 +1,4 @@
+/* @ts-ignore */
 import * as React from 'react';
 import * as ReactNative from 'react-native';
 import { configure } from 'enzyme';
@@ -66,7 +67,7 @@ jest.doMock('react-i18next', () => ({
       )?.replace('{{count}}', params?.count);
     },
     i18n: {
-      changeLanguage: () => new Promise(() => undefined),
+      changeLanguage: () => new Promise(),
     },
   }),
   initReactI18next,

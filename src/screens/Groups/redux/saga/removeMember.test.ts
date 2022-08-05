@@ -10,7 +10,7 @@ import { refreshGroupMembers } from '.';
 describe('Remove member saga', () => {
   const action = {
     type: 'test',
-    payload: { groupId: 1, userId: '1', userFullname: 'Test Name' },
+    payload: { groupId: '1', userId: '1', userFullname: 'Test Name' },
   };
 
   it('should remove member successfully', () => {
@@ -36,6 +36,7 @@ describe('Remove member saga', () => {
     .provide([
       [
         matchers.call.fn(groupsDataHelper.removeUsers),
+        // eslint-disable-next-line prefer-promise-reject-errors
         Promise.reject({ code: 1 }),
       ],
     ])

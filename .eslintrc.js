@@ -45,6 +45,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 0,
     'no-restricted-globals': 0,
     'no-param-reassign': 0,
+    'prefer-promise-reject-errors': 0,
     'consistent-return': 0,
     'import/prefer-default-export': 0,
     'unused-imports/no-unused-imports': 'error',

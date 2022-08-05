@@ -24,6 +24,7 @@ describe('Update Reaction Of Comment By Id saga', () => {
     };
   });
 
+  // eslint-disable-next-line default-param-last
   function allCommentsReducer(state = storeData, action: {type: string}) {
     if (action.type === 'test') {
       return {
@@ -48,14 +49,14 @@ describe('Update Reaction Of Comment By Id saga', () => {
     const response = {
       data: {
         actor: {
-          id: 58,
+          id: '58',
           username: 'thuquyen',
           fullname: 'Nguyen Thi Thu Quyền',
           avatar:
             'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
           email: 'thuquyen@tgm.vn',
         },
-        id: 69,
+        id: '69',
         reactionName: 'smiley',
         createdAt: '2022-05-09T11:05:00.023Z',
       },
@@ -78,7 +79,7 @@ describe('Update Reaction Of Comment By Id saga', () => {
         .withReducer(allCommentsReducer)
         .put(postActions.setAllComments(storeData.post.allComments))
         .provide([[matchers.call.fn(postDataHelper.putReaction), response]])
-        .put(postActions.setAllComments(newAllComments))
+        .put(postActions.setAllComments(newAllComments as any))
         .run()
     );
   });
@@ -206,9 +207,9 @@ describe('Update Reaction Of Comment By Id saga', () => {
       // @ts-ignorets
       expectSaga(putReactionToComment, action)
         .withReducer(allCommentsReducer, newStoreData)
-        .put(postActions.setAllComments(newStoreData.post.allComments))
+        .put(postActions.setAllComments(newStoreData.post.allComments as any))
         .provide([[matchers.call.fn(postDataHelper.putReaction), response]])
-        .put(postActions.setAllComments(newAllComments))
+        .put(postActions.setAllComments(newAllComments as any))
         .run()
     );
   });

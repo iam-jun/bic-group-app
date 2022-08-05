@@ -7,8 +7,7 @@ import groupsDataHelper from '../../helper/GroupsDataHelper';
 
 describe('Get group detail saga', () => {
   const action = {
-    type: 'test',
-    payload: 1,
+    groupId: '1',
     loadingPage: false,
   };
 
@@ -28,7 +27,7 @@ describe('Get group detail saga', () => {
     };
 
     return (
-      expectSaga(getGroupDetail, action)
+      expectSaga(getGroupDetail, action as any)
         .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
         // @ts-ignore
         .put(groupsActions.setGroupDetail(resp.data))
@@ -54,7 +53,7 @@ describe('Get group detail saga', () => {
     };
 
     return (
-      expectSaga(getGroupDetail, { ...action, loadingPage: true })
+      expectSaga(getGroupDetail, { ...action, loadingPage: true } as any)
         .put(groupsActions.setLoadingPage(true))
         .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
         // @ts-ignore
@@ -81,7 +80,7 @@ describe('Get group detail saga', () => {
     };
 
     return (
-      expectSaga(getGroupDetail, action)
+      expectSaga(getGroupDetail, action as any)
         .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
         // @ts-ignore
         .put(groupsActions.setGroupDetail(resp.data))
@@ -107,7 +106,7 @@ describe('Get group detail saga', () => {
     };
 
     return (
-      expectSaga(getGroupDetail, action)
+      expectSaga(getGroupDetail, action as any)
         .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
         // @ts-ignore
         .put(groupsActions.setGroupDetail(resp.data))
@@ -117,7 +116,7 @@ describe('Get group detail saga', () => {
     );
   });
 
-  it('should call server and server throws an error', () => expectSaga(getGroupDetail, action)
+  it('should call server and server throws an error', () => expectSaga(getGroupDetail, action as any)
     .provide([
       [matchers.call.fn(groupsDataHelper.getGroupDetail), Promise.reject()],
     ])
