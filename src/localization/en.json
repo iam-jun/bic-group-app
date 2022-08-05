@@ -884,7 +884,7 @@
       "text_desc_apply_system_scheme": "You must delete custom scheme",
       "text_title_delete_community_scheme": "Delete this scheme",
       "text_desc_delete_community_scheme": "This action cannot be undone. Are you sure to do this?",
-      "text_title_assign_group_confirm": "Assign group confirm",
+      "text_title_assign_group_confirm": "Assign scheme to group",
       "text_desc_assign_group_confirm": "Are you sure you want to assign new scheme?",
       "text_create_scheme_success": "Create scheme successfully",
       "text_update_scheme_success": "Updated scheme successfully",
