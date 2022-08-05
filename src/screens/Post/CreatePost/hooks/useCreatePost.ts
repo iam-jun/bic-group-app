@@ -99,6 +99,8 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     data,
     chosenAudiences = [],
     important,
+    canComment,
+    canReact,
     count,
   } = createPostData || {};
   const { content } = data || {};
@@ -260,7 +262,20 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
           active: !!initPostData?.setting?.isImportant,
           expires_time: initPostData?.setting?.importantExpiredAt,
         };
-        dispatch(postActions.setCreatePostImportant(initImportant));
+        const dataDefault = [
+          !!initImportant.active
+        || !!initImportant.expires_time,
+          !!canComment,
+          !!canReact,
+        ];
+        const newCount = dataDefault.filter((i) => !i);
+
+        dispatch(postActions.setCreatePostSettings({
+          important: initImportant,
+          canComment: initPostData?.setting?.canComment,
+          canReact: initPostData?.setting?.canReact,
+          count: newCount?.length || 0,
+        }));
         dispatch(postActions.setCreatePostCurrentSettings({ important: initImportant }));
 
         const initVideo = initPostData?.media?.videos?.[0];
@@ -374,6 +389,8 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     // if (important?.active) {
     setting.isImportant = important?.active;
     setting.importantExpiredAt = important?.expires_time || 0;
+    setting.canComment = canComment;
+    setting.canReact = canReact;
     // }
 
     const newMentions = getMentionsFromContent(

@@ -84,6 +84,7 @@ const _PostDetailContent = (props: any) => {
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
   const commentLeft = useKeySelector(postKeySelector.postCommentOnlyCountById(id));
   const commentError = useKeySelector(postKeySelector.commentErrorCode);
+  const setting = useKeySelector(postKeySelector.postSettingById(id));
 
   const commentList = useKeySelector(postKeySelector.postCommentListById(id));
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
@@ -458,6 +459,7 @@ const _PostDetailContent = (props: any) => {
   const onscroll = () => {
     DeviceEventEmitter.emit('stopAllVideo');
   };
+  console.log('setting?.canComment', setting?.canComment);
 
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
@@ -469,7 +471,7 @@ const _PostDetailContent = (props: any) => {
         <View style={styles.postDetailContainer}>
           <SectionList
             ref={listRef}
-            sections={deleted ? defaultList : sectionData}
+            sections={(deleted || !setting?.canComment) ? defaultList : sectionData}
             renderItem={renderCommentItem}
             renderSectionHeader={renderSectionHeader}
             ListHeaderComponent={(
@@ -499,12 +501,15 @@ const _PostDetailContent = (props: any) => {
             )}
           />
 
+          {!!setting?.canComment
+          && (
           <CommentInputView
             commentInputRef={commentInputRef}
             postId={id}
             groupIds={groupIds}
             autoFocus={!!focus_comment}
           />
+          )}
         </View>
       </View>
     );
