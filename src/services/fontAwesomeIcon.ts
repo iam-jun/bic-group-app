@@ -89,6 +89,7 @@ import { faFileXmark } from '@fortawesome/pro-regular-svg-icons/faFileXmark';
 import { faFileExclamation } from '@fortawesome/pro-regular-svg-icons/faFileExclamation';
 import { faSuitcase } from '@fortawesome/pro-regular-svg-icons/faSuitcase';
 import { faStar } from '@fortawesome/pro-regular-svg-icons/faStar';
+import { faStar as faStarSolid} from '@fortawesome/pro-solid-svg-icons/faStar';
 import { faVideo } from '@fortawesome/pro-regular-svg-icons/faVideo';
 import { faPaperPlaneTop } from '@fortawesome/pro-regular-svg-icons/faPaperPlaneTop';
 import { faBookOpen } from '@fortawesome/pro-regular-svg-icons/faBookOpen';
@@ -223,6 +224,7 @@ export const initFontAwesomeIcon = () => {
     faFileExclamation,
     faSuitcase,
     faStar,
+    faStarSolid,
     faVideo,
     faPaperPlaneTop,
     faBookOpen,
@@ -342,6 +344,7 @@ export const fontAwesomeIcons = {
   FileExclamation: 'fa-regular fa-file-exclamation',
   Suitcase: 'fa-regular fa-suitcase',
   Star: 'fa-regular fa-star',
+  StarSolid: 'fa-solid fa-star',
   Video: 'fa-regular fa-video',
   PaperPlaneTop: 'fa-regular fa-paper-plane-top',
   BookOpen: 'fa-regular fa-book-open',

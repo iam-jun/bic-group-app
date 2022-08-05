@@ -1,12 +1,12 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {cleanup} from '@testing-library/react-native';
-import {Auth} from 'aws-amplify';
+import { cleanup } from '@testing-library/react-native';
+import { Auth } from 'aws-amplify';
 import i18n from 'i18next';
 
 import forgotPasswordRequest from './forgotPasswordRequest';
 import actions from '../actions';
-import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
+import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
 import * as actionsCommon from '~/store/modal/actions';
 
 afterEach(cleanup);
@@ -40,16 +40,14 @@ describe('Forgot Password Request Saga', () => {
     const toastMessage = {
       content: i18n.t('auth:text_err_limit_exceeded'),
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'error',
       },
     };
 
     const forgotPassword = jest.fn();
 
-    jest.spyOn(Auth, 'forgotPassword').mockImplementation(() => {
-      return Promise.reject({code: authErrors.LIMIT_EXCEEDED_EXCEPTION});
-    });
+    jest.spyOn(Auth, 'forgotPassword').mockImplementation(() => Promise.reject({ code: authErrors.LIMIT_EXCEEDED_EXCEPTION }));
 
     return expectSaga(forgotPasswordRequest, action)
       .put(
@@ -63,7 +61,7 @@ describe('Forgot Password Request Saga', () => {
       .provide([
         [
           matchers.call.fn(forgotPassword),
-          Promise.reject({code: authErrors.LIMIT_EXCEEDED_EXCEPTION}),
+          Promise.reject({ code: authErrors.LIMIT_EXCEEDED_EXCEPTION }),
         ],
       ])
       .put(actionsCommon.showHideToastMessage(toastMessage as any))
@@ -86,18 +84,16 @@ describe('Forgot Password Request Saga', () => {
     const toastMessage = {
       content: 'ERROR!!!!',
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'error',
       },
     };
 
-    const error = {code: 400, message: 'ERROR!!!!'};
+    const error = { code: 400, message: 'ERROR!!!!' };
 
     const forgotPassword = jest.fn();
 
-    jest.spyOn(Auth, 'forgotPassword').mockImplementation(() => {
-      return Promise.reject(error);
-    });
+    jest.spyOn(Auth, 'forgotPassword').mockImplementation(() => Promise.reject(error));
 
     return expectSaga(forgotPasswordRequest, action)
       .put(

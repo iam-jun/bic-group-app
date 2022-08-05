@@ -14,23 +14,21 @@ describe('CommunityAdmin component', () => {
   it('should navigate to pending members correctly', () => {
     const state = { ...initialState };
     // @ts-ignore
-    state.groups.communityDetail.id = "1";
+    state.groups.communityDetail.id = '1';
     state.groups.myPermissions = {
       data: {
         communities: {
-          "1": [
-            'approve_reject_community_joining_requests'
-          ]
-        }
-      }
+          1: [
+            'approve_reject_community_joining_requests',
+          ],
+        },
+      },
     };
     const store = createTestStore(state);
 
     const navigate = jest.fn();
     const rootNavigation = { navigate };
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return { rootNavigation } as any;
-    });
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const wrapper = renderWithRedux(<CommunityAdmin />, store);
     const pendingMember = wrapper.getByTestId(

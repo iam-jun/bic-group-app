@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import {cleanup, waitFor} from '@testing-library/react-native';
+import { cleanup, waitFor } from '@testing-library/react-native';
 
 import React from 'react';
 
+import i18next from 'i18next';
 import initialState from '~/store/initialState';
 
 import {
@@ -15,8 +16,7 @@ import {
 import * as navigationHook from '~/hooks/navigation';
 
 import EditBasicInfo from './EditBasicInfo';
-import {USER_PROFILE} from '~/test/mock_data/menu';
-import i18next from 'i18next';
+import { USER_PROFILE } from '~/test/mock_data/menu';
 
 afterEach(cleanup);
 
@@ -29,7 +29,7 @@ describe('EditDescription screen', () => {
   beforeEach(() => {
     Keyboard = require('react-native').Keyboard;
     jest.clearAllMocks();
-    storeData = {...initialState};
+    storeData = { ...initialState };
     storeData.menu.myProfile = {} as any;
     storeData.auth.user = {} as any;
     storeData.menu.showUserNotFound = false;
@@ -40,7 +40,7 @@ describe('EditDescription screen', () => {
     jest.clearAllMocks();
   });
 
-  it(`should disable save button when not change any value`, async () => {
+  it('should disable save button when not change any value', async () => {
     const store = mockStore(initialState);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
@@ -49,7 +49,7 @@ describe('EditDescription screen', () => {
     expect(component.props.accessibilityState.disabled).toBeTruthy();
   });
 
-  it(`should enable save button when change name`, async () => {
+  it('should enable save button when change name', async () => {
     const store = mockStore(initialState);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
@@ -61,7 +61,7 @@ describe('EditDescription screen', () => {
     expect(component.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it(`should render gender bottom sheet when click gender item`, async () => {
+  it('should render gender bottom sheet when click gender item', async () => {
     Keyboard.dismiss = jest.fn();
 
     storeData.menu.myProfile = USER_PROFILE;
@@ -89,7 +89,7 @@ describe('EditDescription screen', () => {
     expect(buttonSave?.props?.accessibilityState?.disabled).toBeFalsy();
   });
 
-  it(`should render show date picker when click birthday item`, async () => {
+  it('should render show date picker when click birthday item', async () => {
     const store = mockStore(initialState);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
@@ -98,20 +98,18 @@ describe('EditDescription screen', () => {
     expect(component).toBeDefined();
     fireEvent.press(component);
 
-    await waitFor(() =>
-      expect(wrapper.queryByTestId('edit_basic_info.date_picker')).toBeTruthy(),
-    );
+    await waitFor(() => expect(wrapper.queryByTestId('edit_basic_info.date_picker')).toBeTruthy());
   });
 
-  it(`should render language option bottom sheet and enable Save button when click language item`, () => {
+  it('should render language option bottom sheet and enable Save button when click language item', () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
+        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
       },
     };
     Keyboard.dismiss = jest.fn();
 
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.auth.user = user as any;
     storeData.menu.myProfile = USER_PROFILE as any;
     const store = createTestStore(storeData);
@@ -143,15 +141,15 @@ describe('EditDescription screen', () => {
     expect(buttonSave.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it(`should render relationship bottom sheet when click relationship item`, () => {
+  it('should render relationship bottom sheet when click relationship item', () => {
     Keyboard.dismiss = jest.fn();
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
+        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
       },
     };
 
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.auth.user = user as any;
     storeData.menu.myProfile = USER_PROFILE as any;
     const store = createTestStore(storeData);
@@ -182,14 +180,12 @@ describe('EditDescription screen', () => {
     expect(buttonSave?.props?.accessibilityState?.disabled).toBeFalsy();
   });
 
-  it(`should back to previous screen successfully `, () => {
+  it('should back to previous screen successfully ', () => {
     const goBack = jest.fn();
 
-    const rootNavigation = {canGoBack: true, goBack};
+    const rootNavigation = { canGoBack: true, goBack };
 
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const store = mockStore(initialState);
 
@@ -203,7 +199,7 @@ describe('EditDescription screen', () => {
     expect(goBack).toBeCalled();
   });
 
-  it(`should show alert when changed value and click back `, () => {
+  it('should show alert when changed value and click back ', () => {
     Keyboard.dismiss = jest.fn();
 
     const store = mockStore(initialState);
@@ -219,7 +215,7 @@ describe('EditDescription screen', () => {
     expect(Keyboard.dismiss).toBeCalled();
   });
 
-  it(`should dismiss keyboard when click button save `, () => {
+  it('should dismiss keyboard when click button save ', () => {
     Keyboard.dismiss = jest.fn();
 
     const store = mockStore(initialState);
@@ -238,7 +234,7 @@ describe('EditDescription screen', () => {
     expect(Keyboard.dismiss).toBeCalled();
   });
 
-  it(`should show error text when deleting all character of name`, () => {
+  it('should show error text when deleting all character of name', () => {
     Keyboard.dismiss = jest.fn();
 
     storeData.menu.myProfile = USER_PROFILE;

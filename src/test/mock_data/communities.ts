@@ -39,8 +39,8 @@ export const communities = [
 ];
 
 export const communityDetailData = {
-  id: "1",
-  groupId: "1",
+  id: '1',
+  groupId: '1',
   name: 'EVOL Community',
   slug: 'evol',
   privacy: 'PUBLIC',

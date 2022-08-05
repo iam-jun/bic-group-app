@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {renderWithRedux, cleanup, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, cleanup, fireEvent } from '~/test/testUtils';
 
 import LanguageOptionMenu from './LanguageOptionMenu';
 
@@ -14,7 +14,7 @@ describe('LanguageOptionMenu conponent', () => {
 
     const rendered = renderWithRedux(
       <LanguageOptionMenu
-        title={'settings:title_choose_languages'}
+        title="settings:title_choose_languages"
         onChangeLanguages={onChagneLanguage}
         selectedLanguages={languageState}
       />,
@@ -40,7 +40,7 @@ describe('LanguageOptionMenu conponent', () => {
 
     const rendered = renderWithRedux(
       <LanguageOptionMenu
-        title={'settings:title_choose_languages'}
+        title="settings:title_choose_languages"
         onChangeLanguages={onChagneLanguage}
         selectedLanguages={[]}
       />,

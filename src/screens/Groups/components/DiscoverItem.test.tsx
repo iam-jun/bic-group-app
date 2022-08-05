@@ -1,16 +1,16 @@
 import React from 'react';
 
-import {renderWithRedux, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import DiscoverItem from './DiscoverItem';
-import {communityDetailData} from '~/test/mock_data/communities';
-import {ICommunity} from '~/interfaces/ICommunity';
+import { communityDetailData } from '~/test/mock_data/communities';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 describe('DiscoverItem component', () => {
   const onPressView = jest.fn();
   const onPressJoin = jest.fn();
   const onPressCancel = jest.fn();
   it('should render data correctly', () => {
-    const itemData = {...communityDetailData} as ICommunity;
+    const itemData = { ...communityDetailData } as ICommunity;
     const wrapper = renderWithRedux(
       <DiscoverItem
         testID="discover_item"
@@ -24,7 +24,7 @@ describe('DiscoverItem component', () => {
   });
 
   it('should call onPressView correctly', () => {
-    const itemData = {...communityDetailData} as ICommunity;
+    const itemData = { ...communityDetailData } as ICommunity;
     const wrapper = renderWithRedux(
       <DiscoverItem
         testID="discover_item"

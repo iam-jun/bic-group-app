@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme } from '@react-navigation/native';
 
-import { lineHeights, sizes } from '~/theme/dimension';
+import { sizes } from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 
 export const createTextStyle = (theme: ExtendedTheme) => {

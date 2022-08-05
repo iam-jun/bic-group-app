@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import {cleanup, waitFor} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
 import React from 'react';
 
@@ -16,7 +16,7 @@ import * as navigationHook from '~/hooks/navigation';
 
 import EditDescription from '.';
 import menuTypes from '../../redux/types';
-import {USER_PROFILE} from '~/test/mock_data/menu';
+import { USER_PROFILE } from '~/test/mock_data/menu';
 import menuActions from '../../redux/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 
@@ -35,7 +35,7 @@ describe('EditDescription screen', () => {
     jest.clearAllMocks();
   });
 
-  it(`should disable save button when not change description`, async () => {
+  it('should disable save button when not change description', async () => {
     const store = mockStore(initialState);
 
     const wrapper = renderWithRedux(<EditDescription />, store);
@@ -44,7 +44,7 @@ describe('EditDescription screen', () => {
     expect(component.props.accessibilityState.disabled).toBeTruthy();
   });
 
-  it(`should enable save button when change description and description not set`, async () => {
+  it('should enable save button when change description and description not set', async () => {
     const store = mockStore(initialState);
 
     const wrapper = renderWithRedux(<EditDescription />, store);
@@ -56,15 +56,13 @@ describe('EditDescription screen', () => {
     expect(component.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it(`should back to previous screen successfully `, () => {
+  it('should back to previous screen successfully ', () => {
     Keyboard.dismiss = jest.fn();
     const goBack = jest.fn();
 
-    const rootNavigation = {canGoBack: true, goBack};
+    const rootNavigation = { canGoBack: true, goBack };
 
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const store = mockStore(initialState);
 
@@ -79,18 +77,16 @@ describe('EditDescription screen', () => {
     expect(goBack).toBeCalled();
   });
 
-  it(`should update userProfile successfully when click save button `, async () => {
+  it('should update userProfile successfully when click save button ', async () => {
     Keyboard.dismiss = jest.fn();
 
-    const mockActionEditMyProfile = jest.fn().mockImplementation(() => {
-      return {
-        type: menuTypes.EDIT_MY_PROFILE,
-        payload: {
-          id: USER_PROFILE.id,
-          description: 'descriptionText',
-        },
-      };
-    });
+    const mockActionEditMyProfile = jest.fn().mockImplementation(() => ({
+      type: menuTypes.EDIT_MY_PROFILE,
+      payload: {
+        id: USER_PROFILE.id,
+        description: 'descriptionText',
+      },
+    }));
 
     jest
       .spyOn(menuActions, 'editMyProfile')
@@ -110,15 +106,13 @@ describe('EditDescription screen', () => {
     expect(mockActionEditMyProfile).toBeCalled();
   });
 
-  it(`should back to userEdit screen successfully if rootNavigation.canGoBack = false `, () => {
+  it('should back to userEdit screen successfully if rootNavigation.canGoBack = false ', () => {
     Keyboard.dismiss = jest.fn();
     const replace = jest.fn();
 
-    const rootNavigation = {canGoBack: false, replace};
+    const rootNavigation = { canGoBack: false, replace };
 
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const store = mockStore(initialState);
 

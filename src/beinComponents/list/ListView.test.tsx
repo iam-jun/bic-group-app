@@ -1,16 +1,16 @@
 import React from 'react';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
-import {renderWithRedux, fireEvent} from '~/test/testUtils';
+import { View } from 'react-native';
+import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import ListView from './ListView';
 import Text from '~/beinComponents/Text';
-import {View} from 'react-native';
 
 afterEach(cleanup);
 
 describe('ListView component', () => {
   const data = [1, 2, 3];
-  const renderItem = ({item}: {item: any; index: number}) => (
+  const renderItem = ({ item }: {item: any; index: number}) => (
     <Text>{item}</Text>
   );
 
@@ -22,7 +22,7 @@ describe('ListView component', () => {
   });
 
   it('renders data correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView data={data} renderItem={renderItem} />,
     );
     const component = getByTestId('list_view.flat_list');
@@ -30,11 +30,11 @@ describe('ListView component', () => {
   });
 
   it('renders containerStyle correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView
         data={data}
         renderItem={renderItem}
-        containerStyle={{backgroundColor: 'red', margin: 12}}
+        containerStyle={{ backgroundColor: 'red', margin: 12 }}
       />,
     );
     const component = getByTestId('list_view');
@@ -45,11 +45,11 @@ describe('ListView component', () => {
   });
 
   it('renders listStyle correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView
         data={data}
         renderItem={renderItem}
-        listStyle={{backgroundColor: 'red', margin: 12}}
+        listStyle={{ backgroundColor: 'red', margin: 12 }}
       />,
     );
     const component = getByTestId('list_view.flat_list');
@@ -67,7 +67,7 @@ describe('ListView component', () => {
   });
 
   it('renders loading correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView data={data} renderItem={renderItem} loading />,
     );
 
@@ -91,7 +91,7 @@ describe('ListView component', () => {
   });
 
   it('renders LoadingPlaceholder correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView data={data} renderItem={renderItem} loading type="message" />,
     );
     const LoadingPlaceholder = getByTestId('list_view.loading_placeholder');
@@ -99,15 +99,15 @@ describe('ListView component', () => {
   });
 
   it('renders isFullView correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView isFullView data={data} renderItem={renderItem} />,
     );
     const component = getByTestId('list_view');
-    expect(component.props.style).toMatchObject({flex: 1});
+    expect(component.props.style).toMatchObject({ flex: 1 });
   });
 
   it('renders horizontal correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView horizontal data={data} renderItem={renderItem} />,
     );
     const component = getByTestId('list_view.flat_list');
@@ -116,7 +116,7 @@ describe('ListView component', () => {
 
   it('renders title correctly', () => {
     const title = 'Sample Title';
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView title={title} data={data} renderItem={renderItem} />,
     );
     const component = getByTestId('list_view.title');
@@ -124,7 +124,7 @@ describe('ListView component', () => {
   });
 
   it('renders loadingMore correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView loadingMore data={data} renderItem={renderItem} />,
     );
     const indicator = getByTestId('list_view.indicator.loading_more');
@@ -133,7 +133,7 @@ describe('ListView component', () => {
   });
 
   it('renders showItemSeparator = false correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView
         showItemSeparator={false}
         data={data}
@@ -147,7 +147,7 @@ describe('ListView component', () => {
 
   it('should call prop renderItemSeparator correctly', () => {
     const renderItemSeparator = () => <View />;
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView
         data={data}
         renderItem={renderItem}
@@ -161,7 +161,7 @@ describe('ListView component', () => {
 
   it('should call prop onLoadMore correctly', () => {
     const onLoadMore = () => 'onLoadMore';
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView data={data} renderItem={renderItem} onLoadMore={onLoadMore} />,
     );
     const flatList = getByTestId('list_view.flat_list');
@@ -171,7 +171,7 @@ describe('ListView component', () => {
 
   it('should call prop onItemPress correctly', () => {
     const onItemPress = jest.fn();
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView data={data} onItemPress={onItemPress} />,
     );
     const item = getByTestId('list_view.item_wrapper.1');
@@ -182,7 +182,7 @@ describe('ListView component', () => {
   it('should call prop onItemLongPress correctly', () => {
     const onItemPress = jest.fn();
     const onItemLongPress = jest.fn();
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ListView
         data={data}
         onItemPress={onItemPress}

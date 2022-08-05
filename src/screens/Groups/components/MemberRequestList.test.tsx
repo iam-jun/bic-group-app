@@ -1,16 +1,16 @@
 import React from 'react';
 
-import {createTestStore, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import MemberRequestList from './MemberRequestList';
-import {memberRequestDetail,communityDetailData} from '~/test/mock_data/communities';
+import { memberRequestDetail, communityDetailData } from '~/test/mock_data/communities';
 
 describe('MemberRequestList', () => {
   const onLoadMore = jest.fn();
   const onRefresh = jest.fn();
 
   it('should render empty screen when data is empty and loading = false', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberRequestList
@@ -25,7 +25,7 @@ describe('MemberRequestList', () => {
   });
 
   it('should NOT render empty screen when loading = true', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communityMemberRequests = {
       total: 0,
       loading: true,
@@ -47,7 +47,7 @@ describe('MemberRequestList', () => {
   });
 
   it('should NOT render request title correctly when there is no data', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberRequestList
@@ -64,7 +64,7 @@ describe('MemberRequestList', () => {
   });
 
   it('should render request title correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communityMemberRequests = {
       total: 3,
       loading: false,
@@ -88,18 +88,18 @@ describe('MemberRequestList', () => {
   });
 
   it('should render loading more correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communityMemberRequests = {
       total: 1,
       loading: false,
       canLoadMore: true,
       ids: [1],
-      items: {1: {id: 1, user: {fullname: 'Testing Name'}}},
+      items: { 1: { id: 1, user: { fullname: 'Testing Name' } } },
     };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberRequestList
-      id={communityDetailData.id}
+        id={communityDetailData.id}
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
@@ -113,18 +113,18 @@ describe('MemberRequestList', () => {
   });
 
   it('should render data correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communityMemberRequests = {
       total: 1,
       loading: false,
       canLoadMore: false,
       ids: [memberRequestDetail.id],
-      items: {[memberRequestDetail.id]: {...memberRequestDetail}},
+      items: { [memberRequestDetail.id]: { ...memberRequestDetail } },
     };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <MemberRequestList
-      id={communityDetailData.id}
+        id={communityDetailData.id}
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}

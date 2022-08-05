@@ -1,5 +1,5 @@
 import React from 'react';
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import SearchCommunityView from './SearchCommunityView';
 
 describe('SearchCommunityView component', () => {

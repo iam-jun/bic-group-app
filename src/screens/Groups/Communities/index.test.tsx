@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import {act, cleanup, waitFor} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 import React from 'react';
 import initialState from '~/store/initialState';
 
 import {
   configureStore,
-  createTestStore,
   fireEvent,
   renderWithRedux,
 } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 
 import Communities from '.';
-import {communities} from '~/test/mock_data/communities';
+import { communities } from '~/test/mock_data/communities';
 import groupsActions from '../redux/actions';
 import groupsTypes from '../redux/types';
 import MockedNavigator from '~/test/MockedNavigator';
@@ -28,7 +27,7 @@ describe('Communities screen', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    storeData = {...initialState};
+    storeData = { ...initialState };
     storeData.groups.joinedCommunities.data = [] as any;
   });
 
@@ -36,7 +35,7 @@ describe('Communities screen', () => {
     jest.clearAllMocks();
   });
 
-  it(`should render empty list community when communities joined = 0`, async () => {
+  it('should render empty list community when communities joined = 0', async () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
       <MockedNavigator component={() => <Communities />} />,
@@ -47,20 +46,16 @@ describe('Communities screen', () => {
     expect(emptyComponent).toBeDefined();
   });
 
-  it(`should navigate to community detail when click community`, async () => {
+  it('should navigate to community detail when click community', async () => {
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const callback = jest.fn();
-    const mockGetMyCommunities = () => {
-      return {
-        type: groupsTypes.GET_JOINED_COMMUNITIES,
-        payload: {callback},
-      };
-    };
+    const mockGetMyCommunities = () => ({
+      type: groupsTypes.GET_JOINED_COMMUNITIES,
+      payload: { callback },
+    });
 
     jest
       .spyOn(groupsActions, 'getMyCommunities')

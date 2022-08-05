@@ -1,8 +1,8 @@
 import React from 'react';
-import {renderWithRedux, configureStore} from '~/test/testUtils';
+import { renderWithRedux, configureStore } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
-import {POST_DETAIL, POST_DETAIL_2} from '~/test/mock_data/post';
+import { POST_DETAIL_2 } from '~/test/mock_data/post';
 
 const mockPost = {
   actor: {
@@ -73,7 +73,7 @@ const mockPost = {
 
 describe('NFSResult component', () => {
   it('should render loading search result', () => {
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearch.loadingResult = true;
     storeData.home.newsfeedSearch.searchResults = [];
     storeData.home.newsfeedSearch.searchText = 'hello';
@@ -85,7 +85,7 @@ describe('NFSResult component', () => {
   });
 
   it('should render empty search result', () => {
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearch.loadingResult = false;
     storeData.home.newsfeedSearch.searchResults = [];
     storeData.home.newsfeedSearch.searchText = 'hello';
@@ -97,11 +97,11 @@ describe('NFSResult component', () => {
   });
 
   it('should render list search result', () => {
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearch.loadingResult = false;
     // @ts-ignore
     storeData.home.newsfeedSearch.searchResults = [
-      {...POST_DETAIL_2, highlight: '==Important== post'},
+      { ...POST_DETAIL_2, highlight: '==Important== post' },
     ] as any;
     storeData.home.newsfeedSearch.searchText = 'important';
     const mockStore = configureStore([]);

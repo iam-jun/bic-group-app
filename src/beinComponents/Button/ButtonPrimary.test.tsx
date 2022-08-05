@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {renderWithRedux, cleanup} from '~/test/testUtils';
+import { renderWithRedux, cleanup } from '~/test/testUtils';
 import ButtonPrimary from './ButtonPrimary';
 
 afterEach(cleanup);
@@ -19,7 +19,7 @@ describe('ButtonPrimary conponent', () => {
   });
 
   it('renders color correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ButtonPrimary color="red" testID={testID}>
         {children}
       </ButtonPrimary>,
@@ -31,7 +31,7 @@ describe('ButtonPrimary conponent', () => {
   });
 
   it('renders textColor correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ButtonPrimary textColor="red" testID={testID}>
         {children}
       </ButtonPrimary>,

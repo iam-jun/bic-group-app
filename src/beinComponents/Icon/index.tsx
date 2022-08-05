@@ -83,9 +83,7 @@ const Icon: React.FC<IconProps> = ({
   let IconComponent; let type; let name; let
     source;
 
-  // @ts-ignore
   const hasFontAwesomeIcon = !!fontAwesomeIcons[`${icon || _icon}`];
-  // @ts-ignore
   const hasFontAwesomeIconValue = !!fontAwesomeIconValues[icons[icon]];
 
   if (hasFontAwesomeIcon || hasFontAwesomeIconValue) {

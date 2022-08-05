@@ -10,38 +10,36 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 
 describe('cancelJoinCommuniity saga', () => {
-  const communityId = "1";
+  const communityId = '1';
   const communityName = 'Community Name Test';
   const action = {
     type: 'test',
     payload: { communityId, communityName },
   };
 
-  it('should cancel join request to Private community correctly', () => {
-    return expectSaga(cancelJoinCommunity, action)
-      .provide([[matchers.call.fn(groupsDataHelper.cancelJoinCommunity), {}]])
-      .put(
-        groupsActions.editDiscoverCommunityItem({
-          id: communityId,
-          data: { joinStatus: groupJoinStatus.visitor },
-        }),
-      )
-      .put(groupsActions.getCommunityDetail({ communityId }))
-      .put(
-        modalActions.showHideToastMessage({
-          content: `${i18next.t(
-            'groups:text_cancel_join_community',
-          )} ${communityName}`,
-          props: {
-            type: 'success',
-          },
-        }),
-      )
-      .run()
-      .then(({ allEffects }: any) => {
-        expect(allEffects?.length).toEqual(4);
-      });
-  });
+  it('should cancel join request to Private community correctly', () => expectSaga(cancelJoinCommunity, action)
+    .provide([[matchers.call.fn(groupsDataHelper.cancelJoinCommunity), {}]])
+    .put(
+      groupsActions.editDiscoverCommunityItem({
+        id: communityId,
+        data: { joinStatus: groupJoinStatus.visitor },
+      }),
+    )
+    .put(groupsActions.getCommunityDetail({ communityId }))
+    .put(
+      modalActions.showHideToastMessage({
+        content: `${i18next.t(
+          'groups:text_cancel_join_community',
+        )} ${communityName}`,
+        props: {
+          type: 'success',
+        },
+      }),
+    )
+    .run()
+    .then(({ allEffects }: any) => {
+      expect(allEffects?.length).toEqual(4);
+    }));
   it('should cancel join request and server throws error', () => {
     const error = { code: 'error' };
     return expectSaga(cancelJoinCommunity, action)

@@ -1,10 +1,10 @@
 import React from 'react';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
-import {renderWithRedux, fireEvent} from '~/test/testUtils';
+import { StyleSheet } from 'react-native';
+import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import NormalToastMessage from './NormalToastMessage';
 import colors from '~/theme/theme';
-import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -12,16 +12,16 @@ describe('NormalToastMessage component', () => {
   const children = 'Normal Toast Message';
   const rightText = 'Right text';
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const rendered = renderWithRedux(
       <NormalToastMessage>{children}</NormalToastMessage>,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders toast type success with green color correctly`, () => {
-    const {getByTestId} = renderWithRedux(
-      <NormalToastMessage type={'success'}>{children}</NormalToastMessage>,
+  it('renders toast type success with green color correctly', () => {
+    const { getByTestId } = renderWithRedux(
+      <NormalToastMessage type="success">{children}</NormalToastMessage>,
     );
     const buttonComponent = getByTestId('normal_toast_message');
     expect(buttonComponent.props.style.backgroundColor).toBe(
@@ -29,9 +29,9 @@ describe('NormalToastMessage component', () => {
     );
   });
 
-  it(`renders toast type error with red color correctly`, () => {
-    const {getByTestId} = renderWithRedux(
-      <NormalToastMessage type={'error'}>{children}</NormalToastMessage>,
+  it('renders toast type error with red color correctly', () => {
+    const { getByTestId } = renderWithRedux(
+      <NormalToastMessage type="error">{children}</NormalToastMessage>,
     );
     const buttonComponent = getByTestId('normal_toast_message');
     expect(buttonComponent.props.style.backgroundColor).toBe(
@@ -39,17 +39,17 @@ describe('NormalToastMessage component', () => {
     );
   });
 
-  it(`renders children content correctly`, () => {
-    const {getByTestId} = renderWithRedux(
-      <NormalToastMessage type={'success'}>{children}</NormalToastMessage>,
+  it('renders children content correctly', () => {
+    const { getByTestId } = renderWithRedux(
+      <NormalToastMessage type="success">{children}</NormalToastMessage>,
     );
     const childrenComponent = getByTestId('normal_toast_message.children');
     expect(childrenComponent.props.children).toEqual(children);
   });
 
-  it(`renders textProps correctly`, () => {
-    const {getByTestId} = renderWithRedux(
-      <NormalToastMessage textProps={{style: {fontSize: 20}}}>
+  it('renders textProps correctly', () => {
+    const { getByTestId } = renderWithRedux(
+      <NormalToastMessage textProps={{ style: { fontSize: 20 } }}>
         {children}
       </NormalToastMessage>,
     );
@@ -58,9 +58,9 @@ describe('NormalToastMessage component', () => {
     expect(flattenedStyle.fontSize).toBe(20);
   });
 
-  it(`renders container style correctly`, () => {
-    const {getByTestId} = renderWithRedux(
-      <NormalToastMessage type={'success'} style={{margin: 12}}>
+  it('renders container style correctly', () => {
+    const { getByTestId } = renderWithRedux(
+      <NormalToastMessage type="success" style={{ margin: 12 }}>
         {children}
       </NormalToastMessage>,
     );
@@ -68,9 +68,9 @@ describe('NormalToastMessage component', () => {
     expect(childrenComponent.props.style.margin).toBe(12);
   });
 
-  it(`renders leftIcon correctly`, () => {
-    const {getByTestId} = renderWithRedux(
-      <NormalToastMessage type="success" leftIcon={'Check'}>
+  it('renders leftIcon correctly', () => {
+    const { getByTestId } = renderWithRedux(
+      <NormalToastMessage type="success" leftIcon="Check">
         {children}
       </NormalToastMessage>,
     );
@@ -78,12 +78,13 @@ describe('NormalToastMessage component', () => {
     expect(leftIcon.props.children).toBeDefined();
   });
 
-  it(`renders leftIconColor correctly`, () => {
-    const {getByTestId} = renderWithRedux(
+  it('renders leftIconColor correctly', () => {
+    const { getByTestId } = renderWithRedux(
       <NormalToastMessage
         type="success"
-        leftIcon={'Check'}
-        leftIconColor="yellow">
+        leftIcon="Check"
+        leftIconColor="yellow"
+      >
         {children}
       </NormalToastMessage>,
     );
@@ -92,10 +93,10 @@ describe('NormalToastMessage component', () => {
     expect(leftIcon.props.children.props.tintColor).toEqual('yellow');
   });
 
-  it(`renders onActionPress correctly`, () => {
+  it('renders onActionPress correctly', () => {
     const onActionPress = jest.fn();
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <NormalToastMessage onActionPress={onActionPress}>
         {children}
       </NormalToastMessage>,
@@ -107,8 +108,8 @@ describe('NormalToastMessage component', () => {
     expect(onActionPress).toBeCalled();
   });
 
-  it(`renders right text correctly`, () => {
-    const {getByTestId} = renderWithRedux(
+  it('renders right text correctly', () => {
+    const { getByTestId } = renderWithRedux(
       <NormalToastMessage rightText={rightText}>{children}</NormalToastMessage>,
     );
 
@@ -116,14 +117,15 @@ describe('NormalToastMessage component', () => {
     expect(textComponent.props.children).toEqual(rightText);
   });
 
-  it(`renders onPressRight correctly`, () => {
+  it('renders onPressRight correctly', () => {
     const onPressRight = jest.fn();
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <NormalToastMessage
-        type={'success'}
+        type="success"
         rightText={rightText}
-        onPressRight={onPressRight}>
+        onPressRight={onPressRight}
+      >
         {children}
       </NormalToastMessage>,
     );
@@ -134,12 +136,13 @@ describe('NormalToastMessage component', () => {
     expect(onPressRight).toBeCalled();
   });
 
-  it(`renders rightIcon correctly`, () => {
-    const {getByTestId} = renderWithRedux(
+  it('renders rightIcon correctly', () => {
+    const { getByTestId } = renderWithRedux(
       <NormalToastMessage
-        type={'success'}
+        type="success"
         rightText={rightText}
-        rightIcon={'UserGroup'}>
+        rightIcon="UserGroup"
+      >
         {children}
       </NormalToastMessage>,
     );
@@ -147,9 +150,9 @@ describe('NormalToastMessage component', () => {
     expect(rightIcon.props.children).toBeDefined();
   });
 
-  it(`renders rightTextColor correctly`, () => {
-    const {getByTestId} = renderWithRedux(
-      <NormalToastMessage rightText={rightText} rightTextColor={'red'}>
+  it('renders rightTextColor correctly', () => {
+    const { getByTestId } = renderWithRedux(
+      <NormalToastMessage rightText={rightText} rightTextColor="red">
         {children}
       </NormalToastMessage>,
     );
@@ -159,12 +162,13 @@ describe('NormalToastMessage component', () => {
     expect(flattenedStyle.color).toEqual('red');
   });
 
-  it(`renders rightTextStyle correctly`, () => {
-    const {getByTestId} = renderWithRedux(
+  it('renders rightTextStyle correctly', () => {
+    const { getByTestId } = renderWithRedux(
       <NormalToastMessage
-        type={'success'}
+        type="success"
         rightText={rightText}
-        rightTextStyle={{textDecorationColor: 'black'}}>
+        rightTextStyle={{ textDecorationColor: 'black' }}
+      >
         {children}
       </NormalToastMessage>,
     );
@@ -173,12 +177,13 @@ describe('NormalToastMessage component', () => {
     expect(flattenedStyle.textDecorationColor).toBe('black');
   });
 
-  it(`renders rightTextProps correctly`, () => {
-    const {getByTestId} = renderWithRedux(
+  it('renders rightTextProps correctly', () => {
+    const { getByTestId } = renderWithRedux(
       <NormalToastMessage
-        type={'success'}
+        type="success"
         rightText={rightText}
-        rightTextProps={{numberOfLines: 1}}>
+        rightTextProps={{ numberOfLines: 1 }}
+      >
         {children}
       </NormalToastMessage>,
     );

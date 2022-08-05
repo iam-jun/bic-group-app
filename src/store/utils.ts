@@ -4,6 +4,7 @@ import {
 } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import zustandFlipper from 'react-native-flipper-zustand'
 
 type Persist = (
     config: StateCreator<any>,
@@ -37,9 +38,17 @@ const withImmer = (
   payload,
 )
 
+const withFlipper = (
+  payload: any,
+  name?: string,
+) => (zustandFlipper)(
+  payload, name,
+)
+
 export {
   create as createStore,
   withPersist,
   withDevtools,
   withImmer,
+  withFlipper,
 };

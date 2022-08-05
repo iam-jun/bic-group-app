@@ -1,15 +1,15 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getUserProfile from './getUserProfile';
 import menuActions from '../actions';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {mapProfile} from '../helper';
+import { mapProfile } from '../helper';
 
 describe('Get User Profile Saga', () => {
   const action = {
     type: 'test',
-    payload: {userId: 1},
+    payload: { userId: 1 },
   };
 
   it('should request to getUserProfile successfully', () => {
@@ -32,7 +32,7 @@ describe('Get User Profile Saga', () => {
   });
 
   it('should request to getUserProfile failure', () => {
-    const error = {meta: {message: 'Something when wrong!!!'}};
+    const error = { meta: { message: 'Something when wrong!!!' } };
     // @ts-ignorets
     return expectSaga(getUserProfile, action)
       .provide([

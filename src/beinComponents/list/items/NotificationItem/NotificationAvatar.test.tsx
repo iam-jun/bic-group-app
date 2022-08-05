@@ -1,14 +1,14 @@
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 import React from 'react';
 
 import {
   CHILD_COMMENT,
   LOAD_MORE_RESPONSE,
 } from '~/test/mock_data/notifications';
-import {configureStore, renderWithRedux} from '~/test/testUtils';
+import { configureStore, renderWithRedux } from '~/test/testUtils';
 import NotificationAvatar from './NotificationAvatar';
 import initialState from '~/store/initialState';
-import {USER_PROFILE} from '~/test/mock_data/menu';
+import { USER_PROFILE } from '~/test/mock_data/menu';
 
 afterEach(cleanup);
 
@@ -19,20 +19,20 @@ describe('NotificationAvatar component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    storeData = {...initialState};
+    storeData = { ...initialState };
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
+        idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
       },
     };
 
     storeData.auth.user = user as any;
   });
 
-  it(`renders correctly with COMMENT verb with action comment lv1`, async () => {
-    const verb = LOAD_MORE_RESPONSE[0].verb;
-    const actorCount = LOAD_MORE_RESPONSE[0].actorCount;
-    const activities = LOAD_MORE_RESPONSE[0].activities;
+  it('renders correctly with COMMENT verb with action comment lv1', async () => {
+    const { verb } = LOAD_MORE_RESPONSE[0];
+    const { actorCount } = LOAD_MORE_RESPONSE[0];
+    const { activities } = LOAD_MORE_RESPONSE[0];
 
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
@@ -41,7 +41,7 @@ describe('NotificationAvatar component', () => {
         activities={activities}
         actorCount={actorCount}
         verb={verb}
-        isRead={true}
+        isRead
       />,
       store,
     );
@@ -50,7 +50,7 @@ describe('NotificationAvatar component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly with COMMENT verb with action comment lv2`, async () => {
+  it('renders correctly with COMMENT verb with action comment lv2', async () => {
     const commentHasChild = {
       ...LOAD_MORE_RESPONSE[0].activities[0],
       comment: {
@@ -63,9 +63,9 @@ describe('NotificationAvatar component', () => {
       activities: [commentHasChild],
     };
 
-    const verb = NOTIFICATION_COMMENT_LV2.verb;
-    const actorCount = NOTIFICATION_COMMENT_LV2.actorCount;
-    const activities = NOTIFICATION_COMMENT_LV2.activities;
+    const { verb } = NOTIFICATION_COMMENT_LV2;
+    const { actorCount } = NOTIFICATION_COMMENT_LV2;
+    const { activities } = NOTIFICATION_COMMENT_LV2;
 
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
@@ -74,7 +74,7 @@ describe('NotificationAvatar component', () => {
         activities={activities}
         actorCount={actorCount}
         verb={verb}
-        isRead={true}
+        isRead
       />,
       store,
     );
@@ -83,7 +83,7 @@ describe('NotificationAvatar component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly with action comment lv2`, async () => {
+  it('renders correctly with action comment lv2', async () => {
     const commentHasChild = {
       ...LOAD_MORE_RESPONSE[0].activities[0],
       comment: {
@@ -96,9 +96,9 @@ describe('NotificationAvatar component', () => {
       activities: [commentHasChild],
     };
 
-    const verb = NOTIFICATION_COMMENT_LV2.verb;
-    const actorCount = NOTIFICATION_COMMENT_LV2.actorCount;
-    const activities = NOTIFICATION_COMMENT_LV2.activities;
+    const { verb } = NOTIFICATION_COMMENT_LV2;
+    const { actorCount } = NOTIFICATION_COMMENT_LV2;
+    const { activities } = NOTIFICATION_COMMENT_LV2;
 
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
@@ -107,7 +107,7 @@ describe('NotificationAvatar component', () => {
         activities={activities}
         actorCount={actorCount}
         verb={verb}
-        isRead={true}
+        isRead
       />,
       store,
     );
@@ -116,7 +116,7 @@ describe('NotificationAvatar component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly with action REACT post`, async () => {
+  it('renders correctly with action REACT post', async () => {
     const commentHasChild = {
       ...LOAD_MORE_RESPONSE[0].activities[0],
       comment: {
@@ -129,9 +129,9 @@ describe('NotificationAvatar component', () => {
       activities: [commentHasChild],
     };
 
-    const verb = NOTIFICATION_COMMENT_LV2.verb;
-    const actorCount = NOTIFICATION_COMMENT_LV2.actorCount;
-    const activities = NOTIFICATION_COMMENT_LV2.activities;
+    const { verb } = NOTIFICATION_COMMENT_LV2;
+    const { actorCount } = NOTIFICATION_COMMENT_LV2;
+    const { activities } = NOTIFICATION_COMMENT_LV2;
 
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
@@ -139,8 +139,8 @@ describe('NotificationAvatar component', () => {
         actor={defaultActor}
         activities={activities}
         actorCount={actorCount}
-        verb={'REACT'}
-        isRead={true}
+        verb="REACT"
+        isRead
       />,
       store,
     );

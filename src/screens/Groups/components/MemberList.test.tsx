@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {renderWithRedux, createTestStore} from '~/test/testUtils';
+import { renderWithRedux, createTestStore } from '~/test/testUtils';
 import MemberList from './MemberList';
-import {memberDetail, adminDetail} from '~/test/mock_data/group';
+import { memberDetail, adminDetail } from '~/test/mock_data/group';
 import initialState from '~/store/initialState';
 
 describe('MemberList component', () => {
@@ -13,7 +13,7 @@ describe('MemberList component', () => {
   const canManageMember = true;
 
   it('should render data correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communityMembers = {
       loading: false,
       canLoadMore: false,
@@ -48,7 +48,7 @@ describe('MemberList component', () => {
   });
 
   it('should render loading more indicator correctly when getting more data', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communityMembers = {
       loading: false,
       canLoadMore: true,
@@ -85,7 +85,7 @@ describe('MemberList component', () => {
   });
 
   it('should NOT render loading more indicator correctly when no data left from API', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communityMembers = {
       loading: false,
       canLoadMore: false,

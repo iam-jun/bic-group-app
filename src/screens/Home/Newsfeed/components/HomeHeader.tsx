@@ -144,7 +144,7 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
     headerButtonContainer: {
       position: 'absolute',
       right: spacing.margin.large,
-      top: 10,
+      top: 2,
     },
   });
 };

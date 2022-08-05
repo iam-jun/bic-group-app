@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Avatar from '~/beinComponents/Avatar';

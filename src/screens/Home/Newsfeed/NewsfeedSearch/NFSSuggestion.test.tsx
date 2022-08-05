@@ -1,5 +1,5 @@
 import React from 'react';
-import {renderWithRedux, configureStore} from '~/test/testUtils';
+import { renderWithRedux, configureStore } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import NFSSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSSuggestion';
 
@@ -8,7 +8,7 @@ describe('NFSSuggestion component', () => {
 
   it('should render button search keyword', () => {
     const onSelectKeyword = jest.fn();
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearch.isShow = true;
     storeData.home.newsfeedSearch.isSuggestion = true;
     storeData.home.newsfeedSearch.searchText = 'hello';
@@ -23,7 +23,7 @@ describe('NFSSuggestion component', () => {
 
   it('should render NFSResult', () => {
     const onSelectKeyword = jest.fn();
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
     storeData.home.newsfeedSearch.isShow = true;
     storeData.home.newsfeedSearch.isSuggestion = true;
     storeData.home.newsfeedSearch.searchText = '';

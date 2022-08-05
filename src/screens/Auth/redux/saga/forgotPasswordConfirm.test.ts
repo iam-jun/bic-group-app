@@ -1,12 +1,12 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {cleanup} from '@testing-library/react-native';
-import {Auth} from 'aws-amplify';
+import { cleanup } from '@testing-library/react-native';
+import { Auth } from 'aws-amplify';
 import i18n from 'i18next';
 
 import forgotPasswordConfirm from './forgotPasswordConfirm';
 import actions from '../actions';
-import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
+import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
 import * as actionsCommon from '~/store/modal/actions';
 
 afterEach(cleanup);
@@ -14,26 +14,24 @@ afterEach(cleanup);
 describe('Forgot Password Confirm Saga', () => {
   const action = {
     type: 'test',
-    payload: {email: 'thuquyen@tgm.vn', code: '0000', password: '1234567890'},
+    payload: { email: 'thuquyen@tgm.vn', code: '0000', password: '1234567890' },
   };
 
-  it('should be set the state for forgotPasswordStage is COMPLETE successfully', () => {
-    return expectSaga(forgotPasswordConfirm, action)
-      .put(
-        actions.setForgotPasswordError({
-          errBox: '',
-          errConfirm: '',
-          errRequest: '',
-        }),
-      )
-      .put(actions.setForgotPasswordLoading(true))
-      .provide([
-        [matchers.call.fn(Auth.forgotPasswordSubmit), {...action.payload}],
-      ])
-      .put(actions.setForgotPasswordLoading(false))
-      .put(actions.setForgotPasswordStage(forgotPasswordStages.COMPLETE))
-      .run();
-  });
+  it('should be set the state for forgotPasswordStage is COMPLETE successfully', () => expectSaga(forgotPasswordConfirm, action)
+    .put(
+      actions.setForgotPasswordError({
+        errBox: '',
+        errConfirm: '',
+        errRequest: '',
+      }),
+    )
+    .put(actions.setForgotPasswordLoading(true))
+    .provide([
+      [matchers.call.fn(Auth.forgotPasswordSubmit), { ...action.payload }],
+    ])
+    .put(actions.setForgotPasswordLoading(false))
+    .put(actions.setForgotPasswordStage(forgotPasswordStages.COMPLETE))
+    .run());
 
   it('should be set the state for forgotPasswordStage failure with CodeMismatchException error code', () => {
     const error = {
@@ -43,9 +41,7 @@ describe('Forgot Password Confirm Saga', () => {
 
     const forgotPasswordSubmit = jest.fn();
 
-    jest.spyOn(Auth, 'forgotPasswordSubmit').mockImplementation(() => {
-      return Promise.reject(error);
-    });
+    jest.spyOn(Auth, 'forgotPasswordSubmit').mockImplementation(() => Promise.reject(error));
 
     return expectSaga(forgotPasswordConfirm, action)
       .put(
@@ -79,16 +75,14 @@ describe('Forgot Password Confirm Saga', () => {
     const toastMessage = {
       content: i18n.t('auth:text_err_limit_exceeded'),
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'error',
       },
     };
 
     const forgotPasswordSubmit = jest.fn();
 
-    jest.spyOn(Auth, 'forgotPasswordSubmit').mockImplementation(() => {
-      return Promise.reject(error);
-    });
+    jest.spyOn(Auth, 'forgotPasswordSubmit').mockImplementation(() => Promise.reject(error));
 
     return expectSaga(forgotPasswordConfirm, action)
       .put(
@@ -123,16 +117,14 @@ describe('Forgot Password Confirm Saga', () => {
     const toastMessage = {
       content: 'ERROR!!!!',
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'error',
       },
     };
 
     const forgotPasswordSubmit = jest.fn();
 
-    jest.spyOn(Auth, 'forgotPasswordSubmit').mockImplementation(() => {
-      return Promise.reject(error);
-    });
+    jest.spyOn(Auth, 'forgotPasswordSubmit').mockImplementation(() => Promise.reject(error));
 
     return expectSaga(forgotPasswordConfirm, action)
       .put(

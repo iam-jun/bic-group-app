@@ -3,7 +3,7 @@ import apiConfig from '~/configs/apiConfig';
 import chatSocketEvents from '~/constants/chatSocketEvents';
 import { makeHttpRequest } from '~/services/httpApiRequest';
 import {
-  createStore, withDevtools, withImmer, withPersist,
+  createStore, withFlipper, withImmer, withPersist,
 } from '../utils';
 import { handleChannelViewedEvent, handlePostedEvent, handlePostUnreadEvent } from './utils';
 
@@ -13,7 +13,7 @@ export interface ChatState {
   handleChatEvent: (userId: string, payload: any) => void
 }
 
-const useChatStore = (set, get) => ({
+const chatStore = (set, get) => ({
   unreadChannels: {},
   initChat: async () => {
     try {
@@ -29,7 +29,7 @@ const useChatStore = (set, get) => ({
         {},
       );
 
-      set({ unreadChannels: result })
+      set({ unreadChannels: result }, false, 'initChat')
     } catch (error) {
       console.error('initChat', error)
     }
@@ -54,7 +54,7 @@ const useChatStore = (set, get) => ({
       // with immer
       set((state) => {
         state.unreadChannels[channel.id] = channel;
-      });
+      }, false, 'handleChatEvent');
     }
 
     // without immer
@@ -67,4 +67,14 @@ const useChatStore = (set, get) => ({
   },
 });
 
-export default createStore<ChatState>(withDevtools(withImmer(withPersist(useChatStore, { name: 'chat-store' }))));
+const useChatStore = createStore<ChatState | any>(
+  withFlipper(
+    withImmer(
+      withPersist(
+        chatStore, { name: 'chat-store' },
+      ),
+    ), 'chat-store',
+  ),
+)
+
+export default useChatStore

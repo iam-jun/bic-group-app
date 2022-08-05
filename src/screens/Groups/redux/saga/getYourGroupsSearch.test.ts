@@ -1,12 +1,12 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
+import { throwError } from 'redux-saga-test-plan/providers';
 import groupsActions from '~/screens/Groups/redux/actions';
 import getYourGroupsSearch from '~/screens/Groups/redux/saga/getYourGroupsSearch';
 import { communityDetailData } from '~/test/mock_data/communities';
 import { IGetYourGroupsSearch } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import { throwError } from 'redux-saga-test-plan/providers';
 
 describe('GetYourGroupsSearch saga', () => {
   it('should set result without call backend if key is empty', () => {

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import {renderWithRedux, createTestStore} from '~/test/testUtils';
+import { renderWithRedux, createTestStore } from '~/test/testUtils';
 import ManagedCommunities from './ManagedCommunities';
 import initialState from '~/store/initialState';
-import {communityDetailData} from '~/test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 
 describe('ManagedCommunities component', () => {
   it('should NOT render empty screen correctly when loading', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.managedCommunities.loading = true;
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<ManagedCommunities />, store);
@@ -16,11 +16,11 @@ describe('ManagedCommunities component', () => {
   });
 
   it('should NOT render empty screen correctly when having data and not loading', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.managedCommunities = {
       loading: false,
       ids: [communityDetailData.id],
-      items: {[communityDetailData.id]: communityDetailData},
+      items: { [communityDetailData.id]: communityDetailData },
       canLoadMore: true,
     };
 
@@ -31,7 +31,7 @@ describe('ManagedCommunities component', () => {
   });
 
   it('should render empty screen correctly when having NO data and not loading', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.managedCommunities = {
       loading: false,
       ids: [],
@@ -46,11 +46,11 @@ describe('ManagedCommunities component', () => {
   });
 
   it('should render loading more indicator correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.managedCommunities = {
       loading: false,
       ids: [communityDetailData.id],
-      items: {[communityDetailData.id]: communityDetailData},
+      items: { [communityDetailData.id]: communityDetailData },
       canLoadMore: true,
     };
     const store = createTestStore(state);
@@ -62,7 +62,7 @@ describe('ManagedCommunities component', () => {
   });
 
   it('should NOT render loading more indicator correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.managedCommunities = {
       loading: true,
       ids: [],
@@ -78,11 +78,11 @@ describe('ManagedCommunities component', () => {
   });
 
   it('should render data correctly', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.managedCommunities = {
       loading: false,
       ids: [communityDetailData.id],
-      items: {[communityDetailData.id]: communityDetailData},
+      items: { [communityDetailData.id]: communityDetailData },
       canLoadMore: false,
     };
 

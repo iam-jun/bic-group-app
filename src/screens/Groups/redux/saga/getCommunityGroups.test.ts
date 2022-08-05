@@ -1,11 +1,9 @@
-import i18next from 'i18next';
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
-import { IGroupDetail } from '~/interfaces/IGroup';
 import getCommunityGroups from './getCommunityGroups';
 import { GROUP_TREE } from '~/test/mock_data/group';
 
@@ -65,7 +63,7 @@ describe('Get Communities saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(getCommunityGroups, action)
       .provide([
         [

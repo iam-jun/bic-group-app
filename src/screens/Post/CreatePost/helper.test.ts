@@ -32,16 +32,15 @@ describe('CreatePost helper', () => {
   });
 
   it('validateImages: validate picked 1 image upload success', () => {
-    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
-      return {
-        getFile: jest.fn().mockImplementation(() => ({ url: imageUrl })),
-      } as any;
-    });
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
+      getFile: jest.fn().mockImplementation(() => ({ url: imageUrl })),
+    } as any));
 
     const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
       images: [{
-        ...imageValidated, id: undefined,
+        ...imageValidated,
+        id: undefined,
         name: '',
       }],
       imageError: languages.post.error_upload_failed,
@@ -50,18 +49,17 @@ describe('CreatePost helper', () => {
   });
 
   it('validateImages: validate picked 1 image uploading', () => {
-    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
-      return {
-        getFile: jest
-          .fn()
-          .mockImplementation(() => ({ url: imageUrl, uploading: true })),
-      } as any;
-    });
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
+      getFile: jest
+        .fn()
+        .mockImplementation(() => ({ url: imageUrl, uploading: true })),
+    } as any));
 
     const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
       images: [{
-        ...imageValidated, id: undefined,
+        ...imageValidated,
+        id: undefined,
         name: '',
       }],
       imageError: languages.post.error_upload_failed,
@@ -117,13 +115,11 @@ describe('CreatePost helper', () => {
   });
 
   it('validateVideo: return error uploading file', () => {
-    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
-      return {
-        getFile: jest
-          .fn()
-          .mockImplementation(() => ({ uploading: true, result: videoUploaded })),
-      } as any;
-    });
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
+      getFile: jest
+        .fn()
+        .mockImplementation(() => ({ uploading: true, result: videoUploaded })),
+    } as any));
 
     const result = validateVideo(videoSelected, t);
     expect(result).toEqual({
@@ -134,13 +130,11 @@ describe('CreatePost helper', () => {
   });
 
   it('validateVideo: return error upload failed', () => {
-    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
-      return {
-        getFile: jest
-          .fn()
-          .mockImplementation(() => ({ uploading: false, result: {} })),
-      } as any;
-    });
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => ({
+      getFile: jest
+        .fn()
+        .mockImplementation(() => ({ uploading: false, result: {} })),
+    } as any));
 
     const result = validateVideo(videoSelected, t);
     expect(result).toEqual({

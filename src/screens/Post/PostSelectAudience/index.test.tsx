@@ -52,13 +52,13 @@ const mockSearchResponse = {
     groups: [],
     users: [],
   },
-  meta: {message: 'Search groups successfull'},
+  meta: { message: 'Search groups successfull' },
 };
 
 describe('PostSelectAudience screen', () => {
-  it(`renders correctly with params isFirstStep`, async () => {
+  it('renders correctly with params isFirstStep', async () => {
     const wrapper = renderWithRedux(
-      <PostSelectAudience route={{params: {isFirstStep: true}}} />,
+      <PostSelectAudience route={{ params: { isFirstStep: true } }} />,
     );
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
@@ -68,9 +68,7 @@ describe('PostSelectAudience screen', () => {
     jest.useFakeTimers();
     const spy = jest
       .spyOn(postDataHelper, 'getSearchAudiences')
-      .mockImplementation(() => {
-        return Promise.resolve(mockSearchResponse);
-      });
+      .mockImplementation(() => Promise.resolve(mockSearchResponse));
     jest.runOnlyPendingTimers();
     const wrapper = renderWithRedux(<PostSelectAudience />);
     const searchInput = wrapper.getByTestId('post_select_audience.search');
@@ -81,7 +79,7 @@ describe('PostSelectAudience screen', () => {
   });
 
   it('render correctly with group item', async () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.post.createPost.searchResultAudienceGroups = [mockGroupItem] as any;
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<PostSelectAudience />, store);
@@ -89,7 +87,7 @@ describe('PostSelectAudience screen', () => {
   });
 
   it('render Chosen Audiences when select a group', async () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.post.createPost.searchResultAudienceGroups = [mockGroupItem] as any;
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<PostSelectAudience />, store);
@@ -103,7 +101,7 @@ describe('PostSelectAudience screen', () => {
   });
 
   it('render correctly with 1 group selected', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.post.createPost.searchResultAudienceGroups = [mockGroupItem] as any;
     state.post.postSelectAudienceState.selectingGroups = [mockGroupItem] as any;
     const store = createTestStore(state);
@@ -112,7 +110,7 @@ describe('PostSelectAudience screen', () => {
   });
 
   it('not render Chosen Audiences when unselect all group', async () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.post.createPost.searchResultAudienceGroups = [mockGroupItem] as any;
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<PostSelectAudience />, store);
@@ -128,7 +126,7 @@ describe('PostSelectAudience screen', () => {
   });
 
   it('not render Chosen Audiences when unselect all group in selecting panel', async () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.post.createPost.searchResultAudienceGroups = [mockGroupItem] as any;
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<PostSelectAudience />, store);

@@ -1,8 +1,8 @@
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import modalActions from '~/store/modal/actions';
 
-import {_openImagePicker, alertAction} from './helper';
+import { _openImagePicker, alertAction } from './helper';
 
 describe('GeneralInformation helper', () => {
   let Platform: any;

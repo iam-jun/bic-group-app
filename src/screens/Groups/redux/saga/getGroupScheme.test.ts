@@ -20,17 +20,15 @@ describe('getGroupScheme saga', () => {
   const resp = { data: groupScheme };
   const dataWithOrderedFixRole = sortFixedRoles(resp.data);
 
-  it('should get data successfully', async () => {
-    return expectSaga(getGroupScheme, action)
-      .provide([[matchers.call.fn(groupsDataHelper.getGroupScheme), resp]])
-      .call(groupsDataHelper.getGroupScheme, communityId, schemeId)
-      .put(groupsActions.setGroupScheme({ data: dataWithOrderedFixRole }))
-      .put(groupsActions.setCreatingScheme({ data: dataWithOrderedFixRole, memberRoleIndex: 1 }))
-      .run()
-      .then(({ allEffects }: any) => {
-        expect(allEffects?.length).toEqual(3);
-      });
-  });
+  it('should get data successfully', async () => expectSaga(getGroupScheme, action)
+    .provide([[matchers.call.fn(groupsDataHelper.getGroupScheme), resp]])
+    .call(groupsDataHelper.getGroupScheme, communityId, schemeId)
+    .put(groupsActions.setGroupScheme({ data: dataWithOrderedFixRole }))
+    .put(groupsActions.setCreatingScheme({ data: dataWithOrderedFixRole, memberRoleIndex: 1 }))
+    .run()
+    .then(({ allEffects }: any) => {
+      expect(allEffects?.length).toEqual(3);
+    }));
 
   it('should throw error group scheme not found', async () => {
     const error = { code: API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND };

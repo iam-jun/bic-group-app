@@ -1,11 +1,11 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
 import getMyWorkExperience from './getMyWorkExperience';
 import menuActions from '../actions';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {mapWorkExperience} from '../helper';
+import { mapWorkExperience } from '../helper';
 
 afterEach(cleanup);
 
@@ -45,7 +45,7 @@ describe('Get My Work Experience Saga', () => {
 
   it('should request to get user work experience failure', () => {
     const error = {
-      meta: {message: 'Something went wrong'},
+      meta: { message: 'Something went wrong' },
     };
 
     // @ts-ignorets

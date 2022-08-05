@@ -3,14 +3,11 @@
  */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import {cleanup, waitFor} from '@testing-library/react-native';
+import { cleanup, waitFor } from '@testing-library/react-native';
 import React from 'react';
-import {
-  getUserFromSharedPreferences,
-  isAppInstalled,
-} from '~/services/sharePreferences';
+
 import initialState from '~/store/initialState';
-import {configureStore, fireEvent, renderWithRedux} from '~/test/testUtils';
+import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import SignIn from '.';
 
 afterEach(cleanup);
@@ -38,7 +35,7 @@ describe('SignIn screen', () => {
   //   expect(wrapper.toJSON()).toMatchSnapshot();
   // });
 
-  it(`should hide keyboard`, async () => {
+  it('should hide keyboard', async () => {
     Platform.OS = 'ios';
     Keyboard.dismiss = jest.fn();
     const store = mockStore(initialState);
@@ -49,7 +46,7 @@ describe('SignIn screen', () => {
     expect(Keyboard.dismiss).toBeCalled();
   });
 
-  //bc change text input from Controller to useController so can not run this test
+  // bc change text input from Controller to useController so can not run this test
   // it(`should disable inputs when loading`, async () => {
   //   const store = mockStore({
   //     ...initialState,
@@ -87,7 +84,7 @@ describe('SignIn screen', () => {
   //   expect(inputEmail.props.disabled).toBeTruthy();
   // });
 
-  it(`should show sample email placeholder on mobile`, async () => {
+  it('should show sample email placeholder on mobile', async () => {
     const store = mockStore(initialState);
     Platform.OS = 'ios';
 
@@ -97,7 +94,7 @@ describe('SignIn screen', () => {
     expect(inputEmail.props.placeholder).toBe('example@gmail.com');
   });
 
-  it(`Login button should be clickable`, async () => {
+  it('Login button should be clickable', async () => {
     const store = mockStore(initialState);
 
     const wrapper = await waitFor(() => renderWithRedux(<SignIn />, store));
@@ -110,7 +107,7 @@ describe('SignIn screen', () => {
     expect(buttonLogin.props.disabled).toBeFalsy();
   });
 
-  it(`should show modal loading when loading`, async () => {
+  it('should show modal loading when loading', async () => {
     const store = mockStore({
       ...initialState,
       auth: {
