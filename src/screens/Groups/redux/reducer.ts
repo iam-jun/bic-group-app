@@ -198,7 +198,7 @@ export const groupInitState = {
   communitySearch: {
     loading: false,
     canLoadMore: true,
-    ids: [] as number[],
+    ids: [] as string[],
     items: {},
   },
 };

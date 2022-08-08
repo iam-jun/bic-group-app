@@ -1,4 +1,3 @@
-import { Linking } from 'react-native';
 import { linkRegex } from '~/constants/commonRegex';
 
 export const generateAvatar = (

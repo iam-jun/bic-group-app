@@ -1,7 +1,7 @@
-import {memberRequestDetail} from '~/test/mock_data/communities';
-import initialState from '~/store/initialState';
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
+import { memberRequestDetail } from '~/test/mock_data/communities';
+import initialState from '~/store/initialState';
 
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
@@ -10,15 +10,15 @@ import groupsActions from '../actions';
 
 describe('getCommunityMemberRequests saga', () => {
   const communityId = 1;
-  const action = {type: 'test', payload: {communityId}};
+  const action = { type: 'test', payload: { communityId } };
 
   it('should get data correctly', async () => {
-    const state = {...initialState};
-    const resp = {data: [memberRequestDetail], meta: {total: 1}};
+    const state = { ...initialState };
+    const resp = { data: [memberRequestDetail], meta: { total: 1 } };
 
     return expectSaga(getCommunityMemberRequests, action)
       .withState(state)
-      .put(groupsActions.setCommunityMemberRequests({loading: true}))
+      .put(groupsActions.setCommunityMemberRequests({ loading: true }))
       .provide([
         [matchers.call.fn(groupsDataHelper.getCommunityMemberRequests), resp],
       ])
@@ -28,35 +28,35 @@ describe('getCommunityMemberRequests saga', () => {
           loading: false,
           canLoadMore: false,
           ids: [memberRequestDetail.id],
-          items: {[memberRequestDetail.id]: {...memberRequestDetail}},
+          items: { [memberRequestDetail.id]: { ...memberRequestDetail } },
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
 
   it('should not get data when canLoadMore = false', async () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.communityMemberRequests.canLoadMore = false;
 
     return expectSaga(getCommunityMemberRequests, action)
       .withState(state)
-      .put(groupsActions.setCommunityMemberRequests({loading: true}))
+      .put(groupsActions.setCommunityMemberRequests({ loading: true }))
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
 
   it('should call API and throws error', async () => {
-    const error = {code: 'error'};
-    const state = {...initialState};
+    const error = { code: 'error' };
+    const state = { ...initialState };
     state.groups.communityMemberRequests.canLoadMore = true;
     return expectSaga(getCommunityMemberRequests, action)
       .withState(state)
-      .put(groupsActions.setCommunityMemberRequests({loading: true}))
+      .put(groupsActions.setCommunityMemberRequests({ loading: true }))
       .provide([
         [
           matchers.call.fn(groupsDataHelper.getCommunityMemberRequests),
@@ -65,7 +65,7 @@ describe('getCommunityMemberRequests saga', () => {
       ])
       .call(showError, error)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(6);
       });
   });

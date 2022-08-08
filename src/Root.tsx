@@ -14,7 +14,6 @@ import moments from './configs/moments';
 import { AppContext } from './contexts/AppContext';
 import { useRootNavigation } from './hooks/navigation';
 import { IUserResponse } from './interfaces/IAuth';
-import { rootSwitch } from './router/stack';
 
 import RootNavigator from '~/router';
 import { getScreenAndParams, isNavigationRefReady } from '~/router/helper';
@@ -96,12 +95,10 @@ const Root = (): React.ReactElement => {
 
     if (data) {
       rootNavigation.navigate(
-        data.screen || rootSwitch.mainStack, {
-          screen: data?.params?.screen || 'main',
-          params: {
-            ...(data?.params?.params || {}),
-            initial: false,
-          },
+        data.screen || 'main',
+        {
+          ...(data?.params || {}),
+          initial: false,
         },
       );
     }

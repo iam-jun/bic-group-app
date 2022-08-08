@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, cleanup} from '@testing-library/react-native';
+import { render, cleanup } from '@testing-library/react-native';
 
 import Avatar from '~/beinComponents/Avatar';
 import images from '~/resources/images';
@@ -32,62 +32,62 @@ describe('Avatar Group component', () => {
     'https://cdn.dribbble.com/users/183984/screenshots/2574264/pokemon_4.jpg',
   ];
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const rendered = render(<Avatar.Group />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly group with no member`, () => {
+  it('renders correctly group with no member', () => {
     const rendered = render(<Avatar.Group />);
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const avatarComponent = getByTestId('avatar_container');
     expect(avatarComponent).toBeDefined();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly avatar when call Avatar.Group`, () => {
+  it('renders correctly avatar when call Avatar.Group', () => {
     const rendered = render(<Avatar.Group source={avatarLink} />);
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const avatarComponent = getByTestId('avatar.image');
     expect(avatarComponent).toBeDefined();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly group with 1 member`, () => {
-    const {getByTestId} = render(<Avatar.Group source={[avatarLink]} />);
+  it('renders correctly group with 1 member', () => {
+    const { getByTestId } = render(<Avatar.Group source={[avatarLink]} />);
     const avatarComponent = getByTestId('avatar_group.item_0');
     expect(avatarComponent).toBeDefined();
   });
 
-  it(`renders correctly group with 2 member`, () => {
+  it('renders correctly group with 2 member', () => {
     const rendered = render(<Avatar.Group source={listAvatar2} />);
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const groupComponent = getByTestId('avatar_group.group_2');
     expect(groupComponent).toBeDefined();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly group with 3 member`, () => {
+  it('renders correctly group with 3 member', () => {
     const rendered = render(<Avatar.Group source={listAvatar3} />);
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const groupComponent = getByTestId('avatar_group.group_3');
     expect(groupComponent).toBeDefined();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly group with 4 member`, () => {
+  it('renders correctly group with 4 member', () => {
     const rendered = render(<Avatar.Group source={listAvatar4} />);
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const groupComponent = getByTestId('avatar_group.group_4');
     expect(groupComponent).toBeDefined();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly group with 4+ member with totalMember`, () => {
+  it('renders correctly group with 4+ member with totalMember', () => {
     const rendered = render(
       <Avatar.Group source={listAvatar5} totalMember={100} />,
     );
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const groupComponent = getByTestId('avatar_group.group_4_plus');
     expect(groupComponent).toBeDefined();
     const totalMemberComponent = getByTestId('avatar_group.total_member');
@@ -95,9 +95,9 @@ describe('Avatar Group component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly group with 4+ member without totalMember`, () => {
+  it('renders correctly group with 4+ member without totalMember', () => {
     const rendered = render(<Avatar.Group source={listAvatar5} />);
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const groupComponent = getByTestId('avatar_group.group_4_plus');
     expect(groupComponent).toBeDefined();
     const fourthItemComponent = getByTestId('avatar_group.item_3');

@@ -1,6 +1,6 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {NOTIFICATIONS_RESPONSE} from '~/test/mock_data/notifications';
+import { NOTIFICATIONS_RESPONSE } from '~/test/mock_data/notifications';
 
 import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
@@ -9,7 +9,7 @@ import getNotifications from './getNotifications';
 describe('Get notifications saga', () => {
   const storeData = {
     notifications: {
-      notificationList: Object.assign({}, NOTIFICATIONS_RESPONSE.data.list),
+      notificationList: { ...NOTIFICATIONS_RESPONSE.data.list },
       tabAll: {
         loading: false,
         data: [],
@@ -24,7 +24,7 @@ describe('Get notifications saga', () => {
       },
     },
     groups: {
-      joinedCommunities: {data: [1]},
+      joinedCommunities: { data: [1] },
     },
   };
 
@@ -48,7 +48,7 @@ describe('Get notifications saga', () => {
             value: true,
           }),
         )
-        .put(notificationsActions.setNoMoreNoti({keyValue, value: false}))
+        .put(notificationsActions.setNoMoreNoti({ keyValue, value: false }))
         .provide([
           [
             matchers.call.fn(notificationsDataHelper.getNotificationList),
@@ -62,7 +62,7 @@ describe('Get notifications saga', () => {
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(4);
         })
     );
@@ -72,18 +72,18 @@ describe('Get notifications saga', () => {
     const keyValue = 'tabAll';
     const action = {
       type: 'test',
-      payload: {flag: 'ALL', keyValue},
+      payload: { flag: 'ALL', keyValue },
     };
     const response = {
       results: NOTIFICATIONS_RESPONSE.data.list,
       unseen: 0,
     };
 
-    const newData: any[] = [],
-      newResponse: any = {};
+    const newData: any[] = [];
+    const newResponse: any = {};
     response.results.forEach((item: any) => {
       newData.push(item?.id);
-      newResponse[item.id] = {...item};
+      newResponse[item.id] = { ...item };
     });
 
     return (
@@ -110,7 +110,7 @@ describe('Get notifications saga', () => {
         .put(
           notificationsActions.setNotifications({
             notifications: newResponse,
-            keyValue: keyValue,
+            keyValue,
             data: newData,
             unseen: response.unseen,
           }),
@@ -122,7 +122,7 @@ describe('Get notifications saga', () => {
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(5);
         })
     );
@@ -131,7 +131,7 @@ describe('Get notifications saga', () => {
   it('should call server and server throws an error this comment is delete', () => {
     const action = {
       type: 'test',
-      payload: {flag: 'TEST', keyValue: 'tabAll'},
+      payload: { flag: 'TEST', keyValue: 'tabAll' },
     };
 
     const resp = {
@@ -142,7 +142,7 @@ describe('Get notifications saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(getNotifications, action)
       .put(
         notificationsActions.setLoadingNotifications({
@@ -169,7 +169,7 @@ describe('Get notifications saga', () => {
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });
@@ -178,18 +178,18 @@ describe('Get notifications saga', () => {
     const keyValue = 'tabAll';
     const action = {
       type: 'test',
-      payload: {flag: 'ALL', keyValue, isRefresh: true},
+      payload: { flag: 'ALL', keyValue, isRefresh: true },
     };
     const response = {
       results: NOTIFICATIONS_RESPONSE.data.list,
       unseen: 0,
     };
 
-    const newData: any[] = [],
-      newResponse: any = {};
+    const newData: any[] = [];
+    const newResponse: any = {};
     response.results.forEach((item: any) => {
       newData.push(item?.id);
-      newResponse[item.id] = {...item};
+      newResponse[item.id] = { ...item };
     });
 
     return (
@@ -210,13 +210,13 @@ describe('Get notifications saga', () => {
         .put(
           notificationsActions.setNotifications({
             notifications: newResponse,
-            keyValue: keyValue,
+            keyValue,
             data: newData,
             unseen: response.unseen,
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);
         })
     );
@@ -226,7 +226,7 @@ describe('Get notifications saga', () => {
     const keyValue = 'tabUnread';
     const action = {
       type: 'test',
-      payload: {flag: 'UNREAD', keyValue},
+      payload: { flag: 'UNREAD', keyValue },
     };
     const response = {
       results: [],
@@ -242,7 +242,7 @@ describe('Get notifications saga', () => {
             value: true,
           }),
         )
-        .put(notificationsActions.setNoMoreNoti({keyValue, value: false}))
+        .put(notificationsActions.setNoMoreNoti({ keyValue, value: false }))
         .provide([
           [
             matchers.call.fn(notificationsDataHelper.getNotificationList),
@@ -257,7 +257,7 @@ describe('Get notifications saga', () => {
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(6);
         })
     );

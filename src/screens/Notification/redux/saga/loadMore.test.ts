@@ -1,4 +1,4 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import {
   LOAD_MORE_RESPONSE,
@@ -12,7 +12,7 @@ import loadMore from './loadMore';
 describe('Load more notifications saga', () => {
   const storeData = {
     notifications: {
-      notificationList: Object.assign({}, NOTIFICATIONS_RESPONSE.data.list),
+      notificationList: { ...NOTIFICATIONS_RESPONSE.data.list },
       tabAll: {
         loading: false,
         data: [
@@ -48,7 +48,7 @@ describe('Load more notifications saga', () => {
     const keyValue = 'tabAll';
     const action = {
       type: 'test',
-      payload: {keyValue},
+      payload: { keyValue },
     };
     const response = {
       results: [],
@@ -58,7 +58,7 @@ describe('Load more notifications saga', () => {
     return (
       // @ts-ignorets
       expectSaga(loadMore, action)
-        .put(notificationsActions.setIsLoadingMore({keyValue, value: true}))
+        .put(notificationsActions.setIsLoadingMore({ keyValue, value: true }))
         .withState(storeData)
         .provide([
           [
@@ -66,10 +66,10 @@ describe('Load more notifications saga', () => {
             response,
           ],
         ])
-        .put(notificationsActions.setIsLoadingMore({keyValue, value: false}))
-        .put(notificationsActions.setNoMoreNoti({keyValue, value: true}))
+        .put(notificationsActions.setIsLoadingMore({ keyValue, value: false }))
+        .put(notificationsActions.setNoMoreNoti({ keyValue, value: true }))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(5);
         })
     );
@@ -79,24 +79,24 @@ describe('Load more notifications saga', () => {
     const keyValue = 'tabAll';
     const action = {
       type: 'test',
-      payload: {keyValue},
+      payload: { keyValue },
     };
     const response = {
       results: LOAD_MORE_RESPONSE,
       unseen: 0,
     };
 
-    const newData: any[] = [],
-      newResponse: any = {};
+    const newData: any[] = [];
+    const newResponse: any = {};
     response.results.forEach((item: any) => {
       newData.push(item?.id);
-      newResponse[item.id] = {...item};
+      newResponse[item.id] = { ...item };
     });
 
     return (
       // @ts-ignorets
       expectSaga(loadMore, action)
-        .put(notificationsActions.setIsLoadingMore({keyValue, value: true}))
+        .put(notificationsActions.setIsLoadingMore({ keyValue, value: true }))
         .withState(storeData)
         .provide([
           [
@@ -104,7 +104,7 @@ describe('Load more notifications saga', () => {
             response,
           ],
         ])
-        .put(notificationsActions.setIsLoadingMore({keyValue, value: false}))
+        .put(notificationsActions.setIsLoadingMore({ keyValue, value: false }))
         .put(
           notificationsActions.concatNotifications({
             notifications: newResponse,
@@ -113,7 +113,7 @@ describe('Load more notifications saga', () => {
           }),
         )
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(5);
         })
     );
@@ -123,7 +123,7 @@ describe('Load more notifications saga', () => {
     const keyValue = 'TEST';
     const action = {
       type: 'test',
-      payload: {keyValue},
+      payload: { keyValue },
     };
 
     const resp = {
@@ -134,9 +134,9 @@ describe('Load more notifications saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(loadMore, action)
-      .put(notificationsActions.setIsLoadingMore({keyValue, value: true}))
+      .put(notificationsActions.setIsLoadingMore({ keyValue, value: true }))
       .withState(storeData)
       .provide([
         [
@@ -144,9 +144,9 @@ describe('Load more notifications saga', () => {
           Promise.reject(resp),
         ],
       ])
-      .put(notificationsActions.setIsLoadingMore({keyValue, value: false}))
+      .put(notificationsActions.setIsLoadingMore({ keyValue, value: false }))
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });

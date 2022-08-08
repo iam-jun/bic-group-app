@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { createSelector } from 'reselect';
-import useChatStore, { ChatState } from '~/store/chat'
+import useChatStore from '~/store/chat'
 
 export const chatState = (state: any) => state.chat;
 

@@ -3,7 +3,6 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
-  Platform,
   StyleSheet,
 } from 'react-native';
 import FitImage from 'react-native-fit-image';

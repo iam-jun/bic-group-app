@@ -13,7 +13,7 @@ const Experiences = () => {
   if (isEmpty(userWorkExperience)) return null;
 
   return (
-    <InfoSection title="settings:title_experiences">
+    <InfoSection title="settings:title_experience">
       {userWorkExperience.map((item: IUserWorkExperience) => (
         <View key={`${item?.id} ${item?.company}`}>
           <ItemExperience {...item} />

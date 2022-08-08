@@ -1,10 +1,10 @@
 import React from 'react';
 
+import { View } from 'react-native';
 import { renderWithRedux, waitForUpdateRedux } from '~/test/testUtils';
 import NewsfeedList from './NewsfeedList';
 import MockedNavigator from '~/test/MockedNavigator';
-import { POST_DETAIL, POST_DETAIL_2 } from '~/test/mock_data/post';
-import { View } from 'react-native';
+import { POST_DETAIL } from '~/test/mock_data/post';
 import Text from '~/beinComponents/Text';
 
 describe('NewsfeedList component', () => {
@@ -14,7 +14,7 @@ describe('NewsfeedList component', () => {
         component={() => (
           <NewsfeedList
             HeaderComponent={() => (
-              <View testID={'newsfeed_list.header'}>
+              <View testID="newsfeed_list.header">
                 <Text>HeaderComponent</Text>
               </View>
             )}
@@ -36,7 +36,7 @@ describe('NewsfeedList component', () => {
         component={() => (
           <NewsfeedList
             HeaderComponent={() => (
-              <View testID={'newsfeed_list.header'}>
+              <View testID="newsfeed_list.header">
                 <Text>HeaderComponent</Text>
               </View>
             )}

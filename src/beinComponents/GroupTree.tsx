@@ -78,9 +78,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       );
       setTreeData(newData);
     } else {
-      console.log(
-        '\x1b[31m', '🐣️ parse tree data: unknown ', data, '\x1b[0m',
-      );
+      console.warn('\x1b[31m', '🐣️ parse tree data: unknown ', data, '\x1b[0m');
     }
   };
 

@@ -31,6 +31,11 @@ export const getEndDateText = (
     )
     : '')
 
+export const formatPhoneNumber = (
+  phone: string | null | undefined,
+  countryCode: string,
+) => (countryCode ? `(+${countryCode}) ${phone}` : phone)
+
 export const _openImagePicker = async (
   id: string,
   fieldName: 'avatar' | 'backgroundImgUrl',

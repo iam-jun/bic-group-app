@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {fireEvent} from '~/test/testUtils';
-import {render, cleanup} from '@testing-library/react-native';
+import { render, cleanup } from '@testing-library/react-native';
+import { fireEvent } from '~/test/testUtils';
 import colors from '~/theme/theme';
 
 import EditName from './EditName';
@@ -63,7 +63,7 @@ describe('EditName conponent', () => {
     const onChangeName = jest.fn();
 
     const rendered = render(
-      <EditName error={true} fullname={name} onChangeName={onChangeName} />,
+      <EditName error fullname={name} onChangeName={onChangeName} />,
     );
     const textHelper = rendered.getByTestId('text_input.text_helper');
     expect(textHelper).not.toBeNull();

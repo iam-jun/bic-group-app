@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {createTestStore, renderWithRedux} from '~/test/testUtils';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import PostDetail from '~/screens/Post/PostDetail/index';
-import {POST_DETAIL} from '~/test/mock_data/post';
-import {USER_PROFILE} from '~/test/mock_data/menu';
+import { POST_DETAIL } from '~/test/mock_data/post';
+import { USER_PROFILE } from '~/test/mock_data/menu';
 import MockedNavigator from '~/test/MockedNavigator';
 
 describe('PostDetail screen', () => {
-  const props = {route: {params: {post_id: POST_DETAIL.id}}};
+  const props = { route: { params: { post_id: POST_DETAIL.id } } };
   let storeData: any;
 
   beforeEach(() => {
@@ -16,12 +16,12 @@ describe('PostDetail screen', () => {
     storeData = {
       ...initialState,
       ...{
-        post: {allPosts: {[POST_DETAIL.id]: POST_DETAIL}},
-        noInternet: {isInternetReachable: true},
+        post: { allPosts: { [POST_DETAIL.id]: POST_DETAIL } },
+        noInternet: { isInternetReachable: true },
         auth: {
           user: {
             signInUserSession: {
-              idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
+              idToken: { payload: { 'custom:user_uuid': USER_PROFILE.id } },
             },
           },
         },
@@ -30,7 +30,7 @@ describe('PostDetail screen', () => {
   });
 
   it('should render placeholder', () => {
-    const store = createTestStore({...initialState});
+    const store = createTestStore({ ...initialState });
     const wrapper = renderWithRedux(
       <MockedNavigator component={() => <PostDetail {...props} />} />,
       store,

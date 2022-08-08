@@ -1,4 +1,4 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import actions from '../actions';
 import giphyDataHelper from '../apiConfigs';
@@ -19,7 +19,7 @@ describe('Get API key saga', () => {
         .provide([[matchers.call.fn(giphyDataHelper.getAPIKey), response]])
         .put(actions.setAPIKey(response.data))
         .run()
-        .then(({allEffects}: any) => {
+        .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(2);
         })
     );
@@ -38,13 +38,13 @@ describe('Get API key saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(getAPIKey, action)
       .provide([
         [matchers.call.fn(giphyDataHelper.getAPIKey), Promise.reject(resp)],
       ])
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);
       });
   });

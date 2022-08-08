@@ -1,4 +1,4 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import modalActions from '~/store/modal/actions';
@@ -15,7 +15,9 @@ describe('approveSingleGroupMemberRequest saga', () => {
   const callback = jest.fn();
   const action = {
     type: 'string',
-    payload: {groupId, requestId, fullName, callback},
+    payload: {
+      groupId, requestId, fullName, callback,
+    },
   };
 
   const state = {
@@ -23,46 +25,44 @@ describe('approveSingleGroupMemberRequest saga', () => {
       groupMemberRequests: {
         total: 2,
         ids: [1, 2],
-        items: {1: {}, 2: {}},
+        items: { 1: {}, 2: {} },
       },
     },
   };
 
-  it('should approve selected member request correctly', async () => {
-    return expectSaga(approveSingleGroupMemberRequest, action)
-      .withState(state)
-      .provide([
-        [
-          matchers.call.fn(groupsDataHelper.approveSingleGroupMemberRequest),
-          {},
-        ],
-      ])
-      .put(
-        groupsActions.setGroupMemberRequests({
-          total: 1,
-          ids: [2],
-          items: {2: {}} as any,
-        }),
-      )
-      .put(
-        modalActions.showHideToastMessage({
-          content: `Approved user ${fullName}`,
-          props: {
-            textProps: {useI18n: true},
-            type: 'success',
-            rightIcon: 'UserGroup',
-            rightText: 'Members',
-            onPressRight: callback,
-          },
-          toastType: 'normal',
-        }),
-      )
-      .put(groupsActions.getGroupDetail(groupId))
-      .run();
-  });
+  it('should approve selected member request correctly', async () => expectSaga(approveSingleGroupMemberRequest, action)
+    .withState(state)
+    .provide([
+      [
+        matchers.call.fn(groupsDataHelper.approveSingleGroupMemberRequest),
+        {},
+      ],
+    ])
+    .put(
+      groupsActions.setGroupMemberRequests({
+        total: 1,
+        ids: [2],
+        items: { 2: {} } as any,
+      }),
+    )
+    .put(
+      modalActions.showHideToastMessage({
+        content: `Approved user ${fullName}`,
+        props: {
+          textProps: { useI18n: true },
+          type: 'success',
+          rightIcon: 'UserGroup',
+          rightText: 'Members',
+          onPressRight: callback,
+        },
+        toastType: 'normal',
+      }),
+    )
+    .put(groupsActions.getGroupDetail(groupId))
+    .run());
 
   it('should call server and server throws Canceled join request error', async () => {
-    const error = {code: approveDeclineCode.CANCELED};
+    const error = { code: approveDeclineCode.CANCELED };
     return expectSaga(approveSingleGroupMemberRequest, action)
       .withState(state)
       .provide([
@@ -74,17 +74,17 @@ describe('approveSingleGroupMemberRequest saga', () => {
       .put(
         groupsActions.editGroupMemberRequest({
           id: requestId,
-          data: {isCanceled: true},
+          data: { isCanceled: true },
         }),
       )
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
       });
   });
 
   it('should call server and server throws some error', async () => {
-    const error = {code: 'error'};
+    const error = { code: 'error' };
     return expectSaga(approveSingleGroupMemberRequest, action)
       .withState(state)
       .provide([
@@ -95,7 +95,7 @@ describe('approveSingleGroupMemberRequest saga', () => {
       ])
       .call(showError, error)
       .run()
-      .then(({allEffects}: any) => {
+      .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(4);
       });
   });

@@ -3,7 +3,6 @@ import {
   IAudience,
   IPostCreatePost,
   IActivityData,
-  IActivityImportant,
   IReaction,
   IAllPosts,
   IPayloadReactToPost,
@@ -77,10 +76,6 @@ const postActions = {
   }),
   setCreatePostChosenAudiences: (payload: IAudience[]) => ({
     type: postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES,
-    payload,
-  }),
-  setCreatePostImportant: (payload?: IActivityImportant) => ({
-    type: postTypes.SET_CREATE_POST_IMPORTANT,
     payload,
   }),
   setCreatePostImages: (payload: ICreatePostImage[]) => ({

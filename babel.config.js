@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars,func-names
 module.exports = function (api) {
   const presets = ['module:metro-react-native-babel-preset'];
   const plugins = [

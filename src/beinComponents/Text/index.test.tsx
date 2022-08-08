@@ -1,36 +1,35 @@
 import * as React from 'react';
-import {render, cleanup} from '@testing-library/react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { render, cleanup } from '@testing-library/react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {createTextStyle} from '~/beinComponents/Text/textStyle';
+import { StyleSheet } from 'react-native';
+import { createTextStyle } from '~/beinComponents/Text/textStyle';
 import Text from '~/beinComponents/Text';
-
-import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
 describe('Text component', () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createTextStyle(theme);
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const rendered = render(<Text />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly children`, () => {
+  it('renders correctly children', () => {
     const rendered = render(<Text>renders correctly children</Text>);
     expect(rendered).not.toBe(undefined);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly children with useI18n`, () => {
+  it('renders correctly children with useI18n', () => {
     const rendered = render(<Text useI18n>renders correctly children</Text>);
     expect(rendered).not.toBe(undefined);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly text color`, () => {
-    const {getByTestId} = render(
+  it('renders correctly text color', () => {
+    const { getByTestId } = render(
       <Text testID="text" color="green">
         renders correctly children
       </Text>,
@@ -40,7 +39,7 @@ describe('Text component', () => {
     expect(flattenedStyle.color).toBe('green');
   });
 
-  it(`renders correctly variant`, () => {
+  it('renders correctly variant', () => {
     const rendered = render(
       <Text variant="h5" testID="text.h5">
         renders correctly children
@@ -52,7 +51,7 @@ describe('Text component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly variant H1`, () => {
+  it('renders correctly variant H1', () => {
     const rendered = render(
       <Text.H1 testID="text.h1">renders correctly children</Text.H1>,
     );
@@ -62,7 +61,7 @@ describe('Text component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly variant H2`, () => {
+  it('renders correctly variant H2', () => {
     const rendered = render(
       <Text.H2 testID="text.h2">renders correctly children</Text.H2>,
     );
@@ -72,7 +71,7 @@ describe('Text component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly variant H3`, () => {
+  it('renders correctly variant H3', () => {
     const rendered = render(
       <Text.H3 testID="text.h3">renders correctly children</Text.H3>,
     );
@@ -82,7 +81,7 @@ describe('Text component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly variant H4`, () => {
+  it('renders correctly variant H4', () => {
     const rendered = render(
       <Text.H4 testID="text.h4">renders correctly children</Text.H4>,
     );
@@ -92,7 +91,7 @@ describe('Text component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly variant H5`, () => {
+  it('renders correctly variant H5', () => {
     const rendered = render(
       <Text.H5 testID="text.h5">renders correctly children</Text.H5>,
     );
@@ -102,7 +101,7 @@ describe('Text component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly variant H6`, () => {
+  it('renders correctly variant H6', () => {
     const rendered = render(
       <Text.H6 testID="text.h6">renders correctly children</Text.H6>,
     );

@@ -1,25 +1,23 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import {cleanup, waitFor} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 import React from 'react';
 
+import i18next from 'i18next';
 import initialState from '~/store/initialState';
 import {
   configureStore,
-  createTestStore,
   fireEvent,
   renderWithRedux,
-  waitForUpdateRedux,
 } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 import AddWork from './AddWork';
 import menuDataHelper from '../../helper/MenuDataHelper';
-import i18next from 'i18next';
-import {formatDate} from '~/utils/formatData';
+import { formatDate } from '~/utils/formatData';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '../../redux/actions';
 import menuTypes from '../../redux/types';
-import {light} from "~/theme/theme";
+import { light } from '~/theme/theme';
 
 afterEach(cleanup);
 
@@ -56,9 +54,9 @@ describe('AddWork screen', () => {
     jest.clearAllMocks();
   });
 
-  it(`should disable Add button and  when selectedWorkItem = null (add new work)`, async () => {
-    const storeData = {...initialState};
-    //@ts-ignore
+  it('should disable Add button and  when selectedWorkItem = null (add new work)', async () => {
+    const storeData = { ...initialState };
+    // @ts-ignore
     storeData.menu.selectedWorkItem = null;
 
     const store = mockStore(storeData);
@@ -90,9 +88,9 @@ describe('AddWork screen', () => {
     );
   });
 
-  it(`should enable Add button when companyValue and positionValue not null, selectedWorkItem = null (add new work)`, async () => {
-    const storeData = {...initialState};
-    //@ts-ignore
+  it('should enable Add button when companyValue and positionValue not null, selectedWorkItem = null (add new work)', async () => {
+    const storeData = { ...initialState };
+    // @ts-ignore
     storeData.menu.selectedWorkItem = null;
 
     const store = mockStore(storeData);
@@ -115,12 +113,12 @@ describe('AddWork screen', () => {
     expect(component.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it(`should show enable Save button, Delete button, when selectedWorkItem = {...} (edit work)`, async () => {
+  it('should show enable Save button, Delete button, when selectedWorkItem = {...} (edit work)', async () => {
     Keyboard.dismiss = jest.fn();
 
-    const storeData = {...initialState};
-    //@ts-ignore
-    storeData.menu.selectedWorkItem = {...workItem};
+    const storeData = { ...initialState };
+    // @ts-ignore
+    storeData.menu.selectedWorkItem = { ...workItem };
 
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<AddWork />, store);
@@ -151,7 +149,7 @@ describe('AddWork screen', () => {
     );
     expect(buttonDeleteComponent).toBeDefined();
 
-    //off current currentlyWorkHere
+    // off current currentlyWorkHere
     fireEvent.press(toggleComponent);
 
     expect(Keyboard.dismiss).toBeCalled();
@@ -166,14 +164,14 @@ describe('AddWork screen', () => {
     );
   });
 
-  it(`should show enable Save button, Delete button, when selectedWorkItem = {...} but have endDate (edit work)`, async () => {
+  it('should show enable Save button, Delete button, when selectedWorkItem = {...} but have endDate (edit work)', async () => {
     Keyboard.dismiss = jest.fn();
-    const storeData = {...initialState};
-    //@ts-ignore
+    const storeData = { ...initialState };
+    // @ts-ignore
     const endDate = '2024-03-07T07:58:05.436Z';
     storeData.menu.selectedWorkItem = {
       ...workItem,
-      endDate: endDate,
+      endDate,
       currentlyWorkHere: false,
     };
 
@@ -213,7 +211,7 @@ describe('AddWork screen', () => {
     );
     expect(buttonDeleteComponent).toBeDefined();
 
-    //on current currentlyWorkHere
+    // on current currentlyWorkHere
     fireEvent.press(toggleComponent);
 
     expect(Keyboard.dismiss).toBeCalled();
@@ -225,9 +223,9 @@ describe('AddWork screen', () => {
     );
   });
 
-  it(`should show startDate bottom sheet and endDate bottom sheet when click them`, async () => {
-    const storeData = {...initialState};
-    //@ts-ignore
+  it('should show startDate bottom sheet and endDate bottom sheet when click them', async () => {
+    const storeData = { ...initialState };
+    // @ts-ignore
     storeData.menu.selectedWorkItem = null;
 
     const store = mockStore(storeData);
@@ -275,25 +273,23 @@ describe('AddWork screen', () => {
     expect(wrapper.getByTestId('add_work.end_date.bottom_sheet')).toBeDefined();
   });
 
-  it(`should add work item successfully`, async () => {
+  it('should add work item successfully', async () => {
     jest.mock('react', () => ({
       ...jest.requireActual('react'),
       useState: jest.fn(),
     }));
 
-    const mockActionAddWorkExp = jest.fn(() => {
-      return {
-        type: menuTypes.ADD_WORK_EXPERIENCE,
-        payload: {},
-      };
-    });
+    const mockActionAddWorkExp = jest.fn(() => ({
+      type: menuTypes.ADD_WORK_EXPERIENCE,
+      payload: {},
+    }));
 
     jest
       .spyOn(menuActions, 'addWorkExperience')
       .mockImplementation(mockActionAddWorkExp as any);
 
-    const state = {...initialState};
-    //@ts-ignore
+    const state = { ...initialState };
+    // @ts-ignore
     state.menu.selectedWorkItem = null;
 
     const store = mockStore(state);
@@ -338,38 +334,32 @@ describe('AddWork screen', () => {
     expect(mockActionAddWorkExp).toBeCalled();
   });
 
-  it(`should delete work item successfully`, async () => {
+  it('should delete work item successfully', async () => {
     Keyboard.dismiss = jest.fn();
     const goBack = jest.fn();
-    const rootNavigation = {canGoBack: true, goBack};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { canGoBack: true, goBack };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const mockActionDeleteExp = jest.fn(() => {
-      return {
-        type: menuTypes.UPLOAD_IMAGE,
-        payload: {},
-      };
-    });
+    const mockActionDeleteExp = jest.fn(() => ({
+      type: menuTypes.UPLOAD_IMAGE,
+      payload: {},
+    }));
 
     jest
       .spyOn(menuActions, 'deleteWorkExperience')
       .mockImplementation(mockActionDeleteExp as any);
 
-    const deleteFunc = jest.fn(() => {
-      return Promise.resolve({
-        code: 200,
-        data: [],
-        meta: {},
-      });
-    });
+    const deleteFunc = jest.fn(() => Promise.resolve({
+      code: 200,
+      data: [],
+      meta: {},
+    }));
     jest
       .spyOn(menuDataHelper, 'deleteWorkExperience')
       .mockImplementation(deleteFunc);
 
-    const state = {...initialState};
-    //@ts-ignore
+    const state = { ...initialState };
+    // @ts-ignore
     state.menu.selectedWorkItem = workItem;
 
     const store = mockStore(state);
@@ -382,16 +372,14 @@ describe('AddWork screen', () => {
     expect(mockActionDeleteExp).toBeCalled();
   });
 
-  it(`should go back to previous screen successfully`, async () => {
+  it('should go back to previous screen successfully', async () => {
     Keyboard.dismiss = jest.fn();
     const goBack = jest.fn();
-    const rootNavigation = {canGoBack: true, goBack};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { canGoBack: true, goBack };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const state = {...initialState};
-    //@ts-ignore
+    const state = { ...initialState };
+    // @ts-ignore
     state.menu.selectedWorkItem = null;
 
     const store = mockStore(state);
@@ -405,9 +393,9 @@ describe('AddWork screen', () => {
     expect(goBack).toBeCalled();
   });
 
-  it(`should update border color of input`, async () => {
-    const state = {...initialState};
-    //@ts-ignore
+  it('should update border color of input', async () => {
+    const state = { ...initialState };
+    // @ts-ignore
     state.menu.selectedWorkItem = null;
 
     const store = mockStore(state);
@@ -446,21 +434,19 @@ describe('AddWork screen', () => {
       light.colors.gray40,
     );
     fireEvent.changeText(textInputDescription, 'abc');
-    //can't
+    // can't
     // expect(textInputDescriptionView.props.style[0].borderColor).toBe(
     //   colors.light.colors.purple50,
     // );
   });
 
-  it(`should back to userEdit screen successfully if rootNavigation.canGoBack = false `, () => {
+  it('should back to userEdit screen successfully if rootNavigation.canGoBack = false ', () => {
     Keyboard.dismiss = jest.fn();
     const replace = jest.fn();
 
-    const rootNavigation = {canGoBack: false, replace};
+    const rootNavigation = { canGoBack: false, replace };
 
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const store = mockStore(initialState);
 

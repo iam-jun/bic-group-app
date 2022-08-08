@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {cleanup, fireEvent} from '@testing-library/react-native';
+import { cleanup, fireEvent } from '@testing-library/react-native';
 import ForgotInputId from './ForgotInputId';
 import {
   configureStore,
@@ -51,9 +51,7 @@ describe('ForgotInputId component', () => {
       _formValues: ['test'],
       _defaultValues: ['test'],
     },
-    getValues: () => {
-      return '';
-    },
+    getValues: () => '',
     setValue: () => jest.fn(),
     formState: {
       errors: {
@@ -89,12 +87,10 @@ describe('ForgotInputId component', () => {
   //   expect(wrapper.toJSON()).toMatchSnapshot();
   // });
 
-  it(`disable button send code to email when typing an invalid email`, async () => {
+  it('disable button send code to email when typing an invalid email', async () => {
     const newUseForm = {
       ...useForm,
-      getValues: () => {
-        return 'y';
-      },
+      getValues: () => 'y',
     };
 
     const forgotPasswordError = {
@@ -102,7 +98,7 @@ describe('ForgotInputId component', () => {
       errRequest: 'ERRORS!!!!',
       errConfirm: '',
     };
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
     storeData.auth.forgotPasswordLoading = false;
@@ -122,13 +118,13 @@ describe('ForgotInputId component', () => {
     expect(buttonSend.props?.accessibilityState?.disabled).toBe(true);
   });
 
-  it(`request code to forgot password with valid email`, async () => {
+  it('request code to forgot password with valid email', async () => {
     const forgotPasswordError = {
       errBox: '',
       errRequest: '',
       errConfirm: '',
     };
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
     storeData.auth.forgotPasswordLoading = false;
@@ -177,7 +173,7 @@ describe('ForgotInputId component', () => {
     fireEvent.press(buttonSend);
 
     expect(getValues).toBeCalledWith('email');
-    expect(setValue).toBeCalledWith('code', '', {shouldValidate: false});
+    expect(setValue).toBeCalledWith('code', '', { shouldValidate: false });
     expect(clearErrors).toBeCalledWith('code');
   });
 });

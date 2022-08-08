@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ImageStyle,
-  StyleProp, StyleSheet, View, ViewStyle,
+  StyleProp, View, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import AvatarComponent, {

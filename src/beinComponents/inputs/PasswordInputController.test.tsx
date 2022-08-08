@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {cleanup, render, fireEvent} from '@testing-library/react-native';
-import PasswordInputController from './PasswordInputController';
+import { cleanup, render, fireEvent } from '@testing-library/react-native';
 import i18next from 'i18next';
+import PasswordInputController from './PasswordInputController';
 import * as validation from '~/constants/commonRegex';
 
 afterEach(cleanup);
@@ -38,9 +38,7 @@ describe('PasswordInputController component', () => {
       _formValues: ['test'],
       _defaultValues: ['test'],
     },
-    getValues: () => {
-      return '';
-    },
+    getValues: () => '',
     setValue: () => jest.fn(),
     formState: {
       errors: {
@@ -53,13 +51,13 @@ describe('PasswordInputController component', () => {
     watch: () => jest.fn(),
   };
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const validateNewPassword = jest.fn();
 
     const wrapper = render(
       <PasswordInputController
         useFormData={useForm}
-        name={'newPassword'}
+        name="newPassword"
         rules={{
           required: i18next.t('auth:text_err_password_blank'),
           pattern: {
@@ -69,7 +67,7 @@ describe('PasswordInputController component', () => {
         }}
         loading={false}
         disableInput={false}
-        testID={'inputNewPassword'}
+        testID="inputNewPassword"
         label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
         validateValue={validateNewPassword}
@@ -78,7 +76,7 @@ describe('PasswordInputController component', () => {
     expect(wrapper.toJSON()).toMatchSnapshot();
   });
 
-  it(`should called validateValue and show error text when typing an invalid value by rule`, async () => {
+  it('should called validateValue and show error text when typing an invalid value by rule', async () => {
     const newUseForm = {
       ...useForm,
       formState: {
@@ -95,7 +93,7 @@ describe('PasswordInputController component', () => {
     const wrapper = render(
       <PasswordInputController
         useFormData={newUseForm}
-        name={'newPassword'}
+        name="newPassword"
         rules={{
           required: i18next.t('auth:text_err_password_blank'),
           pattern: {
@@ -105,7 +103,7 @@ describe('PasswordInputController component', () => {
         }}
         loading={false}
         disableInput={false}
-        testID={'testID'}
+        testID="testID"
         label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
         validateValue={validateNewPassword}

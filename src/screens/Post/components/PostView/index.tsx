@@ -132,7 +132,9 @@ const _PostView: FC<PostViewProps> = ({
   }
 
   const { images, videos, files } = media || {};
-  const { isImportant, importantExpiredAt } = setting || {};
+  const {
+    isImportant, importantExpiredAt, canComment, canReact,
+  } = setting || {};
 
   const userId = useUserIdAuth();
 
@@ -298,7 +300,7 @@ const _PostView: FC<PostViewProps> = ({
             seenPeopleCount={totalUsersSeen}
           />
         )}
-        {!isLite && (
+        {!isLite && !!canReact && (
           <ReactionView
             style={styles.reactions}
             ownerReactions={ownerReactions}
@@ -318,6 +320,8 @@ const _PostView: FC<PostViewProps> = ({
             btnReactTestID={btnReactTestID}
             btnCommentTestID={btnCommentTestID}
             reactionCounts={reactionsCount}
+            canComment={!!canComment}
+            canReact={!!canReact}
           />
         )}
         {!isLite && (

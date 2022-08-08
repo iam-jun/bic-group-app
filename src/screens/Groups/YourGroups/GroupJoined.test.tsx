@@ -1,16 +1,15 @@
 import React from 'react';
 
-import {createTestStore, fireEvent, renderWithRedux} from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import GroupJoined from '~/screens/Groups/YourGroups/GroupJoined';
-import {communityDetailData} from '~/test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 import modalActions from '~/store/modal/actions';
-import {groupDetailData} from '~/test/mock_data/group';
+import { groupDetailData } from '~/test/mock_data/group';
 
 describe('GroupJoined component', () => {
-  it(`should render tree as default`, async () => {
+  it('should render tree as default', async () => {
     const storeData: any = {
-      groups: {yourGroupsTree: {loading: false, list: [groupDetailData]}},
+      groups: { yourGroupsTree: { loading: false, list: [groupDetailData] } },
     };
     const wrapper = renderWithRedux(
       <GroupJoined communityId={communityDetailData.id} />,
@@ -20,9 +19,9 @@ describe('GroupJoined component', () => {
     expect(listTree).not.toBeNull();
   });
 
-  it(`should render tree empty screen`, async () => {
+  it('should render tree empty screen', async () => {
     const storeData: any = {
-      groups: {yourGroupsTree: {loading: false, list: []}},
+      groups: { yourGroupsTree: { loading: false, list: [] } },
     };
     const wrapper = renderWithRedux(
       <GroupJoined communityId={communityDetailData.id} />,
@@ -34,7 +33,7 @@ describe('GroupJoined component', () => {
 
   it('should render list flat with initModeIndex = 1', () => {
     const storeData: any = {
-      groups: {yourGroupsTree: {loading: false, list: [groupDetailData]}},
+      groups: { yourGroupsTree: { loading: false, list: [groupDetailData] } },
     };
     const wrapper = renderWithRedux(
       <GroupJoined communityId={communityDetailData.id} initModeIndex={1} />,
@@ -44,9 +43,9 @@ describe('GroupJoined component', () => {
     expect(listFlat).not.toBeNull();
   });
 
-  it(`should render flat list empty screen`, async () => {
+  it('should render flat list empty screen', async () => {
     const storeData: any = {
-      groups: {yourGroupsList: {loading: false, list: []}},
+      groups: { yourGroupsList: { loading: false, list: [] } },
     };
     const wrapper = renderWithRedux(
       <GroupJoined communityId={communityDetailData.id} initModeIndex={1} />,

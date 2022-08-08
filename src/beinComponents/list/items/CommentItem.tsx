@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
-import { ICommentData, IReaction } from '~/interfaces/IPost';
+import { ICommentData } from '~/interfaces/IPost';
 import CommentView from '~/screens/Post/components/CommentView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 import postActions from '~/screens/Post/redux/actions';

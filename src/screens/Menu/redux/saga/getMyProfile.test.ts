@@ -1,16 +1,15 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {cleanup} from '@testing-library/react-native';
 
 import getMyProfile from './getMyProfile';
 import menuActions from '../actions';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {mapProfile} from '../helper';
+import { mapProfile } from '../helper';
 
 describe('Get My Profile Saga', () => {
   const action = {
     type: 'test',
-    payload: {userId: 58},
+    payload: { userId: 58 },
   };
 
   const state = {
@@ -36,7 +35,7 @@ describe('Get My Profile Saga', () => {
         gender: 'FEMALE',
         id: '58',
         language: ['vi', 'en'],
-        latestWork: {company: 'test 1', titlePosition: 'test 1'},
+        latestWork: { company: 'test 1', titlePosition: 'test 1' },
         phone: '89871234',
         relationshipStatus: 'SINGLE',
         updatedAt: '2022-03-11T10:23:30.864Z',
@@ -66,7 +65,7 @@ describe('Get My Profile Saga', () => {
   });
 
   it('should request to get My Profile failure', () => {
-    const error = {meta: {message: 'Something when wrong!!!'}};
+    const error = { meta: { message: 'Something when wrong!!!' } };
     // @ts-ignorets
     return expectSaga(getMyProfile, action)
       .withState(state)

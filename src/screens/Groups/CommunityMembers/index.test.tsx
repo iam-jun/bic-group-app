@@ -1,11 +1,11 @@
 import React from 'react';
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import CommunityMembers from '.';
 import MockedNavigator from '~/test/MockedNavigator';
 
 describe('CommunityMembers', () => {
   const communityId = 1;
-  const component = () => <CommunityMembers route={{params: {communityId}}} />;
+  const component = () => <CommunityMembers route={{ params: { communityId } }} />;
 
   it('should render search input correctly', () => {
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);

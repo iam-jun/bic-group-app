@@ -1,6 +1,6 @@
-import {expectSaga} from 'redux-saga-test-plan';
+import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
 import editWorkExperience from './editWorkExperience';
 import menuActions from '../actions';
@@ -88,7 +88,7 @@ describe('Edit Work Experience Saga', () => {
 
   it('should request to edit user work experience failure', () => {
     const error = {
-      meta: {message: 'Something went wrong'},
+      meta: { message: 'Something went wrong' },
     };
 
     // @ts-ignorets
@@ -104,7 +104,7 @@ describe('Edit Work Experience Saga', () => {
           content: error.meta.message,
 
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
 
             type: 'error',
           },

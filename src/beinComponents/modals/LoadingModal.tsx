@@ -3,8 +3,6 @@ import {
   StyleSheet,
   View,
   ImageBackground,
-  ActivityIndicator,
-  Platform,
   Modal,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,7 +14,6 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 
 import useModal from '~/hooks/modal';
-import spacing from '~/theme/spacing';
 import { LottieFileLoading } from '~/resources/lottieJson';
 
 const LoadingModal = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {renderWithRedux, cleanup, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, cleanup, fireEvent } from '~/test/testUtils';
 import colors from '~/theme/theme';
 
 import ButtonDanger from './ButtonDanger';
@@ -21,7 +21,7 @@ describe('ButtonDanger conponent', () => {
   });
 
   it('renders children correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ButtonDanger testID={testID}>{children}</ButtonDanger>,
     );
     const component = getByTestId(testID);
@@ -32,8 +32,8 @@ describe('ButtonDanger conponent', () => {
   });
 
   it('renders style correctly', () => {
-    const {getByTestId} = renderWithRedux(
-      <ButtonDanger style={{margin: 12}} testID={testID}>
+    const { getByTestId } = renderWithRedux(
+      <ButtonDanger style={{ margin: 12 }} testID={testID}>
         {children}
       </ButtonDanger>,
     );
@@ -45,7 +45,7 @@ describe('ButtonDanger conponent', () => {
 
   it('renders disabled correctly', () => {
     const onPress = jest.fn();
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ButtonDanger disabled onPress={onPress} testID={testID}>
         {children}
       </ButtonDanger>,

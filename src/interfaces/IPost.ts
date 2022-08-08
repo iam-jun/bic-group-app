@@ -105,6 +105,8 @@ export interface ICreatePostImage {
 
 export interface ICreatePostSettings {
   important?: IActivityImportant;
+  canComment?: boolean,
+  canReact?: boolean,
   count: number;
 }
 

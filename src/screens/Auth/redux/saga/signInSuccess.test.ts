@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import {expectSaga} from 'redux-saga-test-plan';
-import {IUserResponse} from '~/interfaces/IAuth';
+import { expectSaga } from 'redux-saga-test-plan';
+import { IUserResponse } from '~/interfaces/IAuth';
 import modalActions from '~/store/modal/actions';
 import actions from '../actions';
 import signInSuccess from './signInSuccess';
@@ -20,20 +20,18 @@ describe('signInSuccess Saga', () => {
     payload: user,
   };
 
-  it('signInSuccess should be call loading', () => {
-    return expectSaga(signInSuccess, action)
-      .put(modalActions.showLoading())
-      .put(
-        actions.setUser({
-          username: 'foo',
-          signInUserSession: {},
-          attributes: {},
-          name: '',
-          email: '',
-          id: 'foo',
-          role: 'foo',
-        } as IUserResponse),
-      )
-      .run();
-  });
+  it('signInSuccess should be call loading', () => expectSaga(signInSuccess, action)
+    .put(modalActions.showLoading())
+    .put(
+      actions.setUser({
+        username: 'foo',
+        signInUserSession: {},
+        attributes: {},
+        name: '',
+        email: '',
+        id: 'foo',
+        role: 'foo',
+      } as IUserResponse),
+    )
+    .run());
 });

@@ -1,6 +1,6 @@
-import { adminDetail, memberData, memberDetail } from '~/test/mock_data/group';
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
+import { adminDetail, memberData, memberDetail } from '~/test/mock_data/group';
 
 import getGroupMembers from './getGroupMembers';
 import actions from '../actions';

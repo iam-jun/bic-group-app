@@ -80,10 +80,14 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     selectingTime,
     disableButtonSave,
     showWarning,
+    sCanComment,
+    sCanReact,
     setSelectingDate,
     setSelectingTime,
     handlePressSave,
     handleToggleImportant,
+    handleToggleCanComment,
+    handleToggleCanReact,
     handleChangeDatePicker,
     handleChangeTimePicker,
     getMinDate,
@@ -262,6 +266,44 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     />
   )
 
+  const renderCanComment = () => (
+    <View
+      style={[
+        styles.row, styles.content,
+      ]}
+    >
+      <View style={[styles.flex1]}>
+        <Text style={[styles.flex1]} useI18n>
+          post:people_can_comment
+        </Text>
+      </View>
+      <Toggle
+        testID="post_settings.toggle_can_comment"
+        isChecked={sCanComment}
+        onActionPress={handleToggleCanComment}
+      />
+    </View>
+  )
+
+  const renderCanReact = () => (
+    <View
+      style={[
+        styles.row, styles.content,
+      ]}
+    >
+      <View style={[styles.flex1]}>
+        <Text style={[styles.flex1]} useI18n>
+          post:people_can_react
+        </Text>
+      </View>
+      <Toggle
+        testID="post_settings.toggle_can_react"
+        isChecked={sCanReact}
+        onActionPress={handleToggleCanReact}
+      />
+    </View>
+  )
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
@@ -280,6 +322,8 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {renderImportant()}
+          {renderCanComment()}
+          {renderCanReact()}
         </ScrollView>
         <View style={{ position: 'absolute', alignSelf: 'center' }}>
           {selectingDate && (

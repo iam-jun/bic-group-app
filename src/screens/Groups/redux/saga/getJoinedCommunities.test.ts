@@ -8,7 +8,6 @@ import getJoinedCommunities from './getJoinedCommunities';
 import { communities } from '~/test/mock_data/communities';
 
 describe('Get Joined Communities saga', () => {
-
   it('should get communities successfully with response has list with element ', () => {
     const action = {
       type: 'test',
@@ -67,7 +66,7 @@ describe('Get Joined Communities saga', () => {
       },
     };
 
-    //@ts-ignore
+    // @ts-ignore
     return expectSaga(getJoinedCommunities, action)
       .put(groupsActions.setMyCommunities({ loading: true }))
       .provide([

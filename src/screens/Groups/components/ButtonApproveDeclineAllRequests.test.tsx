@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {renderWithRedux, fireEvent} from '~/test/testUtils';
+import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import ButtonApproveDeclineAllRequests from './ButtonApproveDeclineAllRequests';
 
 describe('Button Approve Decline all requests', () => {

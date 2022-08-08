@@ -2,7 +2,7 @@ import {
   changeSchemeIdOfGroup,
   handleSelectNewGroupScheme,
 } from '~/screens/Groups/GroupSchemeAssignSelection/helper';
-import {GROUP_ASSIGNMENTS} from '~/test/mock_data/group';
+import { GROUP_ASSIGNMENTS } from '~/test/mock_data/group';
 
 describe('group scheme assign selection helper', () => {
   it('handleSelectNewGroupScheme should add new item if has change with current assignments', () => {
@@ -11,7 +11,7 @@ describe('group scheme assign selection helper', () => {
     const schemeId = 'abcd';
     expect(
       handleSelectNewGroupScheme(groupId, schemeId, data, GROUP_ASSIGNMENTS),
-    ).toEqual([{groupId: groupId, schemeId: schemeId}]);
+    ).toEqual([{ groupId, schemeId }]);
   });
 
   it('handleSelectNewGroupScheme should not add new item if not has change with current assignments', () => {

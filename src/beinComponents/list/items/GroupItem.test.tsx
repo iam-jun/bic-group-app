@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
-import {fireEvent, renderWithRedux} from '~/test/testUtils';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import GroupItem from './GroupItem';
 
 afterEach(cleanup);
@@ -44,16 +44,16 @@ describe('Group Item component', () => {
     userCount: 24,
   };
 
-  it(`renders correctly`, () => {
-    //@ts-ignore
+  it('renders correctly', () => {
+    // @ts-ignore
     const rendered = renderWithRedux(<GroupItem {...groupItemData} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should call props onPressItem`, () => {
+  it('should call props onPressItem', () => {
     const onPress = jest.fn();
 
-    //@ts-ignore
+    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem {...groupItemData} onPressItem={onPress} />,
     );
@@ -64,10 +64,10 @@ describe('Group Item component', () => {
     expect(onPress).toBeCalled();
   });
 
-  it(`should render UI Level when uiLevel > 0`, () => {
+  it('should render UI Level when uiLevel > 0', () => {
     const onPress = jest.fn();
 
-    //@ts-ignore
+    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem {...groupItemData} uiLevel={1} onPressItem={onPress} />,
     );
@@ -77,8 +77,8 @@ describe('Group Item component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should render toggle button when childrenUiIds.length > 0`, () => {
-    //@ts-ignore
+  it('should render toggle button when childrenUiIds.length > 0', () => {
+    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem
         {...groupItemData}
@@ -91,10 +91,10 @@ describe('Group Item component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should call props onToggleItem when rendered toggle item`, () => {
+  it('should call props onToggleItem when rendered toggle item', () => {
     const onPress = jest.fn();
 
-    //@ts-ignore
+    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem
         {...groupItemData}
@@ -109,17 +109,17 @@ describe('Group Item component', () => {
     expect(onPress).toBeCalled();
   });
 
-  it(`should render null with props hide=true`, () => {
-    //@ts-ignore
+  it('should render null with props hide=true', () => {
+    // @ts-ignore
     const rendered = renderWithRedux(
-      <GroupItem {...groupItemData} hide={true} />,
+      <GroupItem {...groupItemData} hide />,
     ).toJSON();
 
     expect(rendered).toBeNull();
   });
 
-  it(`toggle should render null with props uiLevel < 0`, () => {
-    //@ts-ignore
+  it('toggle should render null with props uiLevel < 0', () => {
+    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem {...groupItemData} uiLevel={-1} />,
     );
@@ -127,10 +127,10 @@ describe('Group Item component', () => {
     expect(toggleComponent).toBeNull();
   });
 
-  it(`should call props onCheckedItem when rendered toggle item`, () => {
+  it('should call props onCheckedItem when rendered toggle item', () => {
     const onCheckedItem = jest.fn();
 
-    //@ts-ignore
+    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem
         {...groupItemData}
@@ -145,7 +145,7 @@ describe('Group Item component', () => {
     expect(onCheckedItem).toBeCalled();
   });
 
-  it(`should render default prop`, () => {
+  it('should render default prop', () => {
     const fakeGroupItemData = {
       backgroundImgUrl: null,
       chatId: 'rpq3unai7i8ztprmoz97rdjr7w',
@@ -176,7 +176,7 @@ describe('Group Item component', () => {
       updatedAt: '2022-01-10T10:04:48.928Z',
       userCount: 24,
     };
-    //@ts-ignore
+    // @ts-ignore
     const rendered = renderWithRedux(<GroupItem {...fakeGroupItemData} />);
     expect(rendered.toJSON()).toMatchSnapshot();
   });

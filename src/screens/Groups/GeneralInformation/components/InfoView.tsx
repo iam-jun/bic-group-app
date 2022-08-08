@@ -34,20 +34,20 @@ const InfoView = ({
   const editDescription = () => {
     rootNavigation.navigate(
       groupStack.editDescription, {
-      id,
-      description,
-      type,
-    },
+        id,
+        description,
+        type,
+      },
     );
   };
 
   const editName = () => {
     rootNavigation.navigate(
       groupStack.editName, {
-      id,
-      name,
-      type,
-    },
+        id,
+        name,
+        type,
+      },
     );
   };
 

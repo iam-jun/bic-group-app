@@ -3,7 +3,6 @@ import React from 'react';
 import { renderWithRedux, createTestStore } from '~/test/testUtils';
 import NotificationItem from '.';
 import {
-  CHILD_COMMENT,
   LOAD_MORE_RESPONSE,
 } from '~/test/mock_data/notifications';
 import initialState from '~/store/initialState';
@@ -17,7 +16,7 @@ describe('NotificationItem component', () => {
     Platform = require('react-native').Platform;
   });
 
-  it(`renders correctly`, async () => {
+  it('renders correctly', async () => {
     const state = { ...initialState };
     // @ts-ignore
     state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0] } };
@@ -27,17 +26,17 @@ describe('NotificationItem component', () => {
     const wrapper = renderWithRedux(
       <NotificationItem
         {...LOAD_MORE_RESPONSE[0]}
-        testID={`testID`}
+        testID="testID"
         onPress={onPress}
         onPressOption={onPressOption}
-      />, store
+      />, store,
     );
 
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should call prop onPress when click item`, async () => {
+  it('should call prop onPress when click item', async () => {
     const state = { ...initialState };
     // @ts-ignore
     state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0] } };
@@ -47,10 +46,10 @@ describe('NotificationItem component', () => {
     const wrapper = renderWithRedux(
       <NotificationItem
         {...LOAD_MORE_RESPONSE[0]}
-        testID={`testID`}
+        testID="testID"
         onPress={onPress}
         onPressOption={onPressOption}
-      />, store
+      />, store,
     );
 
     const component = wrapper.getByTestId('testID');
@@ -60,7 +59,7 @@ describe('NotificationItem component', () => {
     expect(onPress).toHaveBeenCalled();
   });
 
-  it(`should call prop onPressOption when click item option menu`, async () => {
+  it('should call prop onPressOption when click item option menu', async () => {
     const state = { ...initialState };
     // @ts-ignore
     state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0] } };
@@ -70,10 +69,10 @@ describe('NotificationItem component', () => {
     const wrapper = renderWithRedux(
       <NotificationItem
         {...LOAD_MORE_RESPONSE[0]}
-        testID={`testID`}
+        testID="testID"
         onPress={onPress}
         onPressOption={onPressOption}
-      />, store
+      />, store,
     );
 
     const menuComponent = wrapper.getByTestId(
@@ -85,13 +84,13 @@ describe('NotificationItem component', () => {
     expect(onPressOption).toHaveBeenCalled();
   });
 
-  it(`should show indicator when notification is not read`, async () => {
+  it('should show indicator when notification is not read', async () => {
     const onPress = jest.fn();
     const onPressOption = jest.fn();
     const wrapper = renderWithRedux(
       <NotificationItem
         {...LOAD_MORE_RESPONSE[0]}
-        testID={`testID`}
+        testID="testID"
         onPress={onPress}
         onPressOption={onPressOption}
       />,
@@ -100,7 +99,7 @@ describe('NotificationItem component', () => {
     expect(component).not.toBeNull();
   });
 
-  it(`should not show indicator when notification is read`, async () => {
+  it('should not show indicator when notification is read', async () => {
     const state = { ...initialState };
     // @ts-ignore
     state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0], isRead: true } };
@@ -111,7 +110,7 @@ describe('NotificationItem component', () => {
     const wrapper = renderWithRedux(
       <NotificationItem
         {...LOAD_MORE_RESPONSE[0]}
-        testID={`testID`}
+        testID="testID"
         onPress={onPress}
         onPressOption={onPressOption}
       />,

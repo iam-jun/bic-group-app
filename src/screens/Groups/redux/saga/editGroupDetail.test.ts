@@ -14,10 +14,10 @@ describe('Edit group detail saga', () => {
   it('should edit group detail with full payload successfully', () => {
     const action = {
       type: 'test',
-      payload: { data: { id: 3 }, editFieldName: 'Description', callback },
+      payload: { data: { id: '3' }, editFieldName: 'Description', callback },
     };
     const resp = {
-      data: { group: { id: 10 } } as IGroupDetail,
+      data: { group: { id: '10' } } as IGroupDetail,
     };
 
     return expectSaga(editGroupDetail, action)
@@ -40,7 +40,7 @@ describe('Edit group detail saga', () => {
   it('should edit group detail without editFieldName successfully', () => {
     const action = {
       type: 'test',
-      payload: { data: { id: 1 }, callback },
+      payload: { data: { id: '1' }, callback },
     };
     const resp = {
       data: {} as IGroupDetail,
@@ -55,10 +55,10 @@ describe('Edit group detail saga', () => {
   it('should edit group detail without callback fn successfully', () => {
     const action = {
       type: 'test',
-      payload: { data: { id: 3 }, editFieldName: 'Description' },
+      payload: { data: { id: '3' }, editFieldName: 'Description' },
     };
     const resp = {
-      data: { group: { id: 10 } } as IGroupDetail,
+      data: { group: { id: '10' } } as IGroupDetail,
     };
 
     return expectSaga(editGroupDetail, action)
@@ -81,7 +81,7 @@ describe('Edit group detail saga', () => {
   it('should call server and server throws an error', () => {
     const action = {
       type: 'test',
-      payload: { data: { id: 1 } },
+      payload: { data: { id: '1' } },
     };
 
     return expectSaga(editGroupDetail, action)

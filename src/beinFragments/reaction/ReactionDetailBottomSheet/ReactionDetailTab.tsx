@@ -7,7 +7,6 @@ import { ReactionType } from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import spacing from '~/theme/spacing';
-import { IReaction } from '~/interfaces/IPost';
 
 export interface ReactionDetailTabProps {
   reactionType: ReactionType;

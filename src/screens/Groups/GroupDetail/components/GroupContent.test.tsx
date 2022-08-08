@@ -2,10 +2,10 @@ import React from 'react';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
-import {createTestStore, renderWithRedux, fireEvent} from '~/test/testUtils';
+import { createTestStore, renderWithRedux, fireEvent } from '~/test/testUtils';
 import GroupContent from './GroupContent';
 import initialState from '~/store/initialState';
-import {groupDetailData, groupPostData} from '~/test/mock_data/group';
+import { groupDetailData, groupPostData } from '~/test/mock_data/group';
 
 describe('GroupContent component', () => {
   const getGroupPosts = jest.fn();
@@ -13,11 +13,11 @@ describe('GroupContent component', () => {
   const onGetInfoLayout = jest.fn();
 
   it('renders Post button when user is a group member correctly', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     const store = createTestStore(state);
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -27,11 +27,11 @@ describe('GroupContent component', () => {
   });
 
   it('should not render Post button when user is not a group member correctly', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData, join_status: 1};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData, join_status: 1 };
     const store = createTestStore(state);
 
-    const {queryByTestId} = renderWithRedux(
+    const { queryByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -40,11 +40,11 @@ describe('GroupContent component', () => {
   });
 
   it('renders Channel button correctly', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     const store = createTestStore(state);
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -53,11 +53,11 @@ describe('GroupContent component', () => {
   });
 
   it('renders About button correctly', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     const store = createTestStore(state);
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -66,11 +66,11 @@ describe('GroupContent component', () => {
   });
 
   it('renders Members button correctly when user is not a member but the group is public', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData, join_status: 1};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData, join_status: 1 };
     const store = createTestStore(state);
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -79,15 +79,15 @@ describe('GroupContent component', () => {
   });
 
   it('should not render Members button correctly when user is not a member and the group is private', () => {
-    const state = {...initialState};
+    const state = { ...initialState };
     state.groups.groupDetail = {
       ...groupDetailData,
       join_status: 1,
-      group: {...groupDetailData.group, privacy: 'PRIVATE'},
+      group: { ...groupDetailData.group, privacy: 'PRIVATE' },
     };
     const store = createTestStore(state);
 
-    const {queryByTestId} = renderWithRedux(
+    const { queryByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -96,11 +96,11 @@ describe('GroupContent component', () => {
   });
 
   it('renders Files button correctly', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     const store = createTestStore(state);
 
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -109,16 +109,14 @@ describe('GroupContent component', () => {
   });
 
   it('should navigate to screen About when pressing About button', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     const store = createTestStore(state);
 
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
-    const {getByTestId} = renderWithRedux(
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -130,16 +128,14 @@ describe('GroupContent component', () => {
   });
 
   it('should navigate to screen Members when pressing Members button', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     const store = createTestStore(state);
 
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
-    const {getByTestId} = renderWithRedux(
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -151,16 +147,14 @@ describe('GroupContent component', () => {
   });
 
   it('should navigate to screen Files when pressing Files button', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     const store = createTestStore(state);
 
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
-    const {getByTestId} = renderWithRedux(
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -172,16 +166,14 @@ describe('GroupContent component', () => {
   });
 
   it('should navigate to screen Channel when pressing Channel button', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     const store = createTestStore(state);
 
     const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
-    const {getByTestId} = renderWithRedux(
+    const rootNavigation = { navigate };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+    const { getByTestId } = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} onScroll={onScroll} onGetInfoLayout={onGetInfoLayout} />,
       store,
     );
@@ -193,8 +185,8 @@ describe('GroupContent component', () => {
   });
 
   it('should render posts data correctly', () => {
-    const state = {...initialState};
-    state.groups.groupDetail = {...groupDetailData};
+    const state = { ...initialState };
+    state.groups.groupDetail = { ...groupDetailData };
     // @ts-ignore
     state.groups.posts.data = [...groupPostData];
     const store = createTestStore(state);
