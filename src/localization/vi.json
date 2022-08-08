@@ -530,6 +530,7 @@
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
     "people_can_share": "Mọi người có thể chia sẻ trên bài viết",
     "people_can_react": "Mọi người có thể tương tác trên bài viết",
+    "text_cannot_comment_and_react": "Không thể tương tác và bình luận trên bài viết này",
     "auto_saved": "Bài viết đã lưu tự động",
     "saved_to_draft": "Bài viết đã lưu vào nháp.",
     "text_review_markdown": "Xem trước nội dung",

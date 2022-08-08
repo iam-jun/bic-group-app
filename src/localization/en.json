@@ -581,6 +581,7 @@
     "people_can_comment": "People can comment on this post",
     "people_can_share": "People can share on this post",
     "people_can_react": "People can react on this post",
+    "text_cannot_comment_and_react":"React and comment of this post are not available",
     "auto_saved": "Post auto-saved",
     "saved_to_draft": "Post Saved to Draft.",
     "text_review_markdown": "Review Markdown",
