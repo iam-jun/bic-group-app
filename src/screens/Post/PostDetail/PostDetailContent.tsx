@@ -459,7 +459,6 @@ const _PostDetailContent = (props: any) => {
   const onscroll = () => {
     DeviceEventEmitter.emit('stopAllVideo');
   };
-  console.log('setting?.canComment', setting?.canComment);
 
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;

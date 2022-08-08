@@ -386,12 +386,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       files,
     };
     const setting: any = {};
-    // if (important?.active) {
     setting.isImportant = important?.active;
     setting.importantExpiredAt = important?.expires_time || 0;
     setting.canComment = canComment;
     setting.canReact = canReact;
-    // }
 
     const newMentions = getMentionsFromContent(
       _content, tempMentions,
