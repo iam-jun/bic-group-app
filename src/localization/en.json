@@ -417,6 +417,15 @@
       "description": "The video of your post is being processed. We'll send you a notification when it's completed"
     }
   },
+  "menu": {
+    "title_discover": "Discover",
+    "title_your_community": "Your community",
+    "title_create_post": "Create a Post",
+    "title_draft": "Draft",
+    "title_saved_items": "Saved Items",
+    "title_media": "Media",
+    "title_settings": "Settings"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",

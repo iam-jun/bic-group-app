@@ -364,6 +364,15 @@
       "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
     }
   },
+  "menu": {
+    "title_discover": "Khám phá",
+    "title_your_community": "Cộng đồng của bạn",
+    "title_create_post": "Đăng bài",
+    "title_draft": "Nháp",
+    "title_saved_items": "Đã lưu",
+    "title_media": "Media",
+    "title_settings": "Cài đặt"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Chi tiết bài viết",
