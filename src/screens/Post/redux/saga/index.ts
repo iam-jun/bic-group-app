@@ -229,14 +229,14 @@ function* postRetryAddComment({
   payload: IReaction;
 }) {
   const {
-    activity_id, userId, data, parentCommentId, localId,
+    postId, actor, parentCommentId, localId,
   } = payload;
   const currentComment: IPayloadCreateComment = {
     localId,
-    postId: activity_id,
+    postId,
     parentCommentId,
-    commentData: data,
-    userId,
+    commentData: { ...payload },
+    userId: actor?.id,
   };
   /**
    * preComment exists only when creating new comment from text input

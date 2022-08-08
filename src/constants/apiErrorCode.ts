@@ -12,6 +12,7 @@ const POST = {
   copiedCommentIsDeleted: 'app.comment.not_existing.app_error',
   postPrivacy: 'api.forbidden',
   postDeleted: 'app.post.not_existing.app_error',
+  postCanNotCommentOrReact: 'api.validation_error',
 };
 
 const GROUP = {
