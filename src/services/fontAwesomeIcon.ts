@@ -98,6 +98,7 @@ import { faBookOpen } from '@fortawesome/pro-regular-svg-icons/faBookOpen';
 import { faCircleQuestion } from '@fortawesome/pro-regular-svg-icons/faCircleQuestion';
 import { faCommentSmile } from '@fortawesome/pro-regular-svg-icons/faCommentSmile';
 import { faCreditCard } from '@fortawesome/pro-regular-svg-icons/faCreditCard';
+import { faCreditCard as faCreditCardSolid } from '@fortawesome/pro-solid-svg-icons/faCreditCard';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { faShieldCheck } from '@fortawesome/pro-regular-svg-icons/faShieldCheck';
 import { faDesktop } from '@fortawesome/pro-regular-svg-icons/faDesktop';
@@ -119,6 +120,11 @@ import { faCompass as faCompassSolid } from '@fortawesome/pro-solid-svg-icons/fa
 import { faWallet } from '@fortawesome/pro-regular-svg-icons/faWallet';
 import { faWallet as faWalletSolid } from '@fortawesome/pro-solid-svg-icons/faWallet';
 import { faPhotoFilm as faPhotoFilmSolid } from '@fortawesome/pro-solid-svg-icons/faPhotoFilm';
+import { faBrightness as faBrightnessSolid } from '@fortawesome/pro-solid-svg-icons/faBrightness';
+import { faFolderGear as faFolderGearSolid } from '@fortawesome/pro-solid-svg-icons/faFolderGear';
+import { faMessagesQuestion as faMessagesQuestionSolid } from '@fortawesome/pro-solid-svg-icons/faMessagesQuestion';
+import { faArrowRightFromBracket as faArrowRightFromBracketSolid }
+  from '@fortawesome/pro-solid-svg-icons/faArrowRightFromBracket';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -238,6 +244,7 @@ export const initFontAwesomeIcon = () => {
     faCircleQuestion,
     faCommentSmile,
     faCreditCard,
+    faCreditCardSolid,
     faUser,
     faShieldCheck,
     faDesktop,
@@ -259,6 +266,10 @@ export const initFontAwesomeIcon = () => {
     faWallet,
     faWalletSolid,
     faPhotoFilmSolid,
+    faBrightnessSolid,
+    faFolderGearSolid,
+    faMessagesQuestionSolid,
+    faArrowRightFromBracketSolid,
   );
 };
 
@@ -363,6 +374,7 @@ export const fontAwesomeIcons = {
   CircleQuestion: 'fa-regular fa-circle-question',
   CommentSmile: 'fa-regular fa-comment-smile',
   CreditCard: 'fa-regular fa-credit-card',
+  CreditCardSolid: 'fa-solid fa-credit-card',
   User: 'fa-regular fa-user',
   ShieldCheck: 'fa-regular fa-shield-check',
   Monitor: 'fa-regular fa-desktop',
@@ -384,6 +396,10 @@ export const fontAwesomeIcons = {
   Wallet: 'fa-regular fa-wallet',
   WalletSolid: 'fa-solid fa-wallet',
   PhotoFilmSolid: 'fa-solid fa-photo-film',
+  BrightnessSolid: 'fa-solid fa-brightness',
+  FolderGear: 'fa-solid fa-folder-gear',
+  MessagesQuestion: 'fa-solid fa-messages-question',
+  ArrowRightFromBracket: 'fa-solid fa-arrow-right-from-bracket',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
