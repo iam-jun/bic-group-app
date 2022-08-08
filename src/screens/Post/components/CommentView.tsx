@@ -67,6 +67,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const currentUserId = useUserIdAuth();
 
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
+  const setting = useKeySelector(postKeySelector.postSettingById(postId));
+
   const _commentData = comment || commentData || {};
   const {
     id,
@@ -276,14 +278,17 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const renderReactionsReplyView = () => (
     isActive && (
     <View style={styles.buttonContainer}>
-      <ReactionView
-        ownerReactions={ownerReactions}
-        reactionsCount={reactionsCount}
-        onAddReaction={onAddReaction}
-        onRemoveReaction={onRemoveReaction}
-        onPressSelectReaction={onPressReact}
-        onLongPressReaction={onLongPressReaction}
-      />
+      { !!setting?.canReact
+        ? (
+          <ReactionView
+            ownerReactions={ownerReactions}
+            reactionsCount={reactionsCount}
+            onAddReaction={onAddReaction}
+            onRemoveReaction={onRemoveReaction}
+            onPressSelectReaction={onPressReact}
+            onLongPressReaction={onLongPressReaction}
+          />
+        ) : <View style={{ flex: 1 }} />}
       <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
         <Text.ButtonS style={styles.buttonReply} color={colors.gray50}>
           Reply
