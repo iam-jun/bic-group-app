@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BannerImportant from './BannerImportant'
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 
 describe('BannerImportant component', () => {
   it('renders active banner correctly', () => {
@@ -13,7 +13,7 @@ describe('BannerImportant component', () => {
 
   it('renders inactive banner correctly', () => {
     const rendered = renderWithRedux(
-      <BannerImportant markedAsRead={true} />,
+      <BannerImportant markedAsRead />,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
   })

@@ -1,6 +1,4 @@
-import {
-  StyleProp, StyleSheet, TouchableOpacity, ViewStyle,
-} from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text, { TextVariant } from '../Text';
@@ -8,17 +6,10 @@ import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 import elevation from '~/theme/elevations';
 import { useKeySelector } from '~/hooks/selector';
+import { TabButtonProps } from './TabButton';
 
-interface PillTabButtonProps {
-  testID?: string;
-  children?: string;
-  style?: StyleProp<ViewStyle>;
-  isSelected?: boolean;
+export interface PillTabButtonProps extends TabButtonProps {
   type?: 'primary' | 'secondary' | 'neutral';
-  size?: 'large' | 'medium' | 'small';
-  useI18n?: boolean;
-  disabled?: boolean;
-  onPress?: () => void;
 }
 
 const textVariant = {

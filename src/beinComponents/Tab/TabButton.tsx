@@ -7,7 +7,7 @@ import { useKeySelector } from '~/hooks/selector';
 import Text, { TextVariant } from '../Text';
 import { spacing } from '~/theme';
 
-interface TabButtonProps {
+export interface TabButtonProps {
   testID?: string;
   children?: string;
   style?: StyleProp<ViewStyle>;

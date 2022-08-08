@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native'
-import PillTabButton from '~/beinComponents/TabButton/PillTabButton'
+import PillTabButton from '~/beinComponents/Tab/PillTabButton'
 import ViewSpacing from '~/beinComponents/ViewSpacing'
 import { spacing } from '~/theme'
 

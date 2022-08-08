@@ -1,4 +1,6 @@
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native'
 import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native'
 import Icon from '../Icon';
@@ -10,7 +12,7 @@ interface BannerImportantProps {
   markedAsRead?: boolean;
 }
 
-const BannerImportant = ({style, markedAsRead}: BannerImportantProps) => {
+const BannerImportant = ({ style, markedAsRead }: BannerImportantProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles();
   const { colors } = theme;
@@ -19,19 +21,19 @@ const BannerImportant = ({style, markedAsRead}: BannerImportantProps) => {
     active: {
       textColor: colors.white,
       backgroundColor: colors.purple50,
-      iconColor: colors.white
+      iconColor: colors.white,
     },
     inactive: {
       textColor: colors.neutral40,
       backgroundColor: colors.neutral20,
       iconColor: colors.neutral40,
-    }
+    },
   }
 
-  const {textColor, backgroundColor, iconColor} = markedAsRead ? importantStyles.inactive : importantStyles.active
+  const { textColor, backgroundColor, iconColor } = markedAsRead ? importantStyles.inactive : importantStyles.active
 
   return (
-    <View style={[styles.container, {backgroundColor}, style]}>
+    <View style={[styles.container, { backgroundColor }, style]}>
       <Icon
         icon="StarSolid"
         size={14}
@@ -46,16 +48,14 @@ const BannerImportant = ({style, markedAsRead}: BannerImportantProps) => {
 
 export default BannerImportant
 
-const createStyles = () => {
-  return StyleSheet.create({
-    container: {
-      paddingHorizontal: spacing.padding.large,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    textView: {
-      paddingVertical: spacing.padding.xSmall,
-      marginLeft: spacing.margin.small,
-    },
-  })
-}
+const createStyles = () => StyleSheet.create({
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textView: {
+    paddingVertical: spacing.padding.xSmall,
+    marginLeft: spacing.margin.small,
+  },
+})
