@@ -136,13 +136,13 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
           return {
-            screen: 'home',
-            params: { screen: 'post-detail', params: { post_id: postId } },
+            screen: 'post-detail',
+            params: { post_id: postId },
           };
         case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
           return {
-            screen: 'home',
-            params: { screen: 'draft-post' },
+            screen: 'draft-post',
+            params: {},
           };
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR_AGGREGATED:
@@ -151,11 +151,8 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
         case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
           return {
-            screen: 'home',
-            params: {
-              screen: 'post-detail',
-              params: { post_id: postId, focus_comment: true },
-            },
+            screen: 'post-detail',
+            params: { post_id: postId, focus_comment: true },
           };
 
         case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_COMMENT:
@@ -166,48 +163,36 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR:
         case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
           return {
-            screen: 'home',
-            params: {
-              screen: 'comment-detail',
-              params: { postId, commentId },
-            },
+            screen: 'comment-detail',
+            params: { postId, commentId },
           };
 
         case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
         case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
         case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED:
           return {
-            screen: 'home',
+            screen: 'comment-detail',
             params: {
-              screen: 'comment-detail',
-              params: {
-                postId,
-                commentId: childCommentId,
-                parentId: commentId,
-              },
+              postId,
+              commentId: childCommentId,
+              parentId: commentId,
             },
           };
         case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
         case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
           if (!!communityId) {
             return {
-              screen: 'communities',
+              screen: 'community-members',
               params: {
-                screen: 'community-members',
-                params: {
-                  communityId,
-                },
+                communityId,
               },
             };
           }
           if (!!groupId) {
             return {
-              screen: 'communities',
+              screen: 'group-members',
               params: {
-                screen: 'group-members',
-                params: {
-                  groupId,
-                },
+                groupId,
               },
             };
           }
@@ -220,23 +205,17 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
           if (!!communityId) {
             return {
-              screen: 'communities',
+              screen: 'community-detail',
               params: {
-                screen: 'community-detail',
-                params: {
-                  communityId,
-                },
+                communityId,
               },
             };
           }
           if (!!groupId) {
             return {
-              screen: 'communities',
+              screen: 'group-detail',
               params: {
-                screen: 'group-detail',
-                params: {
-                  groupId,
-                },
+                groupId,
               },
             };
           }
@@ -244,22 +223,16 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
           return {
-            screen: 'communities',
+            screen: !!communityId
+              ? 'community-pending-members'
+              : 'group-pending-members',
             params: {
-              screen: !!communityId
-                ? 'community-pending-members'
-                : 'group-pending-members',
-              params: {
-                id: !!communityId ? communityId : groupId || '',
-              },
+              id: !!communityId ? communityId : groupId || '',
             },
           };
         default:
           console.warn(`Notification type ${type} have not implemented yet`);
-          return {
-            screen: 'home',
-            params: { screen: 'post-detail', params: { post_id: postId } },
-          };
+          return { screen: 'post-detail', params: { post_id: postId } };
       }
     }
   }
