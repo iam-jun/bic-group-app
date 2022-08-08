@@ -76,7 +76,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     theme, insets,
   );
 
-  const refreshControlOffset = insets.top + dimension.headerHeight;
+  const refreshControlOffset = insets.top + dimension.homeHeaderHeight;
 
   const emit = (
     event: string, params?: any,

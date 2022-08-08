@@ -66,7 +66,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
       };
       getDataPromise?.(param)
         ?.then?.((_data: any) => {
-          setData(data.concat(_data || []));
+          setData((previousData:any[]) => previousData.concat(_data || []));
         })
         .catch((e: any) => {
           console.log(`\x1b[31m🐣️ ReactionDetailTab get more error ${e}\x1b[0m`);
@@ -94,6 +94,10 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
 
   const renderHeader = () => <View style={styles.header} />;
 
+  const keyExtractor = (
+    item, index,
+  ) => `reaction_tab_detail_${item?.id}`
+
   return (
     <View style={{ height }}>
       <FlatList
@@ -104,6 +108,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
         ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
         onEndReached={onLoadMore}
+        keyExtractor={keyExtractor}
       />
     </View>
   );
