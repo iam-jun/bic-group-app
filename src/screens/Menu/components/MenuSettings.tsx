@@ -94,7 +94,6 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     itemContainer: {
       flexDirection: 'row',
-      paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
     },
   });
