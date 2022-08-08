@@ -40,7 +40,6 @@ const UserProfile = (props: any) => {
     username,
     email,
     city,
-    country,
     language,
     phone,
     countryCode,
@@ -196,7 +195,7 @@ const UserProfile = (props: any) => {
               email={email}
               phone={phone}
               city={city}
-              country={country}
+              countryCode={countryCode}
             />
             <Divider />
             <Experiences />

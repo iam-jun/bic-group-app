@@ -72,7 +72,7 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.bodyM,
       // lineHeight: lineHeights.bodyM,
-      color: colors.neutral40,
+      color: colors.neutral80,
     },
     bodyMMedium: {
       fontFamily: fontFamilies.BeVietnamProMedium,

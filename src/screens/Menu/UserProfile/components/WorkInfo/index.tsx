@@ -1,19 +1,22 @@
-import { StyleSheet, View } from 'react-native'
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native'
 import React from 'react'
 import Text from '~/beinComponents/Text';
 
 interface Props {
-    latestWork?: {
-        titlePosition: string;
-        company: string;
-    }
+  style?: StyleProp<ViewStyle>;
+  latestWork?: {
+      titlePosition: string;
+      company: string;
+  }
 }
 
-const WorkInfo = ({ latestWork }: Props) => {
+const WorkInfo = ({ style, latestWork }: Props) => {
   if (!latestWork) return null;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text.BodySMedium>
         {`${latestWork?.titlePosition} `}
         <Text.BodySMedium>{` • ${latestWork?.company}`}</Text.BodySMedium>
