@@ -28,7 +28,7 @@ const TabButton = ({
   testID,
   children,
   style,
-  isSelected = false,
+  isSelected = true,
   size = 'medium',
   useI18n,
   disabled,

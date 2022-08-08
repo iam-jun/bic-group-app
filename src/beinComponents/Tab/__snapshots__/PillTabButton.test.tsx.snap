@@ -1,0 +1,228 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PillTabButton renders selected button with type primary and size medium correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#F4EFFB",
+      "borderRadius": 100,
+      "boxShadow": Object {
+        "elevation": 1,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.08,
+        "shadowRadius": 1,
+      },
+      "justifyContent": "center",
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 8,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
+        },
+        Object {},
+        Array [
+          Object {},
+          Object {
+            "color": "#7335C0",
+          },
+        ],
+      ]
+    }
+  >
+    Tab button
+  </Text>
+</View>
+`;
+
+exports[`PillTabButton renders selected button with type secondary and size large correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#EBF4FF",
+      "borderRadius": 100,
+      "boxShadow": Object {
+        "elevation": 1,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.08,
+        "shadowRadius": 1,
+      },
+      "justifyContent": "center",
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 8,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 15,
+        },
+        Object {},
+        Array [
+          Object {},
+          Object {
+            "color": "#007AFF",
+          },
+        ],
+      ]
+    }
+  >
+    Tab button
+  </Text>
+</View>
+`;
+
+exports[`PillTabButton renders selected button with type secondary and size small correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#F1F2F8",
+      "borderRadius": 100,
+      "boxShadow": Object {
+        "elevation": 1,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.08,
+        "shadowRadius": 1,
+      },
+      "justifyContent": "center",
+      "opacity": 1,
+      "paddingHorizontal": 12,
+      "paddingVertical": 6,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 11,
+        },
+        Object {},
+        Array [
+          Object {},
+          Object {
+            "color": "#353E6E",
+          },
+        ],
+      ]
+    }
+  >
+    Tab button
+  </Text>
+</View>
+`;
+
+exports[`PillTabButton renders unselected button with size medium correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "borderRadius": 100,
+      "boxShadow": Object {
+        "elevation": 1,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.08,
+        "shadowRadius": 1,
+      },
+      "justifyContent": "center",
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 8,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
+        },
+        Object {},
+        Array [
+          Object {},
+          Object {
+            "color": "#353E6E",
+          },
+        ],
+      ]
+    }
+  >
+    Tab button
+  </Text>
+</View>
+`;

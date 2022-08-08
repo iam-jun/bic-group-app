@@ -210,8 +210,6 @@ const Section1 = () => {
   );
 
   const renderTab = () => {
-    const [selected, setSelected] = useState(true);
-    const onPressTab = () => setSelected(!selected);
     const [selectedIndex, setSelectedIndex] = useState(0);
     
     const onPress = (item: any, index: number) => {
@@ -274,7 +272,7 @@ const Section1 = () => {
           </View>
           
           <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-            <PillTabButton size='small'>
+            <PillTabButton size='small' isSelected={true}>
               Tab button
             </PillTabButton>
             <PillTabButton size='small' isSelected={false}>
@@ -311,16 +309,6 @@ const Section1 = () => {
           <TabButton isSelected={false} size='large'>
             Tab button
           </TabButton>
-        </View>
-
-        <Text.H5 style={{marginTop: spacing?.margin.base}} >{`Demo press button: Press the buttons`}</Text.H5>
-        <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <TabButton isSelected={selected} size='large' onPress={onPressTab}>
-            Tab button
-          </TabButton>
-          <PillTabButton type='primary' isSelected={selected} size='large' onPress={onPressTab}>
-            Tab button
-          </PillTabButton>
         </View>
 
         <Text.H5 style={{marginTop: spacing?.margin.base}} >{`Demo Tab bar`}</Text.H5>
