@@ -15,8 +15,9 @@ import { IToastMessage } from '~/interfaces/common';
 import { showHideToastMessage } from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 import spacing from '~/theme/spacing';
-import TabButton from '~/beinComponents/TabButton';
+import PillTabButton from '~/beinComponents/TabButton/PillTabButton';
 import BannerImportant from '~/beinComponents/Banner/BannerImportant';
+import TabButton from '~/beinComponents/TabButton/TabButton';
 
 const Section1 = () => {
   const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
@@ -25,6 +26,9 @@ const Section1 = () => {
   const [showWarning, setShowWarning] = useState(true);
   const [showSuccess, setShowSuccess] = useState(true);
   const dispatch = useDispatch();
+  const [selected, setSelected] = useState(true)
+
+  const onPressTab = () => setSelected(!selected)
 
   // const copyToken = async () => {
   //   dispatch(copyDeviceToken());
@@ -209,66 +213,106 @@ const Section1 = () => {
   const renderTab = () => renderSection('Tab Button', 
   <View style={{marginHorizontal: spacing?.margin.base }}>
     <View style={{marginVertical: spacing?.margin.tiny}}>
-      <Text.H5>{`<TabButton size='large'></TabButton>`}</Text.H5>
+      <Text.H5>{`<PillTabButton size='large'></PillTabButton>`}</Text.H5>
       <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <TabButton type='primary' size='large'>
+        <PillTabButton type='primary' size='large'>
           Tab button
-        </TabButton>
-        <TabButton type='secondary' size='large'>
+        </PillTabButton>
+        <PillTabButton type='secondary' size='large'>
           Tab button
-        </TabButton>
+        </PillTabButton>
       </View>
       
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-        <TabButton size='large'>
+        <PillTabButton size='large'>
           Tab button
-        </TabButton>
-        <TabButton size='large' isSelected={false}>
+        </PillTabButton>
+        <PillTabButton size='large' isSelected={false}>
           Tab button
-        </TabButton>
+        </PillTabButton>
       </View>
     </View>
 
     <View style={{marginVertical: spacing?.margin.tiny}}>
-      <Text.H5>{`<TabButton size='medium'></TabButton>`}</Text.H5>
+      <Text.H5>{`<PillTabButton size='medium'></PillTabButton>`}</Text.H5>
       <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <TabButton type='primary' size='medium'>
+        <PillTabButton type='primary' size='medium'>
           Tab button
-        </TabButton>
-        <TabButton type='secondary' size='medium'>
+        </PillTabButton>
+        <PillTabButton type='secondary' size='medium'>
           Tab button
-        </TabButton>
+        </PillTabButton>
       </View>
       
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-        <TabButton size='medium'>
+        <PillTabButton size='medium'>
           Tab button
-        </TabButton>
-        <TabButton size='medium' isSelected={false}>
+        </PillTabButton>
+        <PillTabButton size='medium' isSelected={false}>
           Tab button
-        </TabButton>
+        </PillTabButton>
       </View>
     </View>
 
     <View style={{marginVertical: spacing?.margin.tiny}}>
-      <Text.H5>{`<TabButton size='small'></TabButton>`}</Text.H5>
+      <Text.H5>{`<PillTabButton size='small'></PillTabButton>`}</Text.H5>
       <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <TabButton type='primary' size='small'>
+        <PillTabButton type='primary' size='small'>
           Tab button
-        </TabButton>
-        <TabButton type='secondary' size='small'>
+        </PillTabButton>
+        <PillTabButton type='secondary' size='small'>
           Tab button
-        </TabButton>
+        </PillTabButton>
       </View>
       
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-        <TabButton size='small'>
+        <PillTabButton size='small'>
           Tab button
-        </TabButton>
-        <TabButton size='small' isSelected={false}>
+        </PillTabButton>
+        <PillTabButton size='small' isSelected={false}>
           Tab button
-        </TabButton>
+        </PillTabButton>
       </View>
+    </View>
+
+    <Text.H5 style={{marginTop: spacing?.margin.base}}>{`<TabButton size='small'></TabButton>`}</Text.H5>
+    <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+      <TabButton isSelected={true} size='small'>
+        Tab button
+      </TabButton>
+      <TabButton isSelected={false} size='small'>
+        Tab button
+      </TabButton>
+    </View>
+
+    <Text.H5 style={{marginTop: spacing?.margin.base}} >{`<TabButton size='medium'></TabButton>`}</Text.H5>
+    <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+      <TabButton isSelected={true} size='medium'>
+        Tab button
+      </TabButton>
+      <TabButton isSelected={false} size='medium'>
+        Tab button
+      </TabButton>
+    </View>
+
+    <Text.H5 style={{marginTop: spacing?.margin.base}} >{`<TabButton size='large'></TabButton>`}</Text.H5>
+    <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+      <TabButton isSelected={true} size='large'>
+        Tab button
+      </TabButton>
+      <TabButton isSelected={false} size='large'>
+        Tab button
+      </TabButton>
+    </View>
+
+    <Text.H5 style={{marginTop: spacing?.margin.base}} >{`Demo press button: Press the buttons`}</Text.H5>
+    <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+      <TabButton isSelected={selected} size='large' onPress={onPressTab}>
+        Tab button
+      </TabButton>
+      <PillTabButton type='primary' isSelected={selected} size='large' onPress={onPressTab}>
+        Tab button
+      </PillTabButton>
     </View>
   </View>);
 

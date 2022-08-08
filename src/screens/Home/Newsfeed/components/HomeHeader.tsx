@@ -14,7 +14,7 @@ import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 
 import BicHomeLogo from '~/../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';
-import TabButton from '~/beinComponents/TabButton';
+import PillTabButton from '~/beinComponents/TabButton/PillTabButton';
 import { useBaseHook } from '~/hooks';
 import HomeHeaderButton from '~/screens/Home/Newsfeed/components/HomeHeaderButton';
 import { homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
@@ -88,12 +88,12 @@ const HomeHeader: FC<HomeHeaderProps> = ({
         </Animated.View>
         <View style={styles.tabContainer}>
           <View style={styles.tabs}>
-            <TabButton size="small" type="primary" style={styles.tabButton}>
+            <PillTabButton size="small" type="primary" style={styles.tabButton}>
               {t('home:title_timeline')}
-            </TabButton>
-            <TabButton size="small" type="primary" isSelected={false}>
+            </PillTabButton>
+            <PillTabButton size="small" type="primary" isSelected={false}>
               {t('home:title_important')}
-            </TabButton>
+            </PillTabButton>
           </View>
         </View>
         <HomeHeaderButton

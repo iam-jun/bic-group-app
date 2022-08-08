@@ -9,7 +9,7 @@ import { borderRadius } from '~/theme/spacing';
 import elevation from '~/theme/elevations';
 import { useKeySelector } from '~/hooks/selector';
 
-interface TabButtonProps {
+interface PillTabButtonProps {
   testID?: string;
   children?: string;
   style?: StyleProp<ViewStyle>;
@@ -27,7 +27,7 @@ const textVariant = {
   small: 'tabS' as TextVariant,
 };
 
-const TabButton = ({
+const PillTabButton = ({
   testID,
   children,
   style,
@@ -37,7 +37,7 @@ const TabButton = ({
   useI18n,
   disabled,
   onPress,
-}: TabButtonProps) => {
+}: PillTabButtonProps) => {
   const theme = useTheme();
   const styles = createStyles(theme)
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -58,13 +58,12 @@ const TabButton = ({
         useI18n={useI18n}
       >
         {children}
-
       </Text>
     </TouchableOpacity>
   )
 }
 
-export default TabButton;
+export default PillTabButton;
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
