@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "patch-package && husky install",
-    "precommit": "npm run lint",
+    "precommit": "npm run lint && npm run tsc",
     "lint": "npx eslint --fix .",
     "tsc": "NODE_OPTIONS=--max_old_space_size=12000 tsc",
     "prettier-format": "npx prettier --config .prettierrc.json \"**/*.{js,jsx,ts,tsx}\" --write",
