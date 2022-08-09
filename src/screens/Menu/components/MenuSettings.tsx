@@ -55,11 +55,6 @@ const MenuSettings = () => {
       title: t('menu:title_help_support'),
       onPress: () => dispatch(modalActions.showAlertNewFeature()),
     },
-    {
-      icon: 'ArrowRightFromBracket',
-      title: t('menu:title_logout'),
-      onPress: onLogout,
-    },
   ]
 
   const renderItem = ({ icon, title, onPress }: any) => (
@@ -73,6 +68,10 @@ const MenuSettings = () => {
     <View style={styles.container}>
       <Text.SubtitleM style={styles.textHeader} useI18n>menu:title_settings</Text.SubtitleM>
       {settingItems.map(renderItem)}
+      <Button style={styles.itemContainer} onPress={onLogout}>
+        <Icon tintColor={theme.colors.purple20} icon="ArrowRightFromBracket" />
+        <Text.BodyMMedium style={styles.textLogout} numberOfLines={1}>{t('menu:title_logout')}</Text.BodyMMedium>
+      </Button>
     </View>
   );
 };
@@ -91,6 +90,10 @@ const createStyle = (theme: ExtendedTheme) => {
     textTitle: {
       marginLeft: spacing.margin.large,
       color: colors.neutral40,
+    },
+    textLogout: {
+      marginLeft: spacing.margin.large,
+      color: colors.purple50,
     },
     itemContainer: {
       flexDirection: 'row',
