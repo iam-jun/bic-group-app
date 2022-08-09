@@ -86,7 +86,7 @@ import { faFileXmark } from '@fortawesome/pro-regular-svg-icons/faFileXmark';
 import { faFileExclamation } from '@fortawesome/pro-regular-svg-icons/faFileExclamation';
 import { faSuitcase } from '@fortawesome/pro-regular-svg-icons/faSuitcase';
 import { faStar } from '@fortawesome/pro-regular-svg-icons/faStar';
-import { faStar as faStarSolid} from '@fortawesome/pro-solid-svg-icons/faStar';
+import { faStar as faStarSolid } from '@fortawesome/pro-solid-svg-icons/faStar';
 import { faVideo } from '@fortawesome/pro-regular-svg-icons/faVideo';
 import { faPaperPlaneTop } from '@fortawesome/pro-regular-svg-icons/faPaperPlaneTop';
 import { faBookOpen } from '@fortawesome/pro-regular-svg-icons/faBookOpen';
@@ -105,6 +105,9 @@ import { faFaceSmile } from '@fortawesome/pro-regular-svg-icons/faFaceSmile';
 import { faKeySkeleton } from '@fortawesome/pro-regular-svg-icons/faKeySkeleton';
 import { faCircleMinus } from '@fortawesome/pro-regular-svg-icons/faCircleMinus';
 import { faCirclePlus } from '@fortawesome/pro-regular-svg-icons/faCirclePlus';
+import { faSquare } from '@fortawesome/pro-regular-svg-icons/faSquare';
+import { faSquareCheck as faSquareCheckSolid } from '@fortawesome/pro-solid-svg-icons/faSquareCheck';
+import { faSquareMinus as faSquareMinusSolid } from '@fortawesome/pro-solid-svg-icons/faSquareMinus';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -231,6 +234,9 @@ export const initFontAwesomeIcon = () => {
     faKeySkeleton,
     faCircleMinus,
     faCirclePlus,
+    faSquare,
+    faSquareCheckSolid,
+    faSquareMinusSolid,
   );
 };
 
@@ -342,6 +348,9 @@ export const fontAwesomeIcons = {
   KeySkeleton: 'fa-regular fa-key-skeleton',
   CircleMinus: 'fa-regular fa-circle-minus',
   CirclePlus: 'fa-regular fa-circle-plus',
+  Square: 'fa-regular fa-square',
+  SquareCheckSolid: 'fa-solid fa-square-check',
+  SquareMinus: 'fa-solid fa-square-minus',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
