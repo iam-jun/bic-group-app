@@ -51,8 +51,10 @@ import { faArrowRightFromArc } from '@fortawesome/pro-regular-svg-icons/faArrowR
 import { faImage } from '@fortawesome/pro-regular-svg-icons/faImage';
 import { faImages } from '@fortawesome/pro-regular-svg-icons/faImages';
 import { faPenLine } from '@fortawesome/pro-regular-svg-icons/faPenLine';
+import { faPenLine as faPenLineSolid } from '@fortawesome/pro-solid-svg-icons/faPenLine';
 import { faPaperclip } from '@fortawesome/pro-regular-svg-icons/faPaperclip';
 import { faBell } from '@fortawesome/pro-regular-svg-icons/faBell';
+import { faBell as faBellSolid } from '@fortawesome/pro-solid-svg-icons/faBell';
 import { faBellSlash } from '@fortawesome/pro-regular-svg-icons/faBellSlash';
 import { faUserPlus } from '@fortawesome/pro-regular-svg-icons/faUserPlus';
 import { faMagnifyingGlass } from '@fortawesome/pro-regular-svg-icons/faMagnifyingGlass';
@@ -61,8 +63,10 @@ import { faMessageCheck } from '@fortawesome/pro-regular-svg-icons/faMessageChec
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { faCircleInfo } from '@fortawesome/pro-regular-svg-icons/faCircleInfo';
 import { faShareNodes } from '@fortawesome/pro-regular-svg-icons/faShareNodes';
+import { faShareNodes as faShareNodesSolid } from '@fortawesome/pro-solid-svg-icons/faShareNodes';
 import { faTrashCan } from '@fortawesome/pro-regular-svg-icons/faTrashCan';
 import { faBookmark } from '@fortawesome/pro-regular-svg-icons/faBookmark';
+import { faBookmark as faBookmarkSolid } from '@fortawesome/pro-solid-svg-icons/faBookmark';
 import { faGaugeHigh } from '@fortawesome/pro-regular-svg-icons/faGaugeHigh';
 import { faGauge } from '@fortawesome/pro-regular-svg-icons/faGauge';
 import { faEllipsis } from '@fortawesome/pro-regular-svg-icons/faEllipsis';
@@ -80,6 +84,7 @@ import { faVolumeXmark } from '@fortawesome/pro-regular-svg-icons/faVolumeXmark'
 import { faSitemap } from '@fortawesome/pro-regular-svg-icons/faSitemap';
 import { faCirclePlay } from '@fortawesome/pro-regular-svg-icons/faCirclePlay';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
+import { faBars as faBarsSolid } from '@fortawesome/pro-solid-svg-icons/faBars';
 import { faBug } from '@fortawesome/pro-regular-svg-icons/faBug';
 import { faWifiSlash } from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
 import { faFileXmark } from '@fortawesome/pro-regular-svg-icons/faFileXmark';
@@ -93,6 +98,7 @@ import { faBookOpen } from '@fortawesome/pro-regular-svg-icons/faBookOpen';
 import { faCircleQuestion } from '@fortawesome/pro-regular-svg-icons/faCircleQuestion';
 import { faCommentSmile } from '@fortawesome/pro-regular-svg-icons/faCommentSmile';
 import { faCreditCard } from '@fortawesome/pro-regular-svg-icons/faCreditCard';
+import { faCreditCard as faCreditCardSolid } from '@fortawesome/pro-solid-svg-icons/faCreditCard';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { faShieldCheck } from '@fortawesome/pro-regular-svg-icons/faShieldCheck';
 import { faDesktop } from '@fortawesome/pro-regular-svg-icons/faDesktop';
@@ -100,6 +106,7 @@ import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 import { faShieldHalved } from '@fortawesome/pro-regular-svg-icons/faShieldHalved';
 import { faShieldHalved as faShieldHalvedSolid } from '@fortawesome/pro-solid-svg-icons/faShieldHalved';
 import { faFloppyDisk } from '@fortawesome/pro-regular-svg-icons/faFloppyDisk';
+import { faFloppyDiskPen as FloppyDiskPenSolid } from '@fortawesome/pro-solid-svg-icons/faFloppyDiskPen';
 import { faListUl } from '@fortawesome/pro-regular-svg-icons/faListUl';
 import { faFaceSmile } from '@fortawesome/pro-regular-svg-icons/faFaceSmile';
 import { faKeySkeleton } from '@fortawesome/pro-regular-svg-icons/faKeySkeleton';
@@ -108,6 +115,19 @@ import { faCirclePlus } from '@fortawesome/pro-regular-svg-icons/faCirclePlus';
 import { faSquare } from '@fortawesome/pro-regular-svg-icons/faSquare';
 import { faSquareCheck as faSquareCheckSolid } from '@fortawesome/pro-solid-svg-icons/faSquareCheck';
 import { faSquareMinus as faSquareMinusSolid } from '@fortawesome/pro-solid-svg-icons/faSquareMinus';
+import { faHouse } from '@fortawesome/pro-regular-svg-icons/faHouse';
+import { faHouse as faHouseSolid } from '@fortawesome/pro-solid-svg-icons/faHouse';
+import { faBallot } from '@fortawesome/pro-regular-svg-icons/faBallot';
+import { faBallot as faBallotSolid } from '@fortawesome/pro-solid-svg-icons/faBallot';
+import { faCompass as faCompassSolid } from '@fortawesome/pro-solid-svg-icons/faCompass';
+import { faWallet } from '@fortawesome/pro-regular-svg-icons/faWallet';
+import { faWallet as faWalletSolid } from '@fortawesome/pro-solid-svg-icons/faWallet';
+import { faPhotoFilm as faPhotoFilmSolid } from '@fortawesome/pro-solid-svg-icons/faPhotoFilm';
+import { faBrightness as faBrightnessSolid } from '@fortawesome/pro-solid-svg-icons/faBrightness';
+import { faFolderGear as faFolderGearSolid } from '@fortawesome/pro-solid-svg-icons/faFolderGear';
+import { faMessagesQuestion as faMessagesQuestionSolid } from '@fortawesome/pro-solid-svg-icons/faMessagesQuestion';
+import { faArrowRightFromBracket as faArrowRightFromBracketSolid }
+  from '@fortawesome/pro-solid-svg-icons/faArrowRightFromBracket';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -180,8 +200,10 @@ export const initFontAwesomeIcon = () => {
     faImage,
     faImages,
     faPenLine,
+    faPenLineSolid,
     faPaperclip,
     faBell,
+    faBellSolid,
     faBellSlash,
     faUserPlus,
     faMagnifyingGlass,
@@ -190,8 +212,10 @@ export const initFontAwesomeIcon = () => {
     faClock,
     faCircleInfo,
     faShareNodes,
+    faShareNodesSolid,
     faTrashCan,
     faBookmark,
+    faBookmarkSolid,
     faGaugeHigh,
     faGauge,
     faEllipsis,
@@ -209,6 +233,7 @@ export const initFontAwesomeIcon = () => {
     faSitemap,
     faCirclePlay,
     faBars,
+    faBarsSolid,
     faBug,
     faWifiSlash,
     faFileXmark,
@@ -222,6 +247,7 @@ export const initFontAwesomeIcon = () => {
     faCircleQuestion,
     faCommentSmile,
     faCreditCard,
+    faCreditCardSolid,
     faUser,
     faShieldCheck,
     faDesktop,
@@ -229,6 +255,7 @@ export const initFontAwesomeIcon = () => {
     faShieldHalved,
     faShieldHalvedSolid,
     faFloppyDisk,
+    FloppyDiskPenSolid,
     faListUl,
     faFaceSmile,
     faKeySkeleton,
@@ -237,6 +264,18 @@ export const initFontAwesomeIcon = () => {
     faSquare,
     faSquareCheckSolid,
     faSquareMinusSolid,
+    faHouse,
+    faHouseSolid,
+    faBallot,
+    faBallotSolid,
+    faCompassSolid,
+    faWallet,
+    faWalletSolid,
+    faPhotoFilmSolid,
+    faBrightnessSolid,
+    faFolderGearSolid,
+    faMessagesQuestionSolid,
+    faArrowRightFromBracketSolid,
   );
 };
 
@@ -293,8 +332,10 @@ export const fontAwesomeIcons = {
   Image: 'fa-regular fa-image',
   Images: 'fa-regular fa-images',
   PenLine: 'fa-regular fa-pen-line',
+  PenLineSolid: 'fa-solid fa-pen-line',
   Paperclip: 'fa-regular fa-paperclip',
   Bell: 'fa-regular fa-bell',
+  BellSolid: 'fa-solid fa-bell',
   BellSlash: 'fa-regular fa-bell-slash',
   UserPlus: 'fa-regular fa-user-plus',
   MagnifyingGlass: 'fa-regular fa-magnifying-glass',
@@ -303,8 +344,10 @@ export const fontAwesomeIcons = {
   Clock: 'fa-regular fa-clock',
   CircleInfo: 'fa-regular fa-circle-info',
   ShareNodes: 'fa-regular fa-share-nodes',
+  ShareNodesSolid: 'fa-solid fa-share-nodes',
   TrashCan: 'fa-regular fa-trash-can',
   Bookmark: 'fa-regular fa-bookmark',
+  BookmarkSolid: 'fa-solid fa-bookmark',
   GaugeHigh: 'fa-regular fa-gauge-high',
   Gauge: 'fa-regular fa-gauge',
   Ellipsis: 'fa-regular fa-ellipsis',
@@ -323,6 +366,7 @@ export const fontAwesomeIcons = {
   Sitemap: 'fa-regular fa-sitemap',
   CirclePlay: 'fa-regular fa-circle-play',
   Bars: 'fa-regular fa-bars',
+  BarsSolid: 'fa-solid fa-bars',
   Bug: 'fa-regular fa-bug',
   WifiSlash: 'fa-regular fa-wifi-slash',
   FileXmark: 'fa-regular fa-file-xmark',
@@ -336,6 +380,7 @@ export const fontAwesomeIcons = {
   CircleQuestion: 'fa-regular fa-circle-question',
   CommentSmile: 'fa-regular fa-comment-smile',
   CreditCard: 'fa-regular fa-credit-card',
+  CreditCardSolid: 'fa-solid fa-credit-card',
   User: 'fa-regular fa-user',
   ShieldCheck: 'fa-regular fa-shield-check',
   Monitor: 'fa-regular fa-desktop',
@@ -343,6 +388,7 @@ export const fontAwesomeIcons = {
   ShieldHalved: 'fa-regular fa-shield-halved',
   ShieldHalvedSolid: 'fa-solid fa-shield-halved',
   FloppyDisk: 'fa-regular fa-floppy-disk',
+  FloppyDiskPenSolid: 'fa-solid fa-floppy-disk-pen',
   ListUl: 'fa-regular fa-list-ul',
   FaceSmile: 'fa-regular fa-face-smile',
   KeySkeleton: 'fa-regular fa-key-skeleton',
@@ -351,6 +397,18 @@ export const fontAwesomeIcons = {
   Square: 'fa-regular fa-square',
   SquareCheckSolid: 'fa-solid fa-square-check',
   SquareMinus: 'fa-solid fa-square-minus',
+  House: 'fa-regular fa-house',
+  HouseSolid: 'fa-solid fa-house',
+  Ballot: 'fa-regular fa-ballot',
+  BallotSolid: 'fa-solid fa-ballot',
+  CompassSolid: 'fa-solid fa-compass',
+  Wallet: 'fa-regular fa-wallet',
+  WalletSolid: 'fa-solid fa-wallet',
+  PhotoFilmSolid: 'fa-solid fa-photo-film',
+  BrightnessSolid: 'fa-solid fa-brightness',
+  FolderGear: 'fa-solid fa-folder-gear',
+  MessagesQuestion: 'fa-solid fa-messages-question',
+  ArrowRightFromBracket: 'fa-solid fa-arrow-right-from-bracket',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

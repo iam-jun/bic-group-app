@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { debounce } from 'lodash';
 
 import NodeEmoji from 'node-emoji';
 import { blacklistReactions, ReactionType } from '~/constants/reactions';
@@ -39,7 +40,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
     }, [activeIndex],
   );
 
-  const _onPressTab = (index: number) => {
+  const _onPressTab = debounce((index: number) => {
     setActiveIndex(index);
     if (data.length > index) {
       flatListRef?.current?.scrollToIndex?.({
@@ -48,7 +49,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
         viewPosition: 0.5,
       });
     }
-  };
+  }, 200);
 
   useEffect(
     () => {
