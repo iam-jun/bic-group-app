@@ -6,12 +6,11 @@ import { NotificationsBadgeComponentProps } from '~/beinComponents/Badge/Notific
 import Icon, { IconProps } from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
-import { IOption } from '~/interfaces/IOption';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 
 import spacing from '~/theme/spacing';
 
-interface MenuItemProps extends IOption {
+interface MenuItemProps {
   RightComponent?: React.ReactNode | React.ReactElement;
   onPress?: () => void;
   disabled?: boolean;
@@ -20,6 +19,7 @@ interface MenuItemProps extends IOption {
   badgeColor?: string;
   testID?: string;
   iconProps?: IconProps;
+  [x: string]: any
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
