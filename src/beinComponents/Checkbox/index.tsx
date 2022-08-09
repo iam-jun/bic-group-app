@@ -1,7 +1,7 @@
 import {
-  StyleProp, StyleSheet, TouchableOpacity, ViewStyle,
+  StyleProp, StyleSheet, TouchableOpacity, ViewStyle, View,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '../Icon';
@@ -9,43 +9,52 @@ import { IconType } from '~/resources/icons';
 import Text, { TextVariant } from '../Text';
 import { spacing } from '~/theme';
 
-interface CheckboxProps {
+export interface CheckboxProps {
   testID?: string;
   style?: StyleProp<ViewStyle>
-  type: 'unselect' | 'selected' | 'indeterminate' | 'disabled' | 'disabled-auto-selected'
+  isChecked?: boolean;
+  indeterminate?: boolean;
+  disabled?: 'disabled' | 'disabled-auto-selected';
   size?: 'small' | 'medium';
   label?: string;
   useI18n?: boolean;
-  onPress?: () => void;
+  onPress?: (isChecked?: boolean) => void;
 }
 
 const Checkbox = ({
   testID,
   style,
-  type = 'unselect',
+  isChecked = false,
+  indeterminate = false,
+  disabled,
   size = 'medium',
   label,
   useI18n,
   onPress,
 }: CheckboxProps) => {
-  const [currentState, setCurrentState] = useState(type);
   const theme = useTheme() as ExtendedTheme;
   const { colors } = theme;
-  const isDisabled = type !== 'selected' && type !== 'unselect'
+
+  const [checked, setChecked] = useState(isChecked);
+  const currentState = disabled || (indeterminate
+    ? 'indeterminate' : checked
+      ? 'selected' : 'unselect');
+
+  useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked]);
 
   const onChangeValue = () => {
-    if (currentState === 'selected') {
-      setCurrentState('unselect');
-    } else {
-      setCurrentState('selected');
-    }
+    const newValue = !checked;
+    onPress?.(newValue)
+    setChecked(newValue);
   }
 
   const checkBoxStyles = {
     // based on prop `state`
     unselect: {
       iconName: 'Square' as IconType,
-      iconColor: colors.neutral20,
+      iconColor: colors.neutral40,
       labelColor: colors.neutral80,
     },
     selected: {
@@ -80,16 +89,25 @@ const Checkbox = ({
     },
   }
 
-  const { iconName, iconColor, labelColor } = checkBoxStyles[isDisabled ? type : currentState];
+  const { iconName, iconColor, labelColor } = checkBoxStyles[currentState];
   const { textVariant, iconSize } = checkBoxStyles[size]
 
   return (
     <TouchableOpacity
       testID={testID}
       style={[styles.container, style]}
-      disabled={isDisabled}
+      disabled={!!disabled || !!indeterminate}
       onPress={onChangeValue}
     >
+      <View style={{
+        position: 'absolute',
+        top: 2,
+        left: 2,
+        right: 2,
+        bottom: 2,
+        backgroundColor: colors.neutral,
+      }}
+      />
       <Icon icon={iconName} size={iconSize} tintColor={iconColor} />
       {!!label && (
         <Text

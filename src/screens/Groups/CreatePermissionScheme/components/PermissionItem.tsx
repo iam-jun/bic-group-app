@@ -3,11 +3,10 @@ import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
-import Button from '~/beinComponents/Button';
 import { IPermission, IRole } from '~/interfaces/IGroup';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
+import Checkbox from '~/beinComponents/Checkbox';
 
 export interface PermissionItemProps {
   permission: IPermission;
@@ -41,23 +40,10 @@ const PermissionItem: FC<PermissionItemProps> = ({
   const isRestricted = restrictedRoles?.includes?.(role.type || '');
 
   const _onPress = () => {
-    onPress?.(
-      permission, roleIndex,
-    );
+    onPress?.(permission, roleIndex);
   };
 
-  let icon: any = 'iconCheckboxUnselected';
-  if (isInherited) {
-    icon = 'iconCheckboxInherited';
-  } else if (isChecked) {
-    icon = 'iconCheckboxSelected';
-  } else if (isRestricted) {
-    icon = 'iconCheckboxRestricted';
-  }
-
-  if (isRestricted) {
-    return null;
-  }
+  if (isRestricted) return null;
 
   return (
     <View style={styles.permissionItem}>
@@ -73,9 +59,11 @@ const PermissionItem: FC<PermissionItemProps> = ({
         </Text>
       </View>
       {onPress && (
-        <Button disabled={isRestricted || isInherited} onPress={_onPress}>
-          <Icon icon={icon} />
-        </Button>
+        <Checkbox
+          isChecked={isChecked}
+          disabled={isInherited ? 'disabled-auto-selected' : undefined}
+          onPress={_onPress}
+        />
       )}
     </View>
   );

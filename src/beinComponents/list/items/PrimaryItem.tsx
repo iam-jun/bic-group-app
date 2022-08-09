@@ -8,9 +8,7 @@ import {
 } from 'react-native';
 import Text, { TextProps } from '~/beinComponents/Text';
 import Icon, { IconProps } from '~/beinComponents/Icon';
-import Checkbox, {
-  CheckboxProps,
-} from '~/beinComponents/SelectionControl/Checkbox';
+import Checkbox, { CheckboxProps } from '~/beinComponents/Checkbox';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import { IAction } from '~/constants/commonActions';
 import { IconType } from '~/resources/icons';
@@ -42,7 +40,7 @@ export interface PrimaryItemProps {
   ContentComponent?: React.ReactNode | React.ReactElement;
 
   onPress?: () => void;
-  onPressCheckbox?: (action: IAction) => void;
+  onPressCheckbox?: (isChecked?: boolean) => void;
   onPressToggle?: (action: IAction) => void;
   onPressEdit?: () => void;
   onPressMenu?: (e: any) => void;
@@ -127,7 +125,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Checkbox
             style={styles.iconMarginLeft}
             isChecked={isChecked}
-            onActionPress={onPressCheckbox}
+            onPress={onPressCheckbox}
             {...checkboxProps}
           />
         )}
