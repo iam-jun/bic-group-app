@@ -10,7 +10,6 @@ import Text, { TextProps } from '~/beinComponents/Text';
 import Icon, { IconProps } from '~/beinComponents/Icon';
 import Checkbox, { CheckboxProps } from '~/beinComponents/SelectionControl/Checkbox';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
-import { IAction } from '~/constants/commonActions';
 import { IconType } from '~/resources/icons';
 import Avatar from '~/beinComponents/Avatar';
 import { AvatarProps } from '~/beinComponents/Avatar/AvatarComponent';
@@ -41,7 +40,7 @@ export interface PrimaryItemProps {
 
   onPress?: () => void;
   onPressCheckbox?: (isChecked?: boolean) => void;
-  onPressToggle?: (action: IAction) => void;
+  onPressToggle?: (isChecked?: boolean) => void;
   onPressEdit?: () => void;
   onPressMenu?: (e: any) => void;
 }
@@ -133,7 +132,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Toggle
             style={styles.iconMarginLeft}
             isChecked={toggleChecked}
-            onActionPress={onPressToggle}
+            onPress={onPressToggle}
           />
         )}
         {onPressEdit && (

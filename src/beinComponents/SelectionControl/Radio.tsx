@@ -48,9 +48,10 @@ const Radio = ({
   }
 
   const radioStyles = {
+    // based on prop `state`
     unselect: {
       iconName: 'Circle' as IconType,
-      iconColor: colors.neutral40,
+      iconColor: colors.neutral20,
       labelColor: colors.neutral80,
     },
     selected: {

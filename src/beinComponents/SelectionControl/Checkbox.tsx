@@ -55,7 +55,7 @@ const Checkbox = ({
     // based on prop `state`
     unselect: {
       iconName: 'Square' as IconType,
-      iconColor: colors.neutral40,
+      iconColor: colors.neutral20,
       labelColor: colors.neutral80,
     },
     selected: {

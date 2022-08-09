@@ -1,90 +1,113 @@
-import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
+} from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-
-import commonActions, { IAction } from '~/constants/commonActions';
+import { borderRadius } from '~/theme/spacing';
 
 interface ToggleProps {
-  style?: StyleProp<ViewStyle>;
-  isChecked?: boolean;
   testID?: string;
-  onActionPress: (action: IAction) => void;
+  style?: StyleProp<ViewStyle>
+  isChecked?: boolean;
+  disabled?: boolean;
+  size?: 'small' | 'medium';
+  onPress?: (isChecked?: boolean) => void;
 }
 
-const Toggle: React.FC<ToggleProps> = ({
+const Toggle = ({
+  testID,
   style,
   isChecked = false,
-  testID,
-  onActionPress,
+  disabled,
+  size = 'small',
+  onPress,
 }: ToggleProps) => {
-  const [checked, setChecked] = useState<boolean>(isChecked);
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(
-    theme, checked,
-  );
-
-  useEffect(
-    () => {
-      setChecked(isChecked);
-    }, [isChecked],
-  );
-
-  const _onChangeValue = () => {
-    const newValue = !checked;
-    setChecked(newValue);
-
-    if (newValue) {
-      onActionPress(commonActions.checkBox as IAction);
-    } else {
-      onActionPress(commonActions.uncheckBox as IAction);
-    }
-  };
-
-  return (
-    <TouchableOpacity style={style} onPress={_onChangeValue} testID={testID}>
-      <View
-        testID={testID ? `${testID}.out_side_view` : 'toggle.out_side_view'}
-        style={styles.outsideRectangle}
-      >
-        <View style={styles.insideCircle} />
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const createStyles = (
-  theme: ExtendedTheme, isChecked: boolean,
-) => {
+  const theme = useTheme() as ExtendedTheme;
+  const styles = createStyles(theme);
   const { colors } = theme;
 
-  return StyleSheet.create({
-    outsideRectangle: {
-      width: 40,
-      height: 16,
-      borderRadius: 12,
-      alignItems: isChecked ? 'flex-end' : 'flex-start',
-      justifyContent: 'center',
-      backgroundColor: isChecked ? colors.success : colors.gray10,
+  const [checked, setChecked] = useState(isChecked);
+  const currentState = disabled ? 'disabled' : (checked ? 'selected' : 'unselect')
+
+  useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked]);
+
+  const onChangeValue = () => {
+    const newValue = !checked;
+    onPress?.(newValue)
+    setChecked(newValue);
+  }
+
+  const toggleStyles = {
+    // based on prop `state`
+    unselect: {
+      rectangleColor: colors.gray20,
     },
-    insideCircle: {
-      width: 24,
-      height: 24,
-      right: 0,
-      borderRadius: 12,
+    selected: {
+      rectangleColor: colors.blue50,
+    },
+    disabled: {
+      rectangleColor: colors.blue20,
+    },
+
+    // based on prop `size`
+    medium: {
+      rectangleWidth: 44,
+      rectangleHeight: 24,
+      circle: 28,
+    },
+    small: {
+      rectangleWidth: 40,
+      rectangleHeight: 20,
+      circle: 24,
+    },
+  }
+
+  const { rectangleColor } = toggleStyles[currentState];
+  const { rectangleWidth, rectangleHeight, circle } = toggleStyles[size];
+
+  const rectangleStyle: StyleProp<ViewStyle> = {
+    width: rectangleWidth,
+    height: rectangleHeight,
+    backgroundColor: rectangleColor,
+    alignItems: checked || disabled ? 'flex-end' : 'flex-start',
+  }
+
+  const circleStyle: StyleProp<ViewStyle> = {
+    width: circle,
+    height: circle,
+  }
+
+  return (
+    <TouchableOpacity
+      testID={testID}
+      style={[styles.container, style]}
+      disabled={!!disabled}
+      onPress={onChangeValue}
+    >
+      <View style={[styles.rectangle, rectangleStyle]}>
+        <View style={[styles.circle, circleStyle]} />
+      </View>
+    </TouchableOpacity>
+  )
+}
+
+export default Toggle
+
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {},
+    rectangle: {
+      justifyContent: 'center',
+      borderRadius: borderRadius.pill,
+    },
+    circle: {
       backgroundColor: colors.white,
-      shadowOffset: { width: 0, height: 1 },
-      shadowColor: colors.gray30,
-      shadowOpacity: 1,
-      shadowRadius: 1,
-      elevation: 4,
+      borderRadius: borderRadius.circle,
+      borderWidth: 1,
+      borderColor: colors.neutral5,
     },
   });
-};
-
-export default Toggle;
+}
