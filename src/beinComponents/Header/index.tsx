@@ -327,10 +327,10 @@ const Header: React.FC<HeaderProps> = ({
             disabled={!onPressHeader}
             testID="header.avatar"
           >
-            <Avatar.Group
+            <Avatar
+              isRounded={false}
               source={avatar}
               style={styles.avatar}
-              variant="small"
               {...avatarProps}
             />
           </TouchableOpacity>
@@ -504,7 +504,7 @@ const createStyle = (theme: ExtendedTheme) => {
       borderRadius: 20,
       marginRight: spacing.margin.tiny,
     },
-    avatar: { height: 40, width: 40 },
+    avatar: { marginRight: spacing.margin.base },
     titleContainer: {
       flex: 1,
       height: '100%',

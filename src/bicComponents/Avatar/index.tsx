@@ -2,7 +2,6 @@ import React from 'react';
 import AvatarComponent, {
   AvatarProps,
 } from '~/bicComponents/Avatar/AvatarComponent';
-import Group from './AvatarGroup';
 
 const Tiny: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant="tiny" {...props} />
@@ -35,7 +34,6 @@ const Avatar = Object.assign(
     Medium,
     Large,
     XLarge,
-    Group,
   },
 );
 
