@@ -239,10 +239,10 @@
     "text_err_password_required_symbols": "Please use at least one special characters including common punctuation and symbols!"
   },
   "tabs": {
-    "home": "News feed",
+    "home": "Home",
     "communities": "Communities",
-    "notification": "Notifications",
-    "menus": "You"
+    "notification": "Notification",
+    "menus": "Menu"
   },
   "settings": {
     "title_app_language": "App language",
@@ -416,6 +416,20 @@
       "title": "Processing video (count)",
       "description": "The video of your post is being processed. We'll send you a notification when it's completed"
     }
+  },
+  "menu": {
+    "title_discover": "Discover",
+    "title_your_community": "Your community",
+    "title_create_post": "Create a Post",
+    "title_draft": "Draft",
+    "title_saved_items": "Saved Items",
+    "title_media": "Media",
+    "title_settings": "Settings",
+    "title_display_accessibility": "Display & Accessibility",
+    "title_settings_privacy": "Settings & privacy",
+    "title_billing_payment": "Billing and payment",
+    "title_help_support": "Help & Support",
+    "title_logout": "Log Out"
   },
   "post": {
     "news_feed": "News Feed",

@@ -32,6 +32,8 @@ export interface AvatarProps extends ImageProps {
   isRounded?: boolean;
   cache?: boolean;
   showBorder?: boolean;
+  borderWidth?: number;
+  borderColor?: string;
   badgeCheck?: boolean;
   badgeCheckSize?: number;
   iconCheckSize?: number;
@@ -49,6 +51,8 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badgeBottom,
   isRounded,
   showBorder,
+  borderWidth = 4,
+  borderColor,
   badgeCheck,
   badgeCheckSize = 16,
   iconCheckSize = 12,
@@ -63,7 +67,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   const avatarSize = dimension?.avatarSizes[variant] || 24;
   const avatarContainerStyle: StyleProp<ViewStyle> = styles[variant];
   let avatarStyle: StyleProp<ImageStyle> = styles[variant];
-  const borderStyle = showBorder ? styles.border : {};
+  const borderStyle = showBorder ? { borderWidth, borderColor: borderColor || colors.neutral } : {};
 
   if (isRounded) {
     avatarStyle = [
@@ -277,10 +281,6 @@ const creatStyle = (theme: ExtendedTheme) => {
       width: dimension?.avatarSizes?.ultraSuperLarge,
       height: dimension?.avatarSizes?.ultraSuperLarge,
       borderRadius: (spacing?.borderRadius.small || 6) + 2,
-    },
-    border: {
-      borderWidth: 4,
-      borderColor: colors.white,
     },
     textStyle: {
       backgroundColor: colors.transparent1,

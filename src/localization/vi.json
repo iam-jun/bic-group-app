@@ -195,10 +195,10 @@
     "text_err_password_required_symbols": "Vui lòng sử dụng ít nhất một ký tự đặc biệt bao gồm dấu câu và ký hiệu thông thường!"
   },
   "tabs": {
-    "home": "Bản tin",
+    "home": "Trang chủ",
     "communities": "Cộng đồng",
     "notification": "Thông báo",
-    "menus": "Bạn"
+    "menus": "Cài đặt"
   },
   "settings": {
     "title_app_language": "Ngôn ngữ",
@@ -363,6 +363,20 @@
       "title": "Bài viết có video đang xử lý (count)",
       "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
     }
+  },
+  "menu": {
+    "title_discover": "Khám phá",
+    "title_your_community": "Cộng đồng của bạn",
+    "title_create_post": "Đăng bài",
+    "title_draft": "Nháp",
+    "title_saved_items": "Đã lưu",
+    "title_media": "Media",
+    "title_settings": "Cài đặt",
+    "title_display_accessibility": "Hiển thị và truy cập",
+    "title_settings_privacy": "Cài đặt & riêng tư",
+    "title_billing_payment": "Hoá đơn và thanh toán",
+    "title_help_support": "Trung tâm trợ giúp",
+    "title_logout": "Đăng xuất"
   },
   "post": {
     "news_feed": "News Feed",

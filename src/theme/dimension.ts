@@ -169,7 +169,7 @@ export const primaryItemHeight = 64;
 export const commentBarHeight = 44;
 export const postToolbarHeight = 52;
 export const maxNewsfeedWidth = 584;
-export const bottomBarHeight = 60;
+export const bottomBarHeight = 52;
 export const permissionRoleSectionHeaderHeight = 56;
 
 export const homeHeaderLogoHeight = 48;
