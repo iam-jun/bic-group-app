@@ -1,4 +1,4 @@
-const locations = [
+const LOCATIONS = [
   {
     name: 'An Giang',
     type: 'province',
@@ -397,4 +397,4 @@ const locations = [
   },
 ];
 
-export default locations;
+export default LOCATIONS;
