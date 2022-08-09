@@ -14,7 +14,6 @@ import { IUser } from '~/interfaces/IAuth';
 import { useBaseHook } from '~/hooks';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import spacing from '~/theme/spacing';
-import Checkbox from '~/beinComponents/Checkbox';
 
 const Section2 = () => {
   const { colors }: ExtendedTheme = useTheme();
@@ -22,86 +21,6 @@ const Section2 = () => {
   const { t } = useBaseHook();
 
   const _onActionPress = (action: IAction) => console.log('action:', action);
-
-  const renderSection = (title: string, child: React.ReactNode) => (
-    <>
-      <Text.H3 style={{ marginHorizontal: spacing?.margin.base }}>
-        {title}
-      </Text.H3>
-      <Divider style={{ margin: spacing?.margin.base }} />
-      {child}
-      <Divider
-        style={{
-          margin: spacing?.margin.base,
-          marginBottom: spacing?.margin.big,
-        }}
-      />
-    </>
-  );
-
-  const renderCheckbox = () => {
-    return renderSection('Checkbox', 
-      <View style={{marginHorizontal: spacing?.margin.base }}>
-        <View>
-          <Text.H5>{`<Checkbox size='small' />`}</Text.H5>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Unselect`}</Text.H5>
-            <Checkbox type='unselect' size='small' />
-            <Checkbox type='unselect' label="Label" size='small' />
-          </View>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Selected`}</Text.H5>
-            <Checkbox type="selected" size='small' />
-            <Checkbox type="selected" label="Label" size='small' />
-          </View>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Indeterminate`}</Text.H5>
-            <Checkbox type="indeterminate" size='small' />
-            <Checkbox type="indeterminate" label="Label" size='small' />
-          </View>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Disabled`}</Text.H5>
-            <Checkbox type="disabled" size='small' />
-            <Checkbox type="disabled" label="Label" size='small' />
-          </View>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Disabled Auto Selected`}</Text.H5>
-            <Checkbox type="disabled-auto-selected" size='small' />
-            <Checkbox type="disabled-auto-selected" label="Label" size='small' />
-          </View>
-        </View>
-
-        <View>
-          <Text.H5>{`<Checkbox size='medium' />`}</Text.H5>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Unselect`}</Text.H5>
-            <Checkbox type='unselect' />
-            <Checkbox type='unselect' label="Label" />
-          </View>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Selected`}</Text.H5>
-            <Checkbox type="selected" />
-            <Checkbox type="selected" label="Label" />
-          </View>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Indeterminate`}</Text.H5>
-            <Checkbox type="indeterminate" />
-            <Checkbox type="indeterminate" label="Label" />
-          </View>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Disabled`}</Text.H5>
-            <Checkbox type="disabled" />
-            <Checkbox type="disabled" label="Label" />
-          </View>
-          <View style={{margin: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Text.H5>{`Disabled Auto Selected`}</Text.H5>
-            <Checkbox type="disabled-auto-selected" />
-            <Checkbox type="disabled-auto-selected" label="Label" />
-          </View>
-        </View>
-      </View>
-    )
-  }
 
   const renderBadge = () => (
     <>
@@ -266,7 +185,6 @@ const Section2 = () => {
   return (
     <View style={{}}>
       <Text.H5 style={{ margin: spacing?.margin.base }}>Section 2</Text.H5>
-      {renderCheckbox()}
       {renderBadge()}
       {renderInput()}
       {renderModals()}

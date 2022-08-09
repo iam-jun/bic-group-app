@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Text, { TextProps } from '~/beinComponents/Text';
 import Icon, { IconProps } from '~/beinComponents/Icon';
-import Checkbox, { CheckboxProps } from '~/beinComponents/Checkbox';
+import Checkbox, { CheckboxProps } from '~/beinComponents/SelectionControl/Checkbox';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import { IAction } from '~/constants/commonActions';
 import { IconType } from '~/resources/icons';

@@ -12,7 +12,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Checkbox from '~/beinComponents/Checkbox';
+import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import { generateUniqueId } from '~/utils/generator';
 import { useKeySelector } from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';

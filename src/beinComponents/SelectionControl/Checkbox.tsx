@@ -1,82 +1,136 @@
-import React, { useState } from 'react';
 import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+  StyleProp, StyleSheet, TouchableOpacity, ViewStyle, View,
+} from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Icon from '~/beinComponents/Icon';
-import commonActions, { IAction } from '~/constants/commonActions';
+import Icon from '../Icon';
+import { IconType } from '~/resources/icons';
+import Text, { TextVariant } from '../Text';
+import { spacing } from '~/theme';
 
 export interface CheckboxProps {
   testID?: string;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>
   isChecked?: boolean;
-  onActionPress?: (action: IAction) => void;
-  checkboxTestID?: string;
+  indeterminate?: boolean;
+  disabled?: 'disabled' | 'disabled-auto-selected';
+  size?: 'small' | 'medium';
+  label?: string;
+  useI18n?: boolean;
+  onPress?: (isChecked?: boolean) => void;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({
+const Checkbox = ({
   testID,
   style,
   isChecked = false,
-  onActionPress,
-  checkboxTestID,
+  indeterminate = false,
+  disabled,
+  size = 'medium',
+  label,
+  useI18n,
+  onPress,
 }: CheckboxProps) => {
-  const [checked, setChecked] = useState<boolean>(isChecked);
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(
-    theme, checked,
-  );
-  React.useEffect(
-    () => {
-      setChecked(isChecked);
-    }, [isChecked],
-  );
+  const theme = useTheme() as ExtendedTheme;
+  const { colors } = theme;
 
-  const _onChangeValue = () => {
+  const [checked, setChecked] = useState(isChecked);
+  const currentState = disabled || (indeterminate
+    ? 'indeterminate' : checked
+      ? 'selected' : 'unselect');
+
+  useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked]);
+
+  const onChangeValue = () => {
     const newValue = !checked;
+    onPress?.(newValue)
     setChecked(newValue);
+  }
 
-    if (newValue) {
-      onActionPress?.(commonActions.checkBox as IAction);
-    } else {
-      onActionPress?.(commonActions.uncheckBox as IAction);
-    }
-  };
+  const checkBoxStyles = {
+    // based on prop `state`
+    unselect: {
+      iconName: 'Square' as IconType,
+      iconColor: colors.neutral40,
+      labelColor: colors.neutral80,
+    },
+    selected: {
+      iconName: 'SquareCheckSolid' as IconType,
+      iconColor: colors.blue50,
+      labelColor: colors.neutral80,
+    },
+    indeterminate: {
+      iconName: 'SquareMinus' as IconType,
+      iconColor: colors.blue20,
+      labelColor: colors.neutral80,
+    },
+    disabled: {
+      iconName: 'Square' as IconType,
+      iconColor: colors.neutral20,
+      labelColor: colors.neutral20,
+    },
+    'disabled-auto-selected': {
+      iconName: 'SquareCheckSolid' as IconType,
+      iconColor: colors.blue20,
+      labelColor: colors.neutral80,
+    },
+
+    // based on prop `size`
+    medium: {
+      textVariant: 'labelM' as TextVariant,
+      iconSize: 22,
+    },
+    small: {
+      textVariant: 'labelS' as TextVariant,
+      iconSize: 18,
+    },
+  }
+
+  const { iconName, iconColor, labelColor } = checkBoxStyles[currentState];
+  const { textVariant, iconSize } = checkBoxStyles[size]
 
   return (
     <TouchableOpacity
-      testID={checkboxTestID}
-      style={style}
-      onPress={_onChangeValue}
+      testID={testID}
+      style={[styles.container, style]}
+      disabled={!!disabled || !!indeterminate}
+      onPress={onChangeValue}
     >
-      <View style={styles.checkbox} testID={testID}>
-        <Icon icon="iconCheckbox" size={18} tintColor={theme.colors.white} />
-      </View>
+      <View style={{
+        position: 'absolute',
+        top: 2,
+        left: 2,
+        right: 2,
+        bottom: 2,
+        backgroundColor: colors.neutral,
+      }}
+      />
+      <Icon icon={iconName} size={iconSize} tintColor={iconColor} />
+      {!!label && (
+        <Text
+          style={styles.labelText}
+          variant={textVariant}
+          color={labelColor}
+          useI18n={useI18n}
+        >
+          {label}
+        </Text>
+      )}
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-const createStyles = (
-  theme: ExtendedTheme, isChecked: boolean,
-) => {
-  const { colors } = theme;
+export default Checkbox
 
-  return StyleSheet.create({
-    checkbox: {
-      width: 20,
-      height: 20,
-      borderWidth: 1,
-      borderRadius: 6,
-      borderColor: isChecked ? colors.purple60 : colors.gray40,
-      backgroundColor: isChecked ? colors.purple60 : colors.neutral5,
-      justifyContent: 'center',
-    },
-  });
-};
-
-export default Checkbox;
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  labelText: {
+    marginLeft: spacing.margin.small,
+  },
+})
