@@ -1,4 +1,4 @@
-export default [
+const LANGUAGES = [
   {
     code: 'en',
     title: 'languages:title_en',
@@ -10,3 +10,5 @@ export default [
     icon: 'iconLanguageVi',
   },
 ];
+
+export default LANGUAGES

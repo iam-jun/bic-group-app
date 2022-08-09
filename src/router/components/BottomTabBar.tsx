@@ -21,10 +21,10 @@ import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { bottomTabIcons, bottomTabIconsFocused } from '~/configs/navigator';
 import { useBaseHook } from '~/hooks';
-import useTabBadge from '~/hooks/tabBadge';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
+import { useKeySelector } from '~/hooks/selector';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -42,7 +42,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     theme, insets,
   );
 
-  const tabBadge: any = useTabBadge();
+  const notiUnseen = useKeySelector('notifications.unseenNumber')
+  const tabBadge = { notification: notiUnseen }
+
   const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;
 
   const heightStyle = useAnimatedStyle(() => ({

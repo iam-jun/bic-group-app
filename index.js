@@ -11,13 +11,10 @@ if (__DEV__) {
   import('~/ReactotronConfig').then(() => console.log('Reactotron Configured'));
 }
 
-// messaging().setBackgroundMessageHandler(async remoteMessage => {
-//   console.log('Message handled in the background!', remoteMessage);
-// });
-
 AppRegistry.registerComponent(
   appName, () => gestureHandlerRootHOC(App),
 );
+
 Object.defineProperty(
   exports, '__esModule', { value: true },
 );
