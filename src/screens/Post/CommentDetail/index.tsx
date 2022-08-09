@@ -18,7 +18,7 @@ import postKeySelector from '../redux/keySelector';
 import spacing from '~/theme/spacing';
 
 const CommentDetail = (props: any) => {
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
   const dispatch = useDispatch();
 
   const theme: ExtendedTheme = useTheme();
@@ -28,7 +28,7 @@ const CommentDetail = (props: any) => {
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
 
   const backToNewsFeed = () => {
-    rootNavigation.replace(homeStack.newsfeed);
+    goHome();
   };
 
   useEffect(
