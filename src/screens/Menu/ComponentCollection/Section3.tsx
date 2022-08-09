@@ -6,7 +6,7 @@ import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import spacing from '~/theme/spacing';
 
 const Section3 = () => {
@@ -100,20 +100,33 @@ const Section3 = () => {
     'Avatar',
     <View style={{ marginHorizontal: spacing?.margin.base }}>
       <Text.H5>{'<Avatar.Tiny/>'}</Text.H5>
+      <Text.H5>{'<Avatar.XSmall/>'}</Text.H5>
       <Text.H5>{'<Avatar.Small/>'}</Text.H5>
+      <Text.H5>{'<Avatar.Base/>'}</Text.H5>
       <Text.H5>{'<Avatar.Medium/>'}</Text.H5>
       <Text.H5>{'<Avatar.Large/>'}</Text.H5>
-      <Text.H5>{'<Avatar.LargeAlt/>'}</Text.H5>
+      <Text.H5>{'<Avatar.XLarge/>'}</Text.H5>
       <View style={{ flexDirection: 'row' }}>
         <Avatar.Tiny
           style={{ margin: spacing?.margin.small }}
           source="https://i.ibb.co/DW2bMGR/pikachu.jpg"
         />
+        <Avatar.XSmall
+          style={{ margin: spacing?.margin.small }}
+          source="https://i.ibb.co/DW2bMGR/pikachu.jpg"
+          // onPressAction={() => alert('onPress action')}
+          status="online"
+        />
         <Avatar.Small
           style={{ margin: spacing?.margin.small }}
           source="https://i.ibb.co/DW2bMGR/pikachu.jpg"
-            // onPressAction={() => alert('onPress action')}
+          // onPressAction={() => alert('onPress action')}
           status="online"
+        />
+        <Avatar.Base
+          style={{ margin: spacing?.margin.small }}
+          source="https://i.ibb.co/DW2bMGR/pikachu.jpg"
+          onPressAction={() => alert('onPress action')}
         />
         <Avatar.Medium
           style={{ margin: spacing?.margin.small }}
@@ -128,7 +141,7 @@ const Section3 = () => {
           badge="iconReactionLove"
           badgeBottom
         />
-        <Avatar.LargeAlt
+        <Avatar.XLarge
           style={{ margin: spacing?.margin.small }}
           source="https://i.ibb.co/DW2bMGR/pikachu.jpg"
             // onPressAction={() => alert('onPress action')}
@@ -231,7 +244,6 @@ const Section3 = () => {
           totalMember={123}
         />
         <Avatar.Group
-          variant="largeAlt"
           style={{ margin: spacing?.margin.small }}
           source={[
             'https://cdn.dribbble.com/users/183984/screenshots/2562247/pokemon.jpg',

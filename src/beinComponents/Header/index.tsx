@@ -22,7 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 import Icon, { IconProps } from '~/beinComponents/Icon';

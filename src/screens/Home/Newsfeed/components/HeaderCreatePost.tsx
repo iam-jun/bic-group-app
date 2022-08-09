@@ -9,7 +9,7 @@ import {
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { useKeySelector } from '~/hooks/selector';
@@ -76,7 +76,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   return (
     <View style={[styles.container, style]}>
       <View style={styles.contentContainer}>
-        <Avatar.Medium isRounded source={avatar} />
+        <Avatar.Base isRounded source={avatar} />
         <TouchableOpacity
           testID="header_create_post"
           onPress={onPressCreate}

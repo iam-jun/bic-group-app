@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import AvatarComponent, {
   AvatarProps,
   AvatarType,
-} from '~/beinComponents/Avatar/AvatarComponent';
+} from '~/bicComponents/Avatar/AvatarComponent';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';

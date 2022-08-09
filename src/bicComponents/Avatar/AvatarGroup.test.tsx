@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { render, cleanup } from '@testing-library/react-native';
 
-import Avatar from '~/beinComponents/Avatar';
-import images from '~/resources/images';
+import Avatar from './index';
+import images from '../../resources/images';
 
 afterEach(cleanup);
 

@@ -5,7 +5,7 @@ import i18next from 'i18next';
 
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import ListView from '~/beinComponents/list/ListView';
 
@@ -19,7 +19,7 @@ const PreviewMembers = () => {
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const { userCount, members } = infoDetail;
 
-  const renderItem = ({ item }: {item: IPreviewMember}) => <Avatar.Small isRounded source={item.avatar} />;
+  const renderItem = ({ item }: {item: IPreviewMember}) => <Avatar.Tiny isRounded source={item.avatar} />;
 
   const renderMembersDescription = () => {
     let memberText: string;
