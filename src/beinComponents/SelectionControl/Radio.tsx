@@ -1,19 +1,18 @@
 import {
-  StyleProp, StyleSheet, TouchableOpacity, ViewStyle, View,
+  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-
-import Icon from '../Icon';
 import { IconType } from '~/resources/icons';
 import Text, { TextVariant } from '../Text';
 import { spacing } from '~/theme';
+import Icon from '../Icon';
+import { borderRadius } from '~/theme/spacing';
 
-export interface CheckboxProps {
+export interface RadioProps {
   testID?: string;
   style?: StyleProp<ViewStyle>
   isChecked?: boolean;
-  indeterminate?: boolean;
   disabled?: 'disabled' | 'disabled-auto-selected';
   size?: 'small' | 'medium';
   label?: string;
@@ -21,25 +20,22 @@ export interface CheckboxProps {
   onPress?: (isChecked?: boolean) => void;
 }
 
-const Checkbox = ({
+const Radio = ({
   testID,
   style,
   isChecked = false,
-  indeterminate = false,
   disabled,
   size = 'medium',
   label,
   useI18n,
   onPress,
-}: CheckboxProps) => {
+}: RadioProps) => {
   const theme = useTheme() as ExtendedTheme;
   const styles = createStyles(theme);
   const { colors } = theme;
 
   const [checked, setChecked] = useState(isChecked);
-  const currentState = disabled || (indeterminate
-    ? 'indeterminate' : checked
-      ? 'selected' : 'unselect');
+  const currentState = disabled || (checked ? 'selected' : 'unselect')
 
   useEffect(() => {
     setChecked(isChecked);
@@ -51,30 +47,24 @@ const Checkbox = ({
     setChecked(newValue);
   }
 
-  const checkBoxStyles = {
-    // based on prop `state`
+  const radioStyles = {
     unselect: {
-      iconName: 'Square' as IconType,
+      iconName: 'Circle' as IconType,
       iconColor: colors.neutral40,
       labelColor: colors.neutral80,
     },
     selected: {
-      iconName: 'SquareCheckSolid' as IconType,
+      iconName: 'CircleDotSolid' as IconType,
       iconColor: colors.blue50,
       labelColor: colors.neutral80,
     },
-    indeterminate: {
-      iconName: 'SquareMinus' as IconType,
-      iconColor: colors.blue20,
-      labelColor: colors.neutral80,
-    },
     disabled: {
-      iconName: 'Square' as IconType,
+      iconName: 'Circle' as IconType,
       iconColor: colors.neutral20,
       labelColor: colors.neutral20,
     },
     'disabled-auto-selected': {
-      iconName: 'SquareCheckSolid' as IconType,
+      iconName: 'CircleDotSolid' as IconType,
       iconColor: colors.blue20,
       labelColor: colors.neutral80,
     },
@@ -90,14 +80,14 @@ const Checkbox = ({
     },
   }
 
-  const { iconName, iconColor, labelColor } = checkBoxStyles[currentState];
-  const { textVariant, iconSize } = checkBoxStyles[size]
+  const { iconName, iconColor, labelColor } = radioStyles[currentState];
+  const { textVariant, iconSize } = radioStyles[size]
 
   return (
     <TouchableOpacity
       testID={testID}
       style={[styles.container, style]}
-      disabled={!!disabled || !!indeterminate}
+      disabled={!!disabled}
       onPress={onChangeValue}
     >
       <View style={styles.backgroundView} />
@@ -116,7 +106,7 @@ const Checkbox = ({
   )
 }
 
-export default Checkbox
+export default Radio
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -131,9 +121,10 @@ const createStyles = (theme: ExtendedTheme) => {
     backgroundView: {
       position: 'absolute',
       top: 2,
-      left: 2,
-      right: 2,
+      left: 1,
+      right: 1,
       bottom: 2,
+      borderRadius: borderRadius.circle,
       backgroundColor: colors.neutral,
     },
   })

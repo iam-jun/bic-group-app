@@ -128,6 +128,8 @@ import { faFolderGear as faFolderGearSolid } from '@fortawesome/pro-solid-svg-ic
 import { faMessagesQuestion as faMessagesQuestionSolid } from '@fortawesome/pro-solid-svg-icons/faMessagesQuestion';
 import { faArrowRightFromBracket as faArrowRightFromBracketSolid }
   from '@fortawesome/pro-solid-svg-icons/faArrowRightFromBracket';
+import { faCircle } from '@fortawesome/pro-regular-svg-icons/faCircle';
+import { faCircleDot as faCircleDotSolid } from '@fortawesome/pro-solid-svg-icons/faCircleDot';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -259,6 +261,8 @@ export const initFontAwesomeIcon = () => {
     faListUl,
     faFaceSmile,
     faKeySkeleton,
+    faCircle,
+    faCircleDotSolid,
     faCircleMinus,
     faCirclePlus,
     faSquare,
@@ -392,6 +396,8 @@ export const fontAwesomeIcons = {
   ListUl: 'fa-regular fa-list-ul',
   FaceSmile: 'fa-regular fa-face-smile',
   KeySkeleton: 'fa-regular fa-key-skeleton',
+  Circle: 'fa-regular fa-circle',
+  CircleDotSolid: 'fa-solid fa-circle-dot',
   CircleMinus: 'fa-regular fa-circle-minus',
   CirclePlus: 'fa-regular fa-circle-plus',
   Square: 'fa-regular fa-square',
