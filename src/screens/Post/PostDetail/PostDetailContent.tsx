@@ -52,7 +52,6 @@ const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
@@ -121,16 +120,10 @@ const _PostDetailContent = (props: any) => {
   );
 
   const onPressMarkSeenPost = () => {
-    if (!loading) {
-      setLoading(true);
-      const payload: IPayloadPutMarkAsRead = {
-        postId,
-        callback: () => {
-          setLoading(false);
-        },
-      };
-      dispatch(postActions.putMarkSeenPost(payload));
-    }
+    const payload: IPayloadPutMarkAsRead = {
+      postId,
+    };
+    dispatch(postActions.putMarkSeenPost(payload));
   };
 
   const onPressBack = () => {

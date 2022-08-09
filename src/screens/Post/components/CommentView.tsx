@@ -155,6 +155,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         reactionsCount,
       };
       dispatch(postActions.postReactToComment(payload));
+      dispatch(postActions.putMarkSeenPost({ postId }));
     }
   };
 

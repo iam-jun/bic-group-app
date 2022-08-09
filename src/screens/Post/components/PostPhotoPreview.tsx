@@ -3,6 +3,7 @@ import {
   View, StyleSheet, StyleProp, ViewStyle, Dimensions,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Text from '~/beinComponents/Text';
 import { IActivityDataImage } from '~/interfaces/IPost';
@@ -12,6 +13,7 @@ import Button from '~/beinComponents/Button';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';
 import dimension from '~/theme/dimension';
+import postActions from '~/screens/Post/redux/actions';
 
 const DeviceWidth = Dimensions.get('window').width;
 
@@ -24,6 +26,7 @@ export interface PostPhotoPreviewProps {
   disabled?: boolean;
   enableGalleryModal?: boolean;
   uploadType: IUploadType | string;
+  postId?: string;
 }
 
 const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
@@ -35,7 +38,10 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   disabled = false,
   enableGalleryModal = false,
   uploadType,
+  postId,
 }: PostPhotoPreviewProps) => {
+  const dispatch = useDispatch();
+
   const [galleryVisible, setGalleryVisible] = useState(false);
 
   const theme: ExtendedTheme = useTheme();
@@ -70,6 +76,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       onPress(e);
     } else {
       setGalleryVisible(true);
+      if (!!postId) dispatch(postActions.putMarkSeenPost({ postId }));
     }
   };
 

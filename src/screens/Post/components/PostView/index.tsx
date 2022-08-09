@@ -172,6 +172,7 @@ const _PostView: FC<PostViewProps> = ({
       reactionCounts: reactionsCount,
     };
     dispatch(postActions.postReactToPost(payload));
+    dispatch(postActions.putMarkSeenPost({ postId }));
   };
 
   const onRemoveReaction = (reactionId: ReactionType) => {

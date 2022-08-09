@@ -7,6 +7,7 @@ import {
   ViewStyle,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useBaseHook } from '~/hooks';
@@ -16,6 +17,7 @@ import MarkdownView from '~/beinComponents/MarkdownView';
 import Markdown from '~/beinComponents/Markdown';
 import CopyableView from '../CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
+import postActions from '~/screens/Post/redux/actions';
 
 export interface CollapsibleTextProps extends TextProps {
   testID?: string;
@@ -32,6 +34,7 @@ export interface CollapsibleTextProps extends TextProps {
   onPress?: () => void;
   onPressAudience?: (audience: any, e?: any) => any;
   [x: string]: any;
+  postId?:string;
 }
 
 const _CollapsibleText: FC<CollapsibleTextProps> = ({
@@ -48,6 +51,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   copyEnabled,
   onPress,
   onPressAudience,
+  postId,
   ...textProps
 }: CollapsibleTextProps) => {
   const getShortContent = (c?: string) => {
@@ -58,6 +62,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     }
     return '';
   };
+
+  const dispatch = useDispatch();
 
   const [contentShowAll, setContentShowAll] = useState(false);
   const [shortContent, setShortContent] = useState(getShortContent(content));
@@ -76,7 +82,10 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     }, [content],
   );
 
-  const onToggleShowLess = () => setContentShowAll(!contentShowAll);
+  const onToggleShowLess = () => {
+    setContentShowAll(!contentShowAll)
+    if (!!postId) dispatch(postActions.putMarkSeenPost({ postId }));
+  };
 
   const _onPress = () => {
     if (onPress) {

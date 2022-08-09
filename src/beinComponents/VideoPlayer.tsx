@@ -11,11 +11,13 @@ import {
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import { orderBy } from 'lodash';
 import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
+import postActions from '~/screens/Post/redux/actions';
 
 export interface VideoPlayerProps {
   style?: StyleProp<ViewStyle>;
@@ -34,9 +36,11 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const video = React.createRef<Video>();
+  const video = React.useRef<Video>();
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isCalledApi, setIsCalledApi] = useState(false);
+  const dispatch = useDispatch();
 
   const { url, id, thumbnails } = data || {};
 
@@ -117,11 +121,9 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         'playVideo', id,
       );
     }
-  };
-
-  const handlePlaying = (isVisible: boolean) => {
-    if (!isVisible) {
-      video.current?.pauseAsync?.();
+    if ((status?.durationMillis > 5 * 1000 || status?.durationMillis <= 5 * 1000) && !!postId && !isCalledApi) {
+      dispatch(postActions.putMarkSeenPost({ postId }));
+      setIsCalledApi(true);
     }
   };
 

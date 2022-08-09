@@ -1,7 +1,8 @@
 import React, { FC, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-
+import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
+
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IActivityDataImage, IMarkdownAudience } from '~/interfaces/IPost';
@@ -18,6 +19,7 @@ import FilesView from '../FilesView';
 import CopyableView from '~/beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
 import spacing from '~/theme/spacing';
+import postActions from '~/screens/Post/redux/actions';
 
 export interface PostViewContentProps {
   postId: string;
@@ -41,6 +43,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isDraft,
 }: PostViewContentProps) => {
   const { rootNavigation } = useRootNavigation();
+  const dispatch = useDispatch();
 
   const onPressMentionAudience = useRef((audience: IMarkdownAudience) => {
     if (audience) {
@@ -57,6 +60,10 @@ const PostViewContent: FC<PostViewContentProps> = ({
     && isEmpty(files)
   ) {
     return null;
+  }
+
+  const onPressDownload = () => {
+    dispatch(postActions.putMarkSeenPost({ postId }));
   }
 
   const renderContent = () => {
@@ -83,6 +90,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               limitMarkdownTypes
               selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
               onPressAudience={onPressMentionAudience}
+              postId={postId}
             />
           </View>
           {!!imageSource && (
@@ -113,6 +121,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         copyEnabled
         selector={`${postKeySelector.allPosts}.${postId}.mentions`}
         onPressAudience={onPressMentionAudience}
+        postId={postId}
       />
     );
   };
@@ -126,6 +135,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             data={images || []}
             uploadType="postImage"
             enableGalleryModal
+            postId={postId}
           />
           {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
             <VideoPlayer data={videos?.[0]} postId={postId} />
@@ -141,6 +151,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             files={files}
             disableClose
             showDownload
+            onPressDownload={onPressDownload}
             collapsible={!isPostDetail}
           />
         </>
