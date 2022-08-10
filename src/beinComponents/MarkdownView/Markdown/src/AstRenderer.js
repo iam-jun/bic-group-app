@@ -66,8 +66,6 @@ export default class AstRenderer {
       for (let a = 0; a < parents.length; a++) {
         str += '-';
       }
-
-      console.log(`${str}${node.type}`);
     }
 
     parents.unshift(node);

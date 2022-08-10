@@ -91,6 +91,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         async () => {
           if (video.current) {
             const currentStatus = await video.current.getStatusAsync();
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             if (!currentStatus?.isPlaying) return;
             try {

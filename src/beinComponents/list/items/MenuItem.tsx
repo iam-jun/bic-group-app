@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import { NotificationsBadgeComponentProps } from '~/beinComponents/Badge/NotificationsBadge/NotificationsBadgeComponent';
@@ -9,6 +11,7 @@ import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 
 import spacing from '~/theme/spacing';
+import { IconType } from '~/resources/icons';
 
 interface MenuItemProps {
   RightComponent?: React.ReactNode | React.ReactElement;
@@ -19,7 +22,13 @@ interface MenuItemProps {
   badgeColor?: string;
   testID?: string;
   iconProps?: IconProps;
-  [x: string]: any
+  type?: string;
+  title: string;
+  subTitle?: string;
+  icon?: IconType;
+  rightSubTitle?: string;
+  rightSubIcon?: IconType;
+  style?: StyleProp<ViewStyle>;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({

@@ -52,7 +52,6 @@ const LandingWithInvitation = () => {
         <Image resizeMode="contain" style={styles.logo} source={logo} />
       )}
       <View style={styles.contentContainer}>
-        {/* @ts-ignore */}
         <SVGIcon source={LandingImg} size={imgSize} />
         <Text.H5 style={styles.title}>{title}</Text.H5>
         {!!desc && <Text.BodyS style={styles.desc}>{desc}</Text.BodyS>}

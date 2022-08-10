@@ -14,6 +14,7 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import authActions from '~/screens/Auth/redux/actions';
+import getEnv from '~/utils/env';
 
 const MenuSettings = () => {
   const { rootNavigation } = useRootNavigation();
@@ -66,7 +67,10 @@ const MenuSettings = () => {
 
   return (
     <View style={styles.container}>
-      <Text.SubtitleM style={styles.textHeader} useI18n>menu:title_settings</Text.SubtitleM>
+      <View style={styles.row}>
+        <Text.SubtitleM style={styles.textHeader} useI18n>menu:title_settings</Text.SubtitleM>
+        <Text.SubtitleXS>{getEnv('APP_VERSION')}</Text.SubtitleXS>
+      </View>
       {settingItems.map(renderItem)}
       <Button style={styles.itemContainer} onPress={onLogout}>
         <Icon tintColor={theme.colors.purple20} icon="ArrowRightFromBracket" />
@@ -84,7 +88,12 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
     },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     textHeader: {
+      flex: 1,
       marginBottom: spacing.margin.small,
     },
     textTitle: {

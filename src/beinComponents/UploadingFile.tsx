@@ -58,6 +58,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
 
   const _onProgress = (percent: number) => {
     // todo handle anim progress
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m🐣️ UploadingFile onProgress: ${percent}\x1b[0m`);
   };
 

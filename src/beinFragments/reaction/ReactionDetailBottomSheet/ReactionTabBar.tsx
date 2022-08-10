@@ -104,7 +104,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   );
 
   const onScrollToIndexFailed = () => {
-    console.log('\x1b[31m🐣️ ReactionTabBar onScrollToIndexFailed\x1b[0m');
+    console.warn('\x1b[31m🐣️ ReactionTabBar onScrollToIndexFailed\x1b[0m');
   };
 
   const renderItem = ({ item, index }: any) => {
