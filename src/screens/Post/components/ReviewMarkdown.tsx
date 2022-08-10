@@ -12,7 +12,7 @@ import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Markdown from '~/beinComponents/Markdown';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import { IAudience } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 
@@ -47,7 +47,7 @@ const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
     <View style={styles.post}>
       {/* render post header */}
       <View style={styles.postHeader}>
-        <Avatar.Large isRounded source={avatar} style={{ marginRight: 8 }} />
+        <Avatar.Medium isRounded source={avatar} style={{ marginRight: 8 }} />
         <View>
           <Text.H6>{fullname}</Text.H6>
           <View style={styles.audienceLine}>

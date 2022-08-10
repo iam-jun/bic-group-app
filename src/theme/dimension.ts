@@ -155,13 +155,13 @@ export const sizeButton = {
 };
 
 export const avatarSizes = {
-  tiny: 16,
-  small: 24,
-  smallAlt: 32,
-  medium: 40,
-  large: 48,
-  largeAlt: 72,
-  ultraSuperLarge: 96,
+  tiny: 24,
+  xSmall: 28,
+  small: 32,
+  base: 40,
+  medium: 48,
+  large: 64,
+  xLarge: 90,
 };
 
 export const headerHeight = 60;

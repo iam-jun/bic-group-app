@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
@@ -36,7 +36,7 @@ const NotificationAvatar = ({
       ) {
         return (
           <View key={item?.id} style={styles.item}>
-            <Avatar.SmallAlt
+            <Avatar.Small
               testI="notification_avatar.single"
               source={item?.avatar}
               isRounded
@@ -46,7 +46,7 @@ const NotificationAvatar = ({
       }
       return (
         <View key={item?.id} style={styles.item}>
-          <Avatar.SmallAlt
+          <Avatar.Small
             testI="notification_avatar.single"
             source={item?.avatar}
             isRounded
