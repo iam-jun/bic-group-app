@@ -120,7 +120,6 @@ const UserEditProfile = (props: any) => {
     }, [],
   );
 
-  // @ts-ignore
   const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
   const userLanguages = userLanguageList?.join(', ');
 

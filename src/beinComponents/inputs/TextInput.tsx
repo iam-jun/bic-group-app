@@ -22,7 +22,6 @@ export type HelperType =
   | 'secondary'
   | undefined;
 
-// @ts-ignore
 export interface TextInputProps extends RNTextInputProps {
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
@@ -47,6 +46,7 @@ export interface TextInputProps extends RNTextInputProps {
   onBlur?: () => void;
   onChangeText?: ((text: string) => void) | undefined;
   helperActionOnPress?: () => void;
+  helperContentTriggerAction?: any;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -215,7 +215,6 @@ const themeStyles = (
     iconClear: {
       position: 'absolute',
       right: spacing.margin.large,
-      // @ts-ignore
       top: spacing.margin.base + spacing.margin.small || 13,
     },
   });

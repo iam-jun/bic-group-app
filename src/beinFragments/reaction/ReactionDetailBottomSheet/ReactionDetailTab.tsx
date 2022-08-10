@@ -42,7 +42,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
           setLoading(false);
         })
         .catch((e: any) => {
-          console.log(`\x1b[31m🐣️ ReactionDetailTab get error ${e}\x1b[0m`);
+          console.error(`\x1b[31m🐣️ ReactionDetailTab get error ${e}\x1b[0m`);
           setLoading(false);
         });
     }
@@ -69,7 +69,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
           setData((previousData:any[]) => previousData.concat(_data || []));
         })
         .catch((e: any) => {
-          console.log(`\x1b[31m🐣️ ReactionDetailTab get more error ${e}\x1b[0m`);
+          console.error(`\x1b[31m🐣️ ReactionDetailTab get more error ${e}\x1b[0m`);
         });
     }
   }

@@ -100,7 +100,6 @@ const menuReducer = (
         ...state,
         countryCodeList: {
           ...countryCodeList,
-          // @ts-ignore
           searchResult: countryCodeList.data.filter((item: ICountryCodeList) => searchText(
             payload, item.code,
           ) || searchText(

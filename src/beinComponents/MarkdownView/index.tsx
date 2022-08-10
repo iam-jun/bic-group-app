@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import mark from 'markdown-it-mark';
 import React, { FC, memo } from 'react';
@@ -77,12 +78,6 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
     const html = markdownIt.render(children);
     const astTree = markdownIt.parse(
       children, {},
-    );
-    console.log(
-      '\x1b[34m🐣️ html :', html, '\x1b[0m',
-    );
-    console.log(
-      '\x1b[35m🐣️ astTree :', astTree, '\x1b[0m',
     );
   }
 

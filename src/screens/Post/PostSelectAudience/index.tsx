@@ -352,7 +352,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       <PrimaryItem
         showAvatar
         avatar={icon || avatar}
-        avatarProps={{ variant: isGroup ? 'largeAlt' : 'large' }}
+        avatarProps={{ variant: isGroup ? 'large' : 'medium' }}
         style={styles.item}
         title={name}
         onPressCheckbox={() => onPressUser(item)}
