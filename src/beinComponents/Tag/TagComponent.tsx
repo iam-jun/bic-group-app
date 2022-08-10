@@ -8,7 +8,7 @@ import Icon from '../Icon';
 
 import Text, { TextVariant } from '~/beinComponents/Text';
 import commonActions, { IAction } from '~/constants/commonActions';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';

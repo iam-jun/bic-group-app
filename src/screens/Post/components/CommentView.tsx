@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';

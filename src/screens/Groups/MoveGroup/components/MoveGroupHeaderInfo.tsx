@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
@@ -32,7 +32,7 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
       <MoveLine />
       <View style={styles.infoContainer}>
         <View style={styles.groupNameContainer}>
-          <Avatar.Small style={styles.iconGroup} source={icon} />
+          <Avatar.Tiny style={styles.iconGroup} source={icon} />
           <Text.H6 style={styles.groupName} numberOfLines={1}>
             {name}
           </Text.H6>

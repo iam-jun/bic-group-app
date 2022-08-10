@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import { IGroup } from '~/interfaces/IGroup';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
@@ -42,7 +42,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
           <Icon size={16} icon="Bars" tintColor={colors.white} />
         </View>
         <View>
-          <Avatar.Small source={icon} />
+          <Avatar.Tiny source={icon} />
           <View style={styles.iconPrivacy}>
             <Icon size={spacing.margin.base} icon={privacyIcon} />
           </View>

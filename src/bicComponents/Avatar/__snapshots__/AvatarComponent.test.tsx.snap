@@ -6,8 +6,8 @@ exports[`Avatar component renders correctly 1`] = `
     Array [
       Object {
         "borderRadius": 4,
-        "height": 48,
-        "width": 48,
+        "height": 64,
+        "width": 64,
       },
       undefined,
     ]
@@ -19,8 +19,8 @@ exports[`Avatar component renders correctly 1`] = `
       Array [
         Object {
           "borderRadius": 4,
-          "height": 48,
-          "width": 48,
+          "height": 64,
+          "width": 64,
         },
         Object {},
       ]
@@ -55,9 +55,9 @@ exports[`Avatar component renders correctly 1`] = `
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
               "borderRadius": 4,
-              "height": 48,
+              "height": 64,
               "justifyContent": "center",
-              "width": 48,
+              "width": 64,
             }
           }
           testID="Image__placeholder"
@@ -71,8 +71,8 @@ exports[`Avatar component renders correctly 1`] = `
             },
             Object {
               "borderRadius": 4,
-              "height": 48,
-              "width": 48,
+              "height": 64,
+              "width": 64,
             },
           ]
         }

@@ -10,7 +10,7 @@ import spacing from '~/theme/spacing';
 import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import dimension from '~/theme/dimension';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 
@@ -59,7 +59,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       backgroundColor: colors.neutral,
-      paddingBottom: spacing.padding.tiny,
+      paddingBottom: 10,
     },
     statusBar: {
       height: insets.top,

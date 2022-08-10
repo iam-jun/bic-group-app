@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import * as Sentry from '@sentry/react-native';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
-import FlashMessage from '~/beinComponents/FlashMessage';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
@@ -16,7 +15,6 @@ import { showHideToastMessage } from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 import spacing from '~/theme/spacing';
 import TabButton from '~/beinComponents/TabButton';
-import BannerImportant from '~/beinComponents/Banner/BannerImportant';
 
 const Section1 = () => {
   const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
@@ -75,36 +73,6 @@ const Section1 = () => {
         </Text> */}
     </View>,
   );
-
-  const renderFlashMessage = () => renderSection(
-    'Flash Message',
-    <>
-      {showSuccess && (
-      <FlashMessage type="success" onClose={() => setShowSuccess(false)}>
-        You have successfully copied
-      </FlashMessage>
-      )}
-      {showWarning && (
-      <FlashMessage type="warning" onClose={() => setShowWarning(false)}>
-        Don’t underestimate this banner
-      </FlashMessage>
-      )}
-      {showError && (
-      <FlashMessage type="error" onClose={() => setShowError(false)}>
-        Your account is deactived in 2 hours for requesting code too many
-        time. Please try again later
-      </FlashMessage>
-      )}
-    </>,
-  );
-
-  const renderBannerImportant = () => renderSection(
-    'Banner Important',
-    <>
-      <BannerImportant style={{margin: spacing.margin.small}} />
-      <BannerImportant markedAsRead={true} style={{margin: spacing.margin.small}} />
-    </>
-  )
 
   const renderBannerMessage = () => renderSection(
     'Banner Message',
@@ -206,7 +174,7 @@ const Section1 = () => {
     </View>,
   );
 
-  const renderTab = () => renderSection('Tab Button', 
+  const renderTab = () => renderSection('Tab Button',
   <View style={{marginHorizontal: spacing?.margin.base }}>
     <View style={{marginVertical: spacing?.margin.tiny}}>
       <Text.H5>{`<TabButton size='large'></TabButton>`}</Text.H5>
@@ -218,7 +186,7 @@ const Section1 = () => {
           Tab button
         </TabButton>
       </View>
-      
+
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
         <TabButton size='large'>
           Tab button
@@ -239,7 +207,7 @@ const Section1 = () => {
           Tab button
         </TabButton>
       </View>
-      
+
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
         <TabButton size='medium'>
           Tab button
@@ -260,7 +228,7 @@ const Section1 = () => {
           Tab button
         </TabButton>
       </View>
-      
+
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
         <TabButton size='small'>
           Tab button
@@ -491,9 +459,7 @@ const Section1 = () => {
       </Button.Danger>
       {renderTab()}
       {renderButton()}
-      {renderFlashMessage()}
       {renderToastMessage()}
-      {renderBannerImportant()}
       {renderBannerMessage()}
       {renderIcon()}
       {renderText()}

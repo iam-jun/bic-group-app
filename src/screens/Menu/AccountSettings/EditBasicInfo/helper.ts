@@ -1,6 +1,8 @@
+import { isEmpty } from 'lodash';
 import { IOptionItem } from '~/interfaces/IEditUser';
 
 export const dataMapping = (dataObject: any): IOptionItem[] => {
+  if (isEmpty(dataObject)) return [];
   const dataList = Object.keys(dataObject).map((type) => ({
     type,
     title: dataObject[type],

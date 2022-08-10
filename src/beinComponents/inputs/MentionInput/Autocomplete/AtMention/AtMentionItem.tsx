@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
 
@@ -45,7 +45,7 @@ const AtMentionItem = ({ item, onPress }: Props) => {
         onPress={_onPressItem}
         testID="at_mention_item.touchable"
       >
-        <Avatar.Medium
+        <Avatar.Base
           style={styles.avatar}
           source={item.avatar || item.icon}
           placeholderSource={images.img_user_avatar_default}
