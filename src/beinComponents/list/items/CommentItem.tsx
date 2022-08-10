@@ -22,6 +22,7 @@ export interface CommentItemProps {
   onPressReply?: (data: ICommentData, section?: any, index?: number) => void;
   onPressLoadMore?: (data: any) => void;
   isNotReplyingComment?: boolean;
+  onPressMarkSeenPost?: ()=> void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -35,6 +36,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   onPressReply,
   onPressLoadMore,
   isNotReplyingComment,
+  onPressMarkSeenPost,
 }: CommentItemProps) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
@@ -79,6 +81,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
         commentData={commentData}
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
       {showLoadPrevious ? (
         <LoadMoreComment

@@ -1,7 +1,7 @@
 import React, { FC, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-
 import { isEmpty } from 'lodash';
+
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IActivityDataImage, IMarkdownAudience } from '~/interfaces/IPost';
@@ -28,6 +28,7 @@ export interface PostViewContentProps {
   isPostDetail: boolean;
   isLite?: boolean;
   isDraft?: boolean;
+  onPressMarkSeenPost?: () => void;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
@@ -39,6 +40,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isPostDetail,
   isLite,
   isDraft,
+  onPressMarkSeenPost,
 }: PostViewContentProps) => {
   const { rootNavigation } = useRootNavigation();
 
@@ -83,6 +85,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               limitMarkdownTypes
               selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
               onPressAudience={onPressMentionAudience}
+              onToggleShowTextContent={onPressMarkSeenPost}
             />
           </View>
           {!!imageSource && (
@@ -113,6 +116,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         copyEnabled
         selector={`${postKeySelector.allPosts}.${postId}.mentions`}
         onPressAudience={onPressMentionAudience}
+        onToggleShowTextContent={onPressMarkSeenPost}
       />
     );
   };
@@ -126,9 +130,10 @@ const PostViewContent: FC<PostViewContentProps> = ({
             data={images || []}
             uploadType="postImage"
             enableGalleryModal
+            onPressMarkSeenPost={onPressMarkSeenPost}
           />
           {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
-            <VideoPlayer data={videos?.[0]} postId={postId} />
+            <VideoPlayer data={videos?.[0]} postId={postId} onWatchCheckPoint={onPressMarkSeenPost} />
           ) : (
             <UploadingFile
               uploadType={uploadTypes.postVideo}
@@ -141,6 +146,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             files={files}
             disableClose
             showDownload
+            onPressDownload={onPressMarkSeenPost}
             collapsible={!isPostDetail}
           />
         </>
