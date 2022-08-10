@@ -1,17 +1,19 @@
 import React from 'react';
 import AvatarComponent, {
   AvatarProps,
-} from '~/beinComponents/Avatar/AvatarComponent';
-import Group from './AvatarGroup';
+} from '~/bicComponents/Avatar/AvatarComponent';
 
 const Tiny: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant="tiny" {...props} />
 );
+const XSmall: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant="xSmall" {...props} />
+);
 const Small: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant="small" {...props} />
 );
-const SmallAlt: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant="smallAlt" {...props} />
+const Base: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant="base" {...props} />
 );
 const Medium: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant="medium" {...props} />
@@ -19,23 +21,19 @@ const Medium: React.FC<AvatarProps> = (props: AvatarProps) => (
 const Large: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant="large" {...props} />
 );
-const LargeAlt: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant="largeAlt" {...props} />
-);
-const UltraSuperLarge: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant="ultraSuperLarge" {...props} />
+const XLarge: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant="xLarge" {...props} />
 );
 
 const Avatar = Object.assign(
   AvatarComponent, {
     Tiny,
+    XSmall,
     Small,
-    SmallAlt,
+    Base,
     Medium,
     Large,
-    LargeAlt,
-    UltraSuperLarge,
-    Group,
+    XLarge,
   },
 );
 

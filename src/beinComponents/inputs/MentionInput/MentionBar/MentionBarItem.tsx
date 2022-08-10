@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IMentionUser } from '~/interfaces/IPost';
 
 import Text from '~/beinComponents/Text';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import spacing from '~/theme/spacing';
 
 export interface MentionbarItemProps {
@@ -28,7 +28,7 @@ const MentionBarItem: FC<MentionbarItemProps> = ({
       onPress={() => onPress?.(data)}
       style={styles.container}
     >
-      <Avatar.Small
+      <Avatar.Tiny
         testID="mention_bar_item.avatar"
         isRounded
         source={data?.avatar}
