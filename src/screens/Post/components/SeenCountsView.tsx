@@ -47,7 +47,8 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-end',
-    paddingVertical: spacing.padding.tiny,
+    paddingTop: spacing.padding.large,
+    paddingBottom: spacing.padding.tiny,
     paddingHorizontal: spacing.padding.large,
   },
 });

@@ -18,7 +18,7 @@ import LoadingIndicator from './LoadingIndicator';
 export interface VideoPlayerProps {
   data: any;
   postId?: string;
-  onPressMarkSeenPost?: () => void;
+  watchVideo?: () => void;
 }
 
 const PLAYER_HEIGHT = scaleSize(232);
@@ -26,7 +26,7 @@ const PLAYER_HEIGHT = scaleSize(232);
 const VideoPlayer: FC<VideoPlayerProps> = ({
   data,
   postId,
-  onPressMarkSeenPost,
+  watchVideo,
 }: VideoPlayerProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -35,7 +35,6 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const video = React.useRef<Video>();
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isCalledApi, setIsCalledApi] = useState(false);
 
   const { url, id, thumbnails } = data || {};
 
@@ -116,9 +115,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         'playVideo', id,
       );
     }
-    if ((status?.durationMillis > 5 * 1000 || status?.durationMillis <= 5 * 1000) && !!postId && !isCalledApi) {
-      onPressMarkSeenPost?.();
-      setIsCalledApi(true);
+    if ((status?.durationMillis > 5 * 1000 || status?.durationMillis <= 5 * 1000) && !!postId) {
+      watchVideo?.();
     }
   };
 

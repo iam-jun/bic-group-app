@@ -1,6 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEqual } from 'lodash';
-import React, { FC, memo } from 'react';
+import React, {
+  FC, memo, useCallback, useState,
+} from 'react';
 import {
   Keyboard, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
@@ -138,6 +140,8 @@ const _PostView: FC<PostViewProps> = ({
 
   const userId = useUserIdAuth();
 
+  const [isMarkSeenPost, setMarkSeenPost] = useState(false);
+
   const commentCount = formatLargeNumber(commentsCount);
   const labelButtonComment = `${t('post:button_comment')}${
     commentCount ? ` (${commentCount})` : ''
@@ -172,7 +176,7 @@ const _PostView: FC<PostViewProps> = ({
       reactionCounts: reactionsCount,
     };
     dispatch(postActions.postReactToPost(payload));
-    dispatch(postActions.putMarkSeenPost({ postId }));
+    onPressMarkSeenPost();
   };
 
   const onRemoveReaction = (reactionId: ReactionType) => {
@@ -252,6 +256,13 @@ const _PostView: FC<PostViewProps> = ({
     }
   };
 
+  const onPressMarkSeenPost = useCallback(() => {
+    if (!isMarkSeenPost) {
+      dispatch(postActions.putMarkSeenPost({ postId }));
+      setMarkSeenPost(!isMarkSeenPost);
+    }
+  }, [postId, isMarkSeenPost]);
+
   if (deleted) {
     return (
       <View style={StyleSheet.flatten([styles.deletedContainer, style])}>
@@ -294,6 +305,7 @@ const _PostView: FC<PostViewProps> = ({
           videos={videos}
           files={files}
           isPostDetail={isPostDetail}
+          onPressMarkSeenPost={onPressMarkSeenPost}
         />
         {totalUsersSeen > 0 && (
           <SeenCountsView

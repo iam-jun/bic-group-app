@@ -389,7 +389,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   content={content || ''}
                   selector={`${postKeySelector.allComments}.${id}.mentions`}
                   onPressAudience={onPressAudience}
-                  onToggleShowLess={onPressMarkSeenPost}
+                  onToggleShowTextContent={onPressMarkSeenPost}
                 />
               </View>
               <CommentMediaView

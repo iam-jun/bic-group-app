@@ -1,6 +1,5 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
@@ -19,7 +18,6 @@ import FilesView from '../FilesView';
 import CopyableView from '~/beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
 import spacing from '~/theme/spacing';
-import postActions from '~/screens/Post/redux/actions';
 
 export interface PostViewContentProps {
   postId: string;
@@ -30,6 +28,7 @@ export interface PostViewContentProps {
   isPostDetail: boolean;
   isLite?: boolean;
   isDraft?: boolean;
+  onPressMarkSeenPost?: () => void;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
@@ -41,9 +40,9 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isPostDetail,
   isLite,
   isDraft,
+  onPressMarkSeenPost,
 }: PostViewContentProps) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
 
   const onPressMentionAudience = useRef((audience: IMarkdownAudience) => {
     if (audience) {
@@ -61,10 +60,6 @@ const PostViewContent: FC<PostViewContentProps> = ({
   ) {
     return null;
   }
-
-  const onPressMarkSeenPost = useCallback(() => {
-    dispatch(postActions.putMarkSeenPost({ postId }));
-  }, [postId]);
 
   const renderContent = () => {
     if (isLite) {
@@ -90,7 +85,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               limitMarkdownTypes
               selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
               onPressAudience={onPressMentionAudience}
-              onToggleShowLess={onPressMarkSeenPost}
+              onToggleShowTextContent={onPressMarkSeenPost}
             />
           </View>
           {!!imageSource && (
@@ -121,7 +116,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         copyEnabled
         selector={`${postKeySelector.allPosts}.${postId}.mentions`}
         onPressAudience={onPressMentionAudience}
-        onToggleShowLess={onPressMarkSeenPost}
+        onToggleShowTextContent={onPressMarkSeenPost}
       />
     );
   };
@@ -138,7 +133,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
           {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
-            <VideoPlayer data={videos?.[0]} postId={postId} onPressMarkSeenPost={onPressMarkSeenPost} />
+            <VideoPlayer data={videos?.[0]} postId={postId} watchVideo={onPressMarkSeenPost} />
           ) : (
             <UploadingFile
               uploadType={uploadTypes.postVideo}
