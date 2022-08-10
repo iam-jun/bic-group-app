@@ -15,10 +15,12 @@ import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
 
+const DURATION_CHECK_POINT = 5 * 1000;
+
 export interface VideoPlayerProps {
   data: any;
   postId?: string;
-  watchVideo?: () => void;
+  onWatchCheckPoint?: () => void;
 }
 
 const PLAYER_HEIGHT = scaleSize(232);
@@ -26,7 +28,7 @@ const PLAYER_HEIGHT = scaleSize(232);
 const VideoPlayer: FC<VideoPlayerProps> = ({
   data,
   postId,
-  watchVideo,
+  onWatchCheckPoint,
 }: VideoPlayerProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -115,8 +117,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         'playVideo', id,
       );
     }
-    if ((status?.durationMillis > 5 * 1000 || status?.durationMillis <= 5 * 1000) && !!postId) {
-      watchVideo?.();
+    if ((status?.durationMillis > DURATION_CHECK_POINT || status?.durationMillis <= DURATION_CHECK_POINT) && !!postId) {
+      onWatchCheckPoint?.();
     }
   };
 

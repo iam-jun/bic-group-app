@@ -133,7 +133,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
           {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
-            <VideoPlayer data={videos?.[0]} postId={postId} watchVideo={onPressMarkSeenPost} />
+            <VideoPlayer data={videos?.[0]} postId={postId} onWatchCheckPoint={onPressMarkSeenPost} />
           ) : (
             <UploadingFile
               uploadType={uploadTypes.postVideo}
