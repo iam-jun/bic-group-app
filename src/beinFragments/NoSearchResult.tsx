@@ -18,7 +18,6 @@ const NoSearchResult: FC<NoSearchResultProps> = ({
 
   return (
     <View style={styles.container}>
-      {/* @ts-ignore */}
       <SvgIcon source={NoSearchResultImg} width={250} height={200} />
       <Text.BodyM style={styles.text} useI18n>
         {title || 'common:text_search_no_results'}

@@ -5,7 +5,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import privacyTypes from '~/constants/privacyTypes';
+import { communityPrivacyListDetail } from '~/constants/privacyTypes';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
@@ -29,7 +29,7 @@ const CommunityItem = ({
   const {
     id, name, icon, userCount, privacy,
   } = item || {};
-  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const privacyData = communityPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
 
   const renderContentComponent = () => (
@@ -59,7 +59,7 @@ const CommunityItem = ({
     <PrimaryItem
       showAvatar
       avatar={icon}
-      avatarProps={{ variant: 'largeAlt' }}
+      avatarProps={{ variant: 'large' }}
       style={styles.item}
       title={name}
       titleProps={{ variant: 'h5' }}

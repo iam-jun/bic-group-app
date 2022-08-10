@@ -63,7 +63,6 @@ const TextInputController: React.FC<Props> = ({
         errors?.[name]?.message === helperContent ? '' : errors?.[name]?.message
       }
       helperAction={helperAction}
-      // @ts-ignore
       helperContentTriggerAction={helperContentTriggerAction}
       helperActionOnPress={helperActionOnPress}
       {...props}

@@ -49,7 +49,6 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const { data: schemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
   const { groupSchemes = [] } = schemes || {};
 
-  // @ts-ignore
   const selectingSchemeId = groupSchemes?.[selectingIndex]?.id;
   const disableSave = initGroup?.schemeId === selectingSchemeId;
 
@@ -63,7 +62,6 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   }, [groupSchemes]);
 
   const onPressSave = () => {
-    // @ts-ignore
     const schemeId = groupSchemes?.[selectingIndex]?.id || null;
     const groupId = initGroup?.groupId;
     if (groupId) {

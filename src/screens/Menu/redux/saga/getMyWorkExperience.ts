@@ -9,8 +9,6 @@ export default function* getMyWorkExperience() {
     const response: IResponseData = yield call(menuDataHelper.getMyWorkExperience);
     yield put(menuActions.setMyWorkExperience(mapWorkExperience(response?.data)));
   } catch (err) {
-    console.log(
-      'getMyWorkExperience error:', err,
-    );
+    console.error('getMyWorkExperience error:', err);
   }
 }

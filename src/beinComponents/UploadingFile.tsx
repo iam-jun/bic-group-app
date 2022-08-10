@@ -31,6 +31,7 @@ export interface UploadingFileProps {
   onClose?: (file: IFilePicked) => void;
   onSuccess?: (file: IGetFile) => void;
   onError?: (e?: any) => void;
+  onPressDownload?: () => void;
 }
 
 const UploadingFile: FC<UploadingFileProps> = ({
@@ -42,6 +43,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   onClose,
   onSuccess,
   onError,
+  onPressDownload,
 }: UploadingFileProps) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -56,6 +58,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
 
   const _onProgress = (percent: number) => {
     // todo handle anim progress
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m🐣️ UploadingFile onProgress: ${percent}\x1b[0m`);
   };
 
@@ -147,7 +150,8 @@ const UploadingFile: FC<UploadingFileProps> = ({
     uploadFile();
   };
 
-  const onPressDownload = () => {
+  const _onPressDownload = () => {
+    onPressDownload?.();
     openUrl(file.url);
   };
 
@@ -211,7 +215,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
           hitSlop={{
             top: 10, left: 10, right: 10, bottom: 10,
           }}
-          onPress={onPressDownload}
+          onPress={_onPressDownload}
         >
           <Icon icon="download" />
         </Button>

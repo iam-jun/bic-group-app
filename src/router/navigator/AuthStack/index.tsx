@@ -19,7 +19,7 @@ const AuthStack = () => {
       // make sure delete push token when user logout (when no internet)
         initPushTokenMessage()
           .then((messaging) => messaging().deleteToken())
-          .catch((e) => console.log(
+          .catch((e) => console.error(
             'error when delete push token at auth stack', e,
           ));
       }

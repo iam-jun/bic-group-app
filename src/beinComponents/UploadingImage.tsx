@@ -77,6 +77,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       try {
         await ImageUploader.getInstance().upload(param);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log(
           '\x1b[35m🐣️ UploadingImage upload error:', e, '\x1b[0m',
         );

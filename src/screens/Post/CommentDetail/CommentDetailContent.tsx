@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import {
   FlatList, RefreshControl, StyleSheet, View,
 } from 'react-native';
@@ -274,6 +276,10 @@ const CommentDetailContent = (props: any) => {
     }));
   };
 
+  const onPressMarkSeenPost = useCallback(() => {
+    dispatch(postActions.putMarkSeenPost({ postId }));
+  }, [postId]);
+
   const renderCommentItem = (data: any) => {
     const { item, index } = data || {};
     return (
@@ -283,6 +289,7 @@ const CommentDetailContent = (props: any) => {
         commentParent={newCommentData}
         groupIds={groupIds}
         index={index}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );
   };
@@ -326,6 +333,7 @@ const CommentDetailContent = (props: any) => {
             groupIds={groupIds}
             id={id}
             onPress={goToPostDetail}
+            onPressMarkSeenPost={onPressMarkSeenPost}
           />
         )}
         ListFooterComponent={renderFooter}
@@ -361,6 +369,7 @@ const CommentLevel1 = ({
   commentData,
   groupIds,
   onPress,
+  onPressMarkSeenPost,
 }: any) => {
   if (!id) {
     return null;
@@ -388,6 +397,7 @@ const CommentLevel1 = ({
         commentData={commentData}
         groupIds={groupIds}
         index={0}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
     </View>
   );
