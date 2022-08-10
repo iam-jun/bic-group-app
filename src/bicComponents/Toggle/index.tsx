@@ -107,7 +107,7 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       borderRadius: borderRadius.circle,
       borderWidth: 1,
-      borderColor: colors.neutral5,
+      borderColor: colors.gray1,
     },
   });
 }
