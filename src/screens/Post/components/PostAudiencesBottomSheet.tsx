@@ -12,7 +12,7 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { useRootNavigation } from '~/hooks/navigation';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -69,7 +69,7 @@ const PostAudiencesBottomSheet = () => {
 
   const renderGroupContentComponent = (item: any) => {
     const { type, userCount, privacy } = item || {};
-    const privacyData: any = privacyTypes.find((item) => item?.type === privacy) || {};
+    const privacyData: any = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
     if (type === 'user') {
       return null;
     }

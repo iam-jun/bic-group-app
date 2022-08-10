@@ -8,7 +8,7 @@ import Text from '~/beinComponents/Text';
 import { IGroup } from '~/interfaces/IGroup';
 import Avatar from '~/bicComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 
 export interface ReorderGroupItemProps {
@@ -32,7 +32,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
   const styles = createStyle(theme);
 
   const { privacy, icon, name } = group || {};
-  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon }: any = privacyData || {};
 
   return (

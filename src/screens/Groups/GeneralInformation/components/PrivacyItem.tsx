@@ -12,11 +12,14 @@ import spacing from '~/theme/spacing';
 
 interface Props {
   item: any;
+  type: 'group' | 'community';
   onPressHelpMessage: () => void;
 }
 
-const PrivacyItem = ({ item, onPressHelpMessage }: Props) => {
-  const { privacy } = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+const PrivacyItem = ({ item, type, onPressHelpMessage }: Props) => {
+  const { privacy } = useKeySelector(type === 'group'
+    ? groupsKeySelector.groupDetail.group : groupsKeySelector.communityDetail) || {};
+
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
