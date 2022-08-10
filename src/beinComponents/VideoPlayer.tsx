@@ -36,7 +36,6 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isCalledApi, setIsCalledApi] = useState(false);
-  const dispatch = useDispatch();
 
   const { url, id, thumbnails } = data || {};
 

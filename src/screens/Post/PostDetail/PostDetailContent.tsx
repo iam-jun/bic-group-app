@@ -29,7 +29,6 @@ import {
   IAudienceGroup,
   ICommentData,
   IPayloadGetPostDetail,
-  IPayloadPutMarkAsRead,
 } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -119,12 +118,9 @@ const _PostDetailContent = (props: any) => {
     }, [commentError],
   );
 
-  const onPressMarkSeenPost = () => {
-    const payload: IPayloadPutMarkAsRead = {
-      postId,
-    };
-    dispatch(postActions.putMarkSeenPost(payload));
-  };
+  const onPressMarkSeenPost = useCallback(() => {
+    dispatch(postActions.putMarkSeenPost({ postId }));
+  }, [postId]);
 
   const onPressBack = () => {
     const newCommentInput = commentInputRef?.current?.getText?.() || '';

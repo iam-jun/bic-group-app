@@ -1,5 +1,5 @@
 import React, {
-  FC, memo, useEffect, useState,
+  FC, memo, useCallback, useEffect, useState,
 } from 'react';
 import {
   View,
@@ -78,10 +78,10 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     }, [content],
   );
 
-  const _onToggleShowLess = () => {
+  const _onToggleShowLess = useCallback(() => {
     setContentShowAll(!contentShowAll);
     onToggleShowLess?.();
-  };
+  }, [testID]);
 
   const _onPress = () => {
     if (onPress) {

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import {
   FlatList, RefreshControl, StyleSheet, View,
 } from 'react-native';
@@ -274,9 +276,9 @@ const CommentDetailContent = (props: any) => {
     }));
   };
 
-  const onPressMarkSeenPost = () => {
+  const onPressMarkSeenPost = useCallback(() => {
     dispatch(postActions.putMarkSeenPost({ postId }));
-  };
+  }, [postId]);
 
   const renderCommentItem = (data: any) => {
     const { item, index } = data || {};

@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
@@ -62,9 +62,9 @@ const PostViewContent: FC<PostViewContentProps> = ({
     return null;
   }
 
-  const onPressMarkSeenPost = () => {
+  const onPressMarkSeenPost = useCallback(() => {
     dispatch(postActions.putMarkSeenPost({ postId }));
-  }
+  }, [postId]);
 
   const renderContent = () => {
     if (isLite) {

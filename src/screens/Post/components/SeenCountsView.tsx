@@ -47,21 +47,8 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-end',
-    marginTop: 16,
-    marginEnd: 16,
-  },
-  footerButtonContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: spacing.padding.tiny,
-  },
-  footerButton: {
-    flex: 1,
-    marginVertical: spacing.margin.small,
-    marginHorizontal: spacing.margin.tiny,
-  },
-  draftText: {
-    marginVertical: spacing.margin.small,
-    marginHorizontal: spacing.margin.large,
+    paddingVertical: spacing.padding.tiny,
+    paddingHorizontal: spacing.padding.large,
   },
 });
 
