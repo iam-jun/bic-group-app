@@ -58,7 +58,7 @@ const EditBasicInfo = () => {
 
   const [error, setError] = useState<boolean>(false);
 
-  const relationshipStatusList = dataMapping(relationshipStatus);
+  const relationshipStatusList = dataMapping(RELATIONSHIP_STATUS);
   const gendersList = dataMapping(genders);
 
   const checkIsValid = (
