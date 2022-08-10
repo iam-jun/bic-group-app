@@ -37,7 +37,7 @@ const CommentDetailContent = (props: any) => {
 
   const { t } = useBaseHook();
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
@@ -149,7 +149,7 @@ const CommentDetailContent = (props: any) => {
           },
           toastType: 'normal',
         }));
-        rootNavigation.replace(homeStack.newsfeed);
+        goHome();
       }
     }, [notFoundComment, loading, isEmpty, copyCommentError],
   );
