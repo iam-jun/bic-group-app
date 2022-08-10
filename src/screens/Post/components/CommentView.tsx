@@ -47,6 +47,7 @@ export interface CommentViewProps {
   commentData: ICommentData;
   onPressReply: (data: ICommentData) => void;
   contentBackgroundColor?: string;
+  onPressMarkSeenPost?: () => void;
 }
 
 const _CommentView: React.FC<CommentViewProps> = ({
@@ -56,6 +57,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   commentData,
   onPressReply,
   contentBackgroundColor,
+  onPressMarkSeenPost,
 }: CommentViewProps) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
@@ -155,7 +157,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         reactionsCount,
       };
       dispatch(postActions.postReactToComment(payload));
-      dispatch(postActions.putMarkSeenPost({ postId }));
+      onPressMarkSeenPost?.();
     }
   };
 
@@ -387,6 +389,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   content={content || ''}
                   selector={`${postKeySelector.allComments}.${id}.mentions`}
                   onPressAudience={onPressAudience}
+                  onToggleShowLess={onPressMarkSeenPost}
                 />
               </View>
               <CommentMediaView

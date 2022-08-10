@@ -274,6 +274,10 @@ const CommentDetailContent = (props: any) => {
     }));
   };
 
+  const onPressMarkSeenPost = () => {
+    dispatch(postActions.putMarkSeenPost({ postId }));
+  };
+
   const renderCommentItem = (data: any) => {
     const { item, index } = data || {};
     return (
@@ -283,6 +287,7 @@ const CommentDetailContent = (props: any) => {
         commentParent={newCommentData}
         groupIds={groupIds}
         index={index}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );
   };
@@ -326,6 +331,7 @@ const CommentDetailContent = (props: any) => {
             groupIds={groupIds}
             id={id}
             onPress={goToPostDetail}
+            onPressMarkSeenPost={onPressMarkSeenPost}
           />
         )}
         ListFooterComponent={renderFooter}
@@ -361,6 +367,7 @@ const CommentLevel1 = ({
   commentData,
   groupIds,
   onPress,
+  onPressMarkSeenPost,
 }: any) => {
   if (!id) {
     return null;
@@ -388,6 +395,7 @@ const CommentLevel1 = ({
         commentData={commentData}
         groupIds={groupIds}
         index={0}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
     </View>
   );

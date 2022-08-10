@@ -392,6 +392,7 @@ const _PostDetailContent = (props: any) => {
         isNotReplyingComment
         onPressReply={onPressReplySectionHeader}
         onPressLoadMore={onPressLoadMoreCommentLevel2}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );
   };
@@ -421,6 +422,7 @@ const _PostDetailContent = (props: any) => {
         section={section}
         isNotReplyingComment
         onPressReply={onPressReplyCommentItem}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );
   };

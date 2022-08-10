@@ -62,7 +62,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
     return null;
   }
 
-  const onPressDownload = () => {
+  const onPressMarkSeenPost = () => {
     dispatch(postActions.putMarkSeenPost({ postId }));
   }
 
@@ -90,7 +90,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               limitMarkdownTypes
               selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
               onPressAudience={onPressMentionAudience}
-              postId={postId}
+              onToggleShowLess={onPressMarkSeenPost}
             />
           </View>
           {!!imageSource && (
@@ -121,7 +121,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         copyEnabled
         selector={`${postKeySelector.allPosts}.${postId}.mentions`}
         onPressAudience={onPressMentionAudience}
-        postId={postId}
+        onToggleShowLess={onPressMarkSeenPost}
       />
     );
   };
@@ -135,10 +135,10 @@ const PostViewContent: FC<PostViewContentProps> = ({
             data={images || []}
             uploadType="postImage"
             enableGalleryModal
-            postId={postId}
+            onPressMarkSeenPost={onPressMarkSeenPost}
           />
           {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
-            <VideoPlayer data={videos?.[0]} postId={postId} />
+            <VideoPlayer data={videos?.[0]} postId={postId} onPressMarkSeenPost={onPressMarkSeenPost} />
           ) : (
             <UploadingFile
               uploadType={uploadTypes.postVideo}
@@ -151,7 +151,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             files={files}
             disableClose
             showDownload
-            onPressDownload={onPressDownload}
+            onPressDownload={onPressMarkSeenPost}
             collapsible={!isPostDetail}
           />
         </>

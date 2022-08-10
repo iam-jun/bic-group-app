@@ -2,8 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
-  StyleProp,
-  ViewStyle,
   DeviceEventEmitter,
   PixelRatio,
   TouchableOpacity,
@@ -11,26 +9,24 @@ import {
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import { orderBy } from 'lodash';
 import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
-import postActions from '~/screens/Post/redux/actions';
 
 export interface VideoPlayerProps {
-  style?: StyleProp<ViewStyle>;
   data: any;
   postId?: string;
+  onPressMarkSeenPost?: () => void;
 }
 
 const PLAYER_HEIGHT = scaleSize(232);
 
 const VideoPlayer: FC<VideoPlayerProps> = ({
-  style,
   data,
   postId,
+  onPressMarkSeenPost,
 }: VideoPlayerProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -122,7 +118,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       );
     }
     if ((status?.durationMillis > 5 * 1000 || status?.durationMillis <= 5 * 1000) && !!postId && !isCalledApi) {
-      dispatch(postActions.putMarkSeenPost({ postId }));
+      onPressMarkSeenPost?.();
       setIsCalledApi(true);
     }
   };
