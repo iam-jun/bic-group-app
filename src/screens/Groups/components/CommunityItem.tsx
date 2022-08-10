@@ -59,7 +59,7 @@ const CommunityItem = ({
     <PrimaryItem
       showAvatar
       avatar={icon}
-      avatarProps={{ variant: 'largeAlt' }}
+      avatarProps={{ variant: 'large' }}
       style={styles.item}
       title={name}
       titleProps={{ variant: 'h5' }}

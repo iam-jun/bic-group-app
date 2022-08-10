@@ -17,7 +17,7 @@ export default function* deletePost({
 }): any {
   const { id, isDraftPost, callbackError } = payload || {};
   if (!id) {
-    console.log('\x1b[31m🐣️ saga deletePost: id not found\x1b[0m');
+    console.warn('\x1b[31m🐣️ saga deletePost: id not found\x1b[0m');
     return;
   }
   try {
@@ -38,7 +38,6 @@ export default function* deletePost({
         }),
       );
     }
-    console.log('\x1b[35m🐣️ saga deletePost response', response, '\x1b[0m');
   } catch (e: any) {
     if (e?.meta?.errors?.groups_denied) {
       callbackError?.(e.meta.errors.groups_denied)

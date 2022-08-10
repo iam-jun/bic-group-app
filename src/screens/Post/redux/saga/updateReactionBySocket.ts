@@ -35,7 +35,6 @@ export default function* updateReactionBySocket({
     const isCurrentUser = userId.toString() == reaction?.actor?.id;
     yield onUpdateReactionOfPostById(
       id,
-      // @ts-ignore
       isCurrentUser && !!reaction?.reactionName
         ? reactionsOfActor
         : ownReactions,

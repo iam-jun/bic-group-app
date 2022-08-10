@@ -86,9 +86,7 @@ function* changePassword({
     };
     yield put(actionsCommon.showHideToastMessage(toastMessage));
   } catch (error: any) {
-    console.log(
-      'changePassword error:', error,
-    );
+    console.error('changePassword error:', error);
     let errCurrentPassword = '';
     let errBox = '';
     switch (error.code) {
@@ -118,7 +116,10 @@ function* signInOAuth({
     yield Auth.federatedSignIn({ provider: payload });
   } catch (e) {
     yield put(actions.setLoading(false));
-    console.log(e);
+    console.error(
+      '\x1b[34m🐣️ index signInOAuth',
+      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
+    );
   }
 }
 

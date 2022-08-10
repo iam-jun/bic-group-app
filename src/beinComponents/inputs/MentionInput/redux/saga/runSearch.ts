@@ -23,8 +23,6 @@ export default function* runSearch({
     }
   } catch (e) {
     yield put(actions.setLoading(false));
-    console.log(
-      'runSearch', e,
-    );
+    console.error('runSearch', e);
   }
 }

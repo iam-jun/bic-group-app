@@ -20,7 +20,7 @@ const BackgroundComponent = ({ children }: {children: React.ReactNode}) => {
   return (
     <ImageBackground source={images.img_bg_sign_in} style={styles.background}>
       <View style={styles.bgEntries1}>
-        <SVGIcon // @ts-ignore
+        <SVGIcon
           source={BackgroundEntries1}
           width={164}
           height={205}
@@ -28,7 +28,7 @@ const BackgroundComponent = ({ children }: {children: React.ReactNode}) => {
         />
       </View>
       <View pointerEvents="none" style={styles.bgEntries2}>
-        <SVGIcon // @ts-ignore
+        <SVGIcon
           source={BackgroundEntries2}
           width={122}
           height={163}

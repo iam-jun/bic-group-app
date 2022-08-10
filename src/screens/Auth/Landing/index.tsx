@@ -57,7 +57,6 @@ const Landing = () => {
           <Text.BodyM>{t('auth:text_landing_logo_description')}</Text.BodyM>
         </View>
         <View style={styles.contentContainer}>
-          {/* @ts-ignore */}
           <SVGIcon
             source={LandingImg}
             width={IMAGE_WIDTH}

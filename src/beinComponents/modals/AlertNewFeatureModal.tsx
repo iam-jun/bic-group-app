@@ -1,9 +1,7 @@
 import React from 'react';
 import {
-  StyleProp,
   StyleSheet,
   View,
-  ViewStyle,
   TouchableOpacity,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -18,14 +16,7 @@ import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 
-export interface NewFeatureModalProps {
-  style?: StyleProp<ViewStyle>;
-}
-
-const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
-  style,
-  ...props
-}: NewFeatureModalProps) => {
+const AlertNewFeatureModal = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
@@ -57,7 +48,6 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
           </View>
           <View style={styles.body}>
             <SvgIcon
-              // @ts-ignore
               source={NewFeatureImg}
               width={250}
               height={200}
