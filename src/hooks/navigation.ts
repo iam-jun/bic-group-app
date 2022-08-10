@@ -10,8 +10,16 @@ import { rootNavigationRef } from '~/router/refs';
 export const useRootNavigation = () => {
   const rootNavigation = withNavigation(rootNavigationRef);
 
+  const goHome = () => {
+    rootNavigation.popToTop();
+    setTimeout(() => {
+      rootNavigation.navigate('home');
+    }, 500);
+  }
+
   return {
     rootNavigation,
+    goHome,
   };
 };
 
