@@ -24,6 +24,7 @@ export interface PostPhotoPreviewProps {
   disabled?: boolean;
   enableGalleryModal?: boolean;
   uploadType: IUploadType | string;
+  onPressMarkSeenPost?: () => void;
 }
 
 const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
@@ -35,6 +36,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   disabled = false,
   enableGalleryModal = false,
   uploadType,
+  onPressMarkSeenPost,
 }: PostPhotoPreviewProps) => {
   const [galleryVisible, setGalleryVisible] = useState(false);
 
@@ -70,6 +72,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       onPress(e);
     } else {
       setGalleryVisible(true);
+      onPressMarkSeenPost?.();
     }
   };
 

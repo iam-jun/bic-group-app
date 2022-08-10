@@ -29,7 +29,6 @@ import {
   IAudienceGroup,
   ICommentData,
   IPayloadGetPostDetail,
-  IPayloadPutMarkAsRead,
 } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -52,7 +51,6 @@ const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
@@ -120,18 +118,9 @@ const _PostDetailContent = (props: any) => {
     }, [commentError],
   );
 
-  const onPressMarkSeenPost = () => {
-    if (!loading) {
-      setLoading(true);
-      const payload: IPayloadPutMarkAsRead = {
-        postId,
-        callback: () => {
-          setLoading(false);
-        },
-      };
-      dispatch(postActions.putMarkSeenPost(payload));
-    }
-  };
+  const onPressMarkSeenPost = useCallback(() => {
+    dispatch(postActions.putMarkSeenPost({ postId }));
+  }, [postId]);
 
   const onPressBack = () => {
     const newCommentInput = commentInputRef?.current?.getText?.() || '';
@@ -399,6 +388,7 @@ const _PostDetailContent = (props: any) => {
         isNotReplyingComment
         onPressReply={onPressReplySectionHeader}
         onPressLoadMore={onPressLoadMoreCommentLevel2}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );
   };
@@ -428,6 +418,7 @@ const _PostDetailContent = (props: any) => {
         section={section}
         isNotReplyingComment
         onPressReply={onPressReplyCommentItem}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
     );
   };

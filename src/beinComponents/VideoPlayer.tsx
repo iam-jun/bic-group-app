@@ -2,8 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
-  StyleProp,
-  ViewStyle,
   DeviceEventEmitter,
   PixelRatio,
   TouchableOpacity,
@@ -17,24 +15,26 @@ import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
 
+const DURATION_CHECK_POINT = 5 * 1000;
+
 export interface VideoPlayerProps {
-  style?: StyleProp<ViewStyle>;
   data: any;
   postId?: string;
+  onWatchCheckPoint?: () => void;
 }
 
 const PLAYER_HEIGHT = scaleSize(232);
 
 const VideoPlayer: FC<VideoPlayerProps> = ({
-  style,
   data,
   postId,
+  onWatchCheckPoint,
 }: VideoPlayerProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const video = React.createRef<Video>();
+  const video = React.useRef<Video>();
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -117,11 +117,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         'playVideo', id,
       );
     }
-  };
-
-  const handlePlaying = (isVisible: boolean) => {
-    if (!isVisible) {
-      video.current?.pauseAsync?.();
+    if ((status?.durationMillis > DURATION_CHECK_POINT || status?.durationMillis <= DURATION_CHECK_POINT) && !!postId) {
+      onWatchCheckPoint?.();
     }
   };
 
