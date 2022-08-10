@@ -9,16 +9,16 @@ import { IconType } from '~/resources/icons';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import Text from '../Text';
+import Text from '../../beinComponents/Text';
 
 export type AvatarType =
   | 'tiny'
+  | 'xSmall'
   | 'small'
-  | 'smallAlt'
+  | 'base'
   | 'medium'
   | 'large'
-  | 'largeAlt'
-  | 'ultraSuperLarge';
+  | 'xLarge';
 
 export type AvatarStatus = 'online';
 
@@ -39,10 +39,12 @@ export interface AvatarProps extends ImageProps {
   iconCheckSize?: number;
   counter?: number;
   onPressAction?: () => void;
+  customSize?: number;
+  customStyle?: StyleProp<ImageStyle>;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
-  variant = 'medium',
+  variant = 'base',
   style,
   source,
   status,
@@ -58,15 +60,17 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   iconCheckSize = 12,
   counter,
   onPressAction,
+  customSize,
+  customStyle,
   ...props
 }: AvatarProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = creatStyle(theme);
 
-  const avatarSize = dimension?.avatarSizes[variant] || 24;
-  const avatarContainerStyle: StyleProp<ViewStyle> = styles[variant];
-  let avatarStyle: StyleProp<ImageStyle> = styles[variant];
+  const avatarSize = customSize || dimension?.avatarSizes[variant] || 24;
+  const avatarContainerStyle: StyleProp<ViewStyle> = customStyle || styles[variant];
+  let avatarStyle: StyleProp<ImageStyle> = customStyle || styles[variant];
   const borderStyle = showBorder ? { borderWidth, borderColor: borderColor || colors.neutral } : {};
 
   if (isRounded) {
@@ -248,39 +252,39 @@ const creatStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {},
     tiny: {
-      width: dimension?.avatarSizes?.tiny,
-      height: dimension?.avatarSizes?.tiny,
-      borderRadius: (dimension?.avatarSizes?.tiny || 16) / 2,
+      width: dimension.avatarSizes.tiny,
+      height: dimension.avatarSizes.tiny,
+      borderRadius: (dimension.avatarSizes.tiny || 16) / 2,
     },
     small: {
-      width: dimension?.avatarSizes?.small,
-      height: dimension?.avatarSizes?.small,
-      borderRadius: spacing?.borderRadius.small,
+      width: dimension.avatarSizes.small,
+      height: dimension.avatarSizes.small,
+      borderRadius: spacing.borderRadius.small,
     },
-    smallAlt: {
-      width: dimension?.avatarSizes?.smallAlt,
-      height: dimension?.avatarSizes?.smallAlt,
-      borderRadius: spacing?.borderRadius.pill,
+    xSmall: {
+      width: dimension.avatarSizes.xSmall,
+      height: dimension.avatarSizes.xSmall || 28,
+      borderRadius: spacing.borderRadius.small,
+    },
+    base: {
+      width: dimension.avatarSizes.base,
+      height: dimension.avatarSizes.base,
+      borderRadius: spacing.borderRadius.small,
     },
     medium: {
-      width: dimension?.avatarSizes?.medium,
-      height: dimension?.avatarSizes?.medium,
-      borderRadius: spacing?.borderRadius.small,
+      width: dimension.avatarSizes.medium,
+      height: dimension.avatarSizes.medium,
+      borderRadius: spacing.borderRadius.small,
     },
     large: {
-      width: dimension?.avatarSizes?.large,
-      height: dimension?.avatarSizes?.large,
-      borderRadius: spacing?.borderRadius.small,
+      width: dimension.avatarSizes.large,
+      height: dimension.avatarSizes.large,
+      borderRadius: spacing.borderRadius.small,
     },
-    largeAlt: {
-      width: dimension?.avatarSizes?.largeAlt,
-      height: dimension?.avatarSizes?.largeAlt,
-      borderRadius: (spacing?.borderRadius.small || 6) + 2,
-    },
-    ultraSuperLarge: {
-      width: dimension?.avatarSizes?.ultraSuperLarge,
-      height: dimension?.avatarSizes?.ultraSuperLarge,
-      borderRadius: (spacing?.borderRadius.small || 6) + 2,
+    xLarge: {
+      width: dimension.avatarSizes.xLarge,
+      height: dimension.avatarSizes.xLarge || 90,
+      borderRadius: spacing.borderRadius.small,
     },
     textStyle: {
       backgroundColor: colors.transparent1,

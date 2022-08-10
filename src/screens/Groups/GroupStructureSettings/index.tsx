@@ -83,7 +83,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = () => {
               disableHorizontal
               showInfo={false}
               onPressMenu={onPressMenu}
-              iconVariant="small"
+              iconVariant="tiny"
               nameLines={1}
             />
           )

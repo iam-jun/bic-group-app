@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
@@ -112,7 +112,7 @@ const UserProfilePreviewBottomSheet = () => {
 
   const renderAvatar = () => (
     <TouchableOpacity onPress={navigateToUserProfile} style={styles.avatar}>
-      <Avatar.UltraSuperLarge
+      <Avatar.XLarge
         source={avatar || images.img_user_avatar_default}
       />
     </TouchableOpacity>

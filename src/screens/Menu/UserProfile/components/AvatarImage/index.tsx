@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 
 import React from 'react';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
 import EditButton from '../EditButton';
@@ -23,7 +23,7 @@ const AvatarImage = ({
   return (
     <View testID="user_profile.avatar_image" style={styles.container}>
       <View>
-        <Avatar.UltraSuperLarge
+        <Avatar.XLarge
           source={avatar || images.img_user_avatar_default}
           isRounded
           showBorder
