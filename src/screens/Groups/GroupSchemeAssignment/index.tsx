@@ -163,7 +163,7 @@ const GroupSchemeAssignment = () => {
                 disableHorizontal
                 showInfo={false}
                 onPressMenu={onPressGroup}
-                iconVariant="small"
+                iconVariant="tiny"
                 nameLines={1}
                 menuIcon="AngleRight"
                 entering={LightSpeedInLeft}

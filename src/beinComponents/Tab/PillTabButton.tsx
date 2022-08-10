@@ -1,6 +1,4 @@
-import {
-  StyleProp, StyleSheet, TouchableOpacity, ViewStyle,
-} from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text, { TextVariant } from '../Text';
@@ -8,17 +6,10 @@ import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 import elevation from '~/theme/elevations';
 import { useKeySelector } from '~/hooks/selector';
+import { TabButtonProps } from './TabButton';
 
-interface TabButtonProps {
-  testID?: string;
-  children?: string;
-  style?: StyleProp<ViewStyle>;
-  isSelected?: boolean;
+export interface PillTabButtonProps extends TabButtonProps {
   type?: 'primary' | 'secondary' | 'neutral';
-  size?: 'large' | 'medium' | 'small';
-  useI18n?: boolean;
-  disabled?: boolean;
-  onPress?: () => void;
 }
 
 const textVariant = {
@@ -27,7 +18,7 @@ const textVariant = {
   small: 'tabS' as TextVariant,
 };
 
-const TabButton = ({
+const PillTabButton = ({
   testID,
   children,
   style,
@@ -37,7 +28,7 @@ const TabButton = ({
   useI18n,
   disabled,
   onPress,
-}: TabButtonProps) => {
+}: PillTabButtonProps) => {
   const theme = useTheme();
   const styles = createStyles(theme)
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -58,13 +49,12 @@ const TabButton = ({
         useI18n={useI18n}
       >
         {children}
-
       </Text>
     </TouchableOpacity>
   )
 }
 
-export default TabButton;
+export default PillTabButton;
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;

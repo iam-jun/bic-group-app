@@ -14,8 +14,8 @@ import Checkbox, {
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import { IAction } from '~/constants/commonActions';
 import { IconType } from '~/resources/icons';
-import Avatar from '~/beinComponents/Avatar';
-import { AvatarProps } from '~/beinComponents/Avatar/AvatarComponent';
+import Avatar from '~/bicComponents/Avatar';
+import { AvatarProps } from '~/bicComponents/Avatar/AvatarComponent';
 import { primaryItemHeight } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
@@ -96,7 +96,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
       >
         {LeftComponent}
         {(showAvatar || !!avatar) && (
-          <Avatar.Medium
+          <Avatar.Base
             source={avatar}
             style={styles.avatar}
             {...avatarProps}

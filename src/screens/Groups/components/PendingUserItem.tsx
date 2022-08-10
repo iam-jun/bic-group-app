@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
@@ -56,7 +56,7 @@ const PendingUserItem = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Avatar.Large source={avatar} isRounded />
+        <Avatar.Medium source={avatar} isRounded />
 
         <View style={styles.textHeader}>
           <Text.ButtonM>{fullname}</Text.ButtonM>

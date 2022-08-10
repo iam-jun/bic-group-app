@@ -160,7 +160,6 @@ const themeStyles = (
       justifyContent: !isPhone ? 'center' : undefined,
     },
     completeContainer: {
-      // @ts-ignore
       paddingTop: spacing.padding.big + spacing.padding.large,
     },
     completeDescription: {

@@ -22,9 +22,7 @@ export default function* signIn({
     yield messaging()
       .deleteToken()
       .catch((e: any) => {
-        console.log(
-          'error when delete push token before log in', e,
-        );
+        console.error('error when delete push token before log in', e);
         return true;
       });
     yield put(notificationsActions.savePushToken(''));

@@ -58,6 +58,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         message: imageUrls?.[activeIndex]?.url,
         url: imageUrls?.[activeIndex]?.url,
       }).then((result) => {
+        // eslint-disable-next-line no-console
         console.log(
           '\x1b[35m🐣️ Gallery share result: ', result, '\x1b[0m',
         );
@@ -87,7 +88,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   };
 
   const onScrollToIndexFailed = () => {
-    console.log('\x1b[31m🐣️ ImageGalleryModal onScrollToIndexFailed\x1b[0m');
+    console.warn('\x1b[31m🐣️ ImageGalleryModal onScrollToIndexFailed\x1b[0m');
   };
 
   const onPressNext = () => {

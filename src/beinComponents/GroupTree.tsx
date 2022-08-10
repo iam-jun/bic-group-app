@@ -9,7 +9,7 @@ import GroupItem, { GroupItemProps } from '~/beinComponents/list/items/GroupItem
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import { AvatarType } from '~/beinComponents/Avatar/AvatarComponent';
+import { AvatarType } from '~/bicComponents/Avatar/AvatarComponent';
 import { IconType } from '~/resources/icons';
 
 export interface GroupTreeProps {

@@ -2,10 +2,10 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
@@ -20,7 +20,7 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
   const styles = createStyle(theme);
 
   const { privacy, icon, name } = group || {};
-  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon }: any = privacyData || {};
 
   return (
@@ -34,7 +34,7 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
       <View style={styles.groupInfo}>
         <View style={styles.grayDot} />
         <View>
-          <Avatar.Medium source={icon} />
+          <Avatar.Base source={icon} />
           <View style={styles.iconPrivacy}>
             <Icon size={spacing.margin.large} icon={privacyIcon} />
           </View>

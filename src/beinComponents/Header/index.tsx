@@ -22,7 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 import Icon, { IconProps } from '~/beinComponents/Icon';
@@ -327,10 +327,10 @@ const Header: React.FC<HeaderProps> = ({
             disabled={!onPressHeader}
             testID="header.avatar"
           >
-            <Avatar.Group
+            <Avatar
+              isRounded={false}
               source={avatar}
               style={styles.avatar}
-              variant="small"
               {...avatarProps}
             />
           </TouchableOpacity>
@@ -504,7 +504,7 @@ const createStyle = (theme: ExtendedTheme) => {
       borderRadius: 20,
       marginRight: spacing.margin.tiny,
     },
-    avatar: { height: 40, width: 40 },
+    avatar: { marginRight: spacing.margin.base },
     titleContainer: {
       flex: 1,
       height: '100%',

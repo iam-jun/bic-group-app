@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import SearchInput, {
   SearchInputProps,
 } from '~/beinComponents/inputs/SearchInput';
@@ -69,7 +69,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         checkboxProps={{ testID: 'members_selection.checkbox' }}
         onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}
         LeftComponent={(
-          <Avatar.Large
+          <Avatar.Medium
             style={styles.marginRight}
             source={item.avatar}
             placeholderSource={images.img_user_avatar_default}
@@ -82,7 +82,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
 
   const renderItemSelectedUser = ({ item }: {item: IUser; index: number}) => (
     <View style={styles.itemSelectedUser}>
-      <Avatar.Large
+      <Avatar.Medium
         source={item.avatar}
         actionIcon="iconClose"
         placeholderSource={images.img_user_avatar_default}

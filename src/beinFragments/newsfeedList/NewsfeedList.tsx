@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, {
   FC, memo, useEffect, useRef, useState,
 } from 'react';
@@ -311,7 +312,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       {data && data.length > 0 && (
         <AnimatedFlashList
         // @ts-ignore
-          data={data}
+          data={data as any}
           renderItem={renderItem}
           keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
           estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}

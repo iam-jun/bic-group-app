@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
@@ -47,6 +47,7 @@ export interface CommentViewProps {
   commentData: ICommentData;
   onPressReply: (data: ICommentData) => void;
   contentBackgroundColor?: string;
+  onPressMarkSeenPost?: () => void;
 }
 
 const _CommentView: React.FC<CommentViewProps> = ({
@@ -56,6 +57,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   commentData,
   onPressReply,
   contentBackgroundColor,
+  onPressMarkSeenPost,
 }: CommentViewProps) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
@@ -155,6 +157,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         reactionsCount,
       };
       dispatch(postActions.postReactToComment(payload));
+      onPressMarkSeenPost?.();
     }
   };
 
@@ -386,6 +389,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   content={content || ''}
                   selector={`${postKeySelector.allComments}.${id}.mentions`}
                   onPressAudience={onPressAudience}
+                  onToggleShowTextContent={onPressMarkSeenPost}
                 />
               </View>
               <CommentMediaView

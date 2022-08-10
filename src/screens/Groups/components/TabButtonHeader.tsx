@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native'
-import TabButton from '~/beinComponents/TabButton'
+import PillTabButton from '~/beinComponents/Tab/PillTabButton'
 import ViewSpacing from '~/beinComponents/ViewSpacing'
 import { spacing } from '~/theme'
 
@@ -28,24 +28,24 @@ const TabButtonHeader = ({
     >
       {onPressAbout && (
         <>
-          <TabButton useI18n testID="tab_button_header.about_btn" size="medium" onPress={onPressAbout}>
+          <PillTabButton useI18n testID="tab_button_header.about_btn" size="medium" onPress={onPressAbout}>
             groups:group_content:btn_about
-          </TabButton>
+          </PillTabButton>
           <ViewSpacing width={spacing.margin.small} />
         </>
       )}
       {isMember && onPressDiscover && (
         <>
-          <TabButton useI18n testID="tab_button_header.discover_btn" size="medium" onPress={onPressDiscover}>
+          <PillTabButton useI18n testID="tab_button_header.discover_btn" size="medium" onPress={onPressDiscover}>
             groups:group_content:btn_discover
-          </TabButton>
+          </PillTabButton>
           <ViewSpacing width={spacing.margin.small} />
         </>
       )}
       {onPressMembers && (
-        <TabButton useI18n testID="tab_button_header.members_btn" size="medium" onPress={onPressMembers}>
+        <PillTabButton useI18n testID="tab_button_header.members_btn" size="medium" onPress={onPressMembers}>
           groups:group_content:btn_members
-        </TabButton>
+        </PillTabButton>
       )}
     </ScrollView>
   )

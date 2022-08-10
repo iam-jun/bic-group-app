@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, Platform, View, Button,
+  StyleSheet, Platform, View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -14,6 +14,7 @@ import actions from '~/screens/Auth/redux/actions';
 import authProviders from '~/constants/authProviders';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
+import Button from '~/beinComponents/Button';
 
 const SignInOAuth = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,6 @@ const SignInOAuth = () => {
       <Button
         testID="btnLoginFB"
         // uppercase={false}
-        // @ts-ignore
         style={[styles.button, styles.buttonFacebook]}
         onPress={() => onPress(authProviders.FACEBOOK)}
         disabled={loading}
@@ -41,7 +41,6 @@ const SignInOAuth = () => {
       <Button
         testID="btnLoginGG"
         // uppercase={false}
-        // @ts-ignore
         style={[styles.button, styles.buttonGoogle]}
         onPress={() => onPress(authProviders.GOOGLE)}
         disabled={loading}
@@ -52,7 +51,6 @@ const SignInOAuth = () => {
         <Button
           testID="btnLoginApple"
           // uppercase={false}
-          // @ts-ignore
           style={[styles.button, styles.buttonApple]}
           onPress={() => onPress(authProviders.APPLE)}
           disabled={loading}

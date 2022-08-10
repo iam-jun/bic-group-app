@@ -6,9 +6,9 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import { IGroup } from '~/interfaces/IGroup';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 
 export interface ReorderGroupItemProps {
@@ -32,7 +32,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
   const styles = createStyle(theme);
 
   const { privacy, icon, name } = group || {};
-  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon }: any = privacyData || {};
 
   return (
@@ -42,7 +42,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
           <Icon size={16} icon="Bars" tintColor={colors.white} />
         </View>
         <View>
-          <Avatar.Small source={icon} />
+          <Avatar.Tiny source={icon} />
           <View style={styles.iconPrivacy}>
             <Icon size={spacing.margin.base} icon={privacyIcon} />
           </View>

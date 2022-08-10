@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import ImportantStatus from '~/screens/Post/components/ImportantStatus';
+import BannerImportant from '~/bicComponents/Banner/BannerImportant';
 
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';
@@ -28,7 +28,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
   }
 
   const now = new Date();
-  const notExpired = now.getTime() < new Date(expireTime).getTime() && !markedReadPost;
+  const notExpired = now.getTime() < new Date(expireTime).getTime();
 
   if (isLite) {
     return (
@@ -46,7 +46,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
     );
   }
 
-  return <ImportantStatus notExpired={notExpired} />;
+  return notExpired ? <BannerImportant markedAsRead={markedReadPost} /> : null;
 };
 
 const createStyle = (theme: ExtendedTheme) => {

@@ -18,11 +18,9 @@ const useAuthAmplifyHub = () => {
                 dispatch(actions.signInSuccess(userResponse));
               })
               .catch((error) => {
-                console.log(
-                  '\x1b[36m',
-                  'namanh --- SignInError |  : ',
-                  error,
-                  '\x1b[0m',
+                console.error(
+                  '\x1b[34m🐣️ authAmplifyHub error',
+                  `${JSON.stringify(error, undefined, 2)}\x1b[0m`,
                 );
               });
             break;
