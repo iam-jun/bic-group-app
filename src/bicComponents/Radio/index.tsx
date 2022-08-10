@@ -61,8 +61,8 @@ const Radio = ({
     },
     disabled: {
       iconName: 'Circle' as IconType,
-      iconColor: colors.neutral20,
-      labelColor: colors.neutral20,
+      iconColor: colors.gray20,
+      labelColor: colors.gray20,
     },
     'disabled-auto-selected': {
       iconName: 'CircleDotSolid' as IconType,

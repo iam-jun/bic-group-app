@@ -34,7 +34,7 @@ describe('Toggle component', () => {
     expect(rendered).toMatchSnapshot();
   })
 
-  it('should call onPress when pressing on toggle', () => {
+  it('should call onPress when pressing on Toggle', () => {
     const onPress = jest.fn();
     const wrapper = renderWithRedux(<Toggle onPress={onPress} testID="toggle" />);
     const button = wrapper.getByTestId('toggle');
@@ -42,7 +42,7 @@ describe('Toggle component', () => {
     expect(onPress).toBeCalled();
   })
 
-  it('should NOT call onPress when pressing on disbaled toggle', () => {
+  it('should NOT call onPress when pressing on disabled Toggle', () => {
     const onPress = jest.fn();
     const wrapper = renderWithRedux(<Toggle onPress={onPress} disabled testID="toggle" />);
     const button = wrapper.getByTestId('toggle');
