@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
@@ -20,7 +20,7 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
   const styles = createStyle(theme);
 
   const { privacy, icon, name } = group || {};
-  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon }: any = privacyData || {};
 
   return (

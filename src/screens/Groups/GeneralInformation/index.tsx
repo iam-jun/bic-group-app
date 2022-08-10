@@ -11,7 +11,8 @@ import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import { uploadTypes } from '~/configs/resourceConfig';
-import privacyTypes, {
+import {
+  groupPrivacyListDetail,
   communityPrivacyListDetail,
   groupPrivacy,
 } from '~/constants/privacyTypes';
@@ -167,7 +168,7 @@ const GeneralInformation = (props: any) => {
       testID={`general_information.privacy_item.${item.type}`}
       onPress={() => onPrivacyMenuPress(item)}
     >
-      <PrivacyItem item={item} onPressHelpMessage={helpMessage} />
+      <PrivacyItem item={item} type={type} onPressHelpMessage={helpMessage} />
     </TouchableOpacity>
   );
 
@@ -214,7 +215,7 @@ const GeneralInformation = (props: any) => {
               </Text.H5>
               <ListView
                 data={
-                  type === 'group' ? privacyTypes : communityPrivacyListDetail
+                  type === 'group' ? groupPrivacyListDetail : communityPrivacyListDetail
                 }
                 renderItem={renderPrivacyItem}
               />

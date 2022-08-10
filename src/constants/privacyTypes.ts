@@ -8,7 +8,7 @@ export const groupPrivacy = {
   open: 'OPEN',
 };
 
-export default [
+export const groupPrivacyListDetail = [
   {
     type: 'PUBLIC',
     title: 'settings:title_public',
