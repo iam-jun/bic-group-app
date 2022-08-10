@@ -4,9 +4,9 @@ import {
 import React, { useEffect, useState } from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IconType } from '~/resources/icons';
-import Text, { TextVariant } from '../Text';
+import Text, { TextVariant } from '~/beinComponents/Text';
+import Icon from '~/beinComponents/Icon';
 import { spacing } from '~/theme';
-import Icon from '../Icon';
 import { borderRadius } from '~/theme/spacing';
 
 export interface RadioProps {

@@ -6,7 +6,7 @@ import Text from '~/beinComponents/Text';
 import { IPermission, IRole } from '~/interfaces/IGroup';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
-import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
+import Checkbox from '~/bicComponents/Checkbox';
 
 export interface PermissionItemProps {
   permission: IPermission;

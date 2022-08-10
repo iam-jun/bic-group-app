@@ -4,9 +4,9 @@ import {
 import React, { useEffect, useState } from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Icon from '../Icon';
+import Icon from '~/beinComponents/Icon';
+import Text, { TextVariant } from '~/beinComponents/Text';
 import { IconType } from '~/resources/icons';
-import Text, { TextVariant } from '../Text';
 import { spacing } from '~/theme';
 
 export interface CheckboxProps {
