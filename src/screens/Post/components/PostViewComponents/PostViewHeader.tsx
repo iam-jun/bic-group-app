@@ -4,7 +4,7 @@ import { useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
@@ -75,7 +75,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
         onPress={onPressActor}
         style={styles.avatar}
       >
-        <Avatar.Large isRounded source={avatar} />
+        <Avatar.Medium isRounded source={avatar} />
       </TouchableOpacity>
       <View style={{ flex: 1 }}>
         <TouchableOpacity

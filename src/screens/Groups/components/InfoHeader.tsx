@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import images from '~/resources/images';
@@ -41,7 +41,7 @@ const InfoHeader = ({
         style={styles.cover}
         source={backgroundImgUrl || images.img_cover_default}
       />
-      <Avatar.LargeAlt
+      <Avatar.Large
         showBorder
         source={icon || images.img_user_avatar_default}
         style={styles.avatar}

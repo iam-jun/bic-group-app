@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import privacyTypes from '~/constants/privacyTypes';
@@ -34,7 +34,7 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
       <View style={styles.groupInfo}>
         <View style={styles.grayDot} />
         <View>
-          <Avatar.Medium source={icon} />
+          <Avatar.Base source={icon} />
           <View style={styles.iconPrivacy}>
             <Icon size={spacing.margin.large} icon={privacyIcon} />
           </View>

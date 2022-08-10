@@ -9,8 +9,8 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text, { TextProps } from '~/beinComponents/Text';
-import Avatar from '~/beinComponents/Avatar';
-import { AvatarProps } from '~/beinComponents/Avatar/AvatarComponent';
+import Avatar from '~/bicComponents/Avatar';
+import { AvatarProps } from '~/bicComponents/Avatar/AvatarComponent';
 import Icon, { IconProps } from '~/beinComponents/Icon';
 
 import { useKeySelector } from '~/hooks/selector';
@@ -56,7 +56,7 @@ const HeaderAvatar = ({
       style={StyleSheet.flatten([styles.container, containerStyle])}
       onPress={onPress}
     >
-      <Avatar.Large source={avatar} isRounded {...avatarProps} />
+      <Avatar.Medium source={avatar} isRounded {...avatarProps} />
       <View style={styles.content}>
         <Text
           variant="h5"

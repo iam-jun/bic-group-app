@@ -10,7 +10,7 @@ import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/beinComponents/Text';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import commonActions, { IAction } from '~/constants/commonActions';
@@ -18,7 +18,7 @@ import { generateUniqueId } from '~/utils/generator';
 import { useKeySelector } from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
-import { AvatarType } from '~/beinComponents/Avatar/AvatarComponent';
+import { AvatarType } from '~/bicComponents/Avatar/AvatarComponent';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
@@ -72,7 +72,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     showPrivacyAvatar = false,
     showInfo = true,
     disableHorizontal,
-    iconVariant = 'medium',
+    iconVariant = 'base',
     nameLines = 2,
     menuIcon = 'menu',
     renderExtraInfo,
