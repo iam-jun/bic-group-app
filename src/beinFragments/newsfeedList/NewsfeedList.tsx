@@ -6,10 +6,8 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  ActivityIndicator,
   RefreshControl,
-  DeviceEventEmitter,
-  FlatList,
+  DeviceEventEmitter, ActivityIndicator,
 } from 'react-native';
 import { debounce, throttle } from 'lodash';
 import {
@@ -22,7 +20,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
-import dimension, { scaleSize } from '~/theme/dimension';
+import dimension from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
 import PostView from '~/screens/Post/components/PostView';
@@ -30,8 +28,6 @@ import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCrea
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import { useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
-import Image from '~/beinComponents/Image';
-import images from '~/resources/images';
 import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
 import { IPostActivity } from '~/interfaces/IPost';
@@ -72,6 +68,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const prevOffsetYShared = useSharedValue(0);
 
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(
     theme, insets,
@@ -102,41 +99,21 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       const showFloating = offsetY > CREATE_POST_HEADER_HEIGHT;
       emit('stopAllVideo');
       if (isDown5Percent) {
-        emit(
-          'showHeader', false,
-        );
-        emit(
-          'showBottomBar', false,
-        );
-        emit(
-          'showFloatingCreatePost', false,
-        );
+        emit('showHeader', false);
+        emit('showBottomBar', false);
+        emit('showFloatingCreatePost', false);
       } else if (isDown && offsetY > 92) {
-        emit(
-          'showHeader', false,
-        );
+        emit('showHeader', false);
       }
       if (isUp5Percent) {
-        emit(
-          'showHeader', true,
-        );
-        emit(
-          'showBottomBar', true,
-        );
-        emit(
-          'showFloatingCreatePost', showFloating,
-        );
+        emit('showHeader', true);
+        emit('showBottomBar', true);
+        emit('showFloatingCreatePost', showFloating);
       } else if (isUp) {
-        emit(
-          'showBottomBar', true,
-        );
-        emit(
-          'showFloatingCreatePost', showFloating,
-        );
+        emit('showBottomBar', true);
+        emit('showFloatingCreatePost', showFloating);
         if (offsetY < 50) {
-          emit(
-            'showHeader', true,
-          );
+          emit('showHeader', true);
         }
       }
 
@@ -178,12 +155,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   useEffect(
     () => {
       if (data?.length === 0) {
-        DeviceEventEmitter.emit(
-          'showHeader', true,
-        );
-        DeviceEventEmitter.emit(
-          'showBottomBar', true,
-        );
+        DeviceEventEmitter.emit('showHeader', true);
+        DeviceEventEmitter.emit('showBottomBar', true);
       }
     }, [data?.length],
   );
@@ -249,94 +222,67 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     );
   };
 
-  const renderEmpty = () => {
-    if (data?.length === 0 && !canLoadMore) {
+  const renderFooter = () => {
+    if (!canLoadMore && data?.length === 0) {
       return (
-        <FlatList
-          testID="newsfeed_list.empty_list"
-          data={[]}
-          renderItem={null}
-          refreshControl={(
-            <RefreshControl
-              testID="newsfeed_list.refresh_control"
-              progressViewOffset={refreshControlOffset}
-              refreshing={!!refreshing}
-              onRefresh={() => onRefresh?.()}
-            />
-          )}
-          ListEmptyComponent={(
-            <NewsfeedListEmpty
-              styles={styles}
-              HeaderComponent={HeaderComponent}
-              theme={theme}
-            />
-          )}
-        />
-      );
+        <View style={styles.emptyContainer}>
+          <Text.SubtitleM useI18n>
+            post:newsfeed:title_empty_no_post
+          </Text.SubtitleM>
+          <Text.BodyXS style={{ marginTop: spacing.margin.small }} useI18n color={theme.colors.neutral50}>
+            post:newsfeed:text_empty_no_post
+          </Text.BodyXS>
+        </View>
+      )
     }
-    return null;
-  };
-
-  const renderFooter = () => (
-    <View style={styles.listFooter}>
-      {canLoadMore && !refreshing && (
-      <ActivityIndicator
-        testID="newsfeed_list.activity_indicator"
-        color={theme.colors.gray20}
-      />
-      )}
-      {!refreshing && !canLoadMore && (
-      <>
-        <Image
-          resizeMode="contain"
-          style={[styles.imgEmpty, { marginTop: spacing.margin.base }]}
-          source={images.img_empty_cant_load_more}
+    if (!refreshing && !canLoadMore) {
+      return (
+        <View style={styles.listFooter}>
+          <Text.BodyM useI18n color={theme.colors.neutral40}>
+            {data?.length === 0
+              ? 'post:newsfeed:text_empty_no_post'
+              : 'post:newsfeed:text_empty_cant_load_more'}
+          </Text.BodyM>
+        </View>
+      )
+    }
+    return (
+      <View style={styles.listFooter}>
+        <ActivityIndicator
+          testID="newsfeed_list.activity_indicator"
+          color={theme.colors.gray20}
         />
-        <Text.H6 useI18n>post:newsfeed:title_empty_cant_load_more</Text.H6>
-        <Text.BodyS
-          useI18n
-          color={theme.colors.gray50}
-          style={{ marginBottom: spacing.margin.large }}
-        >
-          post:newsfeed:text_empty_cant_load_more
-        </Text.BodyS>
-      </>
-      )}
-    </View>
-  );
+      </View>
+    )
+  };
 
   return (
     <View testID="newsfeed_list" style={styles.container}>
-      {data && data.length > 0 && (
-        <AnimatedFlashList
-          ref={listRef}
-        // @ts-ignore
-          data={data as any}
-          renderItem={renderItem}
-          keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
-          estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
-          onScroll={onScroll}
-          onLoad={onLoaded}
-          refreshing
-          refreshControl={(
-            <RefreshControl
-              testID="newsfeed_list.refresh_control"
-              progressViewOffset={refreshControlOffset}
-              refreshing={!!refreshing}
-              onRefresh={() => onRefresh?.()}
-            />
+      <AnimatedFlashList
+        ref={listRef}
+          // @ts-ignore
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
+        estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
+        onScroll={onScroll}
+        onLoad={onLoaded}
+        refreshing
+        refreshControl={(
+          <RefreshControl
+            testID="newsfeed_list.refresh_control"
+            progressViewOffset={refreshControlOffset}
+            refreshing={!!refreshing}
+            onRefresh={() => onRefresh?.()}
+          />
           )}
-          showsHorizontalScrollIndicator={false}
-          onRefresh={onRefresh}
-          onEndReached={_onEndReached}
-          onEndReachedThreshold={0.5}
-          ListHeaderComponent={
-            <NewsfeedListHeader HeaderComponent={HeaderComponent} />
-          }
-          ListFooterComponent={renderFooter}
-        />
-      )}
-      {renderEmpty()}
+        showsHorizontalScrollIndicator={false}
+        onRefresh={onRefresh}
+        onEndReached={_onEndReached}
+        onEndReachedThreshold={0.5}
+        ListHeaderComponent={<NewsfeedListHeader HeaderComponent={HeaderComponent} />}
+        ListFooterComponent={renderFooter}
+      />
       {renderPlaceholder()}
       <FloatingCreatePost />
     </View>
@@ -358,23 +304,6 @@ const NewsfeedListHeader = ({ HeaderComponent }: any) => {
   );
 };
 
-const NewsfeedListEmpty = ({ styles, HeaderComponent, theme }: any) => (
-  <View testID="newsfeed_list.empty_view" style={styles.emptyContainer}>
-    {!!HeaderComponent && HeaderComponent}
-    <View style={styles.listFooter}>
-      <Image
-        resizeMode="contain"
-        style={styles.imgEmpty}
-        source={images.img_empty_no_post}
-      />
-      <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
-      <Text.BodyS useI18n color={theme.colors.gray50}>
-        post:newsfeed:text_empty_no_post
-      </Text.BodyS>
-    </View>
-  </View>
-);
-
 const createStyle = (
   theme: ExtendedTheme, insets: any,
 ) => {
@@ -388,10 +317,11 @@ const createStyle = (
       marginBottom: spacing.margin.large,
     },
     listFooter: {
-      minHeight: 150,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingVertical: spacing.padding.large,
+      paddingTop: spacing.padding.small,
+      paddingBottom: 58,
+      paddingHorizontal: spacing.padding.large,
     },
     placeholder: {
       opacity: 1,
@@ -402,19 +332,14 @@ const createStyle = (
       right: 0,
       backgroundColor: colors.neutral1,
     },
-    imgEmpty: {
-      width: scaleSize(240),
-      height: scaleSize(160),
-      maxWidth: 240,
-      maxHeight: 160,
-      marginBottom: spacing.margin.large,
-    },
     headerContainer: {
       marginTop: insets.top + dimension.homeHeaderHeight,
       width: '100%',
     },
     emptyContainer: {
-      marginTop: insets.top + dimension.homeHeaderHeight,
+      marginTop: 56,
+      paddingHorizontal: spacing.padding.large,
+      alignItems: 'center',
     },
     itemStyle: {
       marginBottom: spacing.margin.small,

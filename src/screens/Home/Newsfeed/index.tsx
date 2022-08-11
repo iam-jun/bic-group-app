@@ -161,7 +161,6 @@ const Newsfeed = () => {
         onEndReach={onEndReach}
         onRefresh={onRefresh}
         onScrollY={onScrollY}
-        HeaderComponent={<HeaderCreatePost style={styles.headerCreatePost} />}
       />
       <View style={styles.statusBar} />
       <NewsfeedSearch searchViewRef={searchViewRef} style={styles.searchContainer} />
@@ -174,7 +173,6 @@ const createStyle = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
-    flex1: { flex: 1 },
     statusBar: {
       zIndex: 10,
       position: 'absolute',
@@ -186,7 +184,7 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     container: {
       flex: 1,
-      backgroundColor: colors.neutral1,
+      backgroundColor: colors.gray1,
     },
     searchContainer: {
       zIndex: 2,
@@ -196,29 +194,10 @@ const createStyle = (theme: ExtendedTheme) => {
       right: 0,
       bottom: 0,
     },
-    headerOnLaptop: {
-      backgroundColor: colors.neutral1,
-    },
-    placeholder: {
-      flex: 1,
-    },
-    listContainer: {
-      flex: 1,
-    },
-    listFooter: {
-      height: 150,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     headerCreatePost: {
       width: '100%',
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
-    },
-    importantCount: {
-      paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing.padding.large,
-      paddingBottom: spacing.padding.small,
     },
     headerContainer: {
       position: 'absolute',
