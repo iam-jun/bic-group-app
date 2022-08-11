@@ -80,6 +80,7 @@ import { faDeleteLeft } from '@fortawesome/pro-regular-svg-icons/faDeleteLeft';
 import { faArrowTurnDownRight } from '@fortawesome/pro-regular-svg-icons/faArrowTurnDownRight';
 import { faCloudArrowDown } from '@fortawesome/pro-regular-svg-icons/faCloudArrowDown';
 import { faCircleCheck } from '@fortawesome/pro-regular-svg-icons/faCircleCheck';
+import { faCircleCheck as faCircleCheckSolid } from '@fortawesome/pro-solid-svg-icons/faCircleCheck';
 import { faVolumeXmark } from '@fortawesome/pro-regular-svg-icons/faVolumeXmark';
 import { faSitemap } from '@fortawesome/pro-regular-svg-icons/faSitemap';
 import { faCirclePlay } from '@fortawesome/pro-regular-svg-icons/faCirclePlay';
@@ -226,6 +227,7 @@ export const initFontAwesomeIcon = () => {
     faArrowTurnDownRight,
     faCloudArrowDown,
     faCircleCheck,
+    faCircleCheckSolid,
     faVolumeXmark,
     faSitemap,
     faCirclePlay,
@@ -356,6 +358,7 @@ export const fontAwesomeIcons = {
   ArrowTurnDownRight: 'fa-regular fa-arrow-turn-down-right',
   CloudArrowDown: 'fa-regular fa-cloud-arrow-down',
   CircleCheck: 'fa-regular fa-circle-check',
+  CircleCheckSolid: 'fa-solid fa-circle-check',
   VolumeXmark: 'fa-regular fa-volume-xmark',
   Sitemap: 'fa-regular fa-sitemap',
   CirclePlay: 'fa-regular fa-circle-play',
