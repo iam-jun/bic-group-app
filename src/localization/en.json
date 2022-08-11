@@ -384,7 +384,7 @@
     "newsfeed": "News feed",
     "saved_posts": "Saved Posts",
     "draft_post": "Draft Posts",
-    "title_timeline": "Timeline",
+    "title_timeline": "Newsfeed",
     "title_important": "Important",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
