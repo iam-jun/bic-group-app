@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
-import Divider from '~/beinComponents/Divider';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import { IReactionCounts } from '~/interfaces/IPost';
 import { IconType } from '~/resources/icons';
@@ -82,12 +81,12 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         leftIcon={icon}
         leftIconProps={{
           icon,
-          size: 14,
-          tintColor: colors.gray50,
+          size: 18,
+          tintColor: colors.neutral40,
         }}
         textProps={{
-          variant: 'bodySMedium',
-          color: colors.gray50,
+          variant: 'numberS',
+          color: colors.neutral80,
         }}
         style={styles.buttonReact}
       >
@@ -108,7 +107,6 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
             false,
             btnReactTestID,
           )}
-          <Divider style={{ height: '66%', alignSelf: 'center' }} horizontal />
         </>
       )}
       {!!canComment
@@ -132,12 +130,9 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {},
     reactButtons: {
       flexDirection: 'row',
       height: dimension?.commentBarHeight,
-      borderTopWidth: 1,
-      borderColor: colors.neutral5,
       alignItems: 'center',
     },
     buttonReactContainer: {

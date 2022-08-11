@@ -31,14 +31,14 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
         activeOpacity={1}
         testID="seen_counts_view.touchable_opacity"
       >
-        <Text.SubtitleS
-          color={colors.gray50}
+        <Text.BodyS
+          color={colors.neutral40}
           numberOfLines={1}
           testID="seen_counts_view.show_text"
         >
           {t('post:label_seen_by')}
-          {seenPeopleCount}
-        </Text.SubtitleS>
+          <Text.BodySMedium color={colors.neutral40}>{seenPeopleCount}</Text.BodySMedium>
+        </Text.BodyS>
       </TouchableOpacity>
     </View>
   );
@@ -47,8 +47,8 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-end',
-    paddingTop: spacing.padding.large,
-    paddingBottom: spacing.padding.tiny,
+    paddingTop: spacing.padding.base,
+    paddingBottom: spacing.padding.xSmall,
     paddingHorizontal: spacing.padding.large,
   },
 });
