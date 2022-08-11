@@ -81,7 +81,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const _onToggleShowTextContent = useCallback(() => {
     setContentShowAll(!contentShowAll);
     onToggleShowTextContent?.();
-  }, [testID]);
+  }, [testID, contentShowAll]);
 
   const _onPress = () => {
     if (onPress) {
