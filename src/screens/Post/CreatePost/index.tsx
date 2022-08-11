@@ -13,7 +13,7 @@ import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import ImportantStatus from '~/screens/Post/components/ImportantStatus';
+import BannerImportant from '~/bicComponents/Banner/BannerImportant';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import postActions from '~/screens/Post/redux/actions';
 
@@ -194,7 +194,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         activeOpacity={1}
       >
         <View>
-          {!!important?.active && <ImportantStatus notExpired />}
+          {!!important?.active && <BannerImportant />}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider />
         </View>

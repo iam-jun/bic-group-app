@@ -1,5 +1,5 @@
 import React, {
-  FC, memo, useEffect, useState,
+  FC, memo, useCallback, useEffect, useState,
 } from 'react';
 import {
   View,
@@ -32,6 +32,7 @@ export interface CollapsibleTextProps extends TextProps {
   onPress?: () => void;
   onPressAudience?: (audience: any, e?: any) => any;
   [x: string]: any;
+  onToggleShowTextContent?: () => void;
 }
 
 const _CollapsibleText: FC<CollapsibleTextProps> = ({
@@ -48,6 +49,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   copyEnabled,
   onPress,
   onPressAudience,
+  onToggleShowTextContent,
   ...textProps
 }: CollapsibleTextProps) => {
   const getShortContent = (c?: string) => {
@@ -76,13 +78,16 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     }, [content],
   );
 
-  const onToggleShowLess = () => setContentShowAll(!contentShowAll);
+  const _onToggleShowTextContent = useCallback(() => {
+    setContentShowAll(!contentShowAll);
+    onToggleShowTextContent?.();
+  }, [testID, contentShowAll]);
 
   const _onPress = () => {
     if (onPress) {
       onPress();
     } else if (toggleOnPress) {
-      onToggleShowLess();
+      _onToggleShowTextContent();
     }
   };
 
@@ -114,7 +119,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
       {!!shortContent && (
       <Text.SubtitleS
         testID="collapsible_text.markdown.short_content"
-        onPress={onToggleShowLess}
+        onPress={_onToggleShowTextContent}
         color={colors.neutral50}
       >
         {contentShowAll
@@ -133,7 +138,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
       {!!shortContent && (
       <Text.SubtitleS
         testID="collapsible_text.show_text"
-        onPress={onToggleShowLess}
+        onPress={_onToggleShowTextContent}
         color={colors.neutral50}
       >
         {contentShowAll

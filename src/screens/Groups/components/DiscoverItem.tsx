@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ButtonDiscoverItemAction from './ButtonDiscoverItemAction';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import Icon from '~/beinComponents/Icon';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
@@ -32,7 +32,7 @@ const DiscoverItem = ({
   const {
     id, name, icon, userCount, privacy, joinStatus,
   } = item || {};
-  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
 
   const onView = () => {

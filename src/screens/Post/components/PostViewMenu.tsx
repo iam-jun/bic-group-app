@@ -188,7 +188,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         title={t('post:post_menu_save')}
         onPress={onPress}
       />
-      {!!Object.keys(reactionsCount)?.[0]
+      {!!reactionsCount && !!Object.keys(reactionsCount)?.[0]
       && (
       <PrimaryItem
         testID="post_view_menu.insights"

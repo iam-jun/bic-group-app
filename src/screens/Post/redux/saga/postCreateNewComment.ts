@@ -41,6 +41,7 @@ function* postCreateNewComment({
   }
 
   try {
+    yield put(postActions.putMarkSeenPost({ postId }));
     const creatingComment = yield select((state) => state?.post?.createComment?.loading);
     if (creatingComment) {
       console.error('\x1b[31m🐣️ saga postCreateNewComment: creating\x1b[0m');

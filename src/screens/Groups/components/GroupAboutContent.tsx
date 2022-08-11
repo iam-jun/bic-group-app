@@ -9,7 +9,7 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -28,7 +28,7 @@ const GroupAboutContent = () => {
   const groupId = groupData.id;
   const { description, userCount, privacy } = groupData;
 
-  const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
   const { icon, title, subtitle }: any = privacyData || {};
 
   const onPressMembers = () => {

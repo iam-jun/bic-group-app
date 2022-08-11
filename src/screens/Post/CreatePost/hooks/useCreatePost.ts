@@ -263,12 +263,11 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
           expires_time: initPostData?.setting?.importantExpiredAt,
         };
         const dataDefault = [
-          !!initImportant.active
-        || !!initImportant.expires_time,
-          !!canComment,
-          !!canReact,
+          !!initImportant.active || !!initImportant.expires_time,
+          !canComment,
+          !canReact,
         ];
-        const newCount = dataDefault.filter((i) => !i);
+        const newCount = dataDefault.filter((i) => !!i);
 
         dispatch(postActions.setCreatePostSettings({
           important: initImportant,
