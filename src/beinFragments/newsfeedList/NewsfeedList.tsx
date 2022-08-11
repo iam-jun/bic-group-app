@@ -66,7 +66,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   HeaderComponent,
 }: NewsfeedListProps) => {
   const [initializing, setInitializing] = useState(true);
-  const listView = useRef<any>();
+  const listRef = useRef<any>();
   const lockHeaderRef = useRef(false);
 
   const prevOffsetYShared = useSharedValue(0);
@@ -169,12 +169,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   useTabPressListener(
     (tabName: ITabTypes) => {
       if (tabName === 'home') {
-        listView?.current?.scrollToOffset?.(
-          0, 0, true,
-        );
+        listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
       }
     },
-    [listView?.current],
+    [listRef?.current],
   );
 
   useEffect(
@@ -311,6 +309,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     <View testID="newsfeed_list" style={styles.container}>
       {data && data.length > 0 && (
         <AnimatedFlashList
+          ref={listRef}
         // @ts-ignore
           data={data as any}
           renderItem={renderItem}

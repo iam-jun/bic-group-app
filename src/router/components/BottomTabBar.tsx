@@ -120,6 +120,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
       if (!isFocused && !event.defaultPrevented) {
         navigation.navigate(route.name);
       }
+
+      // avoid quick scroll in newsfeed then click tab noti => hide bottom tab in screen noti
+      setTimeout(() => show(0), 1000);
     };
 
     const onLongPress = () => {
