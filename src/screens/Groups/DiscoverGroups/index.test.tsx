@@ -16,7 +16,6 @@ describe('DiscoverGroups component', () => {
     state.groups.discoverGroups = {
       loading: false,
       canLoadMore: false,
-      // @ts-ignore
       ids: [discoverGroup.id],
       items: { [discoverGroup.id]: discoverGroup },
     };

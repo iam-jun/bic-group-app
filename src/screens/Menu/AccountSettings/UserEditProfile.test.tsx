@@ -53,7 +53,6 @@ describe('UserEditProfile screen', () => {
       .spyOn(menuActions, 'getMyWorkExperience')
       .mockImplementation(mockActionGetUserWorkEXP as any);
 
-    // @ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
 
     const store = mockStore(storeData);
@@ -94,9 +93,7 @@ describe('UserEditProfile screen', () => {
 
     storeData.auth.user = user as any;
 
-    // @ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
-    // @ts-ignore
     storeData.menu.myWorkExperience = WORK_EXPERIENCE;
 
     const mockActionGetMyProfile = () => ({
@@ -155,7 +152,6 @@ describe('UserEditProfile screen', () => {
     };
 
     storeData.auth.user = user as any;
-    // @ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
 
     const mockActionGetMyProfile = () => ({
@@ -220,7 +216,6 @@ describe('UserEditProfile screen', () => {
     };
 
     storeData.auth.user = user as any;
-    // @ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
 
     const store = mockStore(storeData);
@@ -306,7 +301,6 @@ describe('UserEditProfile screen', () => {
     };
 
     storeData.auth.user = user as any;
-    // @ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
 
     const store = mockStore(storeData);
@@ -351,7 +345,6 @@ describe('UserEditProfile screen', () => {
     };
 
     storeData.auth.user = user as any;
-    // @ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
 
     const store = mockStore(storeData);

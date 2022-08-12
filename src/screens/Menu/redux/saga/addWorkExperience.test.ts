@@ -40,7 +40,6 @@ describe('Add Work Experience Saga', () => {
       meta: {},
     };
 
-    // @ts-ignorets
     return expectSaga(addWorkExperience, action)
       .provide([
         [matchers.call.fn(menuDataHelper.addWorkExperience), expectData],
@@ -64,11 +63,10 @@ describe('Add Work Experience Saga', () => {
       meta: {},
     };
 
-    // @ts-ignorets
     return expectSaga(addWorkExperience, {
       ...action,
       callback: () => {
-        console.log('callback');
+        // console.log('callback');
       },
     })
       .provide([
@@ -93,7 +91,6 @@ describe('Add Work Experience Saga', () => {
       },
     };
 
-    // @ts-ignorets
     return expectSaga(addWorkExperience, action)
       .provide([
         [

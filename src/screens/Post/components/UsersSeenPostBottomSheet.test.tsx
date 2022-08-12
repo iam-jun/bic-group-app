@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as React from 'react';
 import { cleanup, waitFor } from '@testing-library/react-native';
 import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';

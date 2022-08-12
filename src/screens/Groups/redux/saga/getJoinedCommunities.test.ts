@@ -15,7 +15,7 @@ describe('Get Joined Communities saga', () => {
     };
     const resp = { data: communities as any };
     return (
-      // @ts-ignorets
+
       expectSaga(getJoinedCommunities, action)
         .put(groupsActions.setMyCommunities({ loading: true }))
         .provide([
@@ -39,7 +39,7 @@ describe('Get Joined Communities saga', () => {
     const resp = { data: [] as any };
 
     return (
-      // @ts-ignorets
+
       expectSaga(getJoinedCommunities, action)
         .put(groupsActions.setMyCommunities({ loading: true }))
         .provide([
@@ -66,7 +66,6 @@ describe('Get Joined Communities saga', () => {
       },
     };
 
-    // @ts-ignore
     return expectSaga(getJoinedCommunities, action)
       .put(groupsActions.setMyCommunities({ loading: true }))
       .provide([

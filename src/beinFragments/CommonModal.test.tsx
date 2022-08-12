@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as React from 'react';
 import { View } from 'react-native';
 import { cleanup } from '@testing-library/react-native';
@@ -21,7 +22,6 @@ describe('CommonModal component', () => {
 
   it('renders correctly', () => {
     const storeData = { ...initialState };
-    // @ts-ignore
     storeData.modal.modal = fake_data;
     const store = mockStore(storeData);
     const rendered = renderWithRedux(<CommonModal />, store);

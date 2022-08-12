@@ -13,10 +13,7 @@ afterEach(cleanup);
 describe('Delete Work Experience Saga', () => {
   const action = {
     type: 'test',
-
-    payload: {
-      id: 1,
-    },
+    id: '1',
   };
 
   it('should request to delete user work experience successfully', () => {
@@ -24,7 +21,7 @@ describe('Delete Work Experience Saga', () => {
       code: 200,
       data: [
         {
-          id: 2,
+          id: '2',
           company: 'test 1',
           currentlyWorkHere: true,
           description: '',
@@ -37,7 +34,6 @@ describe('Delete Work Experience Saga', () => {
       meta: {},
     };
 
-    // @ts-ignorets
     return expectSaga(deleteWorkExperience, action)
       .provide([
         [matchers.call.fn(menuDataHelper.deleteWorkExperience), expectData],
@@ -64,11 +60,10 @@ describe('Delete Work Experience Saga', () => {
       meta: {},
     };
 
-    // @ts-ignorets
     return expectSaga(deleteWorkExperience, {
       ...action,
       callback: () => {
-        console.log('callback');
+        // console.log('callback');
       },
     })
       .provide([
@@ -83,7 +78,6 @@ describe('Delete Work Experience Saga', () => {
       meta: { message: 'Something went wrong' },
     };
 
-    // @ts-ignorets
     return expectSaga(deleteWorkExperience, action)
       .provide([
         [

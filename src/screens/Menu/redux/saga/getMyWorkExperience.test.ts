@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { cleanup } from '@testing-library/react-native';
@@ -39,6 +40,7 @@ describe('Get My Work Experience Saga', () => {
       .provide([
         [matchers.call.fn(menuDataHelper.getMyWorkExperience), expectData],
       ])
+      // @ts-ignore
       .put(menuActions.setMyWorkExperience(mapWorkExperience(expectData.data)))
       .run();
   });

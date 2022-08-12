@@ -59,7 +59,6 @@ describe('Comment Detail screen', () => {
     const rootNavigation = { replace };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    // @ts-ignore
     storeData.post.commentErrorCode = API_ERROR_CODE.POST.postPrivacy;
 
     const store = mockStore(storeData);

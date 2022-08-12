@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import Reaction from '.';
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 

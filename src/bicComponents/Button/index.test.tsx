@@ -140,12 +140,10 @@ describe('Button component', () => {
 
   it('renders correctly children with useI18n', () => {
     const rendered = renderWithRedux(
-      <Button.Primary useI18n>
-       common:text_see_less
-      </Button.Primary>,
+      <Button.Primary useI18n>common:text_see_less</Button.Primary>,
     );
+
     expect(rendered).toBeDefined();
     expect(rendered.toJSON()).toMatchSnapshot();
   });
-
 });

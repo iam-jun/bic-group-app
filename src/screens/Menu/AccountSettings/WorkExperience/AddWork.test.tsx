@@ -34,7 +34,7 @@ describe('AddWork screen', () => {
     currentlyWorkHere: true,
     description: '',
     endDate: null,
-    id: 77,
+    id: '77',
     location: 'test 1',
     startDate: '2022-03-07T07:58:05.436Z',
     titlePosition: 'test 1',
@@ -56,7 +56,6 @@ describe('AddWork screen', () => {
 
   it('should disable Add button and  when selectedWorkItem = null (add new work)', async () => {
     const storeData = { ...initialState };
-    // @ts-ignore
     storeData.menu.selectedWorkItem = null;
 
     const store = mockStore(storeData);
@@ -90,7 +89,6 @@ describe('AddWork screen', () => {
 
   it('should enable Add button when companyValue and positionValue not null, selectedWorkItem = null (add new work)', async () => {
     const storeData = { ...initialState };
-    // @ts-ignore
     storeData.menu.selectedWorkItem = null;
 
     const store = mockStore(storeData);
@@ -117,7 +115,6 @@ describe('AddWork screen', () => {
     Keyboard.dismiss = jest.fn();
 
     const storeData = { ...initialState };
-    // @ts-ignore
     storeData.menu.selectedWorkItem = { ...workItem };
 
     const store = mockStore(storeData);
@@ -167,7 +164,6 @@ describe('AddWork screen', () => {
   it('should show enable Save button, Delete button, when selectedWorkItem = {...} but have endDate (edit work)', async () => {
     Keyboard.dismiss = jest.fn();
     const storeData = { ...initialState };
-    // @ts-ignore
     const endDate = '2024-03-07T07:58:05.436Z';
     storeData.menu.selectedWorkItem = {
       ...workItem,
@@ -225,7 +221,6 @@ describe('AddWork screen', () => {
 
   it('should show startDate bottom sheet and endDate bottom sheet when click them', async () => {
     const storeData = { ...initialState };
-    // @ts-ignore
     storeData.menu.selectedWorkItem = null;
 
     const store = mockStore(storeData);
@@ -274,8 +269,9 @@ describe('AddWork screen', () => {
   });
 
   it('should add work item successfully', async () => {
+    const actualReact = jest.requireActual('react');
     jest.mock('react', () => ({
-      ...jest.requireActual('react'),
+      ...actualReact,
       useState: jest.fn(),
     }));
 
@@ -289,7 +285,6 @@ describe('AddWork screen', () => {
       .mockImplementation(mockActionAddWorkExp as any);
 
     const state = { ...initialState };
-    // @ts-ignore
     state.menu.selectedWorkItem = null;
 
     const store = mockStore(state);
@@ -359,7 +354,6 @@ describe('AddWork screen', () => {
       .mockImplementation(deleteFunc);
 
     const state = { ...initialState };
-    // @ts-ignore
     state.menu.selectedWorkItem = workItem;
 
     const store = mockStore(state);
@@ -379,7 +373,6 @@ describe('AddWork screen', () => {
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const state = { ...initialState };
-    // @ts-ignore
     state.menu.selectedWorkItem = null;
 
     const store = mockStore(state);
@@ -395,7 +388,6 @@ describe('AddWork screen', () => {
 
   it('should update border color of input', async () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.menu.selectedWorkItem = null;
 
     const store = mockStore(state);

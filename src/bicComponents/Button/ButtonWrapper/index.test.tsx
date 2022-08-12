@@ -21,9 +21,9 @@ describe('Button component', () => {
   });
 
   it('renders correctly button when no internet connection', () => {
-  storeData.noInternet.isInternetReachable = false;
+    storeData.noInternet.isInternetReachable = false;
 
-  const store = mockStore(storeData);
+    const store = mockStore(storeData);
     const rendered = renderWithRedux(<Button />, store);
     const { getByTestId } = rendered;
     const btnComponent = getByTestId('button_wrapper');
@@ -31,5 +31,4 @@ describe('Button component', () => {
     expect(btnComponent.props?.accessibilityState?.disabled).toBe(true);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
-
 });

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
@@ -12,8 +13,8 @@ import postActions from '../actions';
 import getCommentsByPostId from './getCommentsByPostId';
 
 describe('Get comments by postId saga', () => {
-  const postId = 302;
-  const parentId = 490;
+  const postId = '302';
+  const parentId = '490';
   const storeData = {
     post: {
       allCommentsByParentIds,
@@ -45,6 +46,7 @@ describe('Get comments by postId saga', () => {
             isMerge: true,
           }),
         )
+        // @ts-ignore
         .put(postActions.addToAllComments(response.list))
         .run()
         .then(({ allEffects }: any) => {
@@ -65,8 +67,9 @@ describe('Get comments by postId saga', () => {
     };
     const newAllPosts = storeData.post.allPosts;
     const post = newAllPosts[postId] || {};
-    //
+    // @ts-ignore
     post.comments.meta.hasNextPage = response.meta.hasNextPage;
+    // @ts-ignore
     newAllPosts[postId] = { ...post };
     return (
       // @ts-ignorets
@@ -75,6 +78,7 @@ describe('Get comments by postId saga', () => {
           [matchers.call.fn(postDataHelper.getCommentsByPostId), response],
         ])
         .withState(storeData)
+      // @ts-ignore
         .put(postActions.addToAllComments(response.list))
         .put(
           postActions.updateAllCommentsByParentIdsWithComments({
@@ -83,6 +87,7 @@ describe('Get comments by postId saga', () => {
             isMerge: true,
           }),
         )
+      // @ts-ignore
         .put(postActions.setAllPosts(newAllPosts))
         .run()
         .then(({ allEffects }: any) => {
@@ -118,6 +123,7 @@ describe('Get comments by postId saga', () => {
             isMerge: true,
           }),
         )
+      // @ts-ignore
         .put(postActions.addToAllComments(response.list))
         .run()
         .then(({ allEffects }: any) => {

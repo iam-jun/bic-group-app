@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as React from 'react';
 import { render, cleanup } from '@testing-library/react-native';
 import initialState from '~/store/initialState';

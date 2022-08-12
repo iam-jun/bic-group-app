@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import GroupMembers from '.';
@@ -12,7 +13,6 @@ describe('GroupMembers component', () => {
 
   it('should render search input correctly', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'username' };
 
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
@@ -22,7 +22,6 @@ describe('GroupMembers component', () => {
 
   it('should render list data correctly', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'username' };
 
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
@@ -32,8 +31,8 @@ describe('GroupMembers component', () => {
 
   it('should render Invite member button and navigate to Invite member screen correctly when user can manage member', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'username' };
+    // @ts-ignore
     state.groups.myPermissions = {
       data: {
         groups: {
@@ -56,8 +55,8 @@ describe('GroupMembers component', () => {
 
   it('should NOT render Invite member button correctly when user cannot manage member', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'username' };
+    // @ts-ignore
     state.groups.myPermissions = { data: { groups: {} } }
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
     const inviteBtn = wrapper.queryByTestId('group_members.invite');

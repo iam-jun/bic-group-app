@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 
 import { baseCommentData, POST_DETAIL_3 } from '~/test/mock_data/post';
@@ -126,6 +127,7 @@ describe('Update Reaction by socket saga', () => {
       expectSaga(updateReactionBySocket, action)
         .withState(storeData)
         .withState(storeData)
+      // @ts-ignorets
         .put(postActions.setAllComments(newAllComments))
         .run()
         .then(({ allEffects }: any) => {
@@ -158,6 +160,7 @@ describe('Update Reaction by socket saga', () => {
       expectSaga(updateReactionBySocket, action)
         .withState(storeData)
         .withState(storeData)
+      // @ts-ignorets
         .put(postActions.setAllComments(newAllComments))
         .run()
         .then(({ allEffects }: any) => {
@@ -207,6 +210,7 @@ describe('Update Reaction by socket saga', () => {
       expectSaga(updateReactionBySocket, action)
         .withState(newStoreData)
         .withState(newStoreData)
+      // @ts-ignorets
         .put(postActions.setAllComments(newAllComments))
         .run()
         .then(({ allEffects }: any) => {
@@ -255,6 +259,7 @@ describe('Update Reaction by socket saga', () => {
       expectSaga(updateReactionBySocket, action)
         .withState(newStoreData)
         .withState(newStoreData)
+      // @ts-ignorets
         .put(postActions.setAllComments(newAllComments))
         .run()
         .then(({ allEffects }: any) => {
