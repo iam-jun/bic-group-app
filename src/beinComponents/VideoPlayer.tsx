@@ -11,7 +11,7 @@ import { Video, ResizeMode } from 'expo-av';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { orderBy } from 'lodash';
-import dimension, { scaleSize } from '~/theme/dimension';
+import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
 
@@ -23,7 +23,7 @@ export interface VideoPlayerProps {
   onWatchCheckPoint?: () => void;
 }
 
-const PLAYER_HEIGHT = scaleSize(232);
+const PLAYER_HEIGHT = scaleCoverHeight();
 
 const VideoPlayer: FC<VideoPlayerProps> = ({
   data,
