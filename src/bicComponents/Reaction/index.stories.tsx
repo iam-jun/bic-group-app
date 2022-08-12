@@ -1,21 +1,14 @@
-import React from 'react';
-import { ComponentMeta } from '@storybook/react-native';
-
 import Reaction from '.';
-import CenterView from '../CenterView';
+import { ComponentMeta, getStoryComponent } from '~/storybook';
 
 export default {
   title: 'components/Reaction',
   component: Reaction,
 } as ComponentMeta<typeof Reaction>;
 
-const Template = (args) => (
-  <CenterView>
-    <Reaction {...args} />
-  </CenterView>
-);
+const StoryComponent = getStoryComponent(Reaction);
 
-export const Default = Template.bind({});
+export const Default = StoryComponent.bind({});
 Default.args = {
   value: 10,
   icon: 'kissing_closed_eyes',
@@ -24,7 +17,7 @@ Default.args = {
   onLongPress: () => { alert('onLongPress') },
 }
 
-export const Loading = Template.bind({});
+export const Loading = StoryComponent.bind({});
 Loading.args = {
   ...Default.args,
   selected: true,

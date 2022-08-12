@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 
-export default function CenterView({ children }) {
+export default function StoryWrapper({ children }) {
   return <View style={styles.main}>{children}</View>;
 }
 
-CenterView.defaultProps = {
+StoryWrapper.defaultProps = {
   children: null,
 };
 
-CenterView.propTypes = {
+StoryWrapper.propTypes = {
   children: PropTypes.node,
 };
 

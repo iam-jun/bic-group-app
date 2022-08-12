@@ -40,7 +40,8 @@
   "//dependencies": {
     "//@giphy/react-native-sdk": "use this version (1.3.0) to match with exoplayer version in expo-av",
     "//lottie-react-native": "5.1.3",
-    "//lottie-ios": "3.2.3 unknown reason, run pod install show error: lottie-react-native (from `../node_modules/lottie-react-native`) was resolved to 5.1.3, which depends on lottie-ios (~> 3.2.3), so we fixed this version, try again later when have new version"
+    "//lottie-ios": "3.2.3 unknown reason, run pod install show error: lottie-react-native (from `../node_modules/lottie-react-native`) was resolved to 5.1.3, which depends on lottie-ios (~> 3.2.3), so we fixed this version, try again later when have new version",
+    "//@storybook/react-native": "doesn't work yet with 6.4, please pin other storybook packages (like @storybook/addons) to ~6.3"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
