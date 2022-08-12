@@ -35,7 +35,9 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     initPostData = useKeySelector(postKeySelector.postById(postId));
   }
 
-  const { important, currentSettings } = useKeySelector(postKeySelector.createPost.all);
+  const {
+    important, currentSettings, canReact, canComment,
+  } = useKeySelector(postKeySelector.createPost.all);
 
   const [selectingDate, setSelectingDate] = useState<boolean>();
   const [selectingTime, setSelectingTime] = useState<boolean>();
@@ -46,6 +48,24 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     expires_time: '',
     ...important,
   });
+  const [sCanReact, setCanReact] = useState<boolean>(canReact);
+  const [sCanComment, setCanComment] = useState<boolean>(canComment);
+
+  useEffect(
+    () => {
+      if (sCanComment !== canComment) {
+        setCanComment(canComment);
+      }
+    }, [canComment],
+  );
+
+  useEffect(
+    () => {
+      if (sCanReact !== canReact) {
+        setCanReact(canReact);
+      }
+    }, [canReact],
+  );
 
   useEffect(
     () => {
@@ -60,7 +80,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   useEffect(
     () => {
       checkDisableButtonSave();
-    }, [sImportant],
+    }, [sImportant, sCanComment, sCanReact],
   );
 
   const checkDisableButtonSave = () => {
@@ -68,10 +88,11 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       isEqual(
         sImportant, important,
       ),
-      //   comments,
+      sCanComment === canComment,
+      sCanReact === canReact,
       //   shares,
-      //   reacts,
     ];
+
     const newCount = dataCount.filter((i) => !i);
     setDisableButtonSave(newCount.length === 0);
   };
@@ -86,7 +107,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
         _newImportant.active = !newImportant.active;
         setImportant(_newImportant);
         setShowWarning(true);
-      }, 100);
+      }, 500);
     } else {
       const newImportant = { ...sImportant };
       newImportant.active = !sImportant.active;
@@ -105,6 +126,14 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       setImportant(newImportant);
     }
   };
+
+  const handleToggleCanComment = () => {
+    setCanComment(!sCanComment);
+  };
+
+  const handleToggleCanReact = () => {
+    setCanReact(!sCanReact);
+  }
 
   const handleChangeDatePicker = (date?: Date) => {
     setSelectingDate(false);
@@ -171,6 +200,8 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     newSettings.importantExpiredAt = sImportant?.active
       ? sImportant?.expires_time
       : null;
+    newSettings.canComment = sCanComment;
+    newSettings.canReact = sCanReact;
 
     const data: IPostCreatePost = {
       content,
@@ -193,22 +224,24 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   };
 
   const handlePressSave = () => {
-    rootNavigation.goBack();
-
     if (putUpdateSettings) {
       handlePutUpdateSettings();
       return 'putUpdateSettings';
     }
 
-    // const dataDefault = [
-    //   sImportant.active === currentSettings?.important?.active
-    //     || sImportant.expires_time === currentSettings?.important?.expires_time,
-    // ];
-    // const newCount = dataDefault.filter((i) => !i);
-    // dispatch(postActions.setCreatePostSettings({
-    //   important: sImportant,
-    //   count: newCount?.length || 0,
-    // }));
+    const dataDefault = [
+      !!sImportant.active,
+      !sCanComment,
+      !sCanReact,
+    ];
+
+    const newCount = dataDefault.filter((i) => !!i);
+    dispatch(postActions.setCreatePostSettings({
+      important: sImportant,
+      canComment: sCanComment,
+      canReact: sCanReact,
+      count: newCount?.length || 0,
+    }));
     rootNavigation.goBack();
     return 'setCreatePostSettings';
   };
@@ -236,8 +269,12 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     selectingTime,
     disableButtonSave,
     showWarning,
+    sCanComment,
+    sCanReact,
     handlePressSave,
     handleToggleImportant,
+    handleToggleCanComment,
+    handleToggleCanReact,
     handleChangeDatePicker,
     handleChangeTimePicker,
     handlePutUpdateSettings,

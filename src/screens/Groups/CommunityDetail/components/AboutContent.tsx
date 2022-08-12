@@ -8,7 +8,7 @@ import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import privacyTypes, { groupPrivacy } from '~/constants/privacyTypes';
+import { groupPrivacyListDetail, groupPrivacy } from '~/constants/privacyTypes';
 import PreviewMembers from '../../components/PreviewMembers';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import spacing from '~/theme/spacing';
@@ -20,7 +20,7 @@ const AboutContent = () => {
   const {
     description, userCount, privacy, joinStatus,
   } = infoDetail;
-  const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
   const isMember = joinStatus === groupJoinStatus.member;
 

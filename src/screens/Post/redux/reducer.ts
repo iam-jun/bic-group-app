@@ -20,6 +20,8 @@ export const postInitState = {
       active: false,
       expires_time: null,
     },
+    canComment: true,
+    canReact: true,
     images: [],
     video: undefined,
     files: [],
@@ -30,6 +32,8 @@ export const postInitState = {
         active: false,
         expires_time: null,
       },
+      canComment: true,
+      canReact: true,
     },
     initAudiences: null,
     isSavingDraftPost: false,
@@ -181,14 +185,6 @@ function postReducer(
         createPost: {
           ...state.createPost,
           initAudiences: payload,
-        },
-      };
-    case postTypes.SET_CREATE_POST_IMPORTANT:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          important: payload || postInitState.createPost.important,
         },
       };
     case postTypes.SET_CREATE_POST_IMAGES:

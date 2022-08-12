@@ -18,10 +18,12 @@ import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 
 import spacing from '~/theme/spacing';
+import { useRootNavigation } from '~/hooks/navigation';
 
 const LandingWithInvitation = () => {
   const theme: ExtendedTheme = useTheme();
-  const { t, navigation } = useBaseHook();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const styles = themeStyles(theme);
   const dimensions = useWindowDimensions();
 
@@ -50,14 +52,13 @@ const LandingWithInvitation = () => {
         <Image resizeMode="contain" style={styles.logo} source={logo} />
       )}
       <View style={styles.contentContainer}>
-        {/* @ts-ignore */}
         <SVGIcon source={LandingImg} size={imgSize} />
         <Text.H5 style={styles.title}>{title}</Text.H5>
         {!!desc && <Text.BodyS style={styles.desc}>{desc}</Text.BodyS>}
       </View>
       <Button.Primary
         style={styles.button}
-        onPress={() => navigation.navigate(authStack.login)}
+        onPress={() => rootNavigation.navigate(authStack.login)}
         textVariant="h5"
       >
         {t('auth:btn_landing_start')}

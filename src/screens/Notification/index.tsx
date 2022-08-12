@@ -56,6 +56,7 @@ const Notification = () => {
     (item?: any) => {
       const type = item?.extra?.type || undefined;
       const act = item?.activities?.[0];
+
       try {
         if (type !== undefined) {
           switch (type) {

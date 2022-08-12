@@ -14,7 +14,6 @@ export const getNewSchemeFromSystemScheme = (systemScheme: IScheme) => {
       (
         filtered, key,
       ) => {
-      // @ts-ignore
         if (role[key]) filtered[key] = role[key];
         return filtered;
       }, {},

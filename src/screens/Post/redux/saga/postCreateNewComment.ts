@@ -41,6 +41,7 @@ function* postCreateNewComment({
   }
 
   try {
+    yield put(postActions.putMarkSeenPost({ postId }));
     const creatingComment = yield select((state) => state?.post?.createComment?.loading);
     if (creatingComment) {
       console.error('\x1b[31m🐣️ saga postCreateNewComment: creating\x1b[0m');
@@ -181,8 +182,11 @@ function* postCreateNewComment({
           leftIcon: 'iconCannotComment',
         },
       }));
-    } else if (e?.code === API_ERROR_CODE.POST.postDeleted) {
-      yield put(postActions.setCommentErrorCode(API_ERROR_CODE.POST.postDeleted));
+    } else if (e?.code === API_ERROR_CODE.POST.postDeleted
+      || e?.code === API_ERROR_CODE.POST.postCanNotCommentOrReact) {
+      if (e?.code === API_ERROR_CODE.POST.postDeleted) {
+        yield put(postActions.setCommentErrorCode(API_ERROR_CODE.POST.postDeleted));
+      }
       if (parentCommentId) {
         yield put(postActions.removeChildComment({
           localId: preComment?.localId,
@@ -196,7 +200,7 @@ function* postCreateNewComment({
         }));
       }
       yield put(modalActions.showHideToastMessage({
-        content: 'post:text_post_deleted',
+        content: e?.code === API_ERROR_CODE.POST.postDeleted ? 'post:text_post_deleted' : e?.meta?.message,
         toastType: 'banner',
         props: {
           textProps: { useI18n: true },

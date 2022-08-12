@@ -1,6 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEqual } from 'lodash';
-import React, { FC, memo } from 'react';
+import React, {
+  FC, memo, useCallback, useState,
+} from 'react';
 import {
   Keyboard, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
@@ -132,9 +134,13 @@ const _PostView: FC<PostViewProps> = ({
   }
 
   const { images, videos, files } = media || {};
-  const { isImportant, importantExpiredAt } = setting || {};
+  const {
+    isImportant, importantExpiredAt, canComment, canReact,
+  } = setting || {};
 
   const userId = useUserIdAuth();
+
+  const [isMarkSeenPost, setMarkSeenPost] = useState(false);
 
   const commentCount = formatLargeNumber(commentsCount);
   const labelButtonComment = `${t('post:button_comment')}${
@@ -170,6 +176,7 @@ const _PostView: FC<PostViewProps> = ({
       reactionCounts: reactionsCount,
     };
     dispatch(postActions.postReactToPost(payload));
+    onPressMarkSeenPost();
   };
 
   const onRemoveReaction = (reactionId: ReactionType) => {
@@ -249,6 +256,13 @@ const _PostView: FC<PostViewProps> = ({
     }
   };
 
+  const onPressMarkSeenPost = useCallback(() => {
+    if (!isMarkSeenPost) {
+      dispatch(postActions.putMarkSeenPost({ postId }));
+      setMarkSeenPost(!isMarkSeenPost);
+    }
+  }, [postId, isMarkSeenPost]);
+
   if (deleted) {
     return (
       <View style={StyleSheet.flatten([styles.deletedContainer, style])}>
@@ -291,6 +305,7 @@ const _PostView: FC<PostViewProps> = ({
           videos={videos}
           files={files}
           isPostDetail={isPostDetail}
+          onPressMarkSeenPost={onPressMarkSeenPost}
         />
         {totalUsersSeen > 0 && (
           <SeenCountsView
@@ -298,7 +313,7 @@ const _PostView: FC<PostViewProps> = ({
             seenPeopleCount={totalUsersSeen}
           />
         )}
-        {!isLite && (
+        {!isLite && !!canReact && (
           <ReactionView
             style={styles.reactions}
             ownerReactions={ownerReactions}
@@ -318,6 +333,8 @@ const _PostView: FC<PostViewProps> = ({
             btnReactTestID={btnReactTestID}
             btnCommentTestID={btnCommentTestID}
             reactionCounts={reactionsCount}
+            canComment={!!canComment}
+            canReact={!!canReact}
           />
         )}
         {!isLite && (

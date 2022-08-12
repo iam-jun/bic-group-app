@@ -11,6 +11,7 @@ import { IconType } from '~/resources/icons';
 import * as modalActions from '~/store/modal/actions';
 import { validateReactionCount } from './helper';
 import dimension from '~/theme/dimension';
+import Text from '~/beinComponents/Text';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -19,6 +20,8 @@ export interface PostViewFooterProps {
   btnCommentTestID?: string;
   onPressComment?: () => void;
   reactionCounts: IReactionCounts;
+  canComment?:boolean;
+  canReact?: boolean;
 }
 
 const PostViewFooter: FC<PostViewFooterProps> = ({
@@ -28,6 +31,8 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   btnCommentTestID,
   onPressComment,
   reactionCounts,
+  canComment,
+  canReact,
 }: PostViewFooterProps) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
@@ -93,7 +98,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
 
   return (
     <View style={styles.reactButtons}>
-      {validReactionCount && (
+      {(validReactionCount && !!canReact) && (
         <>
           {renderReactButtonItem(
             'post:button_react',
@@ -106,13 +111,19 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
           <Divider style={{ height: '66%', alignSelf: 'center' }} horizontal />
         </>
       )}
-      {renderReactButtonItem(
-        labelButtonComment,
-        'MessageDots',
-        onPressComment,
-        onPressComment,
-        !onPressComment,
-        btnCommentTestID,
+      {!!canComment
+       && renderReactButtonItem(
+         labelButtonComment,
+         'MessageDots',
+         onPressComment,
+         onPressComment,
+         !onPressComment,
+         btnCommentTestID,
+       )}
+      {!canComment && !canReact && (
+      <View style={styles.emptyView}>
+        <Text.BodyS color={theme.colors.gray70} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
+      </View>
       )}
     </View>
   );
@@ -137,6 +148,13 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    emptyView: {
+      backgroundColor: colors.gray1,
+      flex: 1,
+      height: dimension?.commentBarHeight,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 };

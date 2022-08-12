@@ -155,13 +155,13 @@ export const sizeButton = {
 };
 
 export const avatarSizes = {
-  tiny: 16,
-  small: 24,
-  smallAlt: 32,
-  medium: 40,
-  large: 48,
-  largeAlt: 72,
-  ultraSuperLarge: 96,
+  tiny: 24,
+  xSmall: 28,
+  small: 32,
+  base: 40,
+  medium: 48,
+  large: 64,
+  xLarge: 90,
 };
 
 export const headerHeight = 60;
@@ -169,7 +169,7 @@ export const primaryItemHeight = 64;
 export const commentBarHeight = 44;
 export const postToolbarHeight = 52;
 export const maxNewsfeedWidth = 584;
-export const bottomBarHeight = 60;
+export const bottomBarHeight = 52;
 export const permissionRoleSectionHeaderHeight = 56;
 
 export const homeHeaderLogoHeight = 48;

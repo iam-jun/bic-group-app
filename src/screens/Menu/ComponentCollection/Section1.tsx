@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import * as Sentry from '@sentry/react-native';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
-import FlashMessage from '~/beinComponents/FlashMessage';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
@@ -15,8 +14,6 @@ import { IToastMessage } from '~/interfaces/common';
 import { showHideToastMessage } from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 import spacing from '~/theme/spacing';
-import TabButton from '~/beinComponents/TabButton';
-import BannerImportant from '~/beinComponents/Banner/BannerImportant';
 
 const Section1 = () => {
   const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
@@ -75,36 +72,6 @@ const Section1 = () => {
         </Text> */}
     </View>,
   );
-
-  const renderFlashMessage = () => renderSection(
-    'Flash Message',
-    <>
-      {showSuccess && (
-      <FlashMessage type="success" onClose={() => setShowSuccess(false)}>
-        You have successfully copied
-      </FlashMessage>
-      )}
-      {showWarning && (
-      <FlashMessage type="warning" onClose={() => setShowWarning(false)}>
-        Don’t underestimate this banner
-      </FlashMessage>
-      )}
-      {showError && (
-      <FlashMessage type="error" onClose={() => setShowError(false)}>
-        Your account is deactived in 2 hours for requesting code too many
-        time. Please try again later
-      </FlashMessage>
-      )}
-    </>,
-  );
-
-  const renderBannerImportant = () => renderSection(
-    'Banner Important',
-    <>
-      <BannerImportant style={{margin: spacing.margin.small}} />
-      <BannerImportant markedAsRead={true} style={{margin: spacing.margin.small}} />
-    </>
-  )
 
   const renderBannerMessage = () => renderSection(
     'Banner Message',
@@ -206,71 +173,6 @@ const Section1 = () => {
     </View>,
   );
 
-  const renderTab = () => renderSection('Tab Button', 
-  <View style={{marginHorizontal: spacing?.margin.base }}>
-    <View style={{marginVertical: spacing?.margin.tiny}}>
-      <Text.H5>{`<TabButton size='large'></TabButton>`}</Text.H5>
-      <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <TabButton type='primary' size='large'>
-          Tab button
-        </TabButton>
-        <TabButton type='secondary' size='large'>
-          Tab button
-        </TabButton>
-      </View>
-      
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-        <TabButton size='large'>
-          Tab button
-        </TabButton>
-        <TabButton size='large' isSelected={false}>
-          Tab button
-        </TabButton>
-      </View>
-    </View>
-
-    <View style={{marginVertical: spacing?.margin.tiny}}>
-      <Text.H5>{`<TabButton size='medium'></TabButton>`}</Text.H5>
-      <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <TabButton type='primary' size='medium'>
-          Tab button
-        </TabButton>
-        <TabButton type='secondary' size='medium'>
-          Tab button
-        </TabButton>
-      </View>
-      
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-        <TabButton size='medium'>
-          Tab button
-        </TabButton>
-        <TabButton size='medium' isSelected={false}>
-          Tab button
-        </TabButton>
-      </View>
-    </View>
-
-    <View style={{marginVertical: spacing?.margin.tiny}}>
-      <Text.H5>{`<TabButton size='small'></TabButton>`}</Text.H5>
-      <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <TabButton type='primary' size='small'>
-          Tab button
-        </TabButton>
-        <TabButton type='secondary' size='small'>
-          Tab button
-        </TabButton>
-      </View>
-      
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-        <TabButton size='small'>
-          Tab button
-        </TabButton>
-        <TabButton size='small' isSelected={false}>
-          Tab button
-        </TabButton>
-      </View>
-    </View>
-  </View>);
 
   const renderButton = () => renderSection(
     'Button',
@@ -489,11 +391,8 @@ const Section1 = () => {
       >
         Crash Native!
       </Button.Danger>
-      {renderTab()}
       {renderButton()}
-      {renderFlashMessage()}
       {renderToastMessage()}
-      {renderBannerImportant()}
       {renderBannerMessage()}
       {renderIcon()}
       {renderText()}

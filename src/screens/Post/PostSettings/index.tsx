@@ -12,7 +12,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import Button from '~/beinComponents/Button';
-import Toggle from '~/beinComponents/SelectionControl/Toggle';
+import Toggle from '~/bicComponents/Toggle';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
@@ -80,10 +80,14 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     selectingTime,
     disableButtonSave,
     showWarning,
+    sCanComment,
+    sCanReact,
     setSelectingDate,
     setSelectingTime,
     handlePressSave,
     handleToggleImportant,
+    handleToggleCanComment,
+    handleToggleCanReact,
     handleChangeDatePicker,
     handleChangeTimePicker,
     getMinDate,
@@ -228,7 +232,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
           <Toggle
             testID="post_settings.toggle_important"
             isChecked={sImportant?.active}
-            onActionPress={handleToggleImportant}
+            onPress={handleToggleImportant}
           />
         </View>
         {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
@@ -262,6 +266,44 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     />
   )
 
+  const renderCanComment = () => (
+    <View
+      style={[
+        styles.row, styles.content,
+      ]}
+    >
+      <View style={[styles.flex1]}>
+        <Text style={[styles.flex1]} useI18n>
+          post:people_can_comment
+        </Text>
+      </View>
+      <Toggle
+        testID="post_settings.toggle_can_comment"
+        isChecked={sCanComment}
+        onPress={handleToggleCanComment}
+      />
+    </View>
+  )
+
+  const renderCanReact = () => (
+    <View
+      style={[
+        styles.row, styles.content,
+      ]}
+    >
+      <View style={[styles.flex1]}>
+        <Text style={[styles.flex1]} useI18n>
+          post:people_can_react
+        </Text>
+      </View>
+      <Toggle
+        testID="post_settings.toggle_can_react"
+        isChecked={sCanReact}
+        onPress={handleToggleCanReact}
+      />
+    </View>
+  )
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
@@ -280,6 +322,8 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {renderImportant()}
+          {renderCanComment()}
+          {renderCanReact()}
         </ScrollView>
         <View style={{ position: 'absolute', alignSelf: 'center' }}>
           {selectingDate && (

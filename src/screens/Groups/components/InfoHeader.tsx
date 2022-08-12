@@ -4,12 +4,12 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import images from '~/resources/images';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
 import { ICommunity } from '~/interfaces/ICommunity';
@@ -32,7 +32,7 @@ const InfoHeader = ({
   const {
     name, userCount, backgroundImgUrl, icon, privacy,
   } = infoDetail;
-  const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
 
   const renderCoverAvatar = () => (
@@ -41,7 +41,7 @@ const InfoHeader = ({
         style={styles.cover}
         source={backgroundImgUrl || images.img_cover_default}
       />
-      <Avatar.LargeAlt
+      <Avatar.Large
         showBorder
         source={icon || images.img_user_avatar_default}
         style={styles.avatar}

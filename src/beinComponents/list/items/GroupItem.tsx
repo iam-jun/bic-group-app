@@ -10,15 +10,14 @@ import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/beinComponents/Text';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
-import commonActions, { IAction } from '~/constants/commonActions';
+import Checkbox from '~/bicComponents/Checkbox';
 import { generateUniqueId } from '~/utils/generator';
 import { useKeySelector } from '~/hooks/selector';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
-import { AvatarType } from '~/beinComponents/Avatar/AvatarComponent';
+import { AvatarType } from '~/bicComponents/Avatar/AvatarComponent';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
@@ -72,7 +71,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     showPrivacyAvatar = false,
     showInfo = true,
     disableHorizontal,
-    iconVariant = 'medium',
+    iconVariant = 'base',
     nameLines = 2,
     menuIcon = 'menu',
     renderExtraInfo,
@@ -89,7 +88,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     return null;
   }
 
-  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
 
   const _onPressItem = () => {
@@ -117,14 +116,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     onToggleItem?.(props);
   };
 
-  const _onCheckedItem = (action: IAction) => {
-    let newChecked = false;
-    if (action === commonActions.checkBox) {
-      newChecked = true;
-    }
-    onCheckedItem?.(
-      props, newChecked,
-    );
+  const _onCheckedItem = (isChecked: boolean) => {
+    onCheckedItem?.(props, isChecked);
   };
 
   const _renderExtraInfo = () => renderExtraInfo?.(props);
@@ -202,7 +195,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 testID="group_item.check_box"
                 style={styles.checkbox}
                 isChecked={isChecked}
-                onActionPress={_onCheckedItem}
+                onPress={_onCheckedItem}
               />
             )}
           </View>

@@ -11,9 +11,11 @@ import { authStack } from '~/configs/navigator';
 
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
+import { useRootNavigation } from '~/hooks/navigation';
 
 const CompleteChangePassword = () => {
-  const { t, navigation } = useBaseHook();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const dimensions = useWindowDimensions();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -40,7 +42,7 @@ const CompleteChangePassword = () => {
         <Button.Primary
           testID="btnComplete"
           style={styles.btn}
-          onPress={() => navigation.navigate(authStack.login)}
+          onPress={() => rootNavigation.navigate(authStack.login)}
         >
           {t('auth:btn_back_to_login')}
         </Button.Primary>

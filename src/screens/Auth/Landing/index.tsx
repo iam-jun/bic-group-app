@@ -16,6 +16,7 @@ import { rootSwitch } from '~/router/stack';
 import images from '~/resources/images';
 import Image from '~/beinComponents/Image';
 import spacing from '~/theme/spacing';
+import { useRootNavigation } from '~/hooks/navigation';
 
 const LOGO_SIZE = 72;
 
@@ -24,7 +25,8 @@ const Landing = () => {
   const isFocused = useIsFocused();
 
   const theme: ExtendedTheme = useTheme();
-  const { t, navigation } = useBaseHook();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const styles = createStyle(
@@ -37,7 +39,7 @@ const Landing = () => {
 
   useEffect(
     () => {
-      isFocused && user && navigation.replace(rootSwitch.mainStack);
+      isFocused && user && rootNavigation.replace(rootSwitch.mainStack);
     }, [isFocused],
   );
 
@@ -55,7 +57,6 @@ const Landing = () => {
           <Text.BodyM>{t('auth:text_landing_logo_description')}</Text.BodyM>
         </View>
         <View style={styles.contentContainer}>
-          {/* @ts-ignore */}
           <SVGIcon
             source={LandingImg}
             width={IMAGE_WIDTH}
@@ -69,7 +70,7 @@ const Landing = () => {
         <Button.Primary
           testID="landing.start"
           style={styles.button}
-          onPress={() => navigation.navigate(authStack.login)}
+          onPress={() => rootNavigation.navigate(authStack.login)}
           textVariant="h5"
         >
           {t('auth:btn_landing_start')}

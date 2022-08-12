@@ -14,7 +14,7 @@ export default function* removeAudiencesFromPost({
 }): any {
   const { id, listAudiences } = payload;
   if (!id || !listAudiences?.length) {
-    console.log('\x1b[31m🐣️ saga removeAudiencesFromPost: id not found or listAudiences is not an array\x1b[0m');
+    console.warn('\x1b[31m🐣️ saga removeAudiencesFromPost: id not found or listAudiences is not an array\x1b[0m');
     return;
   }
   try {
@@ -41,7 +41,7 @@ export default function* removeAudiencesFromPost({
       );
     }
   } catch (e: any) {
-    console.log('\x1b[31m🐣️ saga removeAudiencesFromPost error: ', e, '\x1b[0m');
+    console.error('\x1b[31m🐣️ saga removeAudiencesFromPost error: ', e, '\x1b[0m');
     yield call(showError, e);
   }
 }

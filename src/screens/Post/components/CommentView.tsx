@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
@@ -47,6 +47,7 @@ export interface CommentViewProps {
   commentData: ICommentData;
   onPressReply: (data: ICommentData) => void;
   contentBackgroundColor?: string;
+  onPressMarkSeenPost?: () => void;
 }
 
 const _CommentView: React.FC<CommentViewProps> = ({
@@ -56,6 +57,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   commentData,
   onPressReply,
   contentBackgroundColor,
+  onPressMarkSeenPost,
 }: CommentViewProps) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
@@ -67,6 +69,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const currentUserId = useUserIdAuth();
 
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
+  const setting = useKeySelector(postKeySelector.postSettingById(postId));
+
   const _commentData = comment || commentData || {};
   const {
     id,
@@ -153,6 +157,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         reactionsCount,
       };
       dispatch(postActions.postReactToComment(payload));
+      onPressMarkSeenPost?.();
     }
   };
 
@@ -276,14 +281,17 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const renderReactionsReplyView = () => (
     isActive && (
     <View style={styles.buttonContainer}>
-      <ReactionView
-        ownerReactions={ownerReactions}
-        reactionsCount={reactionsCount}
-        onAddReaction={onAddReaction}
-        onRemoveReaction={onRemoveReaction}
-        onPressSelectReaction={onPressReact}
-        onLongPressReaction={onLongPressReaction}
-      />
+      { !!setting?.canReact
+        ? (
+          <ReactionView
+            ownerReactions={ownerReactions}
+            reactionsCount={reactionsCount}
+            onAddReaction={onAddReaction}
+            onRemoveReaction={onRemoveReaction}
+            onPressSelectReaction={onPressReact}
+            onLongPressReaction={onLongPressReaction}
+          />
+        ) : <View style={{ flex: 1 }} />}
       <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
         <Text.ButtonS style={styles.buttonReply} color={colors.gray50}>
           Reply
@@ -381,6 +389,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   content={content || ''}
                   selector={`${postKeySelector.allComments}.${id}.mentions`}
                   onPressAudience={onPressAudience}
+                  onToggleShowTextContent={onPressMarkSeenPost}
                 />
               </View>
               <CommentMediaView

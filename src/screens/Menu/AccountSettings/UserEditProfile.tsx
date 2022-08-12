@@ -38,7 +38,7 @@ import menuKeySelector from '../redux/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
-import Avatar from '~/beinComponents/Avatar';
+import Avatar from '~/bicComponents/Avatar';
 import homeActions from '~/screens/Home/redux/actions';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import spacing from '~/theme/spacing';
@@ -120,7 +120,6 @@ const UserEditProfile = (props: any) => {
     }, [],
   );
 
-  // @ts-ignore
   const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
   const userLanguages = userLanguageList?.join(', ');
 
@@ -214,7 +213,7 @@ const UserEditProfile = (props: any) => {
         </View>
         <View style={styles.imageButton}>
           {!loadingAvatar ? (
-            <Avatar.UltraSuperLarge
+            <Avatar.XLarge
               style={styles.avatar}
               source={avatar || images.img_user_avatar_default}
               isRounded

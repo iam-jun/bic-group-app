@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import {
+  formatPhoneNumber,
   getEndDateText, getLanguages, uploadFile, _openImagePicker,
 } from './helper';
 import * as PermissionUtils from '~/utils/permission'
@@ -24,6 +25,16 @@ describe('UserProfile helper', () => {
   it('getEndDateText: currentlyWorkHere false', () => {
     const result = getEndDateText(i18next.t, false, '2022-01-01');
     expect(result).toEqual('Jan 1, 2022');
+  });
+
+  it('formatPhoneNumber: with country code', () => {
+    const result = formatPhoneNumber('84', '987654321');
+    expect(result).toEqual('+84 987654321');
+  });
+
+  it('formatPhoneNumber: without country code', () => {
+    const result = formatPhoneNumber(null, '987654321');
+    expect(result).toEqual('987654321');
   });
 
   it('_openImagePicker: callback should not be called if dont have permission', () => {

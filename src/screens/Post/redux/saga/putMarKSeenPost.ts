@@ -1,10 +1,6 @@
-import { call, put, select } from 'redux-saga/effects';
-import { get } from 'lodash';
+import { call } from 'redux-saga/effects';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import showError from '~/store/commonSaga/showError';
 import { IPayloadPutMarkSeenPost } from '~/interfaces/IPost';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import postActions from '~/screens/Post/redux/actions';
 
 function* putMarkSeenPost({
   payload,
@@ -24,17 +20,9 @@ function* putMarkSeenPost({
     const response = yield call(
       postDataHelper.putMarkSeenPost, postId,
     );
-    const isSuccess = !!response?.data;
-    callback?.(isSuccess);
-    if (isSuccess) {
-      const post = yield select((state) => get(
-        state, postKeySelector.postById(postId),
-      ));
-      yield put(postActions.addToAllPosts({ ...post }));
-    }
+    callback?.(!!response?.data);
   } catch (e) {
     callback?.(false);
-    showError(e);
   }
 }
 export default putMarkSeenPost;

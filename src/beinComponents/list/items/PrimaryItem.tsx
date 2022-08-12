@@ -8,14 +8,11 @@ import {
 } from 'react-native';
 import Text, { TextProps } from '~/beinComponents/Text';
 import Icon, { IconProps } from '~/beinComponents/Icon';
-import Checkbox, {
-  CheckboxProps,
-} from '~/beinComponents/SelectionControl/Checkbox';
-import Toggle from '~/beinComponents/SelectionControl/Toggle';
-import { IAction } from '~/constants/commonActions';
+import Checkbox, { CheckboxProps } from '~/bicComponents/Checkbox';
+import Toggle from '~/bicComponents/Toggle';
 import { IconType } from '~/resources/icons';
-import Avatar from '~/beinComponents/Avatar';
-import { AvatarProps } from '~/beinComponents/Avatar/AvatarComponent';
+import Avatar from '~/bicComponents/Avatar';
+import { AvatarProps } from '~/bicComponents/Avatar/AvatarComponent';
 import { primaryItemHeight } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
@@ -42,8 +39,8 @@ export interface PrimaryItemProps {
   ContentComponent?: React.ReactNode | React.ReactElement;
 
   onPress?: () => void;
-  onPressCheckbox?: (action: IAction) => void;
-  onPressToggle?: (action: IAction) => void;
+  onPressCheckbox?: (isChecked?: boolean) => void;
+  onPressToggle?: (isChecked?: boolean) => void;
   onPressEdit?: () => void;
   onPressMenu?: (e: any) => void;
 }
@@ -96,7 +93,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
       >
         {LeftComponent}
         {(showAvatar || !!avatar) && (
-          <Avatar.Medium
+          <Avatar.Base
             source={avatar}
             style={styles.avatar}
             {...avatarProps}
@@ -127,7 +124,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Checkbox
             style={styles.iconMarginLeft}
             isChecked={isChecked}
-            onActionPress={onPressCheckbox}
+            onPress={onPressCheckbox}
             {...checkboxProps}
           />
         )}
@@ -135,7 +132,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Toggle
             style={styles.iconMarginLeft}
             isChecked={toggleChecked}
-            onActionPress={onPressToggle}
+            onPress={onPressToggle}
           />
         )}
         {onPressEdit && (
