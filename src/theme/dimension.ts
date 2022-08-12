@@ -50,7 +50,7 @@ export const sizes = {
   paragraphL: 17,
   paragraphM: 15,
   paragraphS: 13,
-  buttonL: 17,
+  buttonL: 15,
   buttonM: 15,
   buttonS: 13,
   tabL: 15,

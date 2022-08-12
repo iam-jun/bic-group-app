@@ -102,7 +102,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
             onPress={onPressShowAll}
             testID="selecting_audiences.show"
           >
-            {showAll ? 'Show less' : `Show all(${list?.length})`}
+            <Text>{showAll ? 'Show less' : `Show all(${list?.length})`}</Text>
           </ButtonWrapper>
         )}
       </View>

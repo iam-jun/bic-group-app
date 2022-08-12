@@ -5,8 +5,9 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
   style={
     Object {
       "alignItems": "flex-end",
-      "marginEnd": 16,
-      "marginTop": 16,
+      "paddingBottom": 4,
+      "paddingHorizontal": 16,
+      "paddingTop": 16,
     }
   }
 >
@@ -45,7 +46,7 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
       }
       testID="seen_counts_view.show_text"
     >
-      Seen by 
+      Interested by 
     </Text>
   </View>
 </View>
