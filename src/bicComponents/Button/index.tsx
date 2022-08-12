@@ -43,9 +43,9 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   const { colors } = theme;
   const makeGetButtonColors = getButtonColors(theme);
   const buttonColors = makeGetButtonColors[variant]?.[type];
-  let buttonSate = 'default'
-  if (loading) buttonSate = 'loading';
-  if (disabled) buttonSate = 'disabled';
+  let buttonState = 'default'
+  if (loading) buttonState = 'loading';
+  if (disabled) buttonState = 'disabled';
 
   const textVariant = TEXT_SIZES[size];
   const buttonHeight = BUTTON_SIZES[size];
@@ -53,7 +53,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
 
   const buttonVariantStyle = {
     height: buttonHeight,
-    backgroundColor: buttonColors[buttonSate],
+    backgroundColor: buttonColors[buttonState],
     paddingHorizontal: BUTTON_PADDING[size],
   }
 
