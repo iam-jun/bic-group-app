@@ -14,10 +14,11 @@ import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 
 import BicHomeLogo from '../../../../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';
-import PillTabButton from '~/bicComponents/Tab/PillTabButton';
-import { useBaseHook } from '~/hooks';
 import HomeHeaderButton from '~/screens/Home/components/HomeHeaderButton';
 import { homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
+import Tab from '~/bicComponents/Tab';
+import { HOME_TAB_TYPE } from '~/screens/Home/constants';
+import useHomeStore from '~/screens/Home/store/homeStore';
 
 export interface HomeHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -26,16 +27,22 @@ export interface HomeHeaderProps {
   onPressChat?: () => void;
 }
 
+const HEADER_TAB = [
+  { id: HOME_TAB_TYPE.NEWSFEED, text: 'home:title_timeline' },
+  { id: HOME_TAB_TYPE.IMPORTANT, text: 'home:title_important' },
+]
+
 const HomeHeader: FC<HomeHeaderProps> = ({
   style, yShared, onPressSearch, onPressChat,
 }: HomeHeaderProps) => {
   const _yShared = yShared || useSharedValue(0)
   const showShared = useSharedValue(1)
 
-  const { t } = useBaseHook();
   const insets: EdgeInsets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
+
+  const { activeTab, setActiveTab } = useHomeStore();
 
   const logoAnimatedStyle = useAnimatedStyle(() => ({
     height: interpolate(_yShared.value,
@@ -77,6 +84,10 @@ const HomeHeader: FC<HomeHeaderProps> = ({
     }, [],
   );
 
+  const onPressTab = (item: any) => {
+    setActiveTab(item.id)
+  }
+
   return (
     <View style={style}>
       <View style={styles.statusBar} />
@@ -87,14 +98,14 @@ const HomeHeader: FC<HomeHeaderProps> = ({
           </View>
         </Animated.View>
         <View style={styles.tabContainer}>
-          <View style={styles.tabs}>
-            <PillTabButton size="small" type="primary" style={styles.tabButton}>
-              {t('home:title_timeline')}
-            </PillTabButton>
-            <PillTabButton size="small" type="primary" isSelected={false}>
-              {t('home:title_important')}
-            </PillTabButton>
-          </View>
+          <Tab
+            style={styles.tabs}
+            buttonProps={{ size: 'small', type: 'primary', useI18n: true }}
+            data={HEADER_TAB}
+            type="pill"
+            onPressTab={onPressTab}
+            activeIndex={HEADER_TAB.findIndex((item) => item.id === activeTab)}
+          />
         </View>
         <HomeHeaderButton
           onPressSearch={onPressSearch}

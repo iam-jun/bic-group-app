@@ -7,7 +7,7 @@ import PillTabButton, { PillTabButtonProps } from './PillTabButton'
 import TabButton from './TabButton'
 
 interface TabProps {
-  data: any[];
+  data: { id?: string; text?: string, [x: string|number]: any }[];
   activeIndex?: number;
   type?: 'pill' | 'normal';
   buttonProps?: PillTabButtonProps;
@@ -34,7 +34,7 @@ const Tab = ({
         isSelected={isSelected}
         key={`tab-button-${item?.id || item?.text}`}
         testID={`tab-button-${index}`}
-        onPress={() => onPressTab(item, index)}
+        onPress={() => onPressTab?.(item, index)}
         {...buttonProps}
       >
         {item?.text}

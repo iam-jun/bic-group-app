@@ -5,7 +5,6 @@ export const homeInitState = {
   refreshingHomePosts: false,
   noMoreHomePosts: false,
   homePosts: [],
-  homePostsImportantCount: '',
   newsfeedSearch: {
     isShow: false,
     searchText: '',

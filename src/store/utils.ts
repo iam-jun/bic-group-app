@@ -45,7 +45,22 @@ const withFlipper = (
   payload, name,
 )
 
+interface ICreateZustand {
+  persist?: PersistOptions<any>
+}
+
+const createZustand = <T>(name: string, store, options?: ICreateZustand): () => T => {
+  let _store: any = zustandFlipper(immer(store), name);
+  if (options?.persist) {
+    _store = persist(_store, options.persist)
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return create<T>(_store);
+}
+
 export {
+  createZustand,
   create as createStore,
   withPersist,
   withDevtools,
