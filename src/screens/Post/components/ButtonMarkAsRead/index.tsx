@@ -11,6 +11,7 @@ import postActions from '~/screens/Post/redux/actions';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import { spacing } from '~/theme';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
@@ -95,6 +96,7 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       borderTopWidth: 1,
       borderColor: colors.neutral5,
+      marginTop: spacing.margin.small,
     },
   });
 };

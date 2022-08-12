@@ -12,6 +12,7 @@ import { validateReactionCount } from './helper';
 import dimension from '~/theme/dimension';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
+import { spacing } from '~/theme';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -102,7 +103,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   );
 
   return (
-    <View style={styles.reactButtons}>
+    <View style={[styles.reactButtons, !canComment && !canReact && styles.disbaledReactComment]}>
       {(validReactionCount && !!canReact) && (
         <>
           {renderReactButtonItem(
@@ -125,8 +126,8 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
          btnCommentTestID,
        )}
       {!canComment && !canReact && (
-      <View style={styles.emptyView}>
-        <Text.BodyS color={theme.colors.gray70} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
+      <View style={[styles.emptyView, styles.disbaledReactComment]}>
+        <Text.BodyS color={theme.colors.neutral20} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
       </View>
       )}
     </View>
@@ -141,6 +142,10 @@ const createStyle = (theme: ExtendedTheme) => {
       height: dimension?.commentBarHeight,
       alignItems: 'center',
     },
+    disbaledReactComment: {
+      height: 36,
+      marginTop: spacing.margin.tiny,
+    },
     buttonReactContainer: {
       flex: 1,
       height: 'auto',
@@ -151,9 +156,8 @@ const createStyle = (theme: ExtendedTheme) => {
       alignItems: 'center',
     },
     emptyView: {
-      backgroundColor: colors.gray1,
+      backgroundColor: colors.neutral2,
       flex: 1,
-      height: dimension?.commentBarHeight,
       alignItems: 'center',
       justifyContent: 'center',
     },
