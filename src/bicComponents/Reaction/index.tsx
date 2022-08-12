@@ -13,6 +13,7 @@ import Text from '~/beinComponents/Text';
 import commonActions, { IAction } from '~/constants/commonActions';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
+import { numFormatter } from '~/utils/formatData';
 
 interface ReactionProps {
   testId?: string;
@@ -72,11 +73,13 @@ const Reaction: React.FC<ReactionProps> = ({
     onLongPress?.();
   };
 
+  const newValue = numFormatter(value);
+
   return (
     <TouchableOpacity
       testID={testId || 'reaction'}
       disabled={!isInternetReachable || loading}
-      style={StyleSheet.flatten([styles.container, style])}
+      style={[styles.container, style]}
       onPress={_onChangeValue}
       onLongPress={_onLongPress}
     >
@@ -88,14 +91,14 @@ const Reaction: React.FC<ReactionProps> = ({
         />
       ) : (
         <Text.BodySMedium
-          color={isSelected ? colors.purple60 : colors.neutral80}
+          color={isSelected ? colors.purple50 : colors.neutral40}
           style={styles.text}
           testID="reaction.children"
         >
           <Text.BodySMedium style={styles.emoji} testID={`reaction.${icon}`}>
             {emoji}
           </Text.BodySMedium>
-          {` ${value}`}
+          {` ${newValue}`}
         </Text.BodySMedium>
       )}
     </TouchableOpacity>
@@ -112,10 +115,10 @@ const createStyles = (
   return StyleSheet.create({
     container: {
       backgroundColor:
-        isSelected && !loading ? colors.purple5 : colors.neutral5,
+        isSelected && !loading ? colors.purple2 : colors.neutral2,
       borderWidth: 1,
-      borderColor: isSelected && !loading ? colors.purple50 : colors.neutral5,
-      borderRadius: 6,
+      borderColor: isSelected && !loading ? colors.purple50 : colors.neutral2,
+      borderRadius: spacing.borderRadius.small,
       paddingHorizontal: 6,
       justifyContent: 'center',
       alignItems: 'center',
