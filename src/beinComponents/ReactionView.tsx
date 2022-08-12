@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Reaction from '~/beinComponents/Badge/Reaction';
+import Reaction from '~/bicComponents/Reaction';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 
@@ -86,7 +86,7 @@ const ReactionView: FC<ReactionViewProps> = ({
         rendered.push(<Reaction
           testId={`reaction.button.${key}`}
           key={`${key}`}
-          style={{ margin: 2 }}
+          style={{ marginRight: spacing.margin.tiny }}
           value={reactionMap.get(key)}
           icon={key}
           disableUpdateState
