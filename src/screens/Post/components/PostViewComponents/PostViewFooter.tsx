@@ -8,11 +8,12 @@ import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import { IReactionCounts } from '~/interfaces/IPost';
 import { IconType } from '~/resources/icons';
 import * as modalActions from '~/store/modal/actions';
-import { validateReactionCount } from './helper';
+import { getTotalReactions, validateReactionCount } from './helper';
 import dimension from '~/theme/dimension';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
+import { formatLargeNumber } from '~/utils/formatData';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -42,7 +43,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   const { t } = useBaseHook();
 
   const validReactionCount = validateReactionCount(reactionCounts);
-  const numberOfReactions = Object.keys(reactionCounts).length;
+  const numberOfReactions = formatLargeNumber(getTotalReactions(reactionCounts, 'user'))
   const labelReactionCount = `${
     numberOfReactions ? `${numberOfReactions} ` : ''
   }${t('post:button_react')}`;

@@ -94,8 +94,6 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      borderTopWidth: 1,
-      borderColor: colors.neutral5,
       marginTop: spacing.margin.small,
     },
   });

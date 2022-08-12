@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
   textToAudience: {
     flexDirection: 'row',
     marginVertical: spacing.margin.tiny,
+    alignItems: 'center',
   },
   textTo: {
     marginRight: spacing?.margin.tiny,
