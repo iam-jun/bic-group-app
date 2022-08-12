@@ -1,4 +1,3 @@
-import Newsfeed from '~/screens/Home/Newsfeed';
 import CreateComment from '~/screens/Post/CreateComment';
 import CreatePost from '~/screens/Post/CreatePost';
 import PostDetail from '~/screens/Post/PostDetail';
@@ -10,7 +9,6 @@ import PostSettings from '~/screens/Post/PostSettings';
 import CommentDetail from '~/screens/Post/CommentDetail';
 
 const homeScreens = {
-  newsfeed: Newsfeed,
   'post-detail': PostDetail,
   'create-post': CreatePost,
   'create-comment': CreateComment,

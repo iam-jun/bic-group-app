@@ -1,9 +1,9 @@
 import React from 'react';
-import { renderWithRedux, configureStore } from '~/test/testUtils';
-import initialState from '~/store/initialState';
-import NFSSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSSuggestion';
+import { renderWithRedux, configureStore } from '../../../test/testUtils';
+import initialState from '../../../store/initialState';
+import SearchSuggestion from './SearchSuggestion';
 
-describe('NFSSuggestion component', () => {
+describe('SearchSuggestion component', () => {
   const mockStore = configureStore([]);
 
   it('should render button search keyword', () => {
@@ -15,13 +15,13 @@ describe('NFSSuggestion component', () => {
     const store = mockStore(storeData);
 
     const rendered = renderWithRedux(
-      <NFSSuggestion onSelectKeyword={onSelectKeyword} />,
+      <SearchSuggestion onSelectKeyword={onSelectKeyword} />,
       store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it('should render NFSResult', () => {
+  it('should render SearchResult', () => {
     const onSelectKeyword = jest.fn();
     const storeData = { ...initialState };
     storeData.home.newsfeedSearch.isShow = true;
@@ -30,7 +30,7 @@ describe('NFSSuggestion component', () => {
     const store = mockStore(storeData);
 
     const rendered = renderWithRedux(
-      <NFSSuggestion onSelectKeyword={onSelectKeyword} />,
+      <SearchSuggestion onSelectKeyword={onSelectKeyword} />,
       store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();

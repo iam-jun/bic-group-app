@@ -15,10 +15,10 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
 import { scaleSize } from '~/theme/dimension';
-import NFSFilterToolbar from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterToolbar';
+import FilterToolbar from '~/screens/Home/HomeSearch/FilterToolbar';
 import spacing from '~/theme/spacing';
 
-const NFSResult = () => {
+const SearchResult = () => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -92,7 +92,7 @@ const NFSResult = () => {
 
   return (
     <View style={styles.container}>
-      <NFSFilterToolbar />
+      <FilterToolbar />
       <FlatList
         style={styles.flex1}
         data={searchResults || []}
@@ -145,4 +145,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default NFSResult;
+export default SearchResult;

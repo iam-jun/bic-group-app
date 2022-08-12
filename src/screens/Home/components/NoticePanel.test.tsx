@@ -3,13 +3,13 @@ import { cleanup, fireEvent } from '@testing-library/react-native';
 import i18next from 'i18next';
 
 import NoticePanel from './NoticePanel';
-import { createTestStore, renderWithRedux } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import { createTestStore, renderWithRedux } from '../../../test/testUtils';
+import initialState from '../../../store/initialState';
 import {
   LIST_POST_CONTAINING_VIDEO_PROCESS_1,
   LIST_POST_CONTAINING_VIDEO_PROCESS_2,
-} from '~/test/mock_data/draftPosts';
-import postActions from '~/screens/Post/redux/actions';
+} from '../../../test/mock_data/draftPosts';
+import postActions from '../../Post/redux/actions';
 
 afterEach(cleanup);
 

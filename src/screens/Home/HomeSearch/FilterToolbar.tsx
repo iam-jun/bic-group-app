@@ -10,15 +10,15 @@ import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useKeySelector } from '~/hooks/selector';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
-import NFSFilterCreatedBy from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreatedBy';
-import NFSFilterDate from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterDate';
-import NFSFilterOptionMenu from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterOptionMenu';
+import FilterCreatedBy from '~/screens/Home/HomeSearch/FilterCreatedBy';
+import FilterDate from '~/screens/Home/HomeSearch/FilterDate';
+import FilterOptionMenu from '~/screens/Home/HomeSearch/FilterOptionMenu';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
-const NFSFilterToolbar = () => {
+const FilterToolbar = () => {
   const scrollRef = useRef<any>();
   const dispatch = useDispatch();
   const { language } = useContext(AppContext);
@@ -63,7 +63,7 @@ const NFSFilterToolbar = () => {
 
   const onPressFilterCreatedBy = () => {
     showModal(
-      <NFSFilterCreatedBy
+      <FilterCreatedBy
         selectedCreatedBy={filterCreatedBy}
         onSelect={onSelectCreatedBy}
         dismissModalOnPress
@@ -81,7 +81,7 @@ const NFSFilterToolbar = () => {
 
   const onPressFilterDate = () => {
     showModal(
-      <NFSFilterDate
+      <FilterDate
         startDate={startDate}
         endDate={endDate}
         onSelect={onSelectDate}
@@ -92,7 +92,7 @@ const NFSFilterToolbar = () => {
 
   const onPressFilterOptions = () => {
     showModal(
-      <NFSFilterOptionMenu
+      <FilterOptionMenu
         filterCreatedBy={filterCreatedBy}
         filterDate={filterDate}
       />,
@@ -186,4 +186,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default NFSFilterToolbar;
+export default FilterToolbar;

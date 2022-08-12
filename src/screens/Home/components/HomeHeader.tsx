@@ -12,11 +12,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 
-import BicHomeLogo from '~/../assets/images/bic_home_logo.svg';
+import BicHomeLogo from '../../../../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';
 import PillTabButton from '~/bicComponents/Tab/PillTabButton';
 import { useBaseHook } from '~/hooks';
-import HomeHeaderButton from '~/screens/Home/Newsfeed/components/HomeHeaderButton';
+import HomeHeaderButton from '~/screens/Home/components/HomeHeaderButton';
 import { homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
 
 export interface HomeHeaderProps {

@@ -16,7 +16,7 @@ import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ITabTypes } from '~/interfaces/IRouter';
-import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
+import NewsfeedSearch from '~/screens/Home/HomeSearch';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import menuActions from '~/screens/Menu/redux/actions';
@@ -24,9 +24,9 @@ import postActions from '~/screens/Post/redux/actions';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
-import HomeHeader from '~/screens/Home/Newsfeed/components/HomeHeader';
+import HomeHeader from '~/screens/Home/components/HomeHeader';
 
-const Newsfeed = () => {
+const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
@@ -208,4 +208,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default Newsfeed;
+export default Home;

@@ -31,7 +31,7 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import { useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
 import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
-import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
+import NoticePanel from '~/screens/Home/components/NoticePanel';
 import { IPostActivity } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
@@ -285,7 +285,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       {data?.length > 0 ? (
         <AnimatedFlashList
           ref={listRef}
-        // @ts-ignore
+          // @ts-ignore
+          testID="newsfeed_list.list"
+          // @ts-ignore
           data={data}
           renderItem={renderItem}
           keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}

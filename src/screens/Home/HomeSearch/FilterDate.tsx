@@ -23,7 +23,7 @@ export interface NFSFilterDateProps {
   dismissModalOnPress?: boolean;
 }
 
-const NFSFilterDate: FC<NFSFilterDateProps> = ({
+const FilterDate: FC<NFSFilterDateProps> = ({
   startDate,
   endDate,
   onSelect,
@@ -180,4 +180,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default NFSFilterDate;
+export default FilterDate;

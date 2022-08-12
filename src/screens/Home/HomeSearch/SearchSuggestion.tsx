@@ -11,7 +11,7 @@ import homeKeySelector from '~/screens/Home/redux/keySelector';
 import { useBaseHook } from '~/hooks';
 import Icon from '~/beinComponents/Icon';
 import homeActions from '~/screens/Home/redux/actions';
-import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
+import NFSRecentSearchKeyword from '~/screens/Home/HomeSearch/RecentSearchKeyword';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import spacing from '~/theme/spacing';
 
@@ -19,7 +19,7 @@ export interface NFSSuggestionProps {
   onSelectKeyword?: (keyword: string) => void;
 }
 
-const NFSSuggestion: FC<NFSSuggestionProps> = ({
+const SearchSuggestion: FC<NFSSuggestionProps> = ({
   onSelectKeyword,
 }: NFSSuggestionProps) => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -135,4 +135,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default NFSSuggestion;
+export default SearchSuggestion;

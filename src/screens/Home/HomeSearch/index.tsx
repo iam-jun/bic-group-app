@@ -6,18 +6,18 @@ import SearchBaseView from '~/beinComponents/SearchBaseView';
 import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import homeActions from '~/screens/Home/redux/actions';
-import NFSSuggestion from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSSuggestion';
-import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
+import SearchSuggestion from '~/screens/Home/HomeSearch/SearchSuggestion';
+import SearchResult from '~/screens/Home/HomeSearch/SearchResult';
 import { useBaseHook } from '~/hooks';
 import { IPayloadSetNewsfeedSearch } from '~/interfaces/IHome';
 
-interface NewsfeedSearchProps {
+interface HomeSearchProps {
   style?: StyleProp<ViewStyle>;
   onClose?: () => void;
   searchViewRef?: any;
 }
 
-const NewsfeedSearch = ({ style, searchViewRef }: NewsfeedSearchProps) => {
+const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
   const _searchViewRef = searchViewRef || useRef(null);
 
   const dispatch = useDispatch();
@@ -74,12 +74,12 @@ const NewsfeedSearch = ({ style, searchViewRef }: NewsfeedSearchProps) => {
       onSubmitEditing={onSubmitSearch}
     >
       {isSuggestion ? (
-        <NFSSuggestion onSelectKeyword={onSelectKeyword} />
+        <SearchSuggestion onSelectKeyword={onSelectKeyword} />
       ) : (
-        <NFSResult />
+        <SearchResult />
       )}
     </SearchBaseView>
   );
 };
 
-export default NewsfeedSearch;
+export default HomeSearch;

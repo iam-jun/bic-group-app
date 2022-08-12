@@ -1,7 +1,7 @@
 import React from 'react';
-import { renderWithRedux, configureStore, fireEvent } from '~/test/testUtils';
-import initialState from '~/store/initialState';
-import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
+import { renderWithRedux, configureStore, fireEvent } from '../../../test/testUtils';
+import initialState from '../../../store/initialState';
+import NFSRecentSearchKeyword from './RecentSearchKeyword';
 
 describe('NFSRecentSearchKeyword component', () => {
   const mockStore = configureStore([]);

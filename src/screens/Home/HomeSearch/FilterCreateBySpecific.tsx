@@ -30,7 +30,7 @@ export interface NFSFilterCreateBySpecificProps {
   dismissModalOnPress?: boolean;
 }
 
-const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
+const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   onSelect,
   dismissModalOnPress,
 }: NFSFilterCreateBySpecificProps) => {
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NFSFilterCreateBySpecific;
+export default FilterCreateBySpecific;

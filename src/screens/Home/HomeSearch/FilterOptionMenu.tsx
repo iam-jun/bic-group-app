@@ -13,10 +13,10 @@ import { AppContext } from '~/contexts/AppContext';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
-import NFSFilterCreateBySpecific from './NFSFilterCreateBySpecific';
-import NFSFilterCreatedBy from './NFSFilterCreatedBy';
-import NFSFilterDate from './NFSFilterDate';
-import homeActions from '../../redux/actions';
+import FilterCreateBySpecific from './FilterCreateBySpecific';
+import FilterCreatedBy from './FilterCreatedBy';
+import FilterDate from './FilterDate';
+import homeActions from '../redux/actions';
 import modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
@@ -32,7 +32,7 @@ const Stage = {
   FILTER_CREATOR_SPECIFIC: 'FILTER_CREATOR_SPECIFIC',
 };
 
-const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
+const FilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
   filterCreatedBy,
   filterDate,
 }: NFSFilterOptionMenuProps) => {
@@ -103,7 +103,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
 
   if (stage === Stage.FILTER_CREATOR) {
     return (
-      <NFSFilterCreatedBy
+      <FilterCreatedBy
         selectedCreatedBy={filterCreatedBy}
         onSelect={_onSelectCreatedBy}
         onPressSelectSpecific={_onPressSelectSpecific}
@@ -111,14 +111,14 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
     );
   } if (stage === Stage.FILTER_DATE) {
     return (
-      <NFSFilterDate
+      <FilterDate
         startDate={startDate}
         endDate={endDate}
         onSelect={_onSelectDate}
       />
     );
   } if (stage === Stage.FILTER_CREATOR_SPECIFIC) {
-    return <NFSFilterCreateBySpecific onSelect={_onSelectCreatedBy} />;
+    return <FilterCreateBySpecific onSelect={_onSelectCreatedBy} />;
   }
 
   return (
@@ -223,4 +223,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default NFSFilterOptionMenu;
+export default FilterOptionMenu;

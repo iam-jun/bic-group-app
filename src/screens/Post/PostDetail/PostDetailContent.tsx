@@ -64,7 +64,7 @@ const _PostDetailContent = (props: any) => {
 
   const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
+  const { rootNavigation, goHome } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = useMemo(
@@ -139,7 +139,7 @@ const _PostDetailContent = (props: any) => {
       return;
     }
     if (!rootNavigation.canGoBack) {
-      rootNavigation.navigate(homeStack.newsfeed);
+      goHome();
       return;
     }
     rootNavigation.goBack();

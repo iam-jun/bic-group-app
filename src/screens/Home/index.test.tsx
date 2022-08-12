@@ -1,21 +1,21 @@
 import React from 'react';
 
-import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
-import initialState from '~/store/initialState';
-import Newsfeed from '.';
-import MockedNavigator from '~/test/MockedNavigator';
-import homeActions from '~/screens/Home/redux/actions';
-import homeTypes from '~/screens/Home/redux/types';
-import { POST_DETAIL } from '~/test/mock_data/post';
-import * as commonUtil from '~/utils/common';
+import { createTestStore, fireEvent, renderWithRedux } from '../../test/testUtils';
+import initialState from '../../store/initialState';
+import Home from './index';
+import MockedNavigator from '../../test/MockedNavigator';
+import homeActions from './redux/actions';
+import homeTypes from './redux/types';
+import { POST_DETAIL } from '../../test/mock_data/post';
+import * as linkUtil from '../../utils/link';
 
-describe('Newsfeed screen', () => {
+describe('Home screen', () => {
   const user = { signInUserSession: { idToken: { jwtToken: 'jwt' } } };
   const baseStore = { ...initialState };
   baseStore.auth.user = user as any;
   jest.useFakeTimers();
 
-  it('should render newsfeed list when have data', async () => {
+  it('should render Home list when have data', async () => {
     const storeData = { ...baseStore } as any;
 
     const mockActionGetHomePosts = () => ({
@@ -28,7 +28,7 @@ describe('Newsfeed screen', () => {
 
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(
-      <MockedNavigator component={Newsfeed} />,
+      <MockedNavigator component={Home} />,
       store,
     );
     const newsfeedList = wrapper.queryByTestId('newsfeed_list.list');
@@ -36,14 +36,14 @@ describe('Newsfeed screen', () => {
   });
 
   it('should call open chat', () => {
-    const spy = jest.spyOn(commonUtil, 'openLink');
+    const spy = jest.spyOn(linkUtil, 'openUrl').mockImplementation(() => {});
     const storeData = { ...baseStore } as any;
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(
-      <MockedNavigator component={Newsfeed} />,
+      <MockedNavigator component={Home} />,
       store,
     );
-    const btnChat = wrapper.getByTestId('header.iconChat');
+    const btnChat = wrapper.getByTestId('icon_chat.button');
     fireEvent.press(btnChat);
     expect(spy).toBeCalled();
   }); // header.searchIcon.button

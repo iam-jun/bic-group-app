@@ -11,7 +11,7 @@ import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
-import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
+import FilterCreateBySpecific from '~/screens/Home/HomeSearch/FilterCreateBySpecific';
 import modalActions from '~/store/modal/actions';
 
 import spacing from '~/theme/spacing';
@@ -23,7 +23,7 @@ export interface NFSFilterCreatedByProps {
   dismissModalOnPress?: boolean;
 }
 
-const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
+const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   selectedCreatedBy,
   onSelect,
   onPressSelectSpecific,
@@ -49,7 +49,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
       dispatch(modalActions.showModal({
         isOpen: true,
         ContentComponent: (
-          <NFSFilterCreateBySpecific
+          <FilterCreateBySpecific
             onSelect={_onSelect}
             dismissModalOnPress
           />
@@ -131,4 +131,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default NFSFilterCreatedBy;
+export default FilterCreatedBy;

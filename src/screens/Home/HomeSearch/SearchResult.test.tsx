@@ -1,8 +1,8 @@
 import React from 'react';
-import { renderWithRedux, configureStore } from '~/test/testUtils';
-import initialState from '~/store/initialState';
-import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
-import { POST_DETAIL_2 } from '~/test/mock_data/post';
+import { renderWithRedux, configureStore } from '../../../test/testUtils';
+import initialState from '../../../store/initialState';
+import SearchResult from './SearchResult';
+import { POST_DETAIL_2 } from '../../../test/mock_data/post';
 
 const mockPost = {
   actor: {
@@ -71,7 +71,7 @@ const mockPost = {
   verb: 'post',
 };
 
-describe('NFSResult component', () => {
+describe('SearchResult component', () => {
   it('should render loading search result', () => {
     const storeData = { ...initialState };
     storeData.home.newsfeedSearch.loadingResult = true;
@@ -80,7 +80,7 @@ describe('NFSResult component', () => {
     const mockStore = configureStore([]);
     const store = mockStore(storeData);
 
-    const rendered = renderWithRedux(<NFSResult />, store);
+    const rendered = renderWithRedux(<SearchResult />, store);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -92,7 +92,7 @@ describe('NFSResult component', () => {
     const mockStore = configureStore([]);
     const store = mockStore(storeData);
 
-    const rendered = renderWithRedux(<NFSResult />, store);
+    const rendered = renderWithRedux(<SearchResult />, store);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -107,7 +107,7 @@ describe('NFSResult component', () => {
     const mockStore = configureStore([]);
     const store = mockStore(storeData);
 
-    const rendered = renderWithRedux(<NFSResult />, store);
+    const rendered = renderWithRedux(<SearchResult />, store);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 });
