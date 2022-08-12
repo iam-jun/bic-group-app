@@ -131,6 +131,19 @@ import { faArrowRightFromBracket as faArrowRightFromBracketSolid }
   from '@fortawesome/pro-solid-svg-icons/faArrowRightFromBracket';
 import { faCircle } from '@fortawesome/pro-regular-svg-icons/faCircle';
 import { faCircleDot as faCircleDotSolid } from '@fortawesome/pro-solid-svg-icons/faCircleDot';
+import { faFile } from '@fortawesome/pro-regular-svg-icons/faFile';
+import { faFileAudio } from '@fortawesome/pro-regular-svg-icons/faFileAudio';
+import { faFileArrowDown } from '@fortawesome/pro-regular-svg-icons/faFileArrowDown';
+import { faFileWord } from '@fortawesome/pro-regular-svg-icons/faFileWord';
+import { faFilePdf } from '@fortawesome/pro-regular-svg-icons/faFilePdf';
+import { faFileZipper } from '@fortawesome/pro-regular-svg-icons/faFileZipper';
+import { faFileCode } from '@fortawesome/pro-regular-svg-icons/faFileCode';
+import { faFileExcel } from '@fortawesome/pro-regular-svg-icons/faFileExcel';
+import { faFilePowerpoint } from '@fortawesome/pro-regular-svg-icons/faFilePowerpoint';
+import { faFileVideo } from '@fortawesome/pro-regular-svg-icons/faFileVideo';
+import { faFileCsv } from '@fortawesome/pro-regular-svg-icons/faFileCsv';
+import { faFileLines } from '@fortawesome/pro-regular-svg-icons/faFileLines';
+import { faArrowDownToLine } from '@fortawesome/pro-regular-svg-icons/faArrowDownToLine';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -282,6 +295,19 @@ export const initFontAwesomeIcon = () => {
     faFolderGearSolid,
     faMessagesQuestionSolid,
     faArrowRightFromBracketSolid,
+    faFile,
+    faFileAudio,
+    faFileArrowDown,
+    faFileWord,
+    faFilePdf,
+    faFileZipper,
+    faFileCode,
+    faFileExcel,
+    faFilePowerpoint,
+    faFileVideo,
+    faFileCsv,
+    faFileLines,
+    faArrowDownToLine,
   );
 };
 
@@ -418,6 +444,19 @@ export const fontAwesomeIcons = {
   FolderGear: 'fa-solid fa-folder-gear',
   MessagesQuestion: 'fa-solid fa-messages-question',
   ArrowRightFromBracket: 'fa-solid fa-arrow-right-from-bracket',
+  File: 'fa-regular fa-file',
+  FileAudio: 'fa-regular fa-file-audio',
+  FileArrowDown: 'fa-regular fa-file-arrow-down',
+  FileWord: 'fa-regular fa-file-word',
+  FilePdf: 'fa-regular fa-file-pdf',
+  FileZipper: 'fa-regular fa-file-zipper',
+  FileCode: 'fa-regular fa-file-code',
+  FileExcel: 'fa-regular fa-file-excel',
+  FilePowerpoint: 'fa-regular fa-file-powerpoint',
+  FileVideo: 'fa-regular fa-file-video',
+  FileCsv: 'fa-regular fa-file-csv',
+  FileLines: 'fa-regular fa-file-lines',
+  ArrowDownToLine: 'fa-regular fa-arrow-down-to-line',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
