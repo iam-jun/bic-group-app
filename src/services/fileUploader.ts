@@ -136,7 +136,7 @@ export default class FileUploader {
       'file', file, file.name,
     );
     formData.append(
-      'uploadType', uploadType,
+      'upload_type', uploadType,
     );
 
     const _onUploadProgress = (progressEvent: any) => {
