@@ -1,5 +1,5 @@
 module.exports = {
-  stories: [ '../src/beinComponents/**/*.stories.?(ts|tsx|js|jsx)'],
+  stories: [ '../src/bicComponents/**/*.stories.?(ts|tsx|js|jsx)'],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",

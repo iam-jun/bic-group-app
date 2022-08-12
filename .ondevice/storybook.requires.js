@@ -31,8 +31,8 @@ try {
 
 const getStories = () => {
   return [
-    require("../src/beinComponents/Badge/Reaction.stories.tsx"),
-    require("../src/beinComponents/Tag/index.stories.tsx"),
+    require("../src/bicComponents/Reaction/index.stories.tsx"),
+    require("../src/bicComponents/Tag/index.stories.tsx"),
   ];
 };
 
