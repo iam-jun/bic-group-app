@@ -12,8 +12,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/bicComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
-import commonActions, { IAction } from '~/constants/commonActions';
+import Checkbox from '~/bicComponents/Checkbox';
 import { generateUniqueId } from '~/utils/generator';
 import { useKeySelector } from '~/hooks/selector';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
@@ -117,14 +116,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     onToggleItem?.(props);
   };
 
-  const _onCheckedItem = (action: IAction) => {
-    let newChecked = false;
-    if (action === commonActions.checkBox) {
-      newChecked = true;
-    }
-    onCheckedItem?.(
-      props, newChecked,
-    );
+  const _onCheckedItem = (isChecked: boolean) => {
+    onCheckedItem?.(props, isChecked);
   };
 
   const _renderExtraInfo = () => renderExtraInfo?.(props);
@@ -202,7 +195,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 testID="group_item.check_box"
                 style={styles.checkbox}
                 isChecked={isChecked}
-                onActionPress={_onCheckedItem}
+                onPress={_onCheckedItem}
               />
             )}
           </View>

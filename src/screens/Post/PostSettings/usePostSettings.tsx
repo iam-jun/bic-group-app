@@ -93,7 +93,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       //   shares,
     ];
 
-    const newCount = dataCount.filter((i) => !!i);
+    const newCount = dataCount.filter((i) => !i);
     setDisableButtonSave(newCount.length === 0);
   };
 
