@@ -9,10 +9,12 @@ import { useKeySelector } from '~/hooks/selector';
 
 export interface ButtonWrapperProps extends TouchableOpacityProps, TouchableHighlightProps {
   nativeID?: string;
+  testID?: string;
   TouchableComponent?: any;
 }
 
 const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
+  testID,
   disabled,
   TouchableComponent = TouchableOpacity,
   ...props
@@ -21,6 +23,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 
   return (
     <TouchableComponent
+      testID={testID || 'button_wrapper'}
       disabled={!isInternetReachable || disabled}
       {...props}
     />

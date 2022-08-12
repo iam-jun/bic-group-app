@@ -100,7 +100,7 @@ exports[`NotificationItem component renders correctly 1`] = `
               <Text
                 style={
                   Object {
-                    "color": "#353E6E",
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                     "fontWeight": "bold",
@@ -111,7 +111,7 @@ exports[`NotificationItem component renders correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#353E6E",
+                        "color": "#181C32",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 15,
                         "fontWeight": "bold",
@@ -127,7 +127,7 @@ exports[`NotificationItem component renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#353E6E",
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
@@ -191,7 +191,7 @@ exports[`NotificationItem component renders correctly 1`] = `
       }
       testID="notification_item.time_view"
     >
-      11w
+      13w
     </Text>
     <View
       accessible={true}

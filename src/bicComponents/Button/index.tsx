@@ -20,6 +20,7 @@ export interface ButtonProps extends ButtonWrapperProps {
   type?: ButtonType;
   size?: ButtonSize;
   style?: StyleProp<ViewStyle>;
+  contentStyle?: StyleProp<ViewStyle>;
   loading?: boolean;
   useI18n?: boolean;
   icon?: IconType;
@@ -30,6 +31,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   type = 'solid',
   size = 'medium',
   style,
+  contentStyle,
   disabled,
   loading,
   useI18n,
@@ -60,7 +62,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
 
     return (
       <Icon
-        testID="button_wrapper.icon"
+        testID="button.icon"
         icon={icon}
         tintColor={buttonColors?.text}
         size={iconSize}
@@ -73,10 +75,10 @@ const ButtonComponent: React.FC<ButtonProps> = ({
 
     return (
       <ActivityIndicator
+        testID="button.loading"
         color={colors.neutral20}
         style={styles.loading}
         size={iconSize}
-        testID="button.loading"
       />
     );
   };
@@ -87,16 +89,17 @@ const ButtonComponent: React.FC<ButtonProps> = ({
       TouchableComponent={TouchableHighlight}
       disabled={disabled}
       underlayColor={buttonColors.loading}
-      style={[style]}
+      style={style}
     >
       <View
         testID="button.content"
-        style={[styles.container, buttonVariantStyle]}
+        style={[styles.container, contentStyle, buttonVariantStyle]}
       >
         {renderLoading()}
         {renderIcon()}
         {!!children && (
           <Text
+            testID="button.text"
             variant={textVariant}
             style={[styles.text, icon && styles.icon]}
             color={disabled || loading ? colors.neutral20 : buttonColors.text}
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
     paddingVertical: padding.tiny,
   },
   icon: {
-    marginHorizontal: spacing.margin.small,
+    marginLeft: spacing.margin.small,
   },
   loading: {
     marginRight: spacing.margin.small,
@@ -133,9 +136,29 @@ const Primary : React.FC<ButtonProps> = (
   props: ButtonProps,
 ) => <ButtonComponent {...props} variant="primary" />;
 
+const Secondary : React.FC<ButtonProps> = (
+  props: ButtonProps,
+) => <ButtonComponent {...props} variant="secondary" />;
+
+const Neutral : React.FC<ButtonProps> = (
+  props: ButtonProps,
+) => <ButtonComponent {...props} variant="neutral" />;
+
+const Success : React.FC<ButtonProps> = (
+  props: ButtonProps,
+) => <ButtonComponent {...props} variant="success" />;
+
+const Danger : React.FC<ButtonProps> = (
+  props: ButtonProps,
+) => <ButtonComponent {...props} variant="danger" />;
+
 const Button = Object.assign(
   ButtonComponent, {
     Primary,
+    Secondary,
+    Neutral,
+    Success,
+    Danger,
   },
 );
 

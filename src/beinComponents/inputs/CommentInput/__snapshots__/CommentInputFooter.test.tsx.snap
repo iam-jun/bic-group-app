@@ -519,7 +519,7 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
           style={
             Array [
               Object {
-                "color": "#353E6E",
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -1198,7 +1198,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
           style={
             Array [
               Object {
-                "color": "#353E6E",
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -1451,7 +1451,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                 style={
                   Array [
                     Object {
-                      "borderRadius": 4,
+                      "borderRadius": 12,
                       "height": 24,
                       "width": 24,
                     },
@@ -1465,7 +1465,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                     Array [
                       Array [
                         Object {
-                          "borderRadius": 4,
+                          "borderRadius": 12,
                           "height": 24,
                           "width": 24,
                         },

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import BannerImportant from '~/bicComponents/Banner/BannerImportant';
+import BannerImportant from '~/bicComponents/Banner';
 
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';

@@ -488,7 +488,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#353E6E",
+                            "color": "#181C32",
                             "fontFamily": "BeVietnamPro-Light",
                             "fontSize": 15,
                           },
@@ -589,7 +589,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#353E6E",
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 15,
                             },
@@ -674,7 +674,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#353E6E",
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 15,
                             },
@@ -737,7 +737,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#353E6E",
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 15,
                             },
@@ -792,7 +792,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#353E6E",
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 15,
                             },
@@ -889,7 +889,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#353E6E",
+                        "color": "#181C32",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 15,
                       },
@@ -944,7 +944,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#353E6E",
+                        "color": "#181C32",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 15,
                       },
