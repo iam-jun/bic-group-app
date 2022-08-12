@@ -35,9 +35,9 @@ exports[`CommunitItem component should render data correctly 1`] = `
       style={
         Array [
           Object {
-            "borderRadius": 6,
-            "height": 72,
-            "width": 72,
+            "borderRadius": 4,
+            "height": 64,
+            "width": 64,
           },
           Object {
             "marginRight": 12,
@@ -50,9 +50,9 @@ exports[`CommunitItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 6,
-              "height": 72,
-              "width": 72,
+              "borderRadius": 4,
+              "height": 64,
+              "width": 64,
             },
             Object {},
           ]
@@ -86,10 +86,10 @@ exports[`CommunitItem component should render data correctly 1`] = `
                 Object {
                   "alignItems": "center",
                   "backgroundColor": "#f9f9f9",
-                  "borderRadius": 6,
-                  "height": 72,
+                  "borderRadius": 4,
+                  "height": 64,
                   "justifyContent": "center",
-                  "width": 72,
+                  "width": 64,
                 }
               }
               testID="Image__placeholder"
@@ -102,9 +102,9 @@ exports[`CommunitItem component should render data correctly 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "borderRadius": 6,
-                  "height": 72,
-                  "width": 72,
+                  "borderRadius": 4,
+                  "height": 64,
+                  "width": 64,
                 },
               ]
             }

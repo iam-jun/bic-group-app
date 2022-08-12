@@ -4,10 +4,11 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Tag from '~/beinComponents/Tag';
+import Tag from '~/bicComponents/Tag';
 import { IAudience } from '~/interfaces/IPost';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
+import images from '~/resources/images';
 
 export interface SelectingAudiencesProps {
   list: IAudience[];
@@ -75,9 +76,10 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
       <Tag
         style={styles.item}
         key={`tag_${index}`}
-        avatar={icon || avatar}
+        avatar={icon || avatar || images.img_group_avatar_default}
         label={name}
         onPressIcon={() => onPressRemoveItem(item)}
+        icon="Xmark"
       />
     );
   };
@@ -100,7 +102,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
             onPress={onPressShowAll}
             testID="selecting_audiences.show"
           >
-            {showAll ? 'Show less' : `Show all(${list?.length})`}
+            <Text>{showAll ? 'Show less' : `Show all(${list?.length})`}</Text>
           </ButtonWrapper>
         )}
       </View>

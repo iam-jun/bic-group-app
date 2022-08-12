@@ -118,7 +118,10 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         'playVideo', id,
       );
     }
-    if ((status?.durationMillis > DURATION_CHECK_POINT || status?.durationMillis <= DURATION_CHECK_POINT) && !!postId) {
+
+    if (((status?.durationMillis > DURATION_CHECK_POINT && status?.positionMillis >= DURATION_CHECK_POINT)
+    || (status?.durationMillis <= DURATION_CHECK_POINT && status?.positionMillis === status?.durationMillis))
+    && !!postId) {
       onWatchCheckPoint?.();
     }
   };

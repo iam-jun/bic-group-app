@@ -75,17 +75,19 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#353E6E",
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
-          Object {},
+          Object {
+            "color": "#353E6E",
+          },
           undefined,
         ]
       }
       testID="info_item.title"
     >
-      Title/Position
+      Position
     </Text>
     <Text
       style={
@@ -96,7 +98,9 @@ exports[`ItemExperience component renders correctly 1`] = `
             "fontSize": 15,
           },
           Object {},
-          undefined,
+          Object {
+            "marginTop": 8,
+          },
         ]
       }
       testID="info_item.value"
@@ -117,11 +121,13 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#353E6E",
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
-          Object {},
+          Object {
+            "color": "#353E6E",
+          },
           undefined,
         ]
       }
@@ -138,7 +144,9 @@ exports[`ItemExperience component renders correctly 1`] = `
             "fontSize": 15,
           },
           Object {},
-          undefined,
+          Object {
+            "marginTop": 8,
+          },
         ]
       }
       testID="info_item.value"
@@ -159,11 +167,13 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#353E6E",
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
-          Object {},
+          Object {
+            "color": "#353E6E",
+          },
           undefined,
         ]
       }
@@ -180,7 +190,9 @@ exports[`ItemExperience component renders correctly 1`] = `
             "fontSize": 15,
           },
           Object {},
-          undefined,
+          Object {
+            "marginTop": 8,
+          },
         ]
       }
       testID="info_item.value"
@@ -201,11 +213,13 @@ exports[`ItemExperience component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#353E6E",
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
-          Object {},
+          Object {
+            "color": "#353E6E",
+          },
           undefined,
         ]
       }
@@ -222,7 +236,9 @@ exports[`ItemExperience component renders correctly 1`] = `
             "fontSize": 15,
           },
           Object {},
-          undefined,
+          Object {
+            "marginTop": 8,
+          },
         ]
       }
       testID="info_item.value"

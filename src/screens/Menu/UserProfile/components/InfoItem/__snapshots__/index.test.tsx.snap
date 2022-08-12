@@ -16,11 +16,13 @@ exports[`InfoItem component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#353E6E",
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
-        Object {},
+        Object {
+          "color": "#353E6E",
+        },
         undefined,
       ]
     }
@@ -35,7 +37,9 @@ exports[`InfoItem component renders correctly 1`] = `
           "fontSize": 15,
         },
         Object {},
-        undefined,
+        Object {
+          "marginTop": 8,
+        },
       ]
     }
     testID="info_item.value"

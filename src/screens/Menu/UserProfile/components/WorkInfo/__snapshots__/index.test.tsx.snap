@@ -3,9 +3,12 @@
 exports[`WorkInfo component renders correctly 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+      },
+      undefined,
+    ]
   }
 >
   <Text
