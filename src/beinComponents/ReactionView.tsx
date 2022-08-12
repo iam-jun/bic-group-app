@@ -86,7 +86,7 @@ const ReactionView: FC<ReactionViewProps> = ({
         rendered.push(<Reaction
           testId={`reaction.button.${key}`}
           key={`${key}`}
-          style={{ margin: 2 }}
+          style={{ marginRight: spacing.margin.tiny }}
           value={reactionMap.get(key)}
           icon={key}
           disableUpdateState
