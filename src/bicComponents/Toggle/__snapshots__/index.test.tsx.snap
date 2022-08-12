@@ -1,0 +1,355 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toggle component should render active state with default size small 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 100,
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#007AFF",
+          "height": 20,
+          "width": 40,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#F2F5F8",
+            "borderRadius": 200,
+            "borderWidth": 1,
+          },
+          Object {
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Toggle component should render active state with size medium 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 100,
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#007AFF",
+          "height": 24,
+          "width": 44,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#F2F5F8",
+            "borderRadius": 200,
+            "borderWidth": 1,
+          },
+          Object {
+            "height": 28,
+            "width": 28,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Toggle component should render disabled state with default size small 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 100,
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#85C0FF",
+          "height": 20,
+          "width": 40,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#F2F5F8",
+            "borderRadius": 200,
+            "borderWidth": 1,
+          },
+          Object {
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Toggle component should render disabled state with size medium 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 100,
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#85C0FF",
+          "height": 24,
+          "width": 44,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#F2F5F8",
+            "borderRadius": 200,
+            "borderWidth": 1,
+          },
+          Object {
+            "height": 28,
+            "width": 28,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Toggle component should render inactive state with default size small 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 100,
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "flex-start",
+          "backgroundColor": "#D1D4DB",
+          "height": 20,
+          "width": 40,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#F2F5F8",
+            "borderRadius": 200,
+            "borderWidth": 1,
+          },
+          Object {
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Toggle component should render inactive state with size medium 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 100,
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "flex-start",
+          "backgroundColor": "#D1D4DB",
+          "height": 24,
+          "width": 44,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#F2F5F8",
+            "borderRadius": 200,
+            "borderWidth": 1,
+          },
+          Object {
+            "height": 28,
+            "width": 28,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;

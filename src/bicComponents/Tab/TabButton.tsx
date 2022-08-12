@@ -4,7 +4,7 @@ import {
 import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useKeySelector } from '~/hooks/selector';
-import Text, { TextVariant } from '../Text';
+import Text, { TextVariant } from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 
 export interface TabButtonProps {
