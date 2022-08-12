@@ -14,10 +14,6 @@ import { IToastMessage } from '~/interfaces/common';
 import { showHideToastMessage } from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 import spacing from '~/theme/spacing';
-import PillTabButton from '~/beinComponents/Tab/PillTabButton';
-import TabButton from '~/beinComponents/Tab/TabButton';
-import Tab from '~/beinComponents/Tab';
-import { communityMenuData } from '~/constants/communityMenuData';
 
 const Section1 = () => {
   const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
@@ -177,123 +173,6 @@ const Section1 = () => {
     </View>,
   );
 
-  const renderTab = () => {
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    
-    const onPress = (item: any, index: number) => {
-      setSelectedIndex(index);
-    };
-
-    return renderSection('Tab Button', 
-      <View style={{marginHorizontal: spacing?.margin.base }}>
-        <View style={{marginVertical: spacing?.margin.tiny}}>
-          <Text.H5>{`<PillTabButton size='large'></PillTabButton>`}</Text.H5>
-          <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <PillTabButton type='primary' size='large'>
-              Tab button
-            </PillTabButton>
-            <PillTabButton type='secondary' size='large'>
-              Tab button
-            </PillTabButton>
-          </View>
-          
-          <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-            <PillTabButton size='large'>
-              Tab button
-            </PillTabButton>
-            <PillTabButton size='large' isSelected={false}>
-              Tab button
-            </PillTabButton>
-          </View>
-        </View>
-
-        <View style={{marginVertical: spacing?.margin.tiny}}>
-          <Text.H5>{`<PillTabButton size='medium'></PillTabButton>`}</Text.H5>
-          <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <PillTabButton type='primary' size='medium'>
-              Tab button
-            </PillTabButton>
-            <PillTabButton type='secondary' size='medium'>
-              Tab button
-            </PillTabButton>
-          </View>
-          
-          <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-            <PillTabButton size='medium'>
-              Tab button
-            </PillTabButton>
-            <PillTabButton size='medium' isSelected={false}>
-              Tab button
-            </PillTabButton>
-          </View>
-        </View>
-
-        <View style={{marginVertical: spacing?.margin.tiny}}>
-          <Text.H5>{`<PillTabButton size='small'></PillTabButton>`}</Text.H5>
-          <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <PillTabButton type='primary' size='small'>
-              Tab button
-            </PillTabButton>
-            <PillTabButton type='secondary' size='small'>
-              Tab button
-            </PillTabButton>
-          </View>
-          
-          <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: spacing.margin.base}}>
-            <PillTabButton size='small' isSelected={true}>
-              Tab button
-            </PillTabButton>
-            <PillTabButton size='small' isSelected={false}>
-              Tab button
-            </PillTabButton>
-          </View>
-        </View>
-
-        <Text.H5 style={{marginTop: spacing?.margin.base}}>{`<TabButton size='small'></TabButton>`}</Text.H5>
-        <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <TabButton isSelected={true} size='small'>
-            Tab button
-          </TabButton>
-          <TabButton isSelected={false} size='small'>
-            Tab button
-          </TabButton>
-        </View>
-
-        <Text.H5 style={{marginTop: spacing?.margin.base}} >{`<TabButton size='medium'></TabButton>`}</Text.H5>
-        <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <TabButton isSelected={true} size='medium'>
-            Tab button
-          </TabButton>
-          <TabButton isSelected={false} size='medium'>
-            Tab button
-          </TabButton>
-        </View>
-
-        <Text.H5 style={{marginTop: spacing?.margin.base}} >{`<TabButton size='large'></TabButton>`}</Text.H5>
-        <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <TabButton isSelected={true} size='large'>
-            Tab button
-          </TabButton>
-          <TabButton isSelected={false} size='large'>
-            Tab button
-          </TabButton>
-        </View>
-
-        <Text.H5 style={{marginTop: spacing?.margin.base}} >{`Demo Tab bar`}</Text.H5>
-        <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <Tab activeIndex={selectedIndex} data={communityMenuData} onPressTab={onPress}/>
-        </View>
-        <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <Tab type='pill' activeIndex={selectedIndex} data={communityMenuData} buttonProps={{type: 'primary'}} onPressTab={onPress}/>
-        </View>
-        <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <Tab type='pill' activeIndex={selectedIndex} data={communityMenuData} buttonProps={{type: 'secondary'}} onPressTab={onPress}/>
-        </View>
-        <View style={{marginTop: spacing?.margin.base, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <Tab type='pill' activeIndex={selectedIndex} data={communityMenuData} onPressTab={onPress}/>
-        </View>
-      </View>)
-  };
 
   const renderButton = () => renderSection(
     'Button',
@@ -512,7 +391,6 @@ const Section1 = () => {
       >
         Crash Native!
       </Button.Danger>
-      {renderTab()}
       {renderButton()}
       {renderToastMessage()}
       {renderBannerMessage()}
