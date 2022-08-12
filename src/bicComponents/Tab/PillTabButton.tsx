@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text, { TextVariant } from '../Text';
+import Text, { TextVariant } from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 import elevation from '~/theme/elevations';
