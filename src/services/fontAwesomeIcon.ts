@@ -113,6 +113,9 @@ import { faFaceSmile } from '@fortawesome/pro-regular-svg-icons/faFaceSmile';
 import { faKeySkeleton } from '@fortawesome/pro-regular-svg-icons/faKeySkeleton';
 import { faCircleMinus } from '@fortawesome/pro-regular-svg-icons/faCircleMinus';
 import { faCirclePlus } from '@fortawesome/pro-regular-svg-icons/faCirclePlus';
+import { faSquare } from '@fortawesome/pro-regular-svg-icons/faSquare';
+import { faSquareCheck as faSquareCheckSolid } from '@fortawesome/pro-solid-svg-icons/faSquareCheck';
+import { faSquareMinus as faSquareMinusSolid } from '@fortawesome/pro-solid-svg-icons/faSquareMinus';
 import { faHouse } from '@fortawesome/pro-regular-svg-icons/faHouse';
 import { faHouse as faHouseSolid } from '@fortawesome/pro-solid-svg-icons/faHouse';
 import { faBallot } from '@fortawesome/pro-regular-svg-icons/faBallot';
@@ -126,6 +129,8 @@ import { faFolderGear as faFolderGearSolid } from '@fortawesome/pro-solid-svg-ic
 import { faMessagesQuestion as faMessagesQuestionSolid } from '@fortawesome/pro-solid-svg-icons/faMessagesQuestion';
 import { faArrowRightFromBracket as faArrowRightFromBracketSolid }
   from '@fortawesome/pro-solid-svg-icons/faArrowRightFromBracket';
+import { faCircle } from '@fortawesome/pro-regular-svg-icons/faCircle';
+import { faCircleDot as faCircleDotSolid } from '@fortawesome/pro-solid-svg-icons/faCircleDot';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -258,8 +263,13 @@ export const initFontAwesomeIcon = () => {
     faListUl,
     faFaceSmile,
     faKeySkeleton,
+    faCircle,
+    faCircleDotSolid,
     faCircleMinus,
     faCirclePlus,
+    faSquare,
+    faSquareCheckSolid,
+    faSquareMinusSolid,
     faHouse,
     faHouseSolid,
     faBallot,
@@ -389,8 +399,13 @@ export const fontAwesomeIcons = {
   ListUl: 'fa-regular fa-list-ul',
   FaceSmile: 'fa-regular fa-face-smile',
   KeySkeleton: 'fa-regular fa-key-skeleton',
+  Circle: 'fa-regular fa-circle',
+  CircleDotSolid: 'fa-solid fa-circle-dot',
   CircleMinus: 'fa-regular fa-circle-minus',
   CirclePlus: 'fa-regular fa-circle-plus',
+  Square: 'fa-regular fa-square',
+  SquareCheckSolid: 'fa-solid fa-square-check',
+  SquareMinus: 'fa-solid fa-square-minus',
   House: 'fa-regular fa-house',
   HouseSolid: 'fa-solid fa-house',
   Ballot: 'fa-regular fa-ballot',

@@ -230,12 +230,12 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     }
 
     const dataDefault = [
-      sImportant.active === currentSettings?.important?.active
-        || sImportant.expires_time === currentSettings?.important?.expires_time,
-      sCanComment === canComment,
-      sCanReact === canReact,
+      !!sImportant.active,
+      !sCanComment,
+      !sCanReact,
     ];
-    const newCount = dataDefault.filter((i) => !i);
+
+    const newCount = dataDefault.filter((i) => !!i);
     dispatch(postActions.setCreatePostSettings({
       important: sImportant,
       canComment: sCanComment,

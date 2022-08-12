@@ -98,8 +98,7 @@ const LanguageOptionMenu = ({
       height={36}
       isChecked={item.selected}
       checkboxProps={{
-        testID: 'language_option_menu.checkbox',
-        checkboxTestID: `language_option_menu.checkbox.item_${index}`,
+        testID: `language_option_menu.checkbox.item_${index}`,
       }}
       onPressCheckbox={() => onSelectItem(item)}
     />

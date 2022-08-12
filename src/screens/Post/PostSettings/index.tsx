@@ -12,7 +12,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import Button from '~/beinComponents/Button';
-import Toggle from '~/beinComponents/SelectionControl/Toggle';
+import Toggle from '~/bicComponents/Toggle';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
@@ -232,7 +232,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
           <Toggle
             testID="post_settings.toggle_important"
             isChecked={sImportant?.active}
-            onActionPress={handleToggleImportant}
+            onPress={handleToggleImportant}
           />
         </View>
         {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
@@ -280,7 +280,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       <Toggle
         testID="post_settings.toggle_can_comment"
         isChecked={sCanComment}
-        onActionPress={handleToggleCanComment}
+        onPress={handleToggleCanComment}
       />
     </View>
   )
@@ -299,7 +299,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       <Toggle
         testID="post_settings.toggle_can_react"
         isChecked={sCanReact}
-        onActionPress={handleToggleCanReact}
+        onPress={handleToggleCanReact}
       />
     </View>
   )
