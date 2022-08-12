@@ -22,6 +22,7 @@ module.exports = {
     '!src/theme/**/*.{js,jsx,ts,tsx}',
     '!src/beinComponents/Markdown/**/*.{js,jsx,ts,tsx}',
     '!src/beinComponents/MarkdownView/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.stories.{js,jsx,ts,tsx}',
   ],
   setupFiles: ['<rootDir>/src/test/setup.js'],
   setupFilesAfterEnv: ['<rootDir>/src/test/setupAfterEnv.js'],
