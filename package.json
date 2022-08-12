@@ -32,7 +32,7 @@
     "jest:open-cov": "open ./coverage/lcov-report/index.html",
     "reverse": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090",
     "update-stories": "sb-rn-get-stories --config-path .ondevice",
-    "prestart": "yarn update-stories",
+    "prestart": "npm run update-stories",
     "storybook-watcher": "sb-rn-watcher --config-path .ondevice",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -55,6 +55,7 @@
     "@react-native-community/datetimepicker": "3.5.2",
     "@react-native-community/hooks": "2.8.0",
     "@react-native-community/netinfo": "6.0.4",
+    "@react-native-community/slider": "^4.3.0",
     "@react-native-firebase/app": "12.4.0",
     "@react-native-firebase/messaging": "12.4.0",
     "@react-navigation/bottom-tabs": "^6.3.2",
