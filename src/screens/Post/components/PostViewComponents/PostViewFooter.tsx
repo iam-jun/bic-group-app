@@ -11,6 +11,7 @@ import * as modalActions from '~/store/modal/actions';
 import { validateReactionCount } from './helper';
 import dimension from '~/theme/dimension';
 import Text from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -37,8 +38,13 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
+  const { t } = useBaseHook();
 
   const validReactionCount = validateReactionCount(reactionCounts);
+  const numberOfReactions = Object.keys(reactionCounts).length;
+  const labelReactionCount = `${
+    numberOfReactions ? `${numberOfReactions} ` : ''
+  }${t('post:button_react')}`;
 
   const onEmojiSelected = (
     emoji: string, key?: string,
@@ -81,11 +87,11 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         leftIcon={icon}
         leftIconProps={{
           icon,
-          size: 18,
+          size: 20,
           tintColor: colors.neutral40,
         }}
         textProps={{
-          variant: 'numberS',
+          variant: 'bodyM',
           color: colors.neutral80,
         }}
         style={styles.buttonReact}
@@ -100,7 +106,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
       {(validReactionCount && !!canReact) && (
         <>
           {renderReactButtonItem(
-            'post:button_react',
+            labelReactionCount,
             'iconReact',
             onPressReact,
             onPressReact,
