@@ -16,7 +16,6 @@ import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ITabTypes } from '~/interfaces/IRouter';
-import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';

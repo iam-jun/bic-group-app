@@ -7,7 +7,9 @@ import {
   StyleSheet,
   Dimensions,
   RefreshControl,
-  DeviceEventEmitter, ActivityIndicator,
+  DeviceEventEmitter,
+  ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import { debounce, throttle } from 'lodash';
 import {
@@ -20,11 +22,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
+import { useDispatch } from 'react-redux';
 import dimension from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
 import PostView from '~/screens/Post/components/PostView';
-import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import { useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
@@ -32,6 +34,8 @@ import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
 import { IPostActivity } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
+import Button from '~/beinComponents/Button';
+import modalActions from '~/store/modal/actions';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -67,8 +71,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const prevOffsetYShared = useSharedValue(0);
 
+  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(
     theme, insets,
@@ -198,6 +202,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }
   };
 
+  const onPressDiscover = () => {
+    dispatch(modalActions.showAlertNewFeature())
+  }
+
   const renderItem = ({ item }: any) => (
     <PostView
       postId={item.id}
@@ -214,7 +222,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }
     return (
       <View style={styles.placeholder}>
-        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
@@ -223,18 +230,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   const renderFooter = () => {
-    if (!canLoadMore && data?.length === 0) {
-      return (
-        <View style={styles.emptyContainer}>
-          <Text.SubtitleM useI18n>
-            post:newsfeed:title_empty_no_post
-          </Text.SubtitleM>
-          <Text.BodyXS style={{ marginTop: spacing.margin.small }} useI18n color={theme.colors.neutral50}>
-            post:newsfeed:text_empty_no_post
-          </Text.BodyXS>
-        </View>
-      )
-    }
     if (!refreshing && !canLoadMore) {
       return (
         <View style={styles.listFooter}>
@@ -256,33 +251,64 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     )
   };
 
+  const renderEmpty = () => (
+    <View style={styles.emptyContainer}>
+      <Text.SubtitleM useI18n>
+        post:newsfeed:title_empty_no_post
+      </Text.SubtitleM>
+      <Text.BodyXS style={styles.textEmpty} useI18n>
+        post:newsfeed:text_empty_no_post
+      </Text.BodyXS>
+      <Button.Primary onPress={onPressDiscover}>Discover</Button.Primary>
+    </View>
+  )
+
+  const renderListEmpty = () => (
+    <FlatList
+      testID="newsfeed_list.empty_list"
+      data={[]}
+      renderItem={null}
+      refreshControl={(
+        <RefreshControl
+          testID="newsfeed_list.refresh_control"
+          progressViewOffset={refreshControlOffset}
+          refreshing={!!refreshing}
+          onRefresh={() => onRefresh?.()}
+        />
+      )}
+      ListEmptyComponent={renderEmpty}
+    />
+  )
+
   return (
     <View testID="newsfeed_list" style={styles.container}>
-      <AnimatedFlashList
-        ref={listRef}
-          // @ts-ignore
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
-        estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
-        onScroll={onScroll}
-        onLoad={onLoaded}
-        refreshing
-        refreshControl={(
-          <RefreshControl
-            testID="newsfeed_list.refresh_control"
-            progressViewOffset={refreshControlOffset}
-            refreshing={!!refreshing}
-            onRefresh={() => onRefresh?.()}
-          />
-          )}
-        showsHorizontalScrollIndicator={false}
-        onRefresh={onRefresh}
-        onEndReached={_onEndReached}
-        onEndReachedThreshold={0.5}
-        ListHeaderComponent={<NewsfeedListHeader HeaderComponent={HeaderComponent} />}
-        ListFooterComponent={renderFooter}
-      />
+      {data?.length > 0 ? (
+        <AnimatedFlashList
+          ref={listRef}
+        // @ts-ignore
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
+          estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
+          onScroll={onScroll}
+          onLoad={onLoaded}
+          refreshing
+          refreshControl={(
+            <RefreshControl
+              testID="newsfeed_list.refresh_control"
+              progressViewOffset={refreshControlOffset}
+              refreshing={!!refreshing}
+              onRefresh={() => onRefresh?.()}
+            />
+        )}
+          showsHorizontalScrollIndicator={false}
+          onRefresh={onRefresh}
+          onEndReached={_onEndReached}
+          onEndReachedThreshold={0.5}
+          ListHeaderComponent={<NewsfeedListHeader HeaderComponent={HeaderComponent} />}
+          ListFooterComponent={renderFooter}
+        />
+      ) : renderListEmpty() }
       {renderPlaceholder()}
       <FloatingCreatePost />
     </View>
@@ -337,12 +363,17 @@ const createStyle = (
       width: '100%',
     },
     emptyContainer: {
-      marginTop: 56,
+      marginTop: insets.top + dimension.homeHeaderHeight + 56,
       paddingHorizontal: spacing.padding.large,
       alignItems: 'center',
     },
     itemStyle: {
       marginBottom: spacing.margin.small,
+    },
+    textEmpty: {
+      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.extraLarge,
+      color: colors.neutral50,
     },
   });
 };
