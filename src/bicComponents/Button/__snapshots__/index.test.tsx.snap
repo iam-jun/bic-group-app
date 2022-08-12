@@ -183,6 +183,7 @@ exports[`Button component renders button success correctly 1`] = `
 exports[`Button component renders correctly 1`] = `
 <View
   accessible={true}
+  collapsable={false}
   focusable={false}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -191,29 +192,13 @@ exports[`Button component renders correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  testID="button_wrapper"
->
-  <View
-    style={
-      Array [
-        Object {
-          "alignItems": "center",
-          "borderRadius": 6,
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "paddingVertical": 4,
-        },
-        undefined,
-        Object {
-          "backgroundColor": "#BAC0DE",
-          "height": 36,
-          "paddingHorizontal": 12,
-        },
-      ]
+  style={
+    Object {
+      "opacity": 1,
     }
-    testID="button.content"
-  />
-</View>
+  }
+  testID="button_wrapper"
+/>
 `;
 
 exports[`Button component renders correctly button disable 1`] = `
@@ -224,6 +209,7 @@ exports[`Button component renders correctly button disable 1`] = `
     }
   }
   accessible={true}
+  collapsable={false}
   focusable={false}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -232,29 +218,13 @@ exports[`Button component renders correctly button disable 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  testID="button"
->
-  <View
-    style={
-      Array [
-        Object {
-          "alignItems": "center",
-          "borderRadius": 6,
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "paddingVertical": 4,
-        },
-        undefined,
-        Object {
-          "backgroundColor": "#F1F2F8",
-          "height": 36,
-          "paddingHorizontal": 12,
-        },
-      ]
+  style={
+    Object {
+      "opacity": 1,
     }
-    testID="button.content"
-  />
-</View>
+  }
+  testID="button"
+/>
 `;
 
 exports[`Button component renders correctly children with useI18n 1`] = `
@@ -282,7 +252,7 @@ exports[`Button component renders correctly children with useI18n 1`] = `
         },
         undefined,
         Object {
-          "backgroundColor": "#BAC0DE",
+          "backgroundColor": "#7335C0",
           "height": 36,
           "paddingHorizontal": 12,
         },
@@ -299,7 +269,7 @@ exports[`Button component renders correctly children with useI18n 1`] = `
             "fontSize": 15,
           },
           Object {
-            "color": "#212745",
+            "color": "#FFFFFF",
           },
           Array [
             Object {
@@ -344,7 +314,7 @@ exports[`Button component renders correctly contentStyle 1`] = `
           "padding": 10,
         },
         Object {
-          "backgroundColor": "#BAC0DE",
+          "backgroundColor": "#7335C0",
           "height": 36,
           "paddingHorizontal": 12,
         },
@@ -385,7 +355,7 @@ exports[`Button component renders correctly style 1`] = `
         },
         undefined,
         Object {
-          "backgroundColor": "#BAC0DE",
+          "backgroundColor": "#7335C0",
           "height": 36,
           "paddingHorizontal": 12,
         },

@@ -153,7 +153,7 @@ const Danger : React.FC<ButtonProps> = (
 ) => <ButtonComponent {...props} variant="danger" />;
 
 const Button = Object.assign(
-  ButtonComponent, {
+  ButtonWrapper, {
     Primary,
     Secondary,
     Neutral,

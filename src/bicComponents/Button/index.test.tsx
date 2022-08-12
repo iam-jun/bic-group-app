@@ -1,6 +1,5 @@
-import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
-import i18next from 'i18next';
+import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import Button from '.';
@@ -51,7 +50,7 @@ describe('Button component', () => {
 
   it('renders correctly button loading', () => {
     const rendered = renderWithRedux(
-      <Button testID="button" loading>Loading</Button>,
+      <Button.Primary testID="button" loading>Loading</Button.Primary>,
     );
     const { getByTestId } = rendered;
     const loadingComponent = getByTestId('button.loading');
@@ -61,7 +60,7 @@ describe('Button component', () => {
 
   it('renders correctly style', () => {
     const rendered = renderWithRedux(
-      <Button
+      <Button.Primary
         testID="button"
         style={{ padding: 10 }}
       />,
@@ -74,7 +73,7 @@ describe('Button component', () => {
 
   it('renders correctly contentStyle', () => {
     const rendered = renderWithRedux(
-      <Button contentStyle={{ padding: 10 }} />,
+      <Button.Primary contentStyle={{ padding: 10 }} />,
     );
     const { getByTestId } = rendered;
     const contentComponent = getByTestId('button.content');
@@ -87,7 +86,7 @@ describe('Button component', () => {
     const onPress = jest.fn();
 
     const rendered = renderWithRedux(
-      <Button testID="button" onPress={onPress} />,
+      <Button.Primary testID="button" onPress={onPress} />,
     );
 
     const btnComponent = rendered.getByTestId('button');
@@ -100,7 +99,7 @@ describe('Button component', () => {
     const onLongPress = jest.fn();
 
     const rendered = renderWithRedux(
-      <Button
+      <Button.Primary
         testID="button"
         onLongPress={onLongPress}
       />,
@@ -114,7 +113,7 @@ describe('Button component', () => {
 
   it('renders correctly with only icon', () => {
     const rendered = renderWithRedux(
-      <Button icon="FaceSmile" />,
+      <Button.Primary icon="FaceSmile" />,
     );
     const { getByTestId, queryByTestId } = rendered;
     const textComponent = queryByTestId('button.text');
@@ -126,7 +125,7 @@ describe('Button component', () => {
 
   it('renders correctly with text and icon', () => {
     const rendered = renderWithRedux(
-      <Button icon="FaceSmile">text content</Button>,
+      <Button.Primary icon="FaceSmile">text content</Button.Primary>,
     );
     const { getByTestId } = rendered;
     const textComponent = getByTestId('button.text');
@@ -141,9 +140,9 @@ describe('Button component', () => {
 
   it('renders correctly children with useI18n', () => {
     const rendered = renderWithRedux(
-      <Button useI18n>
+      <Button.Primary useI18n>
        common:text_see_less
-      </Button>,
+      </Button.Primary>,
     );
     expect(rendered).toBeDefined();
     expect(rendered.toJSON()).toMatchSnapshot();
