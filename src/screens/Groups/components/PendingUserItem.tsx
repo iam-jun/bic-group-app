@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';

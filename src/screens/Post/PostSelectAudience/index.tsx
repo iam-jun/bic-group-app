@@ -30,7 +30,7 @@ import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IUser } from '~/interfaces/IAuth';
-import NoSearchResult from '~/beinFragments/NoSearchResult';
+import NoSearchResult from '~/components/NoSearchResult';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';

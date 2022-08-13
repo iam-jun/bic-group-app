@@ -10,7 +10,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import Divider from '~/beinComponents/Divider';
-import EmptyScreen from '~/beinFragments/EmptyScreen';
+import EmptyScreen from '~/components/EmptyScreen';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import CommunityItem from '../components/CommunityItem';

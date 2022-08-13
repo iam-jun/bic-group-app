@@ -3,9 +3,9 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { cleanup } from '@testing-library/react-native';
 
-import { renderWithRedux, configureStore } from '~/test/testUtils';
+import { renderWithRedux, configureStore } from '../test/testUtils';
 import CommonModal from './CommonModal';
-import initialState from '~/store/initialState';
+import initialState from '../store/initialState';
 
 afterEach(cleanup);
 

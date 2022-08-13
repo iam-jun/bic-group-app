@@ -12,7 +12,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import Button from '~/beinComponents/Button';
-import Toggle from '~/bicComponents/Toggle';
+import Toggle from '~/baseComponents/Toggle';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';

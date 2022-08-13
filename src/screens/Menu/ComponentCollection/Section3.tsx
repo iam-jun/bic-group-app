@@ -6,7 +6,7 @@ import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import spacing from '~/theme/spacing';
 
 const Section3 = () => {

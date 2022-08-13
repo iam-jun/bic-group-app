@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import NoSearchResult from '~/beinFragments/NoSearchResult';
+import NoSearchResult from '~/components/NoSearchResult';
 import Text from '~/beinComponents/Text';
 import MemberItem from './MemberItem';
 import { getMembersSection } from '../redux/selectors';

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Icon from '~/beinComponents/Icon';
-import reactionConfig from '~/beinFragments/reaction/reactionConfig';
+import reactionConfig from '~/components/reaction/reactionConfig';
 import Button from '~/beinComponents/Button';
 import { IReactionProps } from '~/interfaces/IReaction';
 import spacing from '~/theme/spacing';

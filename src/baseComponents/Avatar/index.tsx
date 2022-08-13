@@ -1,7 +1,7 @@
 import React from 'react';
 import AvatarComponent, {
   AvatarProps,
-} from '~/bicComponents/Avatar/AvatarComponent';
+} from '~/baseComponents/Avatar/AvatarComponent';
 
 const Tiny: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant="tiny" {...props} />

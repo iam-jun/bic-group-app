@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';

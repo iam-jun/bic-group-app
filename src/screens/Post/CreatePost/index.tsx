@@ -13,7 +13,7 @@ import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import BannerImportant from '~/bicComponents/Banner';
+import BannerImportant from '~/baseComponents/Banner';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import postActions from '~/screens/Post/redux/actions';
 

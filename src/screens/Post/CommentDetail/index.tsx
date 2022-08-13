@@ -7,7 +7,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import Header from '~/beinComponents/Header';
 import CommentDetailContent from './CommentDetailContent';
-import EmptyScreen from '~/beinFragments/EmptyScreen';
+import EmptyScreen from '~/components/EmptyScreen';
 import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';

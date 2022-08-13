@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { View } from 'react-native';
-import { renderWithRedux, waitForUpdateRedux } from '~/test/testUtils';
+import { renderWithRedux, waitForUpdateRedux } from '../../test/testUtils';
 import NewsfeedList from './NewsfeedList';
-import MockedNavigator from '~/test/MockedNavigator';
-import { POST_DETAIL } from '~/test/mock_data/post';
-import Text from '~/beinComponents/Text';
+import MockedNavigator from '../../test/MockedNavigator';
+import { POST_DETAIL } from '../../test/mock_data/post';
+import Text from '../../beinComponents/Text';
 
 describe('NewsfeedList component', () => {
   it('renders correctly loading more', async () => {

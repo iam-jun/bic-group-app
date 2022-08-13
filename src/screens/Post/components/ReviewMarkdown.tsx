@@ -12,7 +12,7 @@ import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Markdown from '~/beinComponents/Markdown';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import { IAudience } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 

@@ -7,7 +7,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import ListView from '~/beinComponents/list/ListView';
-import EmptyScreen from '~/beinFragments/EmptyScreen';
+import EmptyScreen from '~/components/EmptyScreen';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';

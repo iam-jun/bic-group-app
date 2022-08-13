@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import EmptyScreen from '~/beinFragments/EmptyScreen';
+import EmptyScreen from '~/components/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import DiscoverItem from '../components/DiscoverItem';
 

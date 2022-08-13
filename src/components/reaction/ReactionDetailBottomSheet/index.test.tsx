@@ -2,9 +2,9 @@
 import * as React from 'react';
 import { cleanup, waitFor } from '@testing-library/react-native';
 
-import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
+import { fireEvent, renderWithRedux, configureStore } from '../../../test/testUtils';
 import ReactionDetailBottomSheet from './index';
-import initialState from '~/store/initialState';
+import initialState from '../../../store/initialState';
 
 afterEach(cleanup);
 

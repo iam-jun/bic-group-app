@@ -9,7 +9,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import appConfig from '~/configs/appConfig';
 
-import MembersSelection from '~/beinFragments/MembersSelection';
+import MembersSelection from '~/components/MembersSelection';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';

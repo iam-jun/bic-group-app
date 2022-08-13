@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Icon from '../../beinComponents/Icon';
 
 export type TagType = 'primary' | 'secondary' | 'neutral';

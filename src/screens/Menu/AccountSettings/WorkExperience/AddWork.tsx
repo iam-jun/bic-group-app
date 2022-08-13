@@ -11,7 +11,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TextInputBein from '~/beinComponents/inputs/TextInput';
 import Icon from '~/beinComponents/Icon';
-import Toggle from '~/bicComponents/Toggle';
+import Toggle from '~/baseComponents/Toggle';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';

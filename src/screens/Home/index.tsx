@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 
 import { useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
+import NewsfeedList from '~/components/newsfeedList/NewsfeedList';
 import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';

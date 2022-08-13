@@ -5,7 +5,7 @@ import i18next from 'i18next';
 
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import ListView from '~/beinComponents/list/ListView';
 

@@ -12,7 +12,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
         "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
         "chatUserId": "tg6kmc6cmybgwpcif9znngyyebe",
         "fullname": "Test Name",
-        "id": 1,
+        "id": "1",
         "roles": Object {
           "name": "COMMUNITY_ADMIN",
         },
@@ -22,7 +22,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
         "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
         "chatUserId": "tg6kmc6cmybgwpcif9znngyyebe",
         "fullname": "Test Name",
-        "id": 1,
+        "id": "1",
         "roles": Object {
           "name": "MEMBER",
         },

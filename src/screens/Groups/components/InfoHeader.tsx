@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import images from '~/resources/images';

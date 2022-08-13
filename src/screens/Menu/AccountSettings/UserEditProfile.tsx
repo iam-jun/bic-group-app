@@ -38,7 +38,7 @@ import menuKeySelector from '../redux/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import homeActions from '~/screens/Home/redux/actions';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import spacing from '~/theme/spacing';

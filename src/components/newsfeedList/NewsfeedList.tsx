@@ -30,7 +30,7 @@ import PostView from '~/screens/Post/components/PostView';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import { useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
-import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
+import FloatingCreatePost from '~/components/FloatingCreatePost';
 import NoticePanel from '~/screens/Home/components/NoticePanel';
 import { IPostActivity } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';

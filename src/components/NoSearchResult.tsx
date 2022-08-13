@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
-import NoSearchResultImg from '~/../assets/images/no_search_result_grey.svg';
+import NoSearchResultImg from '../../assets/images/no_search_result_grey.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 
 export interface NoSearchResultProps {

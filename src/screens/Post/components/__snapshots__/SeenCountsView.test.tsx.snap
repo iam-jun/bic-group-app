@@ -5,9 +5,9 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
   style={
     Object {
       "alignItems": "flex-end",
-      "paddingBottom": 4,
+      "paddingBottom": 6,
       "paddingHorizontal": 16,
-      "paddingTop": 16,
+      "paddingTop": 12,
     }
   }
 >
@@ -35,11 +35,11 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
         Array [
           Object {
             "color": "#181C32",
-            "fontFamily": "BeVietnamPro-Medium",
+            "fontFamily": "BeVietnamPro-Light",
             "fontSize": 13,
           },
           Object {
-            "color": "#767D93",
+            "color": "#353E6E",
           },
           undefined,
         ]
@@ -47,6 +47,21 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
       testID="seen_counts_view.show_text"
     >
       Interested by 
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+      />
     </Text>
   </View>
 </View>

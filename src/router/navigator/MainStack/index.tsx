@@ -5,10 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useBackHandler } from '@react-native-community/hooks';
 import { useDispatch } from 'react-redux';
 
-import CommonModal from '~/beinFragments/CommonModal';
-import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
-import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
-import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
+import CommonModal from '~/components/CommonModal';
+import UserProfilePreviewBottomSheet from '~/components/Preview/UserProfilePreviewBottomSheet';
+import ReactionBottomSheet from '~/components/reaction/ReactionBottomSheet';
+import ReactionDetailBottomSheet from '~/components/reaction/ReactionDetailBottomSheet';
 import {
   customBackHandlerRoutes,
   NAVIGATION_BACK_PRESSED,

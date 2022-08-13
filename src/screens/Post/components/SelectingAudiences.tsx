@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Tag from '~/bicComponents/Tag';
+import Tag from '~/baseComponents/Tag';
 import { IAudience } from '~/interfaces/IPost';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';

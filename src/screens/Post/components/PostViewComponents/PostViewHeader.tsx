@@ -4,7 +4,7 @@ import { useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';

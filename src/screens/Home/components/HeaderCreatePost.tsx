@@ -9,7 +9,7 @@ import {
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { useKeySelector } from '~/hooks/selector';

@@ -16,7 +16,7 @@ import BicHomeLogo from '../../../../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';
 import HomeHeaderButton from '~/screens/Home/components/HomeHeaderButton';
 import { homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
-import Tab from '~/bicComponents/Tab';
+import Tab from '~/baseComponents/Tab';
 import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 import useHomeStore from '~/screens/Home/store/homeStore';
 

@@ -10,7 +10,7 @@ import spacing from '~/theme/spacing';
 import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import dimension from '~/theme/dimension';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 

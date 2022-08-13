@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';

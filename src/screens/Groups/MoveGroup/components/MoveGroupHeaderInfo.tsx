@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';

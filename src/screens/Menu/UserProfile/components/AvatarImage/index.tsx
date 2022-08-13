@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 
 import React from 'react';
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
 import EditButton from '../EditButton';

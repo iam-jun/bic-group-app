@@ -9,7 +9,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import EmptyScreen from '~/beinFragments/EmptyScreen';
+import EmptyScreen from '~/components/EmptyScreen';
 import { useBaseHook } from '~/hooks';
 import Divider from '~/beinComponents/Divider';
 import { useKeySelector } from '~/hooks/selector';
