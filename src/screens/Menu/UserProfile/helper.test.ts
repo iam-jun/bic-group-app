@@ -86,7 +86,6 @@ describe('UserProfile helper', () => {
       callback: jest.fn(),
     });
 
-    // @ts-ignore
     // const action = jest.spyOn(menuActions, 'uploadImage')
     //   .mockImplementation(mockActionUploadImage as any);
 

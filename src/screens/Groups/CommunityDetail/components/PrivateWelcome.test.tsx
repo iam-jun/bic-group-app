@@ -10,10 +10,9 @@ describe('PrivateWelcome component', () => {
   const onButtonLayout = jest.fn();
 
   const state = { ...initialState };
-  // @ts-ignore
   state.groups.communityDetail = {
     ...communityDetailData,
-    join_status: 1,
+    joinStatus: 1,
     privacy: 'PRIVATE',
   };
   const store = createTestStore(state);

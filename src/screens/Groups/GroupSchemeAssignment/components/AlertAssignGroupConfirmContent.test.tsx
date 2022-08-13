@@ -88,7 +88,6 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('prepareData should return correct result with old none scheme', () => {
     const initAssignments = { ...GROUP_ASSIGNMENTS };
-    // @ts-ignore
     initAssignments.schemeId = null;
     const assigningData = [{ groupId: '1', schemeId: 'efgh' }];
     const allSchemes = {

@@ -5,6 +5,8 @@ import MockedNavigator from '~/test/MockedNavigator';
 import CommunityDetail from '.';
 import initialState from '~/store/initialState';
 import { communityDetailData } from '~/test/mock_data/communities';
+import { ICommunity } from '~/interfaces/ICommunity';
+import { COMMUNITY_PRIVACY_TYPE } from '~/constants/privacyTypes';
 
 describe('CommunityDetail', () => {
   const component = () => (
@@ -29,12 +31,11 @@ describe('CommunityDetail', () => {
   it('should render PrivateWelcome page for guest', () => {
     const state = { ...initialState };
     state.groups.loadingPage = false;
-    // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
       joinStatus: 1,
-      privacy: 'PRIVATE',
-    };
+      privacy: 'PRIVATE' as COMMUNITY_PRIVACY_TYPE,
+    } as ICommunity;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -48,8 +49,7 @@ describe('CommunityDetail', () => {
   it('should render PageContent page correctly when user is a member', () => {
     const state = { ...initialState };
     state.groups.loadingPage = false;
-    // @ts-ignore
-    state.groups.communityDetail = { ...communityDetailData };
+    state.groups.communityDetail = { ...communityDetailData } as ICommunity;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -65,8 +65,7 @@ describe('CommunityDetail', () => {
   it('should render PageContent page correctly when user is not a member for OPEN/PUBLIC privacy type', () => {
     const state = { ...initialState };
     state.groups.loadingPage = false;
-    // @ts-ignore
-    state.groups.communityDetail = { ...communityDetailData, joinStatus: 1 };
+    state.groups.communityDetail = { ...communityDetailData, joinStatus: 1 } as ICommunity;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -81,7 +80,6 @@ describe('CommunityDetail', () => {
 
   it('should not render chat icon correctly for PRIVATE privacy type when user is a guest', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
       joinStatus: 1,

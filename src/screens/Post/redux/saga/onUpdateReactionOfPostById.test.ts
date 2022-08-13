@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
+import { IReaction } from '~/interfaces/IPost';
 
 import { POST_DETAIL_3 } from '~/test/mock_data/post';
 import postActions from '../actions';
@@ -38,10 +40,10 @@ describe('Update Reaction Of Post By Id saga', () => {
         postId,
         [
           {
-            id: 0,
+            id: '0',
             reactionName: 'grin',
             createdBy: 0,
-          },
+          } as IReaction,
         ],
         { 0: { smiley: 1 }, 1: { grin: 1 } },
       )

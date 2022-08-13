@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 import MockedNavigator from '~/test/MockedNavigator';
 import { renderWithRedux, createTestStore, fireEvent } from '~/test/testUtils';
@@ -9,7 +10,6 @@ import { communityDetailData } from '~/test/mock_data/communities';
 describe('GroupTopBar component', () => {
   it('renders Search icon correctly', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'testname1' };
     state.groups.groupDetail.joinStatus = groupJoinStatus.member;
     const store = createTestStore(state);
@@ -25,7 +25,6 @@ describe('GroupTopBar component', () => {
 
   it('renders Chat icon correctly', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'testname1' };
     state.groups.groupDetail.joinStatus = groupJoinStatus.member;
     const store = createTestStore(state);
@@ -41,11 +40,12 @@ describe('GroupTopBar component', () => {
 
   it('renders Admin icon correctly when user is an admin', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'testname1' };
     state.groups.groupDetail.joinStatus = groupJoinStatus.member;
+    // @ts-ignore
     state.groups.groupDetail.canSetting = true;
     state.groups.groupDetail.group = { ...communityDetailData };
+    // @ts-ignore
     state.groups.myPermissions = {
       data: {
         groups: {
@@ -76,6 +76,7 @@ describe('GroupTopBar component', () => {
     // @ts-ignore
     state.auth.user = { username: 'testname1' };
     state.groups.groupDetail.joinStatus = groupJoinStatus.member;
+    // @ts-ignore
     state.groups.myPermissions = {
       data: {
         groups: {

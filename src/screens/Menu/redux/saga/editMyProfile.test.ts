@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import i18next from 'i18next';
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
@@ -14,7 +15,7 @@ afterEach(cleanup);
 describe('Update User Profile Saga', () => {
   const action = {
     type: 'test',
-    payload: { id: 58, description: 'Fake fake description' },
+    payload: { id: '58', description: 'Fake fake description' },
   };
 
   it('should request to update user profile successfully', () => {
@@ -46,7 +47,7 @@ describe('Update User Profile Saga', () => {
     const actionUpdateAvatar = {
       type: 'test',
       payload: {
-        id: 58,
+        id: '58',
         avatar:
           'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
       },
@@ -54,7 +55,7 @@ describe('Update User Profile Saga', () => {
     const expectData = {
       code: 200,
       data: {
-        id: 58,
+        id: '58',
         avatar:
           'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
       },
@@ -79,7 +80,7 @@ describe('Update User Profile Saga', () => {
     const actionUpdateCoverPhoto = {
       type: 'test',
       payload: {
-        id: 58,
+        id: '58',
         backgroundImgUrl:
           'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
       },
@@ -87,7 +88,7 @@ describe('Update User Profile Saga', () => {
     const expectData = {
       code: 200,
       data: {
-        id: 58,
+        id: '58',
         backgroundImgUrl:
           'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
       },
