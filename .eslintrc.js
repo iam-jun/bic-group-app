@@ -23,9 +23,9 @@ module.exports = {
     __DEV__: true,
   },
   ignorePatterns: [
-    // '*.test.*',
+    '*.test.*',
+    '**/src/test/*',
     '**/e2e/*',
-    // '**/src/test/*',
     '*mock.*',
     '*.d.*',
     '**/src/services/chatSocket.ts',
