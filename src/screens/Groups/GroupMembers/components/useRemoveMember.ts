@@ -4,8 +4,8 @@ import i18next from 'i18next';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IGroupMembers } from '~/interfaces/IGroup';
-import modalActions from '~/store/modal/actions';
-import groupsActions from '../../redux/actions';
+import modalActions from '~/storeRedux/modal/actions';
+import groupsActions from '../../../../storeRedux/groups/actions';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 

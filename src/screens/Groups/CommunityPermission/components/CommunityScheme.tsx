@@ -10,13 +10,13 @@ import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Icon from '~/beinComponents/Icon';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import spacing from '~/theme/spacing';
 
 export interface CommunitySchemeProps {

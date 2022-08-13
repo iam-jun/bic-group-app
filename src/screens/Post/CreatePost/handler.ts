@@ -2,10 +2,10 @@ import { ExtendedTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 import { Keyboard } from 'react-native';
 import FileUploader from '~/services/fileUploader';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
-import postActions from '../redux/actions';
+import postActions from '../../../storeRedux/post/actions';
 
 export const handleBack = (
   isEditPost: boolean | undefined,

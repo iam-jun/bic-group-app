@@ -10,7 +10,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import { useKeySelector } from '~/hooks/selector';
 import CommunityItem from '../components/CommunityItem';
 import spacing from '~/theme/spacing';

@@ -15,18 +15,18 @@ import Button from '~/beinComponents/Button';
 import Toggle from '~/baseComponents/Toggle';
 
 import { useRootNavigation } from '~/hooks/navigation';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 import { useBaseHook } from '~/hooks';
 import { formatDate } from '~/utils/formatData';
 import { usePostSettings } from '~/screens/Post/PostSettings/usePostSettings';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import { IPostSettingsParams } from '~/interfaces/IPost';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '../redux/keySelector';
+import postKeySelector from '../../../storeRedux/post/keySelector';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';

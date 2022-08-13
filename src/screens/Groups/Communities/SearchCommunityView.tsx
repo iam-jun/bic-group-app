@@ -6,11 +6,11 @@ import { debounce } from 'lodash';
 
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import Text from '~/beinComponents/Text';
-import actions from '~/screens/Groups/redux/actions';
+import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
 import CommunitySearchResults from './CommunitySearchResults';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 
 interface SearchCommunityViewProps {
   isOpen: boolean;

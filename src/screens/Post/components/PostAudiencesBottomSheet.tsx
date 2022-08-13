@@ -4,8 +4,8 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
+import postActions from '~/storeRedux/post/actions';
 import { useKeySelector } from '~/hooks/selector';
 
 import BottomSheet from '~/beinComponents/BottomSheet';

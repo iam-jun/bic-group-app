@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import { useKeySelector } from '~/hooks/selector';
-import homeKeySelector from '~/screens/Home/redux/keySelector';
-import homeActions from '~/screens/Home/redux/actions';
+import homeKeySelector from '~/storeRedux/home/keySelector';
+import homeActions from '~/storeRedux/home/actions';
 import SearchSuggestion from '~/screens/Home/HomeSearch/SearchSuggestion';
 import SearchResult from '~/screens/Home/HomeSearch/SearchResult';
 import { useBaseHook } from '~/hooks';

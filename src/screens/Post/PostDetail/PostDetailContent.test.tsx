@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import PostDetailContent from '~/screens/Post/PostDetail/PostDetailContent';
 import { POST_DETAIL } from '~/test/mock_data/post';
 import MockedNavigator from '~/test/MockedNavigator';
 import { USER_PROFILE } from '~/test/mock_data/menu';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '../../../storeRedux/post/actions';
 import * as navigationHook from '~/hooks/navigation';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 describe('PostDetailContent component', () => {
   const props = { route: { params: { post_id: POST_DETAIL.id } } };

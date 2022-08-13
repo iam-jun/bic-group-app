@@ -8,7 +8,7 @@ import { NotificationsBadgeComponentProps } from '~/beinComponents/Badge/Notific
 import Icon, { IconProps } from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
+import postKeySelector from '~/storeRedux/post/keySelector';
 
 import spacing from '~/theme/spacing';
 import { IconType } from '~/resources/icons';

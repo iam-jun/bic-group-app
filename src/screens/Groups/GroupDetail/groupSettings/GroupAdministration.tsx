@@ -3,13 +3,13 @@ import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import * as modalActions from '~/store/modal/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupsActions from '../../redux/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import groupsActions from '../../../../storeRedux/groups/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';

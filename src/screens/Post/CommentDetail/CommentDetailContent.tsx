@@ -14,11 +14,11 @@ import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, ICommentData } from '~/interfaces/IPost';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 import CommentInputView from '../components/CommentInputView';
-import postActions from '../redux/actions';
-import postKeySelector from '../redux/keySelector';
+import postActions from '../../../storeRedux/post/actions';
+import postKeySelector from '../../../storeRedux/post/keySelector';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import { useRootNavigation } from '~/hooks/navigation';

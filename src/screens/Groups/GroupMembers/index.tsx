@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
 
 import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/screens/Groups/redux/actions';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { IGroupMembers } from '~/interfaces/IGroup';

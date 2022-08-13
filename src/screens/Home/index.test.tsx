@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { createTestStore, fireEvent, renderWithRedux } from '../../test/testUtils';
-import initialState from '../../store/initialState';
+import initialState from '../../storeRedux/initialState';
 import Home from './index';
 import MockedNavigator from '../../test/MockedNavigator';
-import homeActions from './redux/actions';
-import homeTypes from './redux/types';
+import homeActions from '../../storeRedux/home/actions';
+import homeTypes from '../../storeRedux/home/types';
 import { POST_DETAIL } from '../../test/mock_data/post';
 import * as linkUtil from '../../utils/link';
 

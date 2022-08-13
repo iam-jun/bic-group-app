@@ -1,5 +1,5 @@
 import { HOME_TAB_TYPE } from '~/screens/Home/constants';
-import IHomeState from '~/storeInterfaces/IHomeState';
+import IHomeState from '~/store/interface/IHomeState';
 import { createZustand } from '~/store/utils';
 
 const homeStore = (set) => ({

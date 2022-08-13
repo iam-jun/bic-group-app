@@ -7,7 +7,7 @@ import Button from '~/beinComponents/Button';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import { IReactionCounts } from '~/interfaces/IPost';
 import { IconType } from '~/resources/icons';
-import * as modalActions from '~/store/modal/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import { getTotalReactions, validateReactionCount } from './helper';
 import dimension from '~/theme/dimension';
 import Text from '~/beinComponents/Text';

@@ -13,8 +13,8 @@ import SearchInput from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../../redux/keySelector';
-import menuActions from '../../../redux/actions';
+import menuKeySelector from '../../../../../storeRedux/menu/keySelector';
+import menuActions from '../../../../../storeRedux/menu/actions';
 import appConfig from '~/configs/appConfig';
 import { ILocation } from '~/interfaces/common';
 import BottomSheet from '~/beinComponents/BottomSheet';

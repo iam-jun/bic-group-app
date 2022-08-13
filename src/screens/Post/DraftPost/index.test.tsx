@@ -4,7 +4,7 @@ import React from 'react';
 
 import { cleanup } from '@testing-library/react-native';
 import i18next from 'i18next';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import {
   configureStore,
   renderWithRedux,

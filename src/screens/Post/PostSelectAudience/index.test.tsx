@@ -8,7 +8,7 @@ import {
 } from '~/test/testUtils';
 import PostSelectAudience from '.';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 const mockGroupItem = {
   id: 1,

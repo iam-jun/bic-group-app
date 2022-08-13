@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { clearToastMessage } from '~/store/modal/actions';
+import { clearToastMessage } from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
 import PendingUserItem from '~/screens/Groups/components/PendingUserItem';
 
 const GroupMemberRequest = ({

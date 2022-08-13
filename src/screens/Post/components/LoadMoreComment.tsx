@@ -19,7 +19,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/storeRedux/post/actions';
 import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder';
 import spacing from '~/theme/spacing';
 

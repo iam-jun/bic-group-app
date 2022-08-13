@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import actions from '~/screens/Auth/redux/actions';
+import actions from '~/storeRedux/auth/actions';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
 import useAuth from '~/hooks/auth';

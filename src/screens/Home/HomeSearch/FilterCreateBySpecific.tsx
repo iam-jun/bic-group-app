@@ -13,11 +13,11 @@ import { useDispatch } from 'react-redux';
 import { TouchableOpacity as TouchableGestureHandler } from 'react-native-gesture-handler';
 
 import { useKeySelector } from '~/hooks/selector';
-import homeKeySelector from '~/screens/Home/redux/keySelector';
+import homeKeySelector from '~/storeRedux/home/keySelector';
 import { useBaseHook } from '~/hooks';
-import homeActions from '~/screens/Home/redux/actions';
+import homeActions from '~/storeRedux/home/actions';
 import Divider from '~/beinComponents/Divider';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';

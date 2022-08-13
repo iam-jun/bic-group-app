@@ -10,8 +10,8 @@ import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 

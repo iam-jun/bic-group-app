@@ -4,9 +4,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { IUser } from '~/interfaces/IAuth';
-import groupsActions from '../redux/actions';
+import groupsActions from '../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import appConfig from '~/configs/appConfig';
 
 import MembersSelection from '~/components/MembersSelection';

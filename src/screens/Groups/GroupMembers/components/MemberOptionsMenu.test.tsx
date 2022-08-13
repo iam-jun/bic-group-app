@@ -11,11 +11,11 @@ import {
   act,
 } from '~/test/testUtils';
 import MemberOptionsMenu from './MemberOptionsMenu';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { IGroupMembers } from '~/interfaces/IGroup';
 import useRemoveMember from './useRemoveMember';
 import * as helper from '../../helper';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();

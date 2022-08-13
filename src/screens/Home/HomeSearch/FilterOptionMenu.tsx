@@ -16,8 +16,8 @@ import { ISelectedFilterUser } from '~/interfaces/IHome';
 import FilterCreateBySpecific from './FilterCreateBySpecific';
 import FilterCreatedBy from './FilterCreatedBy';
 import FilterDate from './FilterDate';
-import homeActions from '../redux/actions';
-import modalActions from '~/store/modal/actions';
+import homeActions from '../../../storeRedux/home/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 export interface NFSFilterOptionMenuProps {

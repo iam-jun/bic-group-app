@@ -12,7 +12,7 @@ import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
 import FilterCreateBySpecific from '~/screens/Home/HomeSearch/FilterCreateBySpecific';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 

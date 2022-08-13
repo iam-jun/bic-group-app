@@ -7,10 +7,10 @@ import { useTheme, ExtendedTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/storeRedux/post/actions';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
+import postKeySelector from '~/storeRedux/post/keySelector';
 import { spacing } from '~/theme';
 
 export interface ButtonMarkAsReadProps {

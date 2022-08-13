@@ -23,8 +23,8 @@ import i18n from '~/localization';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 
 import spacing from '~/theme/spacing';
-import notificationsActions from './redux/actions';
-import notificationSelector from './redux/selector';
+import notificationsActions from '../../storeRedux/notification/actions';
+import notificationSelector from '../../storeRedux/notification/selector';
 
 const { width: screenWidth } = Dimensions.get('window');
 export interface Props {

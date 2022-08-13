@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import PostDetail from '~/screens/Post/PostDetail/index';
 import { POST_DETAIL } from '~/test/mock_data/post';
 import { USER_PROFILE } from '~/test/mock_data/menu';

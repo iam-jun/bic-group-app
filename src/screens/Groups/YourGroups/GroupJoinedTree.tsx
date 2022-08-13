@@ -3,9 +3,9 @@ import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import ListView from '~/beinComponents/list/ListView';
 import EmptyScreen from '~/components/EmptyScreen';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';

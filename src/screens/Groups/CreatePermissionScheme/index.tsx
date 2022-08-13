@@ -9,8 +9,8 @@ import { cloneDeep } from 'lodash';
 
 import { useDispatch } from 'react-redux';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
 import { useBaseHook } from '~/hooks';
 import InputSchemeInfo from '~/screens/Groups/CreatePermissionScheme/InputSchemeInfo';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';

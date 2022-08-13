@@ -3,19 +3,19 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonApproveDeclineAllRequests';
-import groupsActions from '../../redux/actions';
+import groupsActions from '../../../../storeRedux/groups/actions';
 import {
   clearToastMessage,
   showAlert,
   showHideToastMessage,
-} from '~/store/modal/actions';
+} from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 

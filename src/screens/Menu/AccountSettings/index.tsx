@@ -19,12 +19,12 @@ import { useRootNavigation } from '~/hooks/navigation';
 
 import { ILanguage, ISetting } from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import * as modalActions from '~/store/modal/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
-import appActions from '~/store/app/actions';
+import appActions from '~/storeRedux/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../redux/keySelector';
+import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import spacing from '~/theme/spacing';
 
 const GeneralSettings = () => {

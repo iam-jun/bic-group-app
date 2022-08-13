@@ -9,7 +9,7 @@ import { isEqual } from 'lodash';
 
 import genders from '~/constants/genders';
 import { formatDate } from '~/utils/formatData';
-import menuActions from '~/screens/Menu/redux/actions';
+import menuActions from '~/storeRedux/menu/actions';
 import {
   GENDER_TYPE,
   IGenderItem,
@@ -18,9 +18,9 @@ import {
 } from '~/interfaces/IEditUser';
 import OptionMenu from './fragments/OptionMenu';
 import LanguageOptionMenu from './fragments/LanguageOptionMenu';
-import * as modalActions from '~/store/modal/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../redux/keySelector';
+import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';

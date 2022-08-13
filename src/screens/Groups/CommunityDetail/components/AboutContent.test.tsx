@@ -3,7 +3,7 @@ import React from 'react';
 
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import AboutContent from './AboutContent';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import {
   communityDetailData,
   previewMemberDetail,

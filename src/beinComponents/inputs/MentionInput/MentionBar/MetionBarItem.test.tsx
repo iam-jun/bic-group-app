@@ -1,6 +1,6 @@
 import { cleanup, fireEvent } from '@testing-library/react-native';
 import React from 'react';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { configureStore, renderWithRedux } from '~/test/testUtils';
 import MentionBarItem from './MentionBarItem';
 

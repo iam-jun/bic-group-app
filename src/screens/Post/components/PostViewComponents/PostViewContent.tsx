@@ -11,7 +11,7 @@ import Image from '~/beinComponents/Image';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 
 import Markdown from '~/beinComponents/Markdown';
-import postKeySelector from '../../redux/keySelector';
+import postKeySelector from '../../../../storeRedux/post/keySelector';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
 import FilesView from '../FilesView';

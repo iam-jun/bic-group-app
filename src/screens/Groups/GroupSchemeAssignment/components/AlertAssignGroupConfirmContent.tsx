@@ -7,7 +7,7 @@ import i18n from 'i18next';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Icon from '~/beinComponents/Icon';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';

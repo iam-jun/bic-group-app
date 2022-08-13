@@ -13,7 +13,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import NotificationOptionBottomSheet from './components/NotificationOptionBottomSheet';
-import notificationsActions from './redux/actions';
+import notificationsActions from '../../storeRedux/notification/actions';
 import ScrollableTabBar from './ScrollableTabBar';
 
 const Notification = () => {

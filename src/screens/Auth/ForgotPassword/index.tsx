@@ -25,7 +25,7 @@ import { IForgotPasswordError } from '~/interfaces/IAuth';
 import { rootNavigationRef } from '~/router/refs';
 import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
 import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
-import actions from '~/screens/Auth/redux/actions';
+import actions from '~/storeRedux/auth/actions';
 import { deviceDimensions } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';

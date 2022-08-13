@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import SchemeItem from './SchemeItem';
 import { IGroupScheme } from '~/interfaces/IGroup';
 import Divider from '~/beinComponents/Divider';

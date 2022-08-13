@@ -13,7 +13,7 @@ import EmptyScreen from '~/components/EmptyScreen';
 import { useBaseHook } from '~/hooks';
 import Divider from '~/beinComponents/Divider';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import GroupMemberRequest from '../GroupDetail/groupModerating/components/GroupMemberRequest';
 import CommunityMemberRequest from '../CommunityAdmin/PendingMembers/CommunityMemberRequest';
 import spacing from '~/theme/spacing';

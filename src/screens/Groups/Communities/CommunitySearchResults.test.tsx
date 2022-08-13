@@ -3,7 +3,7 @@ import React from 'react';
 import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import CommunitySearchResults from './CommunitySearchResults';
 import { communityDetailData } from '~/test/mock_data/communities';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 describe('CommunitySearchResults component', () => {
   const onPressCommunity = jest.fn();

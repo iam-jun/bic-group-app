@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderWithRedux, configureStore } from '../../../test/testUtils';
-import initialState from '../../../store/initialState';
+import initialState from '../../../storeRedux/initialState';
 import SearchSuggestion from './SearchSuggestion';
 
 describe('SearchSuggestion component', () => {

@@ -9,11 +9,11 @@ import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import authActions from '~/screens/Auth/redux/actions';
+import authActions from '~/storeRedux/auth/actions';
 import getEnv from '~/utils/env';
 
 const MenuSettings = () => {

@@ -11,10 +11,10 @@ import EmptyScreen from '~/components/EmptyScreen';
 import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import postActions from '../redux/actions';
+import postActions from '../../../storeRedux/post/actions';
 import { useKeySelector } from '~/hooks/selector';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
-import postKeySelector from '../redux/keySelector';
+import postKeySelector from '../../../storeRedux/post/keySelector';
 import spacing from '~/theme/spacing';
 
 const CommentDetail = (props: any) => {

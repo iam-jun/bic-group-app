@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createTestStore, renderWithRedux, fireEvent } from '~/test/testUtils';
 import GroupAboutContent from './GroupAboutContent';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { groupDetailData } from '~/test/mock_data/group';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';

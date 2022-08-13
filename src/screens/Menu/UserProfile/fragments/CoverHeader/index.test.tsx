@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import React from 'react';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import {
   cleanup,
   act,
@@ -12,8 +12,8 @@ import {
 } from '~/test/testUtils';
 import CoverHeader from '.';
 import { USER_PROFILE } from '~/test/mock_data/menu';
-import menuTypes from '../../../redux/types';
-import menuActions from '../../../redux/actions';
+import menuTypes from '../../../../../storeRedux/menu/types';
+import menuActions from '../../../../../storeRedux/menu/actions';
 import * as helper from '../../helper';
 import * as dimension from '~/theme/dimension';
 

@@ -8,7 +8,7 @@ import { useBaseHook } from '~/hooks';
 import { ICommentData } from '~/interfaces/IPost';
 import CommentView from '~/screens/Post/components/CommentView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 
 export interface CommentItemProps {

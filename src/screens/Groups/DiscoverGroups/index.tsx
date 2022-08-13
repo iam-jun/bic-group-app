@@ -15,9 +15,9 @@ import EmptyScreen from '~/components/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import DiscoverItem from '../components/DiscoverItem';
 
-import actions from '../redux/actions';
+import actions from '../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import spacing from '~/theme/spacing';

@@ -10,11 +10,11 @@ import Button from '~/beinComponents/Button';
 
 import { IGroupMembers } from '~/interfaces/IGroup';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 
 import useAuth from '~/hooks/auth';
-import modalActions from '~/store/modal/actions';
-import groupsActions from '../../redux/actions';
+import modalActions from '~/storeRedux/modal/actions';
+import groupsActions from '../../../../storeRedux/groups/actions';
 import { checkLastAdmin, handleLeaveInnerGroups } from '../../helper';
 import useRemoveMember from './useRemoveMember';
 import useRemoveAdmin from './useRemoveAdmin';

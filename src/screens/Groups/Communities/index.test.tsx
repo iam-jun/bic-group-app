@@ -2,7 +2,7 @@
 
 import { cleanup } from '@testing-library/react-native';
 import React from 'react';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 import {
   configureStore,
@@ -13,8 +13,8 @@ import * as navigationHook from '~/hooks/navigation';
 
 import Communities from '.';
 import { communities } from '~/test/mock_data/communities';
-import groupsActions from '../redux/actions';
-import groupsTypes from '../redux/types';
+import groupsActions from '../../../storeRedux/groups/actions';
+import groupsTypes from '../../../storeRedux/groups/types';
 import MockedNavigator from '~/test/MockedNavigator';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 

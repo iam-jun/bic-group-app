@@ -2,7 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useEffect } from 'react';
 import { DeviceEventEmitter } from 'react-native';
 
-import { NAVIGATION_BACK_PRESSED } from '~/configs/navigator';
+import { EVENT_NAVIGATION_BACK_PRESSED } from '~/router/config';
 import { ITabTypes } from '~/interfaces/IRouter';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
@@ -49,7 +49,7 @@ export const useBackPressListener = (callback: () => void) => {
   useFocusEffect(useCallback(
     () => {
       const backEventListener = DeviceEventEmitter.addListener(
-        NAVIGATION_BACK_PRESSED,
+        EVENT_NAVIGATION_BACK_PRESSED,
         callback,
       );
 

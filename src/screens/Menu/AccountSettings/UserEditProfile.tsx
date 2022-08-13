@@ -32,14 +32,14 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import { formatDate } from '~/utils/formatData';
-import menuActions from '../redux/actions';
+import menuActions from '../../../storeRedux/menu/actions';
 import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../redux/keySelector';
+import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
-import homeActions from '~/screens/Home/redux/actions';
+import homeActions from '~/storeRedux/home/actions';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import spacing from '~/theme/spacing';
 

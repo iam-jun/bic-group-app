@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify';
 import { debounce } from 'lodash';
 import { useEffect, useRef } from 'react';
 import { useAuthToken, useAuthTokenExpire, useUserIdAuth } from '~/hooks/auth';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
+import menuKeySelector from '~/storeRedux/menu/keySelector';
 
 import chatSocketClient from '~/services/chatSocket';
 import { getTokenAndCallBackBein } from '~/services/httpApiRequest';

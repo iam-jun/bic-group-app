@@ -7,7 +7,7 @@ import {
   fireEvent,
   renderWithRedux,
 } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import CommentDetail from '.';
 import { baseCommentData, POST_DETAIL_3 } from '~/test/mock_data/post';
 import MockedNavigator from '~/test/MockedNavigator';

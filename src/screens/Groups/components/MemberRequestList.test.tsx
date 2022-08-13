@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import MemberRequestList from './MemberRequestList';
 import { memberRequestDetail, communityDetailData } from '~/test/mock_data/communities';
 

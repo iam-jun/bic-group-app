@@ -10,7 +10,7 @@ import Icon from '~/beinComponents/Icon';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
 import { useKeySelector } from '~/hooks/selector';
-import notificationSelector from '~/screens/Notification/redux/selector';
+import notificationSelector from '~/storeRedux/notification/selector';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import spacing from '~/theme/spacing';
 

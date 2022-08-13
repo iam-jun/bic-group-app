@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
 import { IGroup } from '~/interfaces/IGroup';
 import MoveGroupHeaderInfo from '~/screens/Groups/MoveGroup/components/MoveGroupHeaderInfo';
 import MoveGroupTargets from '~/screens/Groups/MoveGroup/components/MoveGroupTargets';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 export interface MoveGroupProps {
   route: {

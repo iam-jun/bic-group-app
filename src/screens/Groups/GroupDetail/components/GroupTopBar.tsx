@@ -15,7 +15,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import modalActions, {
   clearToastMessage,
   showHideToastMessage,
-} from '~/store/modal/actions';
+} from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getLink, openUrl, LINK_GROUP,
@@ -23,7 +23,7 @@ import {
 import HeaderMenu from '../../components/HeaderMenu';
 import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 import { checkLastAdmin } from '../../helper';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import { useMyPermissions } from '~/hooks/permissions';
 import useChatStore from '~/store/chat'
 

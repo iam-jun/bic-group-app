@@ -4,7 +4,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 import { createTestStore, renderWithRedux, fireEvent } from '~/test/testUtils';
 import GroupContent from './GroupContent';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { groupDetailData, groupPostData } from '~/test/mock_data/group';
 
 describe('GroupContent component', () => {

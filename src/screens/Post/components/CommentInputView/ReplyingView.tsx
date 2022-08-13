@@ -6,10 +6,10 @@ import i18next from 'i18next';
 import { useKeySelector } from '~/hooks/selector';
 import { IPayloadReplying } from '~/interfaces/IPost';
 
-import postKeySelector from '../../redux/keySelector';
+import postKeySelector from '../../../../storeRedux/post/keySelector';
 
 import Text from '~/beinComponents/Text';
-import postActions from '../../redux/actions';
+import postActions from '../../../../storeRedux/post/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import spacing from '~/theme/spacing';
 

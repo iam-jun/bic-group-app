@@ -9,8 +9,8 @@ import Text from '~/beinComponents/Text';
 
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
+import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 
 const NoticePanel = () => {

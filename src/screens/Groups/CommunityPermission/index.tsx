@@ -9,8 +9,8 @@ import SystemScheme from '~/screens/Groups/CommunityPermission/components/System
 import CommunityScheme from '~/screens/Groups/CommunityPermission/components/CommunityScheme';
 import GroupScheme from '~/screens/Groups/CommunityPermission/components/GroupScheme';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
 
 const CommunityPermission = () => {
   const dispatch = useDispatch();

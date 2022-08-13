@@ -12,13 +12,13 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import { useBaseHook } from '~/hooks';
-import { authStack } from '~/configs/navigator';
 import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
+import authStacks from '~/router/navigator/AuthStack/stack';
 
 const LandingWithInvitation = () => {
   const theme: ExtendedTheme = useTheme();
@@ -58,7 +58,7 @@ const LandingWithInvitation = () => {
       </View>
       <Button.Primary
         style={styles.button}
-        onPress={() => rootNavigation.navigate(authStack.login)}
+        onPress={() => rootNavigation.navigate(authStacks.signIn)}
         textVariant="h5"
       >
         {t('auth:btn_landing_start')}

@@ -9,12 +9,12 @@ import Divider from '~/beinComponents/Divider';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import Text from '~/beinComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import groupsActions from '../redux/actions';
+import groupsActions from '../../../storeRedux/groups/actions';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 

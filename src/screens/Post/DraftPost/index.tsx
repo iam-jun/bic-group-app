@@ -15,8 +15,8 @@ import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import PostViewDraft from '~/screens/Post/components/PostViewDraft';
-import postActions from '~/screens/Post/redux/actions';
-import postKeySelector from '~/screens/Post/redux/keySelector';
+import postActions from '~/storeRedux/post/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';

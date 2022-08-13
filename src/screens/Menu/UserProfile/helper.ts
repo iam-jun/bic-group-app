@@ -6,7 +6,7 @@ import { IFilePicked } from '~/interfaces/common';
 import { userProfileImageCropRatio } from '~/theme/dimension';
 import { formatDate } from '~/utils/formatData';
 import { checkPermission, permissionTypes } from '~/utils/permission';
-import menuActions from '../redux/actions';
+import menuActions from '../../../storeRedux/menu/actions';
 
 export const getLanguages = (language: string[]) => {
   if (isEmpty(language)) return '';

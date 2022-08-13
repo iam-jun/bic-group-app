@@ -6,7 +6,7 @@
 import { cleanup, waitFor } from '@testing-library/react-native';
 import React from 'react';
 
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import SignIn from '.';
 

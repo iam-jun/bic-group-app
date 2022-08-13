@@ -7,8 +7,8 @@ import { useDispatch } from 'react-redux';
 
 import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetSearchPosts } from '~/interfaces/IHome';
-import homeKeySelector from '~/screens/Home/redux/keySelector';
-import homeActions from '~/screens/Home/redux/actions';
+import homeKeySelector from '~/storeRedux/home/keySelector';
+import homeActions from '~/storeRedux/home/actions';
 
 import PostView from '~/screens/Post/components/PostView';
 import Image from '~/beinComponents/Image';

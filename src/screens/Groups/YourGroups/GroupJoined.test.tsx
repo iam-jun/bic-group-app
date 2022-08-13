@@ -3,7 +3,7 @@ import React from 'react';
 import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import GroupJoined from '~/screens/Groups/YourGroups/GroupJoined';
 import { communityDetailData } from '~/test/mock_data/communities';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { groupDetailData } from '~/test/mock_data/group';
 
 describe('GroupJoined component', () => {

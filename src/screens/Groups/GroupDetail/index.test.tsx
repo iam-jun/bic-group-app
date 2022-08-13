@@ -3,7 +3,7 @@ import React from 'react';
 import MockedNavigator from '~/test/MockedNavigator';
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import GroupDetail from '.';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { groupDetailData } from '~/test/mock_data/group';
 
 describe('GroupDetail component', () => {

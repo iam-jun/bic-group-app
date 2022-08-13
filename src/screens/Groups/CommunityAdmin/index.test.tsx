@@ -4,7 +4,7 @@ import { renderWithRedux, fireEvent, createTestStore } from '~/test/testUtils';
 import CommunityAdmin from '.';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 describe('CommunityAdmin component', () => {
   it('should render data correctly', () => {

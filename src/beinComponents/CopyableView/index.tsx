@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { showHideToastMessage } from '~/store/modal/actions';
+import { showHideToastMessage } from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 import ButtonWrapper from '../Button/ButtonWrapper';

@@ -24,15 +24,15 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ICreatePostImage } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import postActions from '~/screens/Post/redux/actions';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import { showHideToastMessage } from '~/store/modal/actions';
+import postActions from '~/storeRedux/post/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
+import { showHideToastMessage } from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 import { getChatDomain, openUrl } from '~/utils/link';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { clearExistingFiles, validateFilesPicker } from '../CreatePost/helper';
-import { getTotalFileSize } from '../redux/selectors';
+import { getTotalFileSize } from '../../../storeRedux/post/selectors';
 import ReviewMarkdown from './ReviewMarkdown';
 import { fontFamilies } from '~/theme/fonts';
 

@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import RoleItem from '~/screens/Groups/CreatePermissionScheme/components/RoleItem';
 import { IPermission, IRole } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';

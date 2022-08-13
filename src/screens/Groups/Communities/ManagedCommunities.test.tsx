@@ -2,7 +2,7 @@ import React from 'react';
 
 import { renderWithRedux, createTestStore } from '~/test/testUtils';
 import ManagedCommunities from './ManagedCommunities';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { communityDetailData } from '~/test/mock_data/communities';
 
 describe('ManagedCommunities component', () => {

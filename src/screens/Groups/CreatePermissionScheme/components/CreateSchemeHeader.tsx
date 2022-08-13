@@ -6,10 +6,10 @@ import { isEqual } from 'lodash';
 import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import modalActions from '~/store/modal/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import modalActions from '~/storeRedux/modal/actions';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 
 import { IScheme } from '~/interfaces/IGroup';

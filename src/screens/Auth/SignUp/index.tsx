@@ -10,16 +10,16 @@ import PasswordInputController from '~/beinComponents/inputs/PasswordInputContro
 
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import { authStack } from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
 import useAuth from '~/hooks/auth';
 import { rootNavigationRef } from '~/router/refs';
-import actions from '~/screens/Auth/redux/actions';
+import actions from '~/storeRedux/auth/actions';
 
 import spacing from '~/theme/spacing';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
+import authStacks from '~/router/navigator/AuthStack/stack';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -152,7 +152,7 @@ const SignUp = () => {
         />
         <Button
           testID="textSignin"
-          onPress={() => rootNavigationRef?.current?.navigate(authStack.login)}
+          onPress={() => rootNavigationRef?.current?.navigate(authStacks.signIn)}
         >
           {t('auth:navigate_sign_in')}
         </Button>

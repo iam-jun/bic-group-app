@@ -12,8 +12,8 @@ import Text from '~/beinComponents/Text';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '../../redux/actions';
-import menuKeySelector from '../../redux/keySelector';
+import menuActions from '../../../../storeRedux/menu/actions';
+import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useKeySelector } from '~/hooks/selector';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';

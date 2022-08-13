@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { IGroupMembers } from '~/interfaces/IGroup';
 import MemberList from '../../components/MemberList';
-import actions from '~/screens/Groups/redux/actions';
+import actions from '~/storeRedux/groups/actions';
 import { useMyPermissions } from '~/hooks/permissions';
 
 interface MembersContentProps {

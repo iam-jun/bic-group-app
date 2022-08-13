@@ -13,9 +13,9 @@ import { ISelectedFilterUser } from '~/interfaces/IHome';
 import FilterCreatedBy from '~/screens/Home/HomeSearch/FilterCreatedBy';
 import FilterDate from '~/screens/Home/HomeSearch/FilterDate';
 import FilterOptionMenu from '~/screens/Home/HomeSearch/FilterOptionMenu';
-import homeActions from '~/screens/Home/redux/actions';
-import homeKeySelector from '~/screens/Home/redux/keySelector';
-import * as modalActions from '~/store/modal/actions';
+import homeActions from '~/storeRedux/home/actions';
+import homeKeySelector from '~/storeRedux/home/keySelector';
+import * as modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 const FilterToolbar = () => {

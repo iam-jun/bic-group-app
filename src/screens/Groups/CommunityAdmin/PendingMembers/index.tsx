@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import groupsActions from '../../redux/actions';
+import groupsActions from '../../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import CommunityApproveDeclineAllRequests from './CommunityApproveDeclineAllRequests';
 import MemberRequestList from '../../components/MemberRequestList';
 

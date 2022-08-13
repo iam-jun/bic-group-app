@@ -7,11 +7,11 @@ import Button from '~/beinComponents/Button';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import completeSvg from '../../../../../../assets/images/settings_change_password_complete.svg';
-import { authStack } from '~/configs/navigator';
 
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
+import authStacks from '~/router/navigator/AuthStack/stack';
 
 const CompleteChangePassword = () => {
   const { t } = useBaseHook();
@@ -42,7 +42,7 @@ const CompleteChangePassword = () => {
         <Button.Primary
           testID="btnComplete"
           style={styles.btn}
-          onPress={() => rootNavigation.navigate(authStack.login)}
+          onPress={() => rootNavigation.navigate(authStacks.signIn)}
         >
           {t('auth:btn_back_to_login')}
         </Button.Primary>

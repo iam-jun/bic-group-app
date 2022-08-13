@@ -6,7 +6,7 @@ import InfoHeader from '../../components/InfoHeader';
 import AboutContent from './AboutContent';
 import CommunityJoinCancelButton from './CommunityJoinCancelButton';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 
 interface PrivateWelcomeProps {

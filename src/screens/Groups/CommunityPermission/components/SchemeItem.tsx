@@ -8,7 +8,7 @@ import Text from '~/beinComponents/Text';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { IApplyingGroups, IGroupScheme } from '~/interfaces/IGroup';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';

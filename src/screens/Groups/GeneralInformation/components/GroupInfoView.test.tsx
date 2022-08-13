@@ -1,7 +1,7 @@
 import React from 'react';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import GroupInfoView from './InfoView';
 

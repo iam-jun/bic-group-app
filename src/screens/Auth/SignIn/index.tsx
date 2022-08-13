@@ -29,15 +29,14 @@ import Text from '~/beinComponents/Text';
 import { createTextStyle } from '~/beinComponents/Text/textStyle';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
-import { authStack } from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
 import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
 import images from '~/resources/images';
-import * as modalActions from '~/store/modal/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
-import actions from '../redux/actions';
+import actions from '../../../storeRedux/auth/actions';
 import {
   getUserFromSharedPreferences,
   isAppInstalled,
@@ -49,6 +48,7 @@ import BackgroundComponent from './BackgroundComponent';
 import spacing from '~/theme/spacing';
 import { APP_ENV } from '~/configs/appConfig';
 import { useRootNavigation } from '~/hooks/navigation';
+import authStacks from '~/router/navigator/AuthStack/stack';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -265,7 +265,7 @@ const SignIn = () => {
     Keyboard.dismiss();
   };
 
-  const goToForgotPassword = () => rootNavigation.navigate(authStack.forgotPassword);
+  const goToForgotPassword = () => rootNavigation.navigate(authStacks.forgotPassword);
 
   const logoContainerStyle = useAnimatedStyle(() => ({
     transform: [

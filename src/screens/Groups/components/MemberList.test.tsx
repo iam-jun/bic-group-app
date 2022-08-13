@@ -4,7 +4,7 @@ import React from 'react';
 import { renderWithRedux, createTestStore } from '~/test/testUtils';
 import MemberList from './MemberList';
 import { memberDetail, adminDetail } from '~/test/mock_data/group';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 describe('MemberList component', () => {
   const onLoadMore = jest.fn();

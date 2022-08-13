@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderWithRedux, configureStore } from '../../../test/testUtils';
 import HomeSearch from './index';
-import initialState from '../../../store/initialState';
+import initialState from '../../../storeRedux/initialState';
 
 describe('NewsfeedSearch component', () => {
   const mockStore = configureStore([]);

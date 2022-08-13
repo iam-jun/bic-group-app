@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderWithRedux, configureStore, fireEvent } from '../../../test/testUtils';
-import initialState from '../../../store/initialState';
+import initialState from '../../../storeRedux/initialState';
 import NFSRecentSearchKeyword from './RecentSearchKeyword';
 
 describe('NFSRecentSearchKeyword component', () => {

@@ -12,11 +12,11 @@ import { useKeySelector } from '~/hooks/selector';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import images from '~/resources/images';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
+import menuKeySelector from '~/storeRedux/menu/keySelector';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useBaseHook } from '~/hooks';
-import authActions from '~/screens/Auth/redux/actions';
-import * as modalActions from '~/store/modal/actions';
+import authActions from '~/storeRedux/auth/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 

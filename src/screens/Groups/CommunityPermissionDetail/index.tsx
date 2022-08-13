@@ -12,8 +12,8 @@ import { IScheme } from '~/interfaces/IGroup';
 import SchemeRoles from '~/screens/Groups/components/SchemeRoles';
 import RoleHeaderAnimated from '~/screens/Groups/components/RoleHeaderAnimated';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import spacing from '~/theme/spacing';
 

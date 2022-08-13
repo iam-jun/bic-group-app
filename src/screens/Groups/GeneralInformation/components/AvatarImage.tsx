@@ -7,7 +7,7 @@ import Image from '~/beinComponents/Image';
 
 import { scaleSize } from '~/theme/dimension';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
 

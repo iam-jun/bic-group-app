@@ -9,9 +9,9 @@ import Header from '~/beinComponents/Header';
 import Filter from '~/beinComponents/Filter';
 import GroupJoined from '~/screens/Groups/YourGroups/GroupJoined';
 import { useRootNavigation } from '~/hooks/navigation';
-import modalActions, { showHideToastMessage } from '~/store/modal/actions';
+import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
 import YourGroupsSearch from '~/screens/Groups/YourGroups/YourGroupsSearch';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 

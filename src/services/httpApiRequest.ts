@@ -11,14 +11,14 @@ import ApiConfig, {
   HttpApiRequestConfig,
   HttpApiResponseFormat,
 } from '~/configs/apiConfig';
-import Store from '~/store';
-import * as modalActions from '~/store/modal/actions';
-import noInternetActions from '~/screens/NoInternet/redux/actions';
+import Store from '~/storeRedux';
+import * as modalActions from '~/storeRedux/modal/actions';
+import noInternetActions from '~/storeRedux/network/actions';
 import { ActionTypes, createAction } from '~/utils';
 import { updateUserFromSharedPreferences } from './sharePreferences';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ConvertHelper from '~/utils/convertHelper';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import { uuidRegex } from '~/constants/commonRegex';
 
 const defaultTimeout = 10000;

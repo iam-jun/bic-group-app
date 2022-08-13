@@ -4,13 +4,13 @@ import { useDispatch } from 'react-redux';
 
 import { debounce } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import actions from '~/screens/Groups/redux/actions';
+import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
 import { IGroupMembers } from '~/interfaces/IGroup';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import MemberSearchResult from '../../components/MemberSearchResult';
 import { useMyPermissions } from '~/hooks/permissions';
 

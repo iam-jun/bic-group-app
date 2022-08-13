@@ -8,7 +8,7 @@ import {
   validateImages,
   validateVideo,
 } from '~/screens/Post/CreatePost/helper';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import {
   IAudience,
   ICreatePostParams,
@@ -19,10 +19,10 @@ import {
   IPostActivity,
   IPostCreatePost,
 } from '~/interfaces/IPost';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/storeRedux/post/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
+import postKeySelector from '~/storeRedux/post/keySelector';
 import { useBaseHook } from '~/hooks';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { getMentionsFromContent } from '~/screens/Post/helper/PostUtils';

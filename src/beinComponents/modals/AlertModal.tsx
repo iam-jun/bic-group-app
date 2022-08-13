@@ -16,7 +16,7 @@ import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
-import * as actions from '~/store/modal/actions';
+import * as actions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';

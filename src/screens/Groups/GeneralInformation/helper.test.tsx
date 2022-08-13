@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ImagePicker from '~/beinComponents/ImagePicker';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 import { _openImagePicker, alertAction } from './helper';
 

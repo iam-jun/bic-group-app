@@ -7,7 +7,7 @@ import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import { groupPrivacyListDetail, groupPrivacy } from '~/constants/privacyTypes';
 import PreviewMembers from '../../components/PreviewMembers';
 import groupJoinStatus from '~/constants/groupJoinStatus';

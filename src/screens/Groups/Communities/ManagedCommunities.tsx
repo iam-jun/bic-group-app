@@ -12,10 +12,10 @@ import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/components/EmptyScreen';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import CommunityItem from '../components/CommunityItem';
 
-import actions from '~/screens/Groups/redux/actions';
+import actions from '~/storeRedux/groups/actions';
 import spacing from '~/theme/spacing';
 
 interface ManagedCommunitiesProps {

@@ -5,7 +5,7 @@ import GroupAdministration from '~/screens/Groups/GroupDetail/groupSettings/Grou
 import GeneralInformation from '~/screens/Groups/GeneralInformation';
 import EditDescription from '~/screens/Groups/GeneralInformation/EditDescription';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
-import NewFeature from '~/screens/NewFeature';
+import NewFeature from '~/components/NewFeature';
 import GroupPendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
 
 import Communities from '~/screens/Groups/Communities';

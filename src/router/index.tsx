@@ -12,11 +12,11 @@ import LoadingModal from '~/beinComponents/modals/LoadingModal';
 import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 import { AppConfig } from '~/configs';
 import { IUserResponse } from '~/interfaces/IAuth';
-import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
-import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
-import noInternetActions from '~/screens/NoInternet/redux/actions';
+import InternetConnectionStatus from '~/components/network/InternetConnectionStatus';
+import SystemIssueModal from '~/components/network/SystemIssueModal';
+import noInternetActions from '~/storeRedux/network/actions';
 import { makeRemovePushTokenRequest } from '~/services/httpApiRequest';
-import Store from '~/store';
+import Store from '~/storeRedux';
 import { isNavigationRefReady } from './helper';
 
 import { rootNavigationRef } from './refs';

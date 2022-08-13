@@ -3,7 +3,7 @@ import React from 'react';
 import MockedNavigator from '~/test/MockedNavigator';
 import { renderWithRedux, createTestStore, fireEvent } from '~/test/testUtils';
 import GroupTopBar from './GroupTopBar';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import { communityDetailData } from '~/test/mock_data/communities';
 

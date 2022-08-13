@@ -10,13 +10,13 @@ import PostItem from '~/beinComponents/list/items/PostItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/screens/Groups/redux/actions';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
 import GroupTabHeader from './GroupTabHeader';
 import InfoHeader from '../../components/InfoHeader';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import CommunityJoinedGroupTree from '~/screens/Groups/components/CommunityJoinedGroupTree';
 
 interface GroupContentProps {

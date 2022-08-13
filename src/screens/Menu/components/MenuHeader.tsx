@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
+import menuKeySelector from '~/storeRedux/menu/keySelector';
 import dimension from '~/theme/dimension';
 import Avatar from '~/baseComponents/Avatar';
 import mainStack from '~/router/navigator/MainStack/stack';

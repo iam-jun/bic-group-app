@@ -12,9 +12,9 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Icon from '~/beinComponents/Icon';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import {
   changeSchemeIdOfGroup,
   handleSelectNewGroupScheme,

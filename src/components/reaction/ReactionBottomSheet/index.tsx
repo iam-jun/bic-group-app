@@ -9,8 +9,8 @@ import SelectReactionView from '~/components/reaction/SelectReactionView';
 import Text from '~/beinComponents/Text';
 
 import { useKeySelector } from '~/hooks/selector';
-import * as modalActions from '~/store/modal/actions';
-import commonKeySelector from '~/store/modal/keySelector';
+import * as modalActions from '~/storeRedux/modal/actions';
+import commonKeySelector from '~/storeRedux/modal/keySelector';
 import spacing from '~/theme/spacing';
 
 const ReactionBottomSheet = () => {

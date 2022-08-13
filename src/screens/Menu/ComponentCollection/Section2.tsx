@@ -9,7 +9,7 @@ import { IAction } from '~/constants/commonActions';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Divider from '~/beinComponents/Divider';
 import Reaction from '~/beinComponents/Badge/Reaction';
-import * as modalActions from '~/store/modal/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import { IUser } from '~/interfaces/IAuth';
 import { useBaseHook } from '~/hooks';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';

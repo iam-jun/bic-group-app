@@ -3,7 +3,7 @@ import React from 'react';
 
 import { renderWithRedux, createTestStore, fireEvent } from '~/test/testUtils';
 import PageContent from './PageContent';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { communityDetailData } from '~/test/mock_data/communities';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';

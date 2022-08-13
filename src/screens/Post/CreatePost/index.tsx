@@ -15,11 +15,11 @@ import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import BannerImportant from '~/baseComponents/Banner';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/storeRedux/post/actions';
 
 import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import { getTotalFileSize } from '../redux/selectors';
+import { getTotalFileSize } from '../../../storeRedux/post/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import { handleBack } from './handler';

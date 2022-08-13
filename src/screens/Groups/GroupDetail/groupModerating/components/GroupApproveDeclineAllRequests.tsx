@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 
-import modalActions, { clearToastMessage } from '~/store/modal/actions';
-import groupsActions from '~/screens/Groups/redux/actions';
+import modalActions, { clearToastMessage } from '~/storeRedux/modal/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IToastMessage } from '~/interfaces/common';

@@ -7,7 +7,6 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
-import { authStack } from '~/configs/navigator';
 import { deviceDimensions } from '~/theme/dimension';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
@@ -17,6 +16,7 @@ import images from '~/resources/images';
 import Image from '~/beinComponents/Image';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
+import authStacks from '~/router/navigator/AuthStack/stack';
 
 const LOGO_SIZE = 72;
 
@@ -70,7 +70,7 @@ const Landing = () => {
         <Button.Primary
           testID="landing.start"
           style={styles.button}
-          onPress={() => rootNavigation.navigate(authStack.login)}
+          onPress={() => rootNavigation.navigate(authStacks.signIn)}
           textVariant="h5"
         >
           {t('auth:btn_landing_start')}

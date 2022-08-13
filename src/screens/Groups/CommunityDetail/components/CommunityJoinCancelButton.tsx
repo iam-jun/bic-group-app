@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
 import JoinCancelButton from '../../components/JoinCancelButton';
 
 interface CommunityJoinCancelButtonProps {

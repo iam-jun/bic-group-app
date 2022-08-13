@@ -10,7 +10,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
-import * as actions from '~/store/modal/actions';
+import * as actions from '~/storeRedux/modal/actions';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import Button from '~/beinComponents/Button';

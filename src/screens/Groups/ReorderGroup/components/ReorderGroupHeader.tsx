@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/screens/Groups/redux/actions';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import modalActions from '~/store/modal/actions';
+import groupsActions from '~/storeRedux/groups/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import modalActions from '~/storeRedux/modal/actions';
 
 export interface ReorderGroupHeaderProps {
   initOrder?: any;

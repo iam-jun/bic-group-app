@@ -11,7 +11,7 @@ import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import { IToastMessage } from '~/interfaces/common';
-import { showHideToastMessage } from '~/store/modal/actions';
+import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 import spacing from '~/theme/spacing';
 

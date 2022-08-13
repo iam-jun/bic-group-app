@@ -11,7 +11,7 @@ import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 
 import spacing from '~/theme/spacing';
-import groupsActions from '../redux/actions';
+import groupsActions from '../../../storeRedux/groups/actions';
 
 const EditDescription = (props: any) => {
   const {

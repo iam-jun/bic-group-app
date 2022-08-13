@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { useBaseHook } from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/storeRedux/post/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 
@@ -20,7 +20,7 @@ import PostViewHeader from '~/screens/Post/components/PostViewComponents/PostVie
 import PostViewContent from '~/screens/Post/components/PostViewComponents/PostViewContent';
 import PostViewImportant from '~/screens/Post/components/PostViewComponents/PostViewImportant';
 import Button from '~/beinComponents/Button';
-import modalActions, { showHideToastMessage } from '~/store/modal/actions';
+import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';

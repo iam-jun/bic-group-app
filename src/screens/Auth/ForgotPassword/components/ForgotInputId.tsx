@@ -11,7 +11,7 @@ import Button from '~/beinComponents/Button';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
 import { IObject } from '~/interfaces/common';
-import actions from '~/screens/Auth/redux/actions';
+import actions from '~/storeRedux/auth/actions';
 import useAuth from '~/hooks/auth';
 import { IForgotPasswordError } from '~/interfaces/IAuth';
 

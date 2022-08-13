@@ -6,7 +6,7 @@ import {
   renderWithRedux,
   rerenderWithRedux,
 } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 

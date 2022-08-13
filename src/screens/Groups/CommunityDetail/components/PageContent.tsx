@@ -8,15 +8,15 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import CommunityJoinCancelButton from './CommunityJoinCancelButton';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import PostItem from '~/beinComponents/list/items/PostItem';
-import actions from '~/screens/Groups/redux/actions';
+import actions from '~/storeRedux/groups/actions';
 import spacing from '~/theme/spacing';
 import CommunityTabHeader from './CommunityTabHeader';
 import InfoHeader from '../../components/InfoHeader';
 import CommunityJoinedGroupTree from '~/screens/Groups/components/CommunityJoinedGroupTree';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 interface PageContentProps {
   communityId: string;

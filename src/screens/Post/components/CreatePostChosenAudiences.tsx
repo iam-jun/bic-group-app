@@ -10,7 +10,7 @@ import { IAudience } from '~/interfaces/IPost';
 import Icon from '~/beinComponents/Icon';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
+import postKeySelector from '~/storeRedux/post/keySelector';
 import spacing from '~/theme/spacing';
 
 interface CreatePostChosenAudiencesProps {

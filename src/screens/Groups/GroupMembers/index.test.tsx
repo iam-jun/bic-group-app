@@ -3,7 +3,7 @@ import React from 'react';
 import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import GroupMembers from '.';
 import MockedNavigator from '~/test/MockedNavigator';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 

@@ -4,7 +4,7 @@ import { cleanup, waitFor } from '@testing-library/react-native';
 
 import { fireEvent, renderWithRedux, configureStore } from '../../../test/testUtils';
 import ReactionDetailBottomSheet from './index';
-import initialState from '../../../store/initialState';
+import initialState from '../../../storeRedux/initialState';
 
 afterEach(cleanup);
 

@@ -5,7 +5,7 @@ import { IFilePicked } from '~/interfaces/common';
 import { IActivityDataFile, IActivityDataImage } from '~/interfaces/IPost';
 import i18n from '~/localization';
 import FileUploader from '~/services/fileUploader';
-import { showHideToastMessage } from '~/store/modal/actions';
+import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import {
   CONTENT_INSET_HEIGHT,
   CONTENT_MIN_HEIGHT,

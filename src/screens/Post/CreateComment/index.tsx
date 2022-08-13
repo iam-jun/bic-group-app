@@ -17,9 +17,9 @@ import DeviceInfo from 'react-native-device-info';
 
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import postActions from '~/screens/Post/redux/actions';
-import * as modalActions from '~/store/modal/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
+import postActions from '~/storeRedux/post/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { fontFamilies } from '~/theme/fonts';

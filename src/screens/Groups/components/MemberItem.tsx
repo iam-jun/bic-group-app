@@ -12,7 +12,7 @@ import { formatDMLink, openUrl } from '~/utils/link';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
 
 interface MemberItemProps {

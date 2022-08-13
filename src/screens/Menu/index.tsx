@@ -7,7 +7,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import { useUserIdAuth } from '~/hooks/auth';
 
-import menuActions from '~/screens/Menu/redux/actions';
+import menuActions from '~/storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
 import MenuHeader from '~/screens/Menu/components/MenuHeader';
 import MenuDiscoverCommunity from '~/screens/Menu/components/MenuDiscoverCommunity';

@@ -10,7 +10,7 @@ import ReorderGroupItem, {
   ITEM_HEIGHT,
   ITEM_WIDTH,
 } from '~/screens/Groups/ReorderGroup/components/ReorderGroupItem';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import ReorderGroupHeader from '~/screens/Groups/ReorderGroup/components/ReorderGroupHeader';
 
 export interface ReorderGroupProps {

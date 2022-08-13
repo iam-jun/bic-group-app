@@ -3,7 +3,7 @@ import * as React from 'react';
 import { cleanup, waitFor } from '@testing-library/react-native';
 import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';
 import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import * as navigationHook from '~/hooks/navigation';
 
 afterEach(cleanup);

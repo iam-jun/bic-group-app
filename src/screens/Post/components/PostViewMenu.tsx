@@ -11,12 +11,12 @@ import { useKeySelector } from '~/hooks/selector';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import { IReaction, IAudienceGroup } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import postActions from '~/screens/Post/redux/actions';
-import * as modalActions from '~/store/modal/actions';
-import { showHideToastMessage } from '~/store/modal/actions';
+import postActions from '~/storeRedux/post/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
+import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import { getLink, LINK_POST } from '~/utils/link';
-import postKeySelector from '../redux/keySelector';
+import postKeySelector from '../../../storeRedux/post/keySelector';
 import AlertDeleteAudiencesConfirmContent from './AlertDeleteAudiencesConfirmContent';
 
 export interface PostViewMenuProps {

@@ -14,10 +14,10 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ICreatePostImage } from '~/interfaces/IPost';
 import i18n from '~/localization';
-import postActions from '~/screens/Post/redux/actions';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import * as modalActions from '~/store/modal/actions';
-import { showHideToastMessage } from '~/store/modal/actions';
+import postActions from '~/storeRedux/post/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
+import * as modalActions from '~/storeRedux/modal/actions';
+import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';

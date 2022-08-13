@@ -8,12 +8,12 @@ import {
   renderHook,
   renderWithRedux,
 } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import PostSettings from '~/screens/Post/PostSettings/index';
 import colors from '~/theme/theme';
 import * as navigationHook from '~/hooks/navigation';
-import modalActions from '~/store/modal/actions';
-import postActions from '~/screens/Post/redux/actions';
+import modalActions from '~/storeRedux/modal/actions';
+import postActions from '../../../storeRedux/post/actions';
 import { usePostSettings } from '~/screens/Post/PostSettings/usePostSettings';
 import { POST_DETAIL } from '~/test/mock_data/post';
 

@@ -4,10 +4,10 @@ import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import useJoinedGroupTreeStore from '~/store/communities/joinedGroupTree';
+import useJoinedGroupTreeStore from '~/storeRedux/communities/joinedGroupTree';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { IGroup } from '~/interfaces/IGroup';

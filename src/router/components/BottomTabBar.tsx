@@ -19,7 +19,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import { bottomTabIcons, bottomTabIconsFocused } from '~/configs/navigator';
+import { bottomTabIcons, bottomTabIconsFocused } from '~/router/config';
 import { useBaseHook } from '~/hooks';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';

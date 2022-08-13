@@ -4,12 +4,12 @@ import i18next from 'i18next';
 
 import NoticePanel from './NoticePanel';
 import { createTestStore, renderWithRedux } from '../../../test/testUtils';
-import initialState from '../../../store/initialState';
+import initialState from '../../../storeRedux/initialState';
 import {
   LIST_POST_CONTAINING_VIDEO_PROCESS_1,
   LIST_POST_CONTAINING_VIDEO_PROCESS_2,
 } from '../../../test/mock_data/draftPosts';
-import postActions from '../../Post/redux/actions';
+import postActions from '../../../storeRedux/post/actions';
 
 afterEach(cleanup);
 

@@ -17,9 +17,9 @@ import {
   groupPrivacy,
 } from '~/constants/privacyTypes';
 import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/screens/Groups/redux/actions';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import * as modalActions from '~/store/modal/actions';
+import groupsActions from '~/storeRedux/groups/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import * as modalActions from '~/storeRedux/modal/actions';
 
 import AvatarImage from './components/AvatarImage';
 import PrivacyItem from './components/PrivacyItem';

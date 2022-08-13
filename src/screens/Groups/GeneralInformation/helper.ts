@@ -7,8 +7,8 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import Markdown from '~/beinComponents/Markdown';
 import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
-import groupsActions from '~/screens/Groups/redux/actions';
-import modalActions from '~/store/modal/actions';
+import groupsActions from '~/storeRedux/groups/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { groupProfileImageCropRatio } from '~/theme/dimension';
 
 import { checkPermission, permissionTypes } from '~/utils/permission';

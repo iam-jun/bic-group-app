@@ -10,7 +10,7 @@ import Text from '~/beinComponents/Text';
 import { formatDateTime } from '~/beinComponents/TimeView/helper';
 import { AppContext } from '~/contexts/AppContext';
 import { useBaseHook } from '~/hooks';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 import DatePicker from './component/DatePicker';

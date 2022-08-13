@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { cleanup } from '@testing-library/react-native';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import {
   configureStore,
   createTestStore,
@@ -11,7 +11,7 @@ import {
 } from '~/test/testUtils';
 
 import CommentDetailContent from './CommentDetailContent';
-import postActions from '../redux/actions';
+import postActions from '../../../storeRedux/post/actions';
 import {
   allCommentsByParentIdsWith1ChildComment,
   baseCommentData,

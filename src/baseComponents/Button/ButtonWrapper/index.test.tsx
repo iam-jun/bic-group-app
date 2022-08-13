@@ -1,7 +1,7 @@
 import { cleanup } from '@testing-library/react-native';
 import * as React from 'react';
 import { renderWithRedux, configureStore } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import Button from '.';
 
 afterEach(cleanup);

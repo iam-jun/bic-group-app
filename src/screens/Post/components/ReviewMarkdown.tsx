@@ -9,9 +9,9 @@ import Text from '~/beinComponents/Text';
 
 import Button from '~/beinComponents/Button';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
+import postKeySelector from '~/storeRedux/post/keySelector';
 import Markdown from '~/beinComponents/Markdown';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
+import menuKeySelector from '~/storeRedux/menu/keySelector';
 import Avatar from '~/baseComponents/Avatar';
 import { IAudience } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';

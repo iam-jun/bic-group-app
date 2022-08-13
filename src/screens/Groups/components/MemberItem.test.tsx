@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MemberItem from './MemberItem';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { renderWithRedux, createTestStore, fireEvent } from '~/test/testUtils';
 import { adminDetail } from '~/test/mock_data/communities';
 import * as navigationHook from '~/hooks/navigation';

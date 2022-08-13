@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import ListView from '~/beinComponents/list/ListView';
 import EmptyScreen from '~/components/EmptyScreen';
 import GroupItem from '~/beinComponents/list/items/GroupItem';

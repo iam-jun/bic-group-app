@@ -5,7 +5,7 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 import { scaleCoverHeight } from '~/theme/dimension';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';

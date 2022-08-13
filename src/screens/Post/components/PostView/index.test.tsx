@@ -6,13 +6,13 @@ import {
   languages,
   renderWithRedux,
 } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import PostView from '~/screens/Post/components/PostView';
 import { POST_DETAIL, POST_DETAIL_2 } from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import postActions from '~/screens/Post/redux/actions';
-import modalActions from '~/store/modal/actions';
+import postActions from '../../../../storeRedux/post/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 describe('PostView Component', () => {
   const state = { ...initialState };

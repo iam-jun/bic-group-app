@@ -17,9 +17,9 @@ import {
   IPayloadReplying,
   IPostMedia,
 } from '~/interfaces/IPost';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
-import postActions from '~/screens/Post/redux/actions';
-import postKeySelector from '~/screens/Post/redux/keySelector';
+import menuKeySelector from '~/storeRedux/menu/keySelector';
+import postActions from '~/storeRedux/post/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
 import ReplyingView from './ReplyingView';
 
 export interface CommentInputViewProps {

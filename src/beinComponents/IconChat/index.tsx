@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { getUnreadChannelCount } from '~/selectors/chat';
+import { getUnreadChannelCount } from '~/store/selectors/chat';
 
 import spacing from '~/theme/spacing';
 import NotificationsBadge from '../Badge/NotificationsBadge';

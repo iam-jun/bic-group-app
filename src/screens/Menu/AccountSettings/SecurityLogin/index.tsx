@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import * as modalActions from '~/store/modal/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 
 import { ISetting } from '~/interfaces/common';
 import Header from '~/beinComponents/Header';

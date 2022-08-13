@@ -11,13 +11,13 @@ import ReactionBottomSheet from '~/components/reaction/ReactionBottomSheet';
 import ReactionDetailBottomSheet from '~/components/reaction/ReactionDetailBottomSheet';
 import {
   customBackHandlerRoutes,
-  NAVIGATION_BACK_PRESSED,
-} from '~/configs/navigator';
+  EVENT_NAVIGATION_BACK_PRESSED,
+} from '~/router/config';
 import { useKeySelector } from '~/hooks/selector';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import { getActiveRouteState } from '~/router/helper';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
-import appActions from '~/store/app/actions';
+import appActions from '~/storeRedux/app/actions';
 
 import mainTabScreens from './screens';
 import mainTabStack from './stack';
@@ -43,7 +43,7 @@ const MainStack = (): React.ReactElement => {
       return true;
     }
     if (activeRoute && customBackHandlerRoutes.includes(activeRoute)) {
-      DeviceEventEmitter.emit(NAVIGATION_BACK_PRESSED);
+      DeviceEventEmitter.emit(EVENT_NAVIGATION_BACK_PRESSED);
       return true;
     }
     return false;

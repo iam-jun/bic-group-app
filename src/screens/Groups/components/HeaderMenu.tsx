@@ -8,7 +8,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 interface HeaderMenuProps {

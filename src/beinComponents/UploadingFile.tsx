@@ -14,7 +14,7 @@ import Button from '~/beinComponents/Button';
 import { formatBytes } from '~/utils/formatData';
 import FileUploader, { IGetFile } from '~/services/fileUploader';
 import { useBaseHook } from '~/hooks';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { supportedTypes } from '~/beinComponents/DocumentPicker';
 import { openUrl } from '~/utils/link';
 import { getFileIcons } from '~/configs';

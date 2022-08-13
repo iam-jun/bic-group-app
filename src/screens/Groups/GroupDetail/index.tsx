@@ -27,15 +27,15 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { rootSwitch } from '~/router/stack';
 import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
 import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
-import groupsActions from '~/screens/Groups/redux/actions';
-import modalActions from '~/store/modal/actions';
+import groupsActions from '~/storeRedux/groups/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getLink, LINK_GROUP, openUrl,
 } from '~/utils/link';
 import HeaderMenu from '../components/HeaderMenu';
 import { checkLastAdmin } from '../helper';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
 import useLeaveGroup from '../GroupMembers/components/useLeaveGroup';
 import GroupTabHeader from './components/GroupTabHeader';

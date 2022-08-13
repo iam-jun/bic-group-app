@@ -6,8 +6,8 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
-import modalActions from '~/store/modal/actions';
-import groupsActions from '../../redux/actions';
+import modalActions from '~/storeRedux/modal/actions';
+import groupsActions from '../../../../storeRedux/groups/actions';
 
 interface IUseRemoveAdmin {
   groupId: string;

@@ -2,9 +2,9 @@ import React from 'react'
 import { StyleProp, ViewStyle } from 'react-native'
 import { useDispatch } from 'react-redux';
 
-import groupsActions from '../../redux/actions';
+import groupsActions from '../../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
 

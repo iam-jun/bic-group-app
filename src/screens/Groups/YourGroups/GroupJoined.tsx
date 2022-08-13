@@ -16,7 +16,7 @@ import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import GroupJoinedList from '~/screens/Groups/YourGroups/GroupJoinedList';
 import GroupJoinedTree from '~/screens/Groups/YourGroups/GroupJoinedTree';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 export interface GroupJoinedProps {

@@ -10,7 +10,7 @@ import Animated, {
 import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 import Text from '~/beinComponents/Text';
-import groupsActions from '~/screens/Groups/redux/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import Icon from '~/beinComponents/Icon';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import { useBaseHook } from '~/hooks';

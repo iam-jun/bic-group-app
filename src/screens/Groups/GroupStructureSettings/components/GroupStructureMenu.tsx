@@ -7,7 +7,7 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 

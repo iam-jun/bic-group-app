@@ -11,9 +11,9 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import mainStack from '~/router/navigator/MainStack/stack';
-import postActions from '~/screens/Post/redux/actions';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import modalActions from '~/store/modal/actions';
+import postActions from '~/storeRedux/post/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
+import modalActions from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 

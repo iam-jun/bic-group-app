@@ -4,14 +4,14 @@ import { cleanup } from '@testing-library/react-native';
 
 import React from 'react';
 
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 
 import ForgotPassword from '.';
 import { forgotPasswordStages } from '~/constants/authConstants';
-import actions from '~/screens/Auth/redux/actions';
-import types from '~/screens/Auth/redux/types';
+import actions from '../../../storeRedux/auth/actions';
+import types from '../../../storeRedux/auth/types';
 import * as navigationHook from '~/hooks/navigation';
 
 afterEach(cleanup);

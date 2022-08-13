@@ -19,10 +19,10 @@ import { IObject } from '~/interfaces/common';
 import { IconType } from '~/resources/icons';
 import images from '~/resources/images';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '~/screens/Menu/redux/actions';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
-import modalActions from '~/store/modal/actions';
-import commonKeySelector from '~/store/modal/keySelector';
+import menuActions from '~/storeRedux/menu/actions';
+import menuKeySelector from '~/storeRedux/menu/keySelector';
+import modalActions from '~/storeRedux/modal/actions';
+import commonKeySelector from '~/storeRedux/modal/keySelector';
 import { scaleCoverHeight } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';

@@ -11,12 +11,12 @@ import {
   renderWithRedux,
   waitForUpdateRedux,
 } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import CreatePost from '.';
 import { GROUP_AUDIENCE, POST_DETAIL } from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import useCreatePost, {
   handlePressPostResultType,
 } from '~/screens/Post/CreatePost/hooks/useCreatePost';

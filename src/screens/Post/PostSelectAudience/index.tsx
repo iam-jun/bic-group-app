@@ -15,7 +15,7 @@ import debounce from 'lodash/debounce';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useBaseHook } from '~/hooks';
 
-import postActions from '~/screens/Post/redux/actions';
+import postActions from '~/storeRedux/post/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -32,8 +32,8 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IUser } from '~/interfaces/IAuth';
 import NoSearchResult from '~/components/NoSearchResult';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import modalActions from '~/store/modal/actions';
+import postKeySelector from '~/storeRedux/post/keySelector';
+import modalActions from '~/storeRedux/modal/actions';
 import {
   checkChangeAudiences,
   ISelectAudienceParams,

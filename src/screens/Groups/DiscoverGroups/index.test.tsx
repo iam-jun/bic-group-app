@@ -3,7 +3,7 @@ import React from 'react';
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import DiscoverGroups from '.';
 
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { discoverGroup } from '~/test/mock_data/group';
 import MockedNavigator from '~/test/MockedNavigator';
 
