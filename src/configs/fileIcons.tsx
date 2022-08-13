@@ -3,27 +3,34 @@ const getFileIcons = (extension: string) => {
   switch (ext) {
     case 'html':
     case 'htm':
-      return 'ic_html';
+      return 'FileCode';
     case 'doc':
     case 'docx':
     case 'odt':
-      return 'ic_doc';
+      return 'FileWord';
     case 'pdf':
-      return 'ic_pdf';
+      return 'FilePdf';
     case 'xls':
     case 'xlsx':
     case 'ods':
-      return 'ic_xls';
+      return 'FileExcel';
     case 'ppt':
     case 'pptx':
-      return 'ic_ppt';
+      return 'FilePowerpoint';
+    case 'txt':
+      return 'FileLines'
+    case 'mp3':
+    case 'wav':
+      return 'FileAudio'
     case 'mov':
     case 'mp4':
-      return 'ic_video';
+      return 'FileVideo';
     case 'zip':
-      return 'ic_zip';
+      return 'FileZipper';
+    case 'csv':
+      return 'FileCsv';
     default:
-      return 'ic_default';
+      return 'File';
   }
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { get } from 'lodash';
 import { validateImages, validateVideo } from '~/screens/Post/CreatePost/helper';
 import { languages } from '~/test/testUtils';

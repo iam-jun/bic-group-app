@@ -13,7 +13,6 @@ describe('MemberItem component', () => {
 
   it('should render data correctly', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'test' };
     const item = { ...adminDetail };
     const store = createTestStore(state);
@@ -30,7 +29,6 @@ describe('MemberItem component', () => {
 
   it('should render icon member option correctly when user is an admin', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'anothertest' };
     const item = { ...adminDetail };
     const store = createTestStore(state);
@@ -50,7 +48,6 @@ describe('MemberItem component', () => {
 
   it('should NOT render icon member option correctly when user is NOT an admin', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'anothertest' };
     const item = { ...adminDetail };
     const store = createTestStore(state);
@@ -68,7 +65,6 @@ describe('MemberItem component', () => {
 
   it('should navigate to User profile correctly', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'test' };
     const item = { ...adminDetail };
     const store = createTestStore(state);

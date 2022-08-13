@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
@@ -7,6 +8,7 @@ import {
   communityDetailData,
   previewMemberDetail,
 } from '~/test/mock_data/communities';
+import { COMMUNITY_PRIVACY_TYPE } from '~/constants/privacyTypes';
 
 describe('AboutContent component', () => {
   it('should render member item correctly', () => {
@@ -74,7 +76,7 @@ describe('AboutContent component', () => {
     state.groups.communityDetail = {
       ...communityDetailData,
       joinStatus: 1,
-      privacy: 'OPEN',
+      privacy: 'OPEN' as COMMUNITY_PRIVACY_TYPE,
       members: [previewMemberDetail],
     };
     const store = createTestStore(state);
@@ -127,7 +129,7 @@ describe('AboutContent component', () => {
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
-      privacy: 'OPEN',
+      privacy: 'OPEN' as COMMUNITY_PRIVACY_TYPE,
       joinStatus: 1,
       members: [previewMemberDetail],
     };

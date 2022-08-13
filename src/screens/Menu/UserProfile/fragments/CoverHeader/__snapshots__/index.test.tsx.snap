@@ -97,9 +97,9 @@ exports[`CoverHeader screen renders correctly 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 6,
-              "height": 96,
-              "width": 96,
+              "borderRadius": 4,
+              "height": 90,
+              "width": 90,
             },
             undefined,
           ]
@@ -111,12 +111,12 @@ exports[`CoverHeader screen renders correctly 1`] = `
             Array [
               Array [
                 Object {
-                  "borderRadius": 6,
-                  "height": 96,
-                  "width": 96,
+                  "borderRadius": 4,
+                  "height": 90,
+                  "width": 90,
                 },
                 Object {
-                  "borderRadius": 48,
+                  "borderRadius": 45,
                 },
               ],
               Object {},
@@ -152,11 +152,11 @@ exports[`CoverHeader screen renders correctly 1`] = `
                     "alignItems": "center",
                     "backgroundColor": "#f9f9f9",
                     "borderColor": "#FFFFFF",
-                    "borderRadius": 48,
+                    "borderRadius": 45,
                     "borderWidth": 4,
-                    "height": 96,
+                    "height": 90,
                     "justifyContent": "center",
-                    "width": 96,
+                    "width": 90,
                   }
                 }
                 testID="Image__placeholder"
@@ -170,10 +170,10 @@ exports[`CoverHeader screen renders correctly 1`] = `
                   },
                   Object {
                     "borderColor": "#FFFFFF",
-                    "borderRadius": 48,
+                    "borderRadius": 45,
                     "borderWidth": 4,
-                    "height": 96,
-                    "width": 96,
+                    "height": 90,
+                    "width": 90,
                   },
                 ]
               }

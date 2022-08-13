@@ -65,7 +65,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#353E6E",
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -116,8 +116,8 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
               Array [
                 Object {
                   "borderRadius": 4,
-                  "height": 40,
-                  "width": 40,
+                  "height": 48,
+                  "width": 48,
                 },
                 Object {
                   "marginRight": 12,
@@ -132,11 +132,11 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                   Array [
                     Object {
                       "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
+                      "height": 48,
+                      "width": 48,
                     },
                     Object {
-                      "borderRadius": 20,
+                      "borderRadius": 24,
                     },
                   ],
                   Object {},
@@ -171,10 +171,10 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
-                        "borderRadius": 20,
-                        "height": 40,
+                        "borderRadius": 24,
+                        "height": 48,
                         "justifyContent": "center",
-                        "width": 40,
+                        "width": 48,
                       }
                     }
                     testID="Image__placeholder"
@@ -187,9 +187,9 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
-                        "borderRadius": 20,
-                        "height": 40,
-                        "width": 40,
+                        "borderRadius": 24,
+                        "height": 48,
+                        "width": 48,
                       },
                     ]
                   }
@@ -230,7 +230,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#353E6E",
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                   },
@@ -435,8 +435,8 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
               Array [
                 Object {
                   "borderRadius": 4,
-                  "height": 40,
-                  "width": 40,
+                  "height": 48,
+                  "width": 48,
                 },
                 Object {
                   "marginRight": 12,
@@ -451,11 +451,11 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                   Array [
                     Object {
                       "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
+                      "height": 48,
+                      "width": 48,
                     },
                     Object {
-                      "borderRadius": 20,
+                      "borderRadius": 24,
                     },
                   ],
                   Object {},
@@ -490,10 +490,10 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
-                        "borderRadius": 20,
-                        "height": 40,
+                        "borderRadius": 24,
+                        "height": 48,
                         "justifyContent": "center",
-                        "width": 40,
+                        "width": 48,
                       }
                     }
                     testID="Image__placeholder"
@@ -506,9 +506,9 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
-                        "borderRadius": 20,
-                        "height": 40,
-                        "width": 40,
+                        "borderRadius": 24,
+                        "height": 48,
+                        "width": 48,
                       },
                     ]
                   }
@@ -549,7 +549,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#353E6E",
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                   },

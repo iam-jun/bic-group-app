@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 import { renderWithRedux, fireEvent, createTestStore } from '~/test/testUtils';
 import CommunityAdmin from '.';
@@ -13,8 +14,8 @@ describe('CommunityAdmin component', () => {
 
   it('should navigate to pending members correctly', () => {
     const state = { ...initialState };
-    // @ts-ignore
     state.groups.communityDetail.id = '1';
+    // @ts-ignore
     state.groups.myPermissions = {
       data: {
         communities: {

@@ -18,7 +18,8 @@
     "text_unconnected_title": "Không có kết nối internet",
     "text_unconnected_content": "Please check your internet connection and try again",
     "btn_try_again": "Thử lại",
-    "text_show_all": "Tất cả",
+    "text_show_more": "Xem thêm",
+    "text_show_less": "Xem ít lại",
     "text_see_all": "Xem tất cả",
     "text_member": "Thành viên",
     "text_copied_to_clipboard": "Đã sao chép",
@@ -850,7 +851,7 @@
     "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB",
     "text_file_over_size": "Tổng kích thước các tệp của bạn lớn hơn 25MB",
     "text_file_over_length": "Bạn không thể tải lên hơn {{max_files}} tệp",
-    "text_file_extension_not_supported": "Phần mở rộng của tệp không được hỗ trợ",
+    "text_file_extension_not_supported": "Không được hỗ trợ",
     "text_file_remainning": "Tổng tệp có thể thêm là {{max_files}} và dung lượng còn lại là {{remaining_size}}"
   },
   "file_type": {

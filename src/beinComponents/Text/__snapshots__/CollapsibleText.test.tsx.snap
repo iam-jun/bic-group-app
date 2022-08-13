@@ -19,7 +19,7 @@ exports[`Collapsible Text component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#353E6E",
+        "color": "#181C32",
         "fontFamily": "BeVietnamPro-Light",
         "fontSize": 15,
       },
@@ -32,7 +32,7 @@ exports[`Collapsible Text component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#353E6E",
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -85,7 +85,7 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
   style={
     Array [
       Object {
-        "color": "#353E6E",
+        "color": "#181C32",
         "fontFamily": "BeVietnamPro-Light",
         "fontSize": 15,
       },
@@ -99,7 +99,7 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
     style={
       Array [
         Object {
-          "color": "#353E6E",
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -200,7 +200,7 @@ exports[`Collapsible Text component should render full text when click read more
   style={
     Array [
       Object {
-        "color": "#353E6E",
+        "color": "#181C32",
         "fontFamily": "BeVietnamPro-Light",
         "fontSize": 15,
       },
@@ -213,7 +213,7 @@ exports[`Collapsible Text component should render full text when click read more
     style={
       Array [
         Object {
-          "color": "#353E6E",
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -267,7 +267,7 @@ exports[`Collapsible Text component should render short text with a short length
   style={
     Array [
       Object {
-        "color": "#353E6E",
+        "color": "#181C32",
         "fontFamily": "BeVietnamPro-Light",
         "fontSize": 15,
       },
@@ -280,7 +280,7 @@ exports[`Collapsible Text component should render short text with a short length
     style={
       Array [
         Object {
-          "color": "#353E6E",
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },

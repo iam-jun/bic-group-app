@@ -11,15 +11,18 @@ describe('Get group detail saga', () => {
     loadingPage: false,
   };
 
-  it('should get group detail data with loadingPage = false successfully when user is a group member', () => {
-    const resp = {
-      data: {
-        group: {
-          privacy: 'PUBLIC',
-        },
-        join_status: 2,
+  const resp = {
+    data: {
+      group: {
+        id: '1',
+        name: 'test',
+        privacy: 'PUBLIC',
       },
-    };
+      joinStatus: 2,
+    },
+  };
+
+  it('should get group detail data with loadingPage = false successfully when user is a group member', () => {
     const state = {
       groups: {
         groupDetail: resp.data,
@@ -29,7 +32,6 @@ describe('Get group detail saga', () => {
     return (
       expectSaga(getGroupDetail, action as any)
         .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
-        // @ts-ignore
         .put(groupsActions.setGroupDetail(resp.data))
         .withState(state)
         .not.put(groupsActions.setLoadingPage(false))
@@ -38,14 +40,6 @@ describe('Get group detail saga', () => {
   });
 
   it('should get group detail data with loadingPage = true successfully when user is a group member', () => {
-    const resp = {
-      data: {
-        group: {
-          privacy: 'PUBLIC',
-        },
-        join_status: 2,
-      },
-    };
     const state = {
       groups: {
         groupDetail: resp.data,
@@ -56,7 +50,6 @@ describe('Get group detail saga', () => {
       expectSaga(getGroupDetail, { ...action, loadingPage: true } as any)
         .put(groupsActions.setLoadingPage(true))
         .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
-        // @ts-ignore
         .put(groupsActions.setGroupDetail(resp.data))
         .withState(state)
         .not.put(groupsActions.setLoadingPage(false))
@@ -65,13 +58,9 @@ describe('Get group detail saga', () => {
   });
 
   it('should get group detail data successfully when user visits a public group', () => {
-    const resp = {
-      data: {
-        group: {
-          privacy: 'PUBLIC',
-        },
-        join_status: 1,
-      },
+    const _resp = {
+      ...resp,
+      joinStatus: 2,
     };
     const state = {
       groups: {
@@ -81,8 +70,7 @@ describe('Get group detail saga', () => {
 
     return (
       expectSaga(getGroupDetail, action as any)
-        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
-        // @ts-ignore
+        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), _resp]])
         .put(groupsActions.setGroupDetail(resp.data))
         .withState(state)
         .not.put(groupsActions.setLoadingPage(false))
@@ -91,14 +79,11 @@ describe('Get group detail saga', () => {
   });
 
   it('should get group detail data when user visits a private group', () => {
-    const resp = {
-      data: {
-        group: {
-          privacy: 'PRIVATE',
-        },
-        join_status: 1,
-      },
+    const _resp = {
+      ...resp,
+      joinStatus: 2,
     };
+
     const state = {
       groups: {
         groupDetail: resp.data,
@@ -107,8 +92,7 @@ describe('Get group detail saga', () => {
 
     return (
       expectSaga(getGroupDetail, action as any)
-        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
-        // @ts-ignore
+        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), _resp]])
         .put(groupsActions.setGroupDetail(resp.data))
         .withState(state)
         .put(groupsActions.setLoadingPage(false))

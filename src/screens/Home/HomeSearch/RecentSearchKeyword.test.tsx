@@ -30,7 +30,6 @@ describe('NFSRecentSearchKeyword component', () => {
     const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
     const item = { id: 1, keyword: 'hello' };
-    // @ts-ignore
     storeData.home.newsfeedSearchRecentKeyword.data = [item];
     const store = mockStore(storeData);
 
@@ -44,7 +43,7 @@ describe('NFSRecentSearchKeyword component', () => {
     const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
     const item = { id: 1, keyword: 'hello' };
-    // @ts-ignore
+
     storeData.home.newsfeedSearchRecentKeyword.data = [item];
     const store = mockStore(storeData);
 
@@ -63,7 +62,7 @@ describe('NFSRecentSearchKeyword component', () => {
     const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
     const item = { id: 1, keyword: 'hello' };
-    // @ts-ignore
+
     storeData.home.newsfeedSearchRecentKeyword.data = [item];
     const store = mockStore(storeData);
 
@@ -82,7 +81,7 @@ describe('NFSRecentSearchKeyword component', () => {
     const storeData = { ...initialState };
     storeData.home.newsfeedSearchRecentKeyword.loading = false;
     const item = { id: 1, keyword: 'hello' };
-    // @ts-ignore
+
     storeData.home.newsfeedSearchRecentKeyword.data = [item];
     const store = mockStore(storeData);
 

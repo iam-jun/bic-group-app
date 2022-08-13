@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
+import { IReaction } from '~/interfaces/IPost';
 
 import { baseCommentData } from '~/test/mock_data/post';
 import postActions from '../actions';
@@ -42,14 +44,15 @@ describe('Update Reaction Of Comment By Id saga', () => {
         commentId,
         [
           {
-            id: 0,
+            id: '0',
             reactionName: 'grin',
             createdBy: 0,
-          },
+          } as IReaction,
         ],
         { 0: { smiley: 1 }, 1: { grin: 1 } },
       )
         .withState(storeData)
+      // @ts-ignorets
         .put(postActions.setAllComments(newAllComments))
         .run()
         .then(({ allEffects }: any) => {
@@ -91,15 +94,17 @@ describe('Update Reaction Of Comment By Id saga', () => {
         commentId,
         [
           {
-            id: 0,
+            id: '0',
             reactionName: 'grin',
             createdBy: 0,
-          },
+          } as IReaction,
         ],
         { 0: { smiley: 1 }, 1: { grin: 1 } },
+        // @ts-ignorets
         baseCommentData,
       )
         .withState(newStore)
+      // @ts-ignorets
         .put(postActions.setAllComments(newAllComments))
         .run()
         .then(({ allEffects }: any) => {

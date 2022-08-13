@@ -109,8 +109,8 @@ exports[`Avatar component renders correctly badge 1`] = `
     Array [
       Object {
         "borderRadius": 4,
-        "height": 48,
-        "width": 48,
+        "height": 64,
+        "width": 64,
       },
       undefined,
     ]
@@ -122,8 +122,8 @@ exports[`Avatar component renders correctly badge 1`] = `
       Array [
         Object {
           "borderRadius": 4,
-          "height": 48,
-          "width": 48,
+          "height": 64,
+          "width": 64,
         },
         Object {},
       ]
@@ -158,9 +158,9 @@ exports[`Avatar component renders correctly badge 1`] = `
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
               "borderRadius": 4,
-              "height": 48,
+              "height": 64,
               "justifyContent": "center",
-              "width": 48,
+              "width": 64,
             }
           }
           testID="Image__placeholder"
@@ -174,8 +174,8 @@ exports[`Avatar component renders correctly badge 1`] = `
             },
             Object {
               "borderRadius": 4,
-              "height": 48,
-              "width": 48,
+              "height": 64,
+              "width": 64,
             },
           ]
         }
@@ -207,10 +207,10 @@ exports[`Avatar component renders correctly badge 1`] = `
         Object {
           "alignItems": "center",
           "backgroundColor": "#FFFFFF",
-          "borderRadius": 12,
+          "borderRadius": 16,
           "bottom": undefined,
           "elevation": 2,
-          "height": 24,
+          "height": 32,
           "justifyContent": "center",
           "position": "absolute",
           "right": -8,
@@ -222,7 +222,7 @@ exports[`Avatar component renders correctly badge 1`] = `
           "shadowOpacity": 0.1,
           "shadowRadius": 1,
           "top": -8,
-          "width": 24,
+          "width": 32,
         }
       }
       testID="avatar.badge"
@@ -289,8 +289,8 @@ exports[`Avatar component renders correctly badge 1`] = `
                       "justifyContent": "center",
                     },
                     Object {
-                      "height": 14.040000000000001,
-                      "width": 14.040000000000001,
+                      "height": 18.720000000000002,
+                      "width": 18.720000000000002,
                     },
                   ]
                 }
@@ -298,7 +298,7 @@ exports[`Avatar component renders correctly badge 1`] = `
                 <Text
                   style={
                     Object {
-                      "fontSize": 10.530000000000001,
+                      "fontSize": 14.040000000000003,
                       "textAlignVertical": "bottom",
                     }
                   }
@@ -319,8 +319,8 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
     Array [
       Object {
         "borderRadius": 4,
-        "height": 48,
-        "width": 48,
+        "height": 64,
+        "width": 64,
       },
       undefined,
     ]
@@ -332,8 +332,8 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
       Array [
         Object {
           "borderRadius": 4,
-          "height": 48,
-          "width": 48,
+          "height": 64,
+          "width": 64,
         },
         Object {},
       ]
@@ -368,9 +368,9 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
               "borderRadius": 4,
-              "height": 48,
+              "height": 64,
               "justifyContent": "center",
-              "width": 48,
+              "width": 64,
             }
           }
           testID="Image__placeholder"
@@ -384,8 +384,8 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
             },
             Object {
               "borderRadius": 4,
-              "height": 48,
-              "width": 48,
+              "height": 64,
+              "width": 64,
             },
           ]
         }
@@ -417,10 +417,10 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
         Object {
           "alignItems": "center",
           "backgroundColor": "#FFFFFF",
-          "borderRadius": 12,
+          "borderRadius": 16,
           "bottom": -4,
           "elevation": 2,
-          "height": 24,
+          "height": 32,
           "justifyContent": "center",
           "position": "absolute",
           "right": -8,
@@ -432,7 +432,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
           "shadowOpacity": 0.1,
           "shadowRadius": 1,
           "top": undefined,
-          "width": 24,
+          "width": 32,
         }
       }
       testID="avatar.badge"
@@ -499,8 +499,8 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
                       "justifyContent": "center",
                     },
                     Object {
-                      "height": 14.040000000000001,
-                      "width": 14.040000000000001,
+                      "height": 18.720000000000002,
+                      "width": 18.720000000000002,
                     },
                   ]
                 }
@@ -508,7 +508,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
                 <Text
                   style={
                     Object {
-                      "fontSize": 10.530000000000001,
+                      "fontSize": 14.040000000000003,
                       "textAlignVertical": "bottom",
                     }
                   }
@@ -529,8 +529,8 @@ exports[`Avatar component renders correctly badge check 1`] = `
     Array [
       Object {
         "borderRadius": 4,
-        "height": 48,
-        "width": 48,
+        "height": 64,
+        "width": 64,
       },
       undefined,
     ]
@@ -542,8 +542,8 @@ exports[`Avatar component renders correctly badge check 1`] = `
       Array [
         Object {
           "borderRadius": 4,
-          "height": 48,
-          "width": 48,
+          "height": 64,
+          "width": 64,
         },
         Object {},
       ]
@@ -578,9 +578,9 @@ exports[`Avatar component renders correctly badge check 1`] = `
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
               "borderRadius": 4,
-              "height": 48,
+              "height": 64,
               "justifyContent": "center",
-              "width": 48,
+              "width": 64,
             }
           }
           testID="Image__placeholder"
@@ -594,8 +594,8 @@ exports[`Avatar component renders correctly badge check 1`] = `
             },
             Object {
               "borderRadius": 4,
-              "height": 48,
-              "width": 48,
+              "height": 64,
+              "width": 64,
             },
           ]
         }
@@ -716,8 +716,8 @@ exports[`Avatar component renders correctly status 1`] = `
     Array [
       Object {
         "borderRadius": 4,
-        "height": 48,
-        "width": 48,
+        "height": 64,
+        "width": 64,
       },
       undefined,
     ]
@@ -729,8 +729,8 @@ exports[`Avatar component renders correctly status 1`] = `
       Array [
         Object {
           "borderRadius": 4,
-          "height": 48,
-          "width": 48,
+          "height": 64,
+          "width": 64,
         },
         Object {},
       ]
@@ -765,9 +765,9 @@ exports[`Avatar component renders correctly status 1`] = `
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
               "borderRadius": 4,
-              "height": 48,
+              "height": 64,
               "justifyContent": "center",
-              "width": 48,
+              "width": 64,
             }
           }
           testID="Image__placeholder"
@@ -781,8 +781,8 @@ exports[`Avatar component renders correctly status 1`] = `
             },
             Object {
               "borderRadius": 4,
-              "height": 48,
-              "width": 48,
+              "height": 64,
+              "width": 64,
             },
           ]
         }
@@ -814,13 +814,13 @@ exports[`Avatar component renders correctly status 1`] = `
         Object {
           "backgroundColor": "#13B055",
           "borderColor": "#FFFFFF",
-          "borderRadius": 8,
+          "borderRadius": 10.666666666666666,
           "borderWidth": 1,
           "bottom": 0,
-          "height": 16,
+          "height": 21.333333333333332,
           "position": "absolute",
           "right": 0,
-          "width": 16,
+          "width": 21.333333333333332,
         }
       }
       testID="avatar.status"
@@ -835,8 +835,8 @@ exports[`Avatar component should call props onPressAction 1`] = `
     Array [
       Object {
         "borderRadius": 4,
-        "height": 48,
-        "width": 48,
+        "height": 64,
+        "width": 64,
       },
       undefined,
     ]
@@ -848,8 +848,8 @@ exports[`Avatar component should call props onPressAction 1`] = `
       Array [
         Object {
           "borderRadius": 4,
-          "height": 48,
-          "width": 48,
+          "height": 64,
+          "width": 64,
         },
         Object {},
       ]
@@ -884,9 +884,9 @@ exports[`Avatar component should call props onPressAction 1`] = `
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
               "borderRadius": 4,
-              "height": 48,
+              "height": 64,
               "justifyContent": "center",
-              "width": 48,
+              "width": 64,
             }
           }
           testID="Image__placeholder"
@@ -900,8 +900,8 @@ exports[`Avatar component should call props onPressAction 1`] = `
             },
             Object {
               "borderRadius": 4,
-              "height": 48,
-              "width": 48,
+              "height": 64,
+              "width": 64,
             },
           ]
         }

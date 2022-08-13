@@ -80,6 +80,7 @@ import { faDeleteLeft } from '@fortawesome/pro-regular-svg-icons/faDeleteLeft';
 import { faArrowTurnDownRight } from '@fortawesome/pro-regular-svg-icons/faArrowTurnDownRight';
 import { faCloudArrowDown } from '@fortawesome/pro-regular-svg-icons/faCloudArrowDown';
 import { faCircleCheck } from '@fortawesome/pro-regular-svg-icons/faCircleCheck';
+import { faCircleCheck as faCircleCheckSolid } from '@fortawesome/pro-solid-svg-icons/faCircleCheck';
 import { faVolumeXmark } from '@fortawesome/pro-regular-svg-icons/faVolumeXmark';
 import { faSitemap } from '@fortawesome/pro-regular-svg-icons/faSitemap';
 import { faCirclePlay } from '@fortawesome/pro-regular-svg-icons/faCirclePlay';
@@ -130,6 +131,19 @@ import { faArrowRightFromBracket as faArrowRightFromBracketSolid }
   from '@fortawesome/pro-solid-svg-icons/faArrowRightFromBracket';
 import { faCircle } from '@fortawesome/pro-regular-svg-icons/faCircle';
 import { faCircleDot as faCircleDotSolid } from '@fortawesome/pro-solid-svg-icons/faCircleDot';
+import { faFile } from '@fortawesome/pro-regular-svg-icons/faFile';
+import { faFileAudio } from '@fortawesome/pro-regular-svg-icons/faFileAudio';
+import { faFileArrowDown } from '@fortawesome/pro-regular-svg-icons/faFileArrowDown';
+import { faFileWord } from '@fortawesome/pro-regular-svg-icons/faFileWord';
+import { faFilePdf } from '@fortawesome/pro-regular-svg-icons/faFilePdf';
+import { faFileZipper } from '@fortawesome/pro-regular-svg-icons/faFileZipper';
+import { faFileCode } from '@fortawesome/pro-regular-svg-icons/faFileCode';
+import { faFileExcel } from '@fortawesome/pro-regular-svg-icons/faFileExcel';
+import { faFilePowerpoint } from '@fortawesome/pro-regular-svg-icons/faFilePowerpoint';
+import { faFileVideo } from '@fortawesome/pro-regular-svg-icons/faFileVideo';
+import { faFileCsv } from '@fortawesome/pro-regular-svg-icons/faFileCsv';
+import { faFileLines } from '@fortawesome/pro-regular-svg-icons/faFileLines';
+import { faArrowDownToLine } from '@fortawesome/pro-regular-svg-icons/faArrowDownToLine';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -231,6 +245,7 @@ export const initFontAwesomeIcon = () => {
     faArrowTurnDownRight,
     faCloudArrowDown,
     faCircleCheck,
+    faCircleCheckSolid,
     faVolumeXmark,
     faSitemap,
     faCirclePlay,
@@ -280,6 +295,19 @@ export const initFontAwesomeIcon = () => {
     faFolderGearSolid,
     faMessagesQuestionSolid,
     faArrowRightFromBracketSolid,
+    faFile,
+    faFileAudio,
+    faFileArrowDown,
+    faFileWord,
+    faFilePdf,
+    faFileZipper,
+    faFileCode,
+    faFileExcel,
+    faFilePowerpoint,
+    faFileVideo,
+    faFileCsv,
+    faFileLines,
+    faArrowDownToLine,
   );
 };
 
@@ -366,6 +394,7 @@ export const fontAwesomeIcons = {
   ArrowTurnDownRight: 'fa-regular fa-arrow-turn-down-right',
   CloudArrowDown: 'fa-regular fa-cloud-arrow-down',
   CircleCheck: 'fa-regular fa-circle-check',
+  CircleCheckSolid: 'fa-solid fa-circle-check',
   VolumeXmark: 'fa-regular fa-volume-xmark',
   Sitemap: 'fa-regular fa-sitemap',
   CirclePlay: 'fa-regular fa-circle-play',
@@ -415,6 +444,19 @@ export const fontAwesomeIcons = {
   FolderGear: 'fa-solid fa-folder-gear',
   MessagesQuestion: 'fa-solid fa-messages-question',
   ArrowRightFromBracket: 'fa-solid fa-arrow-right-from-bracket',
+  File: 'fa-regular fa-file',
+  FileAudio: 'fa-regular fa-file-audio',
+  FileArrowDown: 'fa-regular fa-file-arrow-down',
+  FileWord: 'fa-regular fa-file-word',
+  FilePdf: 'fa-regular fa-file-pdf',
+  FileZipper: 'fa-regular fa-file-zipper',
+  FileCode: 'fa-regular fa-file-code',
+  FileExcel: 'fa-regular fa-file-excel',
+  FilePowerpoint: 'fa-regular fa-file-powerpoint',
+  FileVideo: 'fa-regular fa-file-video',
+  FileCsv: 'fa-regular fa-file-csv',
+  FileLines: 'fa-regular fa-file-lines',
+  ArrowDownToLine: 'fa-regular fa-arrow-down-to-line',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

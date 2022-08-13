@@ -183,7 +183,7 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     container: {
       flex: 1,
-      backgroundColor: colors.gray1,
+      backgroundColor: colors.gray5,
     },
     searchContainer: {
       zIndex: 2,

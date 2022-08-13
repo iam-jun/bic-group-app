@@ -69,7 +69,7 @@ const MenuSettings = () => {
     <View style={styles.container}>
       <View style={styles.row}>
         <Text.SubtitleM style={styles.textHeader} useI18n>menu:title_settings</Text.SubtitleM>
-        <Text.SubtitleXS>{getEnv('APP_VERSION')}</Text.SubtitleXS>
+        <Text.SubtitleXS onPress={() => { rootNavigation.navigate(menuStack.componentCollection) }}>{getEnv('APP_VERSION')}</Text.SubtitleXS>
       </View>
       {settingItems.map(renderItem)}
       <Button style={styles.itemContainer} onPress={onLogout}>

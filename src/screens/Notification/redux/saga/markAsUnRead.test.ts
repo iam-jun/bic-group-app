@@ -29,7 +29,6 @@ describe('Mark as unread notification saga', () => {
       payload: undefined,
     };
     return (
-      // @ts-ignorets
       expectSaga(markAsUnRead, action)
         .run()
         .then(({ allEffects }: any) => {
@@ -51,7 +50,6 @@ describe('Mark as unread notification saga', () => {
     newListNoti[action.payload.id as any].isRead = false;
 
     return (
-      // @ts-ignorets
       expectSaga(markAsUnRead, action)
         .provide([
           [matchers.call.fn(notificationsDataHelper.markAsUnRead), response],
@@ -89,7 +87,6 @@ describe('Mark as unread notification saga', () => {
       },
     };
 
-    // @ts-ignore
     return expectSaga(markAsUnRead, action)
       .provide([
         [

@@ -99,7 +99,6 @@ describe('SearchResult component', () => {
   it('should render list search result', () => {
     const storeData = { ...initialState };
     storeData.home.newsfeedSearch.loadingResult = false;
-    // @ts-ignore
     storeData.home.newsfeedSearch.searchResults = [
       { ...POST_DETAIL_2, highlight: '==Important== post' },
     ] as any;

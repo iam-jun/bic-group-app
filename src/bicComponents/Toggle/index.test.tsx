@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Toggle from '.'
-import {fireEvent, renderWithRedux} from '../../test/testUtils'
+import { fireEvent, renderWithRedux } from '../../test/testUtils'
 
 describe('Toggle component', () => {
   it('should render active state with default size small', () => {

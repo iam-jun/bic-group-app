@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 import MockedNavigator from '~/test/MockedNavigator';
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
@@ -27,7 +28,6 @@ describe('GroupDetail component', () => {
     const state = { ...initialState };
     state.groups.loadingPage = false;
     state.groups.groupDetail = { ...groupDetailData };
-    // @ts-ignore
     state.auth.user = { username: 'testname' };
     const store = createTestStore(state);
 
@@ -47,7 +47,7 @@ describe('GroupDetail component', () => {
     const state = { ...initialState };
     state.groups.groupDetail = {
       ...groupDetailData,
-      join_status: 1,
+      joinStatus: 1,
       group: { ...groupDetailData.group, privacy: 'PRIVATE' },
     };
     const store = createTestStore(state);
@@ -80,7 +80,7 @@ describe('GroupDetail component', () => {
     state.groups.loadingPage = false;
     state.groups.groupDetail = {
       ...groupDetailData,
-      join_status: 1,
+      joinStatus: 1,
       group: { ...groupDetailData.group, privacy: 'SECRET' },
     };
     const store = createTestStore(state);
