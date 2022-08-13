@@ -12,6 +12,7 @@ exports[`UserHeader component renders correctly 1`] = `
   testID="user_profile"
 >
   <Text
+    numberOfLines={1}
     style={
       Array [
         Object {
@@ -35,8 +36,13 @@ exports[`UserHeader component renders correctly 1`] = `
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 13,
         },
-        Object {},
-        undefined,
+        Object {
+          "color": "#353E6E",
+        },
+        Object {
+          "marginTop": 8,
+          "textAlign": "center",
+        },
       ]
     }
     testID="user_profile.username"
@@ -45,9 +51,15 @@ exports[`UserHeader component renders correctly 1`] = `
   </Text>
   <View
     style={
-      Object {
-        "alignItems": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+        },
+        Object {
+          "marginTop": 8,
+          "textAlign": "center",
+        },
+      ]
     }
   >
     <Text
@@ -85,7 +97,7 @@ exports[`UserHeader component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#353E6E",
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },

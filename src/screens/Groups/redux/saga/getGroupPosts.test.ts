@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
@@ -15,7 +16,6 @@ describe('Get group posts saga', () => {
     const state = { groups: { posts: { data: [], offset: 0 } } };
     const respones = { data: { list: [] } };
 
-    // @ts-ignore
     return expectSaga(getGroupPosts, action)
       .withState(state)
       .provide([[matchers.call.fn(groupsDataHelper.getGroupPosts), respones]])
@@ -32,13 +32,14 @@ describe('Get group posts saga', () => {
     const state = { groups: { posts: { data: [], offset: 0 } } };
     const respones = { data: { list: groupPostData } };
 
-    // @ts-ignore
     return expectSaga(getGroupPosts, action)
       .withState(state)
       .provide([
         [matchers.call.fn(groupsDataHelper.getGroupPosts), respones],
       ])
+      // @ts-ignore
       .put(postActions.addToAllPosts({ data: respones.data.list }))
+    // @ts-ignore
       .put(groupsActions.setGroupPosts(respones.data.list))
       .put(groupsActions.getGroupPosts(action.payload))
       .put(groupsActions.setLoadingPage(false))
@@ -52,7 +53,6 @@ describe('Get group posts saga', () => {
     const state = { groups: { posts: { data: [{}, {}], offset: 0 } } };
     const respones = { data: { list: [] } };
 
-    // @ts-ignore
     return expectSaga(getGroupPosts, action)
       .withState(state)
       .provide([[matchers.call.fn(groupsDataHelper.getGroupPosts), respones]])
@@ -72,7 +72,7 @@ describe('Get group posts saga', () => {
       code: 500,
       message: 'ERROR!!!!',
     };
-    // @ts-ignore
+
     return expectSaga(getGroupPosts, action)
       .withState(state)
       .provide([

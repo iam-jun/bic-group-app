@@ -161,33 +161,29 @@ const UploadingFile: FC<UploadingFileProps> = ({
 
   return (
     <View style={[styles.container, style]}>
-      <Icon size={40} icon={icon} />
+      <Icon size={22} icon={icon} style={styles.iconFile} />
       <View style={styles.contentContainer}>
-        <Text.BodyS
-          color={error ? colors.red60 : colors.neutral80}
+        <Text.SubtitleXS
+          color={colors.neutral80}
           numberOfLines={1}
+          ellipsizeMode="middle"
         >
           {fileName}
-        </Text.BodyS>
+          <Text.BodyXS color={colors.neutral40}>{`  (${formatBytes(file?.size || 0)})`}</Text.BodyXS>
+        </Text.SubtitleXS>
         {error ? (
-          <Text.BodyS useI18n color={colors.red60}>
+          <Text.BodyXSMedium useI18n color={colors.red40}>
             {error}
-          </Text.BodyS>
-        ) : (
-          <Text.BodyS
+          </Text.BodyXSMedium>
+        ) : uploading ? (
+          <Text.BodyXSMedium
             style={{ justifyContent: 'center' }}
             color={colors.gray50}
             numberOfLines={1}
           >
-            {fileExt}
-            {' '}
-            ∙
-            {' '}
-            {uploading
-              ? t('common:text_uploading')
-              : formatBytes(file?.size || 0)}
-          </Text.BodyS>
-        )}
+            {t('common:text_uploading')}
+          </Text.BodyXSMedium>
+        ) : null}
       </View>
       {!!error && (
         <Button
@@ -197,7 +193,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
           }}
           onPress={onPressRetry}
         >
-          <Icon icon="RotateRight" />
+          <Icon icon="RotateRight" size={16} tintColor={colors.neutral40} />
         </Button>
       )}
       {!disableClose && (
@@ -207,7 +203,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
           }}
           onPress={onPressClose}
         >
-          <Icon icon="iconCloseSmall" />
+          <Icon size={16} icon="iconCloseSmall" tintColor={colors.neutral40} />
         </Button>
       )}
       {showDownload && !!file.url && (
@@ -217,7 +213,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
           }}
           onPress={_onPressDownload}
         >
-          <Icon icon="download" />
+          <Icon icon="ArrowDownToLine" size={16} tintColor={colors.neutral40} />
         </Button>
       )}
     </View>
@@ -231,14 +227,17 @@ const createStyle = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       marginHorizontal: spacing.padding.large,
-      padding: spacing.padding.small,
-      borderColor: colors.neutral5,
-      borderWidth: 1,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.base,
       borderRadius: spacing.borderRadius.small,
+      backgroundColor: colors.gray1,
     },
     contentContainer: {
       padding: spacing.padding.tiny,
       flex: 1,
+    },
+    iconFile: {
+      marginRight: spacing.margin.tiny,
     },
   });
 };

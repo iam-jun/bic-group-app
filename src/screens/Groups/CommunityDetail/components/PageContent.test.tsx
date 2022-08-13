@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 
 import { renderWithRedux, createTestStore, fireEvent } from '~/test/testUtils';

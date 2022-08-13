@@ -28,7 +28,7 @@ describe('GroupContent component', () => {
 
   it('should not render Post button when user is not a group member correctly', () => {
     const state = { ...initialState };
-    state.groups.groupDetail = { ...groupDetailData, join_status: 1 };
+    state.groups.groupDetail = { ...groupDetailData, joinStatus: 1 };
     const store = createTestStore(state);
 
     const { queryByTestId } = renderWithRedux(
@@ -67,7 +67,7 @@ describe('GroupContent component', () => {
 
   it('renders Members button correctly when user is not a member but the group is public', () => {
     const state = { ...initialState };
-    state.groups.groupDetail = { ...groupDetailData, join_status: 1 };
+    state.groups.groupDetail = { ...groupDetailData, joinStatus: 1 };
     const store = createTestStore(state);
 
     const { getByTestId } = renderWithRedux(
@@ -82,7 +82,7 @@ describe('GroupContent component', () => {
     const state = { ...initialState };
     state.groups.groupDetail = {
       ...groupDetailData,
-      join_status: 1,
+      joinStatus: 1,
       group: { ...groupDetailData.group, privacy: 'PRIVATE' },
     };
     const store = createTestStore(state);
@@ -187,7 +187,6 @@ describe('GroupContent component', () => {
   it('should render posts data correctly', () => {
     const state = { ...initialState };
     state.groups.groupDetail = { ...groupDetailData };
-    // @ts-ignore
     state.groups.posts.data = [...groupPostData];
     const store = createTestStore(state);
     const wrapper = renderWithRedux(

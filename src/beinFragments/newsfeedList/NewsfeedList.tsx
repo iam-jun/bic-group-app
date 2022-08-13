@@ -36,6 +36,7 @@ import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
 import { IPostActivity } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -335,6 +336,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
             <NewsfeedListHeader HeaderComponent={HeaderComponent} />
           }
           ListFooterComponent={renderFooter}
+          ItemSeparatorComponent={() => <ViewSpacing height={8} />}
         />
       )}
       {renderEmpty()}
@@ -379,7 +381,7 @@ const NewsfeedListEmpty = ({ styles, HeaderComponent, theme }: any) => (
 const createStyle = (
   theme: ExtendedTheme, insets: any,
 ) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -419,6 +421,7 @@ const createStyle = (
     },
     itemStyle: {
       marginBottom: spacing.margin.small,
+      ...elevations.e1,
     },
   });
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 
 import i18next from 'i18next';
@@ -26,7 +27,6 @@ describe('MemberOptionsMenu component', () => {
     const spy = jest.spyOn(helper, 'checkLastAdmin');
 
     const state = { ...initialState };
-    // @ts-ignore
     state.auth.user = { username: 'testname1' };
     const store = createTestStore(state);
 
@@ -51,8 +51,8 @@ describe('MemberOptionsMenu component', () => {
     const spy = jest.spyOn(helper, 'checkLastAdmin');
 
     const state = { ...initialState };
-    state.groups.groupDetail.canManageMember = true;
     // @ts-ignore
+    state.groups.groupDetail.canManageMember = true;
     state.auth.user = { username: 'testname1' };
     const store = createTestStore(state);
     const selectedMember = {
@@ -78,8 +78,8 @@ describe('MemberOptionsMenu component', () => {
 
   it('should not render Remove member option correctly when admins click on themselves', () => {
     const state = { ...initialState };
-    state.groups.groupDetail.canManageMember = true;
     // @ts-ignore
+    state.groups.groupDetail.canManageMember = true;
     state.auth.user = { username: 'testname1' };
     const store = createTestStore(state);
     const selectedMember = {
@@ -168,6 +168,7 @@ describe('MemberOptionsMenu component', () => {
 
   it('should render Remove admin option correctly', () => {
     const state = { ...initialState };
+    // @ts-ignore
     state.groups.groupDetail.canSetting = true;
     const store = createTestStore(state);
 
@@ -192,6 +193,7 @@ describe('MemberOptionsMenu component', () => {
 
   it('should dispatch alertRemovingAdmin correctly', () => {
     const state = { ...initialState };
+    // @ts-ignore
     state.groups.groupDetail.canSetting = true;
     state.groups.groupMembers = {
       // @ts-ignore
@@ -223,6 +225,7 @@ describe('MemberOptionsMenu component', () => {
     const spy = jest.spyOn(modalActions, 'showHideToastMessage');
 
     const state = { ...initialState };
+    // @ts-ignore
     state.groups.groupDetail.canSetting = true;
     state.groups.groupMembers = { groupAdmin: { userCount: 1 } } as any;
     state.auth.user = { username: 'testname1' } as any;
@@ -254,6 +257,7 @@ describe('MemberOptionsMenu component', () => {
     const spy = jest.spyOn(modalActions, 'showAlert');
 
     const state = { ...initialState };
+    // @ts-ignore
     state.groups.groupDetail.canSetting = true;
     state.auth.user = { username: 'testname1' } as any;
     const store = createTestStore(state);

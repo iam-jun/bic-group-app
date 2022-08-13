@@ -4,14 +4,16 @@ import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
-import Divider from '~/beinComponents/Divider';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import { IReactionCounts } from '~/interfaces/IPost';
 import { IconType } from '~/resources/icons';
 import * as modalActions from '~/store/modal/actions';
-import { validateReactionCount } from './helper';
+import { getTotalReactions, validateReactionCount } from './helper';
 import dimension from '~/theme/dimension';
 import Text from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
+import { spacing } from '~/theme';
+import { formatLargeNumber } from '~/utils/formatData';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -38,8 +40,13 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
+  const { t } = useBaseHook();
 
   const validReactionCount = validateReactionCount(reactionCounts);
+  const numberOfReactions = formatLargeNumber(getTotalReactions(reactionCounts, 'user'))
+  const labelReactionCount = `${
+    numberOfReactions ? `${numberOfReactions} ` : ''
+  }${t('post:button_react')}`;
 
   const onEmojiSelected = (
     emoji: string, key?: string,
@@ -82,12 +89,12 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
         leftIcon={icon}
         leftIconProps={{
           icon,
-          size: 14,
-          tintColor: colors.gray50,
+          size: 20,
+          tintColor: colors.neutral40,
         }}
         textProps={{
-          variant: 'bodySMedium',
-          color: colors.gray50,
+          variant: 'bodyM',
+          color: colors.neutral80,
         }}
         style={styles.buttonReact}
       >
@@ -97,18 +104,17 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   );
 
   return (
-    <View style={styles.reactButtons}>
+    <View style={[styles.reactButtons, !canComment && !canReact && styles.disbaledReactComment]}>
       {(validReactionCount && !!canReact) && (
         <>
           {renderReactButtonItem(
-            'post:button_react',
+            labelReactionCount,
             'iconReact',
             onPressReact,
             onPressReact,
             false,
             btnReactTestID,
           )}
-          <Divider style={{ height: '66%', alignSelf: 'center' }} horizontal />
         </>
       )}
       {!!canComment
@@ -121,8 +127,8 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
          btnCommentTestID,
        )}
       {!canComment && !canReact && (
-      <View style={styles.emptyView}>
-        <Text.BodyS color={theme.colors.gray70} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
+      <View style={[styles.emptyView, styles.disbaledReactComment]}>
+        <Text.BodyS color={theme.colors.neutral20} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
       </View>
       )}
     </View>
@@ -132,13 +138,14 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {},
     reactButtons: {
       flexDirection: 'row',
       height: dimension?.commentBarHeight,
-      borderTopWidth: 1,
-      borderColor: colors.neutral5,
       alignItems: 'center',
+    },
+    disbaledReactComment: {
+      height: 36,
+      marginTop: spacing.margin.tiny,
     },
     buttonReactContainer: {
       flex: 1,
@@ -150,9 +157,8 @@ const createStyle = (theme: ExtendedTheme) => {
       alignItems: 'center',
     },
     emptyView: {
-      backgroundColor: colors.gray1,
+      backgroundColor: colors.neutral2,
       flex: 1,
-      height: dimension?.commentBarHeight,
       alignItems: 'center',
       justifyContent: 'center',
     },

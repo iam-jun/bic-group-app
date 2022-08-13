@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { cleanup } from '@testing-library/react-native';
@@ -76,7 +77,7 @@ describe('Edit Work Experience Saga', () => {
     return expectSaga(editWorkExperience, {
       ...action,
       callback: () => {
-        console.log('callback');
+        // console.log('callback');
       },
     })
       .provide([

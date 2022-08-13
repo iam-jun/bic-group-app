@@ -2,7 +2,7 @@ import React from 'react';
 
 import { cleanup, renderWithRedux, fireEvent } from '~/test/testUtils';
 import colors from '~/theme/theme';
-import {Default} from './index.stories';
+import { Default } from './index.stories';
 
 afterEach(cleanup);
 
@@ -11,8 +11,7 @@ describe('Reaction component', () => {
 
   it('renders correctly', () => {
     const rendered = renderWithRedux(
-      <Default {...Default.args}
-      />,
+      <Default {...Default.args} />,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
   });
@@ -20,8 +19,8 @@ describe('Reaction component', () => {
   it('should call prop onActionPress to select Emoji correctly', () => {
     const { getByTestId } = renderWithRedux(
       <Default
-      {...Default.args}
-        selected={true}
+        {...Default.args}
+        selected
         onActionPress={onActionPress}
       />,
     );
@@ -49,13 +48,13 @@ describe('Reaction component', () => {
   it('renders style correctly', () => {
     const { getByTestId } = renderWithRedux(
       <Default
-       {...Default.args}
-        style={{ backgroundColor: "red" }}
+        {...Default.args}
+        style={{ backgroundColor: 'red' }}
       />,
     );
 
     const reactionComponent = getByTestId('reaction');
-    expect(reactionComponent.props.style.backgroundColor).toBe("red");
+    expect(reactionComponent.props.style.backgroundColor).toBe('red');
   });
 
   it('renders disableUpdateState with selected=false correctly', () => {

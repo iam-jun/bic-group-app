@@ -18,6 +18,7 @@ import { IGetFile } from '~/services/fileUploader';
 
 import spacing from '~/theme/spacing';
 import { formatBytes } from '~/utils/formatData';
+import Icon from '~/beinComponents/Icon';
 
 interface Props extends Partial<UploadingFileProps> {
   files: IGetFile[] | IActivityDataFile[];
@@ -39,9 +40,7 @@ const FilesView = ({
   const { t } = useBaseHook();
   const styles = themeStyles(theme);
   const [collapsed, setCollaped] = useState(true);
-  const topData = files.slice(
-    0, 5,
-  );
+  const topData = files.slice(0, 5);
 
   const bottomData = files.length > 5 ? files.slice(
     5, files.length - 1,
@@ -63,7 +62,7 @@ const FilesView = ({
         {...props}
       />
       {index < files.length - 1 && (
-      <ViewSpacing height={spacing.margin.small} />
+        <ViewSpacing height={spacing.margin.small} />
       )}
     </View>
   ));
@@ -84,9 +83,10 @@ const FilesView = ({
           </Collapsible>
 
           <ButtonWrapper onPress={toggleCollapse}>
-            <Text.BodyS style={styles.collapsibleText}>
-              {t(`common:${collapsed ? 'text_show_all' : 'text_show_less'}`)}
-            </Text.BodyS>
+            <Icon icon={collapsed ? 'CirclePlus' : 'CircleMinus'} size={18} tintColor={theme.colors.neutral40} style={styles.iconPlus} />
+            <Text.LinkM style={styles.collapsibleText}>
+              {t(`common:${collapsed ? 'text_show_more' : 'text_show_less'}`)}
+            </Text.LinkM>
           </ButtonWrapper>
         </View>
       )}
@@ -115,7 +115,10 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     collapsibleText: {
       marginVertical: spacing.margin.small,
-      color: colors.gray50,
+      color: colors.neutral80,
+    },
+    iconPlus: {
+      marginRight: spacing.margin.small,
     },
   });
 };

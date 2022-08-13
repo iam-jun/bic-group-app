@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 import Tag from '.';
 

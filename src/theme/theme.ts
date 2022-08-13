@@ -67,7 +67,8 @@ export const light: ExtendedTheme = {
     red50: '#F42A3E',
     red60: '#E90C22',
 
-    green1: '#EFFDF4',
+    green1: '#FAFFFC',
+    green2: '#EFFDF4',
     green5: '#E5F9EC',
     green10: '#D0F1DB',
     green20: '#8ED6A4',
@@ -175,7 +176,8 @@ export const dark: ExtendedTheme = {
     red50: '#F42A3E',
     red60: '#E90C22',
 
-    green1: '#EFFDF4',
+    green1: '#FAFFFC',
+    green2: '#EFFDF4',
     green5: '#E5F9EC',
     green10: '#D0F1DB',
     green20: '#8ED6A4',

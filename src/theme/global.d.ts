@@ -71,6 +71,7 @@ declare module '@react-navigation/native' {
       red60: string;
 
       green1: string;
+      green2: string;
       green5: string;
       green10: string;
       green20: string;

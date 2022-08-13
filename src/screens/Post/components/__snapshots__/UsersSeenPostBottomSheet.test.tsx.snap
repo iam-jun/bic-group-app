@@ -30,7 +30,7 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
       ]
     }
   >
-    Seen by 
+    Interested by 
     0
   </Text>
   <View
@@ -109,7 +109,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
       ]
     }
   >
-    Seen by 
+    Interested by 
     2
   </Text>
   <View

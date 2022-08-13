@@ -56,7 +56,7 @@ export const communityDetailData = {
 };
 
 export const previewMemberDetail = {
-  id: 1,
+  id: '1',
   username: 'test',
   fullname: 'Test Name',
   avatar:

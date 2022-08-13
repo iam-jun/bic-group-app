@@ -77,31 +77,30 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
       >
         <Avatar.Medium isRounded source={avatar} />
       </TouchableOpacity>
-      <View style={{ flex: 1 }}>
+      <View style={styles.flex1}>
         <TouchableOpacity
           disabled={!isInternetReachable}
           onPress={onPressActor}
           style={{ alignSelf: 'flex-start' }}
         >
-          <Text.BodySMedium testID="post_view_header.actor">
+          <Text.H5 numberOfLines={1} testID="post_view_header.actor">
             {actorName}
-          </Text.BodySMedium>
+          </Text.H5>
         </TouchableOpacity>
-        <View style={{ flexDirection: 'row' }}>
-          <Text.BodySMedium useI18n color={colors.gray50} style={styles.textTo}>
+        <View style={styles.textToAudience}>
+          <Text.H6 useI18n style={styles.textTo}>
             post:to
-          </Text.BodySMedium>
-          <Text.BodySMedium
+          </Text.H6>
+          <Text.H5
             testID="post_view_header.audiences"
             onPress={!isInternetReachable ? undefined : onPressShowAudiences}
           >
             {textAudiences}
-          </Text.BodySMedium>
+          </Text.H5>
         </View>
         <View style={styles.rowCenter}>
           <TimeView
-            textProps={{ variant: 'h6' }}
-            style={{ fontSize: 11 }}
+            textProps={{ variant: 'bodyXS', color: colors.neutral40 }}
             time={time}
           />
         </View>
@@ -145,7 +144,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingTop: spacing?.margin.small,
   },
+  flex1: { flex: 1 },
   rowCenter: { flexDirection: 'row', alignItems: 'center' },
+  textToAudience: {
+    flexDirection: 'row',
+    marginVertical: spacing.margin.tiny,
+    alignItems: 'center',
+  },
   textTo: {
     marginRight: spacing?.margin.tiny,
   },

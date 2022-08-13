@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as React from 'react';
 import { cleanup, waitFor } from '@testing-library/react-native';
 
@@ -142,6 +143,7 @@ describe('ReactionDetailBottomSheet component', () => {
     // @ts-ignore
     storeData.modal.reactionDetailBottomSheet = {
       ...fake_data,
+      // @ts-ignore
       getDataPromise: _getDataPromise,
     };
     const store = mockStore(storeData);
@@ -167,6 +169,7 @@ describe('ReactionDetailBottomSheet component', () => {
     // @ts-ignore
     storeData.modal.reactionDetailBottomSheet = {
       ...fake_data,
+      // @ts-ignore
       getDataPromise: getDataPromiseFail,
       isOpen: false,
     };

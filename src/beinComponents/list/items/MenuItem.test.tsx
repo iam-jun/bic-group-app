@@ -120,7 +120,6 @@ describe('Menu Item component', () => {
 
   it('should render badge Number when type= draftPost', () => {
     const storeData = { ...initialState };
-    // @ts-ignore
     storeData.post.draftPosts.posts = [{}];
     const store = mockStore(storeData);
 
@@ -136,7 +135,6 @@ describe('Menu Item component', () => {
 
   it('should render badge Number when type= draftPost and draftPost.length > 9', () => {
     const storeData = { ...initialState };
-    // @ts-ignore
     storeData.post.draftPosts.posts = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
     const store = mockStore(storeData);
 

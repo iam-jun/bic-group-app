@@ -45,7 +45,6 @@ describe('Group Item component', () => {
   };
 
   it('renders correctly', () => {
-    // @ts-ignore
     const rendered = renderWithRedux(<GroupItem {...groupItemData} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
@@ -53,7 +52,6 @@ describe('Group Item component', () => {
   it('should call props onPressItem', () => {
     const onPress = jest.fn();
 
-    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem {...groupItemData} onPressItem={onPress} />,
     );
@@ -67,7 +65,6 @@ describe('Group Item component', () => {
   it('should render UI Level when uiLevel > 0', () => {
     const onPress = jest.fn();
 
-    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem {...groupItemData} uiLevel={1} onPressItem={onPress} />,
     );
@@ -78,7 +75,6 @@ describe('Group Item component', () => {
   });
 
   it('should render toggle button when childrenUiIds.length > 0', () => {
-    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem
         {...groupItemData}
@@ -94,7 +90,6 @@ describe('Group Item component', () => {
   it('should call props onToggleItem when rendered toggle item', () => {
     const onPress = jest.fn();
 
-    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem
         {...groupItemData}
@@ -110,7 +105,6 @@ describe('Group Item component', () => {
   });
 
   it('should render null with props hide=true', () => {
-    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem {...groupItemData} hide />,
     ).toJSON();
@@ -119,7 +113,6 @@ describe('Group Item component', () => {
   });
 
   it('toggle should render null with props uiLevel < 0', () => {
-    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem {...groupItemData} uiLevel={-1} />,
     );
@@ -130,7 +123,6 @@ describe('Group Item component', () => {
   it('should call props onCheckedItem when rendered toggle item', () => {
     const onCheckedItem = jest.fn();
 
-    // @ts-ignore
     const rendered = renderWithRedux(
       <GroupItem
         {...groupItemData}
@@ -176,8 +168,15 @@ describe('Group Item component', () => {
       updatedAt: '2022-01-10T10:04:48.928Z',
       userCount: 24,
     };
-    // @ts-ignore
-    const rendered = renderWithRedux(<GroupItem {...fakeGroupItemData} />);
+
+    const rendered = renderWithRedux(<GroupItem
+      uiLevel={0}
+      isCollapsing={false}
+      childrenUiIds={[]}
+      hide={false}
+      isChecked={false}
+      {...fakeGroupItemData}
+    />);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 });

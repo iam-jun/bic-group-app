@@ -5,6 +5,7 @@ import i18next from 'i18next';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 
 import SettingItem from './SettingItem';
+import { IconType } from '~/resources/icons';
 
 afterEach(cleanup);
 
@@ -12,11 +13,10 @@ describe('SettingItem conponent', () => {
   const baseProps = {
     title: 'settings:title_name',
     subtitle: i18next.t('common:text_not_set'),
-    leftIcon: 'TextSize',
+    leftIcon: 'TextSize' as IconType,
   };
 
   it('renders correctly', () => {
-    // @ts-ignore
     const rendered = render(<SettingItem {...baseProps} />).toJSON();
 
     expect(rendered).toMatchSnapshot();
@@ -24,7 +24,6 @@ describe('SettingItem conponent', () => {
 
   it('should call props onPress', () => {
     const onPress = jest.fn();
-    // @ts-ignore
     const rendered = render(<SettingItem {...baseProps} onPress={onPress} />);
 
     const itemComp = rendered.getByTestId('edit_user_info.setting_item');
@@ -35,7 +34,6 @@ describe('SettingItem conponent', () => {
   });
 
   it('renders correctly testID', () => {
-    // @ts-ignore
     const rendered = render(<SettingItem {...baseProps} testID="test" />);
 
     const { getByTestId } = rendered;
@@ -45,7 +43,6 @@ describe('SettingItem conponent', () => {
   });
 
   it('should show SettingItem disabled', () => {
-    // @ts-ignore
     const rendered = render(
       <SettingItem {...baseProps} isTouchDisabled />,
     );
@@ -56,7 +53,6 @@ describe('SettingItem conponent', () => {
   });
 
   it('should render left, right component', () => {
-    // @ts-ignore
     const rendered = renderWithRedux(
       <SettingItem
         {...baseProps}
@@ -80,8 +76,7 @@ describe('SettingItem conponent', () => {
   });
 
   it('render without leftIcon', () => {
-    // @ts-ignore
-    const rendered = render(<SettingItem {...baseProps} leftIcon="" />);
+    const rendered = render(<SettingItem {...baseProps} leftIcon={undefined} />);
 
     const leftComponent = rendered.queryByTestId(
       'edit_user_info.setting_item.left_component',

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
@@ -42,6 +43,7 @@ describe('Update User Profile Image Saga', () => {
     return expectSaga(uploadImage, action)
       .put(menuActions.setLoadingAvatar(true))
       .provide([[matchers.call.fn(fileUploader.upload), avatar]])
+    // @ts-ignore
       .put(menuActions.editMyProfile(expectData))
       .run();
   });
@@ -81,6 +83,7 @@ describe('Update User Profile Image Saga', () => {
     return expectSaga(uploadImage, coverPhotoAction)
       .put(menuActions.setLoadingCover(true))
       .provide([[matchers.call.fn(fileUploader.upload), backgroundImgUrl]])
+    // @ts-ignore
       .put(menuActions.editMyProfile(expectData))
       .run();
   });

@@ -29,7 +29,6 @@ describe('Leave Group Saga', () => {
       },
     };
 
-    // @ts-ignore
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
@@ -40,7 +39,7 @@ describe('Leave Group Saga', () => {
         }),
       )
       .call(navigationReplace)
-      .put(groupsActions.getGroupDetail(action.payload))
+      .put(groupsActions.getGroupDetail({ groupId: action.payload }))
       .put(
         modalActions.showHideToastMessage({
           content: i18next.t(
@@ -59,7 +58,6 @@ describe('Leave Group Saga', () => {
       groups: { groupDetail: { group: { privacy: groupPrivacy.public } } },
     };
 
-    // @ts-ignore
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
@@ -70,7 +68,7 @@ describe('Leave Group Saga', () => {
         }),
       )
       .call(navigateToGroup, action.payload)
-      .put(groupsActions.getGroupDetail(action.payload))
+      .put(groupsActions.getGroupDetail({ groupId: action.payload }))
       .put(
         modalActions.showHideToastMessage({
           content: i18next.t(
@@ -90,7 +88,6 @@ describe('Leave Group Saga', () => {
     };
     const error = { meta: { message: 'Some error occurs!' } };
 
-    // @ts-ignore
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([

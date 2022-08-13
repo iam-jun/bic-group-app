@@ -11,12 +11,13 @@ describe('Get Communities saga', () => {
   it('should get communities successfully with response has list with element ', () => {
     const action = {
       type: 'test',
-      payload: {},
+      payload: {
+        id: '1',
+      },
     };
     const resp = { data: [GROUP_TREE] as any };
 
     return (
-      // @ts-ignorets
       expectSaga(getCommunityGroups, action)
         .provide([
           [matchers.call.fn(groupsDataHelper.getCommunityGroups), resp],
@@ -32,12 +33,11 @@ describe('Get Communities saga', () => {
   it('should get communities successfully with response has empty list', () => {
     const action = {
       type: 'test',
-      payload: {},
+      payload: { id: '1' },
     };
     const resp = { data: [] as any };
 
     return (
-      // @ts-ignorets
       expectSaga(getCommunityGroups, action)
         .provide([
           [matchers.call.fn(groupsDataHelper.getCommunityGroups), resp],
@@ -53,7 +53,7 @@ describe('Get Communities saga', () => {
   it('should call server and server throws an error', () => {
     const action = {
       type: 'test',
-      payload: {},
+      payload: { id: '1' },
     };
     const resp = {
       code: 'server_internal_error',
@@ -63,7 +63,6 @@ describe('Get Communities saga', () => {
       },
     };
 
-    // @ts-ignore
     return expectSaga(getCommunityGroups, action)
       .provide([
         [

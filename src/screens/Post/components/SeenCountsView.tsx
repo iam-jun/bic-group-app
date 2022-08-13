@@ -7,6 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useBaseHook } from '~/hooks';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
+import { formatLargeNumber } from '~/utils/formatData';
 
 export interface SeenCountsViewProps {
   onPress?: () => void;
@@ -21,9 +22,12 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
+  const peopleCount = formatLargeNumber(seenPeopleCount);
+
   const _onPress = () => {
     onPress?.();
   };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -31,14 +35,14 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
         activeOpacity={1}
         testID="seen_counts_view.touchable_opacity"
       >
-        <Text.SubtitleS
-          color={colors.gray50}
+        <Text.BodyS
+          color={colors.neutral40}
           numberOfLines={1}
           testID="seen_counts_view.show_text"
         >
           {t('post:label_seen_by')}
-          {seenPeopleCount}
-        </Text.SubtitleS>
+          <Text.BodySMedium color={colors.neutral40}>{peopleCount}</Text.BodySMedium>
+        </Text.BodyS>
       </TouchableOpacity>
     </View>
   );
@@ -47,8 +51,8 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-end',
-    paddingTop: spacing.padding.large,
-    paddingBottom: spacing.padding.tiny,
+    paddingTop: spacing.padding.base,
+    paddingBottom: spacing.padding.xSmall,
     paddingHorizontal: spacing.padding.large,
   },
 });
