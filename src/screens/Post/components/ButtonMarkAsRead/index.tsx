@@ -8,11 +8,10 @@ import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
-import icons from '~/resources/icons';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import spacing from '~/theme/spacing';
+import { spacing } from '~/theme';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
@@ -75,12 +74,14 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
       <Button.Secondary
         testID="button_mark_as_read.button"
         loading={loading}
-        color={colors.neutral1}
-        textColor={colors.neutral80}
+        color={colors.purple2}
+        textVariant="buttonL"
+        textColor={colors.purple50}
         disabled={markedReadPost}
-        colorDisabled={colors.white}
-        textColorDisabled={colors.gray50}
-        leftIcon={markedReadPost && icons.Check}
+        colorDisabled={colors.neutral2}
+        textColorDisabled={colors.neutral20}
+        leftIcon={markedReadPost && 'CircleCheckSolid'}
+        leftIconProps={{ icon: 'CircleCheckSolid', size: 22 }}
         onPress={onPressMarkAsRead}
       >
         {markedReadPost ? t('post:marked_as_read') : t('post:mark_as_read')}
@@ -93,10 +94,7 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      paddingVertical: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
-      borderTopWidth: 1,
-      borderColor: colors.neutral5,
+      marginTop: spacing.margin.small,
     },
   });
 };

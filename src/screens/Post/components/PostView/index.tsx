@@ -143,9 +143,9 @@ const _PostView: FC<PostViewProps> = ({
   const [isMarkSeenPost, setMarkSeenPost] = useState(false);
 
   const commentCount = formatLargeNumber(commentsCount);
-  const labelButtonComment = `${t('post:button_comment')}${
-    commentCount ? ` (${commentCount})` : ''
-  }`;
+  const labelButtonComment = `${
+    commentCount ? `${commentCount} ` : ''
+  }${t('post:button_comment')}`;
 
   const onPressShowAudiences = () => {
     const payload = { postId, fromStack: 'somewhere' };

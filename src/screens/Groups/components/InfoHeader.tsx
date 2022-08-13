@@ -128,7 +128,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     cover: {
       width: dimension.deviceWidth,
-      height: scaleCoverHeight(dimension.deviceWidth),
+      height: scaleCoverHeight(),
     },
     avatar: {
       position: 'absolute',

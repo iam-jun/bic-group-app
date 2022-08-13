@@ -7,7 +7,7 @@ const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
 
 // Cover image ratio -> 21:9
-export const scaleCoverHeight = (widthSize: number) => (widthSize / 21) * 9;
+export const scaleCoverHeight = (widthSize = DeviceWidth) => (widthSize / 21) * 9;
 
 export const groupProfileImageCropRatio = {
   // image crop ratio for cover photo: 25:11
