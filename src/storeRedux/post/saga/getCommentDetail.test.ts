@@ -10,7 +10,7 @@ import {
   allPosts,
   baseCommentData,
 } from '../../../test/mock_data/post';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postActions from '../actions';
 import getCommentDetail from './getCommentDetail';
 

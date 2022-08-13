@@ -6,7 +6,7 @@ import {
   IReaction,
 } from '~/interfaces/IPost';
 import * as modalActions from '~/storeRedux/modal/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import { IToastMessage } from '~/interfaces/common';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';

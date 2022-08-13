@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';

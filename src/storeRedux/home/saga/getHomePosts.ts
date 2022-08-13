@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { IPayloadGetHomePost } from '~/interfaces/IHome';
 import homeActions from '~/storeRedux/home/actions';
 import homeKeySelector from '~/storeRedux/home/keySelector';
-import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
+import homeDataHelper from '~/api/HomeDataHelper';
 import postActions from '~/storeRedux/post/actions';
 
 export default function* getHomePosts({

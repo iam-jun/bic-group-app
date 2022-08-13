@@ -1,6 +1,6 @@
 import { call } from 'redux-saga/effects';
 
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import showError from '~/storeRedux/commonSaga/showError';
 
 export default function* declineAllCommunityMemberRequests({

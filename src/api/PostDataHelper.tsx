@@ -1,5 +1,5 @@
-import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
-import { makeHttpRequest, withHttpRequestPromise } from '~/services/httpApiRequest';
+import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
+import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import {
   IParamDeleteReaction,
   ICommentData,

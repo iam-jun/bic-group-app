@@ -1,5 +1,5 @@
 import { ICommunity } from '~/interfaces/ICommunity';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import { createZustand } from '~/store/utils';
 
 interface JoinedCommunitiesState {

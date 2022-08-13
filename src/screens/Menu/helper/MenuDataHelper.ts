@@ -1,7 +1,7 @@
-import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
+import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
 import { IUserEdit } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
-import { withHttpRequestPromise } from '~/services/httpApiRequest';
+import { withHttpRequestPromise } from '~/api/apiRequest';
 
 export const menuApiConfig = {
   getUserProfile: (

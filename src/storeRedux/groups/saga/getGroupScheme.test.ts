@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getGroupScheme from './getGroupScheme';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '../../commonSaga/showError';
 import { groupScheme } from '../../../test/mock_data/scheme';
 import API_ERROR_CODE from '../../../constants/apiErrorCode';

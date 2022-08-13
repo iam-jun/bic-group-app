@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import { put, select } from 'redux-saga/effects';
 import { IPayloadCreateComment, IReaction } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import showError from '~/storeRedux/commonSaga/showError';
 import addChildCommentToCommentsOfPost from '~/storeRedux/post/saga/addChildCommentToCommentsOfPost';
 import { getMentionsFromContent } from '~/screens/Post/helper/PostUtils';

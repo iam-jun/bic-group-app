@@ -1,7 +1,7 @@
 import { call, put, select } from 'redux-saga/effects';
 import { IObject } from '~/interfaces/common';
 import { IParamSearchMentionAudiences } from '~/interfaces/IPost';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import actions from '../actions';
 
 export default function* runSearch({

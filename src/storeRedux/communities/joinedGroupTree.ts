@@ -1,7 +1,7 @@
 import {
   createStore, withFlipper, withImmer, withPersist,
 } from '~/store/utils';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import { IGroup } from '~/interfaces/IGroup';
 
 interface JoinedGroupTreeState {

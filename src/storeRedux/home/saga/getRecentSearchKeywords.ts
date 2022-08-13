@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { IParamGetRecentSearchKeywords } from '~/interfaces/IHome';
 import homeActions from '~/storeRedux/home/actions';
-import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
+import homeDataHelper from '~/api/HomeDataHelper';
 
 export default function* getRecentSearchKeywords({
   payload,

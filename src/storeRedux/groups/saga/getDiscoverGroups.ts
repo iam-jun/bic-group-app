@@ -4,7 +4,7 @@ import appConfig from '~/configs/appConfig';
 
 import { IParamGetDiscoverGroups } from '~/interfaces/ICommunity';
 import actions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '~/storeRedux/commonSaga/showError';
 import { mapItems } from '../../../screens/Groups/helper/mapper';
 

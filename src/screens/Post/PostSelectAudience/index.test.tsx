@@ -7,7 +7,7 @@ import {
   waitForUpdateRedux,
 } from '~/test/testUtils';
 import PostSelectAudience from '.';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import initialState from '~/storeRedux/initialState';
 
 const mockGroupItem = {

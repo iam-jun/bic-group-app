@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getDraftPosts from './getDraftPosts';
 import { IPayloadGetDraftPosts } from '../../../interfaces/IPost';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postActions from '../actions';
 import {
   LIST_DRAFT_POST,

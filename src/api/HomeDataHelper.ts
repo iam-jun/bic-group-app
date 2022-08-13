@@ -1,5 +1,5 @@
-import { makeHttpRequest } from '~/services/httpApiRequest';
-import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
+import { makeHttpRequest } from '~/api/apiRequest';
+import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IParamGetFeed,
   IParamGetRecentSearchKeywords,

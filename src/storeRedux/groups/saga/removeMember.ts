@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { put, call } from 'redux-saga/effects';
 
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
 import { refreshGroupMembers } from './index';

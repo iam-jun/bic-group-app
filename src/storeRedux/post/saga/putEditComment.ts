@@ -1,7 +1,7 @@
 import { put, select } from 'redux-saga/effects';
 import { IPayloadPutEditComment } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
 import { timeOut } from '~/utils/common';

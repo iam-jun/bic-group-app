@@ -3,7 +3,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import postKeySelector from '../keySelector';
 import postActions from '../actions';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 
 export default function* getDraftPosts({

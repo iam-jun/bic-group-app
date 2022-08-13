@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import i18next from 'i18next';
 
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '../../commonSaga/showError';
 import joinCommunity from './joinCommunity';
 import groupsActions from '../actions';

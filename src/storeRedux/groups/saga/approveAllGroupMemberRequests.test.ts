@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import modalActions from '../../modal/actions';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 
 describe('approveAllGroupMemberRequests saga', () => {
   const groupId = 1;

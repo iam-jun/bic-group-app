@@ -3,7 +3,7 @@ import { put, call } from 'redux-saga/effects';
 import { IToastMessage } from '~/interfaces/common';
 import { IGroupRemoveAdmin } from '~/interfaces/IGroup';
 import { refreshGroupMembers } from './index';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import * as modalActions from '~/storeRedux/modal/actions';
 import showError from '~/storeRedux/commonSaga/showError';
 

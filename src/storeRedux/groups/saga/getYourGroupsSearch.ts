@@ -1,7 +1,7 @@
 import { call, put, select } from 'redux-saga/effects';
 
 import { IGetYourGroupsSearch } from '~/interfaces/IGroup';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import groupsActions from '../actions';
 
 export default function* getYourGroupsSearch({

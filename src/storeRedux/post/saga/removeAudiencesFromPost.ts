@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 
 import { IPayloadRemoveAudiencesOfPost } from '~/interfaces/IPost';
 import modalActions from '~/storeRedux/modal/actions';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postActions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
 

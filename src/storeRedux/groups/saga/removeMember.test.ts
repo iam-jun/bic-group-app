@@ -3,7 +3,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import removeMember from './removeMember';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import * as modalActions from '../../modal/actions';
 import { refreshGroupMembers } from './index';
 

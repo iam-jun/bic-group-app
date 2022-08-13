@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
 import { useBaseHook } from '~/hooks';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import postActions from '~/storeRedux/post/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';

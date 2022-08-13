@@ -10,7 +10,7 @@ import menuReducer from '~/storeRedux/menu/reducer';
 import notificationsReducer from '~/storeRedux/notification/reducer';
 import postReducer from '~/storeRedux/post/reducer';
 
-import { makeRemovePushTokenRequest } from '~/services/httpApiRequest';
+import { makeRemovePushTokenRequest } from '~/api/apiRequest';
 import { ActionTypes } from '~/utils';
 import auth from './auth/reducer';
 import noInternetReducer from './network/reducer';

@@ -3,7 +3,7 @@ import appConfig from '~/configs/appConfig';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import { IJoiningMember } from '~/interfaces/IGroup';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import { mapItems } from '../../../screens/Groups/helper/mapper';
 import groupsActions from '../actions';
 

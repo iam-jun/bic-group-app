@@ -1,7 +1,7 @@
 import { cloneDeep, get } from 'lodash';
 import { call, put, select } from 'redux-saga/effects';
 
-import notificationsDataHelper from '../../../screens/Notification/helper/NotificationDataHelper';
+import notificationsDataHelper from '../../../api/NotificationDataHelper';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 

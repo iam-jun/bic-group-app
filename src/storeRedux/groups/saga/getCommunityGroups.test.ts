@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import * as modalActions from '../../modal/actions';
 import getCommunityGroups from './getCommunityGroups';
 import { GROUP_TREE } from '../../../test/mock_data/group';

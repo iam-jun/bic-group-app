@@ -1,7 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { throwError } from 'redux-saga-test-plan/providers';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import homeDataHelper from '../../../screens/Home/helper/HomeDataHelper';
+import homeDataHelper from '../../../api/HomeDataHelper';
 import homeActions from '../actions';
 import getRecentSearchKeywords from './getRecentSearchKeywords';
 

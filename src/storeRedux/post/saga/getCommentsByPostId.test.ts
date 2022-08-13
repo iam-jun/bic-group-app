@@ -8,7 +8,7 @@ import {
   allCommentsByParentIds,
   allPosts,
 } from '../../../test/mock_data/post';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postActions from '../actions';
 import getCommentsByPostId from './getCommentsByPostId';
 

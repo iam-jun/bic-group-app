@@ -3,7 +3,7 @@ import { put, select, call } from 'redux-saga/effects';
 import actions from '~/storeRedux/groups/actions';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import { groupPrivacy } from '~/constants/privacyTypes';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import { ICommunity } from '~/interfaces/ICommunity';
 
 export default function* getCommunityDetail({

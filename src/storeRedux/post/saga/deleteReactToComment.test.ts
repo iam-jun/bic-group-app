@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
 import { COMMENT_HAS_REACTION } from '../../../test/mock_data/post';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postActions from '../actions';
 import modalActions from '../../modal/actions';
 import deleteReactToComment from './deleteReactToComment';

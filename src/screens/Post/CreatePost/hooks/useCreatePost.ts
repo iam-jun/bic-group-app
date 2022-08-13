@@ -20,7 +20,7 @@ import {
   IPostCreatePost,
 } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import { useBaseHook } from '~/hooks';

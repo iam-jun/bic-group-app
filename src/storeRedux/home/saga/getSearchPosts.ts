@@ -5,7 +5,7 @@ import {
   IPayloadGetSearchPosts,
 } from '~/interfaces/IHome';
 import homeActions from '~/storeRedux/home/actions';
-import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
+import homeDataHelper from '~/api/HomeDataHelper';
 import postActions from '~/storeRedux/post/actions';
 
 export default function* getSearchPosts({

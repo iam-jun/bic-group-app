@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import { call, put, select } from 'redux-saga/effects';
 
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import postActions from '~/storeRedux/post/actions';
 
 function* getPostsContainingVideoInProgress(): any {

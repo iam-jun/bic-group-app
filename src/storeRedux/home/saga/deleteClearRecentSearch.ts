@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import { IRecentSearchTarget } from '~/interfaces/IHome';
-import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
+import homeDataHelper from '~/api/HomeDataHelper';
 import homeActions from '~/storeRedux/home/actions';
 
 export default function* deleteClearRecentSearch({

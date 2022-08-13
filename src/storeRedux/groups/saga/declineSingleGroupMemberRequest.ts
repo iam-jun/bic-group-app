@@ -5,7 +5,7 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import { IToastMessage } from '~/interfaces/common';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import groupsActions from '../actions';
 
 export default function* declineSingleGroupMemberRequest({

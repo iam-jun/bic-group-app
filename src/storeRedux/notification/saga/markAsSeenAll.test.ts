@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import modalActions from '../../modal/actions';
 import { NOTIFICATIONS_RESPONSE } from '../../../test/mock_data/notifications';
-import notificationsDataHelper from '../../../screens/Notification/helper/NotificationDataHelper';
+import notificationsDataHelper from '../../../api/NotificationDataHelper';
 import notificationsActions from '../actions';
 import markAsSeenAll from './markAsSeenAll';
 

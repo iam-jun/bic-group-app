@@ -4,7 +4,7 @@ import { adminDetail, memberData, memberDetail } from '../../../test/mock_data/g
 
 import getGroupSearchMembers from './getGroupSearchMembers';
 import actions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '../../commonSaga/showError';
 
 describe('getGroupSearchMembers saga', () => {

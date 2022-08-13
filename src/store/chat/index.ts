@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
-import apiConfig from '~/configs/apiConfig';
+import apiConfig from '~/api/apiConfig';
 import chatSocketEvents from '~/constants/chatSocketEvents';
-import { makeHttpRequest } from '~/services/httpApiRequest';
+import { makeHttpRequest } from '~/api/apiRequest';
 import {
   createStore, withFlipper, withImmer, withPersist,
 } from '../utils';

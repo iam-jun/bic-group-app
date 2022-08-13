@@ -1,6 +1,6 @@
 import { call, put, select } from 'redux-saga/effects';
 import { IGetSeenPostListSheet } from '~/interfaces/IPost';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import postActions from '~/storeRedux/post/actions';
 import showError from '~/storeRedux/commonSaga/showError';
 

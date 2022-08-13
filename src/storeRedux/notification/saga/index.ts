@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects';
 import notificationsActions from '~/storeRedux/notification/actions';
 import notificationsTypes from '~/storeRedux/notification/types';
-import { makePushTokenRequest } from '~/services/httpApiRequest';
+import { makePushTokenRequest } from '~/api/apiRequest';
 import getNotifications from './getNotifications';
 import markAsReadAll from './markAsReadAll';
 import markAsSeenAll from './markAsSeenAll';

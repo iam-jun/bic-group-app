@@ -8,7 +8,7 @@ import {
   IGroupGetJoinableMembers,
   IGroupImageUpload,
 } from '~/interfaces/IGroup';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsTypes from '~/storeRedux/groups/types';
 import * as modalActions from '~/storeRedux/modal/actions';

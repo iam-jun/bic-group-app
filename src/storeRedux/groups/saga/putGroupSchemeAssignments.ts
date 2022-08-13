@@ -2,7 +2,7 @@ import { put, call } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import { IPayloadGroupSchemeAssignments } from '~/interfaces/IGroup';

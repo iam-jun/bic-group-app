@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import updateCommunityScheme from './updateCommunityScheme';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '../../commonSaga/showError';
 import { communityScheme } from '../../../test/mock_data/scheme';
 import modalActions from '../../modal/actions';

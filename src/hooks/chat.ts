@@ -7,7 +7,7 @@ import { useAuthToken, useAuthTokenExpire, useUserIdAuth } from '~/hooks/auth';
 import menuKeySelector from '~/storeRedux/menu/keySelector';
 
 import chatSocketClient from '~/services/chatSocket';
-import { getTokenAndCallBackBein } from '~/services/httpApiRequest';
+import { getTokenAndCallBackBein } from '~/api/apiRequest';
 import useChatStore from '~/store/chat';
 import getEnv from '~/utils/env';
 import { useKeySelector } from './selector';

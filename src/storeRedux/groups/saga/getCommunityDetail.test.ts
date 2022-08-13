@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getCommunityDetail from './getCommunityDetail';
 import actions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import { ICommunity } from '../../../interfaces/ICommunity';
 
 describe('get Community Detail saga', () => {

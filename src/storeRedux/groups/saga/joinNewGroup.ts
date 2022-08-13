@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import { put, call } from 'redux-saga/effects';
 
 import { AxiosResponse } from 'axios';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import groupsActions from '~/storeRedux/groups/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';

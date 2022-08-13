@@ -1,6 +1,6 @@
-import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
+import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
-import { makeHttpRequest } from '~/services/httpApiRequest';
+import { makeHttpRequest } from '~/api/apiRequest';
 
 export const giphyApiConfig = {
   getAPIKey: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({

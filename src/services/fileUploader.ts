@@ -4,9 +4,9 @@
 /* eslint-disable class-methods-use-this */
 import i18next from 'i18next';
 import { isEmpty } from 'lodash';
-import ApiConfig from '~/configs/apiConfig';
+import ApiConfig from '~/api/apiConfig';
 import { IFilePicked } from '~/interfaces/common';
-import { makeHttpRequest } from '~/services/httpApiRequest';
+import { makeHttpRequest } from '~/api/apiRequest';
 import { AppConfig } from '~/configs';
 import { IUploadType } from '~/configs/resourceConfig';
 

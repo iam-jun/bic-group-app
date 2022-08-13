@@ -6,7 +6,7 @@ import {
   NOTIFICATIONS_RESPONSE,
 } from '../../../test/mock_data/notifications';
 
-import notificationsDataHelper from '../../../screens/Notification/helper/NotificationDataHelper';
+import notificationsDataHelper from '../../../api/NotificationDataHelper';
 import notificationsActions from '../actions';
 import loadMore from './loadMore';
 

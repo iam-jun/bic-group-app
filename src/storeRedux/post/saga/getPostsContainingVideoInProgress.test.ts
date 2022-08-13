@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postActions from '../actions';
 import { LIST_POST_CONTAINING_VIDEO_PROCESS_1, POST_CONTAINING_VIDEO_PROCESS } from '../../../test/mock_data/draftPosts';
 

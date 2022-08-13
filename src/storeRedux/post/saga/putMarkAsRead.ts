@@ -1,6 +1,6 @@
 import { call, put, select } from 'redux-saga/effects';
 import { get } from 'lodash';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import showError from '~/storeRedux/commonSaga/showError';
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
 import postKeySelector from '~/storeRedux/post/keySelector';

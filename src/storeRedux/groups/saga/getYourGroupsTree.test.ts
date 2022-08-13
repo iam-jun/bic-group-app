@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import { throwError } from 'redux-saga-test-plan/providers';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import getYourGroupsTree from './getYourGroupsTree';
 
 describe('GetYourGroupsTree saga', () => {

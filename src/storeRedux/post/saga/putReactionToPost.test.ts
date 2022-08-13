@@ -5,7 +5,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import modalActions from '../../modal/actions';
 
 import { POST_DETAIL } from '../../../test/mock_data/post';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postActions from '../actions';
 import putReactionToPost from './putReactionToPost';
 

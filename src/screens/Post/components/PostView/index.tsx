@@ -37,7 +37,7 @@ import {
   PostViewImportant,
   PostViewMenu,
 } from '../PostViewComponents'
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import modalActions from '~/storeRedux/modal/actions';

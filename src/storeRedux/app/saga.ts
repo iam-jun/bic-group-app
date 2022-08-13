@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
-import apiConfig from '~/configs/apiConfig';
-import { makeHttpRequest } from '~/services/httpApiRequest';
+import apiConfig from '~/api/apiConfig';
+import { makeHttpRequest } from '~/api/apiRequest';
 import { timeOut } from '~/utils/common';
 import actions from './actions';
 import types from './constants';

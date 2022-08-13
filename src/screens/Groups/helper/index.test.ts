@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react-native';
 import { checkLastAdmin, getAllChildrenName, handleLeaveInnerGroups } from '.';
-import groupsDataHelper from './GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import { GROUP_TREE } from '~/test/mock_data/group';
 
 afterEach(cleanup);

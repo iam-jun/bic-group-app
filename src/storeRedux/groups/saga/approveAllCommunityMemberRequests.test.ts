@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import modalActions from '../../modal/actions';
 import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 
 describe('approveAllCommunityMemberRequests saga', () => {
   const communityId = 1;

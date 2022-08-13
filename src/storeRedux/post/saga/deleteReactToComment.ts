@@ -7,7 +7,7 @@ import {
   IReaction,
 } from '~/interfaces/IPost';
 import showError from '~/storeRedux/commonSaga/showError';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postKeySelector from '../keySelector';
 import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
 

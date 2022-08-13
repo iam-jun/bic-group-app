@@ -8,7 +8,7 @@ import {
 
 import getCommunityMembers from './getCommunityMembers';
 import actions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '../../commonSaga/showError';
 
 describe('get Community members', () => {

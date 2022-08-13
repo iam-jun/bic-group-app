@@ -24,7 +24,7 @@ import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SelectingAudiences from '~/screens/Post/components/SelectingAudiences';
 
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import { IGroup } from '~/interfaces/IGroup';
 import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';

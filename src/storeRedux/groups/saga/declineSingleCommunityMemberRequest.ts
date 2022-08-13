@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import showError from '~/storeRedux/commonSaga/showError';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 

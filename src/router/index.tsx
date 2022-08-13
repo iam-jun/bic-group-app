@@ -15,7 +15,7 @@ import { IUserResponse } from '~/interfaces/IAuth';
 import InternetConnectionStatus from '~/components/network/InternetConnectionStatus';
 import SystemIssueModal from '~/components/network/SystemIssueModal';
 import noInternetActions from '~/storeRedux/network/actions';
-import { makeRemovePushTokenRequest } from '~/services/httpApiRequest';
+import { makeRemovePushTokenRequest } from '~/api/apiRequest';
 import Store from '~/storeRedux';
 import { isNavigationRefReady } from './helper';
 

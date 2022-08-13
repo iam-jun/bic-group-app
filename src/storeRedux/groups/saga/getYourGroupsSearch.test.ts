@@ -6,7 +6,7 @@ import groupsActions from '../actions';
 import getYourGroupsSearch from './getYourGroupsSearch';
 import { communityDetailData } from '../../../test/mock_data/communities';
 import { IGetYourGroupsSearch } from '../../../interfaces/IGroup';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 
 describe('GetYourGroupsSearch saga', () => {
   it('should set result without call backend if key is empty', () => {

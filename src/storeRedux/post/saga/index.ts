@@ -21,10 +21,10 @@ import {
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import groupsActions from '~/storeRedux/groups/actions';
 import homeActions from '~/storeRedux/home/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import { sortComments } from '~/screens/Post/helper/PostUtils';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';

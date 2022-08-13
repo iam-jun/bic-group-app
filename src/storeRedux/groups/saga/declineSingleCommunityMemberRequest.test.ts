@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import modalActions from '../../modal/actions';
 import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '../../commonSaga/showError';
 import approveDeclineCode from '../../../constants/approveDeclineCode';
 

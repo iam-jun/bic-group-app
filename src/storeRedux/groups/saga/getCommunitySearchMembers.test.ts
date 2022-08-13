@@ -8,7 +8,7 @@ import {
 
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import actions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '../../commonSaga/showError';
 
 describe('get Search members', () => {

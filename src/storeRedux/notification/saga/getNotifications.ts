@@ -2,7 +2,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import { IObject } from '~/interfaces/common';
 import { IParamGetNotifications } from '~/interfaces/INotification';
-import notificationsDataHelper from '../../../screens/Notification/helper/NotificationDataHelper';
+import notificationsDataHelper from '../../../api/NotificationDataHelper';
 import notificationsActions from '../actions';
 
 function* getNotifications({

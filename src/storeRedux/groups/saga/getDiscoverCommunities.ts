@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '~/storeRedux/commonSaga/showError';
 import { IParamGetCommunities } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';

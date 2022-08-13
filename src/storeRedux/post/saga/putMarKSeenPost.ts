@@ -1,5 +1,5 @@
 import { call } from 'redux-saga/effects';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import { IPayloadPutMarkSeenPost } from '~/interfaces/IPost';
 
 function* putMarkSeenPost({

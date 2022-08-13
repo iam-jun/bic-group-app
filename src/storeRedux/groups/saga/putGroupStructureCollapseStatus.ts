@@ -1,7 +1,7 @@
 import { call } from 'redux-saga/effects';
 
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 
 export default function* putGroupStructureCollapseStatus({
   payload,

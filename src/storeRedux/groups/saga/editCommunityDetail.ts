@@ -2,7 +2,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import { ICommunityDetailEdit } from '~/interfaces/ICommunity';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import groupsActions from '../actions';
 import showToastEditSuccess from './showToastEditSuccess';
 

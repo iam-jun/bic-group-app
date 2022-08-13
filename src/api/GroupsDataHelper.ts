@@ -1,4 +1,4 @@
-import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
+import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
@@ -12,7 +12,7 @@ import {
   IParamGetDiscoverGroups,
   ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
-import { withHttpRequestPromise } from '~/services/httpApiRequest';
+import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {

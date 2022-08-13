@@ -3,7 +3,7 @@ import {
   ICommentData,
   IPayloadGetCommentsById,
 } from '~/interfaces/IPost';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import addChildCommentToCommentsOfPost from '~/storeRedux/post/saga/addChildCommentToCommentsOfPost';
 import postActions from '~/storeRedux/post/actions';
 import showError from '~/storeRedux/commonSaga/showError';

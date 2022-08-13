@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
 import runSearch from './runSearch';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../../../api/PostDataHelper';
 import actions from '../actions';
 import { MENTION_USER } from '~/test/mock_data/mention';
 

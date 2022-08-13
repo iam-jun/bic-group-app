@@ -3,7 +3,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import { IPayloadDeletePost } from '~/interfaces/IPost';
 import modalActions from '~/storeRedux/modal/actions';
-import postDataHelper from '../../../screens/Post/helper/PostDataHelper';
+import postDataHelper from '../../../api/PostDataHelper';
 import postActions from '../actions';
 import postKeySelector from '../keySelector';
 import { timeOut } from '~/utils/common';

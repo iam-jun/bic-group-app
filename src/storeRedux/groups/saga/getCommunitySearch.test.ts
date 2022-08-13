@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import { communityDetailData } from '../../../test/mock_data/communities';
 import getCommunitySearch from './getCommunitySearch';
 import actions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import modalActions from '../../modal/actions';
 
 describe('getCommunitySearch', () => {

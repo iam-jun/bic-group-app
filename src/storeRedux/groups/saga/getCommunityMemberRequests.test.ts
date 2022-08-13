@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import { memberRequestDetail } from '../../../test/mock_data/communities';
 import initialState from '../../initialState';
 
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import showError from '../../commonSaga/showError';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
 import groupsActions from '../actions';

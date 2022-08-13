@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import i18n from 'i18next';
 import { IPayloadPutEditPost } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';

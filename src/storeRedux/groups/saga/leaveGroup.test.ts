@@ -5,7 +5,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import { Platform as RNPlatform } from 'react-native';
 import leaveGroup, { navigateToGroup, navigationReplace } from './leaveGroup';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import * as modalActions from '../../modal/actions';
 import { groupPrivacy } from '../../../constants/privacyTypes';
 import groupJoinStatus from '../../../constants/groupJoinStatus';

@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsActions from '../actions';
 import postActions from '../../post/actions';
-import groupsDataHelper from '../../../screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '../../../api/GroupsDataHelper';
 import { groupPostData } from '../../../test/mock_data/group';
 import getGroupPosts from './getGroupPosts';
 import modalActions from '../../modal/actions';

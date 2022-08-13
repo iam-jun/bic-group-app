@@ -3,7 +3,7 @@ import { put, call, select } from 'redux-saga/effects';
 
 import { AxiosResponse } from 'axios';
 import actions from '~/storeRedux/groups/actions';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import { IParamGetCommunityMembers } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import showError from '~/storeRedux/commonSaga/showError';

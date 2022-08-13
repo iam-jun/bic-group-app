@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 
 import getEnv from '~/utils/env';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
-import appConfig from './appConfig';
+import appConfig from '../configs/appConfig';
 
 const providers = {
   bein: {

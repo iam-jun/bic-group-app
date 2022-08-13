@@ -1,6 +1,6 @@
 import { cloneDeep, isEmpty } from 'lodash';
 import modalActions from '~/storeRedux/modal/actions';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import groupsDataHelper from '~/api/GroupsDataHelper';
 import { IGroup, IRole, IScheme } from '~/interfaces/IGroup';
 import { ROLE_TYPE } from '~/constants/permissionScheme';
 

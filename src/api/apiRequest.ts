@@ -10,12 +10,12 @@ import { put } from 'redux-saga/effects';
 import ApiConfig, {
   HttpApiRequestConfig,
   HttpApiResponseFormat,
-} from '~/configs/apiConfig';
+} from '~/api/apiConfig';
 import Store from '~/storeRedux';
 import * as modalActions from '~/storeRedux/modal/actions';
 import noInternetActions from '~/storeRedux/network/actions';
 import { ActionTypes, createAction } from '~/utils';
-import { updateUserFromSharedPreferences } from './sharePreferences';
+import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ConvertHelper from '~/utils/convertHelper';
 import groupsActions from '~/storeRedux/groups/actions';

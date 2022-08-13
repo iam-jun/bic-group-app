@@ -30,7 +30,7 @@ import {
 import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
 import CommentViewMenu from '~/screens/Post/components/CommentViewMenu';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postDataHelper from '~/api/PostDataHelper';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import * as modalActions from '~/storeRedux/modal/actions';
