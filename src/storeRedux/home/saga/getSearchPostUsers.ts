@@ -1,7 +1,7 @@
 import { put, select } from 'redux-saga/effects';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import homeActions from '~/storeRedux/home/actions';
-import streamApi from '~/api/StreamApi';
+import groupApi from '~/api/GroupApi';
 
 export default function* getSearchPostUsers({
   payload,
@@ -34,7 +34,7 @@ export default function* getSearchPostUsers({
     }
 
     if (state && params) {
-      const response = yield streamApi.getUsers(params);
+      const response = yield groupApi.getUsers(params);
       const newData = data.concat(response || []) || [];
       const newCanLoadMore = newData?.length > state.data?.length;
       yield put(homeActions.setNewsfeedSearchUsers({

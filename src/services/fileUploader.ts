@@ -4,11 +4,11 @@
 /* eslint-disable class-methods-use-this */
 import i18next from 'i18next';
 import { isEmpty } from 'lodash';
-import ApiConfig from '~/api/apiConfig';
 import { IFilePicked } from '~/interfaces/common';
 import { makeHttpRequest } from '~/api/apiRequest';
 import { AppConfig } from '~/configs';
 import { IUploadType } from '~/configs/resourceConfig';
+import { uploadApiConfig } from '~/api/UploadApi';
 
 export interface IGetFile {
   id?: string;
@@ -103,7 +103,7 @@ export default class FileUploader {
 
   async requestCreateFileId(uploadType: string) {
     try {
-      const response: any = await makeHttpRequest(ApiConfig.Upload.createFileId(uploadType));
+      const response: any = await makeHttpRequest(uploadApiConfig.createFileId(uploadType));
       const { id } = response?.data?.data || {};
       if (id) {
         return { id, error: '' };
@@ -150,7 +150,7 @@ export default class FileUploader {
     try {
       const controller = new AbortController();
       this.fileAbortController[file.name] = controller;
-      const response: any = await makeHttpRequest(ApiConfig.Upload.uploadFile(
+      const response: any = await makeHttpRequest(uploadApiConfig.uploadFile(
         fileId,
         uploadType,
         formData,

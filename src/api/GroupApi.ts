@@ -13,10 +13,11 @@ import {
   IParamGetDiscoverGroups,
   ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
-import { withHttpRequestPromise } from '~/api/apiRequest';
+import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
 import { IUserEdit } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
+import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
@@ -26,6 +27,18 @@ const defaultConfig = {
 }
 
 export const groupsApiConfig = {
+  getLinkPreview: (link: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}link-preview/${link}`,
+  }),
+  getUsers: (params: IParamsGetUsers): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users`,
+    params: {
+      ...params,
+      key: params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
   getUserProfile: (
     userId: string, params?: any,
   ): HttpApiRequestConfig => ({
@@ -479,6 +492,18 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  getLinkPreview: (link: string) => withHttpRequestPromise(groupsApiConfig.getLinkPreview, link),
+  getUsers: async (params: IParamsGetUsers) => {
+    try {
+      const response: any = await makeHttpRequest(groupsApiConfig.getUsers(params));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
   getUserProfile: (userId: string, params?: any) => withHttpRequestPromise(
     groupsApiConfig.getUserProfile, userId, params,
   ),

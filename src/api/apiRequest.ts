@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment,no-useless-escape */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Auth } from 'aws-amplify';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import i18n from 'i18next';
@@ -7,7 +7,7 @@ import moment from 'moment';
 import DeviceInfo from 'react-native-device-info';
 import { put } from 'redux-saga/effects';
 
-import ApiConfig, {
+import {
   apiProviders,
   HttpApiRequestConfig,
   HttpApiResponseFormat,
@@ -21,6 +21,7 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ConvertHelper from '~/utils/convertHelper';
 import groupsActions from '~/storeRedux/groups/actions';
 import { uuidRegex } from '~/constants/commonRegex';
+import { notificationApiConfig } from '~/api/NotificationApi';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -338,14 +339,14 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<Axi
 
 const makePushTokenRequest = (deviceToken: string) => {
   const deviceId = DeviceInfo.getUniqueId();
-  return makeHttpRequest(ApiConfig.App.pushToken(
+  return makeHttpRequest(notificationApiConfig.pushToken(
     deviceToken, deviceId,
   ));
 };
 
 const makeRemovePushTokenRequest = async () => {
   const deviceId = DeviceInfo.getUniqueId();
-  const requestConfig = ApiConfig.App.removePushToken(deviceId);
+  const requestConfig = notificationApiConfig.removePushToken(deviceId);
   const axiosInstance = axios.create();
   axiosInstance.defaults.timeout = requestConfig.timeout;
   return axiosInstance(requestConfig);

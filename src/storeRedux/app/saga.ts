@@ -1,10 +1,8 @@
-import { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
-import apiConfig from '~/api/apiConfig';
-import { makeHttpRequest } from '~/api/apiRequest';
 import { timeOut } from '~/utils/common';
 import actions from './actions';
 import types from './constants';
+import groupApi from '~/api/GroupApi';
 
 export default function* saga() {
   yield takeLatest(
@@ -34,8 +32,8 @@ function* getLinkPreview({ payload }: {type: string; payload: string}) {
   try {
     const link = encodeURIComponent(payload);
 
-    const response: AxiosResponse = yield makeHttpRequest(apiConfig.App.getLinkPreview(link));
-    yield put(actions.setLinkPreview(response.data?.data));
+    const response = yield groupApi.getLinkPreview(link);
+    yield put(actions.setLinkPreview(response?.data));
   } catch (err: any) {
     console.error(
       'getLinkPreview', err,

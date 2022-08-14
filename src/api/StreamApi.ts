@@ -1,5 +1,5 @@
 import { Method } from 'axios';
-import ApiConfig, { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
+import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import {
   IParamDeleteReaction,
@@ -23,7 +23,6 @@ import {
   IParamGetSearchPost,
   IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
 } from '~/interfaces/IHome';
-import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 
 const DEFAULT_LIMIT = 10;
@@ -290,17 +289,6 @@ const streamApi = {
   getSearchPost: async (param: IParamGetSearchPost) => {
     try {
       const response: any = await makeHttpRequest(streamApiConfig.getSearchPost(param));
-      if (response && response?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getUsers: async (params: IParamsGetUsers) => {
-    try {
-      const response: any = await makeHttpRequest(ApiConfig.App.getUsers(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }

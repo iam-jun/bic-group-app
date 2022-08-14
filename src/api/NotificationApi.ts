@@ -13,6 +13,24 @@ const defaultConfig = {
 }
 
 export const notificationApiConfig = {
+  pushToken: (
+    deviceToken: string, deviceId: string,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}device-tokens`,
+    method: 'post',
+    data: {
+      token: deviceToken,
+      deviceId,
+    },
+  }),
+  removePushToken: (deviceId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}device-tokens/${deviceId}`,
+    method: 'delete',
+    useRetry: false,
+    timeout: 5000,
+  }),
   getNotifications: (params: IParamGetNotifications): HttpApiRequestConfig => {
     const { limit, ...restParams } = params || {};
     return {
