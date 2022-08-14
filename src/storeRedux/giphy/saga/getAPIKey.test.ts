@@ -2,8 +2,8 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import actions from '../actions';
-import giphyDataHelper from '../apiConfigs';
 import getAPIKey from './getAPIKey';
+import streamApi from "../../../api/StreamApi";
 
 describe('Get API key saga', () => {
   it('should get API key successfully', () => {
@@ -17,7 +17,7 @@ describe('Get API key saga', () => {
     return (
       // @ts-ignorets
       expectSaga(getAPIKey, action)
-        .provide([[matchers.call.fn(giphyDataHelper.getAPIKey), response]])
+        .provide([[matchers.call.fn(streamApi.getGiphyAPIKey), response]])
         .put(actions.setAPIKey(response.data))
         .run()
         .then(({ allEffects }: any) => {
@@ -42,7 +42,7 @@ describe('Get API key saga', () => {
     // @ts-ignore
     return expectSaga(getAPIKey, action)
       .provide([
-        [matchers.call.fn(giphyDataHelper.getAPIKey), Promise.reject(resp)],
+        [matchers.call.fn(streamApi.getGiphyAPIKey), Promise.reject(resp)],
       ])
       .run()
       .then(({ allEffects }: any) => {
