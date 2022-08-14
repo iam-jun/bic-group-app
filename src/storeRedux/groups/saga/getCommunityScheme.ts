@@ -4,7 +4,7 @@ import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
 import groupApi from '~/api/GroupApi';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
-import { sortFixedRoles } from '../../../screens/Groups/helper';
+import { sortFixedRoles } from '../../../screens/groups/helper';
 
 export default function* getCommunityScheme({
   payload,

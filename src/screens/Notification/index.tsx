@@ -13,7 +13,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import NotificationOptionBottomSheet from './components/NotificationOptionBottomSheet';
 import notificationsActions from '../../storeRedux/notification/actions';
-import ScrollableTabBar from './ScrollableTabBar';
+import ScrollableTabBar from './components/ScrollableTabBar';
 import { notificationMenuData } from '~/screens/Notification/constants';
 
 const Notification = () => {

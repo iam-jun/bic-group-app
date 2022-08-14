@@ -1,4 +1,4 @@
-import Communities from '~/screens/Groups/Communities';
+import Communities from '~/screens/communities/Communities';
 import Notification from '~/screens/Notification';
 import Menu from '~/screens/Menu';
 import Home from '~/screens/Home';

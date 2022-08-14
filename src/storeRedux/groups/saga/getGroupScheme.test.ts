@@ -7,7 +7,7 @@ import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import { groupScheme } from '../../../test/mock_data/scheme';
 import API_ERROR_CODE from '../../../constants/apiErrorCode';
-import { sortFixedRoles } from '../../../screens/Groups/helper';
+import { sortFixedRoles } from '../../../screens/groups/helper';
 
 describe('getGroupScheme saga', () => {
   const communityId = 1;

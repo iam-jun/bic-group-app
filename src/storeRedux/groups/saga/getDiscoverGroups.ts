@@ -6,7 +6,7 @@ import { IParamGetDiscoverGroups } from '~/interfaces/ICommunity';
 import actions from '../actions';
 import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
-import { mapItems } from '../../../screens/Groups/helper/mapper';
+import { mapItems } from '../../../screens/groups/helper/mapper';
 
 export default function* getDiscoverGroups({
   payload,

@@ -7,8 +7,8 @@ import groupApi from '~/api/GroupApi';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
-import { sortFixedRoles } from '../../../screens/Groups/helper';
-import { getMemberRoleIndex } from '../../../screens/Groups/CreatePermissionScheme/helper';
+import { sortFixedRoles } from '../../../screens/groups/helper';
+import { getMemberRoleIndex } from '../../../screens/PermissionScheme/CreatePermissionScheme/helper';
 
 const navigation = withNavigation(rootNavigationRef);
 

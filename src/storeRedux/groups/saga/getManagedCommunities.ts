@@ -4,7 +4,7 @@ import appConfig from '~/configs/appConfig';
 import actions from '../actions';
 import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
-import { mapItems } from '../../../screens/Groups/helper/mapper';
+import { mapItems } from '../../../screens/groups/helper/mapper';
 import { ICommunity } from '~/interfaces/ICommunity';
 
 export default function* getManagedCommunities({

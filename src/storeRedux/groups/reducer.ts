@@ -5,7 +5,7 @@ import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
 import { IGroupDetail, IGroupMembers, IJoiningMember } from '~/interfaces/IGroup';
 import { IObject } from '~/interfaces/common';
-import { getNewSchemeRolesOnUpdatePermission } from '~/screens/Groups/CreatePermissionScheme/helper';
+import { getNewSchemeRolesOnUpdatePermission } from '~/screens/PermissionScheme/CreatePermissionScheme/helper';
 
 export const groupInitState = {
   myPermissions: {

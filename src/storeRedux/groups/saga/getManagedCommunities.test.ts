@@ -7,7 +7,7 @@ import getManagedCommunities from './getManagedCommunities';
 import { communityDetailData } from '../../../test/mock_data/communities';
 import showError from '../../commonSaga/showError';
 import { ICommunity } from '../../../interfaces/ICommunity';
-import { mapItems } from '../../../screens/Groups/helper/mapper';
+import { mapItems } from '../../../screens/groups/helper/mapper';
 
 describe('Get managed communities saga', () => {
   const action = { type: 'test', payload: {} };

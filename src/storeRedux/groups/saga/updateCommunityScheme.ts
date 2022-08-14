@@ -7,7 +7,7 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
-import { sortFixedRoles } from '../../../screens/Groups/helper';
+import { sortFixedRoles } from '../../../screens/groups/helper';
 
 const navigation = withNavigation(rootNavigationRef);
 

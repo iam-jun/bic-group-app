@@ -19,7 +19,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import homeActions from '~/storeRedux/home/actions';
-import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
+import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
 import { formatDMLink, openUrl } from '~/utils/link';
 import menuActions from '../../../storeRedux/menu/actions';

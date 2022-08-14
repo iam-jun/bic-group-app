@@ -7,7 +7,7 @@ import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import { communityScheme } from '../../../test/mock_data/scheme';
 import modalActions from '../../modal/actions';
-import { sortFixedRoles } from '../../../screens/Groups/helper';
+import { sortFixedRoles } from '../../../screens/groups/helper';
 
 describe('updateCommunityScheme saga', () => {
   const communityId = 1;

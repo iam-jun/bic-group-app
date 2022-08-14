@@ -13,7 +13,7 @@ import groupsActions from '~/storeRedux/groups/actions';
 import groupsTypes from '~/storeRedux/groups/types';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { IResponseData, IToastMessage } from '~/interfaces/common';
-import { mapData } from '../../../screens/Groups/helper/mapper';
+import { mapData } from '../../../screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import { withNavigation } from '~/router/helper';
