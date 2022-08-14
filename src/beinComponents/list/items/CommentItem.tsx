@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import { ICommentData } from '~/interfaces/IPost';
-import CommentView from '~/screens/Post/components/CommentView';
-import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
+import CommentView from '~/screens/post/components/CommentView';
+import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
 import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 

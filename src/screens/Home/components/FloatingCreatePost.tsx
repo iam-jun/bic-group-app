@@ -13,7 +13,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
-import { ISelectAudienceParams } from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
+import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
 
 export interface FloatingCreatePostProps {

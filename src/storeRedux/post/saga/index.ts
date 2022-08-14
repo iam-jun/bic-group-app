@@ -25,7 +25,7 @@ import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import homeActions from '~/storeRedux/home/actions';
 import streamApi from '~/api/StreamApi';
-import { sortComments } from '~/screens/Post/helper/PostUtils';
+import { sortComments } from '~/screens/post/helper/PostUtils';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import addToAllPosts from '~/storeRedux/post/saga/addToAllPosts';

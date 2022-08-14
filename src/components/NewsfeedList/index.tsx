@@ -26,7 +26,7 @@ import { useDispatch } from 'react-redux';
 import dimension from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
-import PostView from '~/screens/Post/components/PostView';
+import PostView from '~/screens/post/components/PostView';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import { useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';

@@ -5,7 +5,7 @@ import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import addChildCommentToCommentsOfPost from '~/storeRedux/post/saga/addChildCommentToCommentsOfPost';
-import { getMentionsFromContent } from '~/screens/Post/helper/PostUtils';
+import { getMentionsFromContent } from '~/screens/post/helper/PostUtils';
 import modalActions from '~/storeRedux/modal/actions';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 

@@ -7,7 +7,7 @@ import modalActions from '~/storeRedux/modal/actions';
 import { timeOut } from '~/utils/common';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
-import { getMentionsFromContent } from '~/screens/Post/helper/PostUtils';
+import { getMentionsFromContent } from '~/screens/post/helper/PostUtils';
 
 const navigation = withNavigation(rootNavigationRef);
 

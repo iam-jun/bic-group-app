@@ -17,7 +17,7 @@ import menuActions from '~/storeRedux/menu/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
-import { ISelectAudienceParams } from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
+import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
 
 export interface HeaderCreatePostProps {

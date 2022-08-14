@@ -10,7 +10,7 @@ import { IPayloadGetSearchPosts } from '~/interfaces/IHome';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import homeActions from '~/storeRedux/home/actions';
 
-import PostView from '~/screens/Post/components/PostView';
+import PostView from '~/screens/post/components/PostView';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';

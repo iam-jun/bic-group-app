@@ -16,7 +16,7 @@ import {
 import { useKeySelector } from '~/hooks/selector';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import { getActiveRouteState } from '~/router/helper';
-import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
+import PostAudiencesBottomSheet from '~/screens/post/components/PostAudiencesBottomSheet';
 import appActions from '~/storeRedux/app/actions';
 
 import mainTabScreens from './screens';

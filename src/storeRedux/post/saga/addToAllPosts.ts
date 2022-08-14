@@ -6,7 +6,7 @@ import {
   IPostActivity,
 } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import { sortComments } from '~/screens/Post/helper/PostUtils';
+import { sortComments } from '~/screens/post/helper/PostUtils';
 
 function* addToAllPosts({
   payload,
