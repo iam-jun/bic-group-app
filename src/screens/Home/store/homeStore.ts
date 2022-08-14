@@ -1,6 +1,6 @@
 import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 import IHomeState from '~/store/interface/IHomeState';
-import { createZustand } from '~/store/utils';
+import { createZustand } from '~/store';
 
 const homeStore = (set) => ({
   activeTab: HOME_TAB_TYPE.NEWSFEED,
