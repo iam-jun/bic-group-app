@@ -11,9 +11,9 @@ import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import { securityLoginMenu } from '~/constants/settings';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import spacing from '~/theme/spacing';
+import { securityLoginMenu } from './constants';
 
 const SecurityLogin = () => {
   const { t } = useBaseHook();

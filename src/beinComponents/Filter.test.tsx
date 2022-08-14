@@ -3,9 +3,27 @@ import { cleanup, fireEvent } from '@testing-library/react-native';
 
 import Filter from './Filter';
 import { renderWithRedux } from '~/test/testUtils';
-import { communityMenuData } from '~/constants/communityMenuData';
 
 afterEach(cleanup);
+
+export const communityMenuData = [
+  {
+    id: 1,
+    text: 'communities:community_menu:your_communities_text',
+    type: 'COMMUNITIES',
+  },
+  {
+    id: 2,
+    text: 'communities:community_menu:manage_text',
+    type: 'MANAGE',
+  },
+  {
+    id: 3,
+    text: 'communities:community_menu:discover_text',
+    type: 'DISCOVER',
+  },
+];
+
 
 describe('Filter component', () => {
   it('renders correctly', () => {

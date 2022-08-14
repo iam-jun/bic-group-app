@@ -10,13 +10,30 @@ import Filter from '../../../beinComponents/Filter';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import JoinedCommunities from '~/screens/Groups/Communities/JoinedCommunities';
 import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunities';
-import { communityMenuData } from '~/constants/communityMenuData';
 import ManagedCommunities from './ManagedCommunities';
 import SearchCommunityView from './SearchCommunityView';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
 const { width: screenWidth } = Dimensions.get('window');
+
+export const communityMenuData = [
+  {
+    id: 1,
+    text: 'communities:community_menu:your_communities_text',
+    type: 'COMMUNITIES',
+  },
+  {
+    id: 2,
+    text: 'communities:community_menu:manage_text',
+    type: 'MANAGE',
+  },
+  {
+    id: 3,
+    text: 'communities:community_menu:discover_text',
+    type: 'DISCOVER',
+  },
+];
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();

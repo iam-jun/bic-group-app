@@ -20,12 +20,8 @@ import * as modalActions from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
-import settings, {
-  settingsMenu,
-  infoMenu,
-  postFeatureMenu,
-} from '~/constants/settings';
 import spacing from '~/theme/spacing';
+import settings, { infoMenu, postFeatureMenu, settingsMenu } from '~/router/components/MenuSidebarDrawer/constants';
 
 interface MenuSidebarContentProps {
   onCloseSidebar?: () => void;

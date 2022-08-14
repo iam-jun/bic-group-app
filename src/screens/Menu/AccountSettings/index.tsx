@@ -12,7 +12,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 
 import languages from '~/constants/languages';
-import { accountSettingsMenu } from '~/constants/settings';
 import { AppContext } from '~/contexts/AppContext';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -26,6 +25,7 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import spacing from '~/theme/spacing';
+import { accountSettingsMenu } from '~/screens/Menu/AccountSettings/constants';
 
 const GeneralSettings = () => {
   const theme: ExtendedTheme = useTheme();

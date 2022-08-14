@@ -9,18 +9,18 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Text from '~/beinComponents/Text';
-import useModal from '~/hooks/modal';
 import * as actions from '~/storeRedux/modal/actions';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
+import { useKeySelector } from '~/hooks/selector';
 
 const AlertNewFeatureModal = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const { alertNewFeature } = useModal();
+  const { alertNewFeature } = useKeySelector('modal');
   const { visible } = alertNewFeature;
 
   const dispatch = useDispatch();
