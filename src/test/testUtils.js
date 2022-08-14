@@ -13,12 +13,12 @@ import {
 } from 'react-native-reanimated/src/reanimated2/jestUtils';
 
 // WARNING: Don't remove this import
-import '~/store';
+import '~/storeRedux';
 
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import initialState from '~/store/initialState';
-import { appReducer } from '~/store/reducers';
+import initialState from '~/storeRedux/initialState';
+import { appReducer } from '~/storeRedux/reducers';
 
 const languages = require('~/localization/en.json');
 
