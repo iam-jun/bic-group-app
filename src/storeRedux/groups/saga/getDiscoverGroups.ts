@@ -4,7 +4,7 @@ import appConfig from '~/configs/appConfig';
 
 import { IParamGetDiscoverGroups } from '~/interfaces/ICommunity';
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import { mapItems } from '../../../screens/Groups/helper/mapper';
 
@@ -30,7 +30,7 @@ export default function* getDiscoverGroups({
     if (!isRefreshing && !canLoadMore) return;
 
     const resp: AxiosResponse = yield call(
-      groupsDataHelper.getDiscoverGroups, communityId, {
+      groupApi.getDiscoverGroups, communityId, {
         limit: appConfig.recordsPerPage,
         offset: isRefreshing ? 0 : ids.length,
         ...params,

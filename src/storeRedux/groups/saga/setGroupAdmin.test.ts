@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import setGroupAdmin from './setGroupAdmin';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import { refreshGroupMembers } from './index';
 import showError from '../../commonSaga/showError';
@@ -10,7 +10,7 @@ import showError from '../../commonSaga/showError';
 describe('Set group admin', () => {
   const action = { type: 'test', payload: { groupId: 1, userIds: [1] } };
   it('should set admin successfully', () => expectSaga(setGroupAdmin, action)
-    .provide([[matchers.call.fn(groupsDataHelper.setGroupAdmin), {}]])
+    .provide([[matchers.call.fn(groupApi.setGroupAdmin), {}]])
     .put(
       modalActions.showHideToastMessage({
         content: 'groups:modal_confirm_set_admin:success_message',
@@ -31,7 +31,7 @@ describe('Set group admin', () => {
     return expectSaga(setGroupAdmin, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.setGroupAdmin),
+          matchers.call.fn(groupApi.setGroupAdmin),
           Promise.reject(error),
         ],
       ])

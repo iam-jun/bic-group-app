@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { put, select, call } from 'redux-saga/effects';
 
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
@@ -24,7 +24,7 @@ export default function* leaveGroup({
     const { groups } = yield select();
     const privacy = groups?.groupDetail?.group?.privacy;
 
-    yield call(groupsDataHelper.leaveGroup, payload);
+    yield call(groupApi.leaveGroup, payload);
 
     // update button Join/Cancel/View status on Discover groups
     yield put(

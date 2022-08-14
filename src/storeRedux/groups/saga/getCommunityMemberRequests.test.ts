@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import { memberRequestDetail } from '../../../test/mock_data/communities';
 import initialState from '../../initialState';
 
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
 import groupsActions from '../actions';
@@ -20,7 +20,7 @@ describe('getCommunityMemberRequests saga', () => {
       .withState(state)
       .put(groupsActions.setCommunityMemberRequests({ loading: true }))
       .provide([
-        [matchers.call.fn(groupsDataHelper.getCommunityMemberRequests), resp],
+        [matchers.call.fn(groupApi.getCommunityMemberRequests), resp],
       ])
       .put(
         groupsActions.setCommunityMemberRequests({
@@ -59,7 +59,7 @@ describe('getCommunityMemberRequests saga', () => {
       .put(groupsActions.setCommunityMemberRequests({ loading: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getCommunityMemberRequests),
+          matchers.call.fn(groupApi.getCommunityMemberRequests),
           Promise.reject(error),
         ],
       ])

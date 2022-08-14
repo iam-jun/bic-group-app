@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import editGroupDetail from './editGroupDetail';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import { IGroupDetail } from '../../../interfaces/IGroup';
 
@@ -21,7 +21,7 @@ describe('Edit group detail saga', () => {
     };
 
     return expectSaga(editGroupDetail, action)
-      .provide([[matchers.call.fn(groupsDataHelper.editGroupDetail), resp]])
+      .provide([[matchers.call.fn(groupApi.editGroupDetail), resp]])
       .put(
         modalActions.showHideToastMessage({
           content: `${action.payload.editFieldName} ${i18next.t(
@@ -47,7 +47,7 @@ describe('Edit group detail saga', () => {
     };
 
     return expectSaga(editGroupDetail, action)
-      .provide([[matchers.call.fn(groupsDataHelper.editGroupDetail), resp]])
+      .provide([[matchers.call.fn(groupApi.editGroupDetail), resp]])
       .put(groupsActions.setGroupDetail(resp?.data))
       .run();
   });
@@ -62,7 +62,7 @@ describe('Edit group detail saga', () => {
     };
 
     return expectSaga(editGroupDetail, action)
-      .provide([[matchers.call.fn(groupsDataHelper.editGroupDetail), resp]])
+      .provide([[matchers.call.fn(groupApi.editGroupDetail), resp]])
       .put(
         modalActions.showHideToastMessage({
           content: `${action.payload.editFieldName} ${i18next.t(
@@ -87,7 +87,7 @@ describe('Edit group detail saga', () => {
     return expectSaga(editGroupDetail, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.editGroupDetail),
+          matchers.call.fn(groupApi.editGroupDetail),
           Promise.reject({ code: 1 }),
         ],
       ])

@@ -37,7 +37,7 @@ import {
   PostViewImportant,
   PostViewMenu,
 } from '../PostViewComponents'
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
@@ -191,7 +191,7 @@ const _PostView: FC<PostViewProps> = ({
 
   const getReactionStatistics = async (param: any) => {
     try {
-      const response = await postDataHelper.getReactionDetail(param);
+      const response = await streamApi.getReactionDetail(param);
       const data = await response?.list;
       const users = (data || []).map((item: any) => ({
         id: item?.actor?.id,

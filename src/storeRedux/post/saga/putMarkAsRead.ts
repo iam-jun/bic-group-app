@@ -1,6 +1,6 @@
 import { call, put, select } from 'redux-saga/effects';
 import { get } from 'lodash';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
 import postKeySelector from '~/storeRedux/post/keySelector';
@@ -19,7 +19,7 @@ function* putMarkAsRead({
   }
   try {
     const response = yield call(
-      postDataHelper.putMarkAsRead, postId,
+      streamApi.putMarkAsRead, postId,
     );
     const isSuccess = !!response?.data;
     callback?.(isSuccess);

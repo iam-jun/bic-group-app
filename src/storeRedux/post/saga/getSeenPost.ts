@@ -1,6 +1,6 @@
 import { call, put, select } from 'redux-saga/effects';
 import { IGetSeenPostListSheet } from '~/interfaces/IPost';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import showError from '~/storeRedux/commonSaga/showError';
 
@@ -21,7 +21,7 @@ function* getSeenPost({
       return;
     }
     const response = yield call(
-      postDataHelper.getSeenList, params,
+      streamApi.getSeenList, params,
     );
 
     if (response && response?.data?.list) {

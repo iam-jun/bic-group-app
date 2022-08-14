@@ -5,7 +5,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import modalActions from '../../modal/actions';
 
 import { POST_DETAIL } from '../../../test/mock_data/post';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import putReactionToPost from './putReactionToPost';
 
@@ -73,7 +73,7 @@ describe('Update Reaction to Post By Id saga', () => {
         .withReducer(allCommentsReducer)
         .put(postActions.addToAllPosts({ data: newPost1 as any }))
         .provide([
-          [matchers.call.fn(postDataHelper.putReaction), Promise.reject(resp)],
+          [matchers.call.fn(streamApi.putReaction), Promise.reject(resp)],
         ])
         .put(postActions.addToAllPosts({ data: storeData.post.allPosts[28] }))
         .put(

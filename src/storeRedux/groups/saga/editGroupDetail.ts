@@ -2,7 +2,7 @@ import { put, call } from 'redux-saga/effects';
 
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import showToastEditSuccess from './showToastEditSuccess';
 
@@ -21,7 +21,7 @@ export default function* editGroupDetail({
     const groupId = data.id;
     delete data.id; // edit data should not contain group's id
 
-    const resp = yield call(groupsDataHelper.editGroupDetail, groupId, data);
+    const resp = yield call(groupApi.editGroupDetail, groupId, data);
 
     if (editFieldName) yield showToastEditSuccess(editFieldName);
 

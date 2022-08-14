@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 
 import actions from '~/storeRedux/groups/actions';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
 import showError from '~/storeRedux/commonSaga/showError';
 import { IGroupGetMembers } from '~/interfaces/IGroup';
@@ -24,7 +24,7 @@ export default function* getGroupSearchMembers({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resp = yield call(
-      groupsDataHelper.getGroupMembers, groupId, {
+      groupApi.getGroupMembers, groupId, {
         limit: appConfig.recordsPerPage,
         offset: data.length,
         ...params,

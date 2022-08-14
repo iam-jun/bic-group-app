@@ -6,7 +6,7 @@ import { IToastMessage } from '~/interfaces/common';
 import groupsActions from '~/storeRedux/groups/actions';
 import showError from '~/storeRedux/commonSaga/showError';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 
 export default function* joinCommunity({
   payload,
@@ -19,7 +19,7 @@ export default function* joinCommunity({
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const response = yield call(groupsDataHelper.joinCommunity, communityId);
+    const response = yield call(groupApi.joinCommunity, communityId);
     const joinStatus = response?.data?.joinStatus;
     const hasRequested = joinStatus === groupJoinStatus.requested;
 

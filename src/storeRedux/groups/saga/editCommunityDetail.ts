@@ -2,7 +2,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import { ICommunityDetailEdit } from '~/interfaces/ICommunity';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 import showToastEditSuccess from './showToastEditSuccess';
 
@@ -21,7 +21,7 @@ export default function* editCommunityDetail({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resp = yield call(
-      groupsDataHelper.editCommunityDetail,
+      groupApi.editCommunityDetail,
       data.id,
       data,
     );

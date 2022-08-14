@@ -1,6 +1,6 @@
 import { call } from 'redux-saga/effects';
 
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 
 export default function* declineAllCommunityMemberRequests({
@@ -12,7 +12,7 @@ export default function* declineAllCommunityMemberRequests({
   const { communityId } = payload;
   try {
     yield call(
-      groupsDataHelper.declineAllCommunityMemberRequests, communityId,
+      groupApi.declineAllCommunityMemberRequests, communityId,
     );
   } catch (err: any) {
     console.error('declineAllCommunityMemberRequests: ', err);

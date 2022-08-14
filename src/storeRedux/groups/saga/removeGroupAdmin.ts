@@ -3,7 +3,7 @@ import { put, call } from 'redux-saga/effects';
 import { IToastMessage } from '~/interfaces/common';
 import { IGroupRemoveAdmin } from '~/interfaces/IGroup';
 import { refreshGroupMembers } from './index';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '~/storeRedux/modal/actions';
 import showError from '~/storeRedux/commonSaga/showError';
 
@@ -17,7 +17,7 @@ export default function* removeGroupAdmin({
     const { groupId, userId } = payload;
 
     yield call(
-      groupsDataHelper.removeGroupAdmin, groupId, userId,
+      groupApi.removeGroupAdmin, groupId, userId,
     );
 
     const toastMessage: IToastMessage = {

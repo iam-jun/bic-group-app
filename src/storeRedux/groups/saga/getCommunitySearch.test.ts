@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import { communityDetailData } from '../../../test/mock_data/communities';
 import getCommunitySearch from './getCommunitySearch';
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import modalActions from '../../modal/actions';
 
 describe('getCommunitySearch', () => {
@@ -30,7 +30,7 @@ describe('getCommunitySearch', () => {
     return expectSaga(getCommunitySearch, action)
       .withState(state)
       .put(actions.setCommunitySearch({ loading: true }))
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunities), resp]])
+      .provide([[matchers.call.fn(groupApi.getCommunities), resp]])
       .put(
         actions.setCommunitySearch({
           loading: false,
@@ -82,7 +82,7 @@ describe('getCommunitySearch', () => {
       .put(actions.setCommunitySearch({ loading: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getCommunities),
+          matchers.call.fn(groupApi.getCommunities),
           Promise.reject(error),
         ],
       ])

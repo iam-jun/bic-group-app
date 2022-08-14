@@ -8,7 +8,7 @@ import {
   allCommentsByParentIds,
   allPosts,
 } from '../../../test/mock_data/post';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import getCommentsByPostId from './getCommentsByPostId';
 
@@ -36,7 +36,7 @@ describe('Get comments by postId saga', () => {
       // @ts-ignorets
       expectSaga(getCommentsByPostId, action)
         .provide([
-          [matchers.call.fn(postDataHelper.getCommentsByPostId), response],
+          [matchers.call.fn(streamApi.getCommentsByPostId), response],
         ])
         .withState(storeData)
         .put(
@@ -75,7 +75,7 @@ describe('Get comments by postId saga', () => {
       // @ts-ignorets
       expectSaga(getCommentsByPostId, action)
         .provide([
-          [matchers.call.fn(postDataHelper.getCommentsByPostId), response],
+          [matchers.call.fn(streamApi.getCommentsByPostId), response],
         ])
         .withState(storeData)
       // @ts-ignore
@@ -113,7 +113,7 @@ describe('Get comments by postId saga', () => {
       // @ts-ignorets
       expectSaga(getCommentsByPostId, action)
         .provide([
-          [matchers.call.fn(postDataHelper.getCommentsByPostId), response],
+          [matchers.call.fn(streamApi.getCommentsByPostId), response],
         ])
         .withState(storeData)
         .put(
@@ -149,7 +149,7 @@ describe('Get comments by postId saga', () => {
     return expectSaga(getCommentsByPostId, action)
       .provide([
         [
-          matchers.call.fn(postDataHelper.getCommentsByPostId),
+          matchers.call.fn(streamApi.getCommentsByPostId),
           Promise.reject(resp),
         ],
       ])
@@ -179,7 +179,7 @@ describe('Get comments by postId saga', () => {
       // @ts-ignorets
       expectSaga(getCommentsByPostId, action)
         .provide([
-          [matchers.call.fn(postDataHelper.getCommentsByPostId), response],
+          [matchers.call.fn(streamApi.getCommentsByPostId), response],
         ])
         .run()
         .then(({ allEffects }: any) => {

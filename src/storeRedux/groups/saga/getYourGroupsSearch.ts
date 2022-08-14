@@ -1,7 +1,7 @@
 import { call, put, select } from 'redux-saga/effects';
 
 import { IGetYourGroupsSearch } from '~/interfaces/IGroup';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 
 export default function* getYourGroupsSearch({
@@ -18,7 +18,7 @@ export default function* getYourGroupsSearch({
   try {
     yield put(groupsActions.setYourGroupsSearch({ loading: true, key }));
     const response = yield call(
-      groupsDataHelper.getCommunityGroups,
+      groupApi.getCommunityGroups,
       communityId,
       { key, listBy: 'flat' },
     );

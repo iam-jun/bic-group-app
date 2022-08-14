@@ -1,7 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import { IPayloadPutMarkAsRead } from '../../../interfaces/IPost';
 import putMarkAsRead from './putMarkAsRead';
@@ -30,8 +30,8 @@ describe('Put Mark as read Saga', () => {
     };
     return expectSaga(putMarkAsRead, { type: 'test', payload })
       .withState(storeData)
-      .provide([[matchers.call.fn(postDataHelper.putMarkAsRead), { data: true }]])
-      .call(postDataHelper.putMarkAsRead, POST_DETAIL.id)
+      .provide([[matchers.call.fn(streamApi.putMarkAsRead), { data: true }]])
+      .call(streamApi.putMarkAsRead, POST_DETAIL.id)
       .put(postActions.addToAllPosts(newPost))
       .run()
       .then(({ allEffects }: any) => {
@@ -46,9 +46,9 @@ describe('Put Mark as read Saga', () => {
     return expectSaga(putMarkAsRead, { type: 'test', payload })
       .withState(storeData)
       .provide([
-        [matchers.call.fn(postDataHelper.putMarkAsRead), { data: false }],
+        [matchers.call.fn(streamApi.putMarkAsRead), { data: false }],
       ])
-      .call(postDataHelper.putMarkAsRead, POST_DETAIL.id)
+      .call(streamApi.putMarkAsRead, POST_DETAIL.id)
       .run()
       .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);
@@ -63,11 +63,11 @@ describe('Put Mark as read Saga', () => {
       .withState(storeData)
       .provide([
         [
-          matchers.call.fn(postDataHelper.putMarkAsRead),
+          matchers.call.fn(streamApi.putMarkAsRead),
           throwError(new Error('empty data')),
         ],
       ])
-      .call(postDataHelper.putMarkAsRead, POST_DETAIL.id)
+      .call(streamApi.putMarkAsRead, POST_DETAIL.id)
       .run()
       .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);

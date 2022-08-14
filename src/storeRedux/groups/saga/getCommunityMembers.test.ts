@@ -8,7 +8,7 @@ import {
 
 import getCommunityMembers from './getCommunityMembers';
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 
 describe('get Community members', () => {
@@ -33,7 +33,7 @@ describe('get Community members', () => {
     return expectSaga(getCommunityMembers, action)
       .withState(state)
       .put(actions.setCommunityMembers({ loading: true }))
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
+      .provide([[matchers.call.fn(groupApi.getCommunityMembers), resp]])
       .put(
         actions.setCommunityMembers({
           loading: false,
@@ -110,7 +110,7 @@ describe('get Community members', () => {
       .put(actions.setCommunityMembers({ loading: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getCommunityMembers),
+          matchers.call.fn(groupApi.getCommunityMembers),
           Promise.reject(error),
         ],
       ])
@@ -163,7 +163,7 @@ describe('get Community members', () => {
     return expectSaga(getCommunityMembers, action)
       .withState(state)
       .put(actions.setCommunityMembers({ loading: true }))
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
+      .provide([[matchers.call.fn(groupApi.getCommunityMembers), resp]])
       .put(
         actions.setCommunityMembers({
           loading: false,

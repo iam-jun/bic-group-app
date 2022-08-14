@@ -2,7 +2,7 @@ import { cloneDeep, get } from 'lodash';
 import { call, put, select } from 'redux-saga/effects';
 
 import showError from '~/storeRedux/commonSaga/showError';
-import notificationsDataHelper from '../../../api/NotificationDataHelper';
+import notificationsDataHelper from '../../../api/NotificationApi';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 

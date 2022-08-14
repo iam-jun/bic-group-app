@@ -8,7 +8,7 @@ import {
 
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 
 describe('get Search members', () => {
@@ -33,7 +33,7 @@ describe('get Search members', () => {
     return expectSaga(getCommunitySearchMembers, action)
       .withState(state)
       .put(actions.setCommunitySearchMembers({ loading: true }))
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
+      .provide([[matchers.call.fn(groupApi.getCommunityMembers), resp]])
       .put(
         actions.setCommunitySearchMembers({
           loading: false,
@@ -95,7 +95,7 @@ describe('get Search members', () => {
       .put(actions.setCommunitySearchMembers({ loading: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getCommunityMembers),
+          matchers.call.fn(groupApi.getCommunityMembers),
           Promise.reject(error),
         ],
       ])

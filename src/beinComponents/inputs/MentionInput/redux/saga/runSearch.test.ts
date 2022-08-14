@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
 import runSearch from './runSearch';
-import postDataHelper from '../../../../../api/PostDataHelper';
+import streamApi from '../../../../../api/StreamApi';
 import actions from '../actions';
 import { MENTION_USER } from '~/test/mock_data/mention';
 
@@ -17,7 +17,7 @@ describe('_MentionInput Saga', () => {
       .withState(state)
       .provide([
         [
-          matchers.call.fn(postDataHelper.getSearchMentionAudiences),
+          matchers.call.fn(streamApi.getSearchMentionAudiences),
           { data: [MENTION_USER] },
         ],
       ])
@@ -35,7 +35,7 @@ describe('_MentionInput Saga', () => {
       .withState(state)
       .provide([
         [
-          matchers.call.fn(postDataHelper.getSearchMentionAudiences),
+          matchers.call.fn(streamApi.getSearchMentionAudiences),
           { data: [MENTION_USER] },
         ],
       ])
@@ -50,7 +50,7 @@ describe('_MentionInput Saga', () => {
     };
     return expectSaga(runSearch, action)
       .provide([
-        [matchers.call.fn(postDataHelper.getSearchMentionAudiences), null],
+        [matchers.call.fn(streamApi.getSearchMentionAudiences), null],
       ])
       .put(actions.setData([]))
       .run();
@@ -64,7 +64,7 @@ describe('_MentionInput Saga', () => {
     return expectSaga(runSearch, action)
       .provide([
         [
-          matchers.call.fn(postDataHelper.getSearchMentionAudiences),
+          matchers.call.fn(streamApi.getSearchMentionAudiences),
           throwError(new Error('empty data')),
         ],
       ])

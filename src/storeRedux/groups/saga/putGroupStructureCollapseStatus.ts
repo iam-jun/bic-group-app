@@ -1,7 +1,7 @@
 import { call } from 'redux-saga/effects';
 
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 
 export default function* putGroupStructureCollapseStatus({
   payload,
@@ -12,7 +12,7 @@ export default function* putGroupStructureCollapseStatus({
   const { communityId, groupId, isCollapse } = payload || {};
   try {
     yield call(
-      groupsDataHelper.putGroupStructureCollapseStatus,
+      groupApi.putGroupStructureCollapseStatus,
       communityId,
       groupId,
       isCollapse,

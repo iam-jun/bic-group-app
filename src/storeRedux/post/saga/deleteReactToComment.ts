@@ -7,7 +7,7 @@ import {
   IReaction,
 } from '~/interfaces/IPost';
 import showError from '~/storeRedux/commonSaga/showError';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postKeySelector from '../keySelector';
 import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
 
@@ -26,7 +26,7 @@ export default function* deleteReactToComment({
       // yield addReactionLoadingLocal(id, reactionId, comment);
 
       yield call(
-        postDataHelper.deleteReaction, {
+        streamApi.deleteReaction, {
           reactionId: rId,
           target: 'COMMENT',
           targetId: id,

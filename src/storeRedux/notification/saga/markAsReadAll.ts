@@ -3,7 +3,7 @@ import { put, select, call } from 'redux-saga/effects';
 
 import showError from '~/storeRedux/commonSaga/showError';
 import * as modalActions from '~/storeRedux/modal/actions';
-import notificationsDataHelper from '../../../api/NotificationDataHelper';
+import notificationsDataHelper from '../../../api/NotificationApi';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 

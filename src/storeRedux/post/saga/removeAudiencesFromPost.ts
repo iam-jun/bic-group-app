@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 
 import { IPayloadRemoveAudiencesOfPost } from '~/interfaces/IPost';
 import modalActions from '~/storeRedux/modal/actions';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
 
@@ -24,7 +24,7 @@ export default function* removeAudiencesFromPost({
         groupIds: listAudiences,
       },
     };
-    const response = yield call(postDataHelper.putEditPost, {
+    const response = yield call(streamApi.putEditPost, {
       postId: id,
       data,
     });

@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react-native';
 import { checkLastAdmin, getAllChildrenName, handleLeaveInnerGroups } from '.';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import { GROUP_TREE } from '~/test/mock_data/group';
 
 afterEach(cleanup);
@@ -14,7 +14,7 @@ describe('Group functions helper', () => {
 
   it('checkLastAdmin: should call mainCallback correctly', async () => {
     jest
-      .spyOn(groupsDataHelper, 'getInnerGroupsLastAdmin')
+      .spyOn(groupApi, 'getInnerGroupsLastAdmin')
       .mockImplementation(() => Promise.resolve(null));
     const result = await checkLastAdmin(
       groupId,
@@ -29,7 +29,7 @@ describe('Group functions helper', () => {
 
   it('checkLastAdmin: should dispatch last admin of current group error correctly', async () => {
     jest
-      .spyOn(groupsDataHelper, 'getInnerGroupsLastAdmin')
+      .spyOn(groupApi, 'getInnerGroupsLastAdmin')
       .mockImplementation(() => Promise.resolve([{ id: groupId }]));
     const result = await checkLastAdmin(
       groupId,
@@ -44,7 +44,7 @@ describe('Group functions helper', () => {
 
   it('checkLastAdmin: should dispatch last admin of an inner group error correctly', async () => {
     jest
-      .spyOn(groupsDataHelper, 'getInnerGroupsLastAdmin')
+      .spyOn(groupApi, 'getInnerGroupsLastAdmin')
       .mockImplementation(() => Promise.resolve([{ id: 2 }]));
     const result = await checkLastAdmin(
       groupId,
@@ -59,7 +59,7 @@ describe('Group functions helper', () => {
 
   it('checkLastAdmin: should show server error message', async () => {
     jest
-      .spyOn(groupsDataHelper, 'getInnerGroupsLastAdmin')
+      .spyOn(groupApi, 'getInnerGroupsLastAdmin')
       .mockImplementation(() => Promise.reject());
     const result = await checkLastAdmin(
       groupId,
@@ -73,7 +73,7 @@ describe('Group functions helper', () => {
   });
 
   it('handleLeaveInnerGroups should call prop callback correctly', async () => {
-    jest.spyOn(groupsDataHelper, 'getUserInnerGroups').mockImplementation(() => Promise.resolve({
+    jest.spyOn(groupApi, 'getUserInnerGroups').mockImplementation(() => Promise.resolve({
       data: {
         current_group: {},
         inner_groups: [{ name: 'group_1' }],
@@ -90,7 +90,7 @@ describe('Group functions helper', () => {
 
   it('handleLeaveInnerGroups should show error message from server', async () => {
     jest
-      .spyOn(groupsDataHelper, 'getUserInnerGroups')
+      .spyOn(groupApi, 'getUserInnerGroups')
       .mockImplementation(() => Promise.reject());
     const result = await handleLeaveInnerGroups(
       1,

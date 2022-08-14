@@ -2,7 +2,7 @@ import { put, call } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import { sortFixedRoles } from '../../../screens/Groups/helper';
 
@@ -16,7 +16,7 @@ export default function* getCommunityScheme({
     const { communityId } = payload || {};
     yield put(actions.setCommunityScheme({ loading: true, data: undefined }));
     const response = yield call(
-      groupsDataHelper.getCommunityScheme,
+      groupApi.getCommunityScheme,
       communityId,
     );
     if (response?.data) {

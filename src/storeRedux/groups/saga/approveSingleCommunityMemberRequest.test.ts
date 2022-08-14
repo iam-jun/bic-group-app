@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import modalActions from '../../modal/actions';
 import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import approveDeclineCode from '../../../constants/approveDeclineCode';
 
@@ -29,7 +29,7 @@ describe('approveSingleCommunityMemberRequest saga', () => {
     .provide([
       [
         matchers.call.fn(
-          groupsDataHelper.approveSingleCommunityMemberRequest,
+          groupApi.approveSingleCommunityMemberRequest,
         ),
         {},
       ],
@@ -64,7 +64,7 @@ describe('approveSingleCommunityMemberRequest saga', () => {
       .provide([
         [
           matchers.call.fn(
-            groupsDataHelper.approveSingleCommunityMemberRequest,
+            groupApi.approveSingleCommunityMemberRequest,
           ),
           Promise.reject(error),
         ],
@@ -88,7 +88,7 @@ describe('approveSingleCommunityMemberRequest saga', () => {
       .provide([
         [
           matchers.call.fn(
-            groupsDataHelper.approveSingleCommunityMemberRequest,
+            groupApi.approveSingleCommunityMemberRequest,
           ),
           Promise.reject(error),
         ],

@@ -1,5 +1,5 @@
 import { call } from 'redux-saga/effects';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import { IPayloadPutMarkSeenPost } from '~/interfaces/IPost';
 
 function* putMarkSeenPost({
@@ -18,7 +18,7 @@ function* putMarkSeenPost({
   }
   try {
     const response = yield call(
-      postDataHelper.putMarkSeenPost, postId,
+      streamApi.putMarkSeenPost, postId,
     );
     callback?.(!!response?.data);
   } catch (e) {

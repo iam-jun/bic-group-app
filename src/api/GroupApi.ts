@@ -492,7 +492,7 @@ export const groupsApiConfig = {
   }),
 };
 
-const groupsDataHelper = {
+const groupApi = {
   getMyPermissions: () => withHttpRequestPromise(groupsApiConfig.getMyPermissions),
   getCommunityGroupTree: (id: string) => withHttpRequestPromise(groupsApiConfig.getCommunityGroupsTree, id),
   // eslint-disable-next-line max-len
@@ -690,4 +690,4 @@ const groupsDataHelper = {
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
 };
 
-export default groupsDataHelper;
+export default groupApi;

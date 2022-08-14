@@ -2,7 +2,7 @@ import { put, call } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import { IPayloadGroupSchemeAssignments } from '~/interfaces/IGroup';
@@ -25,7 +25,7 @@ export default function* putGroupSchemeAssignments({
       currentAssignments,
     }));
     const response = yield call(
-      groupsDataHelper.putGroupSchemeAssignments,
+      groupApi.putGroupSchemeAssignments,
       payload,
     );
     if (response?.data) {

@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getDraftPosts from './getDraftPosts';
 import { IPayloadGetDraftPosts } from '../../../interfaces/IPost';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import {
   LIST_DRAFT_POST,
@@ -46,7 +46,7 @@ describe('Get Draft Posts Saga', () => {
     return expectSaga(getDraftPosts, { type: 'test', payload })
       .withState(storeData)
       .put(postActions.setDraftPosts(newData as any))
-      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .put(postActions.setDraftPosts({ ...(storeData.post.draftPosts as any) }))
       .run()
       .then(({ allEffects }: any) => {
@@ -83,7 +83,7 @@ describe('Get Draft Posts Saga', () => {
     return expectSaga(getDraftPosts, { type: 'test', payload })
       .withState(newStoreData)
       .put(postActions.setDraftPosts(newData as any))
-      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .put(postActions.setDraftPosts(expectData as any))
       .run()
       .then(({ allEffects }: any) => {
@@ -118,7 +118,7 @@ describe('Get Draft Posts Saga', () => {
       .withState(storeData)
       .put(postActions.setDraftPosts(newData as any))
       .provide([
-        [matchers.call.fn(postDataHelper.getDraftPosts), Promise.reject(error)],
+        [matchers.call.fn(streamApi.getDraftPosts), Promise.reject(error)],
       ])
       .put(postActions.setDraftPosts(expectData as any))
       .run()

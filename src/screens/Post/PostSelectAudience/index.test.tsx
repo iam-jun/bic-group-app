@@ -7,7 +7,7 @@ import {
   waitForUpdateRedux,
 } from '~/test/testUtils';
 import PostSelectAudience from '.';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import initialState from '~/storeRedux/initialState';
 
 const mockGroupItem = {
@@ -67,7 +67,7 @@ describe('PostSelectAudience screen', () => {
   it('should call get search audience when text input change', () => {
     jest.useFakeTimers();
     const spy = jest
-      .spyOn(postDataHelper, 'getSearchAudiences')
+      .spyOn(streamApi, 'getSearchAudiences')
       .mockImplementation(() => Promise.resolve(mockSearchResponse));
     jest.runOnlyPendingTimers();
     const wrapper = renderWithRedux(<PostSelectAudience />);

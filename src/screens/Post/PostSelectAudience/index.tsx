@@ -24,7 +24,7 @@ import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SelectingAudiences from '~/screens/Post/components/SelectingAudiences';
 
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import { IGroup } from '~/interfaces/IGroup';
 import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
@@ -297,7 +297,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const onSearch = debounce(
     (searchText: string) => {
       dispatch(postActions.setPostSelectAudienceState({ loading: true }));
-      postDataHelper
+      streamApi
         .getSearchAudiences(searchText)
         .then((response) => {
           if (response && response?.data?.groups) {

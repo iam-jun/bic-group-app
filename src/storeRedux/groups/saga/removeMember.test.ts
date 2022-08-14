@@ -3,7 +3,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import removeMember from './removeMember';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import { refreshGroupMembers } from './index';
 
@@ -16,7 +16,7 @@ describe('Remove member saga', () => {
   it('should remove member successfully', () => {
     const { groupId, userFullname } = action.payload;
     return expectSaga(removeMember, action)
-      .provide([[matchers.call.fn(groupsDataHelper.removeUsers), {}]])
+      .provide([[matchers.call.fn(groupApi.removeUsers), {}]])
       .call(refreshGroupMembers, groupId)
       .put(
         modalActions.showHideToastMessage({
@@ -35,7 +35,7 @@ describe('Remove member saga', () => {
   it('should call server and error occurs', () => expectSaga(removeMember, action)
     .provide([
       [
-        matchers.call.fn(groupsDataHelper.removeUsers),
+        matchers.call.fn(groupApi.removeUsers),
         // eslint-disable-next-line prefer-promise-reject-errors
         Promise.reject({ code: 1 }),
       ],

@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import modalActions from '../../modal/actions';
 import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 
 describe('approveAllCommunityMemberRequests saga', () => {
   const communityId = 1;
@@ -19,7 +19,7 @@ describe('approveAllCommunityMemberRequests saga', () => {
     .put(groupsActions.resetCommunityMemberRequests())
     .provide([
       [
-        matchers.call.fn(groupsDataHelper.approveAllCommunityMemberRequests),
+        matchers.call.fn(groupApi.approveAllCommunityMemberRequests),
         {},
       ],
     ])
@@ -51,7 +51,7 @@ describe('approveAllCommunityMemberRequests saga', () => {
       .put(groupsActions.resetCommunityMemberRequests())
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.approveAllCommunityMemberRequests),
+          matchers.call.fn(groupApi.approveAllCommunityMemberRequests),
           {},
         ],
       ])
@@ -78,7 +78,7 @@ describe('approveAllCommunityMemberRequests saga', () => {
       .put(groupsActions.resetCommunityMemberRequests())
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.approveAllCommunityMemberRequests),
+          matchers.call.fn(groupApi.approveAllCommunityMemberRequests),
           Promise.reject(error),
         ],
       ])

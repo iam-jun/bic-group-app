@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import { LIST_POST_CONTAINING_VIDEO_PROCESS_1, POST_CONTAINING_VIDEO_PROCESS } from '../../../test/mock_data/draftPosts';
 
@@ -29,7 +29,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       total: 0,
     };
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
-      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
       .run()
       .then(({ allEffects }: any) => {
@@ -44,7 +44,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       total: LIST_POST_CONTAINING_VIDEO_PROCESS_1.length,
     };
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
-      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
       .put(postActions.setAllPostContainingVideoInProgress(response))
       .run()
@@ -62,7 +62,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
 
     storeData.post.allPostContainingVideoInProgress.data = [{ test: 1 }]
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
-      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
       .put(postActions.setAllPostContainingVideoInProgress({
         total: 0,
@@ -84,7 +84,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
     storeData.post.allPostContainingVideoInProgress.data = [{ test: 1 }]
 
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
-      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
       .put(postActions.setAllPostContainingVideoInProgress(response))
       .run()
@@ -103,7 +103,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
     storeData.post.allPostContainingVideoInProgress.data = [{ id: POST_CONTAINING_VIDEO_PROCESS.id }]
 
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
-      .provide([[matchers.call.fn(postDataHelper.getDraftPosts), response]])
+      .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
       .put(postActions.setAllPostContainingVideoInProgress({ data: response.data, total: 0 }))
       .run()
@@ -129,7 +129,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
 
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
       .provide([
-        [matchers.call.fn(postDataHelper.getDraftPosts), Promise.reject(error)],
+        [matchers.call.fn(streamApi.getDraftPosts), Promise.reject(error)],
       ])
       .run()
       .catch((e) => {

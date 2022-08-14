@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 
 describe('declineAllGroupMemberRequests saga', () => {
@@ -14,7 +14,7 @@ describe('declineAllGroupMemberRequests saga', () => {
 
   it('should decline all member requests correctly', async () => expectSaga(declineAllGroupMemberRequests, action)
     .provide([
-      [matchers.call.fn(groupsDataHelper.declineAllGroupMemberRequests), {}],
+      [matchers.call.fn(groupApi.declineAllGroupMemberRequests), {}],
     ])
     .run()
     .then(({ allEffects }: any) => {
@@ -26,7 +26,7 @@ describe('declineAllGroupMemberRequests saga', () => {
     return expectSaga(declineAllGroupMemberRequests, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.declineAllGroupMemberRequests),
+          matchers.call.fn(groupApi.declineAllGroupMemberRequests),
           Promise.reject(error),
         ],
       ])

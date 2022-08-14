@@ -3,7 +3,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import { IPayloadDeletePost } from '~/interfaces/IPost';
 import modalActions from '~/storeRedux/modal/actions';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import postKeySelector from '../keySelector';
 import { timeOut } from '~/utils/common';
@@ -21,7 +21,7 @@ export default function* deletePost({
     return;
   }
   try {
-    const response = yield postDataHelper.deletePost(id, isDraftPost);
+    const response = yield streamApi.deletePost(id, isDraftPost);
     if (response?.data) {
       const post = yield select((state) => get(state, postKeySelector.postById(id)));
       post.deleted = true;

@@ -6,7 +6,7 @@ import groupsActions from '../actions';
 import getYourGroupsSearch from './getYourGroupsSearch';
 import { communityDetailData } from '../../../test/mock_data/communities';
 import { IGetYourGroupsSearch } from '../../../interfaces/IGroup';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 
 describe('GetYourGroupsSearch saga', () => {
   it('should set result without call backend if key is empty', () => {
@@ -33,7 +33,7 @@ describe('GetYourGroupsSearch saga', () => {
     const storeData = { groups: { yourGroupsSearch: { key: 'bein' } } };
     return expectSaga(getYourGroupsSearch, { type: 'test', payload })
       .withState(storeData)
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunityGroups), res]])
+      .provide([[matchers.call.fn(groupApi.getCommunityGroups), res]])
       .put(groupsActions.setYourGroupsSearch({ loading: true, key: 'bein' }))
       .put(groupsActions.setYourGroupsSearch({ loading: false, list: res.data }))
       .run()
@@ -51,7 +51,7 @@ describe('GetYourGroupsSearch saga', () => {
     const storeData = { groups: { yourGroupsSearch: { key: '' } } };
     return expectSaga(getYourGroupsSearch, { type: 'test', payload })
       .withState(storeData)
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunityGroups), list]])
+      .provide([[matchers.call.fn(groupApi.getCommunityGroups), list]])
       .put(groupsActions.setYourGroupsSearch({ loading: true, key: 'bein' }))
       .put(groupsActions.setYourGroupsSearch({ loading: false, list: [] }))
       .run()
@@ -69,7 +69,7 @@ describe('GetYourGroupsSearch saga', () => {
     return expectSaga(getYourGroupsSearch, { type: 'test', payload })
       .withState(storeData)
       .provide([
-        matchers.call.fn(groupsDataHelper.getCommunityGroups),
+        matchers.call.fn(groupApi.getCommunityGroups),
         throwError(new Error('empty data')),
       ])
       .put(groupsActions.setYourGroupsSearch({ loading: true, key: 'bein' }))

@@ -3,7 +3,7 @@ import appConfig from '~/configs/appConfig';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import { IJoiningMember } from '~/interfaces/IGroup';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import { mapItems } from '../../../screens/Groups/helper/mapper';
 import groupsActions from '../actions';
 
@@ -28,7 +28,7 @@ export default function* getCommunityMemberRequests({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const response = yield call(
-      groupsDataHelper.getCommunityMemberRequests,
+      groupApi.getCommunityMemberRequests,
       communityId,
       {
         offset: isRefreshing ? 0 : ids.length,

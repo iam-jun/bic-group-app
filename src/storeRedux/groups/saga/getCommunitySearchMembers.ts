@@ -3,7 +3,7 @@ import { put, call, select } from 'redux-saga/effects';
 
 import { AxiosResponse } from 'axios';
 import actions from '~/storeRedux/groups/actions';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import { IParamGetCommunityMembers } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -24,7 +24,7 @@ export default function* getCommunitySearchMembers({
     if (!canLoadMore) return;
 
     const resp: AxiosResponse = yield call(
-      groupsDataHelper.getCommunityMembers, communityId, {
+      groupApi.getCommunityMembers, communityId, {
         limit: appConfig.recordsPerPage,
         offset: data.length,
         ...params,

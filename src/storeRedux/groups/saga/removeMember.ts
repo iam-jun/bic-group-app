@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { put, call } from 'redux-saga/effects';
 
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
 import { refreshGroupMembers } from './index';
@@ -17,7 +17,7 @@ export default function* removeMember({
     const { groupId, userId, userFullname } = payload;
 
     yield call(
-      groupsDataHelper.removeUsers, groupId, [userId],
+      groupApi.removeUsers, groupId, [userId],
     );
 
     yield call(

@@ -20,7 +20,7 @@ import {
   IPostCreatePost,
 } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import { useBaseHook } from '~/hooks';
@@ -464,14 +464,14 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
           data,
         };
 
-        await postDataHelper.putEditPost(newPayload);
+        await streamApi.putEditPost(newPayload);
         refIsRefresh.current = true;
       } else if (isEdit && sPostId) {
         console.warn('\x1b[36m🐣️ useCreatePost skip autosave edit post\x1b[0m');
       } else if (!sPostId) {
         setLoading(true);
         data.isDraft = true;
-        const resp = await postDataHelper.postCreateNewPost(data);
+        const resp = await streamApi.postCreateNewPost(data);
         refIsRefresh.current = true;
         if (resp?.data) {
           const newData = resp?.data || {};

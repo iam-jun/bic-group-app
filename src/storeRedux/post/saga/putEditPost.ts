@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import i18n from 'i18next';
 import { IPayloadPutEditPost } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';
@@ -32,7 +32,7 @@ export default function* putEditPost({
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const response = yield call(
-      postDataHelper.putEditPost, { postId: id, data },
+      streamApi.putEditPost, { postId: id, data },
     );
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {

@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
 import { useBaseHook } from '~/hooks';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -114,7 +114,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const onDelete = () => {
     dispatch(modalActions.hideModal());
     if (id) {
-      postDataHelper
+      streamApi
         .deletePost(
           id, isDraft,
         )

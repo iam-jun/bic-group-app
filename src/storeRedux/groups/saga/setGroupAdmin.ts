@@ -2,7 +2,7 @@ import { put, call } from 'redux-saga/effects';
 import { IToastMessage } from '~/interfaces/common';
 import { IGroupSetAdmin } from '~/interfaces/IGroup';
 import { refreshGroupMembers } from './index';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '~/storeRedux/modal/actions';
 import showError from '~/storeRedux/commonSaga/showError';
 
@@ -16,7 +16,7 @@ export default function* setGroupAdmin({
     const { groupId, userIds } = payload;
 
     yield call(
-      groupsDataHelper.setGroupAdmin, groupId, userIds,
+      groupApi.setGroupAdmin, groupId, userIds,
     );
 
     const toastMessage: IToastMessage = {

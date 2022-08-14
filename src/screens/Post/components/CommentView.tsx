@@ -30,7 +30,7 @@ import {
 import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/Post/components/CommentMediaView';
 import CommentViewMenu from '~/screens/Post/components/CommentViewMenu';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import * as modalActions from '~/storeRedux/modal/actions';
@@ -253,7 +253,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const getReactionStatistics = async (param: any) => {
     try {
-      const response = await postDataHelper.getReactionDetail(param);
+      const response = await streamApi.getReactionDetail(param);
       const data = await response?.list;
       const users = (data || []).map((item: any) => ({
         id: item?.actor?.id,

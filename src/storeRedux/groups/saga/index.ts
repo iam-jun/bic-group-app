@@ -8,7 +8,7 @@ import {
   IGroupGetJoinableMembers,
   IGroupImageUpload,
 } from '~/interfaces/IGroup';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsTypes from '~/storeRedux/groups/types';
 import * as modalActions from '~/storeRedux/modal/actions';
@@ -332,7 +332,7 @@ function* getJoinableUsers({
 
     const { groupId, params } = payload;
     const response: IResponseData = yield call(
-      groupsDataHelper.getJoinableUsers,
+      groupApi.getJoinableUsers,
       groupId,
       { offset, limit: appConfig.recordsPerPage, ...params },
     );
@@ -372,7 +372,7 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
   try {
     const { groupId, userIds } = payload;
 
-    yield call(groupsDataHelper.addUsers, groupId, userIds);
+    yield call(groupApi.addUsers, groupId, userIds);
 
     // refresh group detail after adding new members
     yield refreshGroupMembers(groupId);
@@ -418,7 +418,7 @@ function* cancelJoinGroup({
 }) {
   const { groupId, groupName } = payload;
   try {
-    yield call(groupsDataHelper.cancelJoinGroup, groupId);
+    yield call(groupApi.cancelJoinGroup, groupId);
 
     // update button Join/Cancel/View status on Discover groups
     yield put(

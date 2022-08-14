@@ -3,7 +3,7 @@ import {
   ICommentData,
   IPayloadGetCommentsById,
 } from '~/interfaces/IPost';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import addChildCommentToCommentsOfPost from '~/storeRedux/post/saga/addChildCommentToCommentsOfPost';
 import postActions from '~/storeRedux/post/actions';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -25,7 +25,7 @@ function* getCommentsByPostId({
 
   try {
     callbackLoading?.(true);
-    const response = yield call(postDataHelper.getCommentsByPostId, params);
+    const response = yield call(streamApi.getCommentsByPostId, params);
     const { list: newList, meta } = response?.data || {};
     callbackLoading?.(false);
     if (newList?.length > 0) {

@@ -1,7 +1,7 @@
 import { put, select } from 'redux-saga/effects';
 import { IPayloadPutEditComment } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
 import { timeOut } from '~/utils/common';
@@ -32,7 +32,7 @@ function* putEditComment({
     );
     data.mentions = { ...comment?.mentions, ...newMentions };
 
-    yield postDataHelper.putEditComment(
+    yield streamApi.putEditComment(
       id, data,
     );
 

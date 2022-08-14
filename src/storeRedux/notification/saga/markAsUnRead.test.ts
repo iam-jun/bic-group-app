@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { NOTIFICATIONS_RESPONSE } from '../../../test/mock_data/notifications';
 
-import notificationsDataHelper from '../../../api/NotificationDataHelper';
+import notificationsDataHelper from '../../../api/NotificationApi';
 import notificationsActions from '../actions';
 import markAsUnRead from './markAsUnRead';
 

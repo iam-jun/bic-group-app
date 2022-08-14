@@ -1,7 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import { IPayloadPutMarkSeenPost } from '../../../interfaces/IPost';
 import putMarkSeenPost from './putMarKSeenPost';
@@ -31,9 +31,9 @@ describe('Put Mark seen post Saga', () => {
     return expectSaga(putMarkSeenPost, { type: 'test', payload })
       .withState(storeData)
       .provide([
-        [matchers.call.fn(postDataHelper.putMarkSeenPost), { data: true }],
+        [matchers.call.fn(streamApi.putMarkSeenPost), { data: true }],
       ])
-      .call(postDataHelper.putMarkSeenPost, POST_DETAIL.id)
+      .call(streamApi.putMarkSeenPost, POST_DETAIL.id)
       .put(postActions.addToAllPosts(newPost))
       .run()
       .then(({ allEffects }: any) => {
@@ -47,9 +47,9 @@ describe('Put Mark seen post Saga', () => {
     return expectSaga(putMarkSeenPost, { type: 'test', payload })
       .withState(storeData)
       .provide([
-        [matchers.call.fn(postDataHelper.putMarkSeenPost), { data: false }],
+        [matchers.call.fn(streamApi.putMarkSeenPost), { data: false }],
       ])
-      .call(postDataHelper.putMarkSeenPost, POST_DETAIL.id)
+      .call(streamApi.putMarkSeenPost, POST_DETAIL.id)
       .run()
       .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);
@@ -64,11 +64,11 @@ describe('Put Mark seen post Saga', () => {
       .withState(storeData)
       .provide([
         [
-          matchers.call.fn(postDataHelper.putMarkSeenPost),
+          matchers.call.fn(streamApi.putMarkSeenPost),
           throwError(new Error('empty data')),
         ],
       ])
-      .call(postDataHelper.putMarkSeenPost, POST_DETAIL.id)
+      .call(streamApi.putMarkSeenPost, POST_DETAIL.id)
       .run()
       .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);

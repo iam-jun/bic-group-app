@@ -1,7 +1,7 @@
 import {
   createStore, withFlipper, withImmer, withPersist,
 } from '~/store/utils';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import { IGroup } from '~/interfaces/IGroup';
 
 interface JoinedGroupTreeState {
@@ -17,7 +17,7 @@ const useJoinedGroupTree = (set) => ({
     set((state) => {
       state.loading = true;
     }, false, 'getJoinedGroupTree');
-    groupsDataHelper.getCommunityGroups(id, { listBy: 'tree' }).then((response) => {
+    groupApi.getCommunityGroups(id, { listBy: 'tree' }).then((response) => {
       set((state) => {
         state.loading = false;
         state.data[id] = response.data || []

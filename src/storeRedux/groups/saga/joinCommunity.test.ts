@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import i18next from 'i18next';
 
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import joinCommunity from './joinCommunity';
 import groupsActions from '../actions';
@@ -20,7 +20,7 @@ describe('joinCommuniity saga', () => {
     const response = { data: { joinStatus: 3 } };
 
     return expectSaga(joinCommunity, action)
-      .provide([[matchers.call.fn(groupsDataHelper.joinCommunity), response]])
+      .provide([[matchers.call.fn(groupApi.joinCommunity), response]])
       .put(
         groupsActions.editDiscoverCommunityItem({
           id: communityId,
@@ -48,7 +48,7 @@ describe('joinCommuniity saga', () => {
     const response = { data: { joinStatus: 2 } };
 
     return expectSaga(joinCommunity, action)
-      .provide([[matchers.call.fn(groupsDataHelper.joinCommunity), response]])
+      .provide([[matchers.call.fn(groupApi.joinCommunity), response]])
       .put(
         groupsActions.editDiscoverCommunityItem({
           id: communityId,
@@ -77,7 +77,7 @@ describe('joinCommuniity saga', () => {
     return expectSaga(joinCommunity, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.joinCommunity),
+          matchers.call.fn(groupApi.joinCommunity),
           Promise.reject(error),
         ],
       ])

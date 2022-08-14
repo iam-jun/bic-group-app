@@ -2,7 +2,7 @@ import { put, select, call } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import postActions from '~/storeRedux/post/actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
 
@@ -17,7 +17,7 @@ export default function* getGroupPosts({
     const { offset, data } = groups.posts;
 
     const param: IParamGetGroupPosts = { groupId: payload, offset };
-    const response = yield call(groupsDataHelper.getGroupPosts, param);
+    const response = yield call(groupApi.getGroupPosts, param);
 
     const result = response.data?.list;
     yield put(postActions.addToAllPosts({ data: result }));

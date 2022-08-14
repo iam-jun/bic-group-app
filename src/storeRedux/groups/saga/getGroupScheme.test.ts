@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getGroupScheme from './getGroupScheme';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import { groupScheme } from '../../../test/mock_data/scheme';
 import API_ERROR_CODE from '../../../constants/apiErrorCode';
@@ -21,8 +21,8 @@ describe('getGroupScheme saga', () => {
   const dataWithOrderedFixRole = sortFixedRoles(resp.data);
 
   it('should get data successfully', async () => expectSaga(getGroupScheme, action)
-    .provide([[matchers.call.fn(groupsDataHelper.getGroupScheme), resp]])
-    .call(groupsDataHelper.getGroupScheme, communityId, schemeId)
+    .provide([[matchers.call.fn(groupApi.getGroupScheme), resp]])
+    .call(groupApi.getGroupScheme, communityId, schemeId)
     .put(groupsActions.setGroupScheme({ data: dataWithOrderedFixRole }))
     .put(groupsActions.setCreatingScheme({ data: dataWithOrderedFixRole, memberRoleIndex: 1 }))
     .run()
@@ -35,11 +35,11 @@ describe('getGroupScheme saga', () => {
     return expectSaga(getGroupScheme, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getGroupScheme),
+          matchers.call.fn(groupApi.getGroupScheme),
           Promise.reject(error),
         ],
       ])
-      .call(groupsDataHelper.getGroupScheme, communityId, schemeId)
+      .call(groupApi.getGroupScheme, communityId, schemeId)
       .put(groupsActions.getSchemes({ communityId, isRefreshing: true }))
       .call(showError, error)
       .run()
@@ -53,11 +53,11 @@ describe('getGroupScheme saga', () => {
     return expectSaga(getGroupScheme, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getGroupScheme),
+          matchers.call.fn(groupApi.getGroupScheme),
           Promise.reject(error),
         ],
       ])
-      .call(groupsDataHelper.getGroupScheme, communityId, schemeId)
+      .call(groupApi.getGroupScheme, communityId, schemeId)
       .call(showError, error)
       .run()
       .then(({ allEffects }: any) => {

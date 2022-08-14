@@ -1,13 +1,13 @@
 import { get } from 'lodash';
 import { call, put, select } from 'redux-saga/effects';
 
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 
 function* getPostsContainingVideoInProgress(): any {
   try {
     const response = yield call(
-      postDataHelper.getDraftPosts, {
+      streamApi.getDraftPosts, {
         isProcessing: true,
       },
     );

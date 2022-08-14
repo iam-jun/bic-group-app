@@ -2,7 +2,7 @@ import { put, call } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 
 export default function* getSchemes({
   payload,
@@ -19,7 +19,7 @@ export default function* getSchemes({
     }
 
     const response = yield call(
-      groupsDataHelper.getSchemes, communityId,
+      groupApi.getSchemes, communityId,
     );
     if (response?.data) {
       const { communityScheme, groupSchemes } = response.data || {};

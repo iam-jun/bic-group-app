@@ -2,7 +2,7 @@ import { put, call, select } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 
 export default function* getMyPermissions(): any {
   try {
@@ -11,7 +11,7 @@ export default function* getMyPermissions(): any {
 
     yield put(actions.setMyPermissions({ loading: true }));
 
-    const response = yield call(groupsDataHelper.getMyPermissions);
+    const response = yield call(groupApi.getMyPermissions);
 
     yield put(actions.setMyPermissions({
       loading: false,

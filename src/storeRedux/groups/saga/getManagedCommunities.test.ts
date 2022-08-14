@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import getManagedCommunities from './getManagedCommunities';
 import { communityDetailData } from '../../../test/mock_data/communities';
 import showError from '../../commonSaga/showError';
@@ -25,7 +25,7 @@ describe('Get managed communities saga', () => {
       .withState(state)
       .put(actions.setManagedCommunities({ loading: true }))
       .provide([
-        [matchers.call.fn(groupsDataHelper.getJoinedCommunities), resp],
+        [matchers.call.fn(groupApi.getJoinedCommunities), resp],
       ])
       .put(
         actions.setManagedCommunities({
@@ -65,7 +65,7 @@ describe('Get managed communities saga', () => {
       .put(actions.setManagedCommunities({ loading: false }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getJoinedCommunities),
+          matchers.call.fn(groupApi.getJoinedCommunities),
           Promise.reject(error),
         ],
       ])

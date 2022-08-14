@@ -4,7 +4,7 @@ import { adminDetail, memberData, memberDetail } from '../../../test/mock_data/g
 
 import getGroupMembers from './getGroupMembers';
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 
 describe('getGroupMembers saga', () => {
@@ -31,7 +31,7 @@ describe('getGroupMembers saga', () => {
     return expectSaga(getGroupMembers, action)
       .withState(state)
       .put(actions.setGroupMembers({ loading: true }))
-      .provide([[matchers.call.fn(groupsDataHelper.getGroupMembers), resp]])
+      .provide([[matchers.call.fn(groupApi.getGroupMembers), resp]])
       .put(
         actions.setGroupMembers({
           loading: false,
@@ -95,7 +95,7 @@ describe('getGroupMembers saga', () => {
       .put(actions.setGroupMembers({ loading: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getGroupMembers),
+          matchers.call.fn(groupApi.getGroupMembers),
           Promise.reject(error),
         ],
       ])
@@ -136,7 +136,7 @@ describe('getGroupMembers saga', () => {
     return expectSaga(getGroupMembers, action)
       .withState(state)
       .put(actions.setGroupMembers({ loading: true }))
-      .provide([[matchers.call.fn(groupsDataHelper.getGroupMembers), resp]])
+      .provide([[matchers.call.fn(groupApi.getGroupMembers), resp]])
       .put(
         actions.setGroupMembers({
           loading: false,

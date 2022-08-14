@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsActions from '../actions';
 import postActions from '../../post/actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import { groupPostData } from '../../../test/mock_data/group';
 import getGroupPosts from './getGroupPosts';
 import modalActions from '../../modal/actions';
@@ -18,7 +18,7 @@ describe('Get group posts saga', () => {
 
     return expectSaga(getGroupPosts, action)
       .withState(state)
-      .provide([[matchers.call.fn(groupsDataHelper.getGroupPosts), respones]])
+      .provide([[matchers.call.fn(groupApi.getGroupPosts), respones]])
       .put(postActions.addToAllPosts({ data: respones.data.list }))
       .put(groupsActions.setGroupPosts(respones.data.list))
       .put(groupsActions.setLoadingPage(false))
@@ -35,7 +35,7 @@ describe('Get group posts saga', () => {
     return expectSaga(getGroupPosts, action)
       .withState(state)
       .provide([
-        [matchers.call.fn(groupsDataHelper.getGroupPosts), respones],
+        [matchers.call.fn(groupApi.getGroupPosts), respones],
       ])
       // @ts-ignore
       .put(postActions.addToAllPosts({ data: respones.data.list }))
@@ -55,7 +55,7 @@ describe('Get group posts saga', () => {
 
     return expectSaga(getGroupPosts, action)
       .withState(state)
-      .provide([[matchers.call.fn(groupsDataHelper.getGroupPosts), respones]])
+      .provide([[matchers.call.fn(groupApi.getGroupPosts), respones]])
       .put(postActions.addToAllPosts({ data: respones.data.list }))
       .put(groupsActions.setExtraGroupPosts(respones.data.list))
       .put(groupsActions.setLoadingPage(false))
@@ -76,7 +76,7 @@ describe('Get group posts saga', () => {
     return expectSaga(getGroupPosts, action)
       .withState(state)
       .provide([
-        [matchers.call.fn(groupsDataHelper.getGroupPosts), Promise.reject(error)],
+        [matchers.call.fn(groupApi.getGroupPosts), Promise.reject(error)],
       ])
       .put(groupsActions.setLoadingPage(false))
       .put(

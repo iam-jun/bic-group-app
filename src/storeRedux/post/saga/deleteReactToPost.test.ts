@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
 import { POST_DETAIL } from '../../../test/mock_data/post';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import modalActions from '../../modal/actions';
 import deleteReactToPost from './deleteReactToPost';
@@ -63,7 +63,7 @@ describe('Delete React To Post Saga', () => {
     return expectSaga(deleteReactToPost, action)
       .withReducer(allPostReducer)
       .put(postActions.addToAllPosts({ data: newPost as any }))
-      .provide([[matchers.call.fn(postDataHelper.deleteReaction), response]])
+      .provide([[matchers.call.fn(streamApi.deleteReaction), response]])
       .run();
   });
 
@@ -110,7 +110,7 @@ describe('Delete React To Post Saga', () => {
       .put(postActions.addToAllPosts({ data: newPost as any }))
       .provide([
         [
-          matchers.call.fn(postDataHelper.deleteReaction),
+          matchers.call.fn(streamApi.deleteReaction),
           throwError(new Error('empty data')),
         ],
       ])

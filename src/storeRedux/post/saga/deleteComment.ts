@@ -6,7 +6,7 @@ import {
   IReaction,
 } from '~/interfaces/IPost';
 import * as modalActions from '~/storeRedux/modal/actions';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import { IToastMessage } from '~/interfaces/common';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
@@ -27,7 +27,7 @@ export default function* deleteComment({
   )) || {};
   const comment: ICommentData = allComments?.[commentId] || {};
   try {
-    yield postDataHelper.deleteComment(commentId);
+    yield streamApi.deleteComment(commentId);
 
     // update allCommentsByParentId
     const allCommentsByParentIds = yield select((state) => state?.post?.allCommentsByParentIds) || {};

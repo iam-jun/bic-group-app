@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import modalActions from '../../modal/actions';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 
 describe('approveAllGroupMemberRequests saga', () => {
   const groupId = 1;
@@ -17,7 +17,7 @@ describe('approveAllGroupMemberRequests saga', () => {
   it('should approve all member requests correctly with callback function', async () => expectSaga(approveAllGroupMemberRequests, action)
     .put(groupsActions.resetGroupMemberRequests())
     .provide([
-      [matchers.call.fn(groupsDataHelper.approveAllGroupMemberRequests), {}],
+      [matchers.call.fn(groupApi.approveAllGroupMemberRequests), {}],
     ])
     .put(groupsActions.getGroupDetail(groupId))
     .put(
@@ -47,7 +47,7 @@ describe('approveAllGroupMemberRequests saga', () => {
     return expectSaga(approveAllGroupMemberRequests, action)
       .put(groupsActions.resetGroupMemberRequests())
       .provide([
-        [matchers.call.fn(groupsDataHelper.approveAllGroupMemberRequests), {}],
+        [matchers.call.fn(groupApi.approveAllGroupMemberRequests), {}],
       ])
       .put(groupsActions.getGroupDetail(groupId))
       .put(
@@ -72,7 +72,7 @@ describe('approveAllGroupMemberRequests saga', () => {
       .put(groupsActions.resetGroupMemberRequests())
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.approveAllGroupMemberRequests),
+          matchers.call.fn(groupApi.approveAllGroupMemberRequests),
           Promise.reject(error),
         ],
       ])

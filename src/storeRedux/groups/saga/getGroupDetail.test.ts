@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getGroupDetail from './getGroupDetail';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 
 describe('Get group detail saga', () => {
   const action = {
@@ -31,7 +31,7 @@ describe('Get group detail saga', () => {
 
     return (
       expectSaga(getGroupDetail, action as any)
-        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
+        .provide([[matchers.call.fn(groupApi.getGroupDetail), resp]])
         .put(groupsActions.setGroupDetail(resp.data))
         .withState(state)
         .not.put(groupsActions.setLoadingPage(false))
@@ -49,7 +49,7 @@ describe('Get group detail saga', () => {
     return (
       expectSaga(getGroupDetail, { ...action, loadingPage: true } as any)
         .put(groupsActions.setLoadingPage(true))
-        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
+        .provide([[matchers.call.fn(groupApi.getGroupDetail), resp]])
         .put(groupsActions.setGroupDetail(resp.data))
         .withState(state)
         .not.put(groupsActions.setLoadingPage(false))
@@ -70,7 +70,7 @@ describe('Get group detail saga', () => {
 
     return (
       expectSaga(getGroupDetail, action as any)
-        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), _resp]])
+        .provide([[matchers.call.fn(groupApi.getGroupDetail), _resp]])
         .put(groupsActions.setGroupDetail(resp.data))
         .withState(state)
         .not.put(groupsActions.setLoadingPage(false))
@@ -92,7 +92,7 @@ describe('Get group detail saga', () => {
 
     return (
       expectSaga(getGroupDetail, action as any)
-        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), _resp]])
+        .provide([[matchers.call.fn(groupApi.getGroupDetail), _resp]])
         .put(groupsActions.setGroupDetail(resp.data))
         .withState(state)
         .put(groupsActions.setLoadingPage(false))
@@ -102,7 +102,7 @@ describe('Get group detail saga', () => {
 
   it('should call server and server throws an error', () => expectSaga(getGroupDetail, action as any)
     .provide([
-      [matchers.call.fn(groupsDataHelper.getGroupDetail), Promise.reject()],
+      [matchers.call.fn(groupApi.getGroupDetail), Promise.reject()],
     ])
     .put(groupsActions.setLoadingPage(false))
     .put(groupsActions.setGroupDetail(null))

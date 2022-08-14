@@ -2,7 +2,7 @@ import { put, call } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 
 export default function* getPermissionCategories({
   payload,
@@ -13,7 +13,7 @@ export default function* getPermissionCategories({
   try {
     yield put(actions.setPermissionCategories({ loading: true, data: undefined }));
     const response = yield call(
-      groupsDataHelper.getPermissionCategories,
+      groupApi.getPermissionCategories,
       payload,
     );
     if (response?.data) {

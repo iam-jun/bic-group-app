@@ -10,7 +10,7 @@ import {
   allPosts,
   baseCommentData,
 } from '../../../test/mock_data/post';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import getCommentDetail from './getCommentDetail';
 
@@ -37,7 +37,7 @@ describe('Get comments detail saga', () => {
       // @ts-ignorets
       expectSaga(getCommentDetail, action)
         .provide([
-          [matchers.call.fn(postDataHelper.getCommentDetail), response],
+          [matchers.call.fn(streamApi.getCommentDetail), response],
         ])
         .put(
           postActions.updateAllCommentsByParentIdsWithComments({
@@ -70,7 +70,7 @@ describe('Get comments detail saga', () => {
       // @ts-ignorets
       expectSaga(getCommentDetail, action)
         .provide([
-          [matchers.call.fn(postDataHelper.getCommentDetail), response],
+          [matchers.call.fn(streamApi.getCommentDetail), response],
         ])
         .put(
           postActions.updateAllCommentsByParentIdsWithComments({
@@ -106,7 +106,7 @@ describe('Get comments detail saga', () => {
     return expectSaga(getCommentDetail, action)
       .provide([
         [
-          matchers.call.fn(postDataHelper.getCommentDetail),
+          matchers.call.fn(streamApi.getCommentDetail),
           Promise.reject(resp),
         ],
       ])
@@ -143,7 +143,7 @@ describe('Get comments detail saga', () => {
     return expectSaga(getCommentDetail, action)
       .provide([
         [
-          matchers.call.fn(postDataHelper.getCommentDetail),
+          matchers.call.fn(streamApi.getCommentDetail),
           Promise.reject(resp),
         ],
       ])
@@ -172,7 +172,7 @@ describe('Get comments detail saga', () => {
     return expectSaga(getCommentDetail, action)
       .provide([
         [
-          matchers.call.fn(postDataHelper.getCommentDetail),
+          matchers.call.fn(streamApi.getCommentDetail),
           Promise.reject(resp),
         ],
       ])
@@ -191,7 +191,7 @@ describe('Get comments detail saga', () => {
     const response = { list: [] };
     // @ts-ignorets
     return expectSaga(getCommentDetail, action)
-      .provide([[matchers.call.fn(postDataHelper.getCommentDetail), response]])
+      .provide([[matchers.call.fn(streamApi.getCommentDetail), response]])
       .run()
       .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(1);

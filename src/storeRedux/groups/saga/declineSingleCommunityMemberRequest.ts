@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 
@@ -21,7 +21,7 @@ export default function* declineSingleCommunityMemberRequest({
   const { communityId, requestId, fullName } = payload;
   try {
     yield call(
-      groupsDataHelper.declineSingleCommunityMemberRequest,
+      groupApi.declineSingleCommunityMemberRequest,
       communityId,
       requestId,
     );

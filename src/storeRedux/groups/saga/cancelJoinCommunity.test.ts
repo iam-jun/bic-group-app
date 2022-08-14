@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import i18next from 'i18next';
 
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import cancelJoinCommunity from './cancelJoinCommunity';
 import groupsActions from '../actions';
 import modalActions from '../../modal/actions';
@@ -18,7 +18,7 @@ describe('cancelJoinCommuniity saga', () => {
   };
 
   it('should cancel join request to Private community correctly', () => expectSaga(cancelJoinCommunity, action)
-    .provide([[matchers.call.fn(groupsDataHelper.cancelJoinCommunity), {}]])
+    .provide([[matchers.call.fn(groupApi.cancelJoinCommunity), {}]])
     .put(
       groupsActions.editDiscoverCommunityItem({
         id: communityId,
@@ -45,7 +45,7 @@ describe('cancelJoinCommuniity saga', () => {
     return expectSaga(cancelJoinCommunity, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.cancelJoinCommunity),
+          matchers.call.fn(groupApi.cancelJoinCommunity),
           Promise.reject(error),
         ],
       ])
@@ -69,7 +69,7 @@ describe('cancelJoinCommuniity saga', () => {
     return expectSaga(cancelJoinCommunity, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.cancelJoinCommunity),
+          matchers.call.fn(groupApi.cancelJoinCommunity),
           Promise.reject(error),
         ],
       ])

@@ -4,7 +4,7 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import putEditPost, { navigate } from './putEditPost';
 import { IPayloadPutEditPost, IPostCreatePost } from '../../../interfaces/IPost';
 import { POST_DETAIL } from '../../../test/mock_data/post';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import modalActions from '../../modal/actions';
 import { languages } from '../../../test/testUtils';
@@ -29,10 +29,10 @@ describe('Edit Post Saga', () => {
     };
     return expectSaga(putEditPost, { type: 'test', payload })
       .provide([
-        [matchers.call.fn(postDataHelper.putEditPost), { data: POST_DETAIL }],
+        [matchers.call.fn(streamApi.putEditPost), { data: POST_DETAIL }],
       ])
       .put(postActions.setLoadingCreatePost(true))
-      .call(postDataHelper.putEditPost, { postId: POST_DETAIL.id, data })
+      .call(streamApi.putEditPost, { postId: POST_DETAIL.id, data })
       .put(postActions.setLoadingCreatePost(false))
       .put(postActions.addToAllPosts({ data: POST_DETAIL } as any))
       .put(
@@ -59,10 +59,10 @@ describe('Edit Post Saga', () => {
     };
     return expectSaga(putEditPost, { type: 'test', payload })
       .provide([
-        [matchers.call.fn(postDataHelper.putEditPost), { data: POST_DETAIL }],
+        [matchers.call.fn(streamApi.putEditPost), { data: POST_DETAIL }],
       ])
       .put(postActions.setLoadingCreatePost(true))
-      .call(postDataHelper.putEditPost, { postId: POST_DETAIL.id, data })
+      .call(streamApi.putEditPost, { postId: POST_DETAIL.id, data })
       .put(postActions.setLoadingCreatePost(false))
       .put(postActions.addToAllPosts({ data: POST_DETAIL } as any))
       .put(
@@ -86,7 +86,7 @@ describe('Edit Post Saga', () => {
     return expectSaga(putEditPost, { type: 'test', payload })
       .provide([
         [
-          matchers.call.fn(postDataHelper.putEditPost),
+          matchers.call.fn(streamApi.putEditPost),
           throwError(new Error('empty data')),
         ],
       ])

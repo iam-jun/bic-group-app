@@ -4,7 +4,7 @@ import { ToastMessageProps } from '~/beinComponents/ToastMessage/NormalToastMess
 import { IToastMessage } from '~/interfaces/common';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 
 export default function* approveAllCommunityMemberRequests({
@@ -18,7 +18,7 @@ export default function* approveAllCommunityMemberRequests({
     yield put(groupsActions.resetCommunityMemberRequests());
 
     yield call(
-      groupsDataHelper.approveAllCommunityMemberRequests, communityId,
+      groupApi.approveAllCommunityMemberRequests, communityId,
     );
 
     // to update userCount

@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import modalActions from '../../modal/actions';
 
 import { baseCommentData } from '../../../test/mock_data/post';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import putReactionToComment from './putReactionToComment';
 
@@ -79,7 +79,7 @@ describe('Update Reaction Of Comment By Id saga', () => {
       expectSaga(putReactionToComment, actionTest)
         .withReducer(allCommentsReducer)
         .put(postActions.setAllComments(storeData.post.allComments))
-        .provide([[matchers.call.fn(postDataHelper.putReaction), response]])
+        .provide([[matchers.call.fn(streamApi.putReaction), response]])
         .put(postActions.setAllComments(newAllComments as any))
         .run()
     );
@@ -209,7 +209,7 @@ describe('Update Reaction Of Comment By Id saga', () => {
       expectSaga(putReactionToComment, action)
         .withReducer(allCommentsReducer, newStoreData)
         .put(postActions.setAllComments(newStoreData.post.allComments as any))
-        .provide([[matchers.call.fn(postDataHelper.putReaction), response]])
+        .provide([[matchers.call.fn(streamApi.putReaction), response]])
         .put(postActions.setAllComments(newAllComments as any))
         .run()
     );
@@ -240,7 +240,7 @@ describe('Update Reaction Of Comment By Id saga', () => {
         .withReducer(allCommentsReducer)
         .put(postActions.setAllComments(storeData.post.allComments))
         .provide([
-          [matchers.call.fn(postDataHelper.putReaction), Promise.reject(resp)],
+          [matchers.call.fn(streamApi.putReaction), Promise.reject(resp)],
         ])
         .put(postActions.setAllComments(storeData.post.allComments))
         .put(

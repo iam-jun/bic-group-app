@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 
 export default function* getGroupStructureCommunityTree({
@@ -16,7 +16,7 @@ export default function* getGroupStructureCommunityTree({
       yield put(groupsActions.setGroupStructureCommunityTree({ loading: true }));
     }
     const response = (yield call(
-      groupsDataHelper.getCommunityGroupTree, communityId,
+      groupApi.getCommunityGroupTree, communityId,
     )) || [];
 
     if (response?.data) {

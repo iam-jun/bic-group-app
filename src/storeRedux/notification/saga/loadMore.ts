@@ -3,7 +3,7 @@ import { put, select, call } from 'redux-saga/effects';
 
 import { IObject } from '~/interfaces/common';
 import { IParamGetNotifications } from '~/interfaces/INotification';
-import notificationsDataHelper from '../../../api/NotificationDataHelper';
+import notificationsDataHelper from '../../../api/NotificationApi';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 

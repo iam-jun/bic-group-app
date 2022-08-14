@@ -4,7 +4,7 @@ import { adminDetail, memberData, memberDetail } from '../../../test/mock_data/g
 
 import getGroupSearchMembers from './getGroupSearchMembers';
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 
 describe('getGroupSearchMembers saga', () => {
@@ -29,7 +29,7 @@ describe('getGroupSearchMembers saga', () => {
     return expectSaga(getGroupSearchMembers, action)
       .withState(state)
       .put(actions.setGroupSearchMembers({ loading: true }))
-      .provide([[matchers.call.fn(groupsDataHelper.getGroupMembers), resp]])
+      .provide([[matchers.call.fn(groupApi.getGroupMembers), resp]])
       .put(
         actions.setGroupSearchMembers({
           loading: false,
@@ -87,7 +87,7 @@ describe('getGroupSearchMembers saga', () => {
       .put(actions.setGroupSearchMembers({ loading: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getGroupMembers),
+          matchers.call.fn(groupApi.getGroupMembers),
           Promise.reject(error),
         ],
       ])

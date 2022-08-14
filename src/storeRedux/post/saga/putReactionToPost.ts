@@ -3,7 +3,7 @@ import { call, select } from 'redux-saga/effects';
 
 import { IOwnReaction, IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
 import showError from '~/storeRedux/commonSaga/showError';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postKeySelector from '../keySelector';
 import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
@@ -57,7 +57,7 @@ export default function* putReactionToPost({
       );
 
       const response = yield call(
-        postDataHelper.putReaction, {
+        streamApi.putReaction, {
           reactionName: reactionId,
           target: 'POST',
           targetId: id,

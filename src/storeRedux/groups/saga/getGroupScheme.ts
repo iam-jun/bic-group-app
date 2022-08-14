@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
@@ -21,7 +21,7 @@ export default function* getGroupScheme({
   const { communityId, schemeId } = payload || {};
   try {
     const response = yield call(
-      groupsDataHelper.getGroupScheme,
+      groupApi.getGroupScheme,
       communityId,
       schemeId,
     );

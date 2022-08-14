@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import updateGroupScheme from './updateGroupScheme';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import { groupScheme } from '../../../test/mock_data/scheme';
 import modalActions from '../../modal/actions';
@@ -25,9 +25,9 @@ describe('updateGroupScheme saga', () => {
   it('should update scheme successfully', async () => expectSaga(updateGroupScheme, action)
     .withState(state)
     .put(groupsActions.setCreatingScheme({ creating: true }))
-    .provide([[matchers.call.fn(groupsDataHelper.updateGroupScheme), resp]])
+    .provide([[matchers.call.fn(groupApi.updateGroupScheme), resp]])
     .call(
-      groupsDataHelper.updateGroupScheme,
+      groupApi.updateGroupScheme,
       communityId,
       schemeId,
       groupScheme,
@@ -51,9 +51,9 @@ describe('updateGroupScheme saga', () => {
   it('should do nothing when there is no data field in response', async () => expectSaga(updateGroupScheme, action)
     .withState(state)
     .put(groupsActions.setCreatingScheme({ creating: true }))
-    .provide([[matchers.call.fn(groupsDataHelper.updateGroupScheme), {}]])
+    .provide([[matchers.call.fn(groupApi.updateGroupScheme), {}]])
     .call(
-      groupsDataHelper.updateGroupScheme,
+      groupApi.updateGroupScheme,
       communityId,
       schemeId,
       groupScheme,
@@ -71,12 +71,12 @@ describe('updateGroupScheme saga', () => {
       .put(groupsActions.setCreatingScheme({ creating: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.updateGroupScheme),
+          matchers.call.fn(groupApi.updateGroupScheme),
           Promise.reject(error),
         ],
       ])
       .call(
-        groupsDataHelper.updateGroupScheme,
+        groupApi.updateGroupScheme,
         communityId,
         schemeId,
         groupScheme,

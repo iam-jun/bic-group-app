@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 
 export default function* getGroupStructureMoveTargets({
@@ -25,7 +25,7 @@ export default function* getGroupStructureMoveTargets({
     }));
 
     const response = yield call(
-      groupsDataHelper.getCommunityStructureMoveTargets,
+      groupApi.getCommunityStructureMoveTargets,
       communityId,
       groupId,
       key,

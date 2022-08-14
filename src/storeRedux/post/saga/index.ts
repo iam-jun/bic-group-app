@@ -21,10 +21,10 @@ import {
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import homeActions from '~/storeRedux/home/actions';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import { sortComments } from '~/screens/Post/helper/PostUtils';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
@@ -182,7 +182,7 @@ function* postCreateNewPost({
     }
     yield put(postActions.setLoadingCreatePost(true));
     const response = yield call(
-      postDataHelper.postCreateNewPost, data,
+      streamApi.postCreateNewPost, data,
     );
     if (response.data) {
       const postData: IPostActivity = response.data;
@@ -304,7 +304,7 @@ function* showPostAudienceBottomSheet({
     if (arrGroupIds.length > 0) {
       const groupIds = arrGroupIds.join(',');
       const response = yield call(
-        groupsDataHelper.getInfoGroups, groupIds,
+        groupApi.getInfoGroups, groupIds,
       );
       if (response?.data?.length > 0) {
         sectionList.push({ title: 'Groups', data: response.data });
@@ -389,7 +389,7 @@ function* postPublishDraftPost({
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const res = yield call(
-      postDataHelper.postPublishDraftPost, draftPostId,
+      streamApi.postPublishDraftPost, draftPostId,
     );
     yield put(postActions.setLoadingCreatePost(false));
     if (res.data) {
@@ -450,7 +450,7 @@ function* putEditDraftPost({
       yield put(postActions.putEditDraftPost(payload));
       return;
     }
-    const response = yield postDataHelper.putEditPost({ postId: id, data });
+    const response = yield streamApi.putEditPost({ postId: id, data });
     if (response?.data) {
       if (publishNow) {
         const p: IPayloadPublishDraftPost = {
@@ -503,7 +503,7 @@ function* getPostDetail({
       ...restParams,
     };
     const response = yield call(
-      postDataHelper.getPostDetail, params,
+      streamApi.getPostDetail, params,
     );
     yield timeOut(500);
     yield put(postActions.addToAllPosts({ data: response?.data || {}, handleComment: true }));
@@ -544,7 +544,7 @@ function* getCreatePostInitAudiences({
   payload: IParamGetPostAudiences;
 }): any {
   try {
-    const response = yield postDataHelper.getPostAudience(payload);
+    const response = yield streamApi.getPostAudience(payload);
     if (response?.data) {
       yield put(postActions.setCreatePostInitAudiences(response.data));
     }

@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import { IParamGetCommunities } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
@@ -31,7 +31,7 @@ export default function* getDiscoverCommunities({
     };
 
     const response = yield call(
-      groupsDataHelper.getDiscoverCommunities,
+      groupApi.getDiscoverCommunities,
       params,
     );
 

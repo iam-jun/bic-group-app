@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import { put, call } from 'redux-saga/effects';
 
 import { AxiosResponse } from 'axios';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
@@ -18,7 +18,7 @@ export default function* joinNewGroup({
   try {
     const { groupId, groupName } = payload;
 
-    const response:AxiosResponse = yield call(groupsDataHelper.joinGroup, groupId);
+    const response:AxiosResponse = yield call(groupApi.joinGroup, groupId);
     const joinStatus = response?.data?.joinStatus;
     const hasRequested = joinStatus === groupJoinStatus.requested;
 

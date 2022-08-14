@@ -1,6 +1,6 @@
 import { cloneDeep, isEmpty } from 'lodash';
 import modalActions from '~/storeRedux/modal/actions';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import { IGroup, IRole, IScheme } from '~/interfaces/IGroup';
 import { ROLE_TYPE } from '~/constants/permissionScheme';
 
@@ -14,7 +14,7 @@ export const checkLastAdmin = async (
 ) => {
   let testingAdminCount: number; // for testing purpose
   try {
-    const response = await groupsDataHelper.getInnerGroupsLastAdmin(
+    const response = await groupApi.getInnerGroupsLastAdmin(
       groupId,
       userId,
     );
@@ -74,7 +74,7 @@ export const handleLeaveInnerGroups = async (
 
   // Get inner groups info (if any) when user leave/being removed from a group
   try {
-    const resp = await groupsDataHelper.getUserInnerGroups(groupId, username);
+    const resp = await groupApi.getUserInnerGroups(groupId, username);
     const innerGroups = resp?.data?.innerGroups?.map?.(
       (group: IGroup) => group.name,
     );

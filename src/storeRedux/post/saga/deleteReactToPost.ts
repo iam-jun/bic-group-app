@@ -3,7 +3,7 @@ import { call, select } from 'redux-saga/effects';
 
 import { IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
 import showError from '~/storeRedux/commonSaga/showError';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postKeySelector from '../keySelector';
 import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
@@ -27,7 +27,7 @@ export default function* deleteReactToPost({
         id, reactionId,
       );
       yield call(
-        postDataHelper.deleteReaction, {
+        streamApi.deleteReaction, {
           reactionId: rId,
           target: 'POST',
           targetId: id,

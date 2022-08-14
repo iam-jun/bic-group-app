@@ -5,7 +5,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import { Platform as RNPlatform } from 'react-native';
 import leaveGroup, { navigateToGroup, navigationReplace } from './leaveGroup';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import { groupPrivacy } from '../../../constants/privacyTypes';
 import groupJoinStatus from '../../../constants/groupJoinStatus';
@@ -31,7 +31,7 @@ describe('Leave Group Saga', () => {
 
     return expectSaga(leaveGroup, action)
       .withState(state)
-      .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
+      .provide([[matchers.call.fn(groupApi.leaveGroup), {}]])
       .put(
         groupsActions.editDiscoverGroupItem({
           id: action.payload,
@@ -60,7 +60,7 @@ describe('Leave Group Saga', () => {
 
     return expectSaga(leaveGroup, action)
       .withState(state)
-      .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
+      .provide([[matchers.call.fn(groupApi.leaveGroup), {}]])
       .put(
         groupsActions.editDiscoverGroupItem({
           id: action.payload,
@@ -91,7 +91,7 @@ describe('Leave Group Saga', () => {
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([
-        [matchers.call.fn(groupsDataHelper.leaveGroup), Promise.reject(error)],
+        [matchers.call.fn(groupApi.leaveGroup), Promise.reject(error)],
       ])
       .put(
         modalActions.showHideToastMessage({

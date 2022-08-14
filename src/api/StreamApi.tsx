@@ -239,7 +239,7 @@ export const postApiConfig = {
   }),
 };
 
-const postDataHelper = {
+const streamApi = {
   postCreateNewPost: (data: IPostCreatePost) => withHttpRequestPromise(postApiConfig.postCreateNewPost, data),
   putReaction: (param: IParamPutReaction) => withHttpRequestPromise(postApiConfig.putReaction, param),
   putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(postApiConfig.putEditPost, param),
@@ -320,4 +320,4 @@ const postDataHelper = {
   getSeenList: (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(postApiConfig.getUsersSeenPost, params),
 };
 
-export default postDataHelper;
+export default streamApi;

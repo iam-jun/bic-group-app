@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 
 export default function* getYourGroupsList({
@@ -13,7 +13,7 @@ export default function* getYourGroupsList({
   try {
     yield put(groupsActions.setYourGroupsList({ loading: true }));
     const response = yield call(
-      groupsDataHelper.getCommunityGroups,
+      groupApi.getCommunityGroups,
       communityId,
       { listBy: 'flat' },
     );

@@ -4,7 +4,7 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import { IToastMessage } from '~/interfaces/common';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 
 export default function* approveSingleCommunityMemberRequest({
@@ -20,7 +20,7 @@ export default function* approveSingleCommunityMemberRequest({
   const { communityId, requestId, fullName } = payload;
   try {
     yield call(
-      groupsDataHelper.approveSingleCommunityMemberRequest,
+      groupApi.approveSingleCommunityMemberRequest,
       communityId,
       requestId,
     );

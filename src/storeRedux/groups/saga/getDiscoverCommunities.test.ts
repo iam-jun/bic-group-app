@@ -1,7 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import getDiscoverCommunities from './getDiscoverCommunities';
 import groupsActions from '../actions';
@@ -27,7 +27,7 @@ describe('getDiscoverCommunities saga', () => {
       .withState(state)
       .put(groupsActions.setDiscoverCommunities({ loading: true }))
       .provide([
-        [matchers.call.fn(groupsDataHelper.getDiscoverCommunities), resp],
+        [matchers.call.fn(groupApi.getDiscoverCommunities), resp],
       ])
       .put(
         groupsActions.setDiscoverCommunities({
@@ -80,7 +80,7 @@ describe('getDiscoverCommunities saga', () => {
       .withState(state)
       .put(groupsActions.setDiscoverCommunities({ loading: true }))
       .provide([
-        [matchers.call.fn(groupsDataHelper.getDiscoverCommunities), resp],
+        [matchers.call.fn(groupApi.getDiscoverCommunities), resp],
       ])
       .run()
       .then(({ allEffects }: any) => {
@@ -105,7 +105,7 @@ describe('getDiscoverCommunities saga', () => {
       .put(groupsActions.setDiscoverCommunities({ loading: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getDiscoverCommunities),
+          matchers.call.fn(groupApi.getDiscoverCommunities),
           Promise.reject(error),
         ],
       ])

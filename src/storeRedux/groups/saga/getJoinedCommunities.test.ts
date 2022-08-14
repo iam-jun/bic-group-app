@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import getJoinedCommunities from './getJoinedCommunities';
 import { communities } from '../../../test/mock_data/communities';
@@ -19,7 +19,7 @@ describe('Get Joined Communities saga', () => {
       expectSaga(getJoinedCommunities, action)
         .put(groupsActions.setMyCommunities({ loading: true }))
         .provide([
-          [matchers.call.fn(groupsDataHelper.getJoinedCommunities), resp],
+          [matchers.call.fn(groupApi.getJoinedCommunities), resp],
         ])
         .put(
           groupsActions.setMyCommunities({ data: resp.data, loading: false }),
@@ -43,7 +43,7 @@ describe('Get Joined Communities saga', () => {
       expectSaga(getJoinedCommunities, action)
         .put(groupsActions.setMyCommunities({ loading: true }))
         .provide([
-          [matchers.call.fn(groupsDataHelper.getJoinedCommunities), resp],
+          [matchers.call.fn(groupApi.getJoinedCommunities), resp],
         ])
         .put(groupsActions.setMyCommunities({ data: [], loading: false }))
         .run()
@@ -70,7 +70,7 @@ describe('Get Joined Communities saga', () => {
       .put(groupsActions.setMyCommunities({ loading: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getJoinedCommunities),
+          matchers.call.fn(groupApi.getJoinedCommunities),
           Promise.reject(resp),
         ],
       ])

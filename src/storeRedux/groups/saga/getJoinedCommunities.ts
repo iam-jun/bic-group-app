@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 
 export default function* getJoinedCommunities({
@@ -16,7 +16,7 @@ export default function* getJoinedCommunities({
     yield put(groupsActions.setMyCommunities({ loading: true }));
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const response = yield call(groupsDataHelper.getJoinedCommunities, {
+    const response = yield call(groupApi.getJoinedCommunities, {
       previewMembers: true,
     });
 

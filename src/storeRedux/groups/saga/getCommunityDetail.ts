@@ -3,7 +3,7 @@ import { put, select, call } from 'redux-saga/effects';
 import actions from '~/storeRedux/groups/actions';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import { groupPrivacy } from '~/constants/privacyTypes';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import { ICommunity } from '~/interfaces/ICommunity';
 
 export default function* getCommunityDetail({
@@ -24,7 +24,7 @@ export default function* getCommunityDetail({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resp = yield call(
-      groupsDataHelper.getCommunityDetail, communityId,
+      groupApi.getCommunityDetail, communityId,
     );
     yield put(actions.setCommunityDetail(resp?.data));
 

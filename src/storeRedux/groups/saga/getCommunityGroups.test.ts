@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import getCommunityGroups from './getCommunityGroups';
 import { GROUP_TREE } from '../../../test/mock_data/group';
@@ -20,7 +20,7 @@ describe('Get Communities saga', () => {
     return (
       expectSaga(getCommunityGroups, action)
         .provide([
-          [matchers.call.fn(groupsDataHelper.getCommunityGroups), resp],
+          [matchers.call.fn(groupApi.getCommunityGroups), resp],
         ])
         .put(groupsActions.setCommunityGroups(resp.data))
         .run()
@@ -40,7 +40,7 @@ describe('Get Communities saga', () => {
     return (
       expectSaga(getCommunityGroups, action)
         .provide([
-          [matchers.call.fn(groupsDataHelper.getCommunityGroups), resp],
+          [matchers.call.fn(groupApi.getCommunityGroups), resp],
         ])
         .put(groupsActions.setCommunityGroups([]))
         .run()
@@ -66,7 +66,7 @@ describe('Get Communities saga', () => {
     return expectSaga(getCommunityGroups, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getCommunityGroups),
+          matchers.call.fn(groupApi.getCommunityGroups),
           Promise.reject(resp),
         ],
       ])

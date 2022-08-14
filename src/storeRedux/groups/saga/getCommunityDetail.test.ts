@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getCommunityDetail from './getCommunityDetail';
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import { ICommunity } from '../../../interfaces/ICommunity';
 
 describe('get Community Detail saga', () => {
@@ -16,7 +16,7 @@ describe('get Community Detail saga', () => {
     const resp = { data: { join_status: 2 } as ICommunity };
 
     return expectSaga(getCommunityDetail, action)
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunityDetail), resp]])
+      .provide([[matchers.call.fn(groupApi.getCommunityDetail), resp]])
       .put(actions.setCommunityDetail(resp?.data))
       .run();
   });
@@ -24,7 +24,7 @@ describe('get Community Detail saga', () => {
   it('should call server and server throws an error', () => expectSaga(getCommunityDetail, action)
     .provide([
       [
-        matchers.call.fn(groupsDataHelper.getCommunityDetail),
+        matchers.call.fn(groupApi.getCommunityDetail),
         Promise.reject(),
       ],
     ])

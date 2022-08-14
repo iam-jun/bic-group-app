@@ -2,7 +2,7 @@ import { put, call, select } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 
 export default function* deleteCommunityScheme({
   payload,
@@ -20,7 +20,7 @@ export default function* deleteCommunityScheme({
       data,
     }));
     const response = yield call(
-      groupsDataHelper.deleteCommunityScheme,
+      groupApi.deleteCommunityScheme,
       communityId,
     );
     if (response?.data) {

@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import joinNewGroup from './joinNewGroup';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import groupJoinStatus from '../../../constants/groupJoinStatus';
 
@@ -19,7 +19,7 @@ describe('Join New Group Saga', () => {
   it('should request to join group successfully', () => expectSaga(joinNewGroup, action)
     .provide([
       [
-        matchers.call.fn(groupsDataHelper.joinGroup),
+        matchers.call.fn(groupApi.joinGroup),
         { data: { joinStatus: groupJoinStatus.requested } },
       ],
     ])
@@ -39,7 +39,7 @@ describe('Join New Group Saga', () => {
   it('should join the group successfully', () => expectSaga(joinNewGroup, action)
     .provide([
       [
-        matchers.call.fn(groupsDataHelper.joinGroup),
+        matchers.call.fn(groupApi.joinGroup),
         { data: { joinStatus: groupJoinStatus.member } },
       ],
     ])
@@ -67,7 +67,7 @@ describe('Join New Group Saga', () => {
 
     return expectSaga(joinNewGroup, action)
       .provide([
-        [matchers.call.fn(groupsDataHelper.joinGroup), Promise.reject(error)],
+        [matchers.call.fn(groupApi.joinGroup), Promise.reject(error)],
       ])
       .put(
         modalActions.showHideToastMessage({

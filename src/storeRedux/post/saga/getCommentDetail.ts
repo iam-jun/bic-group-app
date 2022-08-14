@@ -2,7 +2,7 @@ import { call, put, select } from 'redux-saga/effects';
 import { get, isEmpty } from 'lodash';
 
 import { IPayloadGetCommentsById } from '~/interfaces/IPost';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import showError from '~/storeRedux/commonSaga/showError';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
@@ -17,7 +17,7 @@ function* getCommentDetail({
   try {
     callbackLoading?.(true);
     const response = yield call(
-      postDataHelper.getCommentDetail,
+      streamApi.getCommentDetail,
       commentId,
       payload.params as any,
     );

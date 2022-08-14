@@ -3,7 +3,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import postKeySelector from '../keySelector';
 import postActions from '../actions';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 
 export default function* getDraftPosts({
@@ -35,7 +35,7 @@ export default function* getDraftPosts({
 
       const offset = isRefresh ? 0 : draftPosts?.length || 0;
       const response = yield call(
-        postDataHelper.getDraftPosts, {
+        streamApi.getDraftPosts, {
           offset,
         },
       );

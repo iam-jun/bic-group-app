@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import { IGetCommunityGroup } from '~/interfaces/IGroup';
 
@@ -15,7 +15,7 @@ export default function* getCommunityGroups({
     const { id, params } = payload;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const response = yield call(groupsDataHelper.getCommunityGroups, id, params);
+    const response = yield call(groupApi.getCommunityGroups, id, params);
 
     const groups = response.data;
     if (groups?.length > 0) {

@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import updateCommunityScheme from './updateCommunityScheme';
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 import { communityScheme } from '../../../test/mock_data/scheme';
 import modalActions from '../../modal/actions';
@@ -27,10 +27,10 @@ describe('updateCommunityScheme saga', () => {
     .withState(state)
     .put(groupsActions.setCreatingScheme({ creating: true }))
     .provide([
-      [matchers.call.fn(groupsDataHelper.updateCommunityScheme), resp],
+      [matchers.call.fn(groupApi.updateCommunityScheme), resp],
     ])
     .call(
-      groupsDataHelper.updateCommunityScheme,
+      groupApi.updateCommunityScheme,
       communityId,
       communityScheme,
     )
@@ -53,9 +53,9 @@ describe('updateCommunityScheme saga', () => {
   it('should do nothing when there is no data field in response', async () => expectSaga(updateCommunityScheme, action)
     .withState(state)
     .put(groupsActions.setCreatingScheme({ creating: true }))
-    .provide([[matchers.call.fn(groupsDataHelper.updateCommunityScheme), {}]])
+    .provide([[matchers.call.fn(groupApi.updateCommunityScheme), {}]])
     .call(
-      groupsDataHelper.updateCommunityScheme,
+      groupApi.updateCommunityScheme,
       communityId,
       communityScheme,
     )
@@ -73,12 +73,12 @@ describe('updateCommunityScheme saga', () => {
       .put(groupsActions.setCreatingScheme({ creating: true }))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.updateCommunityScheme),
+          matchers.call.fn(groupApi.updateCommunityScheme),
           Promise.reject(error),
         ],
       ])
       .call(
-        groupsDataHelper.updateCommunityScheme,
+        groupApi.updateCommunityScheme,
         communityId,
         communityScheme,
       )

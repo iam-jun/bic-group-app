@@ -1,5 +1,5 @@
 import { ICommunity } from '~/interfaces/ICommunity';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import { createZustand } from '~/store/utils';
 
 interface JoinedCommunitiesState {
@@ -19,7 +19,7 @@ const useJoinedCommunities = (set) => ({
     managed?: boolean;
   }) => {
     set((state) => { state.loading = true }, false, 'getJoinedCommunities');
-    groupsDataHelper.getJoinedCommunities(params)
+    groupApi.getJoinedCommunities(params)
       .then((response) => {
         set((state) => {
           state.loading = false;

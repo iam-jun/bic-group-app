@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import { put, select } from 'redux-saga/effects';
 import { IPayloadCreateComment, IReaction } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import addChildCommentToCommentsOfPost from '~/storeRedux/post/saga/addChildCommentToCommentsOfPost';
 import { getMentionsFromContent } from '~/screens/Post/helper/PostUtils';
@@ -85,14 +85,14 @@ function* postCreateNewComment({
 
     let resComment;
     if (parentCommentId) {
-      const response = yield postDataHelper.postReplyComment({
+      const response = yield streamApi.postReplyComment({
         postId,
         parentCommentId,
         data: commentData,
       });
       resComment = response?.data;
     } else {
-      const response = yield postDataHelper.postNewComment({
+      const response = yield streamApi.postNewComment({
         postId,
         data: commentData,
       });

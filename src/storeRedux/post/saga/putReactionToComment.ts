@@ -7,7 +7,7 @@ import {
   IReaction,
 } from '~/interfaces/IPost';
 import showError from '~/storeRedux/commonSaga/showError';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postKeySelector from '../keySelector';
 import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
 
@@ -72,7 +72,7 @@ export default function* putReactionToComment({
       );
 
       const response = yield call(
-        postDataHelper.putReaction, {
+        streamApi.putReaction, {
           reactionName: reactionId,
           target: 'COMMENT',
           targetId: id,

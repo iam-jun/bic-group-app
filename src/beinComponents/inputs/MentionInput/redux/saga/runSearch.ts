@@ -1,7 +1,7 @@
 import { call, put, select } from 'redux-saga/effects';
 import { IObject } from '~/interfaces/common';
 import { IParamSearchMentionAudiences } from '~/interfaces/IPost';
-import postDataHelper from '~/api/PostDataHelper';
+import streamApi from '~/api/StreamApi';
 import actions from '../actions';
 
 export default function* runSearch({
@@ -12,7 +12,7 @@ export default function* runSearch({
 }) {
   try {
     const response: IObject<any> = yield call(
-      postDataHelper.getSearchMentionAudiences,
+      streamApi.getSearchMentionAudiences,
       payload,
     );
     const fullContent: string = (yield select((state) => state?.mentionInput?.fullContent)) || '';

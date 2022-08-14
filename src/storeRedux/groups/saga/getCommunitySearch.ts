@@ -2,7 +2,7 @@ import { call, put, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 import { ICommunity, IParamGetCommunities } from '~/interfaces/ICommunity';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import { mapItems } from '../../../screens/Groups/helper/mapper';
 import groupsActions from '../actions';
 
@@ -22,7 +22,7 @@ export default function* getCommunitySearch({
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const response = yield call(groupsDataHelper.getCommunities, {
+    const response = yield call(groupApi.getCommunities, {
       limit: appConfig.recordsPerPage,
       offset: ids.length,
       ...payload,

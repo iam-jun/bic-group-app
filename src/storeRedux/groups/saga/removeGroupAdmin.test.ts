@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import removeGroupAdmin from './removeGroupAdmin';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import { refreshGroupMembers } from './index';
 import showError from '../../commonSaga/showError';
@@ -10,7 +10,7 @@ import showError from '../../commonSaga/showError';
 describe('Remove group admin', () => {
   const action = { type: 'test', payload: { groupId: 1, userId: 1 } };
   it('should remove admin role successfully', () => expectSaga(removeGroupAdmin, action)
-    .provide([[matchers.call.fn(groupsDataHelper.removeGroupAdmin), {}]])
+    .provide([[matchers.call.fn(groupApi.removeGroupAdmin), {}]])
     .put(
       modalActions.showHideToastMessage({
         content: 'groups:modal_confirm_remove_admin:success_message',
@@ -28,7 +28,7 @@ describe('Remove group admin', () => {
     return expectSaga(removeGroupAdmin, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.removeGroupAdmin),
+          matchers.call.fn(groupApi.removeGroupAdmin),
           Promise.reject(error),
         ],
       ])

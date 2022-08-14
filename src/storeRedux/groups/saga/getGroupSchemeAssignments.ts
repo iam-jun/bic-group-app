@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 
 export default function* getGroupSchemeAssignments({
@@ -20,7 +20,7 @@ export default function* getGroupSchemeAssignments({
     }
 
     const response = yield call(
-      groupsDataHelper.getGroupSchemeAssignments,
+      groupApi.getGroupSchemeAssignments,
       communityId,
     );
 

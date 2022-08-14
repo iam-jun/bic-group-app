@@ -3,7 +3,7 @@ import { put, select, call } from 'redux-saga/effects';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import { groupPrivacy } from '~/constants/privacyTypes';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 
 export default function* getGroupDetail({
   payload,
@@ -16,7 +16,7 @@ export default function* getGroupDetail({
 
     if (loadingPage) yield put(groupsActions.setLoadingPage(true));
 
-    const resp = yield call(groupsDataHelper.getGroupDetail, groupId);
+    const resp = yield call(groupApi.getGroupDetail, groupId);
     yield put(groupsActions.setGroupDetail(resp?.data));
 
     const { groups } = yield select();

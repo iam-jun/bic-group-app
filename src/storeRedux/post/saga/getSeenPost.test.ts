@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import postDataHelper from '../../../api/PostDataHelper';
+import streamApi from '../../../api/StreamApi';
 import postActions from '../actions';
 import { IGetSeenPostListSheet } from '../../../interfaces/IPost';
 import getSeenPost from './getSeenPost';
@@ -24,11 +24,11 @@ describe('Get Seen Post Saga', () => {
       .withState(storeData)
       .provide([
         [
-          matchers.call.fn(postDataHelper.getSeenList),
+          matchers.call.fn(streamApi.getSeenList),
           { data: { list: seenPost, meta: { total: 1, hasNextPage: true } } },
         ],
       ])
-      .call(postDataHelper.getSeenList, params)
+      .call(streamApi.getSeenList, params)
       .put(
         postActions.setSeenPost({
           data: [SEEN_POST],
@@ -60,8 +60,8 @@ describe('Get Seen Post Saga', () => {
     const params = { postId: '25', offset: 0 };
     return expectSaga(getSeenPost, { type: 'test', payload })
       .withState(storeData)
-      .provide([[matchers.call.fn(postDataHelper.getSeenList), null]])
-      .call(postDataHelper.getSeenList, params)
+      .provide([[matchers.call.fn(streamApi.getSeenList), null]])
+      .call(streamApi.getSeenList, params)
       .run()
       .then(({ allEffects }: any) => {
         expect(allEffects?.length).toEqual(2);
@@ -81,7 +81,7 @@ describe('Get Seen Post Saga', () => {
     return expectSaga(getSeenPost, { type: 'test', payload })
       .withState(storeData)
       .provide([
-        [matchers.call.fn(postDataHelper.getSeenList), Promise.reject(resp)],
+        [matchers.call.fn(streamApi.getSeenList), Promise.reject(resp)],
       ])
       .run()
       .then(({ allEffects }: any) => {

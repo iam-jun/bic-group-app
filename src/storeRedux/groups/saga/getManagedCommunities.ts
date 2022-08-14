@@ -2,7 +2,7 @@ import { put, call, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 
 import actions from '../actions';
-import groupsDataHelper from '../../../api/GroupsDataHelper';
+import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import { mapItems } from '../../../screens/Groups/helper/mapper';
 import { ICommunity } from '~/interfaces/ICommunity';
@@ -30,7 +30,7 @@ export default function* getManagedCommunities({
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const resp = yield call(groupsDataHelper.getJoinedCommunities, {
+    const resp = yield call(groupApi.getJoinedCommunities, {
       managed: true,
       previewMembers: true,
       limit: appConfig.recordsPerPage,

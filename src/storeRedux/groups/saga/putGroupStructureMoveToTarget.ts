@@ -2,7 +2,7 @@ import { put, call, select } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupsDataHelper from '~/api/GroupsDataHelper';
+import groupApi from '~/api/GroupApi';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { IToastMessage } from '~/interfaces/common';
@@ -29,7 +29,7 @@ export default function* putGroupStructureMoveToTarget({
     }));
 
     const response = yield call(
-      groupsDataHelper.putGroupStructureMoveToTarget,
+      groupApi.putGroupStructureMoveToTarget,
       communityId,
       moveId,
       targetId,
