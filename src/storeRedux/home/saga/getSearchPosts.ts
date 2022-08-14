@@ -5,8 +5,8 @@ import {
   IPayloadGetSearchPosts,
 } from '~/interfaces/IHome';
 import homeActions from '~/storeRedux/home/actions';
-import homeDataHelper from '~/api/HomeDataHelper';
 import postActions from '~/storeRedux/post/actions';
+import streamApi from '~/api/StreamApi';
 
 export default function* getSearchPosts({
   payload,
@@ -54,7 +54,7 @@ export default function* getSearchPosts({
       params.endTime = endDate;
     }
     const response = yield call(
-      homeDataHelper.getSearchPost, params,
+      streamApi.getSearchPost, params,
     );
     data = data.concat(response?.list);
     yield put(postActions.addToAllPosts({ data, handleComment: false }));
@@ -71,7 +71,7 @@ export default function* getSearchPosts({
         target: 'post',
       };
       yield call(
-        homeDataHelper.postNewRecentSearchKeyword, recentParam,
+        streamApi.postNewRecentSearchKeyword, recentParam,
       );
       yield put(homeActions.getRecentSearchKeywords({
         target: 'post',

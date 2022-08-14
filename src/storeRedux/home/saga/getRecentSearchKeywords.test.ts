@@ -1,16 +1,16 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { throwError } from 'redux-saga-test-plan/providers';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import homeDataHelper from '../../../api/HomeDataHelper';
 import homeActions from '../actions';
 import getRecentSearchKeywords from './getRecentSearchKeywords';
+import streamApi from "../../../api/StreamApi";
 
 describe('Search Post Saga', () => {
   it('call server get recent search keywords success', async () => {
     const action = { type: 'test', payload: {} };
     return expectSaga(getRecentSearchKeywords, action)
       .provide([
-        [matchers.call.fn(homeDataHelper.getRecentSearchKeywords), null],
+        [matchers.call.fn(streamApi.getRecentSearchKeywords), null],
       ])
       .put(homeActions.setNewsfeedSearchRecentKeywords({ loading: true }))
       .put(
@@ -22,7 +22,7 @@ describe('Search Post Saga', () => {
     const action = { type: 'test', payload: { showLoading: false } };
     return expectSaga(getRecentSearchKeywords, action)
       .provide([
-        [matchers.call.fn(homeDataHelper.getRecentSearchKeywords), null],
+        [matchers.call.fn(streamApi.getRecentSearchKeywords), null],
       ])
       .put(
         homeActions.setNewsfeedSearchRecentKeywords({ data: [], loading: false }),
@@ -34,7 +34,7 @@ describe('Search Post Saga', () => {
     return expectSaga(getRecentSearchKeywords, action)
       .provide([
         [
-          matchers.call.fn(homeDataHelper.getRecentSearchKeywords),
+          matchers.call.fn(streamApi.getRecentSearchKeywords),
           throwError(new Error('empty data')),
         ],
       ])

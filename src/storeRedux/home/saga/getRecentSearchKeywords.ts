@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { IParamGetRecentSearchKeywords } from '~/interfaces/IHome';
 import homeActions from '~/storeRedux/home/actions';
-import homeDataHelper from '~/api/HomeDataHelper';
+import streamApi from '~/api/StreamApi';
 
 export default function* getRecentSearchKeywords({
   payload,
@@ -15,7 +15,7 @@ export default function* getRecentSearchKeywords({
       yield put(homeActions.setNewsfeedSearchRecentKeywords({ loading: true }));
     }
     const response = yield call(
-      homeDataHelper.getRecentSearchKeywords, param,
+      streamApi.getRecentSearchKeywords, param,
     );
     yield put(homeActions.setNewsfeedSearchRecentKeywords({
       data: response?.recentSearches || [],

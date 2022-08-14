@@ -3,8 +3,8 @@ import { get } from 'lodash';
 import { IPayloadGetHomePost } from '~/interfaces/IHome';
 import homeActions from '~/storeRedux/home/actions';
 import homeKeySelector from '~/storeRedux/home/keySelector';
-import homeDataHelper from '~/api/HomeDataHelper';
 import postActions from '~/storeRedux/post/actions';
+import streamApi from '~/api/StreamApi';
 
 export default function* getHomePosts({
   payload,
@@ -36,7 +36,7 @@ export default function* getHomePosts({
       offset = homePosts?.length || 0;
     }
 
-    const response = yield homeDataHelper.getNewsfeed({ offset });
+    const response = yield streamApi.getNewsfeed({ offset });
     const result = response?.list || [];
     const hasNextPage = response?.meta?.hasNextPage;
 

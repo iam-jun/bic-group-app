@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects';
-import homeDataHelper from '~/api/HomeDataHelper';
 import homeActions from '~/storeRedux/home/actions';
+import streamApi from '~/api/StreamApi';
 
 export default function* deleteRecentSearchById({
   payload,
@@ -10,7 +10,7 @@ export default function* deleteRecentSearchById({
 }): any {
   try {
     yield call(
-      homeDataHelper.deleteRecentSearchById, payload,
+      streamApi.deleteRecentSearchById, payload,
     );
     yield put(homeActions.getRecentSearchKeywords({
       target: 'post',

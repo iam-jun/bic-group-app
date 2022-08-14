@@ -1,17 +1,23 @@
-import { makeHttpRequest } from '~/api/apiRequest';
+import { Method } from 'axios';
+import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
 import { IParamGetNotifications } from '~/interfaces/INotification';
 
 const LIMIT = 20;
 
+const provider = ApiConfig.providers.beinNotification;
+const defaultConfig = {
+  provider,
+  method: 'get' as Method,
+  useRetry: true,
+}
+
 export const notificationApiConfig = {
   getNotifications: (params: IParamGetNotifications): HttpApiRequestConfig => {
     const { limit, ...restParams } = params || {};
     return {
-      url: `${ApiConfig.providers.beinNotification.url}notifications`,
-      method: 'get',
-      provider: ApiConfig.providers.beinNotification,
-      useRetry: true,
+      ...defaultConfig,
+      url: `${provider.url}notifications`,
       params: {
         limit: limit || LIMIT,
         ...restParams,
@@ -19,32 +25,28 @@ export const notificationApiConfig = {
     };
   },
   putMarkAsReadById: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-read`,
+    ...defaultConfig,
+    url: `${provider.url}notifications/${id}/mark-read`,
     method: 'put',
-    provider: ApiConfig.providers.beinNotification,
-    useRetry: true,
   }),
   putMarkAllAsRead: (flag: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read/${flag}`,
+    ...defaultConfig,
+    url: `${provider.url}notifications/mark-read/${flag}`,
     method: 'put',
-    provider: ApiConfig.providers.beinNotification,
-    useRetry: true,
   }),
   putMarkAllAsSeen: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinNotification.url}notifications/mark-seen`,
+    ...defaultConfig,
+    url: `${provider.url}notifications/mark-seen`,
     method: 'put',
-    provider: ApiConfig.providers.beinNotification,
-    useRetry: true,
   }),
   putMarkAsUnReadById: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-unread`,
+    ...defaultConfig,
+    url: `${provider.url}notifications/${id}/mark-unread`,
     method: 'put',
-    provider: ApiConfig.providers.beinNotification,
-    useRetry: true,
   }),
 };
 
-const notificationsDataHelper = {
+const notificationApi = {
   getNotificationList: async (param: IParamGetNotifications) => {
     try {
       const response: any = await makeHttpRequest(notificationApiConfig.getNotifications(param));
@@ -59,52 +61,12 @@ const notificationsDataHelper = {
       return Promise.reject(e);
     }
   },
-  markAsReadAll: async (flag: string) => {
-    try {
-      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAllAsRead(flag));
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-
-  markAsSeenAll: async () => {
-    try {
-      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAllAsSeen());
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-
-  markAsRead: async (activityId: string) => {
-    try {
-      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAsReadById(activityId));
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  markAsUnRead: async (activityId: string) => {
-    try {
-      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAsUnReadById(activityId));
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  markAsReadAll: (flag: string) => withHttpRequestPromise(notificationApiConfig.putMarkAllAsRead, flag),
+  markAsSeenAll: () => withHttpRequestPromise(notificationApiConfig.putMarkAllAsSeen),
+  markAsRead: (activityId: string) => withHttpRequestPromise(notificationApiConfig.putMarkAsReadById, activityId),
+  markAsUnRead: (activityId: string) => withHttpRequestPromise(
+    notificationApiConfig.putMarkAsUnReadById, activityId,
+  ),
 };
 
-export default notificationsDataHelper;
+export default notificationApi;

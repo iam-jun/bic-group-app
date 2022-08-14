@@ -1,3 +1,4 @@
+import { Method } from 'axios';
 import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IGetCommunityGroup,
@@ -15,27 +16,29 @@ import {
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
 
+const provider = ApiConfig.providers.bein;
+const defaultConfig = {
+  provider,
+  method: 'get' as Method,
+  useRetry: true,
+}
+
 export const groupsApiConfig = {
   getMyPermissions: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}me/permissions`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}me/permissions`,
   }),
   getCommunityGroupsTree: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${id}/group-structure`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${id}/group-structure`,
   }),
   putGroupStructureReorder: (
     communityId: string,
     data: number[],
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/order`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-structure/order`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data,
   }),
   getCommunityStructureMoveTargets: (
@@ -43,10 +46,8 @@ export const groupsApiConfig = {
     groupId: string,
     key?: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/move-targets/${groupId}`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-structure/move-targets/${groupId}`,
     ...(key ? { params: { key } } : {}),
   }),
   putGroupStructureMoveToTarget: (
@@ -54,10 +55,9 @@ export const groupsApiConfig = {
     moveId: string,
     targetId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/move`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-structure/move`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: {
       group_id: moveId,
       target_outer_group_id: targetId,
@@ -68,91 +68,74 @@ export const groupsApiConfig = {
     groupId: string,
     status: boolean,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/collapse/${groupId}`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-structure/collapse/${groupId}`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: { status },
   }),
   getPermissionCategories: (
     scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP',
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}permissions/categories`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}permissions/categories`,
     params: { scope },
   }),
   getSystemScheme: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}system-scheme`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}system-scheme`,
   }),
   getCommunityScheme: (communityId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/scheme`,
   }),
   getGroupSchemeAssignments: (communityId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-scheme-assignments`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-scheme-assignments`,
   }),
   putGroupSchemeAssignments: (
     communityId: string,
     data: any[],
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-scheme-assignments`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-scheme-assignments`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: { data },
   }),
   updateCommunityScheme: (
     communityId: string,
     schemeData: IScheme,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/scheme`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: {
       ...schemeData,
     },
   }),
   deleteCommunityScheme: (communityId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/scheme`,
     method: 'delete',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   getSchemes: (communityId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/schemes`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/schemes`,
   }),
   getGroupScheme: (
     communityId: string,
     schemeId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-schemes/${schemeId}`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-schemes/${schemeId}`,
   }),
   updateGroupScheme: (
     communityId: string,
     schemeId: string,
     schemeData: IScheme,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-schemes/${schemeId}`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-schemes/${schemeId}`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: {
       ...schemeData,
     },
@@ -161,83 +144,72 @@ export const groupsApiConfig = {
     communityId: string,
     schemeData: IScheme,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/scheme`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: {
       ...schemeData,
     },
   }),
+
+  // todo move to stream
   getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${ApiConfig.providers.beinFeed.url}feeds/timeline`,
-    method: 'get',
     provider: ApiConfig.providers.beinFeed,
-    useRetry: true,
     params,
   }),
+
   getUserInnerGroups: (
     groupId: string,
     username: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/inner-groups`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/inner-groups`,
     params: {
       username,
     },
   }),
   getGroupMembers: (groupId: string, params: any): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/users`,
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   getInfoGroups: (groupIds: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}post-audiences/groups`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}post-audiences/groups`,
     params: { groupIds },
   }),
   getGroupDetail: (groupId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}`,
   }),
   editGroupDetail: (
     groupId: string,
     data: IGroupDetailEdit,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: {
       ...data,
     },
   }),
   getJoinableUsers: (groupId: string, params: any): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joinable-users`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/joinable-users`,
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   addUsers: (groupId: string, userIds: string[]): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/add`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/users/add`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: { userIds },
   }),
   removeUsers: (
@@ -245,59 +217,51 @@ export const groupsApiConfig = {
     userIds: string[],
     type?: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/remove`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/users/remove`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: {
       [type || 'userIds']: userIds,
     },
   }),
   joinGroup: (groupId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/join`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/join`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   cancelJoinGroup: (groupId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/cancel-joining-request`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/cancel-joining-request`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   leaveGroup: (groupId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/leave`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/leave`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   setGroupAdmin: (
     groupId: string,
     userIds: string[],
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/assign-admin`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/assign-admin`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: { userIds },
   }),
   removeGroupAdmin: (
     groupId: string,
     userId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/revoke-admin/${userId}`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/revoke-admin/${userId}`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   getGroupMemberRequests: (
     groupId: string,
     params: any,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/joining-requests`,
     params: {
       ...params,
       sort: 'updated_at:desc',
@@ -308,48 +272,40 @@ export const groupsApiConfig = {
     groupId: string,
     requestId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/${requestId}/approve`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/joining-requests/${requestId}/approve`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   approveAllGroupMemberRequests: (groupId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/approve`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/joining-requests/approve`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   declineSingleGroupMemberRequest: (
     groupId: string,
     requestId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/${requestId}/decline`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/joining-requests/${requestId}/decline`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   declineAllGroupMemberRequests: (groupId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/decline`,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/joining-requests/decline`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   getInnerGroupsLastAdmin: (
     groupId: string,
     userId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups/${groupId}/inner-groups-have-last-admin/${userId}`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/inner-groups-have-last-admin/${userId}`,
   }),
   getDiscoverCommunities: (
     params: IParamGetCommunities,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/discover`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/discover`,
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
@@ -359,40 +315,33 @@ export const groupsApiConfig = {
     previewMembers?: boolean;
     managed?: boolean;
   }): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}me/communities`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}me/communities`,
     params,
   }),
   getCommunityGroups: (
     id: string,
     otherParams: IGetCommunityGroup,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}me/communities/${id}/groups`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}me/communities/${id}/groups`,
     params: {
       ...otherParams,
       key: otherParams?.key?.trim?.() ? otherParams.key : undefined,
     },
   }),
   getCommunityDetail: (communityId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}`,
     params: { previewMembers: true },
   }),
   editCommunityDetail: (
     communityId: string,
     data: ICommunityDetailEdit,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
     data: {
       ...data,
     },
@@ -401,10 +350,8 @@ export const groupsApiConfig = {
     communityId: string,
     params?: IParamGetCommunityMembers,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/members`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/members`,
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
@@ -414,32 +361,26 @@ export const groupsApiConfig = {
     communityId: string,
     params?: IParamGetDiscoverGroups,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/groups/discover`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/groups/discover`,
     params,
   }),
   joinCommunity: (communityId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/join`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/join`,
     method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   cancelJoinCommunity: (communityId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/cancel-joining-request`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/cancel-joining-request`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   getCommunityMemberRequests: (
     communityId: string,
     params: any,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/joining-requests`,
     params: {
       ...params,
       sort: 'updated_at:desc',
@@ -450,41 +391,35 @@ export const groupsApiConfig = {
     communityId: string,
     requestId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/${requestId}/approve`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/joining-requests/${requestId}/approve`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   declineSingleCommunityMemberRequest: (
     communityId: string,
     requestId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/${requestId}/decline`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/joining-requests/${requestId}/decline`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   approveAllCommunityMemberRequests: (
     communityId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/approve`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/joining-requests/approve`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   declineAllCommunityMemberRequests: (
     communityId: string,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/decline`,
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/joining-requests/decline`,
     method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
   }),
   getCommunities: (params?: IParamGetCommunities): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
+    ...defaultConfig,
+    url: `${provider.url}communities`,
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
@@ -495,8 +430,9 @@ export const groupsApiConfig = {
 const groupApi = {
   getMyPermissions: () => withHttpRequestPromise(groupsApiConfig.getMyPermissions),
   getCommunityGroupTree: (id: string) => withHttpRequestPromise(groupsApiConfig.getCommunityGroupsTree, id),
-  // eslint-disable-next-line max-len
-  putGroupStructureReorder: (communityId: string, data: string[]) => withHttpRequestPromise(groupsApiConfig.putGroupStructureReorder, communityId, data),
+  putGroupStructureReorder: (communityId: string, data: string[]) => withHttpRequestPromise(
+    groupsApiConfig.putGroupStructureReorder, communityId, data,
+  ),
   getCommunityStructureMoveTargets: (
     communityId: string,
     groupId: string,
@@ -663,8 +599,9 @@ const groupApi = {
   cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(
     groupsApiConfig.cancelJoinCommunity, communityId,
   ),
-  // eslint-disable-next-line max-len
-  getCommunityMemberRequests: (communityId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getCommunityMemberRequests, communityId, params),
+  getCommunityMemberRequests: (communityId: string, params: any) => withHttpRequestPromise(
+    groupsApiConfig.getCommunityMemberRequests, communityId, params,
+  ),
   approveSingleCommunityMemberRequest: (
     communityId: string,
     requestId: string,

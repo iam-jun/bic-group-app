@@ -1,3 +1,4 @@
+import { Method } from 'axios';
 import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import {
@@ -16,27 +17,75 @@ import {
   IRequestReplyComment,
   IRequestGetUsersSeenPost,
 } from '~/interfaces/IPost';
-
-const provider = ApiConfig.providers.beinFeed;
+import {
+  IParamGetFeed,
+  IParamGetRecentSearchKeywords,
+  IParamGetSearchPost,
+  IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
+} from '~/interfaces/IHome';
+import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 
 const DEFAULT_LIMIT = 10;
 
-export const postApiConfig = {
+const provider = ApiConfig.providers.beinFeed;
+const defaultConfig = {
+  provider,
+  method: 'get' as Method,
+  useRetry: true,
+}
+
+export const streamApiConfig = {
+  getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}feeds/newsfeed`,
+    params: {
+      order: param?.order || 'DESC',
+      limit: param?.limit,
+      offset: param?.offset,
+      idGte: param?.idGte,
+      idLte: param?.idLte,
+      idGt: param?.idGt,
+      idLt: param?.idLt,
+    },
+  }),
+  getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}posts`,
+    params: { ...param },
+  }),
+  getRecentSearchKeyword: (param: IParamGetRecentSearchKeywords): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}recent-searches`,
+    params: { ...param },
+  }),
+  postNewRecentSearchKeyword: (data: IParamPostNewRecentSearchKeyword): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}recent-searches`,
+    method: 'post',
+
+    data,
+  }),
+  deleteClearRecentSearch: (target: IRecentSearchTarget): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}recent-searches/${target}/clean`,
+    method: 'delete',
+  }),
+  deleteRecentSearchById: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}recent-searches/${id}/delete`,
+    method: 'delete',
+  }),
   getPostDetail: (params: IParamGetPostDetail): HttpApiRequestConfig => {
     const { postId, ...restParams } = params;
     return {
+      ...defaultConfig,
       url: `${provider.url}posts/${postId}`,
-      method: 'get',
-      provider,
-      useRetry: true,
       params: restParams,
     };
   },
   getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}posts/draft`,
-    method: 'get',
-    provider,
-    useRetry: true,
     params: {
       offset: params?.offset || 0,
       limit: params?.limit || 10,
@@ -44,17 +93,15 @@ export const postApiConfig = {
     },
   }),
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}posts`,
     method: 'post',
-    provider,
-    useRetry: true,
     data,
   }),
   putReaction: (params: IParamPutReaction): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}reactions`,
     method: 'post',
-    provider,
-    useRetry: true,
     data: {
       ...params,
     },
@@ -62,40 +109,34 @@ export const postApiConfig = {
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
     const { postId, data } = param || {};
     return {
+      ...defaultConfig,
       url: `${provider.url}posts/${postId}`,
       method: 'put',
-      provider,
-      useRetry: true,
       data,
     };
   },
   putEditComment: (id: string, data: ICommentData): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}comments/${id}`,
     method: 'put',
-    provider,
-    useRetry: true,
     data,
   }),
   deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}posts/${id}`,
     method: 'delete',
-    provider,
-    useRetry: true,
     ...(isDraftPost ? { params: { is_draft: true } } : {}),
   }),
   deleteComment: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}comments/${id}`,
     method: 'delete',
-    provider,
-    useRetry: true,
   }),
   getCommentsByPostId: (
     params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}comments`,
-    method: 'get',
-    provider,
-    useRetry: true,
     params: {
       order: params?.order || 'ASC',
       limit: params?.limit || 10,
@@ -110,10 +151,9 @@ export const postApiConfig = {
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}comments`,
     method: 'post',
-    provider,
-    useRetry: true,
     data: {
       postId: params?.postId,
       content: params?.data?.content,
@@ -125,10 +165,9 @@ export const postApiConfig = {
   postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
     const { postId, parentCommentId, data } = params;
     return {
+      ...defaultConfig,
       url: `${provider.url}comments/${parentCommentId}/reply`,
       method: 'post',
-      provider,
-      useRetry: true,
       data: {
         postId,
         ...data,
@@ -136,40 +175,37 @@ export const postApiConfig = {
     };
   },
   putMarkAsRead: (postId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}posts/${postId}/mark-as-read`,
     method: 'put',
-    provider,
-    useRetry: true,
   }),
   putMarkSeenPost: (postId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}feeds/seen/${postId}`,
     method: 'put',
-    provider,
-    useRetry: true,
   }),
+
+  // todo move to group
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${ApiConfig.providers.bein.url}post-audiences`,
-    method: 'get',
     provider: ApiConfig.providers.bein,
-    useRetry: true,
     params: {
       key,
     },
   }),
   getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${ApiConfig.providers.bein.url}/post-audiences/groups`,
-    method: 'get',
     provider: ApiConfig.providers.bein,
-    useRetry: true,
     params,
   }),
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
   ): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${ApiConfig.providers.bein.url}users/mentionable`,
-    method: 'get',
     provider: ApiConfig.providers.bein,
-    useRetry: true,
     params: {
       group_ids: params.groupIds,
       user_ids: params.userIds,
@@ -178,11 +214,11 @@ export const postApiConfig = {
       limit: params.take,
     },
   }),
+
   deleteReaction: (data: IParamDeleteReaction): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}reactions`,
     method: 'delete',
-    provider,
-    useRetry: true,
     data: {
       ...data,
       reactionName: data?.reactionName,
@@ -191,10 +227,8 @@ export const postApiConfig = {
   getReactionDetail: (
     param: IParamGetReactionDetail,
   ): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}reactions`,
-    method: 'get',
-    provider,
-    useRetry: true,
     params: {
       reactionName: param.reactionName,
       targetId: param.targetId,
@@ -205,19 +239,16 @@ export const postApiConfig = {
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}posts/${draftPostId}/publish`,
     method: 'put',
-    provider,
-    useRetry: true,
   }),
   getCommentDetail: (
     commentId: string,
     params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}comments/${commentId}`,
-    method: 'get',
-    provider,
-    useRetry: true,
     params: {
       limit: params?.limit || 1,
       offset: params?.offset || 0,
@@ -227,10 +258,8 @@ export const postApiConfig = {
   getUsersSeenPost: (
     params: IRequestGetUsersSeenPost,
   ): HttpApiRequestConfig => ({
+    ...defaultConfig,
     url: `${provider.url}feeds/seen/user`,
-    method: 'get',
-    provider,
-    useRetry: true,
     params: {
       postId: params.postId,
       limit: params?.limit || 20,
@@ -240,34 +269,113 @@ export const postApiConfig = {
 };
 
 const streamApi = {
-  postCreateNewPost: (data: IPostCreatePost) => withHttpRequestPromise(postApiConfig.postCreateNewPost, data),
-  putReaction: (param: IParamPutReaction) => withHttpRequestPromise(postApiConfig.putReaction, param),
-  putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(postApiConfig.putEditPost, param),
-  putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(postApiConfig.putEditComment, id, data),
-  deletePost: (id: string, isDraftPost?: boolean) => withHttpRequestPromise(postApiConfig.deletePost, id, isDraftPost),
-  deleteComment: (id: string) => withHttpRequestPromise(postApiConfig.deleteComment, id),
+  getNewsfeed: async (param: IParamGetFeed) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.getNewsfeed(param));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSearchPost: async (param: IParamGetSearchPost) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.getSearchPost(param));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getUsers: async (params: IParamsGetUsers) => {
+    try {
+      const response: any = await makeHttpRequest(ApiConfig.App.getUsers(params));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getRecentSearchKeywords: async (param: IParamGetRecentSearchKeywords) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.getRecentSearchKeyword(param));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postNewRecentSearchKeyword: async (param: IParamPostNewRecentSearchKeyword) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.postNewRecentSearchKeyword(param));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  deleteCleanRecentSearch: async (target: IRecentSearchTarget) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.deleteClearRecentSearch(target));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  deleteRecentSearchById: async (id: string) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.deleteRecentSearchById(id));
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postCreateNewPost: (data: IPostCreatePost) => withHttpRequestPromise(streamApiConfig.postCreateNewPost, data),
+  putReaction: (param: IParamPutReaction) => withHttpRequestPromise(streamApiConfig.putReaction, param),
+  putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
+  putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(streamApiConfig.putEditComment, id, data),
+  deletePost: (id: string, isDraftPost?: boolean) => withHttpRequestPromise(
+    streamApiConfig.deletePost, id, isDraftPost,
+  ),
+  deleteComment: (id: string) => withHttpRequestPromise(streamApiConfig.deleteComment, id),
   getCommentsByPostId: (params: IRequestGetPostComment) => {
     if (!params?.postId) {
       return Promise.reject(new Error('Post Id not found'));
     }
-    return withHttpRequestPromise(postApiConfig.getCommentsByPostId, params)
+    return withHttpRequestPromise(streamApiConfig.getCommentsByPostId, params)
   },
-  postNewComment: (params: IRequestPostComment) => withHttpRequestPromise(postApiConfig.postNewComment, params),
-  postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(postApiConfig.postReplyComment, params),
-  putMarkAsRead: (postId: string) => withHttpRequestPromise(postApiConfig.putMarkAsRead, postId),
-  putMarkSeenPost: (postId: string) => withHttpRequestPromise(postApiConfig.putMarkSeenPost, postId),
-  getSearchAudiences: (key: string) => withHttpRequestPromise(postApiConfig.getSearchAudiences, key),
+  postNewComment: (params: IRequestPostComment) => withHttpRequestPromise(streamApiConfig.postNewComment, params),
+  postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(streamApiConfig.postReplyComment, params),
+  putMarkAsRead: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkAsRead, postId),
+  putMarkSeenPost: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenPost, postId),
+  getSearchAudiences: (key: string) => withHttpRequestPromise(streamApiConfig.getSearchAudiences, key),
   getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
-    postApiConfig.getSearchMentionAudiences, params,
+    streamApiConfig.getSearchMentionAudiences, params,
   ),
-  deleteReaction: (param: IParamDeleteReaction) => withHttpRequestPromise(postApiConfig.deleteReaction, param),
+  deleteReaction: (param: IParamDeleteReaction) => withHttpRequestPromise(streamApiConfig.deleteReaction, param),
   getReactionDetail: async (param: IParamGetReactionDetail) => {
     const { reactionName, targetId, target } = param;
 
     if (reactionName && targetId && target) {
       try {
         const response: any = await makeHttpRequest(
-          postApiConfig.getReactionDetail(param),
+          streamApiConfig.getReactionDetail(param),
         );
         if (response && response?.data?.data?.list) {
           return Promise.resolve(response.data.data);
@@ -287,12 +395,12 @@ const streamApi = {
       withComment: true,
       ...params,
     };
-    return withHttpRequestPromise(postApiConfig.getPostDetail, requestParams)
+    return withHttpRequestPromise(streamApiConfig.getPostDetail, requestParams)
   },
   getDraftPosts: async (param: IParamGetDraftPosts) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.getDraftPosts(param),
+        streamApiConfig.getDraftPosts(param),
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
@@ -309,15 +417,15 @@ const streamApi = {
     }
   },
   postPublishDraftPost: (draftPostId: string) => withHttpRequestPromise(
-    postApiConfig.postPublishDraftPost, draftPostId,
+    streamApiConfig.postPublishDraftPost, draftPostId,
   ),
   getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
-    postApiConfig.getPostAudiences, params,
+    streamApiConfig.getPostAudiences, params,
   ),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
-    postApiConfig.getCommentDetail, commentId, params,
+    streamApiConfig.getCommentDetail, commentId, params,
   ),
-  getSeenList: (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(postApiConfig.getUsersSeenPost, params),
+  getSeenList: (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(streamApiConfig.getUsersSeenPost, params),
 };
 
 export default streamApi;
