@@ -8,7 +8,7 @@ import editMyProfile from './editMyProfile';
 import menuActions from '../actions';
 import * as modalActions from '../../modal/actions';
 import { mapProfile } from '../helper';
-import groupApi from "../../../api/GroupApi";
+import groupApi from '../../../api/GroupApi';
 
 afterEach(cleanup);
 

@@ -9,11 +9,11 @@ import { ICommunity } from '../../../interfaces/ICommunity';
 describe('get Community Detail saga', () => {
   const action = {
     type: 'test',
-    payload: { communityId: 1, loadingPage: false },
+    payload: { communityId: '1', loadingPage: false },
   };
 
   it('should get community details successfully', () => {
-    const resp = { data: { join_status: 2 } as ICommunity };
+    const resp = { data: { joinStatus: 2 } as ICommunity };
 
     return expectSaga(getCommunityDetail, action)
       .provide([[matchers.call.fn(groupApi.getCommunityDetail), resp]])

@@ -5,7 +5,7 @@ import { renderWithRedux, waitForUpdateRedux } from '../../test/testUtils';
 import MockedNavigator from '../../test/MockedNavigator';
 import { POST_DETAIL } from '../../test/mock_data/post';
 import Text from '../../beinComponents/Text';
-import NewsfeedList from "./index";
+import NewsfeedList from './index';
 
 describe('NewsfeedList component', () => {
   it('renders correctly loading more', async () => {

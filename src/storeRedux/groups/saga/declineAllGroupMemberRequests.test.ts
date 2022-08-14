@@ -6,7 +6,7 @@ import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 
 describe('declineAllGroupMemberRequests saga', () => {
-  const groupId = 1;
+  const groupId = '1';
   const action = {
     type: 'test',
     payload: { groupId },

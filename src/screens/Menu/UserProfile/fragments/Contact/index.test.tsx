@@ -7,8 +7,8 @@ describe('Contact component', () => {
   const baseProps = {
     email: 'email',
     phone: 'phone',
-    country: 'country',
     city: 'city',
+    countryCode: '84',
   }
 
   it('renders correctly', () => {

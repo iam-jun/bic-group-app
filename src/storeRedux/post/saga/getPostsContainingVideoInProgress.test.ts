@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
@@ -28,6 +29,8 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       canLoadMore: false,
       total: 0,
     };
+
+    // @ts-ignore
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
       .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
@@ -43,6 +46,8 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       canLoadMore: false,
       total: LIST_POST_CONTAINING_VIDEO_PROCESS_1.length,
     };
+
+    // @ts-ignore
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
       .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
@@ -60,7 +65,9 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       total: 0,
     };
 
-    storeData.post.allPostContainingVideoInProgress.data = [{ test: 1 }]
+    storeData.post.allPostContainingVideoInProgress.data = [{ test: 1 }];
+
+    // @ts-ignore
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
       .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
@@ -83,6 +90,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
 
     storeData.post.allPostContainingVideoInProgress.data = [{ test: 1 }]
 
+    // @ts-ignore
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
       .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
@@ -102,6 +110,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
 
     storeData.post.allPostContainingVideoInProgress.data = [{ id: POST_CONTAINING_VIDEO_PROCESS.id }]
 
+    // @ts-ignore
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
       .provide([[matchers.call.fn(streamApi.getDraftPosts), response]])
       .withState(storeData)
@@ -127,6 +136,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       },
     };
 
+    // @ts-ignore
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
       .provide([
         [matchers.call.fn(streamApi.getDraftPosts), Promise.reject(error)],

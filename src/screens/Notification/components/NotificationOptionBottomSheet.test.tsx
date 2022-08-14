@@ -17,6 +17,7 @@ describe('NotificationOptionBottomSheet component', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[0]}
+        keyValue=""
         modalizeRef={baseSheetRef}
       />,
     ).toJSON();
@@ -28,6 +29,7 @@ describe('NotificationOptionBottomSheet component', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[0]}
+        keyValue=""
         modalizeRef={baseSheetRef}
       />,
     );
@@ -45,6 +47,7 @@ describe('NotificationOptionBottomSheet component', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[1]}
+        keyValue=""
         modalizeRef={baseSheetRef}
       />,
     );
@@ -62,6 +65,7 @@ describe('NotificationOptionBottomSheet component', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[0]}
+        keyValue=""
         modalizeRef={baseSheetRef}
       />,
     );

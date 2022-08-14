@@ -5,6 +5,7 @@ import PrivacyItem from './PrivacyItem';
 
 describe('PrivacyItem component', () => {
   const baseProps = {
+    type: 'group' as 'group' | 'community',
     item: {
       type: 'PUBLIC',
       title: 'Test Title',

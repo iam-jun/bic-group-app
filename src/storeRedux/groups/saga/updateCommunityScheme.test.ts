@@ -8,9 +8,10 @@ import showError from '../../commonSaga/showError';
 import { communityScheme } from '../../../test/mock_data/scheme';
 import modalActions from '../../modal/actions';
 import { sortFixedRoles } from '../../../screens/groups/helper';
+import { IScheme } from '~/interfaces/IGroup';
 
 describe('updateCommunityScheme saga', () => {
-  const communityId = 1;
+  const communityId = '1';
   const action = {
     type: 'test',
     payload: { communityId },
@@ -20,7 +21,7 @@ describe('updateCommunityScheme saga', () => {
     groups: { permissionScheme: { creatingScheme: { data: communityScheme } } },
   };
 
-  const resp = { data: {} };
+  const resp = { data: {} as IScheme };
   const dataWithOrderedFixRole = sortFixedRoles(resp.data);
 
   it('should update scheme successfully', async () => expectSaga(updateCommunityScheme, action)
@@ -59,7 +60,7 @@ describe('updateCommunityScheme saga', () => {
       communityId,
       communityScheme,
     )
-    .put(groupsActions.setCommunityScheme({ data: { roles: [] } }))
+    .put(groupsActions.setCommunityScheme({ data: { roles: [] } as IScheme }))
     .put(groupsActions.setCreatingScheme({ creating: false }))
     .run()
     .then(({ allEffects }: any) => {

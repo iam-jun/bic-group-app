@@ -124,7 +124,7 @@ describe('get Community members', () => {
   it('should refresh data correctly', async () => {
     const action = {
       type: 'test',
-      payload: { communityId: 1, params: {}, isRefreshing: true },
+      payload: { communityId: '1', params: {}, isRefreshing: true },
     };
 
     const resp = { data: { ...memberData } };

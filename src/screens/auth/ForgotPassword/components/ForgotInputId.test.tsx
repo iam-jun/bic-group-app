@@ -101,7 +101,7 @@ describe('ForgotInputId component', () => {
     const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
-    storeData.auth.forgotPasswordLoading = false;
+    // storeData.auth.forgotPasswordLoading = false;
     storeData.auth.forgotPasswordError = forgotPasswordError as any;
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
@@ -127,7 +127,7 @@ describe('ForgotInputId component', () => {
     const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
-    storeData.auth.forgotPasswordLoading = false;
+    // storeData.auth.forgotPasswordLoading = false;
     storeData.auth.forgotPasswordError = forgotPasswordError as any;
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(

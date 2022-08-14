@@ -6,7 +6,7 @@ import groupApi from '../../../api/GroupApi';
 import showError from '../../commonSaga/showError';
 
 describe('declineAllCommunityMemberRequests saga', () => {
-  const communityId = 1;
+  const communityId = '1';
   const total = 3;
   const action = {
     type: 'test',

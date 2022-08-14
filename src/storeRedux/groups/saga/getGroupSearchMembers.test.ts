@@ -10,7 +10,7 @@ import showError from '../../commonSaga/showError';
 describe('getGroupSearchMembers saga', () => {
   const action = {
     type: 'test',
-    payload: { groupId: 1, params: {} },
+    payload: { groupId: '1', params: {} },
   };
 
   it('should get data correctly', async () => {

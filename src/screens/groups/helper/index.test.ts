@@ -6,8 +6,8 @@ import { GROUP_TREE } from '~/test/mock_data/group';
 afterEach(cleanup);
 
 describe('Group functions helper', () => {
-  const groupId = '1';
-  const userId = 1;
+  const groupId = '"1"';
+  const userId = '1';
   const dispatch = jest.fn();
   const mainCallback = jest.fn();
   const onPressRight = jest.fn();
@@ -23,7 +23,7 @@ describe('Group functions helper', () => {
       mainCallback,
       onPressRight,
     );
-    expect(result).toBe(1);
+    expect(result).toBe('1');
     expect(mainCallback).toBeCalled();
   });
 
@@ -68,7 +68,7 @@ describe('Group functions helper', () => {
       mainCallback,
       onPressRight,
     );
-    expect(result).toBe(-1);
+    expect(result).toBe(-'1');
     expect(mainCallback).not.toBeCalled();
   });
 
@@ -76,11 +76,11 @@ describe('Group functions helper', () => {
     jest.spyOn(groupApi, 'getUserInnerGroups').mockImplementation(() => Promise.resolve({
       data: {
         current_group: {},
-        inner_groups: [{ name: 'group_1' }],
+        inner_groups: [{ name: 'group_"1"' }],
       },
     }));
     const result = await handleLeaveInnerGroups(
-      1,
+      '1',
       'username',
       dispatch,
       mainCallback,
@@ -93,7 +93,7 @@ describe('Group functions helper', () => {
       .spyOn(groupApi, 'getUserInnerGroups')
       .mockImplementation(() => Promise.reject());
     const result = await handleLeaveInnerGroups(
-      1,
+      '1',
       'username',
       dispatch,
       mainCallback,

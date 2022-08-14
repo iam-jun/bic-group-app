@@ -24,15 +24,15 @@ describe('TextInput component', () => {
     expect(flattenedStyle.marginVertical).toBe(spacing.margin.tiny);
   });
 
-  it('should show "TextInput" disabled', async () => {
+  it('should show "TextInput" editable', async () => {
     const props = {
-      disabled: true,
+      editable: true,
     };
     const wrapper = render(<TextInput {...props} />);
 
     const component = wrapper.getByTestId('text_input.input');
 
-    expect(component.props.disabled).toBeTruthy();
+    expect(component.props.editable).toBeTruthy();
   });
 
   it('onChangeText should be called', async () => {

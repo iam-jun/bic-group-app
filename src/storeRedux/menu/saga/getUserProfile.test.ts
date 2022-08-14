@@ -5,7 +5,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import getUserProfile from './getUserProfile';
 import menuActions from '../actions';
 import { mapProfile } from '../helper';
-import groupApi from "../../../api/GroupApi";
+import groupApi from '../../../api/GroupApi';
 
 describe('Get User Profile Saga', () => {
   const action = {

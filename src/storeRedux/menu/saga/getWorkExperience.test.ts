@@ -6,7 +6,7 @@ import { cleanup } from '@testing-library/react-native';
 import getWorkExperience from './getWorkExperience';
 import menuActions from '../actions';
 import { mapWorkExperience } from '../helper';
-import groupApi from "../../../api/GroupApi";
+import groupApi from '../../../api/GroupApi';
 
 afterEach(cleanup);
 

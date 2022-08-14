@@ -9,7 +9,7 @@ import { groupScheme } from '../../../test/mock_data/scheme';
 import modalActions from '../../modal/actions';
 
 describe('updateGroupScheme saga', () => {
-  const communityId = 1;
+  const communityId = '1';
   const schemeId = 'abc';
   const action = {
     type: 'test',

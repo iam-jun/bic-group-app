@@ -10,7 +10,7 @@ import API_ERROR_CODE from '../../../constants/apiErrorCode';
 import { sortFixedRoles } from '../../../screens/groups/helper';
 
 describe('getGroupScheme saga', () => {
-  const communityId = 1;
+  const communityId = '1';
   const schemeId = 'abc';
   const action = {
     type: 'test',

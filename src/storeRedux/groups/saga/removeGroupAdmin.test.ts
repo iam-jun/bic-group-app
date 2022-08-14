@@ -8,7 +8,7 @@ import { refreshGroupMembers } from './index';
 import showError from '../../commonSaga/showError';
 
 describe('Remove group admin', () => {
-  const action = { type: 'test', payload: { groupId: 1, userId: 1 } };
+  const action = { type: 'test', payload: { groupId: '1', userId: '1' } };
   it('should remove admin role successfully', () => expectSaga(removeGroupAdmin, action)
     .provide([[matchers.call.fn(groupApi.removeGroupAdmin), {}]])
     .put(

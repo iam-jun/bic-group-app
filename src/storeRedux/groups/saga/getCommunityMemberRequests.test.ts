@@ -9,7 +9,7 @@ import getCommunityMemberRequests from './getCommunityMemberRequests';
 import groupsActions from '../actions';
 
 describe('getCommunityMemberRequests saga', () => {
-  const communityId = 1;
+  const communityId = '1';
   const action = { type: 'test', payload: { communityId } };
 
   it('should get data correctly', async () => {

@@ -151,7 +151,7 @@ export const groupScheme = {
   ],
   applyingGroups: [
     {
-      id: 163,
+      id: '163',
       name: 'Green grass',
       description: null,
       icon: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/d03ab007-b104-43d1-9bbe-178ca2c93c7b.jpg',

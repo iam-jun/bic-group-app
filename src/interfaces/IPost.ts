@@ -151,7 +151,7 @@ export interface IPostActivity {
   ownerReactions?: IOwnReaction;
   markedReadPost?: boolean;
   createdAt?: string;
-  createdBy?: number;
+  createdBy?: string;
   totalUsersSeen?: number;
 }
 

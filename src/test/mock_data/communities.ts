@@ -109,14 +109,14 @@ export const memberData = {
 };
 
 export const memberRequestDetail = {
-  id: 26,
-  userId: 16,
+  id: '26',
+  userId: '16',
   createdAt: '2022-05-21T08:09:22.320Z',
   updatedAt: '2022-06-06T08:12:53.483Z',
-  groupId: 2,
+  groupId: '2',
   status: 'waiting',
   user: {
-    id: 16,
+    id: '16',
     username: 'usernametest',
     fullname: 'User Name Test',
     avatar:

@@ -11,7 +11,7 @@ import groupJoinStatus from '../../../constants/groupJoinStatus';
 describe('Join New Group Saga', () => {
   const action = {
     type: 'test',
-    payload: { groupId: 1, groupName: 'Testing group' },
+    payload: { groupId: '1', groupName: 'Testing group' },
   };
 
   const { groupId, groupName } = action.payload;
@@ -23,7 +23,7 @@ describe('Join New Group Saga', () => {
         { data: { joinStatus: groupJoinStatus.requested } },
       ],
     ])
-    .put(groupsActions.getGroupDetail(groupId))
+    .put(groupsActions.getGroupDetail({ groupId }))
     .put(
       modalActions.showHideToastMessage({
         content: `${i18next.t(
@@ -59,7 +59,7 @@ describe('Join New Group Saga', () => {
         },
       }),
     )
-    .put(groupsActions.getGroupDetail(groupId))
+    .put(groupsActions.getGroupDetail({ groupId }))
     .run());
 
   it('should show error when calling server and error occurs', () => {

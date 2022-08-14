@@ -3,7 +3,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import actions from '../actions';
 import getAPIKey from './getAPIKey';
-import streamApi from "../../../api/StreamApi";
+import streamApi from '../../../api/StreamApi';
 
 describe('Get API key saga', () => {
   it('should get API key successfully', () => {

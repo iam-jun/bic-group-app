@@ -6,7 +6,7 @@ import { cleanup } from '@testing-library/react-native';
 import editWorkExperience from './editWorkExperience';
 import menuActions from '../actions';
 import modalActions from '../../modal/actions';
-import groupApi from "../../../api/GroupApi";
+import groupApi from '../../../api/GroupApi';
 
 afterEach(cleanup);
 

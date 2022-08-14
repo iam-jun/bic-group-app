@@ -9,8 +9,8 @@ import showError from '../../commonSaga/showError';
 import approveDeclineCode from '../../../constants/approveDeclineCode';
 
 describe('approveSingleGroupMemberRequest saga', () => {
-  const groupId = 1;
-  const requestId = 1;
+  const groupId = '1';
+  const requestId = '1';
   const fullName = 'Test User Name';
   const callback = jest.fn();
   const action = {
@@ -24,7 +24,7 @@ describe('approveSingleGroupMemberRequest saga', () => {
     groups: {
       groupMemberRequests: {
         total: 2,
-        ids: [1, 2],
+        ids: ['1', '2'],
         items: { 1: {}, 2: {} },
       },
     },
@@ -41,7 +41,7 @@ describe('approveSingleGroupMemberRequest saga', () => {
     .put(
       groupsActions.setGroupMemberRequests({
         total: 1,
-        ids: [2],
+        ids: ['2'],
         items: { 2: {} } as any,
       }),
     )
@@ -58,7 +58,7 @@ describe('approveSingleGroupMemberRequest saga', () => {
         toastType: 'normal',
       }),
     )
-    .put(groupsActions.getGroupDetail(groupId))
+    .put(groupsActions.getGroupDetail({ groupId }))
     .run());
 
   it('should call server and server throws Canceled join request error', async () => {

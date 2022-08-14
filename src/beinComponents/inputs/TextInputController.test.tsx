@@ -58,7 +58,6 @@ describe('TextInputController component', () => {
             message: i18next.t('auth:text_err_password_format'),
           },
         }}
-        loading={false}
         testID="inputNewPassword"
         label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
@@ -93,7 +92,6 @@ describe('TextInputController component', () => {
             message: i18next.t('auth:text_err_password_format'),
           },
         }}
-        loading={false}
         testID="testID"
         label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
@@ -139,7 +137,6 @@ describe('TextInputController component', () => {
             message: i18next.t('auth:text_err_password_format'),
           },
         }}
-        loading={false}
         testID="testID"
         label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
