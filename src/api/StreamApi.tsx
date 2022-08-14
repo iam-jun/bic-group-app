@@ -1,5 +1,5 @@
 import { Method } from 'axios';
-import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
+import ApiConfig, { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
 import {
   IParamDeleteReaction,
@@ -27,7 +27,7 @@ import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 
 const DEFAULT_LIMIT = 10;
 
-const provider = ApiConfig.providers.beinFeed;
+const provider = apiProviders.beinFeed;
 const defaultConfig = {
   provider,
   method: 'get' as Method,
@@ -188,24 +188,24 @@ export const streamApiConfig = {
   // todo move to group
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${ApiConfig.providers.bein.url}post-audiences`,
-    provider: ApiConfig.providers.bein,
+    url: `${apiProviders.bein.url}post-audiences`,
+    provider: apiProviders.bein,
     params: {
       key,
     },
   }),
   getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${ApiConfig.providers.bein.url}/post-audiences/groups`,
-    provider: ApiConfig.providers.bein,
+    url: `${apiProviders.bein.url}/post-audiences/groups`,
+    provider: apiProviders.bein,
     params,
   }),
   getSearchMentionAudiences: (
     params: IParamSearchMentionAudiences,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${ApiConfig.providers.bein.url}users/mentionable`,
-    provider: ApiConfig.providers.bein,
+    url: `${apiProviders.bein.url}users/mentionable`,
+    provider: apiProviders.bein,
     params: {
       group_ids: params.groupIds,
       user_ids: params.userIds,

@@ -1,5 +1,5 @@
 import { Method } from 'axios';
-import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
+import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
@@ -15,8 +15,10 @@ import {
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
+import { IUserEdit } from '~/interfaces/IAuth';
+import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 
-const provider = ApiConfig.providers.bein;
+const provider = apiProviders.bein;
 const defaultConfig = {
   provider,
   method: 'get' as Method,
@@ -24,6 +26,55 @@ const defaultConfig = {
 }
 
 export const groupsApiConfig = {
+  getUserProfile: (
+    userId: string, params?: any,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${userId}/profile`,
+    params,
+  }),
+  editMyProfile: (
+    userId: string, data: IUserEdit,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${userId}/profile`,
+    method: 'put',
+    data: {
+      ...data,
+    },
+  }),
+  getMyWorkExperience: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/work-experience`,
+  }),
+  addWorkExperience: (data: IAddWorkExperienceReq): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/work-experience`,
+    method: 'post',
+    useRetry: false,
+    data,
+  }),
+  editWorkExperience: (
+    id: string,
+    data: IAddWorkExperienceReq,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/work-experience/${id}`,
+    method: 'put',
+    useRetry: false,
+    data,
+  }),
+  deleteWorkExperience: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/work-experience/${id}`,
+    method: 'delete',
+    useRetry: false,
+  }),
+  // get others work experience data
+  getWorkExperience: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}users/${id}/work-experience`,
+  }),
   getMyPermissions: (): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}me/permissions`,
@@ -155,8 +206,8 @@ export const groupsApiConfig = {
   // todo move to stream
   getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${ApiConfig.providers.beinFeed.url}feeds/timeline`,
-    provider: ApiConfig.providers.beinFeed,
+    url: `${apiProviders.beinFeed.url}feeds/timeline`,
+    provider: apiProviders.beinFeed,
     params,
   }),
 
@@ -428,6 +479,22 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  getUserProfile: (userId: string, params?: any) => withHttpRequestPromise(
+    groupsApiConfig.getUserProfile, userId, params,
+  ),
+  editMyProfile: (params: any) => {
+    const { userId, data } = params || {}
+    return withHttpRequestPromise(groupsApiConfig.editMyProfile, userId, data)
+  },
+  getMyWorkExperience: () => withHttpRequestPromise(groupsApiConfig.getMyWorkExperience),
+  addWorkExperience: (data: IAddWorkExperienceReq) => withHttpRequestPromise(
+    groupsApiConfig.addWorkExperience, data,
+  ),
+  editWorkExperience: (id: string, data: IAddWorkExperienceReq) => withHttpRequestPromise(
+    groupsApiConfig.editWorkExperience, id, data,
+  ),
+  deleteWorkExperience: (id: string) => withHttpRequestPromise(groupsApiConfig.deleteWorkExperience, id),
+  getWorkExperience: (id: string) => withHttpRequestPromise(groupsApiConfig.getWorkExperience, id),
   getMyPermissions: () => withHttpRequestPromise(groupsApiConfig.getMyPermissions),
   getCommunityGroupTree: (id: string) => withHttpRequestPromise(groupsApiConfig.getCommunityGroupsTree, id),
   putGroupStructureReorder: (communityId: string, data: string[]) => withHttpRequestPromise(

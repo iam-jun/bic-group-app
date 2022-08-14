@@ -4,7 +4,7 @@ import getEnv from '~/utils/env';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import appConfig from '../configs/appConfig';
 
-const providers = {
+export const apiProviders = {
   bein: {
     url: getEnv('BEIN_API'),
     name: 'Bein',
@@ -25,9 +25,9 @@ const providers = {
 
 const Upload = {
   createVideoId: (): HttpApiRequestConfig => ({
-    url: `${providers.beinUpload.url}videos`,
+    url: `${apiProviders.beinUpload.url}videos`,
     method: 'post',
-    provider: providers.beinUpload,
+    provider: apiProviders.beinUpload,
     useRetry: true,
   }),
   uploadVideo: (
@@ -37,13 +37,13 @@ const Upload = {
     onUploadProgress?: (progressEvent: any) => void,
     abortSignal?: AbortSignal,
   ): HttpApiRequestConfig => ({
-    url: `${providers.beinUpload.url}videos/${id}`,
+    url: `${apiProviders.beinUpload.url}videos/${id}`,
     method: 'post',
     headers: {
       'Content-Type': 'multipart/form-data',
     },
     useRetry: true,
-    provider: providers.beinUpload,
+    provider: apiProviders.beinUpload,
     onUploadProgress,
     data,
     signal: abortSignal,
@@ -69,15 +69,15 @@ const Upload = {
 
     if (groupUploadEndPoint[type]) {
       // upload bein group
-      url = `${providers.bein.url}${groupUploadEndPoint[type]}`;
-      provider = providers.bein;
+      url = `${apiProviders.bein.url}${groupUploadEndPoint[type]}`;
+      provider = apiProviders.bein;
     } else if (uploadEndPoint[type]) {
-      url = `${providers.beinUpload.url}${uploadEndPoint[type]}`;
-      provider = providers.beinUpload;
+      url = `${apiProviders.beinUpload.url}${uploadEndPoint[type]}`;
+      provider = apiProviders.beinUpload;
     } else {
       // upload bein feed
-      url = `${providers.beinFeed.url}media`;
-      provider = providers.beinFeed;
+      url = `${apiProviders.beinFeed.url}media`;
+      provider = apiProviders.beinFeed;
       data.append(
         'upload_type', type,
       );
@@ -98,9 +98,9 @@ const Upload = {
   createFileId: (uploadType: string): HttpApiRequestConfig => {
     const type = uploadType.split('_')[1];
     return {
-      url: `${providers.beinUpload.url}${type}s`,
+      url: `${apiProviders.beinUpload.url}${type}s`,
       method: 'post',
-      provider: providers.beinUpload,
+      provider: apiProviders.beinUpload,
       useRetry: true,
     };
   },
@@ -113,13 +113,13 @@ const Upload = {
   ): HttpApiRequestConfig => {
     const type = uploadType.split('_')[1];
     return {
-      url: `${providers.beinUpload.url}${type}s/${id}`,
+      url: `${apiProviders.beinUpload.url}${type}s/${id}`,
       method: 'post',
       headers: {
         'Content-Type': 'multipart/form-data',
       },
       useRetry: true,
-      provider: providers.beinUpload,
+      provider: apiProviders.beinUpload,
       data,
       signal: abortSignal,
       timeout: appConfig.fileUploadTimeout,
@@ -130,17 +130,17 @@ const Upload = {
 
 const App = {
   info: (): HttpApiRequestConfig => ({
-    url: `${providers.bein.url}hello/bein`,
+    url: `${apiProviders.bein.url}hello/bein`,
     method: 'get',
-    provider: providers.bein,
+    provider: apiProviders.bein,
     useRetry: true,
   }),
   pushToken: (
     deviceToken: string, deviceId: string,
   ): HttpApiRequestConfig => ({
-    url: `${providers.beinNotification.url}device-tokens`,
+    url: `${apiProviders.beinNotification.url}device-tokens`,
     method: 'post',
-    provider: providers.beinNotification,
+    provider: apiProviders.beinNotification,
     useRetry: true,
     data: {
       token: deviceToken,
@@ -148,36 +148,27 @@ const App = {
     },
   }),
   removePushToken: (deviceId: string): HttpApiRequestConfig => ({
-    url: `${providers.beinNotification.url}device-tokens/${deviceId}`,
+    url: `${apiProviders.beinNotification.url}device-tokens/${deviceId}`,
     method: 'delete',
-    provider: providers.beinNotification,
+    provider: apiProviders.beinNotification,
     useRetry: false,
     timeout: 5000,
   }),
   getLinkPreview: (link: string): HttpApiRequestConfig => ({
-    url: `${providers.bein.url}link-preview/${link}`,
+    url: `${apiProviders.bein.url}link-preview/${link}`,
     method: 'get',
-    provider: providers.bein,
+    provider: apiProviders.bein,
     useRetry: true,
   }),
   getUsers: (params: IParamsGetUsers): HttpApiRequestConfig => ({
-    url: `${providers.bein.url}users`,
+    url: `${apiProviders.bein.url}users`,
     method: 'get',
     useRetry: true,
-    provider: providers.bein,
+    provider: apiProviders.bein,
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
     },
-  }),
-};
-
-const Chat = {
-  init: (): HttpApiRequestConfig => ({
-    url: `${providers.bein.url}chat/channels/unread`,
-    method: 'get',
-    provider: providers.bein,
-    useRetry: true,
   }),
 };
 
@@ -197,22 +188,10 @@ export interface HttpApiResponseFormat {
   meta?: any;
 }
 
-export interface FeedResponseError {
-  message: string | any;
-  error: {
-    detail: string;
-    status_code: number;
-    code: number;
-    exception: any;
-    duration: any;
-    more_info: any;
-  };
-  response: any;
-}
-
-export default {
-  providers,
+const ApiConfig = {
+  providers: apiProviders,
   App,
   Upload,
-  Chat,
-};
+}
+
+export default ApiConfig;

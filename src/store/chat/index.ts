@@ -1,11 +1,9 @@
-import { AxiosResponse } from 'axios';
-import apiConfig from '~/api/apiConfig';
 import chatSocketEvents from '~/constants/chatSocketEvents';
-import { makeHttpRequest } from '~/api/apiRequest';
 import {
   createStore, withFlipper, withImmer, withPersist,
 } from '../utils';
 import { handleChannelViewedEvent, handlePostedEvent, handlePostUnreadEvent } from './utils';
+import chatApi from '~/api/ChatApi';
 
 export interface ChatState {
   unreadChannels: any,
@@ -17,8 +15,8 @@ const chatStore = (set, get) => ({
   unreadChannels: {},
   initChat: async () => {
     try {
-      const response: AxiosResponse = await makeHttpRequest(apiConfig.Chat.init());
-      const data = response.data?.data;
+      const response = await chatApi.init();
+      const data = response?.data;
 
       const result = (data || []).reduce(
         // eslint-disable-next-line no-return-assign

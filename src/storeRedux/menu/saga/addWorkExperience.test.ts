@@ -4,8 +4,8 @@ import { cleanup } from '@testing-library/react-native';
 
 import addWorkExperience from './addWorkExperience';
 import menuActions from '../actions';
-import menuDataHelper from '../../../screens/Menu/helper/MenuDataHelper';
 import modalActions from '../../modal/actions';
+import groupApi from "../../../api/GroupApi";
 
 afterEach(cleanup);
 
@@ -42,7 +42,7 @@ describe('Add Work Experience Saga', () => {
 
     return expectSaga(addWorkExperience, action)
       .provide([
-        [matchers.call.fn(menuDataHelper.addWorkExperience), expectData],
+        [matchers.call.fn(groupApi.addWorkExperience), expectData],
       ])
       .put(menuActions.getMyWorkExperience())
       .run();
@@ -70,7 +70,7 @@ describe('Add Work Experience Saga', () => {
       },
     })
       .provide([
-        [matchers.call.fn(menuDataHelper.addWorkExperience), expectData],
+        [matchers.call.fn(groupApi.addWorkExperience), expectData],
       ])
       .put(menuActions.getMyWorkExperience())
       .run();
@@ -94,7 +94,7 @@ describe('Add Work Experience Saga', () => {
     return expectSaga(addWorkExperience, action)
       .provide([
         [
-          matchers.call.fn(menuDataHelper.addWorkExperience),
+          matchers.call.fn(groupApi.addWorkExperience),
           Promise.reject(error),
         ],
       ])

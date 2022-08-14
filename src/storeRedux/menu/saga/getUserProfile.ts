@@ -2,9 +2,9 @@ import { call, put } from 'redux-saga/effects';
 
 import { IResponseData } from '~/interfaces/common';
 import { IGetUserProfile } from '~/interfaces/IAuth';
-import menuDataHelper from '../../../screens/Menu/helper/MenuDataHelper';
 import menuActions from '../actions';
 import { mapProfile } from '../helper';
+import groupApi from '~/api/GroupApi';
 
 export default function* getUserProfile({
   payload,
@@ -15,7 +15,7 @@ export default function* getUserProfile({
   const { userId, params } = payload;
   try {
     const response: IResponseData = yield call(
-      menuDataHelper.getUserProfile,
+      groupApi.getUserProfile,
       userId,
       params,
     );

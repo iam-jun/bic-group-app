@@ -6,9 +6,9 @@ import { cleanup } from '@testing-library/react-native';
 
 import editMyProfile from './editMyProfile';
 import menuActions from '../actions';
-import menuDataHelper from '../../../screens/Menu/helper/MenuDataHelper';
 import * as modalActions from '../../modal/actions';
 import { mapProfile } from '../helper';
+import groupApi from "../../../api/GroupApi";
 
 afterEach(cleanup);
 
@@ -29,7 +29,7 @@ describe('Update User Profile Saga', () => {
     };
     // @ts-ignorets
     return expectSaga(editMyProfile, action)
-      .provide([[matchers.call.fn(menuDataHelper.editMyProfile), expectData]])
+      .provide([[matchers.call.fn(groupApi.editMyProfile), expectData]])
       .put(
         modalActions.showHideToastMessage({
           content: 'common:text_edit_success',
@@ -62,7 +62,7 @@ describe('Update User Profile Saga', () => {
       meta: {},
     };
     return expectSaga(editMyProfile, actionUpdateAvatar)
-      .provide([[matchers.call.fn(menuDataHelper.editMyProfile), expectData]])
+      .provide([[matchers.call.fn(groupApi.editMyProfile), expectData]])
       .put(
         modalActions.showHideToastMessage({
           content: 'common:avatar_changed',
@@ -95,7 +95,7 @@ describe('Update User Profile Saga', () => {
       meta: {},
     };
     return expectSaga(editMyProfile, actionUpdateCoverPhoto)
-      .provide([[matchers.call.fn(menuDataHelper.editMyProfile), expectData]])
+      .provide([[matchers.call.fn(groupApi.editMyProfile), expectData]])
       .put(
         modalActions.showHideToastMessage({
           content: 'common:cover_changed',
@@ -121,7 +121,7 @@ describe('Update User Profile Saga', () => {
     const editFieldToastMessage = 'common:btn_update';
 
     return expectSaga(editMyProfile, { ...action, editFieldToastMessage })
-      .provide([[matchers.call.fn(menuDataHelper.editMyProfile), expectData]])
+      .provide([[matchers.call.fn(groupApi.editMyProfile), expectData]])
       .put(
         modalActions.showHideToastMessage({
           content: editFieldToastMessage,
@@ -139,7 +139,7 @@ describe('Update User Profile Saga', () => {
     const error = { meta: { message: 'Something went wrong' } };
     return expectSaga(editMyProfile, action)
       .provide([
-        [matchers.call.fn(menuDataHelper.editMyProfile), Promise.reject(error)],
+        [matchers.call.fn(groupApi.editMyProfile), Promise.reject(error)],
       ])
       .put(
         modalActions.showHideToastMessage({
@@ -159,7 +159,7 @@ describe('Update User Profile Saga', () => {
     const error = { meta: { message: 'This Email is used' } };
     return expectSaga(editMyProfile, action)
       .provide([
-        [matchers.call.fn(menuDataHelper.editMyProfile), Promise.reject(error)],
+        [matchers.call.fn(groupApi.editMyProfile), Promise.reject(error)],
       ])
       .put(
         menuActions.setEmailEditError(i18next.t('settings:text_email_is_used')),
@@ -173,7 +173,7 @@ describe('Update User Profile Saga', () => {
     const error = { meta: { message: 'This phone number is used' } };
     return expectSaga(editMyProfile, action)
       .provide([
-        [matchers.call.fn(menuDataHelper.editMyProfile), Promise.reject(error)],
+        [matchers.call.fn(groupApi.editMyProfile), Promise.reject(error)],
       ])
       .put(
         menuActions.setPhoneNumberEditError(

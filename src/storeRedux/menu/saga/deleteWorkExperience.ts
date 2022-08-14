@@ -1,10 +1,10 @@
 import { put, call } from 'redux-saga/effects';
 
 import { IResponseData } from '~/interfaces/common';
-import menuDataHelper from '../../../screens/Menu/helper/MenuDataHelper';
 import menuActions from '../actions';
 import { mapWorkExperience } from '../helper';
 import showError from '~/storeRedux/commonSaga/showError';
+import groupApi from '~/api/GroupApi';
 
 export default function* deleteWorkExperience({
   id,
@@ -16,7 +16,7 @@ export default function* deleteWorkExperience({
 }) {
   try {
     const response: IResponseData = yield call(
-      menuDataHelper.deleteWorkExperience,
+      groupApi.deleteWorkExperience,
       id,
     );
 

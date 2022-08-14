@@ -6,8 +6,8 @@ import { IUserEdit } from '~/interfaces/IAuth';
 import modalActions from '~/storeRedux/modal/actions';
 import menuActions from '../actions';
 import { mapProfile } from '../helper';
-import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import showError from '~/storeRedux/commonSaga/showError';
+import groupApi from '~/api/GroupApi';
 
 export default function* editMyProfile({
   payload,
@@ -24,7 +24,7 @@ export default function* editMyProfile({
     delete payload.id; // edit data should not contain user's id
 
     const result: IResponseData = yield call(
-      menuDataHelper.editMyProfile, {
+      groupApi.editMyProfile, {
         userId,
         data: payload,
       },

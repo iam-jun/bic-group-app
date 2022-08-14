@@ -8,6 +8,7 @@ import DeviceInfo from 'react-native-device-info';
 import { put } from 'redux-saga/effects';
 
 import ApiConfig, {
+  apiProviders,
   HttpApiRequestConfig,
   HttpApiResponseFormat,
 } from '~/api/apiConfig';
@@ -97,10 +98,10 @@ const handleRetry = async (error: AxiosError) => {
   // check if orgConfig contain Authorization key
   // @ts-ignore
   switch (error.config?.provider?.name) {
-    case ApiConfig.providers.bein.name:
-    case ApiConfig.providers.beinFeed.name:
-    case ApiConfig.providers.beinNotification.name:
-    case ApiConfig.providers.beinUpload.name:
+    case apiProviders.bein.name:
+    case apiProviders.beinFeed.name:
+    case apiProviders.beinNotification.name:
+    case apiProviders.beinUpload.name:
       if (!error.config.headers?.Authorization) {
         return Promise.reject(error);
       }
@@ -302,16 +303,16 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig): Promise<Axi
   };
 
   switch (requestConfig.provider.name) {
-    case ApiConfig.providers.bein.name:
+    case apiProviders.bein.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
       interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;
       requestConfig.headers = beinHeaders;
       requestConfig.withCredentials = true;
       break;
-    case ApiConfig.providers.beinFeed.name:
-    case ApiConfig.providers.beinNotification.name:
-    case ApiConfig.providers.beinUpload.name:
+    case apiProviders.beinFeed.name:
+    case apiProviders.beinNotification.name:
+    case apiProviders.beinUpload.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
       interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;

@@ -1,11 +1,11 @@
 import { Method } from 'axios';
 import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
-import ApiConfig, { HttpApiRequestConfig } from '~/api/apiConfig';
+import { apiProviders, HttpApiRequestConfig } from '~/api/apiConfig';
 import { IParamGetNotifications } from '~/interfaces/INotification';
 
 const LIMIT = 20;
 
-const provider = ApiConfig.providers.beinNotification;
+const provider = apiProviders.beinNotification;
 const defaultConfig = {
   provider,
   method: 'get' as Method,

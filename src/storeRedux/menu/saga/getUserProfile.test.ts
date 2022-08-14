@@ -4,8 +4,8 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 
 import getUserProfile from './getUserProfile';
 import menuActions from '../actions';
-import menuDataHelper from '../../../screens/Menu/helper/MenuDataHelper';
 import { mapProfile } from '../helper';
+import groupApi from "../../../api/GroupApi";
 
 describe('Get User Profile Saga', () => {
   const action = {
@@ -27,7 +27,7 @@ describe('Get User Profile Saga', () => {
 
     // @ts-ignorets
     return expectSaga(getUserProfile, action)
-      .provide([[matchers.call.fn(menuDataHelper.getUserProfile), expectData]])
+      .provide([[matchers.call.fn(groupApi.getUserProfile), expectData]])
       .put(menuActions.setUserProfile(mapProfile(expectData.data)))
       .run();
   });
@@ -38,7 +38,7 @@ describe('Get User Profile Saga', () => {
     return expectSaga(getUserProfile, action)
       .provide([
         [
-          matchers.call.fn(menuDataHelper.getUserProfile),
+          matchers.call.fn(groupApi.getUserProfile),
           Promise.reject(error),
         ],
       ])

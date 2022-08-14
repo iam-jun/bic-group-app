@@ -3,9 +3,9 @@ import { call, put, select } from 'redux-saga/effects';
 import { IResponseData } from '~/interfaces/common';
 import { IGetUserProfile } from '~/interfaces/IAuth';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
-import menuDataHelper from '../../../screens/Menu/helper/MenuDataHelper';
 import menuActions from '../actions';
 import { mapProfile } from '../helper';
+import groupApi from '~/api/GroupApi';
 
 export default function* getMyProfile({
   payload,
@@ -19,7 +19,7 @@ export default function* getMyProfile({
 
   try {
     const response: IResponseData = yield call(
-      menuDataHelper.getUserProfile,
+      groupApi.getUserProfile,
       userId,
       params,
     );

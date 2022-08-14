@@ -1,8 +1,8 @@
 import { put, call } from 'redux-saga/effects';
 import { IUserAddWorkExperience } from '~/interfaces/IAuth';
-import menuDataHelper from '../../../screens/Menu/helper/MenuDataHelper';
 import menuActions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
+import groupApi from '~/api/GroupApi';
 
 export default function* addWorkExperience({
   payload,
@@ -23,7 +23,7 @@ export default function* addWorkExperience({
       endDate,
     } = payload;
 
-    yield call(menuDataHelper.addWorkExperience, {
+    yield call(groupApi.addWorkExperience, {
       company,
       titlePosition,
       location,
