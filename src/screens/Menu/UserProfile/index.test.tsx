@@ -3,7 +3,7 @@
 import React from 'react';
 import { cleanup } from '@testing-library/react-native';
 
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import {
   configureStore,
   createTestStore,
@@ -15,8 +15,8 @@ import * as linkUtil from '~/utils/link';
 import UserProfile from '.';
 import { USER_PROFILE } from '~/test/mock_data/menu';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuTypes from '../redux/types';
-import menuActions from '../redux/actions';
+import menuTypes from '../../../storeRedux/menu/types';
+import menuActions from '../../../storeRedux/menu/actions';
 
 afterEach(cleanup);
 

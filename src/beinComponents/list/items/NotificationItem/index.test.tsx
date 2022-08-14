@@ -5,7 +5,7 @@ import NotificationItem from '.';
 import {
   LOAD_MORE_RESPONSE,
 } from '~/test/mock_data/notifications';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 

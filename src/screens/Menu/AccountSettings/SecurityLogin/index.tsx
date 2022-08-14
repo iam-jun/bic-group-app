@@ -4,16 +4,16 @@ import { useDispatch } from 'react-redux';
 
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import * as modalActions from '~/store/modal/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 
 import { ISetting } from '~/interfaces/common';
 import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import { securityLoginMenu } from '~/constants/settings';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import spacing from '~/theme/spacing';
+import { securityLoginMenu } from './constants';
 
 const SecurityLogin = () => {
   const { t } = useBaseHook();

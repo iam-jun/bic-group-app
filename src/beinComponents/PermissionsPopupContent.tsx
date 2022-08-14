@@ -14,7 +14,7 @@ import PrimaryItem, {
   PrimaryItemProps,
 } from '~/beinComponents/list/items/PrimaryItem';
 import ViewSpacing from './ViewSpacing';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 export interface PermissionsPopupContentProps {

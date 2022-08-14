@@ -2,16 +2,14 @@ import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { AppConfig } from '~/configs';
-import { authStack } from '~/configs/navigator';
 import { useUserIdAuth } from '~/hooks/auth';
-import { IObject } from '~/interfaces/common';
-import * as authStacks from './stack';
 import { initPushTokenMessage } from '~/services/firebase';
+import authScreens from '~/router/navigator/AuthStack/screens';
+import authStacks from '~/router/navigator/AuthStack/stack';
 
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
-  const Stacks: IObject<any> = authStacks;
   const currentUserId = useUserIdAuth();
   useEffect(
     () => {
@@ -26,27 +24,14 @@ const AuthStack = () => {
     }, [currentUserId],
   );
   return (
-    <Stack.Navigator initialRouteName={authStack.landing}>
-      <Stack.Screen
-        options={AppConfig.defaultScreenOptions}
-        name={authStack.landing}
-        component={Stacks[authStack.landing]}
-      />
-      <Stack.Screen
-        options={AppConfig.defaultScreenOptions}
-        name={authStack.login}
-        component={Stacks[authStack.login]}
-      />
-      <Stack.Screen
-        options={AppConfig.defaultScreenOptions}
-        name={authStack.signup}
-        component={Stacks[authStack.signup]}
-      />
-      <Stack.Screen
-        options={AppConfig.defaultScreenOptions}
-        name={authStack.forgotPassword}
-        component={Stacks[authStack.forgotPassword]}
-      />
+    <Stack.Navigator initialRouteName={authStacks.landing}>
+      {Object.entries(authScreens).map(([name, component]) => (
+        <Stack.Screen
+          options={AppConfig.defaultScreenOptions}
+          name={name}
+          component={component}
+        />
+      ))}
     </Stack.Navigator>
   );
 };

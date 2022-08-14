@@ -1,6 +1,6 @@
 module.exports = {
   stories: [
-    '../src/bicComponents/**/*.stories.?(ts|tsx|js|jsx)'
+    '../src/baseComponents/**/*.stories.?(ts|tsx|js|jsx)'
   ],
    addons: [
     '@storybook/addon-ondevice-notes',

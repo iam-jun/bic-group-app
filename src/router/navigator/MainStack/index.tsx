@@ -5,19 +5,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useBackHandler } from '@react-native-community/hooks';
 import { useDispatch } from 'react-redux';
 
-import CommonModal from '~/beinFragments/CommonModal';
-import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
-import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
-import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
+import CommonModal from '~/components/CommonModal';
+import UserProfilePreviewBottomSheet from '~/components/Preview/UserProfilePreviewBottomSheet';
+import ReactionBottomSheet from '~/components/reaction/ReactionBottomSheet';
+import ReactionDetailBottomSheet from '~/components/reaction/ReactionDetailBottomSheet';
 import {
   customBackHandlerRoutes,
-  NAVIGATION_BACK_PRESSED,
-} from '~/configs/navigator';
+  EVENT_NAVIGATION_BACK_PRESSED,
+} from '~/router/config';
 import { useKeySelector } from '~/hooks/selector';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import { getActiveRouteState } from '~/router/helper';
-import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
-import appActions from '~/store/app/actions';
+import PostAudiencesBottomSheet from '~/screens/post/components/PostAudiencesBottomSheet';
+import appActions from '~/storeRedux/app/actions';
 
 import mainTabScreens from './screens';
 import mainTabStack from './stack';
@@ -43,7 +43,7 @@ const MainStack = (): React.ReactElement => {
       return true;
     }
     if (activeRoute && customBackHandlerRoutes.includes(activeRoute)) {
-      DeviceEventEmitter.emit(NAVIGATION_BACK_PRESSED);
+      DeviceEventEmitter.emit(EVENT_NAVIGATION_BACK_PRESSED);
       return true;
     }
     return false;

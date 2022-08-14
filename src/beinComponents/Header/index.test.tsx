@@ -11,7 +11,7 @@ import {
   createTestStore,
 } from '~/test/testUtils';
 import Header from '~/beinComponents/Header';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import images from '~/resources/images';
 
 const TestComponent = ({ onChange }: {onChange?: (refs?: any) => void}) => {

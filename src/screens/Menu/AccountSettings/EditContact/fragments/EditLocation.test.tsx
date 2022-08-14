@@ -8,7 +8,7 @@ import {
   renderWithRedux,
 } from '~/test/testUtils';
 import EditLocation from './EditLocation';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 

@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react-native';
 import React from 'react';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { USER_PROFILE } from '~/test/mock_data/menu';
 
 import {

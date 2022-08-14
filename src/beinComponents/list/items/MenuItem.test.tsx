@@ -4,7 +4,7 @@ import { cleanup } from '@testing-library/react-native';
 import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
 import MenuItem from './MenuItem';
 import Icon from '~/beinComponents/Icon';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 

@@ -4,7 +4,7 @@ import { cleanup } from '@testing-library/react-native';
 import React from 'react';
 
 import i18next from 'i18next';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import {
   configureStore,
   fireEvent,
@@ -12,12 +12,12 @@ import {
 } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 import AddWork from './AddWork';
-import menuDataHelper from '../../helper/MenuDataHelper';
 import { formatDate } from '~/utils/formatData';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '../../redux/actions';
-import menuTypes from '../../redux/types';
+import menuActions from '../../../../storeRedux/menu/actions';
+import menuTypes from '../../../../storeRedux/menu/types';
 import { light } from '~/theme/theme';
+import groupApi from "../../../../api/GroupApi";
 
 afterEach(cleanup);
 
@@ -350,7 +350,7 @@ describe('AddWork screen', () => {
       meta: {},
     }));
     jest
-      .spyOn(menuDataHelper, 'deleteWorkExperience')
+      .spyOn(groupApi, 'deleteWorkExperience')
       .mockImplementation(deleteFunc);
 
     const state = { ...initialState };

@@ -3,8 +3,8 @@ import { cleanup, fireEvent } from '@testing-library/react-native';
 
 import NotificationBottomSheet from './NotificationBottomSheet';
 import { renderWithRedux } from '~/test/testUtils';
-import notificationsActions from '../redux/actions';
-import * as modalActions from '~/store/modal/actions';
+import notificationsActions from '../../../storeRedux/notification/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 
 afterEach(cleanup);
 

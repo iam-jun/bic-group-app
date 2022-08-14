@@ -1,13 +1,11 @@
 import { ICommunity } from '~/interfaces/ICommunity';
-import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import {
-  createStore, withFlipper, withImmer, withPersist,
-} from '~/store/utils';
+import groupApi from '~/api/GroupApi';
+import { createZustand } from '~/store';
 
 interface JoinedCommunitiesState {
   data?: ICommunity[],
   loading: boolean,
-  getJoinedCommunities: (params: {
+  getJoinedCommunities: (params?: {
     previewMembers?: boolean;
     managed?: boolean;
   }) => void;
@@ -21,7 +19,7 @@ const useJoinedCommunities = (set) => ({
     managed?: boolean;
   }) => {
     set((state) => { state.loading = true }, false, 'getJoinedCommunities');
-    groupsDataHelper.getJoinedCommunities(params)
+    groupApi.getJoinedCommunities(params)
       .then((response) => {
         set((state) => {
           state.loading = false;
@@ -37,14 +35,8 @@ const useJoinedCommunities = (set) => ({
   },
 })
 
-const useJoinedCommunitiesStore = createStore<JoinedCommunitiesState | any>(
-  withFlipper(
-    withImmer(
-      withPersist(
-        useJoinedCommunities, { name: 'useJoinedCommunitiesStore' },
-      ),
-    ), 'useJoinedCommunitiesStore',
-  ),
+const useJoinedCommunitiesStore = createZustand<JoinedCommunitiesState>(
+  'useJoinedCommunities', useJoinedCommunities,
 )
 
 export default useJoinedCommunitiesStore

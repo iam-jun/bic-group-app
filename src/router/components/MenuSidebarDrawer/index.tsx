@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 
 import { useKeySelector } from '~/hooks/selector';
 import MenuSidebarContent from '~/router/components/MenuSidebarDrawer/MenuSidebarContent';
-import appActions from '~/store/app/actions';
+import appActions from '~/storeRedux/app/actions';
 
 const DeviceWidth = Dimensions.get('window').width;
 

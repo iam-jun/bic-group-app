@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import i18n from 'i18next';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import notificationsActions from '../redux/actions';
-import * as modalActions from '~/store/modal/actions';
+import notificationsActions from '../../../storeRedux/notification/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 export interface NotificationOptionBottomSheetProps {

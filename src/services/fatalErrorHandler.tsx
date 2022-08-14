@@ -8,8 +8,8 @@ import {
 } from 'react-native-exception-handler';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { captureExceptionWithSentry } from '~/services/sentry';
-import Store from '~/store';
-import modalActions from '~/store/modal/actions';
+import Store from '~/storeRedux';
+import modalActions from '~/storeRedux/modal/actions';
 import Text from '~/beinComponents/Text';
 
 const initFatalErrorHandler = () => {

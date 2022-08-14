@@ -2,11 +2,11 @@
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable class-methods-use-this */
 import i18next from 'i18next';
-import ApiConfig from '~/configs/apiConfig';
 import { IFilePicked } from '~/interfaces/common';
-import { makeHttpRequest } from '~/services/httpApiRequest';
+import { makeHttpRequest } from '~/api/apiRequest';
 import { AppConfig } from '~/configs';
 import { IUploadType } from '~/configs/resourceConfig';
+import { uploadApiConfig } from '~/api/UploadApi';
 
 export interface IGetFile {
   id?: string;
@@ -122,7 +122,7 @@ export default class ImageUploader {
 
     this.fileUploading[file.name] = true;
     try {
-      const response: any = await makeHttpRequest(ApiConfig.Upload.uploadImage(
+      const response: any = await makeHttpRequest(uploadApiConfig.uploadImage(
         uploadType, formData, _onUploadProgress,
       ));
       const uploadedUrl = response?.data?.data?.url || response?.data?.data?.src;

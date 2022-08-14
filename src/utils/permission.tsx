@@ -4,7 +4,7 @@ import {
   check, request, PERMISSIONS, RESULTS,
 } from 'react-native-permissions';
 import i18next from 'i18next';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { photo_permission_steps } from '~/constants/permissions';
 import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
 import { IPayloadShowModal } from '~/interfaces/common';

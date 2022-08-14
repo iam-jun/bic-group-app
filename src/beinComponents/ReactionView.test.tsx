@@ -2,7 +2,7 @@ import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
 import ReactionView from '~/beinComponents/ReactionView';
 import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 

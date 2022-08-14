@@ -4,7 +4,7 @@ import {
   getEndDateText, getLanguages, uploadFile, _openImagePicker,
 } from './helper';
 import * as PermissionUtils from '~/utils/permission'
-import menuTypes from '../redux/types';
+import menuTypes from '../../../storeRedux/menu/types';
 
 describe('UserProfile helper', () => {
   it('getLanguages: validate empty array', () => {

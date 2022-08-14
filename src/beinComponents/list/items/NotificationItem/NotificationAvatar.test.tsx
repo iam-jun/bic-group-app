@@ -7,7 +7,7 @@ import {
 } from '~/test/mock_data/notifications';
 import { configureStore, renderWithRedux } from '~/test/testUtils';
 import NotificationAvatar from './NotificationAvatar';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { USER_PROFILE } from '~/test/mock_data/menu';
 
 afterEach(cleanup);

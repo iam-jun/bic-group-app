@@ -31,8 +31,8 @@ try {
 
 const getStories = () => {
   return [
-    require("../src/bicComponents/Reaction/index.stories.tsx"),
-    require("../src/bicComponents/Tag/index.stories.tsx"),
+    require("../src/baseComponents/Reaction/index.stories.tsx"),
+    require("../src/baseComponents/Tag/index.stories.tsx"),
   ];
 };
 

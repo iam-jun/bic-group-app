@@ -12,7 +12,7 @@ import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 
 const MenuShortcut = () => {
   const dispatch = useDispatch();

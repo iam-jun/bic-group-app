@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { put } from 'redux-saga/effects';
-import authActions from '~/screens/Auth/redux/actions';
+import authActions from '~/storeRedux/auth/actions';
 import { IObject } from '~/interfaces/common';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks/index';
 
 const useAuth = () => useSelector((state: IObject<any>) => state.auth);

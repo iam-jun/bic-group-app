@@ -8,7 +8,7 @@ import colors from '~/theme/theme';
 import { mmTheme } from './utils/config';
 
 import Header from '~/beinComponents/Header';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 import { sizes } from '~/theme/dimension';
 

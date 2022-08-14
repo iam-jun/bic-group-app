@@ -13,14 +13,14 @@ import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 
-import useModal from '~/hooks/modal';
 import { LottieFileLoading } from '~/resources/lottieJson';
+import { useKeySelector } from '~/hooks/selector';
 
 const LoadingModal = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const { loading } = useModal();
+  const { loading } = useKeySelector('modal');
   const { visible } = loading;
 
   return (

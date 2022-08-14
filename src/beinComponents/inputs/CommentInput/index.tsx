@@ -34,7 +34,7 @@ import { useBaseHook } from '~/hooks';
 import { IFilePicked, IGiphy } from '~/interfaces/common';
 import { IActivityDataImage } from '~/interfaces/IPost';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
-import modalActions from '~/store/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';

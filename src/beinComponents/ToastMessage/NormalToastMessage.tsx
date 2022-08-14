@@ -14,7 +14,7 @@ import Icon from '~/beinComponents/Icon';
 import Text, { TextProps } from '~/beinComponents/Text';
 import { IconType } from '~/resources/icons';
 
-import { clearToastMessage } from '~/store/modal/actions';
+import { clearToastMessage } from '~/storeRedux/modal/actions';
 import ButtonWrapper from '../Button/ButtonWrapper';
 import spacing from '~/theme/spacing';
 
