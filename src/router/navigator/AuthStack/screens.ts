@@ -1,7 +1,7 @@
-import SignIn from '~/screens/Auth/SignIn';
-import SignUp from '~/screens/Auth/SignUp';
-import ForgotPassword from '~/screens/Auth/ForgotPassword';
-import Landing from '~/screens/Auth/Landing';
+import SignIn from '~/screens/auth/SignIn';
+import SignUp from '~/screens/auth/SignUp';
+import ForgotPassword from '~/screens/auth/ForgotPassword';
+import Landing from '~/screens/auth/Landing';
 
 const authScreens = {
   landing: Landing,

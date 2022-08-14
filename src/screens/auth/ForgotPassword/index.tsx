@@ -23,8 +23,8 @@ import useAuth from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IForgotPasswordError } from '~/interfaces/IAuth';
 import { rootNavigationRef } from '~/router/refs';
-import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
-import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
+import ForgotInputCodePw from '~/screens/auth/ForgotPassword/components/ForgotInputCodePw';
+import ForgotInputId from '~/screens/auth/ForgotPassword/components/ForgotInputId';
 import actions from '~/storeRedux/auth/actions';
 import { deviceDimensions } from '~/theme/dimension';
 
