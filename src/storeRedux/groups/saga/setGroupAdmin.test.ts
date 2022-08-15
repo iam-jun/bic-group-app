@@ -8,7 +8,7 @@ import { refreshGroupMembers } from './index';
 import showError from '../../commonSaga/showError';
 
 describe('Set group admin', () => {
-  const action = { type: 'test', payload: { groupId: 1, userIds: [1] } };
+  const action = { type: 'test', payload: { groupId: '1', userIds: ['1'] } };
   it('should set admin successfully', () => expectSaga(setGroupAdmin, action)
     .provide([[matchers.call.fn(groupApi.setGroupAdmin), {}]])
     .put(

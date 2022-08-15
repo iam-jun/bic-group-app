@@ -13,13 +13,14 @@ import spacing from '~/theme/spacing';
 
 interface Props {
   testID?: string;
-  onEditAvatar: () => void;
   avatar: string;
   canEditInfo: boolean;
+
+  onEditAvatar: () => void;
 }
 
 const AvatarImage = ({
-  testID, onEditAvatar, avatar, canEditInfo,
+  testID, avatar, canEditInfo, onEditAvatar,
 }: Props) => {
   const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
 

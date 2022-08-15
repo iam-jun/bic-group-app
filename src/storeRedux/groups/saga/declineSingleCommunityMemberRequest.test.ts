@@ -9,8 +9,8 @@ import showError from '../../commonSaga/showError';
 import approveDeclineCode from '../../../constants/approveDeclineCode';
 
 describe('declineSingleCommunityMemberRequest saga', () => {
-  const communityId = 1;
-  const requestId = 3;
+  const communityId = '1';
+  const requestId = '3';
   const fullName = 'Test User Name';
   const action = { type: 'string', payload: { communityId, requestId, fullName } };
 
@@ -18,7 +18,7 @@ describe('declineSingleCommunityMemberRequest saga', () => {
     groups: {
       communityMemberRequests: {
         total: 3,
-        ids: [1, 2, 3],
+        ids: ['1', '2', '3'],
         items: { 1: {}, 2: {}, 3: {} },
       },
     },
@@ -37,7 +37,7 @@ describe('declineSingleCommunityMemberRequest saga', () => {
     .put(
       groupsActions.setCommunityMemberRequests({
         total: 2,
-        ids: [1, 2],
+        ids: ['1', '2'],
         items: { 1: {}, 2: {} } as any,
       }),
     )

@@ -8,8 +8,8 @@ import getYourGroupsList from './getYourGroupsList';
 
 describe('GetYourGroupsList saga', () => {
   it('should set data call backend success', () => {
-    const resp = { data: [{ groupdId: 1 }] };
-    return expectSaga(getYourGroupsList, { type: 'test', payload: 1 })
+    const resp = { data: [{ groupdId: '1' }] };
+    return expectSaga(getYourGroupsList, { type: 'test', payload: '1' })
       .provide([[matchers.call.fn(groupApi.getCommunityGroups), resp]])
       .put(groupsActions.setYourGroupsList({ loading: true }))
       .put(groupsActions.setYourGroupsList({ loading: false, list: resp.data }))
@@ -19,7 +19,7 @@ describe('GetYourGroupsList saga', () => {
       });
   });
 
-  it('should set loading false when call backend failed', () => expectSaga(getYourGroupsList, { type: 'test', payload: 1 })
+  it('should set loading false when call backend failed', () => expectSaga(getYourGroupsList, { type: 'test', payload: '1' })
     .provide([
       matchers.call.fn(groupApi.getCommunityGroups),
       throwError(new Error('empty data')),

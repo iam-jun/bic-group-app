@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React from 'react';
 import * as redux from 'react-redux';
-import privacyTypes from '~/constants/privacyTypes';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import groupsActions from '../../../storeRedux/groups/actions';
 import initialState from '~/storeRedux/initialState';
 import MockedNavigator from '~/test/MockedNavigator';
@@ -62,7 +62,7 @@ describe('GeneralInformation component', () => {
 
   it('should call change privacy when group\'s privacy is public', () => {
     storeData.groups.groupDetail.group.privacy = 'PUBLIC';
-    storeData.groups.groupDetail.total_pending_members = 0;
+    // storeData.groups.groupDetail.total_pending_members = 0;
     const store = mockStore(storeData);
 
     const spy = jest.spyOn(groupsActions, 'editGroupDetail');
@@ -71,18 +71,18 @@ describe('GeneralInformation component', () => {
       store,
     );
     const itemComponent = rendered.getByTestId(
-      `general_information.privacy_item.${privacyTypes[1].type}`,
+      `general_information.privacy_item.${groupPrivacyListDetail[1].type}`,
     );
     fireEvent.press(itemComponent);
     expect(spy).toBeCalledWith({
-      data: { id: groupDetailData.group.id, privacy: privacyTypes[1].type },
+      data: { id: groupDetailData.group.id, privacy: groupPrivacyListDetail[1].type },
       editFieldName: i18next.t('common:text_privacy'),
     });
   });
 
   it('should call alert when change privacy to public', () => {
     storeData.groups.groupDetail.group.privacy = 'PRIVATE';
-    storeData.groups.groupDetail.total_pending_members = 3;
+    // storeData.groups.groupDetail.total_pending_members = 3;
     const store = mockStore(storeData);
 
     const spy = jest.spyOn(helper, 'alertAction');
@@ -93,7 +93,7 @@ describe('GeneralInformation component', () => {
     );
 
     const itemComponent = rendered.getByTestId(
-      `general_information.privacy_item.${privacyTypes[0].type}`,
+      `general_information.privacy_item.${groupPrivacyListDetail[0].type}`,
     );
     fireEvent.press(itemComponent);
     expect(spy).toBeCalled();
@@ -101,7 +101,7 @@ describe('GeneralInformation component', () => {
 
   it('should call alert when change privacy to secret', () => {
     storeData.groups.groupDetail.group.privacy = 'PRIVATE';
-    storeData.groups.groupDetail.total_pending_members = 3;
+    // storeData.groups.groupDetail.total_pending_members = 3;
     const store = mockStore(storeData);
 
     const spy = jest.spyOn(helper, 'alertAction');
@@ -112,7 +112,7 @@ describe('GeneralInformation component', () => {
     );
 
     const itemComponent = rendered.getByTestId(
-      `general_information.privacy_item.${privacyTypes[2].type}`,
+      `general_information.privacy_item.${groupPrivacyListDetail[2].type}`,
     );
     fireEvent.press(itemComponent);
     expect(spy).toBeCalled();

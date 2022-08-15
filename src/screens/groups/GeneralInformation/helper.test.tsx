@@ -15,7 +15,7 @@ describe('GeneralInformation helper', () => {
     Platform.OS = 'web';
     const spy = jest.spyOn(ImagePicker, 'openPickerSingle');
 
-    const result = _openImagePicker(jest.fn(), 1, 'icon', 'user_avatar');
+    const result = _openImagePicker(jest.fn(), '1', 'icon', 'user_avatar', 'group');
     expect(result).toBeTruthy();
     expect(spy).toBeCalled();
   });

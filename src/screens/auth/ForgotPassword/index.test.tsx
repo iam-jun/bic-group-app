@@ -45,7 +45,7 @@ describe('ForgotPassword screen', () => {
     const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
-    storeData.auth.forgotPasswordLoading = false;
+    // storeData.auth.forgotPasswordLoading = false;
     storeData.auth.forgotPasswordError = forgotPasswordError as any;
     const store = createTestStore(initialState);
 
@@ -88,7 +88,7 @@ describe('ForgotPassword screen', () => {
     const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
-    storeData.auth.forgotPasswordLoading = false;
+    // storeData.auth.forgotPasswordLoading = false;
     storeData.auth.forgotPasswordError = forgotPasswordError as any;
     const store = createTestStore(initialState);
 
@@ -134,7 +134,7 @@ describe('ForgotPassword screen', () => {
     const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
-    storeData.auth.forgotPasswordLoading = false;
+    // storeData.auth.forgotPasswordLoading = false;
     storeData.auth.forgotPasswordError = forgotPasswordError as any;
     const store = createTestStore(initialState);
 
@@ -171,7 +171,7 @@ describe('ForgotPassword screen', () => {
     const storeData = { ...initialState };
 
     storeData.auth.forgotPasswordStage = '';
-    storeData.auth.forgotPasswordLoading = false;
+    // storeData.auth.forgotPasswordLoading = false;
     storeData.auth.forgotPasswordError = forgotPasswordError as any;
     const store = createTestStore(initialState);
 

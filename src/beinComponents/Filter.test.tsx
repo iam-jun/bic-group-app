@@ -24,26 +24,32 @@ export const communityMenuData = [
   },
 ];
 
-
 describe('Filter component', () => {
   it('renders correctly', () => {
     const onPress = jest.fn();
     const rendered = renderWithRedux(
-      <Filter data={communityMenuData} selectedIndex={0} onPress={onPress} />,
+      <Filter
+        data={communityMenuData}
+        onPress={onPress}
+        translateX={{
+          value: undefined,
+        }}
+      />,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
   it('should called onPress prop', () => {
     const onPress = jest.fn();
-    const selectedIndex = 0;
     const rendered = renderWithRedux(
       <Filter
-        selectedIndex={selectedIndex}
         data={communityMenuData}
         onPress={onPress}
         testID="community_menu"
         itemTestID="item_community_data"
+        translateX={{
+          value: undefined,
+        }}
       />,
     );
     const itemComponent = rendered.getByTestId('item_community_data_2');

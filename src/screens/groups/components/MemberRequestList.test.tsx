@@ -93,8 +93,10 @@ describe('MemberRequestList', () => {
       total: 1,
       loading: false,
       canLoadMore: true,
-      ids: [1],
-      items: { 1: { id: 1, user: { fullname: 'Testing Name' } } },
+      ids: ['1'],
+      items: {
+        1: memberRequestDetail,
+      },
     };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(

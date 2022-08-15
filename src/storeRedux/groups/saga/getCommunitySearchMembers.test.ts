@@ -14,7 +14,7 @@ import showError from '../../commonSaga/showError';
 describe('get Search members', () => {
   const action = {
     type: 'test',
-    payload: { communityId: 1, params: {} },
+    payload: { communityId: '1', params: {} },
   };
 
   it('should get data correctly', async () => {

@@ -3,7 +3,7 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import homeActions from '../actions';
 import getRecentSearchKeywords from './getRecentSearchKeywords';
-import streamApi from "../../../api/StreamApi";
+import streamApi from '../../../api/StreamApi';
 
 describe('Search Post Saga', () => {
   it('call server get recent search keywords success', async () => {

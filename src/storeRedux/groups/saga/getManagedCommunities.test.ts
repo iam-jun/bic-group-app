@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
@@ -18,6 +19,7 @@ describe('Get managed communities saga', () => {
     };
     const resp = { data: [{ ...communityDetailData }] };
 
+    // @ts-ignore
     const newIds = resp.data.map((item: ICommunity) => item.id);
     const newItems = mapItems(resp.data as any);
 

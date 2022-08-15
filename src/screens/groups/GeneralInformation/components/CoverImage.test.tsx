@@ -7,6 +7,8 @@ import CoverImage from './CoverImage';
 
 describe('CoverImage component', () => {
   const baseProps = {
+    backgroundUrl: '',
+    canEditInfo: false,
     onEditCover: jest.fn(),
   };
 
@@ -65,7 +67,7 @@ describe('CoverImage component', () => {
     const onEditCover = jest.fn();
 
     const rendered = renderWithRedux(
-      <CoverImage onEditCover={onEditCover} canEditInfo />,
+      <CoverImage backgroundUrl="" canEditInfo onEditCover={onEditCover} />,
       store,
     );
 

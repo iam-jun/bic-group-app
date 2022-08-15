@@ -7,6 +7,8 @@ import AvatarImage from './AvatarImage';
 
 describe('AvatarImage component', () => {
   const baseProps = {
+    avatar: '',
+    canEditInfo: false,
     onEditAvatar: jest.fn(),
   };
 
@@ -65,7 +67,7 @@ describe('AvatarImage component', () => {
     const onEditAvatar = jest.fn();
 
     const rendered = renderWithRedux(
-      <AvatarImage onEditAvatar={onEditAvatar} canEditInfo />,
+      <AvatarImage avatar="" onEditAvatar={onEditAvatar} canEditInfo />,
       store,
     );
 

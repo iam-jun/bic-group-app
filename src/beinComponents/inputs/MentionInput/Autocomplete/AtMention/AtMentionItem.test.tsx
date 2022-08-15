@@ -42,7 +42,7 @@ describe('AtMentionItem component', () => {
       },
       highlightItem,
     ] as any;
-    storeData.mentionInput.highlightItem = highlightItem;
+    // storeData.mentionInput.highlightItem = highlightItem;
     const store = mockStore(storeData);
     const props = {
       ...baseProps,

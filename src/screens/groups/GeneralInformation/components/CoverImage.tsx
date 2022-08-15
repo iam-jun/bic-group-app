@@ -13,16 +13,18 @@ import spacing from '~/theme/spacing';
 
 interface Props {
   testID?: string;
-  onEditCover: () => void;
   backgroundUrl: string;
   canEditInfo: boolean;
+
+  onEditCover: () => void;
 }
 
 const CoverImage = ({
   testID,
-  onEditCover,
   backgroundUrl,
   canEditInfo,
+
+  onEditCover,
 }: Props) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const theme: ExtendedTheme = useTheme();

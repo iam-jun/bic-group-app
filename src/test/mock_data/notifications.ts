@@ -355,7 +355,7 @@ export const LOAD_MORE_RESPONSE = [
     extra: {
       type: 'comment.to_post_creator',
       actor: {
-        id: 5,
+        id: '5',
         avatar:
           'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/05bcb2c1-2b5c-4f6e-b493-9183946c9318',
         fullname: 'Thân Thế Văn',

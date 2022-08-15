@@ -23,8 +23,8 @@ module.exports = {
     __DEV__: true,
   },
   ignorePatterns: [
-    '*.test.*',
-    '**/src/test/*',
+    // '*.test.*',
+    // '**/src/test/*',
     '**/e2e/*',
     '*mock.*',
     '*.d.*',

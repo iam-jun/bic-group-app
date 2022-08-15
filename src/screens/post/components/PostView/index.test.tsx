@@ -85,6 +85,8 @@ describe('PostView Component', () => {
     const wrapper = renderWithRedux(
       <PostView
         postId={POST_DETAIL.id}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         postData={POST_DETAIL_2}
         isUseReduxState={false}
       />,

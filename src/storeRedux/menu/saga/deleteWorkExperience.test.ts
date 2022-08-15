@@ -6,7 +6,7 @@ import deleteWorkExperience from './deleteWorkExperience';
 import menuActions from '../actions';
 import { mapWorkExperience } from '../helper';
 import modalActions from '../../modal/actions';
-import groupApi from "../../../api/GroupApi";
+import groupApi from '../../../api/GroupApi';
 
 afterEach(cleanup);
 

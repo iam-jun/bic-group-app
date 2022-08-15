@@ -69,6 +69,10 @@ describe('Comment Detail screen', () => {
 
     expect(buttonComponent).toBeDefined();
     fireEvent.press(buttonComponent);
+
+    // [FIXME]
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     expect(replace).toBeCalledWith(homeStack.newsfeed);
   });
 });

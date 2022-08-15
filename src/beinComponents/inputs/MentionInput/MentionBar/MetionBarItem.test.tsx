@@ -9,7 +9,7 @@ afterEach(cleanup);
 describe('MentionBarItem component', () => {
   const baseProps = {
     data: {
-      id: 1,
+      id: '1',
       username: 'test',
       fullname: 'test',
       avatar: 'test',

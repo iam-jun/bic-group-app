@@ -9,7 +9,7 @@ import groupsActions from '../actions';
 import modalActions from '../../modal/actions';
 
 describe('joinCommuniity saga', () => {
-  const communityId = 1;
+  const communityId = '1';
   const communityName = 'Community Name Test';
   const action = {
     type: 'test',

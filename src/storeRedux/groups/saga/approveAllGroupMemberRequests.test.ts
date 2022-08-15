@@ -7,7 +7,7 @@ import groupsActions from '../actions';
 import groupApi from '../../../api/GroupApi';
 
 describe('approveAllGroupMemberRequests saga', () => {
-  const groupId = 1;
+  const groupId = '1';
   const callback = jest.fn();
   const action = {
     type: 'test',
@@ -19,7 +19,7 @@ describe('approveAllGroupMemberRequests saga', () => {
     .provide([
       [matchers.call.fn(groupApi.approveAllGroupMemberRequests), {}],
     ])
-    .put(groupsActions.getGroupDetail(groupId))
+    .put(groupsActions.getGroupDetail({ groupId }))
     .put(
       modalActions.showHideToastMessage({
         content: 'Approved all joining requests',
@@ -49,7 +49,7 @@ describe('approveAllGroupMemberRequests saga', () => {
       .provide([
         [matchers.call.fn(groupApi.approveAllGroupMemberRequests), {}],
       ])
-      .put(groupsActions.getGroupDetail(groupId))
+      .put(groupsActions.getGroupDetail({ groupId }))
       .put(
         modalActions.showHideToastMessage({
           content: 'Approved all joining requests',

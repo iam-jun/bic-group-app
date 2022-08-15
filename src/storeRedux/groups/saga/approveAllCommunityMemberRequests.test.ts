@@ -8,7 +8,7 @@ import groupsActions from '../actions';
 import groupApi from '../../../api/GroupApi';
 
 describe('approveAllCommunityMemberRequests saga', () => {
-  const communityId = 1;
+  const communityId = '1';
   const callback = jest.fn();
   const action = {
     type: 'test',
