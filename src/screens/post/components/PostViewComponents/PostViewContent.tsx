@@ -18,6 +18,7 @@ import FilesView from '../FilesView';
 import CopyableView from '~/beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
 import spacing from '~/theme/spacing';
+import LinkPreviewer from '~/components/LinkPreviewer';
 
 export interface PostViewContentProps {
   postId: string;
@@ -141,6 +142,12 @@ const PostViewContent: FC<PostViewContentProps> = ({
               disableClose
             />
           )}
+
+          {/* only show link previewer when there aren't any attachments */}
+          {(!images || images?.length === 0)
+          && (!videos || videos?.length === 0)
+          && isEmpty(files)
+          && <LinkPreviewer text={content} />}
 
           <FilesView
             files={files}

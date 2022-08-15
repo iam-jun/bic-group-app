@@ -13,7 +13,7 @@ import Text from '~/beinComponents/Text';
 import commonActions, { IAction } from '~/constants/commonActions';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
-import { numFormatter } from '~/utils/formatData';
+import { formatLargeNumber } from '~/utils/formatData';
 
 interface ReactionProps {
   testId?: string;
@@ -73,7 +73,7 @@ const Reaction: React.FC<ReactionProps> = ({
     onLongPress?.();
   };
 
-  const newValue = numFormatter(value);
+  const newValue = formatLargeNumber(value);
 
   return (
     <TouchableOpacity
@@ -90,16 +90,16 @@ const Reaction: React.FC<ReactionProps> = ({
           style={styles.indicator}
         />
       ) : (
-        <Text.BodySMedium
+        <Text.NumberS
           color={isSelected ? colors.purple50 : colors.neutral40}
           style={styles.text}
           testID="reaction.children"
         >
-          <Text.BodySMedium style={styles.emoji} testID={`reaction.${icon}`}>
+          <Text.NumberS style={styles.emoji} testID={`reaction.${icon}`}>
             {emoji}
-          </Text.BodySMedium>
+          </Text.NumberS>
           {` ${newValue}`}
-        </Text.BodySMedium>
+        </Text.NumberS>
       )}
     </TouchableOpacity>
   );
