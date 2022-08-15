@@ -171,6 +171,7 @@ const Home = () => {
         onEndReach={onEndReach}
         onRefresh={onRefresh}
         onScrollY={onScrollY}
+        activeTab={activeTab}
       />
       <View style={styles.statusBar} />
       <NewsfeedSearch searchViewRef={searchViewRef} style={styles.searchContainer} />

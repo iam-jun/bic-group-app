@@ -122,7 +122,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const _renderExtraInfo = () => renderExtraInfo?.(props);
 
-  const renderLine = (uiLevel: number) => (
+  const renderLine = (_uiLevel: number) => (
     <View
       testID="group_item.ui_level"
       key={generateUniqueId()}
@@ -263,8 +263,8 @@ const themeStyles = (theme: IObject<any>) => {
       alignItems: 'center',
     },
     textName: {
-      flex: 1,
-      paddingTop: 2,
+      width: '100%',
+      justifyContent: 'center',
     },
     textNameHorizontal: {
       maxWidth: 200,

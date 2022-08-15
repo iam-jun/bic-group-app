@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
@@ -14,7 +13,6 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
-import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
 const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
@@ -68,7 +66,7 @@ const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
     }
   };
 
-  const renderFooter = () => canLoadMore && <LoadingIndicator />;
+  const renderFooter = () => canLoadMore && <LoadingIndicator style={{ margin: spacing.margin.small }} />;
   const getSeenPost = () => {
     dispatch(postActions.getSeenPost({ postId }));
   };
@@ -80,20 +78,20 @@ const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
     <PrimaryItem
       testID={`users_seen_post_bottom_sheet.item_username.${item?.item?.username}`}
       showAvatar
+      avatarProps={{ isRounded: true, variant: 'small' }}
       height={44}
+      style={{ marginVertical: spacing.padding.tiny }}
       onPress={() => onPressItem(item)}
       avatar={item?.item?.avatar}
       title={item?.item?.fullname}
+      titleProps={{ variant: 'bodyMMedium' }}
+      subTitle={`@${item?.item?.username}`}
+      subTitleProps={{ variant: 'bodyS' }}
     />
   );
 
   return (
     <View style={styles.container}>
-      <Text.H6 style={styles.header} color={colors.purple50} numberOfLines={1}>
-        {t('post:label_seen_by')}
-        {total}
-      </Text.H6>
-      <View style={styles.ruler} />
       <FlatList
         data={dataList}
         renderItem={renderItem}
@@ -112,9 +110,10 @@ const createStyle = (
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      height: dimension.deviceHeight * 0.6,
-      paddingHorizontal: 0,
+      paddingHorizontal: spacing.padding.small,
       paddingBottom: 0,
+      borderTopWidth: 1,
+      borderColor: colors.neutral5,
     },
     headerContainer: {
       paddingHorizontal: spacing.padding.large,
