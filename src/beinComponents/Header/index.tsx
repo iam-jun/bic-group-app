@@ -318,8 +318,8 @@ const Header: React.FC<HeaderProps> = ({
         {onSearchText && (
         <Icon
           testID={searchIconTestID}
-          icon="iconSearch"
-          size={20}
+          icon="search"
+          size={18}
           style={styles.icon}
           onPress={_onPressSearch}
           buttonTestID="header.searchIcon.button"
