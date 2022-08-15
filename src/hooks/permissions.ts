@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { PERMISSION_KEY } from '~/constants/permissionScheme';
 
-import groupsActions from '~/screens/Groups/redux/actions';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useAuthToken, useUserIdAuth } from './auth';
 import { useKeySelector } from './selector';
 

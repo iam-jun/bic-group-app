@@ -10,8 +10,8 @@ import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
-import authActions from '~/screens/Auth/redux/actions';
-import * as modalActions from '~/store/modal/actions';
+import authActions from '~/storeRedux/auth/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 
 import { IChangePasswordError } from '~/interfaces/IAuth';
 import useAuth from '~/hooks/auth';

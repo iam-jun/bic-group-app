@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 import MentionInput from '.';
 import CommentInput from '../CommentInput';
 import { configureStore, renderWithRedux, fireEvent } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import PostInput from '../PostInput';
 import colors from '~/theme/theme';
 

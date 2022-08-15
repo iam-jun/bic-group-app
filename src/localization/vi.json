@@ -336,7 +336,7 @@
     "newsfeed": "Bản tin",
     "saved_posts": "Bài viết đã lưu",
     "draft_post": "Bài nháp",
-    "title_timeline": "Dòng thời gian",
+    "title_timeline": "Bản tin",
     "title_important": "Quan trọng",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
@@ -507,9 +507,8 @@
     "title_comment_detail_of": "bài đăng của %NAME%",
     "newsfeed": {
       "title_empty_no_post": "Nơi đây cô đơn quá...",
-      "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới nào",
-      "title_empty_cant_load_more": "Bạn đã xem hết rồi",
-      "text_empty_cant_load_more": "Nghỉ ngơi và \"chill\" thôi",
+      "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới",
+      "text_empty_cant_load_more": "Bạn đã xem hết bản tin",
       "text_empty_search_post": "Xin lỗi, chúng tôi không tìm thấy\nnội dung bạn tìm kiếm"
     },
     "create_post": {

@@ -3,7 +3,7 @@ import { cleanup } from '@testing-library/react-native';
 import { StyleSheet } from 'react-native';
 import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 

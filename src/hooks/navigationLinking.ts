@@ -2,7 +2,7 @@ import { Linking } from 'react-native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useUserIdAuth } from '~/hooks/auth';
-import { linkingConfig, linkingConfigFull } from '~/configs/navigator';
+import { linkingConfig, linkingConfigFull } from '~/router/config';
 
 const getLinkingCustomConfig = (
   config: any, navigation: any,

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Avatar from '~/bicComponents/Avatar';
+import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
 

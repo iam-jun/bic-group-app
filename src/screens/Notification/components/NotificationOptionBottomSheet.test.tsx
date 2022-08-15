@@ -3,8 +3,8 @@ import { cleanup, fireEvent } from '@testing-library/react-native';
 
 import NotificationOptionBottomSheet from './NotificationOptionBottomSheet';
 import { renderWithRedux } from '~/test/testUtils';
-import notificationsActions from '../redux/actions';
-import * as modalActions from '~/store/modal/actions';
+import notificationsActions from '../../../storeRedux/notification/actions';
+import * as modalActions from '~/storeRedux/modal/actions';
 import { NOTIFICATIONS_RESPONSE } from '~/test/mock_data/notifications';
 
 afterEach(cleanup);
@@ -17,6 +17,7 @@ describe('NotificationOptionBottomSheet component', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[0]}
+        keyValue=""
         modalizeRef={baseSheetRef}
       />,
     ).toJSON();
@@ -28,6 +29,7 @@ describe('NotificationOptionBottomSheet component', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[0]}
+        keyValue=""
         modalizeRef={baseSheetRef}
       />,
     );
@@ -45,6 +47,7 @@ describe('NotificationOptionBottomSheet component', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[1]}
+        keyValue=""
         modalizeRef={baseSheetRef}
       />,
     );
@@ -62,6 +65,7 @@ describe('NotificationOptionBottomSheet component', () => {
     const rendered = renderWithRedux(
       <NotificationOptionBottomSheet
         data={notificationData[0]}
+        keyValue=""
         modalizeRef={baseSheetRef}
       />,
     );

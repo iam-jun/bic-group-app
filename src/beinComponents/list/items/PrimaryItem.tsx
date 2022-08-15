@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import Text, { TextProps } from '~/beinComponents/Text';
 import Icon, { IconProps } from '~/beinComponents/Icon';
-import Checkbox, { CheckboxProps } from '~/bicComponents/Checkbox';
-import Toggle from '~/bicComponents/Toggle';
+import Checkbox, { CheckboxProps } from '~/baseComponents/Checkbox';
+import Toggle from '~/baseComponents/Toggle';
 import { IconType } from '~/resources/icons';
-import Avatar from '~/bicComponents/Avatar';
-import { AvatarProps } from '~/bicComponents/Avatar/AvatarComponent';
+import Avatar from '~/baseComponents/Avatar';
+import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
 import { primaryItemHeight } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 

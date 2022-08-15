@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { IPostActivity } from '~/interfaces/IPost';
-import PostView from '~/screens/Post/components/PostView';
+import PostView from '~/screens/post/components/PostView';
 
 export interface PostItemProps {
   postData: IPostActivity;

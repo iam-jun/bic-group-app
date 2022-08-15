@@ -8,10 +8,10 @@ import useChatSocket from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
 import { useKeySelector } from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
-import groupsActions from '~/screens/Groups/redux/actions';
-import notificationsActions from '~/screens/Notification/redux/actions';
-import postActions from '~/screens/Post/redux/actions';
-import giphyActions from '~/store/giphy/actions';
+import groupsActions from '~/storeRedux/groups/actions';
+import notificationsActions from '~/storeRedux/notification/actions';
+import postActions from '~/storeRedux/post/actions';
+import giphyActions from '~/storeRedux/giphy/actions';
 import { screens } from './screens';
 import { initPushTokenMessage } from '~/services/firebase';
 

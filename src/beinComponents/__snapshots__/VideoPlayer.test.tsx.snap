@@ -7,7 +7,7 @@ exports[`VideoPlayer component renders correctly 1`] = `
       Object {
         "backgroundColor": "#000000",
         "flex": 1,
-        "height": 464,
+        "height": 321.42857142857144,
         "justifyContent": "center",
       },
     ]
@@ -20,7 +20,7 @@ exports[`VideoPlayer component renders correctly 1`] = `
     resizeMode="CONTAIN"
     style={
       Object {
-        "height": 464,
+        "height": 321.42857142857144,
         "position": "absolute",
         "width": "100%",
       }

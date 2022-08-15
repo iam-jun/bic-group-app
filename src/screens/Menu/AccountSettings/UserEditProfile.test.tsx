@@ -4,7 +4,7 @@ import React from 'react';
 
 import { cleanup } from '@testing-library/react-native';
 import i18next from 'i18next';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import {
   configureStore,
   createTestStore,
@@ -16,8 +16,8 @@ import * as navigationHook from '~/hooks/navigation';
 import UserEditProfile from './UserEditProfile';
 import { USER_PROFILE, WORK_EXPERIENCE } from '~/test/mock_data/menu';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuTypes from '../redux/types';
-import menuActions from '../redux/actions';
+import menuTypes from '../../../storeRedux/menu/types';
+import menuActions from '../../../storeRedux/menu/actions';
 
 afterEach(cleanup);
 

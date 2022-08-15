@@ -1,8 +1,8 @@
 import { cleanup } from '@testing-library/react-native';
 import React from 'react';
-import menuActions from '~/screens/Menu/redux/actions';
-import menuTypes from '~/screens/Menu/redux/types';
-import initialState from '~/store/initialState';
+import menuActions from '../../../../../storeRedux/menu/actions';
+import menuTypes from '../../../../../storeRedux/menu/types';
+import initialState from '~/storeRedux/initialState';
 import { USER_PROFILE } from '~/test/mock_data/menu';
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import Experiences from '.';

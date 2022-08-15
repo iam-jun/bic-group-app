@@ -13,7 +13,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';
-import { AvatarType } from '~/bicComponents/Avatar/AvatarComponent';
+import { AvatarType } from '~/baseComponents/Avatar/AvatarComponent';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 

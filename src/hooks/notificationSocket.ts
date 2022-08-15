@@ -6,8 +6,8 @@ import {
   notificationActions,
   notificationEvent,
 } from '~/constants/notifications';
-import actions from '~/screens/Notification/redux/actions';
-import postActions from '~/screens/Post/redux/actions';
+import actions from '~/storeRedux/notification/actions';
+import postActions from '~/storeRedux/post/actions';
 import { parseSafe } from '~/utils/common';
 import getEnv from '~/utils/env';
 import { getMsgPackParser } from '~/utils/socket';

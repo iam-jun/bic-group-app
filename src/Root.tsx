@@ -19,7 +19,7 @@ import RootNavigator from '~/router';
 import { getScreenAndParams, isNavigationRefReady } from '~/router/helper';
 import { initFontAwesomeIcon } from '~/services/fontAwesomeIcon';
 import localStorage from '~/services/localStorage';
-import Store from '~/store';
+import Store from '~/storeRedux';
 
 moment.updateLocale(
   'en', moments.en,

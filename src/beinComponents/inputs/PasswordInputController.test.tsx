@@ -66,9 +66,7 @@ describe('PasswordInputController component', () => {
           },
         }}
         loading={false}
-        disableInput={false}
         testID="inputNewPassword"
-        label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
         validateValue={validateNewPassword}
       />,
@@ -102,9 +100,7 @@ describe('PasswordInputController component', () => {
           },
         }}
         loading={false}
-        disableInput={false}
         testID="testID"
-        label={i18next.t('auth:input_label_new_password')}
         placeholder={i18next.t('auth:input_label_new_password')}
         validateValue={validateNewPassword}
       />,

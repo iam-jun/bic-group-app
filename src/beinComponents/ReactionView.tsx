@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Reaction from '~/bicComponents/Reaction';
+import Reaction from '~/baseComponents/Reaction';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 

@@ -48,7 +48,6 @@ jest.mock('react-native-image-crop-picker', () => ({
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
-jest.mock('~/screens/Menu/helper/MenuDataHelper');
 jest.mock('react-native-permissions', () => mock);
 
 global.FormData = require('react-native/Libraries/Network/FormData');

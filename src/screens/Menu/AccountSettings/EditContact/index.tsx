@@ -11,7 +11,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
 import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../redux/keySelector';
+import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import Button from '~/beinComponents/Button';
@@ -19,7 +19,7 @@ import TitleComponent from '../fragments/TitleComponent';
 import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
 import { ILocation } from '~/interfaces/common';
-import menuActions from '../../redux/actions';
+import menuActions from '../../../../storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
 
 const EditContact = () => {

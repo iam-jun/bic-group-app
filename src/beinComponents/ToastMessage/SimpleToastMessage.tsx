@@ -13,7 +13,7 @@ import Icon from '~/beinComponents/Icon';
 
 import Text, { TextProps } from '~/beinComponents/Text';
 import { IconType } from '~/resources/icons';
-import { clearToastMessage } from '~/store/modal/actions';
+import { clearToastMessage } from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 interface SimpleToastMessageProps {

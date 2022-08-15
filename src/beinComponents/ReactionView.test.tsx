@@ -2,7 +2,8 @@ import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
 import ReactionView from '~/beinComponents/ReactionView';
 import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
+import { IOwnReaction } from '~/interfaces/IPost';
 
 afterEach(cleanup);
 
@@ -23,7 +24,7 @@ describe('ReactionView component', () => {
     const rendered = renderWithRedux(
       <ReactionView
         style={{}}
-        ownerReactions={ownReactions}
+        ownerReactions={ownReactions[0]}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -43,7 +44,7 @@ describe('ReactionView component', () => {
     const onLongPressReaction = jest.fn();
     const rendered = renderWithRedux(
       <ReactionView
-        ownerReactions={ownReactions}
+        ownerReactions={ownReactions[0]}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -127,7 +128,7 @@ describe('ReactionView component', () => {
     const rendered = renderWithRedux(
       <ReactionView
         style={{ backgroundColor: '#FF9800' }}
-        ownerReactions={ownReactions}
+        ownerReactions={ownReactions[0]}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -176,7 +177,7 @@ describe('ReactionView component', () => {
     const rendered = renderWithRedux(
       <ReactionView
         style={{}}
-        ownerReactions={ownReactions}
+        ownerReactions={ownReactions[0]}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -224,7 +225,7 @@ describe('ReactionView component', () => {
     const rendered = renderWithRedux(
       <ReactionView
         style={{}}
-        ownerReactions={ownReactions}
+        ownerReactions={ownReactions[0]}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -247,12 +248,12 @@ const reactionCountsEmpty = {};
 const ownReactions = [
   {
     id: '165',
-    postId: 46,
+    postId: '46',
     reactionName: 'sweat_smile',
-    createdBy: 58,
+    createdBy: '58',
     createdAt: '2022-04-21T03:05:36.908Z',
   },
-];
+] as unknown as IOwnReaction[];
 
 const reactionCounts = {
   0: {

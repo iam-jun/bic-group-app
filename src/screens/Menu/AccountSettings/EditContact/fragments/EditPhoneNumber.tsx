@@ -28,8 +28,8 @@ import { ICountryCodeList } from '~/interfaces/common';
 
 import spacing from '~/theme/spacing';
 import { formatTextRemoveSpace } from '~/utils/formatData';
-import menuActions from '../../../redux/actions';
-import menuKeySelector from '../../../redux/keySelector';
+import menuActions from '../../../../../storeRedux/menu/actions';
+import menuKeySelector from '../../../../../storeRedux/menu/keySelector';
 import TitleComponent from '../../fragments/TitleComponent';
 
 interface EditPhoneNumberProps {

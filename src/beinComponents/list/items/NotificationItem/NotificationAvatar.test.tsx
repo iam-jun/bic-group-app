@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { cleanup } from '@testing-library/react-native';
 import React from 'react';
 
@@ -7,7 +8,7 @@ import {
 } from '~/test/mock_data/notifications';
 import { configureStore, renderWithRedux } from '~/test/testUtils';
 import NotificationAvatar from './NotificationAvatar';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import { USER_PROFILE } from '~/test/mock_data/menu';
 
 afterEach(cleanup);
@@ -37,7 +38,9 @@ describe('NotificationAvatar component', () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
       <NotificationAvatar
-        actor={defaultActor}
+        actors={[defaultActor]}
+        // [FIXME]
+        // @ts-ignore
         activities={activities}
         actorCount={actorCount}
         verb={verb}
@@ -70,7 +73,9 @@ describe('NotificationAvatar component', () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
       <NotificationAvatar
-        actor={defaultActor}
+        actors={[defaultActor]}
+        // [FIXME]
+        // @ts-ignore
         activities={activities}
         actorCount={actorCount}
         verb={verb}
@@ -103,6 +108,8 @@ describe('NotificationAvatar component', () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
       <NotificationAvatar
+        // [FIXME]
+        // @ts-ignore
         actor={defaultActor}
         activities={activities}
         actorCount={actorCount}
@@ -136,7 +143,9 @@ describe('NotificationAvatar component', () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
       <NotificationAvatar
-        actor={defaultActor}
+        actors={[defaultActor]}
+        // [FIXME]
+        // @ts-ignore
         activities={activities}
         actorCount={actorCount}
         verb="REACT"

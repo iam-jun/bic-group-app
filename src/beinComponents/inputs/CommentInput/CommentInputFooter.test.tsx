@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { configureStore, renderWithRedux } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 
 describe('CommentInputFooter component', () => {

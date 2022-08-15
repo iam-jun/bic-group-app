@@ -6,15 +6,15 @@ import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import { notificationMenuData } from '~/constants/notificationMenuData';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import NotificationOptionBottomSheet from './components/NotificationOptionBottomSheet';
-import notificationsActions from './redux/actions';
-import ScrollableTabBar from './ScrollableTabBar';
+import notificationsActions from '../../storeRedux/notification/actions';
+import ScrollableTabBar from './components/ScrollableTabBar';
+import { notificationMenuData } from '~/screens/Notification/constants';
 
 const Notification = () => {
   const menuSheetRef = useRef<any>();

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { cleanup } from '@testing-library/react-native';
 
 import { configureStore, renderWithRedux, fireEvent } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import AtMentionItem from './AtMentionItem';
 import colors from '~/theme/theme';
 
@@ -42,7 +42,7 @@ describe('AtMentionItem component', () => {
       },
       highlightItem,
     ] as any;
-    storeData.mentionInput.highlightItem = highlightItem;
+    // storeData.mentionInput.highlightItem = highlightItem;
     const store = mockStore(storeData);
     const props = {
       ...baseProps,

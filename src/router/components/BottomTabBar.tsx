@@ -19,7 +19,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import { bottomTabIcons, bottomTabIconsFocused } from '~/configs/navigator';
+import { bottomTabIcons, bottomTabIconsFocused } from '~/router/config';
 import { useBaseHook } from '~/hooks';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
@@ -120,6 +120,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
       if (!isFocused && !event.defaultPrevented) {
         navigation.navigate(route.name);
       }
+
+      // avoid quick scroll in newsfeed then click tab noti => hide bottom tab in screen noti
+      setTimeout(() => show(0), 1000);
     };
 
     const onLongPress = () => {

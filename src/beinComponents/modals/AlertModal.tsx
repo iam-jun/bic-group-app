@@ -15,11 +15,11 @@ import { useDispatch } from 'react-redux';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
-import useModal from '~/hooks/modal';
-import * as actions from '~/store/modal/actions';
+import * as actions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
+import { useKeySelector } from '~/hooks/selector';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
@@ -33,7 +33,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const { alert } = useModal();
+  const { alert } = useKeySelector('modal');
   const {
     isDismissible,
     visible,

@@ -805,6 +805,56 @@ exports[`Group Item component should render default prop 1`] = `
     testID="group_item"
   >
     <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "rgba(255,255,255,0)",
+          "flexDirection": "row",
+          "height": "100%",
+          "marginHorizontal": 8,
+          "opacity": 1,
+          "width": 1,
+        }
+      }
+      testID="group_item.button_wrapper"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
+        }
+        testID="button_wrapper.content"
+      />
+    </View>
+    <View
       style={
         Array [
           Object {

@@ -9,8 +9,8 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text, { TextProps } from '~/beinComponents/Text';
-import Avatar from '~/bicComponents/Avatar';
-import { AvatarProps } from '~/bicComponents/Avatar/AvatarComponent';
+import Avatar from '~/baseComponents/Avatar';
+import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
 import Icon, { IconProps } from '~/beinComponents/Icon';
 
 import { useKeySelector } from '~/hooks/selector';

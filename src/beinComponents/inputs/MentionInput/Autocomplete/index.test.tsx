@@ -3,7 +3,7 @@ import { cleanup } from '@testing-library/react-native';
 
 import { StyleSheet } from 'react-native';
 import { configureStore, renderWithRedux } from '~/test/testUtils';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 import Autocomplete, { IModalPosition } from '.';
 
 afterEach(cleanup);

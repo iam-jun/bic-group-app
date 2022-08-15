@@ -1,32 +1,39 @@
-import GroupDetail from '~/screens/Groups/GroupDetail';
-import GroupAbout from '~/screens/Groups/GroupAbout';
-import GroupMembers from '~/screens/Groups/GroupMembers';
-import GroupAdministration from '~/screens/Groups/GroupDetail/groupSettings/GroupAdministration';
-import GeneralInformation from '~/screens/Groups/GeneralInformation';
-import EditDescription from '~/screens/Groups/GeneralInformation/EditDescription';
-import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
-import NewFeature from '~/screens/NewFeature';
-import GroupPendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
+import GroupDetail from '~/screens/groups/GroupDetail';
+import GroupAbout from '~/screens/groups/GroupAbout';
+import GroupMembers from '~/screens/groups/GroupMembers';
+import GroupAdministration from '~/screens/groups/GroupDetail/groupSettings/GroupAdministration';
+import GeneralInformation from '~/screens/groups/GeneralInformation';
+import EditDescription from '~/screens/groups/GeneralInformation/EditDescription';
+import AddMembersToGroup from '~/screens/groups/AddMembersToGroup';
+import NewFeature from '~/components/NewFeature';
+import GroupPendingMembers from '~/screens/groups/GroupDetail/groupModerating/PendingMembers';
 
-import Communities from '~/screens/Groups/Communities';
-import CommunityDetail from '~/screens/Groups/CommunityDetail';
-import YourGroups from '~/screens/Groups/YourGroups';
-import CommunityAbout from '~/screens/Groups/CommunityAbout';
-import DiscoverGroups from '~/screens/Groups/DiscoverGroups';
-import CommunityMembers from '~/screens/Groups/CommunityMembers';
-import CommunityAdmin from '~/screens/Groups/CommunityAdmin';
-import CommunityPermission from '~/screens/Groups/CommunityPermission';
-import CommunityPendingMembers from '~/screens/Groups/CommunityAdmin/PendingMembers';
-import CreatePermissionScheme from '~/screens/Groups/CreatePermissionScheme';
-import CommunityPermissionDetail from '~/screens/Groups/CommunityPermissionDetail';
-import GroupStructureSettings from '~/screens/Groups/GroupStructureSettings';
-import MoveGroup from '~/screens/Groups/MoveGroup';
-import ReorderGroup from '~/screens/Groups/ReorderGroup';
-import EditName from '~/screens/Groups/GeneralInformation/EditName';
-import GroupSchemeAssignment from '~/screens/Groups/GroupSchemeAssignment';
-import GroupSchemeAssignSelection from '~/screens/Groups/GroupSchemeAssignSelection';
+import Communities from '~/screens/communities/Communities';
+import CommunityDetail from '~/screens/communities/CommunityDetail';
+import YourGroups from '~/screens/groups/YourGroups';
+import CommunityAbout from '~/screens/communities/CommunityAbout';
+import DiscoverGroups from '~/screens/groups/DiscoverGroups';
+import CommunityMembers from '~/screens/communities/CommunityMembers';
+import CommunityAdmin from '~/screens/communities/CommunityAdmin';
+import PermissionScheme from '~/screens/PermissionScheme';
+import CommunityPendingMembers from '~/screens/communities/CommunityAdmin/PendingMembers';
+import CreatePermissionScheme from '~/screens/PermissionScheme/CreatePermissionScheme';
+import SchemeDetail from '~/screens/PermissionScheme/SchemeDetail';
+import GroupStructureSettings from '~/screens/groups/GroupStructureSettings';
+import MoveGroup from '~/screens/groups/GroupStructureSettings/MoveGroup';
+import ReorderGroup from '~/screens/groups/GroupStructureSettings/ReorderGroup';
+import EditName from '~/screens/groups/GeneralInformation/EditName';
+import GroupSchemeAssignment from '~/screens/PermissionScheme/GroupSchemeAssignment';
+import GroupSchemeAssignSelection from '~/screens/PermissionScheme/GroupSchemeAssignSelection';
 
 const groupScreens = {
+  // permission scheme
+  'permission-scheme': PermissionScheme,
+  'scheme-detail': SchemeDetail,
+  'group-scheme-assignment': GroupSchemeAssignment,
+  'group-scheme-assign-selection': GroupSchemeAssignSelection,
+  'create-permission-scheme': CreatePermissionScheme,
+
   // community
   communities: Communities,
   'community-detail': CommunityDetail,
@@ -35,15 +42,7 @@ const groupScreens = {
   'discover-groups': DiscoverGroups,
   'community-members': CommunityMembers,
   'community-admin': CommunityAdmin,
-  'community-permission': CommunityPermission,
-  'community-permission-detail': CommunityPermissionDetail,
-  'group-scheme-assignment': GroupSchemeAssignment,
-  'group-scheme-assign-selection': GroupSchemeAssignSelection,
   'community-pending-members': CommunityPendingMembers,
-  'create-permission-scheme': CreatePermissionScheme,
-  'group-structure-settings': GroupStructureSettings,
-  'move-group': MoveGroup,
-  'reorder-group': ReorderGroup,
 
   // group
   'group-detail': GroupDetail,
@@ -55,6 +54,11 @@ const groupScreens = {
   'edit-name': EditName,
   'edit-description': EditDescription,
   'invite-members': AddMembersToGroup,
+
+  // group structure
+  'group-structure-settings': GroupStructureSettings,
+  'move-group': MoveGroup,
+  'reorder-group': ReorderGroup,
 
   // group moderating
   'group-pending-members': GroupPendingMembers,

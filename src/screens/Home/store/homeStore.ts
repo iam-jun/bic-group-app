@@ -1,0 +1,94 @@
+import { HOME_TAB_TYPE } from '~/screens/Home/constants';
+import IHomeState, { IHomeTab } from '~/store/interface/IHomeState';
+import { createZustand } from '~/store';
+import streamApi from '~/api/StreamApi';
+import storeRedux from '~/storeRedux';
+import postActions from '~/storeRedux/post/actions';
+
+const DEFAULT_TAB_DATA = {
+  refreshing: true,
+  data: [],
+  canLoadMore: true,
+}
+
+const homeStore = (set, get) => ({
+  activeTab: HOME_TAB_TYPE.NEWSFEED,
+  tabNewsfeed: DEFAULT_TAB_DATA,
+  tabImportant: DEFAULT_TAB_DATA,
+
+  setActiveTab: (tabId: keyof typeof HOME_TAB_TYPE) => {
+    set(
+      (state: IHomeState) => {
+        state.activeTab = tabId
+      },
+      false,
+      'setActiveTab',
+    )
+  },
+  setTabNewsfeed: (tab: IHomeTab) => {
+    set(
+      (state: IHomeState) => {
+        state.tabNewsfeed = { ...state.tabNewsfeed, ...tab }
+      },
+      false,
+      'setTabNewsfeed',
+    )
+  },
+  setTabImportant: (tab: IHomeTab) => {
+    set(
+      (state: IHomeState) => {
+        state.tabImportant = { ...state.tabImportant, ...tab }
+      },
+      false,
+      'setTabImportant',
+    )
+  },
+
+  getTabData: (tabId: keyof typeof HOME_TAB_TYPE, isRefresh?: boolean) => {
+    const statePath = tabId === HOME_TAB_TYPE.NEWSFEED ? 'tabNewsfeed' : 'tabImportant'
+    set(
+      (state: IHomeState) => {
+        state[statePath] = { ...state[statePath], refreshing: true }
+      },
+      false,
+      'getTabData',
+    )
+    const currentState: IHomeState = get();
+    const currentList = currentState[statePath].data;
+    const offset = isRefresh ? 0 : currentList.length || 0;
+    streamApi.getNewsfeed({ isImportant: tabId === HOME_TAB_TYPE.IMPORTANT, offset })
+      .then((response) => {
+        const responseList = response?.list || [];
+        storeRedux.store.dispatch(postActions.addToAllPosts({ data: responseList }))
+        const newList = isRefresh ? responseList : currentList.concat(responseList)
+        set(
+          (state: IHomeState) => {
+            state[statePath] = {
+              ...state[statePath],
+              refreshing: false,
+              data: newList,
+              canLoadMore: responseList.length > 0,
+            }
+          },
+          false,
+          'getTabData',
+        )
+      })
+      .catch(() => {
+        set(
+          (state: IHomeState) => {
+            state[statePath] = {
+              ...state[statePath],
+              refreshing: false,
+            }
+          },
+          false,
+          'getTabData',
+        )
+      })
+  },
+})
+
+const useHomeStore = createZustand<IHomeState>('home-store', homeStore);
+
+export default useHomeStore
