@@ -25,6 +25,8 @@ import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
 import HomeHeader from '~/screens/Home/components/HomeHeader';
+import useHomeStore from '~/screens/Home/store/homeStore';
+import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -41,9 +43,12 @@ const Home = () => {
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
-  const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
-  const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
+  const {
+    activeTab, tabImportant, tabNewsfeed, getTabData,
+  } = useHomeStore();
+  const tabData = activeTab === HOME_TAB_TYPE.NEWSFEED ? tabNewsfeed : tabImportant;
+  const { data: homePosts, canLoadMore, refreshing } = tabData;
+
   const isShowSearch = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
 
   const searchViewRef = useRef(null);
@@ -66,8 +71,12 @@ const Home = () => {
   );
 
   const getData = (isRefresh?: boolean) => {
-    dispatch(homeActions.getHomePosts({ isRefresh }));
+    getTabData(activeTab, isRefresh);
   };
+
+  useEffect(() => {
+    getTabData(activeTab, true)
+  }, [activeTab])
 
   useTabPressListener(
     (tabName: ITabTypes) => {
@@ -134,11 +143,13 @@ const Home = () => {
   };
 
   const onEndReach = useCallback(
-    () => getData(), [],
+    () => getData(),
+    [activeTab],
   );
 
   const onRefresh = useCallback(
-    () => getData(true), [],
+    () => getData(true),
+    [activeTab],
   );
 
   const onScrollY = (y: number) => {
@@ -156,7 +167,7 @@ const Home = () => {
       <NewsfeedList
         data={homePosts}
         refreshing={refreshing}
-        canLoadMore={!noMoreHomePosts}
+        canLoadMore={canLoadMore}
         onEndReach={onEndReach}
         onRefresh={onRefresh}
         onScrollY={onScrollY}

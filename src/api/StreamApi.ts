@@ -51,6 +51,7 @@ export const streamApiConfig = {
       idLte: param?.idLte,
       idGt: param?.idGt,
       idLt: param?.idLt,
+      isImportant: !!param?.isImportant,
     },
   }),
   getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
