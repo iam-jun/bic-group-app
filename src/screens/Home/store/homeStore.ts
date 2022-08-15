@@ -4,6 +4,7 @@ import { createZustand } from '~/store';
 import streamApi from '~/api/StreamApi';
 import storeRedux from '~/storeRedux';
 import postActions from '~/storeRedux/post/actions';
+import { IParamGetFeed } from '~/interfaces/IHome';
 
 const DEFAULT_TAB_DATA = {
   refreshing: true,
@@ -56,7 +57,11 @@ const homeStore = (set, get) => ({
     const currentState: IHomeState = get();
     const currentList = currentState[statePath].data;
     const offset = isRefresh ? 0 : currentList.length || 0;
-    streamApi.getNewsfeed({ isImportant: tabId === HOME_TAB_TYPE.IMPORTANT, offset })
+    const requestParams: IParamGetFeed = { offset }
+    if (tabId === HOME_TAB_TYPE.IMPORTANT) {
+      requestParams.isImportant = true;
+    }
+    streamApi.getNewsfeed(requestParams)
       .then((response) => {
         const responseList = response?.list || [];
         storeRedux.store.dispatch(postActions.addToAllPosts({ data: responseList }))

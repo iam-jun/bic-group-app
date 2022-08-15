@@ -34,9 +34,9 @@ import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
 import NoticePanel from '~/screens/Home/components/NoticePanel';
 import { IPostActivity } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
-import Button from '~/beinComponents/Button';
 import modalActions from '~/storeRedux/modal/actions';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import Button from '~/beinComponents/Button';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -46,6 +46,7 @@ export interface NewsfeedListProps {
   onRefresh?: () => void;
   onScrollY?: (y: number) => void;
   HeaderComponent?: any;
+  activeTab?: string;
 }
 
 const AnimatedFlashList = Animated.createAnimatedComponent<
@@ -65,6 +66,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   onRefresh,
   onScrollY,
   HeaderComponent,
+  activeTab,
 }: NewsfeedListProps) => {
   const [initializing, setInitializing] = useState(true);
   const listRef = useRef<any>();
@@ -134,6 +136,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     onScrollY?.(e?.nativeEvent?.contentOffset?.y)
     handleScrollY(e?.nativeEvent?.contentOffset?.y);
   };
+
+  useEffect(() => {
+    listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
+  }, [activeTab])
 
   useFocusEffect(React.useCallback(
     () => () => {
@@ -252,17 +258,29 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     )
   };
 
-  const renderEmpty = () => (
-    <View style={styles.emptyContainer}>
-      <Text.SubtitleM useI18n>
-        post:newsfeed:title_empty_no_post
-      </Text.SubtitleM>
-      <Text.BodyXS style={styles.textEmpty} useI18n>
-        post:newsfeed:text_empty_no_post
-      </Text.BodyXS>
-      <Button.Primary onPress={onPressDiscover}>Discover</Button.Primary>
-    </View>
-  )
+  const renderEmpty = () => {
+    if (canLoadMore) {
+      return (
+        <View style={styles.emptyIndicator}>
+          <ActivityIndicator
+            testID="newsfeed_list.activity_indicator"
+            color={theme.colors.gray20}
+          />
+        </View>
+      )
+    }
+    return (
+      <View style={styles.emptyContainer}>
+        <Text.SubtitleM useI18n>
+          post:newsfeed:title_empty_no_post
+        </Text.SubtitleM>
+        <Text.BodyXS style={styles.textEmpty} useI18n>
+          post:newsfeed:text_empty_no_post
+        </Text.BodyXS>
+        <Button.Primary onPress={onPressDiscover}>Discover</Button.Primary>
+      </View>
+    )
+  }
 
   const renderListEmpty = () => (
     <FlatList
@@ -368,6 +386,12 @@ const createStyle = (
     },
     emptyContainer: {
       marginTop: insets.top + dimension.homeHeaderHeight + 56,
+      paddingHorizontal: spacing.padding.large,
+      alignItems: 'center',
+    },
+    emptyIndicator: {
+      marginTop: insets.top + dimension.homeHeaderHeight,
+      paddingTop: 34,
       paddingHorizontal: spacing.padding.large,
       alignItems: 'center',
     },
