@@ -20,8 +20,8 @@ const HomeHeaderButton: FC<HomeHeaderButtonProps> = ({ style, onPressSearch, onP
   return (
     <View style={[styles.container, style]}>
       <View style={styles.row}>
-        <Button onPress={onPressSearch} style={{ marginRight: spacing.margin.large }}>
-          <Icon size={24} icon="iconSearch" />
+        <Button onPress={onPressSearch} style={{ marginRight: spacing.margin.tiny }}>
+          <Icon size={18} icon="search" />
         </Button>
         {onPressChat && <IconChat onPress={onPressChat} />}
       </View>
@@ -37,7 +37,7 @@ const createStyle = () => StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: spacing.margin.large,
+    marginLeft: spacing.margin.large,
   },
 });
 
