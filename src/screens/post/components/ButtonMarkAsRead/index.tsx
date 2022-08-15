@@ -3,15 +3,15 @@ import {
   View, StyleSheet, StyleProp, ViewStyle,
 } from 'react-native';
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
-
 import { useDispatch } from 'react-redux';
-import Button from '~/beinComponents/Button';
+
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import { spacing } from '~/theme';
+import { Button } from '~/baseComponents';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
@@ -37,7 +37,6 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   const { t } = useBaseHook();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
 
   const now = new Date();
@@ -71,21 +70,27 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
       testID="button_mark_as_read.container"
       style={[styles.container, style]}
     >
-      <Button.Secondary
-        testID="button_mark_as_read.button"
-        loading={loading}
-        color={colors.purple2}
-        textVariant="buttonL"
-        textColor={colors.purple50}
-        disabled={markedReadPost}
-        colorDisabled={colors.neutral2}
-        textColorDisabled={colors.neutral20}
-        leftIcon={markedReadPost && 'CircleCheckSolid'}
-        leftIconProps={{ icon: 'CircleCheckSolid', size: 22 }}
-        onPress={onPressMarkAsRead}
-      >
-        {markedReadPost ? t('post:marked_as_read') : t('post:mark_as_read')}
-      </Button.Secondary>
+      {markedReadPost ? (
+        <Button.Neutral
+          testID="button_mark_as_read.button"
+          type="ghost"
+          size="large"
+          disabled
+          icon="CircleCheckSolid"
+        >
+          {t('post:marked_as_read')}
+        </Button.Neutral>
+      ) : (
+        <Button.Primary
+          testID="button_mark_as_read.button"
+          loading={loading}
+          type="ghost"
+          size="large"
+          onPress={onPressMarkAsRead}
+        >
+          {t('post:mark_as_read')}
+        </Button.Primary>
+      )}
     </View>
   );
 };

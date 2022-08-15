@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { timeOut } from '~/utils/common';
 import actions from './actions';
 import types from './constants';
@@ -8,7 +8,7 @@ export default function* saga() {
   yield takeLatest(
     types.GET_CONFIGS, getConfigs,
   );
-  yield takeLatest(
+  yield takeEvery(
     types.GET_LINK_PREVIEW, getLinkPreview,
   );
   // yield takeLatest(types.SETUP_PUSH_TOKEN, setupPushToken);
@@ -30,9 +30,7 @@ function* getConfigs() {
 
 function* getLinkPreview({ payload }: {type: string; payload: string}) {
   try {
-    const link = encodeURIComponent(payload);
-
-    const response = yield groupApi.getLinkPreview(link);
+    const response = yield groupApi.getLinkPreview(payload);
     yield put(actions.setLinkPreview(response?.data));
   } catch (err: any) {
     console.error(

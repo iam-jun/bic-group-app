@@ -1,10 +1,8 @@
 import React, {
-  useEffect, useImperativeHandle, useRef, useState,
+  useImperativeHandle, useRef, useState,
 } from 'react';
 import {
   BackHandler,
-  DeviceEventEmitter,
-  Platform,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -22,8 +20,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
-import Avatar from '~/baseComponents/Avatar';
-import Button from '~/beinComponents/Button';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 import Icon, { IconProps } from '~/beinComponents/Icon';
 import Text, { TextProps } from '~/beinComponents/Text';
@@ -31,9 +27,8 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
 import { ButtonSecondaryProps } from '../Button/ButtonSecondary';
 import IconChat from '../IconChat';
-import { ImageProps } from '../Image';
-import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
+import Button from '~/baseComponents/Button';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -42,8 +37,6 @@ export interface HeaderProps {
   titleTextProps?: TextProps;
   subTitle?: string;
   subTitleTextProps?: TextProps;
-  avatar?: any;
-  avatarProps?: ImageProps;
   leftIcon?: IconType;
   leftIconProps?: Omit<IconProps, 'icon'>;
   icon?: IconType;
@@ -84,8 +77,6 @@ const Header: React.FC<HeaderProps> = ({
   titleTextProps,
   subTitle,
   subTitleTextProps,
-  avatar,
-  avatarProps,
   leftIcon,
   leftIconProps,
   icon,
@@ -127,29 +118,10 @@ const Header: React.FC<HeaderProps> = ({
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();
 
-  const showValue = useSharedValue(1);
   const scrollY = useSharedValue(0);
   const stickyShow = useSharedValue(0);
 
   const { rootNavigation } = useRootNavigation();
-
-  useEffect(
-    () => {
-      const listener = DeviceEventEmitter.addListener(
-        'showHeader', (isShow) => {
-          if (isShow) {
-            show();
-          } else {
-            hide();
-          }
-        },
-      );
-
-      return () => {
-        listener?.remove?.();
-      };
-    }, [],
-  );
 
   const _onPressBack = () => {
     if (onPressBack) {
@@ -216,37 +188,8 @@ const Header: React.FC<HeaderProps> = ({
   });
 
   const insetTop = disableInsetTop ? 0 : insets.top;
-  const contentHeight = dimension?.headerHeight || 44;
-
-  const heightStyle = useAnimatedStyle(() => ({
-    height: interpolate(
-      showValue.value,
-      [0, 1],
-      [insetTop, contentHeight + insetTop],
-    ),
-  }));
-
-  const show = (duration = 200) => {
-    showValue.value = withTiming(
-      1, { duration },
-    );
-  };
-
-  const hide = (duration = 200) => {
-    showValue.value = withTiming(
-      0, { duration },
-    );
-  };
 
   const titleAnimated = useAnimationTitle
-    ? useAnimatedStyle(() => ({
-      opacity: interpolate(
-        scrollY.value, [0, 210, 235], [0, 0, 1],
-      ),
-    }))
-    : {};
-
-  const avatarAnimated = useAnimationTitle
     ? useAnimatedStyle(() => ({
       opacity: interpolate(
         scrollY.value, [0, 210, 235], [0, 0, 1],
@@ -261,7 +204,7 @@ const Header: React.FC<HeaderProps> = ({
         translateY: interpolate(
           stickyShow.value,
           [0, 1],
-          [-50, 60],
+          [-50, 44],
           Extrapolate.CLAMP,
         ),
       },
@@ -282,8 +225,8 @@ const Header: React.FC<HeaderProps> = ({
   const renderContent = () => (
     <Animated.View
       style={[
-        heightStyle,
         {
+          minHeight: 44,
           paddingTop: disableInsetTop ? undefined : insets.top,
           overflow: 'hidden',
           alignItems: 'flex-end',
@@ -297,7 +240,6 @@ const Header: React.FC<HeaderProps> = ({
     >
       <View
         style={{
-          height: contentHeight,
           flex: 1,
           flexDirection: 'row',
           backgroundColor: colors.white,
@@ -319,22 +261,6 @@ const Header: React.FC<HeaderProps> = ({
           style={styles.iconBack}
           buttonTestID="header.back.button"
         />
-        )}
-        {!!avatar && (
-        <Animated.View style={avatarAnimated}>
-          <TouchableOpacity
-            onPress={onPressHeader}
-            disabled={!onPressHeader}
-            testID="header.avatar"
-          >
-            <Avatar
-              isRounded={false}
-              source={avatar}
-              style={styles.avatar}
-              {...avatarProps}
-            />
-          </TouchableOpacity>
-        </Animated.View>
         )}
         {!!leftIcon && (
         <Icon
@@ -369,6 +295,7 @@ const Header: React.FC<HeaderProps> = ({
           >
             <Text.BodyS
               style={styles.subtitle}
+              numberOfLines={1}
               {...subTitleTextProps}
               testID="header.subTitle"
             >
@@ -391,11 +318,10 @@ const Header: React.FC<HeaderProps> = ({
         {onSearchText && (
         <Icon
           testID={searchIconTestID}
-          icon="iconSearch"
-          size={24}
+          icon="search"
+          size={18}
           style={styles.icon}
           onPress={_onPressSearch}
-          backgroundColor={colors.neutral1}
           buttonTestID="header.searchIcon.button"
         />
         )}
@@ -403,29 +329,25 @@ const Header: React.FC<HeaderProps> = ({
         {onPressMenu && (
         <Icon
           icon={menuIcon || 'menu'}
-          size={24}
-          style={styles.icon}
+          size={16}
+          style={styles.iconMenu}
           onPress={onPressMenu}
           testID="header.menuIcon"
           buttonTestID="header.menuIcon.button"
         />
         )}
         {!!buttonText && onPressButton && (
-        <Button.Secondary
+        <Button.Primary
           testID="header.button"
           style={{
-            borderWidth: buttonProps?.disabled ? 0 : 1,
-            borderColor: colors.purple50,
-            height: 40,
             marginRight: spacing.margin.tiny,
           }}
-          textColor={colors.purple50}
           onPress={_onPressButton}
           textProps={{ testID: 'header.button.text' }}
           {...buttonProps}
         >
           {buttonText}
-        </Button.Secondary>
+        </Button.Primary>
         )}
         {!!rightIcon && (
         <Icon
@@ -475,44 +397,47 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
+  const { elevations, colors } = theme;
   const insets = useSafeAreaInsets();
   return StyleSheet.create({
     header: { zIndex: 2 },
     bottomBorderAndShadow: {
-      borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
-      borderColor: colors.neutral5,
-      shadowOffset: { width: 0, height: 1 },
-      shadowColor: '#000',
-      shadowOpacity: 0.1,
-      shadowRadius: 1,
-      elevation: 2,
+      ...elevations.e2,
     },
     iconBack: {
-      height: 48,
-      width: 48,
+      height: 44,
+      width: 44,
       justifyContent: 'center',
       alignItems: 'center',
       padding: spacing.padding.base,
     },
     icon: {
-      height: 40,
-      width: 40,
+      height: 20,
+      width: 20,
       justifyContent: 'center',
       alignItems: 'center',
-      padding: spacing.padding.small,
       borderRadius: 20,
       marginRight: spacing.margin.tiny,
     },
-    avatar: { marginRight: spacing.margin.base },
+    iconMenu: {
+      height: 28,
+      width: 28,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: spacing.borderRadius.base,
+      marginRight: spacing.margin.tiny,
+    },
     titleContainer: {
       flex: 1,
-      height: '100%',
       justifyContent: 'center',
-      marginLeft: spacing.padding.tiny,
+      paddingVertical: spacing.padding.small,
     },
-    title: {},
-    subtitle: {},
+    title: {
+      marginRight: spacing.margin.small,
+    },
+    subtitle: {
+      marginRight: spacing.margin.small,
+    },
     stickyHeader: {
       zIndex: 1,
       position: 'absolute',

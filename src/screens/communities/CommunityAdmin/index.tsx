@@ -191,7 +191,6 @@ const CommunityAdmin = () => {
       <Header
         title={name}
         titleTextProps={{ color: theme.colors.neutral80 }}
-        avatar={icon}
       />
       <Divider size={4} />
       <View style={styles.container}>
