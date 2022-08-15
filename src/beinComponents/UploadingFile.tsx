@@ -178,7 +178,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
         ) : uploading ? (
           <Text.BodyXSMedium
             style={{ justifyContent: 'center' }}
-            color={colors.gray50}
+            color={colors.green50}
             numberOfLines={1}
           >
             {t('common:text_uploading')}
