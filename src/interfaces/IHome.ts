@@ -41,6 +41,7 @@ export interface IParamGetFeed {
   idLte?: number;
   idGt?: number;
   idLt?: number;
+  isImportant?: boolean;
 }
 
 export interface IParamGetSearchPost {

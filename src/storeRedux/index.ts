@@ -77,10 +77,12 @@ const getCurrentAuth = (): unknown | boolean => {
   );
 };
 
-export default {
+const storeRedux = {
   sagaMiddleware,
   store,
   persistor,
   getCurrentUser,
   getCurrentAuth,
 };
+
+export default storeRedux;
