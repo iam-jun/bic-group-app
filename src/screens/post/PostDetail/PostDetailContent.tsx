@@ -30,7 +30,6 @@ import {
   ICommentData,
   IPayloadGetPostDetail,
 } from '~/interfaces/IPost';
-import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { rootSwitch } from '~/router/stack';
 import CommentInputView from '~/screens/post/components/CommentInputView';
@@ -510,7 +509,6 @@ const _PostDetailContent = (props: any) => {
       <Header
         title={headerTitle}
         onPressBack={onPressBack}
-        avatar={images.logo_bein}
       />
       {renderContent()}
     </View>
