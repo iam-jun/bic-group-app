@@ -5,12 +5,12 @@ import {
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import {
-  withReanimatedTimer,
-  advanceAnimationByTime,
-  advanceAnimationByFrame,
-  getAnimatedStyle,
-} from 'react-native-reanimated/src/reanimated2/jestUtils';
+// import {
+//   withReanimatedTimer,
+//   advanceAnimationByTime,
+//   advanceAnimationByFrame,
+//   getAnimatedStyle,
+// } from 'react-native-reanimated/src/reanimated2/jestUtils';
 
 // WARNING: Don't remove this import
 import '~/storeRedux';
@@ -69,10 +69,10 @@ export {
   cleanup,
   fireEvent,
   configureStore,
-  withReanimatedTimer,
-  advanceAnimationByTime,
-  advanceAnimationByFrame,
-  getAnimatedStyle,
+  // withReanimatedTimer,
+  // advanceAnimationByTime,
+  // advanceAnimationByFrame,
+  // getAnimatedStyle,
   languages,
   act,
   createTestStore,
