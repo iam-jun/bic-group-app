@@ -18,6 +18,8 @@ import {
   IPermission,
   IScheme,
   IPayloadGroupSchemeAssignments,
+  IGetJoinedAllGroups,
+  SetJoinedAllGroupsPayload,
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
 import { IObject } from '~/interfaces/common';
@@ -650,6 +652,14 @@ const groupsActions = {
     callback?: () => void;
   }) => ({
     type: groupsTypes.EDIT_COMMUNITY_DETAIL,
+    payload,
+  }),
+  getJoinedAllGroups: (payload: IGetJoinedAllGroups) => ({
+    type: groupsTypes.GET_JOINED_ALL_GROUPS,
+    payload,
+  }),
+  setJoinedAllGroups: (payload: SetJoinedAllGroupsPayload) => ({
+    type: groupsTypes.SET_JOINED_ALL_GROUPS,
     payload,
   }),
 };

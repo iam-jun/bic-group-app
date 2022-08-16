@@ -166,6 +166,13 @@ export const groupInitState = {
     ids: [] as string[],
     items: {},
   },
+  joinedAllGroups: {
+    isRefresh: false,
+    isLoading: false,
+    canLoadMore: true,
+    ids: [],
+    items: {},
+  },
   isGettingInfoDetail: false,
   communityDetail: {} as ICommunity,
   communityMembers: {
@@ -816,7 +823,14 @@ function groupsReducer(
         ...state,
         communitySearch: groupInitState.communitySearch,
       };
-
+    case groupsTypes.SET_JOINED_ALL_GROUPS:
+      return {
+        ...state,
+        joinedAllGroups: {
+          ...state.joinedAllGroups,
+          ...payload,
+        },
+      };
     default:
       return state;
   }

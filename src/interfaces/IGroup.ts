@@ -1,6 +1,7 @@
 import { GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
+import initialState from '~/storeRedux/initialState'
 
 export interface IRole {
   id?: string;
@@ -238,3 +239,9 @@ export interface IPayloadGroupSchemeAssignments {
   data: {groupId: string; schemeId: string}[];
   currentAssignments?: any;
 }
+
+export interface IGetJoinedAllGroups {
+  isRefresh?: boolean;
+}
+
+export type SetJoinedAllGroupsPayload = Partial<typeof initialState.groups.joinedAllGroups>;
