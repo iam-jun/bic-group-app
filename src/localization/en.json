@@ -146,7 +146,9 @@
     "text_help": "Help",
     "text_type_search_keyword": "Type search keyword to see the search results",
     "text_no_results_found": "No results found",
-    "text_more": "+(number) more"
+    "text_more": "+(number) more",
+    "beincomm": "Beincomm",
+    "members": "Thành viên"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -955,5 +957,9 @@
     "image": "image",
     "video": "video",
     "file": "file"
+  },
+  "discover": {
+    "discover_communities": "Discover Communities",
+    "your_communities": "Your Communities"
   }
 }
