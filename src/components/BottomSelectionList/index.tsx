@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import {
   ScrollView,
-  StyleProp, ViewStyle,
 } from 'react-native';
 
 import { useDispatch } from 'react-redux';
@@ -14,24 +13,8 @@ import modalActions from '~/storeRedux/modal/actions';
 
 export interface BottomSelectionListProps extends BaseBottomSheetProps {
   data: any[];
-  renderItem?: ({
-    item,
-    index,
-  }: {
-    item: any;
-    index: number;
-  }
-  ) => React.ReactElement;
   ListHeaderComponent?: any;
-  ListFooterComponent?: any;
-  ListEmptyComponent?: any;
   showsVerticalScrollIndicator?: boolean;
-  onItemPress?: (...params: any) => void;
-  onItemLongPress?: (...params: any) => void;
-  onEndReachedThreshold?: number;
-  itemStyle?: StyleProp<ViewStyle>;
-  horizontal?: boolean;
-  children?: React.ReactNode;
   closeOutSide?: boolean;
 }
 
@@ -42,7 +25,10 @@ const BottomSelectionList = ({
   const modalizeRef = useRef<any>();
   const bottomSelectionList = useKeySelector(modalKeySelector.bottomSelectionList);
   const {
-    data = [], isOpen, ListHeaderComponent = undefined, children, showsVerticalScrollIndicator, onItemPress,
+    data = [],
+    isOpen,
+    ListHeaderComponent = undefined,
+    showsVerticalScrollIndicator = false,
     closeOutSide = true,
   } = bottomSelectionList;
 
@@ -56,17 +42,8 @@ const BottomSelectionList = ({
     closeOutSide && dispatch(modalActions.hideBottomSelectionList());
   };
 
-  //   const _renderItem = ({ item, index }: {item: any, index:number}) => {
-  //     if (!!renderItem) return renderItem({ item, index });
-  //     return (
-  //       <View style={}>
-  //         <Text>{index}</Text>
-  //       </View>
-  //     )
-  //   }
-
   const renderListData = () => (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={showsVerticalScrollIndicator}>
       {ListHeaderComponent}
       {
         data.map((item: any) => (
