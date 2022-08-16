@@ -1,7 +1,7 @@
 import React from 'react';
 import initialState from '../../../storeRedux/initialState';
 import { configureStore, renderWithRedux } from '../../../test/testUtils';
-import YourCommunities from '.';
+import YourCommunities from './YourCommunities';
 import { listYourCommunities } from '../../../test/mock_data/communities';
 
 describe('YourCommunities Screen', () => {

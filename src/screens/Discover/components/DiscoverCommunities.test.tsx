@@ -1,7 +1,7 @@
 import React from 'react';
 import initialState from '../../../storeRedux/initialState';
 import { configureStore, renderWithRedux } from '../../../test/testUtils';
-import DiscoverCommunities from '.';
+import DiscoverCommunities from './DiscoverCommunities';
 import { listDiscoverCommunities } from '../../../test/mock_data/communities';
 
 describe('DiscoverCommunities Screen', () => {

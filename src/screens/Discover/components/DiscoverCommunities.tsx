@@ -12,7 +12,7 @@ import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard'
 
-const Index = () => {
+const DiscoverCommunities = () => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Index;
+export default DiscoverCommunities;

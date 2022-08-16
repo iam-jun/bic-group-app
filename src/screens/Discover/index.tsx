@@ -1,43 +1,37 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Header from '~/beinComponents/Header';
-import TabView from '~/components/TabView';
-import type { TabItem } from '~/components/TabView/Index';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import SearchCommunityView from '~/screens/communities/Communities/components/SearchCommunityView';
 import spacing from '~/theme/spacing';
-import DiscoverCommunities from '~/screens/Discover/DiscoverCommunities'
-import YourCommunities from '~/screens/Discover/YourCommunities'
+import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities'
+import YourCommunities from '~/screens/Discover/components/YourCommunities'
+import Tab from '~/baseComponents/Tab';
 
-const dataTab: TabItem[] = [
-  {
-    key: 'discover-tab-1',
-    title: 'discover:discover_communities',
-  },
-  {
-    key: 'discover-tab-2',
-    title: 'discover:your_communities',
-  },
+const HEADER_TAB = [
+  { id: 'discover-tab-1', text: 'discover:discover_communities' },
+  { id: 'discover-tab-2', text: 'discover:your_communities' },
 ]
 
 const Index = () => {
   const theme = useTheme();
+  const { elevations } = theme;
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenSearchCommunity, setIsOpenSearchCommunity] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const onPressSearch = () => {
-    setIsOpen(true);
+    setIsOpenSearchCommunity(true);
   };
 
   const onCloseSearch = () => {
-    setIsOpen(false);
+    setIsOpenSearchCommunity(false);
   }
 
   const onPressCommunities = (communityId: string) => {
@@ -46,8 +40,8 @@ const Index = () => {
     );
   };
 
-  const onTabPress = (index: number) => {
-    setSelectedIndex(index);
+  const onPressTab = (item: any, index: number) => {
+    setSelectedIndex(index)
   }
 
   const renderContent = () => {
@@ -72,18 +66,21 @@ const Index = () => {
         onRightPress={onPressSearch}
       />
       <View style={styles.containerContent}>
-        <View style={[styles.containerTabView, styles.bottomBorderAndShadow]}>
-          <TabView
-            data={dataTab}
-            selectedIndex={selectedIndex}
-            onTabPress={onTabPress}
+        <View style={[styles.containerTabView, elevations.e1]}>
+          <Tab
+            style={styles.tabs}
+            buttonProps={{ type: 'primary', useI18n: true }}
+            data={HEADER_TAB}
+            type="pill"
+            onPressTab={onPressTab}
+            activeIndex={selectedIndex}
           />
         </View>
 
         {renderContent()}
       </View>
       <SearchCommunityView
-        isOpen={isOpen}
+        isOpen={isOpenSearchCommunity}
         onClose={onCloseSearch}
         onPressCommunity={onPressCommunities}
         placeholder={t('communities:text_search_communities')}
@@ -108,14 +105,9 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingBottom: spacing.padding.small,
       backgroundColor: colors.white,
     },
-    bottomBorderAndShadow: {
-      borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
-      borderColor: colors.neutral5,
-      shadowOffset: { width: 0, height: 1 },
-      shadowColor: '#000',
-      shadowOpacity: 0.1,
-      shadowRadius: 1,
-      elevation: 2,
+    tabs: {
+      alignItems: 'center',
+      paddingHorizontal: spacing.margin.large,
     },
   });
 };

@@ -47,10 +47,9 @@ const getStateButton = (
 
 const ButtonCommunityGroupCardAction: FC<
   ButtonCommunityGroupCardActionProps
-> = (props) => {
-  const {
-    onView, onCancel, onJoin, joinStatus,
-  } = props;
+> = ({
+  onView, onCancel, onJoin, joinStatus,
+}) => {
   const theme: ExtendedTheme = useTheme();
 
   const stateButton = getStateButton(joinStatus, theme);
