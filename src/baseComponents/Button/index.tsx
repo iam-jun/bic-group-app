@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ButtonWrapper, { ButtonWrapperProps } from './ButtonWrapper';
+import ButtonRaise from './ButtonRaise';
 import Text from '~/beinComponents/Text';
 import { getButtonColors } from './helper';
 import { ButtonSize, ButtonType, ButtonVariant } from './interface';
@@ -90,7 +91,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
       TouchableComponent={TouchableHighlight}
       disabled={disabled}
       underlayColor={buttonColors.loading}
-      style={style}
+      style={[styles.wrapper, style]}
     >
       <View
         testID="button.content"
@@ -115,6 +116,9 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    borderRadius: borderRadius.base,
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -160,6 +164,7 @@ const Button = Object.assign(
     Neutral,
     Success,
     Danger,
+    Raise: ButtonRaise,
   },
 );
 

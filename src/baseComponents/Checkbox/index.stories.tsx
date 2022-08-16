@@ -1,9 +1,10 @@
 /* eslint-disable no-alert */
+import { ComponentMeta } from '@storybook/react-native';
 import CheckBox from '.';
-import { ComponentMeta, getStoryComponent } from '~/storybook';
+import { getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/CheckBox',
+  title: 'base/CheckBox',
   component: CheckBox,
   argTypes: {
     disabled: {

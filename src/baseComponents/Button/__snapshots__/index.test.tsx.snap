@@ -11,6 +11,14 @@ exports[`Button component renders button danger correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
   testID="button_wrapper"
 >
   <View
@@ -47,6 +55,14 @@ exports[`Button component renders button neutral correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
   testID="button_wrapper"
 >
   <View
@@ -83,6 +99,14 @@ exports[`Button component renders button primary correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
   testID="button_wrapper"
 >
   <View
@@ -119,6 +143,14 @@ exports[`Button component renders button secondary correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
   testID="button_wrapper"
 >
   <View
@@ -155,6 +187,14 @@ exports[`Button component renders button success correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
   testID="button_wrapper"
 >
   <View
@@ -238,6 +278,14 @@ exports[`Button component renders correctly children with useI18n 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
   testID="button_wrapper"
 >
   <View
@@ -264,7 +312,7 @@ exports[`Button component renders correctly children with useI18n 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 15,
           },
@@ -298,6 +346,14 @@ exports[`Button component renders correctly contentStyle 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
   testID="button_wrapper"
 >
   <View

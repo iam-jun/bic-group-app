@@ -1,405 +1,433 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tag component renders correctly Tag component type AvatarTag 1`] = `
-<View
+<RCTScrollView
   style={
     Object {
-      "alignItems": "center",
-      "backgroundColor": "#F5FCFF",
-      "flex": 1,
-      "justifyContent": "center",
+      "backgroundColor": "#FFFFFF",
     }
   }
 >
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F4EFFB",
-        "borderRadius": 100,
-        "flexDirection": "row",
-        "height": 24,
-        "justifyContent": "center",
-        "marginRight": 8,
-        "opacity": 1,
-        "paddingLeft": 0,
-        "paddingRight": 4,
-      }
-    }
-    testID="tag.item"
-  >
+  <View>
     <View
       style={
-        Array [
-          Object {
-            "borderRadius": 12,
-            "height": 24,
-            "width": 24,
-          },
-          Object {
-            "marginRight": 4,
-          },
-        ]
+        Object {
+          "paddingHorizontal": 16,
+          "paddingVertical": 12,
+        }
       }
-      testID="avatar"
     >
       <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "borderRadius": 12,
-              "height": 24,
-              "width": 24,
-            },
-            Object {},
-          ]
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F4EFFB",
+            "borderRadius": 100,
+            "flexDirection": "row",
+            "height": 24,
+            "justifyContent": "center",
+            "marginRight": 8,
+            "opacity": 1,
+            "paddingLeft": 0,
+            "paddingRight": 4,
+          }
         }
-        testID="avatar_container"
+        testID="tag.item"
       >
         <View
-          onLayout={[Function]}
           style={
-            Object {
-              "backgroundColor": "transparent",
-              "position": "relative",
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
+            Array [
               Object {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#f9f9f9",
-                  "borderRadius": 12,
-                  "height": 24,
-                  "justifyContent": "center",
-                  "width": 24,
-                }
-              }
-              testID="Image__placeholder"
-            />
-          </View>
+                "borderRadius": 12,
+                "height": 24,
+                "width": 24,
+              },
+              Object {
+                "marginRight": 4,
+              },
+            ]
+          }
+          testID="avatar"
+        >
           <View
             style={
               Array [
                 Object {
-                  "overflow": "hidden",
-                },
-                Object {
                   "borderRadius": 12,
                   "height": 24,
                   "width": 24,
                 },
+                Object {},
+              ]
+            }
+            testID="avatar_container"
+          >
+            <View
+              onLayout={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "transparent",
+                  "position": "relative",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#f9f9f9",
+                      "borderColor": "#F2F5F8",
+                      "borderRadius": 12,
+                      "borderWidth": 2,
+                      "height": 24,
+                      "justifyContent": "center",
+                      "width": 24,
+                    }
+                  }
+                  testID="Image__placeholder"
+                />
+              </View>
+              <View
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    Object {
+                      "borderColor": "#F2F5F8",
+                      "borderRadius": 12,
+                      "borderWidth": 2,
+                      "height": 24,
+                      "width": 24,
+                    },
+                  ]
+                }
+              >
+                <FastImageView
+                  onFastImageError={[Function]}
+                  onFastImageLoadEnd={[Function]}
+                  resizeMode="cover"
+                  source={
+                    Object {
+                      "uri": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/close-up-of-cat-wearing-sunglasses-while-sitting-royalty-free-image-1571755145.jpg",
+                    }
+                  }
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                  testID="avatar.image"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 11,
+              },
+              Object {},
+              Object {
+                "color": "#7335C0",
+              },
+            ]
+          }
+          testID="tag.label"
+        >
+          Avatar Tag
+        </Text>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Object {
+                  "marginStart": 4,
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
           >
-            <FastImageView
-              onFastImageError={[Function]}
-              onFastImageLoadEnd={[Function]}
-              resizeMode="cover"
-              source={
-                Object {
-                  "uri": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/close-up-of-cat-wearing-sunglasses-while-sitting-royalty-free-image-1571755145.jpg",
-                }
-              }
+            <View
               style={
-                Object {
-                  "bottom": 0,
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
               }
-              testID="avatar.image"
-            />
+            >
+              <View
+                testID="tag.icon"
+              />
+            </View>
           </View>
         </View>
       </View>
     </View>
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#181C32",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 11,
-          },
-          Object {},
-          Object {
-            "color": "#7335C0",
-          },
-        ]
-      }
-      testID="tag.label"
-    >
-      Avatar Tag
-    </Text>
-    <View
-      accessibilityState={
-        Object {
-          "disabled": false,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      hitSlop={
-        Object {
-          "bottom": 10,
-          "left": 10,
-          "right": 10,
-          "top": 10,
-        }
-      }
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "opacity": 1,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            },
-            Object {
-              "marginStart": 4,
-            },
-            Object {
-              "backgroundColor": undefined,
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Array [
-              undefined,
-              undefined,
-              undefined,
-            ]
-          }
-        >
-          <View
-            testID="tag.icon"
-          />
-        </View>
-      </View>
-    </View>
   </View>
-</View>
+</RCTScrollView>
 `;
 
 exports[`Tag component renders correctly Tag component type NameTag 1`] = `
-<View
+<RCTScrollView
   style={
     Object {
-      "alignItems": "center",
-      "backgroundColor": "#F5FCFF",
-      "flex": 1,
-      "justifyContent": "center",
+      "backgroundColor": "#FFFFFF",
     }
   }
 >
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F4EFFB",
-        "borderRadius": 100,
-        "flexDirection": "row",
-        "height": 24,
-        "justifyContent": "center",
-        "marginRight": 8,
-        "opacity": 1,
-        "paddingLeft": 8,
-        "paddingRight": 4,
-      }
-    }
-    testID="tag.item"
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#181C32",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 11,
-          },
-          Object {},
-          Object {
-            "color": "#7335C0",
-          },
-        ]
-      }
-      testID="tag.label"
-    >
-      Name Tag
-    </Text>
+  <View>
     <View
-      accessibilityState={
-        Object {
-          "disabled": false,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      hitSlop={
-        Object {
-          "bottom": 10,
-          "left": 10,
-          "right": 10,
-          "top": 10,
-        }
-      }
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "opacity": 1,
+          "paddingHorizontal": 16,
+          "paddingVertical": 12,
         }
       }
     >
       <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            },
-            Object {
-              "marginStart": 4,
-            },
-            Object {
-              "backgroundColor": undefined,
-            },
-          ]
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F4EFFB",
+            "borderRadius": 100,
+            "flexDirection": "row",
+            "height": 24,
+            "justifyContent": "center",
+            "marginRight": 8,
+            "opacity": 1,
+            "paddingLeft": 8,
+            "paddingRight": 4,
+          }
         }
+        testID="tag.item"
       >
-        <View
+        <Text
           style={
             Array [
-              undefined,
-              undefined,
-              undefined,
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 11,
+              },
+              Object {},
+              Object {
+                "color": "#7335C0",
+              },
             ]
+          }
+          testID="tag.label"
+        >
+          Name Tag
+        </Text>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
           }
         >
           <View
-            testID="tag.icon"
-          />
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Object {
+                  "marginStart": 4,
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="tag.icon"
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
   </View>
-</View>
+</RCTScrollView>
 `;
 
 exports[`Tag component renders correctly Tag component type TextOnly 1`] = `
-<View
+<RCTScrollView
   style={
     Object {
-      "alignItems": "center",
-      "backgroundColor": "#F5FCFF",
-      "flex": 1,
-      "justifyContent": "center",
+      "backgroundColor": "#FFFFFF",
     }
   }
 >
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F4EFFB",
-        "borderRadius": 100,
-        "flexDirection": "row",
-        "height": 24,
-        "justifyContent": "center",
-        "marginRight": 8,
-        "opacity": 1,
-        "paddingLeft": 8,
-        "paddingRight": 8,
-      }
-    }
-    testID="tag.item"
-  >
-    <Text
+  <View>
+    <View
       style={
-        Array [
-          Object {
-            "color": "#181C32",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 11,
-          },
-          Object {},
-          Object {
-            "color": "#7335C0",
-          },
-        ]
+        Object {
+          "paddingHorizontal": 16,
+          "paddingVertical": 12,
+        }
       }
-      testID="tag.label"
     >
-      tag label
-    </Text>
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F4EFFB",
+            "borderRadius": 100,
+            "flexDirection": "row",
+            "height": 24,
+            "justifyContent": "center",
+            "marginRight": 8,
+            "opacity": 1,
+            "paddingLeft": 8,
+            "paddingRight": 8,
+          }
+        }
+        testID="tag.item"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 11,
+              },
+              Object {},
+              Object {
+                "color": "#7335C0",
+              },
+            ]
+          }
+          testID="tag.label"
+        >
+          tag label
+        </Text>
+      </View>
+    </View>
   </View>
-</View>
+</RCTScrollView>
 `;

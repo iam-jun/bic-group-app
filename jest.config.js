@@ -13,7 +13,12 @@ module.exports = {
   ],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
-    '!src/components/**/*.{js,jsx,ts,tsx}',
+    '!src/api/**/*.{js,jsx,ts,tsx}',
+    '!src/services/**/*.{js,jsx,ts,tsx}',
+    '!src/test/**/*.{js,jsx,ts,tsx}',
+    '!src/contexts/**/*.{js,jsx,ts,tsx}',
+    '!src/localization/**/*.{js,jsx,ts,tsx}',
+    '!src/utils/convertHelper/**/*.{js,jsx,ts,tsx}',
     '!src/configs/**/*.{js,jsx,ts,tsx}',
     '!src/constants/**/*.{js,jsx,ts,tsx}',
     '!src/interfaces/**/*.{js,jsx,ts,tsx}',

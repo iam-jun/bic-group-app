@@ -59,7 +59,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 17,
               },
@@ -75,7 +75,7 @@ exports[`Experiences screen renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#181C32",
+                  "color": "#212745",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 17,
                 },
@@ -103,7 +103,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -121,7 +121,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -149,7 +149,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -167,7 +167,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -195,7 +195,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -213,7 +213,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -241,7 +241,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -259,7 +259,7 @@ exports[`Experiences screen renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
