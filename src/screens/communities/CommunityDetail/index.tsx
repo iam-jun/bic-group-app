@@ -241,7 +241,7 @@ const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     screenContainer: {
-      backgroundColor: colors.neutral5,
+      backgroundColor: colors.gray5,
     },
     contentContainer: {
       flex: 1,
