@@ -55,6 +55,7 @@ module.exports = {
     'react/no-array-index-key': 0,
     'no-nested-ternary': 0,
     'no-unused-vars': 'off',
+    'no-alert': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'max-len': ['error', { code: 120, ignoreStrings: true }],
     'function-paren-newline': ['error', 'consistent'],
