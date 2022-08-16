@@ -3,7 +3,7 @@ import Tab from '.';
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Tab',
+  title: 'base/Tab',
   component: Tab,
   argTypes: {
     type: {

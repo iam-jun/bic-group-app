@@ -3,7 +3,7 @@ import CheckBox from '.';
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/CheckBox',
+  title: 'base/CheckBox',
   component: CheckBox,
   argTypes: {
     disabled: {

@@ -3,7 +3,7 @@ import { ButtonComponent } from '.';
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Button',
+  title: 'base/Button',
   component: ButtonComponent,
   argTypes: {
     size: {

@@ -3,7 +3,7 @@ import Radio from '.';
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Radio',
+  title: 'base/Radio',
   component: Radio,
   argTypes: {
     disabled: {

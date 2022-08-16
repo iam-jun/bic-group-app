@@ -3,7 +3,7 @@ import Banner from '.';
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Banner',
+  title: 'base/Banner',
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 

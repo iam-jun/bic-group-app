@@ -3,7 +3,7 @@ import Reaction from '.';
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Reaction',
+  title: 'base/Reaction',
   component: Reaction,
 } as ComponentMeta<typeof Reaction>;
 

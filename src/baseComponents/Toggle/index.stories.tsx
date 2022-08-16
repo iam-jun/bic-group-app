@@ -3,7 +3,7 @@ import Toggle from '.';
 import { ComponentMeta, getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Toggle',
+  title: 'base/Toggle',
   component: Toggle,
   argTypes: {
     size: {

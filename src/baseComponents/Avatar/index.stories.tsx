@@ -4,7 +4,7 @@ import { ComponentMeta, getStoryComponent } from '~/storybook';
 import images from '~/resources/images';
 
 export default {
-  title: 'components/Avatar',
+  title: 'base/Avatar',
   component: Avatar,
   argTypes: {
     variant: {

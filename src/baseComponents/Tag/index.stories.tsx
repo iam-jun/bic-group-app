@@ -5,7 +5,7 @@ import Tag from '.';
 const avatarUrl = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/close-up-of-cat-wearing-sunglasses-while-sitting-royalty-free-image-1571755145.jpg';
 
 export default {
-  title: 'components/Tag',
+  title: 'base/Tag',
   component: Tag,
   argTypes: {
     size: {
