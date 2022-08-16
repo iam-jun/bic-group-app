@@ -49,10 +49,10 @@ const Tab = ({
   )
 }
 
-export default Tab
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
   },
-})
+});
+
+export default Tab;

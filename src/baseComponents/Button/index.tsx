@@ -26,7 +26,7 @@ export interface ButtonProps extends ButtonWrapperProps {
   icon?: IconType;
 }
 
-const ButtonComponent: React.FC<ButtonProps> = ({
+export const ButtonComponent: React.FC<ButtonProps> = ({
   variant = 'neutral',
   type = 'solid',
   size = 'medium',
