@@ -5,43 +5,51 @@ import { ComponentMeta, getStoryComponent } from '~/storybook';
 export default {
   title: 'components/Button',
   component: ButtonComponent,
+  argTypes: {
+    size: {
+      control: {
+        type: 'select',
+      },
+      options: ['small', 'medium', 'large'],
+    },
+    type: {
+      control: {
+        type: 'select',
+      },
+      options: ['solid', 'ghost'],
+    },
+    variant: {
+      options: ['primary', 'secondary', 'neutral', 'success', 'danger'],
+      control: {
+        type: 'select',
+      },
+    },
+  },
 } as ComponentMeta<typeof ButtonComponent>;
 
 const StoryComponent = getStoryComponent(ButtonComponent);
 
-export const Primary = StoryComponent.bind({});
-Primary.args = {
+export const TextOnly = StoryComponent.bind({});
+TextOnly.args = {
   variant: 'primary',
   type: 'solid',
   size: 'medium',
   disabled: false,
   loading: false,
-  icon: 'iconReact',
   children: 'Button Component',
   onPress: () => { alert('onPress') },
   onLongPress: () => { alert('onLongPress') },
 }
 
-export const Secondary = StoryComponent.bind({});
-Secondary.args = {
-  ...Primary.args,
-  variant: 'secondary',
+export const TextWithIcon = StoryComponent.bind({});
+TextWithIcon.args = {
+  ...TextOnly.args,
+  icon: 'iconReact',
 }
 
-export const Neutral = StoryComponent.bind({});
-Neutral.args = {
-  ...Primary.args,
-  variant: 'neutral',
-}
-
-export const Success = StoryComponent.bind({});
-Success.args = {
-  ...Primary.args,
-  variant: 'success',
-}
-
-export const Danger = StoryComponent.bind({});
-Danger.args = {
-  ...Primary.args,
-  variant: 'danger',
+export const IconOnly = StoryComponent.bind({});
+IconOnly.args = {
+  ...TextOnly.args,
+  icon: 'iconReact',
+  children: null,
 }
