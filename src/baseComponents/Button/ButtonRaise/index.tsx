@@ -40,7 +40,7 @@ const ButtonRaise: FC<ButtonRaiseProps> = ({
 
   const textVariant = TEXT_SIZES[size];
   const buttonHeight = BUTTON_SIZES[size];
-  const iconSize = ICON_SIZES[textVariant];
+  const iconSize = ICON_SIZES[size];
   const _color = color || theme.colors.neutral70
   const _backgroundColor = backgroundColor || theme.colors.neutral
 
