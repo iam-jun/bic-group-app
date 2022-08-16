@@ -79,7 +79,6 @@ const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
       testID={`users_seen_post_bottom_sheet.item_username.${item?.item?.username}`}
       showAvatar
       avatarProps={{ isRounded: true, variant: 'small' }}
-      height={44}
       style={{ marginVertical: spacing.padding.tiny }}
       onPress={() => onPressItem(item)}
       avatar={item?.item?.avatar}

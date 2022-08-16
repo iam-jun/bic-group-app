@@ -12,7 +12,6 @@ import {
 } from '~/test/testUtils';
 import Header from '~/beinComponents/Header';
 import initialState from '~/storeRedux/initialState';
-import images from '~/resources/images';
 
 const TestComponent = ({ onChange }: {onChange?: (refs?: any) => void}) => {
   const headerRefs = React.useRef<any>();
@@ -126,35 +125,6 @@ describe('Header component', () => {
     expect(subTitleComponent.props.children).toBe('Sub Title');
     const flattenedStyle = StyleSheet.flatten(subTitleComponent.props.style);
     expect(flattenedStyle).toEqual(expect.objectContaining({ color: '#421187' }));
-  });
-
-  it('renders correctly with props avatar', () => {
-    const rendered = render(<Header avatar={images.logo_bein} />);
-    expect(rendered.toJSON()).toMatchSnapshot();
-    const avatarComponent = rendered.getByTestId('avatar');
-    expect(avatarComponent).toBeDefined();
-    const imageComponent = rendered.getByTestId('avatar.image');
-    expect(imageComponent).toBeDefined();
-  });
-
-  it('renders correctly with props avatar props', () => {
-    const rendered = render(
-      <Header
-        avatar={images.logo_bein}
-        avatarProps={{ style: { borderWidth: 1, borderColor: '#FF9800' } }}
-      />,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-    const avatarComponent = rendered.getByTestId('avatar');
-    expect(avatarComponent).toBeDefined();
-    const imageComponent = rendered.getByTestId('avatar.image');
-    expect(imageComponent).toBeDefined();
-    const avatarGroup = rendered.getByTestId('avatar_group');
-    expect(avatarGroup).toBeDefined();
-    expect(avatarGroup.props.style).toMatchObject({
-      borderWidth: 1,
-      borderColor: '#FF9800',
-    });
   });
 
   it('renders correctly with props left icon', () => {
@@ -497,7 +467,7 @@ describe('Header component', () => {
   it('renders correctly with props on press header', () => {
     const onPressHeader = jest.fn();
     const rendered = render(
-      <Header avatar={images.logo_bein} onPressHeader={onPressHeader} />,
+      <Header onPressHeader={onPressHeader} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const headerAvatar = rendered.getByTestId('header.avatar');

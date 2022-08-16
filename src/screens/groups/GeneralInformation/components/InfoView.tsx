@@ -55,6 +55,7 @@ const InfoView = ({
     <View style={styles.container}>
       <PrimaryItem
         testID="info_view.name"
+        style={styles.item}
         title={`settings:title_${type}_name`}
         titleProps={{ useI18n: true }}
         subTitle={name}
@@ -69,6 +70,7 @@ const InfoView = ({
 
       <PrimaryItem
         testID="info_view.description"
+        style={styles.item}
         title={`settings:title_${type}_description`}
         titleProps={{ useI18n: true }}
         subTitle={description}
@@ -83,6 +85,7 @@ const InfoView = ({
 
       <PrimaryItem
         testID="info_view.privacy"
+        style={styles.item}
         title="settings:title_privacy"
         titleProps={{ useI18n: true }}
         subTitle={titleCase(privacy) || ''}
@@ -98,6 +101,9 @@ const InfoView = ({
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: spacing.margin.tiny,
+  },
+  item: {
+    paddingVertical: spacing.padding.base,
   },
   rightIcon: {
     marginLeft: spacing.margin.extraLarge,

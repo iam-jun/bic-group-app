@@ -29,7 +29,8 @@ const defaultConfig = {
 export const groupsApiConfig = {
   getLinkPreview: (link: string): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}link-preview/${link}`,
+    url: `${provider.url}url-metadata`,
+    params: { url: link },
   }),
   getUsers: (params: IParamsGetUsers): HttpApiRequestConfig => ({
     ...defaultConfig,

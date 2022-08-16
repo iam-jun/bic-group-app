@@ -5,7 +5,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Header from '~/beinComponents/Header';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import images from '~/resources/images';
 import PostDetailContent from '~/screens/post/PostDetail/PostDetailContent';
 
 const PostDetail = (props: any) => {
@@ -42,7 +41,6 @@ const PostDetail = (props: any) => {
           <Header
             titleTextProps={{ useI18n: true }}
             title="post:title_post_detail"
-            avatar={images.logo_bein}
           />
           <PostViewPlaceholder testID="post_detail.post_view_placeholder" />
         </View>

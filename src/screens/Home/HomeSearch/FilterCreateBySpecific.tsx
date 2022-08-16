@@ -62,7 +62,6 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   const renderItem = ({ item }: any) => (
     <ItemWrapper onPress={() => onPressUser(item)}>
       <PrimaryItem
-        height={40}
         title={item?.fullname}
         showAvatar
         avatar={item?.avatar}

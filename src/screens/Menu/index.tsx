@@ -16,9 +16,12 @@ import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import MenuShortcut from '~/screens/Menu/components/MenuShortcut';
 import MenuSettings from '~/screens/Menu/components/MenuSettings';
+import { useRootNavigation } from '~/hooks/navigation';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
+  const { rootNavigation } = useRootNavigation()
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
@@ -36,7 +39,7 @@ const Menu = (): React.ReactElement => {
       <MenuHeader />
       <ScrollView showsVerticalScrollIndicator={false}>
         <MenuDiscoverCommunity />
-        <Button style={styles.buttonDiscover}>
+        <Button style={styles.buttonDiscover} onPress={() => rootNavigation.navigate(menuStack.discover)}>
           <Icon icon="CompassSolid" tintColor={colors.neutral20} />
           <Text.BodyMMedium style={styles.textDiscover} useI18n>menu:title_discover</Text.BodyMMedium>
         </Button>
