@@ -11,7 +11,7 @@ import {
   IUserPreview,
 } from '~/interfaces/common';
 import { ReactionType } from '~/constants/reactions';
-import { BottomSelectionListProps } from '~/components/BottomSelectionList';
+import { BottomListProps } from '~/components/BottomList';
 
 export function setModal(payload: IPayloadShowModal) {
   return {
@@ -131,18 +131,18 @@ export const showSeenPeopleListBottomSheet = () => ({
   type: Actions.SHOW_SEEN_PEOPLE_LIST_BOTTOM_SHEET,
 });
 
-export const showBottomSelectionSheet = (payload: BottomSelectionListProps) => ({
-  type: Actions.SHOW_BOTTOM_SELECTION_SHEET,
+export const showBottomList = (payload: BottomListProps) => ({
+  type: Actions.SHOW_BOTTOM_LIST,
   payload,
 });
 
-export const setBottomSelectionList = (payload:BottomSelectionListProps) => ({
-  type: Actions.SET_BOTTOM_SELECTION_SHEET,
+export const setBottomList = (payload:BottomListProps) => ({
+  type: Actions.SET_BOTTOM_LIST,
   payload,
 });
 
-export const hideBottomSelectionList = () => ({
-  type: Actions.HIDE_BOTTOM_SELECTION_SHEET,
+export const hideBottomList = () => ({
+  type: Actions.HIDE_BOTTOM_LIST,
 })
 
 const modalActions = {
@@ -166,8 +166,8 @@ const modalActions = {
   showUserProfilePreviewBottomSheet,
   hideUserProfilePreviewBottomSheet,
   showSeenPeopleListBottomSheet,
-  showBottomSelectionSheet,
-  setBottomSelectionList,
-  hideBottomSelectionList,
+  showBottomList,
+  setBottomList,
+  hideBottomList,
 };
 export default modalActions;
