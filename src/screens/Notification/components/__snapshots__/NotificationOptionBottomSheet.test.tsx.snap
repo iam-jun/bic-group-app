@@ -34,6 +34,7 @@ exports[`NotificationOptionBottomSheet component renders correctly 1`] = `
               "height": 44,
               "opacity": 1,
               "paddingHorizontal": 16,
+              "paddingVertical": 8,
             }
           }
           testID="notification.mark_notification_read_or_unread"
@@ -147,6 +148,7 @@ exports[`NotificationOptionBottomSheet component renders correctly 1`] = `
               "height": 44,
               "opacity": 1,
               "paddingHorizontal": 16,
+              "paddingVertical": 8,
             }
           }
           testID="notification.off_notification_from_group"

@@ -22,9 +22,9 @@ exports[`PrivacyItem component renders correctly 1`] = `
       Object {
         "alignItems": "center",
         "flexDirection": "row",
-        "height": 64,
         "opacity": 1,
         "paddingHorizontal": 12,
+        "paddingVertical": 8,
       }
     }
     testID="general_information.privacy.public"
@@ -101,48 +101,28 @@ exports[`PrivacyItem component renders correctly 1`] = `
           Array [
             Object {
               "color": "#181C32",
-              "fontFamily": "BeVietnamPro-Light",
+              "fontFamily": "BeVietnamPro-SemiBold",
               "fontSize": 15,
             },
             Object {},
             undefined,
           ]
         }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-        >
-          undefined 
-          <Text
-            onPress={[MockFunction]}
-            style={
-              Array [
-                Object {
-                  "color": "#181C32",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 15,
-                },
-                Object {
-                  "color": "#007AFF",
-                },
-                undefined,
-              ]
-            }
-          >
-            Learn more
-          </Text>
-        </Text>
-      </Text>
+      />
+      <Text
+        numberOfLines={0}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+      />
     </View>
   </View>
 </View>

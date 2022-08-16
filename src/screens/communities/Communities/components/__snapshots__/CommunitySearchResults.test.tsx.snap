@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ManagedCommunities component should render data correctly 1`] = `
+exports[`CommunitySearchResults component should render data correctly 1`] = `
 <RCTScrollView
   ItemSeparatorComponent={[Function]}
   ListEmptyComponent={[Function]}
   ListFooterComponent={[Function]}
+  ListHeaderComponent={[Function]}
   data={
     Array [
       "1",
@@ -14,7 +15,6 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
   getItemCount={[Function]}
   keyExtractor={[Function]}
   onContentSizeChange={[Function]}
-  onEndReached={[Function]}
   onEndReachedThreshold={0.1}
   onLayout={[Function]}
   onMomentumScrollBegin={[Function]}
@@ -22,22 +22,43 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
   onScroll={[Function]}
   onScrollBeginDrag={[Function]}
   onScrollEndDrag={[Function]}
-  refreshControl={
-    <RefreshControlMock
-      onRefresh={[Function]}
-      refreshing={false}
-      tintColor="#A4A9B7"
-    />
-  }
   removeClippedSubviews={false}
   renderItem={[Function]}
   scrollEventThrottle={50}
+  showsVerticalScrollIndicator={false}
   stickyHeaderIndices={Array []}
   testID="flatlist"
   viewabilityConfigCallbackPairs={Array []}
 >
-  <RCTRefreshControl />
   <View>
+    <View
+      onLayout={[Function]}
+    >
+      <View
+        style={
+          Object {
+            "marginHorizontal": 16,
+            "marginVertical": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Search Results
+        </Text>
+      </View>
+    </View>
     <View
       onLayout={[Function]}
       style={null}
@@ -127,7 +148,9 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 64,
                         "justifyContent": "center",
                         "width": 64,
@@ -143,7 +166,9 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 64,
                         "width": 64,
                       },
@@ -270,7 +295,7 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
+                      "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
@@ -287,7 +312,7 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
+                      "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
@@ -304,7 +329,7 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
+                      "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
@@ -324,7 +349,21 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
     </View>
     <View
       onLayout={[Function]}
-    />
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "height": 100,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <ActivityIndicator
+          testID="community_search_results.loading_more"
+        />
+      </View>
+    </View>
   </View>
 </RCTScrollView>
 `;

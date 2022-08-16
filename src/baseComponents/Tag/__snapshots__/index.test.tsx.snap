@@ -93,7 +93,9 @@ exports[`Tag component renders correctly Tag component type AvatarTag 1`] = `
                 Object {
                   "alignItems": "center",
                   "backgroundColor": "#f9f9f9",
+                  "borderColor": "#F2F5F8",
                   "borderRadius": 12,
+                  "borderWidth": 2,
                   "height": 24,
                   "justifyContent": "center",
                   "width": 24,
@@ -109,7 +111,9 @@ exports[`Tag component renders correctly Tag component type AvatarTag 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
+                  "borderColor": "#F2F5F8",
                   "borderRadius": 12,
+                  "borderWidth": 2,
                   "height": 24,
                   "width": 24,
                 },
@@ -144,7 +148,7 @@ exports[`Tag component renders correctly Tag component type AvatarTag 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 11,
           },
@@ -265,7 +269,7 @@ exports[`Tag component renders correctly Tag component type NameTag 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 11,
           },
@@ -386,7 +390,7 @@ exports[`Tag component renders correctly Tag component type TextOnly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 11,
           },

@@ -39,7 +39,7 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -128,7 +128,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 13,
               },
@@ -166,7 +166,6 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "height": null,
           "opacity": 1,
           "paddingHorizontal": 12,
           "paddingRight": 8,
@@ -187,7 +186,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },

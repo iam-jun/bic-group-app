@@ -40,9 +40,9 @@ exports[`SettingItem conponent renders correctly 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "height": 64,
           "opacity": 1,
           "paddingHorizontal": 12,
+          "paddingVertical": 8,
         }
       }
     >
@@ -135,7 +135,7 @@ exports[`SettingItem conponent renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
@@ -192,9 +192,9 @@ exports[`SettingItem conponent renders correctly testID 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "height": 64,
           "opacity": 1,
           "paddingHorizontal": 12,
+          "paddingVertical": 8,
         }
       }
       testID="test"
@@ -288,7 +288,7 @@ exports[`SettingItem conponent renders correctly testID 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
@@ -345,9 +345,9 @@ exports[`SettingItem conponent should render left, right component 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "height": 64,
           "opacity": 1,
           "paddingHorizontal": 12,
+          "paddingVertical": 8,
         }
       }
     >
@@ -440,7 +440,7 @@ exports[`SettingItem conponent should render left, right component 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },

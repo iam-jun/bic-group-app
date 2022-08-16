@@ -15,7 +15,7 @@ exports[`WorkInfo component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#212745",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },
@@ -29,7 +29,7 @@ exports[`WorkInfo component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },

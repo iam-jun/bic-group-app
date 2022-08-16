@@ -39,26 +39,22 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
         style={
           Array [
             Object {
-              "height": undefined,
-            },
-            Object {
               "alignItems": "flex-end",
               "backgroundColor": "#FFFFFF",
               "flexDirection": "row",
+              "minHeight": 44,
               "overflow": "hidden",
               "paddingTop": 0,
             },
             Object {
-              "borderBottomWidth": 0.5,
-              "borderColor": "#E3E6F2",
               "elevation": 2,
-              "shadowColor": "#000",
+              "shadowColor": "rgba(0, 0, 0, 1)",
               "shadowOffset": Object {
-                "height": 1,
+                "height": 2,
                 "width": 0,
               },
-              "shadowOpacity": 0.1,
-              "shadowRadius": 1,
+              "shadowOpacity": 0.12,
+              "shadowRadius": 1.5,
             },
             undefined,
           ]
@@ -72,7 +68,6 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               "backgroundColor": "#FFFFFF",
               "flex": 1,
               "flexDirection": "row",
-              "height": 60,
               "overflow": "hidden",
               "paddingLeft": 8,
               "paddingRight": 8,
@@ -119,10 +114,10 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                   },
                   Object {
                     "alignItems": "center",
-                    "height": 48,
+                    "height": 44,
                     "justifyContent": "center",
                     "padding": 12,
-                    "width": 48,
+                    "width": 44,
                   },
                   Object {
                     "backgroundColor": undefined,
@@ -150,9 +145,8 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               Array [
                 Object {
                   "flex": 1,
-                  "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 4,
+                  "paddingVertical": 8,
                 },
                 Object {},
               ]
@@ -190,7 +184,9 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       "fontSize": 15,
                     },
                     Object {},
-                    Object {},
+                    Object {
+                      "marginRight": 8,
+                    },
                   ]
                 }
                 testID="header.text"
@@ -215,16 +211,14 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#D1D4DB",
-                "borderColor": "#7335C0",
-                "borderRadius": 4,
-                "borderWidth": 0,
-                "height": 40,
-                "marginRight": 4,
-                "padding": 8,
-              }
+              Array [
+                Object {
+                  "borderRadius": 6,
+                },
+                Object {
+                  "marginRight": 4,
+                },
+              ]
             }
             testID="select_audience.btn_done"
           >
@@ -233,31 +227,41 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                 Array [
                   Object {
                     "alignItems": "center",
+                    "borderRadius": 6,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "paddingVertical": 4,
                   },
                   undefined,
+                  Object {
+                    "backgroundColor": "#F4EFFB",
+                    "height": 36,
+                    "paddingHorizontal": 12,
+                  },
                 ]
               }
-              testID="button_wrapper.content"
+              testID="button.content"
             >
               <Text
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-Light",
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
                     Object {
-                      "color": "#A4A9B7",
+                      "color": "#BAC0DE",
                     },
-                    Object {
-                      "textAlign": "center",
-                    },
+                    Array [
+                      Object {
+                        "textAlign": "center",
+                      },
+                      undefined,
+                    ],
                   ]
                 }
-                testID="header.button.text"
+                testID="button.text"
               >
                 Done
               </Text>
@@ -628,7 +632,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
+                          "color": "#212745",
                           "fontFamily": "BeVietnamPro-Light",
                           "fontSize": 15,
                         },
@@ -645,7 +649,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       style={
                         Array [
                           Object {
-                            "color": "#181C32",
+                            "color": "#212745",
                             "fontFamily": "BeVietnamPro-Light",
                             "fontSize": 15,
                           },
@@ -758,7 +762,9 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                                   Object {
                                     "alignItems": "center",
                                     "backgroundColor": "#f9f9f9",
+                                    "borderColor": "#F2F5F8",
                                     "borderRadius": 4,
+                                    "borderWidth": 2,
                                     "height": 40,
                                     "justifyContent": "center",
                                     "width": 40,
@@ -774,7 +780,9 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                                     "overflow": "hidden",
                                   },
                                   Object {
+                                    "borderColor": "#F2F5F8",
                                     "borderRadius": 4,
+                                    "borderWidth": 2,
                                     "height": 40,
                                     "width": 40,
                                   },
@@ -998,7 +1006,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                         style={
                           Array [
                             Object {
-                              "color": "#181C32",
+                              "color": "#212745",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
@@ -1074,26 +1082,22 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
         style={
           Array [
             Object {
-              "height": undefined,
-            },
-            Object {
               "alignItems": "flex-end",
               "backgroundColor": "#FFFFFF",
               "flexDirection": "row",
+              "minHeight": 44,
               "overflow": "hidden",
               "paddingTop": 0,
             },
             Object {
-              "borderBottomWidth": 0.5,
-              "borderColor": "#E3E6F2",
               "elevation": 2,
-              "shadowColor": "#000",
+              "shadowColor": "rgba(0, 0, 0, 1)",
               "shadowOffset": Object {
-                "height": 1,
+                "height": 2,
                 "width": 0,
               },
-              "shadowOpacity": 0.1,
-              "shadowRadius": 1,
+              "shadowOpacity": 0.12,
+              "shadowRadius": 1.5,
             },
             undefined,
           ]
@@ -1107,7 +1111,6 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               "backgroundColor": "#FFFFFF",
               "flex": 1,
               "flexDirection": "row",
-              "height": 60,
               "overflow": "hidden",
               "paddingLeft": 8,
               "paddingRight": 8,
@@ -1154,10 +1157,10 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                   },
                   Object {
                     "alignItems": "center",
-                    "height": 48,
+                    "height": 44,
                     "justifyContent": "center",
                     "padding": 12,
-                    "width": 48,
+                    "width": 44,
                   },
                   Object {
                     "backgroundColor": undefined,
@@ -1185,9 +1188,8 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               Array [
                 Object {
                   "flex": 1,
-                  "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 4,
+                  "paddingVertical": 8,
                 },
                 Object {},
               ]
@@ -1225,7 +1227,9 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       "fontSize": 15,
                     },
                     Object {},
-                    Object {},
+                    Object {
+                      "marginRight": 8,
+                    },
                   ]
                 }
                 testID="header.text"
@@ -1250,16 +1254,14 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#D1D4DB",
-                "borderColor": "#7335C0",
-                "borderRadius": 4,
-                "borderWidth": 0,
-                "height": 40,
-                "marginRight": 4,
-                "padding": 8,
-              }
+              Array [
+                Object {
+                  "borderRadius": 6,
+                },
+                Object {
+                  "marginRight": 4,
+                },
+              ]
             }
             testID="select_audience.btn_done"
           >
@@ -1268,31 +1270,41 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
+                    "borderRadius": 6,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "paddingVertical": 4,
                   },
                   undefined,
+                  Object {
+                    "backgroundColor": "#F4EFFB",
+                    "height": 36,
+                    "paddingHorizontal": 12,
+                  },
                 ]
               }
-              testID="button_wrapper.content"
+              testID="button.content"
             >
               <Text
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-Light",
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
                     Object {
-                      "color": "#A4A9B7",
+                      "color": "#BAC0DE",
                     },
-                    Object {
-                      "textAlign": "center",
-                    },
+                    Array [
+                      Object {
+                        "textAlign": "center",
+                      },
+                      undefined,
+                    ],
                   ]
                 }
-                testID="header.button.text"
+                testID="button.text"
               >
                 Done
               </Text>
@@ -1663,7 +1675,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
+                          "color": "#212745",
                           "fontFamily": "BeVietnamPro-Light",
                           "fontSize": 15,
                         },
@@ -1680,7 +1692,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": "#181C32",
+                            "color": "#212745",
                             "fontFamily": "BeVietnamPro-Light",
                             "fontSize": 15,
                           },
@@ -1793,7 +1805,9 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                                   Object {
                                     "alignItems": "center",
                                     "backgroundColor": "#f9f9f9",
+                                    "borderColor": "#F2F5F8",
                                     "borderRadius": 4,
+                                    "borderWidth": 2,
                                     "height": 40,
                                     "justifyContent": "center",
                                     "width": 40,
@@ -1809,7 +1823,9 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                                     "overflow": "hidden",
                                   },
                                   Object {
+                                    "borderColor": "#F2F5F8",
                                     "borderRadius": 4,
+                                    "borderWidth": 2,
                                     "height": 40,
                                     "width": 40,
                                   },
@@ -2033,7 +2049,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#181C32",
+                              "color": "#212745",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
@@ -2109,26 +2125,22 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
         style={
           Array [
             Object {
-              "height": undefined,
-            },
-            Object {
               "alignItems": "flex-end",
               "backgroundColor": "#FFFFFF",
               "flexDirection": "row",
+              "minHeight": 44,
               "overflow": "hidden",
               "paddingTop": 0,
             },
             Object {
-              "borderBottomWidth": 0.5,
-              "borderColor": "#E3E6F2",
               "elevation": 2,
-              "shadowColor": "#000",
+              "shadowColor": "rgba(0, 0, 0, 1)",
               "shadowOffset": Object {
-                "height": 1,
+                "height": 2,
                 "width": 0,
               },
-              "shadowOpacity": 0.1,
-              "shadowRadius": 1,
+              "shadowOpacity": 0.12,
+              "shadowRadius": 1.5,
             },
             undefined,
           ]
@@ -2142,7 +2154,6 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
               "backgroundColor": "#FFFFFF",
               "flex": 1,
               "flexDirection": "row",
-              "height": 60,
               "overflow": "hidden",
               "paddingLeft": 8,
               "paddingRight": 8,
@@ -2189,10 +2200,10 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                   },
                   Object {
                     "alignItems": "center",
-                    "height": 48,
+                    "height": 44,
                     "justifyContent": "center",
                     "padding": 12,
-                    "width": 48,
+                    "width": 44,
                   },
                   Object {
                     "backgroundColor": undefined,
@@ -2220,9 +2231,8 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
               Array [
                 Object {
                   "flex": 1,
-                  "height": "100%",
                   "justifyContent": "center",
-                  "marginLeft": 4,
+                  "paddingVertical": 8,
                 },
                 Object {},
               ]
@@ -2260,7 +2270,9 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                       "fontSize": 15,
                     },
                     Object {},
-                    Object {},
+                    Object {
+                      "marginRight": 8,
+                    },
                   ]
                 }
                 testID="header.text"
@@ -2285,16 +2297,14 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#D1D4DB",
-                "borderColor": "#7335C0",
-                "borderRadius": 4,
-                "borderWidth": 0,
-                "height": 40,
-                "marginRight": 4,
-                "padding": 8,
-              }
+              Array [
+                Object {
+                  "borderRadius": 6,
+                },
+                Object {
+                  "marginRight": 4,
+                },
+              ]
             }
             testID="select_audience.btn_done"
           >
@@ -2303,31 +2313,41 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                 Array [
                   Object {
                     "alignItems": "center",
+                    "borderRadius": 6,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "paddingVertical": 4,
                   },
                   undefined,
+                  Object {
+                    "backgroundColor": "#F4EFFB",
+                    "height": 36,
+                    "paddingHorizontal": 12,
+                  },
                 ]
               }
-              testID="button_wrapper.content"
+              testID="button.content"
             >
               <Text
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-Light",
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
                     Object {
-                      "color": "#A4A9B7",
+                      "color": "#BAC0DE",
                     },
-                    Object {
-                      "textAlign": "center",
-                    },
+                    Array [
+                      Object {
+                        "textAlign": "center",
+                      },
+                      undefined,
+                    ],
                   ]
                 }
-                testID="header.button.text"
+                testID="button.text"
               >
                 Next
               </Text>

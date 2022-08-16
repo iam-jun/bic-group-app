@@ -264,7 +264,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                             Object {
                               "alignItems": "center",
                               "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "justifyContent": "center",
                               "width": 40,
@@ -280,7 +282,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                               "overflow": "hidden",
                             },
                             Object {
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "width": 40,
                             },
@@ -504,7 +508,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
@@ -754,7 +758,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                             Object {
                               "alignItems": "center",
                               "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "justifyContent": "center",
                               "width": 40,
@@ -770,7 +776,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                               "overflow": "hidden",
                             },
                             Object {
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "width": 40,
                             },
@@ -994,7 +1002,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
@@ -1186,7 +1194,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                             Object {
                               "alignItems": "center",
                               "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "justifyContent": "center",
                               "width": 40,
@@ -1202,7 +1212,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                               "overflow": "hidden",
                             },
                             Object {
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "width": 40,
                             },
@@ -1426,7 +1438,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
@@ -1681,7 +1693,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                             Object {
                               "alignItems": "center",
                               "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "justifyContent": "center",
                               "width": 40,
@@ -1697,7 +1711,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                               "overflow": "hidden",
                             },
                             Object {
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "width": 40,
                             },
@@ -1921,7 +1937,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
@@ -2171,7 +2187,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                             Object {
                               "alignItems": "center",
                               "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "justifyContent": "center",
                               "width": 40,
@@ -2187,7 +2205,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                               "overflow": "hidden",
                             },
                             Object {
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "width": 40,
                             },
@@ -2411,7 +2431,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
@@ -2603,7 +2623,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                             Object {
                               "alignItems": "center",
                               "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "justifyContent": "center",
                               "width": 40,
@@ -2619,7 +2641,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                               "overflow": "hidden",
                             },
                             Object {
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "width": 40,
                             },
@@ -2843,7 +2867,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
@@ -3098,7 +3122,9 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                             Object {
                               "alignItems": "center",
                               "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "justifyContent": "center",
                               "width": 40,
@@ -3114,7 +3140,9 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                               "overflow": "hidden",
                             },
                             Object {
+                              "borderColor": "#F2F5F8",
                               "borderRadius": 4,
+                              "borderWidth": 2,
                               "height": 40,
                               "width": 40,
                             },
@@ -3240,7 +3268,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },

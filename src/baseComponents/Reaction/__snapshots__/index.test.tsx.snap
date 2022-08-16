@@ -42,7 +42,7 @@ exports[`Reaction component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -60,7 +60,7 @@ exports[`Reaction component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },

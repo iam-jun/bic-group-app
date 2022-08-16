@@ -28,7 +28,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#212745",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -63,7 +63,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 13,
               },
@@ -282,7 +282,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 13,
         },
@@ -324,7 +324,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 13,
             },
