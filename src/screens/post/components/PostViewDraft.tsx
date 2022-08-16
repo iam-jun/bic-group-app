@@ -21,10 +21,10 @@ import PostViewContent from '~/screens/post/components/PostViewComponents/PostVi
 import PostViewImportant from '~/screens/post/components/PostViewComponents/PostViewImportant';
 import Button from '~/beinComponents/Button';
 import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
+import BottomListItem from '~/components/BottomList/BottomListItem';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -156,14 +156,12 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       isOpen: true,
       ContentComponent: (
         <View>
-          <PrimaryItem
-            leftIconProps={{ icon: 'Calendar', size: 20 }}
+          <BottomListItem
             leftIcon="Calendar"
             title={t('post:draft:btn_menu_schedule')}
             onPress={onPressCalendar}
           />
-          <PrimaryItem
-            leftIconProps={{ icon: 'TrashCan', size: 20 }}
+          <BottomListItem
             leftIcon="TrashCan"
             title={t('post:draft:btn_menu_delete')}
             onPress={onPressDelete}

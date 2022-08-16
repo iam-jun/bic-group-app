@@ -22,7 +22,7 @@ exports[`NotificationsBadgeComponent renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#212745",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 13,
         },

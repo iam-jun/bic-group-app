@@ -42,9 +42,9 @@ const TabButton = ({
   return (
     <TouchableOpacity
       testID={testID}
-      onPress={onPress}
       style={[styles.container, style]}
       disabled={!isInternetReachable || disabled}
+      onPress={onPress}
     >
       <Text
         variant={textVariant[size]}
@@ -57,8 +57,6 @@ const TabButton = ({
   )
 }
 
-export default TabButton
-
 const createStyles = (theme: ExtendedTheme, isSelected: boolean) => {
   const { colors } = theme;
   return StyleSheet.create({
@@ -70,4 +68,6 @@ const createStyles = (theme: ExtendedTheme, isSelected: boolean) => {
       borderBottomColor: isSelected ? colors.purple50 : colors.neutral40,
     },
   })
-}
+};
+
+export default TabButton;

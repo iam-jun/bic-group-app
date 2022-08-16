@@ -3,6 +3,7 @@ const modalKeySelector = {
   reactionDetailBottomSheet: 'modal.reactionDetailBottomSheet',
   reactionBottomSheet: 'modal.reactionBottomSheet',
   userProfilePreviewBottomSheet: 'modal.userProfilePreview',
+  bottomList: 'modal.bottomList',
 };
 
 export default modalKeySelector;

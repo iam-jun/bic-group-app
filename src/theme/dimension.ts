@@ -161,7 +161,7 @@ export const avatarSizes = {
   base: 40,
   medium: 48,
   large: 64,
-  xLarge: 90,
+  xLarge: 80,
 };
 
 export const avatarBorderWidth = {

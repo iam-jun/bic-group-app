@@ -78,12 +78,6 @@ const GroupJoined: FC<GroupJoinedProps> = ({
   const onPressShowMenu = () => {
     dispatch(modalActions.showModal({
       isOpen: true,
-      props: {
-        modalStyle: {
-          borderTopRightRadius: spacing.borderRadius.large,
-          borderTopLeftRadius: spacing.borderRadius.large,
-        },
-      },
       ContentComponent: (
         <TouchableOpacity activeOpacity={1} style={styles.container}>
           <Text.H5 style={styles.textHeader}>

@@ -33,7 +33,6 @@ import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getLink, LINK_GROUP, openUrl,
 } from '~/utils/link';
-import HeaderMenu from '../components/HeaderMenu';
 import { checkLastAdmin } from '../helper';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
@@ -41,6 +40,8 @@ import useLeaveGroup from '../GroupMembers/components/useLeaveGroup';
 import GroupTabHeader from './components/GroupTabHeader';
 import { useBaseHook } from '~/hooks';
 import GroupJoinCancelButton from './components/GroupJoinCancelButton';
+import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
+import { BottomListProps } from '~/components/BottomList';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -128,14 +129,14 @@ const GroupDetail = (props: any) => {
   }
 
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomList());
     rootNavigation.navigate(
       groupStack.groupAdmin, { groupId },
     );
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomList());
     Clipboard.setString(getLink(
       LINK_GROUP, groupId,
     ));
@@ -149,7 +150,7 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressShare = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomList());
     const groupLink = getLink(
       LINK_GROUP, groupId,
     );
@@ -173,7 +174,7 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressLeave = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomList());
 
     return checkLastAdmin(
       groupId,
@@ -248,25 +249,23 @@ const GroupDetail = (props: any) => {
   );
 
   const onPressMenu = () => {
-    dispatch(modalActions.showModal({
+    const headerMenuData = getHeaderMenu(
+      'group',
+      isMember,
+      canSetting,
+      dispatch,
+      onPressAdminTools,
+      onPressCopyLink,
+      onPressShare,
+      undefined,
+      undefined,
+      undefined,
+      onPressLeave,
+    )
+    dispatch(modalActions.showBottomList({
       isOpen: true,
-      ContentComponent: (
-        <HeaderMenu
-          type="group"
-          isMember={isMember}
-          canSetting={canSetting}
-          onPressAdminTools={onPressAdminTools}
-          onPressCopyLink={onPressCopyLink}
-          onPressShare={onPressShare}
-          onPressLeave={onPressLeave}
-        />
-      ),
-      props: {
-        isContextMenu: true,
-        menuMinWidth: 280,
-        modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
-      },
-    }));
+      data: headerMenuData,
+    } as BottomListProps))
   };
 
   const onPressChat = () => {

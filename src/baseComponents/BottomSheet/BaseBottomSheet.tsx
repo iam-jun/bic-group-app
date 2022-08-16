@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Modalize, ModalizeProps } from 'react-native-modalize';
 import {
-  StyleSheet, ViewStyle, StyleProp, Keyboard,
+  ViewStyle, StyleProp, Keyboard, StyleSheet,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Portal } from 'react-native-portalize';
 
 import spacing from '~/theme/spacing';
@@ -12,19 +12,16 @@ export interface BaseBottomSheetProps extends ModalizeProps {
   modalizeRef: any;
   isOpen?: boolean;
   children?: React.ReactNode;
-
   adjustToContentHeight?: boolean;
   handlePosition?: 'inside' | 'outside';
   snapPoint?: number;
   modalHeight?: number;
   position?: {x: number; y: number};
   ContentComponent?: React.ReactNode;
-
   handleStyle?: StyleProp<ViewStyle>;
   modalStyle?: StyleProp<ViewStyle>;
   childrenStyle?: StyleProp<ViewStyle>;
   overlayStyle?: StyleProp<ViewStyle>;
-
   onClose?: () => void;
 }
 
@@ -32,15 +29,12 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
   isOpen,
   modalizeRef,
   children,
-
   flatListProps,
   adjustToContentHeight = true,
   handlePosition = 'inside',
   snapPoint,
   modalHeight,
-
   ContentComponent,
-
   handleStyle,
   modalStyle,
   childrenStyle,
@@ -49,6 +43,7 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
 }: BaseBottomSheetProps) => {
   const renderModalize = () => {
     const insets = useSafeAreaInsets();
+    const styles = createStyles(insets);
 
     useEffect(
       () => {
@@ -63,22 +58,6 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
       }, [isOpen],
     );
 
-    const _modalStyle = StyleSheet.flatten([
-      {
-        borderTopRightRadius: 0,
-        borderTopLeftRadius: 0,
-        paddingTop: spacing.padding.extraLarge,
-      },
-      modalStyle,
-    ]);
-
-    const _childrenStyle = [
-      {
-        paddingBottom: insets.bottom + (spacing.padding.large || 16),
-      },
-      childrenStyle,
-    ];
-
     return (
       <Portal>
         <Modalize
@@ -86,12 +65,12 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
           adjustToContentHeight={adjustToContentHeight}
           modalHeight={modalHeight}
           snapPoint={snapPoint}
-          flatListProps={flatListProps}
           handlePosition={handlePosition}
           handleStyle={handleStyle}
-          modalStyle={_modalStyle}
+          modalStyle={[styles.modalStyle, modalStyle]}
           overlayStyle={overlayStyle}
-          childrenStyle={_childrenStyle}
+          childrenStyle={[styles.childrenStyle, childrenStyle]}
+          flatListProps={flatListProps}
           {...props}
         >
           {flatListProps ? undefined : ContentComponent}
@@ -107,5 +86,16 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
     </>
   );
 };
+
+const createStyles = (insets: EdgeInsets) => StyleSheet.create({
+  modalStyle: {
+    borderTopRightRadius: spacing.borderRadius.extraLarge,
+    borderTopLeftRadius: spacing.borderRadius.extraLarge,
+    paddingTop: spacing.padding.extraLarge,
+  },
+  childrenStyle: {
+    paddingBottom: insets.bottom + (spacing.padding.large || 16),
+  },
+});
 
 export default BaseBottomSheet;

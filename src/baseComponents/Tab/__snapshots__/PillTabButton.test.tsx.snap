@@ -38,7 +38,7 @@ exports[`PillTabButton renders selected button with type primary and size medium
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },
@@ -95,7 +95,7 @@ exports[`PillTabButton renders selected button with type secondary and size larg
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 15,
         },
@@ -152,7 +152,7 @@ exports[`PillTabButton renders selected button with type secondary and size smal
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 11,
         },
@@ -208,7 +208,7 @@ exports[`PillTabButton renders unselected button with size medium correctly 1`] 
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },

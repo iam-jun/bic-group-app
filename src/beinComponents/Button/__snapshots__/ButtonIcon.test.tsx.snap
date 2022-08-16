@@ -231,7 +231,7 @@ exports[`ButtonDanger conponent renders label correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#212745",
           "fontFamily": "BeVietnamPro-Medium",
           "fontSize": 13,
         },

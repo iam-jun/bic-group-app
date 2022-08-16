@@ -4,46 +4,13 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
 <View
   style={
     Object {
-      "height": 800.4,
+      "borderColor": "#E3E6F2",
+      "borderTopWidth": 1,
       "paddingBottom": 0,
-      "paddingHorizontal": 0,
+      "paddingHorizontal": 8,
     }
   }
 >
-  <Text
-    numberOfLines={1}
-    style={
-      Array [
-        Object {
-          "color": "#181C32",
-          "fontFamily": "BeVietnamPro-SemiBold",
-          "fontSize": 13,
-        },
-        Object {
-          "color": "#7335C0",
-        },
-        Object {
-          "paddingBottom": 8,
-          "paddingLeft": 14,
-          "paddingTop": 8,
-        },
-      ]
-    }
-  >
-    Interested by 
-    0
-  </Text>
-  <View
-    style={
-      Object {
-        "backgroundColor": "#7335C0",
-        "height": 2,
-        "marginBottom": 16,
-        "marginLeft": 14,
-        "width": 73,
-      }
-    }
-  />
   <RCTScrollView
     ListFooterComponent={[Function]}
     data={Array []}
@@ -71,6 +38,11 @@ exports[`UsersSeenPostBottomSheet component renders correctly loading data users
       >
         <ActivityIndicator
           color="#A4A9B7"
+          style={
+            Object {
+              "margin": 8,
+            }
+          }
           testID="loading_indicator"
         />
       </View>
@@ -83,46 +55,13 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
 <View
   style={
     Object {
-      "height": 800.4,
+      "borderColor": "#E3E6F2",
+      "borderTopWidth": 1,
       "paddingBottom": 0,
-      "paddingHorizontal": 0,
+      "paddingHorizontal": 8,
     }
   }
 >
-  <Text
-    numberOfLines={1}
-    style={
-      Array [
-        Object {
-          "color": "#181C32",
-          "fontFamily": "BeVietnamPro-SemiBold",
-          "fontSize": 13,
-        },
-        Object {
-          "color": "#7335C0",
-        },
-        Object {
-          "paddingBottom": 8,
-          "paddingLeft": 14,
-          "paddingTop": 8,
-        },
-      ]
-    }
-  >
-    Interested by 
-    2
-  </Text>
-  <View
-    style={
-      Object {
-        "backgroundColor": "#7335C0",
-        "height": 2,
-        "marginBottom": 16,
-        "marginLeft": 14,
-        "width": 73,
-      }
-    }
-  />
   <RCTScrollView
     ListFooterComponent={[Function]}
     data={
@@ -197,9 +136,10 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "height": 44,
+                "marginVertical": 4,
                 "opacity": 1,
                 "paddingHorizontal": 12,
+                "paddingVertical": 8,
               }
             }
             testID="users_seen_post_bottom_sheet.item_username.hoangnhat"
@@ -209,8 +149,8 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 Array [
                   Object {
                     "borderRadius": 4,
-                    "height": 40,
-                    "width": 40,
+                    "height": 32,
+                    "width": 32,
                   },
                   Object {
                     "marginRight": 12,
@@ -222,11 +162,16 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
               <View
                 style={
                   Array [
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 32,
+                        "width": 32,
+                      },
+                      Object {
+                        "borderRadius": 16,
+                      },
+                    ],
                     Object {},
                   ]
                 }
@@ -259,10 +204,12 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                         Object {
                           "alignItems": "center",
                           "backgroundColor": "#f9f9f9",
-                          "borderRadius": 4,
-                          "height": 40,
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
                           "justifyContent": "center",
-                          "width": 40,
+                          "width": 32,
                         }
                       }
                       testID="Image__placeholder"
@@ -275,9 +222,11 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                           "overflow": "hidden",
                         },
                         Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
+                          "width": 32,
                         },
                       ]
                     }
@@ -318,9 +267,9 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 13,
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Medium",
+                      "fontSize": 15,
                     },
                     Object {},
                     undefined,
@@ -328,6 +277,22 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 }
               >
                 Hoàng Nhật
+              </Text>
+              <Text
+                numberOfLines={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 13,
+                    },
+                    Object {},
+                    undefined,
+                  ]
+                }
+              >
+                @hoangnhat
               </Text>
             </View>
           </View>
@@ -358,9 +323,10 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "height": 44,
+                "marginVertical": 4,
                 "opacity": 1,
                 "paddingHorizontal": 12,
+                "paddingVertical": 8,
               }
             }
             testID="users_seen_post_bottom_sheet.item_username.anhthien"
@@ -370,8 +336,8 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 Array [
                   Object {
                     "borderRadius": 4,
-                    "height": 40,
-                    "width": 40,
+                    "height": 32,
+                    "width": 32,
                   },
                   Object {
                     "marginRight": 12,
@@ -383,11 +349,16 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
               <View
                 style={
                   Array [
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 32,
+                        "width": 32,
+                      },
+                      Object {
+                        "borderRadius": 16,
+                      },
+                    ],
                     Object {},
                   ]
                 }
@@ -420,10 +391,12 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                         Object {
                           "alignItems": "center",
                           "backgroundColor": "#f9f9f9",
-                          "borderRadius": 4,
-                          "height": 40,
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
                           "justifyContent": "center",
-                          "width": 40,
+                          "width": 32,
                         }
                       }
                       testID="Image__placeholder"
@@ -436,9 +409,11 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                           "overflow": "hidden",
                         },
                         Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
+                          "width": 32,
                         },
                       ]
                     }
@@ -479,9 +454,9 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 13,
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Medium",
+                      "fontSize": 15,
                     },
                     Object {},
                     undefined,
@@ -489,6 +464,22 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 }
               >
                 Nguyễn Anh Thiện
+              </Text>
+              <Text
+                numberOfLines={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 13,
+                    },
+                    Object {},
+                    undefined,
+                  ]
+                }
+              >
+                @anhthien
               </Text>
             </View>
           </View>
@@ -499,6 +490,11 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
       >
         <ActivityIndicator
           color="#A4A9B7"
+          style={
+            Object {
+              "margin": 8,
+            }
+          }
           testID="loading_indicator"
         />
       </View>

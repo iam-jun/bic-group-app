@@ -4,7 +4,6 @@ import PostViewFooter from '~/screens/post/components/PostViewComponents/PostVie
 import PostViewFooterLite from '~/screens/post/components/PostViewComponents/PostViewFooterLite';
 import PostViewHeader from '~/screens/post/components/PostViewComponents/PostViewHeader';
 import PostViewImportant from '~/screens/post/components/PostViewComponents/PostViewImportant';
-import PostViewMenu from '~/screens/post/components/PostViewMenu';
 
 export {
   ButtonMarkAsRead,
@@ -13,5 +12,4 @@ export {
   PostViewFooterLite,
   PostViewHeader,
   PostViewImportant,
-  PostViewMenu,
 }

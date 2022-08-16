@@ -327,13 +327,19 @@ const Header: React.FC<HeaderProps> = ({
         )}
         {onPressChat && <IconChat testID="header.icon_chat" onPress={onPressChat} />}
         {onPressMenu && (
-        <Icon
+        // <Icon
+        //   icon={menuIcon || 'menu'}
+        //   size={16}
+        //   style={styles.iconMenu}
+        //   onPress={onPressMenu}
+        //   testID="header.menuIcon"
+        //   buttonTestID="header.menuIcon.button"
+        // />
+        <Button.Raise
+          size="small"
+          testID="header.menuIcon.button"
           icon={menuIcon || 'menu'}
-          size={16}
-          style={styles.iconMenu}
           onPress={onPressMenu}
-          testID="header.menuIcon"
-          buttonTestID="header.menuIcon.button"
         />
         )}
         {!!buttonText && onPressButton && (
@@ -350,16 +356,12 @@ const Header: React.FC<HeaderProps> = ({
         </Button.Primary>
         )}
         {!!rightIcon && (
-        <Icon
-          size={24}
-          icon={rightIcon}
-          style={styles.icon}
-          onPress={onRightPress}
-          backgroundColor={colors.neutral1}
-          {...rightIconProps}
-          testID="header.rightIcon"
-          buttonTestID="header.rightIcon.button"
-        />
+          <Button.Raise
+            size="small"
+            testID="header.rightIcon.button"
+            icon={rightIcon}
+            onPress={onRightPress}
+          />
         )}
         <HeaderSearch
           testID={searchInputTestID}
