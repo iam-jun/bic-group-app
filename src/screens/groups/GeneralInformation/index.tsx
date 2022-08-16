@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';

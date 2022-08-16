@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import { IReactionProps } from '~/interfaces/IReaction';
 import SelectReactionView from '~/components/reaction/SelectReactionView';
 import Text from '~/beinComponents/Text';

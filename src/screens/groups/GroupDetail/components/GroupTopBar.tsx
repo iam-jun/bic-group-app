@@ -20,12 +20,13 @@ import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getLink, openUrl, LINK_GROUP,
 } from '~/utils/link';
-import HeaderMenu from '../../components/HeaderMenu';
 import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 import { checkLastAdmin } from '../../helper';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import { useMyPermissions } from '~/hooks/permissions';
 import useChatStore from '~/store/chat'
+import { BottomSelectionListProps } from '~/components/BottomSelectionList';
+import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
@@ -42,10 +43,10 @@ const GroupTopBar = () => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
     'groups', groupId, [
-      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
-      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
-    ],
+    PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+    PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
+    PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+  ],
   );
 
   const count = useChatStore().unreadChannels[chatId]?.mentionCountRoot;
@@ -60,14 +61,14 @@ const GroupTopBar = () => {
   };
 
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomSelectionList());
     rootNavigation.navigate(
       groupStack.groupAdmin, { groupId },
     );
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomSelectionList());
     Clipboard.setString(getLink(
       LINK_GROUP, groupId,
     ));
@@ -81,7 +82,7 @@ const GroupTopBar = () => {
   };
 
   const onPressShare = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomSelectionList());
     const groupLink = getLink(
       LINK_GROUP, groupId,
     );
@@ -93,7 +94,7 @@ const GroupTopBar = () => {
   };
 
   const onPressLeave = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomSelectionList());
 
     return checkLastAdmin(
       groupId,
@@ -112,23 +113,23 @@ const GroupTopBar = () => {
   };
 
   const onPressMenu = () => {
-    dispatch(modalActions.showModal({
+    const headerMenuData = getHeaderMenu(
+      'group',
+      isMember,
+      canSetting,
+      dispatch,
+      onPressAdminTools,
+      onPressCopyLink,
+      onPressShare,
+      undefined,
+      undefined,
+      undefined,
+      onPressLeave,
+    )
+    dispatch(modalActions.showBottomSelectionSheet({
       isOpen: true,
-      ContentComponent: (
-        <HeaderMenu
-          type="group"
-          isMember={isMember}
-          canSetting={canSetting}
-          onPressAdminTools={onPressAdminTools}
-          onPressCopyLink={onPressCopyLink}
-          onPressShare={onPressShare}
-          onPressLeave={onPressLeave}
-        />
-      ),
-      props: {
-        modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
-      },
-    }));
+      data: headerMenuData,
+    } as BottomSelectionListProps))
   };
 
   const onPressChat = () => {
@@ -152,14 +153,14 @@ const GroupTopBar = () => {
   // only members can see this icon
   const renderSearchIcon = () => (
     isMember && (
-    <ButtonWrapper onPress={onPressSearch} testID="group_top_bar.search">
-      <Icon
-        icon="iconSearch"
-        size={22}
-        style={styles.iconSearch}
-        tintColor={theme.colors.neutral80}
-      />
-    </ButtonWrapper>
+      <ButtonWrapper onPress={onPressSearch} testID="group_top_bar.search">
+        <Icon
+          icon="iconSearch"
+          size={22}
+          style={styles.iconSearch}
+          tintColor={theme.colors.neutral80}
+        />
+      </ButtonWrapper>
     )
   );
   const renderGroupOption = () => (

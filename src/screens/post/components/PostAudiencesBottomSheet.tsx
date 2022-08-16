@@ -8,7 +8,7 @@ import postKeySelector from '~/storeRedux/post/keySelector';
 import postActions from '~/storeRedux/post/actions';
 import { useKeySelector } from '~/hooks/selector';
 
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';

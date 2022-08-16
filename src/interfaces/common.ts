@@ -1,7 +1,7 @@
 import { languages } from '~/configs';
 import { IconType } from '~/resources/icons';
 import { ToastMessageProps } from '~/beinComponents/ToastMessage/NormalToastMessage';
-import { BaseBottomSheetProps } from '~/beinComponents/BottomSheet/BaseBottomSheet';
+import { BaseBottomSheetProps } from '~/baseComponents/BottomSheet/BaseBottomSheet';
 
 export interface IObject<T> {
   [key: string | number]: T;

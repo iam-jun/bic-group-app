@@ -12,7 +12,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler';
 import { GestureEvent } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import BottomSheet from '~/beinComponents/BottomSheet/index';
+import BottomSheet from '~/baseComponents/BottomSheet/index';
 import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -288,7 +288,6 @@ const PostToolbar = ({
       modalizeRef={modalizeRef}
       ContentComponent={<ReviewMarkdown onPressDone={closeModal} />}
       panGestureAnimatedValue={animated}
-      modalStyle={styles.modalStyle}
       {...props}
     >
       {renderToolbar()}
@@ -327,11 +326,6 @@ const createStyle = (theme: ExtendedTheme) => {
     markdownText: {
       marginRight: spacing.margin.base,
       flex: 1,
-    },
-    modalStyle: {
-      borderRadius: spacing.borderRadius.small,
-      borderTopRightRadius: 20,
-      borderTopLeftRadius: 20,
     },
   });
 };

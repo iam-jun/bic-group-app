@@ -3,6 +3,7 @@ export const borderRadius = {
   small: 4,
   base: 6,
   large: 8,
+  extraLarge: 16,
   pill: 100,
   circle: 200,
 };

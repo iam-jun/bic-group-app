@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import Avatar from '~/baseComponents/Avatar';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
