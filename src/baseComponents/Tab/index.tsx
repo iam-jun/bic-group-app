@@ -1,13 +1,13 @@
 import {
-  View, StyleProp, ViewStyle, StyleSheet,
-} from 'react-native'
-import React from 'react'
+  StyleProp, ViewStyle, StyleSheet, ScrollView,
+} from 'react-native';
+import React from 'react';
 
-import PillTabButton, { PillTabButtonProps } from './PillTabButton'
-import TabButton from './TabButton'
+import PillTabButton, { PillTabButtonProps } from './PillTabButton';
+import TabButton from './TabButton';
 
 interface TabProps {
-  data: { id?: string; text?: string, [x: string|number]: any }[];
+  data: { id?: string; text?: string; [x: string | number]: any }[];
   activeIndex?: number;
   type?: 'pill' | 'normal';
   buttonProps?: PillTabButtonProps;
@@ -26,7 +26,7 @@ const Tab = ({
   const TabButtonComponent = type === 'normal' ? TabButton : PillTabButton;
 
   const renderItem = (item: any, index: number) => {
-    const isSelected = index === activeIndex
+    const isSelected = index === activeIndex;
 
     return (
       <TabButtonComponent
@@ -39,15 +39,19 @@ const Tab = ({
       >
         {item?.text}
       </TabButtonComponent>
-    )
-  }
+    );
+  };
 
   return (
-    <View style={[styles.container, style]}>
+    <ScrollView
+      contentContainerStyle={[styles.container, style]}
+      horizontal
+      alwaysBounceHorizontal={false}
+    >
       {data?.map?.(renderItem)}
-    </View>
-  )
-}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

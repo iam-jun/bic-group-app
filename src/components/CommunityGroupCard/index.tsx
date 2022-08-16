@@ -1,8 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import {
-  View, StyleSheet, TouchableWithoutFeedback,
-} from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { spacing } from '~/theme';
@@ -60,11 +58,14 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
       <Button TouchableComponent={TouchableWithoutFeedback} onPress={onView}>
         <View>
           <View style={styles.row}>
-            <Image resizeMode="contain" style={styles.img} source={icon} />
+            <Image
+              resizeMode="contain"
+              containerStyle={styles.imgContainer}
+              style={styles.img}
+              source={icon}
+            />
             <View style={styles.containerInfo}>
-              <Text.H6 numberOfLines={2}>
-                {name}
-              </Text.H6>
+              <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
               <View style={styles.row}>
                 <View style={styles.row}>
@@ -91,9 +92,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
             </View>
           </View>
           <ViewSpacing height={10} />
-          <Text.BodyM numberOfLines={2}>
-            {`${description}`}
-          </Text.BodyM>
+          <Text.BodyM numberOfLines={2}>{`${description}`}</Text.BodyM>
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
@@ -121,11 +120,20 @@ const themeStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
+    imgContainer: {
+      height: 80,
+      width: 80,
+      borderRadius: spacing.borderRadius.small,
+      padding: 2,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.gray1,
+      marginRight: 10,
+    },
     img: {
       height: 76,
       width: 76,
       borderRadius: spacing.borderRadius.large,
-      marginRight: 10,
     },
     containerInfo: {
       flex: 1,
