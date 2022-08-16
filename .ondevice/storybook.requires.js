@@ -31,6 +31,7 @@ try {
 
 const getStories = () => {
   return [
+    require("../src/baseComponents/Button/index.stories.tsx"),
     require("../src/baseComponents/Reaction/index.stories.tsx"),
     require("../src/baseComponents/Tag/index.stories.tsx"),
   ];
