@@ -4,7 +4,6 @@ import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { spacing } from '~/theme';
-import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -12,7 +11,7 @@ import ButtonCommunityGroupCardAction from './ButtonCommunityGroupCardAction';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
-import { Button } from '~/baseComponents';
+import { Avatar, Button } from '~/baseComponents';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -58,12 +57,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
       <Button TouchableComponent={TouchableWithoutFeedback} onPress={onView}>
         <View>
           <View style={styles.row}>
-            <Image
-              resizeMode="contain"
-              containerStyle={styles.imgContainer}
-              style={styles.img}
-              source={icon}
-            />
+            <Avatar.XLarge source={icon} />
             <View style={styles.containerInfo}>
               <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
@@ -120,23 +114,9 @@ const themeStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    imgContainer: {
-      height: 80,
-      width: 80,
-      borderRadius: spacing.borderRadius.small,
-      padding: 2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: colors.gray1,
-      marginRight: 10,
-    },
-    img: {
-      height: 76,
-      width: 76,
-      borderRadius: spacing.borderRadius.large,
-    },
     containerInfo: {
       flex: 1,
+      marginLeft: 10,
     },
     iconSmall: {
       marginRight: spacing.margin.small,
