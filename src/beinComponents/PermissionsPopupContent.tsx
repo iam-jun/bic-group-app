@@ -74,7 +74,6 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
             titleProps={{ variant: 'bodyS' }}
             leftIcon={item.leftIcon}
             leftIconProps={{ style: styles.iconStyle, ...item.leftIconProps }}
-            height={28}
             style={{ paddingLeft: 0 }}
           />
         </View>

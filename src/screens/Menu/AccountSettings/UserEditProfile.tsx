@@ -423,7 +423,6 @@ const UserEditProfile = (props: any) => {
   const renderWorkItem = ({ item }: {item: IUserWorkExperience}) => (
     <PrimaryItem
       testID="user_edit_profile.work.item"
-      height={null}
       leftIcon="iconSuitcase"
       leftIconProps={{
         icon: 'iconSuitcase',

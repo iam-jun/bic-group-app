@@ -76,7 +76,6 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
       </Text.ButtonS>
       <Divider style={styles.divider} />
       <PrimaryItem
-        height={40}
         onPress={() => _onSelect()}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:filter_created_by_all')}
@@ -87,7 +86,6 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
         }
       />
       <PrimaryItem
-        height={40}
         onPress={() => _onSelect({ id: userId, name: '' })}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:filter_created_by_me')}
@@ -98,7 +96,6 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
         }
       />
       <PrimaryItem
-        height={52}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:filter_created_by_specific')}
         RightComponent={renderSpecificRightComponent()}

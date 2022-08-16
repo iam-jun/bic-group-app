@@ -54,7 +54,6 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
       subTitle={item?.keyword}
       style={styles.item}
       onPress={() => onPressItem(item)}
-      height={null}
       RightComponent={(
         <TouchableOpacity
           testID={`recent_search_keyword.btn_delete_item_${index}`}
