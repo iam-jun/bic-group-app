@@ -86,7 +86,7 @@ const ReactionView: FC<ReactionViewProps> = ({
         rendered.push(<Reaction
           testId={`reaction.button.${key}`}
           key={`${key}`}
-          style={{ marginRight: spacing.margin.tiny }}
+          style={styles.reactionItem}
           value={reactionMap.get(key)}
           icon={key}
           disableUpdateState
@@ -162,6 +162,10 @@ const createStyle = (theme: ExtendedTheme) => {
       alignItems: 'center',
     },
     marginHorizontal6: { marginHorizontal: 6 },
+    reactionItem: {
+      marginBottom: spacing.margin.tiny,
+      marginHorizontal: spacing.margin.tiny,
+    },
   });
 };
 

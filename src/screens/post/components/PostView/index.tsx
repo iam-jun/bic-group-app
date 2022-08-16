@@ -399,11 +399,12 @@ const _PostView: FC<PostViewProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
   return StyleSheet.create({
     rowCenter: { flexDirection: 'row', alignItems: 'center' },
     container: {
       backgroundColor: colors.white,
+      ...elevations.e2,
     },
     reactions: {
       paddingHorizontal: spacing.padding.base,
