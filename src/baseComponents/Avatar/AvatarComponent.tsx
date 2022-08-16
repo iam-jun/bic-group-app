@@ -52,8 +52,8 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badge,
   badgeBottom,
   isRounded,
-  showBorder,
-  borderWidth = 4,
+  showBorder = true,
+  borderWidth = 2,
   borderColor,
   badgeCheck,
   badgeCheckSize = 16,
@@ -69,9 +69,10 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   const styles = creatStyle(theme);
 
   const avatarSize = customSize || dimension?.avatarSizes[variant] || 24;
+  const _borderWidth = borderWidth || dimension.avatarBorderWidth[variant] || 2;
   const avatarContainerStyle: StyleProp<ViewStyle> = customStyle || styles[variant];
   let avatarStyle: StyleProp<ImageStyle> = customStyle || styles[variant];
-  const borderStyle = showBorder ? { borderWidth, borderColor: borderColor || colors.neutral } : {};
+  const borderStyle = showBorder ? { borderWidth: _borderWidth, borderColor: borderColor || colors.gray1 } : {};
 
   if (isRounded) {
     avatarStyle = [
