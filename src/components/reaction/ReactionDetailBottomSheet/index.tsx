@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Dimensions, View } from 'react-native';
 
 import { useDispatch } from 'react-redux';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import { useKeySelector } from '~/hooks/selector';
 import { clearReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
 import ReactionTabBar from '~/components/reaction/ReactionDetailBottomSheet/ReactionTabBar';

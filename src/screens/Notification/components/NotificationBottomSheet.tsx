@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import i18n from 'i18next';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../../../storeRedux/notification/actions';
 import * as modalActions from '~/storeRedux/modal/actions';

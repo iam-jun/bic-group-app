@@ -17,7 +17,7 @@ import menuKeySelector from '../../../../../storeRedux/menu/keySelector';
 import menuActions from '../../../../../storeRedux/menu/actions';
 import appConfig from '~/configs/appConfig';
 import { ILocation } from '~/interfaces/common';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -63,7 +63,7 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
     setSearchQuery('');
   };
 
-  const renderItem = ({ item }: {item: ILocation}) => (
+  const renderItem = ({ item }: { item: ILocation }) => (
     <PrimaryItem
       testID="edit_location.item"
       title={`${item.name}, ${item.country}`}
@@ -75,7 +75,6 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
-      modalStyle={styles.modalStyle}
       childrenStyle={styles.childrenStyle}
       onClosed={resetSearchText}
       handlePosition="inside"
@@ -140,12 +139,6 @@ const createStyles = (
   },
   divider: {
     marginTop: spacing.margin.small,
-  },
-  modalStyle: {
-    borderTopRightRadius: spacing.borderRadius.small,
-    borderTopLeftRadius: spacing.borderRadius.small,
-    height: 0.8 * screenHeight,
-    paddingTop: 0,
   },
   titleSearch: {
     marginLeft: spacing.margin.large,

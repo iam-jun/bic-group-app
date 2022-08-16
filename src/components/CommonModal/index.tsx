@@ -5,7 +5,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import { useKeySelector } from '~/hooks/selector';
 import modalActions from '~/storeRedux/modal/actions';
 import modalKeySelector from '~/storeRedux/modal/keySelector';
