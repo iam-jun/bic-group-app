@@ -6,7 +6,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Clipboard from '@react-native-clipboard/clipboard';
 import NodeEmoji from 'node-emoji';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { useBaseHook } from '~/hooks';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
@@ -19,6 +18,7 @@ import Text from '~/beinComponents/Text';
 import { quickReactions } from '~/configs/reactionConfig';
 import { getLink, LINK_COMMENT } from '~/utils/link';
 import spacing from '~/theme/spacing';
+import BottomListItem from '~/components/BottomList/BottomListItem';
 
 export interface CommentViewMenuProps {
   commentId: string;
@@ -148,54 +148,42 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   return (
     <View style={styles.container}>
       {renderReact()}
-      <PrimaryItem
+      <BottomListItem
         testID="comment_view_menu.reply"
-        style={styles.item}
         leftIcon="ArrowTurnDownRight"
-        leftIconProps={{ icon: 'ArrowTurnDownRight', size: 24 }}
         title={t('post:comment_menu_reply')}
         onPress={_onPressReply}
       />
-      <PrimaryItem
+      <BottomListItem
         testID="comment_view_menu.copy"
-        style={styles.item}
         leftIcon="Copy"
-        leftIconProps={{ icon: 'Copy', size: 24 }}
         title={t('post:comment_menu_copy_text')}
         onPress={_onPressCopy}
       />
-      <PrimaryItem
+      <BottomListItem
         testID="comment_view_menu.copy_link"
-        style={styles.item}
         leftIcon="Link"
-        leftIconProps={{ icon: 'Link', size: 24 }}
         title={t('post:comment_menu_copy_link')}
         onPress={_onPressCopyLink}
       />
       {isActor && (
-        <PrimaryItem
+        <BottomListItem
           testID="comment_view_menu.edit"
-          style={styles.item}
           leftIcon="edit"
-          leftIconProps={{ icon: 'edit', size: 24 }}
           title={t('post:comment_menu_edit')}
           onPress={_onPressEdit}
         />
       )}
-      <PrimaryItem
+      <BottomListItem
         testID="comment_view_menu.history"
-        style={styles.item}
         leftIcon="RotateRight"
-        leftIconProps={{ icon: 'RotateRight', size: 24 }}
         title={t('post:comment_menu_history')}
         onPress={_onPress}
       />
       {isActor && (
-        <PrimaryItem
+        <BottomListItem
           testID="comment_view_menu.delete"
-          style={styles.item}
           leftIcon="TrashCan"
-          leftIconProps={{ icon: 'TrashCan', size: 24 }}
           title={t('post:comment_menu_delete')}
           onPress={_onPressDelete}
         />
@@ -210,14 +198,13 @@ const createStyle = (
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing.padding.large,
       paddingBottom: spacing.padding.base + insets.bottom,
     },
     item: { height: 44 },
     reactContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingHorizontal: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
     },
     btnReact: {

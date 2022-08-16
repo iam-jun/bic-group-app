@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 

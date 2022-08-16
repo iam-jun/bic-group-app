@@ -14,7 +14,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
@@ -111,7 +111,6 @@ const EditPhoneNumber = ({
   const renderCountryCodeList = () => (
     <BottomSheet
       modalizeRef={countryCodeSheetRef}
-      modalStyle={styles.modalStyle}
       onClose={onCloseModal}
       ContentComponent={(
         <View style={styles.contentComponent}>
@@ -248,10 +247,6 @@ const createStyles = (
     },
     contentComponent: {
       minHeight: 0.8 * screenHeight,
-    },
-    modalStyle: {
-      borderTopRightRadius: spacing.borderRadius.small,
-      borderTopLeftRadius: spacing.borderRadius.small,
     },
     searchInput: {
       marginHorizontal: spacing.margin.base,

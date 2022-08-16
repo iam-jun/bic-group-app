@@ -30,12 +30,13 @@ import { ICommunity } from '~/interfaces/ICommunity';
 import { formatChannelLink, openUrl } from '~/utils/link';
 import { chatSchemes } from '~/constants/chat';
 import modalActions from '~/storeRedux/modal/actions';
-import HeaderMenu from '../../groups/components/HeaderMenu';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 import CommunityTabHeader from './components/CommunityTabHeader';
+import { getHeaderMenu } from './helper';
+import { BottomListProps } from '~/components/BottomList';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -82,9 +83,9 @@ const CommunityDetail = (props: any) => {
 
   const getPosts = useCallback(
     () => {
-    /* Avoid getting group posts of the nonexisting group,
-    which will lead to endless fetching group posts in
-    httpApiRequest > makeGetStreamRequest */
+      /* Avoid getting group posts of the nonexisting group,
+      which will lead to endless fetching group posts in
+      httpApiRequest > makeGetStreamRequest */
       const privilegeToFetchPost = isMember || privacy === groupPrivacy.public
 
       if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
@@ -111,27 +112,18 @@ const CommunityDetail = (props: any) => {
   );
 
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideBottomList());
     rootNavigation.navigate(
       groupStack.communityAdmin, { communityId },
     );
   };
 
   const onRightPress = () => {
-    dispatch(modalActions.showModal({
+    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools)
+    dispatch(modalActions.showBottomList({
       isOpen: true,
-      ContentComponent: (
-        <HeaderMenu
-          type="community"
-          isMember={isMember}
-          canSetting={canSetting}
-          onPressAdminTools={onPressAdminTools}
-        />
-      ),
-      props: {
-        modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
-      },
-    }));
+      data: headerMenuData,
+    } as BottomListProps))
   };
 
   const renderPlaceholder = () => (
@@ -179,7 +171,7 @@ const CommunityDetail = (props: any) => {
 
   const onButtonLayout = useCallback(
     (e: any) => {
-    // to get the height from the start of the cover image to the end of button
+      // to get the height from the start of the cover image to the end of button
       setButtonHeight(e.nativeEvent.layout.height);
     }, [],
   );
@@ -241,7 +233,7 @@ const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     screenContainer: {
-      backgroundColor: colors.neutral5,
+      backgroundColor: colors.gray5,
     },
     contentContainer: {
       flex: 1,

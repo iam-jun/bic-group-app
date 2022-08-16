@@ -10,7 +10,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEqual } from 'lodash';
 
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';

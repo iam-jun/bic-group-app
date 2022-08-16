@@ -69,9 +69,9 @@ exports[`AvatarImage screen renders correctly 1`] = `
                 Object {
                   "alignItems": "center",
                   "backgroundColor": "#f9f9f9",
-                  "borderColor": "#FFFFFF",
+                  "borderColor": "#F2F5F8",
                   "borderRadius": 45,
-                  "borderWidth": 4,
+                  "borderWidth": 2,
                   "height": 90,
                   "justifyContent": "center",
                   "width": 90,
@@ -87,9 +87,9 @@ exports[`AvatarImage screen renders correctly 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "borderColor": "#FFFFFF",
+                  "borderColor": "#F2F5F8",
                   "borderRadius": 45,
-                  "borderWidth": 4,
+                  "borderWidth": 2,
                   "height": 90,
                   "width": 90,
                 },

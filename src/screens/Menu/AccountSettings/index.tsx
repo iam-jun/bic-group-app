@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';

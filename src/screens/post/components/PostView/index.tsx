@@ -18,6 +18,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
+  IAudienceGroup,
   IAudienceUser,
   IOwnReaction,
   IPayloadReactToPost,
@@ -35,7 +36,6 @@ import {
   PostViewFooterLite,
   PostViewHeader,
   PostViewImportant,
-  PostViewMenu,
 } from '../PostViewComponents'
 import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
@@ -45,6 +45,10 @@ import spacing from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
 import SeenCountsView from '../SeenCountsView';
 import UsersSeenPostBottomSheet from '../UsersSeenPostBottomSheet';
+import { getPostViewMenu } from './helper';
+import { BottomListProps } from '~/components/BottomList';
+import { useMyPermissions } from '~/hooks/permissions';
+import AlertDeleteAudiencesConfirmContent from '../AlertDeleteAudiencesConfirmContent';
 
 export interface PostViewProps {
   style?: any;
@@ -143,29 +147,70 @@ const _PostView: FC<PostViewProps> = ({
   const [isMarkSeenPost, setMarkSeenPost] = useState(false);
 
   const commentCount = formatLargeNumber(commentsCount);
-  const labelButtonComment = `${
-    commentCount ? `${commentCount} ` : ''
-  }${t('post:button_comment')}`;
+  const labelButtonComment = `${commentCount ? `${commentCount} ` : ''}${t('post:button_comment')}`;
+
+  const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY } = useMyPermissions();
+  const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
+    'groups',
+    audience?.groups,
+    PERMISSION_KEY.GROUP.DELETE_OWN_POST,
+  );
 
   const onPressShowAudiences = () => {
     const payload = { postId, fromStack: 'somewhere' };
     dispatch(postActions.showPostAudiencesBottomSheet(payload));
   };
 
+  const handleDeltePostError = (listIdAudiences: string[]) => {
+    if (listIdAudiences?.length > 0 && audience?.groups?.length > 0) {
+      const listAudiences = listIdAudiences.map((audienceId) => {
+        const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId)
+        return _audience;
+      })
+      if (canDeleteOwnPost) {
+        dispatch(
+          modalActions.showAlert({
+            title: t('post:title_delete_audiences_of_post'),
+            children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+            cancelBtn: true,
+            confirmLabel: t('common:btn_delete'),
+            onConfirm: () => dispatch(postActions.removePostAudiences({
+              id: postId,
+              listAudiences: listIdAudiences,
+            })),
+          }),
+        );
+      } else {
+        dispatch(
+          modalActions.showAlert({
+            title: t('post:title_delete_audiences_of_post'),
+            children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+            cancelBtn: true,
+            cancelLabel: t('common:btn_close'),
+            onConfirm: null,
+          }),
+        );
+      }
+    }
+  }
+
   const onPressMenu = () => {
     Keyboard.dismiss();
-    dispatch(modalActions.showModal({
-      isOpen: true,
-      ContentComponent: (
-        <PostViewMenu
-          postId={postId}
-          isPostDetail={isPostDetail}
-          isActor={actor?.id == userId}
-          isDraftPost={isDraft}
-          getDataPromise={getReactionStatistics}
-        />
-      ),
-    }));
+    const data = getPostViewMenu(
+      reactionsCount,
+      actor?.id == userId,
+      dispatch,
+      rootNavigation,
+      postId,
+      isPostDetail,
+      getReactionStatistics,
+      isDraft,
+      handleDeltePostError,
+    )
+
+    dispatch(modalActions.showBottomList(
+      { isOpen: true, data } as BottomListProps,
+    ))
   };
 
   const onAddReaction = (reactionId: ReactionType) => {

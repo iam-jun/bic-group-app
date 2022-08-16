@@ -278,7 +278,7 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },

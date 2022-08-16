@@ -33,7 +33,6 @@ exports[`TextInputController component renders correctly 1`] = `
     }
   >
     <TextInput
-      loading={false}
       onBlur={[Function]}
       onChangeText={[Function]}
       onFocus={[Function]}

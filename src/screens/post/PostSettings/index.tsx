@@ -27,7 +27,7 @@ import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '../../../storeRedux/post/keySelector';
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
 
