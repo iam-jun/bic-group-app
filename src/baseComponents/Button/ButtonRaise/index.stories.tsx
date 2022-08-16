@@ -5,13 +5,22 @@ import ButtonRaise from '.';
 import { getStoryComponent } from '~/storybook';
 import { light } from '~/theme/theme';
 import { ButtonSize } from '~/baseComponents/Button/interface';
+import Text from '~/beinComponents/Text';
 
 const ButtonRaiseStory = {
   title: 'base/Button.Raise',
   component: ButtonRaise,
+  argTypes: {
+    size: {
+      control: {
+        type: 'select',
+      },
+      options: ['small', 'medium', 'large'],
+    },
+  },
 } as ComponentMeta<typeof ButtonRaise>
 
-export const baseProps = {
+const baseProps = {
   onPress: () => alert('Button Pressed!'),
   size: 'medium' as ButtonSize,
   icon: 'iconPublic' as any,
@@ -37,17 +46,20 @@ const styles: any = {
 }
 
 const ComponentOverview = () => (
-  <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+  <View style={{}}>
+    <Text.H5>Size: Large</Text.H5>
     <View style={styles.row}>
       <ButtonRaise {...testProps.textOnly} size="large" color={light.colors.purple50} />
       <ButtonRaise {...baseProps} size="large" color={light.colors.purple50} />
       <ButtonRaise {...testProps.iconOnly} size="large" color={light.colors.purple50} />
     </View>
+    <Text.H5>Size: Medium</Text.H5>
     <View style={styles.row}>
       <ButtonRaise {...testProps.textOnly} size="medium" color={light.colors.blue50} />
       <ButtonRaise {...baseProps} size="medium" color={light.colors.blue50} />
       <ButtonRaise {...testProps.iconOnly} size="medium" color={light.colors.blue50} />
     </View>
+    <Text.H5>Size: Small</Text.H5>
     <View style={styles.row}>
       <ButtonRaise {...testProps.textOnly} size="small" color={light.colors.green50} />
       <ButtonRaise {...baseProps} size="small" color={light.colors.green50} />
