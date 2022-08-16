@@ -38,7 +38,6 @@ const OptionMenu = ({
     >
       <PrimaryItem
         title={i18next.t(item.title)}
-        height={36}
         RightComponent={
             value === item.type ? (
               <Icon

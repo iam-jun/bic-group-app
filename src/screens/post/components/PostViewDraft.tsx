@@ -157,14 +157,12 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       ContentComponent: (
         <View>
           <PrimaryItem
-            height={48}
             leftIconProps={{ icon: 'Calendar', size: 20 }}
             leftIcon="Calendar"
             title={t('post:draft:btn_menu_schedule')}
             onPress={onPressCalendar}
           />
           <PrimaryItem
-            height={48}
             leftIconProps={{ icon: 'TrashCan', size: 20 }}
             leftIcon="TrashCan"
             title={t('post:draft:btn_menu_delete')}

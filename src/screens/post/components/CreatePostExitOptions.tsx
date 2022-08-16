@@ -47,21 +47,18 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
         </Text.BodyS>
       </View>
       <PrimaryItem
-        height={48}
         leftIconProps={{ icon: 'FilePen', size: 20 }}
         leftIcon="FilePen"
         title={t('post:post_exit_option_save')}
         onPress={onPressSaveAsDraft}
       />
       <PrimaryItem
-        height={48}
         leftIconProps={{ icon: 'TrashCan', size: 20 }}
         leftIcon="TrashCan"
         title={t('post:post_exit_option_discard')}
         onPress={onPressDiscard}
       />
       <PrimaryItem
-        height={48}
         leftIconProps={{ icon: 'PenLine', size: 20 }}
         leftIcon="PenLine"
         title={t('post:post_exit_option_continue')}

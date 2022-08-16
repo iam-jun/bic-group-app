@@ -87,7 +87,6 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
 
 const styles = StyleSheet.create({
   itemContainer: {
-    height: undefined,
     paddingHorizontal: spacing.padding.large,
     paddingVertical: spacing.padding.tiny,
   },
