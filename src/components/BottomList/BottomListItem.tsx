@@ -10,7 +10,7 @@ import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
 
-interface MenuItemProps {
+export interface BottomListItemProps {
   onPress?: () => void;
   disabled?: boolean;
   testID?: string;
@@ -23,7 +23,7 @@ interface MenuItemProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({
+const BottomListItem: React.FC<BottomListItemProps> = ({
   title,
   leftIcon,
   leftIconProps,
@@ -33,7 +33,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   onPress,
   disabled,
   testID,
-}: MenuItemProps) => {
+}: BottomListItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme: ExtendedTheme = useTheme();
@@ -75,4 +75,4 @@ const themeStyles = (theme: ExtendedTheme) => {
   });
 };
 
-export default MenuItem;
+export default BottomListItem;

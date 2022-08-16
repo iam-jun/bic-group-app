@@ -23,7 +23,7 @@ import mainTabScreens from './screens';
 import mainTabStack from './stack';
 import MainTabs from '~/router/navigator/MainStack/MainTabs';
 import { AppConfig } from '~/configs';
-import BottomSelectionList from '~/components/BottomSelectionList';
+import BottomList from '~/components/BottomList';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,7 +74,7 @@ const MainStack = (): React.ReactElement => {
       <ReactionDetailBottomSheet />
       <UserProfilePreviewBottomSheet />
       <CommonModal />
-      <BottomSelectionList />
+      <BottomList />
     </View>
   );
 };

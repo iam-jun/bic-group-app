@@ -21,12 +21,12 @@ export const getPostViewMenu = (
   handleDeltePostError: (listIdAudiences: string[]) => void,
 ) => {
   const onPress = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     dispatch(modalActions.showAlertNewFeature());
   };
 
   const onPressEdit = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     rootNavigation?.navigate?.(
       homeStack.createPost, {
         postId,
@@ -36,14 +36,14 @@ export const getPostViewMenu = (
   };
 
   const onPressEditSettings = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     rootNavigation?.navigate?.(
       homeStack.postSettings, { postId },
     );
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     Clipboard.setString(getLink(
       LINK_POST, postId,
     ));
@@ -57,7 +57,7 @@ export const getPostViewMenu = (
   };
 
   const onPressViewReactions = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     const firstReact = Object.values(reactionsCount)[0] as IReaction;
     if (!!firstReact && !isEmpty(firstReact)) {
       const initReaction = Object.keys(firstReact)[0];
@@ -73,7 +73,7 @@ export const getPostViewMenu = (
   }
 
   const onPressDelete = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     dispatch(
       modalActions.showAlert({
         title: i18next.t('post:title_delete_post'),

@@ -36,7 +36,7 @@ import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 import CommunityTabHeader from './components/CommunityTabHeader';
 import { getHeaderMenu } from './helper';
-import { BottomSelectionListProps } from '~/components/BottomSelectionList';
+import { BottomListProps } from '~/components/BottomList';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -62,12 +62,12 @@ const CommunityDetail = (props: any) => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
     'communities', communityId, [
-    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
-    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
-    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
-    PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
-    PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
-  ],
+      PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
+      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
+      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
+      PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
+      PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
+    ],
   );
   const showPrivate = !isMember && privacy === groupPrivacy.private;
 
@@ -112,7 +112,7 @@ const CommunityDetail = (props: any) => {
   );
 
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     rootNavigation.navigate(
       groupStack.communityAdmin, { communityId },
     );
@@ -120,10 +120,10 @@ const CommunityDetail = (props: any) => {
 
   const onRightPress = () => {
     const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools)
-    dispatch(modalActions.showBottomSelectionSheet({
+    dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
-    } as BottomSelectionListProps))
+    } as BottomListProps))
   };
 
   const renderPlaceholder = () => (

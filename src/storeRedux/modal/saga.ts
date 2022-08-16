@@ -14,7 +14,7 @@ import modalActions, {
 import * as types from './constants';
 import modalKeySelector from '~/storeRedux/modal/keySelector';
 import { timeOut } from '~/utils/common';
-import { BottomSelectionListProps } from '~/components/BottomSelectionList';
+import { BottomListProps } from '~/components/BottomList';
 
 export default function* commonSaga() {
   yield takeLatest(
@@ -32,8 +32,8 @@ export default function* commonSaga() {
     hideUserProfilePreviewBottomSheet,
   );
   yield takeLatest(
-    types.SHOW_BOTTOM_SELECTION_SHEET,
-    showBottomSelectionList,
+    types.SHOW_BOTTOM_LIST,
+    showBottomList,
   );
 }
 
@@ -88,17 +88,17 @@ function* hideUserProfilePreviewBottomSheet() {
   yield put(setUserProfilePreviewBottomSheet(payload));
 }
 
-function* showBottomSelectionList({
+function* showBottomList({
   payload,
 }: {
   type: string;
-  payload: BottomSelectionListProps;
+  payload: BottomListProps;
 }): any {
   const { isOpen } = payload || {};
   if (isOpen) {
-    const _payload = { isOpen: false, data: [] } as BottomSelectionListProps;
-    yield put(modalActions.setBottomSelectionList(_payload));
+    const _payload = { isOpen: false, data: [] } as BottomListProps;
+    yield put(modalActions.setBottomList(_payload));
     yield timeOut(200);
   }
-  yield put(modalActions.setBottomSelectionList(payload));
+  yield put(modalActions.setBottomList(payload));
 }

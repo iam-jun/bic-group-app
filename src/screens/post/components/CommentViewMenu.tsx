@@ -18,7 +18,7 @@ import Text from '~/beinComponents/Text';
 import { quickReactions } from '~/configs/reactionConfig';
 import { getLink, LINK_COMMENT } from '~/utils/link';
 import spacing from '~/theme/spacing';
-import MenuItem from '~/components/BottomSelectionList/MenuItem';
+import BottomListItem from '~/components/BottomList/BottomListItem';
 
 export interface CommentViewMenuProps {
   commentId: string;
@@ -148,40 +148,40 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   return (
     <View style={styles.container}>
       {renderReact()}
-      <MenuItem
+      <BottomListItem
         testID="comment_view_menu.reply"
         leftIcon="ArrowTurnDownRight"
         title={t('post:comment_menu_reply')}
         onPress={_onPressReply}
       />
-      <MenuItem
+      <BottomListItem
         testID="comment_view_menu.copy"
         leftIcon="Copy"
         title={t('post:comment_menu_copy_text')}
         onPress={_onPressCopy}
       />
-      <MenuItem
+      <BottomListItem
         testID="comment_view_menu.copy_link"
         leftIcon="Link"
         title={t('post:comment_menu_copy_link')}
         onPress={_onPressCopyLink}
       />
       {isActor && (
-        <MenuItem
+        <BottomListItem
           testID="comment_view_menu.edit"
           leftIcon="edit"
           title={t('post:comment_menu_edit')}
           onPress={_onPressEdit}
         />
       )}
-      <MenuItem
+      <BottomListItem
         testID="comment_view_menu.history"
         leftIcon="RotateRight"
         title={t('post:comment_menu_history')}
         onPress={_onPress}
       />
       {isActor && (
-        <MenuItem
+        <BottomListItem
           testID="comment_view_menu.delete"
           leftIcon="TrashCan"
           title={t('post:comment_menu_delete')}

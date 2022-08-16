@@ -7,30 +7,29 @@ import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import { BaseBottomSheetProps } from '~/baseComponents/BottomSheet/BaseBottomSheet';
 import { useKeySelector } from '~/hooks/selector';
-import MenuItem from './MenuItem';
+import BottomListItem, { BottomListItemProps } from './BottomListItem';
 import modalKeySelector from '~/storeRedux/modal/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
 
-export interface BottomSelectionListProps extends BaseBottomSheetProps {
-  data: any[];
+export interface BottomListProps extends BaseBottomSheetProps {
+  data: BottomListItemProps[];
   ListHeaderComponent?: any;
   showsVerticalScrollIndicator?: boolean;
   closeOutSide?: boolean;
 }
 
-const BottomSelectionList = ({
-}) => {
+const BottomList = () => {
   const dispatch = useDispatch();
 
   const modalizeRef = useRef<any>();
-  const bottomSelectionList = useKeySelector(modalKeySelector.bottomSelectionList);
+  const bottomList = useKeySelector(modalKeySelector.bottomList);
   const {
     data = [],
     isOpen,
     ListHeaderComponent = undefined,
     showsVerticalScrollIndicator = false,
     closeOutSide = true,
-  } = bottomSelectionList;
+  } = bottomList;
 
   useEffect(() => {
     if (!isOpen) {
@@ -39,7 +38,7 @@ const BottomSelectionList = ({
   }, [isOpen])
 
   const _onClose = () => {
-    closeOutSide && dispatch(modalActions.hideBottomSelectionList());
+    closeOutSide && dispatch(modalActions.hideBottomList());
   };
 
   const renderListData = () => (
@@ -47,7 +46,7 @@ const BottomSelectionList = ({
       {ListHeaderComponent}
       {
         data.map((item: any) => (
-          <MenuItem key={`MenuItem_${item?.title}`} {...item} />))
+          <BottomListItem key={`MenuItem_${item?.title}`} {...item} />))
       }
     </ScrollView>
   )
@@ -62,4 +61,4 @@ const BottomSelectionList = ({
   );
 }
 
-export default BottomSelectionList;
+export default BottomList;

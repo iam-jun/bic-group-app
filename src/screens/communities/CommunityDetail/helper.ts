@@ -13,7 +13,7 @@ export const getHeaderMenu = (type: 'community' | 'group',
   onPressNotification?: () => void,
   onPressLeave?: () => void) => {
   const onPressNewFeature = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     dispatch(modalActions.showAlertNewFeature());
   };
 

@@ -46,7 +46,7 @@ import { formatLargeNumber } from '~/utils/formatData';
 import SeenCountsView from '../SeenCountsView';
 import UsersSeenPostBottomSheet from '../UsersSeenPostBottomSheet';
 import { getPostViewMenu } from './helper';
-import { BottomSelectionListProps } from '~/components/BottomSelectionList';
+import { BottomListProps } from '~/components/BottomList';
 import { useMyPermissions } from '~/hooks/permissions';
 import AlertDeleteAudiencesConfirmContent from '../AlertDeleteAudiencesConfirmContent';
 
@@ -208,8 +208,8 @@ const _PostView: FC<PostViewProps> = ({
       handleDeltePostError,
     )
 
-    dispatch(modalActions.showBottomSelectionSheet(
-      { isOpen: true, data } as BottomSelectionListProps,
+    dispatch(modalActions.showBottomList(
+      { isOpen: true, data } as BottomListProps,
     ))
   };
 

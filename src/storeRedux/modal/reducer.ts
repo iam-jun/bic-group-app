@@ -55,7 +55,7 @@ export const modalInitState = {
     position: { x: -1, y: -1 },
   },
 
-  bottomSelectionList: {
+  bottomList: {
     isOpen: false,
     data: [],
   },
@@ -157,15 +157,15 @@ function commonReducer(
         ...state,
         userProfilePreview: payload || modalInitState.userProfilePreview,
       };
-    case actions.SET_BOTTOM_SELECTION_SHEET:
+    case actions.SET_BOTTOM_LIST:
       return {
         ...state,
-        bottomSelectionList: payload,
+        bottomList: payload,
       }
-    case actions.HIDE_BOTTOM_SELECTION_SHEET:
+    case actions.HIDE_BOTTOM_LIST:
       return {
         ...state,
-        bottomSelectionList: {
+        bottomList: {
           isOpen: false,
           data: [],
         },

@@ -24,7 +24,7 @@ import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import MenuItem from '~/components/BottomSelectionList/MenuItem';
+import BottomListItem from '~/components/BottomList/BottomListItem';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -156,12 +156,12 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       isOpen: true,
       ContentComponent: (
         <View>
-          <MenuItem
+          <BottomListItem
             leftIcon="Calendar"
             title={t('post:draft:btn_menu_schedule')}
             onPress={onPressCalendar}
           />
-          <MenuItem
+          <BottomListItem
             leftIcon="TrashCan"
             title={t('post:draft:btn_menu_delete')}
             onPress={onPressDelete}

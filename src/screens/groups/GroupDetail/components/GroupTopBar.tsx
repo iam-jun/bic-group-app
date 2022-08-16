@@ -25,7 +25,7 @@ import { checkLastAdmin } from '../../helper';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import { useMyPermissions } from '~/hooks/permissions';
 import useChatStore from '~/store/chat'
-import { BottomSelectionListProps } from '~/components/BottomSelectionList';
+import { BottomListProps } from '~/components/BottomList';
 import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 
 const GroupTopBar = () => {
@@ -43,10 +43,10 @@ const GroupTopBar = () => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
     'groups', groupId, [
-    PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
-    PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-    PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
-  ],
+      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+    ],
   );
 
   const count = useChatStore().unreadChannels[chatId]?.mentionCountRoot;
@@ -61,14 +61,14 @@ const GroupTopBar = () => {
   };
 
   const onPressAdminTools = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     rootNavigation.navigate(
       groupStack.groupAdmin, { groupId },
     );
   };
 
   const onPressCopyLink = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     Clipboard.setString(getLink(
       LINK_GROUP, groupId,
     ));
@@ -82,7 +82,7 @@ const GroupTopBar = () => {
   };
 
   const onPressShare = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
     const groupLink = getLink(
       LINK_GROUP, groupId,
     );
@@ -94,7 +94,7 @@ const GroupTopBar = () => {
   };
 
   const onPressLeave = () => {
-    dispatch(modalActions.hideBottomSelectionList());
+    dispatch(modalActions.hideBottomList());
 
     return checkLastAdmin(
       groupId,
@@ -126,10 +126,10 @@ const GroupTopBar = () => {
       undefined,
       onPressLeave,
     )
-    dispatch(modalActions.showBottomSelectionSheet({
+    dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
-    } as BottomSelectionListProps))
+    } as BottomListProps))
   };
 
   const onPressChat = () => {
