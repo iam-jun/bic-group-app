@@ -61,7 +61,7 @@ const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.white,
+      backgroundColor: colors.neutral,
     },
   })
 }
