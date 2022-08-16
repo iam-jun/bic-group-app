@@ -66,7 +66,6 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
   const renderItem = ({ item }: {item: ILocation}) => (
     <PrimaryItem
       testID="edit_location.item"
-      height={34}
       title={`${item.name}, ${item.country}`}
       onPress={() => onItemPress?.(item)}
     />

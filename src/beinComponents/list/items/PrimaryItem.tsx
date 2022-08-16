@@ -13,14 +13,12 @@ import Toggle from '~/baseComponents/Toggle';
 import { IconType } from '~/resources/icons';
 import Avatar from '~/baseComponents/Avatar';
 import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
-import { primaryItemHeight } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
 type ItemIconProps = Omit<IconProps, 'icon'>
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
   testID?: string;
-  height?: number | null;
   title?: string | React.ReactNode;
   titleProps?: TextProps;
   subTitle?: string | React.ReactNode;
@@ -48,7 +46,6 @@ export interface PrimaryItemProps {
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
   style,
   testID,
-  height = primaryItemHeight,
   title,
   titleProps,
   showAvatar,
@@ -74,7 +71,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   const containerStyle: ViewStyle = StyleSheet.flatten([
     {
       flexDirection: 'row',
-      height,
+      paddingVertical: spacing.padding.small,
       alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
     } as ViewStyle,

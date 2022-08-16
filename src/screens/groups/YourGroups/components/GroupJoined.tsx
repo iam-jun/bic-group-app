@@ -60,7 +60,6 @@ const GroupJoined: FC<GroupJoinedProps> = ({
   ) => (
     <PrimaryItem
       key={`view_mode_${index}`}
-      height={48}
       leftIcon={item.icon as any}
       leftIconProps={{
         icon: item.icon as any,

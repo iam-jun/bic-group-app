@@ -8,6 +8,7 @@ const menuStack = {
   editBasicInfo: 'edit-basic-info',
   editContact: 'edit-contact',
   addWork: 'add-work',
+  discover: 'discover',
 };
 
 export default menuStack;

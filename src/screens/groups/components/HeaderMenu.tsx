@@ -51,7 +51,6 @@ const HeaderMenu = ({
       {canSetting && (
         <PrimaryItem
           testID="header_menu.admin_tools"
-          height={48}
           leftIconProps={{
             icon: 'iconShieldStar',
             size: 24,
@@ -72,7 +71,6 @@ const HeaderMenu = ({
       )}
       <PrimaryItem
         testID="header_menu.copy_link"
-        height={48}
         leftIconProps={{
           icon: 'Copy',
           size: 24,
@@ -85,7 +83,6 @@ const HeaderMenu = ({
       />
       <PrimaryItem
         testID={`header_menu.share_${type}`}
-        height={48}
         leftIconProps={{
           icon: 'ShareNodes',
           size: 24,
@@ -98,7 +95,6 @@ const HeaderMenu = ({
       />
       <PrimaryItem
         testID="header_menu.following"
-        height={48}
         leftIconProps={{
           icon: 'iconAddSquareDone',
           size: 24,
@@ -111,7 +107,6 @@ const HeaderMenu = ({
       />
       <PrimaryItem
         testID={`header_menu.pin_${type}`}
-        height={48}
         leftIconProps={{
           icon: 'iconMapPin',
           size: 24,
@@ -124,7 +119,6 @@ const HeaderMenu = ({
       />
       <PrimaryItem
         testID="header_menu.notifications"
-        height={48}
         leftIconProps={{
           icon: 'Bell',
           size: 24,
@@ -138,7 +132,6 @@ const HeaderMenu = ({
       {isMember && (
         <PrimaryItem
           testID={`header_menu.leave_${type}`}
-          height={48}
           leftIconProps={{
             icon: 'ArrowRightFromArc',
             size: 24,
