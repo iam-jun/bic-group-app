@@ -56,31 +56,31 @@ export const formatLargeNumber = (value: number) => {
       .toFixed(2)
       .replace(
         /(\.0+|0+)$/, '',
-      )}k`;
+      )}K`;
   } if (value < 100000) {
     return `${Number(value / 1000)
       .toFixed(1)
       .replace(
         /(\.0+|0+)$/, '',
-      )}k`;
+      )}K`;
   } if (value < 1000000) {
     return `${Number(value / 1000)
       .toFixed(3)
       .replace(
         /(\.0+|0+)$/, '',
-      )}k`;
+      )}K`;
   } if (value < 1000000000) {
     return `${Number(value / 1000000)
       .toFixed(0)
       .replace(
         /(\.0+|0+)$/, '',
-      )}m`;
+      )}M`;
   } if (value >= 1000000000) {
     return `${Number(value / 1000000000)
       .toFixed(0)
       .replace(
         /(\.0+|0+)$/, '',
-      )}b`;
+      )}B`;
   }
   return value;
 };
@@ -162,13 +162,3 @@ export const formatTextRemoveSpace = (text: string) => {
     /\s/g, '',
   );
 };
-
-export const numFormatter = (number: number) => {
-  if (number > 999 && number < 1000000) {
-    return `${(number / 1000).toFixed(2)}K`; // convert to K for number from > 1000 < 1 million
-  } if (number > 1000000) {
-    return `${(number / 1000000).toFixed(2)}M`; // convert to M for number from > 1 million
-  } if (number < 1000) {
-    return number; // if value < 1000, nothing to do
-  }
-}

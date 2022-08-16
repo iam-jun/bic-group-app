@@ -164,6 +164,16 @@ export const avatarSizes = {
   xLarge: 90,
 };
 
+export const avatarBorderWidth = {
+  tiny: 1,
+  xSmall: 1,
+  small: 1,
+  base: 1,
+  medium: 2,
+  large: 2,
+  xLarge: 2,
+};
+
 export const headerHeight = 60;
 export const primaryItemHeight = 64;
 export const commentBarHeight = 44;
@@ -188,6 +198,7 @@ export default {
   homeHeaderHeight,
   primaryItemHeight,
   avatarSizes,
+  avatarBorderWidth,
   commentBarHeight,
   postToolbarHeight,
   maxNewsfeedWidth,

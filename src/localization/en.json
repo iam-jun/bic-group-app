@@ -146,7 +146,9 @@
     "text_help": "Help",
     "text_type_search_keyword": "Type search keyword to see the search results",
     "text_no_results_found": "No results found",
-    "text_more": "+(number) more"
+    "text_more": "+(number) more",
+    "beincomm": "Beincomm",
+    "members": "Thành viên"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -304,17 +306,17 @@
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
     "text_got_it": "Got it",
     "title_public": "Public",
-    "title_public_subtitle_community": "Everyone can discover or search in-app and global to find this community. The content & activities inside are visible to everyone",
-    "title_public_subtitle_group": "Everyone can discover or search in-app and global to find this group. The content & activities inside are visible to everyone",
+    "title_public_subtitle_community": "Everyone can discover or search in-app and global to find this community. The content & activities inside are visible to everyone.",
+    "title_public_subtitle_group": "Everyone can discover or search in-app and global to find this group. The content & activities inside are visible to everyone.",
     "title_private": "Private",
-    "title_private_subtitle_community": "All registered users can discover and search in-app to find this community. The content & activities inside are not visible to all users",
-    "title_private_subtitle_group": "All registered users can discover and search in-app to find this group. The content & activities inside are not visible to all users",
+    "title_private_subtitle_community": "All registered users can discover and search in-app to find this community. The content & activities inside are not visible to all users.",
+    "title_private_subtitle_group": "All registered users can discover and search in-app to find this group. The content & activities inside are not visible to all users.",
     "text_learn_more": "Learn more",
     "title_secret": "Secret",
-    "title_secret_subtitle_community": "All registered users cannot discover and search to find this community. The content & activities inside are not visible to all users",
-    "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users",
+    "title_secret_subtitle_community": "All registered users cannot discover and search to find this community. The content & activities inside are not visible to all users.",
+    "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users.",
     "title_open": "Open",
-    "title_open_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them",
+    "title_open_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
     "title_edit_description": "Edit Description",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
@@ -442,6 +444,8 @@
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
+    "title_seen_by": "Seen by",
+    "title_post_to": "Post to",
     "mention_title": "Can only mention people in your selected audiences",
     "mention_empty_content": "No people found",
     "label_seen_by": "Interested by ",
@@ -953,5 +957,9 @@
     "image": "image",
     "video": "video",
     "file": "file"
+  },
+  "discover": {
+    "discover_communities": "Discover Communities",
+    "your_communities": "Your Communities"
   }
 }

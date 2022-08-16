@@ -85,7 +85,6 @@ const FilterDate: FC<NFSFilterDateProps> = ({
       </Text.ButtonS>
       <Divider style={styles.divider} />
       <PrimaryItem
-        height={52}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:from')}
         subTitle={
@@ -105,7 +104,6 @@ const FilterDate: FC<NFSFilterDateProps> = ({
         )}
       />
       <PrimaryItem
-        height={52}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:to')}
         subTitle={

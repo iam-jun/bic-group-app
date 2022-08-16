@@ -265,6 +265,8 @@ const _PostView: FC<PostViewProps> = ({
   const onPressSeenBy = () => {
     dispatch(modalActions.showModal({
       isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: t('post:title_seen_by'),
       ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
     }));
   };

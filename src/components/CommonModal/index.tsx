@@ -116,7 +116,6 @@ const themeStyles = (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.neutral,
       justifyContent: 'center',
-      paddingHorizontal: spacing.padding.small,
       paddingTop: Platform.OS === 'android' ? 0 : insets.top,
       paddingBottom: insets.bottom + spacing.padding.small,
     },

@@ -259,7 +259,6 @@ const PostSettings = ({ route }: PostSettingsProps) => {
           title={item?.name}
           showAvatar
           avatar={item?.icon || images.img_user_avatar_default}
-          height={54}
           titleProps={{ variant: 'subtitleM' }}
         />
       )}

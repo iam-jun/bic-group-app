@@ -101,7 +101,6 @@ const EditPhoneNumber = ({
   const renderItem = ({ item }: {item: ICountryCodeList}) => (
     <PrimaryItem
       testID="edit_phone_number.country_code.item"
-      height={34}
       title={`${item.name} (+${item.code})`}
       leftIcon={item.flag}
       titleProps={{ variant: 'bodyM' }}

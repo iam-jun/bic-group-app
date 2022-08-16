@@ -138,7 +138,6 @@ const FilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
       </View>
       <Divider style={styles.divider} />
       <PrimaryItem
-        height={60}
         onPress={_onPressCreatedBy}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:label_creator')}
@@ -157,7 +156,6 @@ const FilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         }
       />
       <PrimaryItem
-        height={60}
         onPress={_onPressDate}
         style={styles.itemContainer}
         title={t('home:newsfeed_search:label_creation_date')}

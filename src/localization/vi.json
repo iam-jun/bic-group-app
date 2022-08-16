@@ -26,6 +26,7 @@
     "text_link_copied_to_clipboard": "Đã sao chép liên kết",
     "text_message_link_copied_to_clipboard": "Đã sao chép liên kết tin nhắn",
     "text_description": "Giới thiệu",
+    "btn_cancel_request": "Huỷ tham gia",
     "btn_cancel": "Huỷ",
     "btn_delete": "Xoá",
     "btn_close": "Đóng",
@@ -104,7 +105,9 @@
     "text_type_search_keyword": "Gõ từ khóa để tìm kiếm",
     "text_no_results_found": "Không tìm thấy kết quả",
     "text_search_results": "Kết quả tìm kiếm",
-    "text_more": "+(number) khác"
+    "text_more": "+(number) khác",
+    "beincomm": "Beincomm",
+    "members": "Thành viên"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -254,16 +257,16 @@
     "title_basic_info": "Thông tin cơ bản",
     "title_privacy_type": "Loại quyền riêng tư",
     "title_public": "Công khai",
-    "title_public_subtitle_community": "Mọi người đều có thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả người dùng",
-    "title_public_subtitle_group": "Mọi người đều có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả người dùng",
+    "title_public_subtitle_community": "Mọi người đều có thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả người dùng.",
+    "title_public_subtitle_group": "Mọi người đều có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả người dùng.",
     "title_private": "Riêng tư",
-    "title_private_subtitle_community": "Những người dùng đã đăng nhập có thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng",
-    "title_private_subtitle_group": "Những người dùng đã đăng nhập có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng",
+    "title_private_subtitle_community": "Những người dùng đã đăng nhập có thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
+    "title_private_subtitle_group": "Những người dùng đã đăng nhập có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
     "title_secret": "Bí mật",
-    "title_secret_subtitle_community": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng",
-    "title_secret_subtitle_group": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng",
+    "title_secret_subtitle_community": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm cộng đồng này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
+    "title_secret_subtitle_group": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
     "title_open": "Mở",
-    "title_open_subtitle_group": "Tất cả các thành viên trong cùng một cộng đồng có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả các thành viên. Đối với tất cả người dùng đã đăng ký không thuộc cộng đồng, nội dung và hoạt động bên trong sẽ không hiển thị với họ",
+    "title_open_subtitle_group": "Tất cả các thành viên trong cùng một cộng đồng có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả các thành viên. Đối với tất cả người dùng đã đăng ký không thuộc cộng đồng, nội dung và hoạt động bên trong sẽ không hiển thị với họ.",
     "title_edit_description": "Chỉnh sửa Mô tả",
     "title_logout_from_all_devices": "Đăng xuất khỏi tất cả thiết bị",
     "title_edit_basic_info": "Chỉnh sửa Thông tin cơ bản",
@@ -390,6 +393,8 @@
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
     "title_edit_images": "Sửa ảnh",
+    "title_seen_by": "Quan tâm bởi",
+    "title_post_to": "Đăng tới",
     "mention_title": "Có thể nhắc đến những người là đối tượng của bài viết",
     "mention_empty_content": "Không tìm thấy",
     "label_seen_by": "Quan tâm bởi ",
@@ -858,5 +863,9 @@
     "image": "hình ảnh",
     "video": "video",
     "file": "tệp"
+  },
+  "discover": {
+    "discover_communities": "Khám phá cộng đồng",
+    "your_communities": "Cộng đồng đã tham gia"
   }
 }

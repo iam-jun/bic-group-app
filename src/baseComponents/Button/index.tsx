@@ -50,6 +50,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   const textVariant = TEXT_SIZES[size];
   const buttonHeight = BUTTON_SIZES[size];
   const iconSize = ICON_SIZES[textVariant];
+  const textColor = disabled || loading ? colors.neutral20 : buttonColors.text;
 
   const buttonVariantStyle = {
     height: buttonHeight,
@@ -64,7 +65,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
       <Icon
         testID="button.icon"
         icon={icon}
-        tintColor={buttonColors?.text}
+        tintColor={textColor}
         size={iconSize}
       />
     );
@@ -102,7 +103,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
             testID="button.text"
             variant={textVariant}
             style={[styles.text, icon && styles.icon]}
-            color={disabled || loading ? colors.neutral20 : buttonColors.text}
+            color={textColor}
             useI18n={useI18n}
           >
             {children}

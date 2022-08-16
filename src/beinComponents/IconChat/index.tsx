@@ -23,7 +23,7 @@ const IconChat = ({ testID, onPress }: Props) => {
       <Icon
         testID="icon_chat.icon"
         icon="iconBeinChat"
-        size={24}
+        size={28}
         style={styles.icon}
       />
       <NotificationsBadge.Alert

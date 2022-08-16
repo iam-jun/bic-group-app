@@ -19,7 +19,6 @@ import {
 import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import * as modalActions from '~/storeRedux/modal/actions';
 
 import AvatarImage from './components/AvatarImage';
 import PrivacyItem from './components/PrivacyItem';
@@ -78,16 +77,6 @@ const GeneralInformation = (props: any) => {
       }
     }, [id],
   );
-
-  const helpMessage = () => {
-    baseSheetRef.current?.close();
-    dispatch(modalActions.showAlert({
-      title: i18next.t('settings:text_info'),
-      content: i18next.t('settings:text_help_center'),
-      onConfirm: () => dispatch(modalActions.hideAlert()),
-      confirmLabel: i18next.t('settings:text_got_it'),
-    }));
-  };
 
   const openGroupPrivacyModal = () => baseSheetRef?.current?.open?.();
 
@@ -168,7 +157,7 @@ const GeneralInformation = (props: any) => {
       testID={`general_information.privacy_item.${item.type}`}
       onPress={() => onPrivacyMenuPress(item)}
     >
-      <PrivacyItem item={item} type={type} onPressHelpMessage={helpMessage} />
+      <PrivacyItem item={item} type={type} />
     </TouchableOpacity>
   );
 
