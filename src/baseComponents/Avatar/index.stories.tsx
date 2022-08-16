@@ -1,6 +1,7 @@
 /* eslint-disable no-alert */
+import { ComponentMeta } from '@storybook/react-native';
 import Avatar from '.';
-import { ComponentMeta, getStoryComponent } from '~/storybook';
+import { getStoryComponent } from '~/storybook';
 import images from '~/resources/images';
 
 export default {

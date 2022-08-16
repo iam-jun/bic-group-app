@@ -1,6 +1,6 @@
-/* eslint-disable no-alert */
+import { ComponentMeta } from '@storybook/react-native';
 import { ButtonComponent } from '.';
-import { ComponentMeta, getStoryComponent } from '~/storybook';
+import { getStoryComponent } from '~/storybook';
 
 export default {
   title: 'base/Button',

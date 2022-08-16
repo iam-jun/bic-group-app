@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
-import { ComponentMeta, getStoryComponent } from '~/storybook';
+import { ComponentMeta } from '@storybook/react-native';
+import { getStoryComponent } from '~/storybook';
 import Tag from '.';
 
 const avatarUrl = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/close-up-of-cat-wearing-sunglasses-while-sitting-royalty-free-image-1571755145.jpg';
