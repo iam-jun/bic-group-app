@@ -2,6 +2,7 @@ import { languages } from '~/configs';
 import { IconType } from '~/resources/icons';
 import { ToastMessageProps } from '~/beinComponents/ToastMessage/NormalToastMessage';
 import { BaseBottomSheetProps } from '~/baseComponents/BottomSheet/BaseBottomSheet';
+import { HeaderProps } from '~/beinComponents/Header';
 
 export interface IObject<T> {
   [key: string | number]: T;
@@ -58,6 +59,7 @@ export interface IPayloadShowModal {
   isOpen: boolean;
   isFullScreen?: boolean;
   titleFullScreen?: string;
+  headerFullScreenProps?: HeaderProps;
   ContentComponent: any;
   props?: BaseBottomSheetProps | any;
   useAppBottomSheet?: boolean;
