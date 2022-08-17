@@ -54,7 +54,6 @@ const PostSelectImage = () => {
     dispatch(modalActions.showAlert({
       title: i18n.t('common:label_discard_changes'),
       content: i18n.t('common:text_discard_warning'),
-      showCloseButton: true,
       cancelBtn: true,
       cancelLabel: i18n.t('common:btn_continue_editing'),
       confirmLabel: i18n.t('common:btn_discard'),

@@ -16,7 +16,6 @@ export interface IShowAlert {
   onDismiss?: () => void;
   confirmLabel?: string;
   isDismissible?: boolean;
-  showCloseButton?: boolean;
   style?: StyleProp<ViewStyle>;
   confirmBtnProps?: ButtonSecondaryProps;
   cancelBtnProps?: ButtonSecondaryProps;

@@ -138,7 +138,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     dispatch(modalActions.showAlert({
       title: t('post:draft:title_delete_draft_post'),
       content: t('post:draft:text_delete_draft_post'),
-      showCloseButton: true,
       cancelBtn: true,
       cancelLabel: t('common:btn_cancel'),
       confirmLabel: t('common:btn_delete'),

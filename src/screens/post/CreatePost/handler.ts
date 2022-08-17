@@ -24,7 +24,6 @@ export const handleBack = (
       dispatch(modalActions.showAlert({
         title: i18next.t('post:create_post:title_discard_changes'),
         content: i18next.t('post:alert_content_back_edit_post'),
-        showCloseButton: true,
         cancelBtn: true,
         cancelLabel: i18next.t('common:btn_discard'),
         confirmLabel: i18next.t('post:create_post:btn_keep_edit'),

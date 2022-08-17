@@ -226,7 +226,6 @@ const CommentDetailContent = (props: any) => {
       ),
       title: t(`post:${type}:title`),
       titleProps: { style: { flex: 1, textAlign: 'center' } },
-      showCloseButton: false,
       cancelBtn: false,
       isDismissible: true,
       onConfirm: () => {
