@@ -97,10 +97,6 @@ export default function* postSaga() {
     postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment,
   );
   yield takeLatest(
-    postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
-    showPostAudienceBottomSheet,
-  );
-  yield takeLatest(
     postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
     updateAllCommentsByParentIds,
   );
@@ -272,65 +268,6 @@ function* addToAllComments({
         e, undefined, 2,
       )}\x1b[0m`,
     );
-  }
-}
-
-function* showPostAudienceBottomSheet({
-  payload,
-}: {
-  type: string;
-  payload: {postId: string; fromStack?: any};
-}): any {
-  const { postId, fromStack } = payload;
-  if (!postId) {
-    console.log('\x1b[31m🐣️saga showPostAudienceBottomSheet no postId\x1b[0m');
-  }
-  const allPosts = yield select((state) => state?.post?.allPosts) || {};
-  const post: IPostActivity = allPosts?.[postId] || {};
-  if (post) {
-    yield put(postActions.setPostAudiencesBottomSheet({
-      isShow: true,
-      data: [],
-      fromStack,
-    }));
-
-    const sectionList = [];
-    const { audience } = post;
-    const { groups = [], users = [] } = audience || {};
-
-    // get groups
-    const arrGroupIds: any = [];
-    groups.map?.((group) => arrGroupIds.push(group.id));
-    if (arrGroupIds.length > 0) {
-      const groupIds = arrGroupIds.join(',');
-      const response = yield call(
-        groupApi.getInfoGroups, groupIds,
-      );
-      if (response?.data?.length > 0) {
-        sectionList.push({ title: 'Groups', data: response.data });
-      }
-    }
-
-    if (users.length > 0) {
-      const sectionUsers: any = [];
-      users.forEach((user) => {
-        sectionUsers.push({
-          id: user?.id,
-          name: user?.data?.fullname,
-          avatar: user?.data?.avatar,
-          type: 'user',
-        });
-      });
-      sectionList.push({ title: 'Users', data: sectionUsers });
-    }
-
-    yield put(postActions.setPostAudiencesBottomSheet({
-      isShow: true,
-      data: sectionList,
-      fromStack,
-    }));
-  } else {
-    console.log('\x1b[31m🐣️saga showPostAudienceSheet post not found\x1b[0m');
   }
 }
 
