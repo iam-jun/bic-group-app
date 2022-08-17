@@ -1,11 +1,10 @@
-import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   StyleProp,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity, useWindowDimensions,
   View,
   ViewStyle,
 } from 'react-native';
@@ -13,13 +12,14 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import * as actions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
 import { useKeySelector } from '~/hooks/selector';
+import { Button } from '~/baseComponents';
+import { useBaseHook } from '~/hooks';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
@@ -28,8 +28,8 @@ export interface AlertModalProps {
 
 const AlertModal: React.FC<AlertModalProps> = ({
   style,
-  ...props
 }: AlertModalProps) => {
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
@@ -43,7 +43,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
     contentProps,
     input,
     inputProps,
-    iconName,
     onCancel,
     onConfirm,
     onDismiss,
@@ -62,12 +61,12 @@ const AlertModal: React.FC<AlertModalProps> = ({
     headerStyle,
     HeaderImageComponent,
   } = alert;
-  const _cancelLabel = cancelLabel || i18next.t('common:btn_cancel');
+  const _cancelLabel = cancelLabel || t('common:btn_cancel');
 
-  const Content = ContentComponent || Text.BodyS;
+  const Content = ContentComponent || Text.ParagraphM;
 
-  const ConfirmBtn = ConfirmBtnComponent || Button.Secondary;
-  const CancelBtn = CancelBtnComponent || Button.Secondary;
+  const ConfirmBtn = ConfirmBtnComponent || Button.Primary;
+  const CancelBtn = CancelBtnComponent || Button.Neutral;
 
   const dispatch = useDispatch();
   const [text, setText] = useState(inputProps?.value || '');
@@ -102,6 +101,78 @@ const AlertModal: React.FC<AlertModalProps> = ({
   }));
 
   if (!visible) return null;
+
+  const renderHeader = () => (
+    <>
+      {HeaderImageComponent || null}
+      <View style={[styles.header, headerStyle || {}]}>
+        {!!title && (
+        <Text.H4 style={{ flex: 1 }} {...titleProps}>
+          {title}
+        </Text.H4>
+        )}
+        {showCloseButton && (
+        <View style={styles.closeButton}>
+          <Icon
+            icon="Xmark"
+            size={18}
+            tintColor={theme.colors.neutral80}
+            onPress={_onDismiss}
+          />
+        </View>
+        )}
+      </View>
+    </>
+  )
+
+  const renderContent = () => (
+    <>
+      {children}
+      {!!content && (
+        <Content style={styles.content} {...contentProps}>
+          {content}
+        </Content>
+      )}
+      {input && (
+        <TextInput
+          onChangeText={(value: string) => setText(value)}
+          autoFocus
+          {...inputProps}
+        />
+      )}
+    </>
+  )
+
+  const renderFooter = () => (
+    <View style={[styles.footerContainer, buttonViewStyle || {}]}>
+      {!!cancelBtn && (
+      <CancelBtn
+        testID="alert_modal.cancel"
+        type="ghost"
+        style={{ marginEnd: spacing?.margin.large, minWidth: 64 }}
+        onPress={_onCancel}
+        {...cancelBtnProps}
+      >
+        {_cancelLabel}
+      </CancelBtn>
+      )}
+      {!!visible && !!onConfirm && (
+      <ConfirmBtn
+        testID="alert_modal.confirm"
+        disabled={input && !text}
+        style={{ minWidth: 64 }}
+        onPress={() => {
+          dispatch(actions.hideAlert());
+          onConfirm(text);
+        }}
+        {...confirmBtnProps}
+      >
+        {confirmLabel || t('common:btn_confirm')}
+      </ConfirmBtn>
+      )}
+    </View>
+  )
+
   return (
     <Animated.View style={[styles.root, optionsStyle]}>
       <TouchableOpacity
@@ -109,79 +180,15 @@ const AlertModal: React.FC<AlertModalProps> = ({
         activeOpacity={1}
         onPress={isDismissible ? _onDismiss : undefined}
       >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={_onPressContent}
             style={[styles.modalContainer, style, alertModalStyle]}
           >
-            {HeaderImageComponent || null}
-            <View style={[styles.header, headerStyle || {}]}>
-              {!!title && <Text.ButtonM {...titleProps}>{title}</Text.ButtonM>}
-              {!!iconName && (
-                <Icon
-                  icon={iconName}
-                  size={20}
-                  tintColor={theme.colors.neutral80}
-                />
-              )}
-              {showCloseButton && (
-                <View style={styles.closeButton}>
-                  <Icon
-                    icon="iconClose"
-                    size={14}
-                    tintColor={theme.colors.neutral80}
-                    onPress={_onDismiss}
-                  />
-                </View>
-              )}
-            </View>
-            {children}
-            {!!content && (
-              <Content style={styles.content} {...contentProps}>
-                {content}
-              </Content>
-            )}
-            {input && (
-              <TextInput
-                onChangeText={(value: string) => setText(value)}
-                autoFocus
-                {...inputProps}
-              />
-            )}
-            <View
-              style={[
-                styles.displayBtn,
-                buttonViewStyle || {},
-              ]}
-            >
-              {!!cancelBtn && (
-                <CancelBtn
-                  testID="alert_modal.cancel"
-                  style={{ marginEnd: spacing?.margin.base }}
-                  onPress={_onCancel}
-                  {...cancelBtnProps}
-                >
-                  {_cancelLabel}
-                </CancelBtn>
-              )}
-              {!!visible && !!onConfirm && (
-                <ConfirmBtn
-                  highEmphasis
-                  testID="alert_modal.confirm"
-                  disabled={input && !text}
-                  onPress={() => {
-                    dispatch(actions.hideAlert());
-                    onConfirm(text);
-                  }}
-                  {...confirmBtnProps}
-                >
-                  {confirmLabel || i18next.t('common:btn_confirm')}
-                </ConfirmBtn>
-              )}
-            </View>
+            {renderHeader()}
+            {renderContent()}
+            {renderFooter()}
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </TouchableOpacity>
@@ -191,7 +198,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
-  const defaultAlertWidth = 320;
+  const { width } = useWindowDimensions()
 
   return StyleSheet.create({
     root: {
@@ -206,38 +213,44 @@ const themeStyles = (theme: ExtendedTheme) => {
       justifyContent: 'center',
     },
     modal: {
-      backgroundColor: colors.white,
+      backgroundColor: colors.neutral,
     },
     modalContainer: {
       borderColor: colors.gray20,
-      borderRadius: 6,
+      borderRadius: spacing.borderRadius.large,
       borderWidth: 1,
-      paddingHorizontal: spacing?.padding.extraLarge,
-      paddingVertical: spacing?.padding.large,
-      width: defaultAlertWidth,
-      backgroundColor: colors.white,
+      width: Math.min(width * 0.8, 400),
+      backgroundColor: colors.neutral,
       alignSelf: 'center',
     },
-    displayBtn: {
+    footerContainer: {
       flexDirection: 'row',
       justifyContent: 'flex-end',
-      marginTop: spacing?.margin.extraLarge,
+      paddingVertical: spacing.padding.base,
+      paddingRight: spacing.padding.extraLarge,
+      borderTopWidth: 1,
+      borderColor: colors.neutral5,
     },
     header: {
-      marginBottom: spacing?.margin.base,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      borderBottomWidth: 1,
+      borderColor: colors.neutral5,
+      paddingVertical: spacing.padding.large,
+      paddingHorizontal: spacing.padding.base,
     },
     closeButton: {
-      width: 24,
-      height: 24,
+      width: 28,
+      height: 28,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: colors.neutral5,
-      borderRadius: 6,
     },
-    content: {},
+    content: {
+      paddingTop: spacing.padding.tiny,
+      paddingBottom: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
+    },
   });
 };
 
