@@ -38,7 +38,6 @@ export interface TextInputProps extends RNTextInputProps {
   error?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
   value?: string;
-  clearText?: boolean;
   textInputRef?: React.Ref<RNTextInput>;
   textColor?: string;
   RightComponent?: React.ReactNode | React.ReactElement;
@@ -65,7 +64,6 @@ const TextInput: React.FC<TextInputProps> = ({
   placeholder,
   error,
   value,
-  clearText,
   textInputRef,
   textColor,
   RightComponent,
@@ -129,10 +127,6 @@ const TextInput: React.FC<TextInputProps> = ({
     onChangeText && onChangeText(text);
   };
 
-  const _onClearText = () => {
-    _onChangeText('');
-  };
-
   const _onFocus = () => {
     onFocus?.();
     setIsFocus(true);
@@ -150,7 +144,7 @@ const TextInput: React.FC<TextInputProps> = ({
         <Text.LabelM color={colors.neutral80}>{label}</Text.LabelM>
       </View>
       )}
-      <View>
+      <View style={{ flex: 1 }}>
         <View
           style={[
             styles.row,
@@ -192,32 +186,24 @@ const TextInput: React.FC<TextInputProps> = ({
               {...props}
             />
             {RightComponent}
-            {clearText && !!text && (
-            <Icon
-              testID="text_input.clear_icon"
-              icon="iconClose"
-              size={14}
-              onPress={_onClearText}
-            />
-            )}
           </View>
         </View>
         {!!helperText && (
-          <View style={styles.helperContainer}>
-            {!!error && (
-            <Icon
-              testID="text_input.error_icon"
-              icon="CircleExclamation"
-              size={16}
-              tintColor={colors.red40}
-              style={styles.errorIconStyle}
-            />
-            )}
-            <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
-              {helperText}
-              {renderHelperAction()}
-            </Text.BodyXS>
-          </View>
+        <View style={styles.helperContainer}>
+          {!!error && (
+          <Icon
+            testID="text_input.error_icon"
+            icon="CircleExclamation"
+            size={16}
+            tintColor={colors.red40}
+            style={styles.errorIconStyle}
+          />
+          )}
+          <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
+            {helperText}
+            {renderHelperAction()}
+          </Text.BodyXS>
+        </View>
         )}
       </View>
     </View>
@@ -239,15 +225,18 @@ const themeStyles = (
       flexDirection: 'row',
       alignItems: 'center',
       borderRadius: spacing.borderRadius.base,
-      borderWidth: 1,
       paddingRight: spacing.padding.base,
+      borderWidth: 1,
     },
     inputContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     input: {
       minHeight: 40,
       paddingHorizontal: spacing.padding.large,
       fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension.sizes.bodyM,
       flex: 1,
     },
     defaultStyle: {

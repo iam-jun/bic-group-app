@@ -1,13 +1,14 @@
 /* eslint-disable no-alert */
 import React from 'react';
 import { View } from 'react-native';
-import TextInput from './TextInput';
+import { ComponentMeta } from '@storybook/react-native';
 
-import { ComponentMeta, getStoryComponent } from '~/storybook';
-import dimension from '~/theme/dimension';
+import TextInput from '.';
+import { getStoryComponent } from '~/storybook';
+import { dimension } from '~/theme';
 
 export default {
-  title: 'components/Form',
+  title: 'base/Form.TextInput',
   component: TextInput,
 } as ComponentMeta<typeof TextInput>;
 
@@ -28,5 +29,6 @@ Default.args = {
   horizontal: false,
   error: false,
   leftIcon: 'Sitemap',
+  style: { marginRight: 16 },
 }
 Default.storyName = 'Text Input';
