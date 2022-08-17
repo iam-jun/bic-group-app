@@ -7,7 +7,6 @@ import { ButtonSecondaryProps } from '~/beinComponents/Button/ButtonSecondary';
 export interface IShowAlert {
   title?: string;
   content?: string;
-  iconName?: string;
   input?: boolean;
   inputProps?: TextInputProps;
   onConfirm?: (text: string) => void;

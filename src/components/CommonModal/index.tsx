@@ -13,6 +13,7 @@ import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
+import ModalHeader from '~/components/CommonModal/components/ModalHeader';
 
 const CommonModal = () => {
   const modalizeRef = useRef<any>();
@@ -26,6 +27,7 @@ const CommonModal = () => {
     isOpen,
     isFullScreen,
     titleFullScreen,
+    headerFullScreenProps,
     ContentComponent,
     props,
     useAppBottomSheet = true,
@@ -53,14 +55,16 @@ const CommonModal = () => {
         onRequestClose={() => dispatch(modalActions.hideModal())}
       >
         <View testID="common_modal.center" style={styles.fullScreenContainer}>
-          <View style={styles.fullScreenHeader}>
-            <Text.H4 style={styles.titleFullScreen} numberOfLines={2}>
-              {titleFullScreen}
-            </Text.H4>
-            <Button style={styles.btnClose} onPress={_onClose}>
-              <Icon icon="iconCloseSmall" />
-            </Button>
-          </View>
+          {!!headerFullScreenProps ? <ModalHeader {...headerFullScreenProps} /> : (
+            <View style={styles.fullScreenHeader}>
+              <Text.H4 style={styles.titleFullScreen} numberOfLines={2}>
+                {titleFullScreen}
+              </Text.H4>
+              <Button style={styles.btnClose} onPress={_onClose}>
+                <Icon icon="iconCloseSmall" />
+              </Button>
+            </View>
+          )}
           <View style={{ flex: 1 }}>
             {ContentComponent}
           </View>
