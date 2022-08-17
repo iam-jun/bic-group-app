@@ -187,7 +187,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const goToEditDescription = () => {
-    rootNavigation.navigate(mainStack.editDescription);
+    rootNavigation.navigate(mainStack.userEditDescription);
   };
 
   const renderAvatar = () => {

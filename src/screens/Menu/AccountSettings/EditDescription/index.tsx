@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
-import i18next from 'i18next';
 import {
-  Keyboard, ScrollView, StyleSheet, TextInput, View,
+  Keyboard,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import Text from '~/beinComponents/Text';
 
+import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '../../../../storeRedux/menu/actions';
 import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useKeySelector } from '~/hooks/selector';
-import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
-import dimension from '~/theme/dimension';
+import { TextArea } from '~/baseComponents/Input';
 
 const EditDescription = () => {
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
-
-  const styles = createStyles(theme);
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
@@ -31,7 +27,6 @@ const EditDescription = () => {
   const { id, description } = myProfileData;
 
   const [descriptionText, setDescription] = useState<string>(description);
-  const [isFocus, setIsFocus] = useState<boolean>(false);
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -54,14 +49,6 @@ const EditDescription = () => {
         navigateBack();
       },
     ));
-  };
-
-  const onFocusDescription = () => {
-    setIsFocus(true);
-  };
-
-  const onBlurDescription = () => {
-    setIsFocus(false);
   };
 
   const onChangeDescription = (text: string) => {
@@ -89,57 +76,14 @@ const EditDescription = () => {
         onPressButton={onSave}
         onPressBack={navigateBack}
       />
-      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
-        <Text.H5 color={colors.neutral80} variant="bodyM" useI18n>
-          settings:text_description
-        </Text.H5>
-        <View
-          style={[styles.textInputView, isFocus ? styles.textInputFocus : {}]}
-        >
-          <TextInput
-            value={descriptionText || ''}
-            maxLength={250}
-            testID="edit_description"
-            placeholder={i18next.t('common:text_not_set')}
-            onChangeText={onChangeDescription}
-            style={styles.textInput}
-            multiline
-            textAlignVertical="top"
-            onFocus={onFocusDescription}
-            onBlur={onBlurDescription}
-            placeholderTextColor={colors.gray50}
-          />
-        </View>
-      </ScrollView>
+      <TextArea
+        testID="edit_description"
+        label={t('settings:text_description')}
+        placeholder={t('common:text_not_set')}
+        onChangeText={onChangeDescription}
+      />
     </ScreenWrapper>
   );
 };
 
 export default EditDescription;
-
-const createStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    container: {
-      padding: spacing.margin.large,
-    },
-    textInput: {
-      fontFamily: fontFamilies.BeVietnamProLight,
-      fontSize: dimension.sizes.bodyM,
-      color: colors.neutral80,
-      flex: 1,
-    },
-    textInputView: {
-      borderRadius: spacing.borderRadius.small,
-      borderColor: colors.gray40,
-      borderWidth: 1,
-      padding: spacing.margin.base,
-      marginTop: spacing.margin.small,
-      height: 88,
-    },
-    textInputFocus: {
-      borderColor: colors.purple50,
-    },
-  });
-};
