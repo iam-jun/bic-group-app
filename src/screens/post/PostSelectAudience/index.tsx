@@ -218,7 +218,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         dispatch(modalActions.showAlert({
           title: t('post:create_post:title_audience_changed'),
           content: t('post:create_post:text_discard_change_audience'),
-          showCloseButton: true,
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('post:create_post:btn_save_change'),
@@ -243,7 +242,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         dispatch(modalActions.showAlert({
           title: t('post:create_post:title_discard_audience'),
           content: t('post:create_post:text_discard_audience'),
-          showCloseButton: true,
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('post:create_post:btn_keep_selecting'),
@@ -257,7 +255,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         dispatch(modalActions.showAlert({
           title: t('post:create_post:title_audience_changed'),
           content: t('post:create_post:text_discard_change'),
-          showCloseButton: true,
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('post:create_post:btn_keep_edit'),

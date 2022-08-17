@@ -129,7 +129,6 @@ const _PostDetailContent = (props: any) => {
       dispatch(modalActions.showAlert({
         title: t('post:title_discard_comment'),
         content: t('post:text_discard_comment'),
-        showCloseButton: true,
         cancelBtn: true,
         cancelLabel: t('post:btn_continue_comment'),
         confirmLabel: t('post:btn_discard_comment'),
@@ -202,7 +201,6 @@ const _PostDetailContent = (props: any) => {
       ),
       title: t('post:deleted_post:title'),
       titleProps: { style: { flex: 1, textAlign: 'center' } },
-      showCloseButton: false,
       cancelBtn: false,
       isDismissible: true,
       onConfirm: () => {
