@@ -84,7 +84,7 @@ const TextInput: React.FC<TextInputProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(
-    theme, horizontal, textColor,
+    theme, horizontal, leftIcon, textColor,
   );
   const [text, setText] = useState<string>(value || '');
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -139,6 +139,13 @@ const TextInput: React.FC<TextInputProps> = ({
     setIsFocus(false);
   };
 
+  const getBorderColor = () => {
+    if (error) return colors.red40;
+    if (!editable) return colors.neutral5;
+    if (isFocus) return !!activeOutlineColor ? activeOutlineColor : colors.purple50;
+    return !!outlineColor ? outlineColor : colors.neutral5;
+  }
+
   return (
     <View testID="text_input" style={[styles.container, style]}>
       {!!label && (
@@ -147,18 +154,7 @@ const TextInput: React.FC<TextInputProps> = ({
       </View>
       )}
       <View style={{ flex: 1 }}>
-        <View
-          style={[
-            styles.row,
-            {
-              backgroundColor: !editable ? colors.neutral2 : colors.white,
-              borderColor: !editable ? colors.neutral5 : isFocus
-                ? activeOutlineColor || colors.purple50
-                : outlineColor || colors.neutral5,
-            },
-            inputStyle,
-          ]}
-        >
+        <View style={[styles.row]}>
           {!!leftIcon && (
           <View style={styles.leftIconStyle}>
             <Icon
@@ -170,24 +166,36 @@ const TextInput: React.FC<TextInputProps> = ({
             />
           </View>
           )}
-          <View style={styles.inputContainer}>
-            <RNTextInput
-              testID="text_input.input"
-              placeholder={placeholder}
-              selectionColor={colors.gray50}
-              placeholderTextColor={colors.neutral20}
-              value={text}
-              style={[
-                styles.input,
-                error ? styles.errorStyle : styles.defaultStyle,
-              ]}
-              onChangeText={_onChangeText}
-              ref={textInputRef}
-              onFocus={_onFocus}
-              onBlur={_onBlur}
-              {...props}
-            />
-            {RightComponent}
+          <View
+            style={[
+              styles.inputRow,
+              {
+                backgroundColor: !editable ? colors.neutral2 : colors.white,
+                borderColor: getBorderColor(),
+              },
+              inputStyle,
+            ]}
+          >
+            <View style={styles.inputContainer}>
+              <RNTextInput
+                testID="text_input.input"
+                placeholder={placeholder}
+                selectionColor={colors.gray50}
+                placeholderTextColor={colors.neutral20}
+                value={text}
+                style={[
+                  styles.input,
+                  styles.defaultStyle,
+                ]}
+                onChangeText={_onChangeText}
+                ref={textInputRef}
+                onFocus={_onFocus}
+                onBlur={_onBlur}
+                editable={editable}
+                {...props}
+              />
+              {RightComponent}
+            </View>
           </View>
         </View>
         {!!helperText && (
@@ -213,7 +221,7 @@ const TextInput: React.FC<TextInputProps> = ({
 };
 
 const themeStyles = (
-  theme: ExtendedTheme, horizontal:boolean, textColor?: string,
+  theme: ExtendedTheme, horizontal:boolean, leftIcon: string, textColor?: string,
 ) => {
   const { colors } = theme;
 
@@ -225,14 +233,23 @@ const themeStyles = (
     row: {
       height: 40,
       flexDirection: 'row',
-      alignItems: 'center',
-      borderRadius: spacing.borderRadius.base,
+    },
+    inputRow: {
+      flexDirection: 'row',
       paddingRight: spacing.padding.base,
+      borderTopLeftRadius: !!leftIcon ? 0 : spacing.borderRadius.base,
+      borderBottomLeftRadius: !!leftIcon ? 0 : spacing.borderRadius.base,
+      borderTopRightRadius: spacing.borderRadius.base,
+      borderBottomRightRadius: spacing.borderRadius.base,
       borderWidth: 1,
+      backgroundColor: 'green',
+      flex: 1,
     },
     inputContainer: {
+      height: 40,
       flexDirection: 'row',
       alignItems: 'center',
+      flex: 1,
     },
     input: {
       height: 40,
@@ -243,14 +260,6 @@ const themeStyles = (
     },
     defaultStyle: {
       color: textColor || colors.neutral80,
-    },
-    errorStyle: {
-      color: colors.red60,
-    },
-    iconClear: {
-      position: 'absolute',
-      right: spacing.margin.large,
-      top: spacing.margin.base + spacing.margin.small || 13,
     },
     labelStyle: {
       marginRight: !!horizontal ? spacing.margin.big : 0,
@@ -267,8 +276,10 @@ const themeStyles = (
     },
     leftIconStyle: {
       backgroundColor: colors.neutral2,
-      borderRightColor: colors.neutral5,
-      borderRightWidth: 1,
+      borderColor: colors.neutral5,
+      borderWidth: 1,
+      borderTopLeftRadius: spacing.borderRadius.base,
+      borderBottomLeftRadius: spacing.borderRadius.base,
       padding: spacing.padding.small,
     },
   });
