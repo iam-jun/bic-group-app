@@ -1,7 +1,11 @@
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import Button from '~/beinComponents/Button';
+import Button from '~/baseComponents/Button';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+
+type ButtonActionProps = {
+    joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
+    onPress: () => void;
+}
 
 type ButtonCommunityGroupCardActionProps = {
   joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
@@ -10,38 +14,59 @@ type ButtonCommunityGroupCardActionProps = {
   onCancel?: () => void;
 };
 
-const getStateButton = (
+const getTextButton = (
   joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus],
-  theme: ExtendedTheme,
 ) => {
-  const { colors } = theme;
   switch (joinStatus) {
     case groupJoinStatus.unableToJoin:
-      return {};
+      return '';
     case groupJoinStatus.requested:
-      return {
-        text: 'common:btn_cancel_request',
-        textColor: colors.neutral70,
-        backgroundColor: colors.neutral20,
-      };
+      return 'common:btn_cancel_request';
     case groupJoinStatus.visitor:
-      return {
-        text: 'common:btn_join',
-        textColor: colors.white,
-        backgroundColor: colors.blue50,
-      };
+      return 'common:btn_join';
     case groupJoinStatus.member:
-      return {
-        text: 'common:btn_view',
-        textColor: colors.blue50,
-        backgroundColor: colors.blue2,
-      };
+      return 'common:btn_view';
     default:
-      return {
-        text: 'common:btn_view',
-        textColor: colors.blue50,
-        backgroundColor: colors.blue2,
-      };
+      return '';
+  }
+};
+
+const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
+  const textButton = getTextButton(joinStatus)
+
+  switch (joinStatus) {
+    case groupJoinStatus.unableToJoin:
+      return null;
+    case groupJoinStatus.requested:
+      return (
+        <Button.Neutral
+          useI18n
+          onPress={onPress}
+        >
+          {textButton}
+        </Button.Neutral>
+      )
+    case groupJoinStatus.visitor:
+      return (
+        <Button.Secondary
+          useI18n
+          onPress={onPress}
+        >
+          {textButton}
+        </Button.Secondary>
+      )
+    case groupJoinStatus.member:
+      return (
+        <Button.Secondary
+          type="ghost"
+          useI18n
+          onPress={onPress}
+        >
+          {textButton}
+        </Button.Secondary>
+      )
+    default:
+      return null;
   }
 };
 
@@ -50,10 +75,6 @@ const ButtonCommunityGroupCardAction: FC<
 > = ({
   onView, onCancel, onJoin, joinStatus,
 }) => {
-  const theme: ExtendedTheme = useTheme();
-
-  const stateButton = getStateButton(joinStatus, theme);
-
   const onPressView = () => onView?.();
 
   const onPressJoin = () => onJoin?.();
@@ -76,19 +97,8 @@ const ButtonCommunityGroupCardAction: FC<
     }
   };
 
-  if (!stateButton.text) {
-    return null;
-  }
-
   return (
-    <Button.Primary
-      useI18n
-      color={stateButton.backgroundColor}
-      textColor={stateButton.textColor}
-      onPress={onPress}
-    >
-      {stateButton.text}
-    </Button.Primary>
+    <ButtonAction joinStatus={joinStatus} onPress={onPress} />
   );
 };
 
