@@ -27,7 +27,7 @@ const getTextButton = (
     case groupJoinStatus.member:
       return 'common:btn_view';
     default:
-      return '';
+      return 'common:btn_view';
   }
 };
 
@@ -66,7 +66,15 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
         </Button.Secondary>
       )
     default:
-      return null;
+      return (
+        <Button.Secondary
+          type="ghost"
+          useI18n
+          onPress={onPress}
+        >
+          {textButton}
+        </Button.Secondary>
+      )
   }
 };
 
