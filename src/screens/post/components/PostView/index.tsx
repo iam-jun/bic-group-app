@@ -49,6 +49,7 @@ import { getPostViewMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
 import { useMyPermissions } from '~/hooks/permissions';
 import AlertDeleteAudiencesConfirmContent from '../AlertDeleteAudiencesConfirmContent';
+import PostAudiencesModal from '~/screens/post/components/PostAudiencesModal';
 
 export interface PostViewProps {
   style?: any;
@@ -157,8 +158,16 @@ const _PostView: FC<PostViewProps> = ({
   );
 
   const onPressShowAudiences = () => {
-    const payload = { postId, fromStack: 'somewhere' };
-    dispatch(postActions.showPostAudiencesBottomSheet(payload));
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      isFullScreen: true,
+      titleFullScreen: t('post:title_post_to'),
+      ContentComponent: (
+        <PostAudiencesModal
+          data={audience?.groups || []}
+        />
+      ),
+    }));
   };
 
   const handleDeltePostError = (listIdAudiences: string[]) => {

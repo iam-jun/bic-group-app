@@ -1,40 +1,30 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
-  View, StyleSheet, SectionList, Modal, Platform,
+  View, StyleSheet, FlatList,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import postKeySelector from '~/storeRedux/post/keySelector';
-import postActions from '~/storeRedux/post/actions';
-import { useKeySelector } from '~/hooks/selector';
-
-import Text from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
 import { useRootNavigation } from '~/hooks/navigation';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import mainStack from '~/router/navigator/MainStack/stack';
 import spacing from '~/theme/spacing';
-import Button from '~/beinComponents/Button';
 import GroupItem from '~/beinComponents/list/items/GroupItem';
+import { IGroup } from '~/interfaces/IGroup';
+import modalActions from '~/storeRedux/modal/actions';
 
-const PostAudiencesModal = () => {
+export interface PostAudiencesModalProps {
+  data: IGroup[] | any;
+}
+
+const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data }: PostAudiencesModalProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
-  const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(
-    theme, insets,
-  );
-
-  const postAudienceSheet = useKeySelector(postKeySelector.postAudienceSheet);
-
-  const { isShow, data } = postAudienceSheet || {};
+  const styles = createStyle(theme);
 
   const onPressClose = () => {
-    dispatch(postActions.hidePostAudiencesBottomSheet())
+    dispatch(modalActions.hideModal())
   };
 
   const navigateToGroup = (groupId: any) => {
@@ -58,7 +48,6 @@ const PostAudiencesModal = () => {
   const renderItem = ({ item }: any) => (
     <GroupItem
       {...item}
-      privacy="PUBLIC"
       showPrivacyAvatar
       disableHorizontal
       showInfo={false}
@@ -67,51 +56,23 @@ const PostAudiencesModal = () => {
     />
   );
 
-  const renderEmpty = () => <LoadingIndicator />;
-
-  const renderContent = () => (
+  return (
     <View style={styles.container}>
-      <SectionList
-        style={styles.sectionContainer}
+      <FlatList
         showsVerticalScrollIndicator={false}
-        sections={data || []}
-        keyExtractor={(
-          item, index,
-        ) => `section_list_${item}_${index}`}
+        data={data || []}
+        renderItem={renderItem}
+        initialNumToRender={20}
+        keyExtractor={(item, index) => `audience_${item?.id || index}`}
         ListHeaderComponent={() => (
           <ViewSpacing height={spacing.margin.small} />
         )}
-        ListEmptyComponent={renderEmpty}
-        renderItem={renderItem}
       />
     </View>
   );
-
-  return (
-    <Modal
-      visible={isShow}
-      transparent
-      animationType="slide"
-      onRequestClose={onPressClose}
-    >
-      <View testID="common_modal.center" style={styles.fullScreenContainer}>
-        <View style={styles.fullScreenHeader}>
-          <Text.H4 style={styles.titleFullScreen} numberOfLines={2} useI18n>
-            post:title_post_to
-          </Text.H4>
-          <Button style={styles.btnClose} onPress={onPressClose}>
-            <Icon icon="iconCloseSmall" />
-          </Button>
-        </View>
-        {renderContent()}
-      </View>
-    </Modal>
-  );
 };
 
-const createStyle = (
-  theme: ExtendedTheme, insets: any,
-) => {
+const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
@@ -120,27 +81,6 @@ const createStyle = (
       borderColor: colors.gray5,
       paddingHorizontal: 0,
       paddingBottom: 0,
-    },
-    fullScreenContainer: {
-      flex: 1,
-      backgroundColor: colors.neutral,
-      justifyContent: 'center',
-      paddingTop: Platform.OS === 'android' ? 0 : insets.top,
-      paddingBottom: insets.bottom + spacing.padding.small,
-    },
-    fullScreenHeader: {
-      flexDirection: 'row',
-      paddingVertical: spacing.padding.small,
-      alignItems: 'center',
-    },
-    titleFullScreen: {
-      flex: 1,
-      marginLeft: spacing.margin.large,
-      paddingVertical: spacing.padding.small,
-    },
-    btnClose: { paddingHorizontal: spacing.padding.extraLarge },
-    sectionContainer: {
-      paddingBottom: spacing.padding.base + insets.bottom,
     },
     groupItem: {
       paddingVertical: spacing.padding.small,
