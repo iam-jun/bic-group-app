@@ -21,7 +21,6 @@ import {
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import homeActions from '~/storeRedux/home/actions';
 import streamApi from '~/api/StreamApi';
