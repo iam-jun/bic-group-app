@@ -62,7 +62,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
               <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
               <View style={styles.row}>
-                <View style={styles.row}>
+                <View style={[styles.row, styles.privacyView]}>
                   <Icon
                     style={styles.iconSmall}
                     icon={privacyIcon}
@@ -73,7 +73,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
                     {privacyTitle}
                   </Text.BodyS>
                 </View>
-                <ViewSpacing width={spacing.margin.big} />
+                <ViewSpacing width={spacing.margin.extraLarge} />
                 <View style={styles.row}>
                   <Text.BodySMedium style={styles.textNumberMember}>
                     {userCount}
@@ -113,6 +113,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    privacyView: {
+      width: 100,
     },
     containerInfo: {
       flex: 1,
