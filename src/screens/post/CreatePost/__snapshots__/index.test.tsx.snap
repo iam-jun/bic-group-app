@@ -91,26 +91,22 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
             style={
               Array [
                 Object {
-                  "height": undefined,
-                },
-                Object {
                   "alignItems": "flex-end",
                   "backgroundColor": "#FFFFFF",
                   "flexDirection": "row",
+                  "minHeight": 44,
                   "overflow": "hidden",
                   "paddingTop": 0,
                 },
                 Object {
-                  "borderBottomWidth": 0.5,
-                  "borderColor": "#E3E6F2",
                   "elevation": 2,
-                  "shadowColor": "#000",
+                  "shadowColor": "rgba(0, 0, 0, 1)",
                   "shadowOffset": Object {
-                    "height": 1,
+                    "height": 2,
                     "width": 0,
                   },
-                  "shadowOpacity": 0.1,
-                  "shadowRadius": 1,
+                  "shadowOpacity": 0.12,
+                  "shadowRadius": 1.5,
                 },
                 undefined,
               ]
@@ -124,7 +120,6 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   "backgroundColor": "#FFFFFF",
                   "flex": 1,
                   "flexDirection": "row",
-                  "height": 60,
                   "overflow": "hidden",
                   "paddingLeft": 8,
                   "paddingRight": 8,
@@ -171,10 +166,10 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       },
                       Object {
                         "alignItems": "center",
-                        "height": 48,
+                        "height": 44,
                         "justifyContent": "center",
                         "padding": 12,
-                        "width": 48,
+                        "width": 44,
                       },
                       Object {
                         "backgroundColor": undefined,
@@ -202,9 +197,8 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   Array [
                     Object {
                       "flex": 1,
-                      "height": "100%",
                       "justifyContent": "center",
-                      "marginLeft": 4,
+                      "paddingVertical": 8,
                     },
                     Object {},
                   ]
@@ -242,7 +236,9 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           "fontSize": 15,
                         },
                         Object {},
-                        Object {},
+                        Object {
+                          "marginRight": 8,
+                        },
                       ]
                     }
                     testID="header.text"
@@ -267,13 +263,14 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#D1D4DB",
-                    "borderRadius": 4,
-                    "borderWidth": 0,
-                    "padding": 8,
-                  }
+                  Array [
+                    Object {
+                      "borderRadius": 6,
+                    },
+                    Object {
+                      "borderWidth": 0,
+                    },
+                  ]
                 }
                 testID="create_post.btn_post"
               >
@@ -282,31 +279,41 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                     Array [
                       Object {
                         "alignItems": "center",
+                        "borderRadius": 6,
                         "flexDirection": "row",
                         "justifyContent": "center",
+                        "paddingVertical": 4,
                       },
                       undefined,
+                      Object {
+                        "backgroundColor": "#F4EFFB",
+                        "height": 36,
+                        "paddingHorizontal": 12,
+                      },
                     ]
                   }
-                  testID="button_wrapper.content"
+                  testID="button.content"
                 >
                   <Text
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
-                          "fontFamily": "BeVietnamPro-Light",
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
                           "fontSize": 15,
                         },
                         Object {
-                          "color": "#A4A9B7",
+                          "color": "#BAC0DE",
                         },
-                        Object {
-                          "textAlign": "center",
-                        },
+                        Array [
+                          Object {
+                            "textAlign": "center",
+                          },
+                          undefined,
+                        ],
                       ]
                     }
-                    testID="header.button.text"
+                    testID="button.text"
                   >
                     Post
                   </Text>
@@ -385,7 +392,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
@@ -711,7 +718,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   style={
                     Array [
                       Object {
-                        "color": "#181C32",
+                        "color": "#212745",
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 15,
                       },
@@ -1108,7 +1115,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           style={
                             Array [
                               Object {
-                                "color": "#181C32",
+                                "color": "#212745",
                                 "fontFamily": "BeVietnamPro-Light",
                                 "fontSize": 15,
                               },
@@ -1208,7 +1215,9 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                                   Object {
                                     "alignItems": "center",
                                     "backgroundColor": "#f9f9f9",
+                                    "borderColor": "#F2F5F8",
                                     "borderRadius": 24,
+                                    "borderWidth": 2,
                                     "height": 48,
                                     "justifyContent": "center",
                                     "width": 48,
@@ -1224,7 +1233,9 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                                     "overflow": "hidden",
                                   },
                                   Object {
+                                    "borderColor": "#F2F5F8",
                                     "borderRadius": 24,
+                                    "borderWidth": 2,
                                     "height": 48,
                                     "width": 48,
                                   },
@@ -1276,7 +1287,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                             style={
                               Array [
                                 Object {
-                                  "color": "#181C32",
+                                  "color": "#212745",
                                   "fontFamily": "BeVietnamPro-Medium",
                                   "fontSize": 13,
                                 },

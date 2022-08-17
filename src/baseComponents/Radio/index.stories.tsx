@@ -1,9 +1,9 @@
-/* eslint-disable no-alert */
+import { ComponentMeta } from '@storybook/react-native';
 import Radio from '.';
-import { ComponentMeta, getStoryComponent } from '~/storybook';
+import { getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Radio',
+  title: 'base/Radio',
   component: Radio,
   argTypes: {
     disabled: {

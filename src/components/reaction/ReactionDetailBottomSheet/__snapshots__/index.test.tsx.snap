@@ -124,9 +124,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
-                      "height": 44,
                       "opacity": 1,
                       "paddingHorizontal": 12,
+                      "paddingVertical": 8,
                     }
                   }
                   testID="reaction_detail_bottomSheet.Hoàng Minh Trọng"
@@ -186,7 +186,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                               Object {
                                 "alignItems": "center",
                                 "backgroundColor": "#f9f9f9",
+                                "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
+                                "borderWidth": 2,
                                 "height": 40,
                                 "justifyContent": "center",
                                 "width": 40,
@@ -202,7 +204,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                                 "overflow": "hidden",
                               },
                               Object {
+                                "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
+                                "borderWidth": 2,
                                 "height": 40,
                                 "width": 40,
                               },
@@ -285,9 +289,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
-                      "height": 44,
                       "opacity": 1,
                       "paddingHorizontal": 12,
+                      "paddingVertical": 8,
                     }
                   }
                   testID="reaction_detail_bottomSheet.Nguyễn Thị Ngọc Linh"
@@ -347,7 +351,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                               Object {
                                 "alignItems": "center",
                                 "backgroundColor": "#f9f9f9",
+                                "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
+                                "borderWidth": 2,
                                 "height": 40,
                                 "justifyContent": "center",
                                 "width": 40,
@@ -363,7 +369,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                                 "overflow": "hidden",
                               },
                               Object {
+                                "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
+                                "borderWidth": 2,
                                 "height": 40,
                                 "width": 40,
                               },
@@ -446,9 +454,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                     Object {
                       "alignItems": "center",
                       "flexDirection": "row",
-                      "height": 44,
                       "opacity": 1,
                       "paddingHorizontal": 12,
+                      "paddingVertical": 8,
                     }
                   }
                   testID="reaction_detail_bottomSheet.Nguyen Thi Thu Queen"
@@ -508,7 +516,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                               Object {
                                 "alignItems": "center",
                                 "backgroundColor": "#f9f9f9",
+                                "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
+                                "borderWidth": 2,
                                 "height": 40,
                                 "justifyContent": "center",
                                 "width": 40,
@@ -524,7 +534,9 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
                                 "overflow": "hidden",
                               },
                               Object {
+                                "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
+                                "borderWidth": 2,
                                 "height": 40,
                                 "width": 40,
                               },

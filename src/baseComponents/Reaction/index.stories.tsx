@@ -1,9 +1,10 @@
 /* eslint-disable no-alert */
+import { ComponentMeta } from '@storybook/react-native';
 import Reaction from '.';
-import { ComponentMeta, getStoryComponent } from '~/storybook';
+import { getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Reaction',
+  title: 'base/Reaction',
   component: Reaction,
 } as ComponentMeta<typeof Reaction>;
 

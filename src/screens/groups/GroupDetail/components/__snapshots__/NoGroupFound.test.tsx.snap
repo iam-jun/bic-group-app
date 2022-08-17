@@ -28,26 +28,22 @@ exports[`NoGroupFound component should render correctly 1`] = `
       style={
         Array [
           Object {
-            "height": undefined,
-          },
-          Object {
             "alignItems": "flex-end",
             "backgroundColor": "#FFFFFF",
             "flexDirection": "row",
+            "minHeight": 44,
             "overflow": "hidden",
             "paddingTop": 0,
           },
           Object {
-            "borderBottomWidth": 0.5,
-            "borderColor": "#E3E6F2",
             "elevation": 2,
-            "shadowColor": "#000",
+            "shadowColor": "rgba(0, 0, 0, 1)",
             "shadowOffset": Object {
-              "height": 1,
+              "height": 2,
               "width": 0,
             },
-            "shadowOpacity": 0.1,
-            "shadowRadius": 1,
+            "shadowOpacity": 0.12,
+            "shadowRadius": 1.5,
           },
           undefined,
         ]
@@ -61,7 +57,6 @@ exports[`NoGroupFound component should render correctly 1`] = `
             "backgroundColor": "#FFFFFF",
             "flex": 1,
             "flexDirection": "row",
-            "height": 60,
             "overflow": "hidden",
             "paddingLeft": 8,
             "paddingRight": 8,
@@ -108,10 +103,10 @@ exports[`NoGroupFound component should render correctly 1`] = `
                 },
                 Object {
                   "alignItems": "center",
-                  "height": 48,
+                  "height": 44,
                   "justifyContent": "center",
                   "padding": 12,
-                  "width": 48,
+                  "width": 44,
                 },
                 Object {
                   "backgroundColor": undefined,
@@ -139,9 +134,8 @@ exports[`NoGroupFound component should render correctly 1`] = `
             Array [
               Object {
                 "flex": 1,
-                "height": "100%",
                 "justifyContent": "center",
-                "marginLeft": 4,
+                "paddingVertical": 8,
               },
               Object {},
             ]
@@ -179,7 +173,9 @@ exports[`NoGroupFound component should render correctly 1`] = `
                     "fontSize": 15,
                   },
                   Object {},
-                  Object {},
+                  Object {
+                    "marginRight": 8,
+                  },
                 ]
               }
               testID="header.text"
@@ -244,7 +240,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
             },
@@ -294,7 +290,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
