@@ -164,7 +164,7 @@ const TextInput: React.FC<TextInputProps> = ({
             <Icon
               testID="text_input.left_icon"
               icon={leftIcon}
-              size={24}
+              size={22}
               tintColor={colors.neutral20}
               {...leftIconProps}
             />
@@ -223,7 +223,7 @@ const themeStyles = (
       marginVertical: spacing?.margin.tiny,
     },
     row: {
-      minHeight: 40,
+      height: 40,
       flexDirection: 'row',
       alignItems: 'center',
       borderRadius: spacing.borderRadius.base,
@@ -235,7 +235,7 @@ const themeStyles = (
       alignItems: 'center',
     },
     input: {
-      minHeight: 40,
+      height: 40,
       paddingHorizontal: spacing.padding.large,
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
