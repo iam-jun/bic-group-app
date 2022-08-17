@@ -29,6 +29,7 @@ export interface TextInputProps extends RNTextInputProps {
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
   label?: string,
+  labelProps?: TextProps;
   helperText?: string;
   helperType?: HelperType;
   helperError?: string;
@@ -55,6 +56,7 @@ export interface TextInputProps extends RNTextInputProps {
 
 const TextInput: React.FC<TextInputProps> = ({
   label,
+  labelProps,
   style,
   inputStyle,
   helperType,
@@ -141,7 +143,7 @@ const TextInput: React.FC<TextInputProps> = ({
     <View testID="text_input" style={[styles.container, style]}>
       {!!label && (
       <View style={styles.labelStyle}>
-        <Text.LabelM color={colors.neutral80}>{label}</Text.LabelM>
+        <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
       </View>
       )}
       <View style={{ flex: 1 }}>
