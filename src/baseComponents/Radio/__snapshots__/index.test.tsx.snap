@@ -99,7 +99,7 @@ exports[`Radio component should render disabled state with default size medium 1
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -216,7 +216,7 @@ exports[`Radio component should render disabled state with size small 1`] = `
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 13,
         },
@@ -333,7 +333,7 @@ exports[`Radio component should render disabled-auto-selected state with default
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -450,7 +450,7 @@ exports[`Radio component should render selected state with default size medium 1
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -567,7 +567,7 @@ exports[`Radio component should render unselect state with default size medium 1
     style={
       Array [
         Object {
-          "color": "#181C32",
+          "color": "#353E6E",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },

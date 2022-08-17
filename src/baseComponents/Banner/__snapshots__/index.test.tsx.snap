@@ -85,7 +85,7 @@ exports[`BannerImportant component renders active banner correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -187,7 +187,7 @@ exports[`BannerImportant component renders inactive banner correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },

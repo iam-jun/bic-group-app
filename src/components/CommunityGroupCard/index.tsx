@@ -1,12 +1,9 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import {
-  View, StyleSheet, TouchableWithoutFeedback,
-} from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { spacing } from '~/theme';
-import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -14,7 +11,8 @@ import ButtonCommunityGroupCardAction from './ButtonCommunityGroupCardAction';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
-import { Button } from '~/baseComponents';
+import { Avatar, Button } from '~/baseComponents';
+import { formatLargeNumber } from '~/utils/formatData';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -60,14 +58,12 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
       <Button TouchableComponent={TouchableWithoutFeedback} onPress={onView}>
         <View>
           <View style={styles.row}>
-            <Image resizeMode="contain" style={styles.img} source={icon} />
+            <Avatar.XLarge source={icon} />
             <View style={styles.containerInfo}>
-              <Text.H6 numberOfLines={2}>
-                {name}
-              </Text.H6>
+              <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
               <View style={styles.row}>
-                <View style={styles.row}>
+                <View style={[styles.row, styles.privacyView]}>
                   <Icon
                     style={styles.iconSmall}
                     icon={privacyIcon}
@@ -78,10 +74,10 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
                     {privacyTitle}
                   </Text.BodyS>
                 </View>
-                <ViewSpacing width={spacing.margin.big} />
+                <ViewSpacing width={spacing.margin.extraLarge} />
                 <View style={styles.row}>
                   <Text.BodySMedium style={styles.textNumberMember}>
-                    {userCount}
+                    {formatLargeNumber(userCount)}
                   </Text.BodySMedium>
                   <Text.BodyS color={colors.neutral40} useI18n>
                     common:members
@@ -91,9 +87,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
             </View>
           </View>
           <ViewSpacing height={10} />
-          <Text.BodyM numberOfLines={2}>
-            {`${description}`}
-          </Text.BodyM>
+          <Text.BodyM numberOfLines={2}>{`${description}`}</Text.BodyM>
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
@@ -121,14 +115,12 @@ const themeStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    img: {
-      height: 76,
-      width: 76,
-      borderRadius: spacing.borderRadius.large,
-      marginRight: 10,
+    privacyView: {
+      width: 100,
     },
     containerInfo: {
       flex: 1,
+      marginLeft: 10,
     },
     iconSmall: {
       marginRight: spacing.margin.small,

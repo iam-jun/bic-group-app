@@ -1,9 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NotificationAvatar component renders correctly with COMMENT verb with action comment lv1 1`] = `null`;
+exports[`NotificationAvatar component renders correctly with COMMENT verb with action comment lv1 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+    }
+  }
+/>
+`;
 
-exports[`NotificationAvatar component renders correctly with COMMENT verb with action comment lv2 1`] = `null`;
+exports[`NotificationAvatar component renders correctly with COMMENT verb with action comment lv2 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+    }
+  }
+/>
+`;
 
-exports[`NotificationAvatar component renders correctly with action REACT post 1`] = `null`;
+exports[`NotificationAvatar component renders correctly with action REACT post 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+    }
+  }
+/>
+`;
 
 exports[`NotificationAvatar component renders correctly with action comment lv2 1`] = `null`;

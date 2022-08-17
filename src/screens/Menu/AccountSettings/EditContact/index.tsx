@@ -3,13 +3,13 @@ import {
   StyleSheet, View, Keyboard, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import i18next from 'i18next';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
+import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -21,11 +21,13 @@ import EditLocation from './fragments/EditLocation';
 import { ILocation } from '~/interfaces/common';
 import menuActions from '../../../../storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
+import { TextInput } from '~/baseComponents/Input';
 
 const EditContact = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
 
   const locationRef = useRef<any>();
 
@@ -94,7 +96,7 @@ const EditContact = () => {
           country: countryState,
           city: cityState,
         },
-        i18next.t('settings:text_contact_info_update_success'),
+        t('settings:text_contact_info_update_success'),
         () => {
           navigateBack();
         },
@@ -182,20 +184,12 @@ const EditContact = () => {
             errorsState={errors}
             clearAllErrors={clearAllErrors}
           />
-          <TitleComponent icon="Envelope" title="settings:title_email" />
-          <Button
+          <TextInput
+            label={t('settings:title_email')}
             testID="edit_contact.email"
-            textProps={{ color: theme.colors.gray60, variant: 'bodyM' }}
-            style={[
-              styles.buttonDropDown,
-              { backgroundColor: theme.colors.gray10 },
-            ]}
-            contentStyle={styles.buttonDropDownContent}
-            activeOpacity={1}
-            disabled
-          >
-            {email || i18next.t('common:text_not_set')}
-          </Button>
+            editable={false}
+            value={email || t('common:text_not_set')}
+          />
 
           <TitleComponent icon="LocationDot" title="settings:title_address" />
           <Button
@@ -207,7 +201,7 @@ const EditContact = () => {
           >
             {cityState && countryState
               ? `${cityState}, ${countryState}`
-              : i18next.t('common:text_not_set')}
+              : t('common:text_not_set')}
           </Button>
         </View>
         <EditLocation

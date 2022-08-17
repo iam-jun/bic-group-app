@@ -48,7 +48,7 @@ exports[`ReactionView component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -66,7 +66,7 @@ exports[`ReactionView component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -115,7 +115,7 @@ exports[`ReactionView component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -133,7 +133,7 @@ exports[`ReactionView component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -182,7 +182,7 @@ exports[`ReactionView component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -200,7 +200,7 @@ exports[`ReactionView component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -231,8 +231,8 @@ exports[`ReactionView component renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#F4EFFB",
-        "borderColor": "#7335C0",
+        "backgroundColor": "#F1F2F8",
+        "borderColor": "#F1F2F8",
         "borderRadius": 4,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -249,12 +249,12 @@ exports[`ReactionView component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
           Object {
-            "color": "#7335C0",
+            "color": "#353E6E",
           },
           Object {
             "marginBottom": 2,
@@ -267,7 +267,7 @@ exports[`ReactionView component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -435,7 +435,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -453,7 +453,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -502,7 +502,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -520,7 +520,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -569,7 +569,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -587,7 +587,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -618,8 +618,8 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#F4EFFB",
-        "borderColor": "#7335C0",
+        "backgroundColor": "#F1F2F8",
+        "borderColor": "#F1F2F8",
         "borderRadius": 4,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -636,12 +636,12 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
           Object {
-            "color": "#7335C0",
+            "color": "#353E6E",
           },
           Object {
             "marginBottom": 2,
@@ -654,7 +654,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -1058,7 +1058,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -1076,7 +1076,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -1125,7 +1125,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -1143,7 +1143,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -1192,7 +1192,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -1210,7 +1210,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -1241,8 +1241,8 @@ exports[`ReactionView component renders correctly with props style 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#F4EFFB",
-        "borderColor": "#7335C0",
+        "backgroundColor": "#F1F2F8",
+        "borderColor": "#F1F2F8",
         "borderRadius": 4,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -1259,12 +1259,12 @@ exports[`ReactionView component renders correctly with props style 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#353E6E",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
           Object {
-            "color": "#7335C0",
+            "color": "#353E6E",
           },
           Object {
             "marginBottom": 2,
@@ -1277,7 +1277,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         style={
           Array [
             Object {
-              "color": "#181C32",
+              "color": "#353E6E",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },

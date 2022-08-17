@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { light } from '~/theme/theme';
 
 export default function StoryWrapper({ children }) {
-  return <View style={styles.main}>{children}</View>;
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.main}>{children}</View>
+    </ScrollView>
+  );
 }
 
 StoryWrapper.defaultProps = {
@@ -15,10 +20,11 @@ StoryWrapper.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: light.colors.neutral,
+  },
   main: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
 })

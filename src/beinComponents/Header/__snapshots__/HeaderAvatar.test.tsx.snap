@@ -90,7 +90,9 @@ exports[`Header Avatar component renders correctly 1`] = `
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -106,7 +108,9 @@ exports[`Header Avatar component renders correctly 1`] = `
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "width": 48,
               },
@@ -166,7 +170,7 @@ exports[`Header Avatar component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -276,7 +280,9 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -292,7 +298,9 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "width": 48,
               },
@@ -352,7 +360,7 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -460,7 +468,9 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -476,7 +486,9 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "width": 48,
               },
@@ -536,7 +548,7 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -642,7 +654,9 @@ exports[`Header Avatar component renders correctly with props First Label Props 
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -658,7 +672,9 @@ exports[`Header Avatar component renders correctly with props First Label Props 
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "width": 48,
               },
@@ -721,7 +737,7 @@ exports[`Header Avatar component renders correctly with props First Label Props 
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -827,7 +843,9 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -843,7 +861,9 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "width": 48,
               },
@@ -977,7 +997,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -1083,7 +1103,9 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -1099,7 +1121,9 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "width": 48,
               },
@@ -1219,7 +1243,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -1325,7 +1349,9 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -1341,7 +1367,9 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "width": 48,
               },
@@ -1461,7 +1489,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -1567,7 +1595,9 @@ exports[`Header Avatar component renders correctly with props Second Label Props
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -1583,7 +1613,9 @@ exports[`Header Avatar component renders correctly with props Second Label Props
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 24,
+                "borderWidth": 2,
                 "height": 48,
                 "width": 48,
               },
@@ -1643,7 +1675,7 @@ exports[`Header Avatar component renders correctly with props Second Label Props
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },

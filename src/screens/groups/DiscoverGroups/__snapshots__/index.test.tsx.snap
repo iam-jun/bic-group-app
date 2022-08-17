@@ -90,26 +90,22 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
             style={
               Array [
                 Object {
-                  "height": undefined,
-                },
-                Object {
                   "alignItems": "flex-end",
                   "backgroundColor": "#FFFFFF",
                   "flexDirection": "row",
+                  "minHeight": 44,
                   "overflow": "hidden",
                   "paddingTop": 0,
                 },
                 Object {
-                  "borderBottomWidth": 0.5,
-                  "borderColor": "#E3E6F2",
                   "elevation": 2,
-                  "shadowColor": "#000",
+                  "shadowColor": "rgba(0, 0, 0, 1)",
                   "shadowOffset": Object {
-                    "height": 1,
+                    "height": 2,
                     "width": 0,
                   },
-                  "shadowOpacity": 0.1,
-                  "shadowRadius": 1,
+                  "shadowOpacity": 0.12,
+                  "shadowRadius": 1.5,
                 },
                 undefined,
               ]
@@ -123,7 +119,6 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                   "backgroundColor": "#FFFFFF",
                   "flex": 1,
                   "flexDirection": "row",
-                  "height": 60,
                   "overflow": "hidden",
                   "paddingLeft": 8,
                   "paddingRight": 8,
@@ -170,10 +165,10 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                       },
                       Object {
                         "alignItems": "center",
-                        "height": 48,
+                        "height": 44,
                         "justifyContent": "center",
                         "padding": 12,
-                        "width": 48,
+                        "width": 44,
                       },
                       Object {
                         "backgroundColor": undefined,
@@ -201,9 +196,8 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                   Array [
                     Object {
                       "flex": 1,
-                      "height": "100%",
                       "justifyContent": "center",
-                      "marginLeft": 4,
+                      "paddingVertical": 8,
                     },
                     Object {},
                   ]
@@ -241,7 +235,9 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                           "fontSize": 15,
                         },
                         Object {},
-                        Object {},
+                        Object {
+                          "marginRight": 8,
+                        },
                       ]
                     }
                     testID="header.text"
@@ -291,14 +287,13 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                       Object {
                         "alignItems": "center",
                         "borderRadius": 20,
-                        "height": 40,
+                        "height": 20,
                         "justifyContent": "center",
                         "marginRight": 4,
-                        "padding": 8,
-                        "width": 40,
+                        "width": 20,
                       },
                       Object {
-                        "backgroundColor": "#F8F9FF",
+                        "backgroundColor": undefined,
                       },
                     ]
                   }
@@ -312,74 +307,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                       ]
                     }
                   >
-                    <View>
-                      <View
-                        onLayout={[Function]}
-                        style={
-                          Object {
-                            "backgroundColor": "transparent",
-                            "position": "relative",
-                          }
-                        }
-                      >
-                        <View
-                          collapsable={false}
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "opacity": 1,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              Object {
-                                "alignItems": "center",
-                                "backgroundColor": "#f9f9f9",
-                                "height": 24,
-                                "justifyContent": "center",
-                                "width": 24,
-                              }
-                            }
-                            testID="Image__placeholder"
-                          />
-                        </View>
-                        <View
-                          style={
-                            Array [
-                              Object {
-                                "overflow": "hidden",
-                              },
-                              Object {
-                                "height": 24,
-                                "width": 24,
-                              },
-                            ]
-                          }
-                        >
-                          <FastImageView
-                            onFastImageError={[Function]}
-                            onFastImageLoadEnd={[Function]}
-                            resizeMode="cover"
-                            size={24}
-                            source={null}
-                            style={
-                              Object {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              }
-                            }
-                          />
-                        </View>
-                      </View>
-                    </View>
+                    <View />
                   </View>
                 </View>
               </View>
@@ -525,7 +453,9 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                               Object {
                                 "alignItems": "center",
                                 "backgroundColor": "#f9f9f9",
+                                "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
+                                "borderWidth": 2,
                                 "height": 64,
                                 "justifyContent": "center",
                                 "width": 64,
@@ -541,7 +471,9 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                 "overflow": "hidden",
                               },
                               Object {
+                                "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
+                                "borderWidth": 2,
                                 "height": 64,
                                 "width": 64,
                               },
@@ -664,7 +596,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#181C32",
+                              "color": "#212745",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
@@ -681,7 +613,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#181C32",
+                              "color": "#212745",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
@@ -758,7 +690,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#181C32",
+                              "color": "#212745",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
@@ -775,7 +707,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": "#181C32",
+                              "color": "#212745",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },

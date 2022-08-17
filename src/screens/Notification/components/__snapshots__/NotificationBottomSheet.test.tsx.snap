@@ -34,6 +34,7 @@ exports[`NotificationBottomSheet component renders correctly 1`] = `
               "height": 44,
               "opacity": 1,
               "paddingHorizontal": 16,
+              "paddingVertical": 8,
             }
           }
           testID="notifications.mark_all_as_read"
@@ -147,6 +148,7 @@ exports[`NotificationBottomSheet component renders correctly 1`] = `
               "height": 44,
               "opacity": 1,
               "paddingHorizontal": 16,
+              "paddingVertical": 8,
             }
           }
           testID="notifications.notification_settings"

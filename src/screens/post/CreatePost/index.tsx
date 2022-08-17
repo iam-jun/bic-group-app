@@ -181,7 +181,6 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           loading,
           disabled: disableButtonPost,
           useI18n: true,
-          highEmphasis: true,
           style: { borderWidth: 0 },
           testID: 'create_post.btn_post',
         }}

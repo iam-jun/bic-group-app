@@ -8,7 +8,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
   ListHeaderComponent={[Function]}
   data={
     Array [
-      26,
+      "26",
     ]
   }
   getItem={[Function]}
@@ -149,7 +149,9 @@ exports[`MemberRequestList should render data correctly 1`] = `
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 24,
+                        "borderWidth": 2,
                         "height": 48,
                         "justifyContent": "center",
                         "width": 48,
@@ -165,7 +167,9 @@ exports[`MemberRequestList should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 24,
+                        "borderWidth": 2,
                         "height": 48,
                         "width": 48,
                       },
@@ -209,7 +213,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#181C32",
+                    "color": "#212745",
                     "fontFamily": "BeVietnamPro-Medium",
                     "fontSize": 15,
                   },
@@ -224,7 +228,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#181C32",
+                    "color": "#212745",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                   },
@@ -325,7 +329,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
+                      "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
@@ -410,7 +414,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
+                      "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
@@ -473,7 +477,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
+                      "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
@@ -528,7 +532,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
+                      "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },

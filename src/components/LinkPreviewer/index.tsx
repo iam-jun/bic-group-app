@@ -11,6 +11,7 @@ import spacing from '~/theme/spacing';
 import { getUrlFromText } from '~/utils/common';
 import { openUrl } from '~/utils/link';
 import { Button } from '~/baseComponents';
+import images from '~/resources/images';
 
 interface LinkPreviewerProps {
   text?: string;
@@ -49,6 +50,7 @@ const LinkPreviewer = ({ text }: LinkPreviewerProps) => {
         <Image
           style={styles.thumbnail}
           source={linkPreviews[link].image}
+          placeholderSource={images.img_thumbnail_default}
         />
         )}
         <View style={styles.metadata}>

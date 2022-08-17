@@ -1,9 +1,10 @@
 /* eslint-disable no-alert */
+import { ComponentMeta } from '@storybook/react-native';
 import Toggle from '.';
-import { ComponentMeta, getStoryComponent } from '~/storybook';
+import { getStoryComponent } from '~/storybook';
 
 export default {
-  title: 'components/Toggle',
+  title: 'base/Toggle',
   component: Toggle,
   argTypes: {
     size: {

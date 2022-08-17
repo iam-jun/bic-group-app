@@ -194,7 +194,7 @@ describe('PostView Component', () => {
   });
 
   it('press audience should dispatch show audiences', () => {
-    const spy = jest.spyOn(postActions, 'showPostAudiencesBottomSheet');
+    const spy = jest.spyOn(modalActions, 'showModal');
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <PostView postId={POST_DETAIL.id} />,
@@ -202,10 +202,7 @@ describe('PostView Component', () => {
     );
     const btn = wrapper.getByTestId('post_view_header.audiences');
     fireEvent.press(btn);
-    expect(spy).toBeCalledWith({
-      fromStack: 'somewhere',
-      postId: POST_DETAIL.id,
-    });
+    expect(spy).toBeCalled();
   });
 
   it('press menu should dispatch show modal menu', () => {

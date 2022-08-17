@@ -218,7 +218,9 @@ exports[`Group Item component renders correctly 1`] = `
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 40,
                         "justifyContent": "center",
                         "width": 40,
@@ -234,7 +236,9 @@ exports[`Group Item component renders correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 40,
                         "width": 40,
                       },
@@ -360,7 +364,7 @@ exports[`Group Item component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#181C32",
+                  "color": "#212745",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
@@ -613,7 +617,9 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 40,
                         "justifyContent": "center",
                         "width": 40,
@@ -629,7 +635,9 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 40,
                         "width": 40,
                       },
@@ -755,7 +763,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#181C32",
+                  "color": "#212745",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
@@ -924,7 +932,9 @@ exports[`Group Item component should render default prop 1`] = `
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 40,
                         "justifyContent": "center",
                         "width": 40,
@@ -940,7 +950,9 @@ exports[`Group Item component should render default prop 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 40,
                         "width": 40,
                       },
@@ -1066,7 +1078,7 @@ exports[`Group Item component should render default prop 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#181C32",
+                  "color": "#212745",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
@@ -1306,7 +1318,9 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 40,
                         "justifyContent": "center",
                         "width": 40,
@@ -1322,7 +1336,9 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                         "overflow": "hidden",
                       },
                       Object {
+                        "borderColor": "#F2F5F8",
                         "borderRadius": 4,
+                        "borderWidth": 2,
                         "height": 40,
                         "width": 40,
                       },
@@ -1448,7 +1464,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
             style={
               Array [
                 Object {
-                  "color": "#181C32",
+                  "color": "#212745",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },

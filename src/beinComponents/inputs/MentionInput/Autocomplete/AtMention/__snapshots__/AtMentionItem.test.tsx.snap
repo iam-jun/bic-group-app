@@ -87,7 +87,9 @@ exports[`AtMentionItem component renders correctly 1`] = `
                 Object {
                   "alignItems": "center",
                   "backgroundColor": "#f9f9f9",
+                  "borderColor": "#F2F5F8",
                   "borderRadius": 4,
+                  "borderWidth": 2,
                   "height": 40,
                   "justifyContent": "center",
                   "width": 40,
@@ -103,7 +105,9 @@ exports[`AtMentionItem component renders correctly 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
+                  "borderColor": "#F2F5F8",
                   "borderRadius": 4,
+                  "borderWidth": 2,
                   "height": 40,
                   "width": 40,
                 },
@@ -138,7 +142,7 @@ exports[`AtMentionItem component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#181C32",
+            "color": "#212745",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },

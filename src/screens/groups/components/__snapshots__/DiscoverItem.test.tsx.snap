@@ -86,7 +86,9 @@ exports[`DiscoverItem component should render data correctly 1`] = `
                 Object {
                   "alignItems": "center",
                   "backgroundColor": "#f9f9f9",
+                  "borderColor": "#F2F5F8",
                   "borderRadius": 4,
+                  "borderWidth": 2,
                   "height": 64,
                   "justifyContent": "center",
                   "width": 64,
@@ -102,7 +104,9 @@ exports[`DiscoverItem component should render data correctly 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
+                  "borderColor": "#F2F5F8",
                   "borderRadius": 4,
+                  "borderWidth": 2,
                   "height": 64,
                   "width": 64,
                 },
@@ -229,7 +233,7 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
@@ -246,7 +250,7 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
@@ -323,7 +327,7 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
@@ -340,7 +344,7 @@ exports[`DiscoverItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#181C32",
+                "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },

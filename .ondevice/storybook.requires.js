@@ -33,8 +33,13 @@ const getStories = () => {
   return [
     require("../src/baseComponents/Avatar/index.stories.tsx"),
     require("../src/baseComponents/Banner/index.stories.tsx"),
+    require("../src/baseComponents/Button/ButtonRaise/index.stories.tsx"),
     require("../src/baseComponents/Button/index.stories.tsx"),
     require("../src/baseComponents/Checkbox/index.stories.tsx"),
+    require("../src/baseComponents/Input/DateInput/index.stories.tsx"),
+    require("../src/baseComponents/Input/PasswordInput/index.stories.tsx"),
+    require("../src/baseComponents/Input/TextArea/index.stories.tsx"),
+    require("../src/baseComponents/Input/TextInput/index.stories.tsx"),
     require("../src/baseComponents/Radio/index.stories.tsx"),
     require("../src/baseComponents/Reaction/index.stories.tsx"),
     require("../src/baseComponents/Tab/index.stories.tsx"),

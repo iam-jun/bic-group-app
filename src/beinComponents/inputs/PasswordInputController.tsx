@@ -1,11 +1,10 @@
 import React from 'react';
 import { useController } from 'react-hook-form';
+import PasswordInput, { PasswordInputProps } from '~/baseComponents/Input/PasswordInput';
 
-import PasswordInput from './PasswordInput';
 import { IObject } from '~/interfaces/common';
-import { TextInputProps } from './TextInput';
 
-interface Props extends TextInputProps {
+interface Props extends PasswordInputProps {
   useFormData: IObject<any>;
   name: string;
   rules: any;
@@ -56,7 +55,7 @@ const PasswordInputController: React.FC<Props> = ({
         validateValue?.();
       }}
       helperType={errors?.[name]?.message ? 'error' : undefined}
-      helperContent={errors?.[name]?.message}
+      helperText={errors?.[name]?.message}
       {...props}
     />
   );

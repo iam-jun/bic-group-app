@@ -1,14 +1,13 @@
 import React, { useState, useRef } from 'react';
 import {
-  StyleSheet, Keyboard, ScrollView, View,
+  StyleSheet, Keyboard, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import i18next from 'i18next';
 import { isEqual } from 'lodash';
 
+import { useBaseHook } from '~/hooks';
 import genders from '~/constants/genders';
-import { formatDate } from '~/utils/formatData';
 import menuActions from '~/storeRedux/menu/actions';
 import {
   GENDER_TYPE,
@@ -17,7 +16,6 @@ import {
   RELATIONSHIP_TYPE,
 } from '~/interfaces/IEditUser';
 import OptionMenu from './fragments/OptionMenu';
-import LanguageOptionMenu from './fragments/LanguageOptionMenu';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../../storeRedux/menu/keySelector';
@@ -25,17 +23,18 @@ import { useRootNavigation } from '~/hooks/navigation';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import EditName from './fragments/EditName';
-import DateTimePicker from '~/beinComponents/DateTimePicker';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
 import { dataMapping, maxBirthday } from './helper';
 import spacing from '~/theme/spacing';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
+import { DateInput, TextInput } from '~/baseComponents/Input';
+import LanguageOptionMenu from './fragments/LanguageOptionMenu';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const { t } = useBaseHook();
 
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
@@ -51,7 +50,6 @@ const EditBasicInfo = () => {
 
   const [nameState, setNameState] = useState<string>(fullname);
   const [genderState, setGenderState] = useState<GENDER_TYPE>(gender);
-  const [selectingDate, setSelectingDate] = useState<boolean>(false);
   const [birthdayState, setBirthdayState] = useState<string>(birthday);
   const [languageState, setLanguageState] = useState<string[]>(language);
   const [relationshipState, setRelationshipState] = useState<RELATIONSHIP_TYPE>(relationshipStatus);
@@ -113,7 +111,6 @@ const EditBasicInfo = () => {
     if (date) {
       setBirthdayState(date.toISOString());
     }
-    setSelectingDate(false);
   };
 
   const _onChangeLanguages = (languages: string[]) => {
@@ -124,15 +121,15 @@ const EditBasicInfo = () => {
     if (isValid) {
       Keyboard.dismiss();
       dispatch(modalActions.showAlert({
-        title: i18next.t('common:label_discard_changes'),
+        title: t('common:label_discard_changes'),
         showCloseButton: true,
         cancelBtn: true,
         isDismissible: false,
         onConfirm: () => {
           rootNavigation.goBack();
         },
-        confirmLabel: i18next.t('common:btn_discard'),
-        content: i18next.t('common:text_not_saved_changes_warning'),
+        confirmLabel: t('common:btn_discard'),
+        content: t('common:text_not_saved_changes_warning'),
       }));
     } else {
       rootNavigation.goBack();
@@ -145,12 +142,6 @@ const EditBasicInfo = () => {
       e?.pageX, e?.pageY,
     );
   };
-
-  const onDateEditOpen = () => {
-    Keyboard.dismiss();
-    setSelectingDate(true);
-  };
-  const onDateEditClose = () => setSelectingDate(false);
 
   const onRelationshipEditOpen = (e: any) => {
     Keyboard.dismiss();
@@ -191,10 +182,16 @@ const EditBasicInfo = () => {
         keyboardShouldPersistTaps="always"
         contentContainerStyle={styles.content}
       >
-        <EditName
+        <TextInput
+          testID="edit_name.text_input"
+          value={fullname}
+          label={t('settings:title_name')}
+          onChangeText={onChangeName}
           error={error}
-          fullname={nameState}
-          onChangeName={onChangeName}
+          helperText={
+          error ? t('profile:text_name_must_not_be_empty') : undefined
+        }
+          maxLength={100}
         />
         <TitleComponent icon="SquareUser" title="settings:title_gender" />
         <Button
@@ -206,34 +203,17 @@ const EditBasicInfo = () => {
           onPress={(e) => onGenderEditOpen(e)}
         >
           {genderState
-            ? i18next.t(genders[genderState])
-            : i18next.t('common:text_not_set')}
+            ? t(genders[genderState])
+            : t('common:text_not_set')}
         </Button>
-        <TitleComponent icon="Calendar" title="settings:title_birthday" />
-        <Button
+        <DateInput
           testID="edit_basic_info.birthday"
-          textProps={{ color: colors.neutral80, variant: 'bodyM' }}
-          style={styles.buttonDropDown}
-          contentStyle={styles.buttonDropDownContent}
-          onPress={() => onDateEditOpen()}
-        >
-          {formatDate(
-            birthdayState, 'DD/MM/YYYY',
-          )
-            || i18next.t('common:text_not_set')}
-        </Button>
-        {selectingDate && (
-          <View testID="edit_basic_info.date_picker">
-            <DateTimePicker
-              isVisible={selectingDate}
-              date={maxBirthday()}
-              mode="date"
-              onConfirm={onSetBirthday}
-              onCancel={onDateEditClose}
-              maxDate={maxBirthday()}
-            />
-          </View>
-        )}
+          mode="date"
+          value={birthdayState}
+          label={t('settings:title_birthday')}
+          maxDate={maxBirthday()}
+          onConfirm={onSetBirthday}
+        />
         <LanguageOptionMenu
           title="settings:title_choose_languages"
           onChangeLanguages={_onChangeLanguages}
@@ -252,8 +232,8 @@ const EditBasicInfo = () => {
           rightIcon="AngleDown"
           onPress={(e) => onRelationshipEditOpen(e)}
         >
-          {i18next.t(RELATIONSHIP_STATUS[relationshipState])
-            || i18next.t('common:text_not_set')}
+          {t(RELATIONSHIP_STATUS[relationshipState])
+            || t('common:text_not_set')}
         </Button>
       </ScrollView>
       <OptionMenu
