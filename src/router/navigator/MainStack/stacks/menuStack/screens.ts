@@ -8,6 +8,7 @@ import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasi
 import EditContact from '~/screens/Menu/AccountSettings/EditContact';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 import Discover from '~/screens/Discover';
+import EditDescription from '~/screens/Menu/AccountSettings/EditDescription';
 
 const menuScreens = {
   menu: Menu,
@@ -20,6 +21,7 @@ const menuScreens = {
   'edit-contact': EditContact,
   'add-work': AddWork,
   discover: Discover,
+  'user-edit-descriptions': EditDescription,
 }
 
 export default menuScreens;

@@ -78,7 +78,6 @@ export const getPostViewMenu = (
       modalActions.showAlert({
         title: i18next.t('post:title_delete_post'),
         content: i18next.t('post:content_delete_post'),
-        iconName: 'TrashCan',
         cancelBtn: true,
         confirmLabel: i18next.t('common:btn_delete'),
         onConfirm: () => dispatch(postActions.deletePost({
