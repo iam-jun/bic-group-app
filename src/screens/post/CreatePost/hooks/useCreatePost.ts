@@ -157,7 +157,6 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   const disableButtonPost = imageUploading
     || videoUploading
     || fileUploading
-    || loading
     || content?.trim?.()?.length === 0
     || chosenAudiences.length === 0
     || (isEditPost

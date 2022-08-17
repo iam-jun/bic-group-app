@@ -89,7 +89,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
     <ButtonWrapper
       {...props}
       TouchableComponent={TouchableHighlight}
-      disabled={disabled}
+      disabled={loading || disabled}
       underlayColor={buttonColors.loading}
       style={[styles.wrapper, style]}
     >

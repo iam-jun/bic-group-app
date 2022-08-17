@@ -16,7 +16,6 @@ import {
 import { useKeySelector } from '~/hooks/selector';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import { getActiveRouteState } from '~/router/helper';
-import PostAudiencesModal from '~/screens/post/components/PostAudiencesModal';
 import appActions from '~/storeRedux/app/actions';
 
 import mainTabScreens from './screens';
@@ -69,7 +68,6 @@ const MainStack = (): React.ReactElement => {
         </Stack.Navigator>
       </View>
       <MenuSidebarDrawer />
-      <PostAudiencesModal />
       <ReactionBottomSheet />
       <ReactionDetailBottomSheet />
       <UserProfilePreviewBottomSheet />

@@ -27,9 +27,13 @@ function* putMarkAsRead({
       const post = yield select((state) => get(
         state, postKeySelector.postById(postId),
       ));
-      post.markedReadPost = true;
-      post.markedReadSuccess = true;
-      yield put(postActions.addToAllPosts({ ...post }));
+      yield put(postActions.addToAllPosts({
+        data: {
+          ...post,
+          markedReadPost: true,
+          markedReadSuccess: true,
+        },
+      }));
     }
   } catch (e) {
     callback?.(false);
