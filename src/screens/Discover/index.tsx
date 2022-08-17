@@ -9,11 +9,13 @@ import SearchCommunityView from '~/screens/communities/Communities/components/Se
 import spacing from '~/theme/spacing';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities'
 import YourCommunities from '~/screens/Discover/components/YourCommunities'
+import YourGroups from './components/YourGroups';
 import Tab from '~/baseComponents/Tab';
 
 const HEADER_TAB = [
   { id: 'discover-tab-1', text: 'discover:discover_communities' },
   { id: 'discover-tab-2', text: 'discover:your_communities' },
+  { id: 'discover-tab-3', text: 'discover:your_groups' },
 ]
 
 const Index = () => {
@@ -51,6 +53,10 @@ const Index = () => {
 
     if (selectedIndex === 1) {
       return <YourCommunities />
+    }
+
+    if (selectedIndex === 2) {
+      return <YourGroups />
     }
 
     return null;

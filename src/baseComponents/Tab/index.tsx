@@ -47,6 +47,7 @@ const Tab = ({
       contentContainerStyle={[styles.container, style]}
       horizontal
       alwaysBounceHorizontal={false}
+      showsHorizontalScrollIndicator={false}
     >
       {data?.map?.(renderItem)}
     </ScrollView>
