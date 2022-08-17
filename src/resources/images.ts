@@ -16,6 +16,7 @@ const images = {
   img_banner_discover_communities: require('../../assets/images/img_banner_discover_communities.jpg'),
   img_bg_sign_in: require('../../assets/images/sign_in_bg.png'),
   logo_beincomm: require('../../assets/images/logo_beincomm.png'),
+  img_thumbnail_default: require('../../assets/images/img_thumbnail_default.png'),
 };
 
 export default images;
