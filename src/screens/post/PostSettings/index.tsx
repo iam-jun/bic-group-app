@@ -101,7 +101,6 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       dispatch(modalActions.showAlert({
         title: t('common:label_discard_changes'),
         content: t('common:text_discard_warning'),
-        showCloseButton: true,
         cancelBtn: true,
         cancelLabel: t('common:btn_continue_editing'),
         confirmLabel: t('common:btn_discard'),

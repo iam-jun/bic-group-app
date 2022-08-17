@@ -22,7 +22,6 @@ export const modalInitState = {
     iconName: '',
     confirmLabel: '',
     isDismissible: true,
-    showCloseButton: false,
     style: {},
     children: null as React.ReactNode,
   },

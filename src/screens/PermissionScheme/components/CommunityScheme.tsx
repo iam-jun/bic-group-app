@@ -55,7 +55,6 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
     dispatch(modalActions.showAlert({
       title: t('communities:permission:text_title_delete_community_scheme'),
       content: t('communities:permission:text_desc_delete_community_scheme'),
-      showCloseButton: true,
       cancelBtn: true,
       cancelLabel: t('common:btn_cancel'),
       confirmLabel: t('common:btn_delete'),
