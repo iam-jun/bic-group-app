@@ -145,6 +145,7 @@ import { faFileCsv } from '@fortawesome/pro-regular-svg-icons/faFileCsv';
 import { faFileLines } from '@fortawesome/pro-regular-svg-icons/faFileLines';
 import { faArrowDownToLine } from '@fortawesome/pro-regular-svg-icons/faArrowDownToLine';
 import { faCircleExclamation } from '@fortawesome/pro-regular-svg-icons/faCircleExclamation';
+import { faThumbtack } from '@fortawesome/pro-regular-svg-icons/faThumbtack';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -310,6 +311,7 @@ export const initFontAwesomeIcon = () => {
     faFileLines,
     faArrowDownToLine,
     faCircleExclamation,
+    faThumbtack,
   );
 };
 
@@ -460,6 +462,7 @@ export const fontAwesomeIcons = {
   FileLines: 'fa-regular fa-file-lines',
   ArrowDownToLine: 'fa-regular fa-arrow-down-to-line',
   CircleExclamation: 'fa-regular fa-circle-exclamation',
+  Thumbtack: 'fa-regular fa-thumbtack',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

@@ -49,10 +49,7 @@ export const getHeaderMenu = (type: 'community' | 'group',
   {
     id: 5,
     testID: `header_menu.pin_${type}`,
-    leftIcon: 'iconMapPin',
-    leftIconProps: {
-      tintColor: 'red',
-    },
+    leftIcon: 'Thumbtack',
     title: i18next.t(`groups:group_menu:label_pin_${type}`),
     onPress: !!onPressPin ? onPressPin : onPressNewFeature,
   },
