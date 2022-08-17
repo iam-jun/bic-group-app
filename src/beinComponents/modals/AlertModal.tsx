@@ -53,7 +53,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
     cancelLabel,
     cancelBtnProps,
     CancelBtnComponent,
-    showCloseButton,
     style: alertModalStyle,
     children = null as React.ReactNode,
     titleProps,
@@ -111,7 +110,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
           {title}
         </Text.H4>
         )}
-        {showCloseButton && (
         <View style={styles.closeButton}>
           <Icon
             icon="Xmark"
@@ -120,7 +118,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
             onPress={_onDismiss}
           />
         </View>
-        )}
       </View>
     </>
   )
@@ -237,8 +234,8 @@ const themeStyles = (theme: ExtendedTheme) => {
       alignItems: 'center',
       borderBottomWidth: 1,
       borderColor: colors.neutral5,
-      paddingVertical: spacing.padding.large,
-      paddingHorizontal: spacing.padding.base,
+      paddingVertical: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
     },
     closeButton: {
       width: 28,

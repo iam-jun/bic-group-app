@@ -122,7 +122,6 @@ const EditBasicInfo = () => {
       Keyboard.dismiss();
       dispatch(modalActions.showAlert({
         title: t('common:label_discard_changes'),
-        showCloseButton: true,
         cancelBtn: true,
         isDismissible: false,
         onConfirm: () => {
