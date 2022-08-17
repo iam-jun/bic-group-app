@@ -75,6 +75,7 @@ import editCommunityDetail from './editCommunityDetail';
 import getGroupSchemeAssignments from '~/storeRedux/groups/saga/getGroupSchemeAssignments';
 import putGroupSchemeAssignments from '~/storeRedux/groups/saga/putGroupSchemeAssignments';
 import getMyPermissions from './getMyPermissions';
+import getJoinedAllGroups from './getJoinedAllGroups';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -276,6 +277,7 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.EDIT_COMMUNITY_DETAIL, editCommunityDetail,
   );
+  yield takeLatest(groupsTypes.GET_JOINED_ALL_GROUPS, getJoinedAllGroups);
 }
 
 function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {

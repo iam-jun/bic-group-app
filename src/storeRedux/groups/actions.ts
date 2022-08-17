@@ -654,7 +654,7 @@ const groupsActions = {
     type: groupsTypes.EDIT_COMMUNITY_DETAIL,
     payload,
   }),
-  getJoinedAllGroups: (payload: IGetJoinedAllGroups) => ({
+  getJoinedAllGroups: (payload: IGetJoinedAllGroups = {}) => ({
     type: groupsTypes.GET_JOINED_ALL_GROUPS,
     payload,
   }),
