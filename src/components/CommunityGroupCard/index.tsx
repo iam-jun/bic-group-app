@@ -12,6 +12,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
 import { Avatar, Button } from '~/baseComponents';
+import { formatLargeNumber } from '~/utils/formatData';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -62,7 +63,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
               <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
               <View style={styles.row}>
-                <View style={styles.row}>
+                <View style={[styles.row, styles.privacyView]}>
                   <Icon
                     style={styles.iconSmall}
                     icon={privacyIcon}
@@ -73,10 +74,10 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
                     {privacyTitle}
                   </Text.BodyS>
                 </View>
-                <ViewSpacing width={spacing.margin.big} />
+                <ViewSpacing width={spacing.margin.extraLarge} />
                 <View style={styles.row}>
                   <Text.BodySMedium style={styles.textNumberMember}>
-                    {userCount}
+                    {formatLargeNumber(userCount)}
                   </Text.BodySMedium>
                   <Text.BodyS color={colors.neutral40} useI18n>
                     common:members
@@ -113,6 +114,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    privacyView: {
+      width: 100,
     },
     containerInfo: {
       flex: 1,

@@ -95,6 +95,7 @@ const Home = () => {
       && token
       && (!homePosts || homePosts?.length === 0)
       && !refreshing
+      && canLoadMore
       ) {
         getData(true);
         dispatch(postActions.getAllPostContainingVideoInProgress());

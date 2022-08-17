@@ -397,7 +397,6 @@ const createStyle = (
     },
     itemStyle: {
       marginBottom: spacing.margin.small,
-      ...elevations.e1,
     },
     textEmpty: {
       marginTop: spacing.margin.small,
