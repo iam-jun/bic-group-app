@@ -156,7 +156,9 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
     },
     alertContent: {
-      marginHorizontal: spacing.margin.large,
+      paddingTop: spacing.padding.tiny,
+      paddingBottom: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
     },
     errorMessage: {
       marginHorizontal: spacing.margin.large,
