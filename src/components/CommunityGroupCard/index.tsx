@@ -19,6 +19,8 @@ type CommunityGroupCardProps = {
   testID?: string;
 };
 
+const isGroup = (level?: number) => !!level;
+
 const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -27,7 +29,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
   const { colors, elevations } = theme;
 
   const {
-    id, name, icon, userCount, privacy, joinStatus, description,
+    id, name, icon, userCount, privacy, joinStatus, description, level, community,
   }
     = item || {};
   const privacyData: any
@@ -35,16 +37,31 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
   const { icon: privacyIcon, title: privacyTitle } = privacyData || {};
 
   const onView = () => {
+    if (isGroup(level)) {
+      rootNavigation.navigate(groupStack.groupDetail, { groupId: id });
+      return;
+    }
+
     rootNavigation.navigate(groupStack.communityDetail, { communityId: id });
   };
 
   const onJoin = () => {
+    if (isGroup(level)) {
+      dispatch(groupsActions.joinNewGroup({ groupId: id, groupName: name }));
+      return;
+    }
+
     dispatch(
       groupsActions.joinCommunity({ communityId: id, communityName: name }),
     );
   };
 
   const onCancel = () => {
+    if (isGroup(level)) {
+      dispatch(groupsActions.cancelJoinGroup({ groupId: id, groupName: name }));
+      return;
+    }
+
     dispatch(
       groupsActions.cancelJoinCommunity({
         communityId: id,
@@ -53,8 +70,24 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
     );
   };
 
+  const onViewCommunity = () => {
+    if (community) {
+      const { id } = community;
+      rootNavigation.navigate(groupStack.communityDetail, { communityId: id });
+    }
+  }
+
   return (
     <View testID={testID} style={[styles.container, elevations.e1]}>
+      {
+        isGroup(level) && (
+        <Button onPress={onViewCommunity}>
+          <Text.SubtitleS style={styles.textNameCommunityOnGroup} color={colors.blue50} numberOfLines={1}>
+            {community?.name}
+          </Text.SubtitleS>
+        </Button>
+        )
+      }
       <Button TouchableComponent={TouchableWithoutFeedback} onPress={onView}>
         <View>
           <View style={styles.row}>
@@ -128,6 +161,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     textNumberMember: {
       marginRight: spacing.margin.small,
+    },
+    textNameCommunityOnGroup: {
+      marginBottom: spacing.margin.tiny,
     },
   });
 };
