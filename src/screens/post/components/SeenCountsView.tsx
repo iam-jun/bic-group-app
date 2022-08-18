@@ -15,7 +15,7 @@ export interface SeenCountsViewProps {
 }
 
 const SeenCountsView: FC<SeenCountsViewProps> = ({
-  seenPeopleCount,
+  seenPeopleCount = 0,
   onPress,
 }: SeenCountsViewProps) => {
   const { t } = useBaseHook();

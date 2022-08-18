@@ -490,6 +490,16 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
+  checkMembersCommunityStructureMovePreview: (
+    communityId: string,
+    params: any,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-structure/move-preview/`,
+    params: {
+      ...params,
+    },
+  }),
 };
 
 const groupApi = {
@@ -718,6 +728,14 @@ const groupApi = {
     groupsApiConfig.declineAllCommunityMemberRequests, communityId,
   ),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
+  checkMembersCommunityStructureMovePreview: (
+    communityId: string,
+    params: any,
+  ) => withHttpRequestPromise(
+    groupsApiConfig.checkMembersCommunityStructureMovePreview,
+    communityId,
+    params,
+  ),
 };
 
 export default groupApi;

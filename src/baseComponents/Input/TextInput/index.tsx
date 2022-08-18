@@ -84,7 +84,7 @@ const TextInput: React.FC<TextInputProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(
-    theme, horizontal, leftIcon, textColor,
+    theme, horizontal, leftIcon,
   );
   const [text, setText] = useState<string>(value || '');
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -185,7 +185,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 value={text}
                 style={[
                   styles.input,
-                  styles.defaultStyle,
+                  { color: !editable ? colors.neutral40 : (textColor || colors.neutral80) },
                 ]}
                 onChangeText={_onChangeText}
                 ref={textInputRef}
@@ -221,7 +221,7 @@ const TextInput: React.FC<TextInputProps> = ({
 };
 
 const themeStyles = (
-  theme: ExtendedTheme, horizontal:boolean, leftIcon: string, textColor?: string,
+  theme: ExtendedTheme, horizontal:boolean, leftIcon: string,
 ) => {
   const { colors } = theme;
 
@@ -257,9 +257,6 @@ const themeStyles = (
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
       flex: 1,
-    },
-    defaultStyle: {
-      color: textColor || colors.neutral80,
     },
     labelStyle: {
       marginRight: !!horizontal ? spacing.margin.big : 0,
