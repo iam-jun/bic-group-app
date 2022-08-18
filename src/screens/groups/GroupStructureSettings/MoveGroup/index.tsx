@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -12,6 +12,9 @@ import { IGroup } from '~/interfaces/IGroup';
 import MoveGroupHeaderInfo from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveGroupHeaderInfo';
 import MoveGroupTargets from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveGroupTargets';
 import modalActions from '~/storeRedux/modal/actions';
+import Text from '~/beinComponents/Text';
+import { spacing } from '~/theme';
+import groupApi from '~/api/GroupApi';
 
 export interface MoveGroupProps {
   route: {
@@ -26,6 +29,8 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const initGroup = route?.params?.group;
   const { id: groupId } = initGroup || {};
@@ -53,37 +58,63 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     }, [],
   );
 
-  const onPressSave = () => {
+  const getMemberWillMove = async (communityId: string, param: any) => {
+    try {
+      const response = await groupApi.checkMembersCommunityStructureMovePreview(communityId, param);
+      const moveMemberCount = response?.data?.moveMemberCount || 0;
+      return Promise.resolve(moveMemberCount);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  };
+
+  const renderAlertContent = (number: number) => {
+    const content = t(
+      'communities:group_structure:text_desc_confirm_move_group',
+    )
+      .replaceAll('%MOVING_NAME%', initGroup?.name)
+      .replaceAll('%TARGET_NAME%', selecting?.name);
+    return (
+      <Text.BodyM style={styles.alertContent}>
+        <Text.BodyMMedium>{`${number || userCount || 0} ${t('groups:text_members_other')}`}</Text.BodyMMedium>
+        {content}
+      </Text.BodyM>
+    )
+  }
+
+  const onPressSave = async () => {
+    setErrorMessage('');
     if (communityId && groupId && selecting?.id) {
-      const title = t(
-        'communities:group_structure:text_title_confirm_move_group',
-      )
-        .replaceAll('%MOVING_NAME%', initGroup?.name)
-        .replaceAll('%TARGET_NAME%', selecting?.name);
-      const content = t(
-        'communities:group_structure:text_desc_confirm_move_group',
-      )
-        .replaceAll('%COUNT%', userCount || 0)
-        .replaceAll('%MOVING_NAME%', initGroup?.name)
-        .replaceAll('%TARGET_NAME%', selecting?.name);
-      dispatch(
-        modalActions.showAlert({
-          title,
-          content,
-          cancelBtn: true,
-          cancelLabel: t('common:btn_cancel'),
-          confirmLabel: t('common:btn_confirm'),
-          onConfirm: () => {
-            dispatch(
-              groupsActions.putGroupStructureMoveToTarget({
-                communityId,
-                moveId: groupId,
-                targetId: selecting.id,
-              }),
-            );
-          },
-        }),
-      );
+      getMemberWillMove(communityId, { groupId, targetId: selecting.id }).then((moveMemberCount:number) => {
+        const title = t(
+          'communities:group_structure:text_title_confirm_move_group',
+        )
+          .replaceAll('%MOVING_NAME%', initGroup?.name)
+          .replaceAll('%TARGET_NAME%', selecting?.name);
+        dispatch(
+          modalActions.showAlert({
+            title,
+            children: renderAlertContent(moveMemberCount),
+            cancelBtn: true,
+            cancelLabel: t('common:btn_confirm'),
+            confirmLabel: t('common:btn_cancel'),
+            onCancel: () => {
+              dispatch(
+                groupsActions.putGroupStructureMoveToTarget({
+                  communityId,
+                  moveId: groupId,
+                  targetId: selecting.id,
+                }),
+              );
+            },
+            onConfirm: () => {},
+          }),
+        );
+      }).catch((err:any) => {
+        if (!!err?.meta?.message) {
+          setErrorMessage(err.meta.message);
+        }
+      });
     }
   };
 
@@ -104,6 +135,8 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       />
       <ScrollView>
         <MoveGroupHeaderInfo group={initGroup} />
+        { !!errorMessage
+          && <Text.H6 color={theme.colors.red40} style={styles.errorMessage}>{errorMessage}</Text.H6>}
         <MoveGroupTargets
           communityId={communityId}
           groupId={groupId}
@@ -121,6 +154,14 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       flex: 1,
       backgroundColor: colors.white,
+    },
+    alertContent: {
+      marginHorizontal: spacing.margin.large,
+    },
+    errorMessage: {
+      marginHorizontal: spacing.margin.large,
+      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.big,
     },
   });
 };
