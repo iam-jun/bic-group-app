@@ -5,7 +5,7 @@ import {
   TouchableHighlight,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ButtonWrapper, {
   ButtonWrapperProps,
@@ -24,7 +24,7 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
   disabled,
   ...props
 }: ButtonDangerProps) => {
-  const {colors}: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
 
   const underlayColor = colors.neutral5;
   let backgroundColor = colors.red1;
@@ -32,13 +32,12 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
 
   if (disabled) {
     backgroundColor = colors.gray20;
-    // @ts-ignore
     textColor = colors.gray40;
   }
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
-      backgroundColor: backgroundColor,
+      backgroundColor,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
       alignItems: 'center',
@@ -53,7 +52,8 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
       underlayColor={underlayColor}
       TouchableComponent={TouchableHighlight}
       {...props}
-      textProps={{color: textColor, useI18n, ...props?.textProps}}>
+      textProps={{ color: textColor, useI18n, ...props?.textProps }}
+    >
       {children}
     </ButtonWrapper>
   );

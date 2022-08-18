@@ -26,8 +26,8 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#F8F5FF",
-        "borderRadius": 6,
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
         "height": 36,
         "justifyContent": "center",
         "opacity": 1,
@@ -38,11 +38,14 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -103,53 +106,7 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
           >
             <View
               testID="button_wrapper.icon"
-            >
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={20}
-                bbWidth={20}
-                color={4281284933}
-                focusable={false}
-                height={20}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 20,
-                      "width": 20,
-                    },
-                  ]
-                }
-                tintColor={4281284933}
-                vbHeight={24}
-                vbWidth={24}
-                width={20}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M20.34 9.32l-14-7a3 3 0 00-4.08 3.9l2.4 5.37a1.06 1.06 0 010 .82l-2.4 5.37A3 3 0 005 22a3.14 3.14 0 001.35-.32l14-7a3 3 0 000-5.36zm-.89 3.57l-14 7a1 1 0 01-1.35-1.3l2.39-5.37a2 2 0 00.08-.22h6.89a1 1 0 000-2H6.57a2 2 0 00-.08-.22L4.1 5.41a1 1 0 011.35-1.3l14 7a1 1 0 010 1.78z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -184,8 +141,8 @@ exports[`ButtonDanger conponent renders label correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#F8F5FF",
-        "borderRadius": 6,
+        "backgroundColor": "#F1F1F9",
+        "borderRadius": 4,
         "height": 36,
         "justifyContent": "center",
         "opacity": 1,
@@ -196,11 +153,14 @@ exports[`ButtonDanger conponent renders label correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
       }
       testID="button_wrapper.content"
     >
@@ -261,53 +221,7 @@ exports[`ButtonDanger conponent renders label correctly 1`] = `
           >
             <View
               testID="button_wrapper.icon"
-            >
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={20}
-                bbWidth={20}
-                color={4281284933}
-                focusable={false}
-                height={20}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 20,
-                      "width": 20,
-                    },
-                  ]
-                }
-                tintColor={4281284933}
-                vbHeight={24}
-                vbWidth={24}
-                width={20}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M20.34 9.32l-14-7a3 3 0 00-4.08 3.9l2.4 5.37a1.06 1.06 0 010 .82l-2.4 5.37A3 3 0 005 22a3.14 3.14 0 001.35-.32l14-7a3 3 0 000-5.36zm-.89 3.57l-14 7a1 1 0 01-1.35-1.3l2.39-5.37a2 2 0 00.08-.22h6.89a1 1 0 000-2H6.57a2 2 0 00-.08-.22L4.1 5.41a1 1 0 011.35-1.3l14 7a1 1 0 010 1.78z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -317,9 +231,9 @@ exports[`ButtonDanger conponent renders label correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 12,
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Medium",
+          "fontSize": 13,
         },
         Object {},
         Object {

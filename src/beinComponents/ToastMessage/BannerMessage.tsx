@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -6,11 +6,11 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
-import Text, {TextProps} from '~/beinComponents/Text';
-import {IconType} from '~/resources/icons';
+import Text, { TextProps } from '~/beinComponents/Text';
+import { IconType } from '~/resources/icons';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 
@@ -38,8 +38,10 @@ const BannerMessage: FC<BannerMessageProps> = ({
   onPressRight,
 }: BannerMessageProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
-  const styles = createStyle(theme, type);
+  const { colors } = theme;
+  const styles = createStyle(
+    theme, type,
+  );
 
   const _onPress = () => {
     onActionPress?.();
@@ -49,7 +51,8 @@ const BannerMessage: FC<BannerMessageProps> = ({
     <TouchableOpacity
       activeOpacity={1}
       style={[styles.container, style]}
-      onPress={_onPress}>
+      onPress={_onPress}
+    >
       {leftIcon && (
         <Icon
           isButton
@@ -84,7 +87,7 @@ const createStyle = (
   theme: ExtendedTheme,
   type: 'success' | 'error' | 'informative',
 ) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {
@@ -129,10 +132,10 @@ const createStyle = (
         type === 'success'
           ? colors.success
           : type === 'error'
-          ? colors.red60
-          : colors.white,
+            ? colors.red60
+            : colors.white,
     },
-    marginRightIcon: {marginRight: spacing.margin.tiny},
+    marginRightIcon: { marginRight: spacing.margin.tiny },
     button: {
       marginLeft: spacing.margin.base,
     },

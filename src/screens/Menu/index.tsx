@@ -1,164 +1,79 @@
-import i18next from 'i18next';
-import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 
-import Divider from '~/beinComponents/Divider';
-import Header from '~/beinComponents/Header';
-import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
-import MenuItem from '~/beinComponents/list/items/MenuItem';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import settings, {
-  appSettingsMenu,
-  documentsMenu,
-  logoutMenu,
-  postFeatureMenu,
-} from '~/constants/settings';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {ISetting} from '~/interfaces/common';
 
-import images from '~/resources/images';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
-import mainStack from '~/router/navigator/MainStack/stack';
-import authActions from '~/screens/Auth/redux/actions';
-import menuActions from '~/screens/Menu/redux/actions';
-import menuKeySelector from '~/screens/Menu/redux/keySelector';
-import * as modalActions from '~/store/modal/actions';
+import { useUserIdAuth } from '~/hooks/auth';
+
+import menuActions from '~/storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
+import MenuHeader from '~/screens/Menu/components/MenuHeader';
+import MenuDiscoverCommunity from '~/screens/Menu/components/MenuDiscoverCommunity';
+import Button from '~/beinComponents/Button';
+import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
+import MenuShortcut from '~/screens/Menu/components/MenuShortcut';
+import MenuSettings from '~/screens/Menu/components/MenuSettings';
+import { useRootNavigation } from '~/hooks/navigation';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation()
+  const theme: ExtendedTheme = useTheme();
+  const styles = createStyle(theme);
+  const { colors } = theme;
 
-  const {id, fullname, email, avatar} =
-    useKeySelector(menuKeySelector.myProfile) || {};
   const currentUserId = useUserIdAuth();
 
-  useEffect(() => {
-    if (!!currentUserId)
-      dispatch(menuActions.getMyProfile({userId: currentUserId}));
-  }, []);
-
-  const onSettingPress = (item: ISetting) => {
-    switch (item.type) {
-      case 'draftPost':
-        return rootNavigation.navigate(homeStack.draftPost);
-
-      case 'accountSettings':
-        return rootNavigation.navigate(menuStack.accountSettings);
-
-      case 'component':
-        return rootNavigation.navigate(menuStack.componentCollection);
-
-      case 'logOut': {
-        const alertPayload = {
-          title: i18next.t('auth:text_sign_out'),
-          content: 'Do you want to Log Out?',
-          iconName: 'ArrowRightFromArc',
-          cancelBtn: true,
-          onConfirm: () => dispatch(authActions.signOut()),
-          confirmLabel: i18next.t('auth:text_sign_out'),
-        };
-        dispatch(modalActions.showAlert(alertPayload));
-        break;
-      }
-
-      default:
-        dispatch(modalActions.showAlertNewFeature());
-    }
-  };
-
-  const goToMyProfile = () => {
-    rootNavigation.navigate(mainStack.userProfile, {userId: id});
-  };
-
-  const renderDivider = () => <Divider style={styles.divider} />;
-
-  const renderListView = ({
-    data,
-    itemTestID,
-  }: {
-    data: Array<any>;
-    itemTestID?: string;
-  }) => {
-    return (
-      <View>
-        {data.map((item, index) => {
-          return (
-            <MenuItem
-              title={item.title}
-              key={`menu_${item.type}`}
-              onPress={() => onSettingPress(item)}
-              icon={item.icon}
-              testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
-              rightSubTitle={item.rightSubTitle}
-              type={item.type}
-            />
-          );
-        })}
-      </View>
-    );
-  };
+  useEffect(
+    () => {
+      if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
+    }, [],
+  );
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header hideBack title="tabs:menus" titleTextProps={{useI18n: true}} />
+      <MenuHeader />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <HeaderAvatarView
-          firstLabel={fullname}
-          secondLabel={email}
-          avatar={avatar || images.img_user_avatar_default}
-          containerStyle={styles.header}
-          onPress={goToMyProfile}
-        />
-        <ViewSpacing height={spacing.margin.large} />
-        <>
-          {renderDivider()}
-          {renderListView({
-            data: postFeatureMenu,
-          })}
-        </>
-        {renderDivider()}
-        {renderListView({
-          data: appSettingsMenu,
-          itemTestID: 'menu.account_settings',
-        })}
-        {renderDivider()}
-        {renderListView({
-          data: documentsMenu,
-        })}
-
-        {renderDivider()}
-        {renderListView({
-          data: logoutMenu,
-          itemTestID: 'menu.logout',
-        })}
-
-        {__DEV__ && (
-          <>
-            {renderListView({
-              data: settings,
-            })}
-          </>
-        )}
+        <MenuDiscoverCommunity />
+        <Button style={styles.buttonDiscover} onPress={() => rootNavigation.navigate(menuStack.discover)}>
+          <Icon icon="CompassSolid" tintColor={colors.neutral20} />
+          <Text.BodyMMedium style={styles.textDiscover} useI18n>menu:title_discover</Text.BodyMMedium>
+        </Button>
+        <MenuShortcut />
+        <MenuSettings />
       </ScrollView>
     </ScreenWrapper>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {},
-  header: {
-    marginTop: spacing.margin.large,
-  },
-  divider: {
-    marginHorizontal: spacing.margin.large,
-    marginVertical: spacing.margin.small,
-  },
-});
+const createStyle = (theme: ExtendedTheme) => {
+  const { colors } = theme
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.neutral,
+    },
+    header: {
+      marginTop: spacing.margin.large,
+    },
+    divider: {
+      marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.small,
+    },
+    buttonDiscover: {
+      flexDirection: 'row',
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.base,
+      marginBottom: spacing.margin.small,
+      alignItems: 'center',
+      backgroundColor: colors.neutral,
+    },
+    textDiscover: { marginLeft: spacing.margin.large, color: colors.neutral70 },
+  })
+};
 
 export default Menu;

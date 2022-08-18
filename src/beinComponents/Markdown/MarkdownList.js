@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 
 export default class MarkdownList extends PureComponent {
   static propTypes = {
@@ -20,14 +20,12 @@ export default class MarkdownList extends PureComponent {
       bulletWidth = 9 * lastNumber.toString().length + 7;
     }
 
-    const children = React.Children.map(this.props.children, child => {
-      return React.cloneElement(child, {
-        bulletWidth,
-        ordered: this.props.ordered,
-        tight: this.props.tight,
-      });
-    });
+    const children = React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+      bulletWidth,
+      ordered: this.props.ordered,
+      tight: this.props.tight,
+    }));
 
-    return <React.Fragment>{children}</React.Fragment>;
+    return <>{children}</>;
   }
 }

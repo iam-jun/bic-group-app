@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Animated,
   ImageStyle,
@@ -37,17 +37,17 @@ const Image: React.FC<ImageProps> = ({
   cache = true,
   ...props
 }: ImageProps) => {
-  const [layoutSizeStyle, setLayoutSizeStyle] = useState({width: 0, height: 0});
+  const [layoutSizeStyle, setLayoutSizeStyle] = useState({ width: 0, height: 0 });
 
-  const placeholderContainerOpacity = React.useRef(
-    new Animated.Value(1),
-  ).current;
+  const placeholderContainerOpacity = React.useRef(new Animated.Value(1)).current;
 
   const [_source, setSource] = useState(source || placeholderSource);
 
-  useEffect(() => {
-    updateSource(source || placeholderSource);
-  }, [source]);
+  useEffect(
+    () => {
+      updateSource(source || placeholderSource);
+    }, [source],
+  );
 
   const _onError = (error: any) => {
     if (onError) return onError(error);
@@ -56,11 +56,11 @@ const Image: React.FC<ImageProps> = ({
 
   const updateSource = (source: any) => {
     if (
-      typeof source === 'string' &&
-      source.toLowerCase?.().startsWith?.('http')
+      typeof source === 'string'
+      && source.toLowerCase?.().startsWith?.('http')
     ) {
       const char = source.includes('?') ? '&' : '?';
-      setSource({uri: cache ? source : source + char + Date.now()});
+      setSource({ uri: cache ? source : source + char + Date.now() });
     } else {
       setSource(source);
     }
@@ -70,20 +70,21 @@ const Image: React.FC<ImageProps> = ({
     const minimumWait = 0;
     const staggerNonce = 5 * Math.random();
     setTimeout(
-      () =>
-        Animated.timing(placeholderContainerOpacity, {
+      () => Animated.timing(
+        placeholderContainerOpacity, {
           toValue: 0,
           duration: 250,
           useNativeDriver: true,
-        }).start(),
+        },
+      ).start(),
       minimumWait + staggerNonce,
     );
   };
 
   const onLayout = (e: any) => {
-    const {width, height} = e?.nativeEvent?.layout || {};
+    const { width, height } = e?.nativeEvent?.layout || {};
     if (useOnLayoutSize && width && width !== layoutSizeStyle?.width) {
-      setLayoutSizeStyle({width, height});
+      setLayoutSizeStyle({ width, height });
     }
   };
 
@@ -92,12 +93,13 @@ const Image: React.FC<ImageProps> = ({
       onLayout={onLayout}
       style={StyleSheet.flatten([
         styles.container,
-        useOnLayoutSize ? {width: '100%', height: '100%'} : {},
+        useOnLayoutSize ? { width: '100%', height: '100%' } : {},
         containerStyle,
-      ])}>
+      ])}
+    >
       {Platform.select({
         android: (
-          <React.Fragment>
+          <>
             <View style={styles.placeholderContainer}>
               <Animated.View
                 testID="Image__placeholder"
@@ -114,7 +116,8 @@ const Image: React.FC<ImageProps> = ({
                     }),
                   },
                   placeholderStyle,
-                ])}>
+                ])}
+              >
                 {PlaceholderComponent}
               </Animated.View>
             </View>
@@ -128,22 +131,24 @@ const Image: React.FC<ImageProps> = ({
               ])}
               onError={_onError}
             />
-          </React.Fragment>
+          </>
         ),
         ios: (
-          <React.Fragment>
+          <>
             <Animated.View
               style={StyleSheet.flatten([
                 styles.placeholderContainer,
-                {opacity: placeholderContainerOpacity},
-              ])}>
+                { opacity: placeholderContainerOpacity },
+              ])}
+            >
               <View
                 testID="Image__placeholder"
                 style={StyleSheet.flatten([
                   style,
                   styles.placeholder,
                   placeholderStyle,
-                ])}>
+                ])}
+              >
                 {PlaceholderComponent}
               </View>
             </Animated.View>
@@ -157,7 +162,7 @@ const Image: React.FC<ImageProps> = ({
                 style,
               ])}
             />
-          </React.Fragment>
+          </>
         ),
       })}
     </View>

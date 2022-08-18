@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as React from 'react';
-import {render, cleanup} from '@testing-library/react-native';
-import i18next from 'i18next';
-import initialState from '~/store/initialState';
+import { render, cleanup } from '@testing-library/react-native';
+import initialState from '~/storeRedux/initialState';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {
@@ -16,8 +16,8 @@ afterEach(cleanup);
 describe('Collapsible Text component', () => {
   const mockStore = configureStore([]);
 
-  const description =
-    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s. When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. Remaining essentially unchanged. It was popularised in the 1960s simply dummy text printing standard dummy text.\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.';
+  const description
+    = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s. When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. Remaining essentially unchanged. It was popularised in the 1960s simply dummy text printing standard dummy text.\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.';
 
   const mentionName = '@vantest1';
   const commentData = {
@@ -37,22 +37,22 @@ describe('Collapsible Text component', () => {
     },
   };
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const rendered = render(<CollapsibleText content={description} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly testID`, () => {
+  it('renders correctly testID', () => {
     const rendered = render(
       <CollapsibleText testID="collapsible_text" content={description} />,
     );
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const collapsibleTextComponent = getByTestId('collapsible_text');
     expect(collapsibleTextComponent).toBeDefined();
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should render short text with a short length and limit the length`, () => {
+  it('should render short text with a short length and limit the length', () => {
     const rendered = render(
       <CollapsibleText
         shortLength={50}
@@ -60,7 +60,7 @@ describe('Collapsible Text component', () => {
         content={description}
       />,
     );
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const shortTextComponent = getByTestId('collapsible_text.content');
     expect(shortTextComponent.props.children.length).toBe(50 + 3);
     const shortTextButtonComponent = getByTestId('collapsible_text.show_text');
@@ -70,9 +70,9 @@ describe('Collapsible Text component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should render full text when click read more button text `, () => {
+  it('should render full text when click read more button text ', () => {
     const rendered = render(<CollapsibleText content={description} />);
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const btnSeeMore = getByTestId('collapsible_text.show_text');
     fireEvent.press(btnSeeMore);
     expect(btnSeeMore.props.children).toBe(languages.common.text_see_less);
@@ -81,8 +81,8 @@ describe('Collapsible Text component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly with markdown`, () => {
-    const storeData = {...initialState};
+  it('renders correctly with markdown', () => {
+    const storeData = { ...initialState };
 
     // @ts-ignore
     storeData.post.allComments.abc = commentData;
@@ -92,17 +92,17 @@ describe('Collapsible Text component', () => {
       <CollapsibleText
         useMarkdown
         content={mentionName}
-        selector={`post.allComments.abc.data.mentions.users`}
+        selector="post.allComments.abc.data.mentions.users"
       />,
       store,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should call props onPressAudience`, () => {
+  it('should call props onPressAudience', () => {
     const onPressAudience = jest.fn();
 
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     // @ts-ignore
     storeData.post.allComments.abc = commentData;
@@ -113,7 +113,7 @@ describe('Collapsible Text component', () => {
         useMarkdown
         content={mentionName}
         onPressAudience={onPressAudience}
-        selector={`post.allComments.abc.data.mentions.users`}
+        selector="post.allComments.abc.data.mentions.users"
       />,
       store,
     );
@@ -124,7 +124,7 @@ describe('Collapsible Text component', () => {
     expect(onPressAudience).toBeCalled();
   });
 
-  it(`should call props onPress`, () => {
+  it('should call props onPress', () => {
     const onPress = jest.fn();
 
     const rendered = render(

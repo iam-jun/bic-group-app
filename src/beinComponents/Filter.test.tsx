@@ -1,31 +1,55 @@
 import * as React from 'react';
-import {cleanup, fireEvent, render} from '@testing-library/react-native';
+import { cleanup, fireEvent } from '@testing-library/react-native';
 
 import Filter from './Filter';
-import {renderWithRedux} from '~/test/testUtils';
-import {communityMenuData} from '~/constants/communityMenuData';
+import { renderWithRedux } from '~/test/testUtils';
 
 afterEach(cleanup);
 
+export const communityMenuData = [
+  {
+    id: 1,
+    text: 'communities:community_menu:your_communities_text',
+    type: 'COMMUNITIES',
+  },
+  {
+    id: 2,
+    text: 'communities:community_menu:manage_text',
+    type: 'MANAGE',
+  },
+  {
+    id: 3,
+    text: 'communities:community_menu:discover_text',
+    type: 'DISCOVER',
+  },
+];
+
 describe('Filter component', () => {
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const onPress = jest.fn();
     const rendered = renderWithRedux(
-      <Filter data={communityMenuData} selectedIndex={0} onPress={onPress} />,
+      <Filter
+        data={communityMenuData}
+        onPress={onPress}
+        translateX={{
+          value: undefined,
+        }}
+      />,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`should called onPress prop`, () => {
+  it('should called onPress prop', () => {
     const onPress = jest.fn();
-    const selectedIndex = 0;
     const rendered = renderWithRedux(
       <Filter
-        selectedIndex={selectedIndex}
         data={communityMenuData}
         onPress={onPress}
         testID="community_menu"
         itemTestID="item_community_data"
+        translateX={{
+          value: undefined,
+        }}
       />,
     );
     const itemComponent = rendered.getByTestId('item_community_data_2');

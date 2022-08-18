@@ -1,4 +1,4 @@
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 import {
   checkRunSearch,
   completeMention,
@@ -15,19 +15,19 @@ describe('_MentionInput helper', () => {
     Platform = require('react-native').Platform;
   });
 
-  it(`getMatchTermForAtMention correctly`, async () => {
+  it('getMatchTermForAtMention correctly', async () => {
     expect(getMatchTermForAtMention('test @abc')).toBe('abc');
   });
 
-  it(`getMatchTermForAtMention should be null`, async () => {
+  it('getMatchTermForAtMention should be null', async () => {
     expect(getMatchTermForAtMention('test abc')).toBeNull();
   });
 
-  it(`switchKeyboardForCodeBlocks should be default`, async () => {
+  it('switchKeyboardForCodeBlocks should be default', async () => {
     expect(switchKeyboardForCodeBlocks('test', 0)).toBe('default');
   });
 
-  it(`switchKeyboardForCodeBlocks should be email-address`, async () => {
+  it('switchKeyboardForCodeBlocks should be email-address', async () => {
     Platform.OS = 'ios';
     Platform.Version = 13;
 
@@ -36,9 +36,9 @@ describe('_MentionInput helper', () => {
     );
   });
 
-  it(`completeMention cursorPosition should be text's length`, async () => {
+  it('completeMention cursorPosition should be text\'s length', async () => {
     const text = 'abc @te';
-    const item = {username: 'test'};
+    const item = { username: 'test' };
     const result = completeMention({
       item,
       cursorPosition: undefined,
@@ -50,11 +50,11 @@ describe('_MentionInput helper', () => {
     expect(result.completedDraft).toBe(`abc @${item.username} `);
   });
 
-  it(`checkRunSearch should run`, async () => {
-    expect(checkRunSearch('abc @te', ['group_id'], jest.fn)).toBeTruthy();
+  it('checkRunSearch should run', async () => {
+    expect(checkRunSearch('abc @te', ['groupId'], jest.fn)).toBeTruthy();
   });
 
-  it(`checkRunSearch should not run`, async () => {
-    expect(checkRunSearch('abc te', ['group_id'], jest.fn)).toBeFalsy();
+  it('checkRunSearch should not run', async () => {
+    expect(checkRunSearch('abc te', ['groupId'], jest.fn)).toBeFalsy();
   });
 });

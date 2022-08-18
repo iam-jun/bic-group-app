@@ -1,19 +1,21 @@
 import React from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import completeSvg from '../../../../../../assets/images/settings_change_password_complete.svg';
-import {authStack} from '~/configs/navigator';
 
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
+import { useRootNavigation } from '~/hooks/navigation';
+import authStacks from '~/router/navigator/AuthStack/stack';
 
 const CompleteChangePassword = () => {
-  const {t, navigation} = useBaseHook();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const dimensions = useWindowDimensions();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -28,7 +30,6 @@ const CompleteChangePassword = () => {
       <View style={styles.container}>
         <SVGIcon
           style={styles.svg}
-          // @ts-ignore
           source={completeSvg}
           size={imgSize}
         />
@@ -41,7 +42,8 @@ const CompleteChangePassword = () => {
         <Button.Primary
           testID="btnComplete"
           style={styles.btn}
-          onPress={() => navigation.navigate(authStack.login)}>
+          onPress={() => rootNavigation.navigate(authStacks.signIn)}
+        >
           {t('auth:btn_back_to_login')}
         </Button.Primary>
       </View>
@@ -52,7 +54,7 @@ const CompleteChangePassword = () => {
 export default CompleteChangePassword;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

@@ -1,19 +1,21 @@
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {
+  FC, memo, useCallback, useEffect, useState,
+} from 'react';
 import {
   View,
   StyleProp,
   ViewStyle,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {useBaseHook} from '~/hooks';
-import Text, {TextProps} from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
+import Text, { TextProps } from '~/beinComponents/Text';
 
 import MarkdownView from '~/beinComponents/MarkdownView';
 import Markdown from '~/beinComponents/Markdown';
 import CopyableView from '../CopyableView';
-import {escapeMarkDown} from '~/utils/formatData';
+import { escapeMarkDown } from '~/utils/formatData';
 
 export interface CollapsibleTextProps extends TextProps {
   testID?: string;
@@ -30,6 +32,7 @@ export interface CollapsibleTextProps extends TextProps {
   onPress?: () => void;
   onPressAudience?: (audience: any, e?: any) => any;
   [x: string]: any;
+  onToggleShowTextContent?: () => void;
 }
 
 const _CollapsibleText: FC<CollapsibleTextProps> = ({
@@ -46,101 +49,105 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   copyEnabled,
   onPress,
   onPressAudience,
+  onToggleShowTextContent,
   ...textProps
 }: CollapsibleTextProps) => {
   const getShortContent = (c?: string) => {
     if (c && c?.length > limitLength) {
-      return `${c.substr(0, shortLength)}...`;
-    } else {
-      return '';
+      return `${c.substr(
+        0, shortLength,
+      )}...`;
     }
+    return '';
   };
 
   const [contentShowAll, setContentShowAll] = useState(false);
   const [shortContent, setShortContent] = useState(getShortContent(content));
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
-  useEffect(() => {
-    const newShort = getShortContent(content);
-    if (newShort !== shortContent) {
-      setShortContent(newShort);
-    }
-  }, [content]);
+  useEffect(
+    () => {
+      const newShort = getShortContent(content);
+      if (newShort !== shortContent) {
+        setShortContent(newShort);
+      }
+    }, [content],
+  );
 
-  const onToggleShowLess = () => setContentShowAll(!contentShowAll);
+  const _onToggleShowTextContent = useCallback(() => {
+    setContentShowAll(!contentShowAll);
+    onToggleShowTextContent?.();
+  }, [testID, contentShowAll, content]);
 
   const _onPress = () => {
     if (onPress) {
       onPress();
     } else if (toggleOnPress) {
-      onToggleShowLess();
+      _onToggleShowTextContent();
     }
   };
 
-  const renderContentWithMarkdown = () => {
-    return (
-      <View style={style}>
-        {useMarkdownIt ? (
-          <MarkdownView
-            {...textProps}
-            limitMarkdownTypes={limitMarkdownTypes}
-            onPressAudience={onPressAudience}>
-            {!shortContent ? content : contentShowAll ? content : shortContent}
-          </MarkdownView>
-        ) : (
-          <Markdown
-            {...textProps}
-            textTestID={
+  const renderContentWithMarkdown = () => (
+    <View style={style}>
+      {useMarkdownIt ? (
+        <MarkdownView
+          {...textProps}
+          limitMarkdownTypes={limitMarkdownTypes}
+          onPressAudience={onPressAudience}
+        >
+          {!shortContent ? content : contentShowAll ? content : shortContent}
+        </MarkdownView>
+      ) : (
+        <Markdown
+          {...textProps}
+          textTestID={
               parentCommentId
                 ? 'collapsible_text.level_2.content'
                 : 'collapsible_text.level_1.content'
             }
-            onPressAudience={onPressAudience}
-            value={
+          onPressAudience={onPressAudience}
+          value={
               !shortContent ? content : contentShowAll ? content : shortContent
             }
-          />
-        )}
+        />
+      )}
 
-        {!!shortContent && (
-          <Text.BodyM
-            testID="collapsible_text.markdown.short_content"
-            onPress={onToggleShowLess}
-            color={colors.neutral50}>
-            {contentShowAll
-              ? t('common:text_see_less')
-              : t('common:text_see_more')}
-          </Text.BodyM>
-        )}
-      </View>
-    );
-  };
+      {!!shortContent && (
+      <Text.SubtitleS
+        testID="collapsible_text.markdown.short_content"
+        onPress={_onToggleShowTextContent}
+        color={colors.neutral50}
+      >
+        {contentShowAll
+          ? t('common:text_see_less')
+          : t('common:text_see_more')}
+      </Text.SubtitleS>
+      )}
+    </View>
+  );
 
-  const renderContent = () => {
-    console.log('aloooo', textProps);
-
-    return (
-      <Text style={style}>
-        <Text testID="collapsible_text.content" {...textProps}>
-          {!shortContent ? content : contentShowAll ? content : shortContent}
-        </Text>
-        {!!shortContent && (
-          <Text.BodyM
-            testID="collapsible_text.show_text"
-            onPress={onToggleShowLess}
-            color={colors.neutral50}>
-            {contentShowAll
-              ? t('common:text_see_less')
-              : t('common:text_see_more')}
-          </Text.BodyM>
-        )}
+  const renderContent = () => (
+    <Text style={style}>
+      <Text testID="collapsible_text.content" {...textProps}>
+        {!shortContent ? content : contentShowAll ? content : shortContent}
       </Text>
-    );
-  };
+      {!!shortContent && (
+      <Text.SubtitleS
+        testID="collapsible_text.show_text"
+        onPress={_onToggleShowTextContent}
+        color={colors.neutral50}
+      >
+        {contentShowAll
+          ? t('common:text_see_less')
+          : t('common:text_see_more')}
+      </Text.SubtitleS>
+      )}
+    </Text>
+  );
 
   const WrapperComponent = copyEnabled
     ? CopyableView
@@ -152,7 +159,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
       activeOpacity={0.6}
       content={escapeMarkDown(content)}
       disabled={!(onPress || (toggleOnPress && shortContent))}
-      onPress={_onPress}>
+      onPress={_onPress}
+    >
       {useMarkdown ? renderContentWithMarkdown() : renderContent()}
     </WrapperComponent>
   );

@@ -1,0 +1,423 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component renders button danger correctly 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
+  testID="button_wrapper"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 4,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#F64E60",
+          "height": 36,
+          "paddingHorizontal": 12,
+        },
+      ]
+    }
+    testID="button.content"
+  />
+</View>
+`;
+
+exports[`Button component renders button neutral correctly 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
+  testID="button_wrapper"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 4,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#BAC0DE",
+          "height": 36,
+          "paddingHorizontal": 12,
+        },
+      ]
+    }
+    testID="button.content"
+  />
+</View>
+`;
+
+exports[`Button component renders button primary correctly 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
+  testID="button_wrapper"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 4,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#7335C0",
+          "height": 36,
+          "paddingHorizontal": 12,
+        },
+      ]
+    }
+    testID="button.content"
+  />
+</View>
+`;
+
+exports[`Button component renders button secondary correctly 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
+  testID="button_wrapper"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 4,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#007AFF",
+          "height": 36,
+          "paddingHorizontal": 12,
+        },
+      ]
+    }
+    testID="button.content"
+  />
+</View>
+`;
+
+exports[`Button component renders button success correctly 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
+  testID="button_wrapper"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 4,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#13B055",
+          "height": 36,
+          "paddingHorizontal": 12,
+        },
+      ]
+    }
+    testID="button.content"
+  />
+</View>
+`;
+
+exports[`Button component renders correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+  testID="button_wrapper"
+/>
+`;
+
+exports[`Button component renders correctly button disable 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+  testID="button"
+/>
+`;
+
+exports[`Button component renders correctly children with useI18n 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
+  testID="button_wrapper"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 4,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#7335C0",
+          "height": 36,
+          "paddingHorizontal": 12,
+        },
+      ]
+    }
+    testID="button.content"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#FFFFFF",
+          },
+          Array [
+            Object {
+              "textAlign": "center",
+            },
+            undefined,
+          ],
+        ]
+      }
+      testID="button.text"
+    >
+      See less
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Button component renders correctly contentStyle 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "borderRadius": 6,
+      },
+      undefined,
+    ]
+  }
+  testID="button_wrapper"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 4,
+        },
+        Object {
+          "padding": 10,
+        },
+        Object {
+          "backgroundColor": "#7335C0",
+          "height": 36,
+          "paddingHorizontal": 12,
+        },
+      ]
+    }
+    testID="button.content"
+  />
+</View>
+`;
+
+exports[`Button component renders correctly style 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "padding": 10,
+    }
+  }
+  testID="button"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 6,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 4,
+        },
+        undefined,
+        Object {
+          "backgroundColor": "#7335C0",
+          "height": 36,
+          "paddingHorizontal": 12,
+        },
+      ]
+    }
+    testID="button.content"
+  />
+</View>
+`;

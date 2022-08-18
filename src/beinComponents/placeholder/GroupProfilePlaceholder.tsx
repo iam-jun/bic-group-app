@@ -1,6 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  StyleSheet, View, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import {
   ShineOverlay,
   Placeholder,
@@ -9,7 +11,7 @@ import {
 } from 'rn-placeholder';
 
 import spacing from '~/theme/spacing';
-import {getRandomInt} from '~/utils/generator';
+import { getRandomInt } from '~/utils/generator';
 
 export interface GroupProfilePlaceholderProps {
   style?: StyleProp<ViewStyle>;
@@ -32,36 +34,55 @@ const GroupProfilePlaceholder: React.FC<GroupProfilePlaceholderProps> = ({
       <View style={styles.groupInfoHeaderContainer}>
         <Placeholder
           Animation={ShineOverlay}
-          Left={p => <PlaceholderMedia style={[p.style, styles.avatar]} />}
-          style={styles.infoContainer}>
-          <PlaceholderLine width={disableRandom ? 50 : getRandomInt(30, 60)} />
+          Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}
+          style={styles.infoContainer}
+        >
+          <PlaceholderLine width={disableRandom ? 50 : getRandomInt(
+            30, 60,
+          )}
+          />
           <View style={styles.infoText}>
-            <PlaceholderLine width={disableRandom ? 4 : getRandomInt(3, 8)} />
+            <PlaceholderLine width={disableRandom ? 4 : getRandomInt(
+              3, 8,
+            )}
+            />
             <PlaceholderLine
-              width={disableRandom ? 12 : getRandomInt(8, 20)}
+              width={disableRandom ? 12 : getRandomInt(
+                8, 20,
+              )}
               style={styles.marginLeft}
             />
             <PlaceholderLine
-              width={disableRandom ? 10 : getRandomInt(10, 20)}
+              width={disableRandom ? 10 : getRandomInt(
+                10, 20,
+              )}
               style={styles.marginLeft}
             />
           </View>
         </Placeholder>
         <View style={styles.tabButton}>
           <PlaceholderLine
-            width={disableRandom ? 25 : getRandomInt(10, 20)}
+            width={disableRandom ? 25 : getRandomInt(
+              10, 20,
+            )}
             style={styles.marginLeft}
           />
           <PlaceholderLine
-            width={disableRandom ? 15 : getRandomInt(10, 20)}
+            width={disableRandom ? 15 : getRandomInt(
+              10, 20,
+            )}
             style={styles.marginLeft}
           />
           <PlaceholderLine
-            width={disableRandom ? 20 : getRandomInt(10, 20)}
+            width={disableRandom ? 20 : getRandomInt(
+              10, 20,
+            )}
             style={styles.marginLeft}
           />
           <PlaceholderLine
-            width={disableRandom ? 22 : getRandomInt(10, 20)}
+            width={disableRandom ? 22 : getRandomInt(
+              10, 20,
+            )}
             style={styles.marginLeft}
           />
         </View>
@@ -73,7 +94,7 @@ const GroupProfilePlaceholder: React.FC<GroupProfilePlaceholderProps> = ({
 export default GroupProfilePlaceholder;
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.white,
@@ -105,6 +126,6 @@ const createStyle = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       marginHorizontal: spacing.margin.tiny,
     },
-    infoText: {flexDirection: 'row'},
+    infoText: { flexDirection: 'row' },
   });
 };

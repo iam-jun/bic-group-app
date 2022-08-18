@@ -34,9 +34,9 @@ exports[`NotificationContent component renders correctly 1`] = `
           <Text
             style={
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
                 "fontWeight": "bold",
               }
             }
@@ -45,9 +45,9 @@ exports[`NotificationContent component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Light",
+                    "fontSize": 15,
                     "fontWeight": "bold",
                   },
                   Object {},
@@ -61,9 +61,9 @@ exports[`NotificationContent component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 16,
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
                 },
                 Object {},
               ]
@@ -75,24 +75,5 @@ exports[`NotificationContent component renders correctly 1`] = `
       </View>
     </View>
   </View>
-  <Text
-    numberOfLines={1}
-    style={
-      Array [
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 14,
-        },
-        Object {},
-        Object {
-          "color": "#627286",
-        },
-      ]
-    }
-    testID="notification_content.content"
-  >
-    okie
-  </Text>
 </View>
 `;

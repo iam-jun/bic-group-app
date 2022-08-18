@@ -1,5 +1,5 @@
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import React, {useCallback, useMemo, useState} from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
   Easing,
   interpolate,
@@ -24,7 +24,7 @@ import spacing from '~/theme/spacing';
 import Icon from './Icon';
 import Text from './Text';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 export interface FilterProps {
   filterRef?: React.Ref<ScrollView>;
   testID?: string;
@@ -46,15 +46,19 @@ const FilterComponent: React.FC<FilterProps> = ({
   translateX,
 }: FilterProps) => {
   const theme: ExtendedTheme = useTheme();
-  const styles = useMemo(() => createStyle(theme), [theme, style]);
-
-  const [measurements, setMeasurements] = useState<any[]>(
-    new Array(data?.length).fill({}),
+  const styles = useMemo(
+    () => createStyle(theme), [theme, style],
   );
 
+  const [measurements, setMeasurements] = useState<any[]>(new Array(data?.length).fill({}));
+
   const _onPress = useCallback(
-    (item: any, index: number) => {
-      onPress?.(item, index);
+    (
+      item: any, index: number,
+    ) => {
+      onPress?.(
+        item, index,
+      );
     },
     [onPress],
   );
@@ -63,40 +67,49 @@ const FilterComponent: React.FC<FilterProps> = ({
   const offsetValue = useSharedValue(0);
   const clampedTranslateX = useDerivedValue(() => {
     const lastMeasurements = measurements[measurements.length - 1];
-    const MAX_TRANSLATE_X =
-      -(
-        lastMeasurements?.x +
-        lastMeasurements?.width +
-        spacing.margin.small -
-        screenWidth
-      ) || 0;
+    const MAX_TRANSLATE_X = -(
+      (lastMeasurements?.x || 0)
+        + (lastMeasurements?.width || 0)
+        + spacing.margin.small
+        - screenWidth
+    ) || 0;
     if (MAX_TRANSLATE_X > 0) return 0;
-    return Math.max(Math.min(panGestureValue.value, 0), MAX_TRANSLATE_X);
+    return Math.max(
+      Math.min(
+        panGestureValue.value, 0,
+      ), MAX_TRANSLATE_X,
+    );
   });
 
-  const renderItem = (item: any, index: number) => {
+  const renderItem = (
+    item: any, index: number,
+  ) => {
     const isSelected = index === activeIndex;
     return (
       <View
         style={styles.itemView}
         key={`${itemTestID || 'item_filter'}_${item?.text}`}
-        onLayout={event => {
-          const {x, width, height} = event?.nativeEvent?.layout || {};
+        onLayout={(event) => {
+          const { x, width, height } = event?.nativeEvent?.layout || {};
           if (
-            measurements[index]?.x !== x ||
-            measurements[index]?.width !== width
+            measurements[index]?.x !== x
+            || measurements[index]?.width !== width
           ) {
-            measurements[index] = {x, width, height};
+            measurements[index] = { x, width, height };
             setMeasurements([...measurements]);
           }
-        }}>
+        }}
+      >
         <TouchableOpacity
           activeOpacity={0.25}
           style={[styles.itemContainer]}
           testID={`${itemTestID || 'item_filter'}_${item.id}`}
           onPress={() => {
-            _onPress(item, index);
-          }}>
+            _onPress(
+              item, index,
+            );
+          }}
+        >
           {!!item?.icon && (
             <Icon
               icon={item.icon}
@@ -116,9 +129,6 @@ const FilterComponent: React.FC<FilterProps> = ({
   };
 
   const panGestureEvent = useAnimatedGestureHandler({
-    onStart(event: any) {
-      console.log('>>>>>>START>>>>>>>', panGestureValue.value);
-    },
     onActive(event: any) {
       if (panGestureValue.value > 0) {
         offsetValue.value = 0;
@@ -127,30 +137,34 @@ const FilterComponent: React.FC<FilterProps> = ({
         panGestureValue.value = event.translationX + offsetValue.value;
       }
     },
-    onFinish(event: any) {
+    onFinish() {
       offsetValue.value = panGestureValue.value;
     },
   });
 
-  const scrollViewContainerStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: withTiming(clampedTranslateX.value, {
+  const scrollViewContainerStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: withTiming(
+          clampedTranslateX.value, {
             duration: 10,
-            easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-          }),
-        },
-      ],
-    };
-  });
+            easing: Easing.bezier(
+              0.25, 0.1, 0.25, 1,
+            ),
+          },
+        ),
+      },
+    ],
+  }));
 
   const activeStyle = useAnimatedStyle(() => ({
     transform: [
       {
         translateX: interpolate(
           translateX?.value,
-          data?.map?.((_, index: number) => index * screenWidth),
+          data?.map?.((
+            _, index: number,
+          ) => index * screenWidth),
           measurements.map((item: any) => {
             if (!item?.x) return 8;
             return item.x;
@@ -160,7 +174,9 @@ const FilterComponent: React.FC<FilterProps> = ({
     ],
     width: interpolate(
       translateX?.value,
-      data?.map?.((_, index: number) => index * screenWidth),
+      data?.map?.((
+        _, index: number,
+      ) => index * screenWidth),
       measurements.map((item: any) => item?.width || 60),
     ),
     height: measurements[0]?.height || 0,
@@ -176,14 +192,16 @@ const FilterComponent: React.FC<FilterProps> = ({
               {
                 flexDirection: 'row',
               },
-            ]}>
+            ]}
+          >
             {data?.map?.(renderItem)}
             <Animated.View
               style={[
-                {...StyleSheet.absoluteFillObject},
+                { ...StyleSheet.absoluteFillObject },
                 styles.itemSelectedContainer,
                 activeStyle,
-              ]}></Animated.View>
+              ]}
+            />
           </View>
         </Animated.View>
       </PanGestureHandler>
@@ -192,7 +210,7 @@ const FilterComponent: React.FC<FilterProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing.padding.base,
@@ -221,18 +239,18 @@ const createStyle = (theme: ExtendedTheme) => {
       borderRadius: 100,
       zIndex: -1,
     },
-    iconLeftStyle: {marginRight: spacing.margin.base},
+    iconLeftStyle: { marginRight: spacing.margin.base },
     icon: {
       marginRight: spacing.margin.small,
     },
   });
 };
 
-const _Filter = React.forwardRef(
-  (props: FilterProps, ref?: React.Ref<ScrollView>) => (
-    <FilterComponent filterRef={ref} {...props} />
-  ),
-);
+const _Filter = React.forwardRef((
+  props: FilterProps, ref?: React.Ref<ScrollView>,
+) => (
+  <FilterComponent filterRef={ref} {...props} />
+));
 
 const Filter = React.memo(_Filter);
 Filter.whyDidYouRender = true;

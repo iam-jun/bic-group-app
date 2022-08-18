@@ -1,9 +1,9 @@
 import React from 'react';
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
-import {renderWithRedux} from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import ButtonSecondary from './ButtonSecondary';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 
 afterEach(cleanup);
 
@@ -19,7 +19,7 @@ describe('ButtonSecondary conponent', () => {
   });
 
   it('renders color correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ButtonSecondary color="red" testID={testID}>
         {children}
       </ButtonSecondary>,
@@ -29,7 +29,7 @@ describe('ButtonSecondary conponent', () => {
   });
 
   it('renders textColor correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ButtonSecondary textColor="red" testID={testID}>
         {children}
       </ButtonSecondary>,
@@ -41,7 +41,7 @@ describe('ButtonSecondary conponent', () => {
   });
 
   it('renders highEmphasis correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ButtonSecondary highEmphasis testID={testID}>
         {children}
       </ButtonSecondary>,
@@ -53,7 +53,7 @@ describe('ButtonSecondary conponent', () => {
   });
 
   it('renders disabled correctly', () => {
-    const {getByTestId} = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <ButtonSecondary disabled testID={testID}>
         {children}
       </ButtonSecondary>,

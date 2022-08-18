@@ -6,23 +6,19 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import Text, {TextProps} from '~/beinComponents/Text';
-import Icon, {IconProps} from '~/beinComponents/Icon';
-import Checkbox, {
-  CheckboxProps,
-} from '~/beinComponents/SelectionControl/Checkbox';
-import Toggle from '~/beinComponents/SelectionControl/Toggle';
-import {IAction} from '~/constants/commonActions';
-import {IconType} from '~/resources/icons';
-import Avatar from '~/beinComponents/Avatar';
-import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
-import {primaryItemHeight} from '~/theme/dimension';
+import Text, { TextProps } from '~/beinComponents/Text';
+import Icon, { IconProps } from '~/beinComponents/Icon';
+import Checkbox, { CheckboxProps } from '~/baseComponents/Checkbox';
+import Toggle from '~/baseComponents/Toggle';
+import { IconType } from '~/resources/icons';
+import Avatar from '~/baseComponents/Avatar';
+import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
 import spacing from '~/theme/spacing';
 
+type ItemIconProps = Omit<IconProps, 'icon'>
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
   testID?: string;
-  height?: number | null;
   title?: string | React.ReactNode;
   titleProps?: TextProps;
   subTitle?: string | React.ReactNode;
@@ -31,7 +27,7 @@ export interface PrimaryItemProps {
   avatar?: string;
   avatarProps?: AvatarProps;
   leftIcon?: IconType;
-  leftIconProps?: IconProps;
+  leftIconProps?: ItemIconProps;
   isChecked?: boolean;
   checkboxProps?: CheckboxProps;
   toggleChecked?: boolean;
@@ -41,8 +37,8 @@ export interface PrimaryItemProps {
   ContentComponent?: React.ReactNode | React.ReactElement;
 
   onPress?: () => void;
-  onPressCheckbox?: (action: IAction) => void;
-  onPressToggle?: (action: IAction) => void;
+  onPressCheckbox?: (isChecked?: boolean) => void;
+  onPressToggle?: (isChecked?: boolean) => void;
   onPressEdit?: () => void;
   onPressMenu?: (e: any) => void;
 }
@@ -50,7 +46,6 @@ export interface PrimaryItemProps {
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
   style,
   testID,
-  height = primaryItemHeight,
   title,
   titleProps,
   showAvatar,
@@ -76,7 +71,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   const containerStyle: ViewStyle = StyleSheet.flatten([
     {
       flexDirection: 'row',
-      height: height,
+      paddingVertical: spacing.padding.small,
       alignItems: 'center',
       paddingHorizontal: spacing?.padding.base,
     } as ViewStyle,
@@ -91,10 +86,11 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         style={containerStyle}
         testID={testID}
         disabled={disabled}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         {LeftComponent}
         {(showAvatar || !!avatar) && (
-          <Avatar.Medium
+          <Avatar.Base
             source={avatar}
             style={styles.avatar}
             {...avatarProps}
@@ -125,7 +121,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Checkbox
             style={styles.iconMarginLeft}
             isChecked={isChecked}
-            onActionPress={onPressCheckbox}
+            onPress={onPressCheckbox}
             {...checkboxProps}
           />
         )}
@@ -133,13 +129,13 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Toggle
             style={styles.iconMarginLeft}
             isChecked={toggleChecked}
-            onActionPress={onPressToggle}
+            onPress={onPressToggle}
           />
         )}
         {onPressEdit && (
           <Icon
             style={styles.iconMarginLeft}
-            icon={'edit'}
+            icon="edit"
             onPress={onPressEdit}
           />
         )}
@@ -147,7 +143,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Icon
             style={styles.iconMarginLeft}
             onPress={onPressMenu}
-            icon={'menu'}
+            icon="menu"
             testID={menuIconTestID}
           />
         )}
@@ -158,7 +154,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
 };
 
 const styles = StyleSheet.create({
-  contentContainer: {flex: 1},
+  contentContainer: { flex: 1 },
   iconMarginRight: {
     marginRight: spacing?.margin.extraLarge,
   },

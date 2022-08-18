@@ -1,4 +1,4 @@
-import type {ReactElement} from 'react';
+import type { ReactElement } from 'react';
 import React from 'react';
 import Animated, {
   useSharedValue,
@@ -9,7 +9,7 @@ import Animated, {
   runOnJS,
   withTiming,
 } from 'react-native-reanimated';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 
 export interface Offset {
   y: Animated.SharedValue<number>;
@@ -27,7 +27,7 @@ export const SortableItem = ({
   index,
   offsets,
   children,
-  item: {height, width},
+  item: { height, width },
   onEnd,
 }: SortableItemProps) => {
   const gestureActive = useSharedValue(false);
@@ -41,11 +41,13 @@ export const SortableItem = ({
       gestureActive.value = true;
       safeOffsetY.value = offset.y.value;
     },
-    onActive: event => {
+    onActive: (event) => {
       x.value = event.translationX;
       y.value = safeOffsetY.value + event.translationY;
       const offsetY = Math.round(y.value / height) * height;
-      offsets.forEach((o, i) => {
+      offsets.forEach((
+        o, i,
+      ) => {
         if (o.y.value === offsetY && i !== index) {
           const tmp = o.y.value;
           o.y.value = offset.y.value;
@@ -53,13 +55,15 @@ export const SortableItem = ({
         }
       });
     },
-    onEnd: event => {
+    onEnd: (event) => {
       gestureActive.value = false;
       gestureFinishing.value = true;
       x.value = withTiming(0);
-      y.value = withTiming(offset.y.value, {}, () => {
-        gestureFinishing.value = false;
-      });
+      y.value = withTiming(
+        offset.y.value, {}, () => {
+          gestureFinishing.value = false;
+        },
+      );
       !!onEnd && runOnJS(onEnd)();
     },
   });
@@ -67,20 +71,19 @@ export const SortableItem = ({
   const translateY = useDerivedValue(() => {
     if (gestureActive.value) {
       return y.value;
-    } else {
-      return withTiming(offset.y.value);
     }
+    return withTiming(offset.y.value);
   });
   const style = useAnimatedStyle(() => ({
     zIndex: gestureActive.value || gestureFinishing.value ? 100 : 0,
     transform: [
-      {translateX: translateX.value},
-      {translateY: translateY.value},
-      {scale: withSpring(gestureActive.value ? 1.1 : 1)},
+      { translateX: translateX.value },
+      { translateY: translateY.value },
+      { scale: withSpring(gestureActive.value ? 1.1 : 1) },
     ],
   }));
   return (
-    <PanGestureHandler {...{onGestureEvent}}>
+    <PanGestureHandler {...{ onGestureEvent }}>
       <Animated.View
         style={[
           {
@@ -92,7 +95,8 @@ export const SortableItem = ({
             width,
           },
           style,
-        ]}>
+        ]}
+      >
         {children}
       </Animated.View>
     </PanGestureHandler>

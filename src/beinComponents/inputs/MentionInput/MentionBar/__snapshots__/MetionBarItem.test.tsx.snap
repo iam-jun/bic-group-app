@@ -20,7 +20,7 @@ exports[`MentionBarItem component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F9FAFB",
+      "backgroundColor": "#F8F9FF",
       "borderRadius": 16,
       "flexDirection": "row",
       "marginHorizontal": 8,
@@ -32,21 +32,32 @@ exports[`MentionBarItem component renders correctly 1`] = `
 >
   <View
     style={
-      Object {
-        "borderRadius": 6,
-        "height": 24,
-        "width": 24,
-      }
+      Array [
+        Object {
+          "borderRadius": 12,
+          "height": 24,
+          "width": 24,
+        },
+        undefined,
+      ]
     }
     testID="avatar"
   >
     <View
       style={
-        Object {
-          "borderRadius": 12,
-          "height": 24,
-          "width": 24,
-        }
+        Array [
+          Array [
+            Object {
+              "borderRadius": 12,
+              "height": 24,
+              "width": 24,
+            },
+            Object {
+              "borderRadius": 12,
+            },
+          ],
+          Object {},
+        ]
       }
       testID="avatar_container"
     >
@@ -77,7 +88,9 @@ exports[`MentionBarItem component renders correctly 1`] = `
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
+                "borderColor": "#F2F5F8",
                 "borderRadius": 12,
+                "borderWidth": 2,
                 "height": 24,
                 "justifyContent": "center",
                 "width": 24,
@@ -93,7 +106,9 @@ exports[`MentionBarItem component renders correctly 1`] = `
                 "overflow": "hidden",
               },
               Object {
+                "borderColor": "#F2F5F8",
                 "borderRadius": 12,
+                "borderWidth": 2,
                 "height": 24,
                 "width": 24,
               },
@@ -124,9 +139,9 @@ exports[`MentionBarItem component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 14,
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 13,
         },
         Object {},
         Object {

@@ -6,14 +6,14 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text, {TextProps} from '~/beinComponents/Text';
-import Avatar from '~/beinComponents/Avatar';
-import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
-import Icon, {IconProps} from '~/beinComponents/Icon';
+import Text, { TextProps } from '~/beinComponents/Text';
+import Avatar from '~/baseComponents/Avatar';
+import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
+import Icon, { IconProps } from '~/beinComponents/Icon';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
 interface HeaderAvatarProps {
@@ -46,7 +46,7 @@ const HeaderAvatar = ({
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   return (
@@ -54,13 +54,15 @@ const HeaderAvatar = ({
       testID="header_avatar"
       disabled={!isInternetReachable}
       style={StyleSheet.flatten([styles.container, containerStyle])}
-      onPress={onPress}>
-      <Avatar.Large source={avatar} isRounded {...avatarProps} />
+      onPress={onPress}
+    >
+      <Avatar.Medium source={avatar} isRounded {...avatarProps} />
       <View style={styles.content}>
         <Text
           variant="h5"
           testID="header_avatar.first_label"
-          {...firstLabelProps}>
+          {...firstLabelProps}
+        >
           {firstLabel}
           <View>
             {iconCheckCircle && (
@@ -86,7 +88,8 @@ const HeaderAvatar = ({
           <Text
             variant="bodySMedium"
             testID="header_avatar.second_label"
-            {...secondLabelProps}>
+            {...secondLabelProps}
+          >
             {secondLabel}
           </Text>
         )}
@@ -98,7 +101,7 @@ const HeaderAvatar = ({
 export default HeaderAvatar;
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {
@@ -111,8 +114,8 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
       padding: spacing.padding.small,
     },
-    content: {flex: 1, marginLeft: spacing.margin.small},
-    row: {flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap'},
+    content: { flex: 1, marginLeft: spacing.margin.small },
+    row: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' },
     circle: {
       marginLeft: spacing.margin.small,
       backgroundColor: colors.success,

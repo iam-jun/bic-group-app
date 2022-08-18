@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars,func-names
 module.exports = function (api) {
   const presets = ['module:metro-react-native-babel-preset'];
   const plugins = [
@@ -29,7 +29,7 @@ module.exports = function (api) {
     plugins.push(['transform-remove-console']);
   }
 
-  //Reanimated plugin has to be listed last
+  // Reanimated plugin has to be listed last
   plugins.push(['react-native-reanimated/plugin']);
 
   return {

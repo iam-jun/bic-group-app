@@ -4,8 +4,6 @@
 // leave only shortcuts here. But, who care...
 //
 
-'use strict';
-
 module.exports = function create_rule(
   md,
   emojies,
@@ -13,17 +11,17 @@ module.exports = function create_rule(
   scanRE,
   replaceRE,
 ) {
-  var arrayReplaceAt = md.utils.arrayReplaceAt,
-    ucm = md.utils.lib.ucmicro,
-    ZPCc = new RegExp([ucm.Z.source, ucm.P.source, ucm.Cc.source].join('|'));
+  const { arrayReplaceAt } = md.utils;
+  const ucm = md.utils.lib.ucmicro;
+  const ZPCc = new RegExp([ucm.Z.source, ucm.P.source, ucm.Cc.source].join('|'));
 
   function splitTextToken(text, level, Token) {
-    var token,
-      last_pos = 0,
-      nodes = [];
+    let token;
+    let last_pos = 0;
+    const nodes = [];
 
-    text.replace(replaceRE, function (match, offset, src) {
-      var emoji_name;
+    text.replace(replaceRE, (match, offset, src) => {
+      let emoji_name;
       // Validate emoji name
       if (shortcuts.hasOwnProperty(match)) {
         // replace shortcut with full name
@@ -36,8 +34,8 @@ module.exports = function create_rule(
 
         // Don't allow letters after any shortcut
         if (
-          offset + match.length < src.length &&
-          !ZPCc.test(src[offset + match.length])
+          offset + match.length < src.length
+          && !ZPCc.test(src[offset + match.length])
         ) {
           return;
         }
@@ -70,13 +68,13 @@ module.exports = function create_rule(
   }
 
   return function emoji_replace(state) {
-    var i,
-      j,
-      l,
-      tokens,
-      token,
-      blockTokens = state.tokens,
-      autolinkLevel = 0;
+    let i;
+    let j;
+    let l;
+    let tokens;
+    let token;
+    const blockTokens = state.tokens;
+    let autolinkLevel = 0;
 
     for (j = 0, l = blockTokens.length; j < l; j++) {
       if (blockTokens[j].type !== 'inline') {
@@ -96,9 +94,9 @@ module.exports = function create_rule(
         }
 
         if (
-          token.type === 'text' &&
-          autolinkLevel === 0 &&
-          scanRE.test(token.content)
+          token.type === 'text'
+          && autolinkLevel === 0
+          && scanRE.test(token.content)
         ) {
           // replace current node
           blockTokens[j].children = tokens = arrayReplaceAt(

@@ -6,13 +6,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useKeyboardStatus} from '~/hooks/keyboard';
-import {useKeySelector} from '~/hooks/selector';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { isEmpty } from 'lodash';
+import { useKeyboardStatus } from '~/hooks/keyboard';
+import { useKeySelector } from '~/hooks/selector';
 
 import Text from '~/beinComponents/Text';
 import AtMention from './AtMention';
-import {isEmpty} from 'lodash';
 import spacing from '~/theme/spacing';
 
 export type IModalPosition = 'top' | 'bottom' | 'above-keyboard';
@@ -42,9 +42,9 @@ const Autocomplete = ({
   showShadow = true,
   ...props
 }: AutocompleteProps) => {
-  const {height: keyboardHeight} = useKeyboardStatus();
+  const { height: keyboardHeight } = useKeyboardStatus();
   const windowDimension = useWindowDimensions();
-  const {data, key} = useKeySelector(type);
+  const { data, key } = useKeySelector(type);
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(
@@ -66,7 +66,8 @@ const Autocomplete = ({
         showShadow && styles.shadow,
         modalStyle,
         isEmpty(data) ? styles.hidden : {},
-      ]}>
+      ]}
+    >
       {!!title && key === '' && data?.length === 0 && (
         <Text.BodyS testID="autocomplete.title" style={styles.textTitle}>
           {title}
@@ -86,7 +87,7 @@ const createStyles = (
   screenHeight: number,
   isListEmpty: boolean,
 ) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   const maxTopPosition = measuredHeight / 2;
 
@@ -95,7 +96,9 @@ const createStyles = (
     ? 80
     : screenHeight - keyboardHeight - minViewableContent;
 
-  const maxModalHeight = Math.min(modalHeight, 300);
+  const maxModalHeight = Math.min(
+    modalHeight, 300,
+  );
 
   let stylePosition = {};
   switch (position) {

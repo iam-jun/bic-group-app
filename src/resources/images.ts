@@ -12,12 +12,11 @@ const images = {
   img_right_col: require('../../assets/images/img_right_col.png'),
   ic_star_white: require('../../assets/images/ic_star_white.png'),
   img_empty_draft: require('../../assets/images/img_empty_draft.png'),
-  img_empty_no_post: require('../../assets/images/img_empty_no_post.png'),
   img_empty_search_post: require('../../assets/images/img_empty_search_post.png'),
-  img_empty_cant_load_more: require('../../assets/images/img_empty_cant_load_more.png'),
   img_banner_discover_communities: require('../../assets/images/img_banner_discover_communities.jpg'),
   img_bg_sign_in: require('../../assets/images/sign_in_bg.png'),
   logo_beincomm: require('../../assets/images/logo_beincomm.png'),
+  img_thumbnail_default: require('../../assets/images/img_thumbnail_default.png'),
 };
 
 export default images;

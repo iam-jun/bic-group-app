@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
 import React from 'react';
 
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 import {
   configureStore,
@@ -15,9 +15,9 @@ import {
 import * as navigationHook from '~/hooks/navigation';
 
 import EditContact from '.';
-import menuActions from '../../redux/actions';
-import menuTypes from '../../redux/types';
-import {USER_PROFILE} from '~/test/mock_data/menu';
+import menuActions from '../../../../storeRedux/menu/actions';
+import menuTypes from '../../../../storeRedux/menu/types';
+import { USER_PROFILE } from '~/test/mock_data/menu';
 
 afterEach(cleanup);
 
@@ -30,7 +30,7 @@ describe('Edit Contact screen', () => {
   beforeEach(() => {
     Keyboard = require('react-native').Keyboard;
     jest.clearAllMocks();
-    storeData = {...initialState};
+    storeData = { ...initialState };
     storeData.menu.myProfile = {} as any;
   });
 
@@ -38,7 +38,7 @@ describe('Edit Contact screen', () => {
     jest.clearAllMocks();
   });
 
-  it(`should disable save button when not change contact info`, () => {
+  it('should disable save button when not change contact info', () => {
     storeData.menu.myProfile = USER_PROFILE;
 
     const store = mockStore(storeData);
@@ -49,7 +49,7 @@ describe('Edit Contact screen', () => {
     expect(component.props.accessibilityState.disabled).toBeTruthy();
   });
 
-  it(`should enable save button when change country code`, () => {
+  it('should enable save button when change country code', () => {
     jest.useFakeTimers();
 
     const store = createTestStore(initialState);
@@ -81,7 +81,7 @@ describe('Edit Contact screen', () => {
     expect(component.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it(`should enable save button when change location `, () => {
+  it('should enable save button when change location ', () => {
     jest.useFakeTimers();
 
     const store = createTestStore(initialState);
@@ -109,15 +109,13 @@ describe('Edit Contact screen', () => {
     expect(component.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it(`should back to previous screen successfully `, () => {
+  it('should back to previous screen successfully ', () => {
     Keyboard.dismiss = jest.fn();
     const goBack = jest.fn();
 
-    const rootNavigation = {canGoBack: true, goBack};
+    const rootNavigation = { canGoBack: true, goBack };
 
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
     const store = mockStore(initialState);
 
@@ -132,7 +130,7 @@ describe('Edit Contact screen', () => {
     expect(goBack).toBeCalled();
   });
 
-  it(`should disable email input`, () => {
+  it('should disable email input', () => {
     const store = mockStore(initialState);
 
     const wrapper = renderWithRedux(<EditContact />, store);
@@ -141,22 +139,18 @@ describe('Edit Contact screen', () => {
     expect(component.props.accessibilityState.disabled).toBeTruthy();
   });
 
-  it(`should back to previous screen successfully when click save button`, () => {
+  it('should back to previous screen successfully when click save button', () => {
     jest.useFakeTimers();
     Keyboard.dismiss = jest.fn();
     const goBack = jest.fn();
 
-    const rootNavigation = {canGoBack: true, goBack};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
+    const rootNavigation = { canGoBack: true, goBack };
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const mockActionEditMyProfile = () => {
-      return {
-        type: menuTypes.SET_MY_PROFILE,
-        payload: USER_PROFILE,
-      };
-    };
+    const mockActionEditMyProfile = () => ({
+      type: menuTypes.SET_MY_PROFILE,
+      payload: USER_PROFILE,
+    });
 
     jest
       .spyOn(menuActions, 'editMyProfile')
@@ -189,7 +183,7 @@ describe('Edit Contact screen', () => {
     fireEvent.press(component);
 
     expect(Keyboard.dismiss).toBeCalled();
-    //this test case can't be done bc can mock react-hook-form
+    // this test case can't be done bc can mock react-hook-form
     // expect(goBack).toBeCalled();
   });
 });

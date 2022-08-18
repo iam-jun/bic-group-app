@@ -1,45 +1,45 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {getUnreadChannelCount} from '~/selectors/chat';
+import { StyleSheet } from 'react-native';
+import { getUnreadChannelCount } from '~/store/selectors/chat';
 
 import spacing from '~/theme/spacing';
 import NotificationsBadge from '../Badge/NotificationsBadge';
+import Button from '../Button';
 import Icon from '../Icon';
 
 interface Props {
+  testID?: string;
   onPress: () => void;
 }
 
-const IconChat = ({onPress}: Props) => {
-  const theme: ExtendedTheme = useTheme();
-  const count = useSelector(state => getUnreadChannelCount(state));
+const IconChat = ({ testID, onPress }: Props) => {
+  const count = getUnreadChannelCount();
 
   return (
-    <View>
+    <Button
+      testID={testID || 'icon_chat.button'}
+      onPress={onPress}
+    >
       <Icon
+        testID="icon_chat.icon"
         icon="iconBeinChat"
-        size={24}
+        size={28}
         style={styles.icon}
-        onPress={onPress}
-        backgroundColor={theme.colors.neutral1}
-        buttonTestID="header.iconChat.button"
-        testID="header.iconChat"
       />
       <NotificationsBadge.Alert
+        testID="icon_chat.badge"
         style={styles.badge}
         number={count}
         maxNumber={99}
       />
-    </View>
+    </Button>
   );
 };
 
 const styles = StyleSheet.create({
   icon: {
-    height: 40,
-    width: 40,
+    // height: 40,
+    // width: 40,
     justifyContent: 'center',
     alignItems: 'center',
     padding: spacing.padding.small,

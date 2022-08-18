@@ -1,4 +1,8 @@
-export {default as SignIn} from '~/screens/Auth/SignIn';
-export {default as SignUp} from '~/screens/Auth/SignUp';
-export {default as ForgotPassword} from '~/screens/Auth/ForgotPassword';
-export {default as Landing} from '~/screens/Auth/Landing';
+const authStacks = {
+  signIn: 'sign-in',
+  signUp: 'sign-up',
+  forgotPassword: 'forgot-password',
+  landing: 'landing',
+}
+
+export default authStacks

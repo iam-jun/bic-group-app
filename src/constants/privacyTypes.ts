@@ -1,8 +1,6 @@
 export type GROUP_PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET' | 'OPEN';
 export type COMMUNITY_PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET';
 
-export type GROUP_TYPE = 'GENERIC' | 'COMMUNITY' | 'COMPANY';
-
 export const groupPrivacy = {
   public: 'PUBLIC',
   private: 'PRIVATE',
@@ -10,33 +8,33 @@ export const groupPrivacy = {
   open: 'OPEN',
 };
 
-export default [
+export const groupPrivacyListDetail = [
   {
     type: 'PUBLIC',
     title: 'settings:title_public',
-    icon: 'Globe',
-    subtitle: 'settings:title_public_subtitle',
+    icon: 'iconPublic',
+    subtitle: 'settings:title_public_subtitle_group',
     privacyTitle: 'settings:privacy_public',
   },
   {
     type: 'PRIVATE',
     title: 'settings:title_private',
     icon: 'iconPrivate',
-    subtitle: 'settings:title_private_subtitle',
+    subtitle: 'settings:title_private_subtitle_group',
     privacyTitle: 'settings:privacy_private',
   },
   {
     type: 'SECRET',
     title: 'settings:title_secret',
     icon: 'iconSecret',
-    subtitle: 'settings:title_secret_subtitle',
+    subtitle: 'settings:title_secret_subtitle_group',
     privacyTitle: 'settings:privacy_secret',
   },
   {
     type: 'OPEN',
     title: 'settings:title_open',
-    icon: 'Eye',
-    subtitle: 'settings:title_open_subtitle',
+    icon: 'iconOpen',
+    subtitle: 'settings:title_open_subtitle_group',
     privacyTitle: 'settings:privacy_open',
   },
 ];
@@ -45,22 +43,22 @@ export const communityPrivacyListDetail = [
   {
     type: 'PUBLIC',
     title: 'settings:title_public',
-    icon: 'Globe',
-    subtitle: 'settings:title_public_subtitle',
+    icon: 'iconPublic',
+    subtitle: 'settings:title_public_subtitle_community',
     privacyTitle: 'settings:privacy_public',
   },
   {
     type: 'PRIVATE',
     title: 'settings:title_private',
     icon: 'iconPrivate',
-    subtitle: 'settings:title_private_subtitle',
+    subtitle: 'settings:title_private_subtitle_community',
     privacyTitle: 'settings:privacy_private',
   },
   {
     type: 'SECRET',
     title: 'settings:title_secret',
     icon: 'iconSecret',
-    subtitle: 'settings:title_secret_subtitle',
+    subtitle: 'settings:title_secret_subtitle_community',
     privacyTitle: 'settings:privacy_secret',
   },
 ];

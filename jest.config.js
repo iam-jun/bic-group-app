@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 module.exports = {
   preset: 'react-native',
   testRunner: 'jest-circus/runner',
@@ -12,7 +13,12 @@ module.exports = {
   ],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
-    '!src/components/**/*.{js,jsx,ts,tsx}',
+    '!src/api/**/*.{js,jsx,ts,tsx}',
+    '!src/services/**/*.{js,jsx,ts,tsx}',
+    '!src/test/**/*.{js,jsx,ts,tsx}',
+    '!src/contexts/**/*.{js,jsx,ts,tsx}',
+    '!src/localization/**/*.{js,jsx,ts,tsx}',
+    '!src/utils/convertHelper/**/*.{js,jsx,ts,tsx}',
     '!src/configs/**/*.{js,jsx,ts,tsx}',
     '!src/constants/**/*.{js,jsx,ts,tsx}',
     '!src/interfaces/**/*.{js,jsx,ts,tsx}',
@@ -21,6 +27,7 @@ module.exports = {
     '!src/theme/**/*.{js,jsx,ts,tsx}',
     '!src/beinComponents/Markdown/**/*.{js,jsx,ts,tsx}',
     '!src/beinComponents/MarkdownView/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.stories.{js,jsx,ts,tsx}',
   ],
   setupFiles: ['<rootDir>/src/test/setup.js'],
   setupFilesAfterEnv: ['<rootDir>/src/test/setupAfterEnv.js'],

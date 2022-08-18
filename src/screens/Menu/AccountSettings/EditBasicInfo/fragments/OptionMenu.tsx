@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {IOptionItem} from '~/interfaces/IEditUser';
+import i18next from 'i18next';
+import { IOptionItem } from '~/interfaces/IEditUser';
 
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import i18next from 'i18next';
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';
 
@@ -31,46 +31,45 @@ const OptionMenu = ({
 }: OptionMenuProps) => {
   const theme: ExtendedTheme = useTheme();
 
-  const renderItem = ({item}: {item: IOptionItem}) => {
-    return (
-      <TouchableOpacity
-        testID={`edit_user_info.option_menu.item_${item.type}`}
-        onPress={() => onItemPress(item)}>
-        <PrimaryItem
-          title={i18next.t(item.title)}
-          height={36}
-          RightComponent={
+  const renderItem = ({ item }: {item: IOptionItem}) => (
+    <TouchableOpacity
+      testID={`edit_user_info.option_menu.item_${item.type}`}
+      onPress={() => onItemPress(item)}
+    >
+      <PrimaryItem
+        title={i18next.t(item.title)}
+        RightComponent={
             value === item.type ? (
               <Icon
-                icon={'Check'}
+                icon="Check"
                 size={24}
                 tintColor={theme.colors.purple60}
               />
             ) : undefined
           }
-        />
-      </TouchableOpacity>
-    );
-  };
+      />
+    </TouchableOpacity>
+  );
 
   return (
     <View testID={testID}>
       <BottomSheet
         modalizeRef={menuRef}
-        ContentComponent={
+        ContentComponent={(
           <View style={styles.contentComponent}>
             <Text.ButtonS
               color={theme.colors.gray50}
               style={styles.chooseText}
-              useI18n>
+              useI18n
+            >
               {title}
             </Text.ButtonS>
             <Divider />
             {data.map((item: IOptionItem) => (
-              <View key={item?.title + item?.type}>{renderItem({item})}</View>
+              <View key={`${item?.title} ${item?.type}`}>{renderItem({ item })}</View>
             ))}
           </View>
-        }
+        )}
       />
     </View>
   );

@@ -15,7 +15,7 @@ exports[`ButtonSecondary conponent renders correctly 1`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "#FFFFFF",
-      "borderRadius": 6,
+      "borderRadius": 4,
       "padding": 8,
     }
   }
@@ -23,11 +23,14 @@ exports[`ButtonSecondary conponent renders correctly 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
     }
     testID="button_wrapper.content"
   >
@@ -35,12 +38,12 @@ exports[`ButtonSecondary conponent renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
           },
           Object {
-            "color": "#5D2C9A",
+            "color": "#7335C0",
           },
           Object {
             "textAlign": "center",

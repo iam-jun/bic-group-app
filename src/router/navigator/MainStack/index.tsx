@@ -1,26 +1,30 @@
-import {useBackHandler} from '@react-native-community/hooks';
-import {useNavigationState} from '@react-navigation/native';
 import React from 'react';
-import {DeviceEventEmitter, StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import CommonModal from '~/beinFragments/CommonModal';
-import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
-import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
-import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
+import { DeviceEventEmitter, StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme, useNavigationState } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useBackHandler } from '@react-native-community/hooks';
+import { useDispatch } from 'react-redux';
+
+import CommonModal from '~/components/CommonModal';
+import UserProfilePreviewBottomSheet from '~/components/Preview/UserProfilePreviewBottomSheet';
+import ReactionBottomSheet from '~/components/reaction/ReactionBottomSheet';
+import ReactionDetailBottomSheet from '~/components/reaction/ReactionDetailBottomSheet';
 import {
   customBackHandlerRoutes,
-  NAVIGATION_BACK_PRESSED,
-} from '~/configs/navigator';
-import {useKeySelector} from '~/hooks/selector';
-import BaseStackNavigator from '~/router/components/BaseStackNavigator';
+  EVENT_NAVIGATION_BACK_PRESSED,
+} from '~/router/config';
+import { useKeySelector } from '~/hooks/selector';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
-import {getActiveRouteState} from '~/router/helper';
-import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
-import appActions from '~/store/app/actions';
+import { getActiveRouteState } from '~/router/helper';
+import appActions from '~/storeRedux/app/actions';
 
-import screens from './screens';
-import stack from './stack';
+import mainTabScreens from './screens';
+import mainTabStack from './stack';
+import MainTabs from '~/router/navigator/MainStack/MainTabs';
+import { AppConfig } from '~/configs';
+import BottomList from '~/components/BottomList';
+
+const Stack = createNativeStackNavigator();
 
 const MainStack = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -39,7 +43,7 @@ const MainStack = (): React.ReactElement => {
       return true;
     }
     if (activeRoute && customBackHandlerRoutes.includes(activeRoute)) {
-      DeviceEventEmitter.emit(NAVIGATION_BACK_PRESSED);
+      DeviceEventEmitter.emit(EVENT_NAVIGATION_BACK_PRESSED);
       return true;
     }
     return false;
@@ -48,20 +52,33 @@ const MainStack = (): React.ReactElement => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <BaseStackNavigator stack={stack} screens={screens} />
+        <Stack.Navigator screenOptions={AppConfig.defaultScreenOptions}>
+          <Stack.Screen name="main" component={MainTabs} />
+          {Object.entries(mainTabStack).map(([name, component]) => (
+            <Stack.Screen
+              key={`screen${component}`}
+              name={component}
+              component={mainTabScreens[component]}
+              options={{
+                headerShown: false,
+                title: name,
+              }}
+            />
+          ))}
+        </Stack.Navigator>
       </View>
       <MenuSidebarDrawer />
-      <PostAudiencesBottomSheet />
       <ReactionBottomSheet />
       <ReactionDetailBottomSheet />
       <UserProfilePreviewBottomSheet />
       <CommonModal />
+      <BottomList />
     </View>
   );
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

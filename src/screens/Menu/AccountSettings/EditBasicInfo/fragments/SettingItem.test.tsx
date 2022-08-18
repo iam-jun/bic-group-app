@@ -1,10 +1,11 @@
 import React from 'react';
 
-import {fireEvent, renderWithRedux} from '~/test/testUtils';
-import {render, cleanup} from '@testing-library/react-native';
+import { render, cleanup } from '@testing-library/react-native';
+import i18next from 'i18next';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 
 import SettingItem from './SettingItem';
-import i18next from 'i18next';
+import { IconType } from '~/resources/icons';
 
 afterEach(cleanup);
 
@@ -12,11 +13,10 @@ describe('SettingItem conponent', () => {
   const baseProps = {
     title: 'settings:title_name',
     subtitle: i18next.t('common:text_not_set'),
-    leftIcon: 'TextSize',
+    leftIcon: 'TextSize' as IconType,
   };
 
   it('renders correctly', () => {
-    //@ts-ignore
     const rendered = render(<SettingItem {...baseProps} />).toJSON();
 
     expect(rendered).toMatchSnapshot();
@@ -24,7 +24,6 @@ describe('SettingItem conponent', () => {
 
   it('should call props onPress', () => {
     const onPress = jest.fn();
-    //@ts-ignore
     const rendered = render(<SettingItem {...baseProps} onPress={onPress} />);
 
     const itemComp = rendered.getByTestId('edit_user_info.setting_item');
@@ -34,20 +33,18 @@ describe('SettingItem conponent', () => {
     expect(onPress).toBeCalled();
   });
 
-  it(`renders correctly testID`, () => {
-    //@ts-ignore
+  it('renders correctly testID', () => {
     const rendered = render(<SettingItem {...baseProps} testID="test" />);
 
-    const {getByTestId} = rendered;
+    const { getByTestId } = rendered;
     const itemComponent = getByTestId('test');
     expect(itemComponent).toBeDefined();
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should show SettingItem disabled`, () => {
-    //@ts-ignore
+  it('should show SettingItem disabled', () => {
     const rendered = render(
-      <SettingItem {...baseProps} isTouchDisabled={true} />,
+      <SettingItem {...baseProps} isTouchDisabled />,
     );
 
     const component = rendered.getByTestId('edit_user_info.setting_item');
@@ -55,8 +52,7 @@ describe('SettingItem conponent', () => {
     expect(component.props.accessibilityState.disabled).toBeTruthy();
   });
 
-  it(`should render left, right component`, () => {
-    //@ts-ignore
+  it('should render left, right component', () => {
     const rendered = renderWithRedux(
       <SettingItem
         {...baseProps}
@@ -79,9 +75,8 @@ describe('SettingItem conponent', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`render without leftIcon`, () => {
-    //@ts-ignore
-    const rendered = render(<SettingItem {...baseProps} leftIcon={''} />);
+  it('render without leftIcon', () => {
+    const rendered = render(<SettingItem {...baseProps} leftIcon={undefined} />);
 
     const leftComponent = rendered.queryByTestId(
       'edit_user_info.setting_item.left_component',

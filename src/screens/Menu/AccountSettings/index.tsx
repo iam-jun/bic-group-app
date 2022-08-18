@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {useIsFocused} from '@react-navigation/native';
+import React, { useContext, useEffect, useRef } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
-import BottomSheet from '~/beinComponents/BottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import Icon from '~/beinComponents/Icon';
@@ -13,54 +12,62 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 
 import languages from '~/constants/languages';
-import {accountSettingsMenu} from '~/constants/settings';
-import {AppContext} from '~/contexts/AppContext';
-import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
+import { AppContext } from '~/contexts/AppContext';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
 
-import {ILanguage, ISetting} from '~/interfaces/common';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
-import * as modalActions from '~/store/modal/actions';
+import { ILanguage, ISetting } from '~/interfaces/common';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import * as modalActions from '~/storeRedux/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
-import appActions from '~/store/app/actions';
+import appActions from '~/storeRedux/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
-import {useKeySelector} from '~/hooks/selector';
-import menuKeySelector from '../redux/keySelector';
+import { useKeySelector } from '~/hooks/selector';
+import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import spacing from '~/theme/spacing';
+import { accountSettingsMenu } from '~/screens/Menu/AccountSettings/constants';
 
 const GeneralSettings = () => {
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
-  const {changeLanguage, language} = useContext(AppContext);
+  const { changeLanguage, language } = useContext(AppContext);
 
   const isFocused = useIsFocused();
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
 
-  useEffect(() => {
-    if (isFocused) dispatch(appActions.setRootScreenName('settings'));
-  }, [isFocused]);
+  useEffect(
+    () => {
+      if (isFocused) dispatch(appActions.setRootScreenName('settings'));
+    }, [isFocused],
+  );
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
   };
 
-  const onAccountSettingsPress = (item: ISetting, e: any) => {
+  const onAccountSettingsPress = (
+    item: ISetting, e: any,
+  ) => {
     switch (item.type) {
       case 'userProfile':
-        return rootNavigation.navigate(mainStack.userEdit, {
-          userId: myProfileData?.id,
-          params: {},
-        });
+        return rootNavigation.navigate(
+          mainStack.userEdit, {
+            userId: myProfileData?.id,
+            params: {},
+          },
+        );
 
       case 'securityLogin':
         return rootNavigation.navigate(menuStack.securityLogin);
 
       case 'language':
-        baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+        baseSheetRef?.current?.open?.(
+          e?.pageX, e?.pageY,
+        );
         return;
 
       default:
@@ -68,26 +75,24 @@ const GeneralSettings = () => {
     }
   };
 
-  const renderLanguageOption = ({item}: {item: ILanguage}) => {
-    return (
-      <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
-        <MenuItem
-          style={styles.languageOption}
-          title={t(item.title)}
-          icon={item.icon}
-          RightComponent={
+  const renderLanguageOption = ({ item }: {item: ILanguage}) => (
+    <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
+      <MenuItem
+        style={styles.languageOption}
+        title={t(item.title)}
+        icon={item.icon}
+        RightComponent={
             language === item.code ? (
               <Icon
-                icon={'Check'}
+                icon="Check"
                 size={24}
                 tintColor={theme.colors.purple60}
               />
             ) : null
           }
-        />
-      </TouchableOpacity>
-    );
-  };
+      />
+    </TouchableOpacity>
+  );
 
   return (
     <ScreenWrapper testID="AccountSettings" style={styles.container} isFullView>
@@ -103,12 +108,13 @@ const GeneralSettings = () => {
       />
       <BottomSheet
         modalizeRef={baseSheetRef}
-        ContentComponent={
+        ContentComponent={(
           <View>
             <Text.ButtonS
               color={theme.colors.gray50}
               style={styles.chooseLanguageText}
-              useI18n>
+              useI18n
+            >
               settings:title_choose_language
             </Text.ButtonS>
             <Divider />
@@ -119,7 +125,7 @@ const GeneralSettings = () => {
               onItemPress={onLanguageMenuPress}
             />
           </View>
-        }
+        )}
       />
     </ScreenWrapper>
   );

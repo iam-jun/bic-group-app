@@ -18,8 +18,8 @@
     "text_unconnected_title": "No Internet Connection",
     "text_unconnected_content": "Please check your internet connection and try again",
     "btn_try_again": "Try again",
-    "text_show_all": "Show all",
-    "text_show_less": "Show less",
+    "text_show_more": "Show More",
+    "text_show_less": "Show Less",
     "text_see_all": "See all",
     "text_member": "Members",
     "text_copied_to_clipboard": "Copied to clipboard",
@@ -145,7 +145,10 @@
     "text_go_to_settings": "Go to Settings",
     "text_help": "Help",
     "text_type_search_keyword": "Type search keyword to see the search results",
-    "text_no_results_found": "No results found"
+    "text_no_results_found": "No results found",
+    "text_more": "+(number) more",
+    "beincomm": "Beincomm",
+    "members": "Members"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -238,10 +241,10 @@
     "text_err_password_required_symbols": "Please use at least one special characters including common punctuation and symbols!"
   },
   "tabs": {
-    "home": "News feed",
+    "home": "Home",
     "communities": "Communities",
-    "notification": "Notifications",
-    "menus": "You"
+    "notification": "Notification",
+    "menus": "Menu"
   },
   "settings": {
     "title_app_language": "App language",
@@ -268,7 +271,7 @@
     "title_currency": "Token",
     "title_about": "About",
     "title_about_bein": "About Bein",
-    "title_name": "Name",
+    "title_name": "Full name",
     "title_gender": "Gender",
     "title_birthday": "Birthday",
     "title_choose_language": "Choose Language",
@@ -303,13 +306,17 @@
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
     "text_got_it": "Got it",
     "title_public": "Public",
-    "title_public_subtitle": "Group is visible to everyone and anyone can join.",
+    "title_public_subtitle_community": "Everyone can discover or search in-app and global to find this community. The content & activities inside are visible to everyone.",
+    "title_public_subtitle_group": "Everyone can discover or search in-app and global to find this group. The content & activities inside are visible to everyone.",
     "title_private": "Private",
-    "title_private_subtitle": "Group is visible to everyone and anyone can request to join.",
+    "title_private_subtitle_community": "All registered users can discover and search in-app to find this community. The content & activities inside are not visible to all users.",
+    "title_private_subtitle_group": "All registered users can discover and search in-app to find this group. The content & activities inside are not visible to all users.",
     "text_learn_more": "Learn more",
     "title_secret": "Secret",
-    "title_secret_subtitle": "Group is invisible to everyone and members are invited.",
+    "title_secret_subtitle_community": "All registered users cannot discover and search to find this community. The content & activities inside are not visible to all users.",
+    "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users.",
     "title_open": "Open",
+    "title_open_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
     "title_edit_description": "Edit Description",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
@@ -341,12 +348,14 @@
     "text_phone_number_is_used": "This number is already used",
     "title_choose_location": "Choose Location",
     "title_location": "Location",
+    "title_experience": "Experience",
     "text_work": "Work",
     "text_add_work": "Add Work",
     "text_edit_work": "Edit Work",
     "text_delete_work": "Delete Work",
     "text_compamny": "Company",
-    "text_title_position": "Title/Position",
+    "text_title_position": "Position",
+    "text_title_division": "Division",
     "text_currently_work_here": "Currently work here",
     "text_location_optional": "Location (optional)",
     "text_description_optional": "Description (optional)",
@@ -381,6 +390,8 @@
     "newsfeed": "News feed",
     "saved_posts": "Saved Posts",
     "draft_post": "Draft Posts",
+    "title_timeline": "Newsfeed",
+    "title_important": "Important",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
       "clear": "Clear",
@@ -412,6 +423,20 @@
       "description": "The video of your post is being processed. We'll send you a notification when it's completed"
     }
   },
+  "menu": {
+    "title_discover": "Discover",
+    "title_your_community": "Your community",
+    "title_create_post": "Create a Post",
+    "title_draft": "Draft",
+    "title_saved_items": "Saved Items",
+    "title_media": "Media",
+    "title_settings": "Settings",
+    "title_display_accessibility": "Display & Accessibility",
+    "title_settings_privacy": "Settings & privacy",
+    "title_billing_payment": "Billing and payment",
+    "title_help_support": "Help & Support",
+    "title_logout": "Log Out"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
@@ -419,9 +444,11 @@
     "title_edit_post": "Edit post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
+    "title_seen_by": "Seen by",
+    "title_post_to": "Post to",
     "mention_title": "Can only mention people in your selected audiences",
     "mention_empty_content": "No people found",
-    "label_seen_by": "Seen by ",
+    "label_seen_by": "Interested by ",
     "button_like": "Like",
     "button_reply": "Reply",
     "button_react": "React",
@@ -446,6 +473,10 @@
     "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you really want to delete this post?",
+    "title_delete_audiences_of_post": "You are deleting audiences of this post",
+    "content_delete_audiences_of_post": "You are not able to delete this post from these audiences below. Are you sure to continue?",
+    "content_not_able_delete_of_post": "You are not able to delete this post from these audiences below.",
+    "text_deleted_audiences": "Your post has been deleted audiences.",
     "alert_title_back_edit_post": "Discard changes",
     "alert_content_back_edit_post": "If you discard now, you’ll lose any changes you’ve made to this post.",
     "alert_title_back_create_post": "Discard new post",
@@ -461,6 +492,7 @@
     "save": "Save",
     "and": "and",
     "to": "to",
+    "more_group": "more",
     "edit_comment_success": "Edited comment successfully",
     "label_replying_to": "Replying to ",
     "label_yourself": "yourself",
@@ -500,7 +532,7 @@
     "post_menu_edit": "Edit Post",
     "post_menu_copy": "Copy Post Link",
     "post_menu_save": "Save Post",
-    "post_menu_view_insights": "View Post Insights",
+    "post_menu_view_reactions": "View reactions",
     "post_menu_turn_off_noti": "Turn off notification for this post",
     "post_menu_history": "View Edit History",
     "post_menu_delete": "Delete post",
@@ -530,8 +562,7 @@
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",
-      "title_empty_cant_load_more": "You have seen it all",
-      "text_empty_cant_load_more": "Take a break time & chill",
+      "text_empty_cant_load_more": "You have seen it all",
       "text_empty_search_post": "Sorry, we couldn’t find anything related\nto your search."
     },
     "create_post": {
@@ -571,6 +602,7 @@
     "people_can_comment": "People can comment on this post",
     "people_can_share": "People can share on this post",
     "people_can_react": "People can react on this post",
+    "text_cannot_comment_and_react": "React and comment of this post are not available",
     "auto_saved": "Post auto-saved",
     "saved_to_draft": "Post Saved to Draft.",
     "text_review_markdown": "Review Markdown",
@@ -585,7 +617,9 @@
       "title": "This page is not existing.",
       "description": "It might be deleted or you don't have permission to see it",
       "button_text": "Back to News Feed"
-    }
+    },
+    "text_important_warning_1": "Cannot set because you don't have this permission at",
+    "text_important_warning_2": ". Please remove them or contact your admin"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -624,8 +658,8 @@
   },
   "groups": {
     "group_content": {
-      "btn_your_groups": "Your Groups",
-      "btn_discover": "Discover",
+      "btn_group_tree": "Group Tree",
+      "btn_discover": "Discover Groups",
       "btn_post": "Post",
       "btn_channel": "Channel",
       "btn_about": "About",
@@ -723,7 +757,8 @@
     "text_cancel_join_group": "Cancelled the member request to group",
     "text_cancel_join_community": "Cancelled the member request to community",
     "text_approved_member_group": "You have been approved to be a member of this group",
-    "title_members": "Members",
+    "title_members_one": "Member",
+    "title_members_other": "Members",
     "text_cannot_approve_all": "Cannot approve all because there are changes in the pending member list. Please review again",
     "text_cannot_decline_all": "Cannot decline all because there are changes in the pending member list. Please review again",
     "text_cannot_approve_single": "Cannot approve because {0} has canceled the request",
@@ -736,7 +771,8 @@
         "approve": "Do you want to accept **All pending member requests** in order to change the group privacy to Public now?",
         "decline": "Do you want to decline **All pending member requests** in order to change the group privacy to Secret now?"
       }
-    }
+    },
+    "text_in": "in"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
@@ -832,7 +868,9 @@
       "discover_text": "Discover"
     },
     "text_join_community_button": "Join this community",
+    "text_join_group_button": "Join this group",
     "text_join_community_description": "Join this community to view or participate on discussions",
+    "text_join_group_description": "Join this group to view or participate on discussions",
     "text_other_member_one": "{{count}} other are members",
     "text_other_member_other": "{{count}} others are members",
     "text_is_member": "is a member",
@@ -868,7 +906,7 @@
       "text_desc_apply_system_scheme": "You must delete custom scheme",
       "text_title_delete_community_scheme": "Delete this scheme",
       "text_desc_delete_community_scheme": "This action cannot be undone. Are you sure to do this?",
-      "text_title_assign_group_confirm": "Assign group confirm",
+      "text_title_assign_group_confirm": "Assign scheme to group",
       "text_desc_assign_group_confirm": "Are you sure you want to assign new scheme?",
       "text_create_scheme_success": "Create scheme successfully",
       "text_update_scheme_success": "Updated scheme successfully",
@@ -892,7 +930,7 @@
       "text_title_confirm_reorder_group": "You are changing the order of \"%NAME%\"",
       "text_desc_confirm_reorder_group": "All members in this group will see these changes. Are you sure to do this?",
       "text_title_confirm_move_group": "You are moving \"%MOVING_NAME%\" to \"%TARGET_NAME%\"",
-      "text_desc_confirm_move_group": "%COUNT% members of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
+      "text_desc_confirm_move_group": " of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
       "text_move_group_search_placeholder": "Search a group"
     },
     "text_search_communities": "Search Communities"
@@ -912,12 +950,16 @@
     "text_video_over_size": "Your video must be less than 300MB",
     "text_file_over_size": "Your files are larger than 25MB",
     "text_file_over_length": "You cannot upload more than {{max_files}} files",
-    "text_file_extension_not_supported": "This file format is not supported",
+    "text_file_extension_not_supported": "Not Supported",
     "text_file_remainning": "The maximum files is {{max_files}} and {{remaining_size}} is available to upload"
   },
   "file_type": {
     "image": "image",
     "video": "video",
     "file": "file"
+  },
+  "discover": {
+    "discover_communities": "Discover Communities",
+    "your_communities": "Your Communities"
   }
 }

@@ -3,8 +3,8 @@
 import MarkdownIt from 'markdown-it';
 // @ts-ignore
 import Token from 'markdown-it/lib/token';
-import {ComponentType, ReactNode} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { ComponentType, ReactNode } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 export function getUniqueID(): string;
 export function openUrl(url: string): void;
@@ -65,8 +65,11 @@ export interface ASTNode {
 
 export class AstRenderer {
   constructor(renderRules: RenderRules, style?: any);
+
   getRenderFunction(type: string): RenderFunction;
+
   renderNode(node: any, parentNodes: ReadonlyArray<any>): ReactNode;
+
   render(nodes: ReadonlyArray<any>): View;
 }
 
@@ -96,7 +99,7 @@ export interface MarkdownProps {
 type MarkdownStatic = ComponentType<MarkdownProps>;
 export const Markdown: MarkdownStatic;
 export type Markdown = MarkdownStatic;
-export {MarkdownIt};
+export { MarkdownIt };
 export const emojiShortcuts: any;
 export const emojiDefs: any;
 export const emojiPlugin: any;

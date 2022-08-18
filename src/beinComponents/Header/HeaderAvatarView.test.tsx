@@ -1,21 +1,21 @@
 import * as React from 'react';
-import {cleanup} from '@testing-library/react-native';
-import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
+import { cleanup } from '@testing-library/react-native';
+import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
 import HeaderAvatarView from '~/beinComponents/Header/HeaderAvatarView';
-import initialState from '~/store/initialState';
+import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 
 describe('Header Avatar View component', () => {
   const mockStore = configureStore([]);
-  const storeData = {...initialState};
+  const storeData = { ...initialState };
   storeData.noInternet.isInternetReachable = true;
   const store = mockStore(storeData);
 
-  const urlAvatar =
-    'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png';
+  const urlAvatar
+    = 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png';
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const rendered = renderWithRedux(
       <HeaderAvatarView
         firstLabel="First Label"
@@ -33,7 +33,7 @@ describe('Header Avatar View component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly with props First Label`, () => {
+  it('renders correctly with props First Label', () => {
     const rendered = renderWithRedux(
       <HeaderAvatarView
         firstLabel="First Label"
@@ -55,7 +55,7 @@ describe('Header Avatar View component', () => {
     expect(firstLabelComponent.children[0]).toMatch('First Label');
   });
 
-  it(`renders correctly with props Second Label`, () => {
+  it('renders correctly with props Second Label', () => {
     const rendered = renderWithRedux(
       <HeaderAvatarView
         firstLabel="First Label"
@@ -77,7 +77,7 @@ describe('Header Avatar View component', () => {
     expect(secondLabelComponent.children[0]).toMatch('Second Label');
   });
 
-  it(`renders correctly with props Avatar`, () => {
+  it('renders correctly with props Avatar', () => {
     const rendered = renderWithRedux(
       <HeaderAvatarView
         firstLabel="First Label"
@@ -94,10 +94,10 @@ describe('Header Avatar View component', () => {
     );
     const avatarComponent = rendered.getByTestId('avatar.image');
     expect(avatarComponent).toBeDefined();
-    expect(avatarComponent.props.source).toMatchObject({uri: urlAvatar});
+    expect(avatarComponent.props.source).toMatchObject({ uri: urlAvatar });
   });
 
-  it(`renders correctly with props Container Style`, () => {
+  it('renders correctly with props Container Style', () => {
     const rendered = renderWithRedux(
       <HeaderAvatarView
         firstLabel="First Label"
@@ -122,7 +122,7 @@ describe('Header Avatar View component', () => {
     });
   });
 
-  it(`renders correctly with props On Press`, () => {
+  it('renders correctly with props On Press', () => {
     const onPressHeader = jest.fn();
     const rendered = renderWithRedux(
       <HeaderAvatarView

@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reaction component renders correctly 1`] = `
+<RCTScrollView
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        Object {
+          "paddingHorizontal": 16,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F1F2F8",
+            "borderColor": "#F1F2F8",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "height": 28,
+            "justifyContent": "center",
+            "opacity": 1,
+            "paddingHorizontal": 6,
+          }
+        }
+        testID="reaction"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              Object {
+                "marginBottom": 2,
+              },
+            ]
+          }
+          testID="reaction.children"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {},
+                Object {
+                  "fontSize": 13,
+                },
+              ]
+            }
+            testID="reaction.kissing_closed_eyes"
+          >
+            😚
+          </Text>
+           10
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

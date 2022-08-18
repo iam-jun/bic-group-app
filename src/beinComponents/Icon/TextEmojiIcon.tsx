@@ -1,6 +1,7 @@
-import React, {FC} from 'react';
-import {View, Text, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  View, Text, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
 import NodeEmoji from 'node-emoji';
 
 export interface TextEmojiIconProps {
@@ -12,28 +13,26 @@ const TextEmojiIcon: FC<TextEmojiIconProps> = ({
   name,
   style,
 }: TextEmojiIconProps) => {
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const emoji = NodeEmoji.find(name || '')?.emoji;
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const fontSize = (style?.width || 12) * 0.75;
 
   return (
     <View style={[styles.container, style]}>
-      <Text style={{fontSize, textAlignVertical: 'bottom'}}>{emoji}</Text>
+      <Text style={{ fontSize, textAlignVertical: 'bottom' }}>{emoji}</Text>
     </View>
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  return StyleSheet.create({
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default TextEmojiIcon;

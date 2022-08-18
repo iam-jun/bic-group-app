@@ -1,8 +1,10 @@
 import i18next from 'i18next';
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator, ScrollView, StyleSheet, View,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Divider from '~/beinComponents/Divider';
@@ -13,11 +15,11 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 
-import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import genders from '~/constants/genders';
-import relationshipStatus from '~/constants/relationshipStatus';
+import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import speakingLanguages from '~/constants/speakingLanguages';
-import {IFilePicked} from '~/interfaces/common';
+import { IFilePicked } from '~/interfaces/common';
 import images from '~/resources/images';
 import mainStack from '~/router/navigator/MainStack/stack';
 import SettingItem from '~/screens/Menu/AccountSettings/EditBasicInfo/fragments/SettingItem';
@@ -26,48 +28,50 @@ import {
   scaleSize,
   userProfileImageCropRatio,
 } from '~/theme/dimension';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useRootNavigation } from '~/hooks/navigation';
 
-import {formatDate} from '~/utils/formatData';
-import menuActions from '../redux/actions';
-import {useKeySelector} from '~/hooks/selector';
-import menuKeySelector from '../redux/keySelector';
+import { formatDate } from '~/utils/formatData';
+import menuActions from '../../../storeRedux/menu/actions';
+import { useKeySelector } from '~/hooks/selector';
+import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {IUserWorkExperience} from '~/interfaces/IAuth';
+import { IUserWorkExperience } from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
-import Avatar from '~/beinComponents/Avatar';
-import homeActions from '~/screens/Home/redux/actions';
-import {checkPermission} from '~/utils/permission';
+import Avatar from '~/baseComponents/Avatar';
+import homeActions from '~/storeRedux/home/actions';
+import { checkPermission, permissionTypes } from '~/utils/permission';
 import spacing from '~/theme/spacing';
 
 const UserEditProfile = (props: any) => {
-  const {userId} = props?.route?.params || {};
+  const { userId } = props?.route?.params || {};
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [userData, setUserData] = useState<any>({});
   const [showEditButton, setShowEditButton] = useState<boolean>(false);
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
-  const styles = themeStyles(theme, coverHeight);
+  const { colors } = theme;
+  const styles = themeStyles(
+    theme, coverHeight,
+  );
   const dispatch = useDispatch();
 
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
-  const {username: currentUsername, id} = myProfile || {};
-  const {rootNavigation} = useRootNavigation();
+  const { username: currentUsername, id } = myProfile || {};
+  const { rootNavigation } = useRootNavigation();
 
   const {
     fullname,
     gender,
     avatar,
-    background_img_url,
+    backgroundImgUrl,
     birthday,
     language,
-    relationship_status,
+    relationshipStatus,
     email,
     phone,
-    country_code,
+    countryCode,
     country,
     city,
     description,
@@ -84,38 +88,39 @@ const UserEditProfile = (props: any) => {
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
-    if (!!userId) dispatch(menuActions.getUserProfile({userId}));
+    if (userId) dispatch(menuActions.getUserProfile({ userId }));
   };
 
-  useEffect(() => {
-    setShowEditButton(
-      userId?.toString?.() === currentUserId?.toString?.() ||
-        userId?.toString?.() === currentUsername?.toString?.(),
-    );
-    if (
-      userId?.toString?.() === currentUserId?.toString?.() ||
-      userId?.toString?.() === currentUsername?.toString?.()
-    ) {
-      dispatch(homeActions.getHomePosts({isRefresh: true}));
-      setUserData(myProfile);
-    } else {
-      setUserData(userProfileData);
-    }
-    dispatch(menuActions.getUserWorkExperience(userId));
-  }, [myProfile, userProfileData, userId]);
-
-  useEffect(() => {
-    getUserProfile();
-  }, []);
-
-  useEffect(() => {
-    dispatch(menuActions.getMyWorkExperience());
-  }, []);
-
-  const userLanguageList = language?.map(
-    // @ts-ignore
-    (code: string) => speakingLanguages[code].name,
+  useEffect(
+    () => {
+      setShowEditButton(userId?.toString?.() === currentUserId?.toString?.()
+        || userId?.toString?.() === currentUsername?.toString?.());
+      if (
+        userId?.toString?.() === currentUserId?.toString?.()
+      || userId?.toString?.() === currentUsername?.toString?.()
+      ) {
+        dispatch(homeActions.getHomePosts({ isRefresh: true }));
+        setUserData(myProfile);
+      } else {
+        setUserData(userProfileData);
+      }
+      dispatch(menuActions.getUserWorkExperience(userId));
+    }, [myProfile, userProfileData, userId],
   );
+
+  useEffect(
+    () => {
+      getUserProfile();
+    }, [],
+  );
+
+  useEffect(
+    () => {
+      dispatch(menuActions.getMyWorkExperience());
+    }, [],
+  );
+
+  const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
   const userLanguages = userLanguageList?.join(', ');
 
   const goToEditInfo = () => rootNavigation.navigate(mainStack.editBasicInfo);
@@ -134,42 +139,45 @@ const UserEditProfile = (props: any) => {
 
   const uploadFile = (
     file: IFilePicked,
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    dispatch(
-      menuActions.uploadImage({
-        id,
-        file,
-        fieldName,
-        uploadType,
-      }),
-    );
+    dispatch(menuActions.uploadImage({
+      id,
+      file,
+      fieldName,
+      uploadType,
+    }));
   };
 
   // fieldName: field name in group profile to be edited
-  // 'avatar' for avatar and 'background_img_url' for cover
+  // 'avatar' for avatar and 'backgroundImgUrl' for cover
   const _openImagePicker = async (
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    checkPermission('photo', dispatch, canOpenPicker => {
-      if (canOpenPicker) {
-        ImagePicker.openPickerSingle({
-          ...userProfileImageCropRatio[fieldName],
-          cropping: true,
-          mediaType: 'photo',
-        }).then(file => {
-          uploadFile(file, fieldName, uploadType);
-        });
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle({
+            ...userProfileImageCropRatio[fieldName],
+            cropping: true,
+            mediaType: 'photo',
+          }).then((file) => {
+            uploadFile(
+              file, fieldName, uploadType,
+            );
+          });
+        }
+      },
+    );
   };
 
-  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
+  const onEditAvatar = () => _openImagePicker(
+    'avatar', uploadTypes.userAvatar,
+  );
 
-  const onEditCover = () =>
-    _openImagePicker('background_img_url', uploadTypes.userCover);
+  const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -179,7 +187,7 @@ const UserEditProfile = (props: any) => {
   };
 
   const goToEditDescription = () => {
-    rootNavigation.navigate(mainStack.editDescription);
+    rootNavigation.navigate(mainStack.userEditDescription);
   };
 
   const renderAvatar = () => {
@@ -197,17 +205,18 @@ const UserEditProfile = (props: any) => {
               testID="user_edit_profile.avatar.edit"
               color={!loadingAvatar ? colors.neutral80 : colors.gray40}
               style={styles.editBtn}
-              useI18n>
+              useI18n
+            >
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <View style={styles.imageButton}>
           {!loadingAvatar ? (
-            <Avatar.UltraSuperLarge
+            <Avatar.XLarge
               style={styles.avatar}
               source={avatar || images.img_user_avatar_default}
-              isRounded={true}
+              isRounded
             />
           ) : (
             <View style={[styles.avatar, styles.imageLoading]}>
@@ -235,19 +244,21 @@ const UserEditProfile = (props: any) => {
               testID="user_edit_profile.cover.edit"
               color={!loadingCover ? colors.neutral80 : colors.gray40}
               style={styles.editBtn}
-              useI18n>
+              useI18n
+            >
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <View
-          style={{paddingHorizontal: spacing.padding.large}}
+          style={{ paddingHorizontal: spacing.padding.large }}
           onLayout={onCoverLayout}
-          testID="user_edit_profile.cover_image">
+          testID="user_edit_profile.cover_image"
+        >
           {!loadingCover ? (
             <Image
               style={styles.cover}
-              source={background_img_url || images.img_cover_default}
+              source={backgroundImgUrl || images.img_cover_default}
             />
           ) : (
             <View style={[styles.cover, styles.imageLoading]}>
@@ -264,7 +275,7 @@ const UserEditProfile = (props: any) => {
       return null;
     }
     return (
-      <View style={{paddingTop: spacing.padding.base}}>
+      <View style={{ paddingTop: spacing.padding.base }}>
         <View style={styles.headerItem}>
           <Text.BodyM color={colors.neutral80} useI18n>
             settings:text_description
@@ -274,14 +285,16 @@ const UserEditProfile = (props: any) => {
               testID="user_edit_profile.description.edit"
               color={colors.neutral80}
               style={styles.editBtn}
-              useI18n>
+              useI18n
+            >
               settings:title_edit
             </Text.H6>
           </ButtonWrapper>
         </View>
         <Text.BodyS
           testID="user_edit_profile.description.text"
-          style={styles.descriptionText}>
+          style={styles.descriptionText}
+        >
           {description || i18next.t('common:text_not_set')}
         </Text.BodyS>
         <Divider style={styles.divider} />
@@ -289,172 +302,171 @@ const UserEditProfile = (props: any) => {
     );
   };
 
-  const renderBasicInfo = () => {
-    return (
-      <View>
-        <View style={styles.headerItem}>
-          <Text.BodyM color={colors.neutral80} useI18n>
-            settings:title_basic_info
-          </Text.BodyM>
-          {showEditButton ? (
-            <ButtonWrapper style={styles.editBtn} onPress={goToEditInfo}>
-              <Text.H6
-                testID="user_edit_profile.basic_info.edit"
-                color={colors.neutral80}
-                useI18n>
-                settings:title_edit
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
-        </View>
-        <View style={styles.infoItem}>
-          <SettingItem
-            title={'settings:title_name'}
-            subtitle={fullname || i18next.t('common:text_not_set')}
-            leftIcon={'TextSize'}
-            isTouchDisabled
-          />
-          <SettingItem
-            title={'settings:title_gender'}
-            subtitle={
+  const renderBasicInfo = () => (
+    <View>
+      <View style={styles.headerItem}>
+        <Text.BodyM color={colors.neutral80} useI18n>
+          settings:title_basic_info
+        </Text.BodyM>
+        {showEditButton ? (
+          <ButtonWrapper style={styles.editBtn} onPress={goToEditInfo}>
+            <Text.H6
+              testID="user_edit_profile.basic_info.edit"
+              color={colors.neutral80}
+              useI18n
+            >
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
+        ) : null}
+      </View>
+      <View style={styles.infoItem}>
+        <SettingItem
+          title="settings:title_name"
+          subtitle={fullname || i18next.t('common:text_not_set')}
+          leftIcon="TextSize"
+          isTouchDisabled
+        />
+        <SettingItem
+          title="settings:title_gender"
+          subtitle={
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
               i18next.t(genders[gender]) || i18next.t('common:text_not_set')
             }
-            leftIcon={'SquareUser'}
-            isTouchDisabled
-          />
-          <SettingItem
-            title={'settings:title_birthday'}
-            subtitle={
-              formatDate(birthday, 'MMMM DD, YYYY') ||
-              i18next.t('common:text_not_set')
+          leftIcon="SquareUser"
+          isTouchDisabled
+        />
+        <SettingItem
+          title="settings:title_birthday"
+          subtitle={
+              formatDate(
+                birthday, 'MMMM DD, YYYY',
+              )
+              || i18next.t('common:text_not_set')
             }
-            leftIcon={'Calendar'}
-            isTouchDisabled
-          />
-          <SettingItem
-            title={'settings:title_speaking_languages'}
-            subtitle={userLanguages || i18next.t('common:text_not_set')}
-            leftIcon={'Comments'}
-            isTouchDisabled
-          />
-          <SettingItem
-            title={'settings:title_relationship_status'}
-            subtitle={
+          leftIcon="Calendar"
+          isTouchDisabled
+        />
+        <SettingItem
+          title="settings:title_speaking_languages"
+          subtitle={userLanguages || i18next.t('common:text_not_set')}
+          leftIcon="Comments"
+          isTouchDisabled
+        />
+        <SettingItem
+          title="settings:title_relationship_status"
+          subtitle={
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              i18next.t(relationshipStatus[relationship_status]) ||
-              i18next.t('common:text_not_set')
+              i18next.t(RELATIONSHIP_STATUS[relationshipStatus])
+              || i18next.t('common:text_not_set')
             }
-            leftIcon={'Heart'}
-            isTouchDisabled
-          />
-        </View>
+          leftIcon="Heart"
+          isTouchDisabled
+        />
       </View>
-    );
-  };
+    </View>
+  );
 
-  const renderContact = () => {
-    return (
-      <View>
-        <Divider style={styles.divider} />
-        <View style={styles.headerItem}>
-          <Text.BodyM color={colors.neutral80} useI18n>
-            settings:title_contact
-          </Text.BodyM>
-          {showEditButton ? (
-            <ButtonWrapper onPress={goToEditContact}>
-              <Text.H6
-                testID="user_edit_profile.contact.edit"
-                color={colors.neutral80}
-                style={styles.editBtn}
-                useI18n>
-                settings:title_edit
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
-        </View>
-        <View style={styles.infoItem}>
-          <SettingItem
-            title={'settings:title_email'}
-            subtitle={email || i18next.t('common:text_not_set')}
-            leftIcon={'Envelope'}
-            isTouchDisabled
-          />
-          <SettingItem
-            title={'settings:title_phone_number'}
-            subtitle={
-              country_code && phone
-                ? `(+${country_code}) ${phone}`
+  const renderContact = () => (
+    <View>
+      <Divider style={styles.divider} />
+      <View style={styles.headerItem}>
+        <Text.BodyM color={colors.neutral80} useI18n>
+          settings:title_contact
+        </Text.BodyM>
+        {showEditButton ? (
+          <ButtonWrapper onPress={goToEditContact}>
+            <Text.H6
+              testID="user_edit_profile.contact.edit"
+              color={colors.neutral80}
+              style={styles.editBtn}
+              useI18n
+            >
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
+        ) : null}
+      </View>
+      <View style={styles.infoItem}>
+        <SettingItem
+          title="settings:title_email"
+          subtitle={email || i18next.t('common:text_not_set')}
+          leftIcon="Envelope"
+          isTouchDisabled
+        />
+        <SettingItem
+          title="settings:title_phone_number"
+          subtitle={
+              countryCode && phone
+                ? `(+${countryCode}) ${phone}`
                 : i18next.t('common:text_not_set')
             }
-            leftIcon={'Phone'}
-            isTouchDisabled
-          />
-          <SettingItem
-            title={'settings:title_location'}
-            subtitle={
+          leftIcon="Phone"
+          isTouchDisabled
+        />
+        <SettingItem
+          title="settings:title_location"
+          subtitle={
               city && country
                 ? `${city}, ${country}`
                 : i18next.t('common:text_not_set')
             }
-            leftIcon={'LocationDot'}
-            isTouchDisabled
-          />
-        </View>
+          leftIcon="LocationDot"
+          isTouchDisabled
+        />
       </View>
-    );
-  };
+    </View>
+  );
 
-  const renderWorkItem = ({item}: {item: IUserWorkExperience}) => {
-    return (
-      <PrimaryItem
-        testID={'user_edit_profile.work.item'}
-        height={null}
-        leftIcon={'iconSuitcase'}
-        leftIconProps={{
-          icon: 'iconSuitcase',
-          size: 24,
-        }}
-        RightComponent={
-          showEditButton ? <Icon icon={'PenLine'} size={20} /> : null
+  const renderWorkItem = ({ item }: {item: IUserWorkExperience}) => (
+    <PrimaryItem
+      testID="user_edit_profile.work.item"
+      leftIcon="iconSuitcase"
+      leftIconProps={{
+        icon: 'iconSuitcase',
+        size: 24,
+      }}
+      RightComponent={
+          showEditButton ? <Icon icon="PenLine" size={20} /> : null
         }
-        ContentComponent={
-          <View>
-            <Text.ButtonM>{`${item?.titlePosition} ${i18next.t(
-              'common:text_at',
-            )} ${item?.company}`}</Text.ButtonM>
-            {item?.startDate && (
-              <Text>
-                {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
-                  item?.currentlyWorkHere
-                    ? `${i18next.t('common:text_to')} ${i18next.t(
-                        'common:text_present',
-                      )}`
-                    : item?.endDate
-                    ? `${i18next.t('common:text_to')} ${formatDate(
-                        item.endDate,
-                        'MMM Do, YYYY',
-                      )}`
-                    : ''
-                }`}
-              </Text>
-            )}
-            {!!item?.location && (
-              <Text.BodyS color={colors.gray50}>{item.location}</Text.BodyS>
-            )}
-            {!!item?.description && (
-              <Text.BodyS numberOfLines={3} color={colors.gray50}>
-                {item.description}
-              </Text.BodyS>
-            )}
-          </View>
-        }
-        onPress={() => {
-          showEditButton && selectWorkItem(item);
-        }}
-      />
-    );
-  };
+      ContentComponent={(
+        <View>
+          <Text.ButtonM>
+            {`${item?.titlePosition} ${i18next.t('common:text_at')} ${item?.company}`}
+          </Text.ButtonM>
+          {item?.startDate && (
+          <Text>
+            {`${formatDate(
+              item.startDate, 'MMM Do, YYYY',
+            )} ${
+              item?.currentlyWorkHere
+                ? `${i18next.t('common:text_to')} ${i18next.t('common:text_present')}`
+                : item?.endDate
+                  ? `${i18next.t('common:text_to')} ${formatDate(
+                    item.endDate,
+                    'MMM Do, YYYY',
+                  )}`
+                  : ''
+            }`}
+          </Text>
+          )}
+          {!!item?.location && (
+          <Text.BodyS color={colors.gray50}>{item.location}</Text.BodyS>
+          )}
+          {!!item?.description && (
+          <Text.BodyS numberOfLines={3} color={colors.gray50}>
+            {item.description}
+          </Text.BodyS>
+          )}
+        </View>
+        )}
+      onPress={() => {
+        showEditButton && selectWorkItem(item);
+      }}
+    />
+  );
 
   const renderWorkExperience = () => {
     if (!showEditButton && userWorkExperience?.length > 0) {
@@ -468,8 +480,8 @@ const UserEditProfile = (props: any) => {
           </View>
           <View style={styles.infoItem}>
             {userWorkExperience.map((item: IUserWorkExperience) => (
-              <View key={item?.id + item?.company}>
-                {renderWorkItem({item})}
+              <View key={`${item?.id} ${item?.company}`}>
+                {renderWorkItem({ item })}
               </View>
             ))}
           </View>
@@ -486,8 +498,8 @@ const UserEditProfile = (props: any) => {
         </View>
         <View style={styles.infoItem}>
           {(myWorkExperience || [])?.map((item: IUserWorkExperience) => (
-            <View key={item?.id + item?.company + item?.titlePosition}>
-              {renderWorkItem({item})}
+            <View key={`${item?.id} ${item?.company} ${item?.titlePosition}`}>
+              {renderWorkItem({ item })}
             </View>
           ))}
         </View>
@@ -496,7 +508,8 @@ const UserEditProfile = (props: any) => {
           textColor={colors.purple50}
           onPress={goToAddWork}
           style={styles.buttonAddWork}
-          testID="user_edit_profile.work.add_work">
+          testID="user_edit_profile.work.add_work"
+        >
           {i18next.t('settings:text_add_work')}
         </Button.Secondary>
       </View>
@@ -520,8 +533,10 @@ const UserEditProfile = (props: any) => {
 
 export default UserEditProfile;
 
-const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
-  const {colors} = theme;
+const themeStyles = (
+  theme: ExtendedTheme, coverHeight: number,
+) => {
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {
@@ -538,7 +553,7 @@ const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
       paddingLeft: spacing.padding.large,
       alignItems: 'center',
     },
-    editBtn: {padding: spacing.padding.small},
+    editBtn: { padding: spacing.padding.small },
     avatar: {
       width: scaleSize(96),
       height: scaleSize(96),

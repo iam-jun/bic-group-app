@@ -4,11 +4,8 @@ import reactionIcons from '~/resources/reactions';
 import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
 import iconAddGif from '../../assets/icons/icon_add_gif.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
-import iconTabHome from '../../assets/icons/icon_home.svg';
-import iconTabHomeBein from '../../assets/icons/icon_home_bein.svg';
 import iconLanguageEn from '../../assets/icons/icon_language_en.svg';
 import iconLanguageVi from '../../assets/icons/icon_language_vi.svg';
-import iconTabMenu from '../../assets/icons/icon_menu.svg';
 import iconTabMenuBein from '../../assets/icons/icon_menu_bein.svg';
 import iconMenuDraft from '../../assets/icons/icon_menu_draft.svg';
 import iconMenuFeedback from '../../assets/icons/icon_menu_feedback.svg';
@@ -17,17 +14,9 @@ import iconMenuInfo from '../../assets/icons/icon_menu_info.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconSendComment from '../../assets/icons/icon_send_comment.svg';
-// @ts-ignore
-import iconCheckboxSelected from '../../assets/icons/icon_checkbox_selected.png';
-// @ts-ignore
-import iconCheckboxInherited from '../../assets/icons/icon_checkbox_inherited.png';
-// @ts-ignore
-import iconCheckboxUnselected from '../../assets/icons/icon_checkbox_unselected.png';
 import iconCheckboxRestricted from '../../assets/icons/icon_checkbox_retricted.svg';
 
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
-import iconTabNotification from '../../assets/icons/icon_notification.svg';
-import iconTabNotificationBein from '../../assets/icons/icon_notification_bein.svg';
 import iconSearch from '../../assets/icons/icon_search.svg';
 import iconShieldStar from '../../assets/icons/icon_shield_star.svg';
 import iconStar from '../../assets/icons/icon_star_alt.svg';
@@ -46,31 +35,25 @@ import iconPermissionGuide2Ios from '../../assets/icons/icon_permission_guide_2_
 import iconPermissionGuide3Ios from '../../assets/icons/icon_permission_guide_3_ios.svg';
 import iconPermissionGuide4Ios from '../../assets/icons/icon_permission_guide_4_ios.svg';
 import iconCannotComment from '../../assets/icons/icon_cannot_comment.svg';
-import iconTabCommunities from '../../assets/icons/icon_communities.svg';
 import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg';
 import iconLock from '../../assets/icons/icon_lock.svg';
 import iconPlayGif from '../../assets/icons/ic_play_gif.svg';
 import iconBeinChat from '../../assets/icons/icon_bein_chat.svg';
 import fileIcons from './fileIcons';
-import {fontAwesomeIcons} from '~/services/fontAwesomeIcon';
+import { fontAwesomeIcons } from '~/services/fontAwesomeIcon';
 
 const icons = {
   ...fileIcons,
   ...reactionIcons,
   iconBeinChat,
-  iconTabHome,
-  iconTabHomeBein,
-  iconTabNotification,
-  iconTabNotificationBein,
-  iconTabMenu,
   iconSearch,
   iconSendComment,
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
-  iconCheckboxUnselected,
-  iconCheckboxSelected,
-  iconCheckboxInherited,
+  iconCheckboxUnselected: require('../../assets/icons/icon_checkbox_unselected.png'),
+  iconCheckboxSelected: require('../../assets/icons/icon_checkbox_selected.png'),
+  iconCheckboxInherited: require('../../assets/icons/icon_checkbox_inherited.png'),
   iconCheckboxRestricted,
   iconAddSquareDone,
   iconAddGif,
@@ -98,19 +81,16 @@ const icons = {
   iconPermissionGuide3Ios,
   iconPermissionGuide4Ios,
   iconCannotComment,
-  iconTabCommunities,
   iconTabCommunitiesBein,
   iconLock,
   iconPlayGif,
-  iconStar: iconStar,
+  iconStar,
   iconReact: fontAwesomeIcons.FaceSmile,
   iconSave: fontAwesomeIcons.FloppyDisk,
-  iconSecret: fontAwesomeIcons.ShieldHalved,
-  iconPrivate: fontAwesomeIcons.LockKeyhole,
   iconSend: fontAwesomeIcons.PaperPlaneTop,
   iconSuitcase: fontAwesomeIcons.Suitcase,
   download: fontAwesomeIcons.CloudArrowDown,
-  iconBack: fontAwesomeIcons.AngleLeftSolid,
+  iconBack: fontAwesomeIcons.AngleLeft,
   iconEye: fontAwesomeIcons.Eye,
   iconEyeOff: fontAwesomeIcons.EyeSlash,
   iconClose: fontAwesomeIcons.XmarkLarge,
@@ -120,6 +100,28 @@ const icons = {
   edit: fontAwesomeIcons.PenToSquare,
   menu: fontAwesomeIcons.Ellipsis,
   search: fontAwesomeIcons.MagnifyingGlass,
+  iconCheckCircle: fontAwesomeIcons.CircleCheck,
+
+  // PRIVACY
+  iconPublic: fontAwesomeIcons.GlobeSolid,
+  iconOpen: fontAwesomeIcons.EyeSolid,
+  iconSecret: fontAwesomeIcons.ShieldHalvedSolid,
+  iconPrivate: fontAwesomeIcons.LockKeyholeSolid,
+
+  // MAIN TAB
+  iconTabHome: fontAwesomeIcons.House,
+  iconTabCommunities: fontAwesomeIcons.ShareNodes,
+  iconTabArticle: fontAwesomeIcons.Ballot,
+  iconTabWallet: fontAwesomeIcons.Wallet,
+  iconTabNotification: fontAwesomeIcons.Bell,
+  iconTabMenu: fontAwesomeIcons.Bars,
+  iconTabHomeActive: fontAwesomeIcons.HouseSolid,
+  iconTabCommunitiesActive: fontAwesomeIcons.ShareNodesSolid,
+  iconTabArticleActive: fontAwesomeIcons.BallotSolid,
+  iconTabWalletActive: fontAwesomeIcons.WalletSolid,
+  iconTabNotificationActive: fontAwesomeIcons.BellSolid,
+  iconTabMenuActive: fontAwesomeIcons.BarsSolid,
+
   // ^ ADD RENAMED ICON HERE
   // IF YOU WANT TO RENAME ICON, ADD TO fontAwesomeIcons FIRST
   ...fontAwesomeIcons,

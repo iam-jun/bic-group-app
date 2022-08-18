@@ -1,4 +1,4 @@
-import React, {RefObject} from 'react';
+import React, { RefObject } from 'react';
 import {
   NavigationContainerRef,
   NavigationState,
@@ -6,14 +6,15 @@ import {
   StackActions,
 } from '@react-navigation/native';
 
-import {IObject} from '~/interfaces/common';
-import {isEmpty, isNumber} from 'lodash';
-import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+import { isEmpty, isNumber } from 'lodash';
+import { IObject } from '~/interfaces/common';
+import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
+import { parseSafe } from '~/utils/common';
 
-export const isNavigationRefReady = React.createRef();
+export const isNavigationRefReady: any = React.createRef();
 
 export interface Props {
-  current?: NavigationContainerRef | null;
+  current?: NavigationContainerRef<any> | null;
   canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
@@ -27,33 +28,44 @@ export interface Props {
   setParams: (params: any) => void;
 }
 
-export const withNavigation = (
-  navigationRef: RefObject<NavigationContainerRef> | null | undefined,
-): Props => {
+export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<any>> | null | undefined): Props => {
   const canGoBack = navigationRef?.current?.canGoBack();
 
-  const navigate = (name: string, params?: IObject<unknown>): void => {
+  const navigate = (
+    name: string, params?: IObject<unknown>,
+  ): void => {
     if (isNavigationRefReady?.current && navigationRef?.current) {
-      navigationRef?.current?.navigate(name, params);
+      navigationRef?.current?.navigate(
+        name, params,
+      );
     } else {
-      setTimeout(() => navigationRef?.current?.navigate(name, params), 100);
+      setTimeout(
+        () => navigationRef?.current?.navigate(
+          name, params,
+        ), 100,
+      );
     }
   };
 
-  const replace = (name: string, params?: IObject<unknown>): void => {
+  const replace = (
+    name: string, params?: IObject<unknown>,
+  ): void => {
     if (isNavigationRefReady?.current && navigationRef?.current) {
-      navigationRef?.current?.dispatch(StackActions.replace(name, params));
+      navigationRef?.current?.dispatch(StackActions.replace(
+        name, params,
+      ));
     } else {
       setTimeout(
-        () =>
-          navigationRef?.current?.dispatch(StackActions.replace(name, params)),
+        () => navigationRef?.current?.dispatch(StackActions.replace(
+          name, params,
+        )),
         100,
       );
     }
   };
 
   const goBack = () => {
-    navigationRef?.current?.canGoBack() && navigationRef?.current?.goBack();
+    navigationRef?.current?.goBack?.();
   };
 
   const popToTop = () => {
@@ -65,10 +77,12 @@ export const withNavigation = (
     name: string,
     params?: IObject<unknown>,
   ): void => {
-    navigationRef?.current?.navigate(parentName, {
-      screen: name,
-      params: params,
-    });
+    navigationRef?.current?.navigate(
+      parentName, {
+        screen: name,
+        params,
+      },
+    );
   };
 
   const setParams = (params: any) => {
@@ -87,9 +101,7 @@ export const withNavigation = (
   };
 };
 
-export const getActiveRouteState = function (
-  route?: NavigationState | PartialState<NavigationState>,
-): string | null {
+export const getActiveRouteState = (route?: NavigationState | PartialState<NavigationState>): string | null => {
   if (!route || !isNumber(route?.index)) return null;
 
   const currentRoute = route.routes[route.index];
@@ -99,8 +111,8 @@ export const getActiveRouteState = function (
   return getActiveRouteState(childActiveRoute);
 };
 
-export const getScreenAndParams = (data: any) => {
-  const newData = typeof data === 'string' ? JSON.parse(data) : {};
+export const getScreenAndParams = (data: string|undefined):{screen: string; params: any} | null => {
+  const newData = typeof data === 'string' ? parseSafe(data) : {};
   if (!isEmpty(newData)) {
     const {
       type,
@@ -124,13 +136,13 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
           return {
-            screen: 'home',
-            params: {screen: 'post-detail', params: {post_id: postId}},
+            screen: 'post-detail',
+            params: { post_id: postId },
           };
         case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
           return {
-            screen: 'home',
-            params: {screen: 'draft-post'},
+            screen: 'draft-post',
+            params: {},
           };
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR_AGGREGATED:
@@ -139,11 +151,8 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
         case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
           return {
-            screen: 'home',
-            params: {
-              screen: 'post-detail',
-              params: {post_id: postId, focus_comment: true},
-            },
+            screen: 'post-detail',
+            params: { post_id: postId, focus_comment: true },
           };
 
         case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_COMMENT:
@@ -154,48 +163,36 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR:
         case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
           return {
-            screen: 'home',
-            params: {
-              screen: 'comment-detail',
-              params: {postId: postId, commentId: commentId},
-            },
+            screen: 'comment-detail',
+            params: { postId, commentId },
           };
 
         case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
         case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
         case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED:
           return {
-            screen: 'home',
+            screen: 'comment-detail',
             params: {
-              screen: 'comment-detail',
-              params: {
-                postId: postId,
-                commentId: childCommentId,
-                parentId: commentId,
-              },
+              postId,
+              commentId: childCommentId,
+              parentId: commentId,
             },
           };
         case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
         case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
           if (!!communityId) {
             return {
-              screen: 'communities',
+              screen: 'community-members',
               params: {
-                screen: 'community-members',
-                params: {
-                  communityId,
-                },
+                communityId,
               },
             };
           }
           if (!!groupId) {
             return {
-              screen: 'communities',
+              screen: 'group-members',
               params: {
-                screen: 'group-members',
-                params: {
-                  groupId,
-                },
+                groupId,
               },
             };
           }
@@ -208,23 +205,17 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
           if (!!communityId) {
             return {
-              screen: 'communities',
+              screen: 'community-detail',
               params: {
-                screen: 'community-detail',
-                params: {
-                  communityId,
-                },
+                communityId,
               },
             };
           }
           if (!!groupId) {
             return {
-              screen: 'communities',
+              screen: 'group-detail',
               params: {
-                screen: 'group-detail',
-                params: {
-                  groupId,
-                },
+                groupId,
               },
             };
           }
@@ -232,25 +223,18 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
           return {
-            screen: 'communities',
+            screen: !!communityId
+              ? 'community-pending-members'
+              : 'group-pending-members',
             params: {
-              screen: !!communityId
-                ? 'community-pending-members'
-                : 'group-pending-members',
-              params: {
-                id: !!communityId ? communityId : groupId || '',
-              },
+              id: !!communityId ? communityId : groupId || '',
             },
           };
-          break;
         default:
-          console.log(`Notification type ${type} have not implemented yet`);
-          return {
-            screen: 'home',
-            params: {screen: 'post-detail', params: {post_id: postId}},
-          };
+          console.warn(`Notification type ${type} have not implemented yet`);
+          return { screen: 'post-detail', params: { post_id: postId } };
       }
     }
   }
-  return {};
+  return null;
 };

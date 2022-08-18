@@ -1,7 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/* @ts-ignore */
 import * as React from 'react';
 import * as ReactNative from 'react-native';
-import {configure} from 'enzyme';
-import {get} from 'lodash';
+import { configure } from 'enzyme';
+import { get } from 'lodash';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
@@ -9,31 +11,26 @@ import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/asy
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 
 import 'react-native-gesture-handler/jestSetup';
-import {initReactI18next} from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 
-import colors from '~/theme/colors';
-import spacing from '~/theme/spacing';
-import dimension from '~/theme/dimension';
+import mock from 'react-native-permissions/mock';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
+import colors from '~/theme/theme';
 
-configure({adapter: new Adapter()});
+configure({ adapter: new Adapter() });
 
 global.__reanimatedWorkletInit = jest.fn();
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
 
 jest.mock('@react-native-clipboard/clipboard');
 
-jest.mock('@react-native-firebase/messaging', () => {
-  return () => ({
-    ...jest.requireActual('@react-native-firebase/messaging'),
-    deleteToken: jest.fn(() => Promise.resolve(true)),
-  });
-});
+jest.mock('@react-native-firebase/messaging', () => () => ({
+  ...jest.requireActual('@react-native-firebase/messaging'),
+  deleteToken: jest.fn(() => Promise.resolve(true)),
+}));
 
 jest.mock('~/services/sharePreferences', () => ({
   getUserFromSharedPreferences: jest.fn(),
@@ -43,50 +40,41 @@ jest.mock('~/services/sharePreferences', () => ({
 }));
 
 jest.mock('react-native-image-crop-picker', () => ({
-  openPicker: jest.fn().mockImplementation(() =>
-    Promise.resolve({
-      mime: 'test',
-      data: 'test',
-    }),
-  ),
+  openPicker: jest.fn().mockImplementation(() => Promise.resolve({
+    mime: 'test',
+    data: 'test',
+  })),
 }));
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
-jest.mock('~/screens/Menu/helper/MenuDataHelper');
+jest.mock('react-native-permissions', () => mock);
 
-import mock from 'react-native-permissions/mock';
-jest.mock('react-native-permissions', () => {
-  return mock;
-});
-
-// @ts-ignore
 global.FormData = require('react-native/Libraries/Network/FormData');
 
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 
 jest.doMock('react-i18next', () => ({
-  useTranslation: () => {
-    return {
-      t: (str, params) => {
-        let suffix = '';
-        if (params?.count) {
-          suffix = params.count === 1 ? '_one' : '_other';
-        }
-        return get(
-          languages,
-          `${str}${suffix}`.replaceAll?.(':', '.'),
-        )?.replace('{{count}}', params?.count);
-      },
-      i18n: {
-        changeLanguage: () => new Promise(() => undefined),
-      },
-    };
-  },
+  useTranslation: () => ({
+    t: (str, params) => {
+      let suffix = '';
+      if (params?.count) {
+        suffix = params.count === 1 ? '_one' : '_other';
+      }
+      return get(
+        languages,
+        `${str}${suffix}`.replaceAll?.(':', '.'),
+      )?.replace('{{count}}', params?.count);
+    },
+    i18n: {
+      changeLanguage: () => new Promise(),
+    },
+  }),
   initReactI18next,
 }));
 
 jest.doMock('i18next', () => ({
+  ...jest.requireActual('i18next'),
   t: (str, params) => {
     let suffix = '';
     if (params?.count) {
@@ -101,7 +89,7 @@ jest.doMock('i18next', () => ({
 
 jest.doMock('react-native-autogrow-textinput', () => ({
   // eslint-disable-next-line react/prop-types
-  AutoGrowingTextInput: ({children, ...props}) => (
+  AutoGrowingTextInput: ({ children, ...props }) => (
     <ReactNative.TextInput {...props}>{children}</ReactNative.TextInput>
   ),
 }));
@@ -109,11 +97,13 @@ jest.doMock('react-native-autogrow-textinput', () => ({
 jest.doMock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
   useNavigation: () => ({
-    navigate: (screen, params) => {
-      return {screen, params};
-    },
+    navigate: (screen, params) => ({ screen, params }),
   }),
   useIsFocused: jest.fn(),
+  useTheme: () => ({
+    colors: colors.light.colors,
+    elevations: colors.light.elevations,
+  }),
 }));
 
 jest.doMock('react-native-modalize', () => {
@@ -122,7 +112,18 @@ jest.doMock('react-native-modalize', () => {
   const MockedModule = {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
-    Modalize: ({children}) => <ReactNative.View>{children}</ReactNative.View>,
+    Modalize: ({ children }) => <ReactNative.View>{children}</ReactNative.View>,
+  };
+  return MockedModule;
+});
+
+jest.doMock('react-native-portalize', () => {
+  const RealModule = jest.requireActual('react-native-portalize');
+  // noinspection UnnecessaryLocalVariableJS
+  const MockedModule = {
+    ...RealModule,
+    // eslint-disable-next-line react/prop-types
+    Portal: ({ children }) => <ReactNative.View>{children}</ReactNative.View>,
   };
   return MockedModule;
 });
@@ -170,7 +171,7 @@ jest.doMock('react-native', () => {
 
   const InteractionManager = {
     ...RNInteractionManager,
-    runAfterInteractions: jest.fn(cb => cb()),
+    runAfterInteractions: jest.fn((cb) => cb()),
   };
 
   // noinspection JSUnusedGlobalSymbols
@@ -202,7 +203,7 @@ jest.doMock('react-native', () => {
     },
     KeyboardObserver: {},
     RNCNetInfo: {
-      getCurrentState: jest.fn().mockResolvedValue({isConnected: true}),
+      getCurrentState: jest.fn().mockResolvedValue({ isConnected: true }),
       addListener: jest.fn(),
       removeListeners: jest.fn(),
       addEventListener: jest.fn(),
@@ -262,12 +263,18 @@ jest.mock('react-hook-form', () => ({
       value: '',
     },
   }),
-  Controller: ({children}) => [children],
+  Controller: ({ children }) => [children],
   useSubscribe: () => ({
-    r: {current: {subject: {subscribe: () => jest.fn()}}},
+    r: { current: { subject: { subscribe: () => jest.fn() } } },
   }),
 }));
 
-jest.mock('react-native-reanimated', () =>
-  require('react-native-reanimated/mock'),
-);
+jest.doMock('expo-av', () => ({
+  Video: {
+    ...ReactNative.View,
+    onPlaybackStatusUpdate: jest.fn(),
+    onError: jest.fn(),
+  },
+  ResizeMode: { CONTAIN: 'CONTAIN' },
+}));
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));

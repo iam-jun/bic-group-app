@@ -1,11 +1,11 @@
-import GroupStack from '../GroupStack';
-import HomeStack from '../HomeStack';
-import MenuStack from '../MenuStack';
-import NotiStack from '../NotiStack';
+import Communities from '~/screens/communities/Communities';
+import Notification from '~/screens/Notification';
+import Menu from '~/screens/Menu';
+import Home from '~/screens/Home';
 
 export const screens = {
-  home: HomeStack,
-  communities: GroupStack,
-  notification: NotiStack,
-  menus: MenuStack,
+  home: Home,
+  communities: Communities,
+  notification: Notification,
+  menus: Menu,
 };

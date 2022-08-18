@@ -1,7 +1,6 @@
 import React from 'react';
 
-import {renderWithRedux, cleanup, fireEvent} from '~/test/testUtils';
-import {colors} from '~/theme';
+import { renderWithRedux, cleanup } from '~/test/testUtils';
 
 import ButtonIcon from './ButtonIcon';
 
@@ -35,8 +34,8 @@ describe('ButtonDanger conponent', () => {
   });
 
   it('renders style correctly', () => {
-    const {getByTestId} = renderWithRedux(
-      <ButtonIcon icon={icon} style={{margin: 12}} testID={testID} />,
+    const { getByTestId } = renderWithRedux(
+      <ButtonIcon icon={icon} style={{ margin: 12 }} testID={testID} />,
     );
 
     const component = getByTestId('button_icon');
@@ -48,7 +47,7 @@ describe('ButtonDanger conponent', () => {
     const rendered = renderWithRedux(
       <ButtonIcon
         icon={icon}
-        iconWrapperStyle={{backgroundColor: 'red'}}
+        iconWrapperStyle={{ backgroundColor: 'red' }}
         testID={testID}
       />,
     );

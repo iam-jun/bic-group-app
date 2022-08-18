@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -7,14 +7,14 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Icon from '~/beinComponents/Icon';
-import Text, {TextProps} from '~/beinComponents/Text';
-import {IconType} from '~/resources/icons';
+import Text, { TextProps } from '~/beinComponents/Text';
+import { IconType } from '~/resources/icons';
 
-import {useDispatch} from 'react-redux';
-import {clearToastMessage} from '~/store/modal/actions';
+import { clearToastMessage } from '~/storeRedux/modal/actions';
 import ButtonWrapper from '../Button/ButtonWrapper';
 import spacing from '~/theme/spacing';
 
@@ -55,7 +55,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
 }: ToastMessageProps) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   const _onPress = () => {
     onActionPress?.();
@@ -80,13 +80,12 @@ const ToastMessage: FC<ToastMessageProps> = ({
     },
   };
 
-  const {iconColor, textColor, backgroundColor} =
-    ToastMessageStyle[type] || ToastMessageStyle.success;
+  const { iconColor, textColor, backgroundColor } = ToastMessageStyle[type] || ToastMessageStyle.success;
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       flexDirection: 'row',
-      backgroundColor: backgroundColor,
+      backgroundColor,
       padding: spacing.padding.base,
       borderRadius: 6,
       alignSelf: 'baseline',
@@ -100,14 +99,15 @@ const ToastMessage: FC<ToastMessageProps> = ({
       activeOpacity={1}
       style={containerStyle}
       onPress={_onPress}
-      testID="normal_toast_message">
+      testID="normal_toast_message"
+    >
       {leftIcon && (
         <Icon
           isButton
           testID="normal_toast_message.left_icon"
           iconStyle={[
             styles.leftIconStyle,
-            {backgroundColor: colors.neutral1},
+            { backgroundColor: colors.neutral1 },
             leftIconStyle,
           ]}
           style={[styles.leftIcon, leftStyle]}
@@ -122,7 +122,8 @@ const ToastMessage: FC<ToastMessageProps> = ({
           <Text.BodyM
             {...textProps}
             color={textColor}
-            testID="normal_toast_message.children">
+            testID="normal_toast_message.children"
+          >
             {children}
           </Text.BodyM>
         </View>
@@ -130,7 +131,8 @@ const ToastMessage: FC<ToastMessageProps> = ({
           <ButtonWrapper
             style={styles.button}
             onPress={onPressRight}
-            testID="normal_toast_message.right_button">
+            testID="normal_toast_message.right_button"
+          >
             {!!rightIcon && (
               <Icon
                 testID="normal_toast_message.right_icon"
@@ -143,7 +145,8 @@ const ToastMessage: FC<ToastMessageProps> = ({
               {...rightTextProps}
               testID="normal_toast_message.right_text"
               style={[styles.rightText, rightTextStyle]}
-              color={rightTextColor || theme.colors.white}>
+              color={rightTextColor || theme.colors.white}
+            >
               {rightText}
             </Text.ButtonM>
           </ButtonWrapper>
@@ -166,12 +169,12 @@ const styles = StyleSheet.create({
   leftIcon: {
     marginRight: spacing.margin.base,
   },
-  leftIconStyle: {padding: 2, borderRadius: 6},
-  marginRightIcon: {marginRight: spacing.margin.tiny},
+  leftIconStyle: { padding: 2, borderRadius: 6 },
+  marginRightIcon: { marginRight: spacing.margin.tiny },
   button: {
     marginLeft: spacing.margin.base,
   },
-  rightText: {textDecorationLine: 'underline'},
+  rightText: { textDecorationLine: 'underline' },
 });
 
 export default ToastMessage;

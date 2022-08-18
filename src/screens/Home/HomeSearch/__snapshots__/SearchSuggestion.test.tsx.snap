@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchSuggestion component should render SearchResult 1`] = `
+<RCTScrollView
+  keyboardShouldPersistTaps="always"
+>
+  <View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 12,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": 60,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 13,
+                },
+                Object {},
+                Object {
+                  "flex": 1,
+                },
+              ]
+            }
+          >
+            Recent Search
+          </Text>
+        </View>
+        <ActivityIndicator
+          color="#A4A9B7"
+          style={
+            Object {
+              "alignItems": "center",
+              "height": 44,
+              "justifyContent": "center",
+            }
+          }
+          testID="loading_indicator"
+        />
+      </View>
+    </View>
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "height": 0,
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</RCTScrollView>
+`;
+
+exports[`SearchSuggestion component should render button search keyword 1`] = `
+<RCTScrollView
+  keyboardShouldPersistTaps="always"
+>
+  <View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "opacity": 1,
+            "paddingHorizontal": 16,
+            "paddingVertical": 12,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
+          </View>
+        </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              Object {
+                "color": "#7335C0",
+                "flex": 1,
+                "marginLeft": 16,
+              },
+            ]
+          }
+        >
+          See result for "hello"
+        </Text>
+      </View>
+    </View>
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "height": 0,
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</RCTScrollView>
+`;

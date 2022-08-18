@@ -1,4 +1,4 @@
-import {cleanup} from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 
 global.__DEV__ = false;
 

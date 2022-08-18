@@ -1,14 +1,13 @@
-import {Linking} from 'react-native';
-import {getEnv} from '~/utils/env';
-import {CURRENT_SERVER, DeepLinkTypes, Files} from '../utils/config';
-import {latinise} from './latinise.js';
+import { Linking } from 'react-native';
+import  getEnv  from '~/utils/env';
+import { CURRENT_SERVER, DeepLinkTypes, Files } from './config';
+import { latinise } from './latinise.js';
 
 export function escapeRegex(text) {
   return text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
-const ytRegex =
-  /(?:http|https):\/\/(?:www\.|m\.)?(?:(?:youtube\.com\/(?:(?:v\/)|(?:(?:watch|embed\/watch)(?:\/|.*v=))|(?:embed\/)|(?:user\/[^/]+\/u\/[0-9]\/)))|(?:youtu\.be\/))([^#&?]*)/;
+const ytRegex = /(?:http|https):\/\/(?:www\.|m\.)?(?:(?:youtube\.com\/(?:(?:v\/)|(?:(?:watch|embed\/watch)(?:\/|.*v=))|(?:embed\/)|(?:user\/[^/]+\/u\/[0-9]\/)))|(?:youtu\.be\/))([^#&?]*)/;
 
 export function isValidUrl(url = '') {
   const regex = /^https?:\/\//i;
@@ -24,8 +23,7 @@ export function removeProtocol(url = '') {
 }
 
 export function extractFirstLink(text) {
-  const pattern =
-    /(^|[\s\n]|<br\/?>)((?:https?|ftp):\/\/[-A-Z0-9+\u0026\u2019@#/%?=()~_|!:,.;]*[-A-Z0-9+\u0026@#/%=~()_|])/i;
+  const pattern = /(^|[\s\n]|<br\/?>)((?:https?|ftp):\/\/[-A-Z0-9+\u0026\u2019@#/%?=()~_|!:,.;]*[-A-Z0-9+\u0026@#/%=~()_|])/i;
   let inText = text;
 
   // strip out code blocks
@@ -56,8 +54,8 @@ export function isImageLink(link) {
     const imageType = Files.IMAGE_TYPES[i];
 
     if (
-      linkWithoutQuery.endsWith('.' + imageType) ||
-      linkWithoutQuery.endsWith('=' + imageType)
+      linkWithoutQuery.endsWith(`.${imageType}`)
+      || linkWithoutQuery.endsWith(`=${imageType}`)
     ) {
       return true;
     }
@@ -83,13 +81,13 @@ export function getShortenedURL(url = '', getLength = 27) {
   if (url.length > 35) {
     const subLength = getLength - 14;
     return (
-      url.substring(0, 10) +
-      '...' +
-      url.substring(url.length - subLength, url.length) +
-      '/'
+      `${url.substring(0, 10)
+      }...${
+        url.substring(url.length - subLength, url.length)
+      }/`
     );
   }
-  return url + '/';
+  return `${url}/`;
 }
 
 export function cleanUpUrlable(input) {
@@ -133,7 +131,7 @@ export function matchDeepLink(url, serverURL, siteURL) {
 
   const linkRoot = `(?:${escapeRegex(urlBaseWithoutProtocol)})`;
 
-  match = new RegExp(linkRoot + '\\/([^\\/]+)\\/channels\\/(\\S+)').exec(
+  match = new RegExp(`${linkRoot}\\/([^\\/]+)\\/channels\\/(\\S+)`).exec(
     urlToMatch,
   );
 
@@ -145,7 +143,7 @@ export function matchDeepLink(url, serverURL, siteURL) {
     };
   }
 
-  match = new RegExp(linkRoot + '\\/([^\\/]+)\\/pl\\/(\\w+)').exec(urlToMatch);
+  match = new RegExp(`${linkRoot}\\/([^\\/]+)\\/pl\\/(\\w+)`).exec(urlToMatch);
   if (match) {
     return {
       type: DeepLinkTypes.PERMALINK,
@@ -154,7 +152,7 @@ export function matchDeepLink(url, serverURL, siteURL) {
     };
   }
 
-  match = new RegExp(linkRoot + '\\/([^\\/]+)\\/messages\\/@(\\S+)').exec(
+  match = new RegExp(`${linkRoot}\\/([^\\/]+)\\/messages\\/@(\\S+)`).exec(
     urlToMatch,
   );
   if (match) {
@@ -165,18 +163,18 @@ export function matchDeepLink(url, serverURL, siteURL) {
     };
   }
 
-  match = new RegExp(linkRoot + '\\/([^\\/]+)\\/messages\\/(\\S+)').exec(
+  match = new RegExp(`${linkRoot}\\/([^\\/]+)\\/messages\\/(\\S+)`).exec(
     urlToMatch,
   );
   if (match) {
-    return {type: DeepLinkTypes.GROUPCHANNEL, teamName: match[1], id: match[2]};
+    return { type: DeepLinkTypes.GROUPCHANNEL, teamName: match[1], id: match[2] };
   }
 
-  match = new RegExp(linkRoot + '\\/plugins\\/([^\\/]+)\\/(\\S+)').exec(
+  match = new RegExp(`${linkRoot}\\/plugins\\/([^\\/]+)\\/(\\S+)`).exec(
     urlToMatch,
   );
   if (match) {
-    return {type: DeepLinkTypes.PLUGIN, id: match[1]};
+    return { type: DeepLinkTypes.PLUGIN, id: match[1] };
   }
 
   return null;
@@ -218,24 +216,5 @@ export async function getURLAndMatch(href, serverURL, siteURL) {
 
   const match = matchDeepLink(url, serverURL, siteURL);
 
-  return {url, match};
-}
-
-export function tryOpenURL(url, onError = e => {}, onSuccess = () => {}) {
-  if (url.includes(getEnv('SELF_DOMAIN'))) {
-    const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
-    Linking.canOpenURL(newUrl)
-      .then(supported => {
-        if (supported) {
-          Linking.openURL(newUrl).then(onSuccess).catch(onError);
-        } else {
-          Linking.openURL(url).then(onSuccess).catch(onError);
-        }
-      })
-      .catch(e => {
-        console.log('error when open link:', e);
-      });
-    return;
-  }
-  Linking.openURL(url).then(onSuccess).catch(onError);
+  return { url, match };
 }

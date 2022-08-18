@@ -7,7 +7,7 @@ exports[`Filter component renders correctly 1`] = `
       Object {
         "backgroundColor": "#FFFFFF",
         "borderBottomWidth": 1,
-        "borderColor": "#EAEDF2",
+        "borderColor": "#E3E6F2",
         "borderTopWidth": 1,
         "paddingVertical": 12,
       },
@@ -65,7 +65,7 @@ exports[`Filter component renders correctly 1`] = `
           style={
             Object {
               "backgroundColor": "rgba(255,255,255,0)",
-              "borderColor": "#EAEDF2",
+              "borderColor": "#E3E6F2",
               "borderRadius": 100,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -80,9 +80,9 @@ exports[`Filter component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 15,
                 },
                 Object {},
                 undefined,
@@ -117,7 +117,7 @@ exports[`Filter component renders correctly 1`] = `
           style={
             Object {
               "backgroundColor": "rgba(255,255,255,0)",
-              "borderColor": "#EAEDF2",
+              "borderColor": "#E3E6F2",
               "borderRadius": 100,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -132,9 +132,9 @@ exports[`Filter component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 16,
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
                 },
                 Object {},
                 undefined,
@@ -169,7 +169,7 @@ exports[`Filter component renders correctly 1`] = `
           style={
             Object {
               "backgroundColor": "rgba(255,255,255,0)",
-              "borderColor": "#EAEDF2",
+              "borderColor": "#E3E6F2",
               "borderRadius": 100,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -184,9 +184,9 @@ exports[`Filter component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 16,
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
                 },
                 Object {},
                 undefined,
@@ -208,8 +208,8 @@ exports[`Filter component renders correctly 1`] = `
               "top": 0,
             },
             Object {
-              "backgroundColor": "#B2BDCD",
-              "borderColor": "#B2BDCD",
+              "backgroundColor": "#A4A9B7",
+              "borderColor": "#A4A9B7",
               "borderRadius": 100,
               "zIndex": -1,
             },

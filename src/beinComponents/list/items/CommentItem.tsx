@@ -1,14 +1,14 @@
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import React, {useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {useBaseHook} from '~/hooks';
-import {ICommentData, IReaction} from '~/interfaces/IPost';
-import CommentView from '~/screens/Post/components/CommentView';
-import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
-import postActions from '~/screens/Post/redux/actions';
+import { useBaseHook } from '~/hooks';
+import { ICommentData } from '~/interfaces/IPost';
+import CommentView from '~/screens/post/components/CommentView';
+import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
+import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 
 export interface CommentItemProps {
@@ -19,9 +19,10 @@ export interface CommentItemProps {
   contentBackgroundColor?: string;
   section?: any;
   index?: number;
-  onPressReply?: (data: IReaction, section?: any, index?: number) => void;
+  onPressReply?: (data: ICommentData, section?: any, index?: number) => void;
   onPressLoadMore?: (data: any) => void;
   isNotReplyingComment?: boolean;
+  onPressMarkSeenPost?: ()=> void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -35,32 +36,39 @@ const CommentItem: React.FC<CommentItemProps> = ({
   onPressReply,
   onPressLoadMore,
   isNotReplyingComment,
+  onPressMarkSeenPost,
 }: CommentItemProps) => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const styles = React.useMemo(() => createStyle(theme), [theme]);
+  const styles = React.useMemo(
+    () => createStyle(theme), [theme],
+  );
 
-  const _onPressReply = useCallback(() => {
-    if (!isNotReplyingComment) {
-      dispatch(
-        postActions.setPostDetailReplyingComment({
+  const _onPressReply = useCallback(
+    () => {
+      if (!isNotReplyingComment) {
+        dispatch(postActions.setPostDetailReplyingComment({
           comment: commentData,
           parentComment: commentParent,
-        }),
+        }));
+      }
+      onPressReply?.(
+        commentData, section, index,
       );
-    }
-    onPressReply?.(commentData, section, index);
-  }, [commentData, commentParent, section, index]);
+    }, [commentData, commentParent, section, index],
+  );
 
-  const _onPressLoadMore = useCallback(() => {
-    onPressLoadMore && onPressLoadMore(commentData);
-  }, [commentData]);
+  const _onPressLoadMore = useCallback(
+    () => {
+      onPressLoadMore && onPressLoadMore(commentData);
+    }, [commentData],
+  );
 
   const childCommentCount = commentData?.totalReply || 0;
 
   const idLessThan = commentData?.child?.list?.[0]?.id;
-  const showLoadPrevious = !!onPressLoadMore
+  const showLoadPrevious = onPressLoadMore
     ? childCommentCount - 1 > 0
     : commentData?.child?.meta?.hasNextPage || false;
 
@@ -73,15 +81,16 @@ const CommentItem: React.FC<CommentItemProps> = ({
         commentData={commentData}
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}
+        onPressMarkSeenPost={onPressMarkSeenPost}
       />
-      {!!showLoadPrevious ? (
+      {showLoadPrevious ? (
         <LoadMoreComment
           style={styles.childLoadMore}
           title={t('post:text_load_previous_replies')}
           postId={postId}
           commentId={commentData?.id}
           idLessThan={idLessThan}
-          onPress={!!onPressLoadMore ? _onPressLoadMore : undefined}
+          onPress={onPressLoadMore ? _onPressLoadMore : undefined}
         />
       ) : (
         <ViewSpacing height={0} />
@@ -91,7 +100,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingTop: spacing?.padding.small,
@@ -104,7 +113,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingLeft: 68,
       backgroundColor: colors.white,
     },
-    childLoadMore: {marginLeft: 40},
+    childLoadMore: { marginLeft: 40 },
   });
 };
 

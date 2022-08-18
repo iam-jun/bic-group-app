@@ -10,7 +10,7 @@ export interface IPayloadSetNewsfeedSearch {
   loadingResult?: boolean;
   suggestionResults?: any[];
   searchResults?: any[];
-  searchInputRef?: any;
+  searchViewRef?: any;
   totalResult?: number;
 }
 
@@ -41,6 +41,7 @@ export interface IParamGetFeed {
   idLte?: number;
   idGt?: number;
   idLt?: number;
+  isImportant?: boolean;
 }
 
 export interface IParamGetSearchPost {

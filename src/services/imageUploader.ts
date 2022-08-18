@@ -1,12 +1,15 @@
-import ApiConfig from '~/configs/apiConfig';
-import {IFilePicked} from '~/interfaces/common';
-import {makeHttpRequest} from '~/services/httpApiRequest';
-import {AppConfig} from '~/configs';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable prefer-promise-reject-errors */
+/* eslint-disable class-methods-use-this */
 import i18next from 'i18next';
-import {IUploadType} from '~/configs/resourceConfig';
+import { IFilePicked } from '~/interfaces/common';
+import { makeHttpRequest } from '~/api/apiRequest';
+import { AppConfig } from '~/configs';
+import { IUploadType } from '~/configs/resourceConfig';
+import { uploadApiConfig } from '~/api/UploadApi';
 
 export interface IGetFile {
-  id?: number | string;
+  id?: string;
   fileName: string;
   url?: string;
   size?: any;
@@ -32,11 +35,15 @@ export default class ImageUploader {
   static INSTANCE: ImageUploader | null = null;
 
   fileUploaded: {[x: string]: IGetFile} = {};
+
   fileUploading: any = {};
+
   fileAbortController: {[x: string]: AbortController} = {};
 
   callbackProgress: any = {};
+
   callbackSuccess: any = {};
+
   callbackError: any = {};
 
   static getInstance() {
@@ -62,7 +69,7 @@ export default class ImageUploader {
       this.callbackError[fileName] = onProgress;
     }
     return {
-      fileName: fileName,
+      fileName,
       uploading: this.fileUploading[fileName],
       url: this.fileUploaded[fileName]?.url,
       result: this.fileUploaded[fileName]?.result,
@@ -70,28 +77,30 @@ export default class ImageUploader {
   }
 
   async upload(params: IUploadParam) {
-    const {file, uploadType, onSuccess, onProgress, onError} = params || {};
+    const {
+      file, uploadType, onSuccess, onProgress, onError,
+    } = params || {};
     if (!file) {
-      console.log(`\x1b[31m🐣️ fileUploader upload: file not found!\x1b[0m`);
+      console.error('\x1b[31m🐣️ fileUploader upload: file not found!\x1b[0m');
       onError?.('Input file not found');
-      return Promise.reject({meta: {message: 'Input file not found'}});
+      return Promise.reject({ meta: { message: 'Input file not found' } });
     }
     if (this.fileUploaded[file.name]) {
       const uploaded = this.fileUploaded[file.name];
       if (
-        uploaded.url &&
-        uploaded?.uploadType === uploadType &&
-        uploaded?.size === file?.size
+        uploaded.url
+        && uploaded?.uploadType === uploadType
+        && uploaded?.size === file?.size
       ) {
         onSuccess?.(uploaded);
         return Promise.resolve(uploaded);
       }
     }
-    if (file.size > AppConfig.maxFileSize.file) {
+    if (file.size > AppConfig.maxFileSize.image) {
       const error = i18next.t('common:error:file:over_file_size');
-      console.log(`\x1b[31m🐣️ fileUploader upload error: ${error}\x1b[0m`);
+      console.error(`\x1b[31m🐣️ fileUploader upload error: ${error}\x1b[0m`);
       onError?.(error);
-      return Promise.reject({meta: {message: error}});
+      return Promise.reject({ meta: { message: error } });
     }
 
     const formData = new FormData();
@@ -106,23 +115,18 @@ export default class ImageUploader {
     );
 
     const _onUploadProgress = (progressEvent: any) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total,
-      );
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
       onProgress?.(percentCompleted);
       this.callbackProgress?.[file.name]?.(percentCompleted);
     };
 
     this.fileUploading[file.name] = true;
     try {
-      const response: any = await makeHttpRequest(
-        ApiConfig.Upload.uploadImage(uploadType, formData, _onUploadProgress),
-      );
-      const uploadedUrl =
-        response?.data?.data?.url || response?.data?.data?.src;
-      console.log(
-        `\x1b[32m🐣️ fileUploader response url: ${uploadedUrl} \x1b[0m`,
-      );
+      const response: any = await makeHttpRequest(uploadApiConfig.uploadImage(
+        uploadType, formData, _onUploadProgress,
+      ));
+      const uploadedUrl = response?.data?.data?.url || response?.data?.data?.src;
+
       this.fileUploading[file.name] = false;
       if (uploadedUrl) {
         const fileRes = response?.data?.data;
@@ -137,15 +141,18 @@ export default class ImageUploader {
         onSuccess?.(this.fileUploaded[file.name]);
         this.callbackSuccess?.[file.name]?.(this.fileUploaded[file.name]);
         return Promise.resolve(this.fileUploaded[file.name]);
-      } else {
-        onError?.(response?.data);
-        this.callbackError?.[file.name]?.(response?.data);
-        console.log(`\x1b[31m🐣️ fileUploader upload err`, response, `\x1b[0m`);
-        return Promise.reject(response?.data);
       }
+      onError?.(response?.data);
+      this.callbackError?.[file.name]?.(response?.data);
+      console.error(
+        '\x1b[31m🐣️ fileUploader upload err', response, '\x1b[0m',
+      );
+      return Promise.reject(response?.data);
     } catch (e) {
       this.fileUploading[file.name] = false;
-      console.log(`\x1b[31m🐣️ fileUploader error `, e, `\x1b[0m`);
+      console.error(
+        '\x1b[31m🐣️ fileUploader error ', e, '\x1b[0m',
+      );
       onError?.(e);
       this.callbackError?.[file.name]?.(e);
       return Promise.reject(e);
@@ -153,7 +160,7 @@ export default class ImageUploader {
   }
 
   delete() {
-    console.log(`\x1b[36m🐣️ fileUploader delete\x1b[0m`);
+    console.error('\x1b[36m🐣️ fileUploader delete\x1b[0m');
   }
 
   resetData() {

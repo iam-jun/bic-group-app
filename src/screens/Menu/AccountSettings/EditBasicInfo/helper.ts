@@ -1,7 +1,9 @@
-import {IOptionItem} from '~/interfaces/IEditUser';
+import { isEmpty } from 'lodash';
+import { IOptionItem } from '~/interfaces/IEditUser';
 
 export const dataMapping = (dataObject: any): IOptionItem[] => {
-  const dataList = Object.keys(dataObject).map(type => ({
+  if (isEmpty(dataObject)) return [];
+  const dataList = Object.keys(dataObject).map((type) => ({
     type,
     title: dataObject[type],
   }));
@@ -15,6 +17,8 @@ export const maxBirthday = () => {
   const currentYear = currentMoment.getFullYear();
 
   // user must be at least 8 years old up to today
-  const maxDateToSelect = new Date(currentYear - 8, currentMonth, currentDay);
+  const maxDateToSelect = new Date(
+    currentYear - 8, currentMonth, currentDay,
+  );
   return maxDateToSelect;
 };

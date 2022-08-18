@@ -1,26 +1,25 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
-import {act, render, cleanup, fireEvent} from '@testing-library/react-native';
-import {renderHook} from '@testing-library/react-hooks';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
-import initialState from '~/store/initialState';
 import {
-  withReanimatedTimer,
-  advanceAnimationByTime,
-  advanceAnimationByFrame,
-  getAnimatedStyle,
-} from 'react-native-reanimated/src/reanimated2/jestUtils';
+  act, render, cleanup, fireEvent,
+} from '@testing-library/react-native';
+import { renderHook } from '@testing-library/react-hooks';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+// import {
+//   withReanimatedTimer,
+//   advanceAnimationByTime,
+//   advanceAnimationByFrame,
+//   getAnimatedStyle,
+// } from 'react-native-reanimated/src/reanimated2/jestUtils';
 
 // WARNING: Don't remove this import
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Store from '~/store';
+import '~/storeRedux';
 
-import {applyMiddleware, compose, createStore} from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {appReducer} from '~/store/reducers';
+import initialState from '~/storeRedux/initialState';
+import { appReducer } from '~/storeRedux/reducers';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
 
 const mockStore = configureStore([]);
@@ -45,19 +44,20 @@ export function rerenderWithRedux(
   return wrapper?.rerender?.(<Provider store={store}>{component}</Provider>);
 }
 
-const waitForUpdateRedux = (timeout = 500) => {
-  return new Promise(r => setTimeout(r, timeout));
-};
+// eslint-disable-next-line no-promise-executor-return
+const waitForUpdateRedux = (timeout = 500) => new Promise((r) => setTimeout(r, timeout));
 
 const getHookReduxWrapper = (store = createTestStore()) => {
-  const wrapper = ({children}) => <Provider store={store}>{children}</Provider>;
+  const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
   return wrapper;
 };
 
 // must use React.useState
-const setHookTestState = newState => {
+const setHookTestState = (newState) => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const setStateMockFn = () => {};
   return Object.keys(newState).reduce((acc, val) => {
+    // eslint-disable-next-line no-param-reassign
     acc = acc?.mockImplementationOnce(() => [newState[val], setStateMockFn]);
     return acc;
   }, jest.fn());
@@ -69,10 +69,10 @@ export {
   cleanup,
   fireEvent,
   configureStore,
-  withReanimatedTimer,
-  advanceAnimationByTime,
-  advanceAnimationByFrame,
-  getAnimatedStyle,
+  // withReanimatedTimer,
+  // advanceAnimationByTime,
+  // advanceAnimationByFrame,
+  // getAnimatedStyle,
   languages,
   act,
   createTestStore,

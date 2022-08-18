@@ -1,82 +1,69 @@
+import create, { StateCreator } from 'zustand';
+import {
+  devtools, DevtoolsOptions, persist, PersistOptions,
+} from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import _ from 'lodash';
-import {applyMiddleware, compose, createStore} from 'redux';
-import {persistReducer, persistStore} from 'redux-persist';
-import createSagaMiddleware from 'redux-saga';
-import {IUserResponse} from '~/interfaces/IAuth';
+import zustandFlipper from 'react-native-flipper-zustand'
 
-import ReactotronConfig from '~/ReactotronConfig';
-import rootReducer from './reducers';
+type Persist = (
+    config: StateCreator<any>,
+    options: PersistOptions<any>
+) => StateCreator<any>
 
-// import Flatted from 'flatted'
-// import immutableTransform from 'redux-persist-transform-immutable';
-// import createTransform from 'redux-persist/es/createTransform'
+type Devtools = (
+    config: StateCreator<any>,
+    options: DevtoolsOptions
+) => StateCreator<any>
 
-// export const transformCircular = createTransform(
-//   (inboundState, key) => Flatted.stringify(inboundState),
-//   (outboundState, key) => Flatted.parse(outboundState),
-// )
+const withPersist = (
+  payload: any,
+  options: PersistOptions<any>,
+) => (persist as unknown as Persist)(
+  payload,
+  { ...options, getStorage: () => AsyncStorage },
+);
 
-const persistConfig = {
-  key: 'root',
-  // transforms: [immutableTransform()],
-  // transforms: [transformCircular],
-  storage: AsyncStorage,
-  blacklist: [
-    'modal',
-    'groups',
-    'post',
-    'home',
-    'noInternet',
-    'mentionInput',
-    'chat',
-    'giphy',
-    'notifications',
-  ],
-  // whitelist: ['chat', 'language'],
-};
+const withDevtools = (
+  payload: any,
+  options?: DevtoolsOptions,
+) => (devtools as unknown as Devtools)(
+  payload,
+  options,
+);
 
-// @ts-ignore
-let sagaMiddleware;
-if (__DEV__) {
-  const sagaMonitor = ReactotronConfig.createSagaMonitor();
-  sagaMiddleware = createSagaMiddleware({sagaMonitor});
-} else {
-  sagaMiddleware = createSagaMiddleware();
+const withImmer = (
+  payload: any,
+) => (immer)(
+  payload,
+)
+
+const withFlipper = (
+  payload: any,
+  name?: string,
+) => (zustandFlipper)(
+  payload, name,
+)
+
+interface ICreateZustand {
+  persist?: PersistOptions<any>
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-// @ts-ignore
-// const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-const composeEnhancers = compose;
-// @ts-ignore
-let enhancer;
-if (__DEV__) {
-  enhancer = composeEnhancers(
-    applyMiddleware(sagaMiddleware),
-    ReactotronConfig.createEnhancer(),
-  );
-} else {
-  enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
+const createZustand = <T>(name: string, store, options?: ICreateZustand): () => T => {
+  let _store: any = zustandFlipper(immer(store), name);
+  if (options?.persist) {
+    _store = persist(_store, options.persist)
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return create<T>(_store);
 }
-const store = createStore(persistedReducer, enhancer);
-const persistor = persistStore(store);
 
-const getCurrentUser = (): IUserResponse | boolean => {
-  const state = store.getState();
-  return _.get(state, 'auth.user', false);
-};
-
-const getCurrentAuth = (): unknown | boolean => {
-  const state = store.getState();
-  return _.get(state, 'auth', false);
-};
-
-export default {
-  sagaMiddleware,
-  store,
-  persistor,
-  getCurrentUser,
-  getCurrentAuth,
+export {
+  createZustand,
+  create as createStore,
+  withPersist,
+  withDevtools,
+  withImmer,
+  withFlipper,
 };

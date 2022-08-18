@@ -1,4 +1,5 @@
-import {DefaultTheme, DarkTheme, ExtendedTheme} from '@react-navigation/native';
+import { DefaultTheme, DarkTheme, ExtendedTheme } from '@react-navigation/native';
+import elevations from './elevations';
 
 export const light: ExtendedTheme = {
   dark: false,
@@ -10,20 +11,22 @@ export const light: ExtendedTheme = {
     success: '#13B055',
     warning: '#FFBC1F',
 
-    neutral1: '#F1F2F8',
+    neutral: '#FFFFFF',
+    neutral1: '#F8F9FF',
+    neutral2: '#F1F2F8',
     neutral5: '#E3E6F2',
     neutral10: '#D6D9EB',
-    neutral20: ' #BAC0DE',
+    neutral20: '#BAC0DE',
     neutral30: '#9FA6D1',
-    neutral40: '#838DC3',
-    neutral50: '#424D8A',
-    neutral60: '#353E6E',
-    neutral70: '#282E53',
+    neutral40: '#353E6E',
+    neutral50: '#2E3660',
+    neutral60: '#282E53',
+    neutral70: '#212745',
     neutral80: '#181C32',
     neutral90: '#0D0F1C',
 
-    gray1: '#F4F4F6',
-    gray5: '#E8E9ED',
+    gray1: '#F2F5F8',
+    gray5: '#EAEDF2',
     gray10: '#DDDFE4',
     gray20: '#D1D4DB',
     gray30: '#BABEC9',
@@ -34,7 +37,8 @@ export const light: ExtendedTheme = {
     gray80: '#2D3039',
     gray90: '#1B1D22',
 
-    purple1: '#F4EFFB',
+    purple1: '#FBF8FF',
+    purple2: '#F4EFFB',
     purple5: '#E9DFF6',
     purple10: '#C9AFE9',
     purple20: '#B48FE0',
@@ -43,7 +47,8 @@ export const light: ExtendedTheme = {
     purple50: '#7335C0',
     purple60: '#602CA0',
 
-    blue1: '#EBF4FF',
+    blue1: '#F5FAFF',
+    blue2: '#EBF4FF',
     blue5: '#D6EAFF',
     blue10: '#ADD5FF',
     blue20: '#85C0FF',
@@ -52,7 +57,8 @@ export const light: ExtendedTheme = {
     blue50: '#007AFF',
     blue60: '#006CE0',
 
-    red1: '#FEECED',
+    red1: '#FEF3F4',
+    red2: '#FEECED',
     red5: '#FDD8DC',
     red10: '#FCC5CA',
     red20: '#F1999F',
@@ -61,7 +67,8 @@ export const light: ExtendedTheme = {
     red50: '#F42A3E',
     red60: '#E90C22',
 
-    green1: '#EFFDF4',
+    green1: '#FAFFFC',
+    green2: '#EFFDF4',
     green5: '#E5F9EC',
     green10: '#D0F1DB',
     green20: '#8ED6A4',
@@ -100,6 +107,7 @@ export const light: ExtendedTheme = {
     transparent: 'rgba(255,255,255,0)',
     transparent1: 'rgba(17, 21, 26, 0.6)',
   },
+  elevations: elevations.light,
 };
 
 export const dark: ExtendedTheme = {
@@ -112,20 +120,22 @@ export const dark: ExtendedTheme = {
     success: '#13B055',
     warning: '#FFBC1F',
 
-    neutral1: '#F1F2F8',
+    neutral: '#FFFFFF',
+    neutral1: '#F8F9FF',
+    neutral2: '#F1F2F8',
     neutral5: '#E3E6F2',
     neutral10: '#D6D9EB',
     neutral20: '#BAC0DE',
     neutral30: '#9FA6D1',
-    neutral40: '#838DC3',
-    neutral50: '#424D8A',
-    neutral60: '#353E6E',
-    neutral70: '#282E53',
+    neutral40: '#353E6E',
+    neutral50: '#2E3660',
+    neutral60: '#282E53',
+    neutral70: '#212745',
     neutral80: '#181C32',
     neutral90: '#0D0F1C',
 
-    gray1: '#F4F4F6',
-    gray5: '#E8E9ED',
+    gray1: '#F2F5F8',
+    gray5: '#EAEDF2',
     gray10: '#DDDFE4',
     gray20: '#D1D4DB',
     gray30: '#BABEC9',
@@ -136,7 +146,8 @@ export const dark: ExtendedTheme = {
     gray80: '#2D3039',
     gray90: '#1B1D22',
 
-    purple1: '#F4EFFB',
+    purple1: '#FBF8FF',
+    purple2: '#F4EFFB',
     purple5: '#E9DFF6',
     purple10: '#C9AFE9',
     purple20: '#B48FE0',
@@ -145,7 +156,8 @@ export const dark: ExtendedTheme = {
     purple50: '#7335C0',
     purple60: '#602CA0',
 
-    blue1: '#EBF4FF',
+    blue1: '#F5FAFF',
+    blue2: '#EBF4FF',
     blue5: '#D6EAFF',
     blue10: '#ADD5FF',
     blue20: '#85C0FF',
@@ -154,7 +166,8 @@ export const dark: ExtendedTheme = {
     blue50: '#007AFF',
     blue60: '#006CE0',
 
-    red1: '#FEECED',
+    red1: '#FEF3F4',
+    red2: '#FEECED',
     red5: '#FDD8DC',
     red10: '#FCC5CA',
     red20: '#F1999F',
@@ -163,7 +176,8 @@ export const dark: ExtendedTheme = {
     red50: '#F42A3E',
     red60: '#E90C22',
 
-    green1: '#EFFDF4',
+    green1: '#FAFFFC',
+    green2: '#EFFDF4',
     green5: '#E5F9EC',
     green10: '#D0F1DB',
     green20: '#8ED6A4',
@@ -202,6 +216,7 @@ export const dark: ExtendedTheme = {
     transparent: 'rgba(255,255,255,0)',
     transparent1: 'rgba(17, 21, 26, 0.6)',
   },
+  elevations: elevations.dark,
 };
 
 export default {

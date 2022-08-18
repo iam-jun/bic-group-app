@@ -1,49 +1,51 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
-  StyleProp,
-  ViewStyle,
   DeviceEventEmitter,
   PixelRatio,
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Video, ResizeMode} from 'expo-av';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { Video, ResizeMode } from 'expo-av';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import dimension, {scaleSize} from '~/theme/dimension';
-import {orderBy} from 'lodash';
+import { orderBy } from 'lodash';
+import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
 
+const DURATION_CHECK_POINT = 5 * 1000;
+
 export interface VideoPlayerProps {
-  style?: StyleProp<ViewStyle>;
   data: any;
   postId?: string;
+  onWatchCheckPoint?: () => void;
 }
 
-const PLAYER_HEIGHT = scaleSize(232);
+const PLAYER_HEIGHT = scaleCoverHeight();
 
 const VideoPlayer: FC<VideoPlayerProps> = ({
-  style,
   data,
   postId,
+  onWatchCheckPoint,
 }: VideoPlayerProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
-  const video = React.useRef();
+  const video = React.useRef<Video>();
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const {url, id, thumbnails} = data || {};
+  const { url, id, thumbnails } = data || {};
 
   const getThumbnailImageLink = () => {
     const deviceWidthPixel = PixelRatio.get() * dimension.deviceWidth;
     if (thumbnails?.length > 0) {
-      const newThumbnails = orderBy(thumbnails, ['width'], ['asc']);
+      const newThumbnails = orderBy(
+        thumbnails, ['width'], ['asc'],
+      );
       for (let index = 0; index < thumbnails.length; index++) {
         if (newThumbnails[index]?.width >= deviceWidthPixel) {
           return newThumbnails[index]?.url;
@@ -66,51 +68,61 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         setPlaying(true);
       } catch (error) {
         setLoading(false);
-        console.log('>>>>>>>loadAsync error>>>>>>>', error);
+        console.error(
+          '>>>>>>>loadAsync error>>>>>>>', error,
+        );
       }
     }
   };
 
-  useEffect(() => {
-    const videoListener = DeviceEventEmitter.addListener(
-      'playVideo',
-      (videoId: any) => {
-        if (!!videoId && videoId !== id && isPlaying) {
-          video.current?.pauseAsync?.();
-        }
-      },
-    );
-
-    const stopVideoListener = DeviceEventEmitter.addListener(
-      'stopAllVideo',
-      async () => {
-        if (!!video.current) {
-          const currentStatus = await video.current.getStatusAsync();
-          if (!currentStatus?.isPlaying) return;
-          try {
-            video.current.pauseAsync();
-          } catch (error) {
-            console.log('STOP VIDEO FAILED>>>>>>>>>>', error);
+  useEffect(
+    () => {
+      const videoListener = DeviceEventEmitter.addListener(
+        'playVideo',
+        (videoId: any) => {
+          if (!!videoId && videoId !== id && isPlaying) {
+            video.current?.pauseAsync?.();
           }
-        }
-      },
-    );
-    return () => {
-      videoListener?.remove?.();
-      stopVideoListener?.remove?.();
-    };
-  }, [isPlaying]);
+        },
+      );
+
+      const stopVideoListener = DeviceEventEmitter.addListener(
+        'stopAllVideo',
+        async () => {
+          if (video.current) {
+            const currentStatus = await video.current.getStatusAsync();
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (!currentStatus?.isPlaying) return;
+            try {
+              video.current.pauseAsync();
+            } catch (error) {
+              console.error(
+                'STOP VIDEO FAILED>>>>>>>>>>', error,
+              );
+            }
+          }
+        },
+      );
+      return () => {
+        videoListener?.remove?.();
+        stopVideoListener?.remove?.();
+      };
+    }, [isPlaying],
+  );
 
   const handlePlaybackStatusUpdate = (status: any) => {
     if (status?.isPlaying) {
       setLoading(false);
-      DeviceEventEmitter.emit('playVideo', id);
+      DeviceEventEmitter.emit(
+        'playVideo', id,
+      );
     }
-  };
 
-  const handlePlaying = (isVisible: boolean) => {
-    if (!isVisible) {
-      video.current?.pauseAsync?.();
+    if (((status?.durationMillis > DURATION_CHECK_POINT && status?.positionMillis >= DURATION_CHECK_POINT)
+    || (status?.durationMillis <= DURATION_CHECK_POINT && status?.positionMillis === status?.durationMillis))
+    && !!postId) {
+      onWatchCheckPoint?.();
     }
   };
 
@@ -131,22 +143,25 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         isLooping={false}
         onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
         onError={(error: string) => {
-          console.warn('video failed', error);
+          console.warn(
+            'video failed', error,
+          );
         }}
       />
       {!isPlaying && (
-        <Image style={styles.thumbnail} source={{uri: posterUrl}} />
+        <Image style={styles.thumbnail} source={{ uri: posterUrl }} />
       )}
 
       {loading ? (
         <LoadingIndicator size={60} color={colors.gray20} />
       ) : !isPlaying ? (
         <TouchableOpacity
-          activeOpacity={!!url ? 0.85 : 1}
+          activeOpacity={url ? 0.85 : 1}
           onPress={() => {
             loadAsyncVideo();
           }}
-          style={styles.buttonPlay}>
+          style={styles.buttonPlay}
+        >
           <Icon size={60} tintColor={colors.gray20} icon="CirclePlay" />
         </TouchableOpacity>
       ) : null}
@@ -155,7 +170,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       // width: '100%',

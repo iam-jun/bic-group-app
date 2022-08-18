@@ -1,17 +1,17 @@
 /* Declare Dimensions */
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const guidelineBaseWidth = 375;
 
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
 
-// Cover image ratio -> 25:11
-export const scaleCoverHeight = (widthSize: number) => (widthSize / 25) * 11;
+// Cover image ratio -> 21:9
+export const scaleCoverHeight = (widthSize = DeviceWidth) => (widthSize / 21) * 9;
 
 export const groupProfileImageCropRatio = {
   // image crop ratio for cover photo: 25:11
-  background_img_url: {
+  backgroundImgUrl: {
     width: 1080,
     height: 475,
   },
@@ -21,7 +21,7 @@ export const groupProfileImageCropRatio = {
 
 export const userProfileImageCropRatio = {
   // image crop ratio for cover photo: 25:11
-  background_img_url: {
+  backgroundImgUrl: {
     width: 1080,
     height: 475,
   },
@@ -31,12 +31,12 @@ export const userProfileImageCropRatio = {
 
 /* Size config used for Text */
 export const sizes = {
-  h1: 32,
-  h2: 28,
-  h3: 24,
-  h4: 20,
-  h5: 17,
-  h6: 15,
+  h1: 28,
+  h2: 24,
+  h3: 20,
+  h4: 17,
+  h5: 15,
+  h6: 13,
   subtitleL: 17,
   subtitleM: 15,
   subtitleS: 13,
@@ -45,23 +45,26 @@ export const sizes = {
   bodyMMedium: 15,
   bodyS: 13,
   bodySMedium: 13,
+  bodyXS: 11,
+  bodyXSMedium: 11,
   paragraphL: 17,
   paragraphM: 15,
   paragraphS: 13,
-  buttonL: 17,
+  buttonL: 15,
   buttonM: 15,
   buttonS: 13,
-  tabL: 17,
-  tabM: 15,
-  tabS: 13,
+  tabL: 15,
+  tabM: 13,
+  tabS: 11,
   linkM: 15,
   linkS: 13,
   badgeL: 15,
   badgeM: 13,
   badgeS: 11,
   badgeXS: 9,
-  labelL: 18,
+  labelL: 17,
   labelM: 15,
+  labelS: 13,
   dropdownM: 15,
   dropdownS: 13,
   numberM: 15,
@@ -80,11 +83,11 @@ export const lineHeights = {
   h5: 26,
   h6: 24,
   subtitleL: 26,
-  subtitleM: 22,
+  subtitleM: 24,
   subtitleS: 20,
   subtitleXS: 16,
-  bodyM: 22,
-  bodyMMedium: 22,
+  bodyM: 24,
+  bodyMMedium: 24,
   bodyS: 20,
   bodySMedium: 20,
   paragraphL: 28,
@@ -152,13 +155,23 @@ export const sizeButton = {
 };
 
 export const avatarSizes = {
-  tiny: 16,
-  small: 24,
-  smallAlt: 32,
-  medium: 40,
-  large: 48,
-  largeAlt: 72,
-  ultraSuperLarge: 96,
+  tiny: 24,
+  xSmall: 28,
+  small: 32,
+  base: 40,
+  medium: 48,
+  large: 64,
+  xLarge: 80,
+};
+
+export const avatarBorderWidth = {
+  tiny: 1,
+  xSmall: 1,
+  small: 1,
+  base: 1,
+  medium: 2,
+  large: 2,
+  xLarge: 2,
 };
 
 export const headerHeight = 60;
@@ -166,11 +179,14 @@ export const primaryItemHeight = 64;
 export const commentBarHeight = 44;
 export const postToolbarHeight = 52;
 export const maxNewsfeedWidth = 584;
-export const bottomBarHeight = 60;
+export const bottomBarHeight = 52;
 export const permissionRoleSectionHeaderHeight = 56;
 
-export const scaleSize = (size: number): number =>
-  (DeviceWidth / guidelineBaseWidth) * size;
+export const homeHeaderLogoHeight = 48;
+export const homeHeaderTabHeight = 44;
+export const homeHeaderHeight = homeHeaderLogoHeight + homeHeaderTabHeight;
+
+export const scaleSize = (size: number): number => (DeviceWidth / guidelineBaseWidth) * size;
 
 export default {
   sizes,
@@ -179,8 +195,10 @@ export default {
   sizeButton,
   letterSpacing,
   headerHeight,
+  homeHeaderHeight,
   primaryItemHeight,
   avatarSizes,
+  avatarBorderWidth,
   commentBarHeight,
   postToolbarHeight,
   maxNewsfeedWidth,

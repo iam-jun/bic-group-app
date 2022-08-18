@@ -99,10 +99,10 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
             onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#EAEDF2",
+                "backgroundColor": "rgba(255,255,255,0)",
                 "flexDirection": "row",
                 "height": "100%",
-                "marginHorizontal": 12,
+                "marginHorizontal": 8,
                 "opacity": 1,
                 "width": 1,
               }
@@ -111,11 +111,14 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -124,7 +127,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   Object {
                     "alignSelf": "center",
                     "backgroundColor": "#FFFFFF",
-                    "marginLeft": -7,
+                    "marginLeft": -6,
                     "paddingVertical": 4,
                   }
                 }
@@ -184,53 +187,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                     >
                       <View
                         testID="group_item.button_wrapper.icon"
-                      >
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={18}
-                          bbWidth={18}
-                          color={4281284933}
-                          focusable={false}
-                          height={18}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 18,
-                                "width": 18,
-                              },
-                            ]
-                          }
-                          tintColor={4281284933}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={18}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      />
                     </View>
                   </View>
                 </View>
@@ -239,106 +196,128 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
           </View>
           <View
             style={
-              Object {
-                "flex": 1,
-                "flexDirection": "row",
-                "paddingVertical": 4,
-              }
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "paddingLeft": 8,
+                  "paddingVertical": 4,
+                },
+                undefined,
+              ]
             }
           >
             <View>
-              <View
-                style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-                testID="avatar"
-              >
+              <View>
                 <View
                   style={
-                    Object {
-                      "backgroundColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "height": 40,
-                      "width": 40,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                      undefined,
+                    ]
                   }
-                  testID="avatar_container"
+                  testID="avatar"
                 >
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "borderRadius": 4,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "backgroundColor": "#A4A9B7",
+                        },
+                      ]
                     }
+                    testID="avatar_container"
                   >
                     <View
-                      collapsable={false}
+                      onLayout={[Function]}
                       style={
                         Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
+                          "backgroundColor": "transparent",
+                          "position": "relative",
                         }
                       }
                     >
                       <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "justifyContent": "center",
-                            "width": 40,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={null}
+                        collapsable={false}
                         style={
                           Object {
                             "bottom": 0,
                             "left": 0,
+                            "opacity": 1,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,
                           }
                         }
-                        testID="avatar.image"
-                      />
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "justifyContent": "center",
+                              "width": 40,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "width": 40,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          source={null}
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                          testID="avatar.image"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
@@ -351,149 +330,82 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
+                    "alignItems": "center",
                     "bottom": -3,
+                    "flexDirection": "row",
                     "opacity": 1,
                     "position": "absolute",
                     "right": -6,
                   }
                 }
+                testID="group_item.check_box"
               >
                 <View
                   style={
                     Object {
-                      "backgroundColor": "#EAEDF2",
-                      "borderColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "borderWidth": 1,
-                      "height": 20,
-                      "justifyContent": "center",
-                      "width": 20,
+                      "backgroundColor": "#FFFFFF",
+                      "bottom": 2,
+                      "left": 2,
+                      "position": "absolute",
+                      "right": 2,
+                      "top": 2,
                     }
                   }
-                  testID="group_item.check_box"
+                />
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
                 >
                   <View
-                    accessibilityState={
-                      Object {
-                        "disabled": true,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={false}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
-                      Object {
-                        "opacity": 1,
-                      }
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
                     }
                   >
                     <View
                       style={
                         Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
                           undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
+                          undefined,
+                          undefined,
                         ]
                       }
                     >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View>
-                          <View
-                            onLayout={[Function]}
-                            style={
-                              Object {
-                                "backgroundColor": "transparent",
-                                "position": "relative",
-                              }
-                            }
-                          >
-                            <View
-                              collapsable={false}
-                              style={
-                                Object {
-                                  "bottom": 0,
-                                  "left": 0,
-                                  "opacity": 1,
-                                  "position": "absolute",
-                                  "right": 0,
-                                  "top": 0,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "#f9f9f9",
-                                    "height": 18,
-                                    "justifyContent": "center",
-                                    "width": 18,
-                                  }
-                                }
-                                testID="Image__placeholder"
-                              />
-                            </View>
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "overflow": "hidden",
-                                  },
-                                  Object {
-                                    "height": 18,
-                                    "width": 18,
-                                  },
-                                ]
-                              }
-                            >
-                              <FastImageView
-                                onFastImageError={[Function]}
-                                onFastImageLoadEnd={[Function]}
-                                resizeMode="cover"
-                                size={18}
-                                source={null}
-                                style={
-                                  Object {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  }
-                                }
-                              />
-                            </View>
-                          </View>
-                        </View>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -503,6 +415,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "justifyContent": "center",
                   "paddingHorizontal": 12,
                 }
               }
@@ -512,9 +425,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
                     Object {
@@ -587,53 +500,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         ]
                       }
                     >
-                      <View>
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={16}
-                          bbWidth={16}
-                          color={4284641926}
-                          focusable={false}
-                          height={16}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 16,
-                                "width": 16,
-                              },
-                            ]
-                          }
-                          tintColor={4284641926}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={16}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -641,12 +508,12 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 14,
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
                       },
                       Object {
-                        "color": "#627286",
+                        "color": "#767D93",
                       },
                       Object {
                         "marginHorizontal": 4,
@@ -689,12 +556,14 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
         >
           <View
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "height": "100%",
-                "marginHorizontal": 12,
-                "width": 1,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "#E3E6F2",
+                  "height": "100%",
+                  "marginHorizontal": 8,
+                  "width": 1,
+                },
+              ]
             }
             testID="group_item.ui_level"
           />
@@ -724,10 +593,10 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
             onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#EAEDF2",
+                "backgroundColor": "rgba(255,255,255,0)",
                 "flexDirection": "row",
                 "height": "100%",
-                "marginHorizontal": 12,
+                "marginHorizontal": 8,
                 "opacity": 1,
                 "width": 1,
               }
@@ -736,11 +605,14 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -749,7 +621,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   Object {
                     "alignSelf": "center",
                     "backgroundColor": "#FFFFFF",
-                    "marginLeft": -7,
+                    "marginLeft": -6,
                     "paddingVertical": 4,
                   }
                 }
@@ -809,53 +681,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                     >
                       <View
                         testID="group_item.button_wrapper.icon"
-                      >
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={18}
-                          bbWidth={18}
-                          color={4281284933}
-                          focusable={false}
-                          height={18}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 18,
-                                "width": 18,
-                              },
-                            ]
-                          }
-                          tintColor={4281284933}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={18}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      />
                     </View>
                   </View>
                 </View>
@@ -864,106 +690,128 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
           </View>
           <View
             style={
-              Object {
-                "flex": 1,
-                "flexDirection": "row",
-                "paddingVertical": 4,
-              }
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "paddingLeft": 8,
+                  "paddingVertical": 4,
+                },
+                undefined,
+              ]
             }
           >
             <View>
-              <View
-                style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-                testID="avatar"
-              >
+              <View>
                 <View
                   style={
-                    Object {
-                      "backgroundColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "height": 40,
-                      "width": 40,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                      undefined,
+                    ]
                   }
-                  testID="avatar_container"
+                  testID="avatar"
                 >
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "borderRadius": 4,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "backgroundColor": "#A4A9B7",
+                        },
+                      ]
                     }
+                    testID="avatar_container"
                   >
                     <View
-                      collapsable={false}
+                      onLayout={[Function]}
                       style={
                         Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
+                          "backgroundColor": "transparent",
+                          "position": "relative",
                         }
                       }
                     >
                       <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "justifyContent": "center",
-                            "width": 40,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={null}
+                        collapsable={false}
                         style={
                           Object {
                             "bottom": 0,
                             "left": 0,
+                            "opacity": 1,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,
                           }
                         }
-                        testID="avatar.image"
-                      />
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "justifyContent": "center",
+                              "width": 40,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "width": 40,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          source={null}
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                          testID="avatar.image"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
@@ -976,149 +824,82 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
+                    "alignItems": "center",
                     "bottom": -3,
+                    "flexDirection": "row",
                     "opacity": 1,
                     "position": "absolute",
                     "right": -6,
                   }
                 }
+                testID="group_item.check_box"
               >
                 <View
                   style={
                     Object {
-                      "backgroundColor": "#421187",
-                      "borderColor": "#421187",
-                      "borderRadius": 6,
-                      "borderWidth": 1,
-                      "height": 20,
-                      "justifyContent": "center",
-                      "width": 20,
+                      "backgroundColor": "#FFFFFF",
+                      "bottom": 2,
+                      "left": 2,
+                      "position": "absolute",
+                      "right": 2,
+                      "top": 2,
                     }
                   }
-                  testID="group_item.check_box"
+                />
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
                 >
                   <View
-                    accessibilityState={
-                      Object {
-                        "disabled": true,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={false}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
-                      Object {
-                        "opacity": 1,
-                      }
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
                     }
                   >
                     <View
                       style={
                         Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
                           undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
+                          undefined,
+                          undefined,
                         ]
                       }
                     >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View>
-                          <View
-                            onLayout={[Function]}
-                            style={
-                              Object {
-                                "backgroundColor": "transparent",
-                                "position": "relative",
-                              }
-                            }
-                          >
-                            <View
-                              collapsable={false}
-                              style={
-                                Object {
-                                  "bottom": 0,
-                                  "left": 0,
-                                  "opacity": 1,
-                                  "position": "absolute",
-                                  "right": 0,
-                                  "top": 0,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "#f9f9f9",
-                                    "height": 18,
-                                    "justifyContent": "center",
-                                    "width": 18,
-                                  }
-                                }
-                                testID="Image__placeholder"
-                              />
-                            </View>
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "overflow": "hidden",
-                                  },
-                                  Object {
-                                    "height": 18,
-                                    "width": 18,
-                                  },
-                                ]
-                              }
-                            >
-                              <FastImageView
-                                onFastImageError={[Function]}
-                                onFastImageLoadEnd={[Function]}
-                                resizeMode="cover"
-                                size={18}
-                                source={null}
-                                style={
-                                  Object {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  }
-                                }
-                              />
-                            </View>
-                          </View>
-                        </View>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -1128,6 +909,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "justifyContent": "center",
                   "paddingHorizontal": 12,
                 }
               }
@@ -1137,9 +919,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
                     Object {
@@ -1212,53 +994,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         ]
                       }
                     >
-                      <View>
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={16}
-                          bbWidth={16}
-                          color={4284641926}
-                          focusable={false}
-                          height={16}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 16,
-                                "width": 16,
-                              },
-                            ]
-                          }
-                          tintColor={4284641926}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={16}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -1266,12 +1002,12 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 14,
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
                       },
                       Object {
-                        "color": "#627286",
+                        "color": "#767D93",
                       },
                       Object {
                         "marginHorizontal": 4,
@@ -1314,23 +1050,27 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
         >
           <View
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "height": "100%",
-                "marginHorizontal": 12,
-                "width": 1,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "#E3E6F2",
+                  "height": "100%",
+                  "marginHorizontal": 8,
+                  "width": 1,
+                },
+              ]
             }
             testID="group_item.ui_level"
           />
           <View
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "height": "100%",
-                "marginHorizontal": 12,
-                "width": 1,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "#E3E6F2",
+                  "height": "100%",
+                  "marginHorizontal": 8,
+                  "width": 1,
+                },
+              ]
             }
             testID="group_item.ui_level"
           />
@@ -1360,10 +1100,10 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
             onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#EAEDF2",
+                "backgroundColor": "rgba(255,255,255,0)",
                 "flexDirection": "row",
                 "height": "100%",
-                "marginHorizontal": 12,
+                "marginHorizontal": 8,
                 "opacity": 1,
                 "width": 1,
               }
@@ -1372,117 +1112,142 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             />
           </View>
           <View
             style={
-              Object {
-                "flex": 1,
-                "flexDirection": "row",
-                "paddingVertical": 4,
-              }
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "paddingLeft": 8,
+                  "paddingVertical": 4,
+                },
+                undefined,
+              ]
             }
           >
             <View>
-              <View
-                style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-                testID="avatar"
-              >
+              <View>
                 <View
                   style={
-                    Object {
-                      "backgroundColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "height": 40,
-                      "width": 40,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                      undefined,
+                    ]
                   }
-                  testID="avatar_container"
+                  testID="avatar"
                 >
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "borderRadius": 4,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "backgroundColor": "#A4A9B7",
+                        },
+                      ]
                     }
+                    testID="avatar_container"
                   >
                     <View
-                      collapsable={false}
+                      onLayout={[Function]}
                       style={
                         Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
+                          "backgroundColor": "transparent",
+                          "position": "relative",
                         }
                       }
                     >
                       <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "justifyContent": "center",
-                            "width": 40,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={null}
+                        collapsable={false}
                         style={
                           Object {
                             "bottom": 0,
                             "left": 0,
+                            "opacity": 1,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,
                           }
                         }
-                        testID="avatar.image"
-                      />
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "justifyContent": "center",
+                              "width": 40,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "width": 40,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          source={null}
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                          testID="avatar.image"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
@@ -1495,149 +1260,82 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
+                    "alignItems": "center",
                     "bottom": -3,
+                    "flexDirection": "row",
                     "opacity": 1,
                     "position": "absolute",
                     "right": -6,
                   }
                 }
+                testID="group_item.check_box"
               >
                 <View
                   style={
                     Object {
-                      "backgroundColor": "#421187",
-                      "borderColor": "#421187",
-                      "borderRadius": 6,
-                      "borderWidth": 1,
-                      "height": 20,
-                      "justifyContent": "center",
-                      "width": 20,
+                      "backgroundColor": "#FFFFFF",
+                      "bottom": 2,
+                      "left": 2,
+                      "position": "absolute",
+                      "right": 2,
+                      "top": 2,
                     }
                   }
-                  testID="group_item.check_box"
+                />
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
                 >
                   <View
-                    accessibilityState={
-                      Object {
-                        "disabled": true,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={false}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
-                      Object {
-                        "opacity": 1,
-                      }
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
                     }
                   >
                     <View
                       style={
                         Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
                           undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
+                          undefined,
+                          undefined,
                         ]
                       }
                     >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View>
-                          <View
-                            onLayout={[Function]}
-                            style={
-                              Object {
-                                "backgroundColor": "transparent",
-                                "position": "relative",
-                              }
-                            }
-                          >
-                            <View
-                              collapsable={false}
-                              style={
-                                Object {
-                                  "bottom": 0,
-                                  "left": 0,
-                                  "opacity": 1,
-                                  "position": "absolute",
-                                  "right": 0,
-                                  "top": 0,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "#f9f9f9",
-                                    "height": 18,
-                                    "justifyContent": "center",
-                                    "width": 18,
-                                  }
-                                }
-                                testID="Image__placeholder"
-                              />
-                            </View>
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "overflow": "hidden",
-                                  },
-                                  Object {
-                                    "height": 18,
-                                    "width": 18,
-                                  },
-                                ]
-                              }
-                            >
-                              <FastImageView
-                                onFastImageError={[Function]}
-                                onFastImageLoadEnd={[Function]}
-                                resizeMode="cover"
-                                size={18}
-                                source={null}
-                                style={
-                                  Object {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  }
-                                }
-                              />
-                            </View>
-                          </View>
-                        </View>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -1647,6 +1345,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "justifyContent": "center",
                   "paddingHorizontal": 12,
                 }
               }
@@ -1656,9 +1355,9 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
                     Object {
@@ -1731,53 +1430,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         ]
                       }
                     >
-                      <View>
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={16}
-                          bbWidth={16}
-                          color={4284641926}
-                          focusable={false}
-                          height={16}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 16,
-                                "width": 16,
-                              },
-                            ]
-                          }
-                          tintColor={4284641926}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={16}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -1785,12 +1438,12 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 14,
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
                       },
                       Object {
-                        "color": "#627286",
+                        "color": "#767D93",
                       },
                       Object {
                         "marginHorizontal": 4,
@@ -1875,10 +1528,10 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
             onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#EAEDF2",
+                "backgroundColor": "rgba(255,255,255,0)",
                 "flexDirection": "row",
                 "height": "100%",
-                "marginHorizontal": 12,
+                "marginHorizontal": 8,
                 "opacity": 1,
                 "width": 1,
               }
@@ -1887,11 +1540,14 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -1900,7 +1556,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                   Object {
                     "alignSelf": "center",
                     "backgroundColor": "#FFFFFF",
-                    "marginLeft": -7,
+                    "marginLeft": -6,
                     "paddingVertical": 4,
                   }
                 }
@@ -1960,53 +1616,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     >
                       <View
                         testID="group_item.button_wrapper.icon"
-                      >
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={18}
-                          bbWidth={18}
-                          color={4281284933}
-                          focusable={false}
-                          height={18}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 18,
-                                "width": 18,
-                              },
-                            ]
-                          }
-                          tintColor={4281284933}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={18}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      />
                     </View>
                   </View>
                 </View>
@@ -2015,106 +1625,128 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
           </View>
           <View
             style={
-              Object {
-                "flex": 1,
-                "flexDirection": "row",
-                "paddingVertical": 4,
-              }
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "paddingLeft": 8,
+                  "paddingVertical": 4,
+                },
+                undefined,
+              ]
             }
           >
             <View>
-              <View
-                style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-                testID="avatar"
-              >
+              <View>
                 <View
                   style={
-                    Object {
-                      "backgroundColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "height": 40,
-                      "width": 40,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                      undefined,
+                    ]
                   }
-                  testID="avatar_container"
+                  testID="avatar"
                 >
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "borderRadius": 4,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "backgroundColor": "#A4A9B7",
+                        },
+                      ]
                     }
+                    testID="avatar_container"
                   >
                     <View
-                      collapsable={false}
+                      onLayout={[Function]}
                       style={
                         Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
+                          "backgroundColor": "transparent",
+                          "position": "relative",
                         }
                       }
                     >
                       <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "justifyContent": "center",
-                            "width": 40,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={null}
+                        collapsable={false}
                         style={
                           Object {
                             "bottom": 0,
                             "left": 0,
+                            "opacity": 1,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,
                           }
                         }
-                        testID="avatar.image"
-                      />
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "justifyContent": "center",
+                              "width": 40,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "width": 40,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          source={null}
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                          testID="avatar.image"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
@@ -2127,149 +1759,82 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
+                    "alignItems": "center",
                     "bottom": -3,
+                    "flexDirection": "row",
                     "opacity": 1,
                     "position": "absolute",
                     "right": -6,
                   }
                 }
+                testID="group_item.check_box"
               >
                 <View
                   style={
                     Object {
-                      "backgroundColor": "#EAEDF2",
-                      "borderColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "borderWidth": 1,
-                      "height": 20,
-                      "justifyContent": "center",
-                      "width": 20,
+                      "backgroundColor": "#FFFFFF",
+                      "bottom": 2,
+                      "left": 2,
+                      "position": "absolute",
+                      "right": 2,
+                      "top": 2,
                     }
                   }
-                  testID="group_item.check_box"
+                />
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
                 >
                   <View
-                    accessibilityState={
-                      Object {
-                        "disabled": true,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={false}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
-                      Object {
-                        "opacity": 1,
-                      }
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
                     }
                   >
                     <View
                       style={
                         Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
                           undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
+                          undefined,
+                          undefined,
                         ]
                       }
                     >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View>
-                          <View
-                            onLayout={[Function]}
-                            style={
-                              Object {
-                                "backgroundColor": "transparent",
-                                "position": "relative",
-                              }
-                            }
-                          >
-                            <View
-                              collapsable={false}
-                              style={
-                                Object {
-                                  "bottom": 0,
-                                  "left": 0,
-                                  "opacity": 1,
-                                  "position": "absolute",
-                                  "right": 0,
-                                  "top": 0,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "#f9f9f9",
-                                    "height": 18,
-                                    "justifyContent": "center",
-                                    "width": 18,
-                                  }
-                                }
-                                testID="Image__placeholder"
-                              />
-                            </View>
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "overflow": "hidden",
-                                  },
-                                  Object {
-                                    "height": 18,
-                                    "width": 18,
-                                  },
-                                ]
-                              }
-                            >
-                              <FastImageView
-                                onFastImageError={[Function]}
-                                onFastImageLoadEnd={[Function]}
-                                resizeMode="cover"
-                                size={18}
-                                source={null}
-                                style={
-                                  Object {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  }
-                                }
-                              />
-                            </View>
-                          </View>
-                        </View>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -2279,6 +1844,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               style={
                 Object {
                   "flex": 1,
+                  "justifyContent": "center",
                   "paddingHorizontal": 12,
                 }
               }
@@ -2288,9 +1854,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
                     Object {
@@ -2363,53 +1929,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                         ]
                       }
                     >
-                      <View>
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={16}
-                          bbWidth={16}
-                          color={4284641926}
-                          focusable={false}
-                          height={16}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 16,
-                                "width": 16,
-                              },
-                            ]
-                          }
-                          tintColor={4284641926}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={16}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -2417,12 +1937,12 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 14,
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
                       },
                       Object {
-                        "color": "#627286",
+                        "color": "#767D93",
                       },
                       Object {
                         "marginHorizontal": 4,
@@ -2465,12 +1985,14 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
         >
           <View
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "height": "100%",
-                "marginHorizontal": 12,
-                "width": 1,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "#E3E6F2",
+                  "height": "100%",
+                  "marginHorizontal": 8,
+                  "width": 1,
+                },
+              ]
             }
             testID="group_item.ui_level"
           />
@@ -2500,10 +2022,10 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
             onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#EAEDF2",
+                "backgroundColor": "rgba(255,255,255,0)",
                 "flexDirection": "row",
                 "height": "100%",
-                "marginHorizontal": 12,
+                "marginHorizontal": 8,
                 "opacity": 1,
                 "width": 1,
               }
@@ -2512,11 +2034,14 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -2525,7 +2050,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                   Object {
                     "alignSelf": "center",
                     "backgroundColor": "#FFFFFF",
-                    "marginLeft": -7,
+                    "marginLeft": -6,
                     "paddingVertical": 4,
                   }
                 }
@@ -2585,53 +2110,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     >
                       <View
                         testID="group_item.button_wrapper.icon"
-                      >
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={18}
-                          bbWidth={18}
-                          color={4281284933}
-                          focusable={false}
-                          height={18}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 18,
-                                "width": 18,
-                              },
-                            ]
-                          }
-                          tintColor={4281284933}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={18}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      />
                     </View>
                   </View>
                 </View>
@@ -2640,106 +2119,128 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
           </View>
           <View
             style={
-              Object {
-                "flex": 1,
-                "flexDirection": "row",
-                "paddingVertical": 4,
-              }
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "paddingLeft": 8,
+                  "paddingVertical": 4,
+                },
+                undefined,
+              ]
             }
           >
             <View>
-              <View
-                style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-                testID="avatar"
-              >
+              <View>
                 <View
                   style={
-                    Object {
-                      "backgroundColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "height": 40,
-                      "width": 40,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                      undefined,
+                    ]
                   }
-                  testID="avatar_container"
+                  testID="avatar"
                 >
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "borderRadius": 4,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "backgroundColor": "#A4A9B7",
+                        },
+                      ]
                     }
+                    testID="avatar_container"
                   >
                     <View
-                      collapsable={false}
+                      onLayout={[Function]}
                       style={
                         Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
+                          "backgroundColor": "transparent",
+                          "position": "relative",
                         }
                       }
                     >
                       <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "justifyContent": "center",
-                            "width": 40,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={null}
+                        collapsable={false}
                         style={
                           Object {
                             "bottom": 0,
                             "left": 0,
+                            "opacity": 1,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,
                           }
                         }
-                        testID="avatar.image"
-                      />
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "justifyContent": "center",
+                              "width": 40,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "width": 40,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          source={null}
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                          testID="avatar.image"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
@@ -2752,149 +2253,82 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
+                    "alignItems": "center",
                     "bottom": -3,
+                    "flexDirection": "row",
                     "opacity": 1,
                     "position": "absolute",
                     "right": -6,
                   }
                 }
+                testID="group_item.check_box"
               >
                 <View
                   style={
                     Object {
-                      "backgroundColor": "#EAEDF2",
-                      "borderColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "borderWidth": 1,
-                      "height": 20,
-                      "justifyContent": "center",
-                      "width": 20,
+                      "backgroundColor": "#FFFFFF",
+                      "bottom": 2,
+                      "left": 2,
+                      "position": "absolute",
+                      "right": 2,
+                      "top": 2,
                     }
                   }
-                  testID="group_item.check_box"
+                />
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
                 >
                   <View
-                    accessibilityState={
-                      Object {
-                        "disabled": true,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={false}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
-                      Object {
-                        "opacity": 1,
-                      }
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
                     }
                   >
                     <View
                       style={
                         Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
                           undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
+                          undefined,
+                          undefined,
                         ]
                       }
                     >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View>
-                          <View
-                            onLayout={[Function]}
-                            style={
-                              Object {
-                                "backgroundColor": "transparent",
-                                "position": "relative",
-                              }
-                            }
-                          >
-                            <View
-                              collapsable={false}
-                              style={
-                                Object {
-                                  "bottom": 0,
-                                  "left": 0,
-                                  "opacity": 1,
-                                  "position": "absolute",
-                                  "right": 0,
-                                  "top": 0,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "#f9f9f9",
-                                    "height": 18,
-                                    "justifyContent": "center",
-                                    "width": 18,
-                                  }
-                                }
-                                testID="Image__placeholder"
-                              />
-                            </View>
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "overflow": "hidden",
-                                  },
-                                  Object {
-                                    "height": 18,
-                                    "width": 18,
-                                  },
-                                ]
-                              }
-                            >
-                              <FastImageView
-                                onFastImageError={[Function]}
-                                onFastImageLoadEnd={[Function]}
-                                resizeMode="cover"
-                                size={18}
-                                source={null}
-                                style={
-                                  Object {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  }
-                                }
-                              />
-                            </View>
-                          </View>
-                        </View>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -2904,6 +2338,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               style={
                 Object {
                   "flex": 1,
+                  "justifyContent": "center",
                   "paddingHorizontal": 12,
                 }
               }
@@ -2913,9 +2348,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
                     Object {
@@ -2988,53 +2423,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                         ]
                       }
                     >
-                      <View>
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={16}
-                          bbWidth={16}
-                          color={4284641926}
-                          focusable={false}
-                          height={16}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 16,
-                                "width": 16,
-                              },
-                            ]
-                          }
-                          tintColor={4284641926}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={16}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -3042,12 +2431,12 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 14,
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
                       },
                       Object {
-                        "color": "#627286",
+                        "color": "#767D93",
                       },
                       Object {
                         "marginHorizontal": 4,
@@ -3090,23 +2479,27 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
         >
           <View
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "height": "100%",
-                "marginHorizontal": 12,
-                "width": 1,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "#E3E6F2",
+                  "height": "100%",
+                  "marginHorizontal": 8,
+                  "width": 1,
+                },
+              ]
             }
             testID="group_item.ui_level"
           />
           <View
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "height": "100%",
-                "marginHorizontal": 12,
-                "width": 1,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "#E3E6F2",
+                  "height": "100%",
+                  "marginHorizontal": 8,
+                  "width": 1,
+                },
+              ]
             }
             testID="group_item.ui_level"
           />
@@ -3136,10 +2529,10 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
             onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#EAEDF2",
+                "backgroundColor": "rgba(255,255,255,0)",
                 "flexDirection": "row",
                 "height": "100%",
-                "marginHorizontal": 12,
+                "marginHorizontal": 8,
                 "opacity": 1,
                 "width": 1,
               }
@@ -3148,117 +2541,142 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             />
           </View>
           <View
             style={
-              Object {
-                "flex": 1,
-                "flexDirection": "row",
-                "paddingVertical": 4,
-              }
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "paddingLeft": 8,
+                  "paddingVertical": 4,
+                },
+                undefined,
+              ]
             }
           >
             <View>
-              <View
-                style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-                testID="avatar"
-              >
+              <View>
                 <View
                   style={
-                    Object {
-                      "backgroundColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "height": 40,
-                      "width": 40,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                      undefined,
+                    ]
                   }
-                  testID="avatar_container"
+                  testID="avatar"
                 >
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "borderRadius": 4,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "backgroundColor": "#A4A9B7",
+                        },
+                      ]
                     }
+                    testID="avatar_container"
                   >
                     <View
-                      collapsable={false}
+                      onLayout={[Function]}
                       style={
                         Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
+                          "backgroundColor": "transparent",
+                          "position": "relative",
                         }
                       }
                     >
                       <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "justifyContent": "center",
-                            "width": 40,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={null}
+                        collapsable={false}
                         style={
                           Object {
                             "bottom": 0,
                             "left": 0,
+                            "opacity": 1,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,
                           }
                         }
-                        testID="avatar.image"
-                      />
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "justifyContent": "center",
+                              "width": 40,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "width": 40,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          source={null}
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                          testID="avatar.image"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
                 accessible={true}
                 collapsable={false}
                 focusable={true}
@@ -3271,149 +2689,82 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
+                    "alignItems": "center",
                     "bottom": -3,
+                    "flexDirection": "row",
                     "opacity": 1,
                     "position": "absolute",
                     "right": -6,
                   }
                 }
+                testID="group_item.check_box"
               >
                 <View
                   style={
                     Object {
-                      "backgroundColor": "#EAEDF2",
-                      "borderColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "borderWidth": 1,
-                      "height": 20,
-                      "justifyContent": "center",
-                      "width": 20,
+                      "backgroundColor": "#FFFFFF",
+                      "bottom": 2,
+                      "left": 2,
+                      "position": "absolute",
+                      "right": 2,
+                      "top": 2,
                     }
                   }
-                  testID="group_item.check_box"
+                />
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
                 >
                   <View
-                    accessibilityState={
-                      Object {
-                        "disabled": true,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={false}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
-                      Object {
-                        "opacity": 1,
-                      }
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
                     }
                   >
                     <View
                       style={
                         Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
                           undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
+                          undefined,
+                          undefined,
                         ]
                       }
                     >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View>
-                          <View
-                            onLayout={[Function]}
-                            style={
-                              Object {
-                                "backgroundColor": "transparent",
-                                "position": "relative",
-                              }
-                            }
-                          >
-                            <View
-                              collapsable={false}
-                              style={
-                                Object {
-                                  "bottom": 0,
-                                  "left": 0,
-                                  "opacity": 1,
-                                  "position": "absolute",
-                                  "right": 0,
-                                  "top": 0,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "#f9f9f9",
-                                    "height": 18,
-                                    "justifyContent": "center",
-                                    "width": 18,
-                                  }
-                                }
-                                testID="Image__placeholder"
-                              />
-                            </View>
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "overflow": "hidden",
-                                  },
-                                  Object {
-                                    "height": 18,
-                                    "width": 18,
-                                  },
-                                ]
-                              }
-                            >
-                              <FastImageView
-                                onFastImageError={[Function]}
-                                onFastImageLoadEnd={[Function]}
-                                resizeMode="cover"
-                                size={18}
-                                source={null}
-                                style={
-                                  Object {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  }
-                                }
-                              />
-                            </View>
-                          </View>
-                        </View>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -3423,6 +2774,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               style={
                 Object {
                   "flex": 1,
+                  "justifyContent": "center",
                   "paddingHorizontal": 12,
                 }
               }
@@ -3432,9 +2784,9 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
                     Object {
@@ -3507,53 +2859,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                         ]
                       }
                     >
-                      <View>
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={16}
-                          bbWidth={16}
-                          color={4284641926}
-                          focusable={false}
-                          height={16}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 16,
-                                "width": 16,
-                              },
-                            ]
-                          }
-                          tintColor={4284641926}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={16}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -3561,12 +2867,12 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 14,
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
                       },
                       Object {
-                        "color": "#627286",
+                        "color": "#767D93",
                       },
                       Object {
                         "marginHorizontal": 4,
@@ -3651,10 +2957,10 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
             onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "#EAEDF2",
+                "backgroundColor": "rgba(255,255,255,0)",
                 "flexDirection": "row",
                 "height": "100%",
-                "marginHorizontal": 12,
+                "marginHorizontal": 8,
                 "opacity": 1,
                 "width": 1,
               }
@@ -3663,11 +2969,14 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
               }
               testID="button_wrapper.content"
             >
@@ -3676,7 +2985,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                   Object {
                     "alignSelf": "center",
                     "backgroundColor": "#FFFFFF",
-                    "marginLeft": -7,
+                    "marginLeft": -6,
                     "paddingVertical": 4,
                   }
                 }
@@ -3736,53 +3045,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                     >
                       <View
                         testID="group_item.button_wrapper.icon"
-                      >
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={18}
-                          bbWidth={18}
-                          color={4281284933}
-                          focusable={false}
-                          height={18}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 18,
-                                "width": 18,
-                              },
-                            ]
-                          }
-                          tintColor={4281284933}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={18}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M14.83 11.29l-4.24-4.24a1 1 0 00-1.42 0 1 1 0 000 1.41L12.71 12l-3.54 3.54a1 1 0 000 1.41 1 1 0 00.71.29 1 1 0 00.71-.29l4.24-4.24a1 1 0 000-1.42z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      />
                     </View>
                   </View>
                 </View>
@@ -3791,101 +3054,118 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
           </View>
           <View
             style={
-              Object {
-                "flex": 1,
-                "flexDirection": "row",
-                "paddingVertical": 4,
-              }
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "paddingLeft": 8,
+                  "paddingVertical": 4,
+                },
+                undefined,
+              ]
             }
           >
             <View>
-              <View
-                style={
-                  Object {
-                    "borderRadius": 6,
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-                testID="avatar"
-              >
+              <View>
                 <View
                   style={
-                    Object {
-                      "backgroundColor": "#B2BDCD",
-                      "borderRadius": 6,
-                      "height": 40,
-                      "width": 40,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 40,
+                        "width": 40,
+                      },
+                      undefined,
+                    ]
                   }
-                  testID="avatar_container"
+                  testID="avatar"
                 >
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "borderRadius": 4,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "backgroundColor": "#A4A9B7",
+                        },
+                      ]
                     }
+                    testID="avatar_container"
                   >
                     <View
-                      collapsable={false}
+                      onLayout={[Function]}
                       style={
                         Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
+                          "backgroundColor": "transparent",
+                          "position": "relative",
                         }
                       }
                     >
                       <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderRadius": 6,
-                            "height": 40,
-                            "justifyContent": "center",
-                            "width": 40,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "borderRadius": 6,
-                            "height": 40,
-                            "width": 40,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={null}
+                        collapsable={false}
                         style={
                           Object {
                             "bottom": 0,
                             "left": 0,
+                            "opacity": 1,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,
                           }
                         }
-                        testID="avatar.image"
-                      />
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "justifyContent": "center",
+                              "width": 40,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "borderColor": "#F2F5F8",
+                              "borderRadius": 4,
+                              "borderWidth": 2,
+                              "height": 40,
+                              "width": 40,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          source={null}
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                          testID="avatar.image"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -3895,6 +3175,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
               style={
                 Object {
                   "flex": 1,
+                  "justifyContent": "center",
                   "paddingHorizontal": 12,
                 }
               }
@@ -3904,9 +3185,9 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
+                      "color": "#181C32",
+                      "fontFamily": "BeVietnamPro-SemiBold",
+                      "fontSize": 15,
                     },
                     Object {},
                     Object {
@@ -3979,53 +3260,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                         ]
                       }
                     >
-                      <View>
-                        <RNSVGSvgView
-                          align="xMidYMid"
-                          bbHeight={16}
-                          bbWidth={16}
-                          color={4284641926}
-                          focusable={false}
-                          height={16}
-                          meetOrSlice={0}
-                          minX={0}
-                          minY={0}
-                          style={
-                            Array [
-                              Object {
-                                "backgroundColor": "transparent",
-                                "borderWidth": 0,
-                              },
-                              Object {},
-                              Object {
-                                "flex": 0,
-                                "height": 16,
-                                "width": 16,
-                              },
-                            ]
-                          }
-                          tintColor={4284641926}
-                          vbHeight={24}
-                          vbWidth={24}
-                          width={16}
-                        >
-                          <RNSVGGroup>
-                            <RNSVGPath
-                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                              fill={
-                                Array [
-                                  2,
-                                ]
-                              }
-                              propList={
-                                Array [
-                                  "fill",
-                                ]
-                              }
-                            />
-                          </RNSVGGroup>
-                        </RNSVGSvgView>
-                      </View>
+                      <View />
                     </View>
                   </View>
                 </View>
@@ -4033,12 +3268,12 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                   style={
                     Array [
                       Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 14,
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
                       },
                       Object {
-                        "color": "#627286",
+                        "color": "#767D93",
                       },
                       Object {
                         "marginHorizontal": 4,

@@ -8,13 +8,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
-import Icon, {IconProps} from '~/beinComponents/Icon';
-import {createTextStyle} from '~/beinComponents/Text/textStyle';
-import {useKeySelector} from '~/hooks/selector';
+import Text, { TextProps, TextVariant } from '~/beinComponents/Text';
+import Icon, { IconProps } from '~/beinComponents/Icon';
+import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
+import { lineHeights } from '~/theme/dimension';
 
 export interface ButtonWrapperProps {
   nativeID?: string;
@@ -64,16 +64,16 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   onLayout,
 }: ButtonWrapperProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
-  const textStyles = createTextStyle(theme);
-  textVariant = textVariant || 'buttonM';
+  const { colors } = theme;
+  const _textVariant = textVariant || 'buttonM';
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
+  const renderIcon = (
+    iconSource: any, iconProps: IconProps | undefined,
+  ) => {
     if (iconSource) {
-      // @ts-ignore
-      const size = textStyles[textVariant].lineHeight;
+      const size = lineHeights[_textVariant];
 
       return (
         <Icon
@@ -107,39 +107,46 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     <TouchableComponent
       nativeID={nativeID}
       testID={testID}
-      style={StyleSheet.flatten([style])}
+      style={style}
       disabled={!isInternetReachable || disabled}
       underlayColor={underlayColor}
       hitSlop={hitSlop}
       activeOpacity={activeOpacity}
       onPress={onPress}
       onLongPress={onLongPress}
-      onLayout={onLayout}>
+      onLayout={onLayout}
+    >
       <View
         testID="button_wrapper.content"
-        style={StyleSheet.flatten([
+        style={[
           {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
           },
           contentStyle,
-        ])}>
+        ]}
+      >
         {renderLoading()}
-        {renderIcon(leftIcon, leftIconProps)}
+        {renderIcon(
+          leftIcon, leftIconProps,
+        )}
         {typeof children === 'string' ? (
           <Text
             variant={textVariant}
             style={styles.text}
             color={disabled ? colors.gray40 : undefined}
             useI18n={useI18n}
-            {...textProps}>
+            {...textProps}
+          >
             {children}
           </Text>
         ) : (
           children
         )}
-        {renderIcon(rightIcon, rightIconProps)}
+        {renderIcon(
+          rightIcon, rightIconProps,
+        )}
       </View>
     </TouchableComponent>
   );

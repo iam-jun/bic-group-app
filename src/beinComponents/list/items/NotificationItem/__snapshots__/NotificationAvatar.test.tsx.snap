@@ -20,7 +20,7 @@ exports[`NotificationAvatar component renders correctly with COMMENT verb with a
 />
 `;
 
-exports[`NotificationAvatar component renders correctly with verb is with action comment lv2 1`] = `
+exports[`NotificationAvatar component renders correctly with action REACT post 1`] = `
 <View
   style={
     Object {
@@ -29,3 +29,5 @@ exports[`NotificationAvatar component renders correctly with verb is with action
   }
 />
 `;
+
+exports[`NotificationAvatar component renders correctly with action comment lv2 1`] = `null`;

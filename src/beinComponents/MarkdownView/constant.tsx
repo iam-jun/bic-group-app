@@ -1,12 +1,12 @@
 export type MarkdownType =
-  //core
+  // core
   | 'normalize'
   | 'block'
   | 'inline'
   | 'linkify'
   | 'replacements'
   | 'smartquotes'
-  //block
+  // block
   | 'table'
   | 'code'
   | 'fence'
@@ -16,8 +16,8 @@ export type MarkdownType =
   | 'html_block'
   | 'heading'
   | 'lheading'
-  | 'paragraph' //dangerous
-  //inline
+  | 'paragraph' // dangerous
+  // inline
   | 'text'
   | 'newline'
   | 'escape'

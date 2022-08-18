@@ -1,25 +1,18 @@
-import {GROUP_PRIVACY_TYPE} from '~/constants/privacyTypes';
+import { COMMUNITY_PRIVACY_TYPE } from '~/constants/privacyTypes';
 
 export interface ICommunity {
-  id: number;
-  group_id: number;
+  id: string;
+  groupId: string;
   name: string;
   slug: string;
-  privacy: GROUP_PRIVACY_TYPE;
+  privacy: COMMUNITY_PRIVACY_TYPE;
   description: string;
   icon: string;
-  background_img_url: string;
-  team_id?: string;
-  created_at: string;
-  updated_at: string;
-  user_count: number;
-  can_setting?: boolean;
-  can_edit_info?: boolean;
-  can_edit_privacy?: boolean;
-  can_manage_member?: boolean;
-  can_leave?: boolean;
-  can_manage_scheme?: boolean;
-  join_status?: number;
+  backgroundImgUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  userCount: number;
+  joinStatus?: number;
   members?: IPreviewMember[];
 }
 
@@ -28,11 +21,11 @@ export interface IParamGetCommunities {
   offset?: number;
   limit?: number;
   sort?: string;
-  preview_members?: boolean;
+  previewMembers?: boolean;
 }
 
 export interface IPreviewMember {
-  id: number;
+  id: string;
   username: string;
   fullname: string;
   avatar: string;
@@ -48,7 +41,7 @@ export type COMMUNITY_ROLE = 'COMMUNITY_ADMIN' | 'COMMUNITY_MEMBER';
 
 export interface ICommunityMembers extends IPreviewMember {
   roles: {name: COMMUNITY_ROLE};
-  chat_user_id: string;
+  chatUserId: string;
 }
 
 export interface IParamGetDiscoverGroups {
@@ -56,7 +49,7 @@ export interface IParamGetDiscoverGroups {
   offset?: number;
   limit?: number;
   sort?: string;
-  preview_members?: boolean;
+  previewMembers?: boolean;
 }
 
 export interface ISetMembers {
@@ -70,4 +63,13 @@ export interface ISetCommunitySearchMembers {
   loading?: boolean;
   canLoadMore?: boolean;
   data?: ICommunityMembers[];
+}
+
+export interface ICommunityDetailEdit {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+  icon?: string;
+  backgroundImgUrl?: string;
+  privacy?: COMMUNITY_PRIVACY_TYPE;
 }

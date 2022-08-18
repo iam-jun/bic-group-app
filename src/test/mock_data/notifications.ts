@@ -1,4 +1,4 @@
-import {POST_CONTAINING_VIDEO_PROCESS} from './draftPosts';
+import { POST_CONTAINING_VIDEO_PROCESS } from './draftPosts';
 
 export const CHILD_COMMENT = {
   id: 1335,
@@ -355,7 +355,7 @@ export const LOAD_MORE_RESPONSE = [
     extra: {
       type: 'comment.to_post_creator',
       actor: {
-        id: 5,
+        id: '5',
         avatar:
           'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/05bcb2c1-2b5c-4f6e-b493-9183946c9318',
         fullname: 'Thân Thế Văn',
@@ -430,10 +430,10 @@ export const NOTIFICATIONS_RESPONSE = {
             createdAt: '2022-05-16T10:53:04.185Z',
             updatedAt: '2022-05-16T10:53:04.185Z',
             reactionsCount: {
-              '0': {
+              0: {
                 grinning: 1,
               },
-              '1': {
+              1: {
                 heart_eyes: 1,
               },
             },
@@ -500,7 +500,7 @@ export const NOTIFICATIONS_RESPONSE = {
             createdAt: '2022-05-16T10:53:04.185Z',
             updatedAt: '2022-05-16T10:53:04.185Z',
             reactionsCount: {
-              '0': {
+              0: {
                 grinning: 1,
               },
             },
@@ -552,7 +552,7 @@ export const NOTIFICATIONS_RESPONSE = {
         id: 'a8679246-8c7a-439d-8114-91810b067b53',
         activities: [
           {
-            id: 756,
+            id: '34a808ea-8c15-4516-a8d4-23a9dcd7053a',
             actor: {
               id: 59,
               avatar:
@@ -562,8 +562,39 @@ export const NOTIFICATIONS_RESPONSE = {
             },
             media: {
               files: [],
+              videos: [
+                {
+                  thumbnails: [
+                    {
+                      width: 457,
+                      height: 240,
+                      url: 'https://bein-user-upload-videos-sandbox.s3.ap-southeast-1.amazonaws.com/post/thumbnails/bad3d8e3-8363-4781-af10-3e8ec2ac198a_457x240.jpg',
+                    },
+                    {
+                      width: 686,
+                      height: 360,
+                      url: 'https://bein-user-upload-videos-sandbox.s3.ap-southeast-1.amazonaws.com/post/thumbnails/bad3d8e3-8363-4781-af10-3e8ec2ac198a_686x360.jpg',
+                    },
+                    {
+                      width: 914,
+                      height: 480,
+                      url: 'https://bein-user-upload-videos-sandbox.s3.ap-southeast-1.amazonaws.com/post/thumbnails/bad3d8e3-8363-4781-af10-3e8ec2ac198a_914x480.jpg',
+                    },
+                    {
+                      width: 1371,
+                      height: 720,
+                      url: 'https://bein-user-upload-videos-sandbox.s3.ap-southeast-1.amazonaws.com/post/thumbnails/bad3d8e3-8363-4781-af10-3e8ec2ac198a_1371x720.jpg',
+                    },
+                  ],
+                  id: 'bad3d8e3-8363-4781-af10-3e8ec2ac198a',
+                  status: 'processing',
+                  name: '035318DB-73A8-42CD-9859-041E059E6610.mp4',
+                  url: null,
+                  size: 0,
+                  mimeType: null,
+                },
+              ],
               images: [],
-              videos: [],
             },
             content: 'test @thuquyen  @ngoclinh ',
             setting: {
@@ -720,9 +751,9 @@ export const ATTACH_NOTIFICATION_PUBLISHED = {
   ...NOTIFICATIONS_RESPONSE.data.list[2],
   extra: {
     ...NOTIFICATIONS_RESPONSE.data.list[2].extra,
-    type: 'post.video_published',
+    type: 'post.video.to_user.successful',
   },
-  activities: [{...POST_CONTAINING_VIDEO_PROCESS}],
+  activities: [{ ...POST_CONTAINING_VIDEO_PROCESS }],
 };
 
 export const ATTACH_NOTIFICATION_FAILED = {
@@ -731,5 +762,65 @@ export const ATTACH_NOTIFICATION_FAILED = {
     ...NOTIFICATIONS_RESPONSE.data.list[2].extra,
     type: 'post.video_failed',
   },
-  activities: [{...POST_CONTAINING_VIDEO_PROCESS}],
+  activities: [{ ...POST_CONTAINING_VIDEO_PROCESS }],
+};
+
+export const NOTI_REACT_POST = {
+  id: 'b701e4fb-77d4-4f50-8204-154bd557d428',
+  activities: [
+    {
+      id: 699,
+      actor: {
+        id: 58,
+        email: 'thuquyen@tgm.vn',
+        avatar:
+          'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+        fullname: 'Nguyen Thi Thu Quyền',
+        username: 'thuquyen',
+      },
+      media: {
+        files: [],
+        images: [],
+        videos: [],
+      },
+      comment: {
+        id: 1213,
+        actor: {
+          id: 5,
+          avatar:
+            'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/05bcb2c1-2b5c-4f6e-b493-9183946c9318',
+          fullname: 'Thân Thế Văn',
+          username: 'thanthevan',
+        },
+        media: {
+          files: [],
+          images: [],
+          videos: [],
+        },
+        content: 'okie',
+        mentions: [],
+        createdAt: '2022-05-15T16:40:21.236Z',
+        updatedAt: '2022-05-15T16:40:21.236Z',
+      },
+      content: 'Test noti',
+      setting: {
+        canReact: true,
+        canShare: true,
+        canComment: true,
+        isImportant: false,
+        importantExpiredAt: null,
+      },
+      audience: [
+        {
+          id: 1,
+          icon: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/e55a5e2f-5f61-4a1b-ad3f-623f08eec1a1',
+          name: 'EVOL Community',
+          privacy: 'PUBLIC',
+        },
+      ],
+      mentions: [],
+      createdAt: '2022-05-13T11:20:58.742Z',
+      updatedAt: '2022-05-13T11:20:58.742Z',
+    },
+  ],
 };

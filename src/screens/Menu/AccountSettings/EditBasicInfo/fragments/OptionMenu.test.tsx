@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {fireEvent} from '~/test/testUtils';
-import {render, cleanup} from '@testing-library/react-native';
-import {colors} from '~/theme';
+import { render, cleanup } from '@testing-library/react-native';
+import { fireEvent } from '~/test/testUtils';
 
 import OptionMenu from './OptionMenu';
 
@@ -11,9 +10,9 @@ afterEach(cleanup);
 describe('OptionMenu conponent', () => {
   const baseProps = {
     data: [
-      {title: 'settings:text_male', type: 'MALE'},
-      {title: 'settings:text_female', type: 'FEMALE'},
-      {title: 'settings:text_others', type: 'OTHERS'},
+      { title: 'settings:text_male', type: 'MALE' },
+      { title: 'settings:text_female', type: 'FEMALE' },
+      { title: 'settings:text_others', type: 'OTHERS' },
     ],
     value: 'FEMALE',
     menuRef: null,
