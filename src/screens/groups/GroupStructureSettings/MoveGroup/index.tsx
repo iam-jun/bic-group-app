@@ -11,10 +11,10 @@ import groupsActions from '~/storeRedux/groups/actions';
 import { IGroup } from '~/interfaces/IGroup';
 import MoveGroupHeaderInfo from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveGroupHeaderInfo';
 import MoveGroupTargets from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveGroupTargets';
-import modalActions from '~/storeRedux/modal/actions';
 import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 import groupApi from '~/api/GroupApi';
+import modalActions from '~/storeRedux/modal/actions';
 
 export interface MoveGroupProps {
   route: {
@@ -37,7 +37,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
 
   const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail);
   const {
-    loading, targetGroups, movingGroup, selecting,
+    loading, targetGroups, movingGroup, selecting, key,
   } = useKeySelector(groupsKeySelector.groupStructure.move) || {};
 
   const { userCount } = movingGroup || {};
@@ -82,10 +82,23 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     )
   }
 
+  const setLoadingButton = (loading: boolean) => {
+    dispatch(groupsActions.setGroupStructureMove({
+      loading,
+      key,
+      targetGroups,
+      movingGroup,
+    }));
+  }
+
   const onPressSave = async () => {
     setErrorMessage('');
     if (communityId && groupId && selecting?.id) {
+      const currentSelecting = { ...selecting };
+      setLoadingButton(true);
       getMemberWillMove(communityId, { groupId, targetId: selecting.id }).then((moveMemberCount:number) => {
+        setLoadingButton(false);
+        dispatch(groupsActions.setGroupStructureMoveSelecting(currentSelecting));
         const title = t(
           'communities:group_structure:text_title_confirm_move_group',
         )
@@ -111,6 +124,8 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
           }),
         );
       }).catch((err:any) => {
+        setLoadingButton(false);
+        dispatch(groupsActions.setGroupStructureMoveSelecting(currentSelecting));
         if (!!err?.meta?.message) {
           setErrorMessage(err.meta.message);
         }
