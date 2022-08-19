@@ -411,9 +411,7 @@ const SignIn = () => {
                 placeholderTextColor={theme.colors.gray40}
                 iconColor={theme.colors.white}
                 textColor={theme.colors.white}
-                helperTextProps={{
-                  style: styles.errorText,
-                }}
+                helperStyle={styles.errorText}
                 editable={!loading}
               />
               <TouchableOpacity
