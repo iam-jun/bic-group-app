@@ -139,7 +139,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   useEffect(() => {
-    listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
+    setTimeout(() => {
+      listRef?.current?.scrollToOffset?.({ animated: false, offset: 0 });
+    }, 200)
   }, [activeTab])
 
   useFocusEffect(React.useCallback(
@@ -304,7 +306,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   return (
     <View testID="newsfeed_list" style={styles.container}>
-      <View style={styles.headerBackground} />
       {data?.length > 0 ? (
         <AnimatedFlashList
           ref={listRef}
@@ -364,13 +365,6 @@ const createStyle = (
     container: {
       flex: 1,
     },
-    headerBackground: {
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      height: insets.top + dimension.homeHeaderHeight,
-      backgroundColor: colors.neutral,
-    },
     headerCreatePost: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
@@ -392,7 +386,8 @@ const createStyle = (
       backgroundColor: colors.neutral1,
     },
     headerContainer: {
-      marginTop: insets.top + dimension.homeHeaderHeight,
+      height: insets.top + dimension.homeHeaderHeight,
+      backgroundColor: colors.neutral,
       width: '100%',
     },
     emptyContainer: {

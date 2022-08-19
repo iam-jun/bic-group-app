@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import { useSharedValue } from 'react-native-reanimated';
+import { useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NewsfeedList from '~/components/NewsfeedList';
 import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
@@ -76,7 +76,7 @@ const Home = () => {
 
   useEffect(() => {
     getTabData(activeTab, true)
-    listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
+    yShared.value = withDelay(withTiming(0), 200)
   }, [activeTab])
 
   useTabPressListener(
