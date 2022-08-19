@@ -365,59 +365,55 @@ const SignIn = () => {
                   style: styles.errorText,
                 }}
               />
-              <View style={{ marginBottom: 40 }}>
-                <PasswordInputController
-                  ref={inputPasswordRef}
-                  useFormData={useFormData}
-                  testID="sign_in.input_password"
-                  name="password"
-                  label={t('auth:input_label_password')}
-                  labelProps={{ color: theme.colors.white }}
-                  rules={{
-                    required: t('auth:text_err_password_blank'),
-                    maxLength: {
-                      value: 20,
-                      message: t('auth:text_err_password_characters'),
-                    },
-                    minLength: {
-                      value: 6,
-                      message: t('auth:text_err_password_characters'),
-                    },
-                    validate: () => {
-                      if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
-                        const value = getValues('password');
-                        if (!/(?=.*?[A-Z])/.test(value)) {
-                          return t('auth:text_err_password_required_upper_case');
-                        }
-                        if (!/(?=.*?[a-z])/.test(value)) {
-                          return t('auth:text_err_password_required_lower_case');
-                        }
-                        if (!/(?=.*?[0-9])/.test(value)) {
-                          return t('auth:text_err_password_required_number');
-                        }
-                        if (!/(?=.*?[^\w\s])/.test(value)) {
-                          return t('auth:text_err_password_required_symbols');
-                        }
+              <PasswordInputController
+                ref={inputPasswordRef}
+                useFormData={useFormData}
+                testID="sign_in.input_password"
+                name="password"
+                label={t('auth:input_label_password')}
+                labelProps={{ color: theme.colors.white }}
+                rules={{
+                  required: t('auth:text_err_password_blank'),
+                  maxLength: {
+                    value: 20,
+                    message: t('auth:text_err_password_characters'),
+                  },
+                  minLength: {
+                    value: 6,
+                    message: t('auth:text_err_password_characters'),
+                  },
+                  validate: () => {
+                    if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
+                      const value = getValues('password');
+                      if (!/(?=.*?[A-Z])/.test(value)) {
+                        return t('auth:text_err_password_required_upper_case');
                       }
-                    },
-                  }}
-                  placeholder={t('auth:input_label_password_placeholder')}
-                  validateValue={() => {
-                    clearFieldError('password');
-                    checkDisableSignIn();
-                  }}
-                  onSubmitEditing={onSignIn}
-                  inputStyle={styles.input}
-                  style={styles.inputPassword}
-                  placeholderTextColor={theme.colors.gray40}
-                  iconColor={theme.colors.white}
-                  textColor={theme.colors.white}
-                  helperTextProps={{
-                    style: styles.errorText,
-                  }}
-                  editable={!loading}
-                />
-              </View>
+                      if (!/(?=.*?[a-z])/.test(value)) {
+                        return t('auth:text_err_password_required_lower_case');
+                      }
+                      if (!/(?=.*?[0-9])/.test(value)) {
+                        return t('auth:text_err_password_required_number');
+                      }
+                      if (!/(?=.*?[^\w\s])/.test(value)) {
+                        return t('auth:text_err_password_required_symbols');
+                      }
+                    }
+                  },
+                }}
+                placeholder={t('auth:input_label_password_placeholder')}
+                validateValue={() => {
+                  clearFieldError('password');
+                  checkDisableSignIn();
+                }}
+                onSubmitEditing={onSignIn}
+                inputStyle={styles.input}
+                style={styles.inputPassword}
+                placeholderTextColor={theme.colors.gray40}
+                iconColor={theme.colors.white}
+                textColor={theme.colors.white}
+                helperStyle={styles.errorText}
+                editable={!loading}
+              />
               <TouchableOpacity
                 testID="sign_in.btn_forgot_password"
                 onPress={goToForgotPassword}

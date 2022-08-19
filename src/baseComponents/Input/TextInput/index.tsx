@@ -34,6 +34,7 @@ export interface TextInputProps extends RNTextInputProps {
   helperType?: HelperType;
   helperError?: string;
   helperTextProps?: TextProps;
+  helperStyle?: StyleProp<ViewStyle>;
   helperAction?: string;
   placeholder?: string;
   error?: boolean;
@@ -62,6 +63,7 @@ const TextInput: React.FC<TextInputProps> = ({
   helperType,
   helperText,
   helperTextProps,
+  helperStyle,
   helperAction,
   placeholder,
   error,
@@ -153,7 +155,7 @@ const TextInput: React.FC<TextInputProps> = ({
         <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
       </View>
       )}
-      <View style={{ flex: 1 }}>
+      <View style={[!!horizontal ? { flex: 1 } : {}]}>
         <View style={[styles.row]}>
           {!!leftIcon && (
           <View style={styles.leftIconStyle}>
@@ -199,7 +201,7 @@ const TextInput: React.FC<TextInputProps> = ({
           </View>
         </View>
         {!!helperText && (
-        <View style={styles.helperContainer}>
+        <View style={[styles.helperContainer, helperStyle]}>
           {!!error && (
           <Icon
             testID="text_input.error_icon"
