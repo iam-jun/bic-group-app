@@ -153,7 +153,7 @@ const TextInput: React.FC<TextInputProps> = ({
         <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
       </View>
       )}
-      <View style={{ flex: 1 }}>
+      <View style={[!!horizontal ? { flex: 1 } : {}]}>
         <View style={[styles.row]}>
           {!!leftIcon && (
           <View style={styles.leftIconStyle}>
