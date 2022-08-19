@@ -356,7 +356,7 @@ const NewsfeedListHeader = ({ HeaderComponent }: any) => {
 const createStyle = (
   theme: ExtendedTheme, insets: any,
 ) => {
-  const { colors, elevations } = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
