@@ -301,6 +301,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   return (
     <View testID="newsfeed_list" style={styles.container}>
+      <View style={styles.headerBackground} />
       {data?.length > 0 ? (
         <AnimatedFlashList
           ref={listRef}
@@ -359,6 +360,13 @@ const createStyle = (
   return StyleSheet.create({
     container: {
       flex: 1,
+    },
+    headerBackground: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      height: insets.top + dimension.homeHeaderHeight,
+      backgroundColor: colors.neutral,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,
