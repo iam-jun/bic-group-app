@@ -129,9 +129,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }, 300,
   );
 
-  data = [];
-  canLoadMore = false;
-
   const onScroll = (e: any) => {
     // for smooth handle scrollEvent, i want to use useAnimatedScrollHander
     // this callback run on UI thread, so i have to use runOnJs for function handler and shared value
