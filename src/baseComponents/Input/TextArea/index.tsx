@@ -15,7 +15,7 @@ import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
 export interface TextAreaProps extends RNTextInputProps {
-    maxLength?:number,
+  maxLength?:number,
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
   label?: string,

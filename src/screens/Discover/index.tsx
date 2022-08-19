@@ -10,12 +10,14 @@ import spacing from '~/theme/spacing';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities'
 import YourCommunities from '~/screens/Discover/components/YourCommunities'
 import YourGroups from './components/YourGroups';
+import Managed from './components/Managed'
 import Tab from '~/baseComponents/Tab';
 
 const HEADER_TAB = [
   { id: 'discover-tab-1', text: 'discover:discover_communities' },
   { id: 'discover-tab-2', text: 'discover:your_communities' },
   { id: 'discover-tab-3', text: 'discover:your_groups' },
+  { id: 'discover-tab-4', text: 'discover:managed' },
 ]
 
 const Index = () => {
@@ -57,6 +59,10 @@ const Index = () => {
 
     if (selectedIndex === 2) {
       return <YourGroups />
+    }
+
+    if (selectedIndex === 3) {
+      return <Managed />
     }
 
     return null;

@@ -45,11 +45,11 @@ const PendingUserItem = ({
     TitleComponent?: React.ReactNode;
   }) => (
     (!!title || !!TitleComponent) && (
-    <View style={styles.itemComponent}>
-      <Icon icon={icon} tintColor={theme.colors.purple50} size={24} />
-      <Text.BodyM style={styles.text}>{title}</Text.BodyM>
-      {TitleComponent}
-    </View>
+      <View style={styles.itemComponent}>
+        <Icon icon={icon} tintColor={theme.colors.purple50} size={24} />
+        <Text.BodyM style={styles.text}>{title}</Text.BodyM>
+        {TitleComponent}
+      </View>
     )
   );
 

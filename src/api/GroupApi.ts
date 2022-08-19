@@ -5,6 +5,7 @@ import {
   IGroupDetailEdit,
   IParamGetGroupPosts,
   IParamsGetJoinedAllGroups,
+  IParamsGetManagedCommunityAndGroup,
   IPayloadGroupSchemeAssignments,
   IScheme,
 } from '~/interfaces/IGroup';
@@ -487,11 +488,32 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
+  checkMembersCommunityStructureMovePreview: (
+    communityId: string,
+    params: any,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/group-structure/move-preview/`,
+    params: {
+      ...params,
+    },
+  }),
   getJoinedAllGroups: (
     params: IParamsGetJoinedAllGroups,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}me/groups`,
+    params,
+  }),
+  getOwnerCommunity: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/communities/owned`,
+  }),
+  getManagedCommunityAndGroup: (
+    params: IParamsGetManagedCommunityAndGroup,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/groups/manage`,
     params,
   }),
 };
@@ -815,8 +837,22 @@ const groupApi = {
     communityId,
   ),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
+  checkMembersCommunityStructureMovePreview: (
+    communityId: string,
+    params: any,
+  ) => withHttpRequestPromise(
+    groupsApiConfig.checkMembersCommunityStructureMovePreview,
+    communityId,
+    params,
+  ),
   getJoinedAllGroups: (params: IParamsGetJoinedAllGroups) => withHttpRequestPromise(
     groupsApiConfig.getJoinedAllGroups, params,
+  ),
+  getOwnerCommunity: () => withHttpRequestPromise(
+    groupsApiConfig.getOwnerCommunity,
+  ),
+  getManagedCommunityAndGroup: (params: IParamsGetManagedCommunityAndGroup) => withHttpRequestPromise(
+    groupsApiConfig.getManagedCommunityAndGroup, params,
   ),
 };
 

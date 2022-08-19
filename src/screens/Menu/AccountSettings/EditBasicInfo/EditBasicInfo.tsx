@@ -188,8 +188,8 @@ const EditBasicInfo = () => {
           onChangeText={onChangeName}
           error={error}
           helperText={
-          error ? t('profile:text_name_must_not_be_empty') : undefined
-        }
+            error ? t('profile:text_name_must_not_be_empty') : undefined
+          }
           maxLength={100}
         />
         <TitleComponent icon="SquareUser" title="settings:title_gender" />

@@ -280,24 +280,24 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const renderReactionsReplyView = () => (
     isActive && (
-    <View style={styles.buttonContainer}>
-      { !!setting?.canReact
-        ? (
-          <ReactionView
-            ownerReactions={ownerReactions}
-            reactionsCount={reactionsCount}
-            onAddReaction={onAddReaction}
-            onRemoveReaction={onRemoveReaction}
-            onPressSelectReaction={onPressReact}
-            onLongPressReaction={onLongPressReaction}
-          />
-        ) : <View style={{ flex: 1 }} />}
-      <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
-        <Text.ButtonS style={styles.buttonReply} color={colors.gray50}>
-          Reply
-        </Text.ButtonS>
-      </ButtonWrapper>
-    </View>
+      <View style={styles.buttonContainer}>
+        { !!setting?.canReact
+          ? (
+            <ReactionView
+              ownerReactions={ownerReactions}
+              reactionsCount={reactionsCount}
+              onAddReaction={onAddReaction}
+              onRemoveReaction={onRemoveReaction}
+              onPressSelectReaction={onPressReact}
+              onLongPressReaction={onLongPressReaction}
+            />
+          ) : <View style={{ flex: 1 }} />}
+        <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
+          <Text.ButtonS style={styles.buttonReply} color={colors.gray50}>
+            Reply
+          </Text.ButtonS>
+        </ButtonWrapper>
+      </View>
     )
   );
 
@@ -311,19 +311,19 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const renderErrorState = () => (
     commentStatus === 'failed' && (
-    <View style={styles.errorLine}>
-      <Text.BodySMedium color={colors.red60} useI18n>
-        common:text_failed_to_upload
-      </Text.BodySMedium>
-      <Text.BodySMedium>{'  • '}</Text.BodySMedium>
-      <Button onPress={onPressRetry}>
-        <Text.BodySMedium useI18n>common:text_retry</Text.BodySMedium>
-      </Button>
-      <Text.BodySMedium>{'  • '}</Text.BodySMedium>
-      <Button onPress={onPressCancel}>
-        <Text.BodySMedium useI18n>common:btn_cancel</Text.BodySMedium>
-      </Button>
-    </View>
+      <View style={styles.errorLine}>
+        <Text.BodySMedium color={colors.red60} useI18n>
+          common:text_failed_to_upload
+        </Text.BodySMedium>
+        <Text.BodySMedium>{'  • '}</Text.BodySMedium>
+        <Button onPress={onPressRetry}>
+          <Text.BodySMedium useI18n>common:text_retry</Text.BodySMedium>
+        </Button>
+        <Text.BodySMedium>{'  • '}</Text.BodySMedium>
+        <Button onPress={onPressCancel}>
+          <Text.BodySMedium useI18n>common:btn_cancel</Text.BodySMedium>
+        </Button>
+      </View>
     )
   );
 

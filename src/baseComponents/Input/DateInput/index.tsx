@@ -119,21 +119,21 @@ const DateInput: React.FC<DateInputProps> = ({
       </TouchableOpacity>
       <View style={{ position: 'absolute', alignSelf: 'center' }}>
         {isSelecting && (
-        <DateTimePicker
-          testID="date_input.date_picker"
-          isVisible={isSelecting}
-          date={
-                !!value
-                  ? new Date(value)
-                  : new Date()
-              }
-          minDate={minDate}
-          maxDate={maxDate}
-          mode={mode}
-          onConfirm={_onConfirm}
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onCancel={_onClosePopup}
-        />
+          <DateTimePicker
+            testID="date_input.date_picker"
+            isVisible={isSelecting}
+            date={
+              !!value
+                ? new Date(value)
+                : new Date()
+            }
+            minDate={minDate}
+            maxDate={maxDate}
+            mode={mode}
+            onConfirm={_onConfirm}
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onCancel={_onClosePopup}
+          />
         )}
       </View>
     </View>

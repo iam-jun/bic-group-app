@@ -22,21 +22,21 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
-import { useDispatch } from 'react-redux';
 import dimension from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
 import PostView from '~/screens/post/components/PostView';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import { useTabPressListener } from '~/hooks/navigation';
+import { useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
 import NoticePanel from '~/screens/Home/components/NoticePanel';
 import { IPostActivity } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
-import modalActions from '~/storeRedux/modal/actions';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Button from '~/beinComponents/Button';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import Button from '~/baseComponents/Button';
+import { useBaseHook } from '~/hooks';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -50,7 +50,7 @@ export interface NewsfeedListProps {
 }
 
 const AnimatedFlashList = Animated.createAnimatedComponent<
-  React.ComponentType<FlashListProps<any>>
+React.ComponentType<FlashListProps<any>>
 >(FlashList as any);
 
 const screenHeight = Dimensions.get('window').height;
@@ -74,7 +74,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const prevOffsetYShared = useSharedValue(0);
 
-  const dispatch = useDispatch();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(
@@ -138,7 +139,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   useEffect(() => {
-    listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
+    setTimeout(() => {
+      listRef?.current?.scrollToOffset?.({ animated: false, offset: 0 });
+    }, 200)
   }, [activeTab])
 
   useFocusEffect(React.useCallback(
@@ -210,7 +213,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   const onPressDiscover = () => {
-    dispatch(modalActions.showAlertNewFeature())
+    rootNavigation.navigate(menuStack.discover)
   }
 
   const renderItem = ({ item }: any) => (
@@ -277,7 +280,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         <Text.BodyXS style={styles.textEmpty} useI18n>
           post:newsfeed:text_empty_no_post
         </Text.BodyXS>
-        <Button.Primary onPress={onPressDiscover}>Discover</Button.Primary>
+        <Button.Primary onPress={onPressDiscover}>
+          {t('menu:title_discover')}
+        </Button.Primary>
       </View>
     )
   }
@@ -321,7 +326,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
               refreshing={!!refreshing}
               onRefresh={() => onRefresh?.()}
             />
-        )}
+          )}
           showsHorizontalScrollIndicator={false}
           onRefresh={onRefresh}
           onEndReached={_onEndReached}
@@ -355,7 +360,7 @@ const NewsfeedListHeader = ({ HeaderComponent }: any) => {
 const createStyle = (
   theme: ExtendedTheme, insets: any,
 ) => {
-  const { colors, elevations } = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -381,7 +386,8 @@ const createStyle = (
       backgroundColor: colors.neutral1,
     },
     headerContainer: {
-      marginTop: insets.top + dimension.homeHeaderHeight,
+      height: insets.top + dimension.homeHeaderHeight,
+      backgroundColor: colors.neutral,
       width: '100%',
     },
     emptyContainer: {

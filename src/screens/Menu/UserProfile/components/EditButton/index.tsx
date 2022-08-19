@@ -7,11 +7,11 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { spacing } from '~/theme';
 
 interface Props {
-    style?: StyleProp<ViewStyle>;
-    testID?: string;
-    userId: string;
-    currentUsername: string;
-    onPress?: () => void;
+  style?: StyleProp<ViewStyle>;
+  testID?: string;
+  userId: string;
+  currentUsername: string;
+  onPress?: () => void;
 }
 
 const EditButton = ({

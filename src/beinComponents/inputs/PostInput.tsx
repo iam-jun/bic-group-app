@@ -29,8 +29,8 @@ export interface PostInputProps extends TextInputProps {
   returnKeyType?: ReturnKeyType;
   onSubmitEditing?: () => void;
   onSelectionChange?:
-    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
-    | undefined;
+  | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
+  | undefined;
   value: string;
   inputRef?: any;
 }

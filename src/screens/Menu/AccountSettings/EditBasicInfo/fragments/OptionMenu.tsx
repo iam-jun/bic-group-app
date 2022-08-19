@@ -39,14 +39,14 @@ const OptionMenu = ({
       <PrimaryItem
         title={i18next.t(item.title)}
         RightComponent={
-            value === item.type ? (
-              <Icon
-                icon="Check"
-                size={24}
-                tintColor={theme.colors.purple60}
-              />
-            ) : undefined
-          }
+          value === item.type ? (
+            <Icon
+              icon="Check"
+              size={24}
+              tintColor={theme.colors.purple60}
+            />
+          ) : undefined
+        }
       />
     </TouchableOpacity>
   );

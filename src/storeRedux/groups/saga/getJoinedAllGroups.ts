@@ -1,5 +1,3 @@
-/* eslint-disable no-empty */
-/* eslint-disable require-yield */
 import { call, put, select } from 'redux-saga/effects';
 import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';

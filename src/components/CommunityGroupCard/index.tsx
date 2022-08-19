@@ -13,25 +13,34 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
 import { Avatar, Button } from '~/baseComponents';
 import { formatLargeNumber } from '~/utils/formatData';
+import Tag from '~/baseComponents/Tag';
+import { useBaseHook } from '~/hooks';
+import { isGroup } from '~/screens/groups/helper';
 
 type CommunityGroupCardProps = {
   item: any;
   testID?: string;
 };
 
-const isGroup = (level?: number) => !!level;
-
 const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors, elevations } = theme;
 
   const {
-    id, name, icon, userCount, privacy, joinStatus, description, level, community,
-  }
-    = item || {};
+    id,
+    name,
+    icon,
+    userCount,
+    privacy,
+    joinStatus,
+    description,
+    level,
+    community,
+  } = item || {};
   const privacyData: any
     = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon, title: privacyTitle } = privacyData || {};
@@ -75,19 +84,21 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
       const { id } = community;
       rootNavigation.navigate(groupStack.communityDetail, { communityId: id });
     }
-  }
+  };
 
   return (
     <View testID={testID} style={[styles.container, elevations.e1]}>
-      {
-        isGroup(level) && (
+      {isGroup(level) && (
         <Button onPress={onViewCommunity}>
-          <Text.SubtitleS style={styles.textNameCommunityOnGroup} color={colors.blue50} numberOfLines={1}>
+          <Text.SubtitleS
+            style={styles.textNameCommunityOnGroup}
+            color={colors.blue50}
+            numberOfLines={1}
+          >
             {community?.name}
           </Text.SubtitleS>
         </Button>
-        )
-      }
+      )}
       <Button TouchableComponent={TouchableWithoutFeedback} onPress={onView}>
         <View>
           <View style={styles.row}>
@@ -95,6 +106,15 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
             <View style={styles.containerInfo}>
               <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
+              <Tag
+                style={styles.tagContainer}
+                type="secondary"
+                size="small"
+                label={t(
+                  isGroup(level) ? 'common:text_group' : 'common:text_community',
+                )}
+              />
+              <ViewSpacing height={spacing.margin.xSmall} />
               <View style={styles.row}>
                 <View style={[styles.row, styles.privacyView]}>
                   <Icon
@@ -164,6 +184,9 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     textNameCommunityOnGroup: {
       marginBottom: spacing.margin.tiny,
+    },
+    tagContainer: {
+      alignSelf: 'baseline',
     },
   });
 };

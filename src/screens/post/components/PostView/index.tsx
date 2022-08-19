@@ -363,12 +363,10 @@ const _PostView: FC<PostViewProps> = ({
           isPostDetail={isPostDetail}
           onPressMarkSeenPost={onPressMarkSeenPost}
         />
-        {totalUsersSeen > 0 && (
-          <SeenCountsView
-            onPress={onPressSeenBy}
-            seenPeopleCount={totalUsersSeen}
-          />
-        )}
+        <SeenCountsView
+          onPress={onPressSeenBy}
+          seenPeopleCount={totalUsersSeen}
+        />
         {!isLite && !!canReact && (
           <ReactionView
             style={styles.reactions}

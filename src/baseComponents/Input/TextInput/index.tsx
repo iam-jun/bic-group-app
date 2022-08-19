@@ -34,6 +34,7 @@ export interface TextInputProps extends RNTextInputProps {
   helperType?: HelperType;
   helperError?: string;
   helperTextProps?: TextProps;
+  helperStyle?: StyleProp<ViewStyle>;
   helperAction?: string;
   placeholder?: string;
   error?: boolean;
@@ -62,6 +63,7 @@ const TextInput: React.FC<TextInputProps> = ({
   helperType,
   helperText,
   helperTextProps,
+  helperStyle,
   helperAction,
   placeholder,
   error,
@@ -84,7 +86,7 @@ const TextInput: React.FC<TextInputProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(
-    theme, horizontal, leftIcon, textColor,
+    theme, horizontal, leftIcon,
   );
   const [text, setText] = useState<string>(value || '');
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -149,22 +151,22 @@ const TextInput: React.FC<TextInputProps> = ({
   return (
     <View testID="text_input" style={[styles.container, style]}>
       {!!label && (
-      <View style={styles.labelStyle}>
-        <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
-      </View>
+        <View style={styles.labelStyle}>
+          <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
+        </View>
       )}
-      <View style={{ flex: 1 }}>
+      <View style={[!!horizontal ? { flex: 1 } : {}]}>
         <View style={[styles.row]}>
           {!!leftIcon && (
-          <View style={styles.leftIconStyle}>
-            <Icon
-              testID="text_input.left_icon"
-              icon={leftIcon}
-              size={22}
-              tintColor={colors.neutral20}
-              {...leftIconProps}
-            />
-          </View>
+            <View style={styles.leftIconStyle}>
+              <Icon
+                testID="text_input.left_icon"
+                icon={leftIcon}
+                size={22}
+                tintColor={colors.neutral20}
+                {...leftIconProps}
+              />
+            </View>
           )}
           <View
             style={[
@@ -185,7 +187,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 value={text}
                 style={[
                   styles.input,
-                  styles.defaultStyle,
+                  { color: !editable ? colors.neutral40 : (textColor || colors.neutral80) },
                 ]}
                 onChangeText={_onChangeText}
                 ref={textInputRef}
@@ -199,21 +201,21 @@ const TextInput: React.FC<TextInputProps> = ({
           </View>
         </View>
         {!!helperText && (
-        <View style={styles.helperContainer}>
-          {!!error && (
-          <Icon
-            testID="text_input.error_icon"
-            icon="CircleExclamation"
-            size={16}
-            tintColor={colors.red40}
-            style={styles.errorIconStyle}
-          />
-          )}
-          <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
-            {helperText}
-            {renderHelperAction()}
-          </Text.BodyXS>
-        </View>
+          <View style={[styles.helperContainer, helperStyle]}>
+            {!!error && (
+              <Icon
+                testID="text_input.error_icon"
+                icon="CircleExclamation"
+                size={16}
+                tintColor={colors.red40}
+                style={styles.errorIconStyle}
+              />
+            )}
+            <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
+              {helperText}
+              {renderHelperAction()}
+            </Text.BodyXS>
+          </View>
         )}
       </View>
     </View>
@@ -221,7 +223,7 @@ const TextInput: React.FC<TextInputProps> = ({
 };
 
 const themeStyles = (
-  theme: ExtendedTheme, horizontal:boolean, leftIcon: string, textColor?: string,
+  theme: ExtendedTheme, horizontal:boolean, leftIcon: string,
 ) => {
   const { colors } = theme;
 
@@ -257,9 +259,6 @@ const themeStyles = (
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
       flex: 1,
-    },
-    defaultStyle: {
-      color: textColor || colors.neutral80,
     },
     labelStyle: {
       marginRight: !!horizontal ? spacing.margin.big : 0,

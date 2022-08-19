@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { useForm } from 'react-hook-form';
-import {
-  ScrollView, StyleSheet, TouchableOpacity, View,
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
@@ -16,11 +14,11 @@ import * as modalActions from '~/storeRedux/modal/actions';
 import { IChangePasswordError } from '~/interfaces/IAuth';
 import useAuth from '~/hooks/auth';
 import spacing from '~/theme/spacing';
+import Button from '~/beinComponents/Button';
+import Text from '~/beinComponents/Text';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
-import Button from '~/beinComponents/Button';
-import Text from '~/beinComponents/Text';
 
 const ChangePassword = () => {
   const { t } = useBaseHook();
@@ -148,7 +146,7 @@ const ChangePassword = () => {
   return (
     <ScreenWrapper testID="SecurityLogin" isFullView>
       <Header title={t('settings:title_change_password')} />
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <PasswordInputController
           testID="change_password.current_password"
           useFormData={useFormData}
@@ -238,7 +236,7 @@ const ChangePassword = () => {
             </Text.H6>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </ScreenWrapper>
   );
 };

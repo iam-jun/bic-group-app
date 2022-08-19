@@ -20,6 +20,9 @@ import {
   IPayloadGroupSchemeAssignments,
   IGetJoinedAllGroups,
   SetJoinedAllGroupsPayload,
+  SetManagedPayload,
+  IGetManagedPayload,
+  IGetManagedCommunityAndGroupPayload,
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
 import { IObject } from '~/interfaces/common';
@@ -660,6 +663,21 @@ const groupsActions = {
   }),
   setJoinedAllGroups: (payload: SetJoinedAllGroupsPayload) => ({
     type: groupsTypes.SET_JOINED_ALL_GROUPS,
+    payload,
+  }),
+  getManaged: (payload: IGetManagedPayload = {}) => ({
+    type: groupsTypes.GET_MANAGED,
+    payload,
+  }),
+  setManaged: (payload: SetManagedPayload) => ({
+    type: groupsTypes.SET_MANAGED,
+    payload,
+  }),
+  getOwnerCommunity: () => ({
+    type: groupsTypes.GET_OWNER_COMMUNITY,
+  }),
+  getManagedCommunityAndGroup: (payload: IGetManagedCommunityAndGroupPayload = {}) => ({
+    type: groupsTypes.GET_MANAGED_COMMUNITY_AND_GROUP,
     payload,
   }),
 };

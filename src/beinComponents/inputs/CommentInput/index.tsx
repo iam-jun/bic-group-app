@@ -55,8 +55,8 @@ export interface CommentInputProps {
   onPressSelectImage?: (file: IFilePicked) => void;
   onPressFile?: (file: IFilePicked) => void;
   onSelectionChange?:
-    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
-    | undefined;
+  | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
+  | undefined;
   onKeyPress?: (e: any) => void;
   autoFocus?: boolean;
   blurOnSubmit?: boolean;

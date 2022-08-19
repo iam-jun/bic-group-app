@@ -250,80 +250,80 @@ const Header: React.FC<HeaderProps> = ({
         }}
       >
         {!hideBack && (
-        <Icon
-          testID="header.back"
-          icon="iconBack"
-          onPress={_onPressBack}
-          size={20}
-          hitSlop={{
-            top: 20, bottom: 20, left: 20, right: 20,
-          }}
-          style={styles.iconBack}
-          buttonTestID="header.back.button"
-        />
+          <Icon
+            testID="header.back"
+            icon="iconBack"
+            onPress={_onPressBack}
+            size={20}
+            hitSlop={{
+              top: 20, bottom: 20, left: 20, right: 20,
+            }}
+            style={styles.iconBack}
+            buttonTestID="header.back.button"
+          />
         )}
         {!!leftIcon && (
-        <Icon
-          size={24}
-          style={styles.icon}
-          icon={leftIcon}
-          onPress={onPressHeader}
-          {...leftIconProps}
-          testID="header.leftIcon"
-        />
+          <Icon
+            size={24}
+            style={styles.icon}
+            icon={leftIcon}
+            onPress={onPressHeader}
+            {...leftIconProps}
+            testID="header.leftIcon"
+          />
         )}
         <Animated.View style={[styles.titleContainer, titleAnimated]}>
           {!!title && (
-          <TouchableOpacity
-            onPress={onPressHeader}
-            disabled={!onPressHeader}
-          >
-            <Text.H5
-              style={styles.title}
-              numberOfLines={1}
-              {...titleTextProps}
-              testID="header.text"
+            <TouchableOpacity
+              onPress={onPressHeader}
+              disabled={!onPressHeader}
             >
-              {title}
-            </Text.H5>
-          </TouchableOpacity>
+              <Text.H5
+                style={styles.title}
+                numberOfLines={1}
+                {...titleTextProps}
+                testID="header.text"
+              >
+                {title}
+              </Text.H5>
+            </TouchableOpacity>
           )}
           {!!subTitle && (
-          <TouchableOpacity
-            onPress={onPressHeader}
-            disabled={!onPressHeader}
-          >
-            <Text.BodyS
-              style={styles.subtitle}
-              numberOfLines={1}
-              {...subTitleTextProps}
-              testID="header.subTitle"
+            <TouchableOpacity
+              onPress={onPressHeader}
+              disabled={!onPressHeader}
             >
-              {subTitle}
-            </Text.BodyS>
-          </TouchableOpacity>
+              <Text.BodyS
+                style={styles.subtitle}
+                numberOfLines={1}
+                {...subTitleTextProps}
+                testID="header.subTitle"
+              >
+                {subTitle}
+              </Text.BodyS>
+            </TouchableOpacity>
           )}
         </Animated.View>
         {!!icon && onPressIcon && (
-        <Icon
-          icon={icon}
-          size={24}
-          style={styles.icon}
-          onPress={onPressIcon}
-          backgroundColor={colors.neutral1}
-          testID="header.icon"
-          buttonTestID="header.icon.button"
-        />
+          <Icon
+            icon={icon}
+            size={24}
+            style={styles.icon}
+            onPress={onPressIcon}
+            backgroundColor={colors.neutral1}
+            testID="header.icon"
+            buttonTestID="header.icon.button"
+          />
         )}
         {onSearchText && (
-        <Icon
-          testID={searchIconTestID}
-          icon="search"
-          size={18}
-          style={styles.icon}
-          onPress={_onPressSearch}
-          buttonTestID="header.searchIcon.button"
-        />
+          <Icon
+            testID={searchIconTestID}
+            icon="search"
+            size={18}
+            style={styles.icon}
+            onPress={_onPressSearch}
+            buttonTestID="header.searchIcon.button"
+          />
         )}
         {onPressChat && <IconChat testID="header.icon_chat" onPress={onPressChat} />}
         {onPressMenu && (
@@ -335,25 +335,25 @@ const Header: React.FC<HeaderProps> = ({
         //   testID="header.menuIcon"
         //   buttonTestID="header.menuIcon.button"
         // />
-        <Button.Raise
-          size="small"
-          testID="header.menuIcon.button"
-          icon={menuIcon || 'menu'}
-          onPress={onPressMenu}
-        />
+          <Button.Raise
+            size="small"
+            testID="header.menuIcon.button"
+            icon={menuIcon || 'menu'}
+            onPress={onPressMenu}
+          />
         )}
         {!!buttonText && onPressButton && (
-        <Button.Primary
-          testID="header.button"
-          style={{
-            marginRight: spacing.margin.tiny,
-          }}
-          onPress={_onPressButton}
-          textProps={{ testID: 'header.button.text' }}
-          {...buttonProps}
-        >
-          {buttonText}
-        </Button.Primary>
+          <Button.Primary
+            testID="header.button"
+            style={{
+              marginRight: spacing.margin.tiny,
+            }}
+            onPress={_onPressButton}
+            textProps={{ testID: 'header.button.text' }}
+            {...buttonProps}
+          >
+            {buttonText}
+          </Button.Primary>
         )}
         {!!rightIcon && (
           <Button.Raise

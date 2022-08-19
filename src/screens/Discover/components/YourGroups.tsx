@@ -1,7 +1,12 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useEffect } from 'react';
 import {
-  ActivityIndicator, FlatList, View, StyleSheet, RefreshControl, ListRenderItem,
+  ActivityIndicator,
+  FlatList,
+  View,
+  StyleSheet,
+  RefreshControl,
+  ListRenderItem,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
@@ -10,31 +15,24 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
-import CommunityGroupCard from '~/components/CommunityGroupCard'
+import CommunityGroupCard from '~/components/CommunityGroupCard';
 
 type GroupItemProps = {
-    id: string;
-}
+  id: string;
+};
 
-const GroupItem:FC<GroupItemProps> = ({ id }) => {
+const GroupItem: FC<GroupItemProps> = ({ id }) => {
   const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
-  const {
-    items,
-  } = joinedAllGroups
+  const { items } = joinedAllGroups;
 
   return (
-    <CommunityGroupCard
-      item={items[id]}
-      testID={`your_groups_item_${id}`}
-    />
+    <CommunityGroupCard item={items[id]} testID={`your_groups_item_${id}`} />
   );
-}
+};
 
 const renderEmptyComponent = () => {
   const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
-  const {
-    canLoadMore,
-  } = joinedAllGroups
+  const { canLoadMore } = joinedAllGroups;
 
   if (canLoadMore) {
     return null;
@@ -51,27 +49,24 @@ const renderEmptyComponent = () => {
 
 const renderListFooter = () => {
   const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
-  const {
-    isLoading,
-    canLoadMore,
-  } = joinedAllGroups
+  const { isLoading, canLoadMore } = joinedAllGroups;
 
   if (!isLoading || !canLoadMore) return null;
 
   return (
-    <View
-      style={styles.listFooter}
-      testID="your_groups.loading_more_indicator"
-    >
+    <View style={styles.listFooter} testID="your_groups.loading_more_indicator">
       <ActivityIndicator />
     </View>
-
   );
 };
 
-const Separator = () => <Divider color="transparent" size={spacing.padding.large} />;
+const Separator = () => (
+  <Divider color="transparent" size={spacing.padding.large} />
+);
 
-const renderItem: ListRenderItem<string> = ({ item }) => <GroupItem id={item} />
+const renderItem: ListRenderItem<string> = ({ item }) => (
+  <GroupItem id={item} />
+);
 
 const keyExtractor = (item) => `yourgroups_${item}`;
 
@@ -82,7 +77,7 @@ const YourGroups = () => {
   const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
   const {
     isRefresh, isLoading, canLoadMore, ids, items,
-  } = joinedAllGroups
+  } = joinedAllGroups;
 
   const onLoadMore = () => {
     if (canLoadMore) {
@@ -98,7 +93,7 @@ const YourGroups = () => {
     if (ids.length === 0) {
       dispatch(groupsActions.getJoinedAllGroups());
     }
-  }, [])
+  }, []);
 
   return (
     <FlatList

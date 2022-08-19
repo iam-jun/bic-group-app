@@ -47,11 +47,11 @@ const LinkPreviewer = ({ text }: LinkPreviewerProps) => {
     <Button onPress={onPress}>
       <View style={styles.container}>
         {!!linkPreviews?.[link]?.image && (
-        <Image
-          style={styles.thumbnail}
-          source={linkPreviews[link].image}
-          placeholderSource={images.img_thumbnail_default}
-        />
+          <Image
+            style={styles.thumbnail}
+            source={linkPreviews[link].image}
+            placeholderSource={images.img_thumbnail_default}
+          />
         )}
         <View style={styles.metadata}>
           <Text.BodyS numberOfLines={1} color={colors.neutral80}>

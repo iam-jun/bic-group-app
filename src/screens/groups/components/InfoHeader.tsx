@@ -51,11 +51,11 @@ const InfoHeader = ({
 
   const renderCommunityText = () => (
     !!insideCommunityName && (
-    <View style={styles.communityText}>
-      <Text.SubtitleXS color={theme.colors.blue50} numberOfLines={1}>
-        {insideCommunityName}
-      </Text.SubtitleXS>
-    </View>
+      <View style={styles.communityText}>
+        <Text.SubtitleXS color={theme.colors.blue50} numberOfLines={1}>
+          {insideCommunityName}
+        </Text.SubtitleXS>
+      </View>
     )
   )
 
@@ -91,17 +91,17 @@ const InfoHeader = ({
             </Text.BodyS>
           </View>
           {isMember && (
-          <Button.Secondary
-            useI18n
-            color={theme.colors.blue2}
-            textColor={theme.colors.blue50}
-            borderRadius={spacing.borderRadius.base}
-            textVariant="buttonS"
-            testID="page_content.your_groups_btn"
-            onPress={onPressGroupTree}
-          >
-            groups:group_content:btn_group_tree
-          </Button.Secondary>
+            <Button.Secondary
+              useI18n
+              color={theme.colors.blue2}
+              textColor={theme.colors.blue50}
+              borderRadius={spacing.borderRadius.base}
+              textVariant="buttonS"
+              testID="page_content.your_groups_btn"
+              onPress={onPressGroupTree}
+            >
+              groups:group_content:btn_group_tree
+            </Button.Secondary>
           )}
         </View>
       </View>

@@ -6,11 +6,11 @@ import { spacing } from '~/theme';
 import EditButton from '../EditButton';
 
 interface Props {
-    userId: string;
-    currentUsername: string;
-    bgImg: any;
-    coverHeight: number;
-    onEdit: () => void;
+  userId: string;
+  currentUsername: string;
+  bgImg: any;
+  coverHeight: number;
+  onEdit: () => void;
 }
 
 const CoverImage = ({

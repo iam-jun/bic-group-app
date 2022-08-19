@@ -173,6 +173,20 @@ export const groupInitState = {
     ids: [],
     items: {},
   },
+  managed: {
+    isRefresh: false,
+    owner: {
+      canLoadMore: true,
+      ids: [],
+      items: {},
+    },
+    manage: {
+      isLoading: false,
+      canLoadMore: true,
+      ids: [],
+      items: {},
+    },
+  },
   isGettingInfoDetail: false,
   communityDetail: {} as ICommunity,
   communityMembers: {
@@ -828,6 +842,14 @@ function groupsReducer(
         ...state,
         joinedAllGroups: {
           ...state.joinedAllGroups,
+          ...payload,
+        },
+      };
+    case groupsTypes.SET_MANAGED:
+      return {
+        ...state,
+        managed: {
+          ...state.managed,
           ...payload,
         },
       };

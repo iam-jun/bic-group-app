@@ -62,6 +62,7 @@ const groupsKeySelector = {
     scope: 'communities' | 'groups', id: number,
   ) => `groups.myPermissions.data.${scope}.${id}`,
   joinedAllGroups: 'groups.joinedAllGroups',
+  managed: 'groups.managed',
 };
 
 export default groupsKeySelector;

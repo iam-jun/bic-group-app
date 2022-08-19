@@ -208,16 +208,16 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     <View style={styles.buttonControlContainer}>
       <View>
         {activeIndex > 0 && (
-        <Button style={styles.buttonControl} onPress={onPressBack}>
-          <Icon icon="iconBack" tintColor={colors.white} />
-        </Button>
+          <Button style={styles.buttonControl} onPress={onPressBack}>
+            <Icon icon="iconBack" tintColor={colors.white} />
+          </Button>
         )}
       </View>
       <View>
         {activeIndex < imageUrls.length - 1 && (
-        <Button style={styles.buttonControl} onPress={onPressNext}>
-          <Icon icon="AngleRightSolid" tintColor={colors.white} />
-        </Button>
+          <Button style={styles.buttonControl} onPress={onPressNext}>
+            <Icon icon="AngleRightSolid" tintColor={colors.white} />
+          </Button>
         )}
       </View>
     </View>

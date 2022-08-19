@@ -385,7 +385,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const renderListFooter = () => (
     <View>
       {loading && (
-      <ActivityIndicator size="large" color={colors.neutral5} />
+        <ActivityIndicator size="large" color={colors.neutral5} />
       )}
     </View>
   );
@@ -435,7 +435,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           sections={sectionListData}
           keyExtractor={(
             item, index,
-          ) => item?.unique || `section_list_${item}_${index}`}
+          ) => item?.id || `section_list_${item}_${index}`}
           ListHeaderComponent={renderListHeader}
           ListFooterComponent={renderListFooter}
           ListEmptyComponent={renderEmpty}

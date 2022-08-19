@@ -252,3 +252,17 @@ export interface IParamsGetJoinedAllGroups {
   limit?: number;
   offset?: number;
 }
+export interface IGetManagedPayload {
+  isRefresh?: boolean;
+}
+
+export type SetManagedPayload = Partial<
+  typeof initialState.groups.managed
+>;
+export interface IGetManagedCommunityAndGroupPayload {
+  isRefresh?: boolean;
+}
+export interface IParamsGetManagedCommunityAndGroup {
+  limit?: number;
+  offset?: number;
+}
