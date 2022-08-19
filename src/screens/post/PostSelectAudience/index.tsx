@@ -435,7 +435,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           sections={sectionListData}
           keyExtractor={(
             item, index,
-          ) => item?.unique || `section_list_${item}_${index}`}
+          ) => item?.id || `section_list_${item}_${index}`}
           ListHeaderComponent={renderListHeader}
           ListFooterComponent={renderListFooter}
           ListEmptyComponent={renderEmpty}

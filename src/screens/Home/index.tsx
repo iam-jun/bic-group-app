@@ -76,6 +76,7 @@ const Home = () => {
 
   useEffect(() => {
     getTabData(activeTab, true)
+    listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
   }, [activeTab])
 
   useTabPressListener(

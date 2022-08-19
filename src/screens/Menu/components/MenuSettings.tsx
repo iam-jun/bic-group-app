@@ -15,6 +15,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import authActions from '~/storeRedux/auth/actions';
 import getEnv from '~/utils/env';
+import { APP_ENV } from '~/configs/appConfig';
 
 const MenuSettings = () => {
   const { rootNavigation } = useRootNavigation();
@@ -58,6 +59,13 @@ const MenuSettings = () => {
     },
   ]
 
+  const onPressAppVersion = () => {
+    if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
+      return;
+    }
+    rootNavigation.navigate(menuStack.componentCollection)
+  }
+
   const renderItem = ({ icon, title, onPress }: any) => (
     <Button key={title + icon} style={styles.itemContainer} onPress={onPress}>
       <Icon tintColor={theme.colors.neutral20} icon={icon} />
@@ -69,7 +77,7 @@ const MenuSettings = () => {
     <View style={styles.container}>
       <View style={styles.row}>
         <Text.SubtitleM style={styles.textHeader} useI18n>menu:title_settings</Text.SubtitleM>
-        <Text.SubtitleXS onPress={() => { rootNavigation.navigate(menuStack.componentCollection) }}>{getEnv('APP_VERSION')}</Text.SubtitleXS>
+        <Text.SubtitleXS onPress={onPressAppVersion}>{getEnv('APP_VERSION')}</Text.SubtitleXS>
       </View>
       {settingItems.map(renderItem)}
       <Button style={styles.itemContainer} onPress={onLogout}>

@@ -120,6 +120,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
                 }),
               );
             },
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             onConfirm: () => {},
           }),
         );
