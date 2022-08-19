@@ -23,7 +23,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useKeyboard } from '@react-native-community/hooks';
 
-import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import { createTextStyle } from '~/beinComponents/Text/textStyle';
@@ -49,6 +48,7 @@ import spacing from '~/theme/spacing';
 import { APP_ENV } from '~/configs/appConfig';
 import { useRootNavigation } from '~/hooks/navigation';
 import authStacks from '~/router/navigator/AuthStack/stack';
+import { Button } from '~/baseComponents';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -429,11 +429,10 @@ const SignIn = () => {
               <Button.Primary
                 testID="sign_in.btn_login"
                 style={styles.btnSignIn}
+                type="ghost"
                 disabled={disableSignIn}
                 onPress={onSignIn}
                 useI18n
-                color={theme.colors.white}
-                textColor={theme.colors.purple50}
               >
                 auth:btn_sign_in
               </Button.Primary>
