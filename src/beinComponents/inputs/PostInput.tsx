@@ -29,8 +29,8 @@ export interface PostInputProps extends TextInputProps {
   returnKeyType?: ReturnKeyType;
   onSubmitEditing?: () => void;
   onSelectionChange?:
-  | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
-  | undefined;
+    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
+    | undefined;
   value: string;
   inputRef?: any;
 }
@@ -78,14 +78,12 @@ const PostInput: React.FC<PostInputProps> = ({
 
   const getFocused = () => refInput.current?.isFocused();
 
-  useImperativeHandle(
-    refInput, () => ({
-      setFocus,
-      setBlur,
-      setClear,
-      getFocused,
-    }),
-  );
+  useImperativeHandle(refInput, () => ({
+    setFocus,
+    setBlur,
+    setClear,
+    getFocused,
+  }));
 
   return (
     <AutoGrowingTextInput
