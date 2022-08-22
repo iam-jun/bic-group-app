@@ -109,10 +109,10 @@ exports[`SelectReactionView component renders correctly 1`] = `
       Array [
         Object {
           "flex": 1,
-          "maxHeight": 200,
         },
         Object {
-          "height": 160,
+          "height": 375,
+          "maxHeight": 468.75,
         },
       ]
     }
@@ -150,10 +150,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_check_mark"
@@ -179,10 +180,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -201,10 +206,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_clapping_hands"
@@ -230,10 +236,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -252,10 +262,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_clinking_beer_mugs"
@@ -281,10 +292,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -303,10 +318,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_clinking_glasses"
@@ -332,10 +348,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -354,10 +374,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_crown"
@@ -383,10 +404,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -405,10 +430,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_fire"
@@ -434,10 +460,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -456,10 +486,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_flag"
@@ -485,10 +516,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -507,10 +542,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_glowing_star"
@@ -536,10 +572,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -558,10 +598,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_handshake"
@@ -587,10 +628,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -609,10 +654,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_heart"
@@ -638,10 +684,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -660,10 +710,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_heart_exclamation"
@@ -689,10 +740,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -711,10 +766,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_heart_gift"
@@ -740,10 +796,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -762,10 +822,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_hugging_face"
@@ -791,10 +852,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -813,10 +878,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_hundred_points"
@@ -842,10 +908,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -864,10 +934,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_light_bulb"
@@ -893,10 +964,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -915,10 +990,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_money_mouth_face"
@@ -944,10 +1020,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -966,10 +1046,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_money_with_wings"
@@ -995,10 +1076,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1017,10 +1102,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_muscle_diamond"
@@ -1046,10 +1132,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1068,10 +1158,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_partying_face"
@@ -1097,10 +1188,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1119,10 +1214,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_raising_hands"
@@ -1148,10 +1244,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1170,10 +1270,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_revolving_hearts"
@@ -1199,10 +1300,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1221,10 +1326,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_screaming"
@@ -1250,10 +1356,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1272,10 +1382,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_smiling_face_with_heart_eyes"
@@ -1301,10 +1412,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1323,10 +1438,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_sparkling_heart"
@@ -1352,10 +1468,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1374,10 +1494,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_star_struck"
@@ -1403,10 +1524,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1425,10 +1550,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_text"
@@ -1454,10 +1580,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1476,10 +1606,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_text_x10k"
@@ -1505,10 +1636,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1527,10 +1662,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_thumbs_up"
@@ -1556,10 +1692,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1578,10 +1718,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_tothemoon"
@@ -1607,10 +1748,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1629,10 +1774,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_trophy"
@@ -1658,10 +1804,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1680,10 +1830,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_unicorn"
@@ -1709,10 +1860,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1731,10 +1886,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_violet"
@@ -1760,10 +1916,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1782,10 +1942,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_violet_moon"
@@ -1811,10 +1972,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1833,10 +1998,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_warning"
@@ -1862,10 +2028,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1884,10 +2054,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_writing_hand"
@@ -1913,10 +2084,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
@@ -1935,10 +2110,11 @@ exports[`SelectReactionView component renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "height": 40,
+                "height": 93.75,
                 "justifyContent": "center",
                 "opacity": 1,
-                "width": 40,
+                "padding": 8,
+                "width": 93.75,
               }
             }
             testID="select_reaction_view.item_bic_x10k"
@@ -1964,10 +2140,14 @@ exports[`SelectReactionView component renders correctly 1`] = `
                   }
                 }
                 style={
-                  Object {
-                    "aspectRatio": 1,
-                    "width": 24,
-                  }
+                  Array [
+                    Object {
+                      "aspectRatio": 1,
+                    },
+                    Object {
+                      "width": 77.75,
+                    },
+                  ]
                 }
               />
             </View>
