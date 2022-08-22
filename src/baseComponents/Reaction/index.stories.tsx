@@ -25,3 +25,15 @@ Loading.args = {
   selected: true,
   loading: true,
 }
+
+export const BICEmojiStatic = StoryComponent.bind({});
+BICEmojiStatic.args = {
+  ...Default.args,
+  icon: 'bic_text_x10k',
+}
+
+export const BICEmojiAnimated = StoryComponent.bind({});
+BICEmojiAnimated.args = {
+  ...Default.args,
+  icon: 'bic_purple_heart',
+}
