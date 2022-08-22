@@ -111,14 +111,7 @@ const ManagedCommunities = ({
           tintColor={theme.colors.gray40}
         />
       )}
-      ItemSeparatorComponent={() => (
-        <Divider
-          style={{
-            marginVertical: spacing.margin.tiny,
-            marginHorizontal: spacing.margin.large,
-          }}
-        />
-      )}
+      ItemSeparatorComponent={() => <Divider style={styles.itemDivider} />}
     />
   );
 };
@@ -128,6 +121,10 @@ const createStyles = (theme: ExtendedTheme) => StyleSheet.create({
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  itemDivider: {
+    marginVertical: spacing.margin.tiny,
+    marginHorizontal: spacing.margin.large,
   },
 });
 

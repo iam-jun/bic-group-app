@@ -421,11 +421,21 @@ const groupsActions = {
   }),
 
   // community
-  getMyCommunities: (payload?: {callback?: () => void}) => ({
+  getMyCommunities: (payload: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+    params?: {managed: boolean; previewMembers: boolean};
+    callback?: () => void;
+  }) => ({
     type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),
-  setMyCommunities: (payload: {loading?: boolean; data?: any[]}) => ({
+  setMyCommunities: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: string[];
+    items?: IObject<any>;
+  }) => ({
     type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
