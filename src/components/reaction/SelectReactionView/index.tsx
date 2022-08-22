@@ -1,4 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
 import React, { FC, useEffect } from 'react';
 import {
   Image, View, StyleSheet, LayoutChangeEvent,
