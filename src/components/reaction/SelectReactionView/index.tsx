@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Button from '~/beinComponents/Button';
-import spacing, { margin } from '~/theme/spacing';
+import { margin } from '~/theme/spacing';
 import Tab from '~/baseComponents/Tab';
 import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import { useBaseHook } from '~/hooks';
@@ -15,13 +15,16 @@ export interface ReactionViewProps {
 }
 
 const ITEM_SIZE = 40;
+const MAX_ROWS = 5;
 
 const SelectReactionView: FC<ReactionViewProps> = ({
   onPressReaction,
 }: ReactionViewProps) => {
   const { t } = useBaseHook();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [contentHeight, setContentHeight] = useState(ITEM_SIZE * 4); // 4 rows
+
+  // Initial rows = 4
+  const [contentHeight, setContentHeight] = useState(ITEM_SIZE * 4)
   const [data, setData] = useState<any>(STATIC_EMOJI);
   const tabData = [
     { id: '1', text: t('common:text_static') },
@@ -66,7 +69,7 @@ const SelectReactionView: FC<ReactionViewProps> = ({
         onPressTab={onPressTab}
       />
       <View
-        style={{ flex: 1, maxHeight: ITEM_SIZE * 4, height: contentHeight }}
+        style={[styles.tabContainter, { height: contentHeight }]}
         onLayout={onLayout}
       >
         <ScrollView style={styles.list}>
@@ -83,11 +86,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: spacing.padding.large,
-    paddingVertical: spacing.padding.large,
+  },
+  tabContainter: {
+    flex: 1,
+    maxHeight: ITEM_SIZE * MAX_ROWS,
   },
   list: {
-    flex: 1,
     marginTop: margin.tiny,
   },
   listContainer: {

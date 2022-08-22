@@ -13,7 +13,7 @@ import {
 import Text from '~/beinComponents/Text';
 import commonActions, { IAction } from '~/constants/commonActions';
 import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
-import spacing, { margin } from '~/theme/spacing';
+import spacing, { margin, padding } from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
 import Button from '../Button';
 
@@ -142,7 +142,8 @@ const createStyles = (
       borderWidth: 1,
       borderColor: isSelected && !loading ? colors.purple50 : colors.neutral2,
       borderRadius: spacing.borderRadius.small,
-      paddingHorizontal: 6,
+      paddingHorizontal: padding.xSmall,
+      paddingVertical: padding.tiny,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
