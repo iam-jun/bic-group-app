@@ -151,22 +151,22 @@ const TextInput: React.FC<TextInputProps> = ({
   return (
     <View testID="text_input" style={[styles.container, style]}>
       {!!label && (
-      <View style={styles.labelStyle}>
-        <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
-      </View>
+        <View style={styles.labelStyle}>
+          <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
+        </View>
       )}
       <View style={[!!horizontal ? { flex: 1 } : {}]}>
         <View style={[styles.row]}>
           {!!leftIcon && (
-          <View style={styles.leftIconStyle}>
-            <Icon
-              testID="text_input.left_icon"
-              icon={leftIcon}
-              size={22}
-              tintColor={colors.neutral20}
-              {...leftIconProps}
-            />
-          </View>
+            <View style={styles.leftIconStyle}>
+              <Icon
+                testID="text_input.left_icon"
+                icon={leftIcon}
+                size={22}
+                tintColor={colors.neutral20}
+                {...leftIconProps}
+              />
+            </View>
           )}
           <View
             style={[
@@ -201,21 +201,21 @@ const TextInput: React.FC<TextInputProps> = ({
           </View>
         </View>
         {!!helperText && (
-        <View style={[styles.helperContainer, helperStyle]}>
-          {!!error && (
-          <Icon
-            testID="text_input.error_icon"
-            icon="CircleExclamation"
-            size={16}
-            tintColor={colors.red40}
-            style={styles.errorIconStyle}
-          />
-          )}
-          <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
-            {helperText}
-            {renderHelperAction()}
-          </Text.BodyXS>
-        </View>
+          <View style={[styles.helperContainer, helperStyle]}>
+            {!!error && (
+              <Icon
+                testID="text_input.error_icon"
+                icon="CircleExclamation"
+                size={16}
+                tintColor={colors.red40}
+                style={styles.errorIconStyle}
+              />
+            )}
+            <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
+              {helperText}
+              {renderHelperAction()}
+            </Text.BodyXS>
+          </View>
         )}
       </View>
     </View>

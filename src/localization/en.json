@@ -110,6 +110,7 @@
     "text_start_date": "Start Date",
     "text_end_date": "End Date",
     "text_group": "Group",
+    "text_community": "Community",
     "text_activated": "Activated",
     "text_at": "at",
     "text_to": "to",
@@ -960,6 +961,12 @@
   },
   "discover": {
     "discover_communities": "Discover Communities",
-    "your_communities": "Your Communities"
+    "your_communities": "Your Communities",
+    "your_groups": "Your Groups",
+    "managed": "Managed",
+    "owner": "Owner",
+    "manage": "Manage",
+    "you_have_not_owner_community": "You have not owner community",
+    "you_have_not_manage_communiy_or_group": "You have not manage communiy or group"
   }
 }

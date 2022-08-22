@@ -24,6 +24,7 @@ import iconFlagVn from '../../assets/icons/icon_flag_vn.svg';
 import iconFlagSg from '../../assets/icons/icon_flag_sg.svg';
 import iconFlagUs from '../../assets/icons/icon_flag_us.svg';
 import addUsers from '../../assets/icons/add_users.svg';
+import searchUsers from '../../assets/icons/search_users.svg';
 import iconMapPin from '../../assets/icons/ic_map_pin.svg';
 import iconChat from '../../assets/icons/icon_chat.svg';
 import iconPermissionGuide1Android from '../../assets/icons/icon_permission_guide_1_android.svg';
@@ -70,6 +71,7 @@ const icons = {
   iconFlagSg,
   iconFlagUs,
   addUsers,
+  searchUsers,
   iconMapPin,
   iconChat,
   iconPermissionGuide1Android,

@@ -70,7 +70,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
             communities:empty_communities:button_text
           </Text.ButtonM>
         </ButtonWrapper>
-        )}
+      )}
     />
   );
 

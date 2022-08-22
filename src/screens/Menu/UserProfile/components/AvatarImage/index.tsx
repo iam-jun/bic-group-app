@@ -8,10 +8,10 @@ import { spacing } from '~/theme';
 import EditButton from '../EditButton';
 
 interface Props {
-    userId: string;
-    currentUsername: string;
-    avatar: any;
-    onEdit: () => void;
+  userId: string;
+  currentUsername: string;
+  avatar: any;
+  onEdit: () => void;
 }
 
 const AvatarImage = ({

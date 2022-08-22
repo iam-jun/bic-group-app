@@ -7,11 +7,11 @@ import InfoSection from '../../components/InfoSection';
 import { getLanguages } from '../../helper';
 
 interface Props {
-    fullname: string;
-    gender: string;
-    birthday: string;
-    language: string[];
-    relationship: string;
+  fullname: string;
+  gender: string;
+  birthday: string;
+  language: string[];
+  relationship: string;
 }
 
 const BasicInfo = ({

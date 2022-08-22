@@ -216,7 +216,7 @@ const CommentDetailContent = (props: any) => {
       HeaderImageComponent: (
         <View style={{ alignItems: 'center' }}>
           <SVGIcon
-              // @ts-ignore
+            // @ts-ignore
             source={CommentNotFoundImg}
             width={120}
             height={120}

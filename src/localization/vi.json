@@ -80,6 +80,7 @@
     "text_end_date": "Ngày kết thúc",
     "text_present": "Hiện tại",
     "text_group": "Nhóm",
+    "text_community": "Cộng đồng",
     "text_activated": "Hiện tại",
     "text_at": "tại",
     "text_to": "tới",
@@ -866,6 +867,12 @@
   },
   "discover": {
     "discover_communities": "Khám phá cộng đồng",
-    "your_communities": "Cộng đồng đã tham gia"
+    "your_communities": "Cộng đồng đã tham gia",
+    "your_groups": "Nhóm đã tham gia",
+    "managed": "Quản lý",
+    "owner": "Sở hữu",
+    "manage": "Quản trị",
+    "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
+    "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào"
   }
 }

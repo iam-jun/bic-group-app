@@ -94,21 +94,21 @@ const _GroupMembers = (props: any) => {
   // only admin or moderator can see this button
   const renderInviteMemberButton = () => (
     canAddMember && (
-    <ButtonWrapper
-      testID="group_members.invite"
-      style={styles.inviteButton}
-      onPress={goInviteMembers}
-    >
-      <Icon
-        style={styles.iconSmall}
-        icon="UserPlus"
-        size={22}
-        tintColor={theme.colors.purple60}
-      />
-      <Text.ButtonM color={theme.colors.purple60} useI18n>
-        common:text_invite
-      </Text.ButtonM>
-    </ButtonWrapper>
+      <ButtonWrapper
+        testID="group_members.invite"
+        style={styles.inviteButton}
+        onPress={goInviteMembers}
+      >
+        <Icon
+          style={styles.iconSmall}
+          icon="UserPlus"
+          size={22}
+          tintColor={theme.colors.purple60}
+        />
+        <Text.ButtonM color={theme.colors.purple60} useI18n>
+          common:text_invite
+        </Text.ButtonM>
+      </ButtonWrapper>
     )
   );
   const goInviteMembers = () => {
