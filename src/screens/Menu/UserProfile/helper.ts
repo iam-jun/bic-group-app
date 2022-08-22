@@ -16,7 +16,7 @@ export const getLanguages = (language: string[]) => {
   ) => speakingLanguages[code].name);
 
   return userLanguageList?.join(', ');
-}
+};
 
 export const getEndDateText = (
   t: any,
@@ -29,12 +29,12 @@ export const getEndDateText = (
       endDate,
       'MMM D, YYYY',
     )
-    : '')
+    : '');
 
 export const formatPhoneNumber = (
   phone: string | null | undefined,
   countryCode: string,
-) => (countryCode ? `(+${countryCode}) ${phone}` : phone)
+) => (countryCode ? `(+${countryCode}) ${phone}` : phone);
 
 export const _openImagePicker = async (
   id: string,

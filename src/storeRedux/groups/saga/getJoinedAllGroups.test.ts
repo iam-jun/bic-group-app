@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { listYourGroups } from '../../../test/mock_data/communities';
 import groupsActions from '../actions';
-import getJoinedAllGroups from './getJoinedAllGroups'
+import getJoinedAllGroups from './getJoinedAllGroups';
 import groupApi from '../../../api/GroupApi';
 
 describe('getJoinedAllGroups saga', () => {

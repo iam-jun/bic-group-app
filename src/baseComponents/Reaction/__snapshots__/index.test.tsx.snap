@@ -44,21 +44,13 @@ exports[`Reaction component renders correctly 1`] = `
         }
         testID="reaction"
       >
-        <Text
+        <View
           style={
-            Array [
-              Object {
-                "color": "#353E6E",
-                "fontFamily": "BeVietnamPro-Medium",
-                "fontSize": 13,
-              },
-              Object {
-                "color": "#353E6E",
-              },
-              Object {
-                "marginBottom": 2,
-              },
-            ]
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
           }
           testID="reaction.children"
         >
@@ -72,7 +64,7 @@ exports[`Reaction component renders correctly 1`] = `
                 },
                 Object {},
                 Object {
-                  "fontSize": 13,
+                  "fontSize": 14,
                 },
               ]
             }
@@ -80,8 +72,27 @@ exports[`Reaction component renders correctly 1`] = `
           >
             😚
           </Text>
-           10
-        </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                Object {
+                  "marginLeft": 4,
+                },
+              ]
+            }
+            testID="reaction.children.text"
+          >
+             10
+          </Text>
+        </View>
       </View>
     </View>
   </View>

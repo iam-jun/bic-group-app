@@ -8,6 +8,6 @@ const authScreens = {
   'sign-in': SignIn,
   'sign-up': SignUp,
   'forgot-password': ForgotPassword,
-}
+};
 
-export default authScreens
+export default authScreens;

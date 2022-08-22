@@ -1,7 +1,7 @@
 import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
-} from 'react-native'
-import React, { useState, useEffect } from 'react'
+} from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { borderRadius } from '~/theme/spacing';
 
@@ -27,7 +27,7 @@ const Toggle = ({
   const { colors } = theme;
 
   const [checked, setChecked] = useState(isChecked);
-  const currentState = disabled ? 'disabled' : (checked ? 'selected' : 'unselect')
+  const currentState = disabled ? 'disabled' : (checked ? 'selected' : 'unselect');
 
   useEffect(() => {
     setChecked(isChecked);
@@ -35,9 +35,9 @@ const Toggle = ({
 
   const onChangeValue = () => {
     const newValue = !checked;
-    onPress?.(newValue)
+    onPress?.(newValue);
     setChecked(newValue);
-  }
+  };
 
   const toggleStyles = {
     // based on prop `state`
@@ -62,7 +62,7 @@ const Toggle = ({
       rectangleHeight: 20,
       circle: 24,
     },
-  }
+  };
 
   const { rectangleColor } = toggleStyles[currentState];
   const { rectangleWidth, rectangleHeight, circle } = toggleStyles[size];
@@ -72,12 +72,12 @@ const Toggle = ({
     height: rectangleHeight,
     backgroundColor: rectangleColor,
     alignItems: checked || disabled ? 'flex-end' : 'flex-start',
-  }
+  };
 
   const circleStyle: StyleProp<ViewStyle> = {
     width: circle,
     height: circle,
-  }
+  };
 
   return (
     <TouchableOpacity
@@ -90,10 +90,10 @@ const Toggle = ({
         <View style={[styles.circle, circleStyle]} />
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default Toggle
+export default Toggle;
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -110,4 +110,4 @@ const createStyles = (theme: ExtendedTheme) => {
       borderColor: colors.gray1,
     },
   });
-}
+};

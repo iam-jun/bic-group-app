@@ -18,10 +18,10 @@ const getFileIcons = (extension: string) => {
     case 'pptx':
       return 'FilePowerpoint';
     case 'txt':
-      return 'FileLines'
+      return 'FileLines';
     case 'mp3':
     case 'wav':
-      return 'FileAudio'
+      return 'FileAudio';
     case 'mov':
     case 'mp4':
       return 'FileVideo';

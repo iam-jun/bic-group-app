@@ -19,7 +19,7 @@ const CommonModal = () => {
   const modalizeRef = useRef<any>();
 
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme()
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const modal = useKeySelector(modalKeySelector.modal);
@@ -135,6 +135,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     btnClose: { paddingHorizontal: spacing.padding.extraLarge },
   });
-}
+};
 
 export default CommonModal;

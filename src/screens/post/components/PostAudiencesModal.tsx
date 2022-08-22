@@ -24,7 +24,7 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data }: PostAudiences
   const styles = createStyle(theme);
 
   const onPressClose = () => {
-    dispatch(modalActions.hideModal())
+    dispatch(modalActions.hideModal());
   };
 
   const navigateToGroup = (groupId: any) => {

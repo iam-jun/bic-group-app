@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import { useRootNavigation } from '~/hooks/navigation'
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack'
-import TabButtonHeader from '../../components/TabButtonHeader'
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import TabButtonHeader from '../../components/TabButtonHeader';
 
 interface GroupTabHeaderProps {
   groupId: string;
@@ -26,7 +26,7 @@ const GroupTabHeader = ({ groupId, isMember }: GroupTabHeaderProps) => {
       onPressAbout={onPressAbout}
       onPressMembers={onPressMembers}
     />
-  )
-}
+  );
+};
 
 export default GroupTabHeader;

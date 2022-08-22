@@ -146,7 +146,7 @@ const TextInput: React.FC<TextInputProps> = ({
     if (!editable) return colors.neutral5;
     if (isFocus) return !!activeOutlineColor ? activeOutlineColor : colors.purple50;
     return !!outlineColor ? outlineColor : colors.neutral5;
-  }
+  };
 
   return (
     <View testID="text_input" style={[styles.container, style]}>

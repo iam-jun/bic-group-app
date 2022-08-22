@@ -13,4 +13,4 @@ const StoryComponent = getStoryComponent(Banner);
 export const Default = StoryComponent.bind({});
 Default.args = {
   markedAsRead: false,
-}
+};

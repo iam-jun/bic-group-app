@@ -7,6 +7,6 @@ import NotFound from '~/screens/NotFound';
 
 const commonScreens = {
   'not-found': NotFound,
-}
+};
 
-export default commonScreens
+export default commonScreens;

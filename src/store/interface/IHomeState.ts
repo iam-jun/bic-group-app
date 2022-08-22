@@ -19,4 +19,4 @@ interface IHomeState {
   getTabData: (tabId: keyof typeof HOME_TAB_TYPE, isRefresh?: boolean) => void;
 }
 
-export default IHomeState
+export default IHomeState;

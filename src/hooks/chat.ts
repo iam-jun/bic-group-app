@@ -76,7 +76,7 @@ const useChatSocket = () => {
     () => {
       if (userId) {
         // dispatch(chatAction.initChat());
-        initChat()
+        initChat();
       }
       chatSocketClient.setEventCallback((evt: any) => handleChatEvent(myProfile.chatUserId, evt));
       // chatSocketClient.setErrorCallback(async (evt: any) => {}); //error callback not work on iOS

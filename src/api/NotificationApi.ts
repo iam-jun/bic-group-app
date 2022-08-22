@@ -10,7 +10,7 @@ const defaultConfig = {
   provider,
   method: 'get' as Method,
   useRetry: true,
-}
+};
 
 export const notificationApiConfig = {
   pushToken: (

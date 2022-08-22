@@ -123,4 +123,4 @@ export default {
       elevation: 6,
     },
   },
-}
+};

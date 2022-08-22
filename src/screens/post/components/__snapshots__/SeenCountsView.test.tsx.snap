@@ -61,7 +61,9 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
             undefined,
           ]
         }
-      />
+      >
+        0
+      </Text>
     </Text>
   </View>
 </View>

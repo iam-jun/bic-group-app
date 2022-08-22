@@ -60,7 +60,7 @@ const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
 
   const onClose = () => {
     dispatch(homeActions.clearAllNewsfeedSearch());
-  }
+  };
 
   return (
     <SearchBaseView

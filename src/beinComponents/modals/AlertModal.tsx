@@ -120,7 +120,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
         </View>
       </View>
     </>
-  )
+  );
 
   const renderContent = () => (
     <>
@@ -138,7 +138,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
         />
       )}
     </>
-  )
+  );
 
   const renderFooter = () => (
     <View style={[styles.footerContainer, buttonViewStyle || {}]}>
@@ -168,7 +168,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
         </ConfirmBtn>
       )}
     </View>
-  )
+  );
 
   return (
     <Animated.View style={[styles.root, optionsStyle]}>
@@ -195,7 +195,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
-  const { width } = useWindowDimensions()
+  const { width } = useWindowDimensions();
 
   return StyleSheet.create({
     root: {

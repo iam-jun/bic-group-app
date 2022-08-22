@@ -395,7 +395,7 @@ const Header: React.FC<HeaderProps> = ({
         <Animated.View style={[styles.stickyHeader, stickyHeaderStyle]}>{stickyHeaderComponent}</Animated.View>
       )}
     </>
-  )
+  );
 };
 
 const createStyle = (theme: ExtendedTheme) => {

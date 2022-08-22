@@ -7,7 +7,7 @@ describe('InfoSection component', () => {
   const baseProps = {
     title: 'title',
     children: null,
-  }
+  };
 
   afterEach(cleanup);
 

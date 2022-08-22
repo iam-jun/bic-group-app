@@ -9,7 +9,7 @@ describe('WorkInfo component', () => {
       titlePosition: 'titlePosition',
       company: 'company',
     },
-  }
+  };
 
   it('renders correctly', () => {
     const rendered = render(<WorkInfo {...baseProps} />).toJSON();

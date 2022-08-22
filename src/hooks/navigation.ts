@@ -15,7 +15,7 @@ export const useRootNavigation = () => {
     setTimeout(() => {
       rootNavigation.navigate('home');
     }, 500);
-  }
+  };
 
   return {
     rootNavigation,

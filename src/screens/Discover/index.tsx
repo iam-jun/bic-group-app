@@ -7,10 +7,10 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import SearchCommunityView from '~/screens/communities/Communities/components/SearchCommunityView';
 import spacing from '~/theme/spacing';
-import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities'
-import YourCommunities from '~/screens/Discover/components/YourCommunities'
+import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities';
+import YourCommunities from '~/screens/Discover/components/YourCommunities';
 import YourGroups from './components/YourGroups';
-import Managed from './components/Managed'
+import Managed from './components/Managed';
 import Tab from '~/baseComponents/Tab';
 
 const HEADER_TAB = [
@@ -18,7 +18,7 @@ const HEADER_TAB = [
   { id: 'discover-tab-2', text: 'discover:your_communities' },
   { id: 'discover-tab-3', text: 'discover:your_groups' },
   { id: 'discover-tab-4', text: 'discover:managed' },
-]
+];
 
 const Index = () => {
   const theme = useTheme();
@@ -36,7 +36,7 @@ const Index = () => {
 
   const onCloseSearch = () => {
     setIsOpenSearchCommunity(false);
-  }
+  };
 
   const onPressCommunities = (communityId: string) => {
     rootNavigation.navigate(
@@ -45,24 +45,24 @@ const Index = () => {
   };
 
   const onPressTab = (item: any, index: number) => {
-    setSelectedIndex(index)
-  }
+    setSelectedIndex(index);
+  };
 
   const renderContent = () => {
     if (selectedIndex === 0) {
-      return <DiscoverCommunities />
+      return <DiscoverCommunities />;
     }
 
     if (selectedIndex === 1) {
-      return <YourCommunities />
+      return <YourCommunities />;
     }
 
     if (selectedIndex === 2) {
-      return <YourGroups />
+      return <YourGroups />;
     }
 
     if (selectedIndex === 3) {
-      return <Managed />
+      return <Managed />;
     }
 
     return null;

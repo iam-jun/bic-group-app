@@ -49,8 +49,8 @@ const ItemExperience = ({
         value={getEndDateText(t, currentlyWorkHere, endDate)}
       />
     </View>
-  )
-}
+  );
+};
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -72,7 +72,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     infoItem: {
       paddingBottom: spacing.padding.large,
     },
-  })
-}
+  });
+};
 
 export default ItemExperience;

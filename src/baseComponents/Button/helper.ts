@@ -73,5 +73,5 @@ export const getButtonColors = (theme: ExtendedTheme) => {
         text: colors.green50,
       },
     },
-  }
-}
+  };
+};

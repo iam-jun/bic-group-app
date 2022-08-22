@@ -4,6 +4,6 @@ import NoNotificationFound from '~/screens/Notification/components/NoNotificatio
 const notiScreens = {
   notification: Notification,
   'not-select-notification': NoNotificationFound,
-}
+};
 
 export default notiScreens;

@@ -9,12 +9,12 @@ describe('TabButton', () => {
       <TabButton isSelected size="medium">Tab button</TabButton>,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
-  })
+  });
 
   it('renders unselected button with size large', () => {
     const rendered = renderWithRedux(
       <TabButton isSelected={false} size="large">Tab button</TabButton>,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
-  })
-})
+  });
+});

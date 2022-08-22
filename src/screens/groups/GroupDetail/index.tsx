@@ -61,7 +61,7 @@ const GroupDetail = (props: any) => {
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy } = groupInfo;
-  const { name: communityName } = useKeySelector(groupsKeySelector.communityDetail)
+  const { name: communityName } = useKeySelector(groupsKeySelector.communityDetail);
 
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
@@ -155,7 +155,7 @@ const GroupDetail = (props: any) => {
       LINK_GROUP, groupId,
     );
     try {
-      Share.share({ message: groupLink, url: groupLink })
+      Share.share({ message: groupLink, url: groupLink });
     } catch (error) {
       console.error(`\x1b[31m🐣️ Share group error: ${error}\x1b[0m`);
     }
@@ -195,7 +195,7 @@ const GroupDetail = (props: any) => {
   const scrollWrapper = (offsetY: number) => {
     headerRef?.current?.setScrollY?.(offsetY);
     DeviceEventEmitter.emit('stopAllVideo');
-  }
+  };
 
   const onScrollHandler = useAnimatedScrollHandler((event: any) => {
     const offsetY = event?.contentOffset?.y;
@@ -261,11 +261,11 @@ const GroupDetail = (props: any) => {
       undefined,
       undefined,
       onPressLeave,
-    )
+    );
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
-    } as BottomListProps))
+    } as BottomListProps));
   };
 
   const onPressChat = () => {

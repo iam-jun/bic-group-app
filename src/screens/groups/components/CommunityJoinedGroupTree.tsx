@@ -34,16 +34,16 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
 
   const id = communityId || teamName;
 
-  const joinedGroups = useJoinedGroupTreeStore((state) => get(state, `data.${id}`))
-  const loading = useJoinedGroupTreeStore((state) => get(state, 'loading'))
-  const getJoinedGroupTree = useJoinedGroupTreeStore((state) => get(state, 'getJoinedGroupTree'))
+  const joinedGroups = useJoinedGroupTreeStore((state) => get(state, `data.${id}`));
+  const loading = useJoinedGroupTreeStore((state) => get(state, 'loading'));
+  const getJoinedGroupTree = useJoinedGroupTreeStore((state) => get(state, 'getJoinedGroupTree'));
 
   useEffect(() => {
-    getJoinedGroupTree(communityId)
-  }, [communityId])
+    getJoinedGroupTree(communityId);
+  }, [communityId]);
 
   const onPressGroup = (group: IGroup) => {
-    dispatch(modalActions.hideModal())
+    dispatch(modalActions.hideModal());
     if (group.communityId) {
       rootNavigation.navigate(mainStack.communityDetail, {
         communityId: group.communityId,
@@ -56,7 +56,7 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
         },
       );
     }
-  }
+  };
 
   const renderItem = ({ item }: any) => (
     <FlatGroupItem
@@ -67,18 +67,18 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
       groupStyle={{ paddingVertical: spacing.padding.small }}
       style={{ marginHorizontal: spacing.padding.large }}
     />
-  )
+  );
 
   const renderEmpty = () => {
     if (loading) {
-      return <LoadingIndicator />
+      return <LoadingIndicator />;
     }
     return (
       <View style={styles.emptyContainer}>
         <Text.SubtitleS color={colors.neutral40}>{t('error:no_group_found_title')}</Text.SubtitleS>
       </View>
     );
-  }
+  };
 
   return (
     <FlatList

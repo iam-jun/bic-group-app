@@ -32,5 +32,5 @@ Default.args = {
   buttonProps: { type: 'primary' },
   onPressTab: (
     item: any, index: number,
-  ) => { alert(`Change checked: ${item.text}`) },
-}
+  ) => { alert(`Change checked: ${item.text}`); },
+};

@@ -77,7 +77,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
           </ButtonWrapper>
         )}
       />
-    )
+    );
   };
 
   const renderItem = ({ item }: {item: number}) => {
@@ -85,7 +85,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
 
     return (
       <CommunityItem item={currentItem} onPressCommunities={onPressCommunities} />
-    )
+    );
   };
 
   const renderListFooter = () => {

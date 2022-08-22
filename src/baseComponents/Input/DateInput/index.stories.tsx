@@ -23,7 +23,7 @@ const OverView = (args) => (
   <View style={{ paddingHorizontal: 16 }}>
     <DateInput {...args} />
   </View>
-)
+);
 
 const StoryComponent = getStoryComponent(OverView);
 
@@ -34,5 +34,5 @@ Default.args = {
   style: { marginRight: 16 },
   outlineColor: undefined,
   mode: 'date',
-  onConfirm: (date) => { alert(`ON CONFIRM DATE ${date}`) },
-}
+  onConfirm: (date) => { alert(`ON CONFIRM DATE ${date}`); },
+};

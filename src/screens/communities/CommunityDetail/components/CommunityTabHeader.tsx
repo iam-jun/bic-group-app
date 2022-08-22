@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import { useRootNavigation } from '~/hooks/navigation'
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack'
-import TabButtonHeader from '../../../groups/components/TabButtonHeader'
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import TabButtonHeader from '../../../groups/components/TabButtonHeader';
 
 interface CommunityTabHeaderProps {
   communityId: string;
@@ -31,7 +31,7 @@ const CommunityTabHeader = ({ communityId, isMember }: CommunityTabHeaderProps) 
       onPressMembers={onPressMembers}
       onPressDiscover={onPressDiscover}
     />
-  )
-}
+  );
+};
 
 export default CommunityTabHeader;

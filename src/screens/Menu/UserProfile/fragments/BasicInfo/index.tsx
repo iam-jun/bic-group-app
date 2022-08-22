@@ -24,6 +24,6 @@ const BasicInfo = ({
     <InfoItem title="settings:title_language" value={getLanguages(language)} />
     <InfoItem title="settings:title_relationship_status" value={RELATIONSHIP_STATUS[relationship]} />
   </InfoSection>
-)
+);
 
-export default BasicInfo
+export default BasicInfo;

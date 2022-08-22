@@ -56,7 +56,7 @@ module.exports = {
     'max-len': ['error', { code: 120, ignoreStrings: true }],
     'function-paren-newline': ['error', 'consistent'],
     'operator-linebreak': ['error', 'before'],
-    semi: 0,
+    semi: 2,
     'prefer-destructuring': [
       'error',
       {

@@ -1,9 +1,9 @@
-import { ScrollView, StyleSheet } from 'react-native'
-import React from 'react'
-import { ExtendedTheme, useTheme } from '@react-navigation/native'
-import PillTabButton from '~/baseComponents/Tab/PillTabButton'
-import ViewSpacing from '~/beinComponents/ViewSpacing'
-import { spacing } from '~/theme'
+import { ScrollView, StyleSheet } from 'react-native';
+import React from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import PillTabButton from '~/baseComponents/Tab/PillTabButton';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { spacing } from '~/theme';
 
 interface TabButtonHeaderProps {
   isMember: boolean
@@ -48,10 +48,10 @@ const TabButtonHeader = ({
         </PillTabButton>
       )}
     </ScrollView>
-  )
-}
+  );
+};
 
-export default TabButtonHeader
+export default TabButtonHeader;
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -66,5 +66,5 @@ const createStyles = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.base,
       backgroundColor: colors.white,
     },
-  })
-}
+  });
+};

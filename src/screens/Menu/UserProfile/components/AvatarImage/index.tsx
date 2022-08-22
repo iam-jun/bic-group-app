@@ -37,8 +37,8 @@ const AvatarImage = ({
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const themeStyles = (
   theme: ExtendedTheme,
@@ -56,6 +56,6 @@ const themeStyles = (
       right: spacing?.margin.small,
     },
   });
-}
+};
 
 export default AvatarImage;
