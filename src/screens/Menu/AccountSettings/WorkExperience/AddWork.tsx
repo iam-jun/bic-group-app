@@ -312,14 +312,14 @@ const AddWork = () => {
 
   const renderDeleteButton = () => (
     selectedWorkItem && (
-    <Button.Danger
-      testID="add_work.delete"
-      onPress={onDelete}
-      useI18n
-      style={styles.buttonDelete}
-    >
-      settings:text_delete_work
-    </Button.Danger>
+      <Button.Danger
+        testID="add_work.delete"
+        onPress={onDelete}
+        useI18n
+        style={styles.buttonDelete}
+      >
+        settings:text_delete_work
+      </Button.Danger>
     )
   );
 

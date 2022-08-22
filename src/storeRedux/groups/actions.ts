@@ -18,6 +18,11 @@ import {
   IPermission,
   IScheme,
   IPayloadGroupSchemeAssignments,
+  IGetJoinedAllGroups,
+  SetJoinedAllGroupsPayload,
+  SetManagedPayload,
+  IGetManagedPayload,
+  IGetManagedCommunityAndGroupPayload,
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
 import { IObject } from '~/interfaces/common';
@@ -416,11 +421,21 @@ const groupsActions = {
   }),
 
   // community
-  getMyCommunities: (payload?: {callback?: () => void}) => ({
+  getMyCommunities: (payload: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+    params?: {managed: boolean; previewMembers: boolean};
+    callback?: () => void;
+  }) => ({
     type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),
-  setMyCommunities: (payload: {loading?: boolean; data?: any[]}) => ({
+  setMyCommunities: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: string[];
+    items?: IObject<any>;
+  }) => ({
     type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
@@ -650,6 +665,29 @@ const groupsActions = {
     callback?: () => void;
   }) => ({
     type: groupsTypes.EDIT_COMMUNITY_DETAIL,
+    payload,
+  }),
+  getJoinedAllGroups: (payload: IGetJoinedAllGroups = {}) => ({
+    type: groupsTypes.GET_JOINED_ALL_GROUPS,
+    payload,
+  }),
+  setJoinedAllGroups: (payload: SetJoinedAllGroupsPayload) => ({
+    type: groupsTypes.SET_JOINED_ALL_GROUPS,
+    payload,
+  }),
+  getManaged: (payload: IGetManagedPayload = {}) => ({
+    type: groupsTypes.GET_MANAGED,
+    payload,
+  }),
+  setManaged: (payload: SetManagedPayload) => ({
+    type: groupsTypes.SET_MANAGED,
+    payload,
+  }),
+  getOwnerCommunity: () => ({
+    type: groupsTypes.GET_OWNER_COMMUNITY,
+  }),
+  getManagedCommunityAndGroup: (payload: IGetManagedCommunityAndGroupPayload = {}) => ({
+    type: groupsTypes.GET_MANAGED_COMMUNITY_AND_GROUP,
     payload,
   }),
 };

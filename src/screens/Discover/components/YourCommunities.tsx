@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
-  FlatList, StyleSheet, RefreshControl, ListRenderItem,
+  FlatList, StyleSheet, RefreshControl, ListRenderItem, View, ActivityIndicator,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -16,59 +16,80 @@ const YourCommunities = () => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
 
-  const myCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
+  const {
+    loading, ids, items, canLoadMore,
+  } = useKeySelector(groupsKeySelector.joinedCommunities);
 
-  const [refreshing, setRefreshing] = useState(false);
+  useEffect(() => {
+    getData({ refreshNoLoading: true });
+  }, []);
 
-  const renderEmptyComponent = () => (
-    <EmptyScreen
-      source="addUsers"
-      title="communities:empty_communities:title"
-      description="communities:empty_communities:description"
+  const getData = (params?: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+  }) => {
+    const { isRefreshing, refreshNoLoading } = params || {};
+    dispatch(groupsActions.getMyCommunities({ isRefreshing, refreshNoLoading }));
+  };
 
-    />
-  );
-
-  const getData = () => {
-    dispatch(groupsActions.getMyCommunities({
-      callback: () => {
-        setRefreshing(false);
-      },
-    }));
+  const onLoadMore = () => {
+    canLoadMore && getData();
   };
 
   const onRefresh = () => {
-    setRefreshing(true);
-    getData();
+    getData({ isRefreshing: true });
   };
 
-  const renderItem: ListRenderItem<number> = ({ item, index }) => (
-    <CommunityGroupCard
-      item={item}
-      testID={`your_communities_item_${index}`}
-    />
-  );
+  const renderEmptyComponent = () => {
+    if (loading) return null;
+    return (
+      <EmptyScreen
+        source="addUsers"
+        title="communities:empty_communities:title"
+        description="communities:empty_communities:description"
+      />
+    )
+  };
 
-  useEffect(
-    () => {
-      getData();
-    }, [],
-  );
+  const renderItem: ListRenderItem<number> = ({ item, index }) => {
+    const currentItem = items[item];
+    return (
+      <CommunityGroupCard
+        item={currentItem}
+        testID={`your_communities_item_${index}`}
+      />
+    )
+  };
+
+  const renderListFooter = () => {
+    if (!loading && canLoadMore && ids.length > 0) {
+      return (
+        <View style={styles.listFooter}>
+          <ActivityIndicator testID="your_communites.loading_more" />
+        </View>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <FlatList
       testID="flatlist"
-      data={myCommunities}
+      data={ids}
       renderItem={renderItem}
       keyExtractor={(
         item, index,
       ) => `community_${item}_${index}`}
-      ListEmptyComponent={renderEmptyComponent}
-      ItemSeparatorComponent={() => <Divider color="transparent" size={spacing.padding.large} />}
       ListHeaderComponent={() => <Divider color="transparent" size={spacing.padding.large} />}
+      ListEmptyComponent={renderEmptyComponent}
+      ListFooterComponent={renderListFooter}
+      ItemSeparatorComponent={() => <Divider color="transparent" size={spacing.padding.large} />}
+      onEndReached={onLoadMore}
+      onEndReachedThreshold={0.1}
       refreshControl={(
         <RefreshControl
-          refreshing={refreshing}
+          refreshing={loading}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
         />
@@ -78,9 +99,6 @@ const YourCommunities = () => {
 }
 
 const styles = StyleSheet.create({
-  buttonWrapper: {
-    marginTop: spacing.margin.large,
-  },
   listFooter: {
     height: 100,
     justifyContent: 'center',

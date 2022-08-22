@@ -181,13 +181,13 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             <View>
               <Avatar variant={iconVariant} source={icon} />
               {!!showPrivacyAvatar && (
-              <View style={styles.privacyAvatar}>
-                <Icon
-                  icon={privacyIcon}
-                  size={14}
-                  tintColor={theme.colors.gray50}
-                />
-              </View>
+                <View style={styles.privacyAvatar}>
+                  <Icon
+                    icon={privacyIcon}
+                    size={14}
+                    tintColor={theme.colors.gray50}
+                  />
+                </View>
               )}
             </View>
             {onCheckedItem && (

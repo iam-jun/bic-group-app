@@ -50,7 +50,7 @@ export interface NewsfeedListProps {
 }
 
 const AnimatedFlashList = Animated.createAnimatedComponent<
-  React.ComponentType<FlashListProps<any>>
+React.ComponentType<FlashListProps<any>>
 >(FlashList as any);
 
 const screenHeight = Dimensions.get('window').height;
@@ -326,7 +326,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
               refreshing={!!refreshing}
               onRefresh={() => onRefresh?.()}
             />
-        )}
+          )}
           showsHorizontalScrollIndicator={false}
           onRefresh={onRefresh}
           onEndReached={_onEndReached}

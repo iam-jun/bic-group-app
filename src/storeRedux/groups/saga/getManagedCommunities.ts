@@ -28,8 +28,6 @@ export default function* getManagedCommunities({
 
     if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const resp = yield call(groupApi.getJoinedCommunities, {
       managed: true,
       previewMembers: true,
@@ -54,12 +52,8 @@ export default function* getManagedCommunities({
 
     yield put(actions.setManagedCommunities(newData));
   } catch (err) {
-    console.error(
-      'getManagedCommunities error:', err,
-    );
+    console.error('getManagedCommunities error:', err);
     yield put(actions.setManagedCommunities({ loading: false }));
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

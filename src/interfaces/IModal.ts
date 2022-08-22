@@ -5,7 +5,7 @@ import { IReactionCounts } from '~/interfaces/IPost';
 import { ButtonSecondaryProps } from '~/beinComponents/Button/ButtonSecondary';
 
 export interface IShowAlert {
-  title?: string;
+  title?: string | any;
   content?: string;
   input?: boolean;
   inputProps?: TextInputProps;

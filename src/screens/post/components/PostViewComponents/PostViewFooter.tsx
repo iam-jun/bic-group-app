@@ -130,9 +130,9 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
          btnCommentTestID,
        )}
       {!canComment && !canReact && (
-      <View style={[styles.emptyView, styles.disbaledReactComment]}>
-        <Text.BodyS color={theme.colors.neutral20} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
-      </View>
+        <View style={[styles.emptyView, styles.disbaledReactComment]}>
+          <Text.BodyS color={theme.colors.neutral20} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
+        </View>
       )}
     </View>
   );

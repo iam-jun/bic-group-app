@@ -61,7 +61,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
         >
           <Icon icon="iconCloseSmall" size={16} />
         </TouchableOpacity>
-        )}
+      )}
     />
   );
 

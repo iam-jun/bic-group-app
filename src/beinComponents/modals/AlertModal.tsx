@@ -106,9 +106,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
       {HeaderImageComponent || null}
       <View style={[styles.header, headerStyle || {}]}>
         {!!title && (
-        <Text.H4 style={{ flex: 1 }} {...titleProps}>
-          {title}
-        </Text.H4>
+          <Text.H4 style={{ flex: 1 }} {...titleProps}>
+            {title}
+          </Text.H4>
         )}
         <View style={styles.closeButton}>
           <Icon
@@ -143,29 +143,29 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const renderFooter = () => (
     <View style={[styles.footerContainer, buttonViewStyle || {}]}>
       {!!cancelBtn && (
-      <CancelBtn
-        testID="alert_modal.cancel"
-        type="ghost"
-        style={{ marginEnd: spacing?.margin.large, minWidth: 64 }}
-        onPress={_onCancel}
-        {...cancelBtnProps}
-      >
-        {_cancelLabel}
-      </CancelBtn>
+        <CancelBtn
+          testID="alert_modal.cancel"
+          type="ghost"
+          style={{ marginEnd: spacing?.margin.large, minWidth: 64 }}
+          onPress={_onCancel}
+          {...cancelBtnProps}
+        >
+          {_cancelLabel}
+        </CancelBtn>
       )}
       {!!visible && !!onConfirm && (
-      <ConfirmBtn
-        testID="alert_modal.confirm"
-        disabled={input && !text}
-        style={{ minWidth: 64 }}
-        onPress={() => {
-          dispatch(actions.hideAlert());
-          onConfirm(text);
-        }}
-        {...confirmBtnProps}
-      >
-        {confirmLabel || t('common:btn_confirm')}
-      </ConfirmBtn>
+        <ConfirmBtn
+          testID="alert_modal.confirm"
+          disabled={input && !text}
+          style={{ minWidth: 64 }}
+          onPress={() => {
+            dispatch(actions.hideAlert());
+            onConfirm(text);
+          }}
+          {...confirmBtnProps}
+        >
+          {confirmLabel || t('common:btn_confirm')}
+        </ConfirmBtn>
       )}
     </View>
   )
@@ -231,7 +231,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center',
+      // alignItems: 'center',
       borderBottomWidth: 1,
       borderColor: colors.neutral5,
       paddingVertical: spacing.padding.base,

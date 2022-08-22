@@ -54,12 +54,12 @@ const SettingItem = ({
           ) : null
         }
         RightComponent={(
-            !!privacyIcon && (
-              <ButtonWrapper testID="edit_user_info.setting_item.right_component">
-                <Icon icon={privacyIcon} />
-                <Icon icon="AngleDown" style={styles.rightIcon} />
-              </ButtonWrapper>
-            )
+          !!privacyIcon && (
+            <ButtonWrapper testID="edit_user_info.setting_item.right_component">
+              <Icon icon={privacyIcon} />
+              <Icon icon="AngleDown" style={styles.rightIcon} />
+            </ButtonWrapper>
+          )
         )}
       />
     </TouchableOpacity>

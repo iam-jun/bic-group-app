@@ -100,9 +100,9 @@ const DiscoverGroups = ({ route }: any) => {
     !loading
       && canLoadMore
       && ids.length > 0 && (
-        <View style={styles.listFooter}>
-          <ActivityIndicator />
-        </View>
+      <View style={styles.listFooter}>
+        <ActivityIndicator />
+      </View>
     )
   );
 
