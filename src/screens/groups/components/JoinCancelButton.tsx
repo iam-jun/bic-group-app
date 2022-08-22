@@ -1,7 +1,7 @@
 import {
   View, StyleProp, ViewStyle, StyleSheet,
-} from 'react-native'
-import React from 'react'
+} from 'react-native';
+import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
@@ -70,9 +70,9 @@ const JoinCancelButton = ({
       )}
     </View>
   );
-}
+};
 
-export default JoinCancelButton
+export default JoinCancelButton;
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;

@@ -35,7 +35,7 @@ export const STATIC_EMOJI = {
   bic_warning: require('../../assets/emoji/static/bic_warning.png'),
   bic_writing_hand: require('../../assets/emoji/static/bic_writing_hand.png'),
   bic_x10k: require('../../assets/emoji/static/bic_x10k.png'),
-}
+};
 
 export const ANIMATED_EMOJI = {
   bic_airplane: require('../../assets/emoji/animated/bic_airplane.gif'),
@@ -50,4 +50,4 @@ export const ANIMATED_EMOJI = {
   bic_smiling_face_with_hearts: require('../../assets/emoji/animated/bic_smiling_face_with_hearts.gif'),
   bic_sparkles: require('../../assets/emoji/animated/bic_sparkles.gif'),
   bic_whale: require('../../assets/emoji/animated/bic_whale.gif'),
-}
+};

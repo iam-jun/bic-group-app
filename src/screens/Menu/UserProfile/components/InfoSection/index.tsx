@@ -14,7 +14,7 @@ const InfoSection = ({ testID, title, children }: Props) => (
     <Text.H4 testID="info_section.title" useI18n style={styles.title}>{title}</Text.H4>
     {children}
   </View>
-)
+);
 const styles = StyleSheet.create({
   container: {
     paddingBottom: spacing.padding.base,

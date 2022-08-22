@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import useChatStore from '~/store/chat'
+import useChatStore from '~/store/chat';
 
 export const chatState = (state: any) => state.chat;
 
@@ -17,4 +17,4 @@ export const getUnreadChannelCount = ():number => {
 
     return count;
   }, [unreadChannels]);
-}
+};

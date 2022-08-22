@@ -37,19 +37,19 @@ TextOnly.args = {
   disabled: false,
   loading: false,
   children: 'Button Component',
-  onPress: () => { alert('onPress') },
-  onLongPress: () => { alert('onLongPress') },
-}
+  onPress: () => { alert('onPress'); },
+  onLongPress: () => { alert('onLongPress'); },
+};
 
 export const TextWithIcon = StoryComponent.bind({});
 TextWithIcon.args = {
   ...TextOnly.args,
   icon: 'iconReact',
-}
+};
 
 export const IconOnly = StoryComponent.bind({});
 IconOnly.args = {
   ...TextOnly.args,
   icon: 'iconReact',
   children: null,
-}
+};

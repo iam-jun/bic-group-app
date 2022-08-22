@@ -14,7 +14,7 @@ describe('YourCommunities Screen', () => {
     const wrapper = renderWithRedux(<YourCommunities />, store);
     const emptyComp = wrapper.queryByTestId('empty_screen');
     expect(emptyComp).not.toBeNull();
-  })
+  });
 
   it('given n items, Flatlist should render n items', () => {
     const mockStore = configureStore([]);
@@ -32,4 +32,4 @@ describe('YourCommunities Screen', () => {
     const items = wrapper.queryAllByTestId(/your_communities_item_/);
     expect(items.length).toBe(listYourCommunities.length);
   });
-})
+});

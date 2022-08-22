@@ -36,7 +36,7 @@ import {
   PostViewFooterLite,
   PostViewHeader,
   PostViewImportant,
-} from '../PostViewComponents'
+} from '../PostViewComponents';
 import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
@@ -173,9 +173,9 @@ const _PostView: FC<PostViewProps> = ({
   const handleDeltePostError = (listIdAudiences: string[]) => {
     if (listIdAudiences?.length > 0 && audience?.groups?.length > 0) {
       const listAudiences = listIdAudiences.map((audienceId) => {
-        const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId)
+        const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId);
         return _audience;
-      })
+      });
       if (canDeleteOwnPost) {
         dispatch(
           modalActions.showAlert({
@@ -201,7 +201,7 @@ const _PostView: FC<PostViewProps> = ({
         );
       }
     }
-  }
+  };
 
   const onPressMenu = () => {
     Keyboard.dismiss();
@@ -215,11 +215,11 @@ const _PostView: FC<PostViewProps> = ({
       getReactionStatistics,
       isDraft,
       handleDeltePostError,
-    )
+    );
 
     dispatch(modalActions.showBottomList(
       { isOpen: true, data } as BottomListProps,
-    ))
+    ));
   };
 
   const onAddReaction = (reactionId: ReactionType) => {

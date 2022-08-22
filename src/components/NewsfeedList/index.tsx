@@ -134,15 +134,15 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     // this callback run on UI thread, so i have to use runOnJs for function handler and shared value
     // but flash list v1.1.0 has problem, when update state data, scroll stop working
     // so for now, i used normal function onScroll, maybe refactor in the future
-    onScrollY?.(e?.nativeEvent?.contentOffset?.y)
+    onScrollY?.(e?.nativeEvent?.contentOffset?.y);
     handleScrollY(e?.nativeEvent?.contentOffset?.y);
   };
 
   useEffect(() => {
     setTimeout(() => {
       listRef?.current?.scrollToOffset?.({ animated: false, offset: 0 });
-    }, 200)
-  }, [activeTab])
+    }, 200);
+  }, [activeTab]);
 
   useFocusEffect(React.useCallback(
     () => () => {
@@ -213,8 +213,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   const onPressDiscover = () => {
-    rootNavigation.navigate(menuStack.discover)
-  }
+    rootNavigation.navigate(menuStack.discover);
+  };
 
   const renderItem = ({ item }: any) => (
     <PostView
@@ -249,7 +249,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
               : 'post:newsfeed:text_empty_cant_load_more'}
           </Text.BodyM>
         </View>
-      )
+      );
     }
     return (
       <View style={styles.listFooter}>
@@ -258,7 +258,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           color={theme.colors.gray20}
         />
       </View>
-    )
+    );
   };
 
   const renderEmpty = () => {
@@ -270,7 +270,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
             color={theme.colors.gray20}
           />
         </View>
-      )
+      );
     }
     return (
       <View style={styles.emptyContainer}>
@@ -284,8 +284,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           {t('menu:title_discover')}
         </Button.Primary>
       </View>
-    )
-  }
+    );
+  };
 
   const renderListEmpty = () => (
     <FlatList
@@ -302,7 +302,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       )}
       ListEmptyComponent={renderEmpty}
     />
-  )
+  );
 
   return (
     <View testID="newsfeed_list" style={styles.container}>

@@ -86,7 +86,7 @@ const CommunityDetail = (props: any) => {
       /* Avoid getting group posts of the nonexisting group,
       which will lead to endless fetching group posts in
       httpApiRequest > makeGetStreamRequest */
-      const privilegeToFetchPost = isMember || privacy === groupPrivacy.public
+      const privilegeToFetchPost = isMember || privacy === groupPrivacy.public;
 
       if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
         return;
@@ -119,11 +119,11 @@ const CommunityDetail = (props: any) => {
   };
 
   const onRightPress = () => {
-    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools)
+    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools);
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
-    } as BottomListProps))
+    } as BottomListProps));
   };
 
   const renderPlaceholder = () => (
@@ -179,7 +179,7 @@ const CommunityDetail = (props: any) => {
   const scrollWrapper = (offsetY: number) => {
     headerRef?.current?.setScrollY?.(offsetY);
     DeviceEventEmitter.emit('stopAllVideo');
-  }
+  };
 
   const onScrollHandler = useAnimatedScrollHandler((event: any) => {
     const offsetY = event?.contentOffset?.y;

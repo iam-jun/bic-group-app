@@ -3,7 +3,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import React from 'react'
+import React from 'react';
 import { isEmpty } from 'lodash';
 import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
@@ -18,7 +18,7 @@ const InfoItem = ({ style, title, value }: Props) => {
   const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
 
   let _value = value;
-  if (isEmpty(value)) _value = 'settings:text_not_set'
+  if (isEmpty(value)) _value = 'settings:text_not_set';
 
   return (
     <View testID="info_item" style={[styles.container, style]}>
@@ -33,8 +33,8 @@ const InfoItem = ({ style, title, value }: Props) => {
         {_value}
       </Text.BodyMMedium>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
   subtitle: {
     marginTop: spacing.margin.small,
   },
-})
+});
 
-export default InfoItem
+export default InfoItem;

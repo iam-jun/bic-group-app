@@ -9,7 +9,7 @@ describe('Contact component', () => {
     phone: 'phone',
     city: 'city',
     countryCode: '84',
-  }
+  };
 
   it('renders correctly', () => {
     const rendered = render(<Contact {...baseProps} />).toJSON();
@@ -17,7 +17,7 @@ describe('Contact component', () => {
   });
 
   it('renders location Not set', () => {
-    const props = { ...baseProps, city: '' }
+    const props = { ...baseProps, city: '' };
     const rendered = render(<Contact {...props} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });

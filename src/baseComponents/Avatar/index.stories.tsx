@@ -29,14 +29,14 @@ export const Base = StoryComponent.bind({});
 Base.args = {
   variant: 'base',
   source: images.img_user_avatar_default,
-}
+};
 
 export const Rounded = StoryComponent.bind({});
 Rounded.args = {
   variant: 'base',
   source: images.img_user_avatar_default,
   isRounded: true,
-}
+};
 
 export const Online = StoryComponent.bind({});
 Online.args = {
@@ -44,7 +44,7 @@ Online.args = {
   status: 'online',
   source: images.img_user_avatar_default,
   isRounded: true,
-}
+};
 
 export const Bagde = StoryComponent.bind({});
 Bagde.args = {
@@ -52,7 +52,7 @@ Bagde.args = {
   source: images.img_user_avatar_default,
   isRounded: true,
   badgeCheck: true,
-}
+};
 
 export const Action = StoryComponent.bind({});
 Action.args = {
@@ -60,5 +60,5 @@ Action.args = {
   source: images.img_user_avatar_default,
   isRounded: true,
   actionIcon: 'edit',
-  onPressAction: () => { alert('onPressAction') },
-}
+  onPressAction: () => { alert('onPressAction'); },
+};

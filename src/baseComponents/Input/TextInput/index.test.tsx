@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from '@testing-library/react-native';
 
-import { Default } from './index.stories'
+import { Default } from './index.stories';
 
 describe('TextInput component', () => {
   it('renders active banner correctly', () => {
@@ -9,5 +9,5 @@ describe('TextInput component', () => {
       <Default {...Default.args} />,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
-  })
-})
+  });
+});

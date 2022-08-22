@@ -10,7 +10,7 @@ import SelectReactionView from '.';
 describe('SelectReactionView component', () => {
   const baseProps = {
     onPressReaction: jest.fn(),
-  }
+  };
 
   const store = createTestStore(initialState);
 

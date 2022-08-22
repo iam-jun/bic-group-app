@@ -5,4 +5,4 @@ const MEMBER_REQUEST_STATUS = {
   REJECTED: 'rejected',
 };
 
-export default MEMBER_REQUEST_STATUS
+export default MEMBER_REQUEST_STATUS;

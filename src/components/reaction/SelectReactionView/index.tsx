@@ -24,7 +24,7 @@ const SelectReactionView: FC<ReactionViewProps> = ({
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   // Initial rows = 4
-  const [contentHeight, setContentHeight] = React.useState(ITEM_SIZE * 4)
+  const [contentHeight, setContentHeight] = React.useState(ITEM_SIZE * 4);
   const [data, setData] = React.useState<any>(STATIC_EMOJI);
   const tabData = [
     { id: 'tab_select_reaction_static', text: t('common:text_static') },
@@ -34,7 +34,7 @@ const SelectReactionView: FC<ReactionViewProps> = ({
   useEffect(() => {
     const _data = selectedIndex === 0 ? STATIC_EMOJI : ANIMATED_EMOJI;
     setData(_data);
-  }, [selectedIndex])
+  }, [selectedIndex]);
 
   const _onPressReaction = (item: string) => {
     onPressReaction?.(item);
@@ -52,8 +52,8 @@ const SelectReactionView: FC<ReactionViewProps> = ({
   );
 
   const onPressTab = (_, index:number) => {
-    setSelectedIndex(index)
-  }
+    setSelectedIndex(index);
+  };
 
   const onLayout = (event: LayoutChangeEvent) => {
     const height = event?.nativeEvent?.layout?.height;

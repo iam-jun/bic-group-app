@@ -15,7 +15,7 @@ const OverView = (args) => (
   <View style={{ paddingHorizontal: 16 }}>
     <TextArea {...args} />
   </View>
-)
+);
 
 const StoryComponent = getStoryComponent(OverView);
 
@@ -23,5 +23,5 @@ export const Default = StoryComponent.bind({});
 Default.args = {
   placeholder: 'Text placeholder',
   label: 'Input Label',
-}
+};
 Default.storyName = 'Default';

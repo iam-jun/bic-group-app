@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import StoryWrapper from './StoryWrapper';
 
 // 👇 We create a “template” of how args map to rendering

@@ -122,7 +122,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
         <Text.H5 style={styles.nodeEmoji}>
           {nodeEmoji}
         </Text.H5>
-      )
+      );
     }
 
     if (!emoji) {
@@ -130,7 +130,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       if (imageEmoji) {
         emoji = (
           <Image style={styles.emoji} resizeMode="contain" source={imageEmoji} />
-        )
+        );
       }
     }
 

@@ -53,7 +53,7 @@ const CommunityItem = ({
         )}`}
       </Text.BodyS>
     </View>
-  )
+  );
 
   return (
     <PrimaryItem

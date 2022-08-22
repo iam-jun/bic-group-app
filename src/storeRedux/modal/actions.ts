@@ -141,7 +141,7 @@ export const setBottomList = (payload:BottomListProps) => ({
 
 export const hideBottomList = () => ({
   type: Actions.HIDE_BOTTOM_LIST,
-})
+});
 
 const modalActions = {
   setModal,

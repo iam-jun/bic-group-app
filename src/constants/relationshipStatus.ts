@@ -5,4 +5,4 @@ const RELATIONSHIP_STATUS = {
   MARRIED: 'settings:text_married',
 };
 
-export default RELATIONSHIP_STATUS
+export default RELATIONSHIP_STATUS;

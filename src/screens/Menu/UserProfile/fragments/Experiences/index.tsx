@@ -20,7 +20,7 @@ const Experiences = () => {
         </View>
       ))}
     </InfoSection>
-  )
-}
+  );
+};
 
 export default Experiences;

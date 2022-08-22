@@ -61,7 +61,7 @@ const Reaction: React.FC<ReactionProps> = ({
       <Text.NumberS style={styles.nodeEmoji} testID={`reaction.${icon}`}>
         {nodeEmoji}
       </Text.NumberS>
-    )
+    );
   }
 
   if (!emoji) {
@@ -69,7 +69,7 @@ const Reaction: React.FC<ReactionProps> = ({
     if (imageEmoji) {
       emoji = (
         <Image style={styles.emoji} resizeMode="contain" source={imageEmoji} />
-      )
+      );
     }
   }
 

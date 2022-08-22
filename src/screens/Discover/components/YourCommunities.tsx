@@ -10,7 +10,7 @@ import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
-import CommunityGroupCard from '~/components/CommunityGroupCard'
+import CommunityGroupCard from '~/components/CommunityGroupCard';
 
 const YourCommunities = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const YourCommunities = () => {
         title="communities:empty_communities:title"
         description="communities:empty_communities:description"
       />
-    )
+    );
   };
 
   const renderItem: ListRenderItem<number> = ({ item, index }) => {
@@ -58,7 +58,7 @@ const YourCommunities = () => {
         item={currentItem}
         testID={`your_communities_item_${index}`}
       />
-    )
+    );
   };
 
   const renderListFooter = () => {
@@ -95,8 +95,8 @@ const YourCommunities = () => {
         />
       )}
     />
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   listFooter: {

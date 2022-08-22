@@ -23,5 +23,5 @@ Default.args = {
   isChecked: false,
   onPress: (
     isChecked: boolean,
-  ) => { alert(`Change checked: ${isChecked}`) },
-}
+  ) => { alert(`Change checked: ${isChecked}`); },
+};

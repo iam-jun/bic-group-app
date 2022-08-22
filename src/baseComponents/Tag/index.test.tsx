@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react-native';
 
-import { AvatarTag, NameTag, TextOnly } from './index.stories'
+import { AvatarTag, NameTag, TextOnly } from './index.stories';
 
 afterEach(cleanup);
 
@@ -60,6 +60,6 @@ describe('Tag component', () => {
     const { getByTestId } = render(<TextOnly {...TextOnly.args} style={{ backgroundColor: 'red' }} />);
     const tagComponent = getByTestId('tag.item');
     expect(tagComponent).toBeDefined();
-    expect(tagComponent.props?.style?.backgroundColor).toBe('red')
+    expect(tagComponent.props?.style?.backgroundColor).toBe('red');
   });
 });

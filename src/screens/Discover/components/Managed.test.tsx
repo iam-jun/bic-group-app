@@ -19,7 +19,7 @@ describe('Managed Screen', () => {
         ids: [],
         items: {},
       },
-    }
+    };
     const mockStore = configureStore([]);
     const storeData = {
       ...initialState,
@@ -32,7 +32,7 @@ describe('Managed Screen', () => {
     const wrapper = renderWithRedux(<Managed />, store);
     const emptyComp = wrapper.queryByTestId('list_empty_owner');
     expect(emptyComp).not.toBeNull();
-  })
+  });
 
   it('given n items in list owner, Flatlist should render n items', () => {
     const mockData = {
@@ -51,7 +51,7 @@ describe('Managed Screen', () => {
         ids: [],
         items: {},
       },
-    }
+    };
     const mockStore = configureStore([]);
     const storeData = {
       ...initialState,
@@ -80,7 +80,7 @@ describe('Managed Screen', () => {
         ids: [],
         items: {},
       },
-    }
+    };
     const mockStore = configureStore([]);
     const storeData = {
       ...initialState,
@@ -93,7 +93,7 @@ describe('Managed Screen', () => {
     const wrapper = renderWithRedux(<Managed />, store);
     const emptyComp = wrapper.queryByTestId('list_empty_manage');
     expect(emptyComp).not.toBeNull();
-  })
+  });
 
   it('given n items in list manage, Flatlist should render n items', () => {
     const mockData = {
@@ -112,7 +112,7 @@ describe('Managed Screen', () => {
           [currentItem.id]: currentItem,
         }), {}),
       },
-    }
+    };
     const mockStore = configureStore([]);
     const storeData = {
       ...initialState,
@@ -126,4 +126,4 @@ describe('Managed Screen', () => {
     const items = wrapper.queryAllByTestId(/managed_manage_item_/);
     expect(items.length).toBe(listManage.length);
   });
-})
+});

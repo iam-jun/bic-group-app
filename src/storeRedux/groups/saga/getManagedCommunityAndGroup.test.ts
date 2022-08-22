@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { listManage } from '../../../test/mock_data/communities';
 import groupsActions from '../actions';
-import getManagedCommunityAndGroup from './getManagedCommunityAndGroup'
+import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 import groupApi from '../../../api/GroupApi';
 
 describe('getManagedCommunityAndGroup saga', () => {

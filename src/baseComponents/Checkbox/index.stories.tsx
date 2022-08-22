@@ -27,11 +27,11 @@ const StoryComponent = getStoryComponent(CheckBox);
 export const NoLabel = StoryComponent.bind({});
 NoLabel.args = {
   isChecked: true,
-  onPress: () => { alert('onPress') },
-}
+  onPress: () => { alert('onPress'); },
+};
 
 export const WithLabel = StoryComponent.bind({});
 WithLabel.args = {
   ...NoLabel,
   label: 'Label of checkbox',
-}
+};

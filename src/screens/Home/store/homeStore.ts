@@ -10,7 +10,7 @@ const DEFAULT_TAB_DATA = {
   refreshing: true,
   data: [],
   canLoadMore: true,
-}
+};
 
 const homeStore = (set, get) => ({
   activeTab: HOME_TAB_TYPE.NEWSFEED,
@@ -20,52 +20,52 @@ const homeStore = (set, get) => ({
   setActiveTab: (tabId: keyof typeof HOME_TAB_TYPE) => {
     set(
       (state: IHomeState) => {
-        state.activeTab = tabId
+        state.activeTab = tabId;
       },
       false,
       'setActiveTab',
-    )
+    );
   },
   setTabNewsfeed: (tab: IHomeTab) => {
     set(
       (state: IHomeState) => {
-        state.tabNewsfeed = { ...state.tabNewsfeed, ...tab }
+        state.tabNewsfeed = { ...state.tabNewsfeed, ...tab };
       },
       false,
       'setTabNewsfeed',
-    )
+    );
   },
   setTabImportant: (tab: IHomeTab) => {
     set(
       (state: IHomeState) => {
-        state.tabImportant = { ...state.tabImportant, ...tab }
+        state.tabImportant = { ...state.tabImportant, ...tab };
       },
       false,
       'setTabImportant',
-    )
+    );
   },
 
   getTabData: (tabId: keyof typeof HOME_TAB_TYPE, isRefresh?: boolean) => {
-    const statePath = tabId === HOME_TAB_TYPE.NEWSFEED ? 'tabNewsfeed' : 'tabImportant'
+    const statePath = tabId === HOME_TAB_TYPE.NEWSFEED ? 'tabNewsfeed' : 'tabImportant';
     set(
       (state: IHomeState) => {
-        state[statePath] = { ...state[statePath], refreshing: true }
+        state[statePath] = { ...state[statePath], refreshing: true };
       },
       false,
       'getTabData',
-    )
+    );
     const currentState: IHomeState = get();
     const currentList = currentState[statePath].data;
     const offset = isRefresh ? 0 : currentList.length || 0;
-    const requestParams: IParamGetFeed = { offset }
+    const requestParams: IParamGetFeed = { offset };
     if (tabId === HOME_TAB_TYPE.IMPORTANT) {
       requestParams.isImportant = true;
     }
     streamApi.getNewsfeed(requestParams)
       .then((response) => {
         const responseList = response?.list || [];
-        storeRedux.store.dispatch(postActions.addToAllPosts({ data: responseList }))
-        const newList = isRefresh ? responseList : currentList.concat(responseList)
+        storeRedux.store.dispatch(postActions.addToAllPosts({ data: responseList }));
+        const newList = isRefresh ? responseList : currentList.concat(responseList);
         set(
           (state: IHomeState) => {
             state[statePath] = {
@@ -73,11 +73,11 @@ const homeStore = (set, get) => ({
               refreshing: false,
               data: newList,
               canLoadMore: responseList.length > 0,
-            }
+            };
           },
           false,
           'getTabData',
-        )
+        );
       })
       .catch(() => {
         set(
@@ -85,15 +85,15 @@ const homeStore = (set, get) => ({
             state[statePath] = {
               ...state[statePath],
               refreshing: false,
-            }
+            };
           },
           false,
           'getTabData',
-        )
-      })
+        );
+      });
   },
-})
+});
 
 const useHomeStore = createZustand<IHomeState>('home-store', homeStore);
 
-export default useHomeStore
+export default useHomeStore;

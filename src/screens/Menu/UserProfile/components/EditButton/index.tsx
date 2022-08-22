@@ -34,8 +34,8 @@ const EditButton = ({
     >
       <Icon size={16} tintColor={theme.colors.purple60} icon="Camera" />
     </ButtonWrapper>
-  )
-}
+  );
+};
 
 const themeStyles = (
   theme: ExtendedTheme,
@@ -55,4 +55,4 @@ const themeStyles = (
   });
 };
 
-export default EditButton
+export default EditButton;

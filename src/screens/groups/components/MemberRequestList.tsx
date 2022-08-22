@@ -39,7 +39,7 @@ const MemberRequestList = ({
   } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
 
   const renderItem = ({ item: requestId }: {item: string}) => {
-    if (id && type === 'community') return <CommunityMemberRequest requestId={requestId} organizationId={id} />
+    if (id && type === 'community') return <CommunityMemberRequest requestId={requestId} organizationId={id} />;
 
     return <GroupMemberRequest requestId={requestId} />;
   };

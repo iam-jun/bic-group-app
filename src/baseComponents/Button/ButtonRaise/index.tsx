@@ -41,14 +41,14 @@ const ButtonRaise: FC<ButtonRaiseProps> = ({
   const textVariant = TEXT_SIZES[size];
   const buttonHeight = BUTTON_SIZES[size];
   const iconSize = ICON_SIZES[size];
-  const _color = color || theme.colors.neutral70
-  const _backgroundColor = backgroundColor || theme.colors.neutral
+  const _color = color || theme.colors.neutral70;
+  const _backgroundColor = backgroundColor || theme.colors.neutral;
 
   const buttonStyle = {
     height: buttonHeight,
     backgroundColor: _backgroundColor,
     paddingHorizontal: BUTTON_PADDING[size],
-  }
+  };
 
   const renderIcon = () => {
     if (!icon) return null;

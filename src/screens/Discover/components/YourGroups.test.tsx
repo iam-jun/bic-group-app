@@ -21,7 +21,7 @@ describe('YourGroups Screen', () => {
     const wrapper = renderWithRedux(<YourGroups />, store);
     const emptyComp = wrapper.queryByTestId('empty_screen');
     expect(emptyComp).not.toBeNull();
-  })
+  });
 
   it('given n items, Flatlist should render n items', () => {
     const mockStore = configureStore([]);
@@ -45,4 +45,4 @@ describe('YourGroups Screen', () => {
     const items = wrapper.queryAllByTestId(/your_groups_item_/);
     expect(items.length).toBe(listYourGroups.length);
   });
-})
+});

@@ -7,7 +7,7 @@ describe('InfoItem component', () => {
   const baseProps = {
     title: 'title',
     value: 'value',
-  }
+  };
 
   afterEach(cleanup);
 

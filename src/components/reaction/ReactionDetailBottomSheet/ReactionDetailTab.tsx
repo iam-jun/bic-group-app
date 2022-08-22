@@ -72,7 +72,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
           console.error(`\x1b[31m🐣️ ReactionDetailTab get more error ${e}\x1b[0m`);
         });
     }
-  }
+  };
 
   const renderItem = (item: any) => (
     <PrimaryItem
@@ -95,7 +95,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
 
   const keyExtractor = (
     item, index,
-  ) => `reaction_tab_detail_${item?.id}`
+  ) => `reaction_tab_detail_${item?.id}`;
 
   return (
     <View style={{ height }}>

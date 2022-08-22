@@ -15,17 +15,17 @@ export const handlePostedEvent = (payload: any, unreadChannels:any, userId: stri
     return channel;
   }
   return null;
-}
+};
 
 export const handleChannelViewedEvent = (payload: any) => {
   const id = payload.data.channel_id;
   const channel = { id, mentionCountRoot: 0 };
   return channel;
-}
+};
 
 export const handlePostUnreadEvent = (payload: any) => {
   const id = payload.broadcast.channel_id;
   const channel = { id, mentionCountRoot: payload.data.mention_count_root };
 
   return channel;
-}
+};

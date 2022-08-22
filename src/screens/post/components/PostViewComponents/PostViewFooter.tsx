@@ -42,7 +42,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   const { t } = useBaseHook();
 
   const validReactionCount = validateReactionCount(reactionCounts);
-  const numberOfReactions = formatLargeNumber(getTotalReactions(reactionCounts, 'user'))
+  const numberOfReactions = formatLargeNumber(getTotalReactions(reactionCounts, 'user'));
   const labelReactionCount = `${
     numberOfReactions ? `${numberOfReactions} ` : ''
   }${t('post:button_react')}`;

@@ -34,7 +34,7 @@ const Home = () => {
   const headerRef = useRef<any>();
   const yShared = useSharedValue(0);
 
-  const { rootNavigation } = useRootNavigation()
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const dispatch = useDispatch();
@@ -75,9 +75,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getTabData(activeTab, true)
-    yShared.value = withDelay(withTiming(0), 200)
-  }, [activeTab])
+    getTabData(activeTab, true);
+    yShared.value = withDelay(withTiming(0), 200);
+  }, [activeTab]);
 
   useTabPressListener(
     (tabName: ITabTypes) => {
@@ -138,7 +138,7 @@ const Home = () => {
   const onPressSearch = () => {
     DeviceEventEmitter.emit('showHeader', true);
     dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
-  }
+  };
 
   const navigateToChat = () => {
     openUrl(getEnv('BEIN_CHAT_DEEPLINK'));
@@ -155,8 +155,8 @@ const Home = () => {
   );
 
   const onScrollY = (y: number) => {
-    yShared.value = y
-  }
+    yShared.value = y;
+  };
 
   return (
     <View style={styles.container}>

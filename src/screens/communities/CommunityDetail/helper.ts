@@ -1,4 +1,4 @@
-import i18next from 'i18next'
+import i18next from 'i18next';
 import modalActions from '~/storeRedux/modal/actions';
 
 export const getHeaderMenu = (type: 'community' | 'group',
@@ -69,7 +69,7 @@ export const getHeaderMenu = (type: 'community' | 'group',
     requireCanSetting: false,
     onPress: !!onPressLeave ? onPressLeave : onPressNewFeature,
   },
-  ]
+  ];
   const result = [];
   defaultData.forEach((item: any) => {
     if ((item?.requireCanSetting && canSetting)
@@ -77,7 +77,7 @@ export const getHeaderMenu = (type: 'community' | 'group',
      || (!item?.requireCanSetting && !item?.requireIsMember)) {
       result.push({ ...item });
     }
-  })
+  });
 
   return result;
-}
+};

@@ -40,7 +40,7 @@ export default function* deletePost({
     }
   } catch (e: any) {
     if (e?.meta?.errors?.groups_denied) {
-      callbackError?.(e.meta.errors.groups_denied)
+      callbackError?.(e.meta.errors.groups_denied);
     } else yield call(showError, e);
   }
 }

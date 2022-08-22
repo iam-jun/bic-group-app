@@ -24,12 +24,12 @@ const MenuDiscoverCommunity = () => {
   const { data = [], loading, getJoinedCommunities } = useJoinedCommunitiesStore();
 
   useEffect(() => {
-    getJoinedCommunities()
-  }, [])
+    getJoinedCommunities();
+  }, []);
 
   const onPressCommunity = (item: ICommunity) => {
-    rootNavigation.navigate(groupStack.communityDetail, { communityId: item?.id })
-  }
+    rootNavigation.navigate(groupStack.communityDetail, { communityId: item?.id });
+  };
 
   const renderItem = ({ item, index }) => (
     <Button onPress={() => onPressCommunity(item)}>
@@ -44,7 +44,7 @@ const MenuDiscoverCommunity = () => {
         }}
       />
     </Button>
-  )
+  );
 
   const renderEmpty = () => (
     <View style={styles.emptyContainer}>
@@ -56,7 +56,7 @@ const MenuDiscoverCommunity = () => {
           </Text.SubtitleS>
         )}
     </View>
-  )
+  );
 
   return (
     <View style={styles.container}>
