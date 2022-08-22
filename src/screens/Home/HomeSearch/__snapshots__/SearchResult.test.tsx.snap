@@ -1039,6 +1039,14 @@ exports[`SearchResult component should render list search result 1`] = `
               Array [
                 Object {
                   "backgroundColor": "#FFFFFF",
+                  "elevation": 2,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 2,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.12,
+                  "shadowRadius": 1.5,
                 },
               ]
             }
@@ -1507,6 +1515,72 @@ exports[`SearchResult component should render list search result 1`] = `
                     </View>
                   </View>
                 </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "alignItems": "flex-end",
+                  "paddingBottom": 6,
+                  "paddingHorizontal": 16,
+                  "paddingTop": 12,
+                }
+              }
+            >
+              <View
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "opacity": 1,
+                  }
+                }
+                testID="seen_counts_view.touchable_opacity"
+              >
+                <Text
+                  numberOfLines={1}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
+                      },
+                      Object {
+                        "color": "#353E6E",
+                      },
+                      undefined,
+                    ]
+                  }
+                  testID="seen_counts_view.show_text"
+                >
+                  Interested by 
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "color": "#353E6E",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    0
+                  </Text>
+                </Text>
               </View>
             </View>
           </View>

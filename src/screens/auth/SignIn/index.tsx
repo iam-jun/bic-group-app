@@ -59,7 +59,7 @@ const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 24 * 2);
 const SignIn = () => {
   useAuthAmplifyHub();
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation()
+  const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
   const { loading, signingInError } = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);

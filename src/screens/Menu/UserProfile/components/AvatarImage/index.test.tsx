@@ -17,7 +17,7 @@ describe('AvatarImage screen', () => {
     avatar: null,
     coverHeight: 120,
     onEdit: jest.fn(),
-  }
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -37,5 +37,5 @@ describe('AvatarImage screen', () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<AvatarImage {...baseProps} />, store);
     expect(wrapper).toMatchSnapshot();
-  })
+  });
 });

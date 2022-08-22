@@ -15,7 +15,7 @@ const OverView = (args) => (
   <View style={{ paddingHorizontal: 16 }}>
     <PasswordInput {...args} />
   </View>
-)
+);
 
 const StoryComponent = getStoryComponent(OverView);
 
@@ -27,4 +27,4 @@ Default.args = {
   horizontal: false,
   error: false,
   style: { marginRight: 16 },
-}
+};

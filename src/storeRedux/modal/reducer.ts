@@ -41,7 +41,7 @@ export const modalInitState = {
   },
 
   reactionBottomSheet: {
-    show: false,
+    visible: false,
     title: '',
     position: { x: -1, y: -1 },
     callback: undefined,
@@ -160,7 +160,7 @@ function commonReducer(
       return {
         ...state,
         bottomList: payload,
-      }
+      };
     case actions.HIDE_BOTTOM_LIST:
       return {
         ...state,
@@ -168,7 +168,7 @@ function commonReducer(
           isOpen: false,
           data: [],
         },
-      }
+      };
     default:
       return state;
   }

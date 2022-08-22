@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleProp, ViewStyle } from 'react-native'
+import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import groupsActions from '../../../../storeRedux/groups/actions';
@@ -19,8 +19,8 @@ const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
     privacy,
     id: groupId,
     name: groupName,
-  } = infoDetail
-  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus)
+  } = infoDetail;
+  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
 
   if (isMember) return null;
@@ -42,7 +42,7 @@ const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
       onPressJoin={onPressJoin}
       onPressCancelRequest={onPressCancelRequest}
     />
-  )
-}
+  );
+};
 
 export default GroupJoinCancelButton;

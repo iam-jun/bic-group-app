@@ -27,14 +27,14 @@ const chatStore = (set, get) => ({
         {},
       );
 
-      set({ unreadChannels: result }, false, 'initChat')
+      set({ unreadChannels: result }, false, 'initChat');
     } catch (error) {
-      console.error('initChat', error)
+      console.error('initChat', error);
     }
   },
   handleChatEvent: (userId: string, payload: any) => {
     let channel = null;
-    const { unreadChannels } = get()
+    const { unreadChannels } = get();
     switch (payload.event) {
       case chatSocketEvents.POSTED:
         channel = handlePostedEvent(payload, unreadChannels, userId);
@@ -73,6 +73,6 @@ const useChatStore = createStore<ChatState | any>(
       ),
     ), 'chat-store',
   ),
-)
+);
 
-export default useChatStore
+export default useChatStore;

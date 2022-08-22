@@ -8,10 +8,10 @@ export const chatApiConfig = {
     provider: apiProviders.bein,
     useRetry: true,
   }),
-}
+};
 
 const chatApi = {
   init: () => withHttpRequestPromise(chatApiConfig.init),
-}
+};
 
-export default chatApi
+export default chatApi;

@@ -11,8 +11,8 @@ export const getTotalReactions = (reactionCounts: any, type: 'emoji' | 'user') =
   Object.values(reactionCounts || {})?.forEach((reaction: any) => {
     const key = Object.keys(reaction || {})?.[0];
     if (!!key && !!reaction?.[key] && !blacklistReactions?.[key]) {
-      total += type === 'emoji' ? 1 : (reaction?.[key] || 0)
+      total += type === 'emoji' ? 1 : (reaction?.[key] || 0);
     }
   });
-  return total
-}
+  return total;
+};

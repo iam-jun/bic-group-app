@@ -355,7 +355,7 @@ const makeRemovePushTokenRequest = async () => {
 const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
   try {
     const response: any = await makeHttpRequest(isEmpty(args) ? fn() : fn(...args));
-    const isSuccess = response?.data?.data || response?.data?.code === API_ERROR_CODE.COMMON.SUCCESS
+    const isSuccess = response?.data?.data || response?.data?.code === API_ERROR_CODE.COMMON.SUCCESS;
     if (isSuccess) {
       return Promise.resolve(response?.data);
     }
@@ -363,7 +363,7 @@ const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
   } catch (e) {
     return Promise.reject(e);
   }
-}
+};
 
 export {
   makeHttpRequest,

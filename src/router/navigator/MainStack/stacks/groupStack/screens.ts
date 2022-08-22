@@ -62,6 +62,6 @@ const groupScreens = {
 
   // group moderating
   'group-pending-members': GroupPendingMembers,
-}
+};
 
 export default groupScreens;

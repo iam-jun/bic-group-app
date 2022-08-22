@@ -42,8 +42,8 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     theme, insets,
   );
 
-  const notiUnseen = useKeySelector('notifications.unseenNumber')
-  const tabBadge = { notification: notiUnseen }
+  const notiUnseen = useKeySelector('notifications.unseenNumber');
+  const tabBadge = { notification: notiUnseen };
 
   const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;
 

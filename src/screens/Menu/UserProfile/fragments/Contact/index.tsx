@@ -21,6 +21,6 @@ const Contact = ({
       value={city}
     />
   </InfoSection>
-)
+);
 
 export default Contact;

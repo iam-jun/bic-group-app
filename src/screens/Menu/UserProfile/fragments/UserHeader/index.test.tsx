@@ -12,7 +12,7 @@ describe('UserHeader component', () => {
       titlePosition: 'titlePosition',
       company: 'company',
     },
-  }
+  };
 
   it('renders correctly', () => {
     const rendered = render(<UserHeader {...baseProps} />).toJSON();
@@ -20,7 +20,7 @@ describe('UserHeader component', () => {
   });
 
   it('should hide username when username is empty ', () => {
-    const props = { ...baseProps, username: '' }
+    const props = { ...baseProps, username: '' };
     const { queryByTestId } = render(<UserHeader {...props} />);
 
     const usernameText = queryByTestId('user_profile.username');
@@ -29,7 +29,7 @@ describe('UserHeader component', () => {
   });
 
   it('should hide description when description is empty ', () => {
-    const props = { ...baseProps, description: '' }
+    const props = { ...baseProps, description: '' };
     const { queryByTestId } = render(<UserHeader {...props} />);
 
     const descriptionText = queryByTestId('user_profile.description');

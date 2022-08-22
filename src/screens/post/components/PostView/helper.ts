@@ -70,7 +70,7 @@ export const getPostViewMenu = (
       };
       dispatch(modalActions.showReactionDetailBottomSheet(payload));
     }
-  }
+  };
 
   const onPressDelete = () => {
     dispatch(modalActions.hideBottomList());
@@ -160,14 +160,14 @@ export const getPostViewMenu = (
       requireIsActor: false,
       onPress,
     },
-  ]
+  ];
   const result = [];
   defaultData.forEach((item: any) => {
     if ((!item.requireIsActor && !item?.requireReactionCounts) || (item.requireIsActor && isActor)
      || (item?.requireReactionCounts && !!reactionsCount && !!Object.keys(reactionsCount)?.[0])) {
       result.push({ ...item });
     }
-  })
+  });
 
   return result;
-}
+};

@@ -65,7 +65,7 @@ const CoverHeader = ({
         onEdit={onEditAvatar}
       />
     </View>
-  )
-}
+  );
+};
 
-export default CoverHeader
+export default CoverHeader;

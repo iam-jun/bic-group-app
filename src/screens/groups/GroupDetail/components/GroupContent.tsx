@@ -41,7 +41,7 @@ const GroupContent = ({
   const isMember = joinStatus === groupJoinStatus.member;
   const { id: groupId, teamName } = groupData;
   const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
-  const { id: communityId, name: communityName } = useKeySelector(groupsKeySelector.communityDetail)
+  const { id: communityId, name: communityName } = useKeySelector(groupsKeySelector.communityDetail);
 
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {
@@ -56,7 +56,7 @@ const GroupContent = ({
       titleFullScreen: communityName,
       ContentComponent: (<CommunityJoinedGroupTree communityId={communityId} teamName={teamName} />),
     }));
-  }
+  };
 
   const renderItem = ({ item }: any) => <PostItem postData={item} testID="group_content.post.item" />;
 

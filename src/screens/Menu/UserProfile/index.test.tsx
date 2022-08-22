@@ -139,7 +139,7 @@ describe('UserProfile screen', () => {
     };
     storeData.menu.myProfile = USER_PROFILE;
     storeData.auth.user = user as any;
-    storeData.groups.joinedCommunities.data = [{ slug: 'test' }]
+    storeData.groups.joinedCommunities.data = [{ slug: 'test' }];
 
     const store = mockStore(storeData);
     const props = { route: { params: { userId: 1 } } };

@@ -8,8 +8,8 @@ const ModalHeader: FC<HeaderProps> = ({ ...props }: HeaderProps) => {
   const dispatch = useDispatch();
 
   const _onPressBack = () => {
-    dispatch(modalActions.hideModal())
-  }
+    dispatch(modalActions.hideModal());
+  };
 
   return (
     <Header

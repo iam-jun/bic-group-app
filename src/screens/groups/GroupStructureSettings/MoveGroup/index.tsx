@@ -81,7 +81,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
         {` ${selecting?.name || ''}`}
       </Text.H4>
     </Text.H4>
-  )
+  );
 
   const renderAlertContent = (number: number) => {
     const content = t(
@@ -94,8 +94,8 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
         <Text.BodyMMedium>{`${number || 0} ${t('groups:text_members_other')}`}</Text.BodyMMedium>
         {content}
       </Text.BodyM>
-    )
-  }
+    );
+  };
 
   const setLoadingButton = (loading: boolean) => {
     dispatch(groupsActions.setGroupStructureMove({
@@ -104,7 +104,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       targetGroups,
       movingGroup,
     }));
-  }
+  };
 
   const onPressSave = async () => {
     setErrorMessage('');

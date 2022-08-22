@@ -24,7 +24,7 @@ import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 import { checkLastAdmin } from '../../helper';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import { useMyPermissions } from '~/hooks/permissions';
-import useChatStore from '~/store/chat'
+import useChatStore from '~/store/chat';
 import { BottomListProps } from '~/components/BottomList';
 import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 
@@ -87,7 +87,7 @@ const GroupTopBar = () => {
       LINK_GROUP, groupId,
     );
     try {
-      Share.share({ message: groupLink, url: groupLink })
+      Share.share({ message: groupLink, url: groupLink });
     } catch (error) {
       console.error(`\x1b[31m🐣️ Share group error: ${error}\x1b[0m`);
     }
@@ -125,11 +125,11 @@ const GroupTopBar = () => {
       undefined,
       undefined,
       onPressLeave,
-    )
+    );
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
-    } as BottomListProps))
+    } as BottomListProps));
   };
 
   const onPressChat = () => {

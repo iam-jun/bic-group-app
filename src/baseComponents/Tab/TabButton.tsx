@@ -1,7 +1,7 @@
 import {
   StyleProp, ViewStyle, TouchableOpacity, StyleSheet,
-} from 'react-native'
-import React from 'react'
+} from 'react-native';
+import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useKeySelector } from '~/hooks/selector';
 import Text, { TextVariant } from '~/beinComponents/Text';
@@ -36,7 +36,7 @@ const TabButton = ({
 }: TabButtonProps) => {
   const theme = useTheme();
   const { colors } = theme;
-  const styles = createStyles(theme, isSelected)
+  const styles = createStyles(theme, isSelected);
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   return (
@@ -54,8 +54,8 @@ const TabButton = ({
         {children}
       </Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const createStyles = (theme: ExtendedTheme, isSelected: boolean) => {
   const { colors } = theme;
@@ -67,7 +67,7 @@ const createStyles = (theme: ExtendedTheme, isSelected: boolean) => {
       borderBottomWidth: isSelected ? 2 : null,
       borderBottomColor: isSelected ? colors.purple50 : colors.neutral40,
     },
-  })
+  });
 };
 
 export default TabButton;

@@ -18,7 +18,7 @@ const useJoinedCommunities = (set) => ({
     previewMembers?: boolean;
     managed?: boolean;
   }) => {
-    set((state) => { state.loading = true }, false, 'getJoinedCommunities');
+    set((state) => { state.loading = true; }, false, 'getJoinedCommunities');
     groupApi.getJoinedCommunities(params)
       .then((response) => {
         set((state) => {
@@ -29,14 +29,14 @@ const useJoinedCommunities = (set) => ({
       .catch((error) => {
         console.warn('\x1b[35m🐣️ joinedCommunities error ', error, '\x1b[0m');
         set((state) => {
-          state.loading = false
+          state.loading = false;
         }, false, 'getJoinedCommunitiesError');
-      })
+      });
   },
-})
+});
 
 const useJoinedCommunitiesStore = createZustand<JoinedCommunitiesState>(
   'useJoinedCommunities', useJoinedCommunities,
-)
+);
 
-export default useJoinedCommunitiesStore
+export default useJoinedCommunitiesStore;

@@ -14,7 +14,7 @@ import Avatar from '~/baseComponents/Avatar';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 
-const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large
+const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
 
 const MenuHeader = () => {
   const theme: ExtendedTheme = useTheme();
@@ -30,7 +30,7 @@ const MenuHeader = () => {
     rootNavigation.navigate(
       mainStack.userProfile, { userId: id },
     );
-  }
+  };
 
   return (
     <View style={styles.container}>

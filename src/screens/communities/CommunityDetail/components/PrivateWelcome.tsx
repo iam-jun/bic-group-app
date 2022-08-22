@@ -63,5 +63,5 @@ const createStyles = (theme: ExtendedTheme) => {
     container: {
       backgroundColor: colors.neutral,
     },
-  })
-}
+  });
+};

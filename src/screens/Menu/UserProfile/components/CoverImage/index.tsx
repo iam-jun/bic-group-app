@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CoverImage
+export default CoverImage;
