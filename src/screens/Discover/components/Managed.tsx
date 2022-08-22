@@ -1,6 +1,11 @@
 import React, { FC, useEffect } from 'react';
 import {
-  SectionList, SectionListRenderItem, View, StyleSheet, ActivityIndicator, RefreshControl,
+  SectionList,
+  SectionListRenderItem,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -22,13 +27,20 @@ type SectionTitleProps = {
   title: string;
 };
 
+type ListEmptyProps = {
+  type: 'owner' | 'manage';
+};
+
 const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
   const managed = useKeySelector(groupsKeySelector.managed);
 
   const { owner, manage } = managed;
   const item
     = section === 'discover:owner' ? owner.items[id] : manage.items[id];
-  const testID = section === 'discover:owner' ? `managed_owner_item_${id}` : `managed_manage_item_${id}`;
+  const testID
+    = section === 'discover:owner'
+      ? `managed_owner_item_${id}`
+      : `managed_manage_item_${id}`;
 
   return <CommunityGroupCard item={item} testID={testID} />;
 };
@@ -41,95 +53,44 @@ const SectionTitle: FC<SectionTitleProps> = ({ title }) => {
     <View style={styles.titleSectionContainer}>
       <Text.H5 useI18n>{title}</Text.H5>
     </View>
-  )
-}
+  );
+};
 
-const renderItem: SectionListRenderItem<
-string,
-{ title: string; data: string[] }
-> = ({ item, section }) => <GroupItem id={item} section={section.title} />;
+const ListEmpty: FC<ListEmptyProps> = ({ type }) => {
+  const managed = useKeySelector(groupsKeySelector.managed);
 
-const renderSectionHeader = ({ section: { title } }) => (<SectionTitle title={title} />)
+  const { manage, owner } = managed;
+  const { canLoadMore: canLoadMoreManage } = manage;
+  const { canLoadMore: canLoadMoreOwner } = owner;
+  const canLoadMoreItem
+    = type === 'owner' ? canLoadMoreOwner : canLoadMoreManage;
+  const testID = type === 'owner' ? 'list_empty_owner' : 'list_empty_manage';
+  const description
+    = type === 'owner'
+      ? 'discover:you_have_not_owner_community'
+      : 'discover:you_have_not_manage_communiy_or_group';
 
-const renderSectionFooter = ({ section: { title, data } }) => {
-  if (data.length !== 0) return null;
+  if (canLoadMoreItem) {
+    return null;
+  }
 
-  return (title === 'discover:owner' ? <ListEmptyOwner /> : <ListEmptyManage />)
-}
+  return (
+    <View testID={testID}>
+      <EmptyScreen source="searchUsers" description={description} />
+    </View>
+  );
+};
 
-const keyExtractor = (item) => `managed-${item}`;
-
-const Separator = () => (
-  <Divider color="transparent" size={spacing.padding.large} />
-);
-
-const renderListFooter = () => {
+const Managed = () => {
+  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const managed = useKeySelector(groupsKeySelector.managed);
 
-  const { manage } = managed;
-  const { isLoading, canLoadMore } = manage;
-
-  if (!isLoading || !canLoadMore) return (<View style={styles.listFooter} />);
-
-  return (
-    <View style={styles.listFooter} testID="your_groups.loading_more_indicator">
-      <ActivityIndicator />
-    </View>
-  );
-};
-
-const ListEmptyOwner = () => {
-  const managed = useKeySelector(groupsKeySelector.managed);
-
-  const { owner } = managed;
-  const { canLoadMore } = owner;
-
-  if (canLoadMore) {
-    return null;
-  }
-
-  return (
-    <View testID="list_empty_owner">
-      <EmptyScreen
-        source="searchUsers"
-        description="discover:you_have_not_owner_community"
-      />
-    </View>
-  )
-}
-
-const ListEmptyManage = () => {
-  const managed = useKeySelector(groupsKeySelector.managed);
-
-  const { manage } = managed;
-  const { canLoadMore } = manage;
-
-  if (canLoadMore) {
-    return null;
-  }
-
-  return (
-    <View testID="list_empty_manage">
-      <EmptyScreen
-        source="searchUsers"
-        description="discover:you_have_not_manage_communiy_or_group"
-      />
-    </View>
-  )
-}
-
-const Managed = () => {
-  const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme();
-
-  const managed = useKeySelector(groupsKeySelector.managed);
-
   const { isRefresh, owner, manage } = managed;
   const { ids: idsOwner } = owner;
-  const { ids: idsManage, canLoadMore } = manage;
+  const { ids: idsManage, canLoadMore, isLoading } = manage;
   const data = [
     {
       title: 'discover:owner',
@@ -151,6 +112,33 @@ const Managed = () => {
     dispatch(groupsActions.getManaged({ isRefresh: true }));
   };
 
+  const renderItem: SectionListRenderItem<
+    string,
+    { title: string; data: string[] }
+  > = ({ item, section }) => <GroupItem id={item} section={section.title} />;
+
+  const renderSectionHeader = ({ section: { title } }) => (
+    <SectionTitle title={title} />
+  );
+
+  const renderSectionFooter = ({ section: { title, data } }) => {
+    if (data.length !== 0) return null;
+
+    return <ListEmpty type={title === 'discover:owner' ? 'owner' : 'manage'} />;
+  };
+
+  const keyExtractor = (item) => `managed-${item}`;
+
+  const renderListFooter = () => {
+    if (!isLoading || !canLoadMore) return <View style={styles.listFooter} />;
+
+    return (
+      <View style={styles.listFooter} testID="your_groups.loading_more_indicator">
+        <ActivityIndicator />
+      </View>
+    );
+  };
+
   useEffect(() => {
     dispatch(groupsActions.getManaged({ isRefresh: true }));
   }, []);
@@ -162,7 +150,9 @@ const Managed = () => {
       renderItem={renderItem}
       renderSectionHeader={renderSectionHeader}
       renderSectionFooter={renderSectionFooter}
-      ItemSeparatorComponent={Separator}
+      ItemSeparatorComponent={() => (
+        <Divider color="transparent" size={spacing.padding.large} />
+      )}
       ListFooterComponent={renderListFooter}
       onEndReached={onLoadMore}
       refreshControl={(
@@ -189,7 +179,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-  })
-}
+  });
+};
 
 export default Managed;
