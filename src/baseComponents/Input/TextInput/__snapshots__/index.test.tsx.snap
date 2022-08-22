@@ -217,11 +217,14 @@ exports[`TextInput component renders active banner correctly 1`] = `
             </View>
             <View
               style={
-                Object {
-                  "alignContent": "center",
-                  "flexDirection": "row",
-                  "marginTop": 4,
-                }
+                Array [
+                  Object {
+                    "alignContent": "center",
+                    "flexDirection": "row",
+                    "marginTop": 4,
+                  },
+                  undefined,
+                ]
               }
             >
               <Text

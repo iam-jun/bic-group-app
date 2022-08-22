@@ -191,7 +191,7 @@ exports[`NotificationItem component renders correctly 1`] = `
       }
       testID="notification_item.time_view"
     >
-      13w
+      14w
     </Text>
     <View
       accessible={true}

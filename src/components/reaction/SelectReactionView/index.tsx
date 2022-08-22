@@ -1,5 +1,5 @@
 /* eslint-disable import/no-dynamic-require */
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Image, View, StyleSheet, LayoutChangeEvent,
 } from 'react-native';
@@ -21,14 +21,14 @@ const SelectReactionView: FC<ReactionViewProps> = ({
   onPressReaction,
 }: ReactionViewProps) => {
   const { t } = useBaseHook();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   // Initial rows = 4
-  const [contentHeight, setContentHeight] = useState(ITEM_SIZE * 4)
-  const [data, setData] = useState<any>(STATIC_EMOJI);
+  const [contentHeight, setContentHeight] = React.useState(ITEM_SIZE * 4)
+  const [data, setData] = React.useState<any>(STATIC_EMOJI);
   const tabData = [
-    { id: '1', text: t('common:text_static') },
-    { id: '2', text: t('common:text_animated') },
+    { id: 'tab_select_reaction_static', text: t('common:text_static') },
+    { id: 'tab_select_reaction_animated', text: t('common:text_animated') },
   ];
 
   useEffect(() => {
@@ -40,9 +40,10 @@ const SelectReactionView: FC<ReactionViewProps> = ({
     onPressReaction?.(item);
   };
 
-  const renderItem = (item: any, index: number) => (
+  const renderItem = (item: any) => (
     <Button
-      key={`reaction_${index}_${item}`}
+      key={`select_reaction_${item}`}
+      testID={`select_reaction_view.item_${item}`}
       style={styles.item}
       onPress={() => _onPressReaction(item)}
     >
@@ -74,7 +75,7 @@ const SelectReactionView: FC<ReactionViewProps> = ({
       >
         <ScrollView style={styles.list}>
           <View style={styles.listContainer}>
-            {Object.keys(data).map((item, index) => renderItem(item, index))}
+            {Object.keys(data).map((item, index) => renderItem(item))}
           </View>
         </ScrollView>
       </View>
