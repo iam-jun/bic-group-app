@@ -78,7 +78,7 @@ import getMyPermissions from './getMyPermissions';
 import getJoinedAllGroups from './getJoinedAllGroups';
 import getManaged from './getManaged';
 import getOwnerCommunity from './getOwnerCommunity';
-import getManagedCommunityAndGroup from './getManagedCommunityAndGroup'
+import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -363,7 +363,7 @@ function* getJoinableUsers({
       ),
       '\x1b[0m',
     );
-    yield call(showError, err)
+    yield call(showError, err);
   }
 }
 

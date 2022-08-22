@@ -16,7 +16,7 @@ const OverView = (args) => (
   <View style={{ width: dimension.deviceWidth, paddingHorizontal: 16 }}>
     <TextInput {...args} />
   </View>
-)
+);
 
 const StoryComponent = getStoryComponent(OverView);
 
@@ -30,5 +30,5 @@ Default.args = {
   error: false,
   leftIcon: 'Sitemap',
   style: { marginRight: 16 },
-}
+};
 Default.storyName = 'Text Input';

@@ -28,11 +28,11 @@ NoLabel.args = {
   isChecked: false,
   onPress: (
     isChecked: boolean,
-  ) => { alert(`Change checked: ${isChecked}`) },
-}
+  ) => { alert(`Change checked: ${isChecked}`); },
+};
 
 export const WithLabel = StoryComponent.bind({});
 WithLabel.args = {
   ...NoLabel,
   label: 'Label of radio button',
-}
+};

@@ -30,7 +30,7 @@ describe('CoverHeader screen', () => {
     avatar: null,
     coverHeight: 120,
     uploadCallback: jest.fn(),
-  }
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -83,7 +83,7 @@ describe('CoverHeader screen', () => {
 
     storeData.menu.myProfile = USER_PROFILE as any;
     storeData.auth.user = user as any;
-    const props = { ...baseProps, userId: USER_PROFILE.id }
+    const props = { ...baseProps, userId: USER_PROFILE.id };
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<CoverHeader {...props} />, store);
 

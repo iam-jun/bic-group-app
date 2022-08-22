@@ -44,13 +44,13 @@ const Tag: React.FC<TagProps> = ({
   const getVariant = () => {
     switch (size) {
       case 'medium':
-        return 'bodyS'
+        return 'bodyS';
       case 'large':
-        return 'bodyM'
+        return 'bodyM';
       default:
-        return 'bodyXS'
+        return 'bodyXS';
     }
-  }
+  };
   const variant = getVariant();
 
   return (
@@ -61,7 +61,7 @@ const Tag: React.FC<TagProps> = ({
         paddingLeft: !!avatar ? 0 : spacing.padding.small,
         paddingRight: !!icon ? spacing.padding.tiny : spacing.padding.small,
       }]}
-      onPress={() => { onActionPress?.() }}
+      onPress={() => { onActionPress?.(); }}
     >
       {!!avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
       <Text variant={variant} testID="tag.label" style={styles.labelText}>{label}</Text>
@@ -114,7 +114,7 @@ const createStyles = (
       containerBackgroundColor: colors.neutral2,
       textColor: colors.gray80,
     },
-  }
+  };
 
   const { containerHeight } = tagSizes[size];
   const { containerBackgroundColor, textColor } = tagTypes[type];

@@ -1,5 +1,5 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
 import { useTheme } from '@react-navigation/native';
 import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
@@ -37,8 +37,8 @@ const UserHeader = ({
         <Text testID="user_profile.description" style={styles.subtitle}>{description}</Text>
       )}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   headerName: {

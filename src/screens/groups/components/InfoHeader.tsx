@@ -26,7 +26,7 @@ const InfoHeader = ({
   infoDetail, isMember, insideCommunityName, onPressGroupTree,
 }: InfoHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
-  const { t } = useBaseHook()
+  const { t } = useBaseHook();
   const styles = themeStyles(theme);
 
   const {
@@ -57,7 +57,7 @@ const InfoHeader = ({
         </Text.SubtitleXS>
       </View>
     )
-  )
+  );
 
   const renderInfoHeader = () => (
     <View style={styles.infoContainer}>

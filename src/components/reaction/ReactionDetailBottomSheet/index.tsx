@@ -73,15 +73,15 @@ const ReactionDetailBottomSheet = () => {
         <View>
           <ReactionTabBar
             reactionCounts={reactionCounts}
-            onChangeTab={onChangeTab}
             initReaction={initReaction}
+            onChangeTab={onChangeTab}
           />
           <ReactionDetailTab
             reactionType={selectingReaction || initReaction}
             height={contentBarHeight}
-            onPressItem={onPressItem}
             getDataPromise={getDataPromise}
             getDataParam={getDataParam}
+            onPressItem={onPressItem}
           />
         </View>
       )}

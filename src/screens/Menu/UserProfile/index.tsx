@@ -113,8 +113,8 @@ const UserProfile = (props: any) => {
   );
 
   const uploadCallback = (fieldName:string) => {
-    setIsChangeImg(fieldName)
-  }
+    setIsChangeImg(fieldName);
+  };
 
   const onEditProfileButton = () => rootNavigation.navigate(
     mainStack.userEdit, { userId },
@@ -146,7 +146,7 @@ const UserProfile = (props: any) => {
       >
         {t('profile:title_edit_profile')}
       </Button.Secondary>
-    )
+    );
   };
 
   const renderLoading = () => (

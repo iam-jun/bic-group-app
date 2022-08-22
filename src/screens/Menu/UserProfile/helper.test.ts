@@ -3,7 +3,7 @@ import {
   formatPhoneNumber,
   getEndDateText, getLanguages, uploadFile, _openImagePicker,
 } from './helper';
-import * as PermissionUtils from '~/utils/permission'
+import * as PermissionUtils from '~/utils/permission';
 import menuTypes from '../../../storeRedux/menu/types';
 
 describe('UserProfile helper', () => {

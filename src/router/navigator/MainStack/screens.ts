@@ -10,6 +10,6 @@ const mainTabScreens: any = {
   ...menuScreens,
   ...notiScreens,
   ...commonScreens,
-}
+};
 
 export default mainTabScreens;

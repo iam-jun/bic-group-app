@@ -22,7 +22,7 @@ describe('DiscoverCommunities Screen', () => {
     const wrapper = renderWithRedux(<DiscoverCommunities />, store);
     const emptyComp = wrapper.queryByTestId('empty_screen');
     expect(emptyComp).not.toBeNull();
-  })
+  });
 
   it('should not render empty component with default state', () => {
     const mockStore = configureStore([]);
@@ -54,4 +54,4 @@ describe('DiscoverCommunities Screen', () => {
     const items = wrapper.queryAllByTestId(/discover_communities_item_/);
     expect(items.length).toBe(listDiscoverCommunities.length);
   });
-})
+});

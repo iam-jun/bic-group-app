@@ -24,4 +24,4 @@ export const securityLoginMenu = {
       icon: 'KeySkeleton',
     },
   ],
-}
+};

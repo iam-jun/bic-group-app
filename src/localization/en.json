@@ -44,6 +44,8 @@
     "btn_stay_on_this_page": "Stay on this page",
     "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
+    "text_static": "Static",
+    "text_animated": "Animated",
     "text_important": "Important",
     "text_clear": "Clear",
     "text_set_time": "Set Time",

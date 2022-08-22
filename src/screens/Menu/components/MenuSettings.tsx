@@ -33,8 +33,8 @@ const MenuSettings = () => {
       onConfirm: () => dispatch(authActions.signOut()),
       confirmLabel: t('auth:text_sign_out'),
     };
-    dispatch(modalActions.showAlert(alertPayload))
-  }
+    dispatch(modalActions.showAlert(alertPayload));
+  };
 
   const settingItems = [
     {
@@ -57,21 +57,21 @@ const MenuSettings = () => {
       title: t('menu:title_help_support'),
       onPress: () => dispatch(modalActions.showAlertNewFeature()),
     },
-  ]
+  ];
 
   const onPressAppVersion = () => {
     if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
       return;
     }
-    rootNavigation.navigate(menuStack.componentCollection)
-  }
+    rootNavigation.navigate(menuStack.componentCollection);
+  };
 
   const renderItem = ({ icon, title, onPress }: any) => (
     <Button key={title + icon} style={styles.itemContainer} onPress={onPress}>
       <Icon tintColor={theme.colors.neutral20} icon={icon} />
       <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>{title}</Text.BodyMMedium>
     </Button>
-  )
+  );
 
   return (
     <View style={styles.container}>

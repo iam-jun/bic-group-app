@@ -25,19 +25,19 @@ const MenuShortcut = () => {
     rootNavigation.navigate(
       homeStack.postSelectAudience, { isFirstStep: true },
     );
-  }
+  };
 
   const onPressDraft = () => {
-    rootNavigation.navigate(homeStack.draftPost)
-  }
+    rootNavigation.navigate(homeStack.draftPost);
+  };
 
   const onPressSavedItems = () => {
     dispatch(modalActions.showAlertNewFeature());
-  }
+  };
 
   const onPressMedia = () => {
     dispatch(modalActions.showAlertNewFeature());
-  }
+  };
 
   const renderButton = (icon, name, onPress) => (
     <Button style={styles.button} onPress={onPress}>

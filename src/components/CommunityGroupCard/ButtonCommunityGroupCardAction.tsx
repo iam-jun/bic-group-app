@@ -32,7 +32,7 @@ const getTextButton = (
 };
 
 const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
-  const textButton = getTextButton(joinStatus)
+  const textButton = getTextButton(joinStatus);
 
   switch (joinStatus) {
     case groupJoinStatus.unableToJoin:
@@ -45,7 +45,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
         >
           {textButton}
         </Button.Neutral>
-      )
+      );
     case groupJoinStatus.visitor:
       return (
         <Button.Secondary
@@ -54,7 +54,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
         >
           {textButton}
         </Button.Secondary>
-      )
+      );
     case groupJoinStatus.member:
       return (
         <Button.Secondary
@@ -64,7 +64,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
         >
           {textButton}
         </Button.Secondary>
-      )
+      );
     default:
       return (
         <Button.Secondary
@@ -74,7 +74,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
         >
           {textButton}
         </Button.Secondary>
-      )
+      );
   }
 };
 

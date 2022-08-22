@@ -49,12 +49,12 @@ const CommunityAdmin = () => {
     'communities',
     communityId,
     PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
-  )
+  );
   const canManageScheme = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
     PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
-  )
+  );
 
   useEffect(
     () => {

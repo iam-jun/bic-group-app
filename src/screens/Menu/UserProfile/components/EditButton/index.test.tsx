@@ -14,7 +14,7 @@ describe('EditButton screen', () => {
     userId: USER_PROFILE.id,
     currentUsername: 'username',
     onPress: jest.fn(),
-  }
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -71,9 +71,9 @@ describe('EditButton screen', () => {
 
     const store = createTestStore(storeData);
 
-    const props = { ...baseProps, userId: '1' }
+    const props = { ...baseProps, userId: '1' };
 
     const wrapper = renderWithRedux(<EditButton {...props} />, store);
     expect(wrapper).toMatchSnapshot();
-  })
+  });
 });

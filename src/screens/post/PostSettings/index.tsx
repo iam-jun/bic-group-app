@@ -262,7 +262,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
         />
       )}
     />
-  )
+  );
 
   const renderCanComment = () => (
     <View
@@ -281,7 +281,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
         onPress={handleToggleCanComment}
       />
     </View>
-  )
+  );
 
   const renderCanReact = () => (
     <View
@@ -300,7 +300,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
         onPress={handleToggleCanReact}
       />
     </View>
-  )
+  );
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>

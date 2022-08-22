@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text, { TextVariant } from '~/beinComponents/Text';
 import { spacing } from '~/theme';
@@ -30,7 +30,7 @@ const PillTabButton = ({
   onPress,
 }: PillTabButtonProps) => {
   const theme = useTheme();
-  const styles = createStyles(theme)
+  const styles = createStyles(theme);
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   return (
@@ -51,8 +51,8 @@ const PillTabButton = ({
         {children}
       </Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 export default PillTabButton;
 
@@ -102,5 +102,5 @@ const createStyles = (theme: ExtendedTheme) => {
     neutralText: {
       color: colors.neutral40,
     },
-  })
-}
+  });
+};

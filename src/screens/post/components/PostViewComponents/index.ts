@@ -12,4 +12,4 @@ export {
   PostViewFooterLite,
   PostViewHeader,
   PostViewImportant,
-}
+};

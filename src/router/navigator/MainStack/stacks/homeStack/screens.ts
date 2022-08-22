@@ -18,6 +18,6 @@ const homeScreens = {
   'user-profile': UserProfile,
   'post-settings': PostSettings,
   'comment-detail': CommentDetail,
-}
+};
 
 export default homeScreens;

@@ -133,7 +133,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
 
   const handleToggleCanReact = () => {
     setCanReact(!sCanReact);
-  }
+  };
 
   const handleChangeDatePicker = (date?: Date) => {
     setSelectingDate(false);

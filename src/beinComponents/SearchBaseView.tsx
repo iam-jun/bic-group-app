@@ -53,13 +53,13 @@ function SearchBaseView({
   };
 
   const focus = () => textInputRef.current?.focus?.();
-  const blur = () => textInputRef.current?.blur?.()
+  const blur = () => textInputRef.current?.blur?.();
 
   useImperativeHandle(searchViewRef, () => ({
     setSearchText,
     focus,
     blur,
-  }))
+  }));
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>

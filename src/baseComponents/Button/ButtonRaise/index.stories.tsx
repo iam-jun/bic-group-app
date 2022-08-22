@@ -18,7 +18,7 @@ const ButtonRaiseStory = {
       options: ['small', 'medium', 'large'],
     },
   },
-} as ComponentMeta<typeof ButtonRaise>
+} as ComponentMeta<typeof ButtonRaise>;
 
 const baseProps = {
   onPress: () => alert('Button Pressed!'),
@@ -28,7 +28,7 @@ const baseProps = {
   backgroundColor: light.colors.neutral,
   children: 'Public Group',
   style: { marginVertical: 8, marginHorizontal: 8 },
-}
+};
 
 const testProps = {
   textOnly: {
@@ -39,11 +39,11 @@ const testProps = {
     ...baseProps,
     children: undefined,
   },
-}
+};
 
 const styles: any = {
   row: { flexDirection: 'row', marginVertical: 8 },
-}
+};
 
 const ComponentOverview = () => (
   <View style={{}}>
@@ -74,6 +74,6 @@ const StoryComponent = getStoryComponent(ButtonRaise);
 export const Default = StoryComponent.bind({});
 Default.args = {
   ...baseProps,
-}
+};
 
-export default ButtonRaiseStory
+export default ButtonRaiseStory;

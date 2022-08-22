@@ -212,7 +212,7 @@ export const listDiscoverCommunities = [
     joinStatus: 2,
   },
 
-]
+];
 
 export const listYourCommunities = [
   {
@@ -291,7 +291,7 @@ export const listYourCommunities = [
     userCount: 5,
   },
 
-]
+];
 
 export const listYourGroups = [
   {
@@ -330,7 +330,7 @@ export const listYourGroups = [
       groupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
     },
   },
-]
+];
 
 export const listOwnCommunity = [
   {
@@ -344,7 +344,7 @@ export const listOwnCommunity = [
     backgroundImgUrl: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/cover/default_group_cover.png',
     userCount: 1,
   },
-]
+];
 
 export const listManage = [
   {
@@ -402,4 +402,4 @@ export const listManage = [
       groupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
     },
   },
-]
+];

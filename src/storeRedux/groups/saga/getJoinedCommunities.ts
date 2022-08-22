@@ -39,7 +39,7 @@ export default function* getJoinedCommunities({
       ...params,
     });
 
-    const communities = resp.data
+    const communities = resp.data;
     const newIds = communities?.map((item: ICommunity) => item.id);
     const newItems = mapItems(communities);
 
