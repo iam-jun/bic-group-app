@@ -231,7 +231,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center',
+      // alignItems: 'center',
       borderBottomWidth: 1,
       borderColor: colors.neutral5,
       paddingVertical: spacing.padding.base,
