@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { spacing } from '~/theme';
@@ -99,7 +99,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
           </Text.SubtitleS>
         </Button>
       )}
-      <Button TouchableComponent={TouchableWithoutFeedback} onPress={onView}>
+      <Button onPress={onView}>
         <View>
           <View style={styles.row}>
             <Avatar.XLarge source={icon} />
