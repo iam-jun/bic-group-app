@@ -83,20 +83,22 @@ const ReactionView: FC<ReactionViewProps> = ({
     ) => {
       const react = key as ReactionType;
       if (!blacklistReactions?.[react] && reactionMap.get(key) > 0) {
-        rendered.push(<Reaction
-          testId={`reaction.button.${key}`}
-          key={`${key}`}
-          style={styles.reactionItem}
-          value={reactionMap.get(key)}
-          icon={key}
-          disableUpdateState
-          onLongPress={() => _onLongPressItem(react)}
-          loading={_ownReactions?.[react]?.loading}
-          selected={!!_ownReactions?.[react]?.id}
-          onActionPress={(action) => onActionReaction(
-            react, action,
-          )}
-        />);
+        rendered.push(
+          <Reaction
+            testId={`reaction.button.${key}`}
+            key={`${key}`}
+            style={styles.reactionItem}
+            value={reactionMap.get(key)}
+            icon={key}
+            disableUpdateState
+            onLongPress={() => _onLongPressItem(react)}
+            loading={_ownReactions?.[react]?.loading}
+            selected={!!_ownReactions?.[react]?.id}
+            onActionPress={(action) => onActionReaction(
+              react, action,
+            )}
+          />,
+        );
       }
     })
 
