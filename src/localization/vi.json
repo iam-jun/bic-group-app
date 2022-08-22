@@ -836,7 +836,7 @@
       "text_move_to": "Di chuyển tới",
       "text_title_confirm_reorder_group": "Bạn đang thay đổi thứ tự của \"%NAME%\"",
       "text_desc_confirm_reorder_group": "Tất cả thành viên của nhóm này sẽ thấy thay đổi. Bạn có chắc muốn thực hiện hành động này?",
-      "text_title_confirm_move_group": "Bạn đang di chuyển \"%MOVING_NAME%\" tới \"%TARGET_NAME%\"",
+      "text_title_confirm_move_group": "Bạn đang di chuyển",
       "text_desc_confirm_move_group": " của %MOVING_NAME% và các nhóm bên trong sẽ được thêm vào %TARGET_NAME%. Bạn có chắc muốn thực hiện hành động này?",
       "text_move_group_search_placeholder": "Tìm kiếm một nhóm"
     },
