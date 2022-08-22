@@ -490,12 +490,12 @@ const _PostDetailContent = (props: any) => {
 
           {!!setting?.canComment
           && (
-          <CommentInputView
-            commentInputRef={commentInputRef}
-            postId={id}
-            groupIds={groupIds}
-            autoFocus={!!focus_comment}
-          />
+            <CommentInputView
+              commentInputRef={commentInputRef}
+              postId={id}
+              groupIds={groupIds}
+              autoFocus={!!focus_comment}
+            />
           )}
         </View>
       </View>

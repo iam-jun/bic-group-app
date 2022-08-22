@@ -82,14 +82,14 @@ const GeneralSettings = () => {
         title={t(item.title)}
         icon={item.icon}
         RightComponent={
-            language === item.code ? (
-              <Icon
-                icon="Check"
-                size={24}
-                tintColor={theme.colors.purple60}
-              />
-            ) : null
-          }
+          language === item.code ? (
+            <Icon
+              icon="Check"
+              size={24}
+              tintColor={theme.colors.purple60}
+            />
+          ) : null
+        }
       />
     </TouchableOpacity>
   );

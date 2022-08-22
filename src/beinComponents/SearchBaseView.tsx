@@ -89,14 +89,14 @@ function SearchBaseView({
           onSubmitEditing={onSubmitEditing}
         />
         {!!searchText && (
-        <Icon
-          style={styles.iconClose}
-          icon="iconClose"
-          size={20}
-          tintColor={theme.colors.neutral80}
-          onPress={() => _onChangeText('')}
-          buttonTestID="search_base_view.reset_button"
-        />
+          <Icon
+            style={styles.iconClose}
+            icon="iconClose"
+            size={20}
+            tintColor={theme.colors.neutral80}
+            onPress={() => _onChangeText('')}
+            buttonTestID="search_base_view.reset_button"
+          />
         )}
       </View>
     </View>

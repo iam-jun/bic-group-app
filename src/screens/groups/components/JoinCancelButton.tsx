@@ -58,15 +58,15 @@ const JoinCancelButton = ({
       )}
 
       {isPrivate && (
-      <View style={styles.shortDesc}>
-        <Text.BodyS
-          color={theme.colors.gray50}
-          useI18n
-          testID="join_cancel_button.description"
-        >
-          {`communities:text_join_${type}_description`}
-        </Text.BodyS>
-      </View>
+        <View style={styles.shortDesc}>
+          <Text.BodyS
+            color={theme.colors.gray50}
+            useI18n
+            testID="join_cancel_button.description"
+          >
+            {`communities:text_join_${type}_description`}
+          </Text.BodyS>
+        </View>
       )}
     </View>
   );

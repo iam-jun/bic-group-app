@@ -105,27 +105,27 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
         <Markdown
           {...textProps}
           textTestID={
-              parentCommentId
-                ? 'collapsible_text.level_2.content'
-                : 'collapsible_text.level_1.content'
-            }
+            parentCommentId
+              ? 'collapsible_text.level_2.content'
+              : 'collapsible_text.level_1.content'
+          }
           onPressAudience={onPressAudience}
           value={
-              !shortContent ? content : contentShowAll ? content : shortContent
-            }
+            !shortContent ? content : contentShowAll ? content : shortContent
+          }
         />
       )}
 
       {!!shortContent && (
-      <Text.SubtitleS
-        testID="collapsible_text.markdown.short_content"
-        onPress={_onToggleShowTextContent}
-        color={colors.neutral50}
-      >
-        {contentShowAll
-          ? t('common:text_see_less')
-          : t('common:text_see_more')}
-      </Text.SubtitleS>
+        <Text.SubtitleS
+          testID="collapsible_text.markdown.short_content"
+          onPress={_onToggleShowTextContent}
+          color={colors.neutral50}
+        >
+          {contentShowAll
+            ? t('common:text_see_less')
+            : t('common:text_see_more')}
+        </Text.SubtitleS>
       )}
     </View>
   );
@@ -136,15 +136,15 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
         {!shortContent ? content : contentShowAll ? content : shortContent}
       </Text>
       {!!shortContent && (
-      <Text.SubtitleS
-        testID="collapsible_text.show_text"
-        onPress={_onToggleShowTextContent}
-        color={colors.neutral50}
-      >
-        {contentShowAll
-          ? t('common:text_see_less')
-          : t('common:text_see_more')}
-      </Text.SubtitleS>
+        <Text.SubtitleS
+          testID="collapsible_text.show_text"
+          onPress={_onToggleShowTextContent}
+          color={colors.neutral50}
+        >
+          {contentShowAll
+            ? t('common:text_see_less')
+            : t('common:text_see_more')}
+        </Text.SubtitleS>
       )}
     </Text>
   );

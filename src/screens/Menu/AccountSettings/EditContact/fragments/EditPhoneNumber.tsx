@@ -129,7 +129,7 @@ const EditPhoneNumber = ({
             {(searchQuery ? searchResult : data || []).map((item: ICountryCodeList) => renderItem({ item }))}
           </ScrollView>
         </View>
-        )}
+      )}
     />
   );
 

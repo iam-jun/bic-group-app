@@ -40,7 +40,7 @@ const MainTabs = () => {
       dispatch(groupsActions.getMyPermissions());
       dispatch(postActions.getDraftPosts({}));
       dispatch(giphyActions.getAPIKey());
-      dispatch(groupsActions.getMyCommunities());
+      dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
       dispatch(notificationsActions.registerPushToken());
       initPushTokenMessage()
         .then((messaging) => {

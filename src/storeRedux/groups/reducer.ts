@@ -152,7 +152,9 @@ export const groupInitState = {
   },
   joinedCommunities: {
     loading: false,
-    data: [],
+    canLoadMore: true,
+    ids: [] as string[],
+    items: {},
   },
   discoverCommunities: {
     loading: true,
@@ -165,6 +167,27 @@ export const groupInitState = {
     canLoadMore: true,
     ids: [] as string[],
     items: {},
+  },
+  joinedAllGroups: {
+    isRefresh: false,
+    isLoading: false,
+    canLoadMore: true,
+    ids: [],
+    items: {},
+  },
+  managed: {
+    isRefresh: false,
+    owner: {
+      canLoadMore: true,
+      ids: [],
+      items: {},
+    },
+    manage: {
+      isLoading: false,
+      canLoadMore: true,
+      ids: [],
+      items: {},
+    },
   },
   isGettingInfoDetail: false,
   communityDetail: {} as ICommunity,
@@ -816,7 +839,22 @@ function groupsReducer(
         ...state,
         communitySearch: groupInitState.communitySearch,
       };
-
+    case groupsTypes.SET_JOINED_ALL_GROUPS:
+      return {
+        ...state,
+        joinedAllGroups: {
+          ...state.joinedAllGroups,
+          ...payload,
+        },
+      };
+    case groupsTypes.SET_MANAGED:
+      return {
+        ...state,
+        managed: {
+          ...state.managed,
+          ...payload,
+        },
+      };
     default:
       return state;
   }
