@@ -143,7 +143,6 @@ const createStyles = (
       borderColor: isSelected && !loading ? colors.purple50 : colors.neutral2,
       borderRadius: spacing.borderRadius.small,
       paddingHorizontal: padding.xSmall,
-      paddingVertical: padding.tiny,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
