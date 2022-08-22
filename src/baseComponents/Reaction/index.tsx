@@ -1,19 +1,21 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import NodeEmoji from 'node-emoji';
 import React, { useEffect, useState } from 'react';
+import NodeEmoji from 'node-emoji';
 import {
   ActivityIndicator,
+  Image,
   StyleProp,
   StyleSheet,
-  TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
 
 import Text from '~/beinComponents/Text';
 import commonActions, { IAction } from '~/constants/commonActions';
-import { useKeySelector } from '~/hooks/selector';
-import spacing from '~/theme/spacing';
+import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
+import spacing, { margin } from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
+import Button from '../Button';
 
 interface ReactionProps {
   testId?: string;
@@ -38,8 +40,6 @@ const Reaction: React.FC<ReactionProps> = ({
   disableUpdateState,
   loading,
 }: ReactionProps) => {
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
-
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -53,7 +53,27 @@ const Reaction: React.FC<ReactionProps> = ({
     }, [selected],
   );
 
-  const emoji = NodeEmoji.find(icon || '')?.emoji || '';
+  let emoji = null;
+  const nodeEmoji = NodeEmoji.find(icon || '')?.emoji || '';
+
+  if (nodeEmoji) {
+    emoji = (
+      <Text.NumberS style={styles.nodeEmoji} testID={`reaction.${icon}`}>
+        {nodeEmoji}
+      </Text.NumberS>
+    )
+  }
+
+  if (!emoji) {
+    const imageEmoji = STATIC_EMOJI[icon] || ANIMATED_EMOJI[icon];
+    if (imageEmoji) {
+      emoji = (
+        <Image style={styles.emoji} resizeMode="contain" source={imageEmoji} />
+      )
+    }
+  }
+
+  if (!emoji) return null;
 
   const _onChangeValue = () => {
     const newValue = !isSelected;
@@ -76,9 +96,9 @@ const Reaction: React.FC<ReactionProps> = ({
   const newValue = formatLargeNumber(value);
 
   return (
-    <TouchableOpacity
+    <Button
       testID={testId || 'reaction'}
-      disabled={!isInternetReachable || loading}
+      disabled={loading}
       style={[styles.container, style]}
       onPress={_onChangeValue}
       onLongPress={_onLongPress}
@@ -90,18 +110,21 @@ const Reaction: React.FC<ReactionProps> = ({
           style={styles.indicator}
         />
       ) : (
-        <Text.NumberS
-          color={isSelected ? colors.purple50 : colors.neutral40}
-          style={styles.text}
+        <View
           testID="reaction.children"
+          style={styles.emojiContainer}
         >
-          <Text.NumberS style={styles.emoji} testID={`reaction.${icon}`}>
-            {emoji}
+          {emoji}
+          <Text.NumberS
+            testID="reaction.children.text"
+            style={styles.text}
+            color={isSelected ? colors.purple50 : colors.neutral40}
+          >
+            {` ${newValue}`}
           </Text.NumberS>
-          {` ${newValue}`}
-        </Text.NumberS>
+        </View>
       )}
-    </TouchableOpacity>
+    </Button>
   );
 };
 
@@ -125,11 +148,20 @@ const createStyles = (
       flexDirection: 'row',
       height: 28,
     },
+    emojiContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    nodeEmoji: {
+      fontSize: 14,
+    },
     emoji: {
-      fontSize: 13,
+      width: 14,
+      aspectRatio: 1,
     },
     text: {
-      marginBottom: 2,
+      marginLeft: margin.tiny,
     },
     indicator: {
       marginHorizontal: spacing.margin.tiny,
