@@ -68,6 +68,21 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     }
   };
 
+  const renderAlertTitle = () => (
+    <Text.H4 style={{ flex: 1 }}>
+      {t('communities:group_structure:text_title_confirm_move_group')}
+      <Text.H4 style={styles.highlightText}>
+        {` ${initGroup?.name || ''} `}
+      </Text.H4>
+      <Text.H4>
+        {t('common:text_to')}
+      </Text.H4>
+      <Text.H4 style={styles.highlightText}>
+        {` ${selecting?.name || ''}`}
+      </Text.H4>
+    </Text.H4>
+  )
+
   const renderAlertContent = (number: number) => {
     const content = t(
       'communities:group_structure:text_desc_confirm_move_group',
@@ -76,7 +91,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       .replaceAll('%TARGET_NAME%', selecting?.name);
     return (
       <Text.BodyM style={styles.alertContent}>
-        <Text.BodyMMedium>{`${number || userCount || 0} ${t('groups:text_members_other')}`}</Text.BodyMMedium>
+        <Text.BodyMMedium>{`${number || 0} ${t('groups:text_members_other')}`}</Text.BodyMMedium>
         {content}
       </Text.BodyM>
     )
@@ -99,11 +114,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       getMemberWillMove(communityId, { groupId, targetId: selecting.id }).then((moveMemberCount:number) => {
         setLoadingButton(false);
         dispatch(groupsActions.setGroupStructureMoveSelecting(currentSelecting));
-        const title = t(
-          'communities:group_structure:text_title_confirm_move_group',
-        )
-          .replaceAll('%MOVING_NAME%', initGroup?.name)
-          .replaceAll('%TARGET_NAME%', selecting?.name);
+        const title = renderAlertTitle();
         dispatch(
           modalActions.showAlert({
             title,
@@ -180,6 +191,9 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.big,
+    },
+    highlightText: {
+      color: colors.purple50,
     },
   });
 };
