@@ -22,7 +22,7 @@ describe('Get Joined Communities saga', () => {
           [matchers.call.fn(groupApi.getJoinedCommunities), resp],
         ])
         .put(
-          groupsActions.setMyCommunities({ data: resp.data, loading: false }),
+          groupsActions.setMyCommunities({ ids: resp.data, loading: false }),
         )
         .run()
         .then(({ allEffects }: any) => {
@@ -45,7 +45,7 @@ describe('Get Joined Communities saga', () => {
         .provide([
           [matchers.call.fn(groupApi.getJoinedCommunities), resp],
         ])
-        .put(groupsActions.setMyCommunities({ data: [], loading: false }))
+        .put(groupsActions.setMyCommunities({ ids: [], loading: false }))
         .run()
         .then(({ allEffects }: any) => {
           expect(allEffects?.length).toEqual(3);

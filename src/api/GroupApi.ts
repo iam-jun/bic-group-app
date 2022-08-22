@@ -379,6 +379,8 @@ export const groupsApiConfig = {
   getJoinedCommunities: (params: {
     previewMembers?: boolean;
     managed?: boolean;
+    offset?: number;
+    limit?: number;
   }): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}me/communities`,
@@ -679,6 +681,8 @@ const groupApi = {
   getJoinedCommunities: (params: {
     previewMembers?: boolean;
     managed?: boolean;
+    offset?: number;
+    limit?: number;
   }) => withHttpRequestPromise(groupsApiConfig.getJoinedCommunities, params),
   getCommunityGroups: (id: string, params: IGetCommunityGroup) => withHttpRequestPromise(
     groupsApiConfig.getCommunityGroups, id, params,

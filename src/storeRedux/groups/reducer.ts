@@ -152,7 +152,9 @@ export const groupInitState = {
   },
   joinedCommunities: {
     loading: false,
-    data: [],
+    canLoadMore: true,
+    ids: [] as string[],
+    items: {},
   },
   discoverCommunities: {
     loading: true,
