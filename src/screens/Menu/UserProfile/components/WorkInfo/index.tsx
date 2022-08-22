@@ -7,8 +7,8 @@ import Text from '~/beinComponents/Text';
 interface Props {
   style?: StyleProp<ViewStyle>;
   latestWork?: {
-      titlePosition: string;
-      company: string;
+    titlePosition: string;
+    company: string;
   }
 }
 

@@ -75,12 +75,12 @@ const MemberRequestList = ({
     !loading
       && canLoadMore
       && ids.length > 0 && (
-        <View
-          style={styles.listFooter}
-          testID="member_request_list.loading_more_indicator"
-        >
-          <ActivityIndicator />
-        </View>
+      <View
+        style={styles.listFooter}
+        testID="member_request_list.loading_more_indicator"
+      >
+        <ActivityIndicator />
+      </View>
     )
   );
 

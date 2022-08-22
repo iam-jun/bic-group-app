@@ -4,10 +4,10 @@ import InfoSection from '../../components/InfoSection';
 import { formatPhoneNumber } from '../../helper';
 
 interface Props {
-    email: string;
-    phone: string;
-    countryCode: string;
-    city: string;
+  email: string;
+  phone: string;
+  countryCode: string;
+  city: string;
 }
 
 const Contact = ({

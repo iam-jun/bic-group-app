@@ -3,8 +3,8 @@ import Button from '~/baseComponents/Button';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 
 type ButtonActionProps = {
-    joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
-    onPress: () => void;
+  joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
+  onPress: () => void;
 }
 
 type ButtonCommunityGroupCardActionProps = {
@@ -79,7 +79,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
 };
 
 const ButtonCommunityGroupCardAction: FC<
-  ButtonCommunityGroupCardActionProps
+ButtonCommunityGroupCardActionProps
 > = ({
   onView, onCancel, onJoin, joinStatus,
 }) => {

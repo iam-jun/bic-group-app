@@ -19,24 +19,24 @@ const DatePicker = ({
 }: Props) => (
   <View style={{ position: 'absolute', alignSelf: 'center' }}>
     {selectingStartDate && (
-    <DateTimePicker
-      isVisible={selectingStartDate}
-      date={selectedStartDate}
-      maxDate={new Date()}
-      mode="date"
-      onConfirm={onChangeDatePicker}
-      onCancel={onChangeDatePicker}
-    />
+      <DateTimePicker
+        isVisible={selectingStartDate}
+        date={selectedStartDate}
+        maxDate={new Date()}
+        mode="date"
+        onConfirm={onChangeDatePicker}
+        onCancel={onChangeDatePicker}
+      />
     )}
     {selectingEndDate && (
-    <DateTimePicker
-      isVisible={selectingEndDate}
-      date={selectedEndDate}
-      maxDate={new Date()}
-      mode="date"
-      onConfirm={onChangeDatePicker}
-      onCancel={onChangeDatePicker}
-    />
+      <DateTimePicker
+        isVisible={selectingEndDate}
+        date={selectedEndDate}
+        maxDate={new Date()}
+        mode="date"
+        onConfirm={onChangeDatePicker}
+        onCancel={onChangeDatePicker}
+      />
     )}
   </View>
 );

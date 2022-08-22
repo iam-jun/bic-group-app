@@ -385,7 +385,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const renderListFooter = () => (
     <View>
       {loading && (
-      <ActivityIndicator size="large" color={colors.neutral5} />
+        <ActivityIndicator size="large" color={colors.neutral5} />
       )}
     </View>
   );
