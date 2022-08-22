@@ -7,12 +7,12 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import useJoinedCommunitiesStore from '~/screens/Menu/store/joinedCommunities';
-import Image from '~/beinComponents/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Button from '~/beinComponents/Button';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { Avatar } from '~/baseComponents';
 
 const MAX_LENGTH = 10;
 
@@ -33,12 +33,9 @@ const MenuDiscoverCommunity = () => {
 
   const renderItem = ({ item, index }) => (
     <Button onPress={() => onPressCommunity(item)}>
-      <Image
+      <Avatar.Large
         source={item.icon}
         style={{
-          width: 60,
-          height: 60,
-          borderRadius: spacing.borderRadius.large,
           marginLeft: index === 0 ? spacing.margin.large : spacing.margin.tiny,
           marginRight: index === (data?.length || 0) - 1 ? spacing.margin.large : spacing.margin.tiny,
         }}

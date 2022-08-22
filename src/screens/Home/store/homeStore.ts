@@ -72,7 +72,7 @@ const homeStore = (set, get) => ({
               ...state[statePath],
               refreshing: false,
               data: newList,
-              canLoadMore: responseList.length > 0,
+              canLoadMore: response?.meta?.hasNextPage || false,
             };
           },
           false,
@@ -85,6 +85,7 @@ const homeStore = (set, get) => ({
             state[statePath] = {
               ...state[statePath],
               refreshing: false,
+              canLoadMore: false,
             };
           },
           false,
