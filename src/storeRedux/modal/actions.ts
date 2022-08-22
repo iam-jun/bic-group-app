@@ -99,10 +99,8 @@ export const clearReactionDetailBottomSheet = () => ({
 });
 
 export const setShowReactionBottomSheet = (payload?: {
-  show?: boolean;
+  visible?: boolean;
   title?: string;
-  position?: {x: number; y: number};
-  side?: 'left' | 'right' | 'center';
   callback?: (reactionId: ReactionType) => void;
 }) => ({
   type: Actions.SET_SHOW_REACTION_BOTTOM_SHEET,

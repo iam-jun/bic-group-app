@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet';
-import { IReactionProps } from '~/interfaces/IReaction';
 import SelectReactionView from '~/components/reaction/SelectReactionView';
 import Text from '~/beinComponents/Text';
 
@@ -22,11 +21,11 @@ const ReactionBottomSheet = () => {
 
   const data = useKeySelector(commonKeySelector.reactionBottomSheet);
   const {
-    title, show, position, callback,
+    title, visible, callback,
   } = data || {};
 
-  const _onPressReaction = (reaction: IReactionProps) => {
-    callback?.(reaction.id);
+  const _onPressReaction = (key: string) => {
+    callback?.(key);
     reactionSheetRef?.current?.close?.();
   };
 
@@ -37,8 +36,7 @@ const ReactionBottomSheet = () => {
   return (
     <BottomSheet
       modalizeRef={reactionSheetRef}
-      isOpen={show}
-      position={position}
+      isOpen={visible}
       onClose={_onClose}
       ContentComponent={(
         <View>

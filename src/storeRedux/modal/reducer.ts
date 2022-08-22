@@ -41,7 +41,7 @@ export const modalInitState = {
   },
 
   reactionBottomSheet: {
-    show: false,
+    visible: false,
     title: '',
     position: { x: -1, y: -1 },
     callback: undefined,
