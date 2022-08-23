@@ -14,7 +14,6 @@ const groupStack = {
   discoverGroups: 'discover-groups',
   communityMembers: 'community-members',
   communityAdmin: 'community-admin',
-  communityPendingMembers: 'community-pending-members',
 
   // group
   groupDetail: 'group-detail',

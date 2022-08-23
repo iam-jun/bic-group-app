@@ -16,7 +16,6 @@ import DiscoverGroups from '~/screens/groups/DiscoverGroups';
 import CommunityMembers from '~/screens/communities/CommunityMembers';
 import CommunityAdmin from '~/screens/communities/CommunityAdmin';
 import PermissionScheme from '~/screens/PermissionScheme';
-import CommunityPendingMembers from '~/screens/communities/CommunityAdmin/PendingMembers';
 import CreatePermissionScheme from '~/screens/PermissionScheme/CreatePermissionScheme';
 import SchemeDetail from '~/screens/PermissionScheme/SchemeDetail';
 import GroupStructureSettings from '~/screens/groups/GroupStructureSettings';
@@ -42,7 +41,6 @@ const groupScreens = {
   'discover-groups': DiscoverGroups,
   'community-members': CommunityMembers,
   'community-admin': CommunityAdmin,
-  'community-pending-members': CommunityPendingMembers,
 
   // group
   'group-detail': GroupDetail,
