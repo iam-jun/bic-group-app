@@ -40,7 +40,7 @@ export default function* approveSingleCommunityMemberRequest({
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
       props: {
         textProps: { useI18n: true },
-        type: 'success',
+        type: 'informative',
       },
       toastType: 'normal',
     };
@@ -57,8 +57,6 @@ export default function* approveSingleCommunityMemberRequest({
       return;
     }
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

@@ -131,13 +131,14 @@ const PendingUserItem = ({
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
 
   return StyleSheet.create({
     container: {
       paddingVertical: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.white,
+      ...elevations.e2,
     },
     header: {
       flexDirection: 'row',

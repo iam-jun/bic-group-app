@@ -742,10 +742,11 @@
         "decline": "Decline all member requests?"
       },
       "content": {
-        "approve_one": "You're about to add {{count}} person to {0}",
-        "approve_other": "You're about to add {{count}} people to {0}",
+        "approve_one": "You're about to add {{count}} person to {0}. Confirm this action?",
+        "approve_other": "You're about to add {{count}} people to {0}. Confirm this action?",
         "decline_one": "You're about to decline {{count}} member request",
-        "decline_other": "You're about to decline {{count}} member requests"
+        "decline_other": "You're about to decline {{count}} member requests",
+        "decline": "Decline all member requests. Confirm this action?"
       }
     },
     "text_requested_at": "Requested at",

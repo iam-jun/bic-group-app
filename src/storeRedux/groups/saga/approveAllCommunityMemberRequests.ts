@@ -17,9 +17,7 @@ export default function* approveAllCommunityMemberRequests({
   try {
     yield put(groupsActions.resetCommunityMemberRequests());
 
-    yield call(
-      groupApi.approveAllCommunityMemberRequests, communityId,
-    );
+    yield call(groupApi.approveAllCommunityMemberRequests, communityId);
 
     // to update userCount
     yield put(groupsActions.getCommunityDetail({ communityId }));
@@ -28,7 +26,7 @@ export default function* approveAllCommunityMemberRequests({
     if (callback) {
       toastProps = {
         textProps: { useI18n: true },
-        type: 'success',
+        type: 'informative',
         rightIcon: 'UserGroup',
         rightText: 'Members',
         onPressRight: callback,
@@ -36,7 +34,7 @@ export default function* approveAllCommunityMemberRequests({
     } else {
       toastProps = {
         textProps: { useI18n: true },
-        type: 'success',
+        type: 'informative',
       };
     }
 
@@ -49,8 +47,6 @@ export default function* approveAllCommunityMemberRequests({
   } catch (err: any) {
     console.error('approveAllCommunityMemberRequest: ', err);
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

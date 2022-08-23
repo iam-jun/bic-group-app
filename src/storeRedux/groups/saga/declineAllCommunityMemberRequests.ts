@@ -11,14 +11,10 @@ export default function* declineAllCommunityMemberRequests({
 }) {
   const { communityId } = payload;
   try {
-    yield call(
-      groupApi.declineAllCommunityMemberRequests, communityId,
-    );
+    yield call(groupApi.declineAllCommunityMemberRequests, communityId);
   } catch (err: any) {
     console.error('declineAllCommunityMemberRequests: ', err);
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }
