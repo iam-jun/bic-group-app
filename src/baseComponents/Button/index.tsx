@@ -79,7 +79,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
       <ActivityIndicator
         testID="button.loading"
         color={colors.neutral20}
-        style={styles.loading}
+        style={children ? styles.loading : styles.loadingWithNoMargin}
         size={iconSize}
       />
     );
@@ -131,6 +131,9 @@ const styles = StyleSheet.create({
   },
   loading: {
     marginRight: spacing.margin.small,
+  },
+  loadingWithNoMargin: {
+    marginRight: 0,
   },
   text: {
     textAlign: 'center',
