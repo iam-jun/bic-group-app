@@ -13,7 +13,6 @@ import iconMenuHelp from '../../assets/icons/icon_menu_help.svg';
 import iconMenuInfo from '../../assets/icons/icon_menu_info.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
-import iconSendComment from '../../assets/icons/icon_send_comment.svg';
 import iconCheckboxRestricted from '../../assets/icons/icon_checkbox_retricted.svg';
 
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
@@ -48,7 +47,6 @@ const icons = {
   ...reactionIcons,
   iconBeinChat,
   iconSearch,
-  iconSendComment,
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,

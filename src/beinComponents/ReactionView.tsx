@@ -99,21 +99,6 @@ const ReactionView: FC<ReactionViewProps> = ({
 
   const renderedReactions = renderReactions();
 
-  // if (renderedReactions.length === 0) {
-  //   return (
-  //     <View style={styles.containerButtonOnly}>
-  //       {!!onPressSelectReaction && showSelectReactionWhenEmpty && (
-  //         <Button
-  //           style={styles.buttonReact}
-  //           onPress={onPressSelectReaction}
-  //           testID="reaction_view.react"
-  //         >
-  //           <Icon size={16} icon="iconReact" />
-  //         </Button>
-  //       )}
-  //     </View>
-  //   );
-  // }
   return (
 
     <View

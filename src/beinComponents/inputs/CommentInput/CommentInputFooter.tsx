@@ -128,7 +128,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
             onPress={onPressSend}
             loading={loading}
             disabled={disabledBtnSend}
-            icon="iconSendComment"
+            icon="PaperPlaneTopSolid"
           />
         </>
         )
