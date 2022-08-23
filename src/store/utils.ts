@@ -39,7 +39,7 @@ const createZustand = <T>(
   store,
   options?: ICreateZustand,
 ): (() => T) => {
-  let _store: any = zustandFlipper(immer(store), name);
+  let _store: any = zustandFlipper(immer(store) as any, name);
   if (options?.persist) {
     _store = persist(_store, options.persist);
   }
