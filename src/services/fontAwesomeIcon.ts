@@ -91,6 +91,7 @@ import { faWifiSlash } from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
 import { faFileXmark } from '@fortawesome/pro-regular-svg-icons/faFileXmark';
 import { faFileExclamation } from '@fortawesome/pro-regular-svg-icons/faFileExclamation';
 import { faSuitcase } from '@fortawesome/pro-regular-svg-icons/faSuitcase';
+import { faBriefcase } from '@fortawesome/pro-regular-svg-icons/faBriefcase';
 import { faStar } from '@fortawesome/pro-regular-svg-icons/faStar';
 import { faStar as faStarSolid } from '@fortawesome/pro-solid-svg-icons/faStar';
 import { faVideo } from '@fortawesome/pro-regular-svg-icons/faVideo';
@@ -113,6 +114,7 @@ import { faListUl } from '@fortawesome/pro-regular-svg-icons/faListUl';
 import { faFaceSmile } from '@fortawesome/pro-regular-svg-icons/faFaceSmile';
 import { faKeySkeleton } from '@fortawesome/pro-regular-svg-icons/faKeySkeleton';
 import { faCircleMinus } from '@fortawesome/pro-regular-svg-icons/faCircleMinus';
+import { faCircleMinus as faCircleMinusSolid } from '@fortawesome/pro-solid-svg-icons/faCircleMinus';
 import { faCirclePlus } from '@fortawesome/pro-regular-svg-icons/faCirclePlus';
 import { faSquare } from '@fortawesome/pro-regular-svg-icons/faSquare';
 import { faSquareCheck as faSquareCheckSolid } from '@fortawesome/pro-solid-svg-icons/faSquareCheck';
@@ -147,6 +149,7 @@ import { faFileLines } from '@fortawesome/pro-regular-svg-icons/faFileLines';
 import { faArrowDownToLine } from '@fortawesome/pro-regular-svg-icons/faArrowDownToLine';
 import { faCircleExclamation } from '@fortawesome/pro-regular-svg-icons/faCircleExclamation';
 import { faThumbtack } from '@fortawesome/pro-regular-svg-icons/faThumbtack';
+import { faMobileScreen } from '@fortawesome/pro-regular-svg-icons/faMobileScreen';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -259,6 +262,7 @@ export const initFontAwesomeIcon = () => {
     faFileXmark,
     faFileExclamation,
     faSuitcase,
+    faBriefcase,
     faStar,
     faStarSolid,
     faVideo,
@@ -283,6 +287,7 @@ export const initFontAwesomeIcon = () => {
     faCircle,
     faCircleDotSolid,
     faCircleMinus,
+    faCircleMinusSolid,
     faCirclePlus,
     faSquare,
     faSquareCheckSolid,
@@ -314,6 +319,7 @@ export const initFontAwesomeIcon = () => {
     faArrowDownToLine,
     faCircleExclamation,
     faThumbtack,
+    faMobileScreen,
   );
 };
 
@@ -411,6 +417,7 @@ export const fontAwesomeIcons = {
   FileXmark: 'fa-regular fa-file-xmark',
   FileExclamation: 'fa-regular fa-file-exclamation',
   Suitcase: 'fa-regular fa-suitcase',
+  Briefcase: 'fa-regular fa-briefcase',
   Star: 'fa-regular fa-star',
   StarSolid: 'fa-solid fa-star',
   Video: 'fa-regular fa-video',
@@ -435,6 +442,7 @@ export const fontAwesomeIcons = {
   Circle: 'fa-regular fa-circle',
   CircleDotSolid: 'fa-solid fa-circle-dot',
   CircleMinus: 'fa-regular fa-circle-minus',
+  CircleMinusSolid: 'fa-solid fa-circle-minus',
   CirclePlus: 'fa-regular fa-circle-plus',
   Square: 'fa-regular fa-square',
   SquareCheckSolid: 'fa-solid fa-square-check',
@@ -466,6 +474,7 @@ export const fontAwesomeIcons = {
   ArrowDownToLine: 'fa-regular fa-arrow-down-to-line',
   CircleExclamation: 'fa-regular fa-circle-exclamation',
   Thumbtack: 'fa-regular fa-thumbtack',
+  MobileScreen: 'fa-regular fa-mobile-screen',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

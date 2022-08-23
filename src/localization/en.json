@@ -733,9 +733,9 @@
     },
     "text_successfully_join_group": "Successfully join group",
     "text_successfully_join_community": "Successfully join community",
-    "text_no_pending_members_notice": "There's no pending members",
-    "text_pending_request_notice_group": "People who request to join your group will show here.",
-    "text_pending_request_notice_community": "People who request to join your community will show here.",
+    "text_no_pending_members_notice": "No new member requests",
+    "text_pending_request_notice_group": "You can add more members",
+    "text_pending_request_notice_community": "You can add more members",
     "text_respond_all_member_requests": {
       "title": {
         "approve": "Approve all member requests?",
@@ -775,7 +775,8 @@
         "decline": "Do you want to decline **All pending member requests** in order to change the group privacy to Secret now?"
       }
     },
-    "text_in": "in"
+    "text_in": "in",
+    "title_add_members": "Add Members"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
@@ -936,7 +937,11 @@
       "text_desc_confirm_move_group": " of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
       "text_move_group_search_placeholder": "Search a group"
     },
-    "text_search_communities": "Search Communities"
+    "text_search_communities": "Search Communities",
+    "member_tab_types": {
+    "title_member_list": "Member List",
+    "title_member_requests": "Member Requests"
+    }
   },
   "upload": {
     "text_create_file_id_request_failed": "Cannot request id",

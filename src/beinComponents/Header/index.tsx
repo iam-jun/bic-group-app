@@ -307,7 +307,7 @@ const Header: React.FC<HeaderProps> = ({
         {!!icon && onPressIcon && (
           <Icon
             icon={icon}
-            size={24}
+            size={18}
             style={styles.icon}
             onPress={onPressIcon}
             backgroundColor={colors.neutral1}

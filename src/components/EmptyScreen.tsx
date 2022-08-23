@@ -5,7 +5,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import { IconType } from '~/resources/icons';
-import spacing from '~/theme/spacing';
 
 interface EmptyScreenProps {
   source?: IconType;
@@ -28,12 +27,12 @@ const EmptyScreen = ({
     <View testID="empty_screen" style={styles.container}>
       {!!source && <Icon icon={source} size={size} />}
       {!!title && (
-        <Text.ButtonM style={styles.text} useI18n>
+        <Text.BodyMMedium color={theme.colors.neutral70} style={styles.text} useI18n>
           {title}
-        </Text.ButtonM>
+        </Text.BodyMMedium>
       )}
       {!!description && (
-        <Text.BodyS color={theme.colors.gray50} style={styles.text} useI18n>
+        <Text.BodyS color={theme.colors.neutral40} style={styles.text} useI18n>
           {description}
         </Text.BodyS>
       )}
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    marginVertical: spacing.margin.tiny,
+    marginVertical: 2,
   },
 });
 

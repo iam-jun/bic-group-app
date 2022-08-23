@@ -681,7 +681,11 @@
     "text_request_been_canceled": "Yêu cầu này đã bị hủy",
     "title_members_one": "Thành viên",
     "title_members_other": "Thành viên",
-    "text_in": "thuộc"
+    "text_in": "thuộc",
+    "text_no_pending_members_notice": "Không có yêu cầu đăng ký thành viên",
+    "text_pending_request_notice_group": "Bạn có thể thêm thành viên",
+    "text_pending_request_notice_community": "Bạn có thể thêm thành viên",
+    "title_add_members": "Thêm thành viên"
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
@@ -842,7 +846,11 @@
       "text_desc_confirm_move_group": " của %MOVING_NAME% và các nhóm bên trong sẽ được thêm vào %TARGET_NAME%. Bạn có chắc muốn thực hiện hành động này?",
       "text_move_group_search_placeholder": "Tìm kiếm một nhóm"
     },
-    "text_search_communities": "Tìm kiếm Cộng đồng"
+    "text_search_communities": "Tìm kiếm Cộng đồng",
+    "member_tab_types": {
+    "title_member_list": " Danh sách thành viên",
+    "title_member_requests": "Yêu cầu tham gia"
+    }
   },
   "upload": {
     "text_create_file_id_request_failed": "Có lỗi khi yêu cầu tạo id",

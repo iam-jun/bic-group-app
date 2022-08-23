@@ -104,7 +104,7 @@ const Communities: React.FC = () => {
         headerRef={headerRef}
         title="tabs:communities"
         titleTextProps={{ useI18n: true }}
-        rightIcon="iconSearch"
+        rightIcon="search"
         onRightPress={onPressSearch}
       />
       <View style={{ flex: 1 }}>

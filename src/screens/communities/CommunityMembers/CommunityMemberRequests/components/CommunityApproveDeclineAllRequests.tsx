@@ -3,7 +3,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import ButtonApproveDeclineAllRequests from '~/screens/groups/components/ButtonApproveDeclineAllRequests';
-import groupsActions from '../../../../storeRedux/groups/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import {
   clearToastMessage,
   showAlert,
@@ -15,7 +15,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 

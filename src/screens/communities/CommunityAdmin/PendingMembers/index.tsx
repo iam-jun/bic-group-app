@@ -6,7 +6,7 @@ import Header from '~/beinComponents/Header';
 import groupsActions from '../../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
-import CommunityApproveDeclineAllRequests from './CommunityApproveDeclineAllRequests';
+import CommunityApproveDeclineAllRequests from '../../CommunityMembers/CommunityMemberRequests/components/CommunityApproveDeclineAllRequests';
 import MemberRequestList from '../../../groups/components/MemberRequestList';
 
 const CommunityPendingMembers = (props: any) => {
