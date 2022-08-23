@@ -93,14 +93,14 @@ export const getPostViewMenu = (
     {
       id: 1,
       testID: 'post_view_menu.edit',
-      leftIcon: 'edit',
+      leftIcon: 'FilePen',
       title: i18next.t('post:post_menu_edit'),
       requireIsActor: true,
       onPress: onPressEdit,
     }, {
       id: 2,
       testID: 'post_view_menu.edit_settings',
-      leftIcon: 'SlidersUp',
+      leftIcon: 'Sliders',
       title: i18next.t('post:post_menu_edit_settings'),
       requireIsActor: true,
       onPress: onPressEditSettings,
