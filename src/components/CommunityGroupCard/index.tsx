@@ -139,8 +139,12 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
               </View>
             </View>
           </View>
-          <ViewSpacing height={10} />
-          <Text.BodyM numberOfLines={2}>{`${description}`}</Text.BodyM>
+          {!!description && (
+            <>
+              <ViewSpacing height={10} />
+              <Text.BodyM numberOfLines={2}>{`${description}`}</Text.BodyM>
+            </>
+          )}
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />

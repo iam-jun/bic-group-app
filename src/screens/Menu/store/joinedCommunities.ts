@@ -1,6 +1,6 @@
 import { ICommunity } from '~/interfaces/ICommunity';
 import groupApi from '~/api/GroupApi';
-import { createZustand } from '~/store';
+import { createZustand } from '~/store/utils';
 
 interface JoinedCommunitiesState {
   data?: ICommunity[],

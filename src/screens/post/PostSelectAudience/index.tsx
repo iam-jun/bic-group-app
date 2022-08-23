@@ -297,8 +297,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       streamApi
         .getSearchAudiences(searchText)
         .then((response) => {
-          if (response && response?.data?.groups) {
-            handleSearchResult(response.data.groups);
+          if (response && response?.data) {
+            handleSearchResult(response.data);
           }
           dispatch(postActions.setPostSelectAudienceState({ loading: false }));
         })
