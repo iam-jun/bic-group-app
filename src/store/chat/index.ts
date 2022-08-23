@@ -1,7 +1,7 @@
 import chatSocketEvents from '~/constants/chatSocketEvents';
 import {
   createStore, withFlipper, withImmer, withPersist,
-} from '../index';
+} from '../utils';
 import { handleChannelViewedEvent, handlePostedEvent, handlePostUnreadEvent } from './utils';
 import chatApi from '~/api/ChatApi';
 
