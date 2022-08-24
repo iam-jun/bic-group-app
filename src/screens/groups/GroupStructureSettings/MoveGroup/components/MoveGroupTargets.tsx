@@ -21,6 +21,7 @@ export interface MoveGroupTargetsProps {
   groupId: string;
   targets: any[];
   selecting?: any;
+  onPressItem?: (item: any) => void;
 }
 
 const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
@@ -28,6 +29,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
   groupId,
   targets,
   selecting,
+  onPressItem,
 }: MoveGroupTargetsProps) => {
   const { t } = useBaseHook();
   const dispatch = useDispatch();
@@ -35,7 +37,8 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const onPressItem = (item: any) => {
+  const _onPressItem = (item: any) => {
+    onPressItem?.(item);
     dispatch(groupsActions.setGroupStructureMoveSelecting(item));
   };
 
@@ -54,7 +57,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
             styles.itemContainer,
             isActive ? styles.itemContainerActive : {},
           ]}
-          onPress={() => onPressItem(item)}
+          onPress={() => _onPressItem(item)}
         >
           <Text
             style={styles.textName}
