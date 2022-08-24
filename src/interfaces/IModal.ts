@@ -26,6 +26,5 @@ export interface IPayloadReactionDetailBottomSheet {
   isOpen: boolean;
   reactionCounts: IReactionCounts;
   initReaction: ReactionType;
-  getDataPromise?: any;
   getDataParam?: any;
 }

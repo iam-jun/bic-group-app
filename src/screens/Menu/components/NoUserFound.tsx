@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import NoUserFoundImg from '../../../../assets/images/no_user_found.svg';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 

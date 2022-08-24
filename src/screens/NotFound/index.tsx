@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 

@@ -11,7 +11,7 @@ import modalActions from '~/storeRedux/modal/actions';
 import modalKeySelector from '~/storeRedux/modal/keySelector';
 import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import ModalHeader from '~/components/CommonModal/components/ModalHeader';
 

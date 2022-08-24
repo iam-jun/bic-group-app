@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
-import SearchBaseView from '~/beinComponents/SearchBaseView';
+import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBaseView';
 import Text from '~/beinComponents/Text';
 import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
@@ -12,20 +12,14 @@ import CommunitySearchResults from './CommunitySearchResults';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 
-interface SearchCommunityViewProps {
-  isOpen: boolean;
-  placeholder?: string;
-  initSearch?: string;
-  onClose?: () => void;
+interface SearchCommunityViewProps extends SearchBaseViewProps {
   onPressCommunity: (id: string) => void;
 }
 
 const SearchCommunityView = ({
-  isOpen,
-  placeholder,
   initSearch,
-  onClose,
   onPressCommunity,
+  ...props
 }: SearchCommunityViewProps) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
@@ -61,9 +55,7 @@ const SearchCommunityView = ({
 
   return (
     <SearchBaseView
-      isOpen={isOpen}
-      placeholder={placeholder}
-      onClose={onClose}
+      {...props}
       onChangeText={onSearchCommunities}
     >
       {searchText ? (

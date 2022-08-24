@@ -6,7 +6,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Text from '~/beinComponents/Text';
-import SvgIcon from '~/beinComponents/Icon/SvgIcon';
+import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import SystemIssueImg from '../../../assets/images/SystemIssue.svg';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import noInternetKeySelector from '../../storeRedux/network/keySelector';

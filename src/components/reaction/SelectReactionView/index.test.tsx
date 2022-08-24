@@ -53,4 +53,21 @@ describe('SelectReactionView component', () => {
     expect(item).toBeDefined();
     expect(onPressReaction).toHaveBeenCalledWith('bic_check_mark');
   });
+
+  it('should show Emoji name toast', () => {
+    reactMock.useState = setHookTestState({
+      selectedIndex: 0,
+      contentHeight: 160,
+      data: STATIC_EMOJI,
+    });
+    const onPressReaction = jest.fn();
+    const rendered = renderWithRedux(<SelectReactionView onPressReaction={onPressReaction} />, store);
+    const item = rendered.getByTestId('select_reaction_view.item_bic_check_mark');
+
+    expect(item).toBeDefined();
+    fireEvent(item, 'onLongPress');
+
+    const emojiNameToast = rendered.getByTestId('select_reaction_view.emoji_name_toast');
+    expect(emojiNameToast).toBeDefined();
+  });
 });

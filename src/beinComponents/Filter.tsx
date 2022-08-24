@@ -21,7 +21,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import spacing from '~/theme/spacing';
-import Icon from './Icon';
+import Icon from '../baseComponents/Icon';
 import Text from './Text';
 
 const { width: screenWidth } = Dimensions.get('window');

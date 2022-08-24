@@ -8,6 +8,7 @@ import { getLink, LINK_POST } from '~/utils/link';
 import { IReaction } from '~/interfaces/IPost';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import postActions from '~/storeRedux/post/actions';
+import { Button } from '~/baseComponents';
 
 export const getPostViewMenu = (
   reactionsCount: any,
@@ -16,15 +17,9 @@ export const getPostViewMenu = (
   rootNavigation: any,
   postId: string,
   isPostDetail: boolean,
-  getDataPromise: any,
   isDraftPost: boolean,
   handleDeltePostError: (listIdAudiences: string[]) => void,
 ) => {
-  const onPress = () => {
-    dispatch(modalActions.hideBottomList());
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
   const onPressEdit = () => {
     dispatch(modalActions.hideBottomList());
     rootNavigation?.navigate?.(
@@ -66,7 +61,6 @@ export const getPostViewMenu = (
         reactionCounts: reactionsCount,
         initReaction,
         getDataParam: { target: 'POST', targetId: postId },
-        getDataPromise,
       };
       dispatch(modalActions.showReactionDetailBottomSheet(payload));
     }
@@ -80,6 +74,10 @@ export const getPostViewMenu = (
         content: i18next.t('post:content_delete_post'),
         cancelBtn: true,
         confirmLabel: i18next.t('common:btn_delete'),
+        ConfirmBtnComponent: Button.Danger,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        confirmBtnProps: { type: 'ghost' },
         onConfirm: () => dispatch(postActions.deletePost({
           id: postId,
           isDraftPost,
@@ -93,14 +91,14 @@ export const getPostViewMenu = (
     {
       id: 1,
       testID: 'post_view_menu.edit',
-      leftIcon: 'edit',
+      leftIcon: 'FilePen',
       title: i18next.t('post:post_menu_edit'),
       requireIsActor: true,
       onPress: onPressEdit,
     }, {
       id: 2,
       testID: 'post_view_menu.edit_settings',
-      leftIcon: 'SlidersUp',
+      leftIcon: 'Sliders',
       title: i18next.t('post:post_menu_edit_settings'),
       requireIsActor: true,
       onPress: onPressEditSettings,

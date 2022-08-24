@@ -9,10 +9,8 @@ import Animated, {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Avatar from '~/baseComponents/Avatar';
-import Button from '~/baseComponents/Button';
+import Button from '~/beinComponents/Button';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
-import ReactionView from '~/beinComponents/ReactionView';
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import { ReactionType } from '~/constants/reactions';
@@ -29,7 +27,6 @@ import {
 import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/post/components/CommentMediaView';
 import CommentViewMenu from '~/screens/post/components/CommentViewMenu';
-import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import * as modalActions from '~/storeRedux/modal/actions';
@@ -38,7 +35,9 @@ import { useBaseHook } from '~/hooks';
 import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import TimeView from '~/beinComponents/TimeView';
+import ReactionView from '~/beinComponents/ReactionView';
 
 export interface CommentViewProps {
   postId: string;
@@ -167,7 +166,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
     }
   };
 
-  const onEmojiSelected = (emoji: string, key?: string) => {
+  const onEmojiSelected = (
+    key: string,
+  ) => {
     dispatch(modalActions.hideModal());
     if (key) {
       onAddReaction?.(key);
@@ -175,17 +176,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onPressReact = () => {
-    const payload = {
-      isOpen: true,
-      ContentComponent: (
-        <EmojiBoard
-          width={dimension.deviceWidth}
-          height={280}
-          onEmojiSelected={onEmojiSelected}
-        />
-      ),
-    };
-    dispatch(modalActions.showModal(payload));
+    dispatch(modalActions.setShowReactionBottomSheet(
+      { visible: true, callback: onEmojiSelected },
+    ));
   };
 
   const _onPressReply = () => {
@@ -244,73 +237,58 @@ const _CommentView: React.FC<CommentViewProps> = ({
     );
   };
 
-  const getReactionStatistics = async (param: any) => {
-    try {
-      const response = await streamApi.getReactionDetail(param);
-      const data = await response?.list;
-      const users = (data || []).map((item: any) => ({
-        id: item?.actor?.id,
-        avatar: item?.actor?.avatar,
-        fullname: item?.actor?.fullname,
-      }));
-
-      return Promise.resolve(users || []);
-    } catch (err) {
-      return Promise.reject();
-    }
-  };
-
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
       reactionCounts: reactionsCount,
       initReaction: reactionType,
       getDataParam: { target: 'COMMENT', targetId: id },
-      getDataPromise: getReactionStatistics,
     };
     dispatch(showReactionDetailBottomSheet(payload));
   };
 
-  const renderReactionsReplyView = () => isActive && (
-  <View>
-    {!!setting?.canReact && (
-    <ReactionView
-      style={styles.reactionView}
-      ownerReactions={ownerReactions}
-      reactionsCount={reactionsCount}
-      onAddReaction={onAddReaction}
-      onRemoveReaction={onRemoveReaction}
-            // onPressSelectReaction={onPressReact}
-      onLongPressReaction={onLongPressReaction}
-    />
-    )}
-    <View style={styles.buttonContainer}>
-      <Button onPress={onPressReact}>
-        <Text.BodySMedium useI18n color={theme.colors.neutral40}>
-          post:button_react
-        </Text.BodySMedium>
-      </Button>
-      <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
-        <Text.ButtonS
-          style={styles.marginLeftItem}
-          color={colors.neutral40}
-        >
-          Reply
-        </Text.ButtonS>
-      </ButtonWrapper>
-      <TimeView
-        time={edited ? updatedAt : createdAt}
-        style={styles.marginLeftItem}
-        type="short"
-        textProps={{ color: colors.neutral40 }}
-      />
-      {edited && (
-      <Text.BodyS color={colors.neutral40} style={styles.marginLeftItem}>
-        {t('post:comment:text_edited')}
-      </Text.BodyS>
-      )}
-    </View>
-  </View>
+  const renderReactionsReplyView = () => (
+    isActive && (
+      <View style={{}}>
+        <ReactionView
+          style={styles.reactionView}
+          ownerReactions={ownerReactions}
+          reactionsCount={reactionsCount}
+          onAddReaction={onAddReaction}
+          onRemoveReaction={onRemoveReaction}
+          onLongPressReaction={onLongPressReaction}
+        />
+        <View style={styles.buttonContainer}>
+          { !!setting?.canReact ? (
+            <>
+              <ButtonWrapper onPress={onPressReact} testID="comment_view.react">
+                <Text.BodySMedium useI18n color={colors.neutral40}>
+                  post:button_react
+                </Text.BodySMedium>
+              </ButtonWrapper>
+              <ViewSpacing width={16} />
+            </>
+          ) : null}
+          <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
+            <Text.BodySMedium useI18n color={colors.neutral40}>
+              post:button_reply
+            </Text.BodySMedium>
+          </ButtonWrapper>
+          <ViewSpacing width={16} />
+          <TimeView
+            time={edited ? updatedAt : createdAt}
+            type="short"
+            textProps={{ variant: 'bodyS', colors: colors.neutral40 }}
+          />
+          <ViewSpacing width={16} />
+          {edited && (
+          <Text.BodyS useI18n color={colors.neutral40}>
+            post:comment:text_edited
+          </Text.BodyS>
+          )}
+        </View>
+      </View>
+    )
   );
 
   const onPressRetry = () => {
@@ -343,7 +321,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
           <Avatar isRounded source={avatar} />
         </ButtonWrapper>
-        <View style={{ flex: 1, marginLeft: spacing?.margin.small }}>
+        <View style={{ flex: 1, marginLeft: spacing.margin.small }}>
           <Button
             onLongPress={onLongPress}
             disabled={!isActive}

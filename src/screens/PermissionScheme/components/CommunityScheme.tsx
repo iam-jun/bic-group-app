@@ -12,7 +12,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IconType } from '~/resources/icons';
 import Text, { TextVariant } from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 

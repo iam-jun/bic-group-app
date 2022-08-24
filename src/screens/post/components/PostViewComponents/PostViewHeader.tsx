@@ -5,7 +5,7 @@ import { useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
 import TimeView from '~/beinComponents/TimeView';
