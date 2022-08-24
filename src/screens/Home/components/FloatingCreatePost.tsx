@@ -12,7 +12,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 import Button from '~/beinComponents/Button';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
 

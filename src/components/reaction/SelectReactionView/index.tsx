@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import {
   Image, View, StyleSheet, LayoutChangeEvent,
 } from 'react-native';
@@ -9,6 +9,7 @@ import Tab from '~/baseComponents/Tab';
 import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import { useBaseHook } from '~/hooks';
 import { dimension } from '~/theme';
+import EmojiNameToast from './components/EmojiNameToast';
 
 export interface ReactionViewProps {
   onPressReaction: (key: string) => void;
@@ -24,9 +25,10 @@ const SelectReactionView: FC<ReactionViewProps> = ({
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const ITEM_SIZE = dimension.deviceWidth / NUM_COLUMNS;
   const EMOJI_SIZE = ITEM_SIZE - padding.small * 2;
+  const emojiRef = useRef<any>();
 
-  // Initial rows = 4
-  const [contentHeight, setContentHeight] = React.useState(ITEM_SIZE * 4);
+  // Initial rows = 5
+  const [contentHeight, setContentHeight] = React.useState(ITEM_SIZE * 5);
   const [data, setData] = React.useState<any>(STATIC_EMOJI);
   const tabData = [
     { id: 'tab_select_reaction_static', text: t('common:text_static') },
@@ -42,12 +44,17 @@ const SelectReactionView: FC<ReactionViewProps> = ({
     onPressReaction?.(item);
   };
 
+  const _onEmojiLongPress = (emoji: string) => {
+    emojiRef?.current?.show?.(emoji);
+  };
+
   const renderItem = (item: any) => (
     <Button
       key={`select_reaction_${item}`}
       testID={`select_reaction_view.item_${item}`}
       style={[styles.item, { width: ITEM_SIZE, height: ITEM_SIZE }]}
       onPress={() => _onPressReaction(item)}
+      onLongPress={() => _onEmojiLongPress(item)}
     >
       <Image style={[styles.icon, { width: EMOJI_SIZE }]} resizeMode="contain" source={data[item]} />
     </Button>
@@ -81,6 +88,7 @@ const SelectReactionView: FC<ReactionViewProps> = ({
           </View>
         </ScrollView>
       </View>
+      <EmojiNameToast testID="select_reaction_view.emoji_name_toast" toastRef={emojiRef} />
     </View>
   );
 };

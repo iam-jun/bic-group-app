@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import { IGroup } from '~/interfaces/IGroup';
 import Avatar from '~/baseComponents/Avatar';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 

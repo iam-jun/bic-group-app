@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import completeSvg from '../../../../../../assets/images/settings_change_password_complete.svg';
 

@@ -13,7 +13,7 @@ import { fontFamilies } from '~/theme/fonts';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import { formatDate } from '~/utils/formatData';
 

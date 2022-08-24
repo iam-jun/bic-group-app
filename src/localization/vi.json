@@ -110,7 +110,8 @@
     "text_search_results": "Kết quả tìm kiếm",
     "text_more": "+(number) khác",
     "beincomm": "Beincomm",
-    "members": "Thành viên"
+    "members": "Thành viên",
+    "text_remove": "Loại bỏ"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -424,8 +425,8 @@
     "label_all_reacts": "Tất cả tương tác",
     "text_search_result_empty": "Không có kết quả. Vui lòng thử lại...",
     "title_delete_post": "Xoá bài viết",
-    "content_delete_post": "Bạn thực sự muốn xoá bài viết này?",
-    "title_delete_audiences_of_post": "Bạn đang xóa đối tượng của bài viết này",
+    "content_delete_post": "Bạn có muốn xóa bài viết này?",
+    "title_delete_audiences_of_post": "Bạn không thể xóa bài đăng này",
     "content_delete_audiences_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
     "content_not_able_delete_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây.",
     "text_deleted_audiences": "Bài đăng của bạn đã được xoá khỏi các nhóm đối tượng.",

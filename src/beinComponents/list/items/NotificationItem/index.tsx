@@ -5,7 +5,7 @@ import {
 import { isEmpty, isEqual } from 'lodash';
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
 import TimeView from '~/beinComponents/TimeView';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';

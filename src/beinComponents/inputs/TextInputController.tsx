@@ -1,8 +1,9 @@
 import React from 'react';
 import { useController } from 'react-hook-form';
+import { TextInput } from '~/baseComponents/Input';
+import { TextInputProps } from '~/baseComponents/Input/TextInput';
 
 import { IObject } from '~/interfaces/common';
-import TextInput, { TextInputProps } from './TextInput';
 
 interface Props extends Partial<TextInputProps> {
   useFormData: IObject<any>;
@@ -15,7 +16,6 @@ interface Props extends Partial<TextInputProps> {
   placeholder: string;
   helperActionOnPress?: () => void;
   helperAction?: string;
-  helperContentTriggerAction?: string;
   helperContent?: string;
 }
 
@@ -30,7 +30,6 @@ const TextInputController: React.FC<Props> = ({
   testID,
   label,
   placeholder,
-  helperContentTriggerAction,
   helperContent,
   ...props
 }) => {
@@ -59,11 +58,10 @@ const TextInputController: React.FC<Props> = ({
         validateValue(text);
       }}
       helperType={errors?.[name]?.message ? 'error' : undefined}
-      helperContent={
+      helperText={
         errors?.[name]?.message === helperContent ? '' : errors?.[name]?.message
       }
       helperAction={helperAction}
-      helperContentTriggerAction={helperContentTriggerAction}
       helperActionOnPress={helperActionOnPress}
       {...props}
     />

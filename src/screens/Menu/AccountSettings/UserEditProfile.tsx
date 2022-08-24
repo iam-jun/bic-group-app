@@ -37,7 +37,7 @@ import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
 import homeActions from '~/storeRedux/home/actions';
 import { checkPermission, permissionTypes } from '~/utils/permission';

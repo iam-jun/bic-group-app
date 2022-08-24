@@ -10,7 +10,7 @@ import {
 
 import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';

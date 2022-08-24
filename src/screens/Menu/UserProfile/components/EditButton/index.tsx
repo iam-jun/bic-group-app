@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { useUserIdAuth } from '~/hooks/auth';
 import { spacing } from '~/theme';
 

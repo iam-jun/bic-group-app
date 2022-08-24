@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
 import { formatBytes } from '~/utils/formatData';
 import FileUploader, { IGetFile } from '~/services/fileUploader';
