@@ -74,8 +74,8 @@ const Index = () => {
         removeBorderAndShadow
         title="menu:title_discover"
         titleTextProps={{ useI18n: true }}
-        rightIcon="iconSearch"
-        onRightPress={onPressSearch}
+        icon="iconSearch"
+        onPressIcon={onPressSearch}
       />
       <View style={styles.containerContent}>
         <View style={[styles.containerTabView, elevations.e1]}>

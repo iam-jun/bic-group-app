@@ -5,12 +5,13 @@ import React, { useImperativeHandle, useRef, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import Icon from './Icon';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
-interface SearchBaseViewProps {
+export interface SearchBaseViewProps {
   style?: StyleProp<ViewStyle>;
   isOpen: boolean;
   children?: React.ReactNode;
@@ -102,12 +103,14 @@ function SearchBaseView({
     </View>
   );
 
-  return isOpen ? (
-    <View style={[styles.container, style]}>
+  if (!isOpen) return null;
+
+  return (
+    <Animated.View style={[styles.container, style]} entering={FadeInUp} exiting={FadeOutDown}>
       {renderHeader()}
       {children}
-    </View>
-  ) : null;
+    </Animated.View>
+  );
 }
 
 const createStyles = (theme: ExtendedTheme) => {
