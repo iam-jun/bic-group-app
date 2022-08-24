@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import images from '~/resources/images';
 
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import BackgroundEntries1 from '../../../../assets/images/sign_in_bg_entries_1.svg';
 import BackgroundEntries2 from '../../../../assets/images/sign_in_bg_entries_2.svg';
 

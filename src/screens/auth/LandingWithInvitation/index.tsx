@@ -14,7 +14,7 @@ import Button from '~/beinComponents/Button';
 import { useBaseHook } from '~/hooks';
 import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/landing_page.svg';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';

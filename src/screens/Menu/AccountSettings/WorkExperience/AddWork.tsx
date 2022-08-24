@@ -10,7 +10,7 @@ import { isEmpty } from 'lodash';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TextInputBein from '~/beinComponents/inputs/TextInput';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Toggle from '~/baseComponents/Toggle';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';

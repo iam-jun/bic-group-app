@@ -9,7 +9,7 @@ import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import { useBaseHook } from '~/hooks';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import homeActions from '~/storeRedux/home/actions';
 import NFSRecentSearchKeyword from '~/screens/Home/HomeSearch/RecentSearchKeyword';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';

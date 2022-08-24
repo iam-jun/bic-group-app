@@ -10,7 +10,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text, { TextProps } from '~/beinComponents/Text';
 import { IconType } from '~/resources/icons';
 

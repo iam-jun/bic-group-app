@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Clipboard from '@react-native-clipboard/clipboard';
 import NodeEmoji from 'node-emoji';
 import { useBaseHook } from '~/hooks';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
 import { ReactionType } from '~/constants/reactions';
 import { useRootNavigation } from '~/hooks/navigation';

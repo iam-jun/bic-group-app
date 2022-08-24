@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
-import Icon from './Icon';
+import Icon from '../baseComponents/Icon';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
