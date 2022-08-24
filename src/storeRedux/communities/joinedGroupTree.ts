@@ -1,6 +1,6 @@
 import {
   createStore, withFlipper, withImmer, withPersist,
-} from '~/store';
+} from '~/store/utils';
 import groupApi from '~/api/GroupApi';
 import { IGroup } from '~/interfaces/IGroup';
 
