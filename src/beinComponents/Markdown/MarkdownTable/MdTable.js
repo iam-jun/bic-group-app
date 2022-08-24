@@ -20,7 +20,7 @@ import {
 } from '~/beinComponents/Markdown/utils/utils';
 
 // import {DeviceTypes} from '@constants';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import TableDetail from '~/beinComponents/Markdown/MarkdownTable/TableDetail';
 
 const MAX_HEIGHT = 300;

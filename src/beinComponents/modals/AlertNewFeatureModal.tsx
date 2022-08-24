@@ -11,7 +11,7 @@ import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import Text from '~/beinComponents/Text';
 import * as actions from '~/storeRedux/modal/actions';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
-import SvgIcon from '~/beinComponents/Icon/SvgIcon';
+import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import { useKeySelector } from '~/hooks/selector';

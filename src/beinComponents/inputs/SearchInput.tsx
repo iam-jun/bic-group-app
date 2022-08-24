@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Icon from '../Icon';
+import Icon from '../../baseComponents/Icon';
 import { fontFamilies } from '~/theme/fonts';
 import { TextInputProps } from './TextInput';
 import spacing from '~/theme/spacing';

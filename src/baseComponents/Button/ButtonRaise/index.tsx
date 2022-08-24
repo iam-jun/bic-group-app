@@ -11,7 +11,7 @@ import {
   BUTTON_PADDING, BUTTON_SIZES, ICON_SIZES, TEXT_SIZES,
 } from '~/baseComponents/Button/constants';
 import ButtonWrapper, { ButtonWrapperProps } from '~/baseComponents/Button/ButtonWrapper';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import spacing, { borderRadius } from '~/theme/spacing';
 
 export interface ButtonRaiseProps extends ButtonWrapperProps{

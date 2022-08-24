@@ -22,7 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';

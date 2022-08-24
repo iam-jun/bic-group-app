@@ -3,7 +3,7 @@ import {
   ImageStyle, StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Image, { ImageProps } from '~/beinComponents/Image';
 import { IconType } from '~/resources/icons';
 import dimension from '~/theme/dimension';

@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 

@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Avatar from '~/baseComponents/Avatar';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { IGroup } from '~/interfaces/IGroup';

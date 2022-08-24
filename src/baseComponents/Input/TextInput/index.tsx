@@ -13,7 +13,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { fontFamilies } from '~/theme/fonts';
 import Text, { TextProps } from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import Icon, { IconProps } from '~/beinComponents/Icon';
+import Icon, { IconProps } from '~/baseComponents/Icon';
 import { getTextHelperColor } from '../helper';
 import dimension from '~/theme/dimension';
 import { IconType } from '~/resources/icons';

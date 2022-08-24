@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import BannerImportant from '~/baseComponents/Banner';
 
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
 
 export interface PostViewImportantProps {

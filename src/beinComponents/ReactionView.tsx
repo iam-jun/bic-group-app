@@ -12,7 +12,7 @@ import { IOwnReaction, IReactionCounts } from '~/interfaces/IPost';
 import commonActions, { IAction } from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
-import Icon from './Icon';
+import Icon from '../baseComponents/Icon';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;

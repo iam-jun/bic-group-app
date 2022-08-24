@@ -6,7 +6,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 afterEach(cleanup);
 

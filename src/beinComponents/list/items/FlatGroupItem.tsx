@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IGroup } from '~/interfaces/IGroup';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import GroupItem, { GroupItemProps } from '~/beinComponents/list/items/GroupItem';
 import GroupTree, { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import { useRootNavigation } from '~/hooks/navigation';

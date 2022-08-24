@@ -11,7 +11,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import EmojiNameToast from '~/beinComponents/emoji/EmojiNameToast';
 import EmojiSelector, { Categories } from '~/beinComponents/emoji/EmojiSelector';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 

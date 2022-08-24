@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import Button from '~/baseComponents/Button';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import spacing from '~/theme/spacing';
 

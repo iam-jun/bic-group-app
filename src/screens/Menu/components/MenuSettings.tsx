@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';

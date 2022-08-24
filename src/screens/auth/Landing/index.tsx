@@ -9,7 +9,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
 import { deviceDimensions } from '~/theme/dimension';
 import LandingImg from '../../../../assets/images/landing_page.svg';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import useAuth from '~/hooks/auth';
 import { rootSwitch } from '~/router/stack';
 import images from '~/resources/images';
