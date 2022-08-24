@@ -25,8 +25,8 @@ const SelectReactionView: FC<ReactionViewProps> = ({
   const ITEM_SIZE = dimension.deviceWidth / NUM_COLUMNS;
   const EMOJI_SIZE = ITEM_SIZE - padding.small * 2;
 
-  // Initial rows = 4
-  const [contentHeight, setContentHeight] = React.useState(ITEM_SIZE * 4);
+  // Initial rows = 5
+  const [contentHeight, setContentHeight] = React.useState(ITEM_SIZE * 5);
   const [data, setData] = React.useState<any>(STATIC_EMOJI);
   const tabData = [
     { id: 'tab_select_reaction_static', text: t('common:text_static') },

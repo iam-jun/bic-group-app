@@ -121,7 +121,7 @@ const TextInput: React.FC<TextInputProps> = ({
         {..._textHelperProps}
         style={helperActionStyle.style}
       >
-        {`${helperAction}`}
+        {helperAction}
       </Text.H6>
     );
   };
@@ -201,21 +201,23 @@ const TextInput: React.FC<TextInputProps> = ({
           </View>
         </View>
         {!!helperText && (
-          <View style={[styles.helperContainer, helperStyle]}>
-            {!!error && (
-              <Icon
-                testID="text_input.error_icon"
-                icon="CircleExclamation"
-                size={16}
-                tintColor={colors.red40}
-                style={styles.errorIconStyle}
-              />
-            )}
+        <View style={[styles.helperContainer, helperStyle]}>
+          {!!error && (
+          <Icon
+            testID="text_input.error_icon"
+            icon="CircleExclamation"
+            size={16}
+            tintColor={colors.red40}
+            style={styles.errorIconStyle}
+          />
+          )}
+          <View style={styles.helperTextStyle}>
             <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
               {helperText}
               {renderHelperAction()}
             </Text.BodyXS>
           </View>
+        </View>
         )}
       </View>
     </View>
@@ -266,12 +268,16 @@ const themeStyles = (
       maxWidth: horizontal ? dimension.deviceWidth / 3 : dimension.deviceWidth,
     },
     errorIconStyle: {
-      marginRight: spacing.margin.tiny,
+    },
+    helperTextStyle: {
+      paddingHorizontal: spacing.padding.tiny,
+      flex: 1,
     },
     helperContainer: {
       flexDirection: 'row',
       marginTop: spacing.margin.tiny,
       alignContent: 'center',
+      paddingRight: spacing.padding.tiny,
     },
     leftIconStyle: {
       backgroundColor: colors.neutral2,
