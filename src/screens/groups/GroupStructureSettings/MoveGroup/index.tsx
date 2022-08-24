@@ -155,7 +155,6 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
           loading,
           disabled: !selecting,
           useI18n: true,
-          highEmphasis: true,
           style: { borderWidth: 0 },
           testID: 'move_group.btn_save',
         }}

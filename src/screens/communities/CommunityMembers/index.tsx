@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
+import Header, { HeaderProps } from '~/beinComponents/Header';
 
 import SearchMemberView from './CommunityMemberList/components/SearchMemberView';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
@@ -14,22 +15,28 @@ import { MEMBER_TAB_TYPES } from '../constants';
 import { spacing } from '~/theme';
 import { useMyPermissions } from '~/hooks/permissions';
 import CommunityMemberRequests from './CommunityMemberRequests';
+import modalActions from '~/storeRedux/modal/actions';
+import { useKeySelector } from '~/hooks/selector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
-const MEMBER_TABS = [
+export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
   { id: MEMBER_TAB_TYPES.MEMBER_REQUESTS, text: 'communities:member_tab_types:title_member_requests' },
 ];
 
 const CommunityMembers = ({ route }: any) => {
-  const { communityId } = route.params;
+  const { communityId, targetIndex } = route.params;
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
   const { t } = useBaseHook();
+  const dispatch = useDispatch();
 
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
   const [isOpen, setIsOpen] = useState(false);
+  const { ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
+
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageJoiningRequests = hasPermissionsOnScopeWithId(
     'communities',
@@ -39,9 +46,18 @@ const CommunityMembers = ({ route }: any) => {
       PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_JOIN_SETTING,
     ],
   );
+  const canAddMember = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
+  );
 
   const onPressMenu = (item: ICommunityMembers) => {
-    // TODO: ADD PRESS MENU
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const onPressAdd = () => {
+    dispatch(modalActions.showAlertNewFeature());
   };
 
   const onPressTab = (item: any, index: number) => {
@@ -56,12 +72,33 @@ const CommunityMembers = ({ route }: any) => {
     setIsOpen(false);
   }, []);
 
-  const renderContent = () => (selectedIndex === 0
-    ? <CommunityMemberList communityId={communityId} onPressMenu={onPressMenu} />
-    : selectedIndex === 1
-      ? <CommunityMemberRequests communityId={communityId} />
-      : null
-  );
+  const renderContent = () => {
+    if (selectedIndex === 0) {
+      return <CommunityMemberList communityId={communityId} onPressMenu={onPressMenu} />;
+    }
+
+    if (selectedIndex === 1) {
+      return <CommunityMemberRequests communityId={communityId} />;
+    }
+
+    return null;
+  };
+
+  const showAddButton = () => {
+    if (canAddMember) {
+      // don't show button Add on header when there's button Add Members on Member request screen
+      if (selectedIndex === 1 && ids.length === 0) return false;
+      return true;
+    }
+
+    return false;
+  };
+
+  const headerProps: HeaderProps = showAddButton() && {
+    buttonText: 'common:text_add',
+    onPressButton: onPressAdd,
+    buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
+  };
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.gray5}>
@@ -70,6 +107,7 @@ const CommunityMembers = ({ route }: any) => {
         title="groups:title_members_other"
         icon="search"
         onPressIcon={onPressSearch}
+        {...headerProps}
       />
 
       {!!canManageJoiningRequests && (
@@ -109,6 +147,10 @@ const createStyles = (theme: ExtendedTheme) => {
       flex: 1,
       marginTop: spacing.margin.large,
       backgroundColor: colors.gray5,
+    },
+    addButton: {
+      marginLeft: spacing.margin.base,
+      marginRight: spacing.margin.small,
     },
   });
 };

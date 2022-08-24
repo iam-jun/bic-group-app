@@ -15,6 +15,8 @@ import NotificationOptionBottomSheet from './components/NotificationOptionBottom
 import notificationsActions from '../../storeRedux/notification/actions';
 import ScrollableTabBar from './components/ScrollableTabBar';
 import { notificationMenuData } from '~/screens/Notification/constants';
+import { MEMBER_TABS } from '../communities/CommunityMembers';
+import { MEMBER_TAB_TYPES } from '../communities/constants';
 
 const Notification = () => {
   const menuSheetRef = useRef<any>();
@@ -166,11 +168,15 @@ const Notification = () => {
               }
               break;
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
-            case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
+            case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED: {
+              const targetIndex = MEMBER_TABS.findIndex(
+                (item: {id: string, text: string}) => item.id === MEMBER_TAB_TYPES.MEMBER_REQUESTS,
+              );
               if (act?.community?.id) {
                 rootNavigation.navigate(
                   groupStack.communityMembers, {
                     communityId: act.community.id,
+                    targetIndex,
                   },
                 );
               }
@@ -182,6 +188,7 @@ const Notification = () => {
                 );
               }
               break;
+            }
             default:
               console.warn(`Notification type ${type} have not implemented yet`);
               break;

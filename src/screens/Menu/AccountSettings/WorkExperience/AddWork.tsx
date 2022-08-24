@@ -335,11 +335,8 @@ const AddWork = () => {
         buttonText={selectedWorkItem ? 'common:text_save' : 'common:text_add'}
         buttonProps={{
           useI18n: true,
-          color: theme.colors.purple50,
-          textColor: theme.colors.white,
           disabled:
             !(companyValue?.trim?.() && positionValue?.trim?.()),
-          borderRadius: spacing.borderRadius.small,
           testID: 'add_work.save',
         }}
         onPressButton={onSave}

@@ -22,6 +22,7 @@ import modalActions from '~/storeRedux/modal/actions';
 interface MemberRequestListProps {
   id?: string;
   type: 'community' | 'group';
+  canAddMember?: boolean;
   onLoadMore: () => void;
   onRefresh: () => void;
 }
@@ -29,6 +30,7 @@ interface MemberRequestListProps {
 const MemberRequestList = ({
   id,
   type,
+  canAddMember,
   onLoadMore,
   onRefresh,
 }: MemberRequestListProps) => {
@@ -57,7 +59,7 @@ const MemberRequestList = ({
         source="addUsers"
         title="groups:text_no_pending_members_notice"
         description={`groups:text_pending_request_notice_${type}`}
-        ButtonComponent={(
+        ButtonComponent={canAddMember && (
           <Button.Primary
             style={styles.buttonAddMembers}
             size="large"
@@ -68,7 +70,7 @@ const MemberRequestList = ({
           >
             groups:title_add_members
           </Button.Primary>
-)}
+        )}
       />
     );
   };

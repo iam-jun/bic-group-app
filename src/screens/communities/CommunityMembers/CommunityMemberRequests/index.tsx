@@ -7,6 +7,7 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import groupsActions from '~/storeRedux/groups/actions';
 import MemberRequestList from '~/screens/groups/components/MemberRequestList';
 import CommunityApproveDeclineAllRequests from './components/CommunityApproveDeclineAllRequests';
+import { useMyPermissions } from '~/hooks/permissions';
 
 interface CommunityMemberRequestsProps {
   communityId: string
@@ -15,6 +16,12 @@ interface CommunityMemberRequestsProps {
 const CommunityMemberRequests = ({ communityId }: CommunityMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { canLoadMore, ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const canAddMember = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
+  );
 
   useEffect(
     () => {
@@ -43,6 +50,7 @@ const CommunityMemberRequests = ({ communityId }: CommunityMemberRequestsProps) 
 
       <MemberRequestList
         type="community"
+        canAddMember={canAddMember}
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
         id={communityId}
