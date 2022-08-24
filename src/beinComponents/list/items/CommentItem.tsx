@@ -103,12 +103,12 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      paddingTop: spacing?.padding.small,
+      paddingTop: spacing?.padding.base,
       paddingHorizontal: spacing?.padding.large,
       backgroundColor: colors.white,
     },
     containerChild: {
-      paddingTop: spacing?.padding.small,
+      paddingTop: spacing?.padding.base,
       paddingRight: spacing?.padding.large,
       paddingLeft: 68,
       backgroundColor: colors.white,

@@ -18,7 +18,6 @@ export default function* getManagedCommunityAndGroup({
 
     yield put(
       groupsActions.setManaged({
-        isRefresh,
         manage: {
           ...manage,
           isLoading: !isRefresh,

@@ -21,6 +21,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
+import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -175,6 +176,29 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const onPressEmoji = () => {
     stickerViewRef?.current?.show?.();
+  };
+
+  const onEmojiSelected = (emoji: string, key?: string) => {
+    dispatch(modalActions.hideModal());
+    if (emoji) {
+      setText(text + emoji);
+      onChangeText?.(text + emoji);
+      _textInputRef.current.focus();
+    }
+  };
+
+  const onPressIcon = () => {
+    const payload = {
+      isOpen: true,
+      ContentComponent: (
+        <EmojiBoard
+          width={dimension.deviceWidth}
+          height={280}
+          onEmojiSelected={onEmojiSelected}
+        />
+      ),
+    };
+    dispatch(modalActions.showModal(payload));
   };
 
   const handleUpload = () => {
@@ -414,18 +438,36 @@ const CommentInput: React.FC<CommentInputProps> = ({
               {text}
             </TextInput>
           </Animated.View>
+          {text.trim().length === 0 && (
+            <CommentInputFooter
+              useTestID={useTestID}
+              onPressIcon={onPressIcon}
+              onPressFile={_onPressFile}
+              onPressImage={_onPressSelectImage}
+              onPressCamera={onPressCamera}
+              onPressEmoji={onPressEmoji}
+              onPressSend={_onPressSend}
+              loading={_loading}
+              disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
+              isHideBtnSend={!text.trim() && !hasMedia()}
+            />
+          )}
         </View>
         {renderSelectedMedia()}
-        <CommentInputFooter
-          useTestID={useTestID}
-          onPressFile={_onPressFile}
-          onPressImage={_onPressSelectImage}
-          onPressCamera={onPressCamera}
-          onPressEmoji={onPressEmoji}
-          onPressSend={_onPressSend}
-          loading={_loading}
-          disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
-        />
+        {text.trim().length !== 0 && (
+          <CommentInputFooter
+            useTestID={useTestID}
+            onPressIcon={onPressIcon}
+            onPressFile={_onPressFile}
+            onPressImage={_onPressSelectImage}
+            onPressCamera={onPressCamera}
+            onPressEmoji={onPressEmoji}
+            onPressSend={_onPressSend}
+            loading={_loading}
+            disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
+            isHideBtnSend={false}
+          />
+        )}
       </View>
       <StickerView
         stickerViewRef={stickerViewRef}
@@ -448,8 +490,7 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
     },
     container: {
       flexDirection: 'row',
-      alignItems: 'flex-end',
-      paddingBottom: spacing.padding.small,
+      alignItems: 'center',
     },
     iconContainer: {
       width: 24,
