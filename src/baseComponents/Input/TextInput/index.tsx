@@ -45,14 +45,15 @@ export interface TextInputProps extends RNTextInputProps {
   RightComponent?: React.ReactNode | React.ReactElement;
   activeOutlineColor?: string;
   outlineColor?: string;
-  onFocus?: () => void;
-  onBlur?: () => void;
-  onChangeText?: ((text: string) => void) | undefined;
-  helperActionOnPress?: () => void;
   helperTextTriggerAction?: any;
   horizontal?: boolean;
   leftIcon?: IconType;
   leftIconProps?: IconProps;
+
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onChangeText?: ((text: string) => void) | undefined;
+  helperActionOnPress?: () => void;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
