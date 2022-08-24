@@ -306,23 +306,22 @@ const Header: React.FC<HeaderProps> = ({
         </Animated.View>
         {!!icon && onPressIcon && (
           <Icon
-            icon={icon}
-            size={24}
-            style={styles.icon}
-            onPress={onPressIcon}
-            backgroundColor={colors.neutral1}
             testID="header.icon"
             buttonTestID="header.icon.button"
+            icon={icon}
+            size={20}
+            style={styles.icon}
+            onPress={onPressIcon}
           />
         )}
         {onSearchText && (
           <Icon
-            testID={searchIconTestID}
             icon="search"
+            testID={searchIconTestID}
+            buttonTestID="header.searchIcon.button"
             size={18}
             style={styles.icon}
             onPress={_onPressSearch}
-            buttonTestID="header.searchIcon.button"
           />
         )}
         {onPressChat && <IconChat testID="header.icon_chat" onPress={onPressChat} />}
@@ -414,11 +413,9 @@ const createStyle = (theme: ExtendedTheme) => {
       padding: spacing.padding.base,
     },
     icon: {
-      height: 20,
-      width: 20,
+      padding: 4,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 20,
       marginRight: spacing.margin.tiny,
     },
     iconMenu: {
@@ -427,7 +424,7 @@ const createStyle = (theme: ExtendedTheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: spacing.borderRadius.base,
-      marginRight: spacing.margin.tiny,
+      marginRight: spacing.margin.large,
     },
     titleContainer: {
       flex: 1,
