@@ -22,9 +22,12 @@ exports[`NewsfeedSearch component should render search 1`] = `
       Object {
         "alignItems": "flex-end",
         "backgroundColor": "#FFFFFF",
+        "borderBottomColor": "#F2F5F8",
+        "borderBottomWidth": 1,
         "elevation": 1,
         "flexDirection": "row",
         "overflow": "hidden",
+        "paddingHorizontal": 12,
         "paddingTop": 0,
         "shadowColor": "rgba(0, 0, 0, 1)",
         "shadowOffset": Object {
@@ -45,8 +48,6 @@ exports[`NewsfeedSearch component should render search 1`] = `
           "flexDirection": "row",
           "height": 60,
           "overflow": "hidden",
-          "paddingLeft": 8,
-          "paddingRight": 8,
         }
       }
     >
@@ -90,10 +91,8 @@ exports[`NewsfeedSearch component should render search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
                 "justifyContent": "center",
-                "padding": 12,
-                "width": 48,
+                "padding": 8,
               },
               Object {
                 "backgroundColor": undefined,
@@ -114,28 +113,126 @@ exports[`NewsfeedSearch component should render search 1`] = `
           </View>
         </View>
       </View>
-      <TextInput
-        autoComplete="off"
-        autoFocus={true}
-        onChangeText={[Function]}
-        onFocus={[Function]}
-        onSubmitEditing={[Function]}
-        placeholder="Search for posts..."
-        placeholderTextColor="#A4A9B7"
-        selectionColor="#767D93"
+      <View
         style={
-          Object {
-            "color": "#181C32",
-            "flex": 1,
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
-            "height": "100%",
-            "marginHorizontal": 12,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#E3E6F2",
+              "borderRadius": 24,
+              "borderWidth": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 16,
+            },
+            Object {
+              "color": "#181C32",
+              "flex": 1,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+              "height": "100%",
+            },
+            Object {
+              "height": 32,
+            },
+            false,
+          ]
         }
-        testID="search_base_view.text_input"
-        value=""
-      />
+        testID="search_input"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginRight": 8,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="search_input.icon"
+                />
+              </View>
+            </View>
+          </View>
+          <TextInput
+            autoComplete="off"
+            autoFocus={true}
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onSubmitEditing={[Function]}
+            placeholder="Search for posts..."
+            placeholderTextColor="#767D93"
+            returnKeyType="search"
+            selectionColor="#767D93"
+            style={
+              Object {
+                "color": "#181C32",
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+                "height": "100%",
+              }
+            }
+            testID="search_input.input"
+            value=""
+          />
+        </View>
+      </View>
     </View>
   </View>
   <RCTScrollView
@@ -230,9 +327,12 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
       Object {
         "alignItems": "flex-end",
         "backgroundColor": "#FFFFFF",
+        "borderBottomColor": "#F2F5F8",
+        "borderBottomWidth": 1,
         "elevation": 1,
         "flexDirection": "row",
         "overflow": "hidden",
+        "paddingHorizontal": 12,
         "paddingTop": 0,
         "shadowColor": "rgba(0, 0, 0, 1)",
         "shadowOffset": Object {
@@ -253,8 +353,6 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
           "flexDirection": "row",
           "height": 60,
           "overflow": "hidden",
-          "paddingLeft": 8,
-          "paddingRight": 8,
         }
       }
     >
@@ -298,10 +396,8 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
                 "justifyContent": "center",
-                "padding": 12,
-                "width": 48,
+                "padding": 8,
               },
               Object {
                 "backgroundColor": undefined,
@@ -322,28 +418,126 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
           </View>
         </View>
       </View>
-      <TextInput
-        autoComplete="off"
-        autoFocus={true}
-        onChangeText={[Function]}
-        onFocus={[Function]}
-        onSubmitEditing={[Function]}
-        placeholder="Search for posts..."
-        placeholderTextColor="#A4A9B7"
-        selectionColor="#767D93"
+      <View
         style={
-          Object {
-            "color": "#181C32",
-            "flex": 1,
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
-            "height": "100%",
-            "marginHorizontal": 12,
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#E3E6F2",
+              "borderRadius": 24,
+              "borderWidth": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 16,
+            },
+            Object {
+              "color": "#181C32",
+              "flex": 1,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+              "height": "100%",
+            },
+            Object {
+              "height": 32,
+            },
+            false,
+          ]
         }
-        testID="search_base_view.text_input"
-        value=""
-      />
+        testID="search_input"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginRight": 8,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="search_input.icon"
+                />
+              </View>
+            </View>
+          </View>
+          <TextInput
+            autoComplete="off"
+            autoFocus={true}
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onSubmitEditing={[Function]}
+            placeholder="Search for posts..."
+            placeholderTextColor="#767D93"
+            returnKeyType="search"
+            selectionColor="#767D93"
+            style={
+              Object {
+                "color": "#181C32",
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+                "height": "100%",
+              }
+            }
+            testID="search_input.input"
+            value=""
+          />
+        </View>
+      </View>
     </View>
   </View>
   <RCTScrollView

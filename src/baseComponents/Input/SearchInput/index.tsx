@@ -1,7 +1,6 @@
 import React, {
   Ref,
   useEffect,
-  useRef,
   useState,
   useImperativeHandle,
 } from 'react';
@@ -10,43 +9,39 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Icon from '../Icon';
+import Icon from '../../Icon';
 import { fontFamilies } from '~/theme/fonts';
-import { TextInputProps } from './TextInput';
+import { TextInputProps } from '../TextInput';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
+import { SEARCH_INPUT_SIZES } from './constants';
 
 export interface SearchInputProps extends TextInputProps {
-  searchInputRef?: Ref<TextInput>;
-  inputRef?: Ref<TextInput>;
   style?: StyleProp<ViewStyle>;
-  placeholder?: string;
-  autoFocus?: boolean;
-  value?: string;
-  testID?: string;
-  onChangeText?: (value: string) => void;
-  onFocus?: () => void;
+  inputRef?: Ref<TextInput>;
+  searchInputRef?: Ref<{setText:(text: string)=>void}>;
+  size?: keyof typeof SEARCH_INPUT_SIZES,
+
   onSubmitEditing?: () => void;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
-  searchInputRef,
-  inputRef,
   style,
-  placeholder,
-  autoFocus,
   value,
-  testID,
+  inputRef,
+  searchInputRef,
+  size = 'medium',
+
   onChangeText,
   onFocus,
   onSubmitEditing,
+  ...props
 }: SearchInputProps) => {
-  const _searchInputRef = searchInputRef || useRef<any>();
-
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const [text, setText] = useState<string>('');
+  const [isFocused, setFocused] = useState(false);
 
   useEffect(
     () => {
@@ -55,7 +50,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   );
 
   useImperativeHandle(
-    _searchInputRef, () => ({
+    searchInputRef, () => ({
       setText,
     }),
   );
@@ -67,6 +62,11 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
   const _onFocus = () => {
     onFocus?.();
+    setFocused(true);
+  };
+
+  const _onBlur = () => {
+    setFocused(false);
   };
 
   const _onSubmitEditing = () => {
@@ -76,34 +76,36 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([styles.container, style])}>
+    <View testID="search_input" style={[styles.container, style, { height: SEARCH_INPUT_SIZES[size] }, isFocused && styles.focused]}>
       <View style={styles.itemContainer}>
         <Icon
+          testID="search_input.icon"
           style={styles.searchIcon}
           icon="search"
-          size={20}
-          tintColor={theme.colors.gray50}
+          size={18}
+          tintColor={theme.colors.neutral20}
         />
         <TextInput
+          {...props}
+          testID="search_input.input"
           ref={inputRef}
-          testID={testID}
           style={styles.textInput}
           value={text}
-          autoFocus={autoFocus}
           autoComplete="off"
-          onChangeText={_onChangeText}
-          placeholder={placeholder}
+          returnKeyType="search"
           placeholderTextColor={theme.colors.gray50}
           selectionColor={theme.colors.gray50}
           onFocus={_onFocus}
-          returnKeyType="search"
+          onBlur={_onBlur}
+          onChangeText={_onChangeText}
           onSubmitEditing={_onSubmitEditing}
         />
         {!!text && (
           <Icon
+            testID="search_input.icon_clear"
             icon="iconClose"
-            size={20}
-            tintColor={theme.colors.neutral80}
+            size={12}
+            tintColor={theme.colors.neutral40}
             onPress={() => _onChangeText('')}
           />
         )}
@@ -117,11 +119,15 @@ const createStyles = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     container: {
-      height: 40,
-      borderRadius: 20,
-      backgroundColor: colors.neutral5,
+      backgroundColor: colors.white,
       justifyContent: 'center',
       paddingHorizontal: 16,
+      borderRadius: 24,
+      borderWidth: 1,
+      borderColor: colors.neutral5,
+    },
+    focused: {
+      borderColor: colors.purple50,
     },
     itemContainer: {
       flexDirection: 'row',
@@ -134,9 +140,10 @@ const createStyles = (theme: ExtendedTheme) => {
       flex: 1,
       height: '100%',
       fontFamily: fontFamilies.BeVietnamProLight,
-      fontSize: dimension?.sizes.bodyM,
+      fontSize: dimension?.sizes.bodyS,
       color: colors.neutral80,
     },
+
   });
 };
 

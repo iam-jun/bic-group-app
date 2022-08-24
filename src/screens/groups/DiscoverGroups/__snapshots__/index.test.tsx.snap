@@ -286,11 +286,9 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                       },
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 20,
-                        "height": 20,
                         "justifyContent": "center",
                         "marginRight": 4,
-                        "width": 20,
+                        "padding": 4,
                       },
                       Object {
                         "backgroundColor": undefined,
