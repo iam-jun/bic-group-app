@@ -6,6 +6,8 @@ export default function* getManaged({ payload }: ReturnType<typeof groupsActions
   try {
     const { isRefresh } = payload;
 
+    yield put(groupsActions.setManaged({ isRefresh }));
+
     yield put(groupsActions.getOwnerCommunity());
 
     yield put(groupsActions.getManagedCommunityAndGroup({ isRefresh }));
