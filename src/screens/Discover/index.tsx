@@ -5,13 +5,13 @@ import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import SearchCommunityView from '~/screens/communities/Communities/components/SearchCommunityView';
 import spacing from '~/theme/spacing';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities';
 import YourCommunities from '~/screens/Discover/components/YourCommunities';
 import YourGroups from './components/YourGroups';
 import Managed from './components/Managed';
 import Tab from '~/baseComponents/Tab';
+import GlobalSearch from './components/GlobalSearch';
 
 const HEADER_TAB = [
   { id: 'discover-tab-1', text: 'discover:discover_communities' },
@@ -91,7 +91,7 @@ const Index = () => {
 
         {renderContent()}
       </View>
-      <SearchCommunityView
+      <GlobalSearch
         isOpen={isOpenSearchCommunity}
         onClose={onCloseSearch}
         onPressCommunity={onPressCommunities}

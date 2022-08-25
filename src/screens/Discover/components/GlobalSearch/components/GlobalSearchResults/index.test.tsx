@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { createTestStore, fireEvent, renderWithRedux } from '../../../../test/testUtils';
-import CommunitySearchResults from './CommunitySearchResults';
-import { communityDetailData } from '../../../../test/mock_data/communities';
-import initialState from '../../../../storeRedux/initialState';
+import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
+import GlobalSearchResults from '.';
+import { communityDetailData } from '~/test/mock_data/communities';
+import initialState from '~/storeRedux/initialState';
 
-describe('CommunitySearchResults component', () => {
+describe('GlobalSearchResults component', () => {
   const onPressCommunity = jest.fn();
 
   it('should render data correctly', () => {
@@ -19,7 +19,7 @@ describe('CommunitySearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <CommunitySearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
       store,
     );
     const flatlist = wrapper.getByTestId('flatlist');
@@ -39,7 +39,7 @@ describe('CommunitySearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <CommunitySearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
       store,
     );
     const emptyText = wrapper.queryByTestId(
@@ -59,7 +59,7 @@ describe('CommunitySearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <CommunitySearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
       store,
     );
     const emptyText = wrapper.queryByTestId(
@@ -79,7 +79,7 @@ describe('CommunitySearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <CommunitySearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
       store,
     );
     const emptyText = wrapper.getByTestId(
@@ -99,7 +99,7 @@ describe('CommunitySearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <CommunitySearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
       store,
     );
 
@@ -120,7 +120,7 @@ describe('CommunitySearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <CommunitySearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
       store,
     );
     const item = wrapper.getByTestId('community_item');

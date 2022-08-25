@@ -8,7 +8,7 @@ import Image, { ImageProps } from '~/beinComponents/Image';
 import { IconType } from '~/resources/icons';
 import dimension from '~/theme/dimension';
 
-import spacing from '~/theme/spacing';
+import spacing, { borderRadius } from '~/theme/spacing';
 import Text from '../../beinComponents/Text';
 
 export type AvatarType =
@@ -38,9 +38,9 @@ export interface AvatarProps extends ImageProps {
   badgeCheckSize?: number;
   iconCheckSize?: number;
   counter?: number;
-  onPressAction?: () => void;
   customSize?: number;
   customStyle?: StyleProp<ImageStyle>;
+  onPressAction?: () => void;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -59,9 +59,9 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badgeCheckSize = 16,
   iconCheckSize = 12,
   counter,
-  onPressAction,
   customSize,
   customStyle,
+  onPressAction,
   ...props
 }: AvatarProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -152,33 +152,17 @@ const AvatarComponent: React.FC<AvatarProps> = ({
     const badgeContainerSize = avatarSize / 2;
     const badgeSize = badgeContainerSize * 0.45;
 
-    const absTop = -(spacing?.margin.small || 8);
-    const absBottom = -(spacing?.margin.tiny || 4);
-    const absRight = -(spacing?.margin.small || 8);
-
     return (
-      <View
+      <Icon
         testID="avatar.badge"
-        style={{
-          position: 'absolute',
-          top: badgeBottom ? undefined : absTop,
-          bottom: badgeBottom ? absBottom : undefined,
-          right: absRight,
-          width: badgeContainerSize,
-          height: badgeContainerSize,
-          borderRadius: badgeContainerSize / 2,
-          backgroundColor: colors.white,
-          justifyContent: 'center',
-          alignItems: 'center',
-          shadowOffset: { width: 0, height: 1 },
-          shadowColor: '#000',
-          shadowOpacity: 0.1,
-          shadowRadius: 1,
-          elevation: 2,
-        }}
-      >
-        <Icon size={badgeSize} icon={badge} />
-      </View>
+        style={[styles.badge, {
+          top: badgeBottom ? undefined : 0,
+          bottom: badgeBottom ? 0 : undefined,
+        }]}
+        backgroundColor={colors.white}
+        size={badgeSize}
+        icon={badge}
+      />
     );
   };
 
@@ -251,7 +235,11 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 const creatStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {},
+    container: {
+      backgroundColor: colors.gray1,
+      padding: 2,
+      borderRadius: borderRadius.small,
+    },
     tiny: {
       width: dimension.avatarSizes.tiny,
       height: dimension.avatarSizes.tiny,
@@ -290,6 +278,14 @@ const creatStyle = (theme: ExtendedTheme) => {
     textStyle: {
       backgroundColor: colors.transparent1,
       position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    badge: {
+      position: 'absolute',
+      borderRadius: borderRadius.small,
+      right: 0,
+      padding: 2,
       justifyContent: 'center',
       alignItems: 'center',
     },

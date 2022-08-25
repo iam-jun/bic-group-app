@@ -1,8 +1,8 @@
 import React from 'react';
-import initialState from '../../../storeRedux/initialState';
-import { configureStore, renderWithRedux } from '../../../test/testUtils';
-import Managed from './Managed';
-import { listOwnCommunity, listManage } from '../../../test/mock_data/communities';
+import initialState from '~/storeRedux/initialState';
+import { configureStore, renderWithRedux } from '~/test/testUtils';
+import { listOwnCommunity, listManage } from '~/test/mock_data/communities';
+import Managed from '.';
 
 describe('Managed Screen', () => {
   it('given an empty list owner, should render empty component', () => {

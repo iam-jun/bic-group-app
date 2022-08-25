@@ -10,9 +10,9 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useKeySelector } from '~/hooks/selector';
-import CommunityItem from '../../../groups/components/CommunityItem';
+import CommunityItem from '~/screens/groups/components/CommunityItem';
 import spacing from '~/theme/spacing';
 
 interface CommunitySearchResultsProps {

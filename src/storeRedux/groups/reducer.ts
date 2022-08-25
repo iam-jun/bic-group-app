@@ -224,6 +224,12 @@ export const groupInitState = {
     ids: [] as string[],
     items: {},
   },
+  globalSearch: {
+    loading: false,
+    canLoadMore: true,
+    ids: [] as string[],
+    items: {},
+  },
 };
 
 function groupsReducer(
@@ -838,6 +844,19 @@ function groupsReducer(
       return {
         ...state,
         communitySearch: groupInitState.communitySearch,
+      };
+    case groupsTypes.SET_GLOBAL_SEARCH:
+      return {
+        ...state,
+        globalSearch: {
+          ...state.globalSearch,
+          ...payload,
+        },
+      };
+    case groupsTypes.RESET_GLOBAL_SEARCH:
+      return {
+        ...state,
+        globalSearch: groupInitState.globalSearch,
       };
     case groupsTypes.SET_JOINED_ALL_GROUPS:
       return {
