@@ -114,15 +114,11 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     () => {
     // disable clear data for flow select audience before create post
     // dispatch(postActions.clearCreatPostData());
-    // dispatch(postActions.setSearchResultAudienceGroups([]));
-    // dispatch(postActions.setSearchResultAudienceUsers([]));
       if (screenParams?.initAudience?.id) {
         dispatch(postActions.setCreatePostChosenAudiences(new Array(screenParams?.initAudience)));
       }
       return () => {
         dispatch(postActions.clearCreatPostData());
-        dispatch(postActions.setSearchResultAudienceGroups([]));
-        dispatch(postActions.setSearchResultAudienceUsers([]));
         dispatch(postActions.setCreatePostImagesDraft([]));
 
         // clear comment because of comment input view listen emit event change text

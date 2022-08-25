@@ -114,14 +114,6 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_INIT_AUDIENCES,
     payload,
   }),
-  setSearchResultAudienceGroups: (payload: IGroup[]) => ({
-    type: postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS,
-    payload,
-  }),
-  setSearchResultAudienceUsers: (payload: IUser[]) => ({
-    type: postTypes.SET_SEARCH_RESULT_AUDIENCE_USERS,
-    payload,
-  }),
   setDraftPosts: (payload?: IPayloadSetDraftPosts) => ({
     type: postTypes.SET_DRAFT_POSTS,
     payload,

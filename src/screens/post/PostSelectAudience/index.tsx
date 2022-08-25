@@ -2,11 +2,10 @@ import React, { useState, useEffect, FC } from 'react';
 import {
   View,
   StyleSheet,
-  SectionList,
+  FlatList,
   ActivityIndicator,
   Platform,
   KeyboardAvoidingView,
-  DeviceEventEmitter,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -24,7 +23,6 @@ import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SelectingAudiences from '~/screens/post/components/SelectingAudiences';
 
-import streamApi from '~/api/StreamApi';
 import { IGroup } from '~/interfaces/IGroup';
 import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
@@ -41,6 +39,7 @@ import {
 import { ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
+import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store/selectAudienceStore';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -56,9 +55,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const [lossInternet, setLossInternet] = useState(false);
 
   const state = useKeySelector(postKeySelector.postSelectAudienceState);
-  const {
-    loading, selectingAudiences, selectingGroups, selectingUsers,
-  } = state;
+  const { selectingAudiences, selectingGroups, selectingUsers } = state;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences);
@@ -85,25 +82,16 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const insets = useSafeAreaInsets();
 
   const createPostData = useKeySelector(postKeySelector.createPost.all);
-  const {
-    chosenAudiences,
-    searchResultAudienceGroups,
-    searchResultAudienceUsers,
-  } = createPostData || {};
+  const { chosenAudiences } = createPostData || {};
 
-  const sectionListData: any = [];
-  if (searchResultAudienceGroups?.length > 0) {
-    sectionListData.push({
-      title: t('post:label_groups'),
-      data: searchResultAudienceGroups,
-    });
-  }
-  if (searchResultAudienceUsers?.length > 0) {
-    sectionListData.push({
-      title: t('post:label_users'),
-      data: searchResultAudienceUsers,
-    });
-  }
+  const {
+    tree, search, dispatchGetAudienceTree, dispatchGetAudienceSearch,
+  } = useSelectAudienceStore();
+  const { data: dataTree = [], loading: loadingTree } = tree || {};
+  const { data: dataSearch = [], loading: loadingSearch, key: searchKey } = search || {};
+
+  const listData: IGroup[] = (!!searchKey ? dataSearch : dataTree) || [];
+  const loading = !!searchKey ? loadingSearch : loadingTree;
 
   const updateSelectingAudiences = () => {
     const newSelectingAudiences: (IUser | IGroup)[] = [];
@@ -125,29 +113,20 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     () => {
       if (isFirstStep) {
         dispatch(postActions.clearCreatPostData());
-        dispatch(postActions.setSearchResultAudienceGroups([]));
-        dispatch(postActions.setSearchResultAudienceUsers([]));
-      }
-      if (initAudiences) {
-        handleSearchResult(initAudiences);
-        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-      } else if (sectionListData.length === 0 || isFirstStep) {
-        onSearch('');
+        dispatchGetAudienceTree();
       } else {
         dispatch(postActions.setPostSelectAudienceState({ loading: false }));
       }
 
-      setTimeout(
-        () => {
-          // emit event show header to avoid case quick scroll then press create, lead to missing header
-          DeviceEventEmitter.emit(
-            'showHeader', true,
-          );
-          DeviceEventEmitter.emit(
-            'showBottomBar', true,
-          );
-        }, 2000,
-      );
+      // todo recheck flow edit post audience
+      // if (initAudiences) {
+      //   handleSearchResult(initAudiences);
+      //   dispatch(postActions.setPostSelectAudienceState({ loading: false }));
+      // }
+
+      // else if (listData.length === 0 || isFirstStep) {
+      //   onChangeTextSearch('');
+      // }
 
       return () => {
         dispatch(postActions.setPostSelectAudienceState());
@@ -158,7 +137,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   useEffect(
     () => {
       if (isInternetReachable) {
-        if (lossInternet && sectionListData.length === 0) {
+        if (lossInternet && listData.length === 0) {
           setLossInternet(false);
           onSearch('');
         }
@@ -287,27 +266,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     dispatch(postActions.setPostSelectAudienceState(p));
   };
 
-  const handleSearchResult = (data: []) => {
-    dispatch(postActions.setSearchResultAudienceGroups(data));
-  };
-
   const onSearch = debounce(
     (searchText: string) => {
-      dispatch(postActions.setPostSelectAudienceState({ loading: true }));
-      streamApi
-        .getSearchAudiences(searchText)
-        .then((response) => {
-          if (response && response?.data) {
-            handleSearchResult(response.data);
-          }
-          dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-        })
-        .catch((e) => {
-          dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-          console.error(
-            '\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m',
-          );
-        });
+      dispatchGetAudienceSearch(searchText);
     }, 500,
   );
 
@@ -362,24 +323,10 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     );
   };
 
-  const renderListHeader = () => {
-    if (
-      searchResultAudienceGroups?.length === 0
-      && searchResultAudienceUsers?.length === 0
-    ) {
-      return null;
-    }
-    return (
-      <Text.H6 style={{ marginVertical: spacing?.margin.small }}>
-        Search Results
-      </Text.H6>
-    );
-  };
-
-  const renderSectionHeader = ({ section: { title } }: any) => (
-    <View style={styles.sectionHeaderContainer}>
-      <Text.H6 style={styles.sectionHeaderText}>{title}</Text.H6>
-    </View>
+  const renderListHeader = () => (
+    <Text.H6 style={{ marginVertical: spacing?.margin.small }}>
+      Search Results
+    </Text.H6>
   );
 
   const renderListFooter = () => (
@@ -430,16 +377,15 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           list={selectingAudiences}
           onRemoveItem={onRemoveItem}
         />
-        <SectionList
+        <FlatList
           style={{ paddingHorizontal: spacing?.padding.large }}
-          sections={sectionListData}
+          data={listData}
           keyExtractor={(
             item, index,
           ) => item?.id || `section_list_${item}_${index}`}
           ListHeaderComponent={renderListHeader}
           ListFooterComponent={renderListFooter}
           ListEmptyComponent={renderEmpty}
-          renderSectionHeader={renderSectionHeader}
           renderItem={renderItem}
           ItemSeparatorComponent={() => (
             <View style={{ height: spacing?.margin.large }} />
