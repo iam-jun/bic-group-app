@@ -65,31 +65,34 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
     />
   );
 
+  if (!loading && data?.length === 0) {
+    return (
+      <Text.BodyS style={styles.textEmpty} useI18n>
+        home:newsfeed_search:no_recent_search
+      </Text.BodyS>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text.H6 style={styles.flex1}>
+        <Text.H4 style={styles.flex1}>
           {t('home:newsfeed_search:label_recent_search')}
-        </Text.H6>
+        </Text.H4>
         {data?.length > 0 && (
           <Button
             testID="recent_search_keyword.btn_clear"
             onPress={onPressClear}
             style={{ justifyContent: 'center', alignSelf: 'center' }}
           >
-            <Text.ButtonS style={styles.btnClear}>
-              {t('home:newsfeed_search:clear').toUpperCase()}
-            </Text.ButtonS>
+            <Text.LinkS>
+              {t('home:newsfeed_search:clear')}
+            </Text.LinkS>
           </Button>
         )}
       </View>
       {!!loading && <LoadingIndicator style={styles.loading} />}
       {data?.map?.(renderItem)}
-      {!loading && data?.length === 0 && (
-        <Text style={styles.textEmpty} useI18n>
-          home:newsfeed_search:no_recent_search
-        </Text>
-      )}
     </View>
   );
 };
@@ -99,7 +102,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     flex1: { flex: 1 },
     container: {
-      paddingHorizontal: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
     },
     header: {
       height: 60,
@@ -107,8 +110,7 @@ const createStyle = (theme: ExtendedTheme) => {
       alignItems: 'center',
     },
     btnClear: {
-      color: colors.purple50,
-      marginRight: spacing.margin.tiny,
+      marginRight: spacing.margin.large,
     },
     loading: {
       height: 44,
@@ -122,7 +124,6 @@ const createStyle = (theme: ExtendedTheme) => {
     textEmpty: {
       textAlign: 'center',
       margin: spacing.margin.extraLarge,
-      color: colors.gray50,
     },
   });
 };

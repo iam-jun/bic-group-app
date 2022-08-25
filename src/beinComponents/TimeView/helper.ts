@@ -90,6 +90,7 @@ export const formatDateTime = (
     null, {
       lastDay: `[${i18next.t('common:time:yesterday')}]`,
       sameDay: `[${i18next.t('common:time:today')}]`,
+      nextDay: formatPreviousDay,
       lastWeek: formatPreviousDay,
       sameElse: formatPreviousDay,
     },

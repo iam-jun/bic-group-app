@@ -116,11 +116,19 @@ const _PostView: FC<PostViewProps> = ({
     setting = useKeySelector(postKeySelector.postSettingById(postId));
     deleted = useKeySelector(postKeySelector.postDeletedById(postId));
     markedReadPost = useKeySelector(postKeySelector.postMarkedReadById(postId));
-    commentsCount = useKeySelector(postKeySelector.postCommentsCountById(postId));
+    commentsCount = useKeySelector(
+      postKeySelector.postCommentsCountById(postId),
+    );
 
-    ownerReactions = useKeySelector(postKeySelector.postOwnerReactionById(postId));
-    reactionsCount = useKeySelector(postKeySelector.postReactionCountsById(postId));
-    totalUsersSeen = useKeySelector(postKeySelector.postTotalUsersSeenById(postId));
+    ownerReactions = useKeySelector(
+      postKeySelector.postOwnerReactionById(postId),
+    );
+    reactionsCount = useKeySelector(
+      postKeySelector.postReactionCountsById(postId),
+    );
+    totalUsersSeen = useKeySelector(
+      postKeySelector.postTotalUsersSeenById(postId),
+    );
   } else {
     actor = postData?.actor;
     audience = postData?.audience;
@@ -141,16 +149,20 @@ const _PostView: FC<PostViewProps> = ({
   const { images, videos, files } = media || {};
   const {
     isImportant, importantExpiredAt, canComment, canReact,
-  } = setting || {};
+  }
+    = setting || {};
 
   const userId = useUserIdAuth();
 
   const [isMarkSeenPost, setMarkSeenPost] = useState(false);
 
   const commentCount = formatLargeNumber(commentsCount);
-  const labelButtonComment = `${commentCount ? `${commentCount} ` : ''}${t('post:button_comment')}`;
+  const labelButtonComment = `${commentCount ? `${commentCount} ` : ''}${t(
+    'post:button_comment',
+  )}`;
 
-  const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY } = useMyPermissions();
+  const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
+    = useMyPermissions();
   const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
     'groups',
     audience?.groups,
@@ -158,36 +170,43 @@ const _PostView: FC<PostViewProps> = ({
   );
 
   const onPressShowAudiences = () => {
-    dispatch(modalActions.showModal({
-      isOpen: true,
-      isFullScreen: true,
-      titleFullScreen: t('post:title_post_to'),
-      ContentComponent: (
-        <PostAudiencesModal
-          data={audience?.groups || []}
-        />
-      ),
-    }));
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        isFullScreen: true,
+        titleFullScreen: t('post:title_post_to'),
+        ContentComponent: <PostAudiencesModal data={audience?.groups || []} />,
+      }),
+    );
   };
 
   const handleDeltePostError = (listIdAudiences: string[]) => {
     if (listIdAudiences?.length > 0 && audience?.groups?.length > 0) {
       const listAudiences = listIdAudiences.map((audienceId) => {
-        const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId);
+        const _audience = audience.groups.find(
+          (audience: IAudienceGroup) => audience?.id === audienceId,
+        );
         return _audience;
       });
       if (canDeleteOwnPost) {
         dispatch(
           modalActions.showAlert({
             title: t('post:title_delete_audiences_of_post'),
-            children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+            children: (
+              <AlertDeleteAudiencesConfirmContent
+                data={listAudiences}
+                canDeleteOwnPost={canDeleteOwnPost}
+              />
+            ),
             cancelBtn: true,
             confirmLabel: t('common:text_remove'),
             ConfirmBtnComponent: Button.Danger,
-            onConfirm: () => dispatch(postActions.removePostAudiences({
-              id: postId,
-              listAudiences: listIdAudiences,
-            })),
+            onConfirm: () => dispatch(
+              postActions.removePostAudiences({
+                id: postId,
+                listAudiences: listIdAudiences,
+              }),
+            ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             confirmBtnProps: { type: 'ghost' },
@@ -197,7 +216,12 @@ const _PostView: FC<PostViewProps> = ({
         dispatch(
           modalActions.showAlert({
             title: t('post:title_delete_audiences_of_post'),
-            children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+            children: (
+              <AlertDeleteAudiencesConfirmContent
+                data={listAudiences}
+                canDeleteOwnPost={canDeleteOwnPost}
+              />
+            ),
             cancelBtn: true,
             cancelLabel: t('common:btn_close'),
             onConfirm: null,
@@ -220,9 +244,9 @@ const _PostView: FC<PostViewProps> = ({
       handleDeltePostError,
     );
 
-    dispatch(modalActions.showBottomList(
-      { isOpen: true, data } as BottomListProps,
-    ));
+    dispatch(
+      modalActions.showBottomList({ isOpen: true, data } as BottomListProps),
+    );
   };
 
   const onAddReaction = (reactionId: ReactionType) => {
@@ -257,20 +281,20 @@ const _PostView: FC<PostViewProps> = ({
   };
 
   const onPressSeenBy = () => {
-    dispatch(modalActions.showModal({
-      isOpen: true,
-      isFullScreen: true,
-      titleFullScreen: t('post:title_seen_by'),
-      ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
-    }));
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        isFullScreen: true,
+        titleFullScreen: t('post:title_seen_by'),
+        ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
+      }),
+    );
   };
   const _onPressHeader = () => {
     if (onPressHeader) {
       onPressHeader?.(postId);
     } else {
-      rootNavigation.navigate(
-        homeStack.postDetail, { post_id: postId },
-      );
+      rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
     }
   };
 
@@ -278,20 +302,16 @@ const _PostView: FC<PostViewProps> = ({
     if (onPressComment) {
       onPressComment?.(postId);
     } else {
-      rootNavigation.navigate(
-        homeStack.postDetail, {
-          post_id: postId,
-          focus_comment: true,
-        },
-      );
+      rootNavigation.navigate(homeStack.postDetail, {
+        post_id: postId,
+        focus_comment: true,
+      });
     }
   };
 
   const _onPress = () => {
     if (pressNavigateToDetail) {
-      rootNavigation.navigate(
-        homeStack.postDetail, { post_id: postId },
-      );
+      rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
     } else {
       onPress?.();
     }
@@ -348,10 +368,12 @@ const _PostView: FC<PostViewProps> = ({
           isPostDetail={isPostDetail}
           onPressMarkSeenPost={onPressMarkSeenPost}
         />
-        <SeenCountsView
-          onPress={onPressSeenBy}
-          seenPeopleCount={totalUsersSeen}
-        />
+        {!isLite && (
+          <SeenCountsView
+            onPress={onPressSeenBy}
+            seenPeopleCount={totalUsersSeen}
+          />
+        )}
         {!isLite && !!canReact && (
           <ReactionView
             style={styles.reactions}
@@ -363,7 +385,17 @@ const _PostView: FC<PostViewProps> = ({
           />
         )}
         {isLite ? (
-          <PostViewFooterLite commentsCount={commentsCount} />
+          <PostViewFooterLite
+            reactionsCount={5}
+            commentsCount={commentsCount}
+            seenCountsViewComponent={(
+              <SeenCountsView
+                style={styles.seenCountsViewAtBottom}
+                onPress={onPressSeenBy}
+                seenPeopleCount={totalUsersSeen}
+              />
+            )}
+          />
         ) : (
           <PostViewFooter
             labelButtonComment={labelButtonComment}
@@ -408,19 +440,19 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
     },
     imageDelete: { width: 35, height: 35, marginRight: spacing.margin.large },
+    seenCountsViewAtBottom: {
+      alignItems: 'center',
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingHorizontal: 0,
+    },
   });
 };
 
-function propsAreEqual(
-  prev: any, next: any,
-) {
-  return isEqual(
-    prev, next,
-  );
+function propsAreEqual(prev: any, next: any) {
+  return isEqual(prev, next);
 }
 
-const PostView = memo(
-  _PostView, propsAreEqual,
-);
+const PostView = memo(_PostView, propsAreEqual);
 PostView.whyDidYouRender = true;
 export default PostView;

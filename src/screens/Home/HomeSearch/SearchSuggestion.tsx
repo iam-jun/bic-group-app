@@ -9,7 +9,6 @@ import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import { useBaseHook } from '~/hooks';
-import Icon from '~/baseComponents/Icon';
 import homeActions from '~/storeRedux/home/actions';
 import NFSRecentSearchKeyword from '~/screens/Home/HomeSearch/RecentSearchKeyword';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
@@ -99,8 +98,7 @@ const SearchSuggestion: FC<NFSSuggestionProps> = ({
             style={styles.ctaContainer}
             onPress={onPressCtaSearch}
           >
-            <Icon icon="search" tintColor={colors.purple50} />
-            <Text style={styles.ctaText}>{ctaText}</Text>
+            <Text.BodyMMedium style={styles.ctaText}>{ctaText}</Text.BodyMMedium>
           </TouchableOpacity>
         ) : (
           <NFSRecentSearchKeyword
@@ -129,8 +127,7 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     ctaText: {
       flex: 1,
-      marginLeft: spacing.margin.large,
-      color: colors.purple50,
+      color: colors.blue50,
     },
   });
 };

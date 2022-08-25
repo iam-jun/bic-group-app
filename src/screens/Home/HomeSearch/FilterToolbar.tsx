@@ -3,8 +3,9 @@ import React, { useContext, useRef } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { useDispatch } from 'react-redux';
-import Button from '~/beinComponents/Button';
+import PillTabButton from '~/baseComponents/Tab/PillTabButton';
 import { formatDateTime } from '~/beinComponents/TimeView/helper';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { AppContext } from '~/contexts/AppContext';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
@@ -44,7 +45,7 @@ const FilterToolbar = () => {
     ? filterCreatedBy?.id === userId
       ? t('home:newsfeed_search:filter_created_by_me')
       : `${filterCreatedBy?.name}`
-    : t('home:newsfeed_search:filter_created_by');
+    : t('home:newsfeed_search:filter_post_by');
   const textDate = filterDate
     ? `${formatDateTime(
       startDate, language,
@@ -74,9 +75,7 @@ const FilterToolbar = () => {
   const onSelectDate = (
     startDate?: string, endDate?: string,
   ) => {
-    if (startDate && endDate) {
-      dispatch(homeActions.setNewsfeedSearchFilter({ date: { startDate, endDate } }));
-    }
+    dispatch(homeActions.setNewsfeedSearchFilter({ date: { startDate, endDate } }));
   };
 
   const onPressFilterDate = () => {
@@ -109,10 +108,10 @@ const FilterToolbar = () => {
   };
 
   return (
-    <View>
+    <View style={{ ...theme.elevations.e2 }}>
       <ScrollView ref={scrollRef} style={styles.scrollContainer} horizontal>
         <View style={styles.container}>
-          <Button.Secondary
+          {/* <Button.Secondary
             onPress={onPressFilterOptions}
             leftIcon="SlidersUp"
             leftIconProps={{
@@ -128,10 +127,16 @@ const FilterToolbar = () => {
             {countFilter > 0
               ? `${countFilter}`
               : t('home:newsfeed_search:filter')}
-          </Button.Secondary>
-          <Button.Secondary
+          </Button.Secondary> */}
+          <PillTabButton useI18n onPress={onPressFilterDate} type={startDate && endDate ? 'secondary' : 'neutral'}>
+            home:newsfeed_search:filter_date
+          </PillTabButton>
+          <ViewSpacing width={spacing.margin.small} />
+          <PillTabButton useI18n onPress={onPressFilterCreatedBy} type={filterCreatedBy ? 'secondary' : 'neutral'}>
+            home:newsfeed_search:filter_post_by
+          </PillTabButton>
+          {/* <Button.Secondary
             onPress={onPressFilterCreatedBy}
-            style={styles.button}
             color={filterCreatedBy ? colors.purple10 : colors.violet1}
             textColor={colors.purple50}
           >
@@ -144,8 +149,8 @@ const FilterToolbar = () => {
             textColor={colors.purple50}
           >
             {textDate}
-          </Button.Secondary>
-          {countFilter > 0 && (
+          </Button.Secondary> */}
+          {/* {countFilter > 0 && (
             <Button.Secondary
               style={styles.button}
               textColor={colors.purple50}
@@ -158,7 +163,7 @@ const FilterToolbar = () => {
             >
               {t('home:newsfeed_search:clear')}
             </Button.Secondary>
-          )}
+          )} */}
         </View>
       </ScrollView>
     </View>
@@ -176,12 +181,12 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.base,
-      paddingHorizontal: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
       borderBottomWidth: 1,
       borderColor: colors.neutral1,
     },
     button: {
-      marginLeft: spacing.margin.tiny,
+      marginLeft: spacing.margin.small,
     },
   });
 };
