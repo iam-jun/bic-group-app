@@ -12,6 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -27,7 +28,9 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import { ICommunity } from '~/interfaces/ICommunity';
-import { formatChannelLink, openUrl } from '~/utils/link';
+import {
+  formatChannelLink, getLink, LINK_COMMUNITY, openUrl,
+} from '~/utils/link';
 import { chatSchemes } from '~/constants/chat';
 import modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -118,8 +121,22 @@ const CommunityDetail = (props: any) => {
     );
   };
 
+  const onPressCopyLink = () => {
+    dispatch(modalActions.hideBottomList());
+    Clipboard.setString(getLink(
+      LINK_COMMUNITY, communityId,
+    ));
+    dispatch(modalActions.showHideToastMessage({
+      content: 'common:text_copied',
+      props: {
+        textProps: { useI18n: true },
+        type: 'success',
+      },
+    }));
+  };
+
   const onRightPress = () => {
-    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools);
+    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools, onPressCopyLink);
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
