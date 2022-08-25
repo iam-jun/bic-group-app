@@ -73,7 +73,6 @@ export const postInitState = {
     loading: true,
     selectingAudiences: [],
     selectingGroups: {},
-    selectingUsers: {},
   },
   loadingGetPostDetail: false,
   commentErrorCode: '',

@@ -144,7 +144,6 @@ const postActions = {
     loading?: boolean;
     selectingAudiences?: (IGroup | IUser)[];
     selectingGroups?: {[x: string]: IGroup};
-    selectingUsers?: {[x: string]: IUser};
   }) => ({
     type: postTypes.SET_POST_SELECT_AUDIENCE_STATE,
     payload,

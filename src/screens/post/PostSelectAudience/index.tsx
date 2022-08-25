@@ -18,7 +18,6 @@ import postActions from '~/storeRedux/post/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SelectingAudiences from '~/screens/post/components/SelectingAudiences';
 
 import { IGroup } from '~/interfaces/IGroup';
@@ -55,7 +54,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const [lossInternet, setLossInternet] = useState(false);
 
   const state = useKeySelector(postKeySelector.postSelectAudienceState);
-  const { selectingAudiences, selectingGroups, selectingUsers } = state;
+  const { selectingAudiences, selectingGroups } = state;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences);
@@ -98,11 +97,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     Object.values(selectingGroups).forEach((group) => {
       if (group) {
         newSelectingAudiences.push(group as IGroup);
-      }
-    });
-    Object.values(selectingUsers).forEach((user) => {
-      if (user) {
-        newSelectingAudiences.push(user as IUser);
       }
     });
     const p = { selectingAudiences: newSelectingAudiences };
@@ -150,18 +144,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   useEffect(
     () => {
       if (selectingAudiences?.length === 0) {
-        const newSelectingUsers: any = {};
         const newSelectingGroups: any = {};
         chosenAudiences?.forEach?.((item: any) => {
-          if (item && item?.type === 'user') {
-            newSelectingUsers[item.id] = item;
-          } else {
-            newSelectingGroups[item.id] = item;
-          }
+          newSelectingGroups[item.id] = item;
         });
 
         const p = {
-          selectingUsers: newSelectingUsers,
           selectingGroups: newSelectingGroups,
         };
         dispatch(postActions.setPostSelectAudienceState(p));
@@ -173,12 +161,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     () => {
       updateSelectingAudiences();
     }, [selectingGroups],
-  );
-
-  useEffect(
-    () => {
-      updateSelectingAudiences();
-    }, [selectingUsers],
   );
 
   const onPressSave = () => {
@@ -248,17 +230,10 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   };
 
   const onRemoveItem = (item: any) => {
-    if (item.type === 'user') {
-      const newSelectingUsers: any = { ...selectingUsers };
-      newSelectingUsers[item.id] = false;
-      const p = { selectingUsers: newSelectingUsers };
-      dispatch(postActions.setPostSelectAudienceState(p));
-    } else {
-      const newSelectingGroups: any = { ...selectingGroups };
-      newSelectingGroups[item.id] = false;
-      const p = { selectingGroups: newSelectingGroups };
-      dispatch(postActions.setPostSelectAudienceState(p));
-    }
+    const newSelectingGroups: any = { ...selectingGroups };
+    newSelectingGroups[item.id] = false;
+    const p = { selectingGroups: newSelectingGroups };
+    dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   const onChangeCheckedGroups = (data: OnChangeCheckedGroupsData) => {
@@ -276,52 +251,17 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     onSearch(text);
   };
 
-  const onPressUser = (user: any) => {
-    const newSelectingUsers: any = { ...selectingUsers };
-    if (newSelectingUsers[user.id]) {
-      newSelectingUsers[user.id] = false;
-    } else {
-      newSelectingUsers[user.id] = user;
-    }
-    const p = { selectingUsers: newSelectingUsers };
-    dispatch(postActions.setPostSelectAudienceState(p));
-  };
-
-  const renderItem = ({ item }: any) => {
-    const {
-      id, name, icon, avatar, type,
-    } = item || {};
-    const isGroup = type !== 'user';
-
-    if (isGroup) {
-      return (
-        <FlatGroupItem
-          {...item}
-          groupItemTestID="post_select_audience.groups.item"
-          initShowTree={false}
-          hidePath={false}
-          selectingData={selectingGroups}
-          showSmallestChild
-          onChangeCheckedGroups={onChangeCheckedGroups}
-        />
-      );
-    }
-    return (
-      <PrimaryItem
-        showAvatar
-        avatar={icon || avatar}
-        avatarProps={{ variant: isGroup ? 'large' : 'medium' }}
-        style={styles.item}
-        title={name}
-        onPressCheckbox={() => onPressUser(item)}
-        onPress={() => onPressUser(item)}
-        checkboxProps={{
-          style: { position: 'absolute', left: 26, bottom: 0 },
-          isChecked: !!selectingUsers[id],
-        }}
-      />
-    );
-  };
+  const renderItem = ({ item }: any) => (
+    <FlatGroupItem
+      {...item}
+      groupItemTestID="post_select_audience.groups.item"
+      initShowTree={false}
+      hidePath={false}
+      selectingData={selectingGroups}
+      showSmallestChild
+      onChangeCheckedGroups={onChangeCheckedGroups}
+    />
+  );
 
   const renderListHeader = () => (
     <SelectAllAudience />
