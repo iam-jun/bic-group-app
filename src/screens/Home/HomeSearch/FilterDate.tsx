@@ -24,7 +24,6 @@ export interface NFSFilterDateProps {
   startDate?: string;
   endDate?: string;
   onSelect?: (startDate?: string, endDate?: string) => void;
-  dismissModalOnPress?: boolean;
 }
 
 type DatePickerContainerProps = {
@@ -141,7 +140,6 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   startDate,
   endDate,
   onSelect,
-  dismissModalOnPress,
 }: NFSFilterDateProps) => {
   const [staged, setStaged] = useState(0);
   const [selectedStartDate, setSelectedStartDate] = useState<any>(startDate);
@@ -160,7 +158,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   );
 
   const onPressApply = () => {
-    dismissModalOnPress && dispatch(modalActions.hideModal());
+    dispatch(modalActions.hideModal());
     onSelect?.(selectedStartDate, selectedEndDate);
   };
 
@@ -221,6 +219,11 @@ const FilterDate: FC<NFSFilterDateProps> = ({
                       )} - ${formatDateTime(selectedEndDate, language)}`,
                     )}
                     onActionPress={() => setStaged(1)}
+                    icon="Xmark"
+                    onPressIcon={() => {
+                      setSelectedStartDate(undefined);
+                      setSelectedEndDate(undefined);
+                    }}
                   />
                 )}
               </View>

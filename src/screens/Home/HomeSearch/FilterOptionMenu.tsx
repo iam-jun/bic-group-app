@@ -106,7 +106,7 @@ const FilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
       <FilterCreatedBy
         selectedCreatedBy={filterCreatedBy}
         onSelect={_onSelectCreatedBy}
-        onPressSelectSpecific={_onPressSelectSpecific}
+        // onPressSelectSpecific={_onPressSelectSpecific}
       />
     );
   } if (stage === Stage.FILTER_DATE) {

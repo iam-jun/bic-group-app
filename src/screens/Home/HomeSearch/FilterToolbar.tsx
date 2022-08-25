@@ -67,7 +67,6 @@ const FilterToolbar = () => {
       <FilterCreatedBy
         selectedCreatedBy={filterCreatedBy}
         onSelect={onSelectCreatedBy}
-        dismissModalOnPress
       />,
     );
   };
@@ -84,7 +83,6 @@ const FilterToolbar = () => {
         startDate={startDate}
         endDate={endDate}
         onSelect={onSelectDate}
-        dismissModalOnPress
       />,
     );
   };
