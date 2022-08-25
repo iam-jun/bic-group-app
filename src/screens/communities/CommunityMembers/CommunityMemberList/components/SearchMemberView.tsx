@@ -9,9 +9,9 @@ import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
-import MemberSearchResult from '../../../groups/components/MemberSearchResult';
+import MemberSearchResult from '../../../../groups/components/MemberSearchResult';
 import { useMyPermissions } from '~/hooks/permissions';
 
 interface SearchMemberViewProps {

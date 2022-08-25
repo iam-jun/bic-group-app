@@ -14,7 +14,6 @@ const groupStack = {
   discoverGroups: 'discover-groups',
   communityMembers: 'community-members',
   communityAdmin: 'community-admin',
-  communityPendingMembers: 'community-pending-members',
 
   // group
   groupDetail: 'group-detail',
@@ -31,9 +30,6 @@ const groupStack = {
   groupStructureSettings: 'group-structure-settings',
   moveGroup: 'move-group',
   reorderGroup: 'reorder-group',
-
-  // group moderating
-  groupPendingMembers: 'group-pending-members',
 };
 
 export default groupStack;
