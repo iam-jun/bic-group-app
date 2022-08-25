@@ -18,8 +18,6 @@ import postActions from '~/storeRedux/post/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
-import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SelectingAudiences from '~/screens/post/components/SelectingAudiences';
 
@@ -40,6 +38,8 @@ import { ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store/selectAudienceStore';
+import SearchInput from '~/baseComponents/Input/SearchInput';
+import SelectAllAudience from '~/screens/post/components/SelectAllAudience';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -324,9 +324,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   };
 
   const renderListHeader = () => (
-    <Text.H6 style={{ marginVertical: spacing?.margin.small }}>
-      Search Results
-    </Text.H6>
+    <SelectAllAudience />
   );
 
   const renderListFooter = () => (
@@ -368,8 +366,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         />
         <SearchInput
           autoFocus
-          testID="post_select_audience.search"
+          size="large"
           style={styles.searchInput}
+          testID="post_select_audience.search"
           onChangeText={onChangeTextSearch}
           placeholder={t('post:search_audiences_placeholder')}
         />
@@ -401,7 +400,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {},
     searchInput: {
-      margin: spacing?.margin.base,
+      margin: spacing?.margin.large,
     },
     item: {
       height: undefined,
