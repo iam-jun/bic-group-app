@@ -7,28 +7,22 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import groupsActions from '~/storeRedux/groups/actions';
 import MemberRequestList from '~/screens/groups/components/MemberRequestList';
 import CommunityApproveDeclineAllRequests from './components/CommunityApproveDeclineAllRequests';
-import { useMyPermissions } from '~/hooks/permissions';
 
 interface CommunityMemberRequestsProps {
   communityId: string
+  canAddMember: boolean;
 }
 
-const CommunityMemberRequests = ({ communityId }: CommunityMemberRequestsProps) => {
+const CommunityMemberRequests = ({ communityId, canAddMember }: CommunityMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { canLoadMore, ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canAddMember = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
-  );
 
   useEffect(
     () => {
-      onRefresh();
+      getData();
 
       return () => {
-        onRefresh(); // to update the total member requests again on press back
+        dispatch(groupsActions.resetCommunityMemberRequests());
       };
     }, [communityId],
   );
@@ -56,7 +50,7 @@ const CommunityMemberRequests = ({ communityId }: CommunityMemberRequestsProps) 
         id={communityId}
       />
 
-      {ids.length > 1 && <CommunityApproveDeclineAllRequests />}
+      {ids.length > 1 && <CommunityApproveDeclineAllRequests communityId={communityId} />}
     </View>
   );
 };

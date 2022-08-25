@@ -743,19 +743,18 @@
         "decline": "Decline all member requests?"
       },
       "content": {
-        "approve_one": "You're about to add {{count}} person to {0}. Confirm this action?",
-        "approve_other": "You're about to add {{count}} people to {0}. Confirm this action?",
-        "decline_one": "You're about to decline {{count}} member request",
-        "decline_other": "You're about to decline {{count}} member requests",
+        "text_about_to_add": "You're about to add ",
+        "approve_confirm_community": " people to this community. Confirm this action?",
+        "approve_confirm_group": " people to this group. Confirm this action?",
         "decline": "Decline all member requests. Confirm this action?"
       }
     },
     "text_requested_at": "Requested at",
-    "text_declining_user": "Declining user",
-    "text_declined_user": "Declined user",
-    "text_approved_user": "Approved user",
-    "text_approved_all": "Approved all joining requests",
-    "text_declining_all": "Declining all joining requests",
+    "text_declined_user": "Declined",
+    "text_approved_user": "Approved",
+    "text_approved_all": "Approved {0} users",
+    "text_declining_all": "Declining {0} users",
+    "text_declined_all": "Declined {0} users",
     "text_request_been_canceled": "This join request has just been canceled",
     "text_request_join_group": "Requested to join group",
     "text_request_join_community": "Requested to join community",

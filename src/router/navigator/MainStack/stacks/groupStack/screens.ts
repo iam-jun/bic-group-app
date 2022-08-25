@@ -6,7 +6,6 @@ import GeneralInformation from '~/screens/groups/GeneralInformation';
 import EditDescription from '~/screens/groups/GeneralInformation/EditDescription';
 import AddMembersToGroup from '~/screens/groups/AddMembersToGroup';
 import NewFeature from '~/components/NewFeature';
-import GroupPendingMembers from '~/screens/groups/GroupDetail/groupModerating/PendingMembers';
 
 import Communities from '~/screens/communities/Communities';
 import CommunityDetail from '~/screens/communities/CommunityDetail';
@@ -57,9 +56,6 @@ const groupScreens = {
   'group-structure-settings': GroupStructureSettings,
   'move-group': MoveGroup,
   'reorder-group': ReorderGroup,
-
-  // group moderating
-  'group-pending-members': GroupPendingMembers,
 };
 
 export default groupScreens;

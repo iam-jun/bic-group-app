@@ -78,7 +78,7 @@ const CommunityMembers = ({ route }: any) => {
     }
 
     if (selectedIndex === 1) {
-      return <CommunityMemberRequests communityId={communityId} />;
+      return <CommunityMemberRequests communityId={communityId} canAddMember={canAddMember} />;
     }
 
     return null;

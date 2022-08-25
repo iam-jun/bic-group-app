@@ -13,7 +13,7 @@ import EmptyScreen from '~/components/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import GroupMemberRequest from '../GroupDetail/groupModerating/components/GroupMemberRequest';
+import GroupPendingUserItemWrapper from '~/screens/groups/GroupMembers/GroupMemberRequests/components/GroupPendingUserItemWrapper';
 import CommunityPendingUserItemWrapper from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/CommunityPendingUserItemWrapper';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
@@ -25,12 +25,14 @@ interface MemberRequestListProps {
   canAddMember?: boolean;
   onLoadMore: () => void;
   onRefresh: () => void;
+  onPressAdd?: () => void;
 }
 
 const MemberRequestList = ({
   id,
   type,
   canAddMember,
+  onPressAdd,
   onLoadMore,
   onRefresh,
 }: MemberRequestListProps) => {
@@ -42,13 +44,15 @@ const MemberRequestList = ({
   } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
 
   const onPressAddMemmbers = () => {
-    dispatch(modalActions.showAlertNewFeature());
+    if (onPressAdd) return onPressAdd();
+
+    return dispatch(modalActions.showAlertNewFeature());
   };
 
   const renderItem = ({ item: requestId }: {item: string}) => {
     if (id && type === 'community') return <CommunityPendingUserItemWrapper requestId={requestId} organizationId={id} />;
 
-    return <GroupMemberRequest requestId={requestId} />;
+    return <GroupPendingUserItemWrapper requestId={requestId} />;
   };
 
   const renderEmpty = () => {

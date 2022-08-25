@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
@@ -8,27 +8,27 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
-import Text from '~/beinComponents/Text';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Icon from '~/baseComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
+import Header, { HeaderProps } from '~/beinComponents/Header';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
-import MembersContent from './components/MembersContent';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
+import GroupMemberList from './GroupMemberList';
+import Tab from '~/baseComponents/Tab';
+import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import GroupMemberRequests from './GroupMemberRequests';
 
-const _GroupMembers = (props: any) => {
-  const { params } = props.route;
-  const { groupId } = params || {};
+const _GroupMembers = ({ route }: any) => {
+  const { groupId, targetIndex } = route.params;
 
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
+  const { ids } = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] = useState(false);
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -46,6 +46,14 @@ const _GroupMembers = (props: any) => {
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
+  );
+  const canManageJoiningRequests = hasPermissionsOnScopeWithId(
+    'groups',
+    groupId,
+    [
+      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_JOIN_SETTING,
+    ],
   );
 
   const getGroupProfile = () => {
@@ -83,6 +91,11 @@ const _GroupMembers = (props: any) => {
     baseSheetRef.current?.open();
   };
 
+  const onPressAdd = () => {
+    dispatch(groupsActions.clearSelectedUsers());
+    rootNavigation.navigate(groupStack.inviteMembers, { groupId });
+  };
+
   const onPressSearch = () => {
     setIsOpen(true);
   };
@@ -91,50 +104,62 @@ const _GroupMembers = (props: any) => {
     setIsOpen(false);
   };
 
-  // only admin or moderator can see this button
-  const renderInviteMemberButton = () => (
-    canAddMember && (
-      <ButtonWrapper
-        testID="group_members.invite"
-        style={styles.inviteButton}
-        onPress={goInviteMembers}
-      >
-        <Icon
-          style={styles.iconSmall}
-          icon="UserPlus"
-          size={22}
-          tintColor={theme.colors.purple60}
-        />
-        <Text.ButtonM color={theme.colors.purple60} useI18n>
-          common:text_invite
-        </Text.ButtonM>
-      </ButtonWrapper>
-    )
-  );
-  const goInviteMembers = () => {
-    dispatch(groupsActions.clearSelectedUsers());
-    rootNavigation.navigate(
-      groupStack.inviteMembers, { groupId },
-    );
+  const onPressTab = (item: any, index: number) => {
+    setSelectedIndex(index);
+  };
+
+  const renderContent = () => {
+    if (selectedIndex === 0) {
+      return <GroupMemberList groupId={groupId} onPressMenu={onPressMenu} />;
+    }
+
+    if (selectedIndex === 1) {
+      return <GroupMemberRequests groupId={groupId} canAddMember={canAddMember} onPressAdd={onPressAdd} />;
+    }
+
+    return null;
+  };
+
+  const showAddButton = () => {
+    if (canAddMember) {
+      // don't show button Add on header when there's button Add Members on Member request screen
+      if (selectedIndex === 1 && ids.length === 0) return false;
+      return true;
+    }
+
+    return false;
+  };
+
+  const headerProps: HeaderProps = showAddButton() && {
+    buttonText: 'common:text_add',
+    onPressButton: onPressAdd,
+    buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.white}>
-      <Header titleTextProps={{ useI18n: true }} title="groups:title_members_other" />
-      <View style={styles.searchBar}>
-        <Pressable
-          testID="group_members.search"
-          onPress={onPressSearch}
-          style={styles.searchBtn}
-        >
-          <View pointerEvents="none">
-            <SearchInput placeholder={i18next.t('groups:text_search_member')} />
-          </View>
-        </Pressable>
-        {renderInviteMemberButton()}
-      </View>
+    <ScreenWrapper isFullView backgroundColor={colors.gray5}>
+      <Header
+        titleTextProps={{ useI18n: true }}
+        title="groups:title_members_other"
+        icon="search"
+        onPressIcon={onPressSearch}
+        {...headerProps}
+      />
 
-      <MembersContent groupId={groupId} onPressMenu={onPressMenu} />
+      {!!canManageJoiningRequests && (
+        <View style={styles.tabContainer}>
+          <Tab
+            buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
+            data={MEMBER_TABS}
+            onPressTab={onPressTab}
+            activeIndex={selectedIndex}
+          />
+        </View>
+      )}
+
+      <View style={styles.memberList}>
+        {renderContent()}
+      </View>
 
       <MemberOptionsMenu
         groupId={groupId}
@@ -157,27 +182,17 @@ const _GroupMembers = (props: any) => {
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    searchBtn: {
-      flex: 1,
+    tabContainer: {
       backgroundColor: colors.white,
-      justifyContent: 'space-between',
-      marginHorizontal: spacing.margin.base,
-      marginVertical: spacing.margin.base,
+      marginTop: spacing.margin.large,
     },
-    searchBar: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    inputSearch: {
+    memberList: {
       flex: 1,
+      marginTop: spacing.margin.large,
+      backgroundColor: colors.gray5,
     },
-    inviteButton: {
-      backgroundColor: colors.white,
-      padding: spacing.padding.small,
-      borderRadius: 6,
-      marginRight: spacing.margin.small,
-    },
-    iconSmall: {
+    addButton: {
+      marginLeft: spacing.margin.base,
       marginRight: spacing.margin.small,
     },
   });

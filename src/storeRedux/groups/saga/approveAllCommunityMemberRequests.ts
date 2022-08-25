@@ -11,11 +11,14 @@ export default function* approveAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; callback?: () => void};
+  payload: {communityId: string; total: number; callback?: () => void};
 }) {
-  const { communityId, callback } = payload;
+  const { communityId, total, callback } = payload;
   try {
     yield put(groupsActions.resetCommunityMemberRequests());
+
+    // to show Empty screen component
+    yield put(groupsActions.setCommunityMemberRequests({ loading: false }));
 
     yield call(groupApi.approveAllCommunityMemberRequests, communityId);
 
@@ -39,7 +42,7 @@ export default function* approveAllCommunityMemberRequests({
     }
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_approved_all')}`,
+      content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
       props: toastProps,
       toastType: 'normal',
     };

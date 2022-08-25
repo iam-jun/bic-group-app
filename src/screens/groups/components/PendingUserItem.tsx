@@ -91,7 +91,7 @@ const PendingUserItem = ({
           {renderItem({
             icon: 'MobileScreen',
             title:
-              countryCode && phone ? `(+${countryCode}) ${phone}` : undefined,
+              countryCode && phone ? `+${countryCode} ${phone}` : undefined,
           })}
           {renderItem({ icon: 'Envelope', title: email })}
         </View>

@@ -182,8 +182,9 @@ const Notification = () => {
               }
               if (act?.group?.id) {
                 rootNavigation.navigate(
-                  groupStack.groupPendingMembers, {
-                    id: act.group.id,
+                  groupStack.groupMembers, {
+                    groupId: act.group.id,
+                    targetIndex,
                   },
                 );
               }

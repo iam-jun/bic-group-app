@@ -30,9 +30,6 @@ const groupStack = {
   groupStructureSettings: 'group-structure-settings',
   moveGroup: 'move-group',
   reorderGroup: 'reorder-group',
-
-  // group moderating
-  groupPendingMembers: 'group-pending-members',
 };
 
 export default groupStack;
