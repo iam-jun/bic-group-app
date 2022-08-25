@@ -151,6 +151,9 @@ import { faCircleExclamation } from '@fortawesome/pro-regular-svg-icons/faCircle
 import { faThumbtack } from '@fortawesome/pro-regular-svg-icons/faThumbtack';
 import { faMobileScreen } from '@fortawesome/pro-regular-svg-icons/faMobileScreen';
 import { faSliders } from '@fortawesome/pro-regular-svg-icons/faSliders';
+import { faLinkHorizontal } from '@fortawesome/pro-regular-svg-icons/faLinkHorizontal';
+import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
+import { faRss } from '@fortawesome/pro-regular-svg-icons/faRss';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -322,6 +325,9 @@ export const initFontAwesomeIcon = () => {
     faThumbtack,
     faMobileScreen,
     faSliders,
+    faLinkHorizontal,
+    faShare,
+    faRss,
   );
 };
 
@@ -478,6 +484,9 @@ export const fontAwesomeIcons = {
   Thumbtack: 'fa-regular fa-thumbtack',
   MobileScreen: 'fa-regular fa-mobile-screen',
   Sliders: 'fa-regular fa-sliders',
+  LinkHorizontal: 'fa-regular fa-link-horizontal',
+  Share: 'fa-regular fa-share',
+  RSS: 'fa-regular fa-rss',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

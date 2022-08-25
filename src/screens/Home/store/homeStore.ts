@@ -12,10 +12,14 @@ const DEFAULT_TAB_DATA = {
   canLoadMore: true,
 };
 
-const homeStore = (set, get) => ({
+const initState = {
   activeTab: HOME_TAB_TYPE.NEWSFEED,
   tabNewsfeed: DEFAULT_TAB_DATA,
   tabImportant: DEFAULT_TAB_DATA,
+};
+
+const homeStore = (set, get) => ({
+  ...initState,
 
   setActiveTab: (tabId: keyof typeof HOME_TAB_TYPE) => {
     set(
@@ -92,6 +96,17 @@ const homeStore = (set, get) => ({
           'getTabData',
         );
       });
+  },
+  reset: () => {
+    set(
+      (state: IHomeState) => {
+        Object.keys(initState).forEach((k) => {
+          state[k] = initState[k];
+        });
+      },
+      false,
+      'reset',
+    );
   },
 });
 

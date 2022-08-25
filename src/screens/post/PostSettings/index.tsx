@@ -66,8 +66,6 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     () => () => {
       if (postId) {
         dispatch(postActions.clearCreatPostData());
-        dispatch(postActions.setSearchResultAudienceGroups([]));
-        dispatch(postActions.setSearchResultAudienceUsers([]));
       }
     }, [],
   );
@@ -175,7 +173,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
           value={expires_time}
           minDate={getMinDate()}
           maxDate={getMaxDate()}
-          label={t('common:text_end_date')}
+          label={t('common:text_end_hour')}
           onConfirm={handleChangeTimePicker}
           style={{ flex: 1 }}
         />
@@ -184,21 +182,22 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   };
 
   const renderImportant = () => {
-    const { active } = sImportant || {};
+    const { active, expires_time } = sImportant || {};
+    const notExpired = new Date().getTime() < new Date(expires_time).getTime();
 
     return (
       <View style={styles.content}>
         <View
           style={[
             styles.row,
-            sImportant.active ? styles.active : styles.important,
+            active ? styles.active : styles.important,
           ]}
         >
           <View style={[styles.flex1]}>
             <Text.SubtitleM style={[styles.flex1]} useI18n>
               post:mark_as_important
             </Text.SubtitleM>
-            {sImportant?.active ? (
+            {(active && notExpired) ? (
               <Text.BodyXS
                 useI18n
                 testID="post_settings.expire_time_desc"
@@ -208,21 +207,21 @@ const PostSettings = ({ route }: PostSettingsProps) => {
                 post:expire_time_desc
               </Text.BodyXS>
             ) : null}
+            {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
+              <Text.BodyXS color={colors.danger} style={styles.warningText}>
+                {`${t('post:text_important_warning_1')}`}
+                {renderListAudienceWithoutPermission(listAudiencesWithoutPermission)}
+                {`${t('post:text_important_warning_2')}`}
+              </Text.BodyXS>
+            ) : null}
           </View>
           <Toggle
             testID="post_settings.toggle_important"
-            isChecked={sImportant?.active}
+            isChecked={(active && notExpired)}
             onPress={handleToggleImportant}
           />
         </View>
-        {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
-          <Text.BodyXS color={colors.danger} style={styles.warningText}>
-            {`${t('post:text_important_warning_1')}`}
-            {renderListAudienceWithoutPermission(listAudiencesWithoutPermission)}
-            {`${t('post:text_important_warning_2')}`}
-          </Text.BodyXS>
-        ) : null}
-        {!!active && listAudiencesWithoutPermission?.length < 1 && renderImportantDate()}
+        {!!active && (listAudiencesWithoutPermission?.length < 1 || notExpired) && renderImportantDate()}
       </View>
     );
   };
@@ -287,7 +286,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
         titleTextProps={{ useI18n: true }}
-        title="post:settings"
+        title={!!postId ? 'post:post_menu_edit_settings' : 'post:settings'}
         buttonText="post:save"
         onPressBack={onPressBack}
         onPressButton={handlePressSave}
@@ -328,7 +327,7 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
       justifyContent: 'center',
     },
-    important: { marginTop: spacing.margin.base },
+    important: { marginTop: spacing.margin.base, alignItems: 'flex-start' },
     active: { marginTop: spacing.margin.tiny },
     importantButtons: {
       flexDirection: 'row',
