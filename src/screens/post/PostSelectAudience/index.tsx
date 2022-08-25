@@ -22,7 +22,6 @@ import SelectingAudiences from '~/screens/post/components/SelectingAudiences';
 
 import { IGroup } from '~/interfaces/IGroup';
 import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
-import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IUser } from '~/interfaces/IAuth';
 import NoSearchResult from '~/components/NoSearchResult';
@@ -38,7 +37,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store/selectAudienceStore';
 import SearchInput from '~/baseComponents/Input/SearchInput';
-import SelectAllAudience from '~/screens/post/components/SelectAllAudience';
+import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -84,7 +83,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const { chosenAudiences } = createPostData || {};
 
   const {
-    tree, search, dispatchGetAudienceTree, dispatchGetAudienceSearch,
+    tree, search, dispatchGetAudienceTree, dispatchGetAudienceSearch, reset: resetStore,
   } = useSelectAudienceStore();
   const { data: dataTree = [], loading: loadingTree } = tree || {};
   const { data: dataSearch = [], loading: loadingSearch, key: searchKey } = search || {};
@@ -112,18 +111,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         dispatch(postActions.setPostSelectAudienceState({ loading: false }));
       }
 
-      // todo recheck flow edit post audience
-      // if (initAudiences) {
-      //   handleSearchResult(initAudiences);
-      //   dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-      // }
-
-      // else if (listData.length === 0 || isFirstStep) {
-      //   onChangeTextSearch('');
-      // }
-
       return () => {
         dispatch(postActions.setPostSelectAudienceState());
+        resetStore();
       };
     }, [],
   );
@@ -255,20 +245,17 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     <FlatGroupItem
       {...item}
       groupItemTestID="post_select_audience.groups.item"
-      initShowTree={false}
-      hidePath={false}
+      initShowTree={!searchKey}
+      hidePath
+      groupStyle={{ paddingVertical: spacing.padding.small }}
+      showPrivacyAvatar
       selectingData={selectingGroups}
-      showSmallestChild
       onChangeCheckedGroups={onChangeCheckedGroups}
     />
   );
 
-  const renderListHeader = () => (
-    <SelectAllAudience />
-  );
-
   const renderListFooter = () => (
-    <View>
+    <View style={{ marginBottom: spacing.margin.large }}>
       {loading && (
         <ActivityIndicator size="large" color={colors.neutral5} />
       )}
@@ -305,7 +292,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           onPressBack={onPressBack}
         />
         <SearchInput
-          autoFocus
           size="large"
           style={styles.searchInput}
           testID="post_select_audience.search"
@@ -322,13 +308,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           keyExtractor={(
             item, index,
           ) => item?.id || `section_list_${item}_${index}`}
-          ListHeaderComponent={renderListHeader}
           ListFooterComponent={renderListFooter}
           ListEmptyComponent={renderEmpty}
           renderItem={renderItem}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: spacing?.margin.large }} />
-          )}
         />
       </KeyboardAvoidingView>
     </ScreenWrapper>
