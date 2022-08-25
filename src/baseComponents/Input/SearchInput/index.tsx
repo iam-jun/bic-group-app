@@ -76,7 +76,14 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <View testID="search_input" style={[styles.container, style, { height: SEARCH_INPUT_SIZES[size] }, isFocused && styles.focused]}>
+    <View
+      testID="search_input"
+      style={[
+        styles.container, style,
+        { height: SEARCH_INPUT_SIZES[size] },
+        isFocused && styles.focused,
+      ]}
+    >
       <View style={styles.itemContainer}>
         <Icon
           testID="search_input.icon"

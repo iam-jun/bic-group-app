@@ -77,6 +77,7 @@ const CommunitySearchResults = ({
     <FlatList
       testID="flatlist"
       data={ids}
+      keyboardShouldPersistTaps="handled"
       renderItem={renderItem}
       keyExtractor={(
         item, index,
