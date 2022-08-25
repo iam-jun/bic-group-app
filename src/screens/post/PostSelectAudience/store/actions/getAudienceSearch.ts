@@ -17,7 +17,7 @@ const getAudienceSearch = (set, _) => async (key: string) => {
     return;
   }
   try {
-    const params = { key };
+    const params = { key, limit: 100 }; // todo lazy load
     const response = await groupApi.getSearchAudiences(params);
     set((state: ISelectAudienceState) => {
       state.search = {
