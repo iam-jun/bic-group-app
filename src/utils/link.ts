@@ -6,6 +6,7 @@ import { getWebDomain } from './common';
 const LINK_POST = 'LINK_POST';
 const LINK_GROUP = 'LINK_GROUP';
 const LINK_COMMENT = 'LINK_COMMENT';
+const LINK_COMMUNITY = 'LINK_COMMUNITY';
 
 const formatParams = (params?: any):string => {
   if (typeof params !== 'object') {
@@ -51,13 +52,15 @@ const getLink = (
       return `${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
     case LINK_GROUP:
       return `${getEnv('SELF_DOMAIN')}/groups/${id}${formatParams(params)}`;
+    case LINK_COMMUNITY:
+      return `${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
     default:
       return '';
   }
 };
 
 export {
-  LINK_POST, LINK_GROUP, LINK_COMMENT, getLink,
+  LINK_POST, LINK_GROUP, LINK_COMMENT, LINK_COMMUNITY, getLink,
 };
 
 export const getChatDomain = () => (

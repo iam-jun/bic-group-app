@@ -106,7 +106,7 @@ export const getPostViewMenu = (
     {
       id: 3,
       testID: 'post_view_menu.copy',
-      leftIcon: 'Copy',
+      leftIcon: 'LinkHorizontal',
       title: i18next.t('post:post_menu_copy'),
       requireIsActor: false,
       onPress: onPressCopyLink,

@@ -14,8 +14,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import modalKeySelector from '~/storeRedux/modal/keySelector';
 
 const screenHeight = Dimensions.get('window').height;
-const minHeight = 0.5 * screenHeight;
-const maxHeight = 0.9 * screenHeight;
+const modalHeight = 0.5 * screenHeight;
 
 const ReactionDetailBottomSheet = () => {
   const reactionSheetRef: any = useRef();
@@ -72,8 +71,7 @@ const ReactionDetailBottomSheet = () => {
       modalizeRef={reactionSheetRef}
       isOpen={isOpen}
       onClose={_onClose}
-      modalStyle={{ minHeight, maxHeight }}
-      childrenStyle={{ minHeight, maxHeight }}
+      childrenStyle={{ height: modalHeight }}
       ContentComponent={(
         <View>
           <ReactionTabBar
@@ -83,7 +81,6 @@ const ReactionDetailBottomSheet = () => {
           />
           <ReactionDetailTab
             reactionType={selectingReaction || initReaction}
-            // height={minHeight}
             getDataParam={getDataParam}
             onPressItem={onPressItem}
           />
