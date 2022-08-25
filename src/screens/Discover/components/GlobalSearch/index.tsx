@@ -13,13 +13,13 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 interface GlobalSearchProps extends SearchBaseViewProps {
-  onPressCommunity: (id: string) => void;
+  onView?: (item: any) => void;
+  onJoin?: (item: any) => void;
+  onCancel?: (item: any) => void;
 }
 
 const GlobalSearch = ({
-  initSearch,
-  onPressCommunity,
-  ...props
+  initSearch, onView, onCancel, onJoin, ...props
 }: GlobalSearchProps) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
@@ -63,7 +63,9 @@ const GlobalSearch = ({
       {searchText ? (
         <GlobalSearchResults
           onLoadMore={onLoadMore}
-          onPressCommunity={onPressCommunity}
+          onView={onView}
+          onJoin={onJoin}
+          onCancel={onCancel}
         />
       ) : (
         <View style={styles.text}>

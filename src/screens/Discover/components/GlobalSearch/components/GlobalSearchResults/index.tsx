@@ -14,19 +14,25 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 import GlobalSearchItem from '../GlobalSearchItem';
+import { useRootNavigation } from '~/hooks/navigation';
 
 interface GlobalSearchResultsProps {
   onLoadMore?: () => void;
-  onPressCommunity: (id: string) => void;
   onRefresh?: () => void;
+  onView?: (item: any) => void;
+  onJoin?: (item: any) => void;
+  onCancel?: (item: any) => void;
 }
 
 const GlobalSearchResults = ({
   onLoadMore,
-  onPressCommunity,
   onRefresh,
+  onView,
+  onJoin,
+  onCancel,
 }: GlobalSearchResultsProps) => {
   const theme: ExtendedTheme = useTheme();
+  const { rootNavigation } = useRootNavigation();
 
   const {
     loading, canLoadMore, ids, items,
@@ -35,7 +41,12 @@ const GlobalSearchResults = ({
   const renderItem = ({ item }: {item: number}) => {
     const currentItem = items[item];
     return (
-      <GlobalSearchItem item={currentItem} onPressCommunities={onPressCommunity} />
+      <GlobalSearchItem
+        item={currentItem}
+        onView={onView}
+        onJoin={onJoin}
+        onCancel={onCancel}
+      />
     );
   };
 
@@ -82,7 +93,7 @@ const GlobalSearchResults = ({
       keyExtractor={(
         item, index,
       ) => `global_search_item_${item}?.id_${index}`}
-      ListHeaderComponent={renderHeaderComponent}
+      // ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}
       showsVerticalScrollIndicator={false}

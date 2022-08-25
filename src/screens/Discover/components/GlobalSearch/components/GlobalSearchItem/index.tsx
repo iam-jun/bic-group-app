@@ -4,79 +4,93 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import { communityPrivacyListDetail } from '~/constants/privacyTypes';
-import { useBaseHook } from '~/hooks';
 import { margin, padding } from '~/theme/spacing';
 import { Avatar } from '~/baseComponents';
+import ButtonCommunityGroupCardAction from '~/components/CommunityGroupCard/ButtonCommunityGroupCardAction';
+import { isGroup } from '~/screens/groups/helper';
 
 interface GlobalSearchItemProps {
   item: any;
-  onPressCommunities?: (communityId: string) => void;
-  onPressMenu?: () => void;
+  onView?: (item: any) => void;
+  onJoin?: (item: any) => void;
+  onCancel?: (item: any) => void;
 }
 
 const GlobalSearchItem = ({
-  item,
-  onPressCommunities,
-  onPressMenu,
+  item, onView, onCancel, onJoin,
 }: GlobalSearchItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyles();
-  const { t } = useBaseHook();
+  const styles = createStyles(theme);
 
   const {
-    name, icon, privacy,
+    name, icon, privacy, level, joinStatus,
   } = item || {};
   const privacyData = communityPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
-  const itemType = item.community ? 'Group' : 'Community';
+  const { icon: privacyIcon }: any = privacyData || {};
+  const itemType = isGroup(level) ? 'common:text_group' : 'common:text_community';
 
-  // <PrimaryItem
-  //   showAvatar
-  //   avatar={icon}
-  //   avatarProps={{ variant: 'large' }}
-  //   style={styles.item}
-  //   title={name}
-  //   titleProps={{ variant: 'h5' }}
-  //   testID="community_item"
-  //   onPress={() => onPressCommunities?.(id)}
-  //   ContentComponent={renderContentComponent()}
-  //   onPressMenu={onPressMenu}
-  // />
+  const _onView = () => onView(item);
+  const _onJoin = () => onJoin(item);
+  const _onCancel = () => onCancel(item);
 
   return (
     <View style={styles.container}>
       <Avatar.Base source={icon} badgeBottom badge={privacyIcon} />
       <View style={styles.groupInfo}>
-        <Text.H6>{name}</Text.H6>
-        <View>
-          <View>
-            <Text.BadgeXS>{itemType}</Text.BadgeXS>
+        <View style={styles.titleContainer}>
+          <Text.H6>{name}</Text.H6>
+        </View>
+        <View style={styles.groupInfoBottom}>
+          <View style={styles.chip}>
+            <Text.BodyXS useI18n color={colors.blue50}>{itemType}</Text.BodyXS>
           </View>
+          <ButtonCommunityGroupCardAction
+            joinStatus={joinStatus}
+            size="small"
+            onView={_onView}
+            onJoin={_onJoin}
+            onCancel={_onCancel}
+          />
         </View>
       </View>
     </View>
   );
 };
 
-const createStyles = () => StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    paddingHorizontal: padding.large,
-    paddingVertical: padding.small,
-  },
-  item: {
-    height: '100%',
-    flex: 1,
-    paddingVertical: padding.small,
-  },
-  groupInfo: {
-    marginLeft: margin.small,
-  },
-  iconSmall: {
-    marginRight: margin.tiny,
-    height: 16,
-  },
-});
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: padding.large,
+      paddingVertical: padding.small,
+    },
+    titleContainer: {
+      paddingVertical: padding.small,
+    },
+    groupInfo: {
+      flex: 1,
+      marginLeft: margin.small,
+    },
+    groupInfoBottom: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    chip: {
+      backgroundColor: colors.blue2,
+      borderRadius: 100,
+      paddingHorizontal: padding.small,
+      height: 24,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    iconSmall: {
+      marginRight: margin.tiny,
+      height: 16,
+    },
+  });
+};
 
 export default GlobalSearchItem;

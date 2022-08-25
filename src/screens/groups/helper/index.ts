@@ -165,4 +165,4 @@ export const sortFixedRoles = (data: IScheme) => {
   return { ...cloneDeep(data), roles: newOrderedRoles };
 };
 
-export const isGroup = (level?: number) => !!level;
+export const isGroup = (level?: number) => !isNaN(level);

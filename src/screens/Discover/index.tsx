@@ -1,6 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -12,6 +13,8 @@ import YourGroups from './components/YourGroups';
 import Managed from './components/Managed';
 import Tab from '~/baseComponents/Tab';
 import GlobalSearch from './components/GlobalSearch';
+import { isGroup } from '../groups/helper';
+import groupsActions from '~/storeRedux/groups/actions';
 
 const HEADER_TAB = [
   { id: 'discover-tab-1', text: 'discover:discover_communities' },
@@ -26,6 +29,7 @@ const Index = () => {
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
+  const dispatch = useDispatch();
 
   const [isOpenSearchCommunity, setIsOpenSearchCommunity] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -38,9 +42,37 @@ const Index = () => {
     setIsOpenSearchCommunity(false);
   };
 
-  const onPressCommunities = (communityId: string) => {
-    rootNavigation.navigate(
-      groupStack.communityDetail, { communityId },
+  const onView = (item: any) => {
+    if (isGroup(item.level)) {
+      rootNavigation.navigate(groupStack.groupDetail, { groupId: item.id });
+      return;
+    }
+
+    rootNavigation.navigate(groupStack.communityDetail, { communityId: item.id });
+  };
+
+  const onJoin = (item: any) => {
+    if (isGroup(item.level)) {
+      dispatch(groupsActions.joinNewGroup({ groupId: item.id, groupName: item.name }));
+      return;
+    }
+
+    dispatch(
+      groupsActions.joinCommunity({ communityId: item.id, communityName: item.name }),
+    );
+  };
+
+  const onCancel = (item: any) => {
+    if (isGroup(item.level)) {
+      dispatch(groupsActions.cancelJoinGroup({ groupId: item.id, groupName: item.name }));
+      return;
+    }
+
+    dispatch(
+      groupsActions.cancelJoinCommunity({
+        communityId: item.id,
+        communityName: item.name,
+      }),
     );
   };
 
@@ -93,9 +125,11 @@ const Index = () => {
       </View>
       <GlobalSearch
         isOpen={isOpenSearchCommunity}
-        onClose={onCloseSearch}
-        onPressCommunity={onPressCommunities}
         placeholder={t('communities:text_search_communities')}
+        onClose={onCloseSearch}
+        onView={onView}
+        onJoin={onJoin}
+        onCancel={onCancel}
       />
     </View>
   );
