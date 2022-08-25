@@ -37,7 +37,6 @@ import {
   PostViewHeader,
   PostViewImportant,
 } from '../PostViewComponents';
-import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
@@ -50,6 +49,7 @@ import { BottomListProps } from '~/components/BottomList';
 import { useMyPermissions } from '~/hooks/permissions';
 import AlertDeleteAudiencesConfirmContent from '../AlertDeleteAudiencesConfirmContent';
 import PostAudiencesModal from '~/screens/post/components/PostAudiencesModal';
+import { Button } from '~/baseComponents';
 
 export interface PostViewProps {
   style?: any;
@@ -182,11 +182,15 @@ const _PostView: FC<PostViewProps> = ({
             title: t('post:title_delete_audiences_of_post'),
             children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
             cancelBtn: true,
-            confirmLabel: t('common:btn_delete'),
+            confirmLabel: t('common:text_remove'),
+            ConfirmBtnComponent: Button.Danger,
             onConfirm: () => dispatch(postActions.removePostAudiences({
               id: postId,
               listAudiences: listIdAudiences,
             })),
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            confirmBtnProps: { type: 'ghost' },
           }),
         );
       } else {
@@ -212,7 +216,6 @@ const _PostView: FC<PostViewProps> = ({
       rootNavigation,
       postId,
       isPostDetail,
-      getReactionStatistics,
       isDraft,
       handleDeltePostError,
     );
@@ -243,30 +246,12 @@ const _PostView: FC<PostViewProps> = ({
     dispatch(postActions.deleteReactToPost(payload));
   };
 
-  const getReactionStatistics = async (param: any) => {
-    try {
-      const response = await streamApi.getReactionDetail(param);
-      const data = await response?.list;
-      const users = (data || []).map((item: any) => ({
-        id: item?.actor?.id,
-        avatar: item?.actor?.avatar,
-        fullname: item?.actor?.fullname,
-        reactionId: item?.id,
-      }));
-
-      return Promise.resolve(users || []);
-    } catch (err) {
-      return Promise.reject();
-    }
-  };
-
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
       reactionCounts: reactionsCount,
       initReaction: reactionType,
       getDataParam: { target: 'POST', targetId: postId },
-      getDataPromise: getReactionStatistics,
     };
     dispatch(modalActions.showReactionDetailBottomSheet(payload));
   };

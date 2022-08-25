@@ -151,7 +151,8 @@
     "text_no_results_found": "No results found",
     "text_more": "+(number) more",
     "beincomm": "Beincomm",
-    "members": "Members"
+    "members": "Members",
+    "text_remove": "Remove"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -475,10 +476,10 @@
     "label_all_reacts": "All Reacts",
     "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
-    "content_delete_post": "Do you really want to delete this post?",
-    "title_delete_audiences_of_post": "You are deleting audiences of this post",
-    "content_delete_audiences_of_post": "You are not able to delete this post from these audiences below. Are you sure to continue?",
-    "content_not_able_delete_of_post": "You are not able to delete this post from these audiences below.",
+    "content_delete_post": "Do you want to delete this post?",
+    "title_delete_audiences_of_post": "You Cannot Delete This Post",
+    "content_delete_audiences_of_post": "You can only remove audiences from your post excepting these audiences below. Are you sure do this?",
+    "content_not_able_delete_of_post": "You don't have permission to delete this post because of not allowance from these audiences below.",
     "text_deleted_audiences": "Your post has been deleted audiences.",
     "alert_title_back_edit_post": "Discard changes",
     "alert_content_back_edit_post": "If you discard now, you’ll lose any changes you’ve made to this post.",

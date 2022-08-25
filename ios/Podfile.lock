@@ -518,7 +518,7 @@ PODS:
     - React-Core
   - RNAWSCognito (5.2.9):
     - React-Core
-  - RNCAsyncStorage (1.17.9):
+  - RNCAsyncStorage (1.15.9):
     - React-Core
   - RNCClipboard (1.9.0):
     - React-Core
@@ -583,13 +583,13 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.16.0):
+  - RNScreens (3.15.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.2.4):
+  - RNSentry (4.2.3):
     - React-Core
     - Sentry (= 7.23.0)
-  - RNSVG (12.4.4):
+  - RNSVG (12.4.3):
     - React-Core
   - RNVectorIcons (8.1.0):
     - React-Core
@@ -979,7 +979,7 @@ SPEC CHECKSUMS:
   ReactNativeAutogrowTextinput: 571f3260e200d91ea22fab160452f26d2fd5d55b
   ReactNativeExceptionHandler: b11ff67c78802b2f62eed0e10e75cb1ef7947c60
   RNAWSCognito: b967f462350ac749f2ff36426f84cdbf5689f576
-  RNCAsyncStorage: b2489b49e38c85e10ed45a888d13a2a4c7b32ea1
+  RNCAsyncStorage: 26f25150da507524a7815f2ada06ca0967f65633
   RNCClipboard: 99fc8ad669a376b756fbc8098ae2fd05c0ed0668
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 98cc93d4b3b09b33e784b751f04d414065a61fd4
@@ -993,9 +993,9 @@ SPEC CHECKSUMS:
   RNPermissions: bcd846e8f5a7f39e921cc7ca7172e2de0e698b6f
   RNReactNativeSharedGroupPreferences: de0121a4224c267bc7e9fb16c398f3f087c8da81
   RNReanimated: 5c8c17e26787fd8984cd5accdc70fef2ca70aafd
-  RNScreens: ee31ecdf23fe81e93c74feaa086cf173d758ab58
-  RNSentry: 7495ba091f09f12902d8cf916024efd99b058efe
-  RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
+  RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
+  RNSentry: 6798624706227656d942849d593f89c8ca3bdde5
+  RNSVG: f3b60aeeaa81960e2e0536c3a9eef50b667ef3a9
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d

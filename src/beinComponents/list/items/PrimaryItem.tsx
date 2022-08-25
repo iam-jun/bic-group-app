@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Text, { TextProps } from '~/beinComponents/Text';
-import Icon, { IconProps } from '~/beinComponents/Icon';
+import Icon, { IconProps } from '~/baseComponents/Icon';
 import Checkbox, { CheckboxProps } from '~/baseComponents/Checkbox';
 import Toggle from '~/baseComponents/Toggle';
 import { IconType } from '~/resources/icons';

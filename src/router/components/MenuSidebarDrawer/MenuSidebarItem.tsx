@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Icon, { IconProps } from '~/beinComponents/Icon';
+import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text, { TextProps, TextVariant } from '~/beinComponents/Text';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 import { useKeySelector } from '~/hooks/selector';

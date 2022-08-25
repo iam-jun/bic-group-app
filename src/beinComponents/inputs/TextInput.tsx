@@ -12,7 +12,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { fontFamilies } from '~/theme/fonts';
 import Text, { TextProps } from '~/beinComponents/Text';
-import Icon from '../Icon';
+import Icon from '../../baseComponents/Icon';
 import spacing from '~/theme/spacing';
 
 export type HelperType =

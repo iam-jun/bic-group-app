@@ -1,34 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CommentInputFooter component renders correctly mention bar invisible 1`] = `
-<View
-  style={
-    Object {
-      "borderColor": "#E3E6F2",
-      "borderTopWidth": 1,
-    }
-  }
->
+<View>
   <View
     style={
       Object {
+        "alignItems": "center",
         "backgroundColor": "#FFFFFF",
         "flexDirection": "row",
+        "justifyContent": "flex-end",
         "minHeight": 48,
-        "paddingLeft": 16,
-        "paddingRight": 8,
-        "paddingTop": 8,
+        "paddingHorizontal": 16,
       }
     }
   >
     <View
-      style={
+      accessibilityState={
         Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
+          "disabled": true,
         }
       }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="button_wrapper"
     >
       <View
         accessibilityState={
@@ -39,6 +46,14 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
         accessible={true}
         collapsable={false}
         focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -58,74 +73,53 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "justifyContent": "center",
               },
-              undefined,
+              Object {
+                "marginRight": 16,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
             ]
           }
-          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
             }
           >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginRight": 16,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
+            <View />
           </View>
         </View>
       </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="button_wrapper"
+    >
       <View
         accessibilityState={
           Object {
@@ -135,6 +129,14 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
         accessible={true}
         collapsable={false}
         focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -154,74 +156,53 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "justifyContent": "center",
               },
-              undefined,
+              Object {
+                "marginRight": 16,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
             ]
           }
-          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
             }
           >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginRight": 16,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
+            <View />
           </View>
         </View>
       </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="button_wrapper"
+    >
       <View
         accessibilityState={
           Object {
@@ -231,6 +212,14 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
         accessible={true}
         collapsable={false}
         focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -250,231 +239,88 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "justifyContent": "center",
               },
               undefined,
-            ]
-          }
-          testID="button_wrapper.content"
-        >
-          <View
-            accessibilityState={
               Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginRight": 16,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
+                "backgroundColor": undefined,
               },
-              undefined,
             ]
           }
-          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
             }
           >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginRight": 16,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
+            <View>
               <View
+                onLayout={[Function]}
                 style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
                 }
               >
-                <View>
+                <View
+                  collapsable={false}
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
                   <View
-                    onLayout={[Function]}
                     style={
                       Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "height": 20,
+                        "justifyContent": "center",
+                        "width": 20,
                       }
                     }
-                  >
-                    <View
-                      collapsable={false}
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "height": 20,
+                        "width": 20,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    size={20}
+                    source={null}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
                       }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "height": 20,
-                            "justifyContent": "center",
-                            "width": 20,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 20,
-                            "width": 20,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        size={20}
-                        source={null}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      />
-                    </View>
-                  </View>
+                    }
+                  />
                 </View>
               </View>
             </View>
@@ -482,6 +328,17 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
         </View>
       </View>
     </View>
+    <View
+      style={
+        Object {
+          "borderLeftColor": "#E3E6F2",
+          "borderLeftWidth": 2,
+          "height": 20,
+          "marginLeft": 16,
+          "marginRight": 10,
+        }
+      }
+    />
     <View
       accessible={true}
       focusable={false}
@@ -493,47 +350,35 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#9E6FD8",
-          "borderRadius": 4,
-          "padding": 8,
-          "paddingLeft": 16,
-        }
+        Array [
+          Object {
+            "borderRadius": 6,
+          },
+          undefined,
+        ]
       }
+      testID="button_wrapper"
     >
       <View
         style={
           Array [
             Object {
               "alignItems": "center",
+              "borderRadius": 6,
               "flexDirection": "row",
               "justifyContent": "center",
+              "paddingVertical": 4,
             },
             undefined,
+            Object {
+              "backgroundColor": "#F4EFFB",
+              "height": 36,
+              "paddingHorizontal": 12,
+            },
           ]
         }
-        testID="button_wrapper.content"
+        testID="button.content"
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Send
-        </Text>
         <View
           accessibilityState={
             Object {
@@ -571,9 +416,7 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
                   "alignItems": "center",
                   "flexDirection": "row",
                 },
-                Object {
-                  "marginHorizontal": 8,
-                },
+                undefined,
                 Object {
                   "backgroundColor": undefined,
                 },
@@ -590,75 +433,8 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
               }
             >
               <View
-                testID="button_wrapper.icon"
-              >
-                <View
-                  onLayout={[Function]}
-                  style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "position": "relative",
-                    }
-                  }
-                >
-                  <View
-                    collapsable={false}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "opacity": 1,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#f9f9f9",
-                          "height": 24,
-                          "justifyContent": "center",
-                          "width": 24,
-                        }
-                      }
-                      testID="Image__placeholder"
-                    />
-                  </View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
-                          "width": 24,
-                        },
-                      ]
-                    }
-                  >
-                    <FastImageView
-                      onFastImageError={[Function]}
-                      onFastImageLoadEnd={[Function]}
-                      resizeMode="cover"
-                      size={24}
-                      source={null}
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                    />
-                  </View>
-                </View>
-              </View>
+                testID="button.icon"
+              />
             </View>
           </View>
         </View>
@@ -680,34 +456,41 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
 `;
 
 exports[`CommentInputFooter component renders correctly mention bar with item 1`] = `
-<View
-  style={
-    Object {
-      "borderColor": "#E3E6F2",
-      "borderTopWidth": 1,
-    }
-  }
->
+<View>
   <View
     style={
       Object {
+        "alignItems": "center",
         "backgroundColor": "#FFFFFF",
         "flexDirection": "row",
+        "justifyContent": "flex-end",
         "minHeight": 48,
-        "paddingLeft": 16,
-        "paddingRight": 8,
-        "paddingTop": 8,
+        "paddingHorizontal": 16,
       }
     }
   >
     <View
-      style={
+      accessibilityState={
         Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
+          "disabled": true,
         }
       }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="button_wrapper"
     >
       <View
         accessibilityState={
@@ -718,6 +501,14 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
         accessible={true}
         collapsable={false}
         focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -737,74 +528,53 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "justifyContent": "center",
               },
-              undefined,
+              Object {
+                "marginRight": 16,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
             ]
           }
-          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
             }
           >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginRight": 16,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
+            <View />
           </View>
         </View>
       </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="button_wrapper"
+    >
       <View
         accessibilityState={
           Object {
@@ -814,6 +584,14 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
         accessible={true}
         collapsable={false}
         focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -833,74 +611,53 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "justifyContent": "center",
               },
-              undefined,
+              Object {
+                "marginRight": 16,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
             ]
           }
-          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
             }
           >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginRight": 16,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
+            <View />
           </View>
         </View>
       </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="button_wrapper"
+    >
       <View
         accessibilityState={
           Object {
@@ -910,6 +667,14 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
         accessible={true}
         collapsable={false}
         focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -929,231 +694,88 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "justifyContent": "center",
               },
               undefined,
-            ]
-          }
-          testID="button_wrapper.content"
-        >
-          <View
-            accessibilityState={
               Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginRight": 16,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
+                "backgroundColor": undefined,
               },
-              undefined,
             ]
           }
-          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
             }
           >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginRight": 16,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
+            <View>
               <View
+                onLayout={[Function]}
                 style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
                 }
               >
-                <View>
+                <View
+                  collapsable={false}
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
                   <View
-                    onLayout={[Function]}
                     style={
                       Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "height": 20,
+                        "justifyContent": "center",
+                        "width": 20,
                       }
                     }
-                  >
-                    <View
-                      collapsable={false}
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "height": 20,
+                        "width": 20,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    size={20}
+                    source={null}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
                       }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "height": 20,
-                            "justifyContent": "center",
-                            "width": 20,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 20,
-                            "width": 20,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        size={20}
-                        source={null}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      />
-                    </View>
-                  </View>
+                    }
+                  />
                 </View>
               </View>
             </View>
@@ -1161,6 +783,17 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
         </View>
       </View>
     </View>
+    <View
+      style={
+        Object {
+          "borderLeftColor": "#E3E6F2",
+          "borderLeftWidth": 2,
+          "height": 20,
+          "marginLeft": 16,
+          "marginRight": 10,
+        }
+      }
+    />
     <View
       accessible={true}
       focusable={false}
@@ -1172,47 +805,35 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#9E6FD8",
-          "borderRadius": 4,
-          "padding": 8,
-          "paddingLeft": 16,
-        }
+        Array [
+          Object {
+            "borderRadius": 6,
+          },
+          undefined,
+        ]
       }
+      testID="button_wrapper"
     >
       <View
         style={
           Array [
             Object {
               "alignItems": "center",
+              "borderRadius": 6,
               "flexDirection": "row",
               "justifyContent": "center",
+              "paddingVertical": 4,
             },
             undefined,
+            Object {
+              "backgroundColor": "#F4EFFB",
+              "height": 36,
+              "paddingHorizontal": 12,
+            },
           ]
         }
-        testID="button_wrapper.content"
+        testID="button.content"
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
-              Object {
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Send
-        </Text>
         <View
           accessibilityState={
             Object {
@@ -1250,9 +871,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                   "alignItems": "center",
                   "flexDirection": "row",
                 },
-                Object {
-                  "marginHorizontal": 8,
-                },
+                undefined,
                 Object {
                   "backgroundColor": undefined,
                 },
@@ -1269,75 +888,8 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
               }
             >
               <View
-                testID="button_wrapper.icon"
-              >
-                <View
-                  onLayout={[Function]}
-                  style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "position": "relative",
-                    }
-                  }
-                >
-                  <View
-                    collapsable={false}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "opacity": 1,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#f9f9f9",
-                          "height": 24,
-                          "justifyContent": "center",
-                          "width": 24,
-                        }
-                      }
-                      testID="Image__placeholder"
-                    />
-                  </View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 24,
-                          "width": 24,
-                        },
-                      ]
-                    }
-                  >
-                    <FastImageView
-                      onFastImageError={[Function]}
-                      onFastImageLoadEnd={[Function]}
-                      resizeMode="cover"
-                      size={24}
-                      source={null}
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                    />
-                  </View>
-                </View>
-              </View>
+                testID="button.icon"
+              />
             </View>
           </View>
         </View>

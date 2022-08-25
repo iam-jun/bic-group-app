@@ -7,7 +7,7 @@ import { useBaseHook } from '~/hooks';
 import Button from '~/beinComponents/Button';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IAudience } from '~/interfaces/IPost';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';

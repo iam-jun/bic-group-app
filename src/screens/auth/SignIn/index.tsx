@@ -357,7 +357,7 @@ const SignIn = () => {
                 style={styles.inputEmailContainer}
                 inputStyle={styles.input}
                 helperContent={signingInError}
-                editable={!authSessions || !loading}
+                editable={!authSessions && !loading}
                 onSubmitEditing={onSubmitEmail}
                 placeholderTextColor={theme.colors.gray40}
                 textColor={theme.colors.white}

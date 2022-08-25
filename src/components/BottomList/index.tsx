@@ -56,6 +56,7 @@ const BottomList = () => {
       modalizeRef={modalizeRef}
       isOpen={isOpen}
       onClose={_onClose}
+      childrenStyle={{ minHeight: 140 }}
       ContentComponent={renderListData()}
     />
   );

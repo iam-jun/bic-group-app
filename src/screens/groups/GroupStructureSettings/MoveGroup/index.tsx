@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
+import { isEqual } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
@@ -145,6 +146,12 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     }
   };
 
+  const onPressItem = (item: any) => {
+    if (!isEqual(item, selecting)) {
+      setErrorMessage('');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -153,7 +160,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
         buttonText="common:btn_save"
         buttonProps={{
           loading,
-          disabled: !selecting,
+          disabled: !selecting || !!errorMessage,
           useI18n: true,
           style: { borderWidth: 0 },
           testID: 'move_group.btn_save',
@@ -168,6 +175,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
           groupId={groupId}
           targets={targetGroups}
           selecting={selecting}
+          onPressItem={onPressItem}
         />
       </ScrollView>
     </View>
