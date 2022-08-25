@@ -4,14 +4,12 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import { communityPrivacyListDetail } from '~/constants/privacyTypes';
-import { ICommunity } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
 import { margin, padding } from '~/theme/spacing';
 import { Avatar } from '~/baseComponents';
-import { IGroup } from '~/interfaces/IGroup';
 
 interface GlobalSearchItemProps {
-  item: ICommunity | IGroup;
+  item: any;
   onPressCommunities?: (communityId: string) => void;
   onPressMenu?: () => void;
 }

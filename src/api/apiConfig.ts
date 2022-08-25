@@ -8,7 +8,7 @@ export const apiProviders = {
     name: 'Bein',
   },
   beinFeed: {
-    url: 'https://api.beincomm.io/v1/feed/',
+    url: getEnv('BEIN_FEED'),
     name: 'BeinFeed',
   },
   beinNotification: {
