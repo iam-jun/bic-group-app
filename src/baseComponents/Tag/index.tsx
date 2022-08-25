@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text, { TextProps } from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Avatar from '~/baseComponents/Avatar';
@@ -23,6 +23,7 @@ export interface TagProps {
   onActionPress?: () => void;
   onPressIcon?: () => void;
   style?: StyleProp<ViewStyle>;
+  textProps?: TextProps;
 }
 
 const Tag: React.FC<TagProps> = ({
@@ -35,6 +36,7 @@ const Tag: React.FC<TagProps> = ({
   onActionPress,
   onPressIcon,
   style,
+  textProps,
 }: TagProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(
@@ -64,7 +66,7 @@ const Tag: React.FC<TagProps> = ({
       onPress={() => { onActionPress?.(); }}
     >
       {!!avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
-      <Text variant={variant} testID="tag.label" style={styles.labelText}>{label}</Text>
+      <Text variant={variant} testID="tag.label" style={styles.labelText} {...textProps}>{label}</Text>
       {!disabled && onPressIcon && !!icon && (
         <Icon
           testID="tag.icon"

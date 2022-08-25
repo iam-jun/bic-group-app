@@ -190,50 +190,21 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 </View>
               )}
             </View>
-            {onCheckedItem && (
-              <Checkbox
-                testID="group_item.check_box"
-                style={styles.checkbox}
-                isChecked={isChecked}
-                onPress={_onCheckedItem}
-              />
-            )}
           </View>
           <View style={styles.textContainer}>
-            <Text.H5
-              style={
-                disableHorizontal ? styles.textName : styles.textNameHorizontal
-              }
-              numberOfLines={nameLines}
-            >
+            <Text.H5 style={styles.textName} numberOfLines={nameLines}>
               {name}
             </Text.H5>
-            {showInfo && (
-              <View style={styles.row}>
-                {showPrivacy && (
-                  <>
-                    <Icon
-                      style={styles.iconSmall}
-                      icon={privacyIcon}
-                      size={16}
-                      tintColor={theme.colors.gray50}
-                    />
-                    {showPrivacyName && (
-                      <Text.BodyS style={styles.privacyTitle} useI18n>
-                        {privacyTitle}
-                      </Text.BodyS>
-                    )}
-                    <Text.BodyS> ⬩ </Text.BodyS>
-                  </>
-                )}
-                <Icon icon="UserGroup" size={16} tintColor={colors.gray50} />
-                <Text.BodyS color={colors.gray50} style={styles.textInfo}>
-                  {userCount}
-                </Text.BodyS>
-              </View>
-            )}
             {_renderExtraInfo?.()}
           </View>
+          {onCheckedItem && (
+            <Checkbox
+              testID="group_item.check_box"
+              style={styles.checkbox}
+              isChecked={isChecked}
+              onPress={_onCheckedItem}
+            />
+          )}
           {!!onPressMenu && (
             <View style={styles.btnMenu}>
               <Icon
@@ -265,10 +236,6 @@ const themeStyles = (theme: IObject<any>) => {
     textName: {
       width: '100%',
       justifyContent: 'center',
-    },
-    textNameHorizontal: {
-      maxWidth: 200,
-      paddingTop: 2,
     },
     textInfo: {
       marginHorizontal: spacing.margin.tiny,
@@ -302,7 +269,7 @@ const themeStyles = (theme: IObject<any>) => {
       width: dimension?.avatarSizes.medium,
       height: dimension?.avatarSizes.medium,
     },
-    checkbox: { position: 'absolute', bottom: -3, right: -6 },
+    checkbox: { },
     iconSmall: {
       height: 16,
     },

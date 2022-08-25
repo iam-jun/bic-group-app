@@ -14,8 +14,6 @@ export const postInitState = {
       files: [],
     },
     chosenAudiences: [],
-    searchResultAudienceGroups: [],
-    searchResultAudienceUsers: [],
     important: {
       active: false,
       expires_time: null,
@@ -75,7 +73,6 @@ export const postInitState = {
     loading: true,
     selectingAudiences: [],
     selectingGroups: {},
-    selectingUsers: {},
   },
   loadingGetPostDetail: false,
   commentErrorCode: '',
@@ -256,22 +253,6 @@ function postReducer(
         },
       };
     }
-    case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          searchResultAudienceGroups: payload,
-        },
-      };
-    case postTypes.SET_SEARCH_RESULT_AUDIENCE_USERS:
-      return {
-        ...state,
-        createPost: {
-          ...state.createPost,
-          searchResultAudienceUsers: payload,
-        },
-      };
     case postTypes.SET_SAVING_DRAFT_POST:
       return {
         ...state,

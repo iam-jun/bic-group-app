@@ -313,6 +313,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           testID="newsfeed_list.list"
           // @ts-ignore
           data={data}
+          bounces={false}
           renderItem={renderItem}
           keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
           estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
@@ -353,6 +354,7 @@ const NewsfeedListHeader = ({ HeaderComponent }: any) => {
     <View style={styles.headerContainer}>
       {!!HeaderComponent && HeaderComponent}
       <NoticePanel />
+      <View style={styles.headerDivider} />
     </View>
   );
 };
@@ -364,6 +366,14 @@ const createStyle = (
   return StyleSheet.create({
     container: {
       flex: 1,
+    },
+    headerDivider: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: spacing.margin.large,
+      backgroundColor: colors.gray5,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,
@@ -386,7 +396,7 @@ const createStyle = (
       backgroundColor: colors.neutral1,
     },
     headerContainer: {
-      height: insets.top + dimension.homeHeaderHeight,
+      height: insets.top + dimension.homeHeaderHeight + spacing.margin.large,
       backgroundColor: colors.neutral,
       width: '100%',
     },

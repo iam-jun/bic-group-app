@@ -232,6 +232,7 @@ const Header: React.FC<HeaderProps> = ({
           alignItems: 'flex-end',
           flexDirection: 'row',
           backgroundColor: colors.white,
+          paddingVertical: spacing.padding.tiny,
         },
         removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
         style,
