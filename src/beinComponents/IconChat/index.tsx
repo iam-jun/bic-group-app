@@ -5,7 +5,7 @@ import { getUnreadChannelCount } from '~/store/selectors/chat';
 import spacing from '~/theme/spacing';
 import NotificationsBadge from '../Badge/NotificationsBadge';
 import Button from '../Button';
-import Icon from '../Icon';
+import Icon from '../../baseComponents/Icon';
 
 interface Props {
   testID?: string;

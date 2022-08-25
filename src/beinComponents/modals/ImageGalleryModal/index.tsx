@@ -14,7 +14,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import { debounce } from 'lodash';
 
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { ImageGalleryModalProps } from '~/beinComponents/modals/ImageGalleryModal/IImageGalleryModalProps';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';

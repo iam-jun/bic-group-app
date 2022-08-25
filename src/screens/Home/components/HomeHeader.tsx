@@ -10,7 +10,7 @@ import { EdgeInsets } from 'react-native-safe-area-context/src/SafeArea.types';
 import Animated, {
   Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming,
 } from 'react-native-reanimated';
-import SvgIcon from '~/beinComponents/Icon/SvgIcon';
+import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 
 import BicHomeLogo from '../../../../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';

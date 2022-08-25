@@ -1,0 +1,75 @@
+import React, {
+  FC,
+  useImperativeHandle,
+  useState,
+  useRef,
+  useEffect,
+} from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
+
+export interface EmojiNameToastProps {
+  testID?: string,
+  toastRef: any;
+}
+
+const EmojiNameToast: FC<EmojiNameToastProps> = ({
+  testID,
+  toastRef,
+}: EmojiNameToastProps) => {
+  const [name, setName] = useState('');
+  const timeOutRef = useRef<any>();
+
+  const theme: ExtendedTheme = useTheme();
+  const insets = useSafeAreaInsets();
+  const styles = createStyle(
+    theme, insets,
+  );
+
+  useEffect(
+    () => () => {
+      timeOutRef?.current && clearTimeout(timeOutRef?.current);
+    }, [],
+  );
+
+  const show = (name: string) => {
+    timeOutRef?.current && clearTimeout(timeOutRef?.current);
+    setName(name);
+    timeOutRef.current = setTimeout(
+      () => {
+        setName('');
+      }, 3000,
+    );
+  };
+
+  useImperativeHandle(
+    toastRef, () => ({
+      show,
+    }),
+  );
+
+  if (!name) {
+    return null;
+  }
+
+  return (
+    <View testID={testID} style={styles.container}>
+      <SimpleToastMessage disabled>{name}</SimpleToastMessage>
+    </View>
+  );
+};
+
+const createStyle = (
+  theme: ExtendedTheme, insets: any,
+) => StyleSheet.create({
+  container: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 100 + insets.bottom,
+  },
+});
+
+export default EmojiNameToast;

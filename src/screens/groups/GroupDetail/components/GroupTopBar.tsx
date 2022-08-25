@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import useAuth, { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';

@@ -8,7 +8,7 @@ import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Avatar from '~/baseComponents/Avatar';
-import Icon from '../../beinComponents/Icon';
+import Icon from '../Icon';
 
 export type TagType = 'primary' | 'secondary' | 'neutral';
 export type TagSize = 'small' | 'medium' | 'large';

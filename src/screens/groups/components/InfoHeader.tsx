@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';

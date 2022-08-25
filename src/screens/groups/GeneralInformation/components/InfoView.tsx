@@ -5,7 +5,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { titleCase } from '~/utils/common';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
 
 interface Props {

@@ -12,7 +12,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { orderBy } from 'lodash';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
-import Icon from './Icon';
+import Icon from '../baseComponents/Icon';
 import LoadingIndicator from './LoadingIndicator';
 
 const DURATION_CHECK_POINT = 5 * 1000;

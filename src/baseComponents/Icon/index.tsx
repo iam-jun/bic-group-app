@@ -17,13 +17,13 @@ import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import icons, { IconType } from '~/resources/icons';
 
-import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
+import TextEmojiIcon from '~/baseComponents/Icon/TextEmojiIcon';
 import spacing from '~/theme/spacing';
 import {
   fontAwesomeIcons,
   fontAwesomeIconValues,
 } from '~/services/fontAwesomeIcon';
-import FontAwesomeIcon from '~/beinComponents/Icon/FontAwesomeIcon';
+import FontAwesomeIcon from '~/baseComponents/Icon/FontAwesomeIcon';
 
 export interface IconProps extends SVGIconProps {
   icon: IconType | number;

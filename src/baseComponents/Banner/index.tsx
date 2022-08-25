@@ -3,7 +3,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
 

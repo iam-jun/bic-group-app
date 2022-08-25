@@ -2,7 +2,7 @@ import React, {
   FC, useState, useEffect, useRef,
 } from 'react';
 import {
-  FlatList, View, StyleSheet, Image,
+  FlatList, StyleSheet, Image,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
@@ -13,6 +13,7 @@ import { blacklistReactions, ReactionType } from '~/constants/reactions';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
+import { spacing } from '~/theme';
 
 export interface ReactionTabBarProps {
   initReaction?: ReactionType;
@@ -135,24 +136,16 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
     }
 
     return (
-      <View>
-        <Button
-          testID={`reaction_detail_bottomSheet.${reactionType}`}
-          style={styles.tabItem}
-          onPress={() => _onPressTab(index)}
-        >
-          {emoji}
-          <Text.H6 color={isActive ? colors.purple60 : colors.neutral80}>
-            {` ${count}`}
-          </Text.H6>
-        </Button>
-        {isActive && (
-          <View
-            testID={`reaction_detail_bottomSheet.active_${reactionType}`}
-            style={styles.tabItemActive}
-          />
-        )}
-      </View>
+      <Button
+        testID={`reaction_detail_bottomSheet.${reactionType}`}
+        style={[styles.tabItem, { backgroundColor: isActive ? colors.purple2 : colors.white }]}
+        onPress={() => _onPressTab(index)}
+      >
+        {emoji}
+        <Text.H6 color={isActive ? colors.purple50 : colors.neutral40}>
+          {` ${count}`}
+        </Text.H6>
+      </Button>
     );
   };
 
@@ -176,7 +169,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       renderItem={renderItem}
       keyExtractor={(
         item, index,
-      ) => `reaction_tab_${index}`}
+      ) => `reaction_tab_${index}_${JSON.stringify(item)}`}
     />
   );
 };
@@ -186,21 +179,18 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       borderBottomWidth: 1,
-      borderColor: colors.gray40,
+      borderColor: colors.neutral5,
+      paddingVertical: spacing.padding.base,
+      paddingHorizontal: spacing.padding.base,
     },
     tabItem: {
-      width: itemWidth,
-      height: 44,
+      height: 32,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
-    },
-    tabItemActive: {
-      position: 'absolute',
-      bottom: 0,
-      width: itemWidth,
-      height: 2,
-      backgroundColor: colors.purple60,
+      paddingHorizontal: spacing.padding.small,
+      borderRadius: spacing.borderRadius.small,
+      marginLeft: spacing.margin.xSmall,
     },
     nodeEmoji: {
       fontSize: 14,

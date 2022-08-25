@@ -14,7 +14,7 @@ import {
 } from './constants';
 import spacing, { borderRadius, padding } from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 export interface ButtonProps extends ButtonWrapperProps {
   variant?: ButtonVariant;

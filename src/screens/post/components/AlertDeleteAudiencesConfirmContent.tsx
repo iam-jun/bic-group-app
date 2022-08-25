@@ -20,11 +20,11 @@ const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: a
       key={`alert_assign_group_confirm.item_${index}`}
       style={styles.itemContainer}
     >
-      <Text.BodyM numberOfLines={1}>
+      <Text.ButtonM numberOfLines={1} color={theme.colors.neutral70}>
         {' '}
         •
         {` ${item.name}`}
-      </Text.BodyM>
+      </Text.ButtonM>
     </View>
   );
 
@@ -42,11 +42,11 @@ const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: a
               <View
                 style={styles.itemContainer}
               >
-                <Text.BodyMMedium onPress={() => { setShowAll(true); }} color={theme.colors.purple50}>
+                <Text.ButtonM onPress={() => { setShowAll(true); }} color={theme.colors.neutral70}>
                   {' '}
                   •
                   {` +${data.length - 3} ${i18n.t('post:more_group')}`}
-                </Text.BodyMMedium>
+                </Text.ButtonM>
               </View>
             </TouchableOpacity>
           </ScrollView>
@@ -70,7 +70,10 @@ const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: a
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingTop: spacing.padding.tiny,
+  },
   itemContainer: {
     marginTop: spacing.margin.base,
   },

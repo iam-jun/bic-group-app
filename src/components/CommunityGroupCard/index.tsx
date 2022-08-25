@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ButtonCommunityGroupCardAction from './ButtonCommunityGroupCardAction';
 import { useRootNavigation } from '~/hooks/navigation';

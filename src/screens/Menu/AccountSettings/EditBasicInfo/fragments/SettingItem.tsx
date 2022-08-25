@@ -5,7 +5,7 @@ import i18next from 'i18next';
 
 import { IconType } from '~/resources/icons';
 
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import spacing from '~/theme/spacing';

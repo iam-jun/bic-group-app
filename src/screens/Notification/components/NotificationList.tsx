@@ -12,7 +12,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import NotificationItem from '~/beinComponents/list/items/NotificationItem';
 import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';

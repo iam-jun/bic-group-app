@@ -4,7 +4,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text, { TextVariant } from '~/beinComponents/Text';
 import { IconType } from '~/resources/icons';
 import { spacing } from '~/theme';

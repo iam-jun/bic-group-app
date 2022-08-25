@@ -3,7 +3,7 @@ import {
 } from 'react-native';
 import React, { useImperativeHandle, useRef } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 import Text from '~/beinComponents/Text';
 import { isAndroidAnimated } from '../helper';

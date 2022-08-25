@@ -21,7 +21,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
-import Icon, { IconProps } from '~/beinComponents/Icon';
+import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text, { TextProps } from '~/beinComponents/Text';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';

@@ -5,20 +5,16 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
-import { fontFamilies } from '~/theme/fonts';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import DateTimePicker from '~/beinComponents/DateTimePicker';
-import Button from '~/beinComponents/Button';
 import Toggle from '~/baseComponents/Toggle';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import modalActions from '~/storeRedux/modal/actions';
 
 import { useBaseHook } from '~/hooks';
-import { formatDate } from '~/utils/formatData';
 import { usePostSettings } from '~/screens/post/PostSettings/usePostSettings';
 import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import { IPostSettingsParams } from '~/interfaces/IPost';
@@ -30,6 +26,8 @@ import postKeySelector from '../../../storeRedux/post/keySelector';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
+import { DateInput } from '~/baseComponents/Input';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface PostSettingsProps {
   route?: {
@@ -76,14 +74,10 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const {
     sImportant,
-    selectingDate,
-    selectingTime,
     disableButtonSave,
     showWarning,
     sCanComment,
     sCanReact,
-    setSelectingDate,
-    setSelectingTime,
     handlePressSave,
     handleToggleImportant,
     handleToggleCanComment,
@@ -122,126 +116,114 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     switch (list?.length) {
       case 1:
         return (
-          <Text.BodyS color={colors.danger}>{` ${list[0]?.name}`}</Text.BodyS>
+          <Text.BodyXS color={colors.danger}>{` ${list[0]?.name}`}</Text.BodyXS>
         );
       case 2:
         return (
-          <Text.BodyS
+          <Text.BodyXS
             color={
               colors.danger
             }
           >
             {` ${list[0]?.name}, ${list[1]?.name}`}
-          </Text.BodyS>
+          </Text.BodyXS>
         );
       case 3:
         return (
-          <Text.BodyS
+          <Text.BodyXS
             color={
               colors.danger
             }
           >
             {` ${list[0]?.name}, ${list[1]?.name}, ${list[2]?.name}`}
-          </Text.BodyS>
+          </Text.BodyXS>
         );
       default:
         return (
-          <Text.BodyS color={colors.danger}>
+          <Text.BodyXS color={colors.danger}>
             {` ${list[0]?.name}, ${list[1]?.name}, ${t('post:and')} `}
-            <Text.BodySMedium
+            <Text.BodyXSMedium
               color={colors.danger}
-              style={{ textDecorationLine: 'underline' }}
               onPress={onPressAudiences}
             >
               {`${t('common:text_more').replace('(number)', list.length - 2)}`}
-            </Text.BodySMedium>
-          </Text.BodyS>
+            </Text.BodyXSMedium>
+          </Text.BodyXS>
         );
     }
   };
 
   const renderImportantDate = () => {
     const { expires_time } = sImportant || {};
-    let date = t('common:text_set_date');
-    let time = t('common:text_set_time');
-
-    if (expires_time) {
-      date = formatDate(
-        expires_time, 'MMM Do, YYYY',
-      );
-      time = formatDate(
-        expires_time, 'hh:mm A', undefined, 9999,
-      );
-    }
 
     return (
       <View style={styles.importantButtons}>
-        <Button.Secondary
+        <DateInput
           testID="post_settings.important.btn_date"
-          leftIcon="Calendar"
-          leftIconProps={{ icon: 'Calendar', size: 20 }}
-          style={styles.buttonDate}
-          onPress={() => setSelectingDate(true)}
-          color={colors.gray40}
-          textProps={{ color: colors.neutral80 }}
-        >
-          {date}
-        </Button.Secondary>
-        <Button.Secondary
+          mode="date"
+          value={expires_time}
+          minDate={getMinDate()}
+          maxDate={getMaxDate()}
+          label={t('common:text_end_date')}
+          onConfirm={handleChangeDatePicker}
+          style={{ flex: 1 }}
+        />
+        <ViewSpacing width={16} />
+        <DateInput
           testID="post_settings.important.btn_time"
-          leftIcon="Clock"
-          leftIconProps={{ icon: 'Clock', size: 20 }}
-          style={styles.buttonTime}
-          onPress={() => setSelectingTime(true)}
-          color={colors.gray40}
-          textProps={{ color: colors.neutral80 }}
-        >
-          {time}
-        </Button.Secondary>
+          mode="time"
+          value={expires_time}
+          minDate={getMinDate()}
+          maxDate={getMaxDate()}
+          label={t('common:text_end_hour')}
+          onConfirm={handleChangeTimePicker}
+          style={{ flex: 1 }}
+        />
       </View>
     );
   };
 
   const renderImportant = () => {
-    const { active } = sImportant || {};
+    const { active, expires_time } = sImportant || {};
+    const notExpired = new Date().getTime() < new Date(expires_time).getTime();
 
     return (
       <View style={styles.content}>
         <View
           style={[
             styles.row,
-            sImportant.active ? styles.active : styles.important,
+            active ? styles.active : styles.important,
           ]}
         >
           <View style={[styles.flex1]}>
-            <Text style={[styles.flex1]} useI18n>
+            <Text.SubtitleM style={[styles.flex1]} useI18n>
               post:mark_as_important
-            </Text>
-            {sImportant?.active ? (
-              <Text.BodyS
+            </Text.SubtitleM>
+            {(active && notExpired) ? (
+              <Text.BodyXS
                 useI18n
                 testID="post_settings.expire_time_desc"
-                color={colors.gray50}
-                style={{ fontFamily: fontFamilies.BeVietnamProSemiBold }}
+                color={colors.neutral40}
+                style={styles.expireTimeDesc}
               >
                 post:expire_time_desc
-              </Text.BodyS>
+              </Text.BodyXS>
+            ) : null}
+            {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
+              <Text.BodyXS color={colors.danger} style={styles.warningText}>
+                {`${t('post:text_important_warning_1')}`}
+                {renderListAudienceWithoutPermission(listAudiencesWithoutPermission)}
+                {`${t('post:text_important_warning_2')}`}
+              </Text.BodyXS>
             ) : null}
           </View>
           <Toggle
             testID="post_settings.toggle_important"
-            isChecked={sImportant?.active}
+            isChecked={(active && notExpired)}
             onPress={handleToggleImportant}
           />
         </View>
-        {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
-          <Text.BodyS color={colors.danger} style={styles.warningText}>
-            {`${t('post:text_important_warning_1')}`}
-            {renderListAudienceWithoutPermission(listAudiencesWithoutPermission)}
-            {`${t('post:text_important_warning_2')}`}
-          </Text.BodyS>
-        ) : null}
-        {!!active && listAudiencesWithoutPermission?.length < 1 && renderImportantDate()}
+        {!!active && (listAudiencesWithoutPermission?.length < 1 || notExpired) && renderImportantDate()}
       </View>
     );
   };
@@ -271,9 +253,9 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       ]}
     >
       <View style={[styles.flex1]}>
-        <Text style={[styles.flex1]} useI18n>
+        <Text.SubtitleM style={[styles.flex1]} useI18n>
           post:people_can_comment
-        </Text>
+        </Text.SubtitleM>
       </View>
       <Toggle
         testID="post_settings.toggle_can_comment"
@@ -290,9 +272,9 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       ]}
     >
       <View style={[styles.flex1]}>
-        <Text style={[styles.flex1]} useI18n>
+        <Text.SubtitleM style={[styles.flex1]} useI18n>
           post:people_can_react
-        </Text>
+        </Text.SubtitleM>
       </View>
       <Toggle
         testID="post_settings.toggle_can_react"
@@ -306,7 +288,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
         titleTextProps={{ useI18n: true }}
-        title="post:settings"
+        title={!!postId ? 'post:post_menu_edit_settings' : 'post:settings'}
         buttonText="post:save"
         onPressBack={onPressBack}
         onPressButton={handlePressSave}
@@ -323,40 +305,6 @@ const PostSettings = ({ route }: PostSettingsProps) => {
           {renderCanComment()}
           {renderCanReact()}
         </ScrollView>
-        <View style={{ position: 'absolute', alignSelf: 'center' }}>
-          {selectingDate && (
-            <DateTimePicker
-              isVisible={selectingDate}
-              date={
-                sImportant.expires_time
-                  ? new Date(sImportant.expires_time)
-                  : new Date()
-              }
-              minDate={getMinDate()}
-              maxDate={getMaxDate()}
-              mode="date"
-              onConfirm={handleChangeDatePicker}
-              onCancel={handleChangeDatePicker}
-              testID="post_settings.important.date_picker"
-            />
-          )}
-          {selectingTime && (
-            <DateTimePicker
-              isVisible={selectingTime}
-              date={
-                sImportant.expires_time
-                  ? new Date(sImportant.expires_time)
-                  : new Date()
-              }
-              minDate={getMinDate()}
-              maxDate={getMaxDate()}
-              mode="time"
-              onConfirm={handleChangeTimePicker}
-              onCancel={handleChangeTimePicker}
-              testID="post_settings.important.time_picker"
-            />
-          )}
-        </View>
       </View>
       <BottomSheet
         modalizeRef={modalizeRef}
@@ -369,35 +317,30 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: { backgroundColor: colors.white, flex: 1 },
+    container: {
+      backgroundColor: colors.white,
+      flex: 1,
+      paddingTop: spacing.padding.large,
+    },
     row: { flexDirection: 'row', alignItems: 'center' },
     flex1: { flex: 1 },
     content: {
       marginBottom: spacing.margin.extraLarge,
-      marginLeft: spacing.margin.large,
-      marginRight: spacing.margin.base,
+      marginHorizontal: spacing.margin.large,
       justifyContent: 'center',
     },
-    important: { marginTop: spacing.margin.base },
+    important: { marginTop: spacing.margin.base, alignItems: 'flex-start' },
     active: { marginTop: spacing.margin.tiny },
     importantButtons: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingTop: spacing.padding.base,
     },
-    buttonDate: {
-      flex: 1,
-      marginRight: spacing.margin.base,
-      backgroundColor: colors.gray10,
-      padding: spacing.padding.base,
-    },
-    buttonTime: {
-      flex: 1,
-      backgroundColor: colors.gray10,
-      padding: spacing.padding.base,
-    },
     warningText: {
       marginTop: spacing.padding.base,
+    },
+    expireTimeDesc: {
+      marginTop: spacing.margin.tiny,
     },
   });
 };

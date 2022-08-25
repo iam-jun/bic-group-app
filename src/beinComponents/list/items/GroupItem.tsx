@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
 import { IObject } from '~/interfaces/common';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/beinComponents/Text';

@@ -18,7 +18,7 @@ import Animated, {
 import i18next from 'i18next';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 

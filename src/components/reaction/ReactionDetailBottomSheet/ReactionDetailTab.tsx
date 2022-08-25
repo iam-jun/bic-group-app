@@ -1,77 +1,58 @@
-import React, { FC, useEffect, useState } from 'react';
-import {
-  View, StyleSheet, Dimensions, FlatList,
-} from 'react-native';
+import React, {
+  FC, memo, useCallback, useEffect,
+} from 'react';
+import { StyleSheet, FlatList } from 'react-native';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { ReactionType } from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import spacing from '~/theme/spacing';
+import useReactionDetail from './useReactionDetail';
 
 export interface ReactionDetailTabProps {
   reactionType: ReactionType;
   limit?: number;
   height?: number;
   onPressItem?: (item: any) => void;
-
-  getDataPromise?: any;
   getDataParam?: any;
 }
 
-const screenHeight = Dimensions.get('window').height;
-const contentBarHeight = 0.6 * screenHeight;
-
-const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
+const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   reactionType,
   limit = 100,
-  height = contentBarHeight,
   onPressItem,
-  getDataPromise,
   getDataParam,
 }: ReactionDetailTabProps) => {
-  const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
 
-  const getData = () => {
-    if (getDataPromise && getDataParam) {
-      setLoading(true);
-      const param = { ...getDataParam, reactionName: reactionType, limit };
-      getDataPromise?.(param)
-        ?.then?.((data: any) => {
-          setData(data || []);
-          setLoading(false);
-        })
-        .catch((e: any) => {
-          console.error(`\x1b[31m🐣️ ReactionDetailTab get error ${e}\x1b[0m`);
-          setLoading(false);
-        });
-    }
-  };
+  const { data = [], loading, getReactionDetail } = useReactionDetail();
 
   useEffect(
     () => {
-      setData([]);
-      getData();
+      const param = { ...getDataParam, reactionName: reactionType, limit };
+      getReactionDetail(param);
     }, [reactionType],
   );
 
-  const _onPressItem = (item: any) => {
+  const _onPressItem = useCallback((item: any) => {
     onPressItem?.(item);
-  };
+  }, [onPressItem, reactionType, data]);
 
   const onLoadMore = () => {
-    if (getDataPromise && getDataParam && !!data?.[0]) {
-      const param = {
-        ...getDataParam, reactionName: reactionType, limit, latestId: data[data.length - 1].reactionId, order: 'ASC',
-      };
-      getDataPromise?.(param)
-        ?.then?.((_data: any) => {
-          setData((previousData:any[]) => previousData.concat(_data || []));
-        })
-        .catch((e: any) => {
-          console.error(`\x1b[31m🐣️ ReactionDetailTab get more error ${e}\x1b[0m`);
-        });
-    }
+    // if (getDataPromise && getDataParam && !!data?.[0]) {
+    //   const param = {
+    //     ...getDataParam, reactionName: reactionType, limit, latestId: data[data.length - 1].reactionId, order: 'ASC',
+    //   };
+    //   getDataPromise?.(param)
+    //     ?.then?.((_data: any) => {
+    //       setData((previousData:any[]) => previousData.concat(_data || []));
+    //     })
+    //     .catch((e: any) => {
+    //       console.error(`\x1b[31m🐣️ ReactionDetailTab get more error ${e}\x1b[0m`);
+    //     });
+    // }
   };
 
   const renderItem = (item: any) => (
@@ -80,7 +61,12 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
       showAvatar
       onPress={() => _onPressItem(item)}
       avatar={item?.item?.avatar}
+      avatarProps={{ isRounded: true, style: { marginRight: spacing.margin.small } }}
       title={item?.item?.fullname}
+      titleProps={{ color: colors.neutral70, variant: 'bodyMMedium' }}
+      subTitle={`@${item?.item?.username}`}
+      subTitleProps={{ color: colors.neutral40, variant: 'bodyS' }}
+      style={{ paddingHorizontal: spacing.padding.large }}
     />
   );
 
@@ -91,25 +77,20 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
     return null;
   };
 
-  const renderHeader = () => <View style={styles.header} />;
-
-  const keyExtractor = (
+  const keyExtractor = useCallback((
     item, index,
-  ) => `reaction_tab_detail_${item?.id}`;
+  ) => `reaction_tab_detail_${item?.id?.toString?.()}`, [data]);
 
   return (
-    <View style={{ height }}>
-      <FlatList
-        testID="reaction_detail_bottomSheet.list_user"
-        style={styles.listContainer}
-        data={data}
-        renderItem={renderItem}
-        ListHeaderComponent={renderHeader}
-        ListFooterComponent={renderFooter}
-        onEndReached={onLoadMore}
-        keyExtractor={keyExtractor}
-      />
-    </View>
+    <FlatList
+      testID="reaction_detail_bottomSheet.list_user"
+      style={styles.listContainer}
+      data={data}
+      renderItem={renderItem}
+      ListFooterComponent={renderFooter}
+      onEndReached={onLoadMore}
+      keyExtractor={keyExtractor}
+    />
   );
 };
 
@@ -122,4 +103,6 @@ const styles = StyleSheet.create({
   },
 });
 
+const ReactionDetailTab = memo(_ReactionDetailTab);
+ReactionDetailTab.whyDidYouRender = true;
 export default ReactionDetailTab;

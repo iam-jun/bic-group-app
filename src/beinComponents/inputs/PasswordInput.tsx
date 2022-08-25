@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput as RNTextInput } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import TextInput, { TextInputProps } from './TextInput';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 interface Props extends TextInputProps {
   hideEyeIcon?: boolean;
