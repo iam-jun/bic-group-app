@@ -38,13 +38,15 @@ const CommunityMembers = ({ route }: any) => {
   const { ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canManageJoiningRequests = hasPermissionsOnScopeWithId(
+  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
-    [
-      PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
-      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_JOIN_SETTING,
-    ],
+    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
+  );
+  const canEditJoinSetting = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_JOIN_SETTING,
   );
   const canAddMember = hasPermissionsOnScopeWithId(
     'communities',
@@ -78,7 +80,14 @@ const CommunityMembers = ({ route }: any) => {
     }
 
     if (selectedIndex === 1) {
-      return <CommunityMemberRequests communityId={communityId} canAddMember={canAddMember} />;
+      return (
+        <CommunityMemberRequests
+          communityId={communityId}
+          canAddMember={canAddMember}
+          canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
+          canEditJoinSetting={canEditJoinSetting}
+        />
+      );
     }
 
     return null;
@@ -110,7 +119,7 @@ const CommunityMembers = ({ route }: any) => {
         {...headerProps}
       />
 
-      {!!canManageJoiningRequests && (
+      {(!!canApproveRejectJoiningRequests || !!canEditJoinSetting) && (
         <View style={styles.tabContainer}>
           <Tab
             buttonProps={{ size: 'large', type: 'primary', useI18n: true }}

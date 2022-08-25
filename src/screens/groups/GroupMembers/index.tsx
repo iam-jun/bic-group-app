@@ -47,13 +47,15 @@ const _GroupMembers = ({ route }: any) => {
     groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
   );
-  const canManageJoiningRequests = hasPermissionsOnScopeWithId(
+  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
-    [
-      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
-      PERMISSION_KEY.GROUP.EDIT_GROUP_JOIN_SETTING,
-    ],
+    PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+  );
+  const canEditJoinSetting = hasPermissionsOnScopeWithId(
+    'groups',
+    groupId,
+    PERMISSION_KEY.GROUP.EDIT_GROUP_JOIN_SETTING,
   );
 
   const getGroupProfile = () => {
@@ -114,7 +116,15 @@ const _GroupMembers = ({ route }: any) => {
     }
 
     if (selectedIndex === 1) {
-      return <GroupMemberRequests groupId={groupId} canAddMember={canAddMember} onPressAdd={onPressAdd} />;
+      return (
+        <GroupMemberRequests
+          groupId={groupId}
+          canAddMember={canAddMember}
+          canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
+          canEditJoinSetting={canEditJoinSetting}
+          onPressAdd={onPressAdd}
+        />
+      );
     }
 
     return null;
@@ -146,7 +156,7 @@ const _GroupMembers = ({ route }: any) => {
         {...headerProps}
       />
 
-      {!!canManageJoiningRequests && (
+      {(!!canApproveRejectJoiningRequests || !!canEditJoinSetting) && (
         <View style={styles.tabContainer}>
           <Tab
             buttonProps={{ size: 'large', type: 'primary', useI18n: true }}

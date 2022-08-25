@@ -11,20 +11,28 @@ import CommunityApproveDeclineAllRequests from './components/CommunityApproveDec
 interface CommunityMemberRequestsProps {
   communityId: string
   canAddMember: boolean;
+  canApproveRejectJoiningRequests: boolean;
+  canEditJoinSetting: boolean
 }
 
-const CommunityMemberRequests = ({ communityId, canAddMember }: CommunityMemberRequestsProps) => {
+const CommunityMemberRequests = ({
+  communityId,
+  canAddMember,
+  canApproveRejectJoiningRequests,
+}: CommunityMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { canLoadMore, ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
 
   useEffect(
     () => {
-      getData();
+      if (canApproveRejectJoiningRequests) {
+        getData();
 
-      return () => {
-        dispatch(groupsActions.resetCommunityMemberRequests());
-      };
-    }, [communityId],
+        return () => {
+          dispatch(groupsActions.resetCommunityMemberRequests());
+        };
+      }
+    }, [communityId, canApproveRejectJoiningRequests],
   );
 
   const getData = (isRefreshing?: boolean) => {
@@ -42,15 +50,19 @@ const CommunityMemberRequests = ({ communityId, canAddMember }: CommunityMemberR
   return (
     <View style={styles.container} testID="CommunityMemberRequests">
 
-      <MemberRequestList
-        type="community"
-        canAddMember={canAddMember}
-        onLoadMore={onLoadMore}
-        onRefresh={onRefresh}
-        id={communityId}
-      />
+      {!!canApproveRejectJoiningRequests && (
+        <>
+          <MemberRequestList
+            type="community"
+            canAddMember={canAddMember}
+            onLoadMore={onLoadMore}
+            onRefresh={onRefresh}
+            id={communityId}
+          />
 
-      {ids.length > 1 && <CommunityApproveDeclineAllRequests communityId={communityId} />}
+          {ids.length > 1 && <CommunityApproveDeclineAllRequests communityId={communityId} />}
+        </>
+      )}
     </View>
   );
 };

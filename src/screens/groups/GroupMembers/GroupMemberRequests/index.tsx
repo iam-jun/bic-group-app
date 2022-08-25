@@ -11,21 +11,30 @@ import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllR
 interface GroupMemberRequestsProps {
   groupId: string;
   canAddMember: boolean;
+  canApproveRejectJoiningRequests: boolean;
+  canEditJoinSetting: boolean
   onPressAdd?: () => void;
 }
 
-const GroupMemberRequests = ({ groupId, canAddMember, onPressAdd }: GroupMemberRequestsProps) => {
+const GroupMemberRequests = ({
+  groupId,
+  canAddMember,
+  canApproveRejectJoiningRequests,
+  onPressAdd,
+}: GroupMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { ids, canLoadMore } = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   useEffect(
     () => {
-      getData();
+      if (canApproveRejectJoiningRequests) {
+        getData();
 
-      return () => {
-        dispatch(groupsActions.resetGroupMemberRequests());
-      };
-    }, [groupId],
+        return () => {
+          dispatch(groupsActions.resetGroupMemberRequests());
+        };
+      }
+    }, [groupId, canApproveRejectJoiningRequests],
   );
 
   const getData = (isRefreshing?: boolean) => {
@@ -43,15 +52,20 @@ const GroupMemberRequests = ({ groupId, canAddMember, onPressAdd }: GroupMemberR
   return (
     <View style={styles.container} testID="GroupMemberRequests">
 
-      <MemberRequestList
-        type="group"
-        canAddMember={canAddMember}
-        onLoadMore={onLoadMore}
-        onRefresh={onRefresh}
-        onPressAdd={onPressAdd}
-      />
+      {!!canApproveRejectJoiningRequests && (
+        <>
+          <MemberRequestList
+            type="group"
+            canAddMember={canAddMember}
+            onLoadMore={onLoadMore}
+            onRefresh={onRefresh}
+            onPressAdd={onPressAdd}
+          />
 
-      {ids.length > 1 && <GroupApproveDeclineAllRequests groupId={groupId} />}
+          {ids.length > 1 && <GroupApproveDeclineAllRequests groupId={groupId} />}
+        </>
+      )}
+
     </View>
   );
 };
