@@ -167,6 +167,9 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     refTextInput.current?.setFocus();
   };
 
+  const now = new Date();
+  const notExpired = now.getTime() < new Date(important?.expires_time).getTime();
+
   return (
     <ScreenWrapper isFullView testID="CreatePostScreen">
       <Header
@@ -189,7 +192,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         activeOpacity={1}
       >
         <View>
-          {!!important?.active && <BannerImportant />}
+          {!!important?.active && notExpired && <BannerImportant />}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider />
         </View>
