@@ -66,8 +66,6 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     () => () => {
       if (postId) {
         dispatch(postActions.clearCreatPostData());
-        dispatch(postActions.setSearchResultAudienceGroups([]));
-        dispatch(postActions.setSearchResultAudienceUsers([]));
       }
     }, [],
   );
