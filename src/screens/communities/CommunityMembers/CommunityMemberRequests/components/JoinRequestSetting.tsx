@@ -14,8 +14,7 @@ interface JoinRequestSettingProps {
   type: 'community' | 'group';
   total: number;
   isJoinApproval?: boolean;
-  onPressTurnOn: () => void;
-  onPressTurnOff: () => void;
+  onUpdateJoinSetting: (isJoinApproval: boolean) => void;
   onPressApproveAll: () => void;
 }
 
@@ -23,8 +22,7 @@ const JoinRequestSetting = ({
   type,
   total,
   isJoinApproval,
-  onPressTurnOn,
-  onPressTurnOff,
+  onUpdateJoinSetting,
   onPressApproveAll,
 }: JoinRequestSettingProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -39,12 +37,12 @@ const JoinRequestSetting = ({
 
   const _onPressTurnOn = () => {
     setIsChecked(true);
-    onPressTurnOn?.();
+    onUpdateJoinSetting?.(true);
   };
 
   const _onPressTurnOff = () => {
     setIsChecked(false);
-    onPressTurnOff?.();
+    onUpdateJoinSetting?.(false);
   };
 
   const _onPressTurnOffWithRequests = () => {

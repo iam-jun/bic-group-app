@@ -15,6 +15,7 @@ interface GroupMemberRequestsProps {
   canApproveRejectJoiningRequests: boolean;
   canEditJoinSetting: boolean
   onPressAdd?: () => void;
+  navigateToMemberList: () => void;
 }
 
 const GroupMemberRequests = ({
@@ -23,6 +24,7 @@ const GroupMemberRequests = ({
   canApproveRejectJoiningRequests,
   canEditJoinSetting,
   onPressAdd,
+  navigateToMemberList,
 }: GroupMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
@@ -58,16 +60,12 @@ const GroupMemberRequests = ({
     getData(true);
   };
 
-  const onPressTurnOn = () => {
-    console.log('Turn on');
-  };
-
-  const onPressTurnOff = () => {
-    console.log('Turn off');
+  const onUpdateJoinSetting = (isJoinApproval: boolean) => {
+    dispatch(groupsActions.updateGroupJoinSetting({ groupId, isJoinApproval }));
   };
 
   const onPressApproveAll = () => {
-    console.log('Approve all');
+    dispatch(groupsActions.approveAllGroupMemberRequests({ groupId, total, callback: navigateToMemberList }));
   };
 
   return (
@@ -77,8 +75,7 @@ const GroupMemberRequests = ({
           type="group"
           total={total}
           isJoinApproval={isJoinApproval}
-          onPressTurnOn={onPressTurnOn}
-          onPressTurnOff={onPressTurnOff}
+          onUpdateJoinSetting={onUpdateJoinSetting}
           onPressApproveAll={onPressApproveAll}
         />
       )}

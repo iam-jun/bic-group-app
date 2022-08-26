@@ -15,6 +15,7 @@ interface CommunityMemberRequestsProps {
   canApproveRejectJoiningRequests: boolean;
   canEditJoinSetting: boolean;
   onPressAdd?: () => void;
+  navigateToMemberList: () => void;
 }
 
 const CommunityMemberRequests = ({
@@ -23,6 +24,7 @@ const CommunityMemberRequests = ({
   canApproveRejectJoiningRequests,
   canEditJoinSetting,
   onPressAdd,
+  navigateToMemberList,
 }: CommunityMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { canLoadMore, ids, total } = useKeySelector(groupsKeySelector.communityMemberRequests);
@@ -58,16 +60,12 @@ const CommunityMemberRequests = ({
     getData(true);
   };
 
-  const onPressTurnOn = () => {
-    console.log('Turn on');
-  };
-
-  const onPressTurnOff = () => {
-    console.log('Turn off');
+  const onUpdateJoinSetting = (isJoinApproval: boolean) => {
+    dispatch(groupsActions.updateCommunityJoinSetting({ communityId, isJoinApproval }));
   };
 
   const onPressApproveAll = () => {
-    console.log('Approve all');
+    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, total, callback: navigateToMemberList }));
   };
 
   return (
@@ -77,8 +75,7 @@ const CommunityMemberRequests = ({
           type="community"
           total={total}
           isJoinApproval={isJoinApproval}
-          onPressTurnOn={onPressTurnOn}
-          onPressTurnOff={onPressTurnOff}
+          onUpdateJoinSetting={onUpdateJoinSetting}
           onPressApproveAll={onPressApproveAll}
         />
       )}
