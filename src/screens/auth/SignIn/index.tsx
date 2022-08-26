@@ -147,8 +147,9 @@ const SignIn = () => {
               {
                 duration: 200,
               },
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              () => {},
+              () => {
+                //
+              },
             );
           }
         },
@@ -160,8 +161,9 @@ const SignIn = () => {
             {
               duration: 200,
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            () => {},
+            () => {
+              //
+            },
           );
         },
       );
@@ -191,6 +193,9 @@ const SignIn = () => {
   );
 
   const checkAuthSessions = async () => {
+    const email = getValues('email');
+    if (!!email) return;
+
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();

@@ -702,6 +702,22 @@ const groupsActions = {
     type: groupsTypes.GET_MANAGED_COMMUNITY_AND_GROUP,
     payload,
   }),
+  getGlobalSearch: (payload: string) => ({
+    type: groupsTypes.GET_GLOBAL_SEARCH,
+    payload,
+  }),
+  setGlobalSearch: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: string[];
+    items?: any;
+  }) => ({
+    type: groupsTypes.SET_GLOBAL_SEARCH,
+    payload,
+  }),
+  resetGlobalSearch: () => ({
+    type: groupsTypes.RESET_GLOBAL_SEARCH,
+  }),
 };
 
 export default groupsActions;

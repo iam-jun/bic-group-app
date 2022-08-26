@@ -1,8 +1,8 @@
 import React from 'react';
-import initialState from '../../../storeRedux/initialState';
-import { configureStore, renderWithRedux } from '../../../test/testUtils';
-import YourCommunities from './YourCommunities';
-import { listYourCommunities } from '../../../test/mock_data/communities';
+import initialState from '~/storeRedux/initialState';
+import { configureStore, renderWithRedux } from '~/test/testUtils';
+import { listYourCommunities } from '~/test/mock_data/communities';
+import YourCommunities from '.';
 
 describe('YourCommunities Screen', () => {
   it('given an empty list, should render empty component', () => {

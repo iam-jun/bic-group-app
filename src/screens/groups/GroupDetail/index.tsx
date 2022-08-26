@@ -45,7 +45,7 @@ import { BottomListProps } from '~/components/BottomList';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
-  const groupId = params?.groupId;
+  const { groupId, onGoBack } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -292,6 +292,7 @@ const GroupDetail = (props: any) => {
           onRightPress={onPressMenu}
           showStickyHeight={groupInfoHeight}
           stickyHeaderComponent={!showPrivate && <GroupTabHeader groupId={groupId} isMember={isMember} />}
+          onPressBack={onGoBack}
         />
         <View testID="group_detail.content" style={styles.contentContainer}>
           {renderGroupContent()}

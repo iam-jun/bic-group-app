@@ -81,6 +81,7 @@ import getOwnerCommunity from './getOwnerCommunity';
 import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 import updateCommunityJoinSetting from './updateCommunityJoinSetting';
 import updateGroupJoinSetting from './updateGroupJoinSetting';
+import getGlobalSearch from './getGlobalSearch';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -292,6 +293,9 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_MANAGED, getManaged);
   yield takeLatest(groupsTypes.GET_OWNER_COMMUNITY, getOwnerCommunity);
   yield takeLatest(groupsTypes.GET_MANAGED_COMMUNITY_AND_GROUP, getManagedCommunityAndGroup);
+  yield takeLatest(
+    groupsTypes.GET_GLOBAL_SEARCH, getGlobalSearch,
+  );
 }
 
 function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {

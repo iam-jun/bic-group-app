@@ -20,6 +20,7 @@ import appConfig from '~/configs/appConfig';
 import { IUserEdit } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
+import { ISearchReq } from '~/interfaces/common';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
@@ -511,6 +512,14 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
+  searchGlobal: (params?: ISearchReq): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/search/global`,
+    params: {
+      ...params,
+      keyword: params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
   checkMembersCommunityStructureMovePreview: (
     communityId: string,
     params: any,
@@ -869,6 +878,7 @@ const groupApi = {
     communityId,
   ),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
+  searchGlobal: (params?: ISearchReq) => withHttpRequestPromise(groupsApiConfig.searchGlobal, params),
   checkMembersCommunityStructureMovePreview: (
     communityId: string,
     params: any,
