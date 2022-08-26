@@ -10,44 +10,54 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useKeySelector } from '~/hooks/selector';
-import CommunityItem from '../../../groups/components/CommunityItem';
 import spacing from '~/theme/spacing';
+import GlobalSearchItem from '../GlobalSearchItem';
 
-interface CommunitySearchResultsProps {
+interface GlobalSearchResultsProps {
   onLoadMore?: () => void;
-  onPressCommunity: (id: string) => void;
   onRefresh?: () => void;
+  onView: (item: any) => void;
+  onJoin: (item: any) => void;
+  onCancel: (item: any) => void;
 }
 
-const CommunitySearchResults = ({
+const GlobalSearchResults = ({
   onLoadMore,
-  onPressCommunity,
   onRefresh,
-}: CommunitySearchResultsProps) => {
+  onView,
+  onJoin,
+  onCancel,
+}: GlobalSearchResultsProps) => {
   const theme: ExtendedTheme = useTheme();
 
   const {
     loading, canLoadMore, ids, items,
-  } = useKeySelector(groupsKeySelector.communitySearch);
+  } = useKeySelector(groupsKeySelector.globalSearch);
 
   const renderItem = ({ item }: {item: number}) => {
     const currentItem = items[item];
     return (
-      <CommunityItem item={currentItem} onPressCommunities={onPressCommunity} />
+      <GlobalSearchItem
+        testID={`global_search_results.item_${currentItem.id}`}
+        item={currentItem}
+        onView={onView}
+        onJoin={onJoin}
+        onCancel={onCancel}
+      />
     );
   };
 
   const renderEmptyComponent = () => {
     if (loading) return null;
     return (
-      <View style={styles.textNoResults}>
+      <View testID="global_search_results.no_results" style={styles.textNoResults}>
         <Text.BodyS
           style={styles.noResultText}
           color={theme.colors.gray50}
           useI18n
-          testID="community_search_results.no_results"
+          testID="global_search_results.no_results"
         >
           common:text_search_no_results
         </Text.BodyS>
@@ -55,17 +65,11 @@ const CommunitySearchResults = ({
     );
   };
 
-  const renderHeaderComponent = () => (
-    <View style={styles.textSearchResults}>
-      <Text.BodyM useI18n>common:text_search_results</Text.BodyM>
-    </View>
-  );
-
   const renderListFooter = () => {
     if (!loading && canLoadMore && ids.length > 0) {
       return (
         <View style={styles.listFooter}>
-          <ActivityIndicator testID="community_search_results.loading_more" />
+          <ActivityIndicator testID="global_search_results.loading_more" />
         </View>
       );
     }
@@ -75,13 +79,13 @@ const CommunitySearchResults = ({
 
   return (
     <FlatList
-      testID="flatlist"
+      testID="global_search_results.flatlist"
       data={ids}
+      keyboardShouldPersistTaps="handled"
       renderItem={renderItem}
       keyExtractor={(
         item, index,
-      ) => `search_item_${item}?.id_${index}`}
-      ListHeaderComponent={renderHeaderComponent}
+      ) => `global_search_item_${item}?.id_${index}`}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}
       showsVerticalScrollIndicator={false}
@@ -119,4 +123,4 @@ const styles = StyleSheet.create({
   noResultText: { textAlign: 'center' },
 });
 
-export default CommunitySearchResults;
+export default GlobalSearchResults;

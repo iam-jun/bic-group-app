@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { renderWithRedux, createTestStore } from '../../../../test/testUtils';
-import ManagedCommunities from './ManagedCommunities';
-import initialState from '../../../../storeRedux/initialState';
-import { communityDetailData } from '../../../../test/mock_data/communities';
+import { renderWithRedux, createTestStore } from '~/test/testUtils';
+import ManagedCommunities from '.';
+import initialState from '~/storeRedux/initialState';
+import { communityDetailData } from '~/test/mock_data/communities';
 
 describe('ManagedCommunities component', () => {
   it('should NOT render empty screen correctly when loading', () => {

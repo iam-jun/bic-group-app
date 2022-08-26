@@ -20,7 +20,7 @@ import groupsActions from '~/storeRedux/groups/actions';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import { scaleSize } from '~/theme/dimension';
-import DiscoverItem from '../../../groups/components/DiscoverItem';
+import DiscoverItem from '~/screens/groups/components/DiscoverItem';
 import spacing from '~/theme/spacing';
 
 const screenWidth = Dimensions.get('window').width;

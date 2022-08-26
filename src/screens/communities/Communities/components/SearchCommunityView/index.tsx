@@ -8,9 +8,9 @@ import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBase
 import Text from '~/beinComponents/Text';
 import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
-import CommunitySearchResults from './CommunitySearchResults';
+import CommunitySearchResults from '../CommunitySearchResults';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 interface SearchCommunityViewProps extends SearchBaseViewProps {
   onPressCommunity: (id: string) => void;
