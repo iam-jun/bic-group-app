@@ -57,6 +57,7 @@ const groupsKeySelector = {
     move: 'groups.groupStructure.move',
   },
   communitySearch: 'groups.communitySearch',
+  globalSearch: 'groups.globalSearch',
   myPermissions: 'groups.myPermissions',
   permissionsByScopeAndId: (
     scope: 'communities' | 'groups', id: number,

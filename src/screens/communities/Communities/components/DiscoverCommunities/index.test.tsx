@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { createTestStore, renderWithRedux } from '../../../../test/testUtils';
-import initialState from '../../../../storeRedux/initialState';
-import DiscoverCommunities from './DiscoverCommunities';
-import { communityDetailData } from '../../../../test/mock_data/communities';
+import { createTestStore, renderWithRedux } from '~/test/testUtils';
+import initialState from '~/storeRedux/initialState';
+import DiscoverCommunities from '.';
+import { communityDetailData } from '~/test/mock_data/communities';
 
 describe('DiscoverCommunities Screen', () => {
   it('renders empty screen when list is empty and loading false', async () => {

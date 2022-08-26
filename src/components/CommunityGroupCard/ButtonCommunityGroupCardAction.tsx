@@ -1,18 +1,18 @@
 import React, { FC } from 'react';
-import Button from '~/baseComponents/Button';
+import Button, { ButtonProps } from '~/baseComponents/Button';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 
-type ButtonActionProps = {
+interface ButtonActionProps extends ButtonProps {
   joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
   onPress: () => void;
 }
 
-type ButtonCommunityGroupCardActionProps = {
+interface ButtonCommunityGroupCardActionProps extends ButtonProps {
   joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
   onJoin?: () => void;
   onView?: () => void;
   onCancel?: () => void;
-};
+}
 
 const getTextButton = (
   joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus],
@@ -31,7 +31,7 @@ const getTextButton = (
   }
 };
 
-const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
+const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, ...props }) => {
   const textButton = getTextButton(joinStatus);
 
   switch (joinStatus) {
@@ -41,7 +41,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
       return (
         <Button.Neutral
           useI18n
-          onPress={onPress}
+          {...props}
         >
           {textButton}
         </Button.Neutral>
@@ -50,7 +50,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
       return (
         <Button.Secondary
           useI18n
-          onPress={onPress}
+          {...props}
         >
           {textButton}
         </Button.Secondary>
@@ -60,7 +60,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
         <Button.Secondary
           type="ghost"
           useI18n
-          onPress={onPress}
+          {...props}
         >
           {textButton}
         </Button.Secondary>
@@ -70,7 +70,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
         <Button.Secondary
           type="ghost"
           useI18n
-          onPress={onPress}
+          {...props}
         >
           {textButton}
         </Button.Secondary>
@@ -81,7 +81,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, onPress }) => {
 const ButtonCommunityGroupCardAction: FC<
 ButtonCommunityGroupCardActionProps
 > = ({
-  onView, onCancel, onJoin, joinStatus,
+  onView, onCancel, onJoin, joinStatus, ...props
 }) => {
   const onPressView = () => onView?.();
 
@@ -106,7 +106,7 @@ ButtonCommunityGroupCardActionProps
   };
 
   return (
-    <ButtonAction joinStatus={joinStatus} onPress={onPress} />
+    <ButtonAction joinStatus={joinStatus} {...props} onPress={onPress} />
   );
 };
 
