@@ -29,31 +29,35 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const { loading, data } = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
+  const { loading, data }
+    = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
 
   const onPressClear = () => {
     onClearAllKeyword?.();
   };
 
   const onPressDeleteItem = (item: any) => {
-    onDeleteKeyword?.(
-      item?.id, item?.keyword,
-    );
+    onDeleteKeyword?.(item?.id, item?.keyword);
   };
 
   const onPressItem = (item: any) => {
     onSelectKeyword?.(item?.keyword);
   };
 
-  const renderItem = (
-    item: any, index: number,
-  ) => (
+  const renderItem = (item: any, index: number) => (
     <PrimaryItem
       testID={`recent_search_keyword.item_${index}`}
       key={`recent_item_${item.id}`}
       subTitle={item?.keyword}
+      subTitleProps={{ variant: 'bodyMMedium' }}
       style={styles.item}
       onPress={() => onPressItem(item)}
+      leftIcon="Clock"
+      leftIconProps={{
+        style: { marginRight: spacing.margin.base },
+        tintColor: theme.colors.neutral20,
+        size: 18,
+      }}
       RightComponent={(
         <TouchableOpacity
           testID={`recent_search_keyword.btn_delete_item_${index}`}
@@ -85,9 +89,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
             onPress={onPressClear}
             style={{ justifyContent: 'center', alignSelf: 'center' }}
           >
-            <Text.LinkS>
-              {t('home:newsfeed_search:clear')}
-            </Text.LinkS>
+            <Text.LinkS>{t('home:newsfeed_search:clear')}</Text.LinkS>
           </Button>
         )}
       </View>
@@ -119,7 +121,7 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     item: {
       paddingVertical: spacing.padding.base,
-      paddingRight: spacing.padding.small,
+      paddingHorizontal: 0,
     },
     textEmpty: {
       textAlign: 'center',

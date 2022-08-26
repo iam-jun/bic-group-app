@@ -16,7 +16,7 @@ import spacing from '~/theme/spacing';
 import { isDiffBetweenTwoDates } from './helper';
 import Icon from '~/baseComponents/Icon';
 import Tag from '~/baseComponents/Tag';
-import { formatDateTime } from '~/beinComponents/TimeView/helper';
+import { formatDateWithTodayLabel } from '~/beinComponents/TimeView/helper';
 import { DateInput } from '~/baseComponents/Input';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
@@ -213,10 +213,10 @@ const FilterDate: FC<NFSFilterDateProps> = ({
                     type="secondary"
                     size="small"
                     label={t(
-                      `${formatDateTime(
+                      `${formatDateWithTodayLabel(
                         selectedStartDate,
                         language,
-                      )} - ${formatDateTime(selectedEndDate, language)}`,
+                      )} - ${formatDateWithTodayLabel(selectedEndDate, language)}`,
                     )}
                     onActionPress={() => setStaged(1)}
                     icon="Xmark"

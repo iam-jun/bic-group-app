@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useState,
   useImperativeHandle,
+  RefObject,
 } from 'react';
 import {
   StyleSheet, View, TextInput, StyleProp, ViewStyle,
@@ -18,7 +19,7 @@ import { SEARCH_INPUT_SIZES } from './constants';
 
 export interface SearchInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
-  inputRef?: Ref<TextInput>;
+  inputRef?: RefObject<TextInput>;
   searchInputRef?: Ref<{setText:(text: string)=>void}>;
   size?: keyof typeof SEARCH_INPUT_SIZES,
 
@@ -43,6 +44,9 @@ const SearchInput: React.FC<SearchInputProps> = ({
   const [text, setText] = useState<string>('');
   const [isFocused, setFocused] = useState(false);
 
+  const focus = () => inputRef?.current?.focus?.();
+  const blur = () => inputRef?.current?.blur?.();
+
   useEffect(
     () => {
       setText(value || '');
@@ -52,6 +56,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
   useImperativeHandle(
     searchInputRef, () => ({
       setText,
+      focus,
+      blur,
     }),
   );
 

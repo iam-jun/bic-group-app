@@ -1,7 +1,9 @@
 import {
   StyleSheet, View, TextInput, StyleProp, ViewStyle,
 } from 'react-native';
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, {
+  ReactElement, useImperativeHandle, useRef, useState,
+} from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -22,6 +24,8 @@ export interface SearchBaseViewProps {
   onFocus?: () => void;
   onSubmitEditing?: () => void;
   searchViewRef?: any;
+  searchComponent?: ReactElement;
+  headerContainerStyle?: StyleProp<ViewStyle>;
 }
 
 function SearchBaseView({
@@ -35,6 +39,8 @@ function SearchBaseView({
   onFocus,
   onSubmitEditing,
   searchViewRef,
+  searchComponent,
+  headerContainerStyle,
 }: SearchBaseViewProps) {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -63,7 +69,7 @@ function SearchBaseView({
   }));
 
   const renderHeader = () => (
-    <View style={styles.headerContainer}>
+    <View style={[styles.headerContainer, headerContainerStyle]}>
       <View style={styles.inputIconContainer}>
         <Icon
           icon="iconBack"
@@ -75,30 +81,34 @@ function SearchBaseView({
           style={styles.iconBack}
           buttonTestID="search_base_view.back_button"
         />
-        <TextInput
-          ref={textInputRef}
-          autoFocus
-          testID="search_base_view.text_input"
-          style={styles.textInput}
-          value={searchText}
-          autoComplete="off"
-          placeholder={placeholder}
-          placeholderTextColor={theme.colors.gray40}
-          selectionColor={theme.colors.gray50}
-          onChangeText={_onChangeText}
-          onFocus={onFocus}
-          onSubmitEditing={onSubmitEditing}
-        />
-        {!!searchText && (
-          <Icon
-            style={styles.iconClose}
-            icon="iconClose"
-            size={20}
-            tintColor={theme.colors.neutral80}
-            onPress={() => _onChangeText('')}
-            buttonTestID="search_base_view.reset_button"
-          />
-        )}
+        {!searchComponent ? (
+          <>
+            <TextInput
+              ref={textInputRef}
+              autoFocus
+              testID="search_base_view.text_input"
+              style={styles.textInput}
+              value={searchText}
+              autoComplete="off"
+              placeholder={placeholder}
+              placeholderTextColor={theme.colors.gray40}
+              selectionColor={theme.colors.gray50}
+              onChangeText={_onChangeText}
+              onFocus={onFocus}
+              onSubmitEditing={onSubmitEditing}
+            />
+            {!!searchText && (
+            <Icon
+              style={styles.iconClose}
+              icon="iconClose"
+              size={20}
+              tintColor={theme.colors.neutral80}
+              onPress={() => _onChangeText('')}
+              buttonTestID="search_base_view.reset_button"
+            />
+            )}
+          </>
+        ) : searchComponent}
       </View>
     </View>
   );

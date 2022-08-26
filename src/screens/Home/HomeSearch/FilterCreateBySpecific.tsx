@@ -16,7 +16,7 @@ import { useBaseHook } from '~/hooks';
 import homeActions from '~/storeRedux/home/actions';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
 
-import SearchInput from '~/beinComponents/inputs/SearchInput';
+import SearchInput from '~/baseComponents/Input/SearchInput';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';
