@@ -71,8 +71,9 @@ const GroupDetail = (props: any) => {
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
-    'groups', groupId, [
-      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+    'groups',
+    groupId,
+    [
       PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
       PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
     ],
