@@ -16,6 +16,7 @@ import { formatLargeNumber } from '~/utils/formatData';
 import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';
 import { isGroup } from '~/screens/groups/helper';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -45,9 +46,22 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
     = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon, title: privacyTitle } = privacyData || {};
 
+  const getCommunityDetail = (loadingPage = false) => {
+    dispatch(groupsActions.getCommunityDetail({ communityId: community.id, loadingPage, showLoading: true }));
+  };
+
+  const onGoBackFromGroupDetail = () => {
+    dispatch(groupsActions.setCommunityDetail({} as ICommunity));
+    rootNavigation.goBack();
+  };
+
   const onView = () => {
     if (isGroup(level)) {
-      rootNavigation.navigate(groupStack.groupDetail, { groupId: id });
+      // in group detail we need some infomation from community detail,
+      // so before navigate to group detail we need to fetch community detail
+      // and clear community detail when go back from group detail
+      getCommunityDetail(true);
+      rootNavigation.navigate(groupStack.groupDetail, { groupId: id, onGoBack: onGoBackFromGroupDetail });
       return;
     }
 
