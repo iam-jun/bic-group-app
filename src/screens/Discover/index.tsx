@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities';
 import YourCommunities from '~/screens/Discover/components/YourCommunities';
@@ -13,8 +12,6 @@ import YourGroups from './components/YourGroups';
 import Managed from './components/Managed';
 import Tab from '~/baseComponents/Tab';
 import GlobalSearch from './components/GlobalSearch';
-import { isGroup } from '../groups/helper';
-import groupsActions from '~/storeRedux/groups/actions';
 
 const HEADER_TAB = [
   { id: 'discover-tab-1', text: 'discover:discover_communities' },
@@ -40,40 +37,6 @@ const Index = () => {
 
   const onCloseSearch = () => {
     setIsOpenSearchCommunity(false);
-  };
-
-  const onView = (item: any) => {
-    if (isGroup(item.level)) {
-      rootNavigation.navigate(groupStack.groupDetail, { groupId: item.id });
-      return;
-    }
-
-    rootNavigation.navigate(groupStack.communityDetail, { communityId: item.id });
-  };
-
-  const onJoin = (item: any) => {
-    if (isGroup(item.level)) {
-      dispatch(groupsActions.joinNewGroup({ groupId: item.id, groupName: item.name }));
-      return;
-    }
-
-    dispatch(
-      groupsActions.joinCommunity({ communityId: item.id, communityName: item.name }),
-    );
-  };
-
-  const onCancel = (item: any) => {
-    if (isGroup(item.level)) {
-      dispatch(groupsActions.cancelJoinGroup({ groupId: item.id, groupName: item.name }));
-      return;
-    }
-
-    dispatch(
-      groupsActions.cancelJoinCommunity({
-        communityId: item.id,
-        communityName: item.name,
-      }),
-    );
   };
 
   const onPressTab = (item: any, index: number) => {
@@ -127,9 +90,6 @@ const Index = () => {
         isOpen={isOpenSearchCommunity}
         placeholder={t('communities:text_search_communities')}
         onClose={onCloseSearch}
-        onView={onView}
-        onJoin={onJoin}
-        onCancel={onCancel}
       />
     </View>
   );

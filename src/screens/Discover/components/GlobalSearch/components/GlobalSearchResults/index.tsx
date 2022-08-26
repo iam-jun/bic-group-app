@@ -14,14 +14,13 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 import GlobalSearchItem from '../GlobalSearchItem';
-import { useRootNavigation } from '~/hooks/navigation';
 
 interface GlobalSearchResultsProps {
   onLoadMore?: () => void;
   onRefresh?: () => void;
-  onView?: (item: any) => void;
-  onJoin?: (item: any) => void;
-  onCancel?: (item: any) => void;
+  onView: (item: any) => void;
+  onJoin: (item: any) => void;
+  onCancel: (item: any) => void;
 }
 
 const GlobalSearchResults = ({
@@ -32,7 +31,6 @@ const GlobalSearchResults = ({
   onCancel,
 }: GlobalSearchResultsProps) => {
   const theme: ExtendedTheme = useTheme();
-  const { rootNavigation } = useRootNavigation();
 
   const {
     loading, canLoadMore, ids, items,
@@ -42,6 +40,7 @@ const GlobalSearchResults = ({
     const currentItem = items[item];
     return (
       <GlobalSearchItem
+        testID={`global_search_results.item_${currentItem.id}`}
         item={currentItem}
         onView={onView}
         onJoin={onJoin}
@@ -53,12 +52,12 @@ const GlobalSearchResults = ({
   const renderEmptyComponent = () => {
     if (loading) return null;
     return (
-      <View style={styles.textNoResults}>
+      <View testID="global_search_results.no_results" style={styles.textNoResults}>
         <Text.BodyS
           style={styles.noResultText}
           color={theme.colors.gray50}
           useI18n
-          testID="community_search_results.no_results"
+          testID="global_search_results.no_results"
         >
           common:text_search_no_results
         </Text.BodyS>
@@ -66,17 +65,11 @@ const GlobalSearchResults = ({
     );
   };
 
-  const renderHeaderComponent = () => (
-    <View style={styles.textSearchResults}>
-      <Text.BodyM useI18n>common:text_search_results</Text.BodyM>
-    </View>
-  );
-
   const renderListFooter = () => {
     if (!loading && canLoadMore && ids.length > 0) {
       return (
         <View style={styles.listFooter}>
-          <ActivityIndicator testID="community_search_results.loading_more" />
+          <ActivityIndicator testID="global_search_results.loading_more" />
         </View>
       );
     }
@@ -86,14 +79,13 @@ const GlobalSearchResults = ({
 
   return (
     <FlatList
-      testID="flatlist"
+      testID="global_search_results.flatlist"
       data={ids}
       keyboardShouldPersistTaps="handled"
       renderItem={renderItem}
       keyExtractor={(
         item, index,
       ) => `global_search_item_${item}?.id_${index}`}
-      // ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}
       showsVerticalScrollIndicator={false}

@@ -1,16 +1,23 @@
 import React from 'react';
-
 import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import GlobalSearchResults from '.';
 import { communityDetailData } from '~/test/mock_data/communities';
 import initialState from '~/storeRedux/initialState';
 
 describe('GlobalSearchResults component', () => {
-  const onPressCommunity = jest.fn();
+  const onView = jest.fn();
+  const onJoin = jest.fn();
+  const onCancel = jest.fn();
+
+  const baseProps = {
+    onView,
+    onJoin,
+    onCancel,
+  };
 
   it('should render data correctly', () => {
     const state = { ...initialState };
-    state.groups.communitySearch = {
+    state.groups.globalSearch = {
       loading: false,
       canLoadMore: true,
       ids: [communityDetailData.id],
@@ -19,16 +26,16 @@ describe('GlobalSearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults {...baseProps} />,
       store,
     );
-    const flatlist = wrapper.getByTestId('flatlist');
+    const flatlist = wrapper.getByTestId('global_search_results.flatlist');
     expect(flatlist).toBeDefined();
-    const items = wrapper.getAllByTestId('community_item');
+    const items = wrapper.getAllByTestId('global_search_results.item');
     expect(wrapper).toMatchSnapshot();
     expect(items.length).toBe(1);
     const loadingMore = wrapper.getByTestId(
-      'community_search_results.loading_more',
+      'global_search_results.loading_more',
     );
     expect(loadingMore).toBeDefined();
   });
@@ -39,11 +46,11 @@ describe('GlobalSearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults {...baseProps} />,
       store,
     );
     const emptyText = wrapper.queryByTestId(
-      'community_search_results.no_results',
+      'global_search_results.no_results',
     );
     expect(emptyText).toBeNull();
   });
@@ -59,11 +66,11 @@ describe('GlobalSearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults {...baseProps} />,
       store,
     );
     const emptyText = wrapper.queryByTestId(
-      'community_search_results.no_results',
+      'global_search_results.no_results',
     );
     expect(emptyText).toBeNull();
   });
@@ -79,11 +86,11 @@ describe('GlobalSearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults {...baseProps} />,
       store,
     );
     const emptyText = wrapper.getByTestId(
-      'community_search_results.no_results',
+      'global_search_results.no_results',
     );
     expect(emptyText).toBeDefined();
   });
@@ -99,12 +106,12 @@ describe('GlobalSearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults {...baseProps} />,
       store,
     );
 
     const loadingIndicator = wrapper.getByTestId(
-      'community_search_results.loading_more',
+      'global_search_results.loading_more',
     );
     expect(loadingIndicator).toBeDefined();
   });
@@ -120,11 +127,11 @@ describe('GlobalSearchResults component', () => {
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
-      <GlobalSearchResults onPressCommunity={onPressCommunity} />,
+      <GlobalSearchResults {...baseProps} />,
       store,
     );
-    const item = wrapper.getByTestId('community_item');
+    const item = wrapper.getByTestId('global_search_results_item_0');
     fireEvent.press(item);
-    expect(onPressCommunity).toBeCalled();
+    expect(onView).toBeCalled();
   });
 });

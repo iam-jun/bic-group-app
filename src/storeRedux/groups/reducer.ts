@@ -247,6 +247,7 @@ function groupsReducer(
     groupSearchMembers,
     discoverCommunities,
     communityMemberRequests,
+    globalSearch,
   } = state;
 
   switch (type) {
@@ -763,6 +764,18 @@ function groupsReducer(
             },
           },
         },
+        globalSearch: globalSearch?.items && globalSearch.items?.[payload.id]
+          ? {
+            ...globalSearch,
+            items: {
+              ...globalSearch.items,
+              [payload.id]: {
+                ...globalSearch.items[payload.id],
+                ...payload.data,
+              },
+            },
+          }
+          : globalSearch,
       };
 
     case groupsTypes.SET_MANAGED_COMMUNITIES:
@@ -786,6 +799,18 @@ function groupsReducer(
             },
           },
         },
+        globalSearch: globalSearch?.items && globalSearch.items?.[payload.id]
+          ? {
+            ...globalSearch,
+            items: {
+              ...globalSearch.items,
+              [payload.id]: {
+                ...globalSearch.items[payload.id],
+                ...payload.data,
+              },
+            },
+          }
+          : globalSearch,
       };
 
     case groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS:

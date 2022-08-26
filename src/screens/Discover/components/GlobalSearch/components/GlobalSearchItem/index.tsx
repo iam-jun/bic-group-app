@@ -10,6 +10,7 @@ import ButtonCommunityGroupCardAction from '~/components/CommunityGroupCard/Butt
 import { isGroup } from '~/screens/groups/helper';
 
 interface GlobalSearchItemProps {
+  testID: string,
   item: any;
   onView?: (item: any) => void;
   onJoin?: (item: any) => void;
@@ -17,7 +18,7 @@ interface GlobalSearchItemProps {
 }
 
 const GlobalSearchItem = ({
-  item, onView, onCancel, onJoin,
+  testID, item, onView, onCancel, onJoin,
 }: GlobalSearchItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -35,11 +36,11 @@ const GlobalSearchItem = ({
   const _onCancel = () => onCancel(item);
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <Avatar.Base source={icon} badgeBottom badge={privacyIcon} />
       <View style={styles.groupInfo}>
         <View style={styles.titleContainer}>
-          <Text.H6>{name}</Text.H6>
+          <Text.H6 numberOfLines={2}>{name}</Text.H6>
         </View>
         <View style={styles.groupInfoBottom}>
           <View style={styles.chip}>

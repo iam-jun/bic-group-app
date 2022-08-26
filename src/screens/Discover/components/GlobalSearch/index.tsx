@@ -11,17 +11,18 @@ import appConfig from '~/configs/appConfig';
 import GlobalSearchResults from './components/GlobalSearchResults';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import { isGroup } from '~/screens/groups/helper';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import { useRootNavigation } from '~/hooks/navigation';
 
-interface GlobalSearchProps extends SearchBaseViewProps {
-  onView?: (item: any) => void;
-  onJoin?: (item: any) => void;
-  onCancel?: (item: any) => void;
-}
+type GlobalSearchProps = SearchBaseViewProps
 
 const GlobalSearch = ({
-  initSearch, onView, onCancel, onJoin, ...props
+  initSearch, ...props
 }: GlobalSearchProps) => {
   const dispatch = useDispatch();
+  const { rootNavigation } = useRootNavigation();
+
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
@@ -53,6 +54,40 @@ const GlobalSearch = ({
 
   const onSearch = (text: string) => {
     searchHandler(text);
+  };
+
+  const onView = (item: any) => {
+    if (isGroup(item.level)) {
+      rootNavigation.navigate(groupStack.groupDetail, { groupId: item.id });
+      return;
+    }
+
+    rootNavigation.navigate(groupStack.communityDetail, { communityId: item.id });
+  };
+
+  const onJoin = (item: any) => {
+    if (isGroup(item.level)) {
+      dispatch(actions.joinNewGroup({ groupId: item.id, groupName: item.name }));
+      return;
+    }
+
+    dispatch(
+      actions.joinCommunity({ communityId: item.id, communityName: item.name }),
+    );
+  };
+
+  const onCancel = (item: any) => {
+    if (isGroup(item.level)) {
+      dispatch(actions.cancelJoinGroup({ groupId: item.id, groupName: item.name }));
+      return;
+    }
+
+    dispatch(
+      actions.cancelJoinCommunity({
+        communityId: item.id,
+        communityName: item.name,
+      }),
+    );
   };
 
   return (
