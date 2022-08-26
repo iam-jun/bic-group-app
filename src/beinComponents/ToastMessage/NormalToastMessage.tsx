@@ -74,9 +74,9 @@ const ToastMessage: FC<ToastMessageProps> = ({
       backgroundColor: colors.red60,
     },
     informative: {
-      iconColor: colors.neutral80,
-      textColor: colors.neutral80,
-      backgroundColor: colors.gray40,
+      iconColor: colors.white,
+      textColor: colors.white,
+      backgroundColor: colors.neutral80,
     },
   };
 

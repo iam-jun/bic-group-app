@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ICommunityMembers } from '~/interfaces/ICommunity';
-import MemberList from '../../../groups/components/MemberList';
+import MemberList from '~/screens/groups/components/MemberList';
 import actions from '~/storeRedux/groups/actions';
 import { useMyPermissions } from '~/hooks/permissions';
 
-interface MembersContentProps {
+interface CommunityMemberListProps {
   communityId: string;
   onPressMenu: (item: ICommunityMembers) => void;
 }
 
-const MembersContent = ({ communityId, onPressMenu }: MembersContentProps) => {
+const CommunityMemberList = ({ communityId, onPressMenu }: CommunityMemberListProps) => {
   const dispatch = useDispatch();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
@@ -60,4 +60,4 @@ const MembersContent = ({ communityId, onPressMenu }: MembersContentProps) => {
   );
 };
 
-export default MembersContent;
+export default CommunityMemberList;

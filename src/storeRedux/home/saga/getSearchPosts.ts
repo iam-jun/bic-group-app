@@ -21,7 +21,7 @@ export default function* getSearchPosts({
     let data: any[] = [];
     const state = yield select((state) => state?.home?.newsfeedSearch);
     const { searchResults, totalResult, loadingResult } = state || {};
-    const params: IParamGetSearchPost = { content: searchText };
+    const params: IParamGetSearchPost = { contentSearch: searchText };
 
     if (loadingResult || !searchText?.trim?.()) {
       console.warn('\x1b[36m🐣️ saga getSearchPosts loading result\x1b[0m');

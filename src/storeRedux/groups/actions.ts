@@ -385,13 +385,13 @@ const groupsActions = {
     groupId: string;
     requestId: string;
     fullName: string;
-    callback: () => void;
   }) => ({
     type: groupsTypes.APPROVE_SINGLE_GROUP_MEMBER_REQUEST,
     payload,
   }),
   approveAllGroupMemberRequests: (payload: {
     groupId: string;
+    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_GROUP_MEMBER_REQUESTS,
@@ -407,6 +407,7 @@ const groupsActions = {
   }),
   declineAllGroupMemberRequests: (payload: {
     groupId: string;
+    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
@@ -620,6 +621,7 @@ const groupsActions = {
   }),
   approveAllCommunityMemberRequests: (payload: {
     communityId: string;
+    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
@@ -627,6 +629,7 @@ const groupsActions = {
   }),
   declineAllCommunityMemberRequests: (payload: {
     communityId: string;
+    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,

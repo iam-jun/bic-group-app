@@ -222,9 +222,10 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       handlePutUpdateSettings();
       return 'putUpdateSettings';
     }
+    const notExpired = new Date().getTime() < new Date(sImportant?.expires_time).getTime();
 
     const dataDefault = [
-      !!sImportant.active,
+      !!notExpired,
       !sCanComment,
       !sCanReact,
     ];

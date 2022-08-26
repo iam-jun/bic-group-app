@@ -1,21 +1,17 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { clearToastMessage } from '~/storeRedux/modal/actions';
-import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import groupsActions from '~/storeRedux/groups/actions';
 import PendingUserItem from '~/screens/groups/components/PendingUserItem';
 
-const GroupMemberRequest = ({
+const GroupPendingUserItemWrapper = ({
   requestId,
 }: {
   requestId: string;
 }) => {
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
 
   const groupMemberRequests = useKeySelector(groupsKeySelector.groupMemberRequests);
   const { items } = groupMemberRequests;
@@ -24,19 +20,11 @@ const GroupMemberRequest = ({
   const { groupId, user } = requestItem;
   const { fullname: fullName } = user;
 
-  const navigateToGroupMembers = () => {
-    dispatch(clearToastMessage());
-    rootNavigation.navigate(
-      groupStack.groupMembers, { groupId },
-    );
-  };
-
   const onPressApprove = () => {
     dispatch(groupsActions.approveSingleGroupMemberRequest({
       groupId,
       requestId,
       fullName,
-      callback: navigateToGroupMembers,
     }));
   };
 
@@ -57,4 +45,4 @@ const GroupMemberRequest = ({
   );
 };
 
-export default GroupMemberRequest;
+export default GroupPendingUserItemWrapper;

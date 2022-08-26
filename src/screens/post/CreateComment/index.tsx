@@ -253,7 +253,6 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
           loading,
           disabled: disableButton,
           useI18n: true,
-          highEmphasis: true,
           style: { borderWidth: 0 },
         }}
         onPressBack={onPressBack}
