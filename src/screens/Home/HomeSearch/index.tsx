@@ -10,7 +10,6 @@ import SearchSuggestion from '~/screens/Home/HomeSearch/SearchSuggestion';
 import SearchResult from '~/screens/Home/HomeSearch/SearchResult';
 import { useBaseHook } from '~/hooks';
 import { IPayloadSetNewsfeedSearch } from '~/interfaces/IHome';
-import SearchInput from '~/baseComponents/Input/SearchInput';
 import spacing from '~/theme/spacing';
 
 interface HomeSearchProps {
@@ -21,7 +20,6 @@ interface HomeSearchProps {
 
 const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
   const _searchViewRef = searchViewRef || useRef(null);
-  const textInputRef = useRef(null);
 
   const dispatch = useDispatch();
   const { t } = useBaseHook();
@@ -32,7 +30,7 @@ const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
   );
 
   const onSelectKeyword = (keyword: string) => {
-    _searchViewRef?.current?.setText?.(keyword);
+    _searchViewRef?.current?.setSearchText?.(keyword);
     dispatch(
       homeActions.setNewsfeedSearch({
         isSuggestion: false,
@@ -78,19 +76,15 @@ const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
       style={style}
       isOpen={isShow}
       onClose={onClose}
-      searchComponent={(
-        <SearchInput
-          placeholder={t('input:search_post')}
-          searchInputRef={_searchViewRef}
-          inputRef={textInputRef}
-          style={{ flex: 1 }}
-          autoFocus
-          onFocus={onFocusSearch}
-          onChangeText={onSearchText}
-          onSubmitEditing={onSubmitSearch}
-        />
-      )}
-      headerContainerStyle={{ paddingRight: spacing.padding.small }}
+      placeholder={t('input:search_post')}
+      searchViewRef={_searchViewRef}
+      onFocus={onFocusSearch}
+      onChangeText={onSearchText}
+      onSubmitEditing={onSubmitSearch}
+      headerContainerStyle={{
+        paddingHorizontal: spacing.padding.large,
+        borderBottomWidth: 0,
+      }}
     >
       {isSuggestion ? (
         <SearchSuggestion onSelectKeyword={onSelectKeyword} />

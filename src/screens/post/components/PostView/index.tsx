@@ -50,6 +50,7 @@ import { useMyPermissions } from '~/hooks/permissions';
 import AlertDeleteAudiencesConfirmContent from '../AlertDeleteAudiencesConfirmContent';
 import PostAudiencesModal from '~/screens/post/components/PostAudiencesModal';
 import { Button } from '~/baseComponents';
+import { getTotalReactions } from '../PostViewComponents/helper';
 
 export interface PostViewProps {
   style?: any;
@@ -160,6 +161,8 @@ const _PostView: FC<PostViewProps> = ({
   const labelButtonComment = `${commentCount ? `${commentCount} ` : ''}${t(
     'post:button_comment',
   )}`;
+
+  const numberOfReactions = formatLargeNumber(getTotalReactions(reactionsCount, 'user'));
 
   const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
     = useMyPermissions();
@@ -386,7 +389,7 @@ const _PostView: FC<PostViewProps> = ({
         )}
         {isLite ? (
           <PostViewFooterLite
-            reactionsCount={5}
+            reactionsCount={Number(numberOfReactions)}
             commentsCount={commentsCount}
             seenCountsViewComponent={(
               <SeenCountsView
