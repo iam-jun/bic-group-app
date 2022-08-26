@@ -1,6 +1,6 @@
 import React from 'react';
-import { renderWithRedux } from '../../../../test/testUtils';
-import SearchCommunityView from './SearchCommunityView';
+import { renderWithRedux } from '~/test/testUtils';
+import SearchCommunityView from '.';
 
 describe('SearchCommunityView component', () => {
   const isOpen = true;

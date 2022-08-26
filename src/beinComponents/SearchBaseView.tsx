@@ -1,9 +1,7 @@
 import {
-  StyleSheet, View, TextInput, StyleProp, ViewStyle,
+  StyleSheet, View, StyleProp, ViewStyle,
 } from 'react-native';
-import React, {
-  ReactElement, useImperativeHandle, useRef, useState,
-} from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -12,6 +10,7 @@ import Icon from '../baseComponents/Icon';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
+import { SearchInput } from '~/baseComponents/Input';
 
 export interface SearchBaseViewProps {
   style?: StyleProp<ViewStyle>;
@@ -24,7 +23,6 @@ export interface SearchBaseViewProps {
   onFocus?: () => void;
   onSubmitEditing?: () => void;
   searchViewRef?: any;
-  searchComponent?: ReactElement;
   headerContainerStyle?: StyleProp<ViewStyle>;
 }
 
@@ -39,7 +37,6 @@ function SearchBaseView({
   onFocus,
   onSubmitEditing,
   searchViewRef,
-  searchComponent,
   headerContainerStyle,
 }: SearchBaseViewProps) {
   const theme: ExtendedTheme = useTheme();
@@ -81,34 +78,20 @@ function SearchBaseView({
           style={styles.iconBack}
           buttonTestID="search_base_view.back_button"
         />
-        {!searchComponent ? (
-          <>
-            <TextInput
-              ref={textInputRef}
-              autoFocus
-              testID="search_base_view.text_input"
-              style={styles.textInput}
-              value={searchText}
-              autoComplete="off"
-              placeholder={placeholder}
-              placeholderTextColor={theme.colors.gray40}
-              selectionColor={theme.colors.gray50}
-              onChangeText={_onChangeText}
-              onFocus={onFocus}
-              onSubmitEditing={onSubmitEditing}
-            />
-            {!!searchText && (
-            <Icon
-              style={styles.iconClose}
-              icon="iconClose"
-              size={20}
-              tintColor={theme.colors.neutral80}
-              onPress={() => _onChangeText('')}
-              buttonTestID="search_base_view.reset_button"
-            />
-            )}
-          </>
-        ) : searchComponent}
+        <SearchInput
+          autoFocus
+          inputRef={textInputRef}
+          testID="search_base_view.text_input"
+          style={styles.textInput}
+          value={searchText}
+          autoComplete="off"
+          placeholder={placeholder}
+          placeholderTextColor={theme.colors.gray40}
+          selectionColor={theme.colors.gray50}
+          onChangeText={_onChangeText}
+          onFocus={onFocus}
+          onSubmitEditing={onSubmitEditing}
+        />
       </View>
     </View>
   );
@@ -142,13 +125,14 @@ const createStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       backgroundColor: colors.white,
       ...elevations.e1,
+      borderBottomColor: colors.gray1,
+      borderBottomWidth: 1,
+      paddingHorizontal: spacing.padding.base,
     },
     iconBack: {
-      height: 48,
-      width: 48,
       justifyContent: 'center',
       alignItems: 'center',
-      padding: spacing.padding.base,
+      padding: spacing.padding.small,
     },
     textInput: {
       flex: 1,
@@ -156,7 +140,6 @@ const createStyles = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
       color: colors.neutral80,
-      marginHorizontal: spacing.margin.base,
     },
     inputIconContainer: {
       height: dimension.headerHeight,
@@ -165,8 +148,6 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       overflow: 'hidden',
       alignItems: 'center',
-      paddingRight: spacing.padding.small,
-      paddingLeft: spacing.padding.small,
     },
     iconClose: {
       marginRight: spacing.margin.large,

@@ -1,17 +1,17 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import SearchCommunityView from '~/screens/communities/Communities/components/SearchCommunityView';
 import spacing from '~/theme/spacing';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities';
 import YourCommunities from '~/screens/Discover/components/YourCommunities';
 import YourGroups from './components/YourGroups';
 import Managed from './components/Managed';
 import Tab from '~/baseComponents/Tab';
+import GlobalSearch from './components/GlobalSearch';
 
 const HEADER_TAB = [
   { id: 'discover-tab-1', text: 'discover:discover_communities' },
@@ -26,6 +26,7 @@ const Index = () => {
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
+  const dispatch = useDispatch();
 
   const [isOpenSearchCommunity, setIsOpenSearchCommunity] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -36,12 +37,6 @@ const Index = () => {
 
   const onCloseSearch = () => {
     setIsOpenSearchCommunity(false);
-  };
-
-  const onPressCommunities = (communityId: string) => {
-    rootNavigation.navigate(
-      groupStack.communityDetail, { communityId },
-    );
   };
 
   const onPressTab = (item: any, index: number) => {
@@ -91,11 +86,10 @@ const Index = () => {
 
         {renderContent()}
       </View>
-      <SearchCommunityView
+      <GlobalSearch
         isOpen={isOpenSearchCommunity}
-        onClose={onCloseSearch}
-        onPressCommunity={onPressCommunities}
         placeholder={t('communities:text_search_communities')}
+        onClose={onCloseSearch}
       />
     </View>
   );

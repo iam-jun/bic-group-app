@@ -1,8 +1,8 @@
 import React from 'react';
-import initialState from '../../../storeRedux/initialState';
-import { configureStore, renderWithRedux } from '../../../test/testUtils';
-import DiscoverCommunities from './DiscoverCommunities';
-import { listDiscoverCommunities } from '../../../test/mock_data/communities';
+import initialState from '~/storeRedux/initialState';
+import { configureStore, renderWithRedux } from '~/test/testUtils';
+import { listDiscoverCommunities } from '~/test/mock_data/communities';
+import DiscoverCommunities from '.';
 
 describe('DiscoverCommunities Screen', () => {
   it('given an empty list & canLoadMore = false, should render empty component', () => {

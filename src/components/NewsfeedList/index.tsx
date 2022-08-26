@@ -313,7 +313,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           testID="newsfeed_list.list"
           // @ts-ignore
           data={data}
-          bounces={false}
+          // bounces={false}
           renderItem={renderItem}
           keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
           estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
