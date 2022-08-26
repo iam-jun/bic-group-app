@@ -24,6 +24,7 @@ export interface TagProps {
   onPressIcon?: () => void;
   style?: StyleProp<ViewStyle>;
   textProps?: TextProps;
+  testID?: string;
 }
 
 const Tag: React.FC<TagProps> = ({
@@ -37,6 +38,7 @@ const Tag: React.FC<TagProps> = ({
   onPressIcon,
   style,
   textProps,
+  testID,
 }: TagProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(
@@ -57,7 +59,7 @@ const Tag: React.FC<TagProps> = ({
 
   return (
     <TouchableOpacity
-      testID="tag.item"
+      testID={testID || 'tag.item'}
       disabled={disabled}
       style={[styles.container, style, {
         paddingLeft: !!avatar ? 0 : spacing.padding.small,

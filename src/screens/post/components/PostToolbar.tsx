@@ -35,6 +35,7 @@ import { clearExistingFiles, validateFilesPicker } from '../CreatePost/helper';
 import { getTotalFileSize } from '../../../storeRedux/post/selectors';
 import ReviewMarkdown from './ReviewMarkdown';
 import { fontFamilies } from '~/theme/fonts';
+import { Button } from '~/baseComponents';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
@@ -45,6 +46,7 @@ export interface PostToolbarProps {
   videoDisabled?: boolean;
   fileDisabled?: boolean;
   onPressBack?: () => void;
+  onPressSetting: ()=> void;
 }
 
 const PostToolbar = ({
@@ -55,6 +57,7 @@ const PostToolbar = ({
   videoDisabled,
   fileDisabled,
   onPressBack,
+  onPressSetting,
   ...props
 }: PostToolbarProps) => {
   const animated = useRef(new Animated.Value(0)).current;
@@ -218,12 +221,12 @@ const PostToolbar = ({
     testID: string,
     onPressIcon?: (e: any) => void,
   ) => {
-    const tintColor = onPressIcon ? colors.neutral80 : colors.gray40;
+    const tintColor = onPressIcon ? colors.neutral40 : colors.neutral20;
 
     return (
       <View style={styles.toolbarButton}>
         <Icon
-          size={20}
+          size={24}
           tintColor={tintColor}
           icon={icon}
           buttonTestID={testID}
@@ -237,29 +240,38 @@ const PostToolbar = ({
     <PanGestureHandler onGestureEvent={handleGesture}>
       <Animated.View style={containerStyle}>
         <View
-          style={StyleSheet.flatten([styles.toolbarStyle, style])}
           testID="post_toolbar"
+          style={StyleSheet.flatten([styles.toolbarStyle, style])}
         >
-          {renderToolbarButton(
-            'CreditCard',
-            'post_toolbar.markdown_preview',
-            content && onPressMarkdownPreview,
-          )}
-          {renderToolbarButton(
-            'Image',
-            'post_toolbar.add_photo',
-            !imageDisabled ? _onPressSelectImage : undefined,
-          )}
-          {renderToolbarButton(
-            'CirclePlay',
-            'post_toolbar.add_video',
-            !videoDisabled ? _onPressSelectVideo : undefined,
-          )}
-          {renderToolbarButton(
-            'Paperclip',
-            'post_toolbar.add_file',
-            !fileDisabled ? onPressAddFile : undefined,
-          )}
+          <View style={styles.row}>
+            {renderToolbarButton(
+              'Markdown',
+              'post_toolbar.markdown_preview',
+              content && onPressMarkdownPreview,
+            )}
+            {renderToolbarButton(
+              'Image',
+              'post_toolbar.add_photo',
+              !imageDisabled ? _onPressSelectImage : undefined,
+            )}
+            {renderToolbarButton(
+              'ClapperboardPlay',
+              'post_toolbar.add_video',
+              !videoDisabled ? _onPressSelectVideo : undefined,
+            )}
+            {renderToolbarButton(
+              'Paperclip',
+              'post_toolbar.add_file',
+              !fileDisabled ? onPressAddFile : undefined,
+            )}
+          </View>
+          <Button.Raise
+            size="medium"
+            testID="header.menuIcon.button"
+            icon="Sliders"
+            color={colors.neutral40}
+            onPress={onPressSetting}
+          />
         </View>
         {!!content && renderMarkdownHelp()}
         <KeyboardSpacer iosOnly />
@@ -308,6 +320,8 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.large,
       alignItems: 'center',
       flexDirection: 'row',
+      justifyContent: 'space-between',
+
     },
     toolbarButton: {
       width: 36,

@@ -280,7 +280,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         }
       >
         <Header
-          title="post:select_audience"
+          title="post:title_post_to"
           titleTextProps={{ useI18n: true }}
           buttonText={isFirstStep ? 'common:btn_next' : 'common:btn_done'}
           buttonProps={{

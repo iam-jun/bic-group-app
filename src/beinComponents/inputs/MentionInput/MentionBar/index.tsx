@@ -19,9 +19,9 @@ import {
   completeMention,
   ICursorPositionChange,
 } from '~/beinComponents/inputs/MentionInput/helper';
-import MentionBarItem from '~/beinComponents/inputs/MentionInput/MentionBar/MentionBarItem';
-import Divider from '~/beinComponents/Divider';
-import spacing from '~/theme/spacing';
+import Tag from '~/baseComponents/Tag';
+import images from '~/resources/images';
+import { spacing } from '~/theme';
 
 interface MentionBarProps {
   testID?: string;
@@ -97,10 +97,13 @@ const MentionBar: FC<MentionBarProps> = ({
   };
 
   const renderItem = ({ item }: any) => (
-    <MentionBarItem
+    <Tag
       testID="mention_bar.item"
-      data={item}
-      onPress={onPressItem}
+      type="primary"
+      size="medium"
+      label={item?.fullname || ''}
+      avatar={item?.avatar || images.img_user_avatar_default}
+      onActionPress={() => { onPressItem(item); }}
     />
   );
 
@@ -117,14 +120,6 @@ const MentionBar: FC<MentionBarProps> = ({
         showsHorizontalScrollIndicator={false}
         data={data}
         keyboardShouldPersistTaps="handled"
-        ItemSeparatorComponent={() => (
-          <Divider
-            testID="mention_bar.list.divider"
-            horizontal
-            style={{ marginVertical: spacing.margin.small }}
-            color={colors.gray40}
-          />
-        )}
         renderItem={renderItem}
       />
     </View>
@@ -135,10 +130,11 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      minHeight: 44,
       borderTopWidth: 1,
       borderColor: colors.gray40,
       backgroundColor: colors.white,
+      alignItem: 'center',
+      paddingVertical: spacing.padding.small,
     },
   });
 };

@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -175,7 +174,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       <Header
         titleTextProps={{ useI18n: true }}
         title={isEdit ? 'post:title_edit_post' : 'post:title_create_post'}
-        buttonText={isEdit ? 'common:btn_publish' : 'post:post_button'}
+        buttonText={isEdit ? 'post:post_button' : 'common:btn_publish'}
         buttonProps={{
           loading,
           disabled: disableButtonPost,
@@ -202,7 +201,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           inputRef={refTextInput}
           useCreatePostData={useCreatePostData}
         />
-        <View style={styles.setting}>
+        {/* <View style={styles.setting}>
           <Button.Secondary
             testID="create_post.btn_post_settings"
             color={colors.gray5}
@@ -213,7 +212,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           >
             {t('post:settings') + (count > 0 ? ` (${count})` : '')}
           </Button.Secondary>
-        </View>
+        </View> */}
         <CreatePostFooter
           toolbarRef={toolbarRef}
           loading={loading}
@@ -221,6 +220,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           imageDisabled={imageDisabled}
           videoDisabled={videoDisabled}
           fileDisabled={fileDisabled}
+          onPressSetting={onPressSettings}
         />
       </TouchableOpacity>
     </ScreenWrapper>
