@@ -8,7 +8,6 @@ import {
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import EmptyScreen from '~/components/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import { useKeySelector } from '~/hooks/selector';
@@ -17,7 +16,6 @@ import GroupPendingUserItemWrapper from '~/screens/groups/GroupMembers/GroupMemb
 import CommunityPendingUserItemWrapper from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/CommunityPendingUserItemWrapper';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
-import modalActions from '~/storeRedux/modal/actions';
 
 interface MemberRequestListProps {
   id?: string;
@@ -25,7 +23,7 @@ interface MemberRequestListProps {
   canAddMember?: boolean;
   onLoadMore: () => void;
   onRefresh: () => void;
-  onPressAdd?: () => void;
+  onPressAdd: () => void;
 }
 
 const MemberRequestList = ({
@@ -37,16 +35,13 @@ const MemberRequestList = ({
   onRefresh,
 }: MemberRequestListProps) => {
   const theme: ExtendedTheme = useTheme();
-  const dispatch = useDispatch();
 
   const {
     loading, ids, canLoadMore,
   } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
 
   const onPressAddMemmbers = () => {
-    if (onPressAdd) return onPressAdd();
-
-    return dispatch(modalActions.showAlertNewFeature());
+    onPressAdd?.();
   };
 
   const renderItem = ({ item: requestId }: {item: string}) => {

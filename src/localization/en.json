@@ -947,8 +947,29 @@
     },
     "text_search_communities": "Search Communities",
     "member_tab_types": {
-    "title_member_list": "Member List",
-    "title_member_requests": "Member Requests"
+      "title_member_list": "Member List",
+      "title_member_requests": "Member Requests"
+    },
+    "join_request_setting": {
+      "title": "The join request setting",
+      "description_on_community": "Members must ask for approval to join community",
+      "description_on_group": "Members must ask for approval to join group",
+      "description_off_community": "Members can join community without asking for approval",
+      "description_off_group": "Members can join group without asking for approval",
+      "pop_up_on": {
+        "title": "You are turning on the join request setting",
+        "content_community": "You have to approve a join request to allow member to join your community. Are you sure to do this?",
+        "content_group": "You have to approve a join request to allow member to join your group. Are you sure to do this?",
+        "confirm": "Turn on"
+      },
+      "pop_up_off": {
+        "title": "You are turning off the join request setting",
+        "content_community": "All members can join your community without asking for approval. Are you sure to do this?",
+        "content_group": "All members can join your group without asking for approval. Are you sure to do this?",
+        "content_with_requests": "All pending requests will be approved automatically after turning off this setting. Are you sure to do this?",
+        "confirm": "Turn off",
+        "approve_all": "Yes, Approve All"
+      }
     }
   },
   "upload": {

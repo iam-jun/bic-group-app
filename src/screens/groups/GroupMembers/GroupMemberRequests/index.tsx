@@ -7,6 +7,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import MemberRequestList from '../../components/MemberRequestList';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
+import JoinRequestSetting from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/JoinRequestSetting';
 
 interface GroupMemberRequestsProps {
   groupId: string;
@@ -20,13 +21,21 @@ const GroupMemberRequests = ({
   groupId,
   canAddMember,
   canApproveRejectJoiningRequests,
+  canEditJoinSetting,
   onPressAdd,
 }: GroupMemberRequestsProps) => {
   const dispatch = useDispatch();
-  const { ids, canLoadMore } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { id, settings } = useKeySelector(groupsKeySelector.groupDetail.group);
+  const { isJoinApproval } = settings || {};
 
   useEffect(
     () => {
+      if (!id || id !== groupId) {
+        // get data if navigation from notification screen
+        dispatch(groupsActions.getGroupDetail({ groupId }));
+      }
+
       if (canApproveRejectJoiningRequests) {
         getData();
 
@@ -49,8 +58,30 @@ const GroupMemberRequests = ({
     getData(true);
   };
 
+  const onPressTurnOn = () => {
+    console.log('Turn on');
+  };
+
+  const onPressTurnOff = () => {
+    console.log('Turn off');
+  };
+
+  const onPressApproveAll = () => {
+    console.log('Approve all');
+  };
+
   return (
     <View style={styles.container} testID="GroupMemberRequests">
+      {!!canEditJoinSetting && (
+        <JoinRequestSetting
+          type="group"
+          total={total}
+          isJoinApproval={isJoinApproval}
+          onPressTurnOn={onPressTurnOn}
+          onPressTurnOff={onPressTurnOff}
+          onPressApproveAll={onPressApproveAll}
+        />
+      )}
 
       {!!canApproveRejectJoiningRequests && (
         <>

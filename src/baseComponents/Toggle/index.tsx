@@ -34,9 +34,7 @@ const Toggle = ({
   }, [isChecked]);
 
   const onChangeValue = () => {
-    const newValue = !checked;
-    onPress?.(newValue);
-    setChecked(newValue);
+    onPress?.(!checked);
   };
 
   const toggleStyles = {
