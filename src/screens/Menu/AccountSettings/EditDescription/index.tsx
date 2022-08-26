@@ -14,7 +14,6 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '../../../../storeRedux/menu/actions';
 import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useKeySelector } from '~/hooks/selector';
-import spacing from '~/theme/spacing';
 import { TextArea } from '~/baseComponents/Input';
 
 const EditDescription = () => {
@@ -67,9 +66,6 @@ const EditDescription = () => {
         buttonText="common:text_save"
         buttonProps={{
           useI18n: true,
-          color: theme.colors.purple50,
-          textColor: theme.colors.white,
-          borderRadius: spacing.borderRadius.small,
           disabled: !isValid,
           testID: 'edit_description.save',
         }}

@@ -9,7 +9,7 @@ describe('declineAllGroupMemberRequests saga', () => {
   const groupId = '1';
   const action = {
     type: 'test',
-    payload: { groupId },
+    payload: { groupId, total: 2 },
   };
 
   it('should decline all member requests correctly', async () => expectSaga(declineAllGroupMemberRequests, action)

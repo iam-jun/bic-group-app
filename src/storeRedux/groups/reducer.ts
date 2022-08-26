@@ -137,7 +137,7 @@ export const groupInitState = {
 
   groupMemberRequests: {
     total: 0,
-    loading: false,
+    loading: true,
     ids: [] as string[],
     items: {} as IObject<IJoiningMember>,
     canLoadMore: true,
@@ -204,7 +204,7 @@ export const groupInitState = {
   },
   communityMemberRequests: {
     total: 0,
-    loading: false,
+    loading: true,
     canLoadMore: true,
     ids: [] as string[],
     items: {} as IObject<IJoiningMember>,

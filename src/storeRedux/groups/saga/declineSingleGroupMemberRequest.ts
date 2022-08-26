@@ -37,7 +37,7 @@ export default function* declineSingleGroupMemberRequest({
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
       props: {
         textProps: { useI18n: true },
-        type: 'success',
+        type: 'informative',
       },
       toastType: 'normal',
     };

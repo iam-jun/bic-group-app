@@ -5,7 +5,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Divider from '~/beinComponents/Divider';
-import Button from '~/beinComponents/Button';
+import { Button } from '~/baseComponents';
 
 import spacing from '~/theme/spacing';
 
@@ -27,26 +27,28 @@ const ButtonApproveDeclineAllRequests = ({
     <View style={[styles.container, style]}>
       <Divider />
       <View style={styles.buttons}>
-        <Button.Secondary
+        <Button.Neutral
           testID="button_approve_decline_all_requests.decline"
           style={styles.buttonDecline}
-          color={theme.colors.gray10}
-          textColor={theme.colors.neutral80}
+          type="solid"
+          size="medium"
+          icon="CircleMinusSolid"
           onPress={onPressDeclineAll}
           useI18n
         >
           common:btn_decline_all
-        </Button.Secondary>
-        <Button.Secondary
-          highEmphasis
+        </Button.Neutral>
+        <Button.Primary
           testID="button_approve_decline_all_requests.approve"
           style={styles.buttonApprove}
-          color={theme.colors.purple50}
+          type="solid"
+          size="medium"
+          icon="CircleCheckSolid"
           onPress={onPressApproveAll}
           useI18n
         >
           common:btn_approve_all
-        </Button.Secondary>
+        </Button.Primary>
       </View>
     </View>
   );
@@ -61,7 +63,9 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     buttons: {
       flexDirection: 'row',
-      margin: spacing.margin.large,
+      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing.padding.base,
+      paddingBottom: spacing.padding.extraLarge,
     },
     buttonDecline: {
       flex: 1,

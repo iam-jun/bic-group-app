@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import PendingUserItem from '../../../groups/components/PendingUserItem';
+import PendingUserItem from '~/screens/groups/components/PendingUserItem';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
-import groupsActions from '../../../../storeRedux/groups/actions';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import groupsActions from '~/storeRedux/groups/actions';
 
-const CommunityMemberRequest = ({
+const CommunityPendingUserItemWrapper = ({
   requestId,
   organizationId: communityId,
 }: {
@@ -47,4 +47,4 @@ const CommunityMemberRequest = ({
   );
 };
 
-export default CommunityMemberRequest;
+export default CommunityPendingUserItemWrapper;

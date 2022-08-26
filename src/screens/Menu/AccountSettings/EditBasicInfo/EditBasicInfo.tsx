@@ -167,9 +167,6 @@ const EditBasicInfo = () => {
         buttonText="common:text_save"
         buttonProps={{
           useI18n: true,
-          color: theme.colors.purple50,
-          textColor: theme.colors.white,
-          borderRadius: spacing.borderRadius.small,
           disabled: !isValid,
           testID: 'edit_basic_info.save',
         }}

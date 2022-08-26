@@ -6,7 +6,6 @@ import GeneralInformation from '~/screens/groups/GeneralInformation';
 import EditDescription from '~/screens/groups/GeneralInformation/EditDescription';
 import AddMembersToGroup from '~/screens/groups/AddMembersToGroup';
 import NewFeature from '~/components/NewFeature';
-import GroupPendingMembers from '~/screens/groups/GroupDetail/groupModerating/PendingMembers';
 
 import Communities from '~/screens/communities/Communities';
 import CommunityDetail from '~/screens/communities/CommunityDetail';
@@ -16,7 +15,6 @@ import DiscoverGroups from '~/screens/groups/DiscoverGroups';
 import CommunityMembers from '~/screens/communities/CommunityMembers';
 import CommunityAdmin from '~/screens/communities/CommunityAdmin';
 import PermissionScheme from '~/screens/PermissionScheme';
-import CommunityPendingMembers from '~/screens/communities/CommunityAdmin/PendingMembers';
 import CreatePermissionScheme from '~/screens/PermissionScheme/CreatePermissionScheme';
 import SchemeDetail from '~/screens/PermissionScheme/SchemeDetail';
 import GroupStructureSettings from '~/screens/groups/GroupStructureSettings';
@@ -42,7 +40,6 @@ const groupScreens = {
   'discover-groups': DiscoverGroups,
   'community-members': CommunityMembers,
   'community-admin': CommunityAdmin,
-  'community-pending-members': CommunityPendingMembers,
 
   // group
   'group-detail': GroupDetail,
@@ -59,9 +56,6 @@ const groupScreens = {
   'group-structure-settings': GroupStructureSettings,
   'move-group': MoveGroup,
   'reorder-group': ReorderGroup,
-
-  // group moderating
-  'group-pending-members': GroupPendingMembers,
 };
 
 export default groupScreens;

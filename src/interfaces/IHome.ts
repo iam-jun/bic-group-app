@@ -45,7 +45,7 @@ export interface IParamGetFeed {
 }
 
 export interface IParamGetSearchPost {
-  content: string;
+  contentSearch: string;
   actors?: string;
   startTime?: string;
   endTime?: string;

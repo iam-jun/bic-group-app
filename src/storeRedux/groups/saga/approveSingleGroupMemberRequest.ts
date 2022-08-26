@@ -16,12 +16,9 @@ export default function* approveSingleGroupMemberRequest({
     groupId: string;
     requestId: string;
     fullName: string;
-    callback: () => void;
   };
 }) {
-  const {
-    groupId, requestId, fullName, callback,
-  } = payload;
+  const { groupId, requestId, fullName } = payload;
   try {
     yield call(
       groupApi.approveSingleGroupMemberRequest,
@@ -44,10 +41,7 @@ export default function* approveSingleGroupMemberRequest({
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
       props: {
         textProps: { useI18n: true },
-        type: 'success',
-        rightIcon: 'UserGroup',
-        rightText: 'Members',
-        onPressRight: callback,
+        type: 'informative',
       },
       toastType: 'normal',
     };
@@ -64,8 +58,6 @@ export default function* approveSingleGroupMemberRequest({
       return;
     }
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }
