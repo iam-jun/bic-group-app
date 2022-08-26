@@ -185,6 +185,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         }}
         onPressBack={onPressBack}
         onPressButton={onPressPost}
+        style={styles.headerStyle}
       />
       <TouchableOpacity
         style={styles.flex1}
@@ -194,7 +195,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         <View>
           {!!important?.active && notExpired && <BannerImportant />}
           <CreatePostChosenAudiences disabled={loading} />
-          <Divider />
+          <Divider color={theme.colors.neutral5} />
         </View>
         <CreatePostContent
           groupIds={groupIds}
@@ -244,6 +245,10 @@ const themeStyles = (theme: ExtendedTheme) => {
     buttonSettings: {
       backgroundColor: colors.gray5,
       borderRadius: spacing.borderRadius.small,
+    },
+    headerStyle: {
+      borderBottomColor: colors.neutral5,
+      borderBottomWidth: 1,
     },
   });
 };

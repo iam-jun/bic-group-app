@@ -257,11 +257,11 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         });
         dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
 
+        const notExpired = new Date().getTime() < new Date(initPostData?.setting?.importantExpiredAt).getTime();
         const initImportant = {
-          active: !!initPostData?.setting?.isImportant,
-          expires_time: initPostData?.setting?.importantExpiredAt,
+          active: !!notExpired,
+          expires_time: !!notExpired ? initPostData?.setting?.importantExpiredAt : null,
         };
-        const notExpired = new Date().getTime() < new Date(initImportant?.expires_time).getTime();
         const dataDefault = [
           !!notExpired,
           !canComment,

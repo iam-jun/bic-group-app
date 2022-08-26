@@ -188,7 +188,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 value={text}
                 style={[
                   styles.input,
-                  { color: !editable ? colors.neutral40 : (textColor || colors.neutral80) },
+                  { color: !editable ? (textColor || colors.neutral40) : (textColor || colors.neutral80) },
                 ]}
                 onChangeText={_onChangeText}
                 ref={textInputRef}
