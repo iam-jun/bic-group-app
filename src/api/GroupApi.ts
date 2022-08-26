@@ -241,10 +241,19 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  getInfoGroups: (groupIds: string): HttpApiRequestConfig => ({
+  getSearchAudiences: (params: {key: string, offset?: number, limit?: number}): HttpApiRequestConfig => ({
     ...defaultConfig,
-    url: `${provider.url}post-audiences/groups`,
-    params: { groupIds },
+    url: `${provider.url}post-audiences`,
+    provider: apiProviders.bein,
+    params: {
+      key: params?.key,
+      offset: params?.offset || 0,
+      limit: params?.limit || 20,
+    },
+  }),
+  getAudienceTree: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}post-audiences/trees`,
   }),
   getGroupDetail: (groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -722,9 +731,10 @@ const groupApi = {
       ...param,
     },
   ),
-  getInfoGroups: (groupIds: string) => withHttpRequestPromise(
-    groupsApiConfig.getInfoGroups, groupIds,
+  getSearchAudiences: (params: {key: string, offset?: number, limit?: number}) => withHttpRequestPromise(
+    groupsApiConfig.getSearchAudiences, params,
   ),
+  getAudienceTree: () => withHttpRequestPromise(groupsApiConfig.getAudienceTree),
   getGroupMembers: (groupId: string, params: any) => withHttpRequestPromise(
     groupsApiConfig.getGroupMembers, groupId, params,
   ),

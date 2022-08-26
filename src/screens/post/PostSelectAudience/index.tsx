@@ -2,11 +2,10 @@ import React, { useState, useEffect, FC } from 'react';
 import {
   View,
   StyleSheet,
-  SectionList,
+  FlatList,
   ActivityIndicator,
   Platform,
   KeyboardAvoidingView,
-  DeviceEventEmitter,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -19,15 +18,10 @@ import postActions from '~/storeRedux/post/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
-import Text from '~/beinComponents/Text';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SelectingAudiences from '~/screens/post/components/SelectingAudiences';
 
-import streamApi from '~/api/StreamApi';
 import { IGroup } from '~/interfaces/IGroup';
 import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
-import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IUser } from '~/interfaces/IAuth';
 import NoSearchResult from '~/components/NoSearchResult';
@@ -41,6 +35,9 @@ import {
 import { ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
+import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store/selectAudienceStore';
+import SearchInput from '~/baseComponents/Input/SearchInput';
+import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -56,9 +53,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const [lossInternet, setLossInternet] = useState(false);
 
   const state = useKeySelector(postKeySelector.postSelectAudienceState);
-  const {
-    loading, selectingAudiences, selectingGroups, selectingUsers,
-  } = state;
+  const { selectingAudiences, selectingGroups } = state;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences);
@@ -85,36 +80,22 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const insets = useSafeAreaInsets();
 
   const createPostData = useKeySelector(postKeySelector.createPost.all);
-  const {
-    chosenAudiences,
-    searchResultAudienceGroups,
-    searchResultAudienceUsers,
-  } = createPostData || {};
+  const { chosenAudiences } = createPostData || {};
 
-  const sectionListData: any = [];
-  if (searchResultAudienceGroups?.length > 0) {
-    sectionListData.push({
-      title: t('post:label_groups'),
-      data: searchResultAudienceGroups,
-    });
-  }
-  if (searchResultAudienceUsers?.length > 0) {
-    sectionListData.push({
-      title: t('post:label_users'),
-      data: searchResultAudienceUsers,
-    });
-  }
+  const {
+    tree, search, dispatchGetAudienceTree, dispatchGetAudienceSearch, reset: resetStore,
+  } = useSelectAudienceStore();
+  const { data: dataTree = [], loading: loadingTree } = tree || {};
+  const { data: dataSearch = [], loading: loadingSearch, key: searchKey } = search || {};
+
+  const listData: IGroup[] = (!!searchKey ? dataSearch : dataTree) || [];
+  const loading = !!searchKey ? loadingSearch : loadingTree;
 
   const updateSelectingAudiences = () => {
     const newSelectingAudiences: (IUser | IGroup)[] = [];
     Object.values(selectingGroups).forEach((group) => {
       if (group) {
         newSelectingAudiences.push(group as IGroup);
-      }
-    });
-    Object.values(selectingUsers).forEach((user) => {
-      if (user) {
-        newSelectingAudiences.push(user as IUser);
       }
     });
     const p = { selectingAudiences: newSelectingAudiences };
@@ -125,32 +106,14 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     () => {
       if (isFirstStep) {
         dispatch(postActions.clearCreatPostData());
-        dispatch(postActions.setSearchResultAudienceGroups([]));
-        dispatch(postActions.setSearchResultAudienceUsers([]));
-      }
-      if (initAudiences) {
-        handleSearchResult(initAudiences);
-        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-      } else if (sectionListData.length === 0 || isFirstStep) {
-        onSearch('');
+        dispatchGetAudienceTree();
       } else {
         dispatch(postActions.setPostSelectAudienceState({ loading: false }));
       }
 
-      setTimeout(
-        () => {
-          // emit event show header to avoid case quick scroll then press create, lead to missing header
-          DeviceEventEmitter.emit(
-            'showHeader', true,
-          );
-          DeviceEventEmitter.emit(
-            'showBottomBar', true,
-          );
-        }, 2000,
-      );
-
       return () => {
         dispatch(postActions.setPostSelectAudienceState());
+        resetStore();
       };
     }, [],
   );
@@ -158,7 +121,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   useEffect(
     () => {
       if (isInternetReachable) {
-        if (lossInternet && sectionListData.length === 0) {
+        if (lossInternet && listData.length === 0) {
           setLossInternet(false);
           onSearch('');
         }
@@ -171,18 +134,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   useEffect(
     () => {
       if (selectingAudiences?.length === 0) {
-        const newSelectingUsers: any = {};
         const newSelectingGroups: any = {};
         chosenAudiences?.forEach?.((item: any) => {
-          if (item && item?.type === 'user') {
-            newSelectingUsers[item.id] = item;
-          } else {
-            newSelectingGroups[item.id] = item;
-          }
+          newSelectingGroups[item.id] = item;
         });
 
         const p = {
-          selectingUsers: newSelectingUsers,
           selectingGroups: newSelectingGroups,
         };
         dispatch(postActions.setPostSelectAudienceState(p));
@@ -194,12 +151,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     () => {
       updateSelectingAudiences();
     }, [selectingGroups],
-  );
-
-  useEffect(
-    () => {
-      updateSelectingAudiences();
-    }, [selectingUsers],
   );
 
   const onPressSave = () => {
@@ -244,7 +195,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           content: t('post:create_post:text_discard_audience'),
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('post:create_post:btn_keep_selecting'),
+          confirmLabel: t('common:btn_stay_here'),
           onCancel: () => rootNavigation.goBack(),
         }));
       } else {
@@ -257,7 +208,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           content: t('post:create_post:text_discard_change'),
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('post:create_post:btn_keep_edit'),
+          confirmLabel: t('common:btn_stay_here'),
           onCancel: () => rootNavigation.goBack(),
         }));
       } else {
@@ -269,17 +220,10 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   };
 
   const onRemoveItem = (item: any) => {
-    if (item.type === 'user') {
-      const newSelectingUsers: any = { ...selectingUsers };
-      newSelectingUsers[item.id] = false;
-      const p = { selectingUsers: newSelectingUsers };
-      dispatch(postActions.setPostSelectAudienceState(p));
-    } else {
-      const newSelectingGroups: any = { ...selectingGroups };
-      newSelectingGroups[item.id] = false;
-      const p = { selectingGroups: newSelectingGroups };
-      dispatch(postActions.setPostSelectAudienceState(p));
-    }
+    const newSelectingGroups: any = { ...selectingGroups };
+    newSelectingGroups[item.id] = false;
+    const p = { selectingGroups: newSelectingGroups };
+    dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   const onChangeCheckedGroups = (data: OnChangeCheckedGroupsData) => {
@@ -287,27 +231,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     dispatch(postActions.setPostSelectAudienceState(p));
   };
 
-  const handleSearchResult = (data: []) => {
-    dispatch(postActions.setSearchResultAudienceGroups(data));
-  };
-
   const onSearch = debounce(
     (searchText: string) => {
-      dispatch(postActions.setPostSelectAudienceState({ loading: true }));
-      streamApi
-        .getSearchAudiences(searchText)
-        .then((response) => {
-          if (response && response?.data) {
-            handleSearchResult(response.data);
-          }
-          dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-        })
-        .catch((e) => {
-          dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-          console.error(
-            '\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m',
-          );
-        });
+      dispatchGetAudienceSearch(searchText);
     }, 500,
   );
 
@@ -315,75 +241,21 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     onSearch(text);
   };
 
-  const onPressUser = (user: any) => {
-    const newSelectingUsers: any = { ...selectingUsers };
-    if (newSelectingUsers[user.id]) {
-      newSelectingUsers[user.id] = false;
-    } else {
-      newSelectingUsers[user.id] = user;
-    }
-    const p = { selectingUsers: newSelectingUsers };
-    dispatch(postActions.setPostSelectAudienceState(p));
-  };
-
-  const renderItem = ({ item }: any) => {
-    const {
-      id, name, icon, avatar, type,
-    } = item || {};
-    const isGroup = type !== 'user';
-
-    if (isGroup) {
-      return (
-        <FlatGroupItem
-          {...item}
-          groupItemTestID="post_select_audience.groups.item"
-          initShowTree={false}
-          hidePath={false}
-          selectingData={selectingGroups}
-          showSmallestChild
-          onChangeCheckedGroups={onChangeCheckedGroups}
-        />
-      );
-    }
-    return (
-      <PrimaryItem
-        showAvatar
-        avatar={icon || avatar}
-        avatarProps={{ variant: isGroup ? 'large' : 'medium' }}
-        style={styles.item}
-        title={name}
-        onPressCheckbox={() => onPressUser(item)}
-        onPress={() => onPressUser(item)}
-        checkboxProps={{
-          style: { position: 'absolute', left: 26, bottom: 0 },
-          isChecked: !!selectingUsers[id],
-        }}
-      />
-    );
-  };
-
-  const renderListHeader = () => {
-    if (
-      searchResultAudienceGroups?.length === 0
-      && searchResultAudienceUsers?.length === 0
-    ) {
-      return null;
-    }
-    return (
-      <Text.H6 style={{ marginVertical: spacing?.margin.small }}>
-        Search Results
-      </Text.H6>
-    );
-  };
-
-  const renderSectionHeader = ({ section: { title } }: any) => (
-    <View style={styles.sectionHeaderContainer}>
-      <Text.H6 style={styles.sectionHeaderText}>{title}</Text.H6>
-    </View>
+  const renderItem = ({ item }: any) => (
+    <FlatGroupItem
+      {...item}
+      groupItemTestID="post_select_audience.groups.item"
+      initShowTree={!searchKey}
+      hidePath
+      groupStyle={{ paddingVertical: spacing.padding.small }}
+      showPrivacyAvatar
+      selectingData={selectingGroups}
+      onChangeCheckedGroups={onChangeCheckedGroups}
+    />
   );
 
   const renderListFooter = () => (
-    <View>
+    <View style={{ marginBottom: spacing.margin.large }}>
       {loading && (
         <ActivityIndicator size="large" color={colors.neutral5} />
       )}
@@ -420,9 +292,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           onPressBack={onPressBack}
         />
         <SearchInput
-          autoFocus
-          testID="post_select_audience.search"
+          size="large"
           style={styles.searchInput}
+          testID="post_select_audience.search"
           onChangeText={onChangeTextSearch}
           placeholder={t('post:search_audiences_placeholder')}
         />
@@ -430,20 +302,15 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           list={selectingAudiences}
           onRemoveItem={onRemoveItem}
         />
-        <SectionList
+        <FlatList
           style={{ paddingHorizontal: spacing?.padding.large }}
-          sections={sectionListData}
+          data={listData}
           keyExtractor={(
             item, index,
           ) => item?.id || `section_list_${item}_${index}`}
-          ListHeaderComponent={renderListHeader}
           ListFooterComponent={renderListFooter}
           ListEmptyComponent={renderEmpty}
-          renderSectionHeader={renderSectionHeader}
           renderItem={renderItem}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: spacing?.margin.large }} />
-          )}
         />
       </KeyboardAvoidingView>
     </ScreenWrapper>
@@ -455,7 +322,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {},
     searchInput: {
-      margin: spacing?.margin.base,
+      margin: spacing?.margin.large,
     },
     item: {
       height: undefined,

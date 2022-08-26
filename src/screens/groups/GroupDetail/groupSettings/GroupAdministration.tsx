@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,6 @@ import { IconType } from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '../../../../storeRedux/groups/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -27,15 +26,9 @@ const GroupAdministration = (props: any) => {
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
-  const { name, icon } = useKeySelector(groupsKeySelector.groupDetail.group);
-  const { total } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { name } = useKeySelector(groupsKeySelector.groupDetail.group);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canManageJoiningRequests = hasPermissionsOnScopeWithId(
-    'groups',
-    groupId,
-    PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
-  );
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
     'groups', groupId, [
       PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
@@ -43,24 +36,7 @@ const GroupAdministration = (props: any) => {
     ],
   );
 
-  useEffect(
-    () => {
-      canManageJoiningRequests
-      && dispatch(groupsActions.getGroupMemberRequests({ groupId }));
-
-      return () => {
-        dispatch(groupsActions.resetGroupMemberRequests());
-      };
-    }, [groupId],
-  );
-
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
-
-  const goToPendingMembers = () => {
-    rootNavigation.navigate(
-      groupStack.groupPendingMembers, { id: groupId },
-    );
-  };
 
   const goToGeneralInfo = () => {
     rootNavigation.navigate(
@@ -97,14 +73,6 @@ const GroupAdministration = (props: any) => {
       >
         settings:title_group_moderating
       </Text.H5>
-      {!!canManageJoiningRequests
-        && renderItem(
-          'UserCheck',
-          'settings:title_pending_members',
-          goToPendingMembers,
-          total,
-          'group_administration.pending_members',
-        )}
       {renderItem(
         'FileExclamation',
         'settings:title_pending_posts',

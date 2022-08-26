@@ -42,6 +42,7 @@
     "btn_create": "Tạo",
     "btn_join": "Tham gia",
     "btn_view": "Xem",
+    "btn_stay_here": "Ở lại đây",
     "btn_leave": "Đóng",
     "btn_stay_on_this_page": "Ở lại màn hình này",
     "text_search_emoji": "Tìm Emoji",
@@ -113,7 +114,11 @@
     "text_more": "+(number) khác",
     "beincomm": "Beincomm",
     "members": "Thành viên",
-    "text_remove": "Loại Bỏ"
+    "text_remove": "Loại bỏ",
+    "btn_approve": "Phê duyệt",
+    "btn_decline": "Từ chối",
+    "btn_approve_all": "Phê duyệt tất cả",
+    "btn_decline_all": "Từ chối tất cả"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -467,7 +472,9 @@
     "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi hết thời hạn đã cài đặt.",
     "delete_post_complete": "Bài viết đã được xoá.",
     "search_results": "Kết quả tìm kiếm",
-    "search_audiences_placeholder": "Tìm kiếm nhóm hoặc bạn bè",
+    "search_audiences_placeholder": "Tìm kiếm đối tượng...",
+    "text_chosen_audience": "Đối tượng đã chọn",
+    "text_select_all_audience": "Chọn tất cả",
     "group_manage": "Nhóm của bạn",
     "people_search": "Người dùng",
     "show_all": "Xem tất cả",
@@ -677,16 +684,32 @@
       "last_admin_remove": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt một quản trị viên khác trước khi xóa vai trò quản trị viên",
       "last_admin_inner_group_remove": "Không thể loại khỏi nhóm. Người dùng này là quản trị viên cuối cùng của một nhóm bên trong"
     },
+    "text_respond_all_member_requests": {
+      "title": {
+        "approve": "Phê duyệt tất cả?",
+        "decline": "Từ chối tất cả?"
+      },
+      "content": {
+        "text_about_to_add": "Bạn sẽ thêm ",
+        "approve_confirm_community": " thành viên vào cộng đồng này. Hãy xác nhận?",
+        "approve_confirm_group": " thành viên vào nhóm này. Hãy xác nhận?",
+        "decline": "Từ chối tất cả. Hãy xác nhận?"
+      }
+    },
     "text_requested_at": "Gửi lúc",
-    "text_declining_user": "Đang từ chối người dùng",
-    "text_declined_user": "Từ chối người dùng",
-    "text_approved_user": "Phê duyệt người dùng",
-    "text_approved_all": "Phê duyệt tất cả yêu cầu thành viên",
-    "text_declining_all": "Từ chối tất cả yêu cầu thành viên",
+    "text_declined_user": "Từ chối",
+    "text_approved_user": "Phê duyệt",
+    "text_approved_all": "Phê duyệt {0} yêu cầu thành viên",
+    "text_declining_all": "Đang từ chối {0} yêu cầu thành viên",
+    "text_declined_all": "Đã từ chối {0} yêu cầu thành viên",
     "text_request_been_canceled": "Yêu cầu này đã bị hủy",
     "title_members_one": "Thành viên",
     "title_members_other": "Thành viên",
-    "text_in": "thuộc"
+    "text_in": "thuộc",
+    "text_no_pending_members_notice": "Không có yêu cầu đăng ký thành viên",
+    "text_pending_request_notice_group": "Bạn có thể thêm thành viên",
+    "text_pending_request_notice_community": "Bạn có thể thêm thành viên",
+    "title_add_members": "Thêm thành viên"
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
@@ -847,7 +870,11 @@
       "text_desc_confirm_move_group": " của %MOVING_NAME% và các nhóm bên trong sẽ được thêm vào %TARGET_NAME%. Bạn có chắc muốn thực hiện hành động này?",
       "text_move_group_search_placeholder": "Tìm kiếm một nhóm"
     },
-    "text_search_communities": "Tìm kiếm Cộng đồng"
+    "text_search_communities": "Tìm kiếm Cộng đồng",
+    "member_tab_types": {
+    "title_member_list": " Danh sách thành viên",
+    "title_member_requests": "Yêu cầu tham gia"
+    }
   },
   "upload": {
     "text_create_file_id_request_failed": "Có lỗi khi yêu cầu tạo id",

@@ -25,10 +25,9 @@ import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text, { TextProps } from '~/beinComponents/Text';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
-import { ButtonSecondaryProps } from '../Button/ButtonSecondary';
 import IconChat from '../IconChat';
 import spacing from '~/theme/spacing';
-import Button from '~/baseComponents/Button';
+import Button, { ButtonProps } from '~/baseComponents/Button';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -45,7 +44,7 @@ export interface HeaderProps {
   onPressIcon?: () => void;
   buttonVariant?: 'Primary' | 'Secondary' | 'Icon';
   buttonText?: string;
-  buttonProps?: ButtonSecondaryProps; // as it contains the ButtonPrimaryProps
+  buttonProps?: ButtonProps;
   onPressButton?: () => void;
   menuIcon?: IconType;
   onPressMenu?: (e: any) => void;
@@ -232,6 +231,7 @@ const Header: React.FC<HeaderProps> = ({
           alignItems: 'flex-end',
           flexDirection: 'row',
           backgroundColor: colors.white,
+          paddingVertical: spacing.padding.tiny,
         },
         removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
         style,
@@ -348,7 +348,6 @@ const Header: React.FC<HeaderProps> = ({
               marginRight: spacing.margin.tiny,
             }}
             onPress={_onPressButton}
-            textProps={{ testID: 'header.button.text' }}
             {...buttonProps}
           >
             {buttonText}

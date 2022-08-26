@@ -192,14 +192,6 @@ export const streamApiConfig = {
   }),
 
   // todo move to group
-  getSearchAudiences: (key: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.bein.url}post-audiences`,
-    provider: apiProviders.bein,
-    params: {
-      key,
-    },
-  }),
   getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${apiProviders.bein.url}/post-audiences/groups`,
@@ -360,7 +352,6 @@ const streamApi = {
   postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(streamApiConfig.postReplyComment, params),
   putMarkAsRead: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkAsRead, postId),
   putMarkSeenPost: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenPost, postId),
-  getSearchAudiences: (key: string) => withHttpRequestPromise(streamApiConfig.getSearchAudiences, key),
   getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
     streamApiConfig.getSearchMentionAudiences, params,
   ),

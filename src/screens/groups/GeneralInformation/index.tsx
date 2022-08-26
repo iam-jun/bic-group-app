@@ -96,18 +96,18 @@ const GeneralInformation = (props: any) => {
 
   const approveAllGroupMemberRequests = () => {
     if (type === 'group') {
-      dispatch(groupsActions.approveAllGroupMemberRequests({ groupId: id }));
+      dispatch(groupsActions.approveAllGroupMemberRequests({ groupId: id, total }));
     } else {
-      dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId: id }));
+      dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId: id, total }));
     }
     editPrivacy({ type: groupPrivacy.public });
   };
 
   const declineAllGroupMemberRequests = () => {
     if (type === 'group') {
-      dispatch(groupsActions.declineAllGroupMemberRequests({ groupId: id }));
+      dispatch(groupsActions.declineAllGroupMemberRequests({ groupId: id, total }));
     } else {
-      dispatch(groupsActions.declineAllCommunityMemberRequests({ communityId: id }));
+      dispatch(groupsActions.declineAllCommunityMemberRequests({ communityId: id, total }));
     }
     editPrivacy({ type: groupPrivacy.secret });
   };

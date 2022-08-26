@@ -42,6 +42,7 @@
     "btn_join": "Join",
     "btn_view": "View",
     "btn_leave": "Leave",
+    "btn_stay_here": "Stay here",
     "btn_stay_on_this_page": "Stay on this page",
     "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
@@ -517,7 +518,9 @@
     "expire_time_desc": "This post stay on top of feed until expire time.",
     "delete_post_complete": "Your post has been deleted.",
     "search_results": "Search results",
-    "search_audiences_placeholder": "Search for groups or people",
+    "search_audiences_placeholder": "Search Audience...",
+    "text_chosen_audience": "Chosen audience",
+    "text_select_all_audience": "Select all",
     "group_manage": "Your Groups",
     "people_search": "People",
     "show_all": "Show all",
@@ -738,27 +741,27 @@
     },
     "text_successfully_join_group": "Successfully join group",
     "text_successfully_join_community": "Successfully join community",
-    "text_no_pending_members_notice": "There's no pending members",
-    "text_pending_request_notice_group": "People who request to join your group will show here.",
-    "text_pending_request_notice_community": "People who request to join your community will show here.",
+    "text_no_pending_members_notice": "No new member requests",
+    "text_pending_request_notice_group": "You can add more members",
+    "text_pending_request_notice_community": "You can add more members",
     "text_respond_all_member_requests": {
       "title": {
         "approve": "Approve all member requests?",
         "decline": "Decline all member requests?"
       },
       "content": {
-        "approve_one": "You're about to add {{count}} person to {0}",
-        "approve_other": "You're about to add {{count}} people to {0}",
-        "decline_one": "You're about to decline {{count}} member request",
-        "decline_other": "You're about to decline {{count}} member requests"
+        "text_about_to_add": "You're about to add ",
+        "approve_confirm_community": " people to this community. Confirm this action?",
+        "approve_confirm_group": " people to this group. Confirm this action?",
+        "decline": "Decline all member requests. Confirm this action?"
       }
     },
     "text_requested_at": "Requested at",
-    "text_declining_user": "Declining user",
-    "text_declined_user": "Declined user",
-    "text_approved_user": "Approved user",
-    "text_approved_all": "Approved all joining requests",
-    "text_declining_all": "Declining all joining requests",
+    "text_declined_user": "Declined",
+    "text_approved_user": "Approved",
+    "text_approved_all": "Approved {0} users",
+    "text_declining_all": "Declining {0} users",
+    "text_declined_all": "Declined {0} users",
     "text_request_been_canceled": "This join request has just been canceled",
     "text_request_join_group": "Requested to join group",
     "text_request_join_community": "Requested to join community",
@@ -780,7 +783,8 @@
         "decline": "Do you want to decline **All pending member requests** in order to change the group privacy to Secret now?"
       }
     },
-    "text_in": "in"
+    "text_in": "in",
+    "title_add_members": "Add Members"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
@@ -941,7 +945,11 @@
       "text_desc_confirm_move_group": " of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
       "text_move_group_search_placeholder": "Search a group"
     },
-    "text_search_communities": "Search Communities"
+    "text_search_communities": "Search Communities",
+    "member_tab_types": {
+    "title_member_list": "Member List",
+    "title_member_requests": "Member Requests"
+    }
   },
   "upload": {
     "text_create_file_id_request_failed": "Cannot request id",

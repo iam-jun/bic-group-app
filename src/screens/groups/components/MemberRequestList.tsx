@@ -8,66 +8,74 @@ import {
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import { useDispatch } from 'react-redux';
 import EmptyScreen from '~/components/EmptyScreen';
-import { useBaseHook } from '~/hooks';
 import Divider from '~/beinComponents/Divider';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
-import GroupMemberRequest from '../GroupDetail/groupModerating/components/GroupMemberRequest';
-import CommunityMemberRequest from '../../communities/CommunityAdmin/PendingMembers/CommunityMemberRequest';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import GroupPendingUserItemWrapper from '~/screens/groups/GroupMembers/GroupMemberRequests/components/GroupPendingUserItemWrapper';
+import CommunityPendingUserItemWrapper from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/CommunityPendingUserItemWrapper';
 import spacing from '~/theme/spacing';
+import { Button } from '~/baseComponents';
+import modalActions from '~/storeRedux/modal/actions';
 
 interface MemberRequestListProps {
   id?: string;
   type: 'community' | 'group';
+  canAddMember?: boolean;
   onLoadMore: () => void;
   onRefresh: () => void;
+  onPressAdd?: () => void;
 }
 
 const MemberRequestList = ({
   id,
   type,
+  canAddMember,
+  onPressAdd,
   onLoadMore,
   onRefresh,
 }: MemberRequestListProps) => {
   const theme: ExtendedTheme = useTheme();
-  const { t } = useBaseHook();
+  const dispatch = useDispatch();
 
   const {
-    loading, total, ids, canLoadMore,
+    loading, ids, canLoadMore,
   } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
 
-  const renderItem = ({ item: requestId }: {item: string}) => {
-    if (id && type === 'community') return <CommunityMemberRequest requestId={requestId} organizationId={id} />;
+  const onPressAddMemmbers = () => {
+    if (onPressAdd) return onPressAdd();
 
-    return <GroupMemberRequest requestId={requestId} />;
+    return dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const renderItem = ({ item: requestId }: {item: string}) => {
+    if (id && type === 'community') return <CommunityPendingUserItemWrapper requestId={requestId} organizationId={id} />;
+
+    return <GroupPendingUserItemWrapper requestId={requestId} />;
   };
 
   const renderEmpty = () => {
     if (loading) return null;
     return (
       <EmptyScreen
+        size={120}
         source="addUsers"
         title="groups:text_no_pending_members_notice"
         description={`groups:text_pending_request_notice_${type}`}
+        ButtonComponent={canAddMember && (
+          <Button.Primary
+            style={styles.buttonAddMembers}
+            size="large"
+            type="solid"
+            icon="Plus"
+            onPress={onPressAddMemmbers}
+            useI18n
+          >
+            groups:title_add_members
+          </Button.Primary>
+        )}
       />
-    );
-  };
-
-  const renderListHeader = () => {
-    if (!total) return null;
-    return (
-      <View style={styles.requestHeader}>
-        <Text.H5 testID="member_request_list.request_title">
-          {`${total} ${t(
-            'common:text_request',
-            {
-              count: total,
-            },
-          )}`}
-        </Text.H5>
-      </View>
     );
   };
 
@@ -87,19 +95,17 @@ const MemberRequestList = ({
   return (
     <FlatList
       testID="flatlist"
-      style={styles.flatList}
       data={ids}
       renderItem={renderItem}
       keyExtractor={(
         item, index,
       ) => `requests_${item}_${index}`}
       ListEmptyComponent={renderEmpty}
-      ListHeaderComponent={renderListHeader}
       ListFooterComponent={renderListFooter}
       showsVerticalScrollIndicator={false}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
-      ItemSeparatorComponent={() => <Divider style={styles.divider} />}
+      ItemSeparatorComponent={() => <Divider size={spacing.padding.large} />}
       refreshControl={(
         <RefreshControl
           refreshing={loading}
@@ -112,19 +118,13 @@ const MemberRequestList = ({
 };
 
 const styles = StyleSheet.create({
-  flatList: {
-    marginHorizontal: spacing.margin.large,
-  },
-  requestHeader: {
-    marginVertical: spacing.margin.base,
-  },
-  divider: {
-    marginBottom: spacing.margin.small,
-  },
   listFooter: {
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonAddMembers: {
+    marginVertical: spacing.margin.large,
   },
 });
 

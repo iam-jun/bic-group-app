@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
@@ -14,7 +14,6 @@ import Text from '~/beinComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import groupsActions from '../../../storeRedux/groups/actions';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 
@@ -25,18 +24,10 @@ const CommunityAdmin = () => {
   const { rootNavigation } = useRootNavigation();
   const {
     id: communityId,
-    groupId,
     name,
-    icon,
   } = useKeySelector(groupsKeySelector.communityDetail);
-  const { total } = useKeySelector(groupsKeySelector.communityMemberRequests);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canManageJoiningRequests = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
-  );
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
@@ -56,26 +47,7 @@ const CommunityAdmin = () => {
     PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
   );
 
-  useEffect(
-    () => {
-      canManageJoiningRequests
-      && dispatch(groupsActions.getCommunityMemberRequests({ communityId }));
-
-      return () => {
-        dispatch(groupsActions.resetCommunityMemberRequests());
-      };
-    }, [communityId],
-  );
-
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
-
-  const onPressPendingMembers = () => {
-    rootNavigation.navigate(
-      groupStack.communityPendingMembers, {
-        id: communityId,
-      },
-    );
-  };
 
   const onPressGeneralInfo = () => {
     rootNavigation.navigate(
@@ -104,21 +76,6 @@ const CommunityAdmin = () => {
       >
         settings:title_community_moderating
       </Text.BodyM>
-      {!!canManageJoiningRequests && (
-        <MenuItem
-          testID="community_admin.pending_members"
-          title="settings:title_pending_members"
-          icon="UserCheck"
-          iconProps={{
-            icon: 'UserCheck',
-            tintColor: theme.colors.purple50,
-          }}
-          notificationsBadgeNumber={total}
-          notificationsBadgeProps={{ maxNumber: 99, variant: 'alert' }}
-          rightSubIcon="AngleRightSolid"
-          onPress={onPressPendingMembers}
-        />
-      )}
       <MenuItem
         testID="community_admin.pending_posts"
         title="settings:title_pending_posts"

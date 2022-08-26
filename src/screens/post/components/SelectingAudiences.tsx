@@ -1,82 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React from 'react';
+import {
+  View, StyleSheet, Dimensions, ScrollView,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Tag from '~/baseComponents/Tag';
 import { IAudience } from '~/interfaces/IPost';
-import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
-import images from '~/resources/images';
+import { useBaseHook } from '~/hooks';
 
 export interface SelectingAudiencesProps {
   list: IAudience[];
   onRemoveItem: (item: IAudience) => void;
 }
 
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const TAG_MAX_WIDTH = SCREEN_WIDTH * 0.6;
+
 const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   list,
   onRemoveItem,
 }: SelectingAudiencesProps) => {
-  const [showAll, setShowAll] = useState(false);
-  const [showBtnShowAll, setShowBtnShowAll] = useState(false);
-  const [containerWidth, setContainerWidth] = useState();
-  const [audiencesWidth, setAudiencesWidth] = useState();
-
-  useEffect(
-    () => {
-      if (audiencesWidth && containerWidth) {
-        if (audiencesWidth > containerWidth) {
-          setShowBtnShowAll(true);
-        } else {
-          setShowAll(false);
-          setShowBtnShowAll(false);
-        }
-      }
-    }, [audiencesWidth, containerWidth],
-  );
-
-  useEffect(
-    () => {
-      if (!list || list?.length === 0) {
-        setShowAll(false);
-        setShowBtnShowAll(false);
-      }
-    }, [list],
-  );
+  const { t } = useBaseHook();
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const onPressShowAll = () => {
-    setShowAll(!showAll);
-  };
-
   const onPressRemoveItem = (item: IAudience) => {
     onRemoveItem?.(item);
   };
 
-  const onLayoutContainer = (e: any) => {
-    const { width } = e?.nativeEvent?.layout || {};
-    setContainerWidth(width);
-  };
-
-  const onLayoutAudiences = (e: any) => {
-    const { width } = e?.nativeEvent?.layout || {};
-    setAudiencesWidth(width);
-  };
-
-  const renderItem = (
-    item: any, index: number,
-  ) => {
-    const { name, icon, avatar } = item;
+  const renderItem = (item, index) => {
+    const { name } = item;
     return (
       <Tag
-        style={styles.item}
-        key={`tag_${index}`}
-        avatar={icon || avatar || images.img_group_avatar_default}
+        key={`tag_${item?.id || index}`}
+        style={{
+          marginTop: spacing.margin.small,
+          marginLeft: index === 0 ? spacing.margin.large : 0,
+          marginRight: index === ((list?.length || 0) - 1) ? spacing.margin.large : spacing.margin.small,
+        }}
+        textProps={{
+          numberOfLines: 1,
+          ellipsizeMode: 'middle',
+          style: { maxWidth: TAG_MAX_WIDTH, color: colors.blue50 },
+        }}
+        size="large"
+        type="secondary"
         label={name}
         onPressIcon={() => onPressRemoveItem(item)}
         icon="Xmark"
@@ -84,52 +56,14 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
     );
   };
 
-  if (!list || list?.length === 0) {
-    return null;
-  }
-
   return (
-    <View
-      testID="selecting_audience.container"
-      style={styles.container}
-      onLayout={onLayoutContainer}
-    >
-      <View style={styles.headerContainer}>
-        <Text.H6 style={{ flex: 1 }}>Chosen Audiences</Text.H6>
-        {showBtnShowAll && (
-          <ButtonWrapper
-            textProps={{ color: colors.purple60, variant: 'buttonS' }}
-            onPress={onPressShowAll}
-            testID="selecting_audiences.show"
-          >
-            <Text>{showAll ? 'Show less' : `Show all(${list?.length})`}</Text>
-          </ButtonWrapper>
-        )}
-      </View>
-      <View>
-        <ScrollView
-          style={showAll ? { position: 'absolute' } : {}}
-          horizontal
-          scrollEnabled={false}
-        >
-          <View
-            onLayout={onLayoutAudiences}
-            testID="selecting_audiences"
-            style={styles.contentContainer}
-          >
-            {list?.map?.(renderItem)}
-          </View>
-        </ScrollView>
-        {showAll && (
-          <View
-            testID="selecting_audiences_all"
-            style={styles.contentContainer}
-          >
-            {list?.map?.(renderItem)}
-          </View>
-        )}
-      </View>
-      <Divider style={styles.divider} />
+    <View testID="selecting_audience.container" style={styles.container}>
+      <Text.SubtitleM style={styles.textTitle}>
+        {`${t('post:text_chosen_audience')}: ${list?.length || 0}`}
+      </Text.SubtitleM>
+      <ScrollView horizontal>
+        {list?.map?.(renderItem)}
+      </ScrollView>
     </View>
   );
 };
@@ -138,15 +72,10 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
+      marginBottom: spacing.margin.large,
+    },
+    textTitle: {
       paddingHorizontal: spacing.padding.large,
-    },
-    headerContainer: {
-      flexDirection: 'row',
-      paddingVertical: spacing.padding.small,
-    },
-    item: {
-      marginRight: spacing.margin.small,
-      marginBottom: spacing.margin.small,
     },
     divider: {
       marginTop: spacing.margin.tiny,
