@@ -1,40 +1,149 @@
-import React, { FC, useContext, useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import React, {
+  FC, useContext, useEffect, useState,
+} from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Button from '~/beinComponents/Button';
-import Divider from '~/beinComponents/Divider';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import moment from 'moment';
+import Button from '~/baseComponents/Button';
 import Text from '~/beinComponents/Text';
-import { formatDateTime } from '~/beinComponents/TimeView/helper';
 import { AppContext } from '~/contexts/AppContext';
 import { useBaseHook } from '~/hooks';
 import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
-import DatePicker from './component/DatePicker';
-import { getDefaultEndDate, getDefaultStartDate, isValidDate } from './helper';
+import { isDiffBetweenTwoDates } from './helper';
+import Icon from '~/baseComponents/Icon';
+import Tag from '~/baseComponents/Tag';
+import { formatDateWithTodayLabel } from '~/beinComponents/TimeView/helper';
+import { DateInput } from '~/baseComponents/Input';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface NFSFilterDateProps {
   startDate?: string;
   endDate?: string;
   onSelect?: (startDate?: string, endDate?: string) => void;
-  dismissModalOnPress?: boolean;
 }
+
+type DatePickerContainerProps = {
+  selectedStartDate: Date;
+  setSelectedStartDate: (date: Date) => void;
+  selectedEndDate: Date;
+  setSelectedEndDate: (date: Date) => void;
+  onDone: () => void;
+};
+
+const typeFilter = {
+  all: 'ALL',
+  sevenDaysAgo: '7DaysAgo',
+  thirtyDaysAgo: '30DaysAgo',
+  threeMonthsAgo: '3MonthsAgo',
+  fromTo: 'fromTo',
+};
+
+const itemFilter = [
+  {
+    key: typeFilter.all,
+    text: 'common:all',
+  },
+  {
+    key: typeFilter.sevenDaysAgo,
+    text: 'home:newsfeed_search:seven_days_ago',
+  },
+  {
+    key: typeFilter.thirtyDaysAgo,
+    text: 'home:newsfeed_search:thirty_days_ago',
+  },
+  {
+    key: typeFilter.threeMonthsAgo,
+    text: 'home:newsfeed_search:three_months_ago',
+  },
+  {
+    key: typeFilter.fromTo,
+    text: 'home:newsfeed_search:from_to',
+  },
+];
+
+const getCurrentFilterByTimeRange = (startDate?: string, endDate?: string) => {
+  if (!startDate && !endDate) {
+    return typeFilter.all;
+  }
+
+  if (isDiffBetweenTwoDates(startDate, endDate, 7, 'days')) {
+    return typeFilter.sevenDaysAgo;
+  }
+
+  if (isDiffBetweenTwoDates(startDate, endDate, 30, 'days')) {
+    return typeFilter.thirtyDaysAgo;
+  }
+
+  if (isDiffBetweenTwoDates(startDate, endDate, 3, 'months')) {
+    return typeFilter.threeMonthsAgo;
+  }
+
+  return typeFilter.fromTo;
+};
+
+const DatePickerContainer: FC<DatePickerContainerProps> = ({
+  selectedStartDate = moment().subtract(1, 'days').toDate(),
+  selectedEndDate = moment().toDate(),
+  setSelectedStartDate,
+  setSelectedEndDate,
+  onDone,
+}) => {
+  const { t } = useBaseHook();
+  const theme: ExtendedTheme = useTheme();
+  const styles = createStyle(theme);
+
+  useEffect(() => {
+    setSelectedStartDate(selectedStartDate);
+    setSelectedEndDate(selectedEndDate);
+  }, []);
+
+  return (
+    <TouchableOpacity activeOpacity={1} style={styles.container}>
+      <Text.H4 style={styles.textHeader}>
+        {t('home:newsfeed_search:filter_date')}
+      </Text.H4>
+      <View style={styles.datePickerContainer}>
+        <DateInput
+          style={{ marginVertical: 0 }}
+          mode="date"
+          value={moment(selectedStartDate).toISOString(true)}
+          label={t('home:newsfeed_search:from')}
+          maxDate={moment(selectedEndDate).subtract(1, 'days').toDate()}
+          onConfirm={(date) => setSelectedStartDate(date)}
+        />
+        <ViewSpacing height={spacing.padding.large} />
+        <DateInput
+          style={{ marginVertical: 0 }}
+          mode="date"
+          value={moment(selectedEndDate).toISOString(true)}
+          label={t('home:newsfeed_search:to')}
+          minDate={moment(selectedStartDate).add(1, 'days').toDate()}
+          onConfirm={(date) => setSelectedEndDate(date)}
+        />
+      </View>
+      <Button.Secondary
+        onPress={onDone}
+        style={styles.buttonDoneDatePicker}
+        type="ghost"
+      >
+        {t('common:btn_done')}
+      </Button.Secondary>
+    </TouchableOpacity>
+  );
+};
 
 const FilterDate: FC<NFSFilterDateProps> = ({
   startDate,
   endDate,
   onSelect,
-  dismissModalOnPress,
 }: NFSFilterDateProps) => {
-  const [selectingStartDate, setSelectingStartDate] = useState(false);
-  const [selectingEndDate, setSelectingEndDate] = useState(false);
-  const [selectedStartDate, setSelectedStartDate] = useState<any>(startDate || getDefaultStartDate());
-  const [selectedEndDate, setSelectedEndDate] = useState<any>(endDate || getDefaultEndDate());
-  const [startDateErr, setStartDateErr] = useState(false);
-  const [endDateErr, setEndDateErr] = useState(false);
+  const [staged, setStaged] = useState(0);
+  const [selectedStartDate, setSelectedStartDate] = useState<any>(startDate);
+  const [selectedEndDate, setSelectedEndDate] = useState<any>(endDate);
 
   const dispatch = useDispatch();
   const { language } = useContext(AppContext);
@@ -43,100 +152,112 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  const currentFilter = getCurrentFilterByTimeRange(
+    selectedStartDate,
+    selectedEndDate,
+  );
+
   const onPressApply = () => {
-    dismissModalOnPress && dispatch(modalActions.hideModal());
-    onSelect?.(
-      selectedStartDate, selectedEndDate,
-    );
+    dispatch(modalActions.hideModal());
+    onSelect?.(selectedStartDate, selectedEndDate);
   };
 
-  const onChangeDatePicker = (date?: Date) => {
-    let isValid;
-    if (selectingStartDate) {
-      setSelectingStartDate(false);
-      if (date) {
-        setSelectedStartDate(date);
-        isValid = isValidDate(
-          date, selectedEndDate,
-        );
-        setStartDateErr(!isValid);
-        setEndDateErr(false);
-      }
-    } else if (selectedEndDate) {
-      setSelectingEndDate(false);
-      if (date) {
-        date.setHours(
-          23, 59, 59,
-        );
-        setSelectedEndDate(date);
-        isValid = isValidDate(
-          selectedStartDate, date,
-        );
-        setEndDateErr(!isValid);
-        setStartDateErr(false);
-      }
+  const onDone = () => {
+    setStaged(0);
+  };
+
+  const onSelectItemFilter = (item: any) => {
+    switch (item.key) {
+      case typeFilter.all:
+        setSelectedStartDate(undefined);
+        setSelectedEndDate(undefined);
+        break;
+      case typeFilter.sevenDaysAgo:
+        setSelectedStartDate(moment().subtract(7, 'days').toDate());
+        setSelectedEndDate(moment().toDate());
+        break;
+      case typeFilter.thirtyDaysAgo:
+        setSelectedStartDate(moment().subtract(30, 'days').toDate());
+        setSelectedEndDate(moment().toDate());
+        break;
+      case typeFilter.threeMonthsAgo:
+        setSelectedStartDate(moment().subtract(3, 'months').toDate());
+        setSelectedEndDate(moment().toDate());
+        break;
+      default:
+        break;
     }
   };
 
+  const renderFilter = () => (
+    <>
+      {itemFilter.map((item) => (
+        <Button
+          onPress={() => onSelectItemFilter(item)}
+          disabled={item.key === typeFilter.fromTo}
+        >
+          <View key={item.key} style={styles.rowItemFilter}>
+            <Text.BodyMMedium useI18n>{item.text}</Text.BodyMMedium>
+            {currentFilter === item.key && item.key !== typeFilter.fromTo && (
+              <Icon icon="CircleCheckSolid" tintColor={colors.blue50} />
+            )}
+            {item.key === typeFilter.fromTo && (
+              <View>
+                {currentFilter !== item.key ? (
+                  <Button.Secondary type="ghost" onPress={() => setStaged(1)}>
+                    {t('common:text_select')}
+                  </Button.Secondary>
+                ) : (
+                  <Tag
+                    style={styles.tagContainer}
+                    type="secondary"
+                    size="small"
+                    label={t(
+                      `${formatDateWithTodayLabel(
+                        selectedStartDate,
+                        language,
+                      )} - ${formatDateWithTodayLabel(selectedEndDate, language)}`,
+                    )}
+                    onActionPress={() => setStaged(1)}
+                    icon="Xmark"
+                    onPressIcon={() => {
+                      setSelectedStartDate(undefined);
+                      setSelectedEndDate(undefined);
+                    }}
+                  />
+                )}
+              </View>
+            )}
+          </View>
+        </Button>
+      ))}
+    </>
+  );
+
+  if (staged === 1) {
+    return (
+      <DatePickerContainer
+        selectedStartDate={selectedStartDate}
+        setSelectedStartDate={setSelectedStartDate}
+        selectedEndDate={selectedEndDate}
+        setSelectedEndDate={setSelectedEndDate}
+        onDone={onDone}
+      />
+    );
+  }
+
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
-      <Text.ButtonS style={styles.textHeader}>
-        {t('home:newsfeed_search:choose_date')}
-      </Text.ButtonS>
-      <Divider style={styles.divider} />
-      <PrimaryItem
-        style={styles.itemContainer}
-        title={t('home:newsfeed_search:from')}
-        subTitle={
-          startDateErr ? t('home:newsfeed_search:text_error_date') : undefined
-        }
-        subTitleProps={{ variant: 'bodyS', color: colors.red60 }}
-        RightComponent={(
-          <Button.Secondary
-            onPress={() => setSelectingStartDate(true)}
-            style={startDateErr ? styles.buttonRightErr : styles.buttonRight}
-            textColor={startDateErr ? colors.red60 : colors.purple50}
-          >
-            {formatDateTime(
-              selectedStartDate, language,
-            )}
-          </Button.Secondary>
-        )}
-      />
-      <PrimaryItem
-        style={styles.itemContainer}
-        title={t('home:newsfeed_search:to')}
-        subTitle={
-          endDateErr ? t('home:newsfeed_search:text_error_date') : undefined
-        }
-        subTitleProps={{ variant: 'bodyS', color: colors.red60 }}
-        RightComponent={(
-          <Button.Secondary
-            onPress={() => setSelectingEndDate(true)}
-            style={endDateErr ? styles.buttonRightErr : styles.buttonRight}
-            textColor={endDateErr ? colors.red60 : colors.purple50}
-          >
-            {formatDateTime(
-              selectedEndDate, language,
-            )}
-          </Button.Secondary>
-        )}
-      />
-      <Button.Primary
+      <Text.H4 style={styles.textHeader}>
+        {t('home:newsfeed_search:filter_date')}
+      </Text.H4>
+      {renderFilter()}
+      <Button.Secondary
         onPress={onPressApply}
         style={styles.buttonApply}
-        disabled={startDateErr || endDateErr}
-        color={colors.purple50}
       >
         {t('home:newsfeed_search:apply')}
-      </Button.Primary>
-      <DatePicker
-        selectingStartDate={selectingStartDate}
-        selectingEndDate={selectingEndDate}
-        selectedStartDate={selectedStartDate}
-        selectedEndDate={selectedEndDate}
-        onChangeDatePicker={onChangeDatePicker}
-      />
+      </Button.Secondary>
     </TouchableOpacity>
   );
 };
@@ -147,33 +268,32 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       paddingBottom: spacing.padding.extraLarge,
     },
-    itemContainer: {
-      paddingHorizontal: spacing.padding.extraLarge,
-    },
-    divider: {
-      marginVertical: spacing.margin.small,
-    },
     textHeader: {
-      color: colors.gray50,
       marginTop: spacing.margin.tiny,
-      marginBottom: spacing.margin.tiny,
-      marginHorizontal: spacing.margin.extraLarge,
-    },
-    buttonRight: {
-      marginLeft: spacing.margin.tiny,
-      borderWidth: 1,
-      borderColor: colors.violet1,
-      backgroundColor: colors.violet1,
-    },
-    buttonRightErr: {
-      marginLeft: spacing.margin.tiny,
-      borderWidth: 1,
-      borderColor: colors.red60,
-      backgroundColor: colors.white,
+      marginBottom: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
     },
     buttonApply: {
       marginHorizontal: spacing.margin.extraLarge,
       marginVertical: spacing.margin.small,
+    },
+    buttonDoneDatePicker: {
+      marginHorizontal: spacing.margin.extraLarge,
+      marginBottom: spacing.margin.small,
+      marginTop: spacing.margin.tiny,
+    },
+    rowItemFilter: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.margin.extraLarge,
+      paddingHorizontal: spacing.padding.large,
+    },
+    tagContainer: {
+      alignSelf: 'baseline',
+    },
+    datePickerContainer: {
+      padding: spacing.padding.large,
     },
   });
 };

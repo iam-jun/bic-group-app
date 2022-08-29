@@ -123,7 +123,7 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.neutral1,
     },
     itemContainer: {
-      marginTop: spacing.margin.small,
+      marginTop: spacing.margin.large,
     },
     imgEmpty: {
       width: scaleSize(240),
@@ -140,7 +140,7 @@ const createStyle = (theme: ExtendedTheme) => {
       textAlign: 'center',
     },
     footer: {
-      marginBottom: spacing.margin.base,
+      marginBottom: spacing.margin.large,
     },
   });
 };

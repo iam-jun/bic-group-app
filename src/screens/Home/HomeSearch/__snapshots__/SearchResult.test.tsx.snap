@@ -9,7 +9,20 @@ exports[`SearchResult component should render empty search result 1`] = `
     }
   }
 >
-  <View>
+  <View
+    style={
+      Object {
+        "elevation": 2,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.12,
+        "shadowRadius": 1.5,
+      }
+    }
+  >
     <RCTScrollView
       horizontal={true}
       style={
@@ -27,13 +40,14 @@ exports[`SearchResult component should render empty search result 1`] = `
               "borderColor": "#F8F9FF",
               "flexDirection": "row",
               "paddingBottom": 12,
-              "paddingHorizontal": 12,
+              "paddingHorizontal": 16,
               "paddingTop": 8,
             }
           }
         >
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -45,164 +59,59 @@ exports[`SearchResult component should render empty search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "padding": 8,
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "boxShadow": Object {
+                  "elevation": 1,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.08,
+                  "shadowRadius": 1,
+                },
+                "justifyContent": "center",
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
               }
             }
           >
-            <View
+            <Text
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "color": "#353E6E",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
                   },
-                  undefined,
+                  Object {},
+                  Array [
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                    },
+                  ],
                 ]
               }
-              testID="button_wrapper.content"
             >
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "opacity": 1,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      Object {
-                        "marginLeft": 4,
-                        "marginRight": 8,
-                      },
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        undefined,
-                        undefined,
-                        undefined,
-                      ]
-                    }
-                  >
-                    <View
-                      testID="button_wrapper.icon"
-                    />
-                  </View>
-                </View>
-              </View>
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Filter
-              </Text>
-            </View>
+              Date Post
+            </Text>
           </View>
           <View
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "marginLeft": 4,
-                "padding": 8,
+                "height": undefined,
+                "paddingHorizontal": undefined,
+                "paddingVertical": undefined,
+                "width": 8,
               }
             }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  undefined,
-                ]
-              }
-              testID="button_wrapper.content"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Created by
-              </Text>
-            </View>
-          </View>
+          />
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -214,46 +123,45 @@ exports[`SearchResult component should render empty search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "marginLeft": 4,
-                "padding": 8,
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "boxShadow": Object {
+                  "elevation": 1,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.08,
+                  "shadowRadius": 1,
+                },
+                "justifyContent": "center",
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
               }
             }
           >
-            <View
+            <Text
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "color": "#353E6E",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
                   },
-                  undefined,
+                  Object {},
+                  Array [
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                    },
+                  ],
                 ]
               }
-              testID="button_wrapper.content"
             >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Date
-              </Text>
-            </View>
+              Post By
+            </Text>
           </View>
         </View>
       </View>
@@ -302,7 +210,7 @@ exports[`SearchResult component should render empty search result 1`] = `
       <View
         style={
           Object {
-            "marginBottom": 12,
+            "marginBottom": 16,
           }
         }
       />
@@ -452,7 +360,7 @@ to your search.
         <View
           style={
             Object {
-              "marginBottom": 12,
+              "marginBottom": 16,
             }
           }
         />
@@ -471,7 +379,20 @@ exports[`SearchResult component should render list search result 1`] = `
     }
   }
 >
-  <View>
+  <View
+    style={
+      Object {
+        "elevation": 2,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.12,
+        "shadowRadius": 1.5,
+      }
+    }
+  >
     <RCTScrollView
       horizontal={true}
       style={
@@ -489,13 +410,14 @@ exports[`SearchResult component should render list search result 1`] = `
               "borderColor": "#F8F9FF",
               "flexDirection": "row",
               "paddingBottom": 12,
-              "paddingHorizontal": 12,
+              "paddingHorizontal": 16,
               "paddingTop": 8,
             }
           }
         >
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -507,164 +429,59 @@ exports[`SearchResult component should render list search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "padding": 8,
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "boxShadow": Object {
+                  "elevation": 1,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.08,
+                  "shadowRadius": 1,
+                },
+                "justifyContent": "center",
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
               }
             }
           >
-            <View
+            <Text
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "color": "#353E6E",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
                   },
-                  undefined,
+                  Object {},
+                  Array [
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                    },
+                  ],
                 ]
               }
-              testID="button_wrapper.content"
             >
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "opacity": 1,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      Object {
-                        "marginLeft": 4,
-                        "marginRight": 8,
-                      },
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        undefined,
-                        undefined,
-                        undefined,
-                      ]
-                    }
-                  >
-                    <View
-                      testID="button_wrapper.icon"
-                    />
-                  </View>
-                </View>
-              </View>
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Filter
-              </Text>
-            </View>
+              Date Post
+            </Text>
           </View>
           <View
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "marginLeft": 4,
-                "padding": 8,
+                "height": undefined,
+                "paddingHorizontal": undefined,
+                "paddingVertical": undefined,
+                "width": 8,
               }
             }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  undefined,
-                ]
-              }
-              testID="button_wrapper.content"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Created by
-              </Text>
-            </View>
-          </View>
+          />
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -676,46 +493,45 @@ exports[`SearchResult component should render list search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "marginLeft": 4,
-                "padding": 8,
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "boxShadow": Object {
+                  "elevation": 1,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.08,
+                  "shadowRadius": 1,
+                },
+                "justifyContent": "center",
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
               }
             }
           >
-            <View
+            <Text
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "color": "#353E6E",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
                   },
-                  undefined,
+                  Object {},
+                  Array [
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                    },
+                  ],
                 ]
               }
-              testID="button_wrapper.content"
             >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Date
-              </Text>
-            </View>
+              Post By
+            </Text>
           </View>
         </View>
       </View>
@@ -764,7 +580,7 @@ exports[`SearchResult component should render list search result 1`] = `
       <View
         style={
           Object {
-            "marginBottom": 12,
+            "marginBottom": 16,
           }
         }
       />
@@ -881,7 +697,7 @@ exports[`SearchResult component should render list search result 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "marginTop": 8,
+              "marginTop": 16,
               "opacity": 1,
             }
           }
@@ -1520,33 +1336,24 @@ exports[`SearchResult component should render list search result 1`] = `
             <View
               style={
                 Object {
-                  "alignItems": "flex-end",
-                  "paddingBottom": 6,
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "paddingBottom": 8,
                   "paddingHorizontal": 16,
-                  "paddingTop": 12,
                 }
               }
+              testID="post_view_footer_lite"
             >
               <View
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "opacity": 1,
+                    "alignItems": "center",
+                    "flexDirection": "row",
                   }
                 }
-                testID="seen_counts_view.touchable_opacity"
               >
                 <Text
-                  numberOfLines={1}
                   style={
                     Array [
                       Object {
@@ -1554,21 +1361,82 @@ exports[`SearchResult component should render list search result 1`] = `
                         "fontFamily": "BeVietnamPro-Light",
                         "fontSize": 13,
                       },
-                      Object {
-                        "color": "#353E6E",
-                      },
+                      Object {},
                       undefined,
                     ]
                   }
-                  testID="seen_counts_view.show_text"
                 >
-                  Interested by 
+                  5 React
+                </Text>
+                <View
+                  style={
+                    Object {
+                      "height": undefined,
+                      "paddingHorizontal": undefined,
+                      "paddingVertical": undefined,
+                      "width": 16,
+                    }
+                  }
+                />
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
+                      },
+                      Object {},
+                      undefined,
+                    ]
+                  }
+                >
+                  0 Comment
+                </Text>
+              </View>
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "flex-end",
+                      "paddingBottom": 6,
+                      "paddingHorizontal": 16,
+                      "paddingTop": 12,
+                    },
+                    Object {
+                      "alignItems": "center",
+                      "paddingBottom": 0,
+                      "paddingHorizontal": 0,
+                      "paddingTop": 0,
+                    },
+                  ]
+                }
+              >
+                <View
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                  testID="seen_counts_view.touchable_opacity"
+                >
                   <Text
+                    numberOfLines={1}
                     style={
                       Array [
                         Object {
                           "color": "#212745",
-                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontFamily": "BeVietnamPro-Light",
                           "fontSize": 13,
                         },
                         Object {
@@ -1577,10 +1445,28 @@ exports[`SearchResult component should render list search result 1`] = `
                         undefined,
                       ]
                     }
+                    testID="seen_counts_view.show_text"
                   >
-                    0
+                    Interested by 
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "#212745",
+                            "fontFamily": "BeVietnamPro-Medium",
+                            "fontSize": 13,
+                          },
+                          Object {
+                            "color": "#353E6E",
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      0
+                    </Text>
                   </Text>
-                </Text>
+                </View>
               </View>
             </View>
           </View>
@@ -1592,7 +1478,7 @@ exports[`SearchResult component should render list search result 1`] = `
         <View
           style={
             Object {
-              "marginBottom": 12,
+              "marginBottom": 16,
             }
           }
         />
@@ -1611,7 +1497,20 @@ exports[`SearchResult component should render loading search result 1`] = `
     }
   }
 >
-  <View>
+  <View
+    style={
+      Object {
+        "elevation": 2,
+        "shadowColor": "rgba(0, 0, 0, 1)",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.12,
+        "shadowRadius": 1.5,
+      }
+    }
+  >
     <RCTScrollView
       horizontal={true}
       style={
@@ -1629,13 +1528,14 @@ exports[`SearchResult component should render loading search result 1`] = `
               "borderColor": "#F8F9FF",
               "flexDirection": "row",
               "paddingBottom": 12,
-              "paddingHorizontal": 12,
+              "paddingHorizontal": 16,
               "paddingTop": 8,
             }
           }
         >
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -1647,164 +1547,59 @@ exports[`SearchResult component should render loading search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "padding": 8,
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "boxShadow": Object {
+                  "elevation": 1,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.08,
+                  "shadowRadius": 1,
+                },
+                "justifyContent": "center",
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
               }
             }
           >
-            <View
+            <Text
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "color": "#353E6E",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
                   },
-                  undefined,
+                  Object {},
+                  Array [
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                    },
+                  ],
                 ]
               }
-              testID="button_wrapper.content"
             >
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "opacity": 1,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      Object {
-                        "marginLeft": 4,
-                        "marginRight": 8,
-                      },
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        undefined,
-                        undefined,
-                        undefined,
-                      ]
-                    }
-                  >
-                    <View
-                      testID="button_wrapper.icon"
-                    />
-                  </View>
-                </View>
-              </View>
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Filter
-              </Text>
-            </View>
+              Date Post
+            </Text>
           </View>
           <View
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "marginLeft": 4,
-                "padding": 8,
+                "height": undefined,
+                "paddingHorizontal": undefined,
+                "paddingVertical": undefined,
+                "width": 8,
               }
             }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  undefined,
-                ]
-              }
-              testID="button_wrapper.content"
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Created by
-              </Text>
-            </View>
-          </View>
+          />
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -1816,46 +1611,45 @@ exports[`SearchResult component should render loading search result 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#F1F1F9",
-                "borderRadius": 4,
-                "marginLeft": 4,
-                "padding": 8,
+                "backgroundColor": "#F1F2F8",
+                "borderRadius": 100,
+                "boxShadow": Object {
+                  "elevation": 1,
+                  "shadowColor": "rgba(0, 0, 0, 1)",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.08,
+                  "shadowRadius": 1,
+                },
+                "justifyContent": "center",
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
               }
             }
           >
-            <View
+            <Text
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "color": "#353E6E",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
                   },
-                  undefined,
+                  Object {},
+                  Array [
+                    Object {},
+                    Object {
+                      "color": "#353E6E",
+                    },
+                  ],
                 ]
               }
-              testID="button_wrapper.content"
             >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {
-                      "color": "#7335C0",
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                Date
-              </Text>
-            </View>
+              Post By
+            </Text>
           </View>
         </View>
       </View>
@@ -1867,7 +1661,7 @@ exports[`SearchResult component should render loading search result 1`] = `
       <View
         style={
           Object {
-            "marginBottom": 12,
+            "marginBottom": 16,
           }
         }
       />
@@ -1915,7 +1709,7 @@ exports[`SearchResult component should render loading search result 1`] = `
         <View
           style={
             Object {
-              "marginBottom": 12,
+              "marginBottom": 16,
             }
           }
         />
