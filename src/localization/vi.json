@@ -62,7 +62,7 @@
     "text_error_message": "Có gì đó sai sai",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
-    "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
     "text_see_more": "Xem thêm",
     "text_see_less": "Thu gọn",
     "text_send": "Gửi",
@@ -879,6 +879,27 @@
     "member_tab_types": {
       "title_member_list": " Danh sách thành viên",
       "title_member_requests": "Yêu cầu tham gia"
+    },
+    "join_request_setting": {
+      "title": "Thiết lập yêu cầu tham gia",
+      "description_on_community": "Người dùng phải được phê duyệt mới được tham gia",
+      "description_on_group": "Người dùng phải được phê duyệt mới được tham gia",
+      "description_off_community": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "description_off_group": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "pop_up_on": {
+        "title": "Mở thiết lập phê duyệt yêu cầu tham gia",
+        "content_community": "Bạn phải phê duyệt yêu cầu thành viên. Bạn chắc chứ?",
+        "content_group": "Bạn phải phê duyệt yêu cầu thành viên. Bạn chắc chứ?",
+        "confirm": "Mở"
+      },
+      "pop_up_off": {
+        "title": "Tắt thiết lập phê duyệt yêu cầu tham gia",
+        "content_community": "Tất cả người dùng có thể tham gia mà không cần gửi yêu cầu. Bạn chắc chứ?",
+        "content_group": "Tất cả người dùng có thể tham gia mà không cần gửi yêu cầu. Bạn chắc chứ?",
+        "content_with_requests": "Tất cả yêu cầu tham gia sẽ được tự động phê duyệt sau khi tắt thiết lập này. Bạn chắc chứ?",
+        "confirm": "Tắt",
+        "approve_all": "Phê duyệt tất cả"
+      }
     }
   },
   "upload": {

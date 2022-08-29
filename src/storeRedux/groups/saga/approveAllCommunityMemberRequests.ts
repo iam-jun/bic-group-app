@@ -30,8 +30,7 @@ export default function* approveAllCommunityMemberRequests({
       toastProps = {
         textProps: { useI18n: true },
         type: 'informative',
-        rightIcon: 'UserGroup',
-        rightText: 'Members',
+        rightText: 'Member',
         onPressRight: callback,
       };
     } else {

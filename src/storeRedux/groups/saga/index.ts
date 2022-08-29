@@ -79,11 +79,19 @@ import getJoinedAllGroups from './getJoinedAllGroups';
 import getManaged from './getManaged';
 import getOwnerCommunity from './getOwnerCommunity';
 import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
+import updateCommunityJoinSetting from './updateCommunityJoinSetting';
+import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
+  yield takeLatest(
+    groupsTypes.UPDATE_COMMUNITY_JOIN_SETTING, updateCommunityJoinSetting,
+  );
+  yield takeLatest(
+    groupsTypes.UPDATE_GROUP_JOIN_SETTING, updateGroupJoinSetting,
+  );
   yield takeLatest(
     groupsTypes.GET_MY_PERMISSIONS, getMyPermissions,
   );

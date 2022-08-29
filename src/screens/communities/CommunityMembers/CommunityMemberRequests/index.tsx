@@ -7,24 +7,37 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import groupsActions from '~/storeRedux/groups/actions';
 import MemberRequestList from '~/screens/groups/components/MemberRequestList';
 import CommunityApproveDeclineAllRequests from './components/CommunityApproveDeclineAllRequests';
+import JoinRequestSetting from './components/JoinRequestSetting';
 
 interface CommunityMemberRequestsProps {
   communityId: string
   canAddMember: boolean;
   canApproveRejectJoiningRequests: boolean;
-  canEditJoinSetting: boolean
+  canEditJoinSetting: boolean;
+  onPressAdd?: () => void;
+  navigateToMemberList: () => void;
 }
 
 const CommunityMemberRequests = ({
   communityId,
   canAddMember,
   canApproveRejectJoiningRequests,
+  canEditJoinSetting,
+  onPressAdd,
+  navigateToMemberList,
 }: CommunityMemberRequestsProps) => {
   const dispatch = useDispatch();
-  const { canLoadMore, ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const { canLoadMore, ids, total } = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const { id, settings } = useKeySelector(groupsKeySelector.communityDetail);
+  const { isJoinApproval } = settings || {};
 
   useEffect(
     () => {
+      if (!id || id !== communityId) {
+        // get data if navigation from notification screen
+        dispatch(groupsActions.getCommunityDetail({ communityId }));
+      }
+
       if (canApproveRejectJoiningRequests) {
         getData();
 
@@ -47,8 +60,25 @@ const CommunityMemberRequests = ({
     getData(true);
   };
 
+  const onUpdateJoinSetting = (isJoinApproval: boolean) => {
+    dispatch(groupsActions.updateCommunityJoinSetting({ communityId, isJoinApproval }));
+  };
+
+  const onPressApproveAll = () => {
+    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, total, callback: navigateToMemberList }));
+  };
+
   return (
     <View style={styles.container} testID="CommunityMemberRequests">
+      {!!canEditJoinSetting && (
+        <JoinRequestSetting
+          type="community"
+          total={total}
+          isJoinApproval={isJoinApproval}
+          onUpdateJoinSetting={onUpdateJoinSetting}
+          onPressApproveAll={onPressApproveAll}
+        />
+      )}
 
       {!!canApproveRejectJoiningRequests && (
         <>
@@ -57,6 +87,7 @@ const CommunityMemberRequests = ({
             canAddMember={canAddMember}
             onLoadMore={onLoadMore}
             onRefresh={onRefresh}
+            onPressAdd={onPressAdd}
             id={communityId}
           />
 
