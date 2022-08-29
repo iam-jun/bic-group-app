@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import { communityPrivacyListDetail } from '~/constants/privacyTypes';
 import { margin, padding } from '~/theme/spacing';
-import { Avatar } from '~/baseComponents';
+import { Avatar, Button } from '~/baseComponents';
 import ButtonCommunityGroupCardAction from '~/components/CommunityGroupCard/ButtonCommunityGroupCardAction';
 import { isGroup } from '~/screens/groups/helper';
 
@@ -39,9 +39,11 @@ const GlobalSearchItem = ({
     <View testID={testID} style={styles.container}>
       <Avatar.Base source={icon} badgeBottom badge={privacyIcon} />
       <View style={styles.groupInfo}>
-        <View style={styles.titleContainer}>
-          <Text.H6 numberOfLines={2}>{name}</Text.H6>
-        </View>
+        <Button onPress={_onView}>
+          <View style={styles.titleContainer}>
+            <Text.H6 numberOfLines={2}>{name}</Text.H6>
+          </View>
+        </Button>
         <View style={styles.groupInfoBottom}>
           <View style={styles.chip}>
             <Text.BodyXS useI18n color={colors.blue50}>{itemType}</Text.BodyXS>
