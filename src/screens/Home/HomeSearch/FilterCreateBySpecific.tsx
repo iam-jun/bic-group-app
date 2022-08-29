@@ -119,7 +119,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: dimension.deviceHeight * 0.5,
+    height: dimension.deviceHeight * 0.9,
     paddingHorizontal: 0,
     paddingBottom: 0,
   },
