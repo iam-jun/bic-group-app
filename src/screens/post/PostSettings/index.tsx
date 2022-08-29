@@ -218,7 +218,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
           <Toggle
             testID="post_settings.toggle_important"
             isChecked={(active && notExpired)}
-            onPress={handleToggleImportant}
+            onValueChanged={handleToggleImportant}
           />
         </View>
         {!!active && (listAudiencesWithoutPermission?.length < 1 || notExpired) && renderImportantDate()}
@@ -258,7 +258,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       <Toggle
         testID="post_settings.toggle_can_comment"
         isChecked={sCanComment}
-        onPress={handleToggleCanComment}
+        onValueChanged={handleToggleCanComment}
       />
     </View>
   );
@@ -277,7 +277,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       <Toggle
         testID="post_settings.toggle_can_react"
         isChecked={sCanReact}
-        onPress={handleToggleCanReact}
+        onValueChanged={handleToggleCanReact}
       />
     </View>
   );

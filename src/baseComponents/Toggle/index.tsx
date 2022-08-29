@@ -1,7 +1,7 @@
 import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { borderRadius } from '~/theme/spacing';
 
@@ -9,27 +9,33 @@ interface ToggleProps {
   testID?: string;
   style?: StyleProp<ViewStyle>
   isChecked?: boolean;
+  disableBuiltInState?: boolean;
   disabled?: boolean;
   size?: 'small' | 'medium';
-  onPress?: (isChecked?: boolean) => void;
+  onValueChanged?: (isChecked?: boolean) => void;
 }
 
 const Toggle = ({
   testID,
   style,
   isChecked = false,
+  disableBuiltInState,
   disabled,
   size = 'small',
-  onPress,
+  onValueChanged,
 }: ToggleProps) => {
   const theme = useTheme() as ExtendedTheme;
   const styles = createStyles(theme);
   const { colors } = theme;
 
-  const currentState = disabled ? 'disabled' : (isChecked ? 'selected' : 'unselect');
+  const [checked, setChecked] = useState(isChecked);
 
-  const onChangeValue = () => {
-    onPress?.(!isChecked);
+  const currentCheckedStatus = disableBuiltInState ? isChecked : checked;
+  const currentState = disabled ? 'disabled' : (currentCheckedStatus ? 'selected' : 'unselect');
+
+  const onPress = () => {
+    setChecked(!checked);
+    onValueChanged?.(!currentCheckedStatus);
   };
 
   const toggleStyles = {
@@ -64,7 +70,7 @@ const Toggle = ({
     width: rectangleWidth,
     height: rectangleHeight,
     backgroundColor: rectangleColor,
-    alignItems: isChecked || disabled ? 'flex-end' : 'flex-start',
+    alignItems: currentCheckedStatus || disabled ? 'flex-end' : 'flex-start',
   };
 
   const circleStyle: StyleProp<ViewStyle> = {
@@ -77,7 +83,7 @@ const Toggle = ({
       testID={testID}
       style={[styles.container, style]}
       disabled={!!disabled}
-      onPress={onChangeValue}
+      onPress={onPress}
     >
       <View style={[styles.rectangle, rectangleStyle]}>
         <View style={[styles.circle, circleStyle]} />
