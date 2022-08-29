@@ -45,7 +45,7 @@ import { BottomListProps } from '~/components/BottomList';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
-  const { groupId, onGoBack } = params || {};
+  const { groupId, communityId, onGoBack } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -61,8 +61,8 @@ const GroupDetail = (props: any) => {
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy } = groupInfo;
-  const { name: communityName } = useKeySelector(groupsKeySelector.communityDetail);
-
+  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const { name: communityName } = communityDetail;
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
   const loadingGroupDetail = useKeySelector(
@@ -113,6 +113,9 @@ const GroupDetail = (props: any) => {
   useEffect(
     () => {
       getGroupDetail();
+      if (communityId !== communityDetail?.id) {
+        dispatch(groupsActions.getCommunityDetail({ communityId }));
+      }
     }, [groupId],
   );
 
