@@ -1,11 +1,10 @@
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
 import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBaseView';
-import Text from '~/beinComponents/Text';
 import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
 import GlobalSearchResults from './components/GlobalSearchResults';
@@ -102,17 +101,7 @@ const GlobalSearch = ({
           onJoin={onJoin}
           onCancel={onCancel}
         />
-      ) : (
-        <View style={styles.text}>
-          <Text.BodyS
-            color={theme.colors.gray50}
-            testID="search_community_view.type_search"
-            useI18n
-          >
-            common:text_type_search_keyword
-          </Text.BodyS>
-        </View>
-      )}
+      ) : null}
     </SearchBaseView>
   );
 };

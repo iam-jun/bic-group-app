@@ -119,6 +119,7 @@
     "btn_decline": "Từ chối",
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
+    "all": "Tất cả",
     "in": "trong"
   },
   "auth": {
@@ -373,11 +374,15 @@
       "no_recent_search": "Không có tìm kiếm gần đây",
       "apply": "Xác nhận",
       "filter": "Lọc",
-      "filter_created_by": "Người đăng",
+      "filter_post_by": "Đăng bởi",
       "filter_created_by_all": "Tất cả",
       "filter_created_by_me": "Chính mình",
       "filter_created_by_specific": "Bài viết của",
-      "filter_date": "Ngày đăng"
+      "filter_date": "Ngày đăng",
+      "seven_days_ago": "7 ngày trước",
+      "thirty_days_ago": "30 ngày trước",
+      "three_months_ago": "3 tháng trước",
+      "from_to": "Từ ngày - Đến ngày"
     },
     "notice_post_video_uploading": {
       "title": "Bài viết có video đang xử lý (count)",
@@ -908,6 +913,7 @@
     "owner": "Sở hữu",
     "manage": "Quản trị",
     "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
-    "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào"
+    "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
+    "global_search_placeholder": "Tìm kiếm cộng đồng hoặc nhóm..."
   }
 }

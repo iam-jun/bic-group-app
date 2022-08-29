@@ -23,6 +23,7 @@ export interface SearchBaseViewProps {
   onFocus?: () => void;
   onSubmitEditing?: () => void;
   searchViewRef?: any;
+  headerContainerStyle?: StyleProp<ViewStyle>;
 }
 
 function SearchBaseView({
@@ -36,6 +37,7 @@ function SearchBaseView({
   onFocus,
   onSubmitEditing,
   searchViewRef,
+  headerContainerStyle,
 }: SearchBaseViewProps) {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -64,7 +66,7 @@ function SearchBaseView({
   }));
 
   const renderHeader = () => (
-    <View style={styles.headerContainer}>
+    <View style={[styles.headerContainer, headerContainerStyle]}>
       <View style={styles.inputIconContainer}>
         <Icon
           icon="iconBack"

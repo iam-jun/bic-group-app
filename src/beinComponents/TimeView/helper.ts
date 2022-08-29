@@ -90,9 +90,29 @@ export const formatDateTime = (
     null, {
       lastDay: `[${i18next.t('common:time:yesterday')}]`,
       sameDay: `[${i18next.t('common:time:today')}]`,
+      nextDay: formatPreviousDay,
       lastWeek: formatPreviousDay,
       sameElse: formatPreviousDay,
     },
   );
+  return result;
+};
+
+export const formatDateWithTodayLabel = (
+  time: any, lang: any,
+) => {
+  moment.locale(lang);
+  let result = '';
+  const dateUtc = moment.utc(time);
+  const localDate = dateUtc.local();
+  const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
+  const date = moment(
+    localDate, formats, true,
+  );
+
+  const formatPreviousDay = lang === 'vi' ? 'DD/MM/yyyy' : 'MMM DD, yyyy';
+
+  result = date.isSame(moment(), 'day') ? `${i18next.t('common:time:today')}` : date.format(formatPreviousDay);
+
   return result;
 };

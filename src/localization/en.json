@@ -156,6 +156,7 @@
     "beincomm": "Beincomm",
     "members": "Members",
     "text_remove": "Remove",
+    "all": "All",
     "in": "in"
   },
   "auth": {
@@ -402,7 +403,7 @@
     "title_important": "Important",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
-      "clear": "Clear",
+      "clear": "Clear all",
       "choose_creator": "Choose creator",
       "choose_date": "Choose creation date",
       "from": "From",
@@ -412,19 +413,23 @@
       "label_creation_date": "Creation date",
       "label_anyone": "Anyone",
       "label_anytime": "Anytime",
-      "label_recent_search": "Recent Search",
+      "label_recent_search": "Recent searches",
       "text_error_date": "Invalid Date",
       "btn_reset": "Reset",
       "btn_show_results": "Show Results",
       "search_people": "Search people...",
-      "no_recent_search": "No recent search",
+      "no_recent_search": "No recent searches",
       "apply": "Apply",
       "filter": "Filter",
-      "filter_created_by": "Created by",
+      "filter_post_by": "Post By",
       "filter_created_by_all": "All",
       "filter_created_by_me": "Me",
       "filter_created_by_specific": "Specific person",
-      "filter_date": "Date"
+      "filter_date": "Date Post",
+      "seven_days_ago": "7 days ago",
+      "thirty_days_ago": "30 days ago",
+      "three_months_ago": "3 months ago",
+      "from_to": "From - To"
     },
     "notice_post_video_uploading": {
       "title": "Processing video (count)",
@@ -983,6 +988,7 @@
     "owner": "Own",
     "manage": "Manage",
     "you_have_not_owner_community": "You have not owner community",
-    "you_have_not_manage_communiy_or_group": "You have not manage communiy or group"
+    "you_have_not_manage_communiy_or_group": "You have not manage communiy or group",
+    "global_search_placeholder": "Search community or group..."
   }
 }
