@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity,
+  StyleSheet, View, TouchableOpacity, StyleProp, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -10,11 +10,13 @@ import spacing from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
 
 export interface SeenCountsViewProps {
+  style?: StyleProp<ViewStyle>;
   onPress?: () => void;
   seenPeopleCount?: number;
 }
 
 const SeenCountsView: FC<SeenCountsViewProps> = ({
+  style,
   seenPeopleCount = 0,
   onPress,
 }: SeenCountsViewProps) => {
@@ -29,7 +31,7 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <TouchableOpacity
         onPress={() => _onPress()}
         activeOpacity={1}
