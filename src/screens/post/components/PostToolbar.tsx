@@ -20,10 +20,8 @@ import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import Text from '~/beinComponents/Text';
 import appConfig from '~/configs/appConfig';
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ICreatePostImage } from '~/interfaces/IPost';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import { showHideToastMessage } from '~/storeRedux/modal/actions';
@@ -34,7 +32,6 @@ import { checkPermission, permissionTypes } from '~/utils/permission';
 import { clearExistingFiles, validateFilesPicker } from '../CreatePost/helper';
 import { getTotalFileSize } from '../../../storeRedux/post/selectors';
 import ReviewMarkdown from './ReviewMarkdown';
-import { fontFamilies } from '~/theme/fonts';
 import { Button } from '~/baseComponents';
 
 export interface PostToolbarProps {
@@ -47,6 +44,7 @@ export interface PostToolbarProps {
   fileDisabled?: boolean;
   onPressBack?: () => void;
   onPressSetting: ()=> void;
+  isSetting?:boolean;
 }
 
 const PostToolbar = ({
@@ -58,19 +56,19 @@ const PostToolbar = ({
   fileDisabled,
   onPressBack,
   onPressSetting,
+  isSetting,
   ...props
 }: PostToolbarProps) => {
   const animated = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
 
-  const selectedImage: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.images);
+  const selectedImagesDraft: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.imagesDraft) || [];
   const content = useKeySelector(postKeySelector.createPost.content);
   const selectedFiles = useKeySelector(postKeySelector.createPost.files);
   const { totalFiles, totalSize } = getTotalFileSize();
@@ -156,34 +154,28 @@ const PostToolbar = ({
   };
 
   const openGallery = () => {
-    ImagePicker.openPickerMultiple()
-      .then((images) => {
-        const newImages: ICreatePostImage[] = [];
-        images.forEach((item) => {
-          newImages.push({ fileName: item.filename, file: item });
-        });
-        let newImageDraft = [...selectedImage, ...newImages];
-        if (newImageDraft.length > appConfig.postPhotoLimit) {
-          newImageDraft = newImageDraft.slice(
-            0, appConfig.postPhotoLimit,
-          );
-          const errorContent = t('post:error_reach_upload_photo_limit').replace(
-            '%LIMIT%',
-            appConfig.postPhotoLimit,
-          );
-          dispatch(showHideToastMessage({
-            content: errorContent,
-            props: { textProps: { useI18n: true }, type: 'error' },
-          }));
-        }
-        dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
-        rootNavigation.navigate(homeStack.postSelectImage);
-      })
-      .catch((e) => {
-        console.error(
-          '\x1b[36m🐣️ openPickerMultiple error: \x1b[0m', e,
-        );
+    ImagePicker.openPickerMultiple().then((images) => {
+      const newImages: ICreatePostImage[] = [];
+      images.forEach((item) => {
+        newImages.push({ fileName: item.filename, file: item });
       });
+      let newCurrentImages = [...selectedImagesDraft, ...newImages];
+      if (newCurrentImages.length > appConfig.postPhotoLimit) {
+        newCurrentImages = newCurrentImages.slice(
+          0,
+          appConfig.postPhotoLimit,
+        );
+        const errorContent = t('post:error_reach_upload_photo_limit').replace(
+          '%LIMIT%', appConfig.postPhotoLimit,
+        );
+        dispatch(showHideToastMessage({
+          content: errorContent,
+          props: { textProps: { useI18n: true }, type: 'error' },
+        }));
+      }
+      dispatch(postActions.setCreatePostImagesDraft(newCurrentImages));
+      dispatch(postActions.setCreatePostImages(newCurrentImages));
+    });
   };
 
   const onPressAddFile = async () => {
@@ -220,8 +212,9 @@ const PostToolbar = ({
     icon: any,
     testID: string,
     onPressIcon?: (e: any) => void,
+    shouldHighlight?: boolean,
   ) => {
-    const tintColor = onPressIcon ? colors.neutral40 : colors.neutral20;
+    const tintColor = !!shouldHighlight ? colors.purple50 : onPressIcon ? colors.neutral40 : colors.neutral20;
 
     return (
       <View style={styles.toolbarButton}>
@@ -253,6 +246,7 @@ const PostToolbar = ({
               'Image',
               'post_toolbar.add_photo',
               !imageDisabled ? _onPressSelectImage : undefined,
+              selectedImagesDraft?.length > 0 && !imageDisabled,
             )}
             {renderToolbarButton(
               'ClapperboardPlay',
@@ -263,13 +257,14 @@ const PostToolbar = ({
               'Paperclip',
               'post_toolbar.add_file',
               !fileDisabled ? onPressAddFile : undefined,
+              selectedFiles?.length > 0 && !fileDisabled,
             )}
           </View>
           <Button.Raise
             size="medium"
             testID="header.menuIcon.button"
             icon="Sliders"
-            color={colors.neutral40}
+            color={isSetting ? colors.purple50 : colors.neutral40}
             onPress={onPressSetting}
           />
         </View>
@@ -281,17 +276,16 @@ const PostToolbar = ({
 
   const renderMarkdownHelp = () => (
     <View style={styles.markdownView}>
-      <Text.BodyS style={styles.markdownText} numberOfLines={1}>
+      <Text.BodyXS color={theme.colors.neutral40} style={styles.markdownText} numberOfLines={1}>
         **bold**, *italic*, ~~strike~~, # Heading 1, ## Heading 2,...
-      </Text.BodyS>
-      <Text.BodyS
-        style={{ fontFamily: fontFamilies.BeVietnamProSemiBold }}
+      </Text.BodyXS>
+      <Text.BodyXSMedium
         color={theme.colors.blue50}
         onPress={onPressHelp}
         useI18n
       >
         common:text_help
-      </Text.BodyS>
+      </Text.BodyXSMedium>
     </View>
   );
 
@@ -334,8 +328,8 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     markdownView: {
       flexDirection: 'row',
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.base,
+      marginHorizontal: spacing.margin.small,
+      marginVertical: spacing.margin.tiny,
     },
     markdownText: {
       marginRight: spacing.margin.base,

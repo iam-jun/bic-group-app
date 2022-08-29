@@ -17,11 +17,9 @@ import { useBaseHook } from '~/hooks';
 import { useKeyboardStatus } from '~/hooks/keyboard';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IFilePicked } from '~/interfaces/common';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 
-import PostPhotoPreview from '../../components/PostPhotoPreview';
 import postActions from '../../../../storeRedux/post/actions';
 import { CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT } from '../constanst';
 import { calculateInputHeight, isAndroidAnimated } from '../helper';
@@ -34,14 +32,19 @@ import appConfig from '~/configs/appConfig';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
+import LinkPreviewer from '~/components/LinkPreviewer';
+import PostSelectImage from './PostSelectImage';
 
 interface Props {
   groupIds: any[];
   useCreatePostData: any;
   inputRef: any;
+  isEdit: boolean;
 }
 
-const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
+const Content = ({
+  groupIds, useCreatePostData, inputRef, isEdit,
+}: Props) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -68,6 +71,7 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   const [photosHeight, setPhotosHeight] = React.useState<number>(0);
   const [inputHeight, setInputHeight] = React.useState<number>(0);
   const [contentInput, setContentInput] = React.useState<string>(content);
+  const [isCloseLinkPreview, setCloseLinkPreview] = React.useState<boolean>(false);
 
   const currentInputHeight = useRef<number>(CONTENT_MIN_HEIGHT);
   const refRNText = useRef<any>();
@@ -160,6 +164,10 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
     setInputHeight(height);
   };
 
+  const onCloseLinkPreview = () => {
+    setCloseLinkPreview(true);
+  };
+
   const remainingSize = appConfig.totalFileSize - totalSize;
 
   return (
@@ -205,16 +213,12 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
               }}
               disabled={loading}
             />
-            <ToastAutoSave viewRef={toastRef} visible={isShowToastAutoSave} />
+            {!isCloseLinkPreview
+            && <LinkPreviewer text={content} onClose={onCloseLinkPreview} />}
             <View onLayout={onLayoutPhotoPreview}>
-              <PostPhotoPreview
-                data={images || []}
-                style={{ alignSelf: 'center' }}
-                uploadType={uploadTypes.postImage}
-                onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
-              />
+              <PostSelectImage />
               {video && video?.thumbnails?.length > 0 ? (
-                <VideoPlayer data={video} postId={sPostData?.id || ''} />
+                <VideoPlayer data={video} postId={sPostData?.id || ''} onPressClose={onRemoveVideo} />
               ) : video ? (
                 <UploadingFile
                   uploadType={uploadTypes.postVideo}
@@ -235,6 +239,7 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
                 onSuccess={handleUploadFileSuccess}
               />
             </Button>
+            <ToastAutoSave viewRef={toastRef} visible={isShowToastAutoSave} />
           </Animated.View>
         </View>
       </ScrollView>

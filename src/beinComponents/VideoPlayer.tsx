@@ -14,6 +14,7 @@ import { orderBy } from 'lodash';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import Icon from '../baseComponents/Icon';
 import LoadingIndicator from './LoadingIndicator';
+import { spacing } from '~/theme';
 
 const DURATION_CHECK_POINT = 5 * 1000;
 
@@ -21,6 +22,7 @@ export interface VideoPlayerProps {
   data: any;
   postId?: string;
   onWatchCheckPoint?: () => void;
+  onPressClose?: () => void;
 }
 
 const PLAYER_HEIGHT = scaleCoverHeight();
@@ -29,6 +31,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   data,
   postId,
   onWatchCheckPoint,
+  onPressClose,
 }: VideoPlayerProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -165,6 +168,17 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
           <Icon size={60} tintColor={colors.gray20} icon="CirclePlay" />
         </TouchableOpacity>
       ) : null}
+      {!!onPressClose
+        ? (
+          <TouchableOpacity
+            activeOpacity={url ? 0.85 : 1}
+            onPress={onPressClose}
+            style={styles.buttonClose}
+          >
+            <Icon size={16} tintColor={colors.gray20} icon="Xmark" />
+          </TouchableOpacity>
+        )
+        : null}
     </View>
   );
 };
@@ -197,6 +211,15 @@ const createStyle = (theme: ExtendedTheme) => {
       position: 'absolute',
       zIndex: 2,
       alignSelf: 'center',
+    },
+    buttonClose: {
+      position: 'absolute',
+      zIndex: 2,
+      borderRadius: spacing.borderRadius.circle,
+      padding: spacing.padding.tiny,
+      backgroundColor: colors.white,
+      top: 8,
+      right: 8,
     },
   });
 };

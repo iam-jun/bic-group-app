@@ -12,7 +12,6 @@ import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import BannerImportant from '~/baseComponents/Banner';
 import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import postActions from '~/storeRedux/post/actions';
 
@@ -21,6 +20,7 @@ import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import { getTotalFileSize } from '../../../storeRedux/post/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
+import BannerImportant from './components/BannerImportant';
 import { handleBack } from './handler';
 
 export interface CreatePostProps {
@@ -174,7 +174,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       <Header
         titleTextProps={{ useI18n: true }}
         title={isEdit ? 'post:title_edit_post' : 'post:title_create_post'}
-        buttonText={isEdit ? 'post:post_button' : 'common:btn_publish'}
+        buttonText={isEdit ? 'post:save' : 'common:btn_publish'}
         buttonProps={{
           loading,
           disabled: disableButtonPost,
@@ -192,7 +192,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         activeOpacity={1}
       >
         <View>
-          {!!important?.active && notExpired && <BannerImportant />}
+          {!!important?.active && notExpired && <BannerImportant expiresTime={important.expires_time} />}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />
         </View>
@@ -200,19 +200,8 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           groupIds={groupIds}
           inputRef={refTextInput}
           useCreatePostData={useCreatePostData}
+          isEdit={isEdit}
         />
-        {/* <View style={styles.setting}>
-          <Button.Secondary
-            testID="create_post.btn_post_settings"
-            color={colors.gray5}
-            leftIcon="SlidersUp"
-            style={styles.buttonSettings}
-            onPress={onPressSettings}
-            textProps={{ color: colors.neutral80, style: { fontSize: 14 } }}
-          >
-            {t('post:settings') + (count > 0 ? ` (${count})` : '')}
-          </Button.Secondary>
-        </View> */}
         <CreatePostFooter
           toolbarRef={toolbarRef}
           loading={loading}
@@ -221,6 +210,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           videoDisabled={videoDisabled}
           fileDisabled={fileDisabled}
           onPressSetting={onPressSettings}
+          isSetting={count > 0}
         />
       </TouchableOpacity>
     </ScreenWrapper>
