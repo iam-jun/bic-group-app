@@ -99,7 +99,7 @@ const _PostDetailContent = (props: any) => {
   const isFocused = useIsFocused();
 
   const headerTitle = actor?.fullname
-    ? t('post:title_post_detail_of').replace('%NAME%', actor?.fullname)
+    ? t('post:title_post_detail_of', { name: actor?.fullname })
     : t('post:title_post_detail');
 
   useEffect(() => {

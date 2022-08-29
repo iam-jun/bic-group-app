@@ -453,7 +453,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
-    "title_post_detail_of": "%NAME%'s Post",
+    "title_post_detail_of": "{{name}}'s Post",
     "title_edit_post": "Edit Post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
@@ -574,7 +574,7 @@
     "text_update_post_setting_success": "Post Settings updated",
     "text_update_post_setting_failed": "Post Settings was failed to update",
     "text_comment_from": "This is comment from ",
-    "title_comment_detail_of": "%NAME%'s post",
+    "title_comment_detail_of": "{{name}}'s post",
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",

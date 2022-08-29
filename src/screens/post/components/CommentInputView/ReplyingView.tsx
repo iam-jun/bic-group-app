@@ -70,7 +70,7 @@ const createStyle = (theme: ExtendedTheme) => {
     commentInputHeader: {
       flexDirection: 'row',
       paddingHorizontal: spacing.padding.small,
-      paddingVertical: 6,
+      paddingVertical: spacing.padding.xSmall,
       borderBottomWidth: 1,
       borderColor: colors.neutral5,
     },

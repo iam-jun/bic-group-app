@@ -45,10 +45,9 @@ const CommentDetail = (props: any) => {
     });
   };
 
-  const headerTitle = t('post:title_comment_detail_of').replace(
-    '%NAME%',
-    actor?.fullname || '',
-  );
+  const headerTitle = t('post:title_comment_detail_of', {
+    name: actor?.fullname || '',
+  });
 
   useEffect(
     () => () => {

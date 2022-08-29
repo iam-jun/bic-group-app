@@ -71,10 +71,9 @@ const CommentDetailContent = (props: any) => {
 
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
 
-  const headerTitle = t('post:title_comment_detail_of').replace(
-    '%NAME%',
-    actor?.fullname || '',
-  );
+  const headerTitle = t('post:title_comment_detail_of', {
+    name: actor?.fullname || '',
+  });
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -312,7 +311,7 @@ const CommentDetailContent = (props: any) => {
         />
       );
     }
-    return <ViewSpacing style={styles.footerList} />;
+    return <View style={styles.footerList} />;
   };
 
   if (loading || postDetailLoadingState) {
