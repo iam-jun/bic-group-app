@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 
 export interface ViewSpacingProps {
+  style?: StyleProp<ViewStyle>;
   width?: number;
   height?: number;
   paddingHorizontal?: number;
@@ -10,18 +11,19 @@ export interface ViewSpacingProps {
 }
 
 const ViewSpacing: React.FC<ViewSpacingProps> = ({
+  style,
   width,
   height,
   paddingHorizontal,
   paddingVertical,
 }: ViewSpacingProps) => (
   <View
-    style={{
+    style={[{
       width,
       height,
       paddingHorizontal,
       paddingVertical,
-    }}
+    }, style]}
   />
 );
 

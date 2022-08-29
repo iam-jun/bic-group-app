@@ -43,18 +43,18 @@ const ReplyingView = () => {
   return (
     <View style={styles.commentInputHeader}>
       <View style={styles.headerContent}>
-        <Text color={colors.gray50}>
+        <Text.BodyXS>
           {i18next.t('post:label_replying_to')}
-          <Text.BodyM>
+          <Text.BodyXSMedium>
             {replyTargetName || i18next.t('post:someone')}
-          </Text.BodyM>
-          <Text.BodyS color={colors.gray50}>
-            {'  • '}
-            <Text.BodyM useI18n color={colors.gray50} onPress={onPress}>
+          </Text.BodyXSMedium>
+          <Text.BodyXS>
+            {' • '}
+            <Text.BodyXS useI18n onPress={onPress}>
               common:btn_cancel
-            </Text.BodyM>
-          </Text.BodyS>
-        </Text>
+            </Text.BodyXS>
+          </Text.BodyXS>
+        </Text.BodyXS>
       </View>
     </View>
   );
@@ -70,9 +70,7 @@ const createStyle = (theme: ExtendedTheme) => {
     commentInputHeader: {
       flexDirection: 'row',
       paddingHorizontal: spacing.padding.small,
-      paddingBottom: spacing.padding.small,
-      marginHorizontal: spacing?.margin.small,
-      marginTop: spacing?.margin.small,
+      paddingVertical: 6,
       borderBottomWidth: 1,
       borderColor: colors.neutral5,
     },

@@ -118,7 +118,8 @@
     "btn_approve": "Phê duyệt",
     "btn_decline": "Từ chối",
     "btn_approve_all": "Phê duyệt tất cả",
-    "btn_decline_all": "Từ chối tất cả"
+    "btn_decline_all": "Từ chối tất cả",
+    "in": "trong"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -872,8 +873,8 @@
     },
     "text_search_communities": "Tìm kiếm Cộng đồng",
     "member_tab_types": {
-    "title_member_list": " Danh sách thành viên",
-    "title_member_requests": "Yêu cầu tham gia"
+      "title_member_list": " Danh sách thành viên",
+      "title_member_requests": "Yêu cầu tham gia"
     }
   },
   "upload": {

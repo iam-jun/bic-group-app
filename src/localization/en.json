@@ -155,7 +155,8 @@
     "text_more": "+(number) more",
     "beincomm": "Beincomm",
     "members": "Members",
-    "text_remove": "Remove"
+    "text_remove": "Remove",
+    "in": "in"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -947,8 +948,8 @@
     },
     "text_search_communities": "Search Communities",
     "member_tab_types": {
-    "title_member_list": "Member List",
-    "title_member_requests": "Member Requests"
+      "title_member_list": "Member List",
+      "title_member_requests": "Member Requests"
     }
   },
   "upload": {

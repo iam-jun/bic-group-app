@@ -36,6 +36,7 @@ const CommentDetailContent = (props: any) => {
   const [isScrollFirst, setIsScrollFirst] = useState(false);
 
   const theme: ExtendedTheme = useTheme();
+  const styles = createStyle(theme);
 
   const { t } = useBaseHook();
   const dispatch = useDispatch();
@@ -47,23 +48,26 @@ const CommentDetailContent = (props: any) => {
   const params = props?.route?.params;
   const {
     postId, replyItem, commentParent, commentId, parentId, notiId,
-  } = params || {};
+  }
+    = params || {};
   const id = postId;
 
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const postDetailLoadingState = useKeySelector(postKeySelector.loadingGetPostDetail);
+  const postDetailLoadingState = useKeySelector(
+    postKeySelector.loadingGetPostDetail,
+  );
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const {
     childrenComments = [],
     newCommentData,
     viewMore = false,
     notFoundComment,
-  } = getListChildComment(
-    comments, parentId || commentId,
-  );
+  } = getListChildComment(comments, parentId || commentId);
 
-  const scrollToCommentsPosition = useKeySelector(postKeySelector.scrollToCommentsPosition);
+  const scrollToCommentsPosition = useKeySelector(
+    postKeySelector.scrollToCommentsPosition,
+  );
 
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
 
@@ -72,40 +76,38 @@ const CommentDetailContent = (props: any) => {
     actor?.fullname || '',
   );
 
-  useEffect(
-    () => {
-      if (audience?.groups?.length > 0) {
-        const ids: any = [];
-        audience.groups.map((g: IAudienceGroup) => ids.push(g?.id));
-        setGroupIds(ids?.join?.(','));
-      }
-    }, [audience?.groups],
-  );
+  useEffect(() => {
+    if (audience?.groups?.length > 0) {
+      const ids: any = [];
+      audience.groups.map((g: IAudienceGroup) => ids.push(g?.id));
+      setGroupIds(ids?.join?.(','));
+    }
+  }, [audience?.groups]);
 
-  useEffect(
-    () => {
-      if (copyCommentError === API_ERROR_CODE.POST.postPrivacy) {
-        props?.showPrivacy?.(true);
-      } else if (
-        copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted
+  useEffect(() => {
+    if (copyCommentError === API_ERROR_CODE.POST.postPrivacy) {
+      props?.showPrivacy?.(true);
+    } else if (
+      copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted
       && !postDetailLoadingState
-      ) {
-        setIsEmpty(true);
-        dispatch(modalActions.showHideToastMessage({
+    ) {
+      setIsEmpty(true);
+      dispatch(
+        modalActions.showHideToastMessage({
           content: 'post:text_comment_was_deleted',
           props: {
             type: 'error',
             textProps: { useI18n: true },
           },
           toastType: 'normal',
-        }));
-        rootNavigation.replace(
-          homeStack.postDetail, { post_id: postId },
-        );
-      }
-      if (copyCommentError === API_ERROR_CODE.POST.postDeleted && !!notiId) {
-        dispatch(postActions.deletePostLocal(id));
-        dispatch(modalActions.showHideToastMessage({
+        }),
+      );
+      rootNavigation.replace(homeStack.postDetail, { post_id: postId });
+    }
+    if (copyCommentError === API_ERROR_CODE.POST.postDeleted && !!notiId) {
+      dispatch(postActions.deletePostLocal(id));
+      dispatch(
+        modalActions.showHideToastMessage({
           content: 'post:error_post_detail_deleted',
           toastType: 'banner',
           props: {
@@ -113,78 +115,78 @@ const CommentDetailContent = (props: any) => {
             type: 'informative',
             leftIcon: 'iconCannotComment',
           },
-        }));
-        rootNavigation.popToTop();
-      }
-      if (!postDetailLoadingState && !copyCommentError) {
-        dispatch(postActions.setScrollCommentsPosition(null));
-        dispatch(postActions.getCommentDetail({
+        }),
+      );
+      rootNavigation.popToTop();
+    }
+    if (!postDetailLoadingState && !copyCommentError) {
+      dispatch(postActions.setScrollCommentsPosition(null));
+      dispatch(
+        postActions.getCommentDetail({
           commentId,
           params: { postId },
           callbackLoading: (loading: boolean) => {
             setLoading(loading);
             if (!loading && !!replyItem) {
-              dispatch(postActions.setPostDetailReplyingComment({
-                comment: replyItem,
-                parentComment: commentParent,
-              }));
+              dispatch(
+                postActions.setPostDetailReplyingComment({
+                  comment: replyItem,
+                  parentComment: commentParent,
+                }),
+              );
             }
           },
-        }));
-      }
-    }, [postDetailLoadingState, copyCommentError],
-  );
+        }),
+      );
+    }
+  }, [postDetailLoadingState, copyCommentError]);
 
-  useEffect(
-    () => {
-      if (
-        !loading
+  useEffect(() => {
+    if (
+      !loading
       && (notFoundComment === undefined || notFoundComment < 0)
       && !isEmpty
       && !copyCommentError
-      ) {
-        dispatch(modalActions.showHideToastMessage({
+    ) {
+      dispatch(
+        modalActions.showHideToastMessage({
           content: 'error:not_found_desc',
           props: {
             type: 'error',
             textProps: { useI18n: true },
           },
           toastType: 'normal',
-        }));
-        goHome();
-      }
-    }, [notFoundComment, loading, isEmpty, copyCommentError],
-  );
-
-  useEffect(
-    () => {
-      const timer = setTimeout(
-        () => {
-          if (scrollToCommentsPosition?.position === 'top') {
-            dispatch(postActions.setScrollCommentsPosition(null));
-          } else if (scrollToCommentsPosition?.position === 'bottom') {
-            scrollToIndex();
-          } else if (!!parentId && childrenComments?.length > 0 && !isScrollFirst) {
-            const commentPosition = childrenComments?.findIndex?.((item: ICommentData) => item.id == commentId);
-            if (commentPosition > 0) {
-              setIsScrollFirst(true);
-              scrollToIndex(commentPosition);
-            }
-          }
-        }, 300,
+        }),
       );
-      return () => clearTimeout(timer);
-    }, [scrollToCommentsPosition, childrenComments],
-  );
+      goHome();
+    }
+  }, [notFoundComment, loading, isEmpty, copyCommentError]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (scrollToCommentsPosition?.position === 'top') {
+        dispatch(postActions.setScrollCommentsPosition(null));
+      } else if (scrollToCommentsPosition?.position === 'bottom') {
+        scrollToIndex();
+      } else if (!!parentId && childrenComments?.length > 0 && !isScrollFirst) {
+        const commentPosition = childrenComments?.findIndex?.(
+          (item: ICommentData) => item.id == commentId,
+        );
+        if (commentPosition > 0) {
+          setIsScrollFirst(true);
+          scrollToIndex(commentPosition);
+        }
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [scrollToCommentsPosition, childrenComments]);
 
   const scrollToIndex = (index?: number) => {
     try {
       const position = childrenComments?.length || 1;
       listRef.current?.scrollToIndex?.({
         animated: true,
-        index: index || (position > 0
-          ? position
-          : 0),
+        index: index || (position > 0 ? position : 0),
       });
       dispatch(postActions.setScrollCommentsPosition(null));
     } catch (error) {
@@ -203,52 +205,52 @@ const CommentDetailContent = (props: any) => {
   };
 
   const goToPostDetail = () => {
-    rootNavigation.replace(
-      homeStack.postDetail, {
-        post_id: postId,
-      },
-    );
+    rootNavigation.replace(homeStack.postDetail, {
+      post_id: postId,
+    });
   };
 
   const showNotice = (type = 'deleted_comment') => {
-    dispatch(modalActions.showAlert({
-      // @ts-ignore
-      HeaderImageComponent: (
-        <View style={{ alignItems: 'center' }}>
-          <SVGIcon
-            // @ts-ignore
-            source={CommentNotFoundImg}
-            width={120}
-            height={120}
-            tintColor="none"
-          />
-        </View>
-      ),
-      title: t(`post:${type}:title`),
-      titleProps: { style: { flex: 1, textAlign: 'center' } },
-      cancelBtn: false,
-      isDismissible: true,
-      onConfirm: () => {
-        if (type === 'deleted_post') {
-          rootNavigation.popToTop();
-        } else {
-          rootNavigation.goBack();
-        }
-      },
-      confirmLabel: t(`post:${type}:button_text`),
-      content: t(`post:${type}:description`),
-      contentProps: { style: { textAlign: 'center' } },
-      ContentComponent: Text.BodyS,
-      buttonViewStyle: { justifyContent: 'center' },
-      headerStyle: { marginBottom: 0 },
-      onDismiss: () => {
-        if (type === 'deleted_post') {
-          rootNavigation.popToTop();
-        } else {
-          rootNavigation.goBack();
-        }
-      },
-    }));
+    dispatch(
+      modalActions.showAlert({
+        // @ts-ignore
+        HeaderImageComponent: (
+          <View style={{ alignItems: 'center' }}>
+            <SVGIcon
+              // @ts-ignore
+              source={CommentNotFoundImg}
+              width={120}
+              height={120}
+              tintColor="none"
+            />
+          </View>
+        ),
+        title: t(`post:${type}:title`),
+        titleProps: { style: { flex: 1, textAlign: 'center' } },
+        cancelBtn: false,
+        isDismissible: true,
+        onConfirm: () => {
+          if (type === 'deleted_post') {
+            rootNavigation.popToTop();
+          } else {
+            rootNavigation.goBack();
+          }
+        },
+        confirmLabel: t(`post:${type}:button_text`),
+        content: t(`post:${type}:description`),
+        contentProps: { style: { textAlign: 'center' } },
+        ContentComponent: Text.BodyS,
+        buttonViewStyle: { justifyContent: 'center' },
+        headerStyle: { marginBottom: 0 },
+        onDismiss: () => {
+          if (type === 'deleted_post') {
+            rootNavigation.popToTop();
+          } else {
+            rootNavigation.goBack();
+          }
+        },
+      }),
+    );
   };
 
   const onRefresh = () => {
@@ -258,7 +260,8 @@ const CommentDetailContent = (props: any) => {
       showNotice();
       setRefreshing(false);
       return;
-    } if (copyCommentError === API_ERROR_CODE.POST.postDeleted) {
+    }
+    if (copyCommentError === API_ERROR_CODE.POST.postDeleted) {
       dispatch(postActions.setLoadingGetPostDetail(true));
       setIsEmpty(true);
       setRefreshing(true);
@@ -266,13 +269,15 @@ const CommentDetailContent = (props: any) => {
       setRefreshing(false);
       return;
     }
-    dispatch(postActions.getCommentDetail({
-      commentId: parentId || commentId,
-      params: { postId },
-      callbackLoading: (_loading: boolean) => {
-        setRefreshing(_loading);
-      },
-    }));
+    dispatch(
+      postActions.getCommentDetail({
+        commentId: parentId || commentId,
+        params: { postId },
+        callbackLoading: (_loading: boolean) => {
+          setRefreshing(_loading);
+        },
+      }),
+    );
   };
 
   const onPressMarkSeenPost = useCallback(() => {
@@ -306,7 +311,8 @@ const CommentDetailContent = (props: any) => {
           commentId={_parentId}
         />
       );
-    } return <ViewSpacing height={12} />;
+    }
+    return <ViewSpacing style={styles.footerList} />;
   };
 
   if (loading || postDetailLoadingState) {
@@ -364,33 +370,22 @@ const CommentDetailContent = (props: any) => {
 
 const CommentLevel1 = ({
   id,
-  headerTitle,
   commentData,
   groupIds,
-  onPress,
   onPressMarkSeenPost,
 }: any) => {
+  const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
+
   if (!id) {
     return null;
   }
-  const { t } = useBaseHook();
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
 
   return (
     <View>
-      <View style={styles.container}>
-        <Text.BodySMedium>
-          {t('post:text_comment_from')}
-          <Text.BodyM
-            onPress={onPress}
-            suppressHighlighting
-            style={styles.highlightText}
-          >
-            {headerTitle}
-          </Text.BodyM>
-        </Text.BodySMedium>
-      </View>
+      <ViewSpacing
+        height={spacing.padding.large}
+      />
       <CommentItem
         postId={id}
         commentData={commentData}
@@ -406,7 +401,9 @@ const getListChildComment = (
   listData: ICommentData[],
   parentCommentId: string,
 ) => {
-  const parentCommentPosition = listData?.findIndex?.((item: ICommentData) => item.id === parentCommentId);
+  const parentCommentPosition = listData?.findIndex?.(
+    (item: ICommentData) => item.id === parentCommentId,
+  );
 
   const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];
   return {
@@ -439,6 +436,10 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingTop: spacing.padding.large,
       alignItems: 'center',
       justifyContent: 'flex-start',
+    },
+    footerList: {
+      height: spacing.margin.base,
+      backgroundColor: colors.white,
     },
   });
 };

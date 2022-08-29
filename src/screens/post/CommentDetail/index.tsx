@@ -16,14 +16,22 @@ import { useKeySelector } from '~/hooks/selector';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import postKeySelector from '../../../storeRedux/post/keySelector';
 import spacing from '~/theme/spacing';
+import Text from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
 
 const CommentDetail = (props: any) => {
+  const params = props?.route?.params;
+  const { postId } = params || {};
+
   const { rootNavigation, goHome } = useRootNavigation();
   const dispatch = useDispatch();
+  const { t } = useBaseHook();
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const styles = createStyle(theme);
 
+  const actor = useKeySelector(postKeySelector.postActorById(postId));
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
 
@@ -31,11 +39,23 @@ const CommentDetail = (props: any) => {
     goHome();
   };
 
+  const goToPostDetail = () => {
+    rootNavigation.replace(homeStack.postDetail, {
+      post_id: postId || 0,
+    });
+  };
+
+  const headerTitle = t('post:title_comment_detail_of').replace(
+    '%NAME%',
+    actor?.fullname || '',
+  );
+
   useEffect(
     () => () => {
       dispatch(postActions.setCommentErrorCode(false));
       dispatch(postActions.setLoadingGetPostDetail(false));
-    }, [],
+    },
+    [],
   );
 
   useEffect(
@@ -45,26 +65,37 @@ const CommentDetail = (props: any) => {
         const { postId, commentId } = params || {};
         dispatch(postActions.removeCommentLevel1Deleted({ postId, commentId }));
       }
-    }, [copyCommentError],
+    },
+    [copyCommentError],
   );
 
   const onBack = () => {
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
-      rootNavigation.replace(
-        homeStack.postDetail, {
-          post_id: props?.route?.params?.postId || 0,
-        },
-      );
+      rootNavigation.replace(homeStack.postDetail, {
+        post_id: props?.route?.params?.postId || 0,
+      });
     }
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.white}>
+    <ScreenWrapper isFullView backgroundColor={colors.neutral5}>
       <Header
         titleTextProps={{ useI18n: true }}
         title="post:label_comment"
+        subTitle={(
+          <Text.SubtitleXS>
+            {`${t('common:in')} `}
+            <Text.SubtitleXS
+              onPress={goToPostDetail}
+              suppressHighlighting
+              style={styles.highlightText}
+            >
+              {headerTitle}
+            </Text.SubtitleXS>
+          </Text.SubtitleXS>
+        )}
         onPressBack={onBack}
       />
 
@@ -97,10 +128,15 @@ const CommentDetail = (props: any) => {
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    marginTop: spacing.margin.extraLarge,
-  },
-});
-
+const createStyle = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    button: {
+      marginTop: spacing.margin.extraLarge,
+    },
+    highlightText: {
+      color: colors.blue50,
+    },
+  });
+};
 export default CommentDetail;

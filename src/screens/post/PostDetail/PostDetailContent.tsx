@@ -47,6 +47,7 @@ import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const defaultList = [{ title: '', type: 'empty', data: [] }];
 
@@ -506,6 +507,7 @@ const PostDetailContentHeader = ({
   }
   return (
     <>
+      <ViewSpacing height={spacing.padding.large} />
       <PostView
         postId={id}
         onPressComment={onPressComment}
