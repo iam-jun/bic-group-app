@@ -129,7 +129,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Toggle
             style={styles.iconMarginLeft}
             isChecked={toggleChecked}
-            onPress={onPressToggle}
+            onValueChanged={onPressToggle}
           />
         )}
         {onPressEdit && (

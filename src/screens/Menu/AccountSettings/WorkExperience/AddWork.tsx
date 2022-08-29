@@ -253,7 +253,7 @@ const AddWork = () => {
       <Toggle
         isChecked={isWorkHere}
         testID="add_work.currently_work_here"
-        onPress={onToggleCurrentlyWorkHere}
+        onValueChanged={onToggleCurrentlyWorkHere}
       />
     </View>
   );

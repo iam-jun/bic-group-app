@@ -113,7 +113,7 @@ const JoinRequestSetting = ({
     <View style={styles.container}>
       <View style={styles.line1}>
         <Text.BodyMMedium useI18n>communities:join_request_setting:title</Text.BodyMMedium>
-        <Toggle isChecked={isChecked} onPress={onPressToggle} />
+        <Toggle disableBuiltInState isChecked={isChecked} onValueChanged={onPressToggle} />
       </View>
 
       <View style={styles.line2}>

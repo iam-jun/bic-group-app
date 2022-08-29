@@ -36,7 +36,7 @@ describe('Toggle component', () => {
 
   it('should call onPress when pressing on Toggle', () => {
     const onPress = jest.fn();
-    const wrapper = renderWithRedux(<Toggle onPress={onPress} testID="toggle" />);
+    const wrapper = renderWithRedux(<Toggle onValueChanged={onPress} testID="toggle" />);
     const button = wrapper.getByTestId('toggle');
     fireEvent.press(button);
     expect(onPress).toBeCalled();
@@ -44,7 +44,7 @@ describe('Toggle component', () => {
 
   it('should NOT call onPress when pressing on disabled Toggle', () => {
     const onPress = jest.fn();
-    const wrapper = renderWithRedux(<Toggle onPress={onPress} disabled testID="toggle" />);
+    const wrapper = renderWithRedux(<Toggle onValueChanged={onPress} disabled testID="toggle" />);
     const button = wrapper.getByTestId('toggle');
     fireEvent.press(button);
     expect(onPress).not.toBeCalled();
