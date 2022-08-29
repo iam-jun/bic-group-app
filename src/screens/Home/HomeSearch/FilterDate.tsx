@@ -156,8 +156,6 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  console.log(selectedStartDate, selectedEndDate);
-
   const currentFilter = getCurrentFilterByTimeRange(
     selectedStartDate,
     selectedEndDate,
