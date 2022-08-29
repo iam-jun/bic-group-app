@@ -88,7 +88,7 @@ const Index = () => {
       </View>
       <GlobalSearch
         isOpen={isOpenSearchCommunity}
-        placeholder={t('communities:text_search_communities')}
+        placeholder={t('discover:global_search_placeholder')}
         onClose={onCloseSearch}
       />
     </View>

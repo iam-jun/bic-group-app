@@ -8,6 +8,7 @@ import { memberRequestDetail, communityDetailData } from '~/test/mock_data/commu
 describe('MemberRequestList', () => {
   const onLoadMore = jest.fn();
   const onRefresh = jest.fn();
+  const onPressAdd = jest.fn();
 
   it('should render empty screen when data is empty and loading = false', () => {
     const state = { ...initialState };
@@ -17,6 +18,7 @@ describe('MemberRequestList', () => {
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
+        onPressAdd={onPressAdd}
       />,
       store,
     );
@@ -39,6 +41,7 @@ describe('MemberRequestList', () => {
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
+        onPressAdd={onPressAdd}
       />,
       store,
     );
@@ -54,6 +57,7 @@ describe('MemberRequestList', () => {
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
+        onPressAdd={onPressAdd}
       />,
       store,
     );
@@ -78,6 +82,7 @@ describe('MemberRequestList', () => {
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
+        onPressAdd={onPressAdd}
       />,
       store,
     );
@@ -105,6 +110,7 @@ describe('MemberRequestList', () => {
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
+        onPressAdd={onPressAdd}
       />,
       store,
     );
@@ -130,6 +136,7 @@ describe('MemberRequestList', () => {
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
+        onPressAdd={onPressAdd}
       />,
       store,
     );

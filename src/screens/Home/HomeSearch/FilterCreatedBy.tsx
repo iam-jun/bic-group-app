@@ -1,12 +1,10 @@
-import React, { FC } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import React, { FC, useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Button from '~/beinComponents/Button';
-import Divider from '~/beinComponents/Divider';
+import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
@@ -15,19 +13,16 @@ import FilterCreateBySpecific from '~/screens/Home/HomeSearch/FilterCreateBySpec
 import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
+import Tag from '~/baseComponents/Tag';
 
 export interface NFSFilterCreatedByProps {
   selectedCreatedBy?: any;
   onSelect?: (selected?: ISelectedFilterUser) => void;
-  onPressSelectSpecific?: () => void;
-  dismissModalOnPress?: boolean;
 }
 
 const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   selectedCreatedBy,
   onSelect,
-  onPressSelectSpecific,
-  dismissModalOnPress,
 }: NFSFilterCreatedByProps) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
@@ -36,70 +31,87 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
 
+  const [staged, setStaged] = useState(0);
+  const [selectedCreatedByState, setSelectedCreatedByState] = useState(selectedCreatedBy);
+
   const _onSelect = (selected?: any) => {
-    dismissModalOnPress && dispatch(modalActions.hideModal());
-    onSelect?.(selected);
+    setSelectedCreatedByState(selected);
+    setStaged(0);
   };
 
-  const _onPressSelectSpecific = () => {
-    if (onPressSelectSpecific) {
-      onPressSelectSpecific?.();
-    } else {
-      dismissModalOnPress && dispatch(modalActions.hideModal());
-      dispatch(modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <FilterCreateBySpecific
-            onSelect={_onSelect}
-            dismissModalOnPress
-          />
-        ),
-      }));
-    }
+  const onPressApply = () => {
+    onSelect?.(selectedCreatedByState);
+    dispatch(modalActions.hideModal());
+  };
+
+  const onBack = () => {
+    setStaged(0);
   };
 
   const renderSpecificRightComponent = () => (
-    <Button.Secondary
-      onPress={_onPressSelectSpecific}
-      style={styles.buttonSpecificRight}
-      textColor={colors.purple50}
-      rightIcon={selectedCreatedBy?.name && 'PenLine'}
-    >
-      {selectedCreatedBy?.name || t('home:newsfeed_search:choose_creator')}
-    </Button.Secondary>
+    <View>
+      {(!selectedCreatedByState || selectedCreatedByState.id === userId) && (
+        <Button.Secondary onPress={() => setStaged(1)} type="ghost">
+          {selectedCreatedByState?.name || t('common:text_select')}
+        </Button.Secondary>
+      )}
+      {selectedCreatedByState && selectedCreatedByState.id !== userId && (
+        <Tag
+          style={styles.tagContainer}
+          type="secondary"
+          size="small"
+          label={selectedCreatedByState.name}
+          onActionPress={() => setStaged(1)}
+          icon="Xmark"
+          onPressIcon={() => setSelectedCreatedByState(undefined)}
+        />
+      )}
+    </View>
   );
+
+  if (staged === 1) {
+    return (
+      <FilterCreateBySpecific onSelect={_onSelect} onBack={onBack} />
+    );
+  }
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
-      <Text.ButtonS style={styles.textHeader}>
-        {t('home:newsfeed_search:choose_creator')}
-      </Text.ButtonS>
-      <Divider style={styles.divider} />
-      <PrimaryItem
-        onPress={() => _onSelect()}
-        style={styles.itemContainer}
-        title={t('home:newsfeed_search:filter_created_by_all')}
-        RightComponent={
-          !selectedCreatedBy && (
-            <Icon icon="Check" size={20} tintColor={colors.purple60} />
-          )
-        }
-      />
-      <PrimaryItem
-        onPress={() => _onSelect({ id: userId, name: '' })}
-        style={styles.itemContainer}
-        title={t('home:newsfeed_search:filter_created_by_me')}
-        RightComponent={
-          selectedCreatedBy?.id === userId ? (
-            <Icon icon="Check" size={20} tintColor={colors.purple60} />
-          ) : undefined
-        }
-      />
-      <PrimaryItem
-        style={styles.itemContainer}
-        title={t('home:newsfeed_search:filter_created_by_specific')}
-        RightComponent={renderSpecificRightComponent()}
-      />
+      <Text.H4 style={styles.textHeader}>
+        {t('home:newsfeed_search:filter_post_by')}
+      </Text.H4>
+      <Button onPress={() => _onSelect()}>
+        <View style={styles.rowItemFilter}>
+          <Text.BodyMMedium useI18n>
+            home:newsfeed_search:filter_created_by_all
+          </Text.BodyMMedium>
+          {!selectedCreatedByState && (
+            <Icon icon="CircleCheckSolid" tintColor={colors.blue50} />
+          )}
+        </View>
+      </Button>
+      <Button onPress={() => _onSelect({ id: userId, name: '' })}>
+        <View style={styles.rowItemFilter}>
+          <Text.BodyMMedium useI18n>
+            home:newsfeed_search:filter_created_by_me
+          </Text.BodyMMedium>
+          {selectedCreatedByState?.id === userId && (
+            <Icon icon="CircleCheckSolid" tintColor={colors.blue50} />
+          )}
+        </View>
+      </Button>
+      <View style={styles.rowItemFilter}>
+        <Text.BodyMMedium useI18n>
+          home:newsfeed_search:filter_created_by_specific
+        </Text.BodyMMedium>
+        {renderSpecificRightComponent()}
+      </View>
+      <Button.Secondary
+        onPress={onPressApply}
+        style={styles.buttonApply}
+      >
+        {t('home:newsfeed_search:apply')}
+      </Button.Secondary>
     </TouchableOpacity>
   );
 };
@@ -113,17 +125,27 @@ const createStyle = (theme: ExtendedTheme) => {
     itemContainer: {
       paddingHorizontal: spacing.padding.extraLarge,
     },
-    divider: {
-      marginVertical: spacing.margin.small,
-    },
     textHeader: {
-      color: colors.gray50,
       marginTop: spacing.margin.tiny,
-      marginBottom: spacing.margin.tiny,
-      marginHorizontal: spacing.margin.extraLarge,
+      marginBottom: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
     },
     buttonSpecificRight: {
       marginLeft: spacing.margin.tiny,
+    },
+    rowItemFilter: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.margin.extraLarge,
+      paddingHorizontal: spacing.padding.large,
+    },
+    buttonApply: {
+      marginHorizontal: spacing.margin.extraLarge,
+      marginVertical: spacing.margin.small,
+    },
+    tagContainer: {
+      alignSelf: 'baseline',
     },
   });
 };
