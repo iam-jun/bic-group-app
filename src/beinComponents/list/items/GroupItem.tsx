@@ -27,11 +27,8 @@ export interface GroupItemProps extends IParsedGroup {
   testID?: string;
   uiLevel: number;
   isCollapsing: boolean;
-  onPressItem?: (item: GroupItemProps) => void;
-  onToggleItem?: (item: GroupItemProps) => void;
-  onPressMenu?: (item: GroupItemProps) => void;
-  onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
+  checkboxDisabled?: boolean;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
   showPrivacyAvatar?: boolean;
@@ -40,6 +37,11 @@ export interface GroupItemProps extends IParsedGroup {
   iconVariant?: AvatarType;
   nameLines?: number;
   menuIcon?: IconType;
+
+  onPressItem?: (item: GroupItemProps) => void;
+  onToggleItem?: (item: GroupItemProps) => void;
+  onPressMenu?: (item: GroupItemProps) => void;
+  onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   renderExtraInfo?: (group: IGroup) => any;
 }
 
@@ -60,11 +62,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     hide = false,
     uiLevel = -1,
     isCollapsing = false,
-    onPressItem,
-    onToggleItem,
-    onPressMenu,
-    onCheckedItem,
     disableOnPressItem,
+    checkboxDisabled,
     privacy,
     showPrivacy = false,
     showPrivacyName = true,
@@ -74,6 +73,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     iconVariant = 'base',
     nameLines = 2,
     menuIcon = 'menu',
+    onPressItem,
+    onToggleItem,
+    onPressMenu,
+    onCheckedItem,
     renderExtraInfo,
   } = props;
 
@@ -202,6 +205,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
               testID="group_item.check_box"
               style={styles.checkbox}
               isChecked={isChecked}
+              disabled={checkboxDisabled ? 'disabled' : undefined}
               onPress={_onCheckedItem}
             />
           )}

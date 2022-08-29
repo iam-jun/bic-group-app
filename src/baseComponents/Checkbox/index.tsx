@@ -100,9 +100,10 @@ const Checkbox = ({
       disabled={!!disabled || !!indeterminate}
       onPress={onChangeValue}
     >
-      <View style={styles.backgroundView} />
-      <Icon icon={iconName} size={iconSize} tintColor={iconColor} />
-      {!!label && (
+      <View>
+        <View style={[styles.backgroundView, disabled && styles.backgroundViewDisabled]} />
+        <Icon icon={iconName} size={iconSize} tintColor={iconColor} />
+        {!!label && (
         <Text
           style={styles.labelText}
           variant={textVariant}
@@ -111,7 +112,8 @@ const Checkbox = ({
         >
           {label}
         </Text>
-      )}
+        )}
+      </View>
     </TouchableOpacity>
   );
 };
@@ -135,6 +137,9 @@ const createStyles = (theme: ExtendedTheme) => {
       right: 2,
       bottom: 2,
       backgroundColor: colors.neutral,
+    },
+    backgroundViewDisabled: {
+      backgroundColor: colors.gray5,
     },
   });
 };
