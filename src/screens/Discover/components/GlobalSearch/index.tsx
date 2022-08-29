@@ -57,7 +57,7 @@ const GlobalSearch = ({
 
   const onView = (item: any) => {
     if (isGroup(item.level)) {
-      rootNavigation.navigate(groupStack.groupDetail, { groupId: item.id });
+      rootNavigation.navigate(groupStack.groupDetail, { groupId: item.id, communityId: item.community?.id });
       return;
     }
 
