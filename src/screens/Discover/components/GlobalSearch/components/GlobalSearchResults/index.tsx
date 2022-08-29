@@ -14,6 +14,8 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 import GlobalSearchItem from '../GlobalSearchItem';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
 
 interface GlobalSearchResultsProps {
   onLoadMore?: () => void;
@@ -53,9 +55,14 @@ const GlobalSearchResults = ({
     if (loading) return null;
     return (
       <View testID="global_search_results.no_results" style={styles.textNoResults}>
+        <Image
+          resizeMode="contain"
+          style={styles.imgEmpty}
+          source={images.img_empty_search_post}
+        />
         <Text.BodyS
           style={styles.noResultText}
-          color={theme.colors.gray50}
+          color={theme.colors.neutral40}
           useI18n
           testID="global_search_results.no_results"
         >
@@ -120,7 +127,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  noResultText: { textAlign: 'center' },
+  noResultText: {
+    textAlign: 'center',
+  },
+  imgEmpty: {
+    width: 150,
+    aspectRatio: 1,
+  },
 });
 
 export default GlobalSearchResults;

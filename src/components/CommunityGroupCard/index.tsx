@@ -65,7 +65,10 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
       return;
     }
 
-    rootNavigation.navigate(groupStack.communityDetail, { communityId: id });
+    // if a community has community field, then it is in manage api
+    // so need to pick id from community field
+    // otherwise pick id by normal
+    rootNavigation.navigate(groupStack.communityDetail, { communityId: community ? community.id : id });
   };
 
   const onJoin = () => {

@@ -7,6 +7,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import MemberRequestList from '../../components/MemberRequestList';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
+import JoinRequestSetting from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/JoinRequestSetting';
 
 interface GroupMemberRequestsProps {
   groupId: string;
@@ -14,19 +15,29 @@ interface GroupMemberRequestsProps {
   canApproveRejectJoiningRequests: boolean;
   canEditJoinSetting: boolean
   onPressAdd?: () => void;
+  navigateToMemberList: () => void;
 }
 
 const GroupMemberRequests = ({
   groupId,
   canAddMember,
   canApproveRejectJoiningRequests,
+  canEditJoinSetting,
   onPressAdd,
+  navigateToMemberList,
 }: GroupMemberRequestsProps) => {
   const dispatch = useDispatch();
-  const { ids, canLoadMore } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const { id, settings } = useKeySelector(groupsKeySelector.groupDetail.group);
+  const { isJoinApproval } = settings || {};
 
   useEffect(
     () => {
+      if (!id || id !== groupId) {
+        // get data if navigation from notification screen
+        dispatch(groupsActions.getGroupDetail({ groupId }));
+      }
+
       if (canApproveRejectJoiningRequests) {
         getData();
 
@@ -49,8 +60,25 @@ const GroupMemberRequests = ({
     getData(true);
   };
 
+  const onUpdateJoinSetting = (isJoinApproval: boolean) => {
+    dispatch(groupsActions.updateGroupJoinSetting({ groupId, isJoinApproval }));
+  };
+
+  const onPressApproveAll = () => {
+    dispatch(groupsActions.approveAllGroupMemberRequests({ groupId, total, callback: navigateToMemberList }));
+  };
+
   return (
     <View style={styles.container} testID="GroupMemberRequests">
+      {!!canEditJoinSetting && (
+        <JoinRequestSetting
+          type="group"
+          total={total}
+          isJoinApproval={isJoinApproval}
+          onUpdateJoinSetting={onUpdateJoinSetting}
+          onPressApproveAll={onPressApproveAll}
+        />
+      )}
 
       {!!canApproveRejectJoiningRequests && (
         <>

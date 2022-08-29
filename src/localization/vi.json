@@ -62,7 +62,7 @@
     "text_error_message": "Có gì đó sai sai",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
-    "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
     "text_see_more": "Xem thêm",
     "text_see_less": "Thu gọn",
     "text_send": "Gửi",
@@ -118,7 +118,8 @@
     "btn_approve": "Phê duyệt",
     "btn_decline": "Từ chối",
     "btn_approve_all": "Phê duyệt tất cả",
-    "btn_decline_all": "Từ chối tất cả"
+    "btn_decline_all": "Từ chối tất cả",
+    "all": "Tất cả"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -372,11 +373,15 @@
       "no_recent_search": "Không có tìm kiếm gần đây",
       "apply": "Xác nhận",
       "filter": "Lọc",
-      "filter_created_by": "Người đăng",
+      "filter_post_by": "Đăng bởi",
       "filter_created_by_all": "Tất cả",
       "filter_created_by_me": "Chính mình",
       "filter_created_by_specific": "Bài viết của",
-      "filter_date": "Ngày đăng"
+      "filter_date": "Ngày đăng",
+      "seven_days_ago": "7 ngày trước",
+      "thirty_days_ago": "30 ngày trước",
+      "three_months_ago": "3 tháng trước",
+      "from_to": "Từ ngày - Đến ngày"
     },
     "notice_post_video_uploading": {
       "title": "Bài viết có video đang xử lý (count)",
@@ -872,8 +877,29 @@
     },
     "text_search_communities": "Tìm kiếm Cộng đồng",
     "member_tab_types": {
-    "title_member_list": " Danh sách thành viên",
-    "title_member_requests": "Yêu cầu tham gia"
+      "title_member_list": " Danh sách thành viên",
+      "title_member_requests": "Yêu cầu tham gia"
+    },
+    "join_request_setting": {
+      "title": "Thiết lập yêu cầu tham gia",
+      "description_on_community": "Người dùng phải được phê duyệt mới được tham gia",
+      "description_on_group": "Người dùng phải được phê duyệt mới được tham gia",
+      "description_off_community": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "description_off_group": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "pop_up_on": {
+        "title": "Mở thiết lập phê duyệt yêu cầu tham gia",
+        "content_community": "Bạn phải phê duyệt yêu cầu thành viên. Bạn chắc chứ?",
+        "content_group": "Bạn phải phê duyệt yêu cầu thành viên. Bạn chắc chứ?",
+        "confirm": "Mở"
+      },
+      "pop_up_off": {
+        "title": "Tắt thiết lập phê duyệt yêu cầu tham gia",
+        "content_community": "Tất cả người dùng có thể tham gia mà không cần gửi yêu cầu. Bạn chắc chứ?",
+        "content_group": "Tất cả người dùng có thể tham gia mà không cần gửi yêu cầu. Bạn chắc chứ?",
+        "content_with_requests": "Tất cả yêu cầu tham gia sẽ được tự động phê duyệt sau khi tắt thiết lập này. Bạn chắc chứ?",
+        "confirm": "Tắt",
+        "approve_all": "Phê duyệt tất cả"
+      }
     }
   },
   "upload": {
@@ -907,7 +933,8 @@
     "owner": "Sở hữu",
     "manage": "Quản trị",
     "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
-    "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào"
+    "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
+    "global_search_placeholder": "Tìm kiếm cộng đồng hoặc nhóm..."
   },
   "discard_alert": {
     "title": "Huỷ bỏ những thay đổi?",

@@ -37,6 +37,15 @@ import {
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
+  updateCommunityJoinSetting: (payload: {communityId: string; isJoinApproval: boolean}) => ({
+    type: groupsTypes.UPDATE_COMMUNITY_JOIN_SETTING,
+    payload,
+  }),
+  updateGroupJoinSetting: (payload: {groupId: string; isJoinApproval: boolean}) => ({
+    type: groupsTypes.UPDATE_GROUP_JOIN_SETTING,
+    payload,
+  }),
+
   getMyPermissions: () => ({
     type: groupsTypes.GET_MY_PERMISSIONS,
   }),

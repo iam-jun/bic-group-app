@@ -45,7 +45,7 @@ import { BottomListProps } from '~/components/BottomList';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
-  const { groupId, onGoBack } = params || {};
+  const { groupId, communityId, onGoBack } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -61,8 +61,8 @@ const GroupDetail = (props: any) => {
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy } = groupInfo;
-  const { name: communityName } = useKeySelector(groupsKeySelector.communityDetail);
-
+  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const { name: communityName } = communityDetail;
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
   const loadingGroupDetail = useKeySelector(
@@ -71,8 +71,9 @@ const GroupDetail = (props: any) => {
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
-    'groups', groupId, [
-      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+    'groups',
+    groupId,
+    [
       PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
       PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
     ],
@@ -113,6 +114,9 @@ const GroupDetail = (props: any) => {
   useEffect(
     () => {
       getGroupDetail();
+      if (communityId !== communityDetail?.id) {
+        dispatch(groupsActions.getCommunityDetail({ communityId }));
+      }
     }, [groupId],
   );
 

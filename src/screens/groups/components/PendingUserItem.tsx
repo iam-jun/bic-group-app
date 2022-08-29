@@ -48,7 +48,7 @@ const PendingUserItem = ({
   }) => (
     (!!title || !!TitleComponent) && (
       <View style={styles.itemComponent}>
-        <Icon icon={icon} tintColor={colors.neutral20} size={21} />
+        <Icon icon={icon} tintColor={colors.neutral20} size={18} />
         {!!title && <Text.BodyM color={colors.neutral40} style={styles.text}>{title}</Text.BodyM>}
         {TitleComponent}
       </View>

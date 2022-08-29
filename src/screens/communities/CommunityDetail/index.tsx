@@ -64,8 +64,9 @@ const CommunityDetail = (props: any) => {
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
-    'communities', communityId, [
-      PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
+    'communities',
+    communityId,
+    [
       PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
       PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
       PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,

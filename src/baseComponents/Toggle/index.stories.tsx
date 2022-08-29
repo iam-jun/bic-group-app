@@ -21,7 +21,7 @@ const StoryComponent = getStoryComponent(Toggle);
 export const Default = StoryComponent.bind({});
 Default.args = {
   isChecked: false,
-  onPress: (
+  onValueChanged: (
     isChecked: boolean,
   ) => { alert(`Change checked: ${isChecked}`); },
 };
