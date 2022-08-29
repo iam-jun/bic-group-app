@@ -30,6 +30,18 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
+  updateCommunityJoinSetting: (communityId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/settings`,
+    method: 'put',
+    data: { isJoinApproval },
+  }),
+  updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}groups/${groupId}/settings`,
+    method: 'put',
+    data: { isJoinApproval },
+  }),
   getLinkPreview: (link: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}url-metadata`,
@@ -539,6 +551,12 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  updateCommunityJoinSetting: (communityId: string, isJoinApproval: boolean) => withHttpRequestPromise(
+    groupsApiConfig.updateCommunityJoinSetting, communityId, isJoinApproval,
+  ),
+  updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean) => withHttpRequestPromise(
+    groupsApiConfig.updateGroupJoinSetting, groupId, isJoinApproval,
+  ),
   getLinkPreview: (link: string) => withHttpRequestPromise(
     groupsApiConfig.getLinkPreview, link,
   ),
