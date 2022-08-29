@@ -10,6 +10,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
 import { useDispatch } from 'react-redux';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import { useBaseHook } from '~/hooks';
@@ -36,6 +37,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
+  const styles = createStyles();
 
   const { data, canLoadMore } = useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
 
@@ -117,30 +119,36 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    height: dimension.deviceHeight * 0.9,
-    paddingHorizontal: 0,
-    paddingBottom: 0,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: spacing.padding.large,
-    marginBottom: spacing.margin.extraLarge,
-    marginTop: spacing.margin.large,
-  },
-  searchInput: {
-    marginLeft: spacing.margin.large,
-    flex: 1,
-  },
-  rowItem: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: spacing.padding.large,
-    marginBottom: spacing.margin.extraLarge,
-  },
-});
+const createStyles = () => {
+  const insets = useSafeAreaInsets();
+  const { deviceHeight, headerHeight } = dimension;
+  const containerHeight = deviceHeight - headerHeight - insets.top;
+
+  return StyleSheet.create({
+    container: {
+      height: containerHeight,
+      paddingHorizontal: 0,
+      paddingBottom: 0,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: spacing.padding.large,
+      marginBottom: spacing.margin.extraLarge,
+      marginTop: spacing.margin.large,
+    },
+    searchInput: {
+      marginLeft: spacing.margin.large,
+      flex: 1,
+    },
+    rowItem: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: spacing.padding.large,
+      marginBottom: spacing.margin.extraLarge,
+    },
+  });
+};
 
 export default FilterCreateBySpecific;
