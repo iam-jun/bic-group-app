@@ -13,10 +13,13 @@ import { useBaseHook } from '~/hooks';
 import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
-import { isDiffBetweenTwoDates } from './helper';
+import {
+  endOfToday,
+  getDefaultEndDate, getDefaultStartDate, getTimeAgo, isDiffBetweenTwoDates,
+} from './helper';
 import Icon from '~/baseComponents/Icon';
 import Tag from '~/baseComponents/Tag';
-import { formatDateWithTodayLabel } from '~/beinComponents/TimeView/helper';
+import { formatDateWithSameDayLabel } from '~/beinComponents/TimeView/helper';
 import { DateInput } from '~/baseComponents/Input';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
@@ -86,8 +89,8 @@ const getCurrentFilterByTimeRange = (startDate?: string, endDate?: string) => {
 };
 
 const DatePickerContainer: FC<DatePickerContainerProps> = ({
-  selectedStartDate = moment().subtract(1, 'days').toDate(),
-  selectedEndDate = moment().toDate(),
+  selectedStartDate = getDefaultStartDate(),
+  selectedEndDate = getDefaultEndDate(),
   setSelectedStartDate,
   setSelectedEndDate,
   onDone,
@@ -112,7 +115,7 @@ const DatePickerContainer: FC<DatePickerContainerProps> = ({
           mode="date"
           value={moment(selectedStartDate).toISOString(true)}
           label={t('home:newsfeed_search:from')}
-          maxDate={moment(selectedEndDate).subtract(1, 'days').toDate()}
+          maxDate={moment(selectedEndDate).toDate()}
           onConfirm={(date) => setSelectedStartDate(date)}
         />
         <ViewSpacing height={spacing.padding.large} />
@@ -121,8 +124,9 @@ const DatePickerContainer: FC<DatePickerContainerProps> = ({
           mode="date"
           value={moment(selectedEndDate).toISOString(true)}
           label={t('home:newsfeed_search:to')}
-          minDate={moment(selectedStartDate).add(1, 'days').toDate()}
-          onConfirm={(date) => setSelectedEndDate(date)}
+          minDate={moment(selectedStartDate).toDate()}
+          maxDate={endOfToday()}
+          onConfirm={(date) => setSelectedEndDate(moment(date).endOf('day').toDate())}
         />
       </View>
       <Button.Secondary
@@ -152,6 +156,8 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  console.log(selectedStartDate, selectedEndDate);
+
   const currentFilter = getCurrentFilterByTimeRange(
     selectedStartDate,
     selectedEndDate,
@@ -173,16 +179,16 @@ const FilterDate: FC<NFSFilterDateProps> = ({
         setSelectedEndDate(undefined);
         break;
       case typeFilter.sevenDaysAgo:
-        setSelectedStartDate(moment().subtract(7, 'days').toDate());
-        setSelectedEndDate(moment().toDate());
+        setSelectedStartDate(getTimeAgo(7, 'days'));
+        setSelectedEndDate(endOfToday());
         break;
       case typeFilter.thirtyDaysAgo:
-        setSelectedStartDate(moment().subtract(30, 'days').toDate());
-        setSelectedEndDate(moment().toDate());
+        setSelectedStartDate(getTimeAgo(30, 'days'));
+        setSelectedEndDate(endOfToday());
         break;
       case typeFilter.threeMonthsAgo:
-        setSelectedStartDate(moment().subtract(3, 'months').toDate());
-        setSelectedEndDate(moment().toDate());
+        setSelectedStartDate(getTimeAgo(3, 'months'));
+        setSelectedEndDate(endOfToday());
         break;
       default:
         break;
@@ -212,11 +218,10 @@ const FilterDate: FC<NFSFilterDateProps> = ({
                     style={styles.tagContainer}
                     type="secondary"
                     size="small"
-                    label={t(
-                      `${formatDateWithTodayLabel(
-                        selectedStartDate,
-                        language,
-                      )} - ${formatDateWithTodayLabel(selectedEndDate, language)}`,
+                    label={formatDateWithSameDayLabel(
+                      selectedStartDate,
+                      selectedEndDate,
+                      language,
                     )}
                     onActionPress={() => setStaged(1)}
                     icon="Xmark"
@@ -252,10 +257,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
         {t('home:newsfeed_search:filter_date')}
       </Text.H4>
       {renderFilter()}
-      <Button.Secondary
-        onPress={onPressApply}
-        style={styles.buttonApply}
-      >
+      <Button.Secondary onPress={onPressApply} style={styles.buttonApply}>
         {t('home:newsfeed_search:apply')}
       </Button.Secondary>
     </TouchableOpacity>
