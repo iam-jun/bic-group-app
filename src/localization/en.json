@@ -983,5 +983,9 @@
     "manage": "Manage",
     "you_have_not_owner_community": "You have not owner community",
     "you_have_not_manage_communiy_or_group": "You have not manage communiy or group"
+  },
+  "discard_alert": {
+    "title": "Discard Changes?",
+    "content": "If you discard now, you’ll lose any changes you’ve made."
   }
 }

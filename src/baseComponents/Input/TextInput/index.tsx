@@ -197,7 +197,11 @@ const TextInput: React.FC<TextInputProps> = ({
                 editable={editable}
                 {...props}
               />
-              {RightComponent}
+              {!!RightComponent && (
+              <View style={{ paddingRight: spacing.margin.base }}>
+                {RightComponent}
+              </View>
+              )}
             </View>
           </View>
         </View>
@@ -241,7 +245,6 @@ const themeStyles = (
     },
     inputRow: {
       flexDirection: 'row',
-      paddingRight: spacing.padding.base,
       borderTopLeftRadius: !!leftIcon ? 0 : spacing.borderRadius.base,
       borderBottomLeftRadius: !!leftIcon ? 0 : spacing.borderRadius.base,
       borderTopRightRadius: spacing.borderRadius.base,
