@@ -22,6 +22,7 @@ import Button from '~/beinComponents/Button';
 import postActions from '~/storeRedux/post/actions';
 import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder';
 import spacing from '~/theme/spacing';
+import Icon from '~/baseComponents/Icon';
 
 export interface LoadMoreCommentProps {
   style?: StyleProp<ViewStyle>;
@@ -111,10 +112,16 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   return (
     <View>
       <View style={StyleSheet.flatten([styles.container, style])}>
+        <Icon
+          icon="ArrowRotateRight"
+          tintColor={colors.neutral40}
+          size={10}
+          style={styles.icon}
+        />
         <Button onPress={onPressLoadMore} testID="load_more_comments.button">
-          <Text.H6 style={styles.textLoadMoreComment} useI18n>
+          <Text.BodyXSMedium style={styles.textLoadMoreComment} useI18n>
             {title}
-          </Text.H6>
+          </Text.BodyXSMedium>
         </Button>
         <ActivityIndicator color={colors.gray30} animating={loadingMore} />
       </View>
@@ -138,10 +145,12 @@ const createStyle = (
     },
     textLoadMoreComment: {
       margin: spacing.margin.small,
-      color: colors.neutral80,
     },
     placeholder: {
       marginLeft: commentId ? 36 : 0,
+    },
+    icon: {
+      marginLeft: spacing.margin.small,
     },
   });
 };

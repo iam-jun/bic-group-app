@@ -249,7 +249,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const renderReactionsReplyView = () => (
     isActive && (
-      <View style={{}}>
+      <View style={{ marginTop: spacing.margin.tiny }}>
         <ReactionView
           style={styles.reactionView}
           ownerReactions={ownerReactions}

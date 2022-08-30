@@ -40,7 +40,9 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
 
   const renderContent = () => {
     if (giphy) {
-      return <GifView giphy={giphy} />;
+      return (
+        <GifView giphy={giphy} />
+      );
     }
     if (images && !isEmpty(images)) {
       return (
@@ -55,6 +57,10 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
     }
     return null;
   };
+
+  if (!giphy && (!images || images.length === 0)) {
+    return null;
+  }
 
   return (
     <View
