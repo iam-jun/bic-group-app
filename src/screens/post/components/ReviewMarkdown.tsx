@@ -31,15 +31,14 @@ const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
   const renderTitleHeader = () => (
     <View style={styles.header}>
       <Text.H5 useI18n>post:text_review_markdown</Text.H5>
-      <Button.Secondary
+      <Button.Primary
         testID="header.button"
         style={styles.buttonDone}
-        textColor={theme.colors.purple50}
         textProps={{ useI18n: true }}
         onPress={onPressDone}
       >
         common:btn_done
-      </Button.Secondary>
+      </Button.Primary>
     </View>
   );
 
@@ -47,8 +46,8 @@ const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
     <View style={styles.post}>
       {/* render post header */}
       <View style={styles.postHeader}>
-        <Avatar.Medium isRounded source={avatar} style={{ marginRight: 8 }} />
-        <View>
+        <Avatar.Medium isRounded source={avatar} style={styles.avatar} />
+        <View style={styles.flex1}>
           <Text.H6>{fullname}</Text.H6>
           <View style={styles.audienceLine}>
             <Text.BodySMedium
@@ -115,8 +114,6 @@ const createStyles = (
       marginHorizontal: spacing.margin.large,
     },
     buttonDone: {
-      borderWidth: 1,
-      borderColor: colors.purple50,
       marginRight: spacing.margin.tiny,
     },
     post: {
@@ -139,6 +136,12 @@ const createStyles = (
     },
     content: {
       marginTop: spacing.margin.extraLarge,
+    },
+    avatar: {
+      marginRight: spacing.margin.small,
+    },
+    flex1: {
+      flex: 1,
     },
   });
 };

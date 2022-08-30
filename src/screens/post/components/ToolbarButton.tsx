@@ -27,7 +27,7 @@ const ToolbarButton = ({
   return (
     <View style={styles.toolbarButton}>
       <Icon
-        size={24}
+        size={20}
         tintColor={tintColor}
         icon={icon}
         buttonTestID={testID}

@@ -26,7 +26,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
   const names = getNames(
-    chosenAudiences, t,
+    chosenAudiences,
   );
 
   const onPressSelectAudience = () => {
@@ -51,13 +51,15 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
 };
 
 const getNames = (
-  chosenAudiences: IAudience[], t: any,
+  chosenAudiences: IAudience[],
 ) => {
   let result = '';
   if (chosenAudiences?.length > 0) {
-    chosenAudiences.forEach((item: IAudience) => {
-      result += `${item?.name || ''}, `;
-    });
+    for (let index = 0; index < chosenAudiences.length; index++) {
+      const item = chosenAudiences[index];
+      const shouldAddComma = index === chosenAudiences.length - 1;
+      result += shouldAddComma ? `${item?.name}` : `${item?.name || ''}, `;
+    }
   }
   return result;
 };

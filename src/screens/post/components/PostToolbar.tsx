@@ -243,7 +243,6 @@ const PostToolbar = ({
           style={[styles.toolbarStyle, style]}
         >
           <View style={styles.row}>
-            <ToolbarButton icon="Markdown" testID="post_toolbar.markdown_preview" onPressIcon={content && onPressMarkdownPreview} />
             <ToolbarButton
               icon="Image"
               testID="post_toolbar.add_photo"
@@ -260,6 +259,11 @@ const PostToolbar = ({
               testID="post_toolbar.add_file"
               onPressIcon={!fileDisabled ? onPressAddFile : undefined}
               shouldHighlight={selectedFiles?.length > 0 && !fileDisabled}
+            />
+            <ToolbarButton
+              icon="Markdown"
+              testID="post_toolbar.markdown_preview"
+              onPressIcon={content && onPressMarkdownPreview}
             />
           </View>
           <Button.Raise
