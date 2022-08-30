@@ -24,6 +24,7 @@ export interface CommentInputFooterProps {
   loading?: boolean;
   disabledBtnSend?: boolean;
   isHideBtnSend?: boolean;
+  isDisplayNone?: boolean;
 }
 
 const CommentInputFooter: FC<CommentInputFooterProps> = ({
@@ -37,6 +38,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   loading,
   disabledBtnSend,
   isHideBtnSend,
+  isDisplayNone,
 }: CommentInputFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
@@ -137,7 +139,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   );
 
   return (
-    <View>
+    <View style={{ display: isDisplayNone ? 'none' : 'flex' }}>
       {renderButtons()}
       <Animated.View
         testID="comment_input_footer.mention_bar_container"

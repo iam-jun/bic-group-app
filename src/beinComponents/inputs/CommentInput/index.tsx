@@ -438,23 +438,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
               {text}
             </TextInput>
           </Animated.View>
-          {text.trim().length === 0 && (
-            <CommentInputFooter
-              useTestID={useTestID}
-              onPressIcon={onPressIcon}
-              onPressFile={_onPressFile}
-              onPressImage={_onPressSelectImage}
-              onPressCamera={onPressCamera}
-              onPressEmoji={onPressEmoji}
-              onPressSend={_onPressSend}
-              loading={_loading}
-              disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
-              isHideBtnSend={!text.trim() && !hasMedia()}
-            />
-          )}
-        </View>
-        {renderSelectedMedia()}
-        {text.trim().length !== 0 && (
           <CommentInputFooter
             useTestID={useTestID}
             onPressIcon={onPressIcon}
@@ -465,9 +448,25 @@ const CommentInput: React.FC<CommentInputProps> = ({
             onPressSend={_onPressSend}
             loading={_loading}
             disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
-            isHideBtnSend={false}
+            isHideBtnSend={!text.trim() && !hasMedia()}
+            isDisplayNone={text.trim().length !== 0}
           />
-        )}
+        </View>
+        {renderSelectedMedia()}
+        <CommentInputFooter
+          useTestID={useTestID}
+          onPressIcon={onPressIcon}
+          onPressFile={_onPressFile}
+          onPressImage={_onPressSelectImage}
+          onPressCamera={onPressCamera}
+          onPressEmoji={onPressEmoji}
+          onPressSend={_onPressSend}
+          loading={_loading}
+          disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
+          isHideBtnSend={false}
+          isDisplayNone={text.trim().length === 0}
+        />
+
       </View>
       <StickerView
         stickerViewRef={stickerViewRef}
