@@ -217,6 +217,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
             testID="post_settings.toggle_important"
             isChecked={active}
             onValueChanged={handleToggleImportant}
+            disableBuiltInState
           />
         </View>
         {!!active && (listAudiencesWithoutPermission?.length < 1 || notExpired) && renderImportantDate()}
