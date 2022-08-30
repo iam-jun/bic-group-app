@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
@@ -186,11 +186,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         onPressButton={onPressPost}
         style={styles.headerStyle}
       />
-      <TouchableOpacity
-        style={styles.flex1}
-        onPress={onPressInput}
-        activeOpacity={1}
-      >
+      <View style={styles.flex1}>
         <View>
           {!!important?.active && notExpired && <CreatePostBannerImportant expiresTime={important.expires_time} />}
           <CreatePostChosenAudiences disabled={loading} />
@@ -211,7 +207,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           onPressSetting={onPressSettings}
           isSetting={count > 0}
         />
-      </TouchableOpacity>
+      </View>
     </ScreenWrapper>
   );
 };
