@@ -108,7 +108,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         dispatch(postActions.clearCreatPostData());
         dispatchGetAudienceTree();
       } else {
-        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
+        // with old version, it will show last search result lists, but new flow has tree, so we need re-fetch
+        dispatchGetAudienceTree();
       }
 
       return () => {
