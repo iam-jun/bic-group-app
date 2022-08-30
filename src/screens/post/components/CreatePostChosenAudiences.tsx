@@ -55,11 +55,11 @@ const getNames = (
 ) => {
   let result = '';
   if (chosenAudiences?.length > 0) {
-    for (let index = 0; index < chosenAudiences.length; index++) {
-      const item = chosenAudiences[index];
-      const shouldAddComma = index === chosenAudiences.length - 1;
-      result += shouldAddComma ? `${item?.name}` : `${item?.name || ''}, `;
-    }
+    const newChosenAudiencesName = [];
+    chosenAudiences.forEach((item: IAudience) => {
+      newChosenAudiencesName.push(item?.name);
+    });
+    result = newChosenAudiencesName.join(', ');
   }
   return result;
 };

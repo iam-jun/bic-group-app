@@ -7,7 +7,6 @@ import i18next from 'i18next';
 
 import Text from '~/beinComponents/Text';
 
-import Button from '~/beinComponents/Button';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import Markdown from '~/beinComponents/Markdown';
@@ -15,6 +14,7 @@ import menuKeySelector from '~/storeRedux/menu/keySelector';
 import Avatar from '~/baseComponents/Avatar';
 import { IAudience } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
+import { Button } from '~/baseComponents';
 
 const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
   const windowDimension = useWindowDimensions();
@@ -34,8 +34,9 @@ const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
       <Button.Primary
         testID="header.button"
         style={styles.buttonDone}
-        textProps={{ useI18n: true }}
         onPress={onPressDone}
+        useI18n
+
       >
         common:btn_done
       </Button.Primary>
