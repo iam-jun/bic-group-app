@@ -98,21 +98,21 @@ export const formatDateTime = (
   return result;
 };
 
-export const formatDateWithTodayLabel = (
-  time: any, lang: any,
+export const formatDateWithSameDayLabel = (
+  start: any, end: any, lang: any,
 ) => {
-  moment.locale(lang);
-  let result = '';
-  const dateUtc = moment.utc(time);
-  const localDate = dateUtc.local();
-  const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
-  const date = moment(
-    localDate, formats, true,
-  );
+  const startDate = moment(start);
+  const endDate = moment(end);
 
   const formatPreviousDay = lang === 'vi' ? 'DD/MM/yyyy' : 'MMM DD, yyyy';
 
-  result = date.isSame(moment(), 'day') ? `${i18next.t('common:time:today')}` : date.format(formatPreviousDay);
+  if (startDate.isSame(endDate, 'day')) {
+    if (startDate.isSame(moment(), 'day')) {
+      return `${i18next.t('common:time:today')}`;
+    }
 
-  return result;
+    return startDate.format(formatPreviousDay);
+  }
+
+  return `${startDate.format(formatPreviousDay)} - ${endDate.format(formatPreviousDay)}`;
 };
