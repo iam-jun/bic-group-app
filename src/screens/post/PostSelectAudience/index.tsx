@@ -246,6 +246,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       {...item}
       groupItemTestID="post_select_audience.groups.item"
       initShowTree={!searchKey}
+      checkboxDisabled={!item.isPostable}
+      disableOnPressItem={!item.isPostable}
       hidePath
       groupStyle={{ paddingVertical: spacing.padding.small }}
       showPrivacyAvatar
