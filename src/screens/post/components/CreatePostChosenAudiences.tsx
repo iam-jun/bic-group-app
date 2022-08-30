@@ -26,7 +26,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
   const names = getNames(
-    chosenAudiences, t,
+    chosenAudiences,
   );
 
   const onPressSelectAudience = () => {
@@ -51,13 +51,15 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
 };
 
 const getNames = (
-  chosenAudiences: IAudience[], t: any,
+  chosenAudiences: IAudience[],
 ) => {
   let result = '';
   if (chosenAudiences?.length > 0) {
+    const newChosenAudiencesName = [];
     chosenAudiences.forEach((item: IAudience) => {
-      result += `${item?.name || ''}, `;
+      newChosenAudiencesName.push(item?.name);
     });
+    result = newChosenAudiencesName.join(', ');
   }
   return result;
 };
