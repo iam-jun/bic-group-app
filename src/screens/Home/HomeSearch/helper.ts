@@ -21,4 +21,13 @@ export const isValidDate = (sd: any, ed: any) => {
   return end > start;
 };
 
-export const isDiffBetweenTwoDates = (from: string, to: string, value: number, type: 'days' | 'months') => moment(to).diff(moment(from), type) === value;
+export const isDiffBetweenTwoDates = (
+  from: string,
+  to: string,
+  value: number,
+  type: 'days' | 'months',
+) => moment(to).diff(moment(from), type) === value;
+
+export const getTimeAgo = (time: number, type: 'days' | 'months') => moment().subtract(time, type).startOf('day').toDate();
+
+export const endOfToday = () => moment().endOf('day').toDate();

@@ -73,6 +73,7 @@ import { faEllipsis } from '@fortawesome/pro-regular-svg-icons/faEllipsis';
 import { faEllipsisVertical } from '@fortawesome/pro-regular-svg-icons/faEllipsisVertical';
 import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
 import { faRotateRight } from '@fortawesome/pro-regular-svg-icons/faRotateRight';
+import { faArrowRotateRight } from '@fortawesome/pro-regular-svg-icons/faArrowRotateRight';
 import { faPenToSquare } from '@fortawesome/pro-regular-svg-icons/faPenToSquare';
 import { faFileLock } from '@fortawesome/pro-regular-svg-icons/faFileLock';
 import { faFilePen } from '@fortawesome/pro-regular-svg-icons/faFilePen';
@@ -250,6 +251,7 @@ export const initFontAwesomeIcon = () => {
     faEllipsisVertical,
     faLink,
     faRotateRight,
+    faArrowRotateRight,
     faPenToSquare,
     faFileLock,
     faFilePen,
@@ -410,6 +412,7 @@ export const fontAwesomeIcons = {
   EllipsisVertical: 'fa-regular fa-ellipsis-vertical',
   Link: 'fa-regular fa-link',
   RotateRight: 'fa-regular fa-rotate-right',
+  ArrowRotateRight: 'fa-regular fa-arrow-rotate-right',
   PenToSquare: 'fa-regular fa-pen-to-square',
   FileLock: 'fa-regular fa-file-lock',
   FilePen: 'fa-regular fa-file-pen',

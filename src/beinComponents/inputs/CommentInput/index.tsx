@@ -485,7 +485,6 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
       borderTopWidth: 1,
       borderColor: colors.neutral5,
       backgroundColor: colors.white,
-      paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
     },
     container: {

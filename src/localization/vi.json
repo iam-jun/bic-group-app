@@ -119,7 +119,8 @@
     "btn_decline": "Từ chối",
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
-    "all": "Tất cả"
+    "all": "Tất cả",
+    "in": "trong"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -405,7 +406,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Chi tiết bài viết",
-    "title_post_detail_of": "Bài của %NAME%",
+    "title_post_detail_of": "Bài của {{name}}",
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
     "title_edit_images": "Sửa ảnh",
@@ -528,7 +529,7 @@
     "text_update_post_setting_success": "Đã cập nhật Cài đặt bài viết",
     "text_update_post_setting_failed": "Cập nhật Cài đặt bài viết thất bại",
     "text_comment_from": "Đây là bình luận từ ",
-    "title_comment_detail_of": "bài đăng của %NAME%",
+    "title_comment_detail_of": "bài đăng của {{name}}",
     "newsfeed": {
       "title_empty_no_post": "Nơi đây cô đơn quá...",
       "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới",
