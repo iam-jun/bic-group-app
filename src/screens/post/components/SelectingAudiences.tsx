@@ -45,7 +45,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
         textProps={{
           numberOfLines: 1,
           ellipsizeMode: 'middle',
-          style: { maxWidth: TAG_MAX_WIDTH, color: colors.blue50 },
+          style: { maxWidth: TAG_MAX_WIDTH, color: colors.blue50, marginLeft: spacing.margin.tiny },
         }}
         size="large"
         type="secondary"
