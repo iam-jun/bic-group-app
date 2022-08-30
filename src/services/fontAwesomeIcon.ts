@@ -73,6 +73,7 @@ import { faEllipsis } from '@fortawesome/pro-regular-svg-icons/faEllipsis';
 import { faEllipsisVertical } from '@fortawesome/pro-regular-svg-icons/faEllipsisVertical';
 import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
 import { faRotateRight } from '@fortawesome/pro-regular-svg-icons/faRotateRight';
+import { faArrowRotateRight } from '@fortawesome/pro-regular-svg-icons/faArrowRotateRight';
 import { faPenToSquare } from '@fortawesome/pro-regular-svg-icons/faPenToSquare';
 import { faFileLock } from '@fortawesome/pro-regular-svg-icons/faFileLock';
 import { faFilePen } from '@fortawesome/pro-regular-svg-icons/faFilePen';
@@ -154,6 +155,8 @@ import { faSliders } from '@fortawesome/pro-regular-svg-icons/faSliders';
 import { faLinkHorizontal } from '@fortawesome/pro-regular-svg-icons/faLinkHorizontal';
 import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faRss } from '@fortawesome/pro-regular-svg-icons/faRss';
+import { faClapperboardPlay } from '@fortawesome/pro-regular-svg-icons/faClapperboardPlay';
+import { faMarkdown } from '@fortawesome/free-brands-svg-icons/faMarkdown';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -248,6 +251,7 @@ export const initFontAwesomeIcon = () => {
     faEllipsisVertical,
     faLink,
     faRotateRight,
+    faArrowRotateRight,
     faPenToSquare,
     faFileLock,
     faFilePen,
@@ -328,6 +332,8 @@ export const initFontAwesomeIcon = () => {
     faLinkHorizontal,
     faShare,
     faRss,
+    faClapperboardPlay,
+    faMarkdown,
   );
 };
 
@@ -406,6 +412,7 @@ export const fontAwesomeIcons = {
   EllipsisVertical: 'fa-regular fa-ellipsis-vertical',
   Link: 'fa-regular fa-link',
   RotateRight: 'fa-regular fa-rotate-right',
+  ArrowRotateRight: 'fa-regular fa-arrow-rotate-right',
   PenToSquare: 'fa-regular fa-pen-to-square',
   FileLock: 'fa-regular fa-file-lock',
   FilePen: 'fa-regular fa-file-pen',
@@ -487,6 +494,8 @@ export const fontAwesomeIcons = {
   LinkHorizontal: 'fa-regular fa-link-horizontal',
   Share: 'fa-regular fa-share',
   RSS: 'fa-regular fa-rss',
+  ClapperboardPlay: 'fa-regular fa-clapperboard-play',
+  Markdown: 'fa-brands fa-markdown',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

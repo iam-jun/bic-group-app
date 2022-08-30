@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
@@ -12,22 +12,27 @@ import { getUrlFromText } from '~/utils/common';
 import { openUrl } from '~/utils/link';
 import { Button } from '~/baseComponents';
 import images from '~/resources/images';
+import Icon from '~/baseComponents/Icon';
 
 interface LinkPreviewerProps {
   text?: string;
+  showClose?: boolean;
 }
 
-const LinkPreviewer = ({ text }: LinkPreviewerProps) => {
+const LinkPreviewer = ({ text, showClose }: LinkPreviewerProps) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const [link, setLink] = useState<string | null | undefined>('');
+  const [visible, setVisible] = useState<boolean>(false);
   const linkPreviews = useKeySelector('app.linkPreviews');
 
   useEffect(() => {
-    const url = getUrlFromText(text);
-    setLink(url);
+    const urls = getUrlFromText(text, []);
+    if (urls?.length > 0) {
+      setLink(urls[urls.length - 1]);
+    }
   }, [text]);
 
   useEffect(() => {
@@ -42,6 +47,12 @@ const LinkPreviewer = ({ text }: LinkPreviewerProps) => {
   const onPress = () => {
     openUrl(link);
   };
+
+  const onClose = () => {
+    setVisible(true);
+  };
+
+  if (!!visible) return null;
 
   return (
     <Button onPress={onPress}>
@@ -61,6 +72,17 @@ const LinkPreviewer = ({ text }: LinkPreviewerProps) => {
             {linkPreviews?.[link].title}
           </Text.H6>
         </View>
+        {
+          !!showClose
+              && (
+              <TouchableOpacity
+                onPress={onClose}
+                style={styles.buttonClose}
+              >
+                <Icon size={12} tintColor={colors.neutral40} icon="Xmark" />
+              </TouchableOpacity>
+              )
+        }
       </View>
     </Button>
   );
@@ -92,6 +114,18 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     title: {
       marginTop: spacing.margin.small,
+    },
+    buttonClose: {
+      position: 'absolute',
+      zIndex: 2,
+      borderRadius: spacing.borderRadius.circle,
+      backgroundColor: colors.neutral2,
+      top: 8,
+      right: 8,
+      width: 20,
+      height: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 };

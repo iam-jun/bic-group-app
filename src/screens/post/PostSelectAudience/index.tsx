@@ -204,8 +204,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     } else if (isEditAudience || isFirstStep) {
       if (isAudiencesHasChanged) {
         dispatch(modalActions.showAlert({
-          title: t('post:create_post:title_audience_changed'),
-          content: t('post:create_post:text_discard_change'),
+          title: t('discard_alert:title'),
+          content: t('discard_alert:content'),
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('common:btn_stay_here'),
@@ -246,6 +246,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       {...item}
       groupItemTestID="post_select_audience.groups.item"
       initShowTree={!searchKey}
+      checkboxDisabled={!item.isPostable}
+      disableOnPressItem={!item.isPostable}
       hidePath
       groupStyle={{ paddingVertical: spacing.padding.small }}
       showPrivacyAvatar
@@ -280,9 +282,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         }
       >
         <Header
-          title="post:select_audience"
+          title="post:title_post_to"
           titleTextProps={{ useI18n: true }}
-          buttonText={isFirstStep ? 'common:btn_next' : 'common:btn_done'}
+          buttonText="common:btn_next"
           buttonProps={{
             useI18n: true,
             disabled: disableButtonSave,

@@ -22,11 +22,11 @@ export const handleBack = (
   if (isEditPost) {
     if (isEditPostHasChange) {
       dispatch(modalActions.showAlert({
-        title: i18next.t('post:create_post:title_discard_changes'),
-        content: i18next.t('post:alert_content_back_edit_post'),
+        title: i18next.t('discard_alert:title'),
+        content: i18next.t('discard_alert:content'),
         cancelBtn: true,
         cancelLabel: i18next.t('common:btn_discard'),
-        confirmLabel: i18next.t('post:create_post:btn_keep_edit'),
+        confirmLabel: i18next.t('common:btn_stay_here'),
         onCancel: () => rootNavigation.goBack(),
       }));
       return;
