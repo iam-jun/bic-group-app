@@ -306,11 +306,11 @@ const _CommentView: React.FC<CommentViewProps> = ({
     </Text.BodySMedium>
     <Text.BodySMedium>{'  • '}</Text.BodySMedium>
     <Button onPress={onPressRetry}>
-      <Text.BodySMedium useI18n>common:text_retry</Text.BodySMedium>
+      <Text.BodySMedium useI18n color={colors.neutral40}>common:text_retry</Text.BodySMedium>
     </Button>
     <Text.BodySMedium>{'  • '}</Text.BodySMedium>
     <Button onPress={onPressCancel}>
-      <Text.BodySMedium useI18n>common:btn_cancel</Text.BodySMedium>
+      <Text.BodySMedium useI18n color={colors.neutral40}>common:btn_cancel</Text.BodySMedium>
     </Button>
   </View>
   );

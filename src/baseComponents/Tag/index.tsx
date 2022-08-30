@@ -138,18 +138,19 @@ const createStyles = (
       flexDirection: 'row',
       height: containerHeight,
       marginRight: spacing.margin.small,
+      paddingLeft: spacing.padding.tiny,
     },
     labelText: {
       color: textColor,
+      paddingLeft: spacing.margin.tiny,
     },
     icon: {
       marginStart: spacing?.margin.tiny,
     },
     avatar: {
-      marginRight: spacing?.margin.tiny,
     },
     buttonAvatar: {
-      paddingLeft: spacing.padding.small,
+      paddingLeft: spacing.padding.tiny,
     },
     buttonIcon: {
       paddingRight: spacing.padding.tiny,

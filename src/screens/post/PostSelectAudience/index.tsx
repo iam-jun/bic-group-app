@@ -108,7 +108,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         dispatch(postActions.clearCreatPostData());
         dispatchGetAudienceTree();
       } else {
-        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
+        // with old version, it will show last search result lists, but new flow has tree, so we need re-fetch
+        dispatchGetAudienceTree();
       }
 
       return () => {
@@ -246,7 +247,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       {...item}
       groupItemTestID="post_select_audience.groups.item"
       initShowTree={!searchKey}
-      checkboxDisabled={!item.isPostable}
+      checkboxDisabled={!searchKey && !item.isPostable} // api search return all groups user can post to
       disableOnPressItem={!item.isPostable}
       hidePath
       groupStyle={{ paddingVertical: spacing.padding.small }}
