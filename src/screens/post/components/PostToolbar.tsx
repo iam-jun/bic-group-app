@@ -8,8 +8,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { PanGestureHandler } from 'react-native-gesture-handler';
-import { GestureEvent } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet/index';
@@ -30,7 +28,7 @@ import spacing from '~/theme/spacing';
 import { getChatDomain, openUrl } from '~/utils/link';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { clearExistingFiles, validateFilesPicker } from '../CreatePost/helper';
-import { getTotalFileSize } from '../../../storeRedux/post/selectors';
+import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import ReviewMarkdown from './ReviewMarkdown';
 import { Button } from '~/baseComponents';
 import ToolbarButton from './ToolbarButton';
@@ -107,13 +105,6 @@ const PostToolbar = ({
       goBack,
     }),
   );
-
-  const handleGesture = (event: GestureEvent<any>) => {
-    const { nativeEvent } = event;
-    if (nativeEvent.velocityY < 0) {
-      openModal();
-    }
-  };
 
   const onPressMarkdownPreview = (e: any) => {
     openModal(e);
@@ -236,44 +227,42 @@ const PostToolbar = ({
   };
 
   const renderToolbar = () => (
-    <PanGestureHandler onGestureEvent={handleGesture}>
-      <Animated.View style={containerStyle}>
-        <View
-          testID="post_toolbar"
-          style={[styles.toolbarStyle, style]}
-        >
-          <View style={styles.row}>
-            <ToolbarButton icon="Markdown" testID="post_toolbar.markdown_preview" onPressIcon={content && onPressMarkdownPreview} />
-            <ToolbarButton
-              icon="Image"
-              testID="post_toolbar.add_photo"
-              onPressIcon={!imageDisabled ? _onPressSelectImage : undefined}
-              shouldHighlight={selectedImagesDraft?.length > 0 && !imageDisabled}
-            />
-            <ToolbarButton
-              icon="ClapperboardPlay"
-              testID="post_toolbar.add_video"
-              onPressIcon={!videoDisabled ? _onPressSelectVideo : undefined}
-            />
-            <ToolbarButton
-              icon="Paperclip"
-              testID="post_toolbar.add_file"
-              onPressIcon={!fileDisabled ? onPressAddFile : undefined}
-              shouldHighlight={selectedFiles?.length > 0 && !fileDisabled}
-            />
-          </View>
-          <Button.Raise
-            size="medium"
-            testID="header.menuIcon.button"
-            icon="Sliders"
-            color={isSetting ? colors.purple50 : colors.neutral40}
-            onPress={onPressSetting}
+    <Animated.View style={containerStyle}>
+      <View
+        testID="post_toolbar"
+        style={[styles.toolbarStyle, style]}
+      >
+        <View style={styles.row}>
+          <ToolbarButton icon="Markdown" testID="post_toolbar.markdown_preview" onPressIcon={content && onPressMarkdownPreview} />
+          <ToolbarButton
+            icon="Image"
+            testID="post_toolbar.add_photo"
+            onPressIcon={!imageDisabled ? _onPressSelectImage : undefined}
+            shouldHighlight={selectedImagesDraft?.length > 0 && !imageDisabled}
+          />
+          <ToolbarButton
+            icon="ClapperboardPlay"
+            testID="post_toolbar.add_video"
+            onPressIcon={!videoDisabled ? _onPressSelectVideo : undefined}
+          />
+          <ToolbarButton
+            icon="Paperclip"
+            testID="post_toolbar.add_file"
+            onPressIcon={!fileDisabled ? onPressAddFile : undefined}
+            shouldHighlight={selectedFiles?.length > 0 && !fileDisabled}
           />
         </View>
-        {!!content && renderMarkdownHelp()}
-        <KeyboardSpacer iosOnly />
-      </Animated.View>
-    </PanGestureHandler>
+        <Button.Raise
+          size="medium"
+          testID="header.menuIcon.button"
+          icon="Sliders"
+          color={isSetting ? colors.purple50 : colors.neutral40}
+          onPress={onPressSetting}
+        />
+      </View>
+      {!!content && renderMarkdownHelp()}
+      <KeyboardSpacer iosOnly />
+    </Animated.View>
   );
 
   const renderMarkdownHelp = () => (
