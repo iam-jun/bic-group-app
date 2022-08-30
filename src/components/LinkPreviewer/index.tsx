@@ -16,15 +16,16 @@ import Icon from '~/baseComponents/Icon';
 
 interface LinkPreviewerProps {
   text?: string;
-  onClose?: () => void;
+  showClose?: boolean;
 }
 
-const LinkPreviewer = ({ text, onClose }: LinkPreviewerProps) => {
+const LinkPreviewer = ({ text, showClose }: LinkPreviewerProps) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
   const [link, setLink] = useState<string | null | undefined>('');
+  const [visible, setVisible] = useState<boolean>(false);
   const linkPreviews = useKeySelector('app.linkPreviews');
 
   useEffect(() => {
@@ -47,6 +48,12 @@ const LinkPreviewer = ({ text, onClose }: LinkPreviewerProps) => {
     openUrl(link);
   };
 
+  const onClose = () => {
+    setVisible(true);
+  };
+
+  if (!!visible) return null;
+
   return (
     <Button onPress={onPress}>
       <View style={styles.container}>
@@ -66,16 +73,15 @@ const LinkPreviewer = ({ text, onClose }: LinkPreviewerProps) => {
           </Text.H6>
         </View>
         {
-          !!onClose
-            ? (
+          !!showClose
+              && (
               <TouchableOpacity
                 onPress={onClose}
                 style={styles.buttonClose}
               >
                 <Icon size={12} tintColor={colors.neutral40} icon="Xmark" />
               </TouchableOpacity>
-            )
-            : null
+              )
         }
       </View>
     </Button>

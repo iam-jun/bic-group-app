@@ -39,11 +39,10 @@ interface Props {
   groupIds: any[];
   useCreatePostData: any;
   inputRef: any;
-  isEdit: boolean;
 }
 
 const Content = ({
-  groupIds, useCreatePostData, inputRef, isEdit,
+  groupIds, useCreatePostData, inputRef,
 }: Props) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
@@ -71,7 +70,6 @@ const Content = ({
   const [photosHeight, setPhotosHeight] = React.useState<number>(0);
   const [inputHeight, setInputHeight] = React.useState<number>(0);
   const [contentInput, setContentInput] = React.useState<string>(content);
-  const [isCloseLinkPreview, setCloseLinkPreview] = React.useState<boolean>(false);
 
   const currentInputHeight = useRef<number>(CONTENT_MIN_HEIGHT);
   const refRNText = useRef<any>();
@@ -164,10 +162,6 @@ const Content = ({
     setInputHeight(height);
   };
 
-  const onCloseLinkPreview = () => {
-    setCloseLinkPreview(true);
-  };
-
   const remainingSize = appConfig.totalFileSize - totalSize;
 
   return (
@@ -213,8 +207,7 @@ const Content = ({
               }}
               disabled={loading}
             />
-            {!isCloseLinkPreview
-            && <LinkPreviewer text={content} onClose={onCloseLinkPreview} />}
+            <LinkPreviewer text={content} showClose />
             <View onLayout={onLayoutPhotoPreview}>
               <PostSelectImage />
               {video && video?.thumbnails?.length > 0 ? (

@@ -169,7 +169,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         </TouchableOpacity>
       ) : null}
       {!!onPressClose
-        ? (
+          && (
           <TouchableOpacity
             activeOpacity={url ? 0.85 : 1}
             onPress={onPressClose}
@@ -177,8 +177,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
           >
             <Icon size={16} tintColor={colors.gray20} icon="Xmark" />
           </TouchableOpacity>
-        )
-        : null}
+          )}
     </View>
   );
 };

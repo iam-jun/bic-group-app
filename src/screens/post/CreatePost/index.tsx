@@ -20,7 +20,7 @@ import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import { getTotalFileSize } from '../../../storeRedux/post/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
-import BannerImportant from './components/BannerImportant';
+import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
 
 export interface CreatePostProps {
@@ -192,7 +192,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         activeOpacity={1}
       >
         <View>
-          {!!important?.active && notExpired && <BannerImportant expiresTime={important.expires_time} />}
+          {!!important?.active && notExpired && <CreatePostBannerImportant expiresTime={important.expires_time} />}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />
         </View>
@@ -200,7 +200,6 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           groupIds={groupIds}
           inputRef={refTextInput}
           useCreatePostData={useCreatePostData}
-          isEdit={isEdit}
         />
         <CreatePostFooter
           toolbarRef={toolbarRef}

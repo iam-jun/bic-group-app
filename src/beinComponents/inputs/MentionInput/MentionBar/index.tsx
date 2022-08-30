@@ -101,7 +101,7 @@ const MentionBar: FC<MentionBarProps> = ({
       testID="mention_bar.item"
       type="primary"
       size="medium"
-      label={item?.fullname || ''}
+      label={item?.fullname}
       avatar={item?.avatar || images.img_user_avatar_default}
       onActionPress={() => { onPressItem(item); }}
     />

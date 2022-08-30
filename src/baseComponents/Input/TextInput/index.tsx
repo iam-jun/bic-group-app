@@ -198,7 +198,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 {...props}
               />
               {!!RightComponent && (
-              <View style={{ paddingRight: spacing.margin.base }}>
+              <View style={styles.rightComponentStyle}>
                 {RightComponent}
               </View>
               )}
@@ -290,6 +290,9 @@ const themeStyles = (
       borderTopLeftRadius: spacing.borderRadius.base,
       borderBottomLeftRadius: spacing.borderRadius.base,
       padding: spacing.padding.small,
+    },
+    rightComponentStyle: {
+      paddingRight: spacing.margin.base,
     },
   });
 };

@@ -33,6 +33,7 @@ import { clearExistingFiles, validateFilesPicker } from '../CreatePost/helper';
 import { getTotalFileSize } from '../../../storeRedux/post/selectors';
 import ReviewMarkdown from './ReviewMarkdown';
 import { Button } from '~/baseComponents';
+import ToolbarButton from './ToolbarButton';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
@@ -153,6 +154,20 @@ const PostToolbar = ({
       });
   };
 
+  const checkCurrentImages = (currentImage: ICreatePostImage[]) => {
+    const errorContent = t('post:error_reach_upload_photo_limit').replace(
+      '%LIMIT%', appConfig.postPhotoLimit,
+    );
+    dispatch(showHideToastMessage({
+      content: errorContent,
+      props: { textProps: { useI18n: true }, type: 'error' },
+    }));
+    return currentImage.slice(
+      0,
+      appConfig.postPhotoLimit,
+    );
+  };
+
   const openGallery = () => {
     ImagePicker.openPickerMultiple().then((images) => {
       const newImages: ICreatePostImage[] = [];
@@ -161,17 +176,7 @@ const PostToolbar = ({
       });
       let newCurrentImages = [...selectedImagesDraft, ...newImages];
       if (newCurrentImages.length > appConfig.postPhotoLimit) {
-        newCurrentImages = newCurrentImages.slice(
-          0,
-          appConfig.postPhotoLimit,
-        );
-        const errorContent = t('post:error_reach_upload_photo_limit').replace(
-          '%LIMIT%', appConfig.postPhotoLimit,
-        );
-        dispatch(showHideToastMessage({
-          content: errorContent,
-          props: { textProps: { useI18n: true }, type: 'error' },
-        }));
+        newCurrentImages = checkCurrentImages(newCurrentImages);
       }
       dispatch(postActions.setCreatePostImagesDraft(newCurrentImages));
       dispatch(postActions.setCreatePostImages(newCurrentImages));
@@ -214,7 +219,8 @@ const PostToolbar = ({
     onPressIcon?: (e: any) => void,
     shouldHighlight?: boolean,
   ) => {
-    const tintColor = !!shouldHighlight ? colors.purple50 : onPressIcon ? colors.neutral40 : colors.neutral20;
+    const defaultTiniColor = onPressIcon ? colors.neutral40 : colors.neutral20;
+    const tintColor = !!shouldHighlight ? colors.purple50 : defaultTiniColor;
 
     return (
       <View style={styles.toolbarButton}>
@@ -234,31 +240,27 @@ const PostToolbar = ({
       <Animated.View style={containerStyle}>
         <View
           testID="post_toolbar"
-          style={StyleSheet.flatten([styles.toolbarStyle, style])}
+          style={[styles.toolbarStyle, style]}
         >
           <View style={styles.row}>
-            {renderToolbarButton(
-              'Markdown',
-              'post_toolbar.markdown_preview',
-              content && onPressMarkdownPreview,
-            )}
-            {renderToolbarButton(
-              'Image',
-              'post_toolbar.add_photo',
-              !imageDisabled ? _onPressSelectImage : undefined,
-              selectedImagesDraft?.length > 0 && !imageDisabled,
-            )}
-            {renderToolbarButton(
-              'ClapperboardPlay',
-              'post_toolbar.add_video',
-              !videoDisabled ? _onPressSelectVideo : undefined,
-            )}
-            {renderToolbarButton(
-              'Paperclip',
-              'post_toolbar.add_file',
-              !fileDisabled ? onPressAddFile : undefined,
-              selectedFiles?.length > 0 && !fileDisabled,
-            )}
+            <ToolbarButton icon="Markdown" testID="post_toolbar.markdown_preview" onPressIcon={content && onPressMarkdownPreview} />
+            <ToolbarButton
+              icon="Image"
+              testID="post_toolbar.add_photo"
+              onPressIcon={!imageDisabled ? _onPressSelectImage : undefined}
+              shouldHighlight={selectedImagesDraft?.length > 0 && !imageDisabled}
+            />
+            <ToolbarButton
+              icon="ClapperboardPlay"
+              testID="post_toolbar.add_video"
+              onPressIcon={!videoDisabled ? _onPressSelectVideo : undefined}
+            />
+            <ToolbarButton
+              icon="Paperclip"
+              testID="post_toolbar.add_file"
+              onPressIcon={!fileDisabled ? onPressAddFile : undefined}
+              shouldHighlight={selectedFiles?.length > 0 && !fileDisabled}
+            />
           </View>
           <Button.Raise
             size="medium"

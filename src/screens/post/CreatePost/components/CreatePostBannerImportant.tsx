@@ -10,12 +10,12 @@ import { TextInput } from '~/baseComponents/Input';
 import { formatDate } from '~/utils/formatData';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
-interface BannerImportantProps {
+interface CreatePostBannerImportantProps {
   style?: StyleProp<ViewStyle>;
   expiresTime: any;
 }
 
-const BannerImportant = ({ style, expiresTime }: BannerImportantProps) => {
+const CreatePostBannerImportant = ({ style, expiresTime }: CreatePostBannerImportantProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
@@ -47,7 +47,7 @@ const BannerImportant = ({ style, expiresTime }: BannerImportantProps) => {
   );
 };
 
-export default BannerImportant;
+export default CreatePostBannerImportant;
 
 const createStyles = (theme:ExtendedTheme) => StyleSheet.create({
   container: {
