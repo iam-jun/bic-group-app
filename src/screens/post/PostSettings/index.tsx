@@ -91,14 +91,12 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       rootNavigation.goBack();
     } else {
       dispatch(modalActions.showAlert({
-        title: t('common:label_discard_changes'),
-        content: t('common:text_discard_warning'),
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
         cancelBtn: true,
-        cancelLabel: t('common:btn_continue_editing'),
-        confirmLabel: t('common:btn_discard'),
-        onConfirm: () => {
-          rootNavigation.goBack();
-        },
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
+        onCancel: () => rootNavigation.goBack(),
       }));
     }
   };
@@ -217,7 +215,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
           </View>
           <Toggle
             testID="post_settings.toggle_important"
-            isChecked={(active && notExpired)}
+            isChecked={active}
             onValueChanged={handleToggleImportant}
           />
         </View>

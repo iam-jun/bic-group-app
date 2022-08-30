@@ -220,8 +220,9 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
               ),
           });
         });
-        dispatch(postActions.setCreatePostImagesDraft(initImages));
-        dispatch(postActions.setCreatePostImages(initImages));
+        const newInitImages = initImages.reverse();
+        dispatch(postActions.setCreatePostImagesDraft(newInitImages));
+        dispatch(postActions.setCreatePostImages(newInitImages));
         initSelectingImagesRef.current = initImages;
       }
     }, [initPostData],
@@ -264,8 +265,8 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         };
         const dataDefault = [
           !!notExpired,
-          !canComment,
-          !canReact,
+          !initPostData?.setting?.canComment,
+          !initPostData?.setting?.canReact,
         ];
         const newCount = dataDefault.filter((i) => !!i);
 

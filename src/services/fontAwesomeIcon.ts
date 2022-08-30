@@ -155,6 +155,8 @@ import { faSliders } from '@fortawesome/pro-regular-svg-icons/faSliders';
 import { faLinkHorizontal } from '@fortawesome/pro-regular-svg-icons/faLinkHorizontal';
 import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faRss } from '@fortawesome/pro-regular-svg-icons/faRss';
+import { faClapperboardPlay } from '@fortawesome/pro-regular-svg-icons/faClapperboardPlay';
+import { faMarkdown } from '@fortawesome/free-brands-svg-icons/faMarkdown';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -330,6 +332,8 @@ export const initFontAwesomeIcon = () => {
     faLinkHorizontal,
     faShare,
     faRss,
+    faClapperboardPlay,
+    faMarkdown,
   );
 };
 
@@ -490,6 +494,8 @@ export const fontAwesomeIcons = {
   LinkHorizontal: 'fa-regular fa-link-horizontal',
   Share: 'fa-regular fa-share',
   RSS: 'fa-regular fa-rss',
+  ClapperboardPlay: 'fa-regular fa-clapperboard-play',
+  Markdown: 'fa-brands fa-markdown',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

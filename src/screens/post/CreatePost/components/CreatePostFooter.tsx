@@ -17,6 +17,8 @@ export interface CreatePostFooterProps {
   videoDisabled?: boolean;
   fileDisabled?: boolean;
   onPressBack?: () => void;
+  onPressSetting: () => void;
+  isSetting?: boolean;
 }
 
 const CreatePostFooter: FC<CreatePostFooterProps> = ({
@@ -26,6 +28,8 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
   videoDisabled,
   fileDisabled,
   onPressBack,
+  onPressSetting,
+  isSetting,
 }: CreatePostFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
@@ -56,6 +60,8 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
         videoDisabled={videoDisabled}
         fileDisabled={fileDisabled}
         onPressBack={onPressBack}
+        onPressSetting={onPressSetting}
+        isSetting={isSetting}
       />
       <Animated.View
         testID="create_post_footer.mention_bar_container"
