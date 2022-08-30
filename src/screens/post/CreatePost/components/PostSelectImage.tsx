@@ -20,10 +20,22 @@ const PostSelectImage = () => {
   const selectedImagesDraft: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.imagesDraft) || [];
 
   const onUploadSuccess = (
-    url: string, fileName: string,
+    url: string, fileName: string, index:number,
   ) => {
     // eslint-disable-next-line no-console
     console.log(`\x1b[36m🐣️ index onUploadSuccess ${fileName}: ${url}\x1b[0m`);
+    const newList = [];
+    for (let imageIndex = 0; imageIndex < selectedImagesDraft.length; imageIndex++) {
+      const image = selectedImagesDraft[imageIndex];
+      if (imageIndex === index) {
+        newList.push({ ...image, fileName });
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+      newList.push(image);
+    }
+    dispatch(postActions.setCreatePostImagesDraft(newList));
+    dispatch(postActions.setCreatePostImages(newList));
   };
 
   const onPressRemoveImage = (
@@ -59,7 +71,7 @@ const PostSelectImage = () => {
         url={url}
         width={dfWidth}
         height={dfWidth * ratio}
-        onUploadSuccess={onUploadSuccess}
+        onUploadSuccess={(url: string, fileName: string) => { onUploadSuccess(url, fileName, index); }}
         onPressRemove={() => onPressRemoveImage(
           item, index,
         )}

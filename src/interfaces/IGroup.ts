@@ -79,6 +79,7 @@ export interface IGroup {
   deletedAt?: string | null;
   userCount?: number;
   teamName?: string;
+  isPostable?: boolean;
 
   communityId?: string;
   children?: IGroup[];
