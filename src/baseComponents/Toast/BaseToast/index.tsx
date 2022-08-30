@@ -19,6 +19,7 @@ export interface BaseToastProps {
   content?: string;
   useI18n?: boolean;
   buttonText?: string;
+  isError?: boolean;
   onButtonPress?: () => void;
   onPressClose?: () => void;
 }
@@ -30,6 +31,7 @@ const BaseToast = ({
   content,
   useI18n,
   buttonText,
+  isError,
   onButtonPress,
   onPressClose,
 }: BaseToastProps) => {
@@ -37,6 +39,10 @@ const BaseToast = ({
   const { colors } = theme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();
+
+  const iconProps = isError
+    ? { icon: 'CircleExclamationSolid' as IconType, tintColor: colors.red40 }
+    : { icon, tintColor: iconColor || colors.neutral20 };
 
   const _onPress = () => {
     onButtonPress?.();
@@ -50,12 +56,11 @@ const BaseToast = ({
   return (
     <View style={[styles.container, style]}>
       <View style={styles.leftContainer}>
-        {!!icon && (
+        {!!iconProps.icon && (
           <Icon
-            icon={icon}
             size={20}
             iconStyle={styles.iconStyle}
-            tintColor={iconColor || colors.neutral20}
+            {...iconProps}
           />
         )}
         <Text.BodyM color={colors.white} useI18n={useI18n}>{content}</Text.BodyM>

@@ -150,6 +150,7 @@ import { faFileCsv } from '@fortawesome/pro-regular-svg-icons/faFileCsv';
 import { faFileLines } from '@fortawesome/pro-regular-svg-icons/faFileLines';
 import { faArrowDownToLine } from '@fortawesome/pro-regular-svg-icons/faArrowDownToLine';
 import { faCircleExclamation } from '@fortawesome/pro-regular-svg-icons/faCircleExclamation';
+import { faCircleExclamation as faCircleExclamationSolid } from '@fortawesome/pro-solid-svg-icons/faCircleExclamation';
 import { faThumbtack } from '@fortawesome/pro-regular-svg-icons/faThumbtack';
 import { faMobileScreen } from '@fortawesome/pro-regular-svg-icons/faMobileScreen';
 import { faSliders } from '@fortawesome/pro-regular-svg-icons/faSliders';
@@ -328,6 +329,7 @@ export const initFontAwesomeIcon = () => {
     faFileLines,
     faArrowDownToLine,
     faCircleExclamation,
+    faCircleExclamationSolid,
     faThumbtack,
     faMobileScreen,
     faSliders,
@@ -491,6 +493,7 @@ export const fontAwesomeIcons = {
   FileLines: 'fa-regular fa-file-lines',
   ArrowDownToLine: 'fa-regular fa-arrow-down-to-line',
   CircleExclamation: 'fa-regular fa-circle-exclamation',
+  CircleExclamationSolid: 'fa-solid fa-circle-exclamation',
   Thumbtack: 'fa-regular fa-thumbtack',
   MobileScreen: 'fa-regular fa-mobile-screen',
   Sliders: 'fa-regular fa-sliders',
