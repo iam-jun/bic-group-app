@@ -42,12 +42,16 @@ export function parseSafe(str?: string) {
   return result;
 }
 
-export const getUrlFromText = (text?: string) => {
-  if (!text) return text;
+export const getUrlFromText = (text = '', inputArray = []) => {
+  if (!text) return inputArray;
   const urls = text.match(linkRegex);
-
-  if (urls && urls.length > 0) return urls[0];
-  return null;
+  if (urls && urls.length > 0) {
+    const newArray = [...inputArray];
+    newArray.push(urls[0]);
+    const newText = text.replace(urls[0], '');
+    return getUrlFromText(newText, newArray);
+  }
+  return inputArray;
 };
 
 export const searchText = (

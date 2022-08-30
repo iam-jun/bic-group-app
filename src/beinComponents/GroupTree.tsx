@@ -234,6 +234,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       onPressMenu={onPressMenu}
       disableOnPressItem={disableOnPressItem}
       disableHorizontal={disableHorizontal}
+      checkboxDisabled={group?.isPostable !== undefined ? !group?.isPostable : undefined}
       iconVariant={iconVariant}
       nameLines={nameLines}
       menuIcon={menuIcon}

@@ -51,13 +51,13 @@ const ToastAutoSave = ({ viewRef, visible }: Props) => {
           <Icon
             iconStyle={styles.iconToastAutoSave}
             style={styles.iconToastAutoSaveContainer}
-            size={16}
+            size={20}
             icon="iconSave"
-            tintColor={theme.colors.gray50}
+            tintColor={theme.colors.neutral20}
           />
-          <Text.BodyS useI18n style={styles.textToastAutoSave}>
+          <Text.BodySMedium useI18n color={theme.colors.neutral40}>
             post:auto_saved
-          </Text.BodyS>
+          </Text.BodySMedium>
         </View>
       )}
     </Animated.View>
@@ -80,7 +80,6 @@ const themeStyles = (theme: ExtendedTheme) => {
       padding: 2,
       borderRadius: 6,
     },
-    textToastAutoSave: { color: colors.gray50 },
   });
 };
 

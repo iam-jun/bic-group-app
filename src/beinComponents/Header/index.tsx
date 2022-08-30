@@ -1,4 +1,5 @@
 import React, {
+  ReactElement,
   useImperativeHandle, useRef, useState,
 } from 'react';
 import {
@@ -34,7 +35,7 @@ export interface HeaderProps {
   children?: React.ReactNode;
   title?: string;
   titleTextProps?: TextProps;
-  subTitle?: string;
+  subTitle?: string | ReactElement;
   subTitleTextProps?: TextProps;
   leftIcon?: IconType;
   leftIconProps?: Omit<IconProps, 'icon'>;
@@ -227,7 +228,7 @@ const Header: React.FC<HeaderProps> = ({
         {
           minHeight: 44,
           paddingTop: disableInsetTop ? undefined : insets.top,
-          overflow: 'hidden',
+          // overflow: 'hidden',
           alignItems: 'flex-end',
           flexDirection: 'row',
           backgroundColor: colors.white,

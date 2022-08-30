@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleProp, StyleSheet, TouchableOpacity, ViewStyle,
+  StyleProp, StyleSheet, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -9,6 +9,7 @@ import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '../Icon';
+import Button from '../Button';
 
 export type TagType = 'primary' | 'secondary' | 'neutral';
 export type TagSize = 'small' | 'medium' | 'large';
@@ -24,6 +25,7 @@ export interface TagProps {
   onPressIcon?: () => void;
   style?: StyleProp<ViewStyle>;
   textProps?: TextProps;
+  testID?: string;
 }
 
 const Tag: React.FC<TagProps> = ({
@@ -37,6 +39,7 @@ const Tag: React.FC<TagProps> = ({
   onPressIcon,
   style,
   textProps,
+  testID,
 }: TagProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(
@@ -56,17 +59,22 @@ const Tag: React.FC<TagProps> = ({
   const variant = getVariant();
 
   return (
-    <TouchableOpacity
-      testID="tag.item"
+    <Button
+      testID={testID || 'tag.item'}
       disabled={disabled}
-      style={[styles.container, style, {
-        paddingLeft: !!avatar ? 0 : spacing.padding.small,
-        paddingRight: !!icon ? spacing.padding.tiny : spacing.padding.small,
-      }]}
+      style={[styles.container, style,
+        !!avatar ? styles.buttonAvatar : {},
+        !!icon ? styles.buttonIcon : styles.buttonWithoutIcon,
+      ]}
       onPress={() => { onActionPress?.(); }}
     >
       {!!avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
-      <Text variant={variant} testID="tag.label" style={styles.labelText} {...textProps}>{label}</Text>
+      {!!label
+      && (
+      <Text variant={variant} testID="tag.label" style={styles.labelText} {...textProps}>
+        {label}
+      </Text>
+      )}
       {!disabled && onPressIcon && !!icon && (
         <Icon
           testID="tag.icon"
@@ -78,7 +86,7 @@ const Tag: React.FC<TagProps> = ({
           onPress={onPressIcon}
         />
       )}
-    </TouchableOpacity>
+    </Button>
   );
 };
 
@@ -130,15 +138,25 @@ const createStyles = (
       flexDirection: 'row',
       height: containerHeight,
       marginRight: spacing.margin.small,
+      paddingLeft: spacing.padding.tiny,
     },
     labelText: {
       color: textColor,
+      paddingLeft: spacing.margin.tiny,
     },
     icon: {
       marginStart: spacing?.margin.tiny,
     },
     avatar: {
-      marginRight: spacing?.margin.tiny,
+    },
+    buttonAvatar: {
+      paddingLeft: spacing.padding.tiny,
+    },
+    buttonIcon: {
+      paddingRight: spacing.padding.tiny,
+    },
+    buttonWithoutIcon: {
+      paddingRight: spacing.padding.small,
     },
   });
 };
