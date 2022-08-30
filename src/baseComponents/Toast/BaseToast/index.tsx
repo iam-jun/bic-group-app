@@ -44,13 +44,16 @@ const BaseToast = ({
     ? { icon: 'CircleExclamationSolid' as IconType, tintColor: colors.red40 }
     : { icon, tintColor: iconColor || colors.neutral20 };
 
+  const hideToast = () => dispatch(modalActions.clearToastMessage());
+
   const _onPress = () => {
     onButtonPress?.();
+    hideToast();
   };
 
   const _onPressClose = () => {
     onPressClose?.();
-    dispatch(modalActions.clearToastMessage());
+    hideToast();
   };
 
   return (
@@ -63,7 +66,7 @@ const BaseToast = ({
             {...iconProps}
           />
         )}
-        <Text.BodyM color={colors.white} useI18n={useI18n}>{content}</Text.BodyM>
+        <Text.BodyM style={styles.flex1} color={colors.white} useI18n={useI18n}>{content}</Text.BodyM>
       </View>
 
       <View style={styles.rightContainer}>
@@ -94,6 +97,7 @@ const createStyles = (theme: ExtendedTheme) => {
       alignItems: 'center',
       ...elevations.e3,
     },
+    flex1: { flex: 1 },
     leftContainer: {
       flex: 1,
       flexDirection: 'row',

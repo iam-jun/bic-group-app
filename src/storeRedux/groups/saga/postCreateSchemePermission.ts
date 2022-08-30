@@ -34,10 +34,6 @@ export default function* postCreateSchemePermission({
       navigation.goBack();
       const toastMessage: IToastMessage = {
         content: 'communities:permission:text_create_scheme_success',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
       };
       yield put(groupsActions.setCommunityScheme({ data: response.data }));
       yield put(modalActions.showHideToastMessage(toastMessage));

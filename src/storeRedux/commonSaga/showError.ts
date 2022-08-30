@@ -10,10 +10,7 @@ function* showError(err: any) {
         err?.meta?.errors?.[0]?.message
         || err?.meta?.message
         || 'common:text_error_message',
-    props: {
-      textProps: { useI18n: true },
-      type: 'error',
-    },
+    props: { isError: true },
   }));
 }
 

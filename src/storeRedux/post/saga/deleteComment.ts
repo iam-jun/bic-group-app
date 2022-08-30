@@ -93,19 +93,12 @@ export default function* deleteComment({
     // show toast success
     const toastMessage: IToastMessage = {
       content: 'post:comment:text_delete_comment_success',
-      props: {
-        textProps: { useI18n: true },
-        type: 'informative',
-        leftIcon: 'TrashCan',
-      },
-      toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (e) {
     yield put(modalActions.showHideToastMessage({
       content: 'post:comment:text_delete_comment_error',
-      props: { textProps: { useI18n: true }, type: 'error' },
-      toastType: 'normal',
+      props: { isError: true },
     }));
   }
 }

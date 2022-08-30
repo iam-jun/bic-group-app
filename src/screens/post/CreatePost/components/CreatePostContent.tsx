@@ -153,7 +153,7 @@ const Content = ({
           file_type: t(`file_type:${type}`),
         },
       ),
-      props: { type: 'error' },
+      props: { isError: true },
     }));
   };
 

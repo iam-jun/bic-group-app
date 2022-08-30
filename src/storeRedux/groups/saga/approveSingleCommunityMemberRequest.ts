@@ -38,11 +38,6 @@ export default function* approveSingleCommunityMemberRequest({
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
-      props: {
-        textProps: { useI18n: true },
-        type: 'informative',
-      },
-      toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
     yield put(groupsActions.getCommunityDetail({ communityId })); // to update userCount

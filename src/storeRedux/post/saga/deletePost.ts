@@ -29,13 +29,7 @@ export default function* deletePost({
       yield timeOut(500);
 
       yield put(
-        modalActions.showHideToastMessage({
-          content: 'post:delete_post_complete',
-          props: {
-            textProps: { variant: 'h6', useI18n: true },
-            type: 'success',
-          },
-        }),
+        modalActions.showHideToastMessage({ content: 'post:delete_post_complete' }),
       );
     }
   } catch (e: any) {

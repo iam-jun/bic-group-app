@@ -35,11 +35,6 @@ export default function* declineSingleGroupMemberRequest({
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
-      props: {
-        textProps: { useI18n: true },
-        type: 'informative',
-      },
-      toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {

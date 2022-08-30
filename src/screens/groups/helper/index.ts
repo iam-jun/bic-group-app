@@ -27,24 +27,13 @@ export const checkLastAdmin = async (
       testingAdminCount = 2;
       dispatch(modalActions.showHideToastMessage({
         content: 'groups:error:last_admin_leave',
-        props: {
-          type: 'error',
-          textProps: { useI18n: true },
-          rightIcon: 'UserGroup',
-          rightText: 'Members',
-          onPressRight,
-        },
-        toastType: 'normal',
+        props: { isError: true },
       }));
     } else {
       testingAdminCount = 3;
       dispatch(modalActions.showHideToastMessage({
         content: `groups:error:last_admin_inner_group_${type}`,
-        props: {
-          type: 'error',
-          textProps: { useI18n: true },
-        },
-        toastType: 'normal',
+        props: { isError: true },
       }));
     }
   } catch (err: any) {
@@ -57,7 +46,7 @@ export const checkLastAdmin = async (
           err?.meta?.errors?.[0]?.message
           || err?.meta?.message
           || 'common:text_error_message',
-      props: { textProps: { useI18n: true }, type: 'error' },
+      props: { isError: true },
     }));
   }
 
@@ -89,7 +78,7 @@ export const handleLeaveInnerGroups = async (
           err?.meta?.errors?.[0]?.message
           || err?.meta?.message
           || 'common:text_error_message',
-      props: { textProps: { useI18n: true }, type: 'error' },
+      props: { isError: true },
     }));
   }
   return testingFlag;

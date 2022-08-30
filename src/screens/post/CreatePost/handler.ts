@@ -4,7 +4,6 @@ import { Keyboard } from 'react-native';
 import FileUploader from '~/services/fileUploader';
 import modalActions from '~/storeRedux/modal/actions';
 
-import spacing from '~/theme/spacing';
 import postActions from '../../../storeRedux/post/actions';
 
 export const handleBack = (
@@ -52,40 +51,9 @@ export const handleBack = (
     dispatch(modalActions.showHideToastMessage({
       content: 'post:saved_to_draft',
       props: {
-        textProps: {
-          useI18n: true,
-          variant: 'bodyS',
-          style: { color: colors.neutral80 },
-        },
-        type: 'informative',
-        leftIcon: 'CircleInfo',
-        leftIconColor: colors.white,
-        leftIconStyle: {
-          backgroundColor: colors.neutral80,
-          padding: spacing.padding.tiny,
-        },
-        leftStyle: {
-          marginRight: spacing.margin.small,
-        },
-        style: {
-          backgroundColor: colors.white,
-          borderLeftWidth: 4,
-          borderLeftColor: colors.neutral80,
-          paddingHorizontal: spacing.padding.large,
-          marginHorizontal: spacing.margin.base,
-          marginBottom: spacing.margin.small,
-          borderWidth: 1,
-          borderColor: colors.gray20,
-        },
-        rightText: isNewsfeed ? i18next.t('home:draft_post') : '',
-        rightTextColor: colors.neutral80,
-        rightTextProps: {
-          variant: 'bodySMedium',
-        },
-        rightTextStyle: { textDecorationLine: 'none' },
-        onPressRight: onPressDraftPost,
+        buttonText: isNewsfeed ? i18next.t('home:draft_post') : '',
+        onButtonPress: onPressDraftPost,
       },
-      toastType: 'normal',
     }));
   }
   rootNavigation.goBack();

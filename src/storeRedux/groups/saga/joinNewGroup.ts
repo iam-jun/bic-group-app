@@ -31,9 +31,6 @@ export default function* joinNewGroup({
       yield put(groupsActions.getGroupDetail({ groupId }));
       const toastMessage: IToastMessage = {
         content: `${i18next.t('groups:text_request_join_group')} ${groupName}`,
-        props: {
-          type: 'success',
-        },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
       return;
@@ -41,9 +38,6 @@ export default function* joinNewGroup({
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_successfully_join_group')} ${groupName}`,
-      props: {
-        type: 'success',
-      },
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));

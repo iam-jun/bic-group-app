@@ -32,12 +32,7 @@ export default function* removeAudiencesFromPost({
       const post = response?.data;
       yield put(postActions.addToAllPosts({ data: post }));
       yield put(
-        modalActions.showHideToastMessage({
-          content: 'post:text_deleted_audiences',
-          props: {
-            textProps: { variant: 'h6', useI18n: true },
-          },
-        }),
+        modalActions.showHideToastMessage({ content: 'post:text_deleted_audiences' }),
       );
     }
   } catch (e: any) {

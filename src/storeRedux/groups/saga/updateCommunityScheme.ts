@@ -35,10 +35,6 @@ export default function* updateCommunityScheme({
     navigation.goBack();
     const toastMessage: IToastMessage = {
       content: 'communities:permission:text_update_scheme_success',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
     };
     yield put(groupsActions.setCommunityScheme({ data: dataWithOrderedFixRole }));
     yield put(modalActions.showHideToastMessage(toastMessage));

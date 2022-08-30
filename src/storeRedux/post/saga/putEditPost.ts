@@ -40,7 +40,6 @@ export default function* putEditPost({
       yield put(postActions.addToAllPosts({ data: post }));
       yield put(modalActions.showHideToastMessage({
         content: msgSuccess || 'post:text_edit_post_success',
-        props: { textProps: { useI18n: true }, type: 'success' },
       }));
       if (!disableNavigate) {
         yield call(
@@ -52,12 +51,10 @@ export default function* putEditPost({
     yield put(postActions.setLoadingCreatePost(false));
     yield put(modalActions.showHideToastMessage({
       content: msgError || 'post:text_edit_post_failed',
-      toastType: 'normal',
       props: {
-        textProps: { useI18n: true },
-        type: 'error',
-        rightText: i18n.t('common:text_retry'),
-        onPressRight: onRetry,
+        isError: true,
+        buttonText: i18n.t('common:text_retry'),
+        onButtonPress: onRetry,
       },
     }));
   }

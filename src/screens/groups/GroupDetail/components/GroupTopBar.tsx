@@ -72,13 +72,7 @@ const GroupTopBar = () => {
     Clipboard.setString(getLink(
       LINK_GROUP, groupId,
     ));
-    dispatch(showHideToastMessage({
-      content: 'common:text_link_copied_to_clipboard',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    }));
+    dispatch(showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
   };
 
   const onPressShare = () => {

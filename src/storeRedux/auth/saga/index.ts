@@ -77,13 +77,7 @@ function* changePassword({
     yield put(actions.setChangePasswordLoading(false));
 
     navigation.goBack();
-    const toastMessage: IToastMessage = {
-      content: 'auth:text_change_password_success_desc',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    };
+    const toastMessage: IToastMessage = { content: 'auth:text_change_password_success_desc' };
     yield put(actionsCommon.showHideToastMessage(toastMessage));
   } catch (error: any) {
     console.error('changePassword error:', error);
@@ -184,10 +178,7 @@ export function* showErrorWithDefinedMessage(mess: string) {
   if (!mess) return;
   const toastMessage: IToastMessage = {
     content: mess,
-    props: {
-      textProps: { useI18n: true },
-      type: 'error',
-    },
+    props: { isError: true },
   };
   yield put(actionsCommon.showHideToastMessage(toastMessage));
 }

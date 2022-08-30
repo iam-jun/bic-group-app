@@ -118,14 +118,7 @@ const MemberOptionsMenu = ({
       } else {
         dispatch(modalActions.showHideToastMessage({
           content: 'groups:error:last_admin_remove',
-          props: {
-            type: 'error',
-            textProps: { useI18n: true },
-            rightIcon: 'UserGroup',
-            rightText: 'Members',
-            onPressRight: onPressMemberButton,
-          },
-          toastType: 'normal',
+          props: { isError: true },
         }));
       }
     }
