@@ -258,6 +258,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
         testID="post_settings.toggle_can_comment"
         isChecked={sCanComment}
         onValueChanged={handleToggleCanComment}
+        disableBuiltInState
       />
     </View>
   );
@@ -276,6 +277,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       <Toggle
         testID="post_settings.toggle_can_react"
         isChecked={sCanReact}
+        disableBuiltInState
         onValueChanged={handleToggleCanReact}
       />
     </View>

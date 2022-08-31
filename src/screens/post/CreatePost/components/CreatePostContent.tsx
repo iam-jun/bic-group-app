@@ -27,7 +27,7 @@ import ToastAutoSave from './ToastAutoSave';
 import FilesView from '../../components/FilesView';
 import { IGetFile } from '~/services/fileUploader';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
-import { getTotalFileSize } from '../../../../storeRedux/post/selectors';
+import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import appConfig from '~/configs/appConfig';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
@@ -56,7 +56,6 @@ const Content = ({
     sPostData,
     isShowToastAutoSave,
     createPostData,
-    images,
     video,
     files,
     handleChangeContent,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import UploadingImage from '~/beinComponents/UploadingImage';
@@ -48,13 +48,7 @@ const PostSelectImage = () => {
     dispatch(postActions.setCreatePostImages(newList));
   };
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: ICreatePostImage;
-    index: number;
-  }) => {
+  const renderItem = (item, index) => {
     const { file, fileName, url } = item || {};
     const { width = 1, height = 1 } = file || {};
     const ratio = height / width;
@@ -64,6 +58,7 @@ const PostSelectImage = () => {
 
     return (
       <UploadingImage
+        key={`create_post_image_${index}_${item?.fileName}`}
         uploadType={uploadTypes.postImage}
         style={styles.item}
         file={file}
@@ -80,14 +75,9 @@ const PostSelectImage = () => {
   };
 
   return (
-    <FlatList
-      data={selectedImagesDraft || []}
-      renderItem={renderItem}
-      contentContainerStyle={styles.container}
-      keyExtractor={(
-        item, index,
-      ) => `create_post_image_${index}_${item?.fileName}`}
-    />
+    <View style={styles.container}>
+      {selectedImagesDraft?.map?.(renderItem)}
+    </View>
   );
 };
 
