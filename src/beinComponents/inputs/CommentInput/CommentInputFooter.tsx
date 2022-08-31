@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -44,9 +44,6 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   const showCommentInputFooter = useSharedValue(0);
   const transformCommentInputFooter = useSharedValue(0);
 
-  showCommentInputFooter.value = isDisplayNone ? 0 : withTiming(1);
-  transformCommentInputFooter.value = isDisplayNone ? -20 : withTiming(0);
-
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -67,6 +64,11 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
       { translateX: transformCommentInputFooter.value },
     ],
   }));
+
+  useEffect(() => {
+    showCommentInputFooter.value = isDisplayNone ? 0 : withTiming(1);
+    transformCommentInputFooter.value = isDisplayNone ? -20 : withTiming(0);
+  }, [isDisplayNone]);
 
   const onVisibleMentionBar = (isVisible: boolean) => {
     if (isVisible) {
