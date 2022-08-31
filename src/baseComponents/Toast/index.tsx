@@ -50,7 +50,7 @@ const Toast = () => {
   if (buttonText) {
     newButtonText = buttonText;
     if (duration && countDown) {
-      newButtonText = `${buttonText} (${countDown})`;
+      newButtonText = `${buttonText} (${countDown}s)`;
     }
   }
 
