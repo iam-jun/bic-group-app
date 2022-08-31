@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -41,6 +41,8 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   isDisplayNone,
 }: CommentInputFooterProps) => {
   const showMentionValue = useSharedValue(0);
+  const showCommentInputFooter = useSharedValue(0);
+  const transformCommentInputFooter = useSharedValue(0);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -54,6 +56,19 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
       showMentionValue.value, [0, 1], [0, 1],
     ),
   }));
+
+  const containerStyle = useAnimatedStyle(() => ({
+    display: isDisplayNone ? 'none' : 'flex',
+    opacity: showCommentInputFooter.value,
+    transform: [
+      { translateX: transformCommentInputFooter.value },
+    ],
+  }));
+
+  useEffect(() => {
+    showCommentInputFooter.value = isDisplayNone ? 0 : withTiming(1);
+    transformCommentInputFooter.value = isDisplayNone ? -20 : withTiming(0);
+  }, [isDisplayNone]);
 
   const onVisibleMentionBar = (isVisible: boolean) => {
     if (isVisible) {
@@ -139,7 +154,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   );
 
   return (
-    <View style={{ display: isDisplayNone ? 'none' : 'flex' }}>
+    <Animated.View style={containerStyle}>
       {renderButtons()}
       <Animated.View
         testID="comment_input_footer.mention_bar_container"
@@ -147,7 +162,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
       >
         <MentionBar onVisible={onVisibleMentionBar} style={styles.mentionBar} />
       </Animated.View>
-    </View>
+    </Animated.View>
   );
 };
 
