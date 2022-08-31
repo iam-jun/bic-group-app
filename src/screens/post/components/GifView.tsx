@@ -8,7 +8,7 @@ import {
   StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 interface Props {
   style?: StyleProp<ViewStyle>;

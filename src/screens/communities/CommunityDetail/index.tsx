@@ -12,6 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -27,7 +28,9 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import { ICommunity } from '~/interfaces/ICommunity';
-import { formatChannelLink, openUrl } from '~/utils/link';
+import {
+  formatChannelLink, getLink, LINK_COMMUNITY, openUrl,
+} from '~/utils/link';
 import { chatSchemes } from '~/constants/chat';
 import modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -61,8 +64,9 @@ const CommunityDetail = (props: any) => {
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
-    'communities', communityId, [
-      PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
+    'communities',
+    communityId,
+    [
       PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
       PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
       PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
@@ -86,7 +90,7 @@ const CommunityDetail = (props: any) => {
       /* Avoid getting group posts of the nonexisting group,
       which will lead to endless fetching group posts in
       httpApiRequest > makeGetStreamRequest */
-      const privilegeToFetchPost = isMember || privacy === groupPrivacy.public
+      const privilegeToFetchPost = isMember || privacy === groupPrivacy.public;
 
       if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
         return;
@@ -118,12 +122,26 @@ const CommunityDetail = (props: any) => {
     );
   };
 
+  const onPressCopyLink = () => {
+    dispatch(modalActions.hideBottomList());
+    Clipboard.setString(getLink(
+      LINK_COMMUNITY, communityId,
+    ));
+    dispatch(modalActions.showHideToastMessage({
+      content: 'common:text_copied',
+      props: {
+        textProps: { useI18n: true },
+        type: 'success',
+      },
+    }));
+  };
+
   const onRightPress = () => {
-    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools)
+    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools, onPressCopyLink);
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
-    } as BottomListProps))
+    } as BottomListProps));
   };
 
   const renderPlaceholder = () => (
@@ -179,7 +197,7 @@ const CommunityDetail = (props: any) => {
   const scrollWrapper = (offsetY: number) => {
     headerRef?.current?.setScrollY?.(offsetY);
     DeviceEventEmitter.emit('stopAllVideo');
-  }
+  };
 
   const onScrollHandler = useAnimatedScrollHandler((event: any) => {
     const offsetY = event?.contentOffset?.y;

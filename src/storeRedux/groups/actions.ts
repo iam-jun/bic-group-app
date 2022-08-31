@@ -18,6 +18,11 @@ import {
   IPermission,
   IScheme,
   IPayloadGroupSchemeAssignments,
+  IGetJoinedAllGroups,
+  SetJoinedAllGroupsPayload,
+  SetManagedPayload,
+  IGetManagedPayload,
+  IGetManagedCommunityAndGroupPayload,
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
 import { IObject } from '~/interfaces/common';
@@ -32,6 +37,15 @@ import {
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
+  updateCommunityJoinSetting: (payload: {communityId: string; isJoinApproval: boolean}) => ({
+    type: groupsTypes.UPDATE_COMMUNITY_JOIN_SETTING,
+    payload,
+  }),
+  updateGroupJoinSetting: (payload: {groupId: string; isJoinApproval: boolean}) => ({
+    type: groupsTypes.UPDATE_GROUP_JOIN_SETTING,
+    payload,
+  }),
+
   getMyPermissions: () => ({
     type: groupsTypes.GET_MY_PERMISSIONS,
   }),
@@ -380,13 +394,13 @@ const groupsActions = {
     groupId: string;
     requestId: string;
     fullName: string;
-    callback: () => void;
   }) => ({
     type: groupsTypes.APPROVE_SINGLE_GROUP_MEMBER_REQUEST,
     payload,
   }),
   approveAllGroupMemberRequests: (payload: {
     groupId: string;
+    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_GROUP_MEMBER_REQUESTS,
@@ -402,6 +416,7 @@ const groupsActions = {
   }),
   declineAllGroupMemberRequests: (payload: {
     groupId: string;
+    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
@@ -416,11 +431,21 @@ const groupsActions = {
   }),
 
   // community
-  getMyCommunities: (payload?: {callback?: () => void}) => ({
+  getMyCommunities: (payload: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+    params?: {managed: boolean; previewMembers: boolean};
+    callback?: () => void;
+  }) => ({
     type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),
-  setMyCommunities: (payload: {loading?: boolean; data?: any[]}) => ({
+  setMyCommunities: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: string[];
+    items?: IObject<any>;
+  }) => ({
     type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
@@ -605,6 +630,7 @@ const groupsActions = {
   }),
   approveAllCommunityMemberRequests: (payload: {
     communityId: string;
+    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
@@ -612,6 +638,7 @@ const groupsActions = {
   }),
   declineAllCommunityMemberRequests: (payload: {
     communityId: string;
+    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
@@ -651,6 +678,45 @@ const groupsActions = {
   }) => ({
     type: groupsTypes.EDIT_COMMUNITY_DETAIL,
     payload,
+  }),
+  getJoinedAllGroups: (payload: IGetJoinedAllGroups = {}) => ({
+    type: groupsTypes.GET_JOINED_ALL_GROUPS,
+    payload,
+  }),
+  setJoinedAllGroups: (payload: SetJoinedAllGroupsPayload) => ({
+    type: groupsTypes.SET_JOINED_ALL_GROUPS,
+    payload,
+  }),
+  getManaged: (payload: IGetManagedPayload = {}) => ({
+    type: groupsTypes.GET_MANAGED,
+    payload,
+  }),
+  setManaged: (payload: SetManagedPayload) => ({
+    type: groupsTypes.SET_MANAGED,
+    payload,
+  }),
+  getOwnerCommunity: () => ({
+    type: groupsTypes.GET_OWNER_COMMUNITY,
+  }),
+  getManagedCommunityAndGroup: (payload: IGetManagedCommunityAndGroupPayload = {}) => ({
+    type: groupsTypes.GET_MANAGED_COMMUNITY_AND_GROUP,
+    payload,
+  }),
+  getGlobalSearch: (payload: string) => ({
+    type: groupsTypes.GET_GLOBAL_SEARCH,
+    payload,
+  }),
+  setGlobalSearch: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: string[];
+    items?: any;
+  }) => ({
+    type: groupsTypes.SET_GLOBAL_SEARCH,
+    payload,
+  }),
+  resetGlobalSearch: () => ({
+    type: groupsTypes.RESET_GLOBAL_SEARCH,
   }),
 };
 

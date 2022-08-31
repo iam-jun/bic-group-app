@@ -5,11 +5,7 @@ module.exports = {
     'airbnb',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: [
-    '@typescript-eslint',
-    'import',
-    'unused-imports',
-  ],
+  plugins: ['@typescript-eslint', 'import', 'unused-imports'],
   settings: {
     react: {
       pragma: 'React',
@@ -60,23 +56,24 @@ module.exports = {
     'max-len': ['error', { code: 120, ignoreStrings: true }],
     'function-paren-newline': ['error', 'consistent'],
     'operator-linebreak': ['error', 'before'],
-    semi: 0,
-    'prefer-destructuring': ['error', {
-      VariableDeclarator: {
-        array: false,
-        object: true,
-      },
-      AssignmentExpression: {
-        array: true,
-        object: false,
-      },
-    }, {
-      enforceForRenamedProperties: false,
-    }],
-    'react/no-unstable-nested-components': [
+    semi: 2,
+    'prefer-destructuring': [
       'error',
-      { allowAsProps: true },
+      {
+        VariableDeclarator: {
+          array: false,
+          object: true,
+        },
+        AssignmentExpression: {
+          array: true,
+          object: false,
+        },
+      },
+      {
+        enforceForRenamedProperties: false,
+      },
     ],
+    'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
     camelcase: [
       0,
       {
@@ -86,7 +83,10 @@ module.exports = {
     'react/no-unused-prop-types': 'off',
     'no-underscore-dangle': 0,
     'no-undef': 0,
-    'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+    'no-unused-expressions': [
+      'error',
+      { allowShortCircuit: true, allowTernary: true },
+    ],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     '@typescript-eslint/ban-types': 0,
@@ -101,7 +101,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'no-shadow': 0,
     '@typescript-eslint/no-shadow': 0,
-
   },
   overrides: [
     {

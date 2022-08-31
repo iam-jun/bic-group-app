@@ -23,7 +23,7 @@ const groupsKeySelector = {
   groupMemberRequests: 'groups.groupMemberRequests',
   loadingAvatar: 'groups.loadingAvatar',
   loadingCover: 'groups.loadingCover',
-  joinedCommunities: 'groups.joinedCommunities.data',
+  joinedCommunities: 'groups.joinedCommunities',
   managedCommunities: 'groups.managedCommunities',
   discoverCommunitiesData: 'groups.discoverCommunities',
   loadingCommunities: 'groups.communities.loading',
@@ -57,10 +57,13 @@ const groupsKeySelector = {
     move: 'groups.groupStructure.move',
   },
   communitySearch: 'groups.communitySearch',
+  globalSearch: 'groups.globalSearch',
   myPermissions: 'groups.myPermissions',
   permissionsByScopeAndId: (
     scope: 'communities' | 'groups', id: number,
   ) => `groups.myPermissions.data.${scope}.${id}`,
+  joinedAllGroups: 'groups.joinedAllGroups',
+  managed: 'groups.managed',
 };
 
 export default groupsKeySelector;

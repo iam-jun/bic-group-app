@@ -25,6 +25,7 @@
     "text_copied_to_clipboard": "Đã sao chép",
     "text_link_copied_to_clipboard": "Đã sao chép liên kết",
     "text_message_link_copied_to_clipboard": "Đã sao chép liên kết tin nhắn",
+    "text_copied": "Đã sao chép",
     "text_description": "Giới thiệu",
     "btn_cancel_request": "Huỷ tham gia",
     "btn_cancel": "Huỷ",
@@ -41,9 +42,12 @@
     "btn_create": "Tạo",
     "btn_join": "Tham gia",
     "btn_view": "Xem",
+    "btn_stay_here": "Ở lại đây",
     "btn_leave": "Đóng",
     "btn_stay_on_this_page": "Ở lại màn hình này",
     "text_search_emoji": "Tìm Emoji",
+    "text_static": "Tĩnh",
+    "text_animated": "Động",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
     "text_set_time": "Đặt Giờ",
@@ -58,7 +62,7 @@
     "text_error_message": "Có gì đó sai sai",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
-    "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
+    "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
     "text_see_more": "Xem thêm",
     "text_see_less": "Thu gọn",
     "text_send": "Gửi",
@@ -78,8 +82,10 @@
     "text_add": "Thêm",
     "text_start_date": "Ngày bắt đầu",
     "text_end_date": "Ngày kết thúc",
+    "text_end_hour": "Giờ kết thúc",
     "text_present": "Hiện tại",
     "text_group": "Nhóm",
+    "text_community": "Cộng đồng",
     "text_activated": "Hiện tại",
     "text_at": "tại",
     "text_to": "tới",
@@ -107,7 +113,14 @@
     "text_search_results": "Kết quả tìm kiếm",
     "text_more": "+(number) khác",
     "beincomm": "Beincomm",
-    "members": "Thành viên"
+    "members": "Thành viên",
+    "text_remove": "Loại bỏ",
+    "btn_approve": "Phê duyệt",
+    "btn_decline": "Từ chối",
+    "btn_approve_all": "Phê duyệt tất cả",
+    "btn_decline_all": "Từ chối tất cả",
+    "all": "Tất cả",
+    "in": "trong"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -361,11 +374,15 @@
       "no_recent_search": "Không có tìm kiếm gần đây",
       "apply": "Xác nhận",
       "filter": "Lọc",
-      "filter_created_by": "Người đăng",
+      "filter_post_by": "Đăng bởi",
       "filter_created_by_all": "Tất cả",
       "filter_created_by_me": "Chính mình",
       "filter_created_by_specific": "Bài viết của",
-      "filter_date": "Ngày đăng"
+      "filter_date": "Ngày đăng",
+      "seven_days_ago": "7 ngày trước",
+      "thirty_days_ago": "30 ngày trước",
+      "three_months_ago": "3 tháng trước",
+      "from_to": "Từ ngày - Đến ngày"
     },
     "notice_post_video_uploading": {
       "title": "Bài viết có video đang xử lý (count)",
@@ -389,7 +406,7 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Chi tiết bài viết",
-    "title_post_detail_of": "Bài của %NAME%",
+    "title_post_detail_of": "Bài của {{name}}",
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
     "title_edit_images": "Sửa ảnh",
@@ -420,9 +437,9 @@
     "label_post_deleted": "Bài viết đã xoá",
     "label_all_reacts": "Tất cả tương tác",
     "text_search_result_empty": "Không có kết quả. Vui lòng thử lại...",
-    "title_delete_post": "Xoá bài viết",
-    "content_delete_post": "Bạn thực sự muốn xoá bài viết này?",
-    "title_delete_audiences_of_post": "Bạn đang xóa đối tượng của bài viết này",
+    "title_delete_post": "Xoá Bài Viết",
+    "content_delete_post": "Bạn có muốn xóa bài viết này?",
+    "title_delete_audiences_of_post": "Bạn Không Thể Xóa Bài Đăng Này",
     "content_delete_audiences_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
     "content_not_able_delete_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây.",
     "text_deleted_audiences": "Bài đăng của bạn đã được xoá khỏi các nhóm đối tượng.",
@@ -439,10 +456,11 @@
     "create_new_post": "Viết về ngày hôm nay của bạn...",
     "post_button": "Tạo",
     "send_to": "Tới",
+    "post_to": "Đăng tới",
     "save": "Lưu",
     "to": "đến",
     "and": "và",
-    "more_group": "nhóm nữa",
+    "more_group": "Nhóm nữa",
     "edit_comment_success": "Sửa bình luận thành công",
     "label_replying_to": "Đang trả lời ",
     "label_yourself": "chính mình",
@@ -457,10 +475,12 @@
     "audience_selected": "Đã chọn",
     "select_audience": "Chọn đối tượng",
     "expiring_time": "Thời gian kết thúc",
-    "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi",
-    "delete_post_complete": "Bài viết đã được xoá",
+    "expire_time_desc": "Bài viết này sẽ ở trên đầu bản tin cho đến khi hết thời hạn đã cài đặt.",
+    "delete_post_complete": "Bài viết đã được xoá.",
     "search_results": "Kết quả tìm kiếm",
-    "search_audiences_placeholder": "Tìm kiếm nhóm hoặc bạn bè",
+    "search_audiences_placeholder": "Tìm kiếm đối tượng...",
+    "text_chosen_audience": "Đối tượng đã chọn",
+    "text_select_all_audience": "Chọn tất cả",
     "group_manage": "Nhóm của bạn",
     "people_search": "Người dùng",
     "show_all": "Xem tất cả",
@@ -479,15 +499,15 @@
     "comment_link_copied": "Đã sao chép liên kết của bình luận",
     "comment_menu_edit": "Sửa bình luận",
     "comment_menu_history": "Lịch sử chỉnh sửa",
-    "comment_menu_delete": "Xoá bình luận",
-    "post_menu_edit": "Sửa bài viết",
-    "post_menu_copy": "Sao chép liên kết",
-    "post_menu_save": "Lưu bài viết",
-    "post_menu_view_reactions": "Xem tương tác",
+    "comment_menu_delete": "Xoá Bình Luận",
+    "post_menu_edit": "Sửa Bài Viết",
+    "post_menu_copy": "Sao Chép Liên Kết",
+    "post_menu_save": "Lưu Bài Viết",
+    "post_menu_view_reactions": "Xem Tương Tác",
     "post_menu_turn_off_noti": "Tắt thông báo cho bài viết này",
-    "post_menu_history": "Xem lịch sử chỉnh sửa",
-    "post_menu_delete": "Xoá bài viết",
-    "post_menu_edit_settings": "Sửa cài đặt bài viết",
+    "post_menu_history": "Xem Lịch Sử Chỉnh Sửa",
+    "post_menu_delete": "Xoá Bài Viết",
+    "post_menu_edit_settings": "Sửa Cài Đặt Bài Viết",
     "post_menu_report": "Báo cáo",
     "error_wait_uploading": "Vui lòng chờ tải lên hoàn tất",
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
@@ -509,7 +529,7 @@
     "text_update_post_setting_success": "Đã cập nhật Cài đặt bài viết",
     "text_update_post_setting_failed": "Cập nhật Cài đặt bài viết thất bại",
     "text_comment_from": "Đây là bình luận từ ",
-    "title_comment_detail_of": "bài đăng của %NAME%",
+    "title_comment_detail_of": "bài đăng của {{name}}",
     "newsfeed": {
       "title_empty_no_post": "Nơi đây cô đơn quá...",
       "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới",
@@ -632,7 +652,8 @@
       "label_following": "Theo dõi",
       "label_pin_group": "Ghim nhóm",
       "label_pin_community": "Ghim cộng đồng",
-      "label_notifications": "Thông báo"
+      "label_notifications": "Thông báo",
+      "label_go_back_home": "Về trang chủ"
     },
     "member_menu": {
       "label_view_profile": "View profile",
@@ -669,16 +690,32 @@
       "last_admin_remove": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt một quản trị viên khác trước khi xóa vai trò quản trị viên",
       "last_admin_inner_group_remove": "Không thể loại khỏi nhóm. Người dùng này là quản trị viên cuối cùng của một nhóm bên trong"
     },
+    "text_respond_all_member_requests": {
+      "title": {
+        "approve": "Phê duyệt tất cả?",
+        "decline": "Từ chối tất cả?"
+      },
+      "content": {
+        "text_about_to_add": "Bạn sẽ thêm ",
+        "approve_confirm_community": " thành viên vào cộng đồng này. Hãy xác nhận?",
+        "approve_confirm_group": " thành viên vào nhóm này. Hãy xác nhận?",
+        "decline": "Từ chối tất cả. Hãy xác nhận?"
+      }
+    },
     "text_requested_at": "Gửi lúc",
-    "text_declining_user": "Đang từ chối người dùng",
-    "text_declined_user": "Từ chối người dùng",
-    "text_approved_user": "Phê duyệt người dùng",
-    "text_approved_all": "Phê duyệt tất cả yêu cầu thành viên",
-    "text_declining_all": "Từ chối tất cả yêu cầu thành viên",
+    "text_declined_user": "Từ chối",
+    "text_approved_user": "Phê duyệt",
+    "text_approved_all": "Phê duyệt {0} yêu cầu thành viên",
+    "text_declining_all": "Đang từ chối {0} yêu cầu thành viên",
+    "text_declined_all": "Đã từ chối {0} yêu cầu thành viên",
     "text_request_been_canceled": "Yêu cầu này đã bị hủy",
     "title_members_one": "Thành viên",
     "title_members_other": "Thành viên",
-    "text_in": "thuộc"
+    "text_in": "thuộc",
+    "text_no_pending_members_notice": "Không có yêu cầu đăng ký thành viên",
+    "text_pending_request_notice_group": "Bạn có thể thêm thành viên",
+    "text_pending_request_notice_community": "Bạn có thể thêm thành viên",
+    "title_add_members": "Thêm thành viên"
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",
@@ -835,11 +872,36 @@
       "text_move_to": "Di chuyển tới",
       "text_title_confirm_reorder_group": "Bạn đang thay đổi thứ tự của \"%NAME%\"",
       "text_desc_confirm_reorder_group": "Tất cả thành viên của nhóm này sẽ thấy thay đổi. Bạn có chắc muốn thực hiện hành động này?",
-      "text_title_confirm_move_group": "Bạn đang di chuyển \"%MOVING_NAME%\" tới \"%TARGET_NAME%\"",
+      "text_title_confirm_move_group": "Bạn đang di chuyển",
       "text_desc_confirm_move_group": " của %MOVING_NAME% và các nhóm bên trong sẽ được thêm vào %TARGET_NAME%. Bạn có chắc muốn thực hiện hành động này?",
       "text_move_group_search_placeholder": "Tìm kiếm một nhóm"
     },
-    "text_search_communities": "Tìm kiếm Cộng đồng"
+    "text_search_communities": "Tìm kiếm Cộng đồng",
+    "member_tab_types": {
+      "title_member_list": " Danh sách thành viên",
+      "title_member_requests": "Yêu cầu tham gia"
+    },
+    "join_request_setting": {
+      "title": "Thiết lập yêu cầu tham gia",
+      "description_on_community": "Người dùng phải được phê duyệt mới được tham gia",
+      "description_on_group": "Người dùng phải được phê duyệt mới được tham gia",
+      "description_off_community": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "description_off_group": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "pop_up_on": {
+        "title": "Mở thiết lập phê duyệt yêu cầu tham gia",
+        "content_community": "Bạn phải phê duyệt yêu cầu thành viên. Bạn chắc chứ?",
+        "content_group": "Bạn phải phê duyệt yêu cầu thành viên. Bạn chắc chứ?",
+        "confirm": "Mở"
+      },
+      "pop_up_off": {
+        "title": "Tắt thiết lập phê duyệt yêu cầu tham gia",
+        "content_community": "Tất cả người dùng có thể tham gia mà không cần gửi yêu cầu. Bạn chắc chứ?",
+        "content_group": "Tất cả người dùng có thể tham gia mà không cần gửi yêu cầu. Bạn chắc chứ?",
+        "content_with_requests": "Tất cả yêu cầu tham gia sẽ được tự động phê duyệt sau khi tắt thiết lập này. Bạn chắc chứ?",
+        "confirm": "Tắt",
+        "approve_all": "Phê duyệt tất cả"
+      }
+    }
   },
   "upload": {
     "text_create_file_id_request_failed": "Có lỗi khi yêu cầu tạo id",
@@ -866,6 +928,17 @@
   },
   "discover": {
     "discover_communities": "Khám phá cộng đồng",
-    "your_communities": "Cộng đồng đã tham gia"
+    "your_communities": "Cộng đồng đã tham gia",
+    "your_groups": "Nhóm đã tham gia",
+    "managed": "Quản lý",
+    "owner": "Sở hữu",
+    "manage": "Quản trị",
+    "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
+    "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
+    "global_search_placeholder": "Tìm kiếm cộng đồng hoặc nhóm..."
+  },
+  "discard_alert": {
+    "title": "Huỷ bỏ những thay đổi?",
+    "content": "Nếu bạn huỷ bỏ ngay bây giờ, bạn sẽ mất những thay đổi nào mà bạn đã thực hiện."
   }
 }

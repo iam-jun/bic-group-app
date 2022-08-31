@@ -73,7 +73,6 @@ const AddMembersToGroup = (props: any) => {
         buttonText={i18next.t('common:text_invite')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
-          highEmphasis: true,
         }}
         onPressButton={onInvitePress}
       />

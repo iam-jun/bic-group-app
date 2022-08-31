@@ -45,7 +45,7 @@ import { BottomListProps } from '~/components/BottomList';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
-  const groupId = params?.groupId;
+  const { groupId, communityId, onGoBack } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -61,8 +61,8 @@ const GroupDetail = (props: any) => {
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy } = groupInfo;
-  const { name: communityName } = useKeySelector(groupsKeySelector.communityDetail)
-
+  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const { name: communityName } = communityDetail;
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
   const loadingGroupDetail = useKeySelector(
@@ -71,8 +71,9 @@ const GroupDetail = (props: any) => {
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
-    'groups', groupId, [
-      PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+    'groups',
+    groupId,
+    [
       PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
       PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
     ],
@@ -113,6 +114,9 @@ const GroupDetail = (props: any) => {
   useEffect(
     () => {
       getGroupDetail();
+      if (communityId !== communityDetail?.id) {
+        dispatch(groupsActions.getCommunityDetail({ communityId }));
+      }
     }, [groupId],
   );
 
@@ -155,7 +159,7 @@ const GroupDetail = (props: any) => {
       LINK_GROUP, groupId,
     );
     try {
-      Share.share({ message: groupLink, url: groupLink })
+      Share.share({ message: groupLink, url: groupLink });
     } catch (error) {
       console.error(`\x1b[31m🐣️ Share group error: ${error}\x1b[0m`);
     }
@@ -195,7 +199,7 @@ const GroupDetail = (props: any) => {
   const scrollWrapper = (offsetY: number) => {
     headerRef?.current?.setScrollY?.(offsetY);
     DeviceEventEmitter.emit('stopAllVideo');
-  }
+  };
 
   const onScrollHandler = useAnimatedScrollHandler((event: any) => {
     const offsetY = event?.contentOffset?.y;
@@ -261,11 +265,11 @@ const GroupDetail = (props: any) => {
       undefined,
       undefined,
       onPressLeave,
-    )
+    );
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
-    } as BottomListProps))
+    } as BottomListProps));
   };
 
   const onPressChat = () => {
@@ -291,6 +295,7 @@ const GroupDetail = (props: any) => {
           onRightPress={onPressMenu}
           showStickyHeight={groupInfoHeight}
           stickyHeaderComponent={!showPrivate && <GroupTabHeader groupId={groupId} isMember={isMember} />}
+          onPressBack={onGoBack}
         />
         <View testID="group_detail.content" style={styles.contentContainer}>
           {renderGroupContent()}

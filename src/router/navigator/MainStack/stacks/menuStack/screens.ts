@@ -22,6 +22,6 @@ const menuScreens = {
   'add-work': AddWork,
   discover: Discover,
   'user-edit-descriptions': EditDescription,
-}
+};
 
 export default menuScreens;

@@ -220,8 +220,9 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
               ),
           });
         });
-        dispatch(postActions.setCreatePostImagesDraft(initImages));
-        dispatch(postActions.setCreatePostImages(initImages));
+        const newInitImages = initImages.reverse();
+        dispatch(postActions.setCreatePostImagesDraft(newInitImages));
+        dispatch(postActions.setCreatePostImages(newInitImages));
         initSelectingImagesRef.current = initImages;
       }
     }, [initPostData],
@@ -257,14 +258,15 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         });
         dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
 
+        const notExpired = new Date().getTime() < new Date(initPostData?.setting?.importantExpiredAt).getTime();
         const initImportant = {
-          active: !!initPostData?.setting?.isImportant,
-          expires_time: initPostData?.setting?.importantExpiredAt,
+          active: !!notExpired,
+          expires_time: !!notExpired ? initPostData?.setting?.importantExpiredAt : null,
         };
         const dataDefault = [
-          !!initImportant.active || !!initImportant.expires_time,
-          !canComment,
-          !canReact,
+          !!notExpired,
+          !initPostData?.setting?.canComment,
+          !initPostData?.setting?.canReact,
         ];
         const newCount = dataDefault.filter((i) => !!i);
 

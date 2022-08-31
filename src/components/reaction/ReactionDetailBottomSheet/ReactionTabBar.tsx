@@ -1,7 +1,9 @@
 import React, {
   FC, useState, useEffect, useRef,
 } from 'react';
-import { FlatList, View, StyleSheet } from 'react-native';
+import {
+  FlatList, StyleSheet, Image,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
@@ -10,6 +12,8 @@ import { blacklistReactions, ReactionType } from '~/constants/reactions';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
+import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
+import { spacing } from '~/theme';
 
 export interface ReactionTabBarProps {
   initReaction?: ReactionType;
@@ -110,28 +114,38 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   const renderItem = ({ item, index }: any) => {
     const { reactionType, count } = item || {};
     const isActive = activeIndex === index;
-    const emoji = NodeEmoji.find(reactionType)?.emoji || '';
+
+    let emoji = null;
+    const nodeEmoji = NodeEmoji.find(reactionType || '')?.emoji || '';
+
+    if (nodeEmoji) {
+      emoji = (
+        <Text.H5 style={styles.nodeEmoji}>
+          {nodeEmoji}
+        </Text.H5>
+      );
+    }
+
+    if (!emoji) {
+      const imageEmoji = STATIC_EMOJI[reactionType] || ANIMATED_EMOJI[reactionType];
+      if (imageEmoji) {
+        emoji = (
+          <Image style={styles.emoji} resizeMode="contain" source={imageEmoji} />
+        );
+      }
+    }
+
     return (
-      <View>
-        <Button
-          testID={`reaction_detail_bottomSheet.${reactionType}`}
-          style={styles.tabItem}
-          onPress={() => _onPressTab(index)}
-        >
-          <Text.H5 color={isActive ? colors.purple60 : colors.neutral80}>
-            {emoji}
-          </Text.H5>
-          <Text.H6 color={isActive ? colors.purple60 : colors.neutral80}>
-            {` ${count}`}
-          </Text.H6>
-        </Button>
-        {isActive && (
-          <View
-            testID={`reaction_detail_bottomSheet.active_${reactionType}`}
-            style={styles.tabItemActive}
-          />
-        )}
-      </View>
+      <Button
+        testID={`reaction_detail_bottomSheet.${reactionType}`}
+        style={[styles.tabItem, { backgroundColor: isActive ? colors.purple2 : colors.white }]}
+        onPress={() => _onPressTab(index)}
+      >
+        {emoji}
+        <Text.H6 color={isActive ? colors.purple50 : colors.neutral40}>
+          {` ${count}`}
+        </Text.H6>
+      </Button>
     );
   };
 
@@ -155,7 +169,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       renderItem={renderItem}
       keyExtractor={(
         item, index,
-      ) => `reaction_tab_${index}`}
+      ) => `reaction_tab_${index}_${JSON.stringify(item)}`}
     />
   );
 };
@@ -165,21 +179,25 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       borderBottomWidth: 1,
-      borderColor: colors.gray40,
+      borderColor: colors.neutral5,
+      paddingVertical: spacing.padding.base,
+      paddingHorizontal: spacing.padding.base,
     },
     tabItem: {
-      width: itemWidth,
-      height: 44,
+      height: 32,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
+      paddingHorizontal: spacing.padding.small,
+      borderRadius: spacing.borderRadius.small,
+      marginLeft: spacing.margin.xSmall,
     },
-    tabItemActive: {
-      position: 'absolute',
-      bottom: 0,
-      width: itemWidth,
-      height: 2,
-      backgroundColor: colors.purple60,
+    nodeEmoji: {
+      fontSize: 14,
+    },
+    emoji: {
+      width: 14,
+      aspectRatio: 1,
     },
   });
 };

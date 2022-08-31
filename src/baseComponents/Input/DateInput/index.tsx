@@ -13,23 +13,23 @@ import { fontFamilies } from '~/theme/fonts';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import { formatDate } from '~/utils/formatData';
 
 interface DateInputProps {
-  mode: 'date' | 'time',
+  mode: 'date' | 'time';
   testID?: string;
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
-  label?: string,
+  label?: string;
   placeholder?: string;
   keyboardType?: KeyboardTypeOptions | undefined;
   value?: string;
   textInputRef?: React.Ref<View>;
   textColor?: string;
   outlineColor?: string;
-  iconColor?:string;
+  iconColor?: string;
   minDate?: Date;
   maxDate?: Date;
   onConfirm: (date: Date) => void;
@@ -52,19 +52,13 @@ const DateInput: React.FC<DateInputProps> = ({
 }: DateInputProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = themeStyles(
-    theme, textColor,
-  );
+  const styles = themeStyles(theme, textColor);
   const [text, setText] = useState<string>(() => {
     if (!!value) {
       if (mode === 'date') {
-        return formatDate(
-          value, 'DD/MM/YYYY',
-        );
+        return formatDate(value, 'DD/MM/YYYY');
       }
-      return formatDate(
-        value, 'hh:mm A', undefined, 9999,
-      );
+      return formatDate(value, 'hh:mm A', undefined, 9999);
     }
     if (mode === 'date') return !!placeholder ? placeholder : 'DD/MM/YYYY';
     return !!placeholder ? placeholder : 'HH:MM';
@@ -72,9 +66,9 @@ const DateInput: React.FC<DateInputProps> = ({
   const [isSelecting, setSelecting] = useState<boolean>(false);
 
   const getIcon = () => {
-    if (mode === 'date') return 'Calendar'
-    return 'Clock'
-  }
+    if (mode === 'date') return 'Calendar';
+    return 'Clock';
+  };
 
   const _onPress = () => {
     setSelecting(true);
@@ -83,32 +77,34 @@ const DateInput: React.FC<DateInputProps> = ({
   const _onConfirm = (date: Date) => {
     onConfirm(date);
     if (mode === 'date') {
-      const newDate = formatDate(
-        date, 'DD/MM/YYYY',
-      );
+      const newDate = formatDate(date, 'DD/MM/YYYY');
       setText(newDate);
     } else {
-      const newDate = formatDate(
-        date, 'hh:mm A', undefined, 9999,
-      );
+      const newDate = formatDate(date, 'hh:mm A', undefined, 9999);
       setText(newDate);
     }
     _onClosePopup();
-  }
+  };
 
   const _onClosePopup = () => {
     setSelecting(false);
-  }
+  };
 
   return (
     <View testID="date_input" style={[styles.container, style]}>
       {!!label && (
-        <Text.LabelM color={colors.neutral80} style={styles.labelStyle}>{label}</Text.LabelM>
+        <Text.LabelM color={colors.neutral80} style={styles.labelStyle}>
+          {label}
+        </Text.LabelM>
       )}
       <TouchableOpacity
         testID={testID}
         onPress={_onPress}
-        style={[styles.row, { borderColor: outlineColor || colors.neutral5 }, inputStyle]}
+        style={[
+          styles.row,
+          { borderColor: outlineColor || colors.neutral5 },
+          inputStyle,
+        ]}
       >
         <Text.BodyM color={colors.neutral40}>{text}</Text.BodyM>
         <Icon
@@ -119,30 +115,24 @@ const DateInput: React.FC<DateInputProps> = ({
       </TouchableOpacity>
       <View style={{ position: 'absolute', alignSelf: 'center' }}>
         {isSelecting && (
-        <DateTimePicker
-          testID="date_input.date_picker"
-          isVisible={isSelecting}
-          date={
-                !!value
-                  ? new Date(value)
-                  : new Date()
-              }
-          minDate={minDate}
-          maxDate={maxDate}
-          mode={mode}
-          onConfirm={_onConfirm}
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onCancel={_onClosePopup}
-        />
+          <DateTimePicker
+            testID="date_input.date_picker"
+            isVisible={isSelecting}
+            date={!!value ? new Date(value) : new Date()}
+            minDate={minDate}
+            maxDate={maxDate}
+            mode={mode}
+            onConfirm={_onConfirm}
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onCancel={_onClosePopup}
+          />
         )}
       </View>
     </View>
   );
 };
 
-const themeStyles = (
-  theme: ExtendedTheme, textColor?: string,
-) => {
+const themeStyles = (theme: ExtendedTheme, textColor?: string) => {
   const { colors } = theme;
 
   return StyleSheet.create({

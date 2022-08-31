@@ -37,7 +37,7 @@ import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
 import homeActions from '~/storeRedux/home/actions';
 import { checkPermission, permissionTypes } from '~/utils/permission';
@@ -330,21 +330,21 @@ const UserEditProfile = (props: any) => {
         <SettingItem
           title="settings:title_gender"
           subtitle={
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              i18next.t(genders[gender]) || i18next.t('common:text_not_set')
-            }
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            i18next.t(genders[gender]) || i18next.t('common:text_not_set')
+          }
           leftIcon="SquareUser"
           isTouchDisabled
         />
         <SettingItem
           title="settings:title_birthday"
           subtitle={
-              formatDate(
-                birthday, 'MMMM DD, YYYY',
-              )
+            formatDate(
+              birthday, 'MMMM DD, YYYY',
+            )
               || i18next.t('common:text_not_set')
-            }
+          }
           leftIcon="Calendar"
           isTouchDisabled
         />
@@ -357,11 +357,11 @@ const UserEditProfile = (props: any) => {
         <SettingItem
           title="settings:title_relationship_status"
           subtitle={
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              i18next.t(RELATIONSHIP_STATUS[relationshipStatus])
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            i18next.t(RELATIONSHIP_STATUS[relationshipStatus])
               || i18next.t('common:text_not_set')
-            }
+          }
           leftIcon="Heart"
           isTouchDisabled
         />
@@ -399,20 +399,20 @@ const UserEditProfile = (props: any) => {
         <SettingItem
           title="settings:title_phone_number"
           subtitle={
-              countryCode && phone
-                ? `(+${countryCode}) ${phone}`
-                : i18next.t('common:text_not_set')
-            }
+            countryCode && phone
+              ? `(+${countryCode}) ${phone}`
+              : i18next.t('common:text_not_set')
+          }
           leftIcon="Phone"
           isTouchDisabled
         />
         <SettingItem
           title="settings:title_location"
           subtitle={
-              city && country
-                ? `${city}, ${country}`
-                : i18next.t('common:text_not_set')
-            }
+            city && country
+              ? `${city}, ${country}`
+              : i18next.t('common:text_not_set')
+          }
           leftIcon="LocationDot"
           isTouchDisabled
         />
@@ -429,39 +429,39 @@ const UserEditProfile = (props: any) => {
         size: 24,
       }}
       RightComponent={
-          showEditButton ? <Icon icon="PenLine" size={20} /> : null
-        }
+        showEditButton ? <Icon icon="PenLine" size={20} /> : null
+      }
       ContentComponent={(
         <View>
           <Text.ButtonM>
             {`${item?.titlePosition} ${i18next.t('common:text_at')} ${item?.company}`}
           </Text.ButtonM>
           {item?.startDate && (
-          <Text>
-            {`${formatDate(
-              item.startDate, 'MMM Do, YYYY',
-            )} ${
-              item?.currentlyWorkHere
-                ? `${i18next.t('common:text_to')} ${i18next.t('common:text_present')}`
-                : item?.endDate
-                  ? `${i18next.t('common:text_to')} ${formatDate(
-                    item.endDate,
-                    'MMM Do, YYYY',
-                  )}`
-                  : ''
-            }`}
-          </Text>
+            <Text>
+              {`${formatDate(
+                item.startDate, 'MMM Do, YYYY',
+              )} ${
+                item?.currentlyWorkHere
+                  ? `${i18next.t('common:text_to')} ${i18next.t('common:text_present')}`
+                  : item?.endDate
+                    ? `${i18next.t('common:text_to')} ${formatDate(
+                      item.endDate,
+                      'MMM Do, YYYY',
+                    )}`
+                    : ''
+              }`}
+            </Text>
           )}
           {!!item?.location && (
-          <Text.BodyS color={colors.gray50}>{item.location}</Text.BodyS>
+            <Text.BodyS color={colors.gray50}>{item.location}</Text.BodyS>
           )}
           {!!item?.description && (
-          <Text.BodyS numberOfLines={3} color={colors.gray50}>
-            {item.description}
-          </Text.BodyS>
+            <Text.BodyS numberOfLines={3} color={colors.gray50}>
+              {item.description}
+            </Text.BodyS>
           )}
         </View>
-        )}
+      )}
       onPress={() => {
         showEditButton && selectWorkItem(item);
       }}

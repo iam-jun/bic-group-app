@@ -20,7 +20,7 @@ describe('Experiences screen', () => {
       endDate: null,
       location: 'location',
     },
-  ]
+  ];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -55,5 +55,5 @@ describe('Experiences screen', () => {
 
     const wrapper = renderWithRedux(<Experiences />, store);
     expect(wrapper).toMatchSnapshot();
-  })
+  });
 });

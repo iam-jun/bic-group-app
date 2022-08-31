@@ -14,7 +14,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import { debounce } from 'lodash';
 
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { ImageGalleryModalProps } from '~/beinComponents/modals/ImageGalleryModal/IImageGalleryModalProps';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
@@ -208,16 +208,16 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     <View style={styles.buttonControlContainer}>
       <View>
         {activeIndex > 0 && (
-        <Button style={styles.buttonControl} onPress={onPressBack}>
-          <Icon icon="iconBack" tintColor={colors.white} />
-        </Button>
+          <Button style={styles.buttonControl} onPress={onPressBack}>
+            <Icon icon="iconBack" tintColor={colors.white} />
+          </Button>
         )}
       </View>
       <View>
         {activeIndex < imageUrls.length - 1 && (
-        <Button style={styles.buttonControl} onPress={onPressNext}>
-          <Icon icon="AngleRightSolid" tintColor={colors.white} />
-        </Button>
+          <Button style={styles.buttonControl} onPress={onPressNext}>
+            <Icon icon="AngleRightSolid" tintColor={colors.white} />
+          </Button>
         )}
       </View>
     </View>

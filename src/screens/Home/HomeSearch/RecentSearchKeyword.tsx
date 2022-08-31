@@ -7,7 +7,7 @@ import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
@@ -29,31 +29,35 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const { loading, data } = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
+  const { loading, data }
+    = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
 
   const onPressClear = () => {
     onClearAllKeyword?.();
   };
 
   const onPressDeleteItem = (item: any) => {
-    onDeleteKeyword?.(
-      item?.id, item?.keyword,
-    );
+    onDeleteKeyword?.(item?.id, item?.keyword);
   };
 
   const onPressItem = (item: any) => {
     onSelectKeyword?.(item?.keyword);
   };
 
-  const renderItem = (
-    item: any, index: number,
-  ) => (
+  const renderItem = (item: any, index: number) => (
     <PrimaryItem
       testID={`recent_search_keyword.item_${index}`}
       key={`recent_item_${item.id}`}
       subTitle={item?.keyword}
+      subTitleProps={{ variant: 'bodyMMedium' }}
       style={styles.item}
       onPress={() => onPressItem(item)}
+      leftIcon="Clock"
+      leftIconProps={{
+        style: { marginRight: spacing.margin.base },
+        tintColor: theme.colors.neutral20,
+        size: 18,
+      }}
       RightComponent={(
         <TouchableOpacity
           testID={`recent_search_keyword.btn_delete_item_${index}`}
@@ -61,35 +65,36 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
         >
           <Icon icon="iconCloseSmall" size={16} />
         </TouchableOpacity>
-        )}
+      )}
     />
   );
+
+  if (!loading && data?.length === 0) {
+    return (
+      <Text.BodyS style={styles.textEmpty} useI18n>
+        home:newsfeed_search:no_recent_search
+      </Text.BodyS>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text.H6 style={styles.flex1}>
+        <Text.H4 style={styles.flex1}>
           {t('home:newsfeed_search:label_recent_search')}
-        </Text.H6>
+        </Text.H4>
         {data?.length > 0 && (
           <Button
             testID="recent_search_keyword.btn_clear"
             onPress={onPressClear}
             style={{ justifyContent: 'center', alignSelf: 'center' }}
           >
-            <Text.ButtonS style={styles.btnClear}>
-              {t('home:newsfeed_search:clear').toUpperCase()}
-            </Text.ButtonS>
+            <Text.LinkS>{t('home:newsfeed_search:clear')}</Text.LinkS>
           </Button>
         )}
       </View>
       {!!loading && <LoadingIndicator style={styles.loading} />}
       {data?.map?.(renderItem)}
-      {!loading && data?.length === 0 && (
-        <Text style={styles.textEmpty} useI18n>
-          home:newsfeed_search:no_recent_search
-        </Text>
-      )}
     </View>
   );
 };
@@ -99,7 +104,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     flex1: { flex: 1 },
     container: {
-      paddingHorizontal: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
     },
     header: {
       height: 60,
@@ -107,8 +112,7 @@ const createStyle = (theme: ExtendedTheme) => {
       alignItems: 'center',
     },
     btnClear: {
-      color: colors.purple50,
-      marginRight: spacing.margin.tiny,
+      marginRight: spacing.margin.large,
     },
     loading: {
       height: 44,
@@ -117,12 +121,11 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     item: {
       paddingVertical: spacing.padding.base,
-      paddingRight: spacing.padding.small,
+      paddingHorizontal: 0,
     },
     textEmpty: {
       textAlign: 'center',
       margin: spacing.margin.extraLarge,
-      color: colors.gray50,
     },
   });
 };

@@ -7,7 +7,7 @@ const defaultConfig = {
   provider,
   method: 'get' as Method,
   useRetry: true,
-}
+};
 
 export const uploadApiConfig = {
   createVideoId: (): HttpApiRequestConfig => ({
@@ -108,8 +108,8 @@ export const uploadApiConfig = {
       onUploadProgress,
     };
   },
-}
+};
 
-const uploadApi = {}
+const uploadApi = {};
 
-export default uploadApi
+export default uploadApi;

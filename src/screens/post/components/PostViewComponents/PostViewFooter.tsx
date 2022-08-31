@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
-import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import { IReactionCounts } from '~/interfaces/IPost';
 import { IconType } from '~/resources/icons';
 import * as modalActions from '~/storeRedux/modal/actions';
@@ -43,13 +42,13 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   const { t } = useBaseHook();
 
   const validReactionCount = validateReactionCount(reactionCounts);
-  const numberOfReactions = formatLargeNumber(getTotalReactions(reactionCounts, 'user'))
+  const numberOfReactions = formatLargeNumber(getTotalReactions(reactionCounts, 'user'));
   const labelReactionCount = `${
     numberOfReactions ? `${numberOfReactions} ` : ''
   }${t('post:button_react')}`;
 
   const onEmojiSelected = (
-    emoji: string, key?: string,
+    key: string,
   ) => {
     dispatch(modalActions.hideModal());
     if (key) {
@@ -58,17 +57,21 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   };
 
   const onPressReact = () => {
-    const payload = {
-      isOpen: true,
-      ContentComponent: (
-        <EmojiBoard
-          width={dimension.deviceWidth}
-          height={280}
-          onEmojiSelected={onEmojiSelected}
-        />
-      ),
-    };
-    dispatch(modalActions.showModal(payload));
+    // const payload = {
+    //   isOpen: true,
+    //   ContentComponent: (
+    //     <EmojiBoard
+    //       width={dimension.deviceWidth}
+    //       height={280}
+    //       onEmojiSelected={onEmojiSelected}
+    //     />
+    //   ),
+    // };
+    // dispatch(modalActions.showModal(payload));
+
+    dispatch(modalActions.setShowReactionBottomSheet(
+      { visible: true, callback: onEmojiSelected },
+    ));
   };
 
   const renderReactButtonItem = (
@@ -127,9 +130,9 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
          btnCommentTestID,
        )}
       {!canComment && !canReact && (
-      <View style={[styles.emptyView, styles.disbaledReactComment]}>
-        <Text.BodyS color={theme.colors.neutral20} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
-      </View>
+        <View style={[styles.emptyView, styles.disbaledReactComment]}>
+          <Text.BodyS color={theme.colors.neutral20} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
+        </View>
       )}
     </View>
   );

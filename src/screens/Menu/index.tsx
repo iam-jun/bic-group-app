@@ -12,7 +12,7 @@ import spacing from '~/theme/spacing';
 import MenuHeader from '~/screens/Menu/components/MenuHeader';
 import MenuDiscoverCommunity from '~/screens/Menu/components/MenuDiscoverCommunity';
 import Button from '~/beinComponents/Button';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import MenuShortcut from '~/screens/Menu/components/MenuShortcut';
 import MenuSettings from '~/screens/Menu/components/MenuSettings';
@@ -21,7 +21,7 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation()
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
@@ -51,7 +51,7 @@ const Menu = (): React.ReactElement => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -73,7 +73,7 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.neutral,
     },
     textDiscover: { marginLeft: spacing.margin.large, color: colors.neutral70 },
-  })
+  });
 };
 
 export default Menu;

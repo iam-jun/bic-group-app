@@ -75,10 +75,23 @@ import editCommunityDetail from './editCommunityDetail';
 import getGroupSchemeAssignments from '~/storeRedux/groups/saga/getGroupSchemeAssignments';
 import putGroupSchemeAssignments from '~/storeRedux/groups/saga/putGroupSchemeAssignments';
 import getMyPermissions from './getMyPermissions';
+import getJoinedAllGroups from './getJoinedAllGroups';
+import getManaged from './getManaged';
+import getOwnerCommunity from './getOwnerCommunity';
+import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
+import updateCommunityJoinSetting from './updateCommunityJoinSetting';
+import updateGroupJoinSetting from './updateGroupJoinSetting';
+import getGlobalSearch from './getGlobalSearch';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
+  yield takeLatest(
+    groupsTypes.UPDATE_COMMUNITY_JOIN_SETTING, updateCommunityJoinSetting,
+  );
+  yield takeLatest(
+    groupsTypes.UPDATE_GROUP_JOIN_SETTING, updateGroupJoinSetting,
+  );
   yield takeLatest(
     groupsTypes.GET_MY_PERMISSIONS, getMyPermissions,
   );
@@ -276,6 +289,13 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.EDIT_COMMUNITY_DETAIL, editCommunityDetail,
   );
+  yield takeLatest(groupsTypes.GET_JOINED_ALL_GROUPS, getJoinedAllGroups);
+  yield takeLatest(groupsTypes.GET_MANAGED, getManaged);
+  yield takeLatest(groupsTypes.GET_OWNER_COMMUNITY, getOwnerCommunity);
+  yield takeLatest(groupsTypes.GET_MANAGED_COMMUNITY_AND_GROUP, getManagedCommunityAndGroup);
+  yield takeLatest(
+    groupsTypes.GET_GLOBAL_SEARCH, getGlobalSearch,
+  );
 }
 
 function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
@@ -355,7 +375,7 @@ function* getJoinableUsers({
       ),
       '\x1b[0m',
     );
-    yield call(showError, err)
+    yield call(showError, err);
   }
 }
 

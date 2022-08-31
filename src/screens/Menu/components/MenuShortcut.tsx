@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
 import spacing from '~/theme/spacing';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
@@ -25,19 +25,19 @@ const MenuShortcut = () => {
     rootNavigation.navigate(
       homeStack.postSelectAudience, { isFirstStep: true },
     );
-  }
+  };
 
   const onPressDraft = () => {
-    rootNavigation.navigate(homeStack.draftPost)
-  }
+    rootNavigation.navigate(homeStack.draftPost);
+  };
 
   const onPressSavedItems = () => {
     dispatch(modalActions.showAlertNewFeature());
-  }
+  };
 
   const onPressMedia = () => {
     dispatch(modalActions.showAlertNewFeature());
-  }
+  };
 
   const renderButton = (icon, name, onPress) => (
     <Button style={styles.button} onPress={onPress}>

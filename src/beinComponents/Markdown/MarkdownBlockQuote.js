@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 export default class MarkdownBlockQuote extends PureComponent {
   static propTypes = {

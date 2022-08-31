@@ -93,3 +93,9 @@ export interface ILocation {
   name_with_type: string;
   country: string;
 }
+
+export interface ISearchReq {
+  limit: number,
+  offset: number,
+  key?: string,
+}

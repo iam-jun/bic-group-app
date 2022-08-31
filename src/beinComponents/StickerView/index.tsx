@@ -84,8 +84,8 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
   };
 
   const _onMediaSelect = (e: NativeSyntheticEvent<{
-      media: GiphyMedia;
-    }>) => {
+    media: GiphyMedia;
+  }>) => {
     onMediaSelect(e.nativeEvent.media);
   };
 

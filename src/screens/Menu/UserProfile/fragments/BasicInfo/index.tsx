@@ -7,11 +7,11 @@ import InfoSection from '../../components/InfoSection';
 import { getLanguages } from '../../helper';
 
 interface Props {
-    fullname: string;
-    gender: string;
-    birthday: string;
-    language: string[];
-    relationship: string;
+  fullname: string;
+  gender: string;
+  birthday: string;
+  language: string[];
+  relationship: string;
 }
 
 const BasicInfo = ({
@@ -24,6 +24,6 @@ const BasicInfo = ({
     <InfoItem title="settings:title_language" value={getLanguages(language)} />
     <InfoItem title="settings:title_relationship_status" value={RELATIONSHIP_STATUS[relationship]} />
   </InfoSection>
-)
+);
 
-export default BasicInfo
+export default BasicInfo;

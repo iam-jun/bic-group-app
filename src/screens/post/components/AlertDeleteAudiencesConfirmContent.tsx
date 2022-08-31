@@ -20,15 +20,15 @@ const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: a
       key={`alert_assign_group_confirm.item_${index}`}
       style={styles.itemContainer}
     >
-      <Text.BodyM numberOfLines={1}>
+      <Text.ButtonM numberOfLines={1} color={theme.colors.neutral70}>
         {' '}
         •
         {` ${item.name}`}
-      </Text.BodyM>
+      </Text.ButtonM>
     </View>
   );
 
-  const content = canDeleteOwnPost ? i18n.t('post:content_delete_audiences_of_post') : i18n.t('post:content_not_able_delete_of_post')
+  const content = canDeleteOwnPost ? i18n.t('post:content_delete_audiences_of_post') : i18n.t('post:content_not_able_delete_of_post');
 
   if (!data?.length) return null;
   if (data.length > 3 && !showAll) {
@@ -42,18 +42,18 @@ const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: a
               <View
                 style={styles.itemContainer}
               >
-                <Text.BodyMMedium onPress={() => { setShowAll(true) }} color={theme.colors.purple50}>
+                <Text.ButtonM onPress={() => { setShowAll(true); }} color={theme.colors.neutral70}>
                   {' '}
                   •
                   {` +${data.length - 3} ${i18n.t('post:more_group')}`}
-                </Text.BodyMMedium>
+                </Text.ButtonM>
               </View>
             </TouchableOpacity>
           </ScrollView>
         </View>
 
       </View>
-    )
+    );
   }
   return (
     <View style={styles.container}>
@@ -66,11 +66,14 @@ const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: a
         </ScrollView>
       </View>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingTop: spacing.padding.tiny,
+  },
   itemContainer: {
     marginTop: spacing.margin.base,
   },

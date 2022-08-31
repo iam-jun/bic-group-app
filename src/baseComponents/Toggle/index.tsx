@@ -1,7 +1,7 @@
 import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
-} from 'react-native'
-import React, { useState, useEffect } from 'react'
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { borderRadius } from '~/theme/spacing';
 
@@ -9,35 +9,38 @@ interface ToggleProps {
   testID?: string;
   style?: StyleProp<ViewStyle>
   isChecked?: boolean;
+  disableBuiltInState?: boolean;
   disabled?: boolean;
   size?: 'small' | 'medium';
-  onPress?: (isChecked?: boolean) => void;
+  onValueChanged?: (isChecked?: boolean) => void;
 }
 
 const Toggle = ({
   testID,
   style,
   isChecked = false,
+  disableBuiltInState,
   disabled,
   size = 'small',
-  onPress,
+  onValueChanged,
 }: ToggleProps) => {
   const theme = useTheme() as ExtendedTheme;
   const styles = createStyles(theme);
   const { colors } = theme;
 
   const [checked, setChecked] = useState(isChecked);
-  const currentState = disabled ? 'disabled' : (checked ? 'selected' : 'unselect')
+
+  const currentCheckedStatus = disableBuiltInState ? isChecked : checked;
+  const currentState = disabled ? 'disabled' : (currentCheckedStatus ? 'selected' : 'unselect');
 
   useEffect(() => {
     setChecked(isChecked);
   }, [isChecked]);
 
-  const onChangeValue = () => {
-    const newValue = !checked;
-    onPress?.(newValue)
-    setChecked(newValue);
-  }
+  const onPress = () => {
+    setChecked(!checked);
+    onValueChanged?.(!currentCheckedStatus);
+  };
 
   const toggleStyles = {
     // based on prop `state`
@@ -62,7 +65,7 @@ const Toggle = ({
       rectangleHeight: 20,
       circle: 24,
     },
-  }
+  };
 
   const { rectangleColor } = toggleStyles[currentState];
   const { rectangleWidth, rectangleHeight, circle } = toggleStyles[size];
@@ -71,29 +74,27 @@ const Toggle = ({
     width: rectangleWidth,
     height: rectangleHeight,
     backgroundColor: rectangleColor,
-    alignItems: checked || disabled ? 'flex-end' : 'flex-start',
-  }
+    alignItems: currentCheckedStatus || disabled ? 'flex-end' : 'flex-start',
+  };
 
   const circleStyle: StyleProp<ViewStyle> = {
     width: circle,
     height: circle,
-  }
+  };
 
   return (
     <TouchableOpacity
       testID={testID}
       style={[styles.container, style]}
       disabled={!!disabled}
-      onPress={onChangeValue}
+      onPress={onPress}
     >
       <View style={[styles.rectangle, rectangleStyle]}>
         <View style={[styles.circle, circleStyle]} />
       </View>
     </TouchableOpacity>
-  )
-}
-
-export default Toggle
+  );
+};
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -110,4 +111,6 @@ const createStyles = (theme: ExtendedTheme) => {
       borderColor: colors.gray1,
     },
   });
-}
+};
+
+export default Toggle;

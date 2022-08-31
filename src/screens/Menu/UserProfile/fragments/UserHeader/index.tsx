@@ -1,18 +1,18 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
 import { useTheme } from '@react-navigation/native';
 import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
 import WorkInfo from '../../components/WorkInfo';
 
 interface Props {
-fullname: string;
-username: string;
- latestWork?: {
+  fullname: string;
+  username: string;
+  latestWork?: {
     titlePosition: string;
     company: string;
-};
-description?: string;
+  };
+  description?: string;
 }
 
 const UserHeader = ({
@@ -24,21 +24,21 @@ const UserHeader = ({
     <View testID="user_profile" style={styles.headerName}>
       <Text.H4 testID="user_profile.fullname" numberOfLines={1}>{fullname}</Text.H4>
       {!!username && (
-      <Text.BodyS
-        testID="user_profile.username"
-        color={colors.neutral40}
-        style={styles.subtitle}
-      >
-        {`@${username}`}
-      </Text.BodyS>
+        <Text.BodyS
+          testID="user_profile.username"
+          color={colors.neutral40}
+          style={styles.subtitle}
+        >
+          {`@${username}`}
+        </Text.BodyS>
       )}
       <WorkInfo style={styles.subtitle} latestWork={latestWork} />
       {!!description && (
         <Text testID="user_profile.description" style={styles.subtitle}>{description}</Text>
       )}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   headerName: {

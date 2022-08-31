@@ -10,7 +10,7 @@ import { isEmpty } from 'lodash';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TextInputBein from '~/beinComponents/inputs/TextInput';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Toggle from '~/baseComponents/Toggle';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
@@ -253,7 +253,7 @@ const AddWork = () => {
       <Toggle
         isChecked={isWorkHere}
         testID="add_work.currently_work_here"
-        onPress={onToggleCurrentlyWorkHere}
+        onValueChanged={onToggleCurrentlyWorkHere}
       />
     </View>
   );
@@ -312,14 +312,14 @@ const AddWork = () => {
 
   const renderDeleteButton = () => (
     selectedWorkItem && (
-    <Button.Danger
-      testID="add_work.delete"
-      onPress={onDelete}
-      useI18n
-      style={styles.buttonDelete}
-    >
-      settings:text_delete_work
-    </Button.Danger>
+      <Button.Danger
+        testID="add_work.delete"
+        onPress={onDelete}
+        useI18n
+        style={styles.buttonDelete}
+      >
+        settings:text_delete_work
+      </Button.Danger>
     )
   );
 
@@ -335,11 +335,8 @@ const AddWork = () => {
         buttonText={selectedWorkItem ? 'common:text_save' : 'common:text_add'}
         buttonProps={{
           useI18n: true,
-          color: theme.colors.purple50,
-          textColor: theme.colors.white,
           disabled:
             !(companyValue?.trim?.() && positionValue?.trim?.()),
-          borderRadius: spacing.borderRadius.small,
           testID: 'add_work.save',
         }}
         onPressButton={onSave}

@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -8,13 +8,14 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import Button from '~/beinComponents/Button';
-import Icon from '~/beinComponents/Icon';
+import Button from '~/baseComponents/Button';
+import Icon from '~/baseComponents/Icon';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import spacing from '~/theme/spacing';
 
 export interface CommentInputFooterProps {
   useTestID?: boolean;
+  onPressIcon?: () => void;
   onPressFile?: (e: any) => void;
   onPressImage?: (e: any) => void;
   onPressCamera?: (e: any) => void;
@@ -22,10 +23,13 @@ export interface CommentInputFooterProps {
   onPressSend?: (e: any) => void;
   loading?: boolean;
   disabledBtnSend?: boolean;
+  isHideBtnSend?: boolean;
+  isDisplayNone?: boolean;
 }
 
 const CommentInputFooter: FC<CommentInputFooterProps> = ({
   useTestID,
+  onPressIcon,
   onPressFile,
   onPressImage,
   onPressCamera,
@@ -33,8 +37,12 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   onPressSend,
   loading,
   disabledBtnSend,
+  isHideBtnSend,
+  isDisplayNone,
 }: CommentInputFooterProps) => {
   const showMentionValue = useSharedValue(0);
+  const showCommentInputFooter = useSharedValue(0);
+  const transformCommentInputFooter = useSharedValue(0);
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -49,6 +57,19 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
     ),
   }));
 
+  const containerStyle = useAnimatedStyle(() => ({
+    display: isDisplayNone ? 'none' : 'flex',
+    opacity: showCommentInputFooter.value,
+    transform: [
+      { translateX: transformCommentInputFooter.value },
+    ],
+  }));
+
+  useEffect(() => {
+    showCommentInputFooter.value = isDisplayNone ? 0 : withTiming(1);
+    transformCommentInputFooter.value = isDisplayNone ? -20 : withTiming(0);
+  }, [isDisplayNone]);
+
   const onVisibleMentionBar = (isVisible: boolean) => {
     if (isVisible) {
       showMentionValue.value = withTiming(1);
@@ -59,8 +80,18 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
 
   const renderButtons = () => (
     <View style={styles.buttonsContainer}>
-      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        <Button
+      <Button
+        testID={useTestID ? 'comment_input.btn_icon' : undefined}
+        disabled={!onPressIcon}
+        onPress={onPressIcon}
+      >
+        <Icon
+          style={styles.icon}
+          tintColor={colors.gray50}
+          icon="iconReact"
+        />
+      </Button>
+      {/* <Button
           testID={useTestID ? 'comment_input.btn_file' : undefined}
           disabled={!onPressFile}
           onPress={onPressFile}
@@ -70,20 +101,20 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
             tintColor={colors.gray50}
             icon="Paperclip"
           />
-        </Button>
-        <Button
-          testID={useTestID ? 'comment_input.btn_image' : undefined}
-          disabled={!onPressImage}
-          onPress={onPressImage}
-        >
-          <Icon
-            size={18}
-            style={styles.icon}
-            tintColor={colors.gray50}
-            icon="Image"
-          />
-        </Button>
-        <Button
+        </Button> */}
+      <Button
+        testID={useTestID ? 'comment_input.btn_image' : undefined}
+        disabled={!onPressImage}
+        onPress={onPressImage}
+      >
+        <Icon
+          size={18}
+          style={styles.icon}
+          tintColor={colors.gray50}
+          icon="Image"
+        />
+      </Button>
+      {/* <Button
           testID={useTestID ? 'comment_input.btn_camera' : undefined}
           disabled={!onPressCamera}
           onPress={onPressCamera}
@@ -93,36 +124,37 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
             tintColor={colors.gray50}
             icon="Camera"
           />
-        </Button>
-        <Button
-          testID={useTestID ? 'comment_input.btn_emoji' : undefined}
-          disabled={!onPressEmoji}
-          onPress={onPressEmoji}
-        >
-          <Icon
-            style={styles.icon}
-            tintColor={colors.gray50}
-            icon="iconAddGif"
-          />
-        </Button>
-      </View>
-      <Button.Secondary
-        testID={useTestID ? 'comment_input.send' : undefined}
-        onPress={onPressSend}
-        style={styles.buttonSend}
-        rightIcon="iconSendComment"
-        loading={loading}
-        disabled={disabledBtnSend}
-        useI18n
-        highEmphasis
+        </Button> */}
+      <Button
+        testID={useTestID ? 'comment_input.btn_emoji' : undefined}
+        disabled={!onPressEmoji}
+        onPress={onPressEmoji}
       >
-        common:text_send
-      </Button.Secondary>
+        <Icon
+          tintColor={colors.gray50}
+          icon="iconAddGif"
+        />
+      </Button>
+      {
+        !isHideBtnSend && (
+        <>
+          <View style={styles.separator} />
+          <Button.Primary
+            testID={useTestID ? 'comment_input.send' : undefined}
+            type="ghost"
+            onPress={onPressSend}
+            loading={loading}
+            disabled={disabledBtnSend}
+            icon="PaperPlaneTopSolid"
+          />
+        </>
+        )
+      }
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={containerStyle}>
       {renderButtons()}
       <Animated.View
         testID="comment_input_footer.mention_bar_container"
@@ -130,24 +162,20 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
       >
         <MentionBar onVisible={onVisibleMentionBar} style={styles.mentionBar} />
       </Animated.View>
-    </View>
+    </Animated.View>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {
-      borderTopWidth: 1,
-      borderColor: colors.neutral5,
-    },
     buttonsContainer: {
       minHeight: 48,
       flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
       backgroundColor: colors.white,
-      paddingTop: spacing.padding.small,
-      paddingLeft: spacing.padding.large,
-      paddingRight: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
     },
     mentionBar: {
       borderTopWidth: 0,
@@ -157,6 +185,13 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     icon: { marginRight: spacing.margin.large },
     buttonSend: { paddingLeft: spacing.padding.large },
+    separator: {
+      borderLeftWidth: 2,
+      borderLeftColor: colors.neutral5,
+      height: 20,
+      marginLeft: spacing.margin.large,
+      marginRight: 10,
+    },
   });
 };
 

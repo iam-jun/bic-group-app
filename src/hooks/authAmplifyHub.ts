@@ -29,7 +29,7 @@ const useAuthAmplifyHub = () => {
           case 'customOAuthState':
             break;
           default:
-            break
+            break;
         }
       };
       Hub.listen(

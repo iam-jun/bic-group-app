@@ -6,9 +6,10 @@ import initialState from '~/storeRedux/initialState';
 
 describe('CreatePostFooter component', () => {
   const mockStore = configureStore([]);
+  const onPressSetting = jest.fn();
 
   it('renders correctly', async () => {
-    const wrapper = renderWithRedux(<CreatePostFooter />);
+    const wrapper = renderWithRedux(<CreatePostFooter onPressSetting={onPressSetting} />);
 
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
@@ -33,7 +34,7 @@ describe('CreatePostFooter component', () => {
       },
     ] as any;
     const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<CreatePostFooter />, store);
+    const wrapper = renderWithRedux(<CreatePostFooter onPressSetting={onPressSetting} />, store);
     const items = wrapper.getAllByTestId('mention_bar_item');
     expect(items?.length).toBe(2);
   });

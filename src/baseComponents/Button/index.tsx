@@ -14,7 +14,7 @@ import {
 } from './constants';
 import spacing, { borderRadius, padding } from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 export interface ButtonProps extends ButtonWrapperProps {
   variant?: ButtonVariant;
@@ -44,7 +44,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
   const { colors } = theme;
   const makeGetButtonColors = getButtonColors(theme);
   const buttonColors = makeGetButtonColors[variant]?.[type];
-  let buttonState = 'default'
+  let buttonState = 'default';
   if (loading) buttonState = 'loading';
   if (disabled) buttonState = 'disabled';
 
@@ -57,7 +57,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
     height: buttonHeight,
     backgroundColor: buttonColors[buttonState],
     paddingHorizontal: BUTTON_PADDING[size],
-  }
+  };
 
   const renderIcon = () => {
     if (loading || !icon) return null;
@@ -79,7 +79,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
       <ActivityIndicator
         testID="button.loading"
         color={colors.neutral20}
-        style={styles.loading}
+        style={children ? styles.loading : styles.loadingWithNoMargin}
         size={iconSize}
       />
     );
@@ -112,7 +112,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
         )}
       </View>
     </ButtonWrapper>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -131,6 +131,9 @@ const styles = StyleSheet.create({
   },
   loading: {
     marginRight: spacing.margin.small,
+  },
+  loadingWithNoMargin: {
+    marginRight: 0,
   },
   text: {
     textAlign: 'center',

@@ -13,7 +13,7 @@ import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import groupsActions from '~/storeRedux/groups/actions';
 import {
   changeSchemeIdOfGroup,
@@ -129,7 +129,6 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         buttonProps={{
           disabled: disableSave,
           useI18n: true,
-          highEmphasis: true,
           style: { borderWidth: 0 },
           testID: 'group_scheme_assignments.btn_assign',
         }}

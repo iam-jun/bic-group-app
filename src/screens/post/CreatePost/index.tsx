@@ -1,9 +1,8 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -13,7 +12,6 @@ import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import BannerImportant from '~/baseComponents/Banner';
 import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import postActions from '~/storeRedux/post/actions';
 
@@ -22,6 +20,7 @@ import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import { getTotalFileSize } from '../../../storeRedux/post/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
+import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
 
 export interface CreatePostProps {
@@ -114,15 +113,11 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     () => {
     // disable clear data for flow select audience before create post
     // dispatch(postActions.clearCreatPostData());
-    // dispatch(postActions.setSearchResultAudienceGroups([]));
-    // dispatch(postActions.setSearchResultAudienceUsers([]));
       if (screenParams?.initAudience?.id) {
         dispatch(postActions.setCreatePostChosenAudiences(new Array(screenParams?.initAudience)));
       }
       return () => {
         dispatch(postActions.clearCreatPostData());
-        dispatch(postActions.setSearchResultAudienceGroups([]));
-        dispatch(postActions.setSearchResultAudienceUsers([]));
         dispatch(postActions.setCreatePostImagesDraft([]));
 
         // clear comment because of comment input view listen emit event change text
@@ -171,12 +166,15 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     refTextInput.current?.setFocus();
   };
 
+  const now = new Date();
+  const notExpired = now.getTime() < new Date(important?.expires_time).getTime();
+
   return (
     <ScreenWrapper isFullView testID="CreatePostScreen">
       <Header
         titleTextProps={{ useI18n: true }}
         title={isEdit ? 'post:title_edit_post' : 'post:title_create_post'}
-        buttonText={isEdit ? 'common:btn_publish' : 'post:post_button'}
+        buttonText={isEdit ? 'post:save' : 'common:btn_publish'}
         buttonProps={{
           loading,
           disabled: disableButtonPost,
@@ -186,34 +184,19 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         }}
         onPressBack={onPressBack}
         onPressButton={onPressPost}
+        style={styles.headerStyle}
       />
-      <TouchableOpacity
-        style={styles.flex1}
-        onPress={onPressInput}
-        activeOpacity={1}
-      >
+      <View style={styles.flex1}>
         <View>
-          {!!important?.active && <BannerImportant />}
+          {!!important?.active && notExpired && <CreatePostBannerImportant expiresTime={important.expires_time} />}
           <CreatePostChosenAudiences disabled={loading} />
-          <Divider />
+          <Divider color={theme.colors.neutral5} />
         </View>
         <CreatePostContent
           groupIds={groupIds}
           inputRef={refTextInput}
           useCreatePostData={useCreatePostData}
         />
-        <View style={styles.setting}>
-          <Button.Secondary
-            testID="create_post.btn_post_settings"
-            color={colors.gray5}
-            leftIcon="SlidersUp"
-            style={styles.buttonSettings}
-            onPress={onPressSettings}
-            textProps={{ color: colors.neutral80, style: { fontSize: 14 } }}
-          >
-            {t('post:settings') + (count > 0 ? ` (${count})` : '')}
-          </Button.Secondary>
-        </View>
         <CreatePostFooter
           toolbarRef={toolbarRef}
           loading={loading}
@@ -221,8 +204,10 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           imageDisabled={imageDisabled}
           videoDisabled={videoDisabled}
           fileDisabled={fileDisabled}
+          onPressSetting={onPressSettings}
+          isSetting={count > 0}
         />
-      </TouchableOpacity>
+      </View>
     </ScreenWrapper>
   );
 };
@@ -245,6 +230,10 @@ const themeStyles = (theme: ExtendedTheme) => {
     buttonSettings: {
       backgroundColor: colors.gray5,
       borderRadius: spacing.borderRadius.small,
+    },
+    headerStyle: {
+      borderBottomColor: colors.neutral5,
+      borderBottomWidth: 1,
     },
   });
 };

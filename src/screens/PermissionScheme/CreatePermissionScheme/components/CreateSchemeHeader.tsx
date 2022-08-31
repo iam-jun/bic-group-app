@@ -94,7 +94,6 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
         loading: creating,
         disabled: disableButtonCreate,
         useI18n: true,
-        highEmphasis: true,
         style: { borderWidth: 0 },
         testID: 'common.btn_create',
       }}

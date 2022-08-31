@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { communityPrivacyListDetail } from '~/constants/privacyTypes';
 import { ICommunity } from '~/interfaces/ICommunity';
@@ -53,7 +53,7 @@ const CommunityItem = ({
         )}`}
       </Text.BodyS>
     </View>
-  )
+  );
 
   return (
     <PrimaryItem

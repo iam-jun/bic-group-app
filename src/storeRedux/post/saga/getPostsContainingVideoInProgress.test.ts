@@ -88,7 +88,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       total: LIST_POST_CONTAINING_VIDEO_PROCESS_1.length,
     };
 
-    storeData.post.allPostContainingVideoInProgress.data = [{ test: 1 }]
+    storeData.post.allPostContainingVideoInProgress.data = [{ test: 1 }];
 
     // @ts-ignore
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })
@@ -108,7 +108,7 @@ describe('Get Posts Containing Video In Progress Saga', () => {
       total: LIST_POST_CONTAINING_VIDEO_PROCESS_1.length,
     };
 
-    storeData.post.allPostContainingVideoInProgress.data = [{ id: POST_CONTAINING_VIDEO_PROCESS.id }]
+    storeData.post.allPostContainingVideoInProgress.data = [{ id: POST_CONTAINING_VIDEO_PROCESS.id }];
 
     // @ts-ignore
     return expectSaga(getPostsContainingVideoInProgress, { type: 'test' })

@@ -13,7 +13,6 @@ import iconMenuHelp from '../../assets/icons/icon_menu_help.svg';
 import iconMenuInfo from '../../assets/icons/icon_menu_info.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
-import iconSendComment from '../../assets/icons/icon_send_comment.svg';
 import iconCheckboxRestricted from '../../assets/icons/icon_checkbox_retricted.svg';
 
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
@@ -24,6 +23,7 @@ import iconFlagVn from '../../assets/icons/icon_flag_vn.svg';
 import iconFlagSg from '../../assets/icons/icon_flag_sg.svg';
 import iconFlagUs from '../../assets/icons/icon_flag_us.svg';
 import addUsers from '../../assets/icons/add_users.svg';
+import searchUsers from '../../assets/icons/search_users.svg';
 import iconMapPin from '../../assets/icons/ic_map_pin.svg';
 import iconChat from '../../assets/icons/icon_chat.svg';
 import iconPermissionGuide1Android from '../../assets/icons/icon_permission_guide_1_android.svg';
@@ -47,7 +47,6 @@ const icons = {
   ...reactionIcons,
   iconBeinChat,
   iconSearch,
-  iconSendComment,
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
@@ -70,6 +69,7 @@ const icons = {
   iconFlagSg,
   iconFlagUs,
   addUsers,
+  searchUsers,
   iconMapPin,
   iconChat,
   iconPermissionGuide1Android,

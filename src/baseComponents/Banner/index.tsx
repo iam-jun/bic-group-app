@@ -1,9 +1,9 @@
 import {
   StyleProp, StyleSheet, View, ViewStyle,
-} from 'react-native'
-import React from 'react'
-import { ExtendedTheme, useTheme } from '@react-navigation/native'
-import Icon from '~/beinComponents/Icon';
+} from 'react-native';
+import React from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Icon from '~/baseComponents/Icon';
 import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
 
@@ -28,9 +28,9 @@ const BannerImportant = ({ style, markedAsRead }: BannerImportantProps) => {
       backgroundColor: colors.neutral20,
       iconColor: colors.neutral40,
     },
-  }
+  };
 
-  const { textColor, backgroundColor, iconColor } = markedAsRead ? importantStyles.inactive : importantStyles.active
+  const { textColor, backgroundColor, iconColor } = markedAsRead ? importantStyles.inactive : importantStyles.active;
 
   return (
     <View style={[styles.container, { backgroundColor }, style]}>
@@ -43,10 +43,10 @@ const BannerImportant = ({ style, markedAsRead }: BannerImportantProps) => {
         <Text.SubtitleS color={textColor} useI18n>common:text_important</Text.SubtitleS>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default BannerImportant
+export default BannerImportant;
 
 const createStyles = () => StyleSheet.create({
   container: {
@@ -58,4 +58,4 @@ const createStyles = () => StyleSheet.create({
     paddingVertical: spacing.padding.xSmall,
     marginLeft: spacing.margin.small,
   },
-})
+});

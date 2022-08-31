@@ -11,15 +11,16 @@ export default function* approveAllGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: string; callback?: () => void};
+  payload: {groupId: string; total: number; callback?: () => void};
 }) {
-  const { groupId, callback } = payload;
+  const { groupId, total, callback } = payload;
   try {
     yield put(groupsActions.resetGroupMemberRequests());
 
-    yield call(
-      groupApi.approveAllGroupMemberRequests, groupId,
-    );
+    // to show Empty screen component
+    yield put(groupsActions.setGroupMemberRequests({ loading: false }));
+
+    yield call(groupApi.approveAllGroupMemberRequests, groupId);
 
     // to update userCount
     yield put(groupsActions.getGroupDetail({ groupId }));
@@ -28,20 +29,19 @@ export default function* approveAllGroupMemberRequests({
     if (callback) {
       toastProps = {
         textProps: { useI18n: true },
-        type: 'success',
-        rightIcon: 'UserGroup',
-        rightText: 'Members',
+        type: 'informative',
+        rightText: 'Member',
         onPressRight: callback,
       };
     } else {
       toastProps = {
         textProps: { useI18n: true },
-        type: 'success',
+        type: 'informative',
       };
     }
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_approved_all')}`,
+      content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
       props: toastProps,
       toastType: 'normal',
     };

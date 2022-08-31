@@ -1,11 +1,11 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ButtonCommunityGroupCardAction from './ButtonCommunityGroupCardAction';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -13,6 +13,10 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
 import { Avatar, Button } from '~/baseComponents';
 import { formatLargeNumber } from '~/utils/formatData';
+import Tag from '~/baseComponents/Tag';
+import { useBaseHook } from '~/hooks';
+import { isGroup } from '~/screens/groups/helper';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -22,29 +26,68 @@ type CommunityGroupCardProps = {
 const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { colors, elevations } = theme;
 
   const {
-    id, name, icon, userCount, privacy, joinStatus, description,
-  }
-    = item || {};
+    id,
+    name,
+    icon,
+    userCount,
+    privacy,
+    joinStatus,
+    description,
+    level,
+    community,
+  } = item || {};
   const privacyData: any
     = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon, title: privacyTitle } = privacyData || {};
 
+  const getCommunityDetail = (loadingPage = false) => {
+    dispatch(groupsActions.getCommunityDetail({ communityId: community.id, loadingPage, showLoading: true }));
+  };
+
+  const onGoBackFromGroupDetail = () => {
+    dispatch(groupsActions.setCommunityDetail({} as ICommunity));
+    rootNavigation.goBack();
+  };
+
   const onView = () => {
-    rootNavigation.navigate(groupStack.communityDetail, { communityId: id });
+    if (isGroup(level)) {
+      // in group detail we need some infomation from community detail,
+      // so before navigate to group detail we need to fetch community detail
+      // and clear community detail when go back from group detail
+      getCommunityDetail(true);
+      rootNavigation.navigate(groupStack.groupDetail, { groupId: id, onGoBack: onGoBackFromGroupDetail });
+      return;
+    }
+
+    // if a community has community field, then it is in manage api
+    // so need to pick id from community field
+    // otherwise pick id by normal
+    rootNavigation.navigate(groupStack.communityDetail, { communityId: community ? community.id : id });
   };
 
   const onJoin = () => {
+    if (isGroup(level)) {
+      dispatch(groupsActions.joinNewGroup({ groupId: id, groupName: name }));
+      return;
+    }
+
     dispatch(
       groupsActions.joinCommunity({ communityId: id, communityName: name }),
     );
   };
 
   const onCancel = () => {
+    if (isGroup(level)) {
+      dispatch(groupsActions.cancelJoinGroup({ groupId: id, groupName: name }));
+      return;
+    }
+
     dispatch(
       groupsActions.cancelJoinCommunity({
         communityId: id,
@@ -53,15 +96,42 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
     );
   };
 
+  const onViewCommunity = () => {
+    if (community) {
+      const { id } = community;
+      rootNavigation.navigate(groupStack.communityDetail, { communityId: id });
+    }
+  };
+
   return (
     <View testID={testID} style={[styles.container, elevations.e1]}>
-      <Button TouchableComponent={TouchableWithoutFeedback} onPress={onView}>
+      {isGroup(level) && (
+        <Button onPress={onViewCommunity}>
+          <Text.SubtitleS
+            style={styles.textNameCommunityOnGroup}
+            color={colors.blue50}
+            numberOfLines={1}
+          >
+            {community?.name}
+          </Text.SubtitleS>
+        </Button>
+      )}
+      <Button onPress={onView}>
         <View>
           <View style={styles.row}>
             <Avatar.XLarge source={icon} />
             <View style={styles.containerInfo}>
               <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
+              <Tag
+                style={styles.tagContainer}
+                type="secondary"
+                size="small"
+                label={t(
+                  isGroup(level) ? 'common:text_group' : 'common:text_community',
+                )}
+              />
+              <ViewSpacing height={spacing.margin.xSmall} />
               <View style={styles.row}>
                 <View style={[styles.row, styles.privacyView]}>
                   <Icon
@@ -86,8 +156,12 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
               </View>
             </View>
           </View>
-          <ViewSpacing height={10} />
-          <Text.BodyM numberOfLines={2}>{`${description}`}</Text.BodyM>
+          {!!description && (
+            <>
+              <ViewSpacing height={10} />
+              <Text.BodyM numberOfLines={2}>{`${description}`}</Text.BodyM>
+            </>
+          )}
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
@@ -128,6 +202,12 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     textNumberMember: {
       marginRight: spacing.margin.small,
+    },
+    textNameCommunityOnGroup: {
+      marginBottom: spacing.margin.tiny,
+    },
+    tagContainer: {
+      alignSelf: 'baseline',
     },
   });
 };

@@ -3,7 +3,7 @@ import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Icon, { IconProps } from '~/beinComponents/Icon';
+import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 
@@ -47,7 +47,15 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
       testID={testID}
     >
       <View style={[styles.container, style]}>
-        {!!leftIcon && <Icon icon={leftIcon} size={20} tintColor={colors.neutral20} {...leftIconProps} />}
+        {!!leftIcon && (
+        <Icon
+          icon={leftIcon}
+          size={20}
+          tintColor={colors.neutral20}
+          style={styles.leftIcon}
+          {...leftIconProps}
+        />
+        )}
         <Text.ButtonM style={styles.title} color={colors.neutral40} testID="menu_item.title" useI18n>
           {title}
         </Text.ButtonM>
@@ -65,12 +73,14 @@ const themeStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      paddingVertical: spacing.padding.small,
+      paddingVertical: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
       alignItems: 'center',
     },
+    leftIcon: {
+      marginRight: spacing.margin.small,
+    },
     title: {
-      marginLeft: spacing.margin.small,
     },
   });
 };

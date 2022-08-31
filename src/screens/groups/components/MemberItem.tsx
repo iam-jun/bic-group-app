@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
 import { formatDMLink, openUrl } from '~/utils/link';

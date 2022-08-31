@@ -22,6 +22,7 @@ import ConvertHelper from '~/utils/convertHelper';
 import groupsActions from '~/storeRedux/groups/actions';
 import { uuidRegex } from '~/constants/commonRegex';
 import { notificationApiConfig } from '~/api/NotificationApi';
+import resetStore from '~/store/resetStore';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -31,6 +32,7 @@ const commonHeaders = {
 
 const _dispatchLogout = async () => {
   Store.store.dispatch(createAction(ActionTypes.UnauthorizedLogout));
+  resetStore();
 };
 
 const _dispatchSessionExpire = () => {
@@ -355,7 +357,7 @@ const makeRemovePushTokenRequest = async () => {
 const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
   try {
     const response: any = await makeHttpRequest(isEmpty(args) ? fn() : fn(...args));
-    const isSuccess = response?.data?.data || response?.data?.code === API_ERROR_CODE.COMMON.SUCCESS
+    const isSuccess = response?.data?.data || response?.data?.code === API_ERROR_CODE.COMMON.SUCCESS;
     if (isSuccess) {
       return Promise.resolve(response?.data);
     }
@@ -363,7 +365,7 @@ const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
   } catch (e) {
     return Promise.reject(e);
   }
-}
+};
 
 export {
   makeHttpRequest,

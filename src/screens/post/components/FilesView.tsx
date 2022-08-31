@@ -18,7 +18,7 @@ import { IGetFile } from '~/services/fileUploader';
 
 import spacing from '~/theme/spacing';
 import { formatBytes } from '~/utils/formatData';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 
 interface Props extends Partial<UploadingFileProps> {
   files: IGetFile[] | IActivityDataFile[];

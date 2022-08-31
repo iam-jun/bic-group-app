@@ -25,6 +25,7 @@
     "text_copied_to_clipboard": "Copied to clipboard",
     "text_link_copied_to_clipboard": "Link copied to clipboard",
     "text_message_link_copied_to_clipboard": "Message link copied to clipboard",
+    "text_copied": "Copied!",
     "btn_cancel": "Cancel",
     "btn_delete": "Delete",
     "btn_close": "Close",
@@ -41,9 +42,12 @@
     "btn_join": "Join",
     "btn_view": "View",
     "btn_leave": "Leave",
+    "btn_stay_here": "Stay here",
     "btn_stay_on_this_page": "Stay on this page",
     "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
+    "text_static": "Static",
+    "text_animated": "Animated",
     "text_important": "Important",
     "text_clear": "Clear",
     "text_set_time": "Set Time",
@@ -109,7 +113,9 @@
     "text_present": "Present",
     "text_start_date": "Start Date",
     "text_end_date": "End Date",
+    "text_end_hour": "End Hour",
     "text_group": "Group",
+    "text_community": "Community",
     "text_activated": "Activated",
     "text_at": "at",
     "text_to": "to",
@@ -148,7 +154,10 @@
     "text_no_results_found": "No results found",
     "text_more": "+(number) more",
     "beincomm": "Beincomm",
-    "members": "Members"
+    "members": "Members",
+    "text_remove": "Remove",
+    "all": "All",
+    "in": "in"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -394,7 +403,7 @@
     "title_important": "Important",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
-      "clear": "Clear",
+      "clear": "Clear all",
       "choose_creator": "Choose creator",
       "choose_date": "Choose creation date",
       "from": "From",
@@ -404,19 +413,23 @@
       "label_creation_date": "Creation date",
       "label_anyone": "Anyone",
       "label_anytime": "Anytime",
-      "label_recent_search": "Recent Search",
+      "label_recent_search": "Recent searches",
       "text_error_date": "Invalid Date",
       "btn_reset": "Reset",
       "btn_show_results": "Show Results",
       "search_people": "Search people...",
-      "no_recent_search": "No recent search",
+      "no_recent_search": "No recent searches",
       "apply": "Apply",
       "filter": "Filter",
-      "filter_created_by": "Created by",
+      "filter_post_by": "Post By",
       "filter_created_by_all": "All",
       "filter_created_by_me": "Me",
       "filter_created_by_specific": "Specific person",
-      "filter_date": "Date"
+      "filter_date": "Date Post",
+      "seven_days_ago": "7 days ago",
+      "thirty_days_ago": "30 days ago",
+      "three_months_ago": "3 months ago",
+      "from_to": "From - To"
     },
     "notice_post_video_uploading": {
       "title": "Processing video (count)",
@@ -440,8 +453,8 @@
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
-    "title_post_detail_of": "%NAME%'s Post",
-    "title_edit_post": "Edit post",
+    "title_post_detail_of": "{{name}}'s Post",
+    "title_edit_post": "Edit Post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
     "title_seen_by": "Seen by",
@@ -472,11 +485,11 @@
     "label_all_reacts": "All Reacts",
     "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
-    "content_delete_post": "Do you really want to delete this post?",
-    "title_delete_audiences_of_post": "You are deleting audiences of this post",
-    "content_delete_audiences_of_post": "You are not able to delete this post from these audiences below. Are you sure to continue?",
-    "content_not_able_delete_of_post": "You are not able to delete this post from these audiences below.",
-    "text_deleted_audiences": "Your post has been deleted audiences.",
+    "content_delete_post": "Do you want to delete this post?",
+    "title_delete_audiences_of_post": "You Cannot Delete This Post",
+    "content_delete_audiences_of_post": "You can only remove audiences from your post excepting these audiences below. Are you sure do this?",
+    "content_not_able_delete_of_post": "You don't have permission to delete this post because of not allowance from these audiences below.",
+    "text_deleted_audiences": "Your post has been removed audiences.",
     "alert_title_back_edit_post": "Discard changes",
     "alert_content_back_edit_post": "If you discard now, you’ll lose any changes you’ve made to this post.",
     "alert_title_back_create_post": "Discard new post",
@@ -489,10 +502,11 @@
     "create_new_post": "Write your today discoveries...",
     "post_button": "Post",
     "send_to": "Send to",
+    "post_to": "Post to",
     "save": "Save",
     "and": "and",
     "to": "to",
-    "more_group": "more",
+    "more_group": "More",
     "edit_comment_success": "Edited comment successfully",
     "label_replying_to": "Replying to ",
     "label_yourself": "yourself",
@@ -507,10 +521,12 @@
     "audience_selected": "Selected audiences",
     "select_audience": "Select Audiences",
     "expiring_time": "Expiring Time",
-    "expire_time_desc": "This post will stay on top of feed until",
-    "delete_post_complete": "Your post has been deleted",
+    "expire_time_desc": "This post stay on top of feed until expire time.",
+    "delete_post_complete": "Your post has been deleted.",
     "search_results": "Search results",
-    "search_audiences_placeholder": "Search for groups or people",
+    "search_audiences_placeholder": "Search Audience...",
+    "text_chosen_audience": "Chosen audience",
+    "text_select_all_audience": "Select all",
     "group_manage": "Your Groups",
     "people_search": "People",
     "show_all": "Show all",
@@ -530,12 +546,12 @@
     "comment_menu_history": "View Edit History",
     "comment_menu_delete": "Delete Comment",
     "post_menu_edit": "Edit Post",
-    "post_menu_copy": "Copy Post Link",
+    "post_menu_copy": "Copy Link",
     "post_menu_save": "Save Post",
-    "post_menu_view_reactions": "View reactions",
+    "post_menu_view_reactions": "View Reactions",
     "post_menu_turn_off_noti": "Turn off notification for this post",
     "post_menu_history": "View Edit History",
-    "post_menu_delete": "Delete post",
+    "post_menu_delete": "Delete Post",
     "post_menu_edit_settings": "Edit Post Settings",
     "post_menu_report": "Report to group Admin",
     "error_wait_uploading": "Please wait until upload finish",
@@ -558,7 +574,7 @@
     "text_update_post_setting_success": "Post Settings updated",
     "text_update_post_setting_failed": "Post Settings was failed to update",
     "text_comment_from": "This is comment from ",
-    "title_comment_detail_of": "%NAME%'s post",
+    "title_comment_detail_of": "{{name}}'s post",
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",
@@ -683,7 +699,8 @@
       "label_following": "Following",
       "label_pin_group": "Pin this group",
       "label_pin_community": "Pin this community",
-      "label_notifications": "Notifications"
+      "label_notifications": "Notifications",
+      "label_go_back_home": "Go back home"
     },
     "member_menu": {
       "label_view_profile": "View profile",
@@ -730,27 +747,27 @@
     },
     "text_successfully_join_group": "Successfully join group",
     "text_successfully_join_community": "Successfully join community",
-    "text_no_pending_members_notice": "There's no pending members",
-    "text_pending_request_notice_group": "People who request to join your group will show here.",
-    "text_pending_request_notice_community": "People who request to join your community will show here.",
+    "text_no_pending_members_notice": "No new member requests",
+    "text_pending_request_notice_group": "You can add more members",
+    "text_pending_request_notice_community": "You can add more members",
     "text_respond_all_member_requests": {
       "title": {
         "approve": "Approve all member requests?",
         "decline": "Decline all member requests?"
       },
       "content": {
-        "approve_one": "You're about to add {{count}} person to {0}",
-        "approve_other": "You're about to add {{count}} people to {0}",
-        "decline_one": "You're about to decline {{count}} member request",
-        "decline_other": "You're about to decline {{count}} member requests"
+        "text_about_to_add": "You're about to add ",
+        "approve_confirm_community": " people to this community. Confirm this action?",
+        "approve_confirm_group": " people to this group. Confirm this action?",
+        "decline": "Decline all member requests. Confirm this action?"
       }
     },
     "text_requested_at": "Requested at",
-    "text_declining_user": "Declining user",
-    "text_declined_user": "Declined user",
-    "text_approved_user": "Approved user",
-    "text_approved_all": "Approved all joining requests",
-    "text_declining_all": "Declining all joining requests",
+    "text_declined_user": "Declined",
+    "text_approved_user": "Approved",
+    "text_approved_all": "Approved {0} users",
+    "text_declining_all": "Declining {0} users",
+    "text_declined_all": "Declined {0} users",
     "text_request_been_canceled": "This join request has just been canceled",
     "text_request_join_group": "Requested to join group",
     "text_request_join_community": "Requested to join community",
@@ -772,7 +789,8 @@
         "decline": "Do you want to decline **All pending member requests** in order to change the group privacy to Secret now?"
       }
     },
-    "text_in": "in"
+    "text_in": "in",
+    "title_add_members": "Add Members"
   },
   "profile": {
     "title_edit_profile": "Edit Profile",
@@ -929,11 +947,36 @@
       "text_move_to": "Move to",
       "text_title_confirm_reorder_group": "You are changing the order of \"%NAME%\"",
       "text_desc_confirm_reorder_group": "All members in this group will see these changes. Are you sure to do this?",
-      "text_title_confirm_move_group": "You are moving \"%MOVING_NAME%\" to \"%TARGET_NAME%\"",
+      "text_title_confirm_move_group": "You are moving",
       "text_desc_confirm_move_group": " of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
       "text_move_group_search_placeholder": "Search a group"
     },
-    "text_search_communities": "Search Communities"
+    "text_search_communities": "Search Communities",
+    "member_tab_types": {
+      "title_member_list": "Member List",
+      "title_member_requests": "Member Requests"
+    },
+    "join_request_setting": {
+      "title": "The join request setting",
+      "description_on_community": "Members must ask for approval to join community",
+      "description_on_group": "Members must ask for approval to join group",
+      "description_off_community": "Members can join community without asking for approval",
+      "description_off_group": "Members can join group without asking for approval",
+      "pop_up_on": {
+        "title": "You are turning on the join request setting",
+        "content_community": "You have to approve a join request to allow member to join your community. Are you sure to do this?",
+        "content_group": "You have to approve a join request to allow member to join your group. Are you sure to do this?",
+        "confirm": "Turn on"
+      },
+      "pop_up_off": {
+        "title": "You are turning off the join request setting",
+        "content_community": "All members can join your community without asking for approval. Are you sure to do this?",
+        "content_group": "All members can join your group without asking for approval. Are you sure to do this?",
+        "content_with_requests": "All pending requests will be approved automatically after turning off this setting. Are you sure to do this?",
+        "confirm": "Turn off",
+        "approve_all": "Yes, Approve All"
+      }
+    }
   },
   "upload": {
     "text_create_file_id_request_failed": "Cannot request id",
@@ -960,6 +1003,17 @@
   },
   "discover": {
     "discover_communities": "Discover Communities",
-    "your_communities": "Your Communities"
+    "your_communities": "Your Communities",
+    "your_groups": "Your Groups",
+    "managed": "Managed",
+    "owner": "Own",
+    "manage": "Manage",
+    "you_have_not_owner_community": "You have not owner community",
+    "you_have_not_manage_communiy_or_group": "You have not manage communiy or group",
+    "global_search_placeholder": "Search community or group..."
+  },
+  "discard_alert": {
+    "title": "Discard Changes?",
+    "content": "If you discard now, you’ll lose any changes you’ve made."
   }
 }

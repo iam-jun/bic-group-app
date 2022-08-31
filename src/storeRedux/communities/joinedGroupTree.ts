@@ -1,6 +1,6 @@
 import {
   createStore, withFlipper, withImmer, withPersist,
-} from '~/store';
+} from '~/store/utils';
 import groupApi from '~/api/GroupApi';
 import { IGroup } from '~/interfaces/IGroup';
 
@@ -20,14 +20,14 @@ const useJoinedGroupTree = (set) => ({
     groupApi.getCommunityGroups(id, { listBy: 'tree' }).then((response) => {
       set((state) => {
         state.loading = false;
-        state.data[id] = response.data || []
+        state.data[id] = response.data || [];
       }, false, 'getJoinedGroupTree');
     }).catch((error) => {
       console.error('\x1b[35m🐣️ joinedGroupTree error ', error, '\x1b[0m');
       set((state) => {
         state.loading = false;
       }, false, 'getJoinedGroupTree');
-    })
+    });
   },
 });
 
@@ -39,6 +39,6 @@ const useJoinedGroupTreeStore = createStore<JoinedGroupTreeState | any>(
       ),
     ), 'communities-joined-group-tree-store',
   ),
-)
+);
 
 export default useJoinedGroupTreeStore;

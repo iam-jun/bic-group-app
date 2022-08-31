@@ -86,8 +86,9 @@ const Markdown = ({ value, ...rest }) => {
       color: '#386fe5',
     },
     mention: {
-      color: '#386fe5',
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: sizes.bodyM,
+      color: '#7335C0',
     },
     mention_highlight: {
       backgroundColor: '#ffd470',

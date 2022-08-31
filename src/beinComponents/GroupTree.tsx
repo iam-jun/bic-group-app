@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, StyleSheet, ScrollView, StyleProp, ViewStyle,
+  View, StyleSheet, StyleProp, ViewStyle,
 } from 'react-native';
 import { isArray, isObject } from 'lodash';
 
@@ -164,54 +164,12 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     setTreeData(newTreeData);
   };
 
-  /**
-   * Logic:
-   *  - If child uncheck => auto uncheck parent and above
-   */
-  const onCheckedGroupParent = (
-    newTree: TreeData, group: IParsedGroup,
-  ) => {
-    const uiUd = group.parentUiId;
-    if (!newTree[uiUd]) {
-      return;
-    }
-    newTree[uiUd].isChecked = false;
-    onCheckedGroupParent(
-      newTree, newTree[uiUd],
-    );
-  };
-
-  /**
-   * Logic:
-   *  - If group checked => auto check inner group
-   */
-  const onCheckedGroupInner = (
-    newTree: TreeData, group: IParsedGroup,
-  ) => {
-    group?.childrenUiIds?.forEach?.((innerUiId) => {
-      newTree[innerUiId] = treeData[innerUiId];
-      newTree[innerUiId].isChecked = true;
-      onCheckedGroupInner(
-        newTree, treeData[innerUiId],
-      );
-    });
-  };
-
   const onCheckedGroup = (
     group: GroupItemProps, newChecked: boolean,
   ) => {
     const newTreeData = { ...treeData };
     const { uiId } = group;
     newTreeData[uiId].isChecked = newChecked;
-    if (!newChecked) {
-      onCheckedGroupParent(
-        newTreeData, group,
-      );
-    } else {
-      onCheckedGroupInner(
-        newTreeData, group,
-      );
-    }
     if (onChangeCheckedGroups) {
       const callbackData: OnChangeCheckedGroupsData = {};
       Object.values(newTreeData).forEach((g) => {
@@ -276,6 +234,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       onPressMenu={onPressMenu}
       disableOnPressItem={disableOnPressItem}
       disableHorizontal={disableHorizontal}
+      checkboxDisabled={group?.isPostable !== undefined ? !group?.isPostable : undefined}
       iconVariant={iconVariant}
       nameLines={nameLines}
       menuIcon={menuIcon}
@@ -284,19 +243,11 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     setRenderedTree(tree);
   };
 
-  if (disableHorizontal) {
-    return <View style={styles.container}>{renderedTree}</View>;
-  }
-  return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      <View style={styles.container}>{renderedTree}</View>
-    </ScrollView>
-  );
+  return <View style={styles.container}>{renderedTree}</View>;
 };
 
 const createStyle = () => StyleSheet.create({
   container: {
-    minHeight: 51,
   },
 });
 export default GroupTree;

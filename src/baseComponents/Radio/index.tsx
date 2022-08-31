@@ -1,11 +1,11 @@
 import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
-} from 'react-native'
-import React, { useEffect, useState } from 'react'
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IconType } from '~/resources/icons';
 import Text, { TextVariant } from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { spacing } from '~/theme';
 import { borderRadius } from '~/theme/spacing';
 
@@ -35,7 +35,7 @@ const Radio = ({
   const { colors } = theme;
 
   const [checked, setChecked] = useState(isChecked);
-  const currentState = disabled || (checked ? 'selected' : 'unselect')
+  const currentState = disabled || (checked ? 'selected' : 'unselect');
 
   useEffect(() => {
     setChecked(isChecked);
@@ -43,9 +43,9 @@ const Radio = ({
 
   const onChangeValue = () => {
     const newValue = !checked;
-    onPress?.(newValue)
+    onPress?.(newValue);
     setChecked(newValue);
-  }
+  };
 
   const radioStyles = {
     // based on prop `state`
@@ -79,10 +79,10 @@ const Radio = ({
       textVariant: 'labelS' as TextVariant,
       iconSize: 18,
     },
-  }
+  };
 
   const { iconName, iconColor, labelColor } = radioStyles[currentState];
-  const { textVariant, iconSize } = radioStyles[size]
+  const { textVariant, iconSize } = radioStyles[size];
 
   return (
     <TouchableOpacity
@@ -104,10 +104,10 @@ const Radio = ({
         </Text>
       )}
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default Radio
+export default Radio;
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -128,5 +128,5 @@ const createStyles = (theme: ExtendedTheme) => {
       borderRadius: borderRadius.circle,
       backgroundColor: colors.neutral,
     },
-  })
-}
+  });
+};

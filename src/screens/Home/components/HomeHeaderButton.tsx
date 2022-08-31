@@ -5,7 +5,7 @@ import {
 
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import IconChat from '~/beinComponents/IconChat';
 
 export interface HomeHeaderButtonProps {

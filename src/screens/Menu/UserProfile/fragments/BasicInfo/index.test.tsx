@@ -10,7 +10,7 @@ describe('BasicInfo component', () => {
     birthday: '2022-03-07T07:58:05.436Z',
     language: ['en'],
     relationship: '',
-  }
+  };
 
   it('renders correctly', () => {
     const rendered = render(<BasicInfo {...baseProps} />).toJSON();

@@ -8,12 +8,12 @@ import CoverImage from '../../components/CoverImage';
 import { _openImagePicker } from '../../helper';
 
 interface Props {
-    id: string;
-    userId: string;
-    currentUsername: string;
-    bgImg: any;
-    avatar: any;
-    uploadCallback: (fieldName: string) => void;
+  id: string;
+  userId: string;
+  currentUsername: string;
+  bgImg: any;
+  avatar: any;
+  uploadCallback: (fieldName: string) => void;
 }
 
 const CoverHeader = ({
@@ -65,7 +65,7 @@ const CoverHeader = ({
         onEdit={onEditAvatar}
       />
     </View>
-  )
-}
+  );
+};
 
-export default CoverHeader
+export default CoverHeader;

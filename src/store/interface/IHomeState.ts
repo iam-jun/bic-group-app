@@ -17,6 +17,7 @@ interface IHomeState {
   setTabImportant: (data: IHomeTab) => void;
 
   getTabData: (tabId: keyof typeof HOME_TAB_TYPE, isRefresh?: boolean) => void;
+  reset: () => void;
 }
 
-export default IHomeState
+export default IHomeState;

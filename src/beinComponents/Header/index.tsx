@@ -1,4 +1,5 @@
 import React, {
+  ReactElement,
   useImperativeHandle, useRef, useState,
 } from 'react';
 import {
@@ -21,21 +22,20 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
-import Icon, { IconProps } from '~/beinComponents/Icon';
+import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text, { TextProps } from '~/beinComponents/Text';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
-import { ButtonSecondaryProps } from '../Button/ButtonSecondary';
 import IconChat from '../IconChat';
 import spacing from '~/theme/spacing';
-import Button from '~/baseComponents/Button';
+import Button, { ButtonProps } from '~/baseComponents/Button';
 
 export interface HeaderProps {
   headerRef?: any;
   children?: React.ReactNode;
   title?: string;
   titleTextProps?: TextProps;
-  subTitle?: string;
+  subTitle?: string | ReactElement;
   subTitleTextProps?: TextProps;
   leftIcon?: IconType;
   leftIconProps?: Omit<IconProps, 'icon'>;
@@ -45,7 +45,7 @@ export interface HeaderProps {
   onPressIcon?: () => void;
   buttonVariant?: 'Primary' | 'Secondary' | 'Icon';
   buttonText?: string;
-  buttonProps?: ButtonSecondaryProps; // as it contains the ButtonPrimaryProps
+  buttonProps?: ButtonProps;
   onPressButton?: () => void;
   menuIcon?: IconType;
   onPressMenu?: (e: any) => void;
@@ -228,10 +228,11 @@ const Header: React.FC<HeaderProps> = ({
         {
           minHeight: 44,
           paddingTop: disableInsetTop ? undefined : insets.top,
-          overflow: 'hidden',
+          // overflow: 'hidden',
           alignItems: 'flex-end',
           flexDirection: 'row',
           backgroundColor: colors.white,
+          paddingVertical: spacing.padding.tiny,
         },
         removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
         style,
@@ -250,80 +251,79 @@ const Header: React.FC<HeaderProps> = ({
         }}
       >
         {!hideBack && (
-        <Icon
-          testID="header.back"
-          icon="iconBack"
-          onPress={_onPressBack}
-          size={20}
-          hitSlop={{
-            top: 20, bottom: 20, left: 20, right: 20,
-          }}
-          style={styles.iconBack}
-          buttonTestID="header.back.button"
-        />
+          <Icon
+            testID="header.back"
+            icon="iconBack"
+            onPress={_onPressBack}
+            size={20}
+            hitSlop={{
+              top: 20, bottom: 20, left: 20, right: 20,
+            }}
+            style={styles.iconBack}
+            buttonTestID="header.back.button"
+          />
         )}
         {!!leftIcon && (
-        <Icon
-          size={24}
-          style={styles.icon}
-          icon={leftIcon}
-          onPress={onPressHeader}
-          {...leftIconProps}
-          testID="header.leftIcon"
-        />
+          <Icon
+            size={24}
+            style={styles.icon}
+            icon={leftIcon}
+            onPress={onPressHeader}
+            {...leftIconProps}
+            testID="header.leftIcon"
+          />
         )}
         <Animated.View style={[styles.titleContainer, titleAnimated]}>
           {!!title && (
-          <TouchableOpacity
-            onPress={onPressHeader}
-            disabled={!onPressHeader}
-          >
-            <Text.H5
-              style={styles.title}
-              numberOfLines={1}
-              {...titleTextProps}
-              testID="header.text"
+            <TouchableOpacity
+              onPress={onPressHeader}
+              disabled={!onPressHeader}
             >
-              {title}
-            </Text.H5>
-          </TouchableOpacity>
+              <Text.H5
+                style={styles.title}
+                numberOfLines={1}
+                {...titleTextProps}
+                testID="header.text"
+              >
+                {title}
+              </Text.H5>
+            </TouchableOpacity>
           )}
           {!!subTitle && (
-          <TouchableOpacity
-            onPress={onPressHeader}
-            disabled={!onPressHeader}
-          >
-            <Text.BodyS
-              style={styles.subtitle}
-              numberOfLines={1}
-              {...subTitleTextProps}
-              testID="header.subTitle"
+            <TouchableOpacity
+              onPress={onPressHeader}
+              disabled={!onPressHeader}
             >
-              {subTitle}
-            </Text.BodyS>
-          </TouchableOpacity>
+              <Text.BodyS
+                style={styles.subtitle}
+                numberOfLines={1}
+                {...subTitleTextProps}
+                testID="header.subTitle"
+              >
+                {subTitle}
+              </Text.BodyS>
+            </TouchableOpacity>
           )}
         </Animated.View>
         {!!icon && onPressIcon && (
-        <Icon
-          icon={icon}
-          size={24}
-          style={styles.icon}
-          onPress={onPressIcon}
-          backgroundColor={colors.neutral1}
-          testID="header.icon"
-          buttonTestID="header.icon.button"
-        />
+          <Icon
+            testID="header.icon"
+            buttonTestID="header.icon.button"
+            icon={icon}
+            size={20}
+            style={styles.icon}
+            onPress={onPressIcon}
+          />
         )}
         {onSearchText && (
-        <Icon
-          testID={searchIconTestID}
-          icon="search"
-          size={18}
-          style={styles.icon}
-          onPress={_onPressSearch}
-          buttonTestID="header.searchIcon.button"
-        />
+          <Icon
+            icon="search"
+            testID={searchIconTestID}
+            buttonTestID="header.searchIcon.button"
+            size={18}
+            style={styles.icon}
+            onPress={_onPressSearch}
+          />
         )}
         {onPressChat && <IconChat testID="header.icon_chat" onPress={onPressChat} />}
         {onPressMenu && (
@@ -335,25 +335,24 @@ const Header: React.FC<HeaderProps> = ({
         //   testID="header.menuIcon"
         //   buttonTestID="header.menuIcon.button"
         // />
-        <Button.Raise
-          size="small"
-          testID="header.menuIcon.button"
-          icon={menuIcon || 'menu'}
-          onPress={onPressMenu}
-        />
+          <Button.Raise
+            size="small"
+            testID="header.menuIcon.button"
+            icon={menuIcon || 'menu'}
+            onPress={onPressMenu}
+          />
         )}
         {!!buttonText && onPressButton && (
-        <Button.Primary
-          testID="header.button"
-          style={{
-            marginRight: spacing.margin.tiny,
-          }}
-          onPress={_onPressButton}
-          textProps={{ testID: 'header.button.text' }}
-          {...buttonProps}
-        >
-          {buttonText}
-        </Button.Primary>
+          <Button.Primary
+            testID="header.button"
+            style={{
+              marginRight: spacing.margin.tiny,
+            }}
+            onPress={_onPressButton}
+            {...buttonProps}
+          >
+            {buttonText}
+          </Button.Primary>
         )}
         {!!rightIcon && (
           <Button.Raise
@@ -395,7 +394,7 @@ const Header: React.FC<HeaderProps> = ({
         <Animated.View style={[styles.stickyHeader, stickyHeaderStyle]}>{stickyHeaderComponent}</Animated.View>
       )}
     </>
-  )
+  );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
@@ -414,11 +413,9 @@ const createStyle = (theme: ExtendedTheme) => {
       padding: spacing.padding.base,
     },
     icon: {
-      height: 20,
-      width: 20,
+      padding: 4,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 20,
       marginRight: spacing.margin.tiny,
     },
     iconMenu: {
@@ -427,7 +424,7 @@ const createStyle = (theme: ExtendedTheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: spacing.borderRadius.base,
-      marginRight: spacing.margin.tiny,
+      marginRight: spacing.margin.large,
     },
     titleContainer: {
       flex: 1,

@@ -1,57 +1,144 @@
-import { StyleSheet, View, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import SearchInput from '~/beinComponents/inputs/SearchInput';
+import { StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Header from '~/beinComponents/Header';
+import Header, { HeaderProps } from '~/beinComponents/Header';
 
-import SearchMemberView from './components/SearchMemberView';
-import MembersContent from './components/MembersContent';
+import SearchMemberView from './CommunityMemberList/components/SearchMemberView';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
-import spacing from '~/theme/spacing';
+import CommunityMemberList from './CommunityMemberList';
+import Tab from '~/baseComponents/Tab';
+import { MEMBER_TAB_TYPES } from '../constants';
+import { spacing } from '~/theme';
+import { useMyPermissions } from '~/hooks/permissions';
+import CommunityMemberRequests from './CommunityMemberRequests';
+import modalActions from '~/storeRedux/modal/actions';
+import { useKeySelector } from '~/hooks/selector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
+
+export const MEMBER_TABS = [
+  { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
+  { id: MEMBER_TAB_TYPES.MEMBER_REQUESTS, text: 'communities:member_tab_types:title_member_requests' },
+];
 
 const CommunityMembers = ({ route }: any) => {
-  const { communityId } = route.params;
+  const { communityId, targetIndex } = route.params;
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
   const { t } = useBaseHook();
+  const dispatch = useDispatch();
 
+  const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
   const [isOpen, setIsOpen] = useState(false);
+  const { ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
+
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
+  );
+  const canEditJoinSetting = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_JOIN_SETTING,
+  );
+  const canAddMember = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
+  );
 
   const onPressMenu = (item: ICommunityMembers) => {
-    // TODO: ADD PRESS MENU
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const onPressAdd = () => {
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const onPressTab = (item: any, index: number) => {
+    setSelectedIndex(index);
+  };
+
+  const navigateToMemberList = () => {
+    setSelectedIndex(0);
   };
 
   const onPressSearch = () => {
     setIsOpen(true);
   };
 
-  const onCloseModal = React.useCallback(
-    () => {
-      setIsOpen(false);
-    }, [],
-  );
+  const onCloseModal = React.useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const renderContent = () => {
+    if (selectedIndex === 0) {
+      return <CommunityMemberList communityId={communityId} onPressMenu={onPressMenu} />;
+    }
+
+    if (selectedIndex === 1) {
+      return (
+        <CommunityMemberRequests
+          communityId={communityId}
+          canAddMember={canAddMember}
+          canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
+          canEditJoinSetting={canEditJoinSetting}
+          onPressAdd={onPressAdd}
+          navigateToMemberList={navigateToMemberList}
+        />
+      );
+    }
+
+    return null;
+  };
+
+  const showAddButton = () => {
+    if (canAddMember) {
+      // don't show button Add on header when there's button Add Members on Member request screen
+      if (selectedIndex === 1 && ids.length === 0) return false;
+      return true;
+    }
+
+    return false;
+  };
+
+  const headerProps: HeaderProps = showAddButton() && {
+    buttonText: 'common:text_add',
+    onPressButton: onPressAdd,
+    buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
+  };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.white}>
-      <Header titleTextProps={{ useI18n: true }} title="groups:title_members_other" />
-      <View style={styles.searchBar}>
-        <Pressable
-          testID="community_members.search"
-          onPress={onPressSearch}
-          style={styles.searchAndInvite}
-        >
-          <View pointerEvents="none">
-            <SearchInput placeholder={t('groups:text_search_member')} />
-          </View>
-        </Pressable>
-      </View>
+    <ScreenWrapper isFullView backgroundColor={colors.gray5}>
+      <Header
+        titleTextProps={{ useI18n: true }}
+        title="groups:title_members_other"
+        icon="search"
+        onPressIcon={onPressSearch}
+        {...headerProps}
+      />
 
-      <MembersContent communityId={communityId} onPressMenu={onPressMenu} />
+      {(!!canApproveRejectJoiningRequests || !!canEditJoinSetting) && (
+        <View style={styles.tabContainer}>
+          <Tab
+            buttonProps={{ size: 'large', type: 'primary', useI18n: true }}
+            data={MEMBER_TABS}
+            onPressTab={onPressTab}
+            activeIndex={selectedIndex}
+          />
+        </View>
+      )}
+
+      <View style={styles.memberList}>
+        {renderContent()}
+      </View>
 
       <SearchMemberView
         isOpen={isOpen}
@@ -64,22 +151,23 @@ const CommunityMembers = ({ route }: any) => {
   );
 };
 
-export default CommunityMembers;
-
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
-
   return StyleSheet.create({
-    searchBar: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    searchAndInvite: {
-      flex: 1,
+    tabContainer: {
       backgroundColor: colors.white,
-      justifyContent: 'space-between',
-      marginHorizontal: spacing.margin.base,
-      marginVertical: spacing.margin.base,
+      marginTop: spacing.margin.large,
+    },
+    memberList: {
+      flex: 1,
+      marginTop: spacing.margin.large,
+      backgroundColor: colors.gray5,
+    },
+    addButton: {
+      marginLeft: spacing.margin.base,
+      marginRight: spacing.margin.small,
     },
   });
 };
+
+export default CommunityMembers;

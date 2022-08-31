@@ -1,4 +1,4 @@
-import i18next from 'i18next'
+import i18next from 'i18next';
 import modalActions from '~/storeRedux/modal/actions';
 
 export const getHeaderMenu = (type: 'community' | 'group',
@@ -28,21 +28,21 @@ export const getHeaderMenu = (type: 'community' | 'group',
   {
     id: 2,
     testID: 'header_menu.copy_link',
-    leftIcon: 'Copy',
+    leftIcon: 'LinkHorizontal',
     title: i18next.t('groups:group_menu:label_copy_group_link'),
     onPress: !!onPressCopyLink ? onPressCopyLink : onPressNewFeature,
   },
   {
     id: 3,
     testID: `header_menu.share_${type}`,
-    leftIcon: 'ShareNodes',
+    leftIcon: 'Share',
     title: i18next.t('groups:group_menu:label_share_group'),
     onPress: !!onPressShare ? onPressShare : onPressNewFeature,
   },
   {
     id: 4,
     testID: 'header_menu.following',
-    leftIcon: 'iconAddSquareDone',
+    leftIcon: 'RSS',
     title: i18next.t('groups:group_menu:label_following'),
     onPress: !!onPressFollowing ? onPressFollowing : onPressNewFeature,
   },
@@ -55,9 +55,9 @@ export const getHeaderMenu = (type: 'community' | 'group',
   },
   {
     id: 6,
-    testID: 'header_menu.notifications',
-    leftIcon: 'Bell',
-    title: i18next.t('groups:group_menu:label_notifications'),
+    testID: 'header_menu.go_back_home',
+    leftIcon: 'House',
+    title: i18next.t('groups:group_menu:label_go_back_home'),
     onPress: !!onPressNotification ? onPressNotification : onPressNewFeature,
   },
   {
@@ -69,7 +69,7 @@ export const getHeaderMenu = (type: 'community' | 'group',
     requireCanSetting: false,
     onPress: !!onPressLeave ? onPressLeave : onPressNewFeature,
   },
-  ]
+  ];
   const result = [];
   defaultData.forEach((item: any) => {
     if ((item?.requireCanSetting && canSetting)
@@ -77,7 +77,7 @@ export const getHeaderMenu = (type: 'community' | 'group',
      || (!item?.requireCanSetting && !item?.requireIsMember)) {
       result.push({ ...item });
     }
-  })
+  });
 
   return result;
-}
+};

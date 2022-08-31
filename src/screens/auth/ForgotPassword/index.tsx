@@ -12,7 +12,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import Text from '~/beinComponents/Text';
@@ -38,20 +38,16 @@ const ForgotPassword = () => {
 
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
-  const styles = themeStyles(
-    theme, isPhone,
-  );
+  const styles = themeStyles(theme, isPhone);
 
   const { forgotPasswordStage, forgotPasswordError } = useAuth();
   const { errBox }: IForgotPasswordError = forgotPasswordError || {};
 
   const useFormData = useForm();
 
-  useEffect(
-    () => {
-      dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
-    }, [],
-  );
+  useEffect(() => {
+    dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
+  }, []);
 
   const imgMaxWidth = 500;
   const imgPadding = 67;
@@ -126,9 +122,7 @@ const ForgotPassword = () => {
   );
 };
 
-const themeStyles = (
-  theme: ExtendedTheme, isPhone: boolean,
-) => {
+const themeStyles = (theme: ExtendedTheme, isPhone: boolean) => {
   const insets = useSafeAreaInsets();
   const { colors } = theme;
   return StyleSheet.create({

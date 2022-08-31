@@ -79,7 +79,7 @@ describe('GroupInfoView component', () => {
       canEditPrivacy: true,
     };
 
-    const rendered = renderWithRedux(<GroupInfoView {...props} type="community" />, store)
+    const rendered = renderWithRedux(<GroupInfoView {...props} type="community" />, store);
     const component = rendered.getByTestId('info_view.privacy');
 
     fireEvent.press(component);

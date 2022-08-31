@@ -1,10 +1,10 @@
 import {
   StyleProp, StyleSheet, TouchableOpacity, ViewStyle, View,
-} from 'react-native'
-import React, { useEffect, useState } from 'react'
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text, { TextVariant } from '~/beinComponents/Text';
 import { IconType } from '~/resources/icons';
 import { spacing } from '~/theme';
@@ -47,9 +47,9 @@ const Checkbox = ({
 
   const onChangeValue = () => {
     const newValue = !checked;
-    onPress?.(newValue)
+    onPress?.(newValue);
     setChecked(newValue);
-  }
+  };
 
   const checkBoxStyles = {
     // based on prop `state`
@@ -88,10 +88,10 @@ const Checkbox = ({
       textVariant: 'labelS' as TextVariant,
       iconSize: 18,
     },
-  }
+  };
 
   const { iconName, iconColor, labelColor } = checkBoxStyles[currentState];
-  const { textVariant, iconSize } = checkBoxStyles[size]
+  const { textVariant, iconSize } = checkBoxStyles[size];
 
   return (
     <TouchableOpacity
@@ -100,9 +100,10 @@ const Checkbox = ({
       disabled={!!disabled || !!indeterminate}
       onPress={onChangeValue}
     >
-      <View style={styles.backgroundView} />
-      <Icon icon={iconName} size={iconSize} tintColor={iconColor} />
-      {!!label && (
+      <View>
+        <View style={[styles.backgroundView, disabled && styles.backgroundViewDisabled]} />
+        <Icon icon={iconName} size={iconSize} tintColor={iconColor} />
+        {!!label && (
         <Text
           style={styles.labelText}
           variant={textVariant}
@@ -111,12 +112,13 @@ const Checkbox = ({
         >
           {label}
         </Text>
-      )}
+        )}
+      </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default Checkbox
+export default Checkbox;
 
 const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -136,5 +138,8 @@ const createStyles = (theme: ExtendedTheme) => {
       bottom: 2,
       backgroundColor: colors.neutral,
     },
-  })
-}
+    backgroundViewDisabled: {
+      backgroundColor: colors.gray5,
+    },
+  });
+};

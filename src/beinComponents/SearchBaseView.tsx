@@ -1,16 +1,18 @@
 import {
-  StyleSheet, View, TextInput, StyleProp, ViewStyle,
+  StyleSheet, View, StyleProp, ViewStyle,
 } from 'react-native';
 import React, { useImperativeHandle, useRef, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Icon from './Icon';
+import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
+import Icon from '../baseComponents/Icon';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
+import { SearchInput } from '~/baseComponents/Input';
 
-interface SearchBaseViewProps {
+export interface SearchBaseViewProps {
   style?: StyleProp<ViewStyle>;
   isOpen: boolean;
   children?: React.ReactNode;
@@ -21,6 +23,7 @@ interface SearchBaseViewProps {
   onFocus?: () => void;
   onSubmitEditing?: () => void;
   searchViewRef?: any;
+  headerContainerStyle?: StyleProp<ViewStyle>;
 }
 
 function SearchBaseView({
@@ -34,6 +37,7 @@ function SearchBaseView({
   onFocus,
   onSubmitEditing,
   searchViewRef,
+  headerContainerStyle,
 }: SearchBaseViewProps) {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -53,16 +57,16 @@ function SearchBaseView({
   };
 
   const focus = () => textInputRef.current?.focus?.();
-  const blur = () => textInputRef.current?.blur?.()
+  const blur = () => textInputRef.current?.blur?.();
 
   useImperativeHandle(searchViewRef, () => ({
     setSearchText,
     focus,
     blur,
-  }))
+  }));
 
   const renderHeader = () => (
-    <View style={styles.headerContainer}>
+    <View style={[styles.headerContainer, headerContainerStyle]}>
       <View style={styles.inputIconContainer}>
         <Icon
           icon="iconBack"
@@ -74,9 +78,9 @@ function SearchBaseView({
           style={styles.iconBack}
           buttonTestID="search_base_view.back_button"
         />
-        <TextInput
-          ref={textInputRef}
+        <SearchInput
           autoFocus
+          inputRef={textInputRef}
           testID="search_base_view.text_input"
           style={styles.textInput}
           value={searchText}
@@ -88,26 +92,18 @@ function SearchBaseView({
           onFocus={onFocus}
           onSubmitEditing={onSubmitEditing}
         />
-        {!!searchText && (
-        <Icon
-          style={styles.iconClose}
-          icon="iconClose"
-          size={20}
-          tintColor={theme.colors.neutral80}
-          onPress={() => _onChangeText('')}
-          buttonTestID="search_base_view.reset_button"
-        />
-        )}
       </View>
     </View>
   );
 
-  return isOpen ? (
-    <View style={[styles.container, style]}>
+  if (!isOpen) return null;
+
+  return (
+    <Animated.View style={[styles.container, style]} entering={FadeInUp} exiting={FadeOutDown}>
       {renderHeader()}
       {children}
-    </View>
-  ) : null;
+    </Animated.View>
+  );
 }
 
 const createStyles = (theme: ExtendedTheme) => {
@@ -129,13 +125,14 @@ const createStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       backgroundColor: colors.white,
       ...elevations.e1,
+      borderBottomColor: colors.gray1,
+      borderBottomWidth: 1,
+      paddingHorizontal: spacing.padding.base,
     },
     iconBack: {
-      height: 48,
-      width: 48,
       justifyContent: 'center',
       alignItems: 'center',
-      padding: spacing.padding.base,
+      padding: spacing.padding.small,
     },
     textInput: {
       flex: 1,
@@ -143,7 +140,6 @@ const createStyles = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
       color: colors.neutral80,
-      marginHorizontal: spacing.margin.base,
     },
     inputIconContainer: {
       height: dimension.headerHeight,
@@ -152,8 +148,6 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       overflow: 'hidden',
       alignItems: 'center',
-      paddingRight: spacing.padding.small,
-      paddingLeft: spacing.padding.small,
     },
     iconClose: {
       marginRight: spacing.margin.large,

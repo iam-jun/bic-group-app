@@ -39,8 +39,6 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     important, currentSettings, canReact, canComment,
   } = useKeySelector(postKeySelector.createPost.all);
 
-  const [selectingDate, setSelectingDate] = useState<boolean>();
-  const [selectingTime, setSelectingTime] = useState<boolean>();
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [sImportant, setImportant] = useState<IActivityImportant>({
@@ -133,11 +131,9 @@ export const usePostSettings = (params?: IUsePostSettings) => {
 
   const handleToggleCanReact = () => {
     setCanReact(!sCanReact);
-  }
+  };
 
   const handleChangeDatePicker = (date?: Date) => {
-    setSelectingDate(false);
-    setSelectingTime(false);
     if (date) {
       const newImportant = { ...sImportant };
       let expiresTime = '';
@@ -159,8 +155,6 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   };
 
   const handleChangeTimePicker = (time?: Date) => {
-    setSelectingDate(false);
-    setSelectingTime(false);
     if (time) {
       const newImportant = { ...sImportant };
       const date = sImportant.expires_time
@@ -228,9 +222,10 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       handlePutUpdateSettings();
       return 'putUpdateSettings';
     }
+    const notExpired = new Date().getTime() < new Date(sImportant?.expires_time).getTime();
 
     const dataDefault = [
-      !!sImportant.active,
+      !!notExpired,
       !sCanComment,
       !sCanReact,
     ];
@@ -265,8 +260,6 @@ export const usePostSettings = (params?: IUsePostSettings) => {
 
   return {
     sImportant,
-    selectingDate,
-    selectingTime,
     disableButtonSave,
     showWarning,
     sCanComment,
@@ -278,8 +271,6 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     handleChangeDatePicker,
     handleChangeTimePicker,
     handlePutUpdateSettings,
-    setSelectingDate,
-    setSelectingTime,
     getMinDate,
     getMaxDate,
   };

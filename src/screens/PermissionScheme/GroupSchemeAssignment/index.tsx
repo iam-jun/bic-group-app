@@ -142,7 +142,6 @@ const GroupSchemeAssignment = () => {
           loading: loadingAssigning,
           disabled: disableAssign,
           useI18n: true,
-          highEmphasis: true,
           style: { borderWidth: 0 },
           testID: 'group_scheme_assignments.btn_assign',
         }}

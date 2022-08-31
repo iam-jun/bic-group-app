@@ -167,9 +167,6 @@ const EditBasicInfo = () => {
         buttonText="common:text_save"
         buttonProps={{
           useI18n: true,
-          color: theme.colors.purple50,
-          textColor: theme.colors.white,
-          borderRadius: spacing.borderRadius.small,
           disabled: !isValid,
           testID: 'edit_basic_info.save',
         }}
@@ -188,8 +185,8 @@ const EditBasicInfo = () => {
           onChangeText={onChangeName}
           error={error}
           helperText={
-          error ? t('profile:text_name_must_not_be_empty') : undefined
-        }
+            error ? t('profile:text_name_must_not_be_empty') : undefined
+          }
           maxLength={100}
         />
         <TitleComponent icon="SquareUser" title="settings:title_gender" />

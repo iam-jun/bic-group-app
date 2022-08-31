@@ -10,7 +10,7 @@ import { EdgeInsets } from 'react-native-safe-area-context/src/SafeArea.types';
 import Animated, {
   Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming,
 } from 'react-native-reanimated';
-import SvgIcon from '~/beinComponents/Icon/SvgIcon';
+import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 
 import BicHomeLogo from '../../../../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';
@@ -30,13 +30,13 @@ export interface HomeHeaderProps {
 const HEADER_TAB = [
   { id: HOME_TAB_TYPE.NEWSFEED, text: 'home:title_timeline' },
   { id: HOME_TAB_TYPE.IMPORTANT, text: 'home:title_important' },
-]
+];
 
 const HomeHeader: FC<HomeHeaderProps> = ({
   style, yShared, onPressSearch, onPressChat,
 }: HomeHeaderProps) => {
-  const _yShared = yShared || useSharedValue(0)
-  const showShared = useSharedValue(1)
+  const _yShared = yShared || useSharedValue(0);
+  const showShared = useSharedValue(1);
 
   const insets: EdgeInsets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
@@ -49,14 +49,14 @@ const HomeHeader: FC<HomeHeaderProps> = ({
       [0, homeHeaderLogoHeight],
       [homeHeaderLogoHeight, 0],
       Extrapolation.CLAMP),
-  }))
+  }));
 
   const containerAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{
       translateY:
         interpolate(showShared.value, [0, 1], [-100, 0]),
     }],
-  }))
+  }));
 
   const show = (duration = 200) => {
     showShared.value = withTiming(
@@ -74,7 +74,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({
     () => {
       const listener = DeviceEventEmitter.addListener(
         'showHeader', (isShow) => {
-          if (!isShow) { hide() } else { show() }
+          if (!isShow) { hide(); } else { show(); }
         },
       );
 
@@ -85,8 +85,8 @@ const HomeHeader: FC<HomeHeaderProps> = ({
   );
 
   const onPressTab = (item: any) => {
-    setActiveTab(item.id)
-  }
+    setActiveTab(item.id);
+  };
 
   return (
     <View style={style}>

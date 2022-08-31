@@ -1,8 +1,8 @@
 import { Linking } from 'react-native';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useUserIdAuth } from '~/hooks/auth';
 import { linkingConfig, linkingConfigFull } from '~/router/config';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const getLinkingCustomConfig = (
   config: any, navigation: any,
@@ -18,7 +18,7 @@ const getLinkingCustomConfig = (
 
         if (params?.length === 1) {
           navigation?.navigate?.(
-            homeStack.postDetail, { post_id: data },
+            mainStack.postDetail, { post_id: data },
           );
         } else if (params?.length > 1 && navigation) {
           const newParams = params[1]
@@ -39,7 +39,7 @@ const getLinkingCustomConfig = (
             );
 
           navigation?.navigate?.(
-            homeStack.commentDetail, {
+            mainStack.commentDetail, {
               ...newParams,
               postId: params[0],
             },
@@ -47,6 +47,15 @@ const getLinkingCustomConfig = (
         } else {
           listener(url);
         }
+      } else if (url.includes('bein:///communities/')) {
+        const communityId = url?.replace(
+          'bein:///communities/', '',
+        );
+        navigation?.navigate?.(
+          mainStack.communityDetail, {
+            communityId,
+          },
+        );
       } else {
         listener(url);
       }

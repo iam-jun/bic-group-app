@@ -5,7 +5,6 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Reaction from '~/baseComponents/Reaction';
-import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 
 import { blacklistReactions, ReactionType } from '~/constants/reactions';
@@ -13,6 +12,7 @@ import { IOwnReaction, IReactionCounts } from '~/interfaces/IPost';
 import commonActions, { IAction } from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
+import Icon from '../baseComponents/Icon';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
@@ -38,9 +38,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const onActionReaction = (
-    reactionId: ReactionType, action: IAction,
-  ) => {
+  const onActionReaction = (reactionId: ReactionType, action: IAction) => {
     if (action === commonActions.selectEmoji) {
       onAddReaction?.(reactionId);
     } else {
@@ -70,69 +68,60 @@ const ReactionView: FC<ReactionViewProps> = ({
     Object.values(reactionsCount || {})?.forEach((reaction: any) => {
       const key = Object.keys(reaction || {})?.[0];
       if (key) {
-        reactionMap.set(
-          key, reaction?.[key],
-        );
+        reactionMap.set(key, reaction?.[key]);
       }
     });
 
     const rendered: React.ReactNode[] = [];
 
-    reactionMap.forEach((
-      value, key,
-    ) => {
+    reactionMap.forEach((value, key) => {
       const react = key as ReactionType;
       if (!blacklistReactions?.[react] && reactionMap.get(key) > 0) {
-        rendered.push(<Reaction
-          testId={`reaction.button.${key}`}
-          key={`${key}`}
-          style={styles.reactionItem}
-          value={reactionMap.get(key)}
-          icon={key}
-          disableUpdateState
-          onLongPress={() => _onLongPressItem(react)}
-          loading={_ownReactions?.[react]?.loading}
-          selected={!!_ownReactions?.[react]?.id}
-          onActionPress={(action) => onActionReaction(
-            react, action,
-          )}
-        />);
+        rendered.push(
+          <Reaction
+            testId={`reaction.button.${key}`}
+            key={`${key}`}
+            style={styles.reactionItem}
+            value={reactionMap.get(key)}
+            icon={key}
+            disableUpdateState
+            onLongPress={() => _onLongPressItem(react)}
+            loading={_ownReactions?.[react]?.loading}
+            selected={!!_ownReactions?.[react]?.id}
+            onActionPress={(action) => onActionReaction(react, action)}
+          />,
+        );
       }
-    })
+    });
 
     return rendered;
   };
 
   const renderedReactions = renderReactions();
 
-  if (renderedReactions.length === 0) {
-    return (
-      <View style={styles.containerButtonOnly}>
-        {!!onPressSelectReaction && showSelectReactionWhenEmpty && (
-          <Button
-            style={styles.buttonReact}
-            onPress={onPressSelectReaction}
-            testID="reaction_view.react"
-          >
-            <Icon size={16} icon="iconReact" />
-          </Button>
-        )}
-      </View>
-    );
-  }
   return (
-    <View style={[styles.container, style]} testID="reaction_view">
+
+    <View
+      style={[
+        styles.container,
+        renderedReactions.length > 0 ? styles.withPadding : null,
+        style,
+      ]}
+      testID="reaction_view"
+    >
       {renderReactions()}
-      {!!onPressSelectReaction
-          && renderedReactions.length < appConfig.limitReactionCount && (
-            <Button
-              style={[styles.buttonReact, styles.marginHorizontal6]}
-              onPress={onPressSelectReaction}
-            >
-              <Icon size={16} icon="iconReact" testID="reaction_view.react" />
-            </Button>
+      {!!onPressSelectReaction && showSelectReactionWhenEmpty
+        && renderedReactions.length < appConfig.limitReactionCount && (
+        <Button
+          style={styles.buttonReact}
+          onPress={onPressSelectReaction}
+          testID="reaction_view.react"
+        >
+          <Icon size={16} icon="iconReact" />
+        </Button>
       )}
     </View>
+
   );
 };
 
@@ -148,6 +137,8 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
+    },
+    withPadding: {
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
     },

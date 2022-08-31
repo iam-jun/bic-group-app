@@ -50,7 +50,7 @@ export interface NewsfeedListProps {
 }
 
 const AnimatedFlashList = Animated.createAnimatedComponent<
-  React.ComponentType<FlashListProps<any>>
+React.ComponentType<FlashListProps<any>>
 >(FlashList as any);
 
 const screenHeight = Dimensions.get('window').height;
@@ -134,15 +134,15 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     // this callback run on UI thread, so i have to use runOnJs for function handler and shared value
     // but flash list v1.1.0 has problem, when update state data, scroll stop working
     // so for now, i used normal function onScroll, maybe refactor in the future
-    onScrollY?.(e?.nativeEvent?.contentOffset?.y)
+    onScrollY?.(e?.nativeEvent?.contentOffset?.y);
     handleScrollY(e?.nativeEvent?.contentOffset?.y);
   };
 
   useEffect(() => {
     setTimeout(() => {
       listRef?.current?.scrollToOffset?.({ animated: false, offset: 0 });
-    }, 200)
-  }, [activeTab])
+    }, 200);
+  }, [activeTab]);
 
   useFocusEffect(React.useCallback(
     () => () => {
@@ -213,8 +213,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   const onPressDiscover = () => {
-    rootNavigation.navigate(menuStack.discover)
-  }
+    rootNavigation.navigate(menuStack.discover);
+  };
 
   const renderItem = ({ item }: any) => (
     <PostView
@@ -249,7 +249,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
               : 'post:newsfeed:text_empty_cant_load_more'}
           </Text.BodyM>
         </View>
-      )
+      );
     }
     return (
       <View style={styles.listFooter}>
@@ -258,7 +258,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           color={theme.colors.gray20}
         />
       </View>
-    )
+    );
   };
 
   const renderEmpty = () => {
@@ -270,7 +270,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
             color={theme.colors.gray20}
           />
         </View>
-      )
+      );
     }
     return (
       <View style={styles.emptyContainer}>
@@ -284,8 +284,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           {t('menu:title_discover')}
         </Button.Primary>
       </View>
-    )
-  }
+    );
+  };
 
   const renderListEmpty = () => (
     <FlatList
@@ -302,7 +302,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       )}
       ListEmptyComponent={renderEmpty}
     />
-  )
+  );
 
   return (
     <View testID="newsfeed_list" style={styles.container}>
@@ -313,6 +313,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           testID="newsfeed_list.list"
           // @ts-ignore
           data={data}
+          // bounces={false}
           renderItem={renderItem}
           keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
           estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
@@ -326,7 +327,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
               refreshing={!!refreshing}
               onRefresh={() => onRefresh?.()}
             />
-        )}
+          )}
           showsHorizontalScrollIndicator={false}
           onRefresh={onRefresh}
           onEndReached={_onEndReached}
@@ -353,6 +354,7 @@ const NewsfeedListHeader = ({ HeaderComponent }: any) => {
     <View style={styles.headerContainer}>
       {!!HeaderComponent && HeaderComponent}
       <NoticePanel />
+      <View style={styles.headerDivider} />
     </View>
   );
 };
@@ -364,6 +366,14 @@ const createStyle = (
   return StyleSheet.create({
     container: {
       flex: 1,
+    },
+    headerDivider: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: spacing.margin.large,
+      backgroundColor: colors.gray5,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,
@@ -386,7 +396,7 @@ const createStyle = (
       backgroundColor: colors.neutral1,
     },
     headerContainer: {
-      height: insets.top + dimension.homeHeaderHeight,
+      height: insets.top + dimension.homeHeaderHeight + spacing.margin.large,
       backgroundColor: colors.neutral,
       width: '100%',
     },

@@ -57,7 +57,7 @@ describe('GroupMembers component', () => {
     const state = { ...initialState };
     state.auth.user = { username: 'username' };
     // @ts-ignore
-    state.groups.myPermissions = { data: { groups: {} } }
+    state.groups.myPermissions = { data: { groups: {} } };
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
     const inviteBtn = wrapper.queryByTestId('group_members.invite');
     expect(inviteBtn).toBeNull();

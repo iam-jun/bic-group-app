@@ -8,6 +8,8 @@ exports[`ReactionView component renders correctly 1`] = `
         "flex": 1,
         "flexDirection": "row",
         "flexWrap": "wrap",
+      },
+      Object {
         "paddingBottom": 8,
         "paddingTop": 8,
       },
@@ -37,28 +39,21 @@ exports[`ReactionView component renders correctly 1`] = `
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.grinning"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -72,7 +67,7 @@ exports[`ReactionView component renders correctly 1`] = `
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -80,8 +75,27 @@ exports[`ReactionView component renders correctly 1`] = `
       >
         😀
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -104,28 +118,21 @@ exports[`ReactionView component renders correctly 1`] = `
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.grinning_face_with_star_eyes"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -139,7 +146,7 @@ exports[`ReactionView component renders correctly 1`] = `
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -147,8 +154,27 @@ exports[`ReactionView component renders correctly 1`] = `
       >
         🤩
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -171,28 +197,21 @@ exports[`ReactionView component renders correctly 1`] = `
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.kissing_smiling_eyes"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -206,7 +225,7 @@ exports[`ReactionView component renders correctly 1`] = `
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -214,8 +233,27 @@ exports[`ReactionView component renders correctly 1`] = `
       >
         😙
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -238,28 +276,21 @@ exports[`ReactionView component renders correctly 1`] = `
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.sweat_smile"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -273,7 +304,7 @@ exports[`ReactionView component renders correctly 1`] = `
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -281,8 +312,27 @@ exports[`ReactionView component renders correctly 1`] = `
       >
         😅
       </Text>
-       2
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         2
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -302,13 +352,13 @@ exports[`ReactionView component renders correctly 1`] = `
         "borderRadius": 4,
         "borderWidth": 1,
         "justifyContent": "center",
-        "marginHorizontal": 6,
         "marginVertical": 2,
         "opacity": 1,
         "paddingHorizontal": 4,
         "paddingVertical": 4,
       }
     }
+    testID="reaction_view.react"
   >
     <View
       style={
@@ -376,9 +426,7 @@ exports[`ReactionView component renders correctly 1`] = `
               ]
             }
           >
-            <View
-              testID="reaction_view.react"
-            />
+            <View />
           </View>
         </View>
       </View>
@@ -395,6 +443,8 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         "flex": 1,
         "flexDirection": "row",
         "flexWrap": "wrap",
+      },
+      Object {
         "paddingBottom": 8,
         "paddingTop": 8,
       },
@@ -424,28 +474,21 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.grinning"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -459,7 +502,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -467,8 +510,27 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       >
         😀
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -491,28 +553,21 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.grinning_face_with_star_eyes"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -526,7 +581,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -534,8 +589,27 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       >
         🤩
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -558,28 +632,21 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.kissing_smiling_eyes"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -593,7 +660,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -601,8 +668,27 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       >
         😙
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -625,28 +711,21 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.sweat_smile"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -660,7 +739,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -668,8 +747,27 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       >
         😅
       </Text>
-       2
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         2
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -689,13 +787,13 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         "borderRadius": 4,
         "borderWidth": 1,
         "justifyContent": "center",
-        "marginHorizontal": 6,
         "marginVertical": 2,
         "opacity": 1,
         "paddingHorizontal": 4,
         "paddingVertical": 4,
       }
     }
+    testID="reaction_view.react"
   >
     <View
       style={
@@ -763,9 +861,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
               ]
             }
           >
-            <View
-              testID="reaction_view.react"
-            />
+            <View />
           </View>
         </View>
       </View>
@@ -777,12 +873,17 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
 exports[`ReactionView component renders correctly with props Reactions Order empty  1`] = `
 <View
   style={
-    Object {
-      "alignItems": "flex-start",
-      "flex": 1,
-      "paddingTop": 8,
-    }
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      },
+      null,
+      Object {},
+    ]
   }
+  testID="reaction_view"
 >
   <View
     accessible={true}
@@ -888,24 +989,34 @@ exports[`ReactionView component renders correctly with props Reactions Order emp
 exports[`ReactionView component renders correctly with props showSelectReactionWhenEmpty = false  1`] = `
 <View
   style={
-    Object {
-      "alignItems": "flex-start",
-      "flex": 1,
-      "paddingTop": 8,
-    }
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      },
+      null,
+      Object {},
+    ]
   }
+  testID="reaction_view"
 />
 `;
 
 exports[`ReactionView component renders correctly with props showSelectReactionWhenEmpty 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "flex-start",
-      "flex": 1,
-      "paddingTop": 8,
-    }
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      },
+      null,
+      Object {},
+    ]
   }
+  testID="reaction_view"
 >
   <View
     accessible={true}
@@ -1016,6 +1127,8 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         "flex": 1,
         "flexDirection": "row",
         "flexWrap": "wrap",
+      },
+      Object {
         "paddingBottom": 8,
         "paddingTop": 8,
       },
@@ -1047,28 +1160,21 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.grinning"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -1082,7 +1188,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -1090,8 +1196,27 @@ exports[`ReactionView component renders correctly with props style 1`] = `
       >
         😀
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -1114,28 +1239,21 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.grinning_face_with_star_eyes"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -1149,7 +1267,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -1157,8 +1275,27 @@ exports[`ReactionView component renders correctly with props style 1`] = `
       >
         🤩
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -1181,28 +1318,21 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.kissing_smiling_eyes"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -1216,7 +1346,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -1224,8 +1354,27 @@ exports[`ReactionView component renders correctly with props style 1`] = `
       >
         😙
       </Text>
-       1
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         1
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -1248,28 +1397,21 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         "flexDirection": "row",
         "height": 28,
         "justifyContent": "center",
-        "marginRight": 4,
+        "marginBottom": 4,
+        "marginHorizontal": 4,
         "opacity": 1,
         "paddingHorizontal": 6,
       }
     }
     testID="reaction.button.sweat_smile"
   >
-    <Text
+    <View
       style={
-        Array [
-          Object {
-            "color": "#353E6E",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          Object {
-            "marginBottom": 2,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
       testID="reaction.children"
     >
@@ -1283,7 +1425,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
             },
             Object {},
             Object {
-              "fontSize": 13,
+              "fontSize": 14,
             },
           ]
         }
@@ -1291,8 +1433,27 @@ exports[`ReactionView component renders correctly with props style 1`] = `
       >
         😅
       </Text>
-       2
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            Object {
+              "marginLeft": 4,
+            },
+          ]
+        }
+        testID="reaction.children.text"
+      >
+         2
+      </Text>
+    </View>
   </View>
   <View
     accessible={true}
@@ -1312,13 +1473,13 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         "borderRadius": 4,
         "borderWidth": 1,
         "justifyContent": "center",
-        "marginHorizontal": 6,
         "marginVertical": 2,
         "opacity": 1,
         "paddingHorizontal": 4,
         "paddingVertical": 4,
       }
     }
+    testID="reaction_view.react"
   >
     <View
       style={
@@ -1386,9 +1547,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
               ]
             }
           >
-            <View
-              testID="reaction_view.react"
-            />
+            <View />
           </View>
         </View>
       </View>

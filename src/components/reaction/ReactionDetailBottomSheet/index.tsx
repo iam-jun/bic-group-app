@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, {
+  useRef, useState, useEffect, useCallback,
+} from 'react';
 import { Dimensions, View } from 'react-native';
 
 import { useDispatch } from 'react-redux';
@@ -12,7 +14,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import modalKeySelector from '~/storeRedux/modal/keySelector';
 
 const screenHeight = Dimensions.get('window').height;
-const contentBarHeight = 0.6 * screenHeight;
+const modalHeight = 0.5 * screenHeight;
 
 const ReactionDetailBottomSheet = () => {
   const reactionSheetRef: any = useRef();
@@ -23,7 +25,7 @@ const ReactionDetailBottomSheet = () => {
 
   const data = useKeySelector(modalKeySelector.reactionDetailBottomSheet);
   const {
-    isOpen, reactionCounts, initReaction, getDataPromise, getDataParam,
+    isOpen, reactionCounts, initReaction, getDataParam,
   } = data || {};
 
   useEffect(
@@ -45,7 +47,7 @@ const ReactionDetailBottomSheet = () => {
     }
   };
 
-  const onPressItem = (item: any) => {
+  const onPressItem = useCallback((item: any) => {
     const itemUserId = item?.item?.id;
     if (itemUserId) {
       rootNavigation.navigate(
@@ -62,26 +64,25 @@ const ReactionDetailBottomSheet = () => {
       );
     }
     reactionSheetRef?.current?.close?.();
-  };
+  }, [selectingReaction, initReaction]);
 
   return (
     <BottomSheet
       modalizeRef={reactionSheetRef}
       isOpen={isOpen}
       onClose={_onClose}
+      childrenStyle={{ height: modalHeight }}
       ContentComponent={(
         <View>
           <ReactionTabBar
             reactionCounts={reactionCounts}
-            onChangeTab={onChangeTab}
             initReaction={initReaction}
+            onChangeTab={onChangeTab}
           />
           <ReactionDetailTab
             reactionType={selectingReaction || initReaction}
-            height={contentBarHeight}
-            onPressItem={onPressItem}
-            getDataPromise={getDataPromise}
             getDataParam={getDataParam}
+            onPressItem={onPressItem}
           />
         </View>
       )}

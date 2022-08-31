@@ -3,6 +3,6 @@ const authStacks = {
   signUp: 'sign-up',
   forgotPassword: 'forgot-password',
   landing: 'landing',
-}
+};
 
-export default authStacks
+export default authStacks;

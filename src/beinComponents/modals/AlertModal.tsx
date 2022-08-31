@@ -15,7 +15,7 @@ import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import Text from '~/beinComponents/Text';
 import * as actions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
-import Icon from '../Icon';
+import Icon from '../../baseComponents/Icon';
 import TextInput from '../inputs/TextInput';
 import { useKeySelector } from '~/hooks/selector';
 import { Button } from '~/baseComponents';
@@ -106,9 +106,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
       {HeaderImageComponent || null}
       <View style={[styles.header, headerStyle || {}]}>
         {!!title && (
-        <Text.H4 style={{ flex: 1 }} {...titleProps}>
-          {title}
-        </Text.H4>
+          <Text.H4 style={{ flex: 1 }} {...titleProps}>
+            {title}
+          </Text.H4>
         )}
         <View style={styles.closeButton}>
           <Icon
@@ -120,7 +120,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
         </View>
       </View>
     </>
-  )
+  );
 
   const renderContent = () => (
     <>
@@ -138,37 +138,37 @@ const AlertModal: React.FC<AlertModalProps> = ({
         />
       )}
     </>
-  )
+  );
 
   const renderFooter = () => (
     <View style={[styles.footerContainer, buttonViewStyle || {}]}>
       {!!cancelBtn && (
-      <CancelBtn
-        testID="alert_modal.cancel"
-        type="ghost"
-        style={{ marginEnd: spacing?.margin.large, minWidth: 64 }}
-        onPress={_onCancel}
-        {...cancelBtnProps}
-      >
-        {_cancelLabel}
-      </CancelBtn>
+        <CancelBtn
+          testID="alert_modal.cancel"
+          type="ghost"
+          style={{ marginEnd: spacing?.margin.large, minWidth: 64 }}
+          onPress={_onCancel}
+          {...cancelBtnProps}
+        >
+          {_cancelLabel}
+        </CancelBtn>
       )}
       {!!visible && !!onConfirm && (
-      <ConfirmBtn
-        testID="alert_modal.confirm"
-        disabled={input && !text}
-        style={{ minWidth: 64 }}
-        onPress={() => {
-          dispatch(actions.hideAlert());
-          onConfirm(text);
-        }}
-        {...confirmBtnProps}
-      >
-        {confirmLabel || t('common:btn_confirm')}
-      </ConfirmBtn>
+        <ConfirmBtn
+          testID="alert_modal.confirm"
+          disabled={input && !text}
+          style={{ minWidth: 64 }}
+          onPress={() => {
+            dispatch(actions.hideAlert());
+            onConfirm(text);
+          }}
+          {...confirmBtnProps}
+        >
+          {confirmLabel || t('common:btn_confirm')}
+        </ConfirmBtn>
       )}
     </View>
-  )
+  );
 
   return (
     <Animated.View style={[styles.root, optionsStyle]}>
@@ -195,7 +195,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
-  const { width } = useWindowDimensions()
+  const { width } = useWindowDimensions();
 
   return StyleSheet.create({
     root: {
@@ -231,7 +231,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center',
+      // alignItems: 'center',
       borderBottomWidth: 1,
       borderColor: colors.neutral5,
       paddingVertical: spacing.padding.base,

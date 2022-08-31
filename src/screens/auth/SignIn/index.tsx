@@ -59,7 +59,7 @@ const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 24 * 2);
 const SignIn = () => {
   useAuthAmplifyHub();
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation()
+  const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
   const { loading, signingInError } = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
@@ -147,8 +147,9 @@ const SignIn = () => {
               {
                 duration: 200,
               },
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              () => {},
+              () => {
+                //
+              },
             );
           }
         },
@@ -160,8 +161,9 @@ const SignIn = () => {
             {
               duration: 200,
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            () => {},
+            () => {
+              //
+            },
           );
         },
       );
@@ -191,6 +193,9 @@ const SignIn = () => {
   );
 
   const checkAuthSessions = async () => {
+    const email = getValues('email');
+    if (!!email) return;
+
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
@@ -357,7 +362,7 @@ const SignIn = () => {
                 style={styles.inputEmailContainer}
                 inputStyle={styles.input}
                 helperContent={signingInError}
-                editable={!authSessions || !loading}
+                editable={!authSessions && !loading}
                 onSubmitEditing={onSubmitEmail}
                 placeholderTextColor={theme.colors.gray40}
                 textColor={theme.colors.white}

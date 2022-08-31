@@ -11,7 +11,7 @@ describe('PillTabButton', () => {
       </PillTabButton>,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
-  })
+  });
 
   it('renders selected button with type secondary and size large correctly', () => {
     const rendered = renderWithRedux(
@@ -20,7 +20,7 @@ describe('PillTabButton', () => {
       </PillTabButton>,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
-  })
+  });
 
   it('renders selected button with type secondary and size small correctly', () => {
     const rendered = renderWithRedux(
@@ -29,7 +29,7 @@ describe('PillTabButton', () => {
       </PillTabButton>,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
-  })
+  });
 
   it('renders unselected button with size medium correctly', () => {
     const rendered = renderWithRedux(
@@ -38,5 +38,5 @@ describe('PillTabButton', () => {
       </PillTabButton>,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
-  })
-})
+  });
+});

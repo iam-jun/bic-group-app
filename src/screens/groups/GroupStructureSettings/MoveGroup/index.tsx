@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
+import { isEqual } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
@@ -68,6 +69,21 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     }
   };
 
+  const renderAlertTitle = () => (
+    <Text.H4 style={{ flex: 1 }}>
+      {t('communities:group_structure:text_title_confirm_move_group')}
+      <Text.H4 style={styles.highlightText}>
+        {` ${initGroup?.name || ''} `}
+      </Text.H4>
+      <Text.H4>
+        {t('common:text_to')}
+      </Text.H4>
+      <Text.H4 style={styles.highlightText}>
+        {` ${selecting?.name || ''}`}
+      </Text.H4>
+    </Text.H4>
+  );
+
   const renderAlertContent = (number: number) => {
     const content = t(
       'communities:group_structure:text_desc_confirm_move_group',
@@ -76,11 +92,11 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       .replaceAll('%TARGET_NAME%', selecting?.name);
     return (
       <Text.BodyM style={styles.alertContent}>
-        <Text.BodyMMedium>{`${number || userCount || 0} ${t('groups:text_members_other')}`}</Text.BodyMMedium>
+        <Text.BodyMMedium>{`${number || 0} ${t('groups:text_members_other')}`}</Text.BodyMMedium>
         {content}
       </Text.BodyM>
-    )
-  }
+    );
+  };
 
   const setLoadingButton = (loading: boolean) => {
     dispatch(groupsActions.setGroupStructureMove({
@@ -89,7 +105,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       targetGroups,
       movingGroup,
     }));
-  }
+  };
 
   const onPressSave = async () => {
     setErrorMessage('');
@@ -99,11 +115,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       getMemberWillMove(communityId, { groupId, targetId: selecting.id }).then((moveMemberCount:number) => {
         setLoadingButton(false);
         dispatch(groupsActions.setGroupStructureMoveSelecting(currentSelecting));
-        const title = t(
-          'communities:group_structure:text_title_confirm_move_group',
-        )
-          .replaceAll('%MOVING_NAME%', initGroup?.name)
-          .replaceAll('%TARGET_NAME%', selecting?.name);
+        const title = renderAlertTitle();
         dispatch(
           modalActions.showAlert({
             title,
@@ -134,6 +146,12 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     }
   };
 
+  const onPressItem = (item: any) => {
+    if (!isEqual(item, selecting)) {
+      setErrorMessage('');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -142,9 +160,8 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
         buttonText="common:btn_save"
         buttonProps={{
           loading,
-          disabled: !selecting,
+          disabled: !selecting || !!errorMessage,
           useI18n: true,
-          highEmphasis: true,
           style: { borderWidth: 0 },
           testID: 'move_group.btn_save',
         }}
@@ -158,6 +175,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
           groupId={groupId}
           targets={targetGroups}
           selecting={selecting}
+          onPressItem={onPressItem}
         />
       </ScrollView>
     </View>
@@ -180,6 +198,9 @@ const createStyle = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.big,
+    },
+    highlightText: {
+      color: colors.purple50,
     },
   });
 };

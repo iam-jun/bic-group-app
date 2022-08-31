@@ -5,7 +5,7 @@ import i18next from 'i18next';
 
 import { IconType } from '~/resources/icons';
 
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import spacing from '~/theme/spacing';
@@ -54,12 +54,12 @@ const SettingItem = ({
           ) : null
         }
         RightComponent={(
-            !!privacyIcon && (
-              <ButtonWrapper testID="edit_user_info.setting_item.right_component">
-                <Icon icon={privacyIcon} />
-                <Icon icon="AngleDown" style={styles.rightIcon} />
-              </ButtonWrapper>
-            )
+          !!privacyIcon && (
+            <ButtonWrapper testID="edit_user_info.setting_item.right_component">
+              <Icon icon={privacyIcon} />
+              <Icon icon="AngleDown" style={styles.rightIcon} />
+            </ButtonWrapper>
+          )
         )}
       />
     </TouchableOpacity>

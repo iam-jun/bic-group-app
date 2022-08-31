@@ -11,7 +11,7 @@ import {
   BUTTON_PADDING, BUTTON_SIZES, ICON_SIZES, TEXT_SIZES,
 } from '~/baseComponents/Button/constants';
 import ButtonWrapper, { ButtonWrapperProps } from '~/baseComponents/Button/ButtonWrapper';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import spacing, { borderRadius } from '~/theme/spacing';
 
 export interface ButtonRaiseProps extends ButtonWrapperProps{
@@ -41,14 +41,14 @@ const ButtonRaise: FC<ButtonRaiseProps> = ({
   const textVariant = TEXT_SIZES[size];
   const buttonHeight = BUTTON_SIZES[size];
   const iconSize = ICON_SIZES[size];
-  const _color = color || theme.colors.neutral70
-  const _backgroundColor = backgroundColor || theme.colors.neutral
+  const _color = color || theme.colors.neutral70;
+  const _backgroundColor = backgroundColor || theme.colors.neutral;
 
   const buttonStyle = {
     height: buttonHeight,
     backgroundColor: _backgroundColor,
     paddingHorizontal: BUTTON_PADDING[size],
-  }
+  };
 
   const renderIcon = () => {
     if (!icon) return null;

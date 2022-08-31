@@ -17,7 +17,7 @@ import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { bottomTabIcons, bottomTabIconsFocused } from '~/router/config';
 import { useBaseHook } from '~/hooks';
@@ -42,8 +42,8 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     theme, insets,
   );
 
-  const notiUnseen = useKeySelector('notifications.unseenNumber')
-  const tabBadge = { notification: notiUnseen }
+  const notiUnseen = useKeySelector('notifications.unseenNumber');
+  const tabBadge = { notification: notiUnseen };
 
   const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;
 

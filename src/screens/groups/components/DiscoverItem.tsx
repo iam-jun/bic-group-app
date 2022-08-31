@@ -6,7 +6,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ButtonDiscoverItemAction from './ButtonDiscoverItemAction';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
@@ -26,7 +26,7 @@ const InfoHeader = ({
   infoDetail, isMember, insideCommunityName, onPressGroupTree,
 }: InfoHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
-  const { t } = useBaseHook()
+  const { t } = useBaseHook();
   const styles = themeStyles(theme);
 
   const {
@@ -51,13 +51,13 @@ const InfoHeader = ({
 
   const renderCommunityText = () => (
     !!insideCommunityName && (
-    <View style={styles.communityText}>
-      <Text.SubtitleXS color={theme.colors.blue50} numberOfLines={1}>
-        {insideCommunityName}
-      </Text.SubtitleXS>
-    </View>
+      <View style={styles.communityText}>
+        <Text.SubtitleXS color={theme.colors.blue50} numberOfLines={1}>
+          {insideCommunityName}
+        </Text.SubtitleXS>
+      </View>
     )
-  )
+  );
 
   const renderInfoHeader = () => (
     <View style={styles.infoContainer}>
@@ -91,17 +91,17 @@ const InfoHeader = ({
             </Text.BodyS>
           </View>
           {isMember && (
-          <Button.Secondary
-            useI18n
-            color={theme.colors.blue2}
-            textColor={theme.colors.blue50}
-            borderRadius={spacing.borderRadius.base}
-            textVariant="buttonS"
-            testID="page_content.your_groups_btn"
-            onPress={onPressGroupTree}
-          >
-            groups:group_content:btn_group_tree
-          </Button.Secondary>
+            <Button.Secondary
+              useI18n
+              color={theme.colors.blue2}
+              textColor={theme.colors.blue50}
+              borderRadius={spacing.borderRadius.base}
+              textVariant="buttonS"
+              testID="page_content.your_groups_btn"
+              onPress={onPressGroupTree}
+            >
+              groups:group_content:btn_group_tree
+            </Button.Secondary>
           )}
         </View>
       </View>

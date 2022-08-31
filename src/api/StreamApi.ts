@@ -32,7 +32,7 @@ const defaultConfig = {
   provider,
   method: 'get' as Method,
   useRetry: true,
-}
+};
 
 export const streamApiConfig = {
   getGiphyAPIKey: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
@@ -192,14 +192,6 @@ export const streamApiConfig = {
   }),
 
   // todo move to group
-  getSearchAudiences: (key: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${apiProviders.bein.url}post-audiences`,
-    provider: apiProviders.bein,
-    params: {
-      key,
-    },
-  }),
   getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${apiProviders.bein.url}/post-audiences/groups`,
@@ -354,13 +346,12 @@ const streamApi = {
     if (!params?.postId) {
       return Promise.reject(new Error('Post Id not found'));
     }
-    return withHttpRequestPromise(streamApiConfig.getCommentsByPostId, params)
+    return withHttpRequestPromise(streamApiConfig.getCommentsByPostId, params);
   },
   postNewComment: (params: IRequestPostComment) => withHttpRequestPromise(streamApiConfig.postNewComment, params),
   postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(streamApiConfig.postReplyComment, params),
   putMarkAsRead: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkAsRead, postId),
   putMarkSeenPost: (postId: string) => withHttpRequestPromise(streamApiConfig.putMarkSeenPost, postId),
-  getSearchAudiences: (key: string) => withHttpRequestPromise(streamApiConfig.getSearchAudiences, key),
   getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
     streamApiConfig.getSearchMentionAudiences, params,
   ),
@@ -391,7 +382,7 @@ const streamApi = {
       withComment: true,
       ...params,
     };
-    return withHttpRequestPromise(streamApiConfig.getPostDetail, requestParams)
+    return withHttpRequestPromise(streamApiConfig.getPostDetail, requestParams);
   },
   getDraftPosts: async (param: IParamGetDraftPosts) => {
     try {

@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
 import { IObject } from '~/interfaces/common';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/beinComponents/Text';
@@ -27,11 +27,8 @@ export interface GroupItemProps extends IParsedGroup {
   testID?: string;
   uiLevel: number;
   isCollapsing: boolean;
-  onPressItem?: (item: GroupItemProps) => void;
-  onToggleItem?: (item: GroupItemProps) => void;
-  onPressMenu?: (item: GroupItemProps) => void;
-  onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
+  checkboxDisabled?: boolean;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
   showPrivacyAvatar?: boolean;
@@ -40,6 +37,11 @@ export interface GroupItemProps extends IParsedGroup {
   iconVariant?: AvatarType;
   nameLines?: number;
   menuIcon?: IconType;
+
+  onPressItem?: (item: GroupItemProps) => void;
+  onToggleItem?: (item: GroupItemProps) => void;
+  onPressMenu?: (item: GroupItemProps) => void;
+  onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   renderExtraInfo?: (group: IGroup) => any;
 }
 
@@ -60,11 +62,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     hide = false,
     uiLevel = -1,
     isCollapsing = false,
-    onPressItem,
-    onToggleItem,
-    onPressMenu,
-    onCheckedItem,
     disableOnPressItem,
+    checkboxDisabled,
     privacy,
     showPrivacy = false,
     showPrivacyName = true,
@@ -74,6 +73,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     iconVariant = 'base',
     nameLines = 2,
     menuIcon = 'menu',
+    onPressItem,
+    onToggleItem,
+    onPressMenu,
+    onCheckedItem,
     renderExtraInfo,
   } = props;
 
@@ -181,59 +184,31 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             <View>
               <Avatar variant={iconVariant} source={icon} />
               {!!showPrivacyAvatar && (
-              <View style={styles.privacyAvatar}>
-                <Icon
-                  icon={privacyIcon}
-                  size={14}
-                  tintColor={theme.colors.gray50}
-                />
-              </View>
+                <View style={styles.privacyAvatar}>
+                  <Icon
+                    icon={privacyIcon}
+                    size={14}
+                    tintColor={theme.colors.gray50}
+                  />
+                </View>
               )}
             </View>
-            {onCheckedItem && (
-              <Checkbox
-                testID="group_item.check_box"
-                style={styles.checkbox}
-                isChecked={isChecked}
-                onPress={_onCheckedItem}
-              />
-            )}
           </View>
           <View style={styles.textContainer}>
-            <Text.H5
-              style={
-                disableHorizontal ? styles.textName : styles.textNameHorizontal
-              }
-              numberOfLines={nameLines}
-            >
+            <Text.H5 style={styles.textName} numberOfLines={nameLines}>
               {name}
             </Text.H5>
-            {showInfo && (
-              <View style={styles.row}>
-                {showPrivacy && (
-                  <>
-                    <Icon
-                      style={styles.iconSmall}
-                      icon={privacyIcon}
-                      size={16}
-                      tintColor={theme.colors.gray50}
-                    />
-                    {showPrivacyName && (
-                      <Text.BodyS style={styles.privacyTitle} useI18n>
-                        {privacyTitle}
-                      </Text.BodyS>
-                    )}
-                    <Text.BodyS> ⬩ </Text.BodyS>
-                  </>
-                )}
-                <Icon icon="UserGroup" size={16} tintColor={colors.gray50} />
-                <Text.BodyS color={colors.gray50} style={styles.textInfo}>
-                  {userCount}
-                </Text.BodyS>
-              </View>
-            )}
             {_renderExtraInfo?.()}
           </View>
+          {onCheckedItem && (
+            <Checkbox
+              testID="group_item.check_box"
+              style={styles.checkbox}
+              isChecked={isChecked}
+              disabled={checkboxDisabled ? 'disabled' : undefined}
+              onPress={_onCheckedItem}
+            />
+          )}
           {!!onPressMenu && (
             <View style={styles.btnMenu}>
               <Icon
@@ -265,10 +240,6 @@ const themeStyles = (theme: IObject<any>) => {
     textName: {
       width: '100%',
       justifyContent: 'center',
-    },
-    textNameHorizontal: {
-      maxWidth: 200,
-      paddingTop: 2,
     },
     textInfo: {
       marginHorizontal: spacing.margin.tiny,
@@ -302,7 +273,7 @@ const themeStyles = (theme: IObject<any>) => {
       width: dimension?.avatarSizes.medium,
       height: dimension?.avatarSizes.medium,
     },
-    checkbox: { position: 'absolute', bottom: -3, right: -6 },
+    checkbox: { },
     iconSmall: {
       height: 16,
     },

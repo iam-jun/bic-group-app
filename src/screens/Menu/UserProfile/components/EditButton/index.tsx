@@ -2,16 +2,16 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import { useUserIdAuth } from '~/hooks/auth';
 import { spacing } from '~/theme';
 
 interface Props {
-    style?: StyleProp<ViewStyle>;
-    testID?: string;
-    userId: string;
-    currentUsername: string;
-    onPress?: () => void;
+  style?: StyleProp<ViewStyle>;
+  testID?: string;
+  userId: string;
+  currentUsername: string;
+  onPress?: () => void;
 }
 
 const EditButton = ({
@@ -34,8 +34,8 @@ const EditButton = ({
     >
       <Icon size={16} tintColor={theme.colors.purple60} icon="Camera" />
     </ButtonWrapper>
-  )
-}
+  );
+};
 
 const themeStyles = (
   theme: ExtendedTheme,
@@ -55,4 +55,4 @@ const themeStyles = (
   });
 };
 
-export default EditButton
+export default EditButton;

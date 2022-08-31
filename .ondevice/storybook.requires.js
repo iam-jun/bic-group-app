@@ -38,6 +38,7 @@ const getStories = () => {
     require("../src/baseComponents/Checkbox/index.stories.tsx"),
     require("../src/baseComponents/Input/DateInput/index.stories.tsx"),
     require("../src/baseComponents/Input/PasswordInput/index.stories.tsx"),
+    require("../src/baseComponents/Input/SearchInput/index.stories.tsx"),
     require("../src/baseComponents/Input/TextArea/index.stories.tsx"),
     require("../src/baseComponents/Input/TextInput/index.stories.tsx"),
     require("../src/baseComponents/Radio/index.stories.tsx"),

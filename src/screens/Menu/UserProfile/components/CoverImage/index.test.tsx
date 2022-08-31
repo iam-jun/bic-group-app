@@ -17,7 +17,7 @@ describe('CoverImage screen', () => {
     bgImg: null,
     coverHeight: 120,
     onEdit: jest.fn(),
-  }
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -37,5 +37,5 @@ describe('CoverImage screen', () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<CoverImage {...baseProps} />, store);
     expect(wrapper).toMatchSnapshot();
-  })
+  });
 });

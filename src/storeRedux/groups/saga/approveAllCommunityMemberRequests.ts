@@ -11,15 +11,16 @@ export default function* approveAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; callback?: () => void};
+  payload: {communityId: string; total: number; callback?: () => void};
 }) {
-  const { communityId, callback } = payload;
+  const { communityId, total, callback } = payload;
   try {
     yield put(groupsActions.resetCommunityMemberRequests());
 
-    yield call(
-      groupApi.approveAllCommunityMemberRequests, communityId,
-    );
+    // to show Empty screen component
+    yield put(groupsActions.setCommunityMemberRequests({ loading: false }));
+
+    yield call(groupApi.approveAllCommunityMemberRequests, communityId);
 
     // to update userCount
     yield put(groupsActions.getCommunityDetail({ communityId }));
@@ -28,20 +29,19 @@ export default function* approveAllCommunityMemberRequests({
     if (callback) {
       toastProps = {
         textProps: { useI18n: true },
-        type: 'success',
-        rightIcon: 'UserGroup',
-        rightText: 'Members',
+        type: 'informative',
+        rightText: 'Member',
         onPressRight: callback,
       };
     } else {
       toastProps = {
         textProps: { useI18n: true },
-        type: 'success',
+        type: 'informative',
       };
     }
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_approved_all')}`,
+      content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
       props: toastProps,
       toastType: 'normal',
     };
@@ -49,8 +49,6 @@ export default function* approveAllCommunityMemberRequests({
   } catch (err: any) {
     console.error('approveAllCommunityMemberRequest: ', err);
 
-    yield call(
-      showError, err,
-    );
+    yield call(showError, err);
   }
 }

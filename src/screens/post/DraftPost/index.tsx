@@ -62,12 +62,12 @@ const DraftPost = () => {
   const renderFooter = () => (
     <View>
       {canLoadMore && !refreshing && (
-      <View testID="draft_post.load_more_view" style={styles.listFooter}>
-        <ActivityIndicator color={theme.colors.gray20} />
-      </View>
+        <View testID="draft_post.load_more_view" style={styles.listFooter}>
+          <ActivityIndicator color={theme.colors.gray20} />
+        </View>
       )}
       {!refreshing && !canLoadMore && (
-      <ViewSpacing height={spacing.margin.large} />
+        <ViewSpacing height={spacing.margin.large} />
       )}
     </View>
   );

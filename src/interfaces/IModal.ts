@@ -5,7 +5,7 @@ import { IReactionCounts } from '~/interfaces/IPost';
 import { ButtonSecondaryProps } from '~/beinComponents/Button/ButtonSecondary';
 
 export interface IShowAlert {
-  title?: string;
+  title?: string | any;
   content?: string;
   input?: boolean;
   inputProps?: TextInputProps;
@@ -26,6 +26,5 @@ export interface IPayloadReactionDetailBottomSheet {
   isOpen: boolean;
   reactionCounts: IReactionCounts;
   initReaction: ReactionType;
-  getDataPromise?: any;
   getDataParam?: any;
 }

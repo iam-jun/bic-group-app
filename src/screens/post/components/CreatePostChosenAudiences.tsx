@@ -1,13 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
 import { useBaseHook } from '~/hooks';
-import Button from '~/beinComponents/Button';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IAudience } from '~/interfaces/IPost';
-import Icon from '~/beinComponents/Icon';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
@@ -28,7 +26,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
   const names = getNames(
-    chosenAudiences, t,
+    chosenAudiences,
   );
 
   const onPressSelectAudience = () => {
@@ -42,42 +40,26 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
       onPress={onPressSelectAudience}
       testID="create_post_chosen_audiences"
     >
-      <View style={styles.contentContainer}>
-        <Text.BodyS color={theme.colors.gray50} style={styles.textSendTo}>
-          {`${t('post:send_to')} `}
-          <Text.H6 testID="create_post_chosen_audiences.names">{names}</Text.H6>
-        </Text.BodyS>
-        {chosenAudiences?.length === 0 && (
-          <Button.Secondary
-            textProps={{
-              variant: 'bodyM',
-              useI18n: true,
-              color: theme.colors.purple60,
-            }}
-            borderRadius={spacing?.borderRadius.pill}
-            style={styles.buttonChoose}
-            onPress={onPressSelectAudience}
-            testID="create_post_chosen_audiences.choose_group"
-          >
-            post:choose_group_people
-          </Button.Secondary>
-        )}
-      </View>
-      <Icon icon="AngleRightSolid" />
+      <Text.BodyM numberOfLines={2} color={theme.colors.neutral40} style={styles.textPostTo}>
+        {`${t('post:post_to')} `}
+        <Text.BodyMMedium color={theme.colors.neutral70}>{chosenAudiences?.length || 0}</Text.BodyMMedium>
+        {': '}
+        <Text.BodyMMedium color={theme.colors.neutral70} testID="create_post_chosen_audiences.names">{names}</Text.BodyMMedium>
+      </Text.BodyM>
     </TouchableOpacity>
   );
 };
 
 const getNames = (
-  chosenAudiences: IAudience[], t: any,
+  chosenAudiences: IAudience[],
 ) => {
   let result = '';
   if (chosenAudiences?.length > 0) {
-    result = chosenAudiences?.[0]?.name || '';
-    const countLeft = chosenAudiences.length - 1;
-    if (countLeft > 0) {
-      result = `${result} ${t('post:and')} ${countLeft} ${t('post:other_places')}`;
-    }
+    const newChosenAudiencesName = [];
+    chosenAudiences.forEach((item: IAudience) => {
+      newChosenAudiencesName.push(item?.name);
+    });
+    result = newChosenAudiencesName.join(', ');
   }
   return result;
 };
@@ -85,19 +67,11 @@ const getNames = (
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingHorizontal: spacing?.padding.extraLarge,
+    paddingHorizontal: spacing?.padding.large,
     paddingVertical: spacing?.padding.small,
     alignItems: 'center',
   },
-  contentContainer: { flex: 1, flexDirection: 'row', alignItems: 'center' },
-  textSendTo: {
-    marginRight: spacing?.margin.tiny,
-    marginVertical: spacing.margin.small,
-  },
-  buttonChoose: {
-    paddingHorizontal: spacing?.padding.large,
-    alignSelf: 'center',
-    paddingVertical: spacing?.padding.tiny,
+  textPostTo: {
   },
 });
 

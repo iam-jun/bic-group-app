@@ -13,7 +13,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { fontFamilies } from '~/theme/fonts';
 import Text, { TextProps } from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import Icon, { IconProps } from '~/beinComponents/Icon';
+import Icon, { IconProps } from '~/baseComponents/Icon';
 import { getTextHelperColor } from '../helper';
 import dimension from '~/theme/dimension';
 import { IconType } from '~/resources/icons';
@@ -45,14 +45,15 @@ export interface TextInputProps extends RNTextInputProps {
   RightComponent?: React.ReactNode | React.ReactElement;
   activeOutlineColor?: string;
   outlineColor?: string;
-  onFocus?: () => void;
-  onBlur?: () => void;
-  onChangeText?: ((text: string) => void) | undefined;
-  helperActionOnPress?: () => void;
   helperTextTriggerAction?: any;
   horizontal?: boolean;
   leftIcon?: IconType;
   leftIconProps?: IconProps;
+
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onChangeText?: ((text: string) => void) | undefined;
+  helperActionOnPress?: () => void;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -121,7 +122,7 @@ const TextInput: React.FC<TextInputProps> = ({
         {..._textHelperProps}
         style={helperActionStyle.style}
       >
-        {`${helperAction}`}
+        {helperAction}
       </Text.H6>
     );
   };
@@ -146,27 +147,27 @@ const TextInput: React.FC<TextInputProps> = ({
     if (!editable) return colors.neutral5;
     if (isFocus) return !!activeOutlineColor ? activeOutlineColor : colors.purple50;
     return !!outlineColor ? outlineColor : colors.neutral5;
-  }
+  };
 
   return (
     <View testID="text_input" style={[styles.container, style]}>
       {!!label && (
-      <View style={styles.labelStyle}>
-        <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
-      </View>
+        <View style={styles.labelStyle}>
+          <Text.LabelM color={colors.neutral80} {...labelProps}>{label}</Text.LabelM>
+        </View>
       )}
       <View style={[!!horizontal ? { flex: 1 } : {}]}>
         <View style={[styles.row]}>
           {!!leftIcon && (
-          <View style={styles.leftIconStyle}>
-            <Icon
-              testID="text_input.left_icon"
-              icon={leftIcon}
-              size={22}
-              tintColor={colors.neutral20}
-              {...leftIconProps}
-            />
-          </View>
+            <View style={styles.leftIconStyle}>
+              <Icon
+                testID="text_input.left_icon"
+                icon={leftIcon}
+                size={22}
+                tintColor={colors.neutral20}
+                {...leftIconProps}
+              />
+            </View>
           )}
           <View
             style={[
@@ -187,7 +188,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 value={text}
                 style={[
                   styles.input,
-                  { color: !editable ? colors.neutral40 : (textColor || colors.neutral80) },
+                  { color: !editable ? (textColor || colors.neutral40) : (textColor || colors.neutral80) },
                 ]}
                 onChangeText={_onChangeText}
                 ref={textInputRef}
@@ -196,7 +197,11 @@ const TextInput: React.FC<TextInputProps> = ({
                 editable={editable}
                 {...props}
               />
-              {RightComponent}
+              {!!RightComponent && (
+              <View style={styles.rightComponentStyle}>
+                {RightComponent}
+              </View>
+              )}
             </View>
           </View>
         </View>
@@ -211,10 +216,12 @@ const TextInput: React.FC<TextInputProps> = ({
             style={styles.errorIconStyle}
           />
           )}
-          <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
-            {helperText}
-            {renderHelperAction()}
-          </Text.BodyXS>
+          <View style={styles.helperTextStyle}>
+            <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
+              {helperText}
+              {renderHelperAction()}
+            </Text.BodyXS>
+          </View>
         </View>
         )}
       </View>
@@ -238,7 +245,6 @@ const themeStyles = (
     },
     inputRow: {
       flexDirection: 'row',
-      paddingRight: spacing.padding.base,
       borderTopLeftRadius: !!leftIcon ? 0 : spacing.borderRadius.base,
       borderBottomLeftRadius: !!leftIcon ? 0 : spacing.borderRadius.base,
       borderTopRightRadius: spacing.borderRadius.base,
@@ -266,12 +272,16 @@ const themeStyles = (
       maxWidth: horizontal ? dimension.deviceWidth / 3 : dimension.deviceWidth,
     },
     errorIconStyle: {
-      marginRight: spacing.margin.tiny,
+    },
+    helperTextStyle: {
+      paddingHorizontal: spacing.padding.tiny,
+      flex: 1,
     },
     helperContainer: {
       flexDirection: 'row',
       marginTop: spacing.margin.tiny,
       alignContent: 'center',
+      paddingRight: spacing.padding.tiny,
     },
     leftIconStyle: {
       backgroundColor: colors.neutral2,
@@ -280,6 +290,9 @@ const themeStyles = (
       borderTopLeftRadius: spacing.borderRadius.base,
       borderBottomLeftRadius: spacing.borderRadius.base,
       padding: spacing.padding.small,
+    },
+    rightComponentStyle: {
+      paddingRight: spacing.margin.base,
     },
   });
 };

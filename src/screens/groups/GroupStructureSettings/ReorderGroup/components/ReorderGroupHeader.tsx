@@ -57,7 +57,6 @@ const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
         loading,
         disabled,
         useI18n: true,
-        highEmphasis: true,
         style: { borderWidth: 0 },
         testID: 'reorder_group.btn_save',
       }}

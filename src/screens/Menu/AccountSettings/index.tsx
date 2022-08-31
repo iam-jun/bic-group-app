@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
@@ -82,14 +82,14 @@ const GeneralSettings = () => {
         title={t(item.title)}
         icon={item.icon}
         RightComponent={
-            language === item.code ? (
-              <Icon
-                icon="Check"
-                size={24}
-                tintColor={theme.colors.purple60}
-              />
-            ) : null
-          }
+          language === item.code ? (
+            <Icon
+              icon="Check"
+              size={24}
+              tintColor={theme.colors.purple60}
+            />
+          ) : null
+        }
       />
     </TouchableOpacity>
   );

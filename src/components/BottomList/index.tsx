@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react';
 import {
   ScrollView,
 } from 'react-native';
@@ -35,7 +35,7 @@ const BottomList = () => {
     if (!isOpen) {
       modalizeRef?.current?.close?.();
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   const _onClose = () => {
     closeOutSide && dispatch(modalActions.hideBottomList());
@@ -49,16 +49,17 @@ const BottomList = () => {
           <BottomListItem key={`MenuItem_${item?.title}`} {...item} />))
       }
     </ScrollView>
-  )
+  );
 
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
       isOpen={isOpen}
       onClose={_onClose}
+      childrenStyle={{ minHeight: 140 }}
       ContentComponent={renderListData()}
     />
   );
-}
+};
 
 export default BottomList;

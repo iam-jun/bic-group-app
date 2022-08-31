@@ -11,7 +11,7 @@ describe('approveAllGroupMemberRequests saga', () => {
   const callback = jest.fn();
   const action = {
     type: 'test',
-    payload: { groupId, callback },
+    payload: { groupId, callback, total: 2 },
   };
 
   it('should approve all member requests correctly with callback function', async () => expectSaga(approveAllGroupMemberRequests, action)
@@ -41,7 +41,7 @@ describe('approveAllGroupMemberRequests saga', () => {
   it('should approve all member requests correctly without callback function', async () => {
     const action = {
       type: 'test',
-      payload: { groupId },
+      payload: { groupId, total: 2 },
     };
 
     return expectSaga(approveAllGroupMemberRequests, action)

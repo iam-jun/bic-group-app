@@ -9,7 +9,7 @@ import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Icon from '~/beinComponents/Icon';
+import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
 
 interface OptionMenuProps {
@@ -39,14 +39,14 @@ const OptionMenu = ({
       <PrimaryItem
         title={i18next.t(item.title)}
         RightComponent={
-            value === item.type ? (
-              <Icon
-                icon="Check"
-                size={24}
-                tintColor={theme.colors.purple60}
-              />
-            ) : undefined
-          }
+          value === item.type ? (
+            <Icon
+              icon="Check"
+              size={24}
+              tintColor={theme.colors.purple60}
+            />
+          ) : undefined
+        }
       />
     </TouchableOpacity>
   );

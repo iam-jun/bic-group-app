@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Text, { TextProps } from '~/beinComponents/Text';
-import Icon, { IconProps } from '~/beinComponents/Icon';
+import Icon, { IconProps } from '~/baseComponents/Icon';
 import Checkbox, { CheckboxProps } from '~/baseComponents/Checkbox';
 import Toggle from '~/baseComponents/Toggle';
 import { IconType } from '~/resources/icons';
@@ -129,7 +129,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Toggle
             style={styles.iconMarginLeft}
             isChecked={toggleChecked}
-            onPress={onPressToggle}
+            onValueChanged={onPressToggle}
           />
         )}
         {onPressEdit && (
