@@ -1,7 +1,7 @@
 import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { borderRadius } from '~/theme/spacing';
 
@@ -32,6 +32,10 @@ const Toggle = ({
 
   const currentCheckedStatus = disableBuiltInState ? isChecked : checked;
   const currentState = disabled ? 'disabled' : (currentCheckedStatus ? 'selected' : 'unselect');
+
+  useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked]);
 
   const onPress = () => {
     setChecked(!checked);
