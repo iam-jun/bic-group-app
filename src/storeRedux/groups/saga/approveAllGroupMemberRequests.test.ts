@@ -24,13 +24,9 @@ describe('approveAllGroupMemberRequests saga', () => {
       modalActions.showHideToastMessage({
         content: 'Approved all joining requests',
         props: {
-          textProps: { useI18n: true },
-          type: 'success',
-          rightIcon: 'UserGroup',
-          rightText: 'Members',
-          onPressRight: callback,
+          buttonText: 'Member',
+          onButtonPress: callback,
         },
-        toastType: 'normal',
       }),
     )
     .run()
@@ -53,11 +49,6 @@ describe('approveAllGroupMemberRequests saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'Approved all joining requests',
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
-          toastType: 'normal',
         }),
       )
       .run()

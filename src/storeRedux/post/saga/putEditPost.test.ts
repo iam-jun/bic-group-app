@@ -38,7 +38,6 @@ describe('Edit Post Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'post:text_edit_post_success',
-          props: { textProps: { useI18n: true }, type: 'success' },
         }),
       )
       .call(navigate, true, POST_DETAIL.id)
@@ -68,7 +67,6 @@ describe('Edit Post Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'post:text_edit_post_success',
-          props: { textProps: { useI18n: true }, type: 'success' },
         }),
       )
       .call(navigate, false, POST_DETAIL.id)
@@ -95,12 +93,9 @@ describe('Edit Post Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'post:text_edit_post_failed',
-          toastType: 'normal',
           props: {
-            textProps: { useI18n: true },
-            type: 'error',
-            rightText: languages.common.text_retry,
-            onPressRight: undefined,
+            isError: true,
+            buttonText: languages.common.text_retry,
           },
         }),
       )

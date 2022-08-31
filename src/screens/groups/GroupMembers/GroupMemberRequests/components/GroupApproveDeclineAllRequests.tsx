@@ -88,7 +88,7 @@ const GroupApproveDeclineAllRequests = ({ groupId }: {groupId: string}) => {
     const toastMessage: IToastMessage = {
       content: `${t('groups:text_declining_all')}`.replace('{0}', total),
       props: {
-        buttonText: 'Undo',
+        buttonText: t('common:text_undo'),
         onButtonPress: onPressUndo,
       },
       duration: 5000,

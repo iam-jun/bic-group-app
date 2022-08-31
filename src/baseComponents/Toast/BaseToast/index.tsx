@@ -1,16 +1,13 @@
 import {
-  StyleProp, StyleSheet, View, ViewStyle,
+  StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
 import React from 'react';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { IconType } from '~/resources/icons';
 import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
-import Icon from '../../Icon';
-import Button from '../../Button';
-import modalActions from '~/storeRedux/modal/actions';
+import Icon from '~/baseComponents/Icon/';
 
 export interface BaseToastProps {
   style?: StyleProp<ViewStyle>;
@@ -38,23 +35,10 @@ const BaseToast = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyles(theme);
-  const dispatch = useDispatch();
 
   const iconProps = isError
     ? { icon: 'CircleExclamationSolid' as IconType, tintColor: colors.red40 }
     : { icon, tintColor: iconColor || colors.neutral20 };
-
-  const hideToast = () => dispatch(modalActions.clearToastMessage());
-
-  const _onPress = () => {
-    onButtonPress?.();
-    hideToast();
-  };
-
-  const _onPressClose = () => {
-    onPressClose?.();
-    hideToast();
-  };
 
   return (
     <View style={[styles.container, style]}>
@@ -71,11 +55,11 @@ const BaseToast = ({
 
       <View style={styles.rightContainer}>
         {!!buttonText && (
-          <Button style={styles.actionButton} onPress={_onPress}>
+          <TouchableOpacity style={styles.actionButton} onPress={onButtonPress}>
             <Text.ButtonS useI18n={useI18n}>{buttonText}</Text.ButtonS>
-          </Button>
+          </TouchableOpacity>
         )}
-        <Icon icon="iconClose" size={12} tintColor={colors.neutral20} onPress={_onPressClose} />
+        <Icon icon="iconClose" size={12} tintColor={colors.neutral20} onPress={onPressClose} />
       </View>
     </View>
   );

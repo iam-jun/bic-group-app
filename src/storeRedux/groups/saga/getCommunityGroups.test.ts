@@ -74,10 +74,7 @@ describe('Get Communities saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: resp.meta.message,
-          props: {
-            textProps: { useI18n: true },
-            type: 'error',
-          },
+          props: { isError: true },
         }),
       )
       .run()

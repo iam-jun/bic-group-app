@@ -158,7 +158,8 @@
     "text_remove": "Remove",
     "all": "All",
     "in": "in",
-    "text_refresh": "Refresh"
+    "text_refresh": "Refresh",
+    "text_undo": "Undo"
   },
   "auth": {
     "text_kickout_title": "Notice",

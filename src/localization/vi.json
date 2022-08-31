@@ -121,7 +121,8 @@
     "btn_decline_all": "Từ chối tất cả",
     "all": "Tất cả",
     "in": "trong",
-    "text_refresh": "Tải lại"
+    "text_refresh": "Tải lại",
+    "text_undo": "Khôi phục"
   },
   "auth": {
     "text_kickout_title": "Notice",

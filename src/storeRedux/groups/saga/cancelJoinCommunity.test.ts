@@ -31,9 +31,6 @@ describe('cancelJoinCommuniity saga', () => {
         content: `${i18next.t(
           'groups:text_cancel_join_community',
         )} ${communityName}`,
-        props: {
-          type: 'success',
-        },
       }),
     )
     .run()
@@ -52,10 +49,7 @@ describe('cancelJoinCommuniity saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'common:text_error_message',
-          props: {
-            textProps: { useI18n: true },
-            type: 'error',
-          },
+          props: { isError: true },
         }),
       )
       .run()
@@ -83,10 +77,7 @@ describe('cancelJoinCommuniity saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'common:text_error_message',
-          props: {
-            textProps: { useI18n: true },
-            type: 'error',
-          },
+          props: { isError: true },
         }),
       )
       .run()
