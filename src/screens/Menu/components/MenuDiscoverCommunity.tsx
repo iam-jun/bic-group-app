@@ -13,6 +13,7 @@ import { ICommunity } from '~/interfaces/ICommunity';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { Avatar } from '~/baseComponents';
+import { avatarSizes } from '~/theme/dimension';
 
 const MAX_LENGTH = 10;
 
@@ -86,7 +87,8 @@ const createStyle = () => StyleSheet.create({
     paddingTop: spacing.padding.small,
   },
   emptyContainer: {
-    height: 60,
+    height: avatarSizes.large,
+    marginTop: spacing.margin.small,
     justifyContent: 'center',
     alignItems: 'center',
   },
