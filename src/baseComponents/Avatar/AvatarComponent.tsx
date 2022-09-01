@@ -41,6 +41,7 @@ export interface AvatarProps extends ImageProps {
   customSize?: number;
   customStyle?: StyleProp<ImageStyle>;
   onPressAction?: () => void;
+  backgroundColor?: string;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -62,6 +63,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   customSize,
   customStyle,
   onPressAction,
+  backgroundColor,
   ...props
 }: AvatarProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -70,6 +72,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 
   const avatarSize = customSize || dimension?.avatarSizes[variant] || 24;
   const _borderWidth = borderWidth || dimension.avatarBorderWidth[variant] || 2;
+  const _backgroundColor = backgroundColor || colors.neutral;
   const avatarContainerStyle: StyleProp<ViewStyle> = customStyle || styles[variant];
   let avatarStyle: StyleProp<ImageStyle> = customStyle || styles[variant];
   const borderStyle = showBorder ? { borderWidth: _borderWidth, borderColor: borderColor || colors.gray1 } : {};
@@ -211,7 +214,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
       >
         <Image
           testID="avatar.image"
-          style={[avatarStyle, borderStyle]}
+          style={[avatarStyle, borderStyle, { backgroundColor: _backgroundColor }]}
           source={source}
           {...props}
         />

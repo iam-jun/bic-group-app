@@ -36,8 +36,8 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data }: PostAudiences
   };
 
   const onPressItem = (item: any) => {
-    const { id, communityId } = item || {};
-    if (communityId) {
+    const { id, communityId, isCommunity } = item || {};
+    if (isCommunity && communityId) {
       navigateToCommunity(communityId);
     } else {
       navigateToGroup(id);
