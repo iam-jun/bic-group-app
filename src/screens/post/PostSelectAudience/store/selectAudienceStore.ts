@@ -1,4 +1,4 @@
-import { createZustand } from '~/store/utils';
+import { createZustand, resetZustand } from '~/store/utils';
 import getAudienceTree from './actions/getAudienceTree';
 import ISelectAudienceState from './ISelectAudienceState';
 import getAudienceSearch from './actions/getAudienceSearch';
@@ -27,11 +27,11 @@ const selectAudienceStore = (set, get) => ({
   dispatchGetAudienceTree: getAudienceTree(set, get),
   dispatchGetAudienceSearch: getAudienceSearch(set, get),
 
-  reset: () => {
-    set((state) => { Object.keys(initState).forEach((k) => { state[k] = initState[k]; }); }, false, 'reset');
-  },
+  reset: () => resetZustand(initState, set),
 });
 
-const useSelectAudienceStore = createZustand<ISelectAudienceState>('select-audience-store', selectAudienceStore);
+const useSelectAudienceStore = createZustand<ISelectAudienceState>(
+  'select-audience-store', selectAudienceStore,
+);
 
 export default useSelectAudienceStore;

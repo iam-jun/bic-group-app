@@ -1,11 +1,26 @@
-import IHomeState from '~/store/interface/IHomeState';
-import { IJoinedCommunitiesState } from '~/screens/Menu/store/joinedCommunities';
+import IHomeState from '~/screens/Home/store/IHomeState';
 import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/ISelectAudienceState';
+import IChatState from '~/store/chat/IChatState';
+import IJoinedCommunitiesState from '~/screens/Menu/store/IJoinedCommunitiesState';
+import IJoinedGroupTreeState from '~/screens/groups/store/IJoinedGroupTreeState';
 
 export interface BicStore {
-  home: IHomeState
-  joinedCommunities: IJoinedCommunitiesState
+  // screens
   post: {
-    selectAudience: ISelectAudienceState
+    PostSelectAudience: {
+      selectAudienceStore: ISelectAudienceState
+    }
   }
+  groups: {
+    joinedGroupTreeStore: IJoinedGroupTreeState
+  }
+  Home: {
+    homeStore: IHomeState,
+  }
+  Menu: {
+    joinedCommunitiesStore: IJoinedCommunitiesState
+  }
+
+  // others
+  chat: IChatState
 }

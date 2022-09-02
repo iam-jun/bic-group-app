@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import useJoinedGroupTreeStore from '~/storeRedux/communities/joinedGroupTree';
+import useJoinedGroupTreeStore from '~/screens/groups/store/joinedGroupTreeStore';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import modalActions from '~/storeRedux/modal/actions';
@@ -34,9 +34,9 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
 
   const id = communityId || teamName;
 
-  const joinedGroups = useJoinedGroupTreeStore((state) => get(state, `data.${id}`));
-  const loading = useJoinedGroupTreeStore((state) => get(state, 'loading'));
-  const getJoinedGroupTree = useJoinedGroupTreeStore((state) => get(state, 'getJoinedGroupTree'));
+  const joinedGroupTreeStore = useJoinedGroupTreeStore();
+  const { loading, getJoinedGroupTree } = joinedGroupTreeStore;
+  const joinedGroups = get(joinedGroupTreeStore, `data.${id}`);
 
   useEffect(() => {
     getJoinedGroupTree(communityId);

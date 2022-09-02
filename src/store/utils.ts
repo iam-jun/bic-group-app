@@ -48,6 +48,14 @@ const createZustand = <T>(
   return create<T>(_store);
 };
 
+const resetZustand = (initState: any, set: any) => {
+  set((state) => {
+    Object.keys(initState).forEach((k) => {
+      state[k] = initState[k];
+    });
+  }, false, 'reset');
+};
+
 export {
   createZustand,
   create as createStore,
@@ -55,4 +63,5 @@ export {
   withDevtools,
   withImmer,
   withFlipper,
+  resetZustand,
 };

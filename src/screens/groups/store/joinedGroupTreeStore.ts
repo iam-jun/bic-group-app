@@ -1,18 +1,15 @@
-import {
-  createStore, withFlipper, withImmer, withPersist,
-} from '~/store/utils';
+import { createZustand, resetZustand } from '~/store/utils';
 import groupApi from '~/api/GroupApi';
-import { IGroup } from '~/interfaces/IGroup';
+import IJoinedGroupTreeState from '~/screens/groups/store/IJoinedGroupTreeState';
 
-interface JoinedGroupTreeState {
-  data: {[key: string]: IGroup},
-  loading: boolean,
-  getJoinedGroupTree: any
-}
-
-const useJoinedGroupTree = (set) => ({
+const initialState = {
   data: {},
   loading: false,
+};
+
+const joinedGroupTreeStore = (set) => ({
+  ...initialState,
+
   getJoinedGroupTree: (id: string) => {
     set((state) => {
       state.loading = true;
@@ -29,16 +26,12 @@ const useJoinedGroupTree = (set) => ({
       }, false, 'getJoinedGroupTree');
     });
   },
+
+  reset: () => resetZustand(initialState, set),
 });
 
-const useJoinedGroupTreeStore = createStore<JoinedGroupTreeState | any>(
-  withFlipper(
-    withImmer(
-      withPersist(
-        useJoinedGroupTree, { name: 'communities-joined-group-tree-store' },
-      ),
-    ), 'communities-joined-group-tree-store',
-  ),
+const useJoinedGroupTreeStore = createZustand<IJoinedGroupTreeState>(
+  'joined-group-tree-store', joinedGroupTreeStore,
 );
 
 export default useJoinedGroupTreeStore;

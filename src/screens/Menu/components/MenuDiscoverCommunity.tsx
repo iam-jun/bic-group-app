@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import useJoinedCommunitiesStore from '~/screens/Menu/store/joinedCommunities';
+import useJoinedCommunitiesStore from '~/screens/Menu/store/joinedCommunitiesStore';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Button from '~/beinComponents/Button';
 import { ICommunity } from '~/interfaces/ICommunity';
