@@ -13,7 +13,7 @@ export interface ChatState {
 
 const chatStore = (set, get) => ({
   unreadChannels: {},
-  initChat: async () => {
+  dispatchInitChat: async () => {
     try {
       const response = await chatApi.init();
       const data = response?.data;
@@ -27,7 +27,7 @@ const chatStore = (set, get) => ({
         {},
       );
 
-      set({ unreadChannels: result }, false, 'initChat');
+      set({ unreadChannels: result });
     } catch (error) {
       console.error('initChat', error);
     }
@@ -49,19 +49,10 @@ const chatStore = (set, get) => ({
         break;
     }
     if (channel?.id) {
-      // with immer
       set((state) => {
         state.unreadChannels[channel.id] = channel;
-      }, false, 'handleChatEvent');
+      });
     }
-
-    // without immer
-    // set({
-    //   unreadChannels: {
-    //     ...unreadChannels,
-    //     ...channel,
-    //   },
-    // })
   },
 });
 

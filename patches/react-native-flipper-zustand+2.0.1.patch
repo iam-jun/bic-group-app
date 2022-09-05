@@ -1,0 +1,89 @@
+diff --git a/node_modules/react-native-flipper-zustand/index.js b/node_modules/react-native-flipper-zustand/index.js
+index a1d243c..d117621 100644
+--- a/node_modules/react-native-flipper-zustand/index.js
++++ b/node_modules/react-native-flipper-zustand/index.js
+@@ -8,21 +8,80 @@ export default function zustandFlipper(fn, storeName) {
+     onConnect(connection) {
+       connectionFlipper = connection;
+     },
+-    onDisconnect() {},
++    onDisconnect() { },
+   });
+-  return function (set, get, api) {
+-    const namedSet = (state, replace, name) => {
++  const test = function (set, get, api) {
++    const namedSet = (state, name, replace = false) => {
++
++      const blacklist = [
++        'apply',
++        'anonymous',
++        '_callReactNativeMicrotasksPass',
++        '__callReactNativeMicrotasks',
++        '__guard',
++        'invokeCallbackAndReturnFlushedQueue',
++        'namedSet',
++        'tryCallOne',
++        '_callTimer',
++        'callReactNativeMicrotasks',
++        'flushedQueue',
++        'commitHookEffectListMount',
++        'commitPassiveMountEffects_complete',
++        'commitPassiveMountEffects',
++        'flushPassiveEffects',
++        'workLoop',
++        '_flushCallback',
++        'callTimers',
++        '__callFunction',
++        'invoke',
++        'call',
++        'tryCallTwo',
++        'Promise',
++        'enqueue',
++        'callFunctionReturnFlushedQueue',
++        'safelyCallDestroy',
++        'commitPassiveUnmountInsideDeletedTreeOnFiber',
++        'commitPassiveUnmountEffects',
++        'commitPassiveUnmountEffects_begin',
++        'flushPassiveEffectsImpl',
++        'flushWork',
++        'commitHookEffectListUnmount',
++        'commitPassiveUnmountEffectsInsideOfDeletedTree_begin',
++      ];
++
++      const callerName = [];
++
++      try { throw new Error(); }
++      catch (e) {
++
++        var re = /(\w+)@|at (\w+) \(/g, st = e.stack, m;
++        do {
++          re.exec(st), m = re.exec(st);
++          if (m) {
++            const _name = m[1] || m[2];
++            if (!blacklist.includes(_name))
++              callerName.push(_name)
++          }
++        } while (m);
++      }
++
++      const newName = callerName.join('/');
++
+       set(state, replace, name);
++
+       if (connectionFlipper) {
+         connectionFlipper.send("newData", {
+           storeName,
+           timestamp: new Date(),
+-          title: name || "ZustandAction",
++          title: name || newName || "ZustandAction",
+           state: get(),
+         });
+       }
+     };
+ 
++
+     return fn(namedSet, get, api);
+   };
++
++  return test;
+ }

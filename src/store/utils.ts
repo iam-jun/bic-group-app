@@ -43,8 +43,7 @@ const createZustand = <T>(
   if (options?.persist) {
     _store = persist(_store, options.persist);
   }
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+
   return create<T>(_store);
 };
 

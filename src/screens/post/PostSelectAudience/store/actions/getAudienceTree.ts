@@ -1,10 +1,10 @@
 import groupApi from '~/api/GroupApi';
-import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/ISelectAudienceState';
+import ISelectAudienceState from '../ISelectAudienceState';
 
-const getAudienceTree = (set, _) => async () => {
+const getAudienceTree = async (set, _) => {
   set((state: ISelectAudienceState) => {
     state.tree.loading = true;
-  }, false, 'getAudienceTree');
+  });
   try {
     const response = await groupApi.getAudienceTree();
     set((state: ISelectAudienceState) => {
@@ -12,14 +12,14 @@ const getAudienceTree = (set, _) => async () => {
         loading: false,
         data: response?.data || [],
       };
-    }, false, 'getAudienceTree');
+    }, 'getAudienceTree');
   } catch (e) {
     set((state: ISelectAudienceState) => {
       state.tree = {
         loading: false,
         data: undefined,
       };
-    }, false, 'getAudienceTree');
+    }, 'getAudienceTree');
   }
 };
 
