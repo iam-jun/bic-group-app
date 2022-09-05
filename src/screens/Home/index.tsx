@@ -25,7 +25,7 @@ import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
 import HomeHeader from '~/screens/Home/components/HomeHeader';
-import useHomeStore from '~/screens/Home/store/homeStore';
+import useHomeStore from '~/screens/Home/store';
 import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 
 const Home = () => {

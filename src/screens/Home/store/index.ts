@@ -1,5 +1,5 @@
 import { HOME_TAB_TYPE } from '~/screens/Home/constants';
-import IHomeState, { IHomeTab } from '~/screens/Home/store/IHomeState';
+import IHomeState, { IHomeTab } from '~/screens/Home/store/Interface';
 import { createZustand } from '~/store/utils';
 import streamApi from '~/api/StreamApi';
 import storeRedux from '~/storeRedux';

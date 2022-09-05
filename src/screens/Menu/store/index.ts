@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { createZustand, resetZustand } from '~/store/utils';
-import IJoinedCommunitiesState from '~/screens/Menu/store/IJoinedCommunitiesState';
+import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 
 const initState = {
   data: undefined,

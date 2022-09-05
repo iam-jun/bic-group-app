@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import useHomeStore from '~/screens/Home/store/homeStore';
-import useJoinedCommunitiesStore from '~/screens/Menu/store/joinedCommunitiesStore';
+import useHomeStore from '~/screens/Home/store';
+import useJoinedCommunitiesStore from '~/screens/Menu/store';
 import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
 

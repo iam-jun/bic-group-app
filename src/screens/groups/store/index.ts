@@ -1,6 +1,6 @@
 import { createZustand, resetZustand } from '~/store/utils';
 import groupApi from '~/api/GroupApi';
-import IJoinedGroupTreeState from '~/screens/groups/store/IJoinedGroupTreeState';
+import IJoinedGroupTreeState from '~/screens/groups/store/Interface';
 
 const initialState = {
   data: {},

@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import useJoinedGroupTreeStore from '~/screens/groups/store/joinedGroupTreeStore';
+import useJoinedGroupTreeStore from '~/screens/groups/store';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import modalActions from '~/storeRedux/modal/actions';
