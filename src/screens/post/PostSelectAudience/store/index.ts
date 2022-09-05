@@ -1,6 +1,6 @@
 import { createZustand, resetZustand } from '~/store/utils';
 import getAudienceTree from './actions/getAudienceTree';
-import ISelectAudienceState from './ISelectAudienceState';
+import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/Interface';
 import getAudienceSearch from './actions/getAudienceSearch';
 
 const initState: ISelectAudienceState = {

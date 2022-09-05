@@ -3,7 +3,7 @@
 
 import useHomeStore from '~/screens/Home/store/homeStore';
 import useJoinedCommunitiesStore from '~/screens/Menu/store/joinedCommunitiesStore';
-import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store/selectAudienceStore';
+import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
 
 export const resetStore = () => {

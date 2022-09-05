@@ -1,5 +1,5 @@
 import IHomeState from '~/screens/Home/store/IHomeState';
-import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/ISelectAudienceState';
+import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/Interface';
 import IChatState from '~/store/chat/IChatState';
 import IJoinedCommunitiesState from '~/screens/Menu/store/IJoinedCommunitiesState';
 import IJoinedGroupTreeState from '~/screens/groups/store/IJoinedGroupTreeState';
