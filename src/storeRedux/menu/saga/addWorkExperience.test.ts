@@ -101,7 +101,7 @@ describe('Add Work Experience Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: error.meta.errors[0].message,
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       )
       .run();

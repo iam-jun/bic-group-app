@@ -118,7 +118,7 @@ describe('Delete React To Post Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'common:text_error_message',
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       )
       .run();

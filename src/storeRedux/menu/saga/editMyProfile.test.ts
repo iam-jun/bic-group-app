@@ -128,7 +128,7 @@ describe('Update User Profile Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: error.meta.message,
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       )
       .put(menuActions.setLoadingAvatar(false))

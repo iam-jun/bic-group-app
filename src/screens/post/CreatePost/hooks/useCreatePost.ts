@@ -446,7 +446,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         if (imageError) {
           dispatch(modalActions.showHideToastMessage({
             content: imageError,
-            props: { isError: true },
+            props: { type: 'error' },
           }));
         }
         return;
@@ -526,7 +526,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     if (imageError) {
       dispatch(modalActions.showHideToastMessage({
         content: imageError,
-        props: { isError: true },
+        props: { type: 'error' },
       }));
       return 'attachmentError';
     }

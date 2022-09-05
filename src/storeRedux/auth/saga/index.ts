@@ -178,7 +178,7 @@ export function* showErrorWithDefinedMessage(mess: string) {
   if (!mess) return;
   const toastMessage: IToastMessage = {
     content: mess,
-    props: { isError: true },
+    props: { type: 'error' },
   };
   yield put(actionsCommon.showHideToastMessage(toastMessage));
 }

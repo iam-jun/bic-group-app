@@ -98,7 +98,7 @@ export default function* deleteComment({
   } catch (e) {
     yield put(modalActions.showHideToastMessage({
       content: 'post:comment:text_delete_comment_error',
-      props: { isError: true },
+      props: { type: 'error' },
     }));
   }
 }

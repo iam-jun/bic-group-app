@@ -52,7 +52,7 @@ export default function* putEditPost({
     yield put(modalActions.showHideToastMessage({
       content: msgError || 'post:text_edit_post_failed',
       props: {
-        isError: true,
+        type: 'error',
         buttonText: i18n.t('common:text_retry'),
         onButtonPress: onRetry,
       },

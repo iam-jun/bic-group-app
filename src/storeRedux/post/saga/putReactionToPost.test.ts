@@ -79,7 +79,7 @@ describe('Update Reaction to Post By Id saga', () => {
         .put(
           modalActions.showHideToastMessage({
             content: resp.meta.message,
-            props: { isError: true },
+            props: { type: 'error' },
           }),
         )
         .run()

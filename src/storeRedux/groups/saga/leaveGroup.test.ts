@@ -90,7 +90,7 @@ describe('Leave Group Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: error.meta.message,
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       )
       .run();

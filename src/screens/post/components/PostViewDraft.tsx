@@ -73,7 +73,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           e?.meta?.message
           || e?.meta?.errors?.[0]?.message
           || 'common:text_error_message',
-      props: { isError: true },
+      props: { type: 'error' },
     }));
   };
 

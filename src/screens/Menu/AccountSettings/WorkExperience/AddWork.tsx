@@ -92,7 +92,7 @@ const AddWork = () => {
     ) {
       const toastMessage: IToastMessage = {
         content: 'settings:text_enddate_after_startdate',
-        props: { isError: true },
+        props: { type: 'error' },
       };
       dispatch(showHideToastMessage(toastMessage));
       return;
@@ -101,7 +101,7 @@ const AddWork = () => {
     if (!isWorkHere && !endDateValue) {
       const toastMessage: IToastMessage = {
         content: 'settings:text_enddate_must_choose',
-        props: { isError: true },
+        props: { type: 'error' },
       };
       dispatch(showHideToastMessage(toastMessage));
       return;

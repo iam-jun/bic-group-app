@@ -88,7 +88,7 @@ describe('Delete Work Experience Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: error.meta.message,
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       )
       .run();

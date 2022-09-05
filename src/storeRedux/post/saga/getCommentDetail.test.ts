@@ -113,7 +113,7 @@ describe('Get comments detail saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: resp.meta.message,
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       )
       .run()

@@ -94,7 +94,7 @@ const CommentDetailContent = (props: any) => {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'post:text_comment_was_deleted',
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       );
       rootNavigation.replace(homeStack.postDetail, { post_id: postId });
@@ -138,7 +138,7 @@ const CommentDetailContent = (props: any) => {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'error:not_found_desc',
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       );
       goHome();

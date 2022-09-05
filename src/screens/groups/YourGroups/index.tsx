@@ -50,7 +50,7 @@ const YourGroups: FC<YourGroupsProps> = ({ route }: YourGroupsProps) => {
 
   if (!communityId) {
     rootNavigation.goBack();
-    dispatch(showHideToastMessage({ content: 'common:text_error_message', props: { isError: true } }));
+    dispatch(showHideToastMessage({ content: 'common:text_error_message', props: { type: 'error' } }));
   }
 
   const onPress = (item: any) => {

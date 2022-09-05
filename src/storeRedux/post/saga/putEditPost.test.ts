@@ -94,7 +94,7 @@ describe('Edit Post Saga', () => {
         modalActions.showHideToastMessage({
           content: 'post:text_edit_post_failed',
           props: {
-            isError: true,
+            type: 'error',
             buttonText: languages.common.text_retry,
           },
         }),

@@ -90,7 +90,7 @@ describe('getCommunitySearch', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'common:text_error_message',
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       )
       .run()

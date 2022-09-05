@@ -156,7 +156,7 @@ describe('Get comments by postId saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: resp.meta.message,
-          props: { isError: true },
+          props: { type: 'error' },
         }),
       )
       .run()

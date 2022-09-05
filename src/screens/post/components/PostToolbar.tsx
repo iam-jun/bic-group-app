@@ -151,7 +151,7 @@ const PostToolbar = ({
     );
     dispatch(showHideToastMessage({
       content: errorContent,
-      props: { isError: true },
+      props: { type: 'error' },
     }));
     return currentImage.slice(
       0,

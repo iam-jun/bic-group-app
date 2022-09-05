@@ -191,7 +191,7 @@ export const validateFilesPicker = (
   if (toastMessage) {
     dispatch(showHideToastMessage({
       content: toastMessage,
-      props: { isError: true },
+      props: { type: 'error' },
     }));
   }
 
