@@ -114,7 +114,7 @@ const GroupDetail = (props: any) => {
   useEffect(
     () => {
       getGroupDetail();
-      if (communityId !== communityDetail?.id) {
+      if (communityId && communityId !== communityDetail?.id) {
         dispatch(groupsActions.getCommunityDetail({ communityId }));
       }
     }, [groupId],
