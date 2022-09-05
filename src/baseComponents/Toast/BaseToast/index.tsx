@@ -34,13 +34,12 @@ const BaseToast = ({
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const typeColor = {
-    success: { iconColor: colors.green50 },
-    neutral: { iconColor: colors.neutral20 },
-    error: { iconColor: colors.red40 },
+  const iconColor = {
+    success: colors.green50,
+    neutral: colors.neutral20,
+    error: colors.red40,
   };
 
-  const { iconColor } = typeColor[type];
   const iconName = type === 'error' ? 'CircleExclamationSolid' : icon;
 
   return (
@@ -51,7 +50,7 @@ const BaseToast = ({
             size={20}
             iconStyle={styles.iconStyle}
             icon={iconName}
-            tintColor={iconColor}
+            tintColor={iconColor[type]}
           />
         )}
         <Text.BodyM style={styles.flex1} color={colors.white} useI18n={useI18n}>{content}</Text.BodyM>
