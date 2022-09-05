@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import ISelectAudienceState from '../ISelectAudienceState';
+import ISelectAudienceState from '../Interface';
 
 const getAudienceTree = async (set, _) => {
   set((state: ISelectAudienceState) => {

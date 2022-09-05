@@ -42,13 +42,7 @@ export const getPostViewMenu = (
     Clipboard.setString(getLink(
       LINK_POST, postId,
     ));
-    dispatch(showHideToastMessage({
-      content: 'common:text_link_copied_to_clipboard',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    }));
+    dispatch(showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
   };
 
   const onPressViewReactions = () => {

@@ -39,10 +39,6 @@ export default function* putGroupStructureReorder({
       navigation.goBack();
       const toastMessage: IToastMessage = {
         content: 'communities:group_structure:text_reorder_success',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
     } else {

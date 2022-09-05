@@ -73,7 +73,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           e?.meta?.message
           || e?.meta?.errors?.[0]?.message
           || 'common:text_error_message',
-      props: { textProps: { useI18n: true }, type: 'error' },
+      props: { type: 'error' },
     }));
   };
 
@@ -90,10 +90,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         onSuccess: () => {
-          dispatch(showHideToastMessage({
-            content: 'post:draft:text_draft_published',
-            props: { textProps: { useI18n: true }, type: 'success' },
-          }));
+          dispatch(showHideToastMessage({ content: 'post:draft:text_draft_published' }));
           refreshDraftPosts();
         },
         onError: () => setPublishing(false),
@@ -120,10 +117,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         )
         .then((response) => {
           if (response?.data) {
-            dispatch(showHideToastMessage({
-              content: 'post:draft:text_draft_deleted',
-              props: { textProps: { useI18n: true }, type: 'success' },
-            }));
+            dispatch(showHideToastMessage({ content: 'post:draft:text_draft_deleted' }));
             refreshDraftPosts();
           }
         })

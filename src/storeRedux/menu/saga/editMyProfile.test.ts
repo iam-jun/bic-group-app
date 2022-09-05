@@ -33,10 +33,6 @@ describe('Update User Profile Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'common:text_edit_success',
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
         }),
       )
       .put(menuActions.setMyProfile(mapProfile(expectData.data)))
@@ -66,10 +62,6 @@ describe('Update User Profile Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'common:avatar_changed',
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
         }),
       )
       .put(menuActions.setMyProfile(mapProfile(expectData.data)))
@@ -99,10 +91,6 @@ describe('Update User Profile Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'common:cover_changed',
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
         }),
       )
       .put(menuActions.setMyProfile(mapProfile(expectData.data)))
@@ -125,10 +113,6 @@ describe('Update User Profile Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: editFieldToastMessage,
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
         }),
       )
       .put(menuActions.setMyProfile(mapProfile(expectData.data)))
@@ -144,10 +128,7 @@ describe('Update User Profile Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: error.meta.message,
-          props: {
-            textProps: { useI18n: true },
-            type: 'error',
-          },
+          props: { type: 'error' },
         }),
       )
       .put(menuActions.setLoadingAvatar(false))

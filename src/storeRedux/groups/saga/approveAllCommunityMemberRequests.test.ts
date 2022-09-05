@@ -28,13 +28,9 @@ describe('approveAllCommunityMemberRequests saga', () => {
       modalActions.showHideToastMessage({
         content: `${i18next.t('groups:text_approved_all')}`,
         props: {
-          textProps: { useI18n: true },
-          type: 'success',
-          rightIcon: 'UserGroup',
-          rightText: 'Members',
-          onPressRight: callback,
+          buttonText: 'Member',
+          onButtonPress: callback,
         },
-        toastType: 'normal',
       }),
     )
     .run()
@@ -59,11 +55,6 @@ describe('approveAllCommunityMemberRequests saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: `${i18next.t('groups:text_approved_all')}`,
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
-          toastType: 'normal',
         }),
       )
       .run()

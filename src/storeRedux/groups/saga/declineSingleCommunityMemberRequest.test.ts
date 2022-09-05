@@ -44,11 +44,6 @@ describe('declineSingleCommunityMemberRequest saga', () => {
     .put(
       modalActions.showHideToastMessage({
         content: `Declined user ${fullName}`,
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
-        toastType: 'normal',
       }),
     )
     .run()

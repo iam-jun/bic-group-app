@@ -61,13 +61,10 @@ const CommunityApproveDeclineAllRequests = ({ communityId }: {communityId: strin
     const toastMessage: IToastMessage = {
       content: `${t('groups:text_declining_all')}`.replace('{0}', total),
       props: {
-        textProps: { useI18n: true },
-        type: 'informative',
-        rightText: 'Undo',
-        onPressRight: onPressUndo,
+        buttonText: t('common:text_undo'),
+        onButtonPress: onPressUndo,
       },
       duration: 5000,
-      toastType: 'normal',
     };
     dispatch(modalActions.showHideToastMessage(toastMessage));
 

@@ -19,7 +19,7 @@ const useChatSocket = () => {
   const token = useAuthToken();
   const tokenExp = useAuthTokenExpire();
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
-  const { dispatchInitChat, handleChatEvent } = useChatStore();
+  const { initChat, handleChatEvent } = useChatStore();
 
   // use ref to avoid arrow function callback can't get the latest value of state
   const tokenRef = useRef(token);
@@ -75,8 +75,7 @@ const useChatSocket = () => {
   useEffect(
     () => {
       if (userId) {
-        // dispatch(chatAction.initChat());
-        dispatchInitChat();
+        initChat();
       }
       chatSocketClient.setEventCallback((evt: any) => handleChatEvent(myProfile.chatUserId, evt));
       // chatSocketClient.setErrorCallback(async (evt: any) => {}); //error callback not work on iOS

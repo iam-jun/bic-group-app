@@ -1,6 +1,6 @@
 import { HOME_TAB_TYPE } from '~/screens/Home/constants';
-import IHomeState, { IHomeTab } from '~/store/interface/IHomeState';
-import { createZustand } from '~/store/utils';
+import IHomeState, { IHomeTab } from '~/screens/Home/store/Interface';
+import { createStore } from '~/store/utils';
 import streamApi from '~/api/StreamApi';
 import storeRedux from '~/storeRedux';
 import postActions from '~/storeRedux/post/actions';
@@ -110,6 +110,6 @@ const homeStore = (set, get) => ({
   },
 });
 
-const useHomeStore = createZustand<IHomeState>('home-store', homeStore);
+const useHomeStore = createStore<IHomeState>('home-store', homeStore);
 
 export default useHomeStore;

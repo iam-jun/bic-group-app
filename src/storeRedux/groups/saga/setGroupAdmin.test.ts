@@ -14,10 +14,6 @@ describe('Set group admin', () => {
     .put(
       modalActions.showHideToastMessage({
         content: 'groups:modal_confirm_set_admin:success_message',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
       }),
     )
     .call(refreshGroupMembers, action.payload.groupId)

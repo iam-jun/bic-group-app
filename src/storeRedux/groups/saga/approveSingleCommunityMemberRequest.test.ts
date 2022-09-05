@@ -44,11 +44,6 @@ describe('approveSingleCommunityMemberRequest saga', () => {
     .put(
       modalActions.showHideToastMessage({
         content: `Approved user ${fullName}`,
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
-        toastType: 'normal',
       }),
     )
     .put(groupsActions.getCommunityDetail({ communityId }))

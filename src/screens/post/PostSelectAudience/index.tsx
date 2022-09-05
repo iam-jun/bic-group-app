@@ -37,7 +37,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import SearchInput from '~/baseComponents/Input/SearchInput';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
-import useSelectAudienceStore from './store/selectAudienceStore';
+import useSelectAudienceStore from './store';
 
 export interface PostSelectAudienceProps {
   route?: {

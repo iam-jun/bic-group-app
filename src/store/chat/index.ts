@@ -1,19 +1,19 @@
 import chatSocketEvents from '~/constants/chatSocketEvents';
 import {
-  createStore, withFlipper, withImmer, withPersist,
+  resetStore,
+  createStore,
 } from '../utils';
 import { handleChannelViewedEvent, handlePostedEvent, handlePostUnreadEvent } from './utils';
 import chatApi from '~/api/ChatApi';
+import IChatState from '~/store/chat/IChatState';
 
-export interface ChatState {
-  unreadChannels: any,
-  initChat: () => void,
-  handleChatEvent: (userId: string, payload: any) => void
-}
+const initialState = {
+  unreadChannels: {},
+};
 
 const chatStore = (set, get) => ({
-  unreadChannels: {},
-  dispatchInitChat: async () => {
+  ...initialState,
+  initChat: async () => {
     try {
       const response = await chatApi.init();
       const data = response?.data;
@@ -54,16 +54,10 @@ const chatStore = (set, get) => ({
       });
     }
   },
+
+  reset: () => resetStore(initialState, set),
 });
 
-const useChatStore = createStore<ChatState | any>(
-  withFlipper(
-    withImmer(
-      withPersist(
-        chatStore, { name: 'chat-store' },
-      ),
-    ), 'chat-store',
-  ),
-);
+const useChatStore = createStore<IChatState>('chat-store', chatStore);
 
 export default useChatStore;

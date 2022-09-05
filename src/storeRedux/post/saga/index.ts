@@ -196,7 +196,6 @@ function* postCreateNewPost({
       if (data?.isDraft) {
         yield put(modalActions.showHideToastMessage({
           content: 'post:draft:text_draft_saved',
-          props: { textProps: { useI18n: true }, type: 'success' },
         }));
         navigation?.goBack?.();
       } else {
@@ -335,7 +334,6 @@ function* postPublishDraftPost({
       if (res.data?.isProcessing) {
         yield put(modalActions.showHideToastMessage({
           content: 'post:draft:text_processing_publish',
-          props: { textProps: { useI18n: true }, type: 'success' },
         }));
         navigation.goBack();
         yield put(postActions.getAllPostContainingVideoInProgress());
@@ -405,7 +403,6 @@ function* putEditDraftPost({
         navigation.goBack();
         yield put(modalActions.showHideToastMessage({
           content: 'post:draft:text_draft_saved',
-          props: { textProps: { useI18n: true }, type: 'success' },
         }));
       }
     } else {
@@ -459,12 +456,6 @@ function* getPostDetail({
       if (payload?.showToast) {
         yield put(modalActions.showHideToastMessage({
           content: 'post:error_post_detail_deleted',
-          toastType: 'banner',
-          props: {
-            textProps: { useI18n: true },
-            type: 'informative',
-            leftIcon: 'iconCannotComment',
-          },
         }));
       }
     } else {

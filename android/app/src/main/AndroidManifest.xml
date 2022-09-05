@@ -48,7 +48,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="bein" />
+                <data android:scheme="bic" />
             </intent-filter>
         </activity>
         <provider
@@ -63,7 +63,7 @@
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="beinchat" />
+            <data android:scheme="bicchat" />
         </intent>
     </queries>
 </manifest>

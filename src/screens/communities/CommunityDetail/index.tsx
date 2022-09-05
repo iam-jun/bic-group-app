@@ -127,13 +127,7 @@ const CommunityDetail = (props: any) => {
     Clipboard.setString(getLink(
       LINK_COMMUNITY, communityId,
     ));
-    dispatch(modalActions.showHideToastMessage({
-      content: 'common:text_copied',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    }));
+    dispatch(modalActions.showHideToastMessage({ content: 'common:text_copied' }));
   };
 
   const onRightPress = () => {
