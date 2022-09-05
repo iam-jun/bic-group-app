@@ -11,24 +11,22 @@ import Icon from '~/baseComponents/Icon/';
 
 export interface BaseToastProps {
   style?: StyleProp<ViewStyle>;
+  type?: 'success' | 'neutral' | 'error';
   icon?: IconType;
-  iconColor?: string;
   content?: string;
   useI18n?: boolean;
   buttonText?: string;
-  isError?: boolean;
   onButtonPress?: () => void;
   onPressClose?: () => void;
 }
 
 const BaseToast = ({
   style,
+  type = 'neutral',
   icon,
-  iconColor,
   content,
   useI18n,
   buttonText,
-  isError,
   onButtonPress,
   onPressClose,
 }: BaseToastProps) => {
@@ -36,18 +34,24 @@ const BaseToast = ({
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const iconProps = isError
-    ? { icon: 'CircleExclamationSolid' as IconType, tintColor: colors.red40 }
-    : { icon, tintColor: iconColor || colors.neutral20 };
+  const typeColor = {
+    success: { iconColor: colors.green50 },
+    neutral: { iconColor: colors.neutral20 },
+    error: { iconColor: colors.red40 },
+  };
+
+  const { iconColor } = typeColor[type];
+  const iconName = type === 'error' ? 'CircleExclamationSolid' : icon;
 
   return (
     <View style={[styles.container, style]}>
       <View style={styles.leftContainer}>
-        {!!iconProps.icon && (
+        {!!iconName && (
           <Icon
             size={20}
             iconStyle={styles.iconStyle}
-            {...iconProps}
+            icon={iconName}
+            tintColor={iconColor}
           />
         )}
         <Text.BodyM style={styles.flex1} color={colors.white} useI18n={useI18n}>{content}</Text.BodyM>
