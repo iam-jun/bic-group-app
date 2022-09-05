@@ -1,4 +1,4 @@
-const PREFIX_DEEPLINK = 'beinchat://';
+const PREFIX_DEEPLINK = 'bicchat://';
 
 const PREFIX_HTTPS = 'https://';
 
