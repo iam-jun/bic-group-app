@@ -20,14 +20,11 @@ const initState = {
 
 const homeStore = (set, get) => ({
   ...initState,
-
   setActiveTab: (tabId: keyof typeof HOME_TAB_TYPE) => {
     set(
       (state: IHomeState) => {
         state.activeTab = tabId;
       },
-      false,
-      'setActiveTab',
     );
   },
   setTabNewsfeed: (tab: IHomeTab) => {
@@ -35,8 +32,6 @@ const homeStore = (set, get) => ({
       (state: IHomeState) => {
         state.tabNewsfeed = { ...state.tabNewsfeed, ...tab };
       },
-      false,
-      'setTabNewsfeed',
     );
   },
   setTabImportant: (tab: IHomeTab) => {
@@ -44,8 +39,6 @@ const homeStore = (set, get) => ({
       (state: IHomeState) => {
         state.tabImportant = { ...state.tabImportant, ...tab };
       },
-      false,
-      'setTabImportant',
     );
   },
 
@@ -55,8 +48,6 @@ const homeStore = (set, get) => ({
       (state: IHomeState) => {
         state[statePath] = { ...state[statePath], refreshing: true };
       },
-      false,
-      'getTabData',
     );
     const currentState: IHomeState = get();
     const currentList = currentState[statePath].data;
@@ -79,7 +70,6 @@ const homeStore = (set, get) => ({
               canLoadMore: response?.meta?.hasNextPage || false,
             };
           },
-          false,
           'getTabData',
         );
       })
@@ -92,7 +82,6 @@ const homeStore = (set, get) => ({
               canLoadMore: false,
             };
           },
-          false,
           'getTabData',
         );
       });
@@ -104,8 +93,6 @@ const homeStore = (set, get) => ({
           state[k] = initState[k];
         });
       },
-      false,
-      'reset',
     );
   },
 });

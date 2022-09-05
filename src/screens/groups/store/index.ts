@@ -1,6 +1,6 @@
 import { createStore, resetStore } from '~/store/utils';
 import groupApi from '~/api/GroupApi';
-import IJoinedGroupTreeState from '~/screens/groups/store/Interface';
+import IJoinedGroupTreeState from './Interface';
 
 const initialState = {
   data: {},
@@ -12,17 +12,17 @@ const joinedGroupTreeStore = (set) => ({
   getJoinedGroupTree: (id: string) => {
     set((state) => {
       state.loading = true;
-    }, false, 'getJoinedGroupTree');
+    });
     groupApi.getCommunityGroups(id, { listBy: 'tree' }).then((response) => {
       set((state) => {
         state.loading = false;
         state.data[id] = response.data || [];
-      }, false, 'getJoinedGroupTree');
+      }, 'getJoinedGroupTree');
     }).catch((error) => {
       console.error('\x1b[35m🐣️ joinedGroupTree error ', error, '\x1b[0m');
       set((state) => {
         state.loading = false;
-      }, false, 'getJoinedGroupTree');
+      }, 'getJoinedGroupTree');
     });
   },
   reset: () => resetStore(initialState, set),

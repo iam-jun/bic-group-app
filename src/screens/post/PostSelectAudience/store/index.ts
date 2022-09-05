@@ -17,12 +17,11 @@ const initState: ISelectAudienceState = {
 
 const selectAudienceStore = (set, get) => ({
   ...initState,
-  setSearch(payload?: any) {
+  setSearch: (payload?: any) => {
     set((state) => {
       state.search = payload || {};
-    }, false, 'setSearch');
+    });
   },
-
   dispatchGetAudienceTree: () => getAudienceTree(set, get),
   dispatchGetAudienceSearch: getAudienceSearch(set, get),
   reset: () => resetStore(initState, set),

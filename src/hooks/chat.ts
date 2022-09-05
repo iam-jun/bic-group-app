@@ -19,7 +19,9 @@ const useChatSocket = () => {
   const token = useAuthToken();
   const tokenExp = useAuthTokenExpire();
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
-  const { initChat, handleChatEvent } = useChatStore();
+  // const { initChat, handleChatEvent } = useChatStore();
+  const initChat = useChatStore((state) => state.initChat);
+  const handleChatEvent = useChatStore((state) => state.handleChatEvent);
 
   // use ref to avoid arrow function callback can't get the latest value of state
   const tokenRef = useRef(token);
