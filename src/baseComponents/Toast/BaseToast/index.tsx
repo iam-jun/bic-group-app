@@ -58,11 +58,11 @@ const BaseToast = ({
 
       <View style={styles.rightContainer}>
         {!!buttonText && (
-          <TouchableOpacity style={styles.actionButton} onPress={onButtonPress}>
+          <TouchableOpacity style={styles.actionButton} onPress={onButtonPress} testID="toast_button_action">
             <Text.ButtonS useI18n={useI18n}>{buttonText}</Text.ButtonS>
           </TouchableOpacity>
         )}
-        <Icon icon="iconClose" size={12} tintColor={colors.neutral20} onPress={onPressClose} />
+        <Icon icon="iconClose" size={12} tintColor={colors.neutral20} onPress={onPressClose} buttonTestID="toast_button_close" />
       </View>
     </View>
   );
