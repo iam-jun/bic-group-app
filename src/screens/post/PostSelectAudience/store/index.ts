@@ -1,4 +1,4 @@
-import { createZustand, resetStore } from '~/store/utils';
+import { createStore, resetStore } from '~/store/utils';
 import getAudienceTree from './actions/getAudienceTree';
 import ISelectAudienceState from './Interface';
 import getAudienceSearch from './actions/getAudienceSearch';
@@ -30,7 +30,7 @@ const selectAudienceStore = (set, get) => ({
   reset: () => resetStore(initState, set),
 });
 
-const useSelectAudienceStore = createZustand<ISelectAudienceState>(
+const useSelectAudienceStore = createStore<ISelectAudienceState>(
   'select-audience-store', selectAudienceStore,
 );
 

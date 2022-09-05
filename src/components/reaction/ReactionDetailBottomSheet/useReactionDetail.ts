@@ -1,4 +1,4 @@
-import { createZustand } from '~/store/utils';
+import { createStore } from '~/store/utils';
 import streamApi from '~/api/StreamApi';
 import { IParamGetReactionDetail } from '~/interfaces/IPost';
 
@@ -35,7 +35,7 @@ const useReactionDetail = (set) => ({
   },
 });
 
-const useReactionDetailStore = createZustand<GetReactionDetailState>(
+const useReactionDetailStore = createStore<GetReactionDetailState>(
   'useReactionDetail', useReactionDetail,
 );
 

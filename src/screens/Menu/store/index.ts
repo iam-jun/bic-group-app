@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import { createZustand, resetStore } from '~/store/utils';
+import { createStore, resetStore } from '~/store/utils';
 import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 
 const initState = {
@@ -33,7 +33,7 @@ const joinedCommunitiesStore = (set) => ({
   reset: () => resetStore(initState, set),
 });
 
-const useJoinedCommunitiesStore = createZustand<IJoinedCommunitiesState>(
+const useJoinedCommunitiesStore = createStore<IJoinedCommunitiesState>(
   'joined-communities-store', joinedCommunitiesStore,
 );
 

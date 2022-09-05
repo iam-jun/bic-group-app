@@ -1,6 +1,7 @@
 import chatSocketEvents from '~/constants/chatSocketEvents';
 import {
-  createStore, resetStore, withFlipper, withImmer, withPersist,
+  resetStore,
+  createStore,
 } from '../utils';
 import { handleChannelViewedEvent, handlePostedEvent, handlePostUnreadEvent } from './utils';
 import chatApi from '~/api/ChatApi';
@@ -67,14 +68,6 @@ const chatStore = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useChatStore = createStore<IChatState | any>(
-  withFlipper(
-    withImmer(
-      withPersist(
-        chatStore, { name: 'chat-store' },
-      ),
-    ), 'chat-store',
-  ),
-);
+const useChatStore = createStore<IChatState>('chat-store', chatStore);
 
 export default useChatStore;
