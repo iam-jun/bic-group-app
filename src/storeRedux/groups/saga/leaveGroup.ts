@@ -44,9 +44,6 @@ export default function* leaveGroup({
 
     const toastMessage: IToastMessage = {
       content: i18next.t('groups:modal_confirm_leave_group:success_message'),
-      props: {
-        type: 'success',
-      },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {

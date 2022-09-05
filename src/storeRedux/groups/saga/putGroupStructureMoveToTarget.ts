@@ -44,10 +44,6 @@ export default function* putGroupStructureMoveToTarget({
       navigation.goBack();
       const toastMessage: IToastMessage = {
         content: 'communities:group_structure:text_move_success',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
     } else {

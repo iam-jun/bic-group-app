@@ -88,7 +88,8 @@ import { faCirclePlay } from '@fortawesome/pro-regular-svg-icons/faCirclePlay';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 import { faBars as faBarsSolid } from '@fortawesome/pro-solid-svg-icons/faBars';
 import { faBug } from '@fortawesome/pro-regular-svg-icons/faBug';
-import { faWifiSlash } from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
+import { faWifi as faWifiSolid } from '@fortawesome/pro-solid-svg-icons/faWifi';
+import { faWifiSlash as faWifiSlashSolid } from '@fortawesome/pro-solid-svg-icons/faWifiSlash';
 import { faFileXmark } from '@fortawesome/pro-regular-svg-icons/faFileXmark';
 import { faFileExclamation } from '@fortawesome/pro-regular-svg-icons/faFileExclamation';
 import { faSuitcase } from '@fortawesome/pro-regular-svg-icons/faSuitcase';
@@ -149,6 +150,7 @@ import { faFileCsv } from '@fortawesome/pro-regular-svg-icons/faFileCsv';
 import { faFileLines } from '@fortawesome/pro-regular-svg-icons/faFileLines';
 import { faArrowDownToLine } from '@fortawesome/pro-regular-svg-icons/faArrowDownToLine';
 import { faCircleExclamation } from '@fortawesome/pro-regular-svg-icons/faCircleExclamation';
+import { faCircleExclamation as faCircleExclamationSolid } from '@fortawesome/pro-solid-svg-icons/faCircleExclamation';
 import { faThumbtack } from '@fortawesome/pro-regular-svg-icons/faThumbtack';
 import { faMobileScreen } from '@fortawesome/pro-regular-svg-icons/faMobileScreen';
 import { faSliders } from '@fortawesome/pro-regular-svg-icons/faSliders';
@@ -266,7 +268,8 @@ export const initFontAwesomeIcon = () => {
     faBars,
     faBarsSolid,
     faBug,
-    faWifiSlash,
+    faWifiSolid,
+    faWifiSlashSolid,
     faFileXmark,
     faFileExclamation,
     faSuitcase,
@@ -326,6 +329,7 @@ export const initFontAwesomeIcon = () => {
     faFileLines,
     faArrowDownToLine,
     faCircleExclamation,
+    faCircleExclamationSolid,
     faThumbtack,
     faMobileScreen,
     faSliders,
@@ -428,7 +432,8 @@ export const fontAwesomeIcons = {
   Bars: 'fa-regular fa-bars',
   BarsSolid: 'fa-solid fa-bars',
   Bug: 'fa-regular fa-bug',
-  WifiSlash: 'fa-regular fa-wifi-slash',
+  WifiSolid: 'fa-solid fa-wifi',
+  WifiSlashSolid: 'fa-solid fa-wifi-slash',
   FileXmark: 'fa-regular fa-file-xmark',
   FileExclamation: 'fa-regular fa-file-exclamation',
   Suitcase: 'fa-regular fa-suitcase',
@@ -488,6 +493,7 @@ export const fontAwesomeIcons = {
   FileLines: 'fa-regular fa-file-lines',
   ArrowDownToLine: 'fa-regular fa-arrow-down-to-line',
   CircleExclamation: 'fa-regular fa-circle-exclamation',
+  CircleExclamationSolid: 'fa-solid fa-circle-exclamation',
   Thumbtack: 'fa-regular fa-thumbtack',
   MobileScreen: 'fa-regular fa-mobile-screen',
   Sliders: 'fa-regular fa-sliders',

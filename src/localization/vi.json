@@ -120,7 +120,9 @@
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
     "all": "Tất cả",
-    "in": "trong"
+    "in": "trong",
+    "text_refresh": "Tải lại",
+    "text_undo": "Khôi phục"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -776,11 +778,12 @@
     "text_we_will_notify_you": "We will notify you when this features is ready."
   },
   "internet_connection": {
-    "online": "Đã có kết nối internet",
-    "offline": "Hiện bạn không có kết nối internet. Vui lòng kiểm tra lại",
+    "online": "Internet đã được khôi phục",
+    "offline": "Hiện không có kết nối internet",
     "system_issue": {
       "title": "Đã có lỗi xảy ra",
-      "desc": "Vui lòng đăng nhập lại"
+      "desc": "Vui lòng đăng nhập lại",
+      "toast": "Không thể thực hiện hành động này do lỗi hệ thống"
     }
   },
   "communities": {

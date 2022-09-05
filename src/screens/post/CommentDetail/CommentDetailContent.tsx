@@ -94,11 +94,7 @@ const CommentDetailContent = (props: any) => {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'post:text_comment_was_deleted',
-          props: {
-            type: 'error',
-            textProps: { useI18n: true },
-          },
-          toastType: 'normal',
+          props: { type: 'error' },
         }),
       );
       rootNavigation.replace(homeStack.postDetail, { post_id: postId });
@@ -106,15 +102,7 @@ const CommentDetailContent = (props: any) => {
     if (copyCommentError === API_ERROR_CODE.POST.postDeleted && !!notiId) {
       dispatch(postActions.deletePostLocal(id));
       dispatch(
-        modalActions.showHideToastMessage({
-          content: 'post:error_post_detail_deleted',
-          toastType: 'banner',
-          props: {
-            textProps: { useI18n: true },
-            type: 'informative',
-            leftIcon: 'iconCannotComment',
-          },
-        }),
+        modalActions.showHideToastMessage({ content: 'post:error_post_detail_deleted' }),
       );
       rootNavigation.popToTop();
     }
@@ -150,11 +138,7 @@ const CommentDetailContent = (props: any) => {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'error:not_found_desc',
-          props: {
-            type: 'error',
-            textProps: { useI18n: true },
-          },
-          toastType: 'normal',
+          props: { type: 'error' },
         }),
       );
       goHome();

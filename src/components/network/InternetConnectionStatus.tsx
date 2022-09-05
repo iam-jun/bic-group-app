@@ -1,40 +1,51 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
-import { useKeySelector } from '~/hooks/selector';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
-import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
+import { useKeySelector } from '~/hooks/selector';
+import dimension from '~/theme/dimension';
+import BaseToast, { BaseToastProps } from '~/baseComponents/Toast/BaseToast';
+import { spacing } from '~/theme';
+import noInternetActions from '~/storeRedux/network/actions';
 
 const InternetConnectionStatus = () => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
+  const theme = useTheme() as ExtendedTheme;
+  const { colors } = theme;
   const styles = createStyle();
   const firstRender = useRef(true);
+  const dispatch = useDispatch();
 
-  const [showBanner, setShowBanner] = useState<boolean>(false);
+  const [showToast, setShowToast] = useState<boolean>(false);
   const timeoutRef = useRef<any>();
 
-  const doShowBanner = () => {
-    setShowBanner(true);
+  const hideToast = () => setShowToast(false);
+
+  const checkInternetReacble = () => {
+    dispatch(noInternetActions.checkInternetReachable());
+  };
+
+  const doShowToast = () => {
+    setShowToast(true);
     if (isInternetReachable) {
       timeoutRef.current && clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(
-        () => {
-          setShowBanner(false);
-        }, 2000,
-      );
+      timeoutRef.current = setTimeout(hideToast, 4000);
     }
   };
 
   useEffect(
     () => {
       if (firstRender.current) {
-        if (!isInternetReachable) doShowBanner();
+        if (!isInternetReachable) doShowToast();
 
         firstRender.current = false;
         return;
       }
 
-      doShowBanner();
+      doShowToast();
     }, [isInternetReachable],
   );
 
@@ -44,36 +55,39 @@ const InternetConnectionStatus = () => {
     }, [],
   );
 
-  if (!showBanner) return null;
+  if (!showToast) return null;
 
-  return isInternetReachable ? (
-    <BannerMessage
-      style={styles.banner}
-      type="success"
-      leftIcon="Check"
-      textProps={{ useI18n: true }}
-    >
-      internet_connection:online
-    </BannerMessage>
-  ) : (
-    <BannerMessage
-      style={styles.banner}
-      leftIcon="WifiSlash"
-      textProps={{ useI18n: true }}
-    >
-      internet_connection:offline
-    </BannerMessage>
+  const toastProps: BaseToastProps = isInternetReachable ? {
+    type: 'success',
+    content: 'internet_connection:online',
+    icon: 'WifiSolid',
+  } : {
+    type: 'neutral',
+    content: 'internet_connection:offline',
+    icon: 'WifiSlashSolid',
+    buttonText: 'common:text_refresh',
+    onButtonPress: checkInternetReacble,
+  };
+
+  return (
+    <BaseToast
+      useI18n
+      style={styles.toast}
+      onPressClose={hideToast}
+      {...toastProps}
+    />
   );
 };
 
-const createStyle = () => StyleSheet.create({
-  banner: {
-    position: 'absolute',
-    bottom: 110,
-    alignSelf: 'center',
-    marginHorizontal: 12,
-    marginBottom: 4,
-  },
-});
+const createStyle = () => {
+  const insets = useSafeAreaInsets();
+
+  return StyleSheet.create({
+    toast: {
+      position: 'absolute',
+      bottom: dimension.bottomBarHeight + insets.bottom + spacing.margin.extraLarge,
+    },
+  });
+};
 
 export default InternetConnectionStatus;

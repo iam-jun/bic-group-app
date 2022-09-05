@@ -35,9 +35,6 @@ export default function* joinCommunity({
       yield put(groupsActions.getCommunityDetail({ communityId }));
       const toastMessage: IToastMessage = {
         content: `${i18next.t('groups:text_request_join_community')} ${communityName}`,
-        props: {
-          type: 'success',
-        },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
       return;
@@ -45,9 +42,6 @@ export default function* joinCommunity({
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_successfully_join_community')} ${communityName}`,
-      props: {
-        type: 'success',
-      },
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));
