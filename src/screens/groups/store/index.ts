@@ -1,4 +1,4 @@
-import { createZustand, resetZustand } from '~/store/utils';
+import { createZustand, resetStore } from '~/store/utils';
 import groupApi from '~/api/GroupApi';
 import IJoinedGroupTreeState from '~/screens/groups/store/Interface';
 
@@ -27,7 +27,7 @@ const joinedGroupTreeStore = (set) => ({
     });
   },
 
-  reset: () => resetZustand(initialState, set),
+  reset: () => resetStore(initialState, set),
 });
 
 const useJoinedGroupTreeStore = createZustand<IJoinedGroupTreeState>(

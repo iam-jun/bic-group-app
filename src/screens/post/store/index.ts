@@ -1,4 +1,4 @@
-import { createZustand, resetZustand } from '~/store/utils';
+import { createZustand, resetStore } from '~/store/utils';
 
 const initState: IPostState = {
 };
@@ -6,7 +6,7 @@ const initState: IPostState = {
 const postStore = (set, _) => ({
   ...initState,
 
-  reset: () => resetZustand(initState, set),
+  reset: () => resetStore(initState, set),
 });
 
 const usePostStore = createZustand<IPostState>(

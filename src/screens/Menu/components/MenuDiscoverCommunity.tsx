@@ -6,14 +6,14 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import useJoinedCommunitiesStore from '~/screens/Menu/store';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Button from '~/beinComponents/Button';
-import { ICommunity } from '~/interfaces/ICommunity';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { Avatar } from '~/baseComponents';
 import { avatarSizes } from '~/theme/dimension';
+import { ICommunity } from '~/interfaces/ICommunity';
+import useJoinedCommunitiesStore from '../store';
 
 const MAX_LENGTH = 10;
 

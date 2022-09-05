@@ -1,6 +1,6 @@
 import chatSocketEvents from '~/constants/chatSocketEvents';
 import {
-  createStore, resetZustand, withFlipper, withImmer, withPersist,
+  createStore, resetStore, withFlipper, withImmer, withPersist,
 } from '../utils';
 import { handleChannelViewedEvent, handlePostedEvent, handlePostUnreadEvent } from './utils';
 import chatApi from '~/api/ChatApi';
@@ -64,7 +64,7 @@ const chatStore = (set, get) => ({
     // })
   },
 
-  reset: () => resetZustand(initialState, set),
+  reset: () => resetStore(initialState, set),
 });
 
 const useChatStore = createStore<IChatState | any>(

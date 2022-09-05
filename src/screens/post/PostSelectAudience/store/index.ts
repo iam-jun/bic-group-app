@@ -1,6 +1,6 @@
-import { createZustand, resetZustand } from '~/store/utils';
+import { createZustand, resetStore } from '~/store/utils';
 import getAudienceTree from './actions/getAudienceTree';
-import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/Interface';
+import ISelectAudienceState from './Interface';
 import getAudienceSearch from './actions/getAudienceSearch';
 
 const initState: ISelectAudienceState = {
@@ -27,7 +27,7 @@ const selectAudienceStore = (set, get) => ({
   dispatchGetAudienceTree: getAudienceTree(set, get),
   dispatchGetAudienceSearch: getAudienceSearch(set, get),
 
-  reset: () => resetZustand(initState, set),
+  reset: () => resetStore(initState, set),
 });
 
 const useSelectAudienceStore = createZustand<ISelectAudienceState>(
