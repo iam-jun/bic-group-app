@@ -22,7 +22,7 @@ import ConvertHelper from '~/utils/convertHelper';
 import groupsActions from '~/storeRedux/groups/actions';
 import { uuidRegex } from '~/constants/commonRegex';
 import { notificationApiConfig } from '~/api/NotificationApi';
-import resetStore from '~/store/resetStore';
+import resetAllStores from '~/store/resetAllStores';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -32,7 +32,7 @@ const commonHeaders = {
 
 const _dispatchLogout = async () => {
   Store.store.dispatch(createAction(ActionTypes.UnauthorizedLogout));
-  resetStore();
+  resetAllStores();
 };
 
 const _dispatchSessionExpire = () => {

@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/ISelectAudienceState';
+import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/Interface';
 
 const getAudienceSearch = (set, _) => async (key: string) => {
   set((state: ISelectAudienceState) => {

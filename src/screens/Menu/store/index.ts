@@ -1,24 +1,15 @@
-import { ICommunity } from '~/interfaces/ICommunity';
 import groupApi from '~/api/GroupApi';
-import { createZustand } from '~/store/utils';
-
-export interface IJoinedCommunitiesState {
-  data?: ICommunity[],
-  loading: boolean,
-  getJoinedCommunities: (params?: {
-    previewMembers?: boolean;
-    managed?: boolean;
-  }) => void;
-  reset: () => void;
-}
+import { createStore, resetStore } from '~/store/utils';
+import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 
 const initState = {
   data: undefined,
   loading: false,
 };
 
-const useJoinedCommunities = (set) => ({
+const joinedCommunitiesStore = (set) => ({
   ...initState,
+
   getJoinedCommunities: (params: {
     previewMembers?: boolean;
     managed?: boolean;
@@ -38,19 +29,12 @@ const useJoinedCommunities = (set) => ({
         }, false, 'getJoinedCommunitiesError');
       });
   },
-  reset: () => {
-    set((state) => {
-      Object.keys(initState).forEach((k) => {
-        state[k] = initState[k];
-      });
-    },
-    false,
-    'reset');
-  },
+
+  reset: () => resetStore(initState, set),
 });
 
-const useJoinedCommunitiesStore = createZustand<IJoinedCommunitiesState>(
-  'useJoinedCommunities', useJoinedCommunities,
+const useJoinedCommunitiesStore = createStore<IJoinedCommunitiesState>(
+  'joined-communities-store', joinedCommunitiesStore,
 );
 
 export default useJoinedCommunitiesStore;
