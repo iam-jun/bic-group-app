@@ -131,7 +131,9 @@ const CommunityDetail = (props: any) => {
   };
 
   const onRightPress = () => {
-    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools, onPressCopyLink);
+    const headerMenuData = getHeaderMenu({
+      type: 'community', isMember, canSetting, dispatch, onPressAdminTools, onPressCopyLink,
+    });
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
