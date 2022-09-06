@@ -35,9 +35,9 @@ import {
 import { ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
-import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store';
 import SearchInput from '~/baseComponents/Input/SearchInput';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
+import useSelectAudienceStore from './store';
 
 export interface PostSelectAudienceProps {
   route?: {

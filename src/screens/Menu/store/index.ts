@@ -14,19 +14,19 @@ const joinedCommunitiesStore = (set) => ({
     previewMembers?: boolean;
     managed?: boolean;
   }) => {
-    set((state) => { state.loading = true; }, false, 'getJoinedCommunities');
+    set((state) => { state.loading = true; });
     groupApi.getJoinedCommunities(params)
       .then((response) => {
         set((state) => {
           state.loading = false;
           state.data = response.data || [];
-        }, false, 'getJoinedCommunitiesSuccess');
+        }, 'getJoinedCommunitiesSuccess');
       })
       .catch((error) => {
         console.warn('\x1b[35m🐣️ joinedCommunities error ', error, '\x1b[0m');
         set((state) => {
           state.loading = false;
-        }, false, 'getJoinedCommunitiesError');
+        }, 'getJoinedCommunitiesError');
       });
   },
 
