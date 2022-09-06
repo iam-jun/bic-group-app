@@ -122,7 +122,8 @@
     "all": "Tất cả",
     "in": "trong",
     "text_refresh": "Tải lại",
-    "text_undo": "Khôi phục"
+    "text_undo": "Khôi phục",
+    "text_search_result_empty": "Rất tiếc, chúng tối không tìm thấy kết quả của bạn."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -643,7 +644,7 @@
     "text_members_other": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
-    "text_search_member": "Tìm kiếm thành viên",
+    "text_search_member": "Tìm kiếm thành viên...",
     "group_menu": {
       "label_admin_tools": "Công cụ quản trị",
       "label_copy_group_link": "Sao chép đường dẫn nhóm",

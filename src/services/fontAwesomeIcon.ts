@@ -159,6 +159,7 @@ import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faRss } from '@fortawesome/pro-regular-svg-icons/faRss';
 import { faClapperboardPlay } from '@fortawesome/pro-regular-svg-icons/faClapperboardPlay';
 import { faMarkdown } from '@fortawesome/free-brands-svg-icons/faMarkdown';
+import { faCommentDots as faCommentDotsSolid } from '@fortawesome/pro-solid-svg-icons/faCommentDots';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -338,6 +339,7 @@ export const initFontAwesomeIcon = () => {
     faRss,
     faClapperboardPlay,
     faMarkdown,
+    faCommentDotsSolid,
   );
 };
 
@@ -502,6 +504,7 @@ export const fontAwesomeIcons = {
   RSS: 'fa-regular fa-rss',
   ClapperboardPlay: 'fa-regular fa-clapperboard-play',
   Markdown: 'fa-brands fa-markdown',
+  CommentDotsSolid: 'fa-solid fa-comment-dots',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
