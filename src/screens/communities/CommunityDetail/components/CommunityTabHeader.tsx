@@ -21,7 +21,7 @@ const CommunityTabHeader = ({ communityId, isMember }: CommunityTabHeaderProps) 
   };
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.communityMembers, { communityId });
+    rootNavigation.navigate(groupStack.communityMembers, { communityId, isMember });
   };
 
   return (

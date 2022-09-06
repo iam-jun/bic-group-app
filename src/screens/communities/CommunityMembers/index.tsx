@@ -18,6 +18,7 @@ import CommunityMemberRequests from './CommunityMemberRequests';
 import modalActions from '~/storeRedux/modal/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import { IconType } from '~/resources/icons';
 
 export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
@@ -25,7 +26,7 @@ export const MEMBER_TABS = [
 ];
 
 const CommunityMembers = ({ route }: any) => {
-  const { communityId, targetIndex } = route.params;
+  const { communityId, targetIndex, isMember } = route.params;
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -115,13 +116,17 @@ const CommunityMembers = ({ route }: any) => {
     buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
   };
 
+  const showSearchMember = isMember && {
+    icon: 'search' as IconType,
+    onPressIcon: onPressSearch,
+  };
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.gray5}>
       <Header
         titleTextProps={{ useI18n: true }}
         title="groups:title_members_other"
-        icon="search"
-        onPressIcon={onPressSearch}
+        {...showSearchMember}
         {...headerProps}
       />
 

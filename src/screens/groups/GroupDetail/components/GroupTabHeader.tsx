@@ -17,7 +17,7 @@ const GroupTabHeader = ({ groupId, isMember }: GroupTabHeaderProps) => {
   };
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
+    rootNavigation.navigate(groupStack.groupMembers, { groupId, isMember });
   };
 
   return (

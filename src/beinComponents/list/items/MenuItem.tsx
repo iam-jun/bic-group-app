@@ -21,7 +21,7 @@ interface MenuItemProps {
   notificationsBadgeProps?: NotificationsBadgeComponentProps;
   badgeColor?: string;
   testID?: string;
-  iconProps?: IconProps;
+  iconProps?: Partial<IconProps>;
   type?: string;
   title: string;
   subTitle?: string;

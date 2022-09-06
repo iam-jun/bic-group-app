@@ -9,6 +9,7 @@ import CommunityJoinCancelButton from './CommunityJoinCancelButton';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import { spacing } from '~/theme';
 
 interface PrivateWelcomeProps {
   onScroll: (e: any) => void;
@@ -47,10 +48,10 @@ const PrivateWelcome = ({
     >
       <View onLayout={onButtonLayout}>
         <InfoHeader infoDetail={infoDetail} isMember={isMember} />
-        <CommunityJoinCancelButton />
+        <CommunityJoinCancelButton style={styles.btnJoin} />
       </View>
 
-      <AboutContent />
+      <AboutContent showPrivate />
     </Animated.ScrollView>
   );
 };
@@ -62,6 +63,10 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       backgroundColor: colors.neutral,
+    },
+    btnJoin: {
+      paddingTop: spacing.padding.base,
+      paddingBottom: spacing.padding.large,
     },
   });
 };
