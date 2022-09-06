@@ -80,7 +80,7 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
             <Button.Raise
               icon="menu"
               size="small"
-              testID="member_item.icon_chat.button"
+              testID="member_item.icon_option.button"
               onPress={() => onPressMenu(item)}
             />
           )}

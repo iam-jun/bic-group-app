@@ -55,7 +55,7 @@ const MemberSearchResult = ({
           style={styles.noResultText}
           color={theme.colors.neutral40}
           useI18n
-          testID="member_search_results.no_results"
+          testID="member_search_result.no_results"
         >
           common:text_search_no_results
         </Text.BodyS>
