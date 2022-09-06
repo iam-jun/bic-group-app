@@ -27,6 +27,8 @@ import { useBaseHook } from '~/hooks';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { getMentionsFromContent } from '~/screens/post/helper/PostUtils';
 import { IGetFile } from '~/services/fileUploader';
+import useDraftPostStore from '../../DraftPost/store';
+import IDraftPostState from '../../DraftPost/store/Interface';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -89,7 +91,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   }
 
   if (draftPostId) {
-    const draftPosts = useKeySelector(postKeySelector.draft.posts) || [];
+    const draftPosts = useDraftPostStore((state:IDraftPostState) => state.posts) || [];
     initPostData = draftPosts?.find((item: IPostActivity) => item?.id === draftPostId);
   }
 

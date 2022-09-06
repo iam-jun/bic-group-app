@@ -10,7 +10,6 @@ import { useKeySelector } from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/storeRedux/groups/actions';
 import notificationsActions from '~/storeRedux/notification/actions';
-import postActions from '~/storeRedux/post/actions';
 import giphyActions from '~/storeRedux/giphy/actions';
 import { screens } from './screens';
 import { initPushTokenMessage } from '~/services/firebase';
@@ -38,7 +37,6 @@ const MainTabs = () => {
       }
 
       dispatch(groupsActions.getMyPermissions());
-      dispatch(postActions.getDraftPosts({}));
       dispatch(giphyActions.getAPIKey());
       dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
       dispatch(notificationsActions.registerPushToken());

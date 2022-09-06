@@ -22,6 +22,7 @@ import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
+import useDraftPostStore from '../DraftPost/store';
 
 export interface CreatePostProps {
   route?: {
@@ -41,6 +42,8 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const { colors } = theme;
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
+
+  const { dispatchGetDraftPosts } = useDraftPostStore();
 
   const useCreatePostData = useCreatePost({
     screenParams,
@@ -149,7 +152,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const onPressDraftPost = () => {
     if (isNewsfeed) {
-      dispatch(postActions.getDraftPosts({ isRefresh: true }));
+      dispatchGetDraftPosts({ isRefresh: true });
       rootNavigation.navigate(homeStack.draftPost);
     }
   };

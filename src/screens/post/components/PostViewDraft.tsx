@@ -25,6 +25,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 import BottomListItem from '~/components/BottomList/BottomListItem';
+import useDraftPostStore from '../DraftPost/store';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -47,6 +48,8 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
+
+  const { dispatchGetDraftPosts } = useDraftPostStore();
 
   const {
     id,
@@ -80,7 +83,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const refreshDraftPosts = () => {
     if (userId) {
       const payload: IPayloadGetDraftPosts = { isRefresh: true };
-      dispatch(postActions.getDraftPosts(payload));
+      dispatchGetDraftPosts(payload);
     }
   };
 
