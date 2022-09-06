@@ -1,7 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import Image from '~/beinComponents/Image';
@@ -15,15 +14,13 @@ import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import PostViewDraft from '~/screens/post/components/PostViewDraft';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
+import useDraftPostStore from './store';
 
 const DraftPost = () => {
   const [lossInternet, setLossInternet] = useState(false);
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -32,6 +29,14 @@ const DraftPost = () => {
   const userId = useUserIdAuth();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+
+  const {
+    posts: draftPosts = [], canLoadMore, refreshing, dispatchGetDraftPosts,
+  } = useDraftPostStore();
+
+  useEffect(() => {
+    getData(true);
+  }, []);
 
   useEffect(() => {
     if (isInternetReachable) {
@@ -44,16 +49,12 @@ const DraftPost = () => {
     }
   }, [isInternetReachable]);
 
-  // get draft post called from MainTabs
-  const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};
-  const { posts: draftPosts = [], canLoadMore, refreshing } = draftPostsData;
-
   const getData = (isRefreshing?: boolean) => {
     if (userId) {
       const payload: IPayloadGetDraftPosts = {
         isRefresh: isRefreshing,
       };
-      dispatch(postActions.getDraftPosts(payload));
+      dispatchGetDraftPosts(payload);
     }
   };
 
