@@ -152,7 +152,6 @@ Array [
               "borderColor": "#E3E6F2",
               "borderTopWidth": 1,
               "paddingBottom": 8,
-              "paddingTop": 8,
             },
             Array [
               null,
@@ -209,8 +208,489 @@ Array [
               value
             </TextInput>
           </View>
+          <View
+            style={
+              Object {
+                "display": "none",
+                "opacity": 0,
+                "transform": Array [
+                  Object {
+                    "translateX": 0,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "flexDirection": "row",
+                  "justifyContent": "flex-end",
+                  "minHeight": 48,
+                  "paddingHorizontal": 16,
+                }
+              }
+            >
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "opacity": 1,
+                  }
+                }
+                testID="comment_input.btn_icon"
+              >
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        Object {
+                          "marginRight": 16,
+                        },
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "opacity": 1,
+                  }
+                }
+                testID="comment_input.btn_image"
+              >
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        Object {
+                          "marginRight": 16,
+                        },
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "opacity": 1,
+                  }
+                }
+                testID="comment_input.btn_emoji"
+              >
+                <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View>
+                        <View
+                          onLayout={[Function]}
+                          style={
+                            Object {
+                              "backgroundColor": "transparent",
+                              "position": "relative",
+                            }
+                          }
+                        >
+                          <View
+                            collapsable={false}
+                            style={
+                              Object {
+                                "bottom": 0,
+                                "left": 0,
+                                "opacity": 1,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "center",
+                                  "backgroundColor": "#f9f9f9",
+                                  "height": 20,
+                                  "justifyContent": "center",
+                                  "width": 20,
+                                }
+                              }
+                              testID="Image__placeholder"
+                            />
+                          </View>
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "overflow": "hidden",
+                                },
+                                Object {
+                                  "height": 20,
+                                  "width": 20,
+                                },
+                              ]
+                            }
+                          >
+                            <FastImageView
+                              onFastImageError={[Function]}
+                              onFastImageLoadEnd={[Function]}
+                              resizeMode="cover"
+                              size={20}
+                              source={null}
+                              style={
+                                Object {
+                                  "bottom": 0,
+                                  "left": 0,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                }
+                              }
+                            />
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "borderLeftColor": "#E3E6F2",
+                    "borderLeftWidth": 2,
+                    "height": 20,
+                    "marginLeft": 16,
+                    "marginRight": 10,
+                  }
+                }
+              />
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 6,
+                    },
+                    undefined,
+                  ]
+                }
+                testID="comment_input.send"
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "borderRadius": 6,
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "paddingVertical": 4,
+                      },
+                      undefined,
+                      Object {
+                        "backgroundColor": "#F4EFFB",
+                        "height": 36,
+                        "paddingHorizontal": 12,
+                      },
+                    ]
+                  }
+                  testID="button.content"
+                >
+                  <View
+                    accessibilityState={
+                      Object {
+                        "disabled": true,
+                      }
+                    }
+                    accessible={true}
+                    collapsable={false}
+                    focusable={false}
+                    hitSlop={
+                      Object {
+                        "bottom": 10,
+                        "left": 10,
+                        "right": 10,
+                        "top": 10,
+                      }
+                    }
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "opacity": 1,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                          },
+                          undefined,
+                          Object {
+                            "backgroundColor": undefined,
+                          },
+                        ]
+                      }
+                    >
+                      <View
+                        style={
+                          Array [
+                            undefined,
+                            undefined,
+                            undefined,
+                          ]
+                        }
+                      >
+                        <View
+                          testID="button.icon"
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "left": 0,
+                  "opacity": undefined,
+                  "position": "absolute",
+                  "right": 0,
+                }
+              }
+              testID="comment_input_footer.mention_bar_container"
+            />
+          </View>
         </View>
-        <View>
+        <View
+          style={
+            Object {
+              "display": "flex",
+              "opacity": 0,
+              "transform": Array [
+                Object {
+                  "translateX": 0,
+                },
+              ],
+            }
+          }
+        >
           <View
             style={
               Object {

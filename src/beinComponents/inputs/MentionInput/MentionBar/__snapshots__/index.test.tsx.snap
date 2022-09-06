@@ -5,10 +5,11 @@ exports[`MentionBar component renders correctly 1`] = `
   style={
     Array [
       Object {
+        "alignItem": "center",
         "backgroundColor": "#FFFFFF",
         "borderColor": "#A4A9B7",
         "borderTopWidth": 1,
-        "minHeight": 44,
+        "paddingVertical": 8,
       },
       undefined,
     ]
@@ -16,7 +17,6 @@ exports[`MentionBar component renders correctly 1`] = `
   testID="mention_bar"
 >
   <RCTScrollView
-    ItemSeparatorComponent={[Function]}
     data={
       Array [
         Object {
@@ -59,11 +59,6 @@ exports[`MentionBar component renders correctly 1`] = `
         }
       >
         <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -77,15 +72,18 @@ exports[`MentionBar component renders correctly 1`] = `
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": "#F8F9FF",
-              "borderRadius": 16,
+              "backgroundColor": "#F4EFFB",
+              "borderRadius": 100,
               "flexDirection": "row",
-              "marginHorizontal": 8,
-              "marginVertical": 8,
+              "height": 28,
+              "justifyContent": "center",
+              "marginRight": 8,
               "opacity": 1,
+              "paddingLeft": 4,
+              "paddingRight": 8,
             }
           }
-          testID="mention_bar_item"
+          testID="mention_bar.item"
         >
           <View
             style={
@@ -95,7 +93,7 @@ exports[`MentionBar component renders correctly 1`] = `
                   "height": 24,
                   "width": 24,
                 },
-                undefined,
+                Object {},
               ]
             }
             testID="avatar"
@@ -103,16 +101,11 @@ exports[`MentionBar component renders correctly 1`] = `
             <View
               style={
                 Array [
-                  Array [
-                    Object {
-                      "borderRadius": 12,
-                      "height": 24,
-                      "width": 24,
-                    },
-                    Object {
-                      "borderRadius": 12,
-                    },
-                  ],
+                  Object {
+                    "borderRadius": 12,
+                    "height": 24,
+                    "width": 24,
+                  },
                   Object {},
                 ]
               }
@@ -163,6 +156,7 @@ exports[`MentionBar component renders correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
                         "borderRadius": 12,
                         "borderWidth": 2,
@@ -186,29 +180,12 @@ exports[`MentionBar component renders correctly 1`] = `
                         "top": 0,
                       }
                     }
-                    testID="mention_bar_item.avatar"
+                    testID="avatar.image"
                   />
                 </View>
               </View>
             </View>
           </View>
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#212745",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 13,
-                },
-                Object {},
-                Object {
-                  "marginLeft": 4,
-                  "marginRight": 8,
-                },
-              ]
-            }
-            testID="mention_bar_item.name"
-          />
         </View>
       </View>
     </View>

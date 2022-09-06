@@ -1,56 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GroupTree component renders correctly empty tree 1`] = `
-<RCTScrollView
-  horizontal={true}
-  showsHorizontalScrollIndicator={false}
->
-  <View>
-    <View
-      style={
-        Object {
-          "minHeight": 51,
-        }
-      }
-    />
-  </View>
-</RCTScrollView>
+<View
+  style={Object {}}
+/>
 `;
 
 exports[`GroupTree component renders nothing with invalid data 1`] = `
-<RCTScrollView
-  horizontal={true}
-  showsHorizontalScrollIndicator={false}
->
-  <View>
-    <View
-      style={
-        Object {
-          "minHeight": 51,
-        }
-      }
-    />
-  </View>
-</RCTScrollView>
+<View
+  style={Object {}}
+/>
 `;
 
 exports[`GroupTree component should render correctly uncheck item 1`] = `
-<RCTScrollView
-  horizontal={true}
-  showsHorizontalScrollIndicator={false}
+<View
+  style={Object {}}
 >
-  <View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="group_item.container"
+  >
     <View
       style={
         Object {
-          "minHeight": 51,
+          "flexDirection": "row",
         }
       }
+      testID="group_item"
     >
       <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -60,1399 +68,346 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           Object {
+            "backgroundColor": "rgba(255,255,255,0)",
+            "flexDirection": "row",
+            "height": "100%",
+            "marginHorizontal": 8,
             "opacity": 1,
+            "width": 1,
           }
         }
-        testID="group_item.container"
+        testID="group_item.button_wrapper"
       >
         <View
           style={
-            Object {
-              "flexDirection": "row",
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
           }
-          testID="group_item"
+          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "rgba(255,255,255,0)",
-                "flexDirection": "row",
-                "height": "100%",
-                "marginHorizontal": 8,
-                "opacity": 1,
-                "width": 1,
+                "alignSelf": "center",
+                "backgroundColor": "#FFFFFF",
+                "marginLeft": -6,
+                "paddingVertical": 4,
               }
             }
-            testID="group_item.button_wrapper"
           >
             <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  undefined,
-                ]
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
               }
-              testID="button_wrapper.content"
-            >
-              <View
-                style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "#FFFFFF",
-                    "marginLeft": -6,
-                    "paddingVertical": 4,
-                  }
-                }
-              >
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View
-                        testID="group_item.button_wrapper.icon"
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Array [
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
                 Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "paddingLeft": 8,
-                  "paddingVertical": 4,
-                },
-                undefined,
-              ]
-            }
-          >
-            <View>
-              <View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "borderRadius": 4,
-                        "height": 40,
-                        "width": 40,
-                      },
-                      undefined,
-                    ]
-                  }
-                  testID="avatar"
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                        Object {
-                          "backgroundColor": "#A4A9B7",
-                        },
-                      ]
-                    }
-                    testID="avatar_container"
-                  >
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "transparent",
-                          "position": "relative",
-                        }
-                      }
-                    >
-                      <View
-                        collapsable={false}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "opacity": 1,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#f9f9f9",
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "justifyContent": "center",
-                              "width": 40,
-                            }
-                          }
-                          testID="Image__placeholder"
-                        />
-                      </View>
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "overflow": "hidden",
-                            },
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "width": 40,
-                            },
-                          ]
-                        }
-                      >
-                        <FastImageView
-                          onFastImageError={[Function]}
-                          onFastImageLoadEnd={[Function]}
-                          resizeMode="cover"
-                          source={null}
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                            }
-                          }
-                          testID="avatar.image"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
                 }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "bottom": -3,
-                    "flexDirection": "row",
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": -6,
-                  }
-                }
-                testID="group_item.check_box"
-              >
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "#FFFFFF",
-                      "bottom": 2,
-                      "left": 2,
-                      "position": "absolute",
-                      "right": 2,
-                      "top": 2,
-                    }
-                  }
-                />
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "flex": 1,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 12,
+                  "opacity": 1,
                 }
               }
             >
-              <Text
-                numberOfLines={2}
+              <View
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "alignItems": "center",
+                      "flexDirection": "row",
                     },
-                    Object {},
+                    undefined,
                     Object {
-                      "maxWidth": 200,
-                      "paddingTop": 2,
+                      "backgroundColor": undefined,
                     },
                   ]
                 }
               >
-                EVOL Community
-              </Text>
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  }
-                }
-              >
                 <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-                <Text
                   style={
                     Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 13,
-                      },
-                      Object {
-                        "color": "#767D93",
-                      },
-                      Object {
-                        "marginHorizontal": 4,
-                      },
+                      undefined,
+                      undefined,
+                      undefined,
                     ]
                   }
                 >
-                  25
-                </Text>
+                  <View
+                    testID="group_item.button_wrapper.icon"
+                  />
+                </View>
               </View>
             </View>
           </View>
         </View>
       </View>
       <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="group_item.container"
-      >
-        <View
-          style={
+          Array [
             Object {
+              "flex": 1,
               "flexDirection": "row",
-            }
-          }
-          testID="group_item"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "#E3E6F2",
-                  "height": "100%",
-                  "marginHorizontal": 8,
-                  "width": 1,
-                },
-              ]
-            }
-            testID="group_item.ui_level"
-          />
-          <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "backgroundColor": "rgba(255,255,255,0)",
-                "flexDirection": "row",
-                "height": "100%",
-                "marginHorizontal": 8,
-                "opacity": 1,
-                "width": 1,
-              }
-            }
-            testID="group_item.button_wrapper"
-          >
+              "paddingLeft": 8,
+              "paddingVertical": 4,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View>
+          <View>
             <View
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
                   },
                   undefined,
                 ]
               }
-              testID="button_wrapper.content"
+              testID="avatar"
             >
               <View
-                style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "#FFFFFF",
-                    "marginLeft": -6,
-                    "paddingVertical": 4,
-                  }
-                }
-              >
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View
-                        testID="group_item.button_wrapper.icon"
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "paddingLeft": 8,
-                  "paddingVertical": 4,
-                },
-                undefined,
-              ]
-            }
-          >
-            <View>
-              <View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "borderRadius": 4,
-                        "height": 40,
-                        "width": 40,
-                      },
-                      undefined,
-                    ]
-                  }
-                  testID="avatar"
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                        Object {
-                          "backgroundColor": "#A4A9B7",
-                        },
-                      ]
-                    }
-                    testID="avatar_container"
-                  >
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "transparent",
-                          "position": "relative",
-                        }
-                      }
-                    >
-                      <View
-                        collapsable={false}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "opacity": 1,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#f9f9f9",
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "justifyContent": "center",
-                              "width": 40,
-                            }
-                          }
-                          testID="Image__placeholder"
-                        />
-                      </View>
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "overflow": "hidden",
-                            },
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "width": 40,
-                            },
-                          ]
-                        }
-                      >
-                        <FastImageView
-                          onFastImageError={[Function]}
-                          onFastImageLoadEnd={[Function]}
-                          resizeMode="cover"
-                          source={null}
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                            }
-                          }
-                          testID="avatar.image"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "bottom": -3,
-                    "flexDirection": "row",
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": -6,
-                  }
-                }
-                testID="group_item.check_box"
-              >
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "#FFFFFF",
-                      "bottom": 2,
-                      "left": 2,
-                      "position": "absolute",
-                      "right": 2,
-                      "top": 2,
-                    }
-                  }
-                />
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
-              <Text
-                numberOfLines={2}
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
                     },
-                    Object {},
                     Object {
-                      "maxWidth": 200,
-                      "paddingTop": 2,
+                      "backgroundColor": "#A4A9B7",
                     },
                   ]
                 }
-              >
-                Bein Community
-              </Text>
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  }
-                }
+                testID="avatar_container"
               >
                 <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                  onLayout={[Function]}
                   style={
                     Object {
-                      "opacity": 1,
+                      "backgroundColor": "transparent",
+                      "position": "relative",
                     }
                   }
                 >
                   <View
+                    collapsable={false}
                     style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
                     }
                   >
                     <View
                       style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
                       }
-                    >
-                      <View />
-                    </View>
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
                   </View>
                 </View>
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 13,
-                      },
-                      Object {
-                        "color": "#767D93",
-                      },
-                      Object {
-                        "marginHorizontal": 4,
-                      },
-                    ]
-                  }
-                >
-                  19
-                </Text>
               </View>
             </View>
           </View>
         </View>
-      </View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="group_item.container"
-      >
         <View
           style={
             Object {
-              "flexDirection": "row",
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 12,
             }
           }
-          testID="group_item"
         >
-          <View
+          <Text
+            numberOfLines={2}
             style={
               Array [
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "height": "100%",
-                  "marginHorizontal": 8,
-                  "width": 1,
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
                 },
-              ]
-            }
-            testID="group_item.ui_level"
-          />
-          <View
-            style={
-              Array [
+                Object {},
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "height": "100%",
-                  "marginHorizontal": 8,
-                  "width": 1,
+                  "justifyContent": "center",
+                  "width": "100%",
                 },
               ]
             }
-            testID="group_item.ui_level"
-          />
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "backgroundColor": "rgba(255,255,255,0)",
-                "flexDirection": "row",
-                "height": "100%",
-                "marginHorizontal": 8,
-                "opacity": 1,
-                "width": 1,
-              }
-            }
-            testID="group_item.button_wrapper"
           >
+            EVOL Community
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "opacity": 1,
+            }
+          }
+          testID="group_item.check_box"
+        >
+          <View>
             <View
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 2,
+                    "left": 2,
+                    "position": "absolute",
+                    "right": 2,
+                    "top": 2,
                   },
                   undefined,
                 ]
               }
-              testID="button_wrapper.content"
             />
-          </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "paddingLeft": 8,
-                  "paddingVertical": 4,
-                },
-                undefined,
-              ]
-            }
-          >
-            <View>
-              <View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "borderRadius": 4,
-                        "height": 40,
-                        "width": 40,
-                      },
-                      undefined,
-                    ]
-                  }
-                  testID="avatar"
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                        Object {
-                          "backgroundColor": "#A4A9B7",
-                        },
-                      ]
-                    }
-                    testID="avatar_container"
-                  >
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "transparent",
-                          "position": "relative",
-                        }
-                      }
-                    >
-                      <View
-                        collapsable={false}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "opacity": 1,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#f9f9f9",
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "justifyContent": "center",
-                              "width": 40,
-                            }
-                          }
-                          testID="Image__placeholder"
-                        />
-                      </View>
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "overflow": "hidden",
-                            },
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "width": 40,
-                            },
-                          ]
-                        }
-                      >
-                        <FastImageView
-                          onFastImageError={[Function]}
-                          onFastImageLoadEnd={[Function]}
-                          resizeMode="cover"
-                          source={null}
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                            }
-                          }
-                          testID="avatar.image"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "bottom": -3,
-                    "flexDirection": "row",
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": -6,
-                  }
-                }
-                testID="group_item.check_box"
-              >
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "#FFFFFF",
-                      "bottom": 2,
-                      "left": 2,
-                      "position": "absolute",
-                      "right": 2,
-                      "top": 2,
-                    }
-                  }
-                />
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
             <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "flex": 1,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 12,
+                  "opacity": 1,
                 }
               }
             >
-              <Text
-                numberOfLines={2}
+              <View
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "alignItems": "center",
+                      "flexDirection": "row",
                     },
-                    Object {},
+                    undefined,
                     Object {
-                      "maxWidth": 200,
-                      "paddingTop": 2,
+                      "backgroundColor": undefined,
                     },
                   ]
                 }
               >
-                Bein Product Team
-              </Text>
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  }
-                }
-              >
                 <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-                <Text
                   style={
                     Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 13,
-                      },
-                      Object {
-                        "color": "#767D93",
-                      },
-                      Object {
-                        "marginHorizontal": 4,
-                      },
+                      undefined,
+                      undefined,
+                      undefined,
                     ]
                   }
                 >
-                  18
-                </Text>
+                  <View />
+                </View>
               </View>
             </View>
           </View>
@@ -1460,26 +415,822 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
       </View>
     </View>
   </View>
-</RCTScrollView>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="group_item.container"
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+      testID="group_item"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#E3E6F2",
+              "height": "100%",
+              "marginHorizontal": 8,
+              "width": 1,
+            },
+          ]
+        }
+        testID="group_item.ui_level"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "rgba(255,255,255,0)",
+            "flexDirection": "row",
+            "height": "100%",
+            "marginHorizontal": 8,
+            "opacity": 1,
+            "width": 1,
+          }
+        }
+        testID="group_item.button_wrapper"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="button_wrapper.content"
+        >
+          <View
+            style={
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "#FFFFFF",
+                "marginLeft": -6,
+                "paddingVertical": 4,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    testID="group_item.button_wrapper.icon"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "flexDirection": "row",
+              "paddingLeft": 8,
+              "paddingVertical": 4,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View>
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  undefined,
+                ]
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "backgroundColor": "#A4A9B7",
+                    },
+                  ]
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    collapsable={false}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 12,
+            }
+          }
+        >
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
+                },
+                Object {},
+                Object {
+                  "justifyContent": "center",
+                  "width": "100%",
+                },
+              ]
+            }
+          >
+            Bein Community
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "opacity": 1,
+            }
+          }
+          testID="group_item.check_box"
+        >
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 2,
+                    "left": 2,
+                    "position": "absolute",
+                    "right": 2,
+                    "top": 2,
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="group_item.container"
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+      testID="group_item"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#E3E6F2",
+              "height": "100%",
+              "marginHorizontal": 8,
+              "width": 1,
+            },
+          ]
+        }
+        testID="group_item.ui_level"
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#E3E6F2",
+              "height": "100%",
+              "marginHorizontal": 8,
+              "width": 1,
+            },
+          ]
+        }
+        testID="group_item.ui_level"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "rgba(255,255,255,0)",
+            "flexDirection": "row",
+            "height": "100%",
+            "marginHorizontal": 8,
+            "opacity": 1,
+            "width": 1,
+          }
+        }
+        testID="group_item.button_wrapper"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="button_wrapper.content"
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "flexDirection": "row",
+              "paddingLeft": 8,
+              "paddingVertical": 4,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View>
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  undefined,
+                ]
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "backgroundColor": "#A4A9B7",
+                    },
+                  ]
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    collapsable={false}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 12,
+            }
+          }
+        >
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
+                },
+                Object {},
+                Object {
+                  "justifyContent": "center",
+                  "width": "100%",
+                },
+              ]
+            }
+          >
+            Bein Product Team
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "opacity": 1,
+            }
+          }
+          testID="group_item.check_box"
+        >
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 2,
+                    "left": 2,
+                    "position": "absolute",
+                    "right": 2,
+                    "top": 2,
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
 `;
 
 exports[`GroupTree component should render correctly uncheck item 2`] = `
-<RCTScrollView
-  horizontal={true}
-  showsHorizontalScrollIndicator={false}
+<View
+  style={Object {}}
 >
-  <View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="group_item.container"
+  >
     <View
       style={
         Object {
-          "minHeight": 51,
+          "flexDirection": "row",
         }
       }
+      testID="group_item"
     >
       <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1489,1399 +1240,346 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
         onStartShouldSetResponder={[Function]}
         style={
           Object {
+            "backgroundColor": "rgba(255,255,255,0)",
+            "flexDirection": "row",
+            "height": "100%",
+            "marginHorizontal": 8,
             "opacity": 1,
+            "width": 1,
           }
         }
-        testID="group_item.container"
+        testID="group_item.button_wrapper"
       >
         <View
           style={
-            Object {
-              "flexDirection": "row",
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
           }
-          testID="group_item"
+          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "rgba(255,255,255,0)",
-                "flexDirection": "row",
-                "height": "100%",
-                "marginHorizontal": 8,
-                "opacity": 1,
-                "width": 1,
+                "alignSelf": "center",
+                "backgroundColor": "#FFFFFF",
+                "marginLeft": -6,
+                "paddingVertical": 4,
               }
             }
-            testID="group_item.button_wrapper"
           >
             <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  undefined,
-                ]
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
               }
-              testID="button_wrapper.content"
-            >
-              <View
-                style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "#FFFFFF",
-                    "marginLeft": -6,
-                    "paddingVertical": 4,
-                  }
-                }
-              >
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View
-                        testID="group_item.button_wrapper.icon"
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Array [
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
                 Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "paddingLeft": 8,
-                  "paddingVertical": 4,
-                },
-                undefined,
-              ]
-            }
-          >
-            <View>
-              <View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "borderRadius": 4,
-                        "height": 40,
-                        "width": 40,
-                      },
-                      undefined,
-                    ]
-                  }
-                  testID="avatar"
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                        Object {
-                          "backgroundColor": "#A4A9B7",
-                        },
-                      ]
-                    }
-                    testID="avatar_container"
-                  >
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "transparent",
-                          "position": "relative",
-                        }
-                      }
-                    >
-                      <View
-                        collapsable={false}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "opacity": 1,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#f9f9f9",
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "justifyContent": "center",
-                              "width": 40,
-                            }
-                          }
-                          testID="Image__placeholder"
-                        />
-                      </View>
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "overflow": "hidden",
-                            },
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "width": 40,
-                            },
-                          ]
-                        }
-                      >
-                        <FastImageView
-                          onFastImageError={[Function]}
-                          onFastImageLoadEnd={[Function]}
-                          resizeMode="cover"
-                          source={null}
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                            }
-                          }
-                          testID="avatar.image"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
                 }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "bottom": -3,
-                    "flexDirection": "row",
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": -6,
-                  }
-                }
-                testID="group_item.check_box"
-              >
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "#FFFFFF",
-                      "bottom": 2,
-                      "left": 2,
-                      "position": "absolute",
-                      "right": 2,
-                      "top": 2,
-                    }
-                  }
-                />
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "flex": 1,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 12,
+                  "opacity": 1,
                 }
               }
             >
-              <Text
-                numberOfLines={2}
+              <View
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "alignItems": "center",
+                      "flexDirection": "row",
                     },
-                    Object {},
+                    undefined,
                     Object {
-                      "maxWidth": 200,
-                      "paddingTop": 2,
+                      "backgroundColor": undefined,
                     },
                   ]
                 }
               >
-                EVOL Community
-              </Text>
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  }
-                }
-              >
                 <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-                <Text
                   style={
                     Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 13,
-                      },
-                      Object {
-                        "color": "#767D93",
-                      },
-                      Object {
-                        "marginHorizontal": 4,
-                      },
+                      undefined,
+                      undefined,
+                      undefined,
                     ]
                   }
                 >
-                  25
-                </Text>
+                  <View
+                    testID="group_item.button_wrapper.icon"
+                  />
+                </View>
               </View>
             </View>
           </View>
         </View>
       </View>
       <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="group_item.container"
-      >
-        <View
-          style={
+          Array [
             Object {
+              "flex": 1,
               "flexDirection": "row",
-            }
-          }
-          testID="group_item"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "#E3E6F2",
-                  "height": "100%",
-                  "marginHorizontal": 8,
-                  "width": 1,
-                },
-              ]
-            }
-            testID="group_item.ui_level"
-          />
-          <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "backgroundColor": "rgba(255,255,255,0)",
-                "flexDirection": "row",
-                "height": "100%",
-                "marginHorizontal": 8,
-                "opacity": 1,
-                "width": 1,
-              }
-            }
-            testID="group_item.button_wrapper"
-          >
+              "paddingLeft": 8,
+              "paddingVertical": 4,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View>
+          <View>
             <View
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
                   },
                   undefined,
                 ]
               }
-              testID="button_wrapper.content"
+              testID="avatar"
             >
               <View
-                style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "#FFFFFF",
-                    "marginLeft": -6,
-                    "paddingVertical": 4,
-                  }
-                }
-              >
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View
-                        testID="group_item.button_wrapper.icon"
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "paddingLeft": 8,
-                  "paddingVertical": 4,
-                },
-                undefined,
-              ]
-            }
-          >
-            <View>
-              <View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "borderRadius": 4,
-                        "height": 40,
-                        "width": 40,
-                      },
-                      undefined,
-                    ]
-                  }
-                  testID="avatar"
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                        Object {
-                          "backgroundColor": "#A4A9B7",
-                        },
-                      ]
-                    }
-                    testID="avatar_container"
-                  >
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "transparent",
-                          "position": "relative",
-                        }
-                      }
-                    >
-                      <View
-                        collapsable={false}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "opacity": 1,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#f9f9f9",
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "justifyContent": "center",
-                              "width": 40,
-                            }
-                          }
-                          testID="Image__placeholder"
-                        />
-                      </View>
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "overflow": "hidden",
-                            },
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "width": 40,
-                            },
-                          ]
-                        }
-                      >
-                        <FastImageView
-                          onFastImageError={[Function]}
-                          onFastImageLoadEnd={[Function]}
-                          resizeMode="cover"
-                          source={null}
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                            }
-                          }
-                          testID="avatar.image"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "bottom": -3,
-                    "flexDirection": "row",
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": -6,
-                  }
-                }
-                testID="group_item.check_box"
-              >
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "#FFFFFF",
-                      "bottom": 2,
-                      "left": 2,
-                      "position": "absolute",
-                      "right": 2,
-                      "top": 2,
-                    }
-                  }
-                />
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
-              <Text
-                numberOfLines={2}
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
                     },
-                    Object {},
                     Object {
-                      "maxWidth": 200,
-                      "paddingTop": 2,
+                      "backgroundColor": "#A4A9B7",
                     },
                   ]
                 }
-              >
-                Bein Community
-              </Text>
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  }
-                }
+                testID="avatar_container"
               >
                 <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                  onLayout={[Function]}
                   style={
                     Object {
-                      "opacity": 1,
+                      "backgroundColor": "transparent",
+                      "position": "relative",
                     }
                   }
                 >
                   <View
+                    collapsable={false}
                     style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
                     }
                   >
                     <View
                       style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
                       }
-                    >
-                      <View />
-                    </View>
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
                   </View>
                 </View>
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 13,
-                      },
-                      Object {
-                        "color": "#767D93",
-                      },
-                      Object {
-                        "marginHorizontal": 4,
-                      },
-                    ]
-                  }
-                >
-                  19
-                </Text>
               </View>
             </View>
           </View>
         </View>
-      </View>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="group_item.container"
-      >
         <View
           style={
             Object {
-              "flexDirection": "row",
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 12,
             }
           }
-          testID="group_item"
         >
-          <View
+          <Text
+            numberOfLines={2}
             style={
               Array [
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "height": "100%",
-                  "marginHorizontal": 8,
-                  "width": 1,
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
                 },
-              ]
-            }
-            testID="group_item.ui_level"
-          />
-          <View
-            style={
-              Array [
+                Object {},
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "height": "100%",
-                  "marginHorizontal": 8,
-                  "width": 1,
+                  "justifyContent": "center",
+                  "width": "100%",
                 },
               ]
             }
-            testID="group_item.ui_level"
-          />
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "backgroundColor": "rgba(255,255,255,0)",
-                "flexDirection": "row",
-                "height": "100%",
-                "marginHorizontal": 8,
-                "opacity": 1,
-                "width": 1,
-              }
-            }
-            testID="group_item.button_wrapper"
           >
+            EVOL Community
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "opacity": 1,
+            }
+          }
+          testID="group_item.check_box"
+        >
+          <View>
             <View
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 2,
+                    "left": 2,
+                    "position": "absolute",
+                    "right": 2,
+                    "top": 2,
                   },
                   undefined,
                 ]
               }
-              testID="button_wrapper.content"
             />
-          </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "paddingLeft": 8,
-                  "paddingVertical": 4,
-                },
-                undefined,
-              ]
-            }
-          >
-            <View>
-              <View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "borderRadius": 4,
-                        "height": 40,
-                        "width": 40,
-                      },
-                      undefined,
-                    ]
-                  }
-                  testID="avatar"
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                        Object {
-                          "backgroundColor": "#A4A9B7",
-                        },
-                      ]
-                    }
-                    testID="avatar_container"
-                  >
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "transparent",
-                          "position": "relative",
-                        }
-                      }
-                    >
-                      <View
-                        collapsable={false}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "opacity": 1,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#f9f9f9",
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "justifyContent": "center",
-                              "width": 40,
-                            }
-                          }
-                          testID="Image__placeholder"
-                        />
-                      </View>
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "overflow": "hidden",
-                            },
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "width": 40,
-                            },
-                          ]
-                        }
-                      >
-                        <FastImageView
-                          onFastImageError={[Function]}
-                          onFastImageLoadEnd={[Function]}
-                          resizeMode="cover"
-                          source={null}
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                            }
-                          }
-                          testID="avatar.image"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": false,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "bottom": -3,
-                    "flexDirection": "row",
-                    "opacity": 1,
-                    "position": "absolute",
-                    "right": -6,
-                  }
-                }
-                testID="group_item.check_box"
-              >
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "#FFFFFF",
-                      "bottom": 2,
-                      "left": 2,
-                      "position": "absolute",
-                      "right": 2,
-                      "top": 2,
-                    }
-                  }
-                />
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
             <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "flex": 1,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 12,
+                  "opacity": 1,
                 }
               }
             >
-              <Text
-                numberOfLines={2}
+              <View
                 style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "alignItems": "center",
+                      "flexDirection": "row",
                     },
-                    Object {},
+                    undefined,
                     Object {
-                      "maxWidth": 200,
-                      "paddingTop": 2,
+                      "backgroundColor": undefined,
                     },
                   ]
                 }
               >
-                Bein Product Team
-              </Text>
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  }
-                }
-              >
                 <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-                <Text
                   style={
                     Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 13,
-                      },
-                      Object {
-                        "color": "#767D93",
-                      },
-                      Object {
-                        "marginHorizontal": 4,
-                      },
+                      undefined,
+                      undefined,
+                      undefined,
                     ]
                   }
                 >
-                  18
-                </Text>
+                  <View />
+                </View>
               </View>
             </View>
           </View>
@@ -2889,26 +1587,822 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
       </View>
     </View>
   </View>
-</RCTScrollView>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="group_item.container"
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+      testID="group_item"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#E3E6F2",
+              "height": "100%",
+              "marginHorizontal": 8,
+              "width": 1,
+            },
+          ]
+        }
+        testID="group_item.ui_level"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "rgba(255,255,255,0)",
+            "flexDirection": "row",
+            "height": "100%",
+            "marginHorizontal": 8,
+            "opacity": 1,
+            "width": 1,
+          }
+        }
+        testID="group_item.button_wrapper"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="button_wrapper.content"
+        >
+          <View
+            style={
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "#FFFFFF",
+                "marginLeft": -6,
+                "paddingVertical": 4,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    testID="group_item.button_wrapper.icon"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "flexDirection": "row",
+              "paddingLeft": 8,
+              "paddingVertical": 4,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View>
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  undefined,
+                ]
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "backgroundColor": "#A4A9B7",
+                    },
+                  ]
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    collapsable={false}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 12,
+            }
+          }
+        >
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
+                },
+                Object {},
+                Object {
+                  "justifyContent": "center",
+                  "width": "100%",
+                },
+              ]
+            }
+          >
+            Bein Community
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "opacity": 1,
+            }
+          }
+          testID="group_item.check_box"
+        >
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 2,
+                    "left": 2,
+                    "position": "absolute",
+                    "right": 2,
+                    "top": 2,
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="group_item.container"
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+      testID="group_item"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#E3E6F2",
+              "height": "100%",
+              "marginHorizontal": 8,
+              "width": 1,
+            },
+          ]
+        }
+        testID="group_item.ui_level"
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#E3E6F2",
+              "height": "100%",
+              "marginHorizontal": 8,
+              "width": 1,
+            },
+          ]
+        }
+        testID="group_item.ui_level"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "rgba(255,255,255,0)",
+            "flexDirection": "row",
+            "height": "100%",
+            "marginHorizontal": 8,
+            "opacity": 1,
+            "width": 1,
+          }
+        }
+        testID="group_item.button_wrapper"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="button_wrapper.content"
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "flexDirection": "row",
+              "paddingLeft": 8,
+              "paddingVertical": 4,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View>
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  undefined,
+                ]
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "backgroundColor": "#A4A9B7",
+                    },
+                  ]
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    collapsable={false}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 12,
+            }
+          }
+        >
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
+                },
+                Object {},
+                Object {
+                  "justifyContent": "center",
+                  "width": "100%",
+                },
+              ]
+            }
+          >
+            Bein Product Team
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "opacity": 1,
+            }
+          }
+          testID="group_item.check_box"
+        >
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 2,
+                    "left": 2,
+                    "position": "absolute",
+                    "right": 2,
+                    "top": 2,
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
 `;
 
 exports[`GroupTree component should renders correctly toggle group 1`] = `
-<RCTScrollView
-  horizontal={true}
-  showsHorizontalScrollIndicator={false}
+<View
+  style={Object {}}
 >
-  <View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="group_item.container"
+  >
     <View
       style={
         Object {
-          "minHeight": 51,
+          "flexDirection": "row",
         }
       }
+      testID="group_item"
     >
       <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2918,377 +2412,252 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           Object {
+            "backgroundColor": "rgba(255,255,255,0)",
+            "flexDirection": "row",
+            "height": "100%",
+            "marginHorizontal": 8,
             "opacity": 1,
+            "width": 1,
           }
         }
-        testID="group_item.container"
+        testID="group_item.button_wrapper"
       >
         <View
           style={
-            Object {
-              "flexDirection": "row",
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
           }
-          testID="group_item"
+          testID="button_wrapper.content"
         >
           <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "rgba(255,255,255,0)",
-                "flexDirection": "row",
-                "height": "100%",
-                "marginHorizontal": 8,
-                "opacity": 1,
-                "width": 1,
+                "alignSelf": "center",
+                "backgroundColor": "#FFFFFF",
+                "marginLeft": -6,
+                "paddingVertical": 4,
               }
             }
-            testID="group_item.button_wrapper"
           >
             <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
-                  undefined,
-                ]
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
               }
-              testID="button_wrapper.content"
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "#FFFFFF",
-                    "marginLeft": -6,
-                    "paddingVertical": 4,
-                  }
-                }
-              >
-                <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View
-                        testID="group_item.button_wrapper.icon"
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "paddingLeft": 8,
-                  "paddingVertical": 4,
-                },
-                undefined,
-              ]
-            }
-          >
-            <View>
-              <View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "borderRadius": 4,
-                        "height": 40,
-                        "width": 40,
-                      },
-                      undefined,
-                    ]
-                  }
-                  testID="avatar"
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                        Object {
-                          "backgroundColor": "#A4A9B7",
-                        },
-                      ]
-                    }
-                    testID="avatar_container"
-                  >
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "transparent",
-                          "position": "relative",
-                        }
-                      }
-                    >
-                      <View
-                        collapsable={false}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "opacity": 1,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      >
-                        <View
-                          style={
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#f9f9f9",
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "justifyContent": "center",
-                              "width": 40,
-                            }
-                          }
-                          testID="Image__placeholder"
-                        />
-                      </View>
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "overflow": "hidden",
-                            },
-                            Object {
-                              "borderColor": "#F2F5F8",
-                              "borderRadius": 4,
-                              "borderWidth": 2,
-                              "height": 40,
-                              "width": 40,
-                            },
-                          ]
-                        }
-                      >
-                        <FastImageView
-                          onFastImageError={[Function]}
-                          onFastImageLoadEnd={[Function]}
-                          resizeMode="cover"
-                          source={null}
-                          style={
-                            Object {
-                              "bottom": 0,
-                              "left": 0,
-                              "position": "absolute",
-                              "right": 0,
-                              "top": 0,
-                            }
-                          }
-                          testID="avatar.image"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
-              <Text
-                numberOfLines={2}
-                style={
                   Array [
                     Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 15,
+                      "alignItems": "center",
+                      "flexDirection": "row",
                     },
-                    Object {},
+                    undefined,
                     Object {
-                      "maxWidth": 200,
-                      "paddingTop": 2,
+                      "backgroundColor": undefined,
                     },
                   ]
                 }
               >
-                EVOL Community
-              </Text>
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  }
-                }
-              >
                 <View
-                  accessibilityState={
-                    Object {
-                      "disabled": true,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        },
-                        undefined,
-                        Object {
-                          "backgroundColor": undefined,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View />
-                    </View>
-                  </View>
-                </View>
-                <Text
                   style={
                     Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 13,
-                      },
-                      Object {
-                        "color": "#767D93",
-                      },
-                      Object {
-                        "marginHorizontal": 4,
-                      },
+                      undefined,
+                      undefined,
+                      undefined,
                     ]
                   }
                 >
-                  25
-                </Text>
+                  <View
+                    testID="group_item.button_wrapper.icon"
+                  />
+                </View>
               </View>
             </View>
           </View>
         </View>
       </View>
+      <View
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "flexDirection": "row",
+              "paddingLeft": 8,
+              "paddingVertical": 4,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View>
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 40,
+                    "width": 40,
+                  },
+                  undefined,
+                ]
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 4,
+                      "height": 40,
+                      "width": 40,
+                    },
+                    Object {
+                      "backgroundColor": "#A4A9B7",
+                    },
+                  ]
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    collapsable={false}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 12,
+            }
+          }
+        >
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
+                },
+                Object {},
+                Object {
+                  "justifyContent": "center",
+                  "width": "100%",
+                },
+              ]
+            }
+          >
+            EVOL Community
+          </Text>
+        </View>
+      </View>
     </View>
   </View>
-</RCTScrollView>
+</View>
 `;

@@ -188,6 +188,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
                         "borderRadius": 24,
                         "borderWidth": 2,
@@ -510,6 +511,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
                         "borderRadius": 24,
                         "borderWidth": 2,

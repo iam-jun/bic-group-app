@@ -222,6 +222,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                           "overflow": "hidden",
                         },
                         Object {
+                          "backgroundColor": "#FFFFFF",
                           "borderColor": "#F2F5F8",
                           "borderRadius": 16,
                           "borderWidth": 2,
@@ -409,6 +410,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                           "overflow": "hidden",
                         },
                         Object {
+                          "backgroundColor": "#FFFFFF",
                           "borderColor": "#F2F5F8",
                           "borderRadius": 16,
                           "borderWidth": 2,

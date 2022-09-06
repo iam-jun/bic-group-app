@@ -169,6 +169,7 @@ exports[`CoverHeader screen renders correctly 1`] = `
                     "overflow": "hidden",
                   },
                   Object {
+                    "backgroundColor": "#FFFFFF",
                     "borderColor": "#F2F5F8",
                     "borderRadius": 40,
                     "borderWidth": 2,

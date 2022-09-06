@@ -107,6 +107,7 @@ exports[`MemberItem component should render data correctly 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
+                  "backgroundColor": "#FFFFFF",
                   "borderColor": "#F2F5F8",
                   "borderRadius": 24,
                   "borderWidth": 2,
@@ -352,6 +353,7 @@ exports[`MemberItem component should render icon member option correctly when us
                   "overflow": "hidden",
                 },
                 Object {
+                  "backgroundColor": "#FFFFFF",
                   "borderColor": "#F2F5F8",
                   "borderRadius": 24,
                   "borderWidth": 2,
