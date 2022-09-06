@@ -106,7 +106,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           value={text}
           autoComplete="off"
           returnKeyType="search"
-          placeholderTextColor={theme.colors.gray50}
+          placeholderTextColor={theme.colors.neutral20}
           selectionColor={theme.colors.gray50}
           onFocus={_onFocus}
           onBlur={_onBlur}
@@ -116,8 +116,9 @@ const SearchInput: React.FC<SearchInputProps> = ({
         {!!text && (
           <Icon
             testID="search_input.icon_clear"
+            style={styles.iconClose}
             icon="iconClose"
-            size={12}
+            size={8}
             tintColor={theme.colors.neutral40}
             onPress={() => _onChangeText('')}
           />
@@ -134,7 +135,8 @@ const createStyles = (theme: ExtendedTheme) => {
     container: {
       backgroundColor: colors.white,
       justifyContent: 'center',
-      paddingHorizontal: 16,
+      paddingLeft: spacing.padding.small,
+      paddingRight: spacing.padding.base,
       borderRadius: 24,
       borderWidth: 1,
       borderColor: colors.neutral5,
@@ -156,7 +158,9 @@ const createStyles = (theme: ExtendedTheme) => {
       fontSize: dimension?.sizes.bodyS,
       color: colors.neutral80,
     },
-
+    iconClose: {
+      marginLeft: spacing.margin.small,
+    },
   });
 };
 

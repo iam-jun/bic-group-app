@@ -14,6 +14,7 @@ import MemberItem from './MemberItem';
 import { getMembersSection } from '../../../storeRedux/groups/selectors';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface MemberListProps {
   type: 'group' | 'community';
@@ -90,7 +91,7 @@ const MemberList = ({
       ListFooterComponent={renderListFooter}
       renderSectionHeader={renderSectionHeader}
       renderItem={renderItem}
-      ItemSeparatorComponent={() => <View style={{}} />}
+      ItemSeparatorComponent={() => <ViewSpacing height={8} />}
       stickySectionHeadersEnabled={false}
       showsVerticalScrollIndicator={false}
       refreshControl={

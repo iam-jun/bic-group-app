@@ -5,7 +5,6 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
   ItemSeparatorComponent={[Function]}
   ListEmptyComponent={[Function]}
   ListFooterComponent={[Function]}
-  ListHeaderComponent={[Function]}
   data={
     Array [
       Object {
@@ -46,38 +45,15 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
   scrollEventThrottle={50}
   showsVerticalScrollIndicator={false}
   stickyHeaderIndices={Array []}
+  style={
+    Object {
+      "marginVertical": 8,
+    }
+  }
   testID="flatlist"
   viewabilityConfigCallbackPairs={Array []}
 >
   <View>
-    <View
-      onLayout={[Function]}
-    >
-      <View
-        style={
-          Object {
-            "marginHorizontal": 16,
-            "marginVertical": 12,
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-        >
-          Search Results
-        </Text>
-      </View>
-    </View>
     <View
       onLayout={[Function]}
       style={null}
@@ -115,8 +91,8 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
               Array [
                 Object {
                   "borderRadius": 4,
-                  "height": 48,
-                  "width": 48,
+                  "height": 32,
+                  "width": 32,
                 },
                 Object {
                   "marginRight": 12,
@@ -131,11 +107,11 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                   Array [
                     Object {
                       "borderRadius": 4,
-                      "height": 48,
-                      "width": 48,
+                      "height": 32,
+                      "width": 32,
                     },
                     Object {
-                      "borderRadius": 24,
+                      "borderRadius": 16,
                     },
                   ],
                   Object {},
@@ -171,11 +147,11 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
                         "borderColor": "#F2F5F8",
-                        "borderRadius": 24,
+                        "borderRadius": 16,
                         "borderWidth": 2,
-                        "height": 48,
+                        "height": 32,
                         "justifyContent": "center",
-                        "width": 48,
+                        "width": 32,
                       }
                     }
                     testID="Image__placeholder"
@@ -188,11 +164,12 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
-                        "borderRadius": 24,
+                        "borderRadius": 16,
                         "borderWidth": 2,
-                        "height": 48,
-                        "width": 48,
+                        "height": 32,
+                        "width": 32,
                       },
                     ]
                   }
@@ -234,32 +211,35 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                 Array [
                   Object {
                     "color": "#212745",
-                    "fontFamily": "BeVietnamPro-Light",
+                    "fontFamily": "BeVietnamPro-Medium",
                     "fontSize": 15,
                   },
-                  Object {},
+                  Object {
+                    "color": "#212745",
+                  },
                   undefined,
                 ]
               }
             >
               Test Name
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 13,
-                    },
-                    Object {
-                      "color": "#767D93",
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                 @test
-              </Text>
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Light",
+                    "fontSize": 13,
+                  },
+                  Object {
+                    "color": "#353E6E",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              @test
             </Text>
           </View>
           <View
@@ -302,14 +282,15 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                   },
                   Object {
                     "alignItems": "center",
-                    "height": 36,
+                    "borderRadius": 6,
+                    "height": 30,
                     "justifyContent": "center",
-                    "marginLeft": 4,
-                    "padding": 8,
-                    "width": 36,
+                    "marginHorizontal": 8,
+                    "padding": 6,
+                    "width": 30,
                   },
                   Object {
-                    "backgroundColor": "#F8F9FF",
+                    "backgroundColor": "#EBF4FF",
                   },
                 ]
               }
@@ -328,22 +309,8 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
             </View>
           </View>
           <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
             accessible={true}
-            collapsable={false}
             focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -352,9 +319,12 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                Object {
+                  "borderRadius": 6,
+                },
+                undefined,
+              ]
             }
             testID="member_item.icon_option.button"
           >
@@ -363,27 +333,86 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
+                    "borderRadius": 6,
+                    "elevation": 2,
                     "flexDirection": "row",
+                    "justifyContent": "center",
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.12,
+                    "shadowRadius": 1.5,
                   },
+                  undefined,
                   Object {
-                    "marginLeft": 8,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#FFFFFF",
+                    "height": 28,
+                    "paddingHorizontal": 8,
                   },
                 ]
               }
+              testID="button.content"
             >
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={false}
+                hitSlop={
+                  Object {
+                    "bottom": 10,
+                    "left": 10,
+                    "right": 10,
+                    "top": 10,
+                  }
+                }
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
+                  Object {
+                    "opacity": 1,
+                  }
                 }
               >
-                <View />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      },
+                      undefined,
+                      Object {
+                        "backgroundColor": undefined,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        undefined,
+                        undefined,
+                        undefined,
+                      ]
+                    }
+                  >
+                    <View
+                      testID="button.icon"
+                    />
+                  </View>
+                </View>
               </View>
             </View>
           </View>
@@ -392,7 +421,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
       <View
         style={
           Object {
-            "height": 4,
+            "height": 8,
             "paddingHorizontal": undefined,
             "paddingVertical": undefined,
             "width": undefined,
@@ -437,8 +466,8 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
               Array [
                 Object {
                   "borderRadius": 4,
-                  "height": 48,
-                  "width": 48,
+                  "height": 32,
+                  "width": 32,
                 },
                 Object {
                   "marginRight": 12,
@@ -453,11 +482,11 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                   Array [
                     Object {
                       "borderRadius": 4,
-                      "height": 48,
-                      "width": 48,
+                      "height": 32,
+                      "width": 32,
                     },
                     Object {
-                      "borderRadius": 24,
+                      "borderRadius": 16,
                     },
                   ],
                   Object {},
@@ -493,11 +522,11 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                         "alignItems": "center",
                         "backgroundColor": "#f9f9f9",
                         "borderColor": "#F2F5F8",
-                        "borderRadius": 24,
+                        "borderRadius": 16,
                         "borderWidth": 2,
-                        "height": 48,
+                        "height": 32,
                         "justifyContent": "center",
-                        "width": 48,
+                        "width": 32,
                       }
                     }
                     testID="Image__placeholder"
@@ -510,11 +539,12 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
-                        "borderRadius": 24,
+                        "borderRadius": 16,
                         "borderWidth": 2,
-                        "height": 48,
-                        "width": 48,
+                        "height": 32,
+                        "width": 32,
                       },
                     ]
                   }
@@ -556,32 +586,35 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                 Array [
                   Object {
                     "color": "#212745",
-                    "fontFamily": "BeVietnamPro-Light",
+                    "fontFamily": "BeVietnamPro-Medium",
                     "fontSize": 15,
                   },
-                  Object {},
+                  Object {
+                    "color": "#212745",
+                  },
                   undefined,
                 ]
               }
             >
               Test Name
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 13,
-                    },
-                    Object {
-                      "color": "#767D93",
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                 @test
-              </Text>
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Light",
+                    "fontSize": 13,
+                  },
+                  Object {
+                    "color": "#353E6E",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              @test
             </Text>
           </View>
           <View
@@ -624,14 +657,15 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                   },
                   Object {
                     "alignItems": "center",
-                    "height": 36,
+                    "borderRadius": 6,
+                    "height": 30,
                     "justifyContent": "center",
-                    "marginLeft": 4,
-                    "padding": 8,
-                    "width": 36,
+                    "marginHorizontal": 8,
+                    "padding": 6,
+                    "width": 30,
                   },
                   Object {
-                    "backgroundColor": "#F8F9FF",
+                    "backgroundColor": "#EBF4FF",
                   },
                 ]
               }
@@ -650,22 +684,8 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
             </View>
           </View>
           <View
-            accessibilityState={
-              Object {
-                "disabled": false,
-              }
-            }
             accessible={true}
-            collapsable={false}
             focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -674,9 +694,12 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                Object {
+                  "borderRadius": 6,
+                },
+                undefined,
+              ]
             }
             testID="member_item.icon_option.button"
           >
@@ -685,27 +708,86 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
+                    "borderRadius": 6,
+                    "elevation": 2,
                     "flexDirection": "row",
+                    "justifyContent": "center",
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": Object {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.12,
+                    "shadowRadius": 1.5,
                   },
+                  undefined,
                   Object {
-                    "marginLeft": 8,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#FFFFFF",
+                    "height": 28,
+                    "paddingHorizontal": 8,
                   },
                 ]
               }
+              testID="button.content"
             >
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={false}
+                hitSlop={
+                  Object {
+                    "bottom": 10,
+                    "left": 10,
+                    "right": 10,
+                    "top": 10,
+                  }
+                }
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
+                  Object {
+                    "opacity": 1,
+                  }
                 }
               >
-                <View />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      },
+                      undefined,
+                      Object {
+                        "backgroundColor": undefined,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        undefined,
+                        undefined,
+                        undefined,
+                      ]
+                    }
+                  >
+                    <View
+                      testID="button.icon"
+                    />
+                  </View>
+                </View>
               </View>
             </View>
           </View>
