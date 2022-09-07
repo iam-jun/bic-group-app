@@ -20,7 +20,7 @@ export interface GroupSchemeProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const GroupScheme: FC<GroupSchemeProps> = ({ style }: GroupSchemeProps) => {
+const GroupScheme: FC<GroupSchemeProps> = () => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);

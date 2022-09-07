@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/baseComponents/Icon';
@@ -31,7 +30,6 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   onPressMenu,
   onPressShowAudiences,
 }: PostViewHeaderProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { colors } = useTheme();
   const { rootNavigation } = useRootNavigation();
@@ -43,7 +41,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const avatar = actor?.avatar;
   const actorName = actor?.fullname;
 
-  const onPressActor = (e: any) => {
+  const onPressActor = () => {
     if (!actor.id) return;
     // Double check if userId is username, and lack of type in params
     // const _params: IObject<unknown> = {

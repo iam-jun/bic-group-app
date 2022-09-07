@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import { useKeySelector } from '~/hooks/selector';
@@ -13,8 +12,6 @@ import noInternetActions from '~/storeRedux/network/actions';
 const InternetConnectionStatus = () => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme = useTheme() as ExtendedTheme;
-  const { colors } = theme;
   const styles = createStyle();
   const firstRender = useRef(true);
   const dispatch = useDispatch();

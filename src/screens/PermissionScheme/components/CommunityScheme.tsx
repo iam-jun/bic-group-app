@@ -23,9 +23,7 @@ export interface CommunitySchemeProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const CommunityScheme: FC<CommunitySchemeProps> = ({
-  style,
-}: CommunitySchemeProps) => {
+const CommunityScheme: FC<CommunitySchemeProps> = () => {
   const { t } = useBaseHook();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();

@@ -41,7 +41,6 @@ export interface HeaderProps {
   leftIconProps?: Omit<IconProps, 'icon'>;
   icon?: IconType;
   rightIcon?: IconType;
-  rightIconProps?: Omit<IconProps, 'icon'>;
   onPressIcon?: () => void;
   buttonVariant?: 'Primary' | 'Secondary' | 'Icon';
   buttonText?: string;
@@ -81,7 +80,6 @@ const Header: React.FC<HeaderProps> = ({
   leftIconProps,
   icon,
   rightIcon,
-  rightIconProps,
   onPressIcon,
   buttonText,
   onPressButton,
@@ -398,7 +396,7 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const { elevations, colors } = theme;
+  const { elevations } = theme;
   const insets = useSafeAreaInsets();
   return StyleSheet.create({
     header: { zIndex: 2 },

@@ -63,13 +63,13 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     showValue.value = withTiming(0, { duration });
   };
 
-  const getActiveRouteName = (state: any): any => {
-    const route: any = state?.routes?.[state?.index];
-    if (route?.state) {
-      return getActiveRouteName(route?.state);
-    }
-    return route?.name;
-  };
+  // const getActiveRouteName = (state: any): any => {
+  //   const route: any = state?.routes?.[state?.index];
+  //   if (route?.state) {
+  //     return getActiveRouteName(route?.state);
+  //   }
+  //   return route?.name;
+  // };
 
   useEffect(() => {
     const onShow = () => hide(0);

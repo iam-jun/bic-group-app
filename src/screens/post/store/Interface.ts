@@ -1,3 +1,3 @@
-interface IPostState {
+export interface IPostState {
   TODO_SOME_STATES?: any
 }

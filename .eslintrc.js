@@ -92,7 +92,9 @@ module.exports = {
     '@typescript-eslint/ban-types': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/ban-ts-comment': 'warn',
-    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', {
+      vars: 'local', args: 'after-used', ignoreRestSiblings: true, argsIgnorePattern: '^_', caughtErrors: 'none',
+    }],
     '@typescript-eslint/no-explicit-any': 'off',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 0,

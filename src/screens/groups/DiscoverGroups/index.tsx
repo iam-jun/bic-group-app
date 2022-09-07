@@ -68,7 +68,7 @@ const DiscoverGroups = ({ route }: any) => {
     dispatch(actions.cancelJoinGroup({ groupId, groupName }));
   };
 
-  const onSearchText = (searchText: string) => {
+  const onSearchText = (_searchText: string) => {
     // TODO: Add search
   };
 

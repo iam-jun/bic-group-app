@@ -78,7 +78,7 @@ const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   };
 
   const keyExtractor = useCallback((
-    item, index,
+    item,
   ) => `reaction_tab_detail_${item?.id?.toString?.()}`, [data]);
 
   return (

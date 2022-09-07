@@ -61,11 +61,11 @@ export default class AstRenderer {
     const parents = [...parentNodes];
 
     if (this._debugPrintTree === true) {
-      let str = '';
+      // let str = '';
 
-      for (let a = 0; a < parents.length; a++) {
-        str += '-';
-      }
+      // for (let a = 0; a < parents.length; a++) {
+      //   str += '-';
+      // }
     }
 
     parents.unshift(node);

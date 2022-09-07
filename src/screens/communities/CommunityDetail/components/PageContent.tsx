@@ -6,7 +6,6 @@ import Animated from 'react-native-reanimated';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import CommunityJoinCancelButton from './CommunityJoinCancelButton';
-import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -31,10 +30,9 @@ const _PageContent = ({
   onScroll,
   onButtonLayout,
 }: PageContentProps) => {
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme || {};
-  const styles = createStyles(theme);
+  const { colors } = theme;
+  const styles = createStyles();
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
@@ -110,17 +108,14 @@ const PageContent = React.memo(_PageContent);
 PageContent.whyDidYouRender = true;
 export default PageContent;
 
-const createStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    listContainer: {
-      flex: 1,
-    },
-    listHeaderComponentStyle: {
-      marginBottom: spacing.margin.base,
-    },
-    createPost: {
-      marginTop: spacing.margin.base,
-    },
-  });
-};
+const createStyles = () => StyleSheet.create({
+  listContainer: {
+    flex: 1,
+  },
+  listHeaderComponentStyle: {
+    marginBottom: spacing.margin.base,
+  },
+  createPost: {
+    marginTop: spacing.margin.base,
+  },
+});

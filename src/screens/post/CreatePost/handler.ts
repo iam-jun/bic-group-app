@@ -16,7 +16,6 @@ export const handleBack = (
   isNewsfeed: boolean | undefined,
   onPressDraftPost: () => void,
 ) => {
-  const { colors } = theme;
   Keyboard.dismiss();
   if (isEditPost) {
     if (isEditPostHasChange) {
