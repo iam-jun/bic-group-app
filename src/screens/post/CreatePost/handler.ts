@@ -47,7 +47,7 @@ export const handleBack = (
       }));
       return;
     }
-    useDraftPostStore.getState().dispatchGetDraftPosts({ isRefresh: true });
+    useDraftPostStore.getState().doGetDraftPosts({ isRefresh: true });
     dispatch(modalActions.showHideToastMessage({
       content: 'post:saved_to_draft',
       props: {

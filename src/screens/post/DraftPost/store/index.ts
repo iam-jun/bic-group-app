@@ -4,7 +4,7 @@ import getDraftPosts from './actions/getDraftPosts';
 
 const initState: IDraftPostState = {
   posts: [],
-  canLoadMore: true,
+  hasNextPage: true,
   loading: false,
   refreshing: false,
 };
@@ -12,7 +12,7 @@ const initState: IDraftPostState = {
 const draftPostStore = (set, get) => ({
   ...initState,
 
-  dispatchGetDraftPosts: getDraftPosts(set, get),
+  doGetDraftPosts: getDraftPosts(set, get),
 
   reset: () => resetStore(initState, set),
 });

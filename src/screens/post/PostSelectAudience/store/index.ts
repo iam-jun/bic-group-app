@@ -22,8 +22,8 @@ const selectAudienceStore = (set, get) => ({
       state.search = payload || {};
     });
   },
-  dispatchGetAudienceTree: getAudienceTree(set, get),
-  dispatchGetAudienceSearch: getAudienceSearch(set, get),
+  doGetAudienceTree: getAudienceTree(set, get),
+  doGetAudienceSearch: getAudienceSearch(set, get),
   reset: () => resetStore(initState, set),
 });
 

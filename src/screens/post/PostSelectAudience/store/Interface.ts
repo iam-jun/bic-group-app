@@ -1,4 +1,6 @@
-interface ISelectAudienceState {
+import IBaseStore from '~/store/interfaces/IBaseStore';
+
+interface ISelectAudienceState extends IBaseStore {
   tree: {
     data: undefined,
     loading: boolean,
@@ -11,9 +13,8 @@ interface ISelectAudienceState {
 
   setSearch?: (payload: any) => void;
 
-  dispatchGetAudienceTree?: () => void;
-  dispatchGetAudienceSearch?: (key: string) => void;
-  reset?: () => void;
+  doGetAudienceTree?: () => void;
+  doGetAudienceSearch?: (key: string) => void;
 }
 
 export default ISelectAudienceState;
