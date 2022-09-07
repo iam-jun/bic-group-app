@@ -29,9 +29,6 @@ describe('Join New Group Saga', () => {
         content: `${i18next.t(
           'groups:text_request_join_group',
         )} ${groupName}`,
-        props: {
-          type: 'success',
-        },
       }),
     )
     .run());
@@ -54,9 +51,6 @@ describe('Join New Group Saga', () => {
         content: `${i18next.t(
           'groups:text_successfully_join_group',
         )} ${groupName}`,
-        props: {
-          type: 'success',
-        },
       }),
     )
     .put(groupsActions.getGroupDetail({ groupId }))
@@ -72,10 +66,6 @@ describe('Join New Group Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: error.meta.message,
-          props: {
-            textProps: { useI18n: true },
-            type: 'error',
-          },
         }),
       )
       .run();

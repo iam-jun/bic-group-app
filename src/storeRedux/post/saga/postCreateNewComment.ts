@@ -173,15 +173,7 @@ function* postCreateNewComment({
         parentCommentId,
       }));
 
-      yield put(modalActions.showHideToastMessage({
-        content: 'post:text_comment_deleted',
-        toastType: 'banner',
-        props: {
-          textProps: { useI18n: true },
-          type: 'informative',
-          leftIcon: 'iconCannotComment',
-        },
-      }));
+      yield put(modalActions.showHideToastMessage({ content: 'post:text_comment_deleted' }));
     } else if (e?.code === API_ERROR_CODE.POST.postDeleted
       || e?.code === API_ERROR_CODE.POST.postCanNotCommentOrReact) {
       if (e?.code === API_ERROR_CODE.POST.postDeleted) {
@@ -201,12 +193,6 @@ function* postCreateNewComment({
       }
       yield put(modalActions.showHideToastMessage({
         content: e?.code === API_ERROR_CODE.POST.postDeleted ? 'post:text_post_deleted' : e?.meta?.message,
-        toastType: 'banner',
-        props: {
-          textProps: { useI18n: true },
-          type: 'informative',
-          leftIcon: 'iconCannotComment',
-        },
       }));
     } else {
       yield showError(e);

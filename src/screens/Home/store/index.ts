@@ -1,6 +1,6 @@
 import { HOME_TAB_TYPE } from '~/screens/Home/constants';
-import IHomeState, { IHomeTab } from '~/store/interface/IHomeState';
-import { createZustand } from '~/store/utils';
+import IHomeState, { IHomeTab } from '~/screens/Home/store/Interface';
+import { createStore } from '~/store/utils';
 import streamApi from '~/api/StreamApi';
 import storeRedux from '~/storeRedux';
 import postActions from '~/storeRedux/post/actions';
@@ -20,14 +20,11 @@ const initState = {
 
 const homeStore = (set, get) => ({
   ...initState,
-
   setActiveTab: (tabId: keyof typeof HOME_TAB_TYPE) => {
     set(
       (state: IHomeState) => {
         state.activeTab = tabId;
       },
-      false,
-      'setActiveTab',
     );
   },
   setTabNewsfeed: (tab: IHomeTab) => {
@@ -35,8 +32,6 @@ const homeStore = (set, get) => ({
       (state: IHomeState) => {
         state.tabNewsfeed = { ...state.tabNewsfeed, ...tab };
       },
-      false,
-      'setTabNewsfeed',
     );
   },
   setTabImportant: (tab: IHomeTab) => {
@@ -44,8 +39,6 @@ const homeStore = (set, get) => ({
       (state: IHomeState) => {
         state.tabImportant = { ...state.tabImportant, ...tab };
       },
-      false,
-      'setTabImportant',
     );
   },
 
@@ -55,8 +48,6 @@ const homeStore = (set, get) => ({
       (state: IHomeState) => {
         state[statePath] = { ...state[statePath], refreshing: true };
       },
-      false,
-      'getTabData',
     );
     const currentState: IHomeState = get();
     const currentList = currentState[statePath].data;
@@ -79,7 +70,6 @@ const homeStore = (set, get) => ({
               canLoadMore: response?.meta?.hasNextPage || false,
             };
           },
-          false,
           'getTabData',
         );
       })
@@ -92,7 +82,6 @@ const homeStore = (set, get) => ({
               canLoadMore: false,
             };
           },
-          false,
           'getTabData',
         );
       });
@@ -104,12 +93,10 @@ const homeStore = (set, get) => ({
           state[k] = initState[k];
         });
       },
-      false,
-      'reset',
     );
   },
 });
 
-const useHomeStore = createZustand<IHomeState>('home-store', homeStore);
+const useHomeStore = createStore<IHomeState>('home-store', homeStore);
 
 export default useHomeStore;

@@ -13,7 +13,8 @@ import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
-import spacing from '~/theme/spacing';
+import spacing, { borderRadius } from '~/theme/spacing';
+import { Button } from '~/baseComponents';
 
 interface MemberItemProps {
   item: any;
@@ -52,31 +53,35 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
       testID="member_item"
       style={styles.itemContainer}
       avatar={avatar || images.img_user_avatar_default}
-      avatarProps={{ isRounded: true, variant: 'medium' }}
+      avatarProps={{ isRounded: true, variant: 'small' }}
       onPress={goToUserProfile}
       ContentComponent={(
-        <Text.BodyM numberOfLines={1}>
-          {fullname}
-          <Text.BodyS color={colors.gray50}>{` @${username}`}</Text.BodyS>
-        </Text.BodyM>
+        <>
+          <Text.BodyMMedium color={colors.neutral70} numberOfLines={1}>
+            {fullname}
+          </Text.BodyMMedium>
+          <Text.BodyS color={colors.neutral40} numberOfLines={1}>{`@${username}`}</Text.BodyS>
+        </>
       )}
       RightComponent={(
         <>
           {user?.username !== username && (
             <Icon
-              icon="MessageDots"
-              backgroundColor={colors.neutral1}
+              icon="CommentDotsSolid"
+              size={15}
+              backgroundColor={colors.blue2}
+              tintColor={colors.blue50}
               style={styles.iconChat}
               onPress={onPressChat}
               buttonTestID="member_item.icon_chat.button"
             />
           )}
           {canManageMember && (
-            <Icon
+            <Button.Raise
               icon="menu"
-              style={styles.iconOption}
+              size="small"
+              testID="member_item.icon_option.button"
               onPress={() => onPressMenu(item)}
-              buttonTestID="member_item.icon_option.button"
             />
           )}
         </>
@@ -91,15 +96,13 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.padding.tiny,
   },
   iconChat: {
-    height: 36,
-    width: 36,
+    height: 30,
+    width: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: spacing.padding.small,
-    marginLeft: spacing.margin.tiny,
-  },
-  iconOption: {
-    marginLeft: spacing.margin.small,
+    padding: spacing.padding.xSmall,
+    marginHorizontal: spacing.margin.small,
+    borderRadius: borderRadius.base,
   },
 });
 

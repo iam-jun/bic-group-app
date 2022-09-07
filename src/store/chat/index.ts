@@ -1,33 +1,26 @@
 import chatSocketEvents from '~/constants/chatSocketEvents';
 import {
-  createStore, withFlipper, withImmer, withPersist,
+  resetStore,
+  createStore,
 } from '../utils';
 import { handleChannelViewedEvent, handlePostedEvent, handlePostUnreadEvent } from './utils';
 import chatApi from '~/api/ChatApi';
+import IChatState from '~/store/chat/IChatState';
+import { convertArrayToObject } from '~/utils/formatData';
 
-export interface ChatState {
-  unreadChannels: any,
-  initChat: () => void,
-  handleChatEvent: (userId: string, payload: any) => void
-}
+const initialState = {
+  unreadChannels: {},
+};
 
 const chatStore = (set, get) => ({
-  unreadChannels: {},
+  ...initialState,
   initChat: async () => {
     try {
       const response = await chatApi.init();
       const data = response?.data;
+      const result = convertArrayToObject(data);
 
-      const result = (data || []).reduce(
-        // eslint-disable-next-line no-return-assign
-        (
-          obj: any, item: any,
-          // eslint-disable-next-line no-sequences
-        ) => ((obj[item.channelId] = item), obj),
-        {},
-      );
-
-      set({ unreadChannels: result }, false, 'initChat');
+      set({ unreadChannels: result }, 'initChat');
     } catch (error) {
       console.error('initChat', error);
     }
@@ -49,30 +42,14 @@ const chatStore = (set, get) => ({
         break;
     }
     if (channel?.id) {
-      // with immer
       set((state) => {
         state.unreadChannels[channel.id] = channel;
-      }, false, 'handleChatEvent');
+      });
     }
-
-    // without immer
-    // set({
-    //   unreadChannels: {
-    //     ...unreadChannels,
-    //     ...channel,
-    //   },
-    // })
   },
+  reset: () => resetStore(initialState, set),
 });
 
-const useChatStore = createStore<ChatState | any>(
-  withFlipper(
-    withImmer(
-      withPersist(
-        chatStore, { name: 'chat-store' },
-      ),
-    ), 'chat-store',
-  ),
-);
+const useChatStore = createStore<IChatState>('chat-store', chatStore);
 
 export default useChatStore;

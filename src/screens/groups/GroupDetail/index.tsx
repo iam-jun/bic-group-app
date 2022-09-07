@@ -147,16 +147,10 @@ const GroupDetail = (props: any) => {
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(LINK_GROUP, groupId));
-    dispatch(
-      modalActions.showHideToastMessage({
-        content: 'common:text_link_copied_to_clipboard',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
-      }),
-    );
+    Clipboard.setString(getLink(
+      LINK_GROUP, groupId,
+    ));
+    dispatch(modalActions.showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
   };
 
   const onPressShare = () => {

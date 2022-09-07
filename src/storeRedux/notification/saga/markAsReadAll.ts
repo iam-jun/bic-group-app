@@ -35,10 +35,6 @@ function* markAsReadAll({ payload }: {payload: string; type: string}): any {
 
     yield put(modalActions.showHideToastMessage({
       content: 'notification:mark_all_as_read_success',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
     }));
   } catch (err) {
     console.error(

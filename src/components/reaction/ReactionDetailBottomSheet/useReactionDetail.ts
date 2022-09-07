@@ -1,4 +1,4 @@
-import { createZustand } from '~/store/utils';
+import { createStore } from '~/store/utils';
 import streamApi from '~/api/StreamApi';
 import { IParamGetReactionDetail } from '~/interfaces/IPost';
 
@@ -12,7 +12,7 @@ const useReactionDetail = (set) => ({
   data: undefined,
   loading: false,
   getReactionDetail: (params: IParamGetReactionDetail) => {
-    set((state) => { state.loading = true; }, false, 'getReactionDetail');
+    set((state) => { state.loading = true; }, 'getReactionDetail');
     streamApi.getReactionDetail(params)
       .then((response) => {
         const users = (response?.list || []).map((item: any) => ({
@@ -24,18 +24,18 @@ const useReactionDetail = (set) => ({
         set((state) => {
           state.loading = false;
           state.data = users || [];
-        }, false, 'getReactionDetailSuccess');
+        }, 'getReactionDetailSuccess');
       })
       .catch((error) => {
         console.warn('\x1b[35m🐣️ getReactionDetail error ', error, '\x1b[0m');
         set((state) => {
           state.loading = false;
-        }, false, 'getReactionDetailError');
+        }, 'getReactionDetailError');
       });
   },
 });
 
-const useReactionDetailStore = createZustand<GetReactionDetailState>(
+const useReactionDetailStore = createStore<GetReactionDetailState>(
   'useReactionDetail', useReactionDetail,
 );
 

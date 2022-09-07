@@ -67,10 +67,6 @@ const CommunityMembers = ({ route }: any) => {
     setSelectedIndex(index);
   };
 
-  const navigateToMemberList = () => {
-    setSelectedIndex(0);
-  };
-
   const onPressSearch = () => {
     setIsOpen(true);
   };
@@ -92,7 +88,6 @@ const CommunityMembers = ({ route }: any) => {
           canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
           canEditJoinSetting={canEditJoinSetting}
           onPressAdd={onPressAdd}
-          navigateToMemberList={navigateToMemberList}
         />
       );
     }

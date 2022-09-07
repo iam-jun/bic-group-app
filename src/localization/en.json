@@ -157,7 +157,10 @@
     "members": "Members",
     "text_remove": "Remove",
     "all": "All",
-    "in": "in"
+    "in": "in",
+    "text_refresh": "Refresh",
+    "text_undo": "Undo",
+    "text_search_result_empty": "Sorry, we couldn’t find anything related to your search."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -687,7 +690,7 @@
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
-    "text_search_member": "Search member",
+    "text_search_member": "Search member...",
     "text_search": "Search people",
     "group_menu": {
       "label_admin_tools": "Admin Tools",
@@ -851,11 +854,12 @@
     "text_we_will_notify_you": "We will notify you when this features is ready."
   },
   "internet_connection": {
-    "online": "You are back online",
-    "offline": "You are currently offline. Please check it and try again",
+    "online": "Internet connection was restored",
+    "offline": "You are currently offline",
     "system_issue": {
       "title": "System Issue Occurred",
-      "desc": "Please re-login to continue"
+      "desc": "Please re-login to continue",
+      "toast": "Action cannot be proceeded due to system issue"
     }
   },
   "communities": {
