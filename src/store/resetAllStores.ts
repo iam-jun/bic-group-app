@@ -6,6 +6,7 @@ import useJoinedCommunitiesStore from '~/screens/Menu/store';
 import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
 import useDraftPostStore from '../screens/post/DraftPost/store';
+import useLeaveCommunity from '~/screens/communities/CommunityDetail/store';
 
 const stores = [
   useHomeStore,
@@ -13,6 +14,7 @@ const stores = [
   useSelectAudienceStore,
   useDraftPostStore,
   useChatStore,
+  useLeaveCommunity,
 ];
 
 export const resetAllStores = () => {

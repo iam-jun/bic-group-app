@@ -40,6 +40,9 @@ import { useMyPermissions } from '~/hooks/permissions';
 import CommunityTabHeader from './components/CommunityTabHeader';
 import { getHeaderMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
+import { useBaseHook } from '~/hooks';
+import Text from '~/beinComponents/Text';
+import useLeaveCommunity from './store';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -52,6 +55,7 @@ const CommunityDetail = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const { t } = useBaseHook();
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
@@ -76,6 +80,7 @@ const CommunityDetail = (props: any) => {
   const showPrivate = !isMember && privacy === groupPrivacy.private;
 
   const buttonShow = useSharedValue(0);
+  const { doPostLeaveCommunity } = useLeaveCommunity();
 
   const getCommunityDetail = (loadingPage = false) => {
     dispatch(actions.getCommunityDetail({ communityId, loadingPage, showLoading: true }));
@@ -130,8 +135,31 @@ const CommunityDetail = (props: any) => {
     dispatch(modalActions.showHideToastMessage({ content: 'common:text_copied' }));
   };
 
+  const onConfirmLeaveCommunity = async () => {
+    doPostLeaveCommunity(communityId, privacy, dispatch);
+  };
+
+  const onPressLeave = () => {
+    dispatch(modalActions.hideBottomList());
+    dispatch(modalActions.showAlert({
+      title: t('communities:modal_confirm_leave_community:title'),
+      confirmLabel: t('communities:modal_confirm_leave_community:button_leave'),
+      cancelBtn: true,
+      children: (
+        <Text.ParagraphM style={styles.childrenText}>
+          {t('communities:modal_confirm_leave_community:description')}
+          <Text.BodyMMedium>{name}</Text.BodyMMedium>
+          ?
+        </Text.ParagraphM>
+      ),
+      onConfirm: onConfirmLeaveCommunity,
+    }));
+  };
+
   const onRightPress = () => {
-    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools, onPressCopyLink);
+    const headerMenuData = getHeaderMenu({
+      type: 'community', isMember, canSetting, dispatch, onPressAdminTools, onPressCopyLink, onPressLeave,
+    });
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
@@ -261,6 +289,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       position: 'absolute',
       width: '100%',
       bottom: 0,
+    },
+    childrenText: {
+      paddingVertical: spacing.padding.small,
+      paddingBottom: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
     },
   });
 };

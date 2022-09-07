@@ -1,17 +1,33 @@
 import i18next from 'i18next';
 import modalActions from '~/storeRedux/modal/actions';
 
-export const getHeaderMenu = (type: 'community' | 'group',
-  isMember: boolean,
-  canSetting: boolean,
-  dispatch: any,
-  onPressAdminTools?: () => void,
-  onPressCopyLink?: () => void,
-  onPressShare?: () => void,
-  onPressFollowing?: () => void,
-  onPressPin?: () => void,
-  onPressNotification?: () => void,
-  onPressLeave?: () => void) => {
+interface IGetHeaderMenuParams {
+  type: 'community' | 'group';
+  isMember: boolean;
+  canSetting: boolean;
+  dispatch: any;
+  onPressAdminTools?: () => void;
+  onPressCopyLink?: () => void;
+  onPressShare?: () => void;
+  onPressFollowing?: () => void;
+  onPressPin?: () => void;
+  onPressNotification?: () => void;
+  onPressLeave?: () => void
+}
+
+export const getHeaderMenu = ({
+  type,
+  isMember,
+  canSetting,
+  dispatch,
+  onPressAdminTools,
+  onPressCopyLink,
+  onPressShare,
+  onPressFollowing,
+  onPressPin,
+  onPressNotification,
+  onPressLeave,
+}: IGetHeaderMenuParams) => {
   const onPressNewFeature = () => {
     dispatch(modalActions.hideBottomList());
     dispatch(modalActions.showAlertNewFeature());
