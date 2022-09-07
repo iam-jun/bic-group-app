@@ -48,7 +48,7 @@ const AboutContent: FC<AboutContentProps> = ({ showPrivate }) => {
 
   if (showPrivate) {
     return (
-      <View style={styles.container}>
+      <View testID="about_content" style={styles.container}>
         {renderDescription()}
       </View>
     );

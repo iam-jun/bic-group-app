@@ -48,6 +48,10 @@ const PreviewMembers = () => {
     );
   };
 
+  if (!members) {
+    return null;
+  }
+
   return (
     <>
       <ListView

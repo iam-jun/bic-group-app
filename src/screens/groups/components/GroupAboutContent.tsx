@@ -73,7 +73,7 @@ const GroupAboutContent: FC<GroupAboutContentProps> = ({ showPrivate }) => {
   );
 
   if (showPrivate) {
-    return <View style={styles.container}>{renderDescription()}</View>;
+    return <View testID="group_about_content" style={styles.container}>{renderDescription()}</View>;
   }
 
   return (
