@@ -31,7 +31,7 @@ const DraftPost = () => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const {
-    posts: draftPosts = [], canLoadMore, refreshing, dispatchGetDraftPosts,
+    posts: draftPosts = [], hasNextPage, refreshing, dispatchGetDraftPosts,
   } = useDraftPostStore();
 
   useEffect(() => {
@@ -62,12 +62,12 @@ const DraftPost = () => {
 
   const renderFooter = () => (
     <View>
-      {canLoadMore && !refreshing && (
+      {hasNextPage && !refreshing && (
         <View testID="draft_post.load_more_view" style={styles.listFooter}>
           <ActivityIndicator color={theme.colors.gray20} />
         </View>
       )}
-      {!refreshing && !canLoadMore && (
+      {!refreshing && !hasNextPage && (
         <ViewSpacing height={spacing.margin.large} />
       )}
     </View>

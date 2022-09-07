@@ -1,8 +1,9 @@
 import { IPayloadGetDraftPosts, IPostActivity } from '~/interfaces/IPost';
+import IBaseStore from '~/store/interfaces/IBaseStore';
 
-interface IDraftPostState {
+interface IDraftPostState extends IBaseStore, IFetchingStore{
   posts: IPostActivity[],
-  canLoadMore: boolean,
+  hasNextPage: boolean,
   loading: boolean,
   refreshing: boolean,
 

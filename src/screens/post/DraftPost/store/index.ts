@@ -4,7 +4,7 @@ import getDraftPosts from './actions/getDraftPosts';
 
 const initState: IDraftPostState = {
   posts: [],
-  canLoadMore: true,
+  hasNextPage: true,
   loading: false,
   refreshing: false,
 };

@@ -4,18 +4,18 @@ import IDraftPostState from '../Interface';
 
 const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
   const { isRefresh = true } = payload;
-  const data = get();
+  const data: IDraftPostState = get();
   const {
     posts: draftPosts,
-    canLoadMore,
+    hasNextPage,
     refreshing,
     loading,
   } = data || {};
 
   try {
-    if (!refreshing && !loading && (isRefresh || canLoadMore)) {
+    if (!refreshing && !loading && (isRefresh || hasNextPage)) {
       set((state: IDraftPostState) => {
-        if (refreshing) {
+        if (isRefresh) {
           state.refreshing = true;
         } else {
           state.loading = true;
@@ -31,7 +31,7 @@ const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
 
       set((state: IDraftPostState) => {
         state.posts = newPosts;
-        state.canLoadMore = response?.canLoadMore;
+        state.hasNextPage = response?.canLoadMore;
         state.refreshing = false;
         state.loading = false;
       }, 'getDraftPostsSuccess');
