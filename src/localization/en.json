@@ -980,6 +980,12 @@
         "confirm": "Turn off",
         "approve_all": "Yes, Approve All"
       }
+    },
+    "modal_confirm_leave_community": {
+      "title": "Leave this community",
+      "description": "Are you sure you want to leave ",
+      "button_leave": "Leave",
+      "success_message": "You have left the community"
     }
   },
   "upload": {
