@@ -3,6 +3,8 @@ import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/Interf
 import IChatState from '~/store/chat/IChatState';
 import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 import IJoinedGroupTreeState from '~/screens/groups/store/Interface';
+import IDraftPostState from '~/screens/post/DraftPost/store/Interface';
+import ILeaveCommunityState from '~/screens/communities/CommunityDetail/store/interface';
 
 export interface BicStore {
   // screens
@@ -10,7 +12,13 @@ export interface BicStore {
     PostSelectAudience: {
       selectAudienceStore: ISelectAudienceState
     }
-  }
+    DraftPost: {
+      draftPostStore: IDraftPostState
+    }
+  },
+  communities: {
+    leaveCommunity: ILeaveCommunityState,
+  },
   groups: {
     joinedGroupTreeStore: IJoinedGroupTreeState
   }

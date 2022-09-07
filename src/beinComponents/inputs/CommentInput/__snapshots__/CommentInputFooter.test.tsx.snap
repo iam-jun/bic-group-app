@@ -1,7 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CommentInputFooter component renders correctly mention bar invisible 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "display": "flex",
+      "opacity": 0,
+      "transform": Array [
+        Object {
+          "translateX": 0,
+        },
+      ],
+    }
+  }
+>
   <View
     style={
       Object {
@@ -456,7 +468,19 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
 `;
 
 exports[`CommentInputFooter component renders correctly mention bar with item 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "display": "flex",
+      "opacity": 0,
+      "transform": Array [
+        Object {
+          "translateX": 0,
+        },
+      ],
+    }
+  }
+>
   <View
     style={
       Object {
@@ -911,10 +935,11 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
       style={
         Array [
           Object {
+            "alignItem": "center",
             "backgroundColor": "#FFFFFF",
             "borderColor": "#A4A9B7",
             "borderTopWidth": 1,
-            "minHeight": 44,
+            "paddingVertical": 8,
           },
           Object {
             "backgroundColor": "#FFFFFF",
@@ -927,7 +952,6 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
       testID="mention_bar"
     >
       <RCTScrollView
-        ItemSeparatorComponent={[Function]}
         data={
           Array [
             Object {
@@ -971,11 +995,6 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
             }
           >
             <View
-              accessibilityState={
-                Object {
-                  "disabled": false,
-                }
-              }
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -989,15 +1008,18 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#F8F9FF",
-                  "borderRadius": 16,
+                  "backgroundColor": "#F4EFFB",
+                  "borderRadius": 100,
                   "flexDirection": "row",
-                  "marginHorizontal": 8,
-                  "marginVertical": 8,
+                  "height": 28,
+                  "justifyContent": "center",
+                  "marginRight": 8,
                   "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
                 }
               }
-              testID="mention_bar_item"
+              testID="mention_bar.item"
             >
               <View
                 style={
@@ -1007,7 +1029,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                       "height": 24,
                       "width": 24,
                     },
-                    undefined,
+                    Object {},
                   ]
                 }
                 testID="avatar"
@@ -1015,16 +1037,11 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                 <View
                   style={
                     Array [
-                      Array [
-                        Object {
-                          "borderRadius": 12,
-                          "height": 24,
-                          "width": 24,
-                        },
-                        Object {
-                          "borderRadius": 12,
-                        },
-                      ],
+                      Object {
+                        "borderRadius": 12,
+                        "height": 24,
+                        "width": 24,
+                      },
                       Object {},
                     ]
                   }
@@ -1075,6 +1092,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                             "overflow": "hidden",
                           },
                           Object {
+                            "backgroundColor": "#FFFFFF",
                             "borderColor": "#F2F5F8",
                             "borderRadius": 12,
                             "borderWidth": 2,
@@ -1102,7 +1120,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                             "top": 0,
                           }
                         }
-                        testID="mention_bar_item.avatar"
+                        testID="avatar.image"
                       />
                     </View>
                   </View>
@@ -1118,12 +1136,12 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                     },
                     Object {},
                     Object {
-                      "marginLeft": 4,
-                      "marginRight": 8,
+                      "color": "#7335C0",
+                      "paddingLeft": 4,
                     },
                   ]
                 }
-                testID="mention_bar_item.name"
+                testID="tag.label"
               >
                 Test account 2
               </Text>

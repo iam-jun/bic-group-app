@@ -648,8 +648,8 @@
     "group_menu": {
       "label_admin_tools": "Công cụ quản trị",
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
-      "label_leave_group": "Rời nhóm",
-      "label_leave_community": "Rời cộng đồng",
+      "label_leave_group": "Thoát khỏi nhóm",
+      "label_leave_community": "Thoát khỏi cộng đồng",
       "label_share_group": "Chia sẻ tới...",
       "label_share_to_chat": "Chia sẻ trong Bein Chat",
       "label_following": "Theo dõi",
@@ -688,8 +688,8 @@
       "button_remove": "Xác nhận"
     },
     "error": {
-      "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi rời đi",
-      "last_admin_inner_group_leave": "Không thể rời đi. Bạn là quản trị viên cuối cùng của một nhóm bên trong",
+      "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi thoát",
+      "last_admin_inner_group_leave": "Không thể thoát. Bạn là quản trị viên cuối cùng của một nhóm bên trong",
       "last_admin_remove": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt một quản trị viên khác trước khi xóa vai trò quản trị viên",
       "last_admin_inner_group_remove": "Không thể loại khỏi nhóm. Người dùng này là quản trị viên cuối cùng của một nhóm bên trong"
     },
@@ -906,6 +906,12 @@
         "confirm": "Tắt",
         "approve_all": "Phê duyệt tất cả"
       }
+    },
+    "modal_confirm_leave_community": {
+      "title": "Thoát khỏi cộng đồng",
+      "description": "Bạn có chắc là muốn thoát khỏi ",
+      "button_leave": "Thoát",
+      "success_message": "Bạn đã thoát khỏi cộng đồng này"
     }
   },
   "upload": {

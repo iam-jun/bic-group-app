@@ -32,8 +32,8 @@ exports[`NoGroupFound component should render correctly 1`] = `
             "backgroundColor": "#FFFFFF",
             "flexDirection": "row",
             "minHeight": 44,
-            "overflow": "hidden",
             "paddingTop": 0,
+            "paddingVertical": 4,
           },
           Object {
             "elevation": 2,

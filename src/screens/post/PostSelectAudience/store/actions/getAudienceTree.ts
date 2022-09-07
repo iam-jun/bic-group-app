@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import ISelectAudienceState from '../Interface';
 
-const getAudienceTree = async (set, _) => {
+const getAudienceTree = (set, _) => async () => {
   set((state: ISelectAudienceState) => {
     state.tree.loading = true;
   });

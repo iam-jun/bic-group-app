@@ -41,7 +41,6 @@ import deleteComment from './deleteComment';
 import deleteReactToComment from './deleteReactToComment';
 import deleteReactToPost from './deleteReactToPost';
 import getCommentDetail from './getCommentDetail';
-import getDraftPosts from './getDraftPosts';
 import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
 import getSeenPost from './getSeenPost';
 import putMarkSeenPost from './putMarKSeenPost';
@@ -52,6 +51,7 @@ import deletePost from './deletePost';
 import updateReactionBySocket from './updateReactionBySocket';
 import updateUnReactionBySocket from './updateUnReactionBySocket';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
+import useDraftPostStore from '../../../screens/post/DraftPost/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -108,9 +108,6 @@ export default function* postSaga() {
   );
   yield takeLatest(
     postTypes.GET_POST_DETAIL, getPostDetail,
-  );
-  yield takeEvery(
-    postTypes.GET_DRAFT_POSTS, getDraftPosts,
   );
   yield takeEvery(
     postTypes.POST_PUBLISH_DRAFT_POST, postPublishDraftPost,
@@ -184,7 +181,7 @@ function* postCreateNewPost({
       yield put(postActions.addToAllPosts({ data: postData }));
 
       if (data?.isDraft) {
-        yield put(postActions.getDraftPosts({}));
+        yield call(useDraftPostStore.getState().doGetDraftPosts, {});
       } else if (createFromGroupId) {
         yield put(groupsActions.clearGroupPosts());
         yield put(groupsActions.getGroupPosts(createFromGroupId));
@@ -350,7 +347,7 @@ function* postPublishDraftPost({
         isRefresh: true,
       };
       yield put(homeActions.getHomePosts({ isRefresh: true }));
-      yield put(postActions.getDraftPosts(payloadGetDraftPosts));
+      yield call(useDraftPostStore.getState().doGetDraftPosts, payloadGetDraftPosts);
     } else {
       onError?.();
       yield showError(res);
@@ -399,7 +396,7 @@ function* putEditDraftPost({
         const payloadGetDraftPosts: IPayloadGetDraftPosts = {
           isRefresh: true,
         };
-        yield put(postActions.getDraftPosts(payloadGetDraftPosts));
+        yield call(useDraftPostStore.getState().doGetDraftPosts, payloadGetDraftPosts);
         navigation.goBack();
         yield put(modalActions.showHideToastMessage({
           content: 'post:draft:text_draft_saved',

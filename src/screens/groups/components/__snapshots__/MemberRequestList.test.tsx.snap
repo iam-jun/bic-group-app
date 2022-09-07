@@ -5,7 +5,6 @@ exports[`MemberRequestList should render data correctly 1`] = `
   ItemSeparatorComponent={[Function]}
   ListEmptyComponent={[Function]}
   ListFooterComponent={[Function]}
-  ListHeaderComponent={[Function]}
   data={
     Array [
       "26",
@@ -35,11 +34,6 @@ exports[`MemberRequestList should render data correctly 1`] = `
   scrollEventThrottle={50}
   showsVerticalScrollIndicator={false}
   stickyHeaderIndices={Array []}
-  style={
-    Object {
-      "marginHorizontal": 16,
-    }
-  }
   testID="flatlist"
   viewabilityConfigCallbackPairs={Array []}
 >
@@ -47,40 +41,22 @@ exports[`MemberRequestList should render data correctly 1`] = `
   <View>
     <View
       onLayout={[Function]}
-    >
-      <View
-        style={
-          Object {
-            "marginVertical": 12,
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 15,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-          testID="member_request_list.request_title"
-        >
-          1 Request
-        </Text>
-      </View>
-    </View>
-    <View
-      onLayout={[Function]}
       style={null}
     >
       <View
         style={
           Object {
-            "marginVertical": 4,
+            "backgroundColor": "#FFFFFF",
+            "elevation": 2,
+            "paddingHorizontal": 16,
+            "paddingVertical": 12,
+            "shadowColor": "rgba(0, 0, 0, 1)",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.12,
+            "shadowRadius": 1.5,
           }
         }
       >
@@ -167,6 +143,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
                         "borderRadius": 24,
                         "borderWidth": 2,
@@ -213,8 +190,8 @@ exports[`MemberRequestList should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#212745",
-                    "fontFamily": "BeVietnamPro-Medium",
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
                     "fontSize": 15,
                   },
                   Object {},
@@ -224,16 +201,23 @@ exports[`MemberRequestList should render data correctly 1`] = `
             >
               User Name Test
             </Text>
+            <View
+              style={
+                Object {
+                  "marginVertical": 2,
+                }
+              }
+            />
             <Text
               style={
                 Array [
                   Object {
                     "color": "#212745",
                     "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 15,
+                    "fontSize": 13,
                   },
                   Object {
-                    "color": "#767D93",
+                    "color": "#353E6E",
                   },
                   undefined,
                 ]
@@ -243,20 +227,10 @@ exports[`MemberRequestList should render data correctly 1`] = `
             </Text>
             <View
               style={
-                Array [
-                  Object {
-                    "alignSelf": "stretch",
-                    "backgroundColor": "#E3E6F2",
-                    "height": 1,
-                    "marginHorizontal": 0,
-                    "width": undefined,
-                  },
-                  Object {
-                    "marginVertical": 8,
-                  },
-                ]
+                Object {
+                  "marginVertical": 6,
+                }
               }
-              testID="divider"
             />
             <View
               style={
@@ -333,9 +307,11 @@ exports[`MemberRequestList should render data correctly 1`] = `
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
-                    Object {},
                     Object {
-                      "marginLeft": 16,
+                      "color": "#353E6E",
+                    },
+                    Object {
+                      "marginLeft": 12,
                     },
                   ]
                 }
@@ -418,9 +394,11 @@ exports[`MemberRequestList should render data correctly 1`] = `
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
-                    Object {},
                     Object {
-                      "marginLeft": 16,
+                      "color": "#353E6E",
+                    },
+                    Object {
+                      "marginLeft": 12,
                     },
                   ]
                 }
@@ -434,7 +412,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
           style={
             Object {
               "flexDirection": "row",
-              "marginVertical": 8,
+              "marginTop": 8,
             }
           }
         >
@@ -449,14 +427,15 @@ exports[`MemberRequestList should render data correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#DDDFE4",
-                "borderRadius": 4,
-                "flex": 1,
-                "marginRight": 8,
-                "padding": 8,
-              }
+              Array [
+                Object {
+                  "borderRadius": 6,
+                },
+                Object {
+                  "flex": 1,
+                  "marginRight": 8,
+                },
+              ]
             }
             testID="pending_user_item.btn_decline"
           >
@@ -465,30 +444,41 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
+                    "borderRadius": 6,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "paddingVertical": 4,
                   },
                   undefined,
+                  Object {
+                    "backgroundColor": "#F1F2F8",
+                    "height": 36,
+                    "paddingHorizontal": 12,
+                  },
                 ]
               }
-              testID="button_wrapper.content"
+              testID="button.content"
             >
               <Text
                 style={
                   Array [
                     Object {
                       "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
+                      "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
                     Object {
-                      "color": "#181C32",
+                      "color": "#212745",
                     },
-                    Object {
-                      "textAlign": "center",
-                    },
+                    Array [
+                      Object {
+                        "textAlign": "center",
+                      },
+                      undefined,
+                    ],
                   ]
                 }
+                testID="button.text"
               >
                 Decline
               </Text>
@@ -505,13 +495,14 @@ exports[`MemberRequestList should render data correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E6FD8",
-                "borderRadius": 4,
-                "flex": 1,
-                "padding": 8,
-              }
+              Array [
+                Object {
+                  "borderRadius": 6,
+                },
+                Object {
+                  "flex": 1,
+                },
+              ]
             }
             testID="pending_user_item.btn_approve"
           >
@@ -520,30 +511,41 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
+                    "borderRadius": 6,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "paddingVertical": 4,
                   },
                   undefined,
+                  Object {
+                    "backgroundColor": "#F4EFFB",
+                    "height": 36,
+                    "paddingHorizontal": 12,
+                  },
                 ]
               }
-              testID="button_wrapper.content"
+              testID="button.content"
             >
               <Text
                 style={
                   Array [
                     Object {
                       "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
+                      "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#7335C0",
                     },
-                    Object {
-                      "textAlign": "center",
-                    },
+                    Array [
+                      Object {
+                        "textAlign": "center",
+                      },
+                      undefined,
+                    ],
                   ]
                 }
+                testID="button.text"
               >
                 Approve
               </Text>

@@ -104,6 +104,7 @@ exports[`DiscoverItem component should render data correctly 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
+                  "backgroundColor": "#FFFFFF",
                   "borderColor": "#F2F5F8",
                   "borderRadius": 4,
                   "borderWidth": 2,
