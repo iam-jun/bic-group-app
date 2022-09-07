@@ -15,7 +15,6 @@ interface CommunityMemberRequestsProps {
   canApproveRejectJoiningRequests: boolean;
   canEditJoinSetting: boolean;
   onPressAdd?: () => void;
-  navigateToMemberList: () => void;
 }
 
 const CommunityMemberRequests = ({
@@ -24,7 +23,6 @@ const CommunityMemberRequests = ({
   canApproveRejectJoiningRequests,
   canEditJoinSetting,
   onPressAdd,
-  navigateToMemberList,
 }: CommunityMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { canLoadMore, ids, total } = useKeySelector(groupsKeySelector.communityMemberRequests);
@@ -65,7 +63,7 @@ const CommunityMemberRequests = ({
   };
 
   const onPressApproveAll = () => {
-    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, total, callback: navigateToMemberList }));
+    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, total }));
   };
 
   return (

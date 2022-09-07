@@ -1,6 +1,7 @@
 import { IGroup } from '~/interfaces/IGroup';
+import IBaseStore from '~/store/interfaces/IBaseStore';
 
-interface IJoinedGroupTreeState {
+interface IJoinedGroupTreeState extends IBaseStore {
   data: {[key: string]: IGroup},
   loading: boolean,
 

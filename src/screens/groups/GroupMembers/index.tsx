@@ -110,10 +110,6 @@ const _GroupMembers = ({ route }: any) => {
     setSelectedIndex(index);
   };
 
-  const navigateToMemberList = () => {
-    setSelectedIndex(0);
-  };
-
   const renderContent = () => {
     if (selectedIndex === 0) {
       return <GroupMemberList groupId={groupId} onPressMenu={onPressMenu} />;
@@ -127,7 +123,6 @@ const _GroupMembers = ({ route }: any) => {
           canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
           canEditJoinSetting={canEditJoinSetting}
           onPressAdd={onPressAdd}
-          navigateToMemberList={navigateToMemberList}
         />
       );
     }
