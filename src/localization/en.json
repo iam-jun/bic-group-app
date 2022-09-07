@@ -160,7 +160,8 @@
     "in": "in",
     "text_refresh": "Refresh",
     "text_undo": "Undo",
-    "text_search_result_empty": "Sorry, we couldn’t find anything related to your search."
+    "text_search_result_empty": "Sorry, we couldn’t find anything related to your search.",
+    "text_you": "You"
   },
   "auth": {
     "text_kickout_title": "Notice",
