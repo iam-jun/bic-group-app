@@ -12,7 +12,7 @@ const initState: IDraftPostState = {
 const draftPostStore = (set, get) => ({
   ...initState,
 
-  dispatchGetDraftPosts: getDraftPosts(set, get),
+  doGetDraftPosts: getDraftPosts(set, get),
 
   reset: () => resetStore(initState, set),
 });

@@ -181,7 +181,7 @@ function* postCreateNewPost({
       yield put(postActions.addToAllPosts({ data: postData }));
 
       if (data?.isDraft) {
-        yield call(useDraftPostStore.getState().dispatchGetDraftPosts, {});
+        yield call(useDraftPostStore.getState().doGetDraftPosts, {});
       } else if (createFromGroupId) {
         yield put(groupsActions.clearGroupPosts());
         yield put(groupsActions.getGroupPosts(createFromGroupId));
@@ -347,7 +347,7 @@ function* postPublishDraftPost({
         isRefresh: true,
       };
       yield put(homeActions.getHomePosts({ isRefresh: true }));
-      yield call(useDraftPostStore.getState().dispatchGetDraftPosts, payloadGetDraftPosts);
+      yield call(useDraftPostStore.getState().doGetDraftPosts, payloadGetDraftPosts);
     } else {
       onError?.();
       yield showError(res);
@@ -396,7 +396,7 @@ function* putEditDraftPost({
         const payloadGetDraftPosts: IPayloadGetDraftPosts = {
           isRefresh: true,
         };
-        yield call(useDraftPostStore.getState().dispatchGetDraftPosts, payloadGetDraftPosts);
+        yield call(useDraftPostStore.getState().doGetDraftPosts, payloadGetDraftPosts);
         navigation.goBack();
         yield put(modalActions.showHideToastMessage({
           content: 'post:draft:text_draft_saved',

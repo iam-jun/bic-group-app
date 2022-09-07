@@ -31,7 +31,7 @@ const DraftPost = () => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const {
-    posts: draftPosts = [], hasNextPage, refreshing, dispatchGetDraftPosts,
+    posts: draftPosts = [], hasNextPage, refreshing, doGetDraftPosts,
   } = useDraftPostStore();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const DraftPost = () => {
       const payload: IPayloadGetDraftPosts = {
         isRefresh: isRefreshing,
       };
-      dispatchGetDraftPosts(payload);
+      doGetDraftPosts(payload);
     }
   };
 

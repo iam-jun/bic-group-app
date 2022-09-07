@@ -7,9 +7,7 @@ interface IDraftPostState extends IBaseStore, IFetchingStore{
   loading: boolean,
   refreshing: boolean,
 
-  dispatchGetDraftPosts?: (payload: IPayloadGetDraftPosts) => void;
-
-  reset?: () => void;
+  doGetDraftPosts?: (payload: IPayloadGetDraftPosts) => void;
 }
 
 export default IDraftPostState;

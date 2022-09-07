@@ -1,13 +1,13 @@
 import { ICommunity } from '~/interfaces/ICommunity';
+import IBaseStore from '~/store/interfaces/IBaseStore';
 
-interface IJoinedCommunitiesState {
+interface IJoinedCommunitiesState extends IBaseStore{
   data?: ICommunity[],
   loading: boolean,
   getJoinedCommunities: (params?: {
     previewMembers?: boolean;
     managed?: boolean;
   }) => void;
-  reset: () => void;
 }
 
 export default IJoinedCommunitiesState;
