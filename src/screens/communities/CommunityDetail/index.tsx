@@ -217,7 +217,6 @@ const CommunityDetail = (props: any) => {
         title={name}
         useAnimationTitle
         rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
-        rightIconProps={{ backgroundColor: theme.colors.white }}
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
         showStickyHeight={buttonHeight}

@@ -1,4 +1,5 @@
 import { createStore, resetStore } from '~/store/utils';
+import { IPostState } from './Interface';
 
 const initState: IPostState = {
 };
