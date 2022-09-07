@@ -19,13 +19,6 @@ const postKeySelector = {
   postAudienceSheet: 'post.postAudienceSheet',
   allPosts: 'post.allPosts',
   allComments: 'post.allComments',
-  draftPostsData: 'post.draftPosts',
-  draft: {
-    posts: 'post.draftPosts.posts',
-    canLoadMore: 'post.draftPosts.canLoadMore',
-    loading: 'post.draftPosts.loading',
-    refreshing: 'post.draftPosts.refreshing',
-  },
   seenPostList: {
     dataList: 'post.seenPostList.data',
     total: 'post.seenPostList.total',

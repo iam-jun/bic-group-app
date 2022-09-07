@@ -1,67 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NFSRecentSearchKeyword component should render empty recent search keyword 1`] = `
-<View
+<Text
   style={
-    Object {
-      "paddingHorizontal": 12,
-    }
+    Array [
+      Object {
+        "color": "#212745",
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 13,
+      },
+      Object {},
+      Object {
+        "margin": 24,
+        "textAlign": "center",
+      },
+    ]
   }
 >
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "height": 60,
-      }
-    }
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#181C32",
-            "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 13,
-          },
-          Object {},
-          Object {
-            "flex": 1,
-          },
-        ]
-      }
-    >
-      Recent Search
-    </Text>
-  </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#212745",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
-        },
-        Object {},
-        Object {
-          "color": "#767D93",
-          "margin": 24,
-          "textAlign": "center",
-        },
-      ]
-    }
-  >
-    No recent search
-  </Text>
-</View>
+  No recent searches
+</Text>
 `;
 
 exports[`NFSRecentSearchKeyword component should render list recent search keyword 1`] = `
 <View
   style={
     Object {
-      "paddingHorizontal": 12,
+      "paddingHorizontal": 16,
     }
   }
 >
@@ -80,7 +44,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 13,
+            "fontSize": 17,
           },
           Object {},
           Object {
@@ -89,7 +53,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
         ]
       }
     >
-      Recent Search
+      Recent searches
     </Text>
     <View
       accessible={true}
@@ -128,19 +92,16 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           style={
             Array [
               Object {
-                "color": "#212745",
+                "color": "#007AFF",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 13,
               },
               Object {},
-              Object {
-                "color": "#7335C0",
-                "marginRight": 4,
-              },
+              undefined,
             ]
           }
         >
-          CLEAR
+          Clear all
         </Text>
       </View>
     </View>
@@ -167,13 +128,71 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           "alignItems": "center",
           "flexDirection": "row",
           "opacity": 1,
-          "paddingHorizontal": 12,
-          "paddingRight": 8,
+          "paddingHorizontal": 0,
           "paddingVertical": 12,
         }
       }
       testID="recent_search_keyword.item_0"
     >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "marginRight": 12,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
       <View
         style={
           Object {
@@ -187,7 +206,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
             Array [
               Object {
                 "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
+                "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
               Object {},
@@ -283,7 +302,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
 <View
   style={
     Object {
-      "paddingHorizontal": 12,
+      "paddingHorizontal": 16,
     }
   }
 >
@@ -302,7 +321,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
           Object {
             "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
-            "fontSize": 13,
+            "fontSize": 17,
           },
           Object {},
           Object {
@@ -311,7 +330,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
         ]
       }
     >
-      Recent Search
+      Recent searches
     </Text>
   </View>
   <ActivityIndicator

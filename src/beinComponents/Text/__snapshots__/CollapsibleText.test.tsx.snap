@@ -167,8 +167,9 @@ exports[`Collapsible Text component renders correctly with markdown 1`] = `
         style={
           Array [
             Object {
-              "color": "#386fe5",
-              "fontFamily": "BeVietnamPro-SemiBold",
+              "color": "#7335C0",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
             },
           ]
         }

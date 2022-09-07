@@ -107,19 +107,16 @@ const GroupTopBar = () => {
   };
 
   const onPressMenu = () => {
-    const headerMenuData = getHeaderMenu(
-      'group',
+    const headerMenuData = getHeaderMenu({
+      type: 'group',
       isMember,
       canSetting,
       dispatch,
       onPressAdminTools,
       onPressCopyLink,
       onPressShare,
-      undefined,
-      undefined,
-      undefined,
       onPressLeave,
-    );
+    });
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
