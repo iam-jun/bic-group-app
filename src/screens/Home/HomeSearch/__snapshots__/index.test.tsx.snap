@@ -23,9 +23,12 @@ exports[`NewsfeedSearch component should render search 1`] = `
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "#F2F5F8",
+          "borderBottomWidth": 1,
           "elevation": 1,
           "flexDirection": "row",
           "overflow": "hidden",
+          "paddingHorizontal": 12,
           "paddingTop": 0,
           "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
@@ -36,7 +39,8 @@ exports[`NewsfeedSearch component should render search 1`] = `
           "shadowRadius": 1,
         },
         Object {
-          "paddingRight": 8,
+          "borderBottomWidth": 0,
+          "paddingHorizontal": 16,
         },
       ]
     }
@@ -50,8 +54,6 @@ exports[`NewsfeedSearch component should render search 1`] = `
           "flexDirection": "row",
           "height": 60,
           "overflow": "hidden",
-          "paddingLeft": 8,
-          "paddingRight": 8,
         }
       }
     >
@@ -95,10 +97,8 @@ exports[`NewsfeedSearch component should render search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
                 "justifyContent": "center",
-                "padding": 12,
-                "width": 48,
+                "padding": 8,
               },
               Object {
                 "backgroundColor": undefined,
@@ -131,7 +131,11 @@ exports[`NewsfeedSearch component should render search 1`] = `
               "paddingHorizontal": 16,
             },
             Object {
+              "color": "#181C32",
               "flex": 1,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+              "height": "100%",
             },
             Object {
               "height": 32,
@@ -330,9 +334,12 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "#F2F5F8",
+          "borderBottomWidth": 1,
           "elevation": 1,
           "flexDirection": "row",
           "overflow": "hidden",
+          "paddingHorizontal": 12,
           "paddingTop": 0,
           "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
@@ -343,7 +350,8 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
           "shadowRadius": 1,
         },
         Object {
-          "paddingRight": 8,
+          "borderBottomWidth": 0,
+          "paddingHorizontal": 16,
         },
       ]
     }
@@ -357,8 +365,6 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
           "flexDirection": "row",
           "height": 60,
           "overflow": "hidden",
-          "paddingLeft": 8,
-          "paddingRight": 8,
         }
       }
     >
@@ -402,10 +408,8 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
                 "justifyContent": "center",
-                "padding": 12,
-                "width": 48,
+                "padding": 8,
               },
               Object {
                 "backgroundColor": undefined,
@@ -438,7 +442,11 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
               "paddingHorizontal": 16,
             },
             Object {
+              "color": "#181C32",
               "flex": 1,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+              "height": "100%",
             },
             Object {
               "height": 32,
