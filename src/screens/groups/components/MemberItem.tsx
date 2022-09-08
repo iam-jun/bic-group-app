@@ -15,6 +15,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import spacing, { borderRadius } from '~/theme/spacing';
 import { Button } from '~/baseComponents';
+import { useBaseHook } from '~/hooks';
 
 interface MemberItemProps {
   item: any;
@@ -28,10 +29,14 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
   const { user } = useAuth();
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
   const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
 
   const {
     id, fullname, avatar, username,
   } = item || {};
+
+  const isMe = user?.username === username;
+  const memberName = isMe ? `${fullname} (${t('common:text_you')})` : fullname;
 
   const goToUserProfile = () => {
     rootNavigation.navigate(
@@ -57,15 +62,15 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
       onPress={goToUserProfile}
       ContentComponent={(
         <>
-          <Text.BodyMMedium color={colors.neutral70} numberOfLines={1}>
-            {fullname}
+          <Text.BodyMMedium ellipsizeMode="middle" color={colors.neutral70} numberOfLines={1}>
+            {memberName}
           </Text.BodyMMedium>
           <Text.BodyS color={colors.neutral40} numberOfLines={1}>{`@${username}`}</Text.BodyS>
         </>
       )}
       RightComponent={(
         <>
-          {user?.username !== username && (
+          {!isMe && (
             <Icon
               icon="CommentDotsSolid"
               size={15}
@@ -78,6 +83,7 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
           )}
           {canManageMember && (
             <Button.Raise
+              style={styles.iconMenu}
               icon="menu"
               size="small"
               testID="member_item.icon_option.button"
@@ -101,8 +107,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: spacing.padding.xSmall,
-    marginHorizontal: spacing.margin.small,
+    marginLeft: spacing.margin.small,
     borderRadius: borderRadius.base,
+  },
+  iconMenu: {
+    marginLeft: spacing.margin.small,
   },
 });
 

@@ -13,7 +13,7 @@ interface TabButtonHeaderProps {
 }
 
 const TabButtonHeader = ({
-  isMember, onPressDiscover, onPressAbout, onPressMembers,
+  onPressDiscover, onPressAbout, onPressMembers,
 }: TabButtonHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);

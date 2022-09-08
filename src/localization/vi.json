@@ -123,7 +123,8 @@
     "in": "trong",
     "text_refresh": "Tải lại",
     "text_undo": "Khôi phục",
-    "text_search_result_empty": "Rất tiếc, chúng tối không tìm thấy kết quả của bạn."
+    "text_search_result_empty": "Rất tiếc, chúng tối không tìm thấy kết quả của bạn.",
+    "text_you": "Bạn"
   },
   "auth": {
     "text_kickout_title": "Notice",

@@ -19,7 +19,7 @@ interface JoinCancelButtonProps {
 }
 
 const JoinCancelButton = ({
-  style, type, joinStatus, privacy, onPressJoin, onPressCancelRequest,
+  style, type, joinStatus, onPressJoin, onPressCancelRequest,
 }: JoinCancelButtonProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
