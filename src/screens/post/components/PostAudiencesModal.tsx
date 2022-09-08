@@ -27,8 +27,8 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data }: PostAudiences
     dispatch(modalActions.hideModal());
   };
 
-  const navigateToGroup = (groupId: any) => {
-    rootNavigation.navigate(mainStack.groupDetail, { groupId });
+  const navigateToGroup = (groupId: any, communityId: any) => {
+    rootNavigation.navigate(mainStack.groupDetail, { groupId, communityId });
   };
 
   const navigateToCommunity = (communityId: string) => {
@@ -40,7 +40,7 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data }: PostAudiences
     if (isCommunity && communityId) {
       navigateToCommunity(communityId);
     } else {
-      navigateToGroup(id);
+      navigateToGroup(id, communityId);
     }
     onPressClose();
   };

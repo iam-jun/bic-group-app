@@ -68,7 +68,6 @@ describe('TextInput component', () => {
       error: true,
     };
     const wrapper = render(<TextInput {...props} />);
-    const component = wrapper.getByTestId('text_input.input');
 
     const textHelper = wrapper.getByTestId('text_input.text_helper');
     const flattenedStyle = StyleSheet.flatten(textHelper.props.style);

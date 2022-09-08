@@ -10,7 +10,7 @@ const useAuthAmplifyHub = () => {
 
   useEffect(
     () => {
-      const handleAuthEvent = ({ payload: { event, data } }: HubCapsule) => {
+      const handleAuthEvent = ({ payload: { event } }: HubCapsule) => {
         switch (event) {
           case 'signIn':
             Auth.currentAuthenticatedUser()

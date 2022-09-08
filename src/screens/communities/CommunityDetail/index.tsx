@@ -14,6 +14,7 @@ import { isEmpty } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Clipboard from '@react-native-clipboard/clipboard';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PrivateWelcome from './components/PrivateWelcome';
@@ -245,7 +246,6 @@ const CommunityDetail = (props: any) => {
         title={name}
         useAnimationTitle
         rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
-        rightIconProps={{ backgroundColor: theme.colors.white }}
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
         showStickyHeight={buttonHeight}
@@ -271,6 +271,8 @@ export default CommunityDetail;
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
+  const insets = useSafeAreaInsets();
+
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.gray5,
@@ -279,7 +281,8 @@ const themeStyles = (theme: ExtendedTheme) => {
       flex: 1,
     },
     joinBtn: {
-      paddingVertical: spacing.padding.tiny,
+      paddingBottom: spacing.padding.large + insets.bottom,
+      paddingTop: spacing.padding.large,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,

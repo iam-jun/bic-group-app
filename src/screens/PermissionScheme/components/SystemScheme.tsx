@@ -22,7 +22,7 @@ export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const SystemScheme: FC<SystemSchemeProps> = ({ style }: SystemSchemeProps) => {
+const SystemScheme: FC<SystemSchemeProps> = () => {
   const { t } = useBaseHook();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();

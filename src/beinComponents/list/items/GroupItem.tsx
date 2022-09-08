@@ -52,7 +52,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     id,
     communityId,
     name,
-    userCount,
     icon,
     testID = 'group_item',
 
@@ -65,11 +64,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableOnPressItem,
     checkboxDisabled,
     privacy,
-    showPrivacy = false,
-    showPrivacyName = true,
     showPrivacyAvatar = false,
-    showInfo = true,
-    disableHorizontal,
     iconVariant = 'base',
     nameLines = 2,
     menuIcon = 'menu',
@@ -83,7 +78,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
 
@@ -92,7 +86,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   }
 
   const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
+  const { icon: privacyIcon }: any = privacyData || {};
 
   const _onPressItem = () => {
     if (onPressItem) {

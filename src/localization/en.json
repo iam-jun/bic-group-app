@@ -679,7 +679,7 @@
   "groups": {
     "group_content": {
       "btn_group_tree": "Group Tree",
-      "btn_discover": "Discover Groups",
+      "btn_browse": "Browse Groups",
       "btn_post": "Post",
       "btn_channel": "Channel",
       "btn_about": "About",
@@ -883,21 +883,22 @@
     },
     "empty_groups": {
       "title": "No group found",
-      "description": "Discover groups to join one."
+      "description": "Browse groups to join one."
     },
     "community_menu": {
       "your_communities_text": "You've joined",
       "manage_text": "You manage",
       "discover_text": "Discover"
     },
-    "text_join_community_button": "Join this community",
-    "text_join_group_button": "Join this group",
+    "text_join_community_button": "Join",
+    "text_join_group_button": "Join",
     "text_join_community_description": "Join this community to view or participate on discussions",
     "text_join_group_description": "Join this group to view or participate on discussions",
     "text_other_member_one": "{{count}} other are members",
     "text_other_member_other": "{{count}} others are members",
     "text_is_member": "is a member",
-    "title_discover_groups": "Discover Groups",
+    "title_browse_groups": "Browse Groups",
+    "text_must_be_member_first": "You need to be a member of the community first",
     "permission": {
       "title_permission": "Permission",
       "title_system_scheme": "System Scheme",

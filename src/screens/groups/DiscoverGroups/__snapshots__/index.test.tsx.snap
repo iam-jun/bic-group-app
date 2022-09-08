@@ -242,7 +242,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                     }
                     testID="header.text"
                   >
-                    Discover Groups
+                    Browse Groups
                   </Text>
                 </View>
               </View>

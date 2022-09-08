@@ -21,16 +21,23 @@ import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import spacing from '~/theme/spacing';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import modalActions from '~/storeRedux/modal/actions';
+import { useBaseHook } from '~/hooks';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
   const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
 
   const {
     ids, items, loading, canLoadMore,
   } = useKeySelector(groupsKeySelector.discoverGroups);
+  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const { joinStatus } = communityDetail;
+  const isMemberOfCommunity = joinStatus === groupJoinStatus.member;
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
     dispatch(actions.getDiscoverGroups({ communityId, isRefreshing }));
@@ -59,6 +66,14 @@ const DiscoverGroups = ({ route }: any) => {
   const onPressJoin = (
     groupId: string, groupName: string,
   ) => {
+    if (!isMemberOfCommunity) {
+      dispatch(modalActions.showAlert({
+        title: t('error:alert_title'),
+        content: t('communities:text_must_be_member_first'),
+        confirmLabel: t('common:text_ok'),
+      }));
+      return;
+    }
     dispatch(actions.joinNewGroup({ groupId, groupName }));
   };
 
@@ -68,7 +83,7 @@ const DiscoverGroups = ({ route }: any) => {
     dispatch(actions.cancelJoinGroup({ groupId, groupName }));
   };
 
-  const onSearchText = (searchText: string) => {
+  const onSearchText = (_searchText: string) => {
     // TODO: Add search
   };
 
@@ -110,7 +125,7 @@ const DiscoverGroups = ({ route }: any) => {
     <ScreenWrapper isFullView>
       <Header
         titleTextProps={{ useI18n: true }}
-        title="communities:title_discover_groups"
+        title="communities:title_browse_groups"
         onSearchText={onSearchText}
       />
       <FlatList

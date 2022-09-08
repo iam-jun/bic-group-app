@@ -21,9 +21,10 @@ import Tab from '~/baseComponents/Tab';
 import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupMemberRequests from './GroupMemberRequests';
+import { IconType } from '~/resources/icons';
 
 const _GroupMembers = ({ route }: any) => {
-  const { groupId, targetIndex } = route.params;
+  const { groupId, targetIndex, isMember } = route.params;
 
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
@@ -146,13 +147,17 @@ const _GroupMembers = ({ route }: any) => {
     buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
   };
 
+  const showSearchMember = isMember && {
+    icon: 'search' as IconType,
+    onPressIcon: onPressSearch,
+  };
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.gray5}>
       <Header
         titleTextProps={{ useI18n: true }}
         title="groups:title_members_other"
-        icon="search"
-        onPressIcon={onPressSearch}
+        {...showSearchMember}
         {...headerProps}
       />
 

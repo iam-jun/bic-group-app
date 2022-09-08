@@ -15,7 +15,7 @@ import textStyleProps from './data/textStyleProps';
 const renderRules = {
   // when unknown elements are introduced, so it wont break
   unknown: (
-    node, children, parent, styles,
+    // node, children, parent, styles,
   ) => null,
 
   // The main container

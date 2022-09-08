@@ -25,7 +25,7 @@ export function cleanupTokens(tokens) {
   const stack = [];
   tokens = tokens.reduce(
     (
-      acc, token, index,
+      acc, token,
     ) => {
       if (token.type === 'link' && token.nesting === 1) {
         stack.push(token);

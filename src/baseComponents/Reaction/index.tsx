@@ -27,6 +27,7 @@ interface ReactionProps {
   style?: StyleProp<ViewStyle>;
   disableUpdateState?: boolean;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 const Reaction: React.FC<ReactionProps> = ({
@@ -39,6 +40,7 @@ const Reaction: React.FC<ReactionProps> = ({
   style,
   disableUpdateState,
   loading,
+  disabled = false,
 }: ReactionProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ExtendedTheme = useTheme();
@@ -98,7 +100,7 @@ const Reaction: React.FC<ReactionProps> = ({
   return (
     <Button
       testID={testId || 'reaction'}
-      disabled={loading}
+      disabled={loading || disabled}
       style={[styles.container, style]}
       onPress={_onChangeValue}
       onLongPress={_onLongPress}

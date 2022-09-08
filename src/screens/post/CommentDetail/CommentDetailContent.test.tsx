@@ -1,30 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import React from 'react';
-
 import { cleanup } from '@testing-library/react-native';
 import initialState from '~/storeRedux/initialState';
-import {
-  configureStore,
-  createTestStore,
-  renderWithRedux,
-} from '~/test/testUtils';
 
-import CommentDetailContent from './CommentDetailContent';
 import postActions from '../../../storeRedux/post/actions';
 import {
   allCommentsByParentIdsWith1ChildComment,
   baseCommentData,
   POST_DETAIL_3,
 } from '~/test/mock_data/post';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 afterEach(cleanup);
 
 describe('CommentDetail screen', () => {
-  const mockStore = configureStore([]);
   let storeData: any;
 
   beforeEach(() => {
@@ -40,69 +30,70 @@ describe('CommentDetail screen', () => {
     storeData.post.commentErrorCode = '';
   });
 
-  const replyComment = {
-    totalReply: 0,
-    ownerReactions: [],
-    id: 505,
-    actor: {
-      id: 58,
-      username: 'thuquyen',
-      fullname: 'Nguyen Thi Thu Quyền',
-      avatar:
-        'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
-    },
-    parentId: 490,
-    postId: 302,
-    content: '9',
-    createdAt: '2022-04-27T03:54:38.962Z',
-    updatedAt: '2022-04-27T03:54:38.962Z',
-    media: [],
-    reactionsCount: null,
-    mentions: [],
-    child: [],
-  };
+  // const replyComment = {
+  //   totalReply: 0,
+  //   ownerReactions: [],
+  //   id: 505,
+  //   actor: {
+  //     id: 58,
+  //     username: 'thuquyen',
+  //     fullname: 'Nguyen Thi Thu Quyền',
+  //     avatar:
+  // eslint-disable-next-line max-len
+  //       'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+  //   },
+  //   parentId: 490,
+  //   postId: 302,
+  //   content: '9',
+  //   createdAt: '2022-04-27T03:54:38.962Z',
+  //   updatedAt: '2022-04-27T03:54:38.962Z',
+  //   media: [],
+  //   reactionsCount: null,
+  //   mentions: [],
+  //   child: [],
+  // };
 
   it('should call backend to get comment detail with ', async () => {
     const spy = jest.spyOn(postActions, 'getCommentDetail');
 
-    const props = {
-      route: {
-        params: {
-          commentId: baseCommentData.id,
-          postId: baseCommentData.postId,
-          replyItem: undefined,
-          commentParent: undefined,
-        },
-      },
-    };
+    // const props = {
+    //   route: {
+    //     params: {
+    //       commentId: baseCommentData.id,
+    //       postId: baseCommentData.postId,
+    //       replyItem: undefined,
+    //       commentParent: undefined,
+    //     },
+    //   },
+    // };
 
     storeData.post.allCommentsByParentIds
       = allCommentsByParentIdsWith1ChildComment;
-    const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
+    // const store = createTestStore(storeData);
+    // const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
 
     expect(spy).toBeCalledTimes(1);
   });
 
   it('should call showPrivacy prop when commentErrorCode = api.forbidden', async () => {
     const showPrivacy = jest.fn();
-    const props = {
-      route: {
-        params: {
-          commentId: baseCommentData.id,
-          postId: baseCommentData.postId,
-          replyItem: undefined,
-          commentParent: undefined,
-        },
-      },
-    };
+    // const props = {
+    //   route: {
+    //     params: {
+    //       commentId: baseCommentData.id,
+    //       postId: baseCommentData.postId,
+    //       replyItem: undefined,
+    //       commentParent: undefined,
+    //     },
+    //   },
+    // };
 
-    storeData.post.commentErrorCode = API_ERROR_CODE.POST.postPrivacy;
-    const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(
-      <CommentDetailContent showPrivacy={showPrivacy} {...props} />,
-      store,
-    );
+    // storeData.post.commentErrorCode = API_ERROR_CODE.POST.postPrivacy;
+    // const store = createTestStore(storeData);
+    // const wrapper = renderWithRedux(
+    //   <CommentDetailContent showPrivacy={showPrivacy} {...props} />,
+    //   store,
+    // );
 
     expect(showPrivacy).toBeCalledWith(true);
   });
@@ -112,21 +103,21 @@ describe('CommentDetail screen', () => {
     const rootNavigation = { replace };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const props = {
-      route: {
-        params: {
-          commentId: baseCommentData.id,
-          postId: baseCommentData.postId,
-          replyItem: undefined,
-          commentParent: undefined,
-        },
-      },
-    };
+    // const props = {
+    //   route: {
+    //     params: {
+    //       commentId: baseCommentData.id,
+    //       postId: baseCommentData.postId,
+    //       replyItem: undefined,
+    //       commentParent: undefined,
+    //     },
+    //   },
+    // };
 
-    storeData.post.commentErrorCode
-      = API_ERROR_CODE.POST.copiedCommentIsDeleted;
-    const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
+    // storeData.post.commentErrorCode
+    //   = API_ERROR_CODE.POST.copiedCommentIsDeleted;
+    // const store = createTestStore(storeData);
+    // const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
 
     expect(replace).toBeCalledWith(homeStack.postDetail, {
       post_id: baseCommentData.postId,

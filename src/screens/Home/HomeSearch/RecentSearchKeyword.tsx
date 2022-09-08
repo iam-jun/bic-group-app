@@ -27,7 +27,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
 }: NFSRecentSearchKeywordProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const { loading, data }
     = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
@@ -99,35 +99,32 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    flex1: { flex: 1 },
-    container: {
-      paddingHorizontal: spacing.padding.large,
-    },
-    header: {
-      height: 60,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    btnClear: {
-      marginRight: spacing.margin.large,
-    },
-    loading: {
-      height: 44,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    item: {
-      paddingVertical: spacing.padding.base,
-      paddingHorizontal: 0,
-    },
-    textEmpty: {
-      textAlign: 'center',
-      margin: spacing.margin.extraLarge,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  flex1: { flex: 1 },
+  container: {
+    paddingHorizontal: spacing.padding.large,
+  },
+  header: {
+    height: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  btnClear: {
+    marginRight: spacing.margin.large,
+  },
+  loading: {
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  item: {
+    paddingVertical: spacing.padding.base,
+    paddingHorizontal: 0,
+  },
+  textEmpty: {
+    textAlign: 'center',
+    margin: spacing.margin.extraLarge,
+  },
+});
 
 export default NFSRecentSearchKeyword;

@@ -97,10 +97,6 @@ const FilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
     setDate(undefined);
   };
 
-  const _onPressSelectSpecific = () => {
-    setStage(Stage.FILTER_CREATOR_SPECIFIC);
-  };
-
   if (stage === Stage.FILTER_CREATOR) {
     return (
       <FilterCreatedBy
@@ -109,7 +105,9 @@ const FilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         // onPressSelectSpecific={_onPressSelectSpecific}
       />
     );
-  } if (stage === Stage.FILTER_DATE) {
+  }
+
+  if (stage === Stage.FILTER_DATE) {
     return (
       <FilterDate
         startDate={startDate}
@@ -117,7 +115,9 @@ const FilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         onSelect={_onSelectDate}
       />
     );
-  } if (stage === Stage.FILTER_CREATOR_SPECIFIC) {
+  }
+
+  if (stage === Stage.FILTER_CREATOR_SPECIFIC) {
     return <FilterCreateBySpecific onSelect={_onSelectCreatedBy} />;
   }
 

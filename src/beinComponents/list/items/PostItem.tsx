@@ -7,6 +7,7 @@ export interface PostItemProps {
   testID?: string;
   btnReactTestID?: string;
   btnCommentTestID?: string;
+  hasReactPermission?: boolean;
 }
 
 const PostItem = ({
@@ -14,12 +15,14 @@ const PostItem = ({
   testID,
   btnReactTestID,
   btnCommentTestID,
+  hasReactPermission,
 }: any) => (
   <PostView
     postId={postData?.id}
     testID={testID}
     btnReactTestID={btnReactTestID}
     btnCommentTestID={btnCommentTestID}
+    hasReactPermission={hasReactPermission}
   />
 );
 
