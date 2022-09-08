@@ -137,7 +137,7 @@ const CommunityDetail = (props: any) => {
   };
 
   const onConfirmLeaveCommunity = async () => {
-    doPostLeaveCommunity(communityId, privacy, dispatch);
+    doPostLeaveCommunity(communityId, privacy);
   };
 
   const onPressLeave = () => {

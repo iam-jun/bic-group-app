@@ -8,19 +8,19 @@ import { COMMUNITY_PRIVACY_TYPE, groupPrivacy } from '~/constants/privacyTypes';
 import GROUP_JOIN_STATUS from '~/constants/groupJoinStatus';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import useJoinedCommunitiesStore from '~/screens/Menu/store';
+import Store from '~/storeRedux';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
 const leaveCommunity = (_set, _get) => async (
   communityId: string,
   privacy: COMMUNITY_PRIVACY_TYPE,
-  dispatch: any,
 ) => {
   try {
     await groupApi.leaveCommunity(communityId);
 
     // update button Join/Cancel/View status on Discover community
-    dispatch(groupsActions.editDiscoverCommunityItem({
+    Store.store.dispatch(groupsActions.editDiscoverCommunityItem({
       id: communityId,
       data: { joinStatus: GROUP_JOIN_STATUS.visitor },
     }));
@@ -28,30 +28,30 @@ const leaveCommunity = (_set, _get) => async (
     if (privacy === groupPrivacy.secret) {
       rootNavigation.popToTop();
     } else {
-      dispatch(groupsActions.getCommunityDetail({ communityId }));
+      Store.store.dispatch(groupsActions.getCommunityDetail({ communityId }));
     }
 
     // refresh joined communities
-    dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
+    Store.store.dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
     useJoinedCommunitiesStore.getState().getJoinedCommunities();
 
     const toastMessage: IToastMessage = {
       content: 'communities:modal_confirm_leave_community:success_message',
       props: { type: 'success' },
     };
-    dispatch(modalActions.showHideToastMessage(toastMessage));
+    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.error('leaveCommunity error:', err);
 
     if (err.code === API_ERROR_CODE.GROUP.REVOKE_ACCOUNT_OWNER) {
-      return dispatch(modalActions.showHideToastMessage({
+      return Store.store.dispatch(modalActions.showHideToastMessage({
         content: 'groups:error:owner_leave_community',
         props: { type: 'error' },
       }));
     }
 
     if (err.code === API_ERROR_CODE.GROUP.LAST_ADMIN_LEAVE) {
-      return dispatch(modalActions.showHideToastMessage({
+      return Store.store.dispatch(modalActions.showHideToastMessage({
         content: 'groups:error:last_admin_inner_group_leave',
         props: { type: 'error' },
       }));
