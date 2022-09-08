@@ -7,6 +7,7 @@ const initialState = {
   text: '',
   fullContent: '',
   key: null,
+  groupIds: '',
   cursorPosition: -2, // follow MatterMost
   topPosition: 0,
   loading: false,
@@ -16,6 +17,9 @@ const initialState = {
 
 const mentionInputStore = (set, get) => ({
   ...initialState,
+  setGroupIds: (payload: string) => set((state) => {
+    state.groupIds = payload;
+  }),
   setText: (payload: string) => set((state) => {
     state.text = payload;
   }),

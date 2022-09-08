@@ -32,6 +32,7 @@ const MentionBar: FC<MentionBarProps> = ({
   const cursorPosition = useRef(0);
 
   const data = useMentionInputStore((state: IMentionInputState) => state.data);
+  const canLoadMore = useMentionInputStore((state: IMentionInputState) => state.canLoadMore);
   const doRunSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
   const doCompleteMention = useMentionInputStore((state: IMentionInputState) => state.doCompleteMention);
 
@@ -67,15 +68,14 @@ const MentionBar: FC<MentionBarProps> = ({
   );
 
   const onCursorPositionChange = debounce(
-    ({ position, value, groupIds }: ICursorPositionChange) => {
+    ({ position, value }: ICursorPositionChange) => {
       text.current = value;
       cursorPosition.current = position;
-      doRunSearch({
-        key: value.substring(
+      doRunSearch(
+        value.substring(
           0, position,
         ),
-        groupIds,
-      });
+      );
     },
     100,
   );
@@ -99,6 +99,14 @@ const MentionBar: FC<MentionBarProps> = ({
     />
   );
 
+  const onLoadMore = () => {
+    canLoadMore && doRunSearch(
+      text.current.substring(
+        0, cursorPosition.current,
+      ),
+    );
+  };
+
   if (!isShow) {
     return null;
   }
@@ -113,6 +121,9 @@ const MentionBar: FC<MentionBarProps> = ({
         data={data}
         keyboardShouldPersistTaps="handled"
         renderItem={renderItem}
+        keyExtractor={(item) => `list-mention-bar-${item.username}`}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
@@ -122,6 +133,7 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
+      flex: 1,
       borderTopWidth: 1,
       borderColor: colors.gray40,
       backgroundColor: colors.white,

@@ -22,7 +22,7 @@ import {
   switchKeyboardForCodeBlocks,
 } from './helper';
 import useMentionInputStore from './store';
-import { ICursorPositionChange } from './store/Interface';
+import IMentionInputState, { ICursorPositionChange } from './store/Interface';
 
 interface Props {
   textInputRef?: any;
@@ -57,9 +57,9 @@ const _MentionInput = ({
   const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
 
-  const {
-    setFullContent, setData,
-  } = useMentionInputStore();
+  const setData = useMentionInputStore((state: IMentionInputState) => state.setData);
+  const setFullContent = useMentionInputStore((state: IMentionInputState) => state.setFullContent);
+  const setGroupIds = useMentionInputStore((state: IMentionInputState) => state.setGroupIds);
 
   const [keyboardType, setKeyboardType] = useState<KeyboardTypeOptions>('default');
   const { isOpen: isKeyboardOpen } = useKeyboardStatus();
@@ -83,6 +83,8 @@ const _MentionInput = ({
       };
     }, [],
   );
+
+  useEffect(() => setGroupIds(groupIds), [groupIds]);
 
   const getContent = () => componentInputProps?.value;
 
@@ -112,7 +114,6 @@ const _MentionInput = ({
     const param: ICursorPositionChange = {
       position,
       value: text,
-      groupIds,
     };
     DeviceEventEmitter.emit(
       'autocomplete-on-selection-change', param,
@@ -125,7 +126,6 @@ const _MentionInput = ({
     const param: ICursorPositionChange = {
       position: cursorPosition.current,
       value,
-      groupIds,
     };
     DeviceEventEmitter.emit(
       'autocomplete-on-selection-change', param,
