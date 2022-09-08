@@ -17,7 +17,7 @@ import { formatLargeNumber } from '~/utils/formatData';
 
 export type GroupAboutContentProps = {
   showPrivate?: boolean;
-}
+};
 
 const GroupAboutContent: FC<GroupAboutContentProps> = ({ showPrivate }) => {
   const theme: ExtendedTheme = useTheme();
@@ -73,7 +73,11 @@ const GroupAboutContent: FC<GroupAboutContentProps> = ({ showPrivate }) => {
   );
 
   if (showPrivate) {
-    return <View testID="group_about_content" style={styles.container}>{renderDescription()}</View>;
+    return (
+      <View testID="group_about_content" style={styles.container}>
+        {renderDescription()}
+      </View>
+    );
   }
 
   return (

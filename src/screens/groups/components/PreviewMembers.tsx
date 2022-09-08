@@ -12,15 +12,31 @@ import ListView from '~/beinComponents/list/ListView';
 import { IPreviewMember } from '~/interfaces/ICommunity';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { useRootNavigation } from '~/hooks/navigation';
+import mainTabStack from '~/router/navigator/MainStack/stack';
+import { Button } from '~/baseComponents';
 
 const PreviewMembers = () => {
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const { userCount, members } = infoDetail;
+  const otherMembers = userCount - (members?.length || 0);
 
-  const renderItem = ({ item, index }: { item: IPreviewMember, index: number }) => (
-    <Avatar.XSmall style={index ? { marginLeft: -8 } : null} isRounded source={item.avatar} />
+  const onPressAvatar = (previewMember: IPreviewMember) => {
+    rootNavigation.navigate(mainTabStack.userProfile, {
+      userId: previewMember.id,
+    });
+  };
+
+  const renderItem = ({ item }: { item: IPreviewMember }) => (
+    <Button onPress={() => onPressAvatar(item)}>
+      <Avatar.XSmall
+        isRounded
+        source={item.avatar}
+      />
+    </Button>
   );
 
   const renderMembersDescription = () => {
@@ -60,7 +76,14 @@ const PreviewMembers = () => {
         renderItem={renderItem}
         listStyle={styles.listStyle}
         scrollEnabled={false}
-        renderItemSeparator={() => <ViewSpacing width={0} />}
+        renderItemSeparator={() => <ViewSpacing width={spacing.margin.tiny} />}
+        ListFooterComponent={() => (
+          <Avatar.XSmall
+            isRounded
+            counter={otherMembers}
+            style={{ marginLeft: spacing.margin.tiny }}
+          />
+        )}
       />
       {renderMembersDescription()}
     </>

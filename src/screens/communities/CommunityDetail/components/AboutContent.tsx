@@ -13,22 +13,27 @@ import PreviewMembers from '../../../groups/components/PreviewMembers';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatData';
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 type AboutContentProps = {
   showPrivate?: boolean;
 }
 
 const AboutContent: FC<AboutContentProps> = ({ showPrivate }) => {
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
-    description, userCount, privacy,
+    description, userCount, privacy, id, joinStatus,
   } = infoDetail;
   const privacyData
     = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
+  const isMember = joinStatus === groupJoinStatus.member;
 
   const renderDescription = () => {
     if (!description) return null;
@@ -44,6 +49,10 @@ const AboutContent: FC<AboutContentProps> = ({ showPrivate }) => {
         />
       </View>
     );
+  };
+
+  const onPressTotalMember = () => {
+    rootNavigation.navigate(groupStack.communityMembers, { communityId: id, isMember });
   };
 
   if (showPrivate) {
@@ -72,8 +81,9 @@ const AboutContent: FC<AboutContentProps> = ({ showPrivate }) => {
           title={`${formatLargeNumber(userCount)} ${i18next.t('groups:text_members', {
             count: userCount,
           })}`}
-          disabled
+          onPress={onPressTotalMember}
           iconProps={{ tintColor: colors.neutral40 }}
+          rightSubIcon="AngleRightSolid"
         />
         <PreviewMembers />
       </View>
