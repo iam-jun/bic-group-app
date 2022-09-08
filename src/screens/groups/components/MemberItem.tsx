@@ -35,7 +35,8 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
     id, fullname, avatar, username,
   } = item || {};
 
-  const memberName = user?.username !== username ? fullname : `${fullname} (${t('common:text_you')})`;
+  const isMe = user?.username === username;
+  const memberName = isMe ? `${fullname} (${t('common:text_you')})` : fullname;
 
   const goToUserProfile = () => {
     rootNavigation.navigate(
@@ -69,7 +70,7 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
       )}
       RightComponent={(
         <>
-          {user?.username !== username && (
+          {!isMe && (
             <Icon
               icon="CommentDotsSolid"
               size={15}
