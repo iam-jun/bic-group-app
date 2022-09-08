@@ -13,13 +13,7 @@ export default function* showToastEditSuccess(editFieldName: string): any {
       toastContent = 'common:text_edit_success';
     }
 
-    const toastMessage: IToastMessage = {
-      content: toastContent,
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    };
+    const toastMessage: IToastMessage = { content: toastContent };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (e) {
     console.error(

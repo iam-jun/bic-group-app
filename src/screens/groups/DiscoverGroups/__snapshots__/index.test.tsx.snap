@@ -94,8 +94,8 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                   "backgroundColor": "#FFFFFF",
                   "flexDirection": "row",
                   "minHeight": 44,
-                  "overflow": "hidden",
                   "paddingTop": 0,
+                  "paddingVertical": 4,
                 },
                 Object {
                   "elevation": 2,
@@ -242,7 +242,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                     }
                     testID="header.text"
                   >
-                    Discover Groups
+                    Browse Groups
                   </Text>
                 </View>
               </View>
@@ -469,6 +469,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                 "overflow": "hidden",
                               },
                               Object {
+                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "#F2F5F8",
                                 "borderRadius": 4,
                                 "borderWidth": 2,

@@ -18,7 +18,7 @@ import HomeHeaderButton from '~/screens/Home/components/HomeHeaderButton';
 import { homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
 import Tab from '~/baseComponents/Tab';
 import { HOME_TAB_TYPE } from '~/screens/Home/constants';
-import useHomeStore from '~/screens/Home/store/homeStore';
+import useHomeStore from '~/screens/Home/store';
 
 export interface HomeHeaderProps {
   style?: StyleProp<ViewStyle>;

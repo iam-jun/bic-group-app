@@ -1,11 +1,11 @@
 import groupApi from '~/api/GroupApi';
-import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/ISelectAudienceState';
+import ISelectAudienceState from '../Interface';
 
 const getAudienceSearch = (set, _) => async (key: string) => {
   set((state: ISelectAudienceState) => {
     state.search.loading = true;
     state.search.key = key;
-  }, false, 'getAudienceSearch');
+  });
   if (!key) {
     set((state: ISelectAudienceState) => {
       state.search = {
@@ -13,7 +13,7 @@ const getAudienceSearch = (set, _) => async (key: string) => {
         loading: false,
         data: undefined,
       };
-    }, false, 'getAudienceSearch');
+    });
     return;
   }
   try {
@@ -25,7 +25,7 @@ const getAudienceSearch = (set, _) => async (key: string) => {
         loading: false,
         data: response?.data || [],
       };
-    }, false, 'getAudienceSearch');
+    }, 'getAudienceSearch');
   } catch (e) {
     set((state: ISelectAudienceState) => {
       state.search = {
@@ -33,7 +33,7 @@ const getAudienceSearch = (set, _) => async (key: string) => {
         loading: false,
         data: undefined,
       };
-    }, false, 'getAudienceSearch');
+    }, 'getAudienceSearch');
   }
 };
 

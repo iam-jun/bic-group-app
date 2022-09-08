@@ -75,9 +75,7 @@ const YourGroups = () => {
   const theme: ExtendedTheme = useTheme();
 
   const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
-  const {
-    isRefresh, isLoading, canLoadMore, ids, items,
-  } = joinedAllGroups;
+  const { isRefresh, canLoadMore, ids } = joinedAllGroups;
 
   const onLoadMore = () => {
     if (canLoadMore) {

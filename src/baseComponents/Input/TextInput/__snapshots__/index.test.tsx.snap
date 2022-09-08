@@ -167,7 +167,6 @@ exports[`TextInput component renders active banner correctly 1`] = `
                       "borderWidth": 1,
                       "flex": 1,
                       "flexDirection": "row",
-                      "paddingRight": 12,
                     },
                     Object {
                       "backgroundColor": "#FFFFFF",
@@ -222,29 +221,40 @@ exports[`TextInput component renders active banner correctly 1`] = `
                     "alignContent": "center",
                     "flexDirection": "row",
                     "marginTop": 4,
+                    "paddingRight": 4,
                   },
                   undefined,
                 ]
               }
             >
-              <Text
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 11,
-                    },
-                    Object {
-                      "color": "#353E6E",
-                    },
-                    undefined,
-                  ]
+                  Object {
+                    "flex": 1,
+                    "paddingHorizontal": 4,
+                  }
                 }
-                testID="text_input.text_helper"
               >
-                Example help text that remains unchanged.
-              </Text>
+                <Text
+                  flex={1}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 11,
+                      },
+                      Object {
+                        "color": "#353E6E",
+                      },
+                      undefined,
+                    ]
+                  }
+                  testID="text_input.text_helper"
+                >
+                  Example help text that remains unchanged.
+                </Text>
+              </View>
             </View>
           </View>
         </View>

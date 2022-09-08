@@ -1,4 +1,3 @@
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 
 import React from 'react';
@@ -17,8 +16,7 @@ interface Props {
 const AvatarImage = ({
   avatar, userId, currentUsername, onEdit,
 }: Props) => {
-  const theme:ExtendedTheme = useTheme();
-  const styles = themeStyles(theme);
+  const styles = themeStyles();
 
   return (
     <View testID="user_profile.avatar_image" style={styles.container}>
@@ -41,21 +39,16 @@ const AvatarImage = ({
 };
 
 const themeStyles = (
-  theme: ExtendedTheme,
-) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    container: {
-      alignItems: 'center',
-      marginTop: -44,
-    },
-    editAvatar: {
-      position: 'absolute',
-      bottom: 0,
-      right: spacing?.margin.small,
-    },
-  });
-};
+) => StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    marginTop: -44,
+  },
+  editAvatar: {
+    position: 'absolute',
+    bottom: 0,
+    right: spacing?.margin.small,
+  },
+});
 
 export default AvatarImage;

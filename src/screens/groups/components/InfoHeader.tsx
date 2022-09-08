@@ -14,6 +14,7 @@ import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { IGroup } from '~/interfaces/IGroup';
+import { formatLargeNumber } from '~/utils/formatData';
 
 interface InfoHeaderProps {
   infoDetail: ICommunity | IGroup;
@@ -68,27 +69,26 @@ const InfoHeader = ({
             <Icon
               icon={iconPrivacy}
               size={16}
-              tintColor={theme.colors.neutral40}
+              tintColor={theme.colors.neutral20}
             />
-            <Text.BodySMedium
+            <Text.BodyMMedium
               style={styles.privacyText}
-              color={theme.colors.neutral40}
               testID="info_header.privacy"
             >
               {t(privacyTitle)}
-            </Text.BodySMedium>
-            <Text.BodySMedium
+            </Text.BodyMMedium>
+            <Text.BodyMMedium
               style={styles.memberCount}
-              color={theme.colors.neutral40}
+              color={theme.colors.neutral80}
               testID="info_header.member_count"
             >
-              {userCount}
-            </Text.BodySMedium>
-            <Text.BodyS color={theme.colors.neutral40}>
+              {formatLargeNumber(userCount)}
+            </Text.BodyMMedium>
+            <Text.BodyM>
               {`${t('groups:title_members', {
                 count: userCount,
               })}`}
-            </Text.BodyS>
+            </Text.BodyM>
           </View>
           {isMember && (
             <Button.Secondary
@@ -160,8 +160,8 @@ const themeStyles = (theme: ExtendedTheme) => {
       marginLeft: spacing.margin.small,
     },
     memberCount: {
-      marginLeft: 40,
-      marginRight: spacing.margin.tiny,
+      marginLeft: spacing.margin.big,
+      marginRight: spacing.margin.small,
     },
   });
 };

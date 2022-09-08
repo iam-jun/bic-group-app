@@ -35,10 +35,6 @@ export default function* putGroupSchemeAssignments({
 
       const toastMessage: IToastMessage = {
         content: 'communities:permission:text_update_group_scheme_success',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
     } else {

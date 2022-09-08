@@ -120,7 +120,11 @@
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
     "all": "Tất cả",
-    "in": "trong"
+    "in": "trong",
+    "text_refresh": "Tải lại",
+    "text_undo": "Khôi phục",
+    "text_search_result_empty": "Rất tiếc, chúng tối không tìm thấy kết quả của bạn.",
+    "text_you": "Bạn"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -598,7 +602,7 @@
     "reply_to": "Trả lời "
   },
   "error": {
-    "alert_title": "Notice",
+    "alert_title": "Thông báo",
     "no_internet": "No internet",
     "button_confirm": "Got it",
     "http": {
@@ -630,7 +634,7 @@
   "groups": {
     "group_content": {
       "btn_group_tree": "Cấu trúc nhóm",
-      "btn_discover": "Khám phá nhóm",
+      "btn_browse": "Khám phá nhóm",
       "btn_post": "Bài đăng",
       "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
@@ -641,12 +645,12 @@
     "text_members_other": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
-    "text_search_member": "Tìm kiếm thành viên",
+    "text_search_member": "Tìm kiếm thành viên...",
     "group_menu": {
       "label_admin_tools": "Công cụ quản trị",
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
-      "label_leave_group": "Rời nhóm",
-      "label_leave_community": "Rời cộng đồng",
+      "label_leave_group": "Thoát khỏi nhóm",
+      "label_leave_community": "Thoát khỏi cộng đồng",
       "label_share_group": "Chia sẻ tới...",
       "label_share_to_chat": "Chia sẻ trong Bein Chat",
       "label_following": "Theo dõi",
@@ -685,8 +689,8 @@
       "button_remove": "Xác nhận"
     },
     "error": {
-      "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi rời đi",
-      "last_admin_inner_group_leave": "Không thể rời đi. Bạn là quản trị viên cuối cùng của một nhóm bên trong",
+      "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi thoát",
+      "last_admin_inner_group_leave": "Không thể thoát. Bạn là quản trị viên cuối cùng của một nhóm bên trong",
       "last_admin_remove": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt một quản trị viên khác trước khi xóa vai trò quản trị viên",
       "last_admin_inner_group_remove": "Không thể loại khỏi nhóm. Người dùng này là quản trị viên cuối cùng của một nhóm bên trong"
     },
@@ -776,11 +780,12 @@
     "text_we_will_notify_you": "We will notify you when this features is ready."
   },
   "internet_connection": {
-    "online": "Đã có kết nối internet",
-    "offline": "Hiện bạn không có kết nối internet. Vui lòng kiểm tra lại",
+    "online": "Internet đã được khôi phục",
+    "offline": "Hiện không có kết nối internet",
     "system_issue": {
       "title": "Đã có lỗi xảy ra",
-      "desc": "Vui lòng đăng nhập lại"
+      "desc": "Vui lòng đăng nhập lại",
+      "toast": "Không thể thực hiện hành động này do lỗi hệ thống"
     }
   },
   "communities": {
@@ -817,7 +822,8 @@
     "text_other_member_one": "{{count}} người khác là thành viên",
     "text_other_member_other": "{{count}} người khác là thành viên",
     "text_is_member": "là thành viên",
-    "title_discover_groups": "Khám phá các nhóm",
+    "title_browse_groups": "Khám phá các nhóm",
+    "text_must_be_member_first": "Bạn cần là thành viên cộng đồng trước",
     "permission": {
       "title_permission": "Cài đặt quyền",
       "title_system_scheme": "Quyền hệ thống",
@@ -901,6 +907,12 @@
         "confirm": "Tắt",
         "approve_all": "Phê duyệt tất cả"
       }
+    },
+    "modal_confirm_leave_community": {
+      "title": "Thoát khỏi cộng đồng",
+      "description": "Bạn có chắc là muốn thoát khỏi ",
+      "button_leave": "Thoát",
+      "success_message": "Bạn đã thoát khỏi cộng đồng này"
     }
   },
   "upload": {

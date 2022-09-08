@@ -14,6 +14,7 @@ import { isEmpty } from 'lodash';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Clipboard from '@react-native-clipboard/clipboard';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PrivateWelcome from './components/PrivateWelcome';
@@ -40,6 +41,9 @@ import { useMyPermissions } from '~/hooks/permissions';
 import CommunityTabHeader from './components/CommunityTabHeader';
 import { getHeaderMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
+import { useBaseHook } from '~/hooks';
+import Text from '~/beinComponents/Text';
+import useLeaveCommunity from './store';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -52,6 +56,7 @@ const CommunityDetail = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const { t } = useBaseHook();
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
@@ -76,6 +81,7 @@ const CommunityDetail = (props: any) => {
   const showPrivate = !isMember && privacy === groupPrivacy.private;
 
   const buttonShow = useSharedValue(0);
+  const { doPostLeaveCommunity } = useLeaveCommunity();
 
   const getCommunityDetail = (loadingPage = false) => {
     dispatch(actions.getCommunityDetail({ communityId, loadingPage, showLoading: true }));
@@ -127,17 +133,34 @@ const CommunityDetail = (props: any) => {
     Clipboard.setString(getLink(
       LINK_COMMUNITY, communityId,
     ));
-    dispatch(modalActions.showHideToastMessage({
-      content: 'common:text_copied',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
+    dispatch(modalActions.showHideToastMessage({ content: 'common:text_copied' }));
+  };
+
+  const onConfirmLeaveCommunity = async () => {
+    doPostLeaveCommunity(communityId, privacy, dispatch);
+  };
+
+  const onPressLeave = () => {
+    dispatch(modalActions.hideBottomList());
+    dispatch(modalActions.showAlert({
+      title: t('communities:modal_confirm_leave_community:title'),
+      confirmLabel: t('communities:modal_confirm_leave_community:button_leave'),
+      cancelBtn: true,
+      children: (
+        <Text.ParagraphM style={styles.childrenText}>
+          {t('communities:modal_confirm_leave_community:description')}
+          <Text.BodyMMedium>{name}</Text.BodyMMedium>
+          ?
+        </Text.ParagraphM>
+      ),
+      onConfirm: onConfirmLeaveCommunity,
     }));
   };
 
   const onRightPress = () => {
-    const headerMenuData = getHeaderMenu('community', isMember, canSetting, dispatch, onPressAdminTools, onPressCopyLink);
+    const headerMenuData = getHeaderMenu({
+      type: 'community', isMember, canSetting, dispatch, onPressAdminTools, onPressCopyLink, onPressLeave,
+    });
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,
@@ -223,7 +246,6 @@ const CommunityDetail = (props: any) => {
         title={name}
         useAnimationTitle
         rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
-        rightIconProps={{ backgroundColor: theme.colors.white }}
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
         showStickyHeight={buttonHeight}
@@ -249,6 +271,8 @@ export default CommunityDetail;
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
+  const insets = useSafeAreaInsets();
+
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.gray5,
@@ -257,7 +281,8 @@ const themeStyles = (theme: ExtendedTheme) => {
       flex: 1,
     },
     joinBtn: {
-      paddingVertical: spacing.padding.tiny,
+      paddingBottom: spacing.padding.large + insets.bottom,
+      paddingTop: spacing.padding.large,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,
@@ -267,6 +292,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       position: 'absolute',
       width: '100%',
       bottom: 0,
+    },
+    childrenText: {
+      paddingVertical: spacing.padding.small,
+      paddingBottom: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
     },
   });
 };

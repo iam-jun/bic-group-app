@@ -30,10 +30,6 @@ export default function* removeMember({
         .replace(
           '{n}', userFullname,
         ),
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {

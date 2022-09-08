@@ -407,10 +407,6 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
         .replace(
           '{n}', userAddedCount.toString(),
         ),
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
 
@@ -452,9 +448,6 @@ function* cancelJoinGroup({
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_cancel_join_group')} ${groupName}`,
-      props: {
-        type: 'success',
-      },
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));
@@ -467,9 +460,6 @@ function* cancelJoinGroup({
     ) {
       const toastMessage: IToastMessage = {
         content: `${i18next.t('groups:text_approved_member_group')}`,
-        props: {
-          type: 'error',
-        },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
       yield put(groupsActions.getGroupDetail({

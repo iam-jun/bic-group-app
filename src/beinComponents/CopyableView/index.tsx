@@ -50,13 +50,7 @@ const CopyableView = ({
 
   const copyContent = () => {
     Clipboard.setString(content);
-    dispatch(showHideToastMessage({
-      content: 'common:text_copied_to_clipboard',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    }));
+    dispatch(showHideToastMessage({ content: 'common:text_copied_to_clipboard' }));
     hideTooltip();
   };
 

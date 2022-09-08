@@ -28,7 +28,6 @@ const persistConfig = {
     'post',
     'home',
     'noInternet',
-    'mentionInput',
     'chat',
     'giphy',
     'notifications',

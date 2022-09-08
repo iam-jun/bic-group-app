@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react';
 import {
   View, StyleSheet, StyleProp, ViewStyle,
 } from 'react-native';
-import { useTheme, ExtendedTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
@@ -36,8 +35,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 
   const { t } = useBaseHook();
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const now = new Date();
   const expired = now.getTime() >= new Date(expireTime || '').getTime();
@@ -95,13 +93,10 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    container: {
-      marginTop: spacing.margin.small,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  container: {
+    marginTop: spacing.margin.small,
+  },
+});
 
 export default ButtonMarkAsRead;

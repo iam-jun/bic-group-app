@@ -307,9 +307,9 @@ export interface IReaction {
   parentCommentId?: string ; // used when retry/cancel adding new comment
   child?: any;
   actor?: IAudienceUser;
-  activity_id: string;
-  userId:string;
-  data:any
+  activity_id?: string;
+  userId?: string;
+  data?: any;
 }
 
 export interface IGetStreamAudienceUser {

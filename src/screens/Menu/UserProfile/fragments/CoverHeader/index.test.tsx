@@ -5,7 +5,6 @@ import initialState from '~/storeRedux/initialState';
 import {
   cleanup,
   act,
-  configureStore,
   createTestStore,
   renderWithRedux,
   fireEvent,
@@ -20,7 +19,6 @@ import * as dimension from '~/theme/dimension';
 afterEach(cleanup);
 
 describe('CoverHeader screen', () => {
-  const mockStore = configureStore([]);
   let storeData: any;
   const baseProps = {
     id: '1',

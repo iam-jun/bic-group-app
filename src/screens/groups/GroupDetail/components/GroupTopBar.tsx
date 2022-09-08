@@ -72,13 +72,7 @@ const GroupTopBar = () => {
     Clipboard.setString(getLink(
       LINK_GROUP, groupId,
     ));
-    dispatch(showHideToastMessage({
-      content: 'common:text_link_copied_to_clipboard',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    }));
+    dispatch(showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
   };
 
   const onPressShare = () => {
@@ -113,19 +107,16 @@ const GroupTopBar = () => {
   };
 
   const onPressMenu = () => {
-    const headerMenuData = getHeaderMenu(
-      'group',
+    const headerMenuData = getHeaderMenu({
+      type: 'group',
       isMember,
       canSetting,
       dispatch,
       onPressAdminTools,
       onPressCopyLink,
       onPressShare,
-      undefined,
-      undefined,
-      undefined,
       onPressLeave,
-    );
+    });
     dispatch(modalActions.showBottomList({
       isOpen: true,
       data: headerMenuData,

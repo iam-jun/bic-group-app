@@ -45,9 +45,6 @@ describe('Leave Group Saga', () => {
           content: i18next.t(
             'groups:modal_confirm_leave_group:success_message',
           ),
-          props: {
-            type: 'success',
-          },
         }),
       )
       .run();
@@ -74,9 +71,6 @@ describe('Leave Group Saga', () => {
           content: i18next.t(
             'groups:modal_confirm_leave_group:success_message',
           ),
-          props: {
-            type: 'success',
-          },
         }),
       )
       .run();
@@ -96,10 +90,7 @@ describe('Leave Group Saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: error.meta.message,
-          props: {
-            textProps: { useI18n: true },
-            type: 'error',
-          },
+          props: { type: 'error' },
         }),
       )
       .run();

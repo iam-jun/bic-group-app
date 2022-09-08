@@ -108,6 +108,7 @@ exports[`Header Avatar component renders correctly 1`] = `
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 24,
                 "borderWidth": 2,
@@ -298,6 +299,7 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 24,
                 "borderWidth": 2,
@@ -486,6 +488,7 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 24,
                 "borderWidth": 2,
@@ -672,6 +675,7 @@ exports[`Header Avatar component renders correctly with props First Label Props 
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 24,
                 "borderWidth": 2,
@@ -861,6 +865,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 24,
                 "borderWidth": 2,
@@ -1121,6 +1126,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 24,
                 "borderWidth": 2,
@@ -1367,6 +1373,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 24,
                 "borderWidth": 2,
@@ -1613,6 +1620,7 @@ exports[`Header Avatar component renders correctly with props Second Label Props
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 24,
                 "borderWidth": 2,

@@ -67,6 +67,7 @@ export interface PostViewProps {
   isUseReduxState?: boolean;
   btnReactTestID?: string;
   btnCommentTestID?: string;
+  hasReactPermission?: boolean;
 }
 
 const _PostView: FC<PostViewProps> = ({
@@ -84,6 +85,7 @@ const _PostView: FC<PostViewProps> = ({
   isUseReduxState = true,
   btnReactTestID,
   btnCommentTestID,
+  hasReactPermission,
 }: PostViewProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -342,7 +344,7 @@ const _PostView: FC<PostViewProps> = ({
     <TouchableOpacity
       testID={testID}
       activeOpacity={0.8}
-      disabled={!onPress && !pressNavigateToDetail}
+      disabled={(!onPress && !pressNavigateToDetail) || !hasReactPermission}
       onPress={_onPress}
       style={style}
     >
@@ -360,6 +362,7 @@ const _PostView: FC<PostViewProps> = ({
           onPressHeader={_onPressHeader}
           onPressMenu={onPressMenu}
           onPressShowAudiences={onPressShowAudiences}
+          disabled={!hasReactPermission}
         />
         <PostViewContent
           postId={postId}
@@ -385,6 +388,7 @@ const _PostView: FC<PostViewProps> = ({
             onAddReaction={onAddReaction}
             onRemoveReaction={onRemoveReaction}
             onLongPressReaction={onLongPressReaction}
+            hasReactPermission={hasReactPermission}
           />
         )}
         {isLite ? (
@@ -409,6 +413,7 @@ const _PostView: FC<PostViewProps> = ({
             reactionCounts={reactionsCount}
             canComment={!!canComment}
             canReact={!!canReact}
+            hasReactPermission={hasReactPermission}
           />
         )}
         {!isLite && (

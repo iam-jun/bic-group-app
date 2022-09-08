@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Keyboard,
 } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -17,7 +16,6 @@ import { useKeySelector } from '~/hooks/selector';
 import { TextArea } from '~/baseComponents/Input';
 
 const EditDescription = () => {
-  const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();

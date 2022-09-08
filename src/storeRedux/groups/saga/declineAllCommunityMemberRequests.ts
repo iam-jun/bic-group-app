@@ -18,11 +18,6 @@ export default function* declineAllCommunityMemberRequests({
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declined_all')}`.replace('{0}', total.toString()),
-      props: {
-        textProps: { useI18n: true },
-        type: 'informative',
-      },
-      toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
