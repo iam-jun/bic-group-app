@@ -7,6 +7,7 @@ import { rootNavigationRef } from '~/router/refs';
 import { COMMUNITY_PRIVACY_TYPE, groupPrivacy } from '~/constants/privacyTypes';
 import GROUP_JOIN_STATUS from '~/constants/groupJoinStatus';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
+import useJoinedCommunitiesStore from '~/screens/Menu/store';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -30,6 +31,10 @@ const leaveCommunity = (_set, _get) => async (
       dispatch(groupsActions.getCommunityDetail({ communityId }));
     }
 
+    // refresh joined communities
+    dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
+    useJoinedCommunitiesStore.getState().getJoinedCommunities();
+
     const toastMessage: IToastMessage = {
       content: 'communities:modal_confirm_leave_community:success_message',
       props: { type: 'success' },
@@ -43,7 +48,7 @@ const leaveCommunity = (_set, _get) => async (
         content: 'groups:error:owner_leave_community',
         props: { type: 'error' },
       }));
-    };
+    }
 
     if (err.code === API_ERROR_CODE.GROUP.LAST_ADMIN_LEAVE) {
       return dispatch(modalActions.showHideToastMessage({

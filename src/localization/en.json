@@ -745,7 +745,7 @@
     },
     "error": {
       "last_admin_leave": "You are the last admin of this group. Kindly set another admin before leaving",
-      "last_admin_inner_group_leave": "Cannot leave. You are the last admin of an inner group",
+      "last_admin_inner_group_leave": "Cannot leave. You are the last admin of an inner group.",
       "owner_leave_community": "Cannot leave. You are the owner of this community.",
       "last_admin_remove": "You are the last admin of this group. Kindly set another admin before removing the admin role",
       "last_admin_inner_group_remove": "Cannot remove. This user is the last admin of an inner group"
