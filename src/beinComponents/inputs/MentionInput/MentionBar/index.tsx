@@ -31,6 +31,7 @@ const MentionBar: FC<MentionBarProps> = ({
   const text = useRef('');
   const cursorPosition = useRef(0);
 
+  const key = useMentionInputStore((state: IMentionInputState) => state.key);
   const data = useMentionInputStore((state: IMentionInputState) => state.data);
   const canLoadMore = useMentionInputStore((state: IMentionInputState) => state.canLoadMore);
   const doRunSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
@@ -39,7 +40,7 @@ const MentionBar: FC<MentionBarProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const isShow = !!data?.length;
+  const visible = !!data?.length;
 
   useEffect(
     () => {
@@ -55,16 +56,16 @@ const MentionBar: FC<MentionBarProps> = ({
 
   useEffect(
     () => {
-      if (data?.length > 0) {
+      if (key !== null && data?.length > 0) {
         listRef?.current?.scrollToOffset?.({ offset: 0, animated: true });
       }
-    }, [data?.length],
+    }, [key],
   );
 
   useEffect(
     () => {
-      onVisible?.(isShow);
-    }, [isShow],
+      onVisible?.(visible);
+    }, [visible],
   );
 
   const onCursorPositionChange = debounce(
@@ -100,14 +101,16 @@ const MentionBar: FC<MentionBarProps> = ({
   );
 
   const onLoadMore = () => {
-    canLoadMore && doRunSearch(
-      text.current.substring(
-        0, cursorPosition.current,
-      ),
-    );
+    if (canLoadMore) {
+      doRunSearch(
+        text.current.substring(
+          0, cursorPosition.current,
+        ),
+      );
+    }
   };
 
-  if (!isShow) {
+  if (!visible) {
     return null;
   }
 
