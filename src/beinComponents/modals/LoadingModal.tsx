@@ -64,8 +64,8 @@ const themeStyles = () => StyleSheet.create({
     top: -31,
   },
   loadingIndicator: {
-    width: 78,
-    height: 78,
+    width: 74,
+    height: 74,
     position: 'absolute',
   },
 });
