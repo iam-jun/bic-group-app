@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
@@ -23,6 +23,7 @@ const PreviewMembers = () => {
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const { userCount, members } = infoDetail;
   const otherMembers = userCount - (members?.length || 0);
+  const otherMembersDisplay = otherMembers > 99 ? 99 : otherMembers;
 
   const onPressAvatar = (previewMember: IPreviewMember) => {
     rootNavigation.navigate(mainTabStack.userProfile, {
@@ -32,10 +33,7 @@ const PreviewMembers = () => {
 
   const renderItem = ({ item }: { item: IPreviewMember }) => (
     <Button onPress={() => onPressAvatar(item)}>
-      <Avatar.XSmall
-        isRounded
-        source={item.avatar}
-      />
+      <Avatar.XSmall isRounded source={item.avatar} />
     </Button>
   );
 
@@ -78,11 +76,15 @@ const PreviewMembers = () => {
         scrollEnabled={false}
         renderItemSeparator={() => <ViewSpacing width={spacing.margin.tiny} />}
         ListFooterComponent={() => (
-          <Avatar.XSmall
-            isRounded
-            counter={otherMembers}
-            style={{ marginLeft: spacing.margin.tiny }}
-          />
+          <View>
+            {!!otherMembersDisplay && (
+              <Avatar.XSmall
+                isRounded
+                counter={otherMembersDisplay}
+                style={{ marginLeft: spacing.margin.tiny }}
+              />
+            )}
+          </View>
         )}
       />
       {renderMembersDescription()}
