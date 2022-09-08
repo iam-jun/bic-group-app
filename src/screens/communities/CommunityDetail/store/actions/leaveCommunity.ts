@@ -9,7 +9,7 @@ import GROUP_JOIN_STATUS from '~/constants/groupJoinStatus';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
-const leaveCommunity = (set, get) => async (
+const leaveCommunity = (_set, _get) => async (
   communityId: string,
   privacy: COMMUNITY_PRIVACY_TYPE,
   dispatch: any,

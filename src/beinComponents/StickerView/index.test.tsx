@@ -17,7 +17,7 @@ describe('StickerView component', () => {
   };
 
   const reactMock = require('react');
-  let Platform = { OS: 'ios' };
+  // let Platform = { OS: 'ios' };
 
   beforeEach(() => {
     jest.spyOn(RNCommunityHooks, 'useKeyboard').mockImplementation(() => ({
@@ -31,7 +31,7 @@ describe('StickerView component', () => {
       keyboardHeight: 0,
     }));
 
-    Platform = require('react-native').Platform;
+    // Platform = require('react-native').Platform;
   });
 
   afterEach(() => {

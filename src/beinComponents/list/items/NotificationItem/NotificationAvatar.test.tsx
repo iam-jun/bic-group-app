@@ -136,9 +136,7 @@ describe('NotificationAvatar component', () => {
       activities: [commentHasChild],
     };
 
-    const { verb } = NOTIFICATION_COMMENT_LV2;
-    const { actorCount } = NOTIFICATION_COMMENT_LV2;
-    const { activities } = NOTIFICATION_COMMENT_LV2;
+    const { actorCount, activities } = NOTIFICATION_COMMENT_LV2;
 
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(

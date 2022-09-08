@@ -27,7 +27,6 @@ const PermissionItem: FC<PermissionItemProps> = ({
   onPress,
   isChecked,
   isInherited,
-  inheritedRoleName,
   isFixed,
   isFixedForCreator,
 }: PermissionItemProps) => {

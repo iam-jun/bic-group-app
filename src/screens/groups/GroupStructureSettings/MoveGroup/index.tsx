@@ -41,8 +41,6 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     loading, targetGroups, movingGroup, selecting, key,
   } = useKeySelector(groupsKeySelector.groupStructure.move) || {};
 
-  const { userCount } = movingGroup || {};
-
   const getMoveTargets = (key = '') => {
     if (communityId && groupId) {
       dispatch(groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }));

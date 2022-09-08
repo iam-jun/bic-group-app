@@ -9,11 +9,12 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import { useKeyboardStatus } from '~/hooks/keyboard';
-import { useKeySelector } from '~/hooks/selector';
 
 import Text from '~/beinComponents/Text';
 import AtMention from './AtMention';
 import spacing from '~/theme/spacing';
+import useMentionInputStore from '../store';
+import IMentionInputState from '../store/Interface';
 
 export type IModalPosition = 'top' | 'bottom' | 'above-keyboard';
 
@@ -32,7 +33,6 @@ export interface AutocompleteProps {
 }
 
 const Autocomplete = ({
-  type,
   modalPosition,
   title,
   topPosition,
@@ -44,7 +44,8 @@ const Autocomplete = ({
 }: AutocompleteProps) => {
   const { height: keyboardHeight } = useKeyboardStatus();
   const windowDimension = useWindowDimensions();
-  const { data, key } = useKeySelector(type);
+  const data = useMentionInputStore((state: IMentionInputState) => state.data);
+  const key = useMentionInputStore((state: IMentionInputState) => state.key);
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(
@@ -69,7 +70,7 @@ const Autocomplete = ({
       ]}
     >
       {!!title && key === '' && data?.length === 0 && (
-        <Text.BodyS testID="autocomplete.title" style={styles.textTitle}>
+        <Text.BodyS testID="autocomplete.title" style={styles.title}>
           {title}
         </Text.BodyS>
       )}
@@ -166,7 +167,7 @@ const createStyles = (
       paddingBottom: 0,
       borderWidth: 0,
     },
-    textTitle: {
+    title: {
       marginVertical: spacing.margin.small,
       marginHorizontal: spacing.margin.base,
       color: colors.gray50,

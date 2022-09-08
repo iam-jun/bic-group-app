@@ -9,6 +9,8 @@ import { useKeySelector } from '~/hooks/selector';
 import { IMarkdownAudience } from '~/interfaces/IPost';
 
 import { fontFamilies } from '~/theme/fonts';
+import useMentionInputStore from '../inputs/MentionInput/store';
+import IMentionInputState from '../inputs/MentionInput/store/Interface';
 
 interface Props {
   selector: string;
@@ -24,9 +26,8 @@ const AtMention = ({
   const styles = createStyles(theme);
 
   let audience = useKeySelector(`${selector}.${mentionName}`);
-  const tempSelectedUser = useKeySelector(
-    `mentionInput.tempSelected.${mentionName}`,
-  );
+  const tempSelectedUser = useMentionInputStore((state: IMentionInputState) => state.tempSelected)
+
   if (!audience) {
     audience = tempSelectedUser || {};
   }

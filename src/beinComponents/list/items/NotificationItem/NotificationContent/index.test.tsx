@@ -36,17 +36,6 @@ describe('NotificationContent component', () => {
   });
 
   it('should show "NotificationContent" with description and content is comment lv2 content', async () => {
-    const commentHasChild = {
-      ...LOAD_MORE_RESPONSE[0].activities[0],
-      comment: {
-        ...LOAD_MORE_RESPONSE[0].activities[0].comment,
-        child: CHILD_COMMENT,
-      },
-    };
-    const NOTIFICATION_COMMENT_LV2 = {
-      ...LOAD_MORE_RESPONSE[0],
-      activities: [commentHasChild],
-    };
     const { extra } = LOAD_MORE_RESPONSE[0];
 
     const wrapper = render(
@@ -82,17 +71,6 @@ describe('NotificationContent component', () => {
   });
 
   it('should show "NotificationContent" with not description and content is comment lv2 content  in verb REACT', async () => {
-    const commentHasChild = {
-      ...LOAD_MORE_RESPONSE[0].activities[0],
-      comment: {
-        ...LOAD_MORE_RESPONSE[0].activities[0].comment,
-        child: CHILD_COMMENT,
-      },
-    };
-    const NOTIFICATION_COMMENT_LV2 = {
-      ...LOAD_MORE_RESPONSE[0],
-      activities: [commentHasChild],
-    };
     const { extra } = LOAD_MORE_RESPONSE[0];
 
     const wrapper = render(

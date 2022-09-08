@@ -17,22 +17,22 @@ describe('CreatePostFooter component', () => {
 
   it('renders correctly mention bar with items', async () => {
     const storeData = { ...initialState };
-    storeData.mentionInput.data = [
-      {
-        id: 7,
-        username: 'testaccount2',
-        fullname: 'Test account 2',
-        avatar:
-          'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
-      },
-      {
-        id: 8,
-        username: 'testaccount3',
-        fullname: 'Test account 3',
-        avatar:
-          'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
-      },
-    ] as any;
+    // storeData.mentionInput.data = [
+    //   {
+    //     id: 7,
+    //     username: 'testaccount2',
+    //     fullname: 'Test account 2',
+    //     avatar:
+    //       'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
+    //   },
+    //   {
+    //     id: 8,
+    //     username: 'testaccount3',
+    //     fullname: 'Test account 3',
+    //     avatar:
+    //       'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
+    //   },
+    // ] as any;
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(<CreatePostFooter onPressSetting={onPressSetting} />, store);
     const items = wrapper.getAllByTestId('mention_bar_item');

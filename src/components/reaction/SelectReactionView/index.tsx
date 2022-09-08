@@ -84,7 +84,7 @@ const SelectReactionView: FC<ReactionViewProps> = ({
       >
         <ScrollView style={styles.list}>
           <View style={styles.listContainer}>
-            {Object.keys(data).map((item, index) => renderItem(item))}
+            {Object.keys(data).map((item) => renderItem(item))}
           </View>
         </ScrollView>
       </View>

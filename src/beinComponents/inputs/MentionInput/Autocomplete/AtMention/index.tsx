@@ -8,18 +8,14 @@ import {
   View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
-import { useKeySelector } from '~/hooks/selector';
 
 import spacing from '~/theme/spacing';
 import { AutocompleteProps } from '..';
-import {
-  checkRunSearch,
-  completeMention,
-  ICursorPositionChange,
-} from '../../helper';
+
 import AtMentionItem from './AtMentionItem';
+import useMentionInputStore from '../../store';
+import IMentionInputState, { ICursorPositionChange } from '../../store/Interface';
 
 type Props = Partial<AutocompleteProps>;
 
@@ -28,9 +24,10 @@ const AtMention = ({
   emptyContent,
   cursorPosition,
 }: Props) => {
-  const dispatch = useDispatch();
-
-  const { data, loading } = useKeySelector('mentionInput');
+  const data = useMentionInputStore((state: IMentionInputState) => state.data);
+  const loading = useMentionInputStore((state: IMentionInputState) => state.loading);
+  const doRunSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
+  const doCompleteMention = useMentionInputStore((state: IMentionInputState) => state.doCompleteMention);
 
   const text = useRef('');
 
@@ -56,18 +53,19 @@ const AtMention = ({
   const onCursorPositionChange = debounce(
     ({ position, value, groupIds }: ICursorPositionChange) => {
       text.current = value;
-      checkRunSearch(
-        value.substring(
+      doRunSearch({
+        key: value.substring(
           0, position,
-        ), groupIds, dispatch,
-      );
+        ),
+        groupIds,
+      });
     },
     100,
   );
 
   const _completeMention = (item: any) => {
-    completeMention({
-      item, dispatch, text: text.current, cursorPosition,
+    doCompleteMention({
+      item, text: text.current, cursorPosition,
     });
   };
 

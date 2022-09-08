@@ -37,8 +37,8 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme || {};
-  const styles = themeStyles(theme);
+  const { colors } = theme;
+  const styles = themeStyles();
 
   return (
     <TouchableOpacity
@@ -67,22 +67,18 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   );
 };
 
-const themeStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      paddingVertical: spacing.padding.base,
-      paddingHorizontal: spacing.padding.large,
-      alignItems: 'center',
-    },
-    leftIcon: {
-      marginRight: spacing.margin.small,
-    },
-    title: {
-    },
-  });
-};
+const themeStyles = () => StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingVertical: spacing.padding.base,
+    paddingHorizontal: spacing.padding.large,
+    alignItems: 'center',
+  },
+  leftIcon: {
+    marginRight: spacing.margin.small,
+  },
+  title: {
+  },
+});
 
 export default BottomListItem;

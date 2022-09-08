@@ -5,51 +5,6 @@ import {
 } from '~/test/testUtils';
 import PostSelectAudience from '.';
 
-const mockGroupItem = {
-  id: 1,
-  name: 'EVOL Community',
-  description: 'The greatest community ever',
-  parentId: null,
-  parents: null,
-  icon: '',
-  children: [
-    {
-      id: 1,
-      parentId: null,
-      name: 'EVOL Community',
-      slug: 'evol-community-1641809088',
-      description: 'The greatest community ever',
-      level: 0,
-      parents: null,
-      ownerId: '1',
-      icon: '',
-      backgroundImgUrl: null,
-      group_type: 'COMPANY',
-      privacy: 'PUBLIC',
-      chatId: 'rpq3unai7i8ztprmoz97rdjr7w',
-      createdAt: '2022-01-10T10:04:48.685Z',
-      updatedAt: '2022-01-10T10:04:48.928Z',
-      deletedAt: null,
-      children: [],
-      userCount: '25',
-      unique: '5ef2593a-a47c-4419-a7ba-693e862418cb',
-      testID: 'post_select_audience.groups.item',
-      isChecked: false,
-    },
-  ],
-  userCount: '25',
-  unique: '6f17969b-0776-47eb-8561-6992e4acb006',
-};
-
-const mockSearchResponse = {
-  code: 200,
-  data: {
-    groups: [],
-    users: [],
-  },
-  meta: { message: 'Search groups successfull' },
-};
-
 describe('PostSelectAudience screen', () => {
   it('renders correctly with params isFirstStep', async () => {
     const wrapper = renderWithRedux(

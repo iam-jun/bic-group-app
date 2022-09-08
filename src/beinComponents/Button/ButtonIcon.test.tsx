@@ -7,7 +7,7 @@ import ButtonIcon from './ButtonIcon';
 afterEach(cleanup);
 
 describe('ButtonDanger conponent', () => {
-  const children = 'Button Icon';
+  // const children = 'Button Icon';
 
   const testID = 'button_icon.test';
 

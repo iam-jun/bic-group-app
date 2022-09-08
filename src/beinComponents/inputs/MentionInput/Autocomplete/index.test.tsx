@@ -2,8 +2,7 @@ import React from 'react';
 import { cleanup } from '@testing-library/react-native';
 
 import { StyleSheet } from 'react-native';
-import { configureStore, renderWithRedux } from '~/test/testUtils';
-import initialState from '~/storeRedux/initialState';
+import { renderWithRedux } from '~/test/testUtils';
 import Autocomplete, { IModalPosition } from '.';
 
 afterEach(cleanup);
@@ -18,21 +17,15 @@ describe('Autocomplete component', () => {
     onCompletePress: jest.fn(),
   };
 
-  const mockStore = configureStore([]);
-
   it('renders correctly', async () => {
-    const store = mockStore(initialState);
-    const wrapper = renderWithRedux(<Autocomplete {...baseProps} />, store);
+    const wrapper = renderWithRedux(<Autocomplete {...baseProps} />);
 
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
   it('should hide "Autocomplete"', async () => {
-    const storeData = { ...initialState };
-    storeData.mentionInput.data = [];
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<Autocomplete {...baseProps} />, store);
+    const wrapper = renderWithRedux(<Autocomplete {...baseProps} />);
     const component = wrapper.getByTestId('autocomplete');
     expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
@@ -41,12 +34,7 @@ describe('Autocomplete component', () => {
   });
 
   it('should show "Autocomplete"', async () => {
-    const storeData = { ...initialState };
-    storeData.mentionInput.data = [
-      { username: 'test', name: 'test', avatar: 'test' },
-    ] as any;
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<Autocomplete {...baseProps} />, store);
+    const wrapper = renderWithRedux(<Autocomplete {...baseProps} />);
     const component = wrapper.getByTestId('autocomplete');
     expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
@@ -55,17 +43,12 @@ describe('Autocomplete component', () => {
   });
 
   it('should show "Autocomplete" in "top"', async () => {
-    const storeData = { ...initialState };
-    storeData.mentionInput.data = [
-      { username: 'test', name: 'test', avatar: 'test' },
-    ] as any;
-    const store = mockStore(storeData);
     const measuredHeight = 200;
     const props = {
       ...baseProps,
       measuredHeight,
     };
-    const wrapper = renderWithRedux(<Autocomplete {...props} />, store);
+    const wrapper = renderWithRedux(<Autocomplete {...props} />);
     const component = wrapper.getByTestId('autocomplete');
     expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
@@ -74,16 +57,11 @@ describe('Autocomplete component', () => {
   });
 
   it('should show "Autocomplete" in "fullWidth"', async () => {
-    const storeData = { ...initialState };
-    storeData.mentionInput.data = [
-      { username: 'test', name: 'test', avatar: 'test' },
-    ] as any;
-    const store = mockStore(storeData);
     const props = {
       ...baseProps,
       fullWidth: true,
     };
-    const wrapper = renderWithRedux(<Autocomplete {...props} />, store);
+    const wrapper = renderWithRedux(<Autocomplete {...props} />);
     const component = wrapper.getByTestId('autocomplete');
     expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
@@ -92,16 +70,11 @@ describe('Autocomplete component', () => {
   });
 
   it('should show "Autocomplete" with shadow', async () => {
-    const storeData = { ...initialState };
-    storeData.mentionInput.data = [
-      { username: 'test', name: 'test', avatar: 'test' },
-    ] as any;
-    const store = mockStore(storeData);
     const props = {
       ...baseProps,
       showShadow: true,
     };
-    const wrapper = renderWithRedux(<Autocomplete {...props} />, store);
+    const wrapper = renderWithRedux(<Autocomplete {...props} />);
     const component = wrapper.getByTestId('autocomplete');
     expect(component).not.toBeNull();
     const flattenedStyle = StyleSheet.flatten(component.props.style);
@@ -109,15 +82,11 @@ describe('Autocomplete component', () => {
     expect(flattenedStyle.shadowOffset).not.toBeNull();
   });
   it('should show "Autocomplete" with title', async () => {
-    const storeData = { ...initialState };
-    storeData.mentionInput.data = [];
-    storeData.mentionInput.key = '' as any;
-    const store = mockStore(storeData);
     const props = {
       ...baseProps,
       title: 'title',
     };
-    const wrapper = renderWithRedux(<Autocomplete {...props} />, store);
+    const wrapper = renderWithRedux(<Autocomplete {...props} />);
     const component = wrapper.getByTestId('autocomplete.title');
 
     expect(component).not.toBeNull();

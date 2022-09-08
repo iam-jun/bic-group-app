@@ -15,7 +15,6 @@ import UploadingFile from '~/beinComponents/UploadingFile';
 import { uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { useKeyboardStatus } from '~/hooks/keyboard';
-import { useRootNavigation } from '~/hooks/navigation';
 import { IFilePicked } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
@@ -48,7 +47,6 @@ const Content = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const mentionInputRef = useRef<any>();
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const refTextInput = inputRef;
 

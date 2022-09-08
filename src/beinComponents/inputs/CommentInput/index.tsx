@@ -178,7 +178,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
     stickerViewRef?.current?.show?.();
   };
 
-  const onEmojiSelected = (emoji: string, key?: string) => {
+  const onEmojiSelected = (emoji: string) => {
     dispatch(modalActions.hideModal());
     if (emoji) {
       setText(text + emoji);

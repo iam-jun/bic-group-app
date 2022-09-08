@@ -28,7 +28,7 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle();
   const userId = useUserIdAuth();
 
   const [staged, setStaged] = useState(0);
@@ -116,38 +116,35 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    container: {
-      paddingBottom: spacing.padding.extraLarge,
-    },
-    itemContainer: {
-      paddingHorizontal: spacing.padding.extraLarge,
-    },
-    textHeader: {
-      marginTop: spacing.margin.tiny,
-      marginBottom: spacing.margin.large,
-      marginHorizontal: spacing.margin.large,
-    },
-    buttonSpecificRight: {
-      marginLeft: spacing.margin.tiny,
-    },
-    rowItemFilter: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: spacing.margin.extraLarge,
-      paddingHorizontal: spacing.padding.large,
-    },
-    buttonApply: {
-      marginHorizontal: spacing.margin.extraLarge,
-      marginVertical: spacing.margin.small,
-    },
-    tagContainer: {
-      alignSelf: 'baseline',
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  container: {
+    paddingBottom: spacing.padding.extraLarge,
+  },
+  itemContainer: {
+    paddingHorizontal: spacing.padding.extraLarge,
+  },
+  textHeader: {
+    marginTop: spacing.margin.tiny,
+    marginBottom: spacing.margin.large,
+    marginHorizontal: spacing.margin.large,
+  },
+  buttonSpecificRight: {
+    marginLeft: spacing.margin.tiny,
+  },
+  rowItemFilter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.margin.extraLarge,
+    paddingHorizontal: spacing.padding.large,
+  },
+  buttonApply: {
+    marginHorizontal: spacing.margin.extraLarge,
+    marginVertical: spacing.margin.small,
+  },
+  tagContainer: {
+    alignSelf: 'baseline',
+  },
+});
 
 export default FilterCreatedBy;

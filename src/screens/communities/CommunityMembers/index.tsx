@@ -54,7 +54,7 @@ const CommunityMembers = ({ route }: any) => {
     PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
   );
 
-  const onPressMenu = (item: ICommunityMembers) => {
+  const onPressMenu = (_item: ICommunityMembers) => {
     dispatch(modalActions.showAlertNewFeature());
   };
 

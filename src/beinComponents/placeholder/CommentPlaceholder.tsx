@@ -30,7 +30,7 @@ const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
     <View style={StyleSheet.flatten([styles.container, style])}>
       <Placeholder
         Animation={ShineOverlay}
-        Left={(p) => <PlaceholderMedia style={styles.avatar} />}
+        Left={() => <PlaceholderMedia style={styles.avatar} />}
         style={styles.infoContainer}
       >
         <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>

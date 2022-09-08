@@ -11,14 +11,12 @@ import initialState from '~/storeRedux/initialState';
 afterEach(cleanup);
 
 describe('ForgotInputId component', () => {
-  let Keyboard: any;
-
   const mockStore = configureStore([]);
 
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    Keyboard = require('react-native').Keyboard;
-  });
+  // let Keyboard: any;
+  // beforeEach(() => {
+  //   Keyboard = require('react-native').Keyboard;
+  // });
 
   afterEach(() => {
     jest.clearAllMocks();

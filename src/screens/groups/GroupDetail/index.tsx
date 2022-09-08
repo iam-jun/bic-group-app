@@ -281,7 +281,6 @@ const GroupDetail = (props: any) => {
           subTitleTextProps={{ variant: 'subtitleXS', numberOfLines: 1 }}
           useAnimationTitle
           rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
-          rightIconProps={{ backgroundColor: theme.colors.white }}
           onPressChat={isMember ? onPressChat : undefined}
           onRightPress={onPressMenu}
           showStickyHeight={groupInfoHeight}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
 
-import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import MenuItem from './MenuItem';
 import Icon from '~/baseComponents/Icon';
 
@@ -11,7 +11,6 @@ describe('Menu Item component', () => {
   const title = 'Menu Item Title';
   const testID = 'menu_item.test';
   const icon = 'Calendar';
-  const mockStore = configureStore([]);
 
   it('renders correctly', () => {
     const rendered = renderWithRedux(<MenuItem title={title} />).toJSON();

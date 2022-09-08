@@ -42,7 +42,7 @@ const KeyboardSpacer: FC<KeyboardSpacerProps> = ({
       );
       const keyboardWillHideListener = Keyboard.addListener(
         dismissEvent,
-        (event) => {
+        () => {
           Animated.timing(
             animatedValue, {
               toValue: 0,
