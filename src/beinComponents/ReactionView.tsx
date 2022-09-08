@@ -23,6 +23,7 @@ export interface ReactionViewProps {
   onRemoveReaction: (reaction: ReactionType) => void;
   onPressSelectReaction?: (event: any) => void;
   onLongPressReaction?: (reactionType: ReactionType) => void;
+  hasReactPermission?: boolean;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
@@ -34,6 +35,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   onPressSelectReaction,
   onLongPressReaction,
   showSelectReactionWhenEmpty = true,
+  hasReactPermission = true,
 }: ReactionViewProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -89,6 +91,7 @@ const ReactionView: FC<ReactionViewProps> = ({
             loading={_ownReactions?.[react]?.loading}
             selected={!!_ownReactions?.[react]?.id}
             onActionPress={(action) => onActionReaction(react, action)}
+            disabled={!hasReactPermission}
           />,
         );
       }
@@ -100,28 +103,30 @@ const ReactionView: FC<ReactionViewProps> = ({
   const renderedReactions = renderReactions();
 
   return (
-
-    <View
-      style={[
-        styles.container,
-        renderedReactions.length > 0 ? styles.withPadding : null,
-        style,
-      ]}
-      testID="reaction_view"
-    >
-      {renderReactions()}
-      {!!onPressSelectReaction && showSelectReactionWhenEmpty
-        && renderedReactions.length < appConfig.limitReactionCount && (
-        <Button
-          style={styles.buttonReact}
-          onPress={onPressSelectReaction}
-          testID="reaction_view.react"
-        >
-          <Icon size={16} icon="iconReact" />
-        </Button>
-      )}
-    </View>
-
+    <>
+      {!hasReactPermission && renderedReactions.length > 0 && <View style={styles.line} />}
+      <View
+        style={[
+          styles.container,
+          renderedReactions.length > 0 ? styles.withPadding : null,
+          style,
+        ]}
+        testID="reaction_view"
+      >
+        {renderReactions()}
+        {!!onPressSelectReaction
+          && showSelectReactionWhenEmpty
+          && renderedReactions.length < appConfig.limitReactionCount && (
+            <Button
+              style={styles.buttonReact}
+              onPress={onPressSelectReaction}
+              testID="reaction_view.react"
+            >
+              <Icon size={16} icon="iconReact" />
+            </Button>
+        )}
+      </View>
+    </>
   );
 };
 
@@ -141,6 +146,12 @@ const createStyle = (theme: ExtendedTheme) => {
     withPadding: {
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
+    },
+    line: {
+      borderTopWidth: 1,
+      borderTopColor: colors.neutral5,
+      marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.xSmall,
     },
     buttonReact: {
       marginVertical: 2,

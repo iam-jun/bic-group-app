@@ -19,6 +19,11 @@ exports[`ReactionView component renders correctly 1`] = `
   testID="reaction_view"
 >
   <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -98,6 +103,11 @@ exports[`ReactionView component renders correctly 1`] = `
     </View>
   </View>
   <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -177,6 +187,11 @@ exports[`ReactionView component renders correctly 1`] = `
     </View>
   </View>
   <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -256,6 +271,11 @@ exports[`ReactionView component renders correctly 1`] = `
     </View>
   </View>
   <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -454,6 +474,11 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
   testID="reaction_view"
 >
   <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -533,6 +558,11 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     </View>
   </View>
   <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -612,6 +642,11 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     </View>
   </View>
   <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -691,6 +726,11 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     </View>
   </View>
   <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -1018,443 +1058,6 @@ exports[`ReactionView component renders correctly with props showSelectReactionW
   }
   testID="reaction_view"
 >
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "borderColor": "#D1D4DB",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "justifyContent": "center",
-        "marginVertical": 2,
-        "opacity": 1,
-        "paddingHorizontal": 4,
-        "paddingVertical": 4,
-      }
-    }
-    testID="reaction_view.react"
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
-      }
-      testID="button_wrapper.content"
-    >
-      <View
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        hitSlop={
-          Object {
-            "bottom": 10,
-            "left": 10,
-            "right": 10,
-            "top": 10,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-              },
-              undefined,
-              Object {
-                "backgroundColor": undefined,
-              },
-            ]
-          }
-        >
-          <View
-            style={
-              Array [
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
-          >
-            <View />
-          </View>
-        </View>
-      </View>
-    </View>
-  </View>
-</View>
-`;
-
-exports[`ReactionView component renders correctly with props style 1`] = `
-<View
-  style={
-    Array [
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-      },
-      Object {
-        "paddingBottom": 8,
-        "paddingTop": 8,
-      },
-      Object {
-        "backgroundColor": "#FF9800",
-      },
-    ]
-  }
-  testID="reaction_view"
->
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
-            },
-          ]
-        }
-        testID="reaction.grinning"
-      >
-        😀
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning_face_with_star_eyes"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
-            },
-          ]
-        }
-        testID="reaction.grinning_face_with_star_eyes"
-      >
-        🤩
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.kissing_smiling_eyes"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
-            },
-          ]
-        }
-        testID="reaction.kissing_smiling_eyes"
-      >
-        😙
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.sweat_smile"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
-            },
-          ]
-        }
-        testID="reaction.sweat_smile"
-      >
-        😅
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         2
-      </Text>
-    </View>
-  </View>
   <View
     accessible={true}
     collapsable={false}

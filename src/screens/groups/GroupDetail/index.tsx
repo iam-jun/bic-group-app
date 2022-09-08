@@ -1,4 +1,8 @@
-import { useFocusEffect, ExtendedTheme, useTheme } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  ExtendedTheme,
+  useTheme,
+} from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React, {
   useCallback, useEffect, useRef, useState,
@@ -10,8 +14,13 @@ import { useDispatch } from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import Animated, {
-  interpolate, runOnJS, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue,
+  interpolate,
+  runOnJS,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
 } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
@@ -62,24 +71,24 @@ const GroupDetail = (props: any) => {
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy } = groupInfo;
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { name: communityName } = communityDetail;
+  const { name: communityName, joinStatus: joinStatusCommunity }
+    = communityDetail;
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
+  const isMemberCommunity = joinStatusCommunity === groupJoinStatus.member;
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId(
-    'groups',
-    groupId,
-    [
-      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
-    ],
-  );
-  const showPrivate = !isMember && privacy === groupPrivacy.private;
-
+  const canSetting = hasPermissionsOnScopeWithId('groups', groupId, [
+    PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
+    PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+  ]);
+  const showPrivate
+    = !isMember
+    && (privacy === groupPrivacy.private
+      || (!isMemberCommunity && privacy === groupPrivacy.open));
   const buttonShow = useSharedValue(0);
 
   useFocusEffect(() => {
@@ -89,17 +98,20 @@ const GroupDetail = (props: any) => {
   });
 
   const getGroupDetail = () => {
-    dispatch(groupsActions.getGroupDetail({
-      groupId,
-      loadingPage: true,
-    }));
+    dispatch(
+      groupsActions.getGroupDetail({
+        groupId,
+        loadingPage: true,
+      }),
+    );
   };
 
   const getGroupPosts = useCallback(() => {
     /* Avoid getting group posts of the nonexisting group,
     which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
-    const privilegeToFetchPost = isMember
+    const privilegeToFetchPost
+      = isMember
       || privacy === groupPrivacy.public
       || privacy === groupPrivacy.open;
 
@@ -111,20 +123,16 @@ const GroupDetail = (props: any) => {
     dispatch(groupsActions.getGroupPosts(groupId));
   }, [groupId, isMember, privacy, loadingGroupDetail, groupInfo]);
 
-  useEffect(
-    () => {
-      getGroupDetail();
-      if (communityId && communityId !== communityDetail?.id) {
-        dispatch(groupsActions.getCommunityDetail({ communityId }));
-      }
-    }, [groupId],
-  );
+  useEffect(() => {
+    getGroupDetail();
+    if (communityId && communityId !== communityDetail?.id) {
+      dispatch(groupsActions.getCommunityDetail({ communityId }));
+    }
+  }, [groupId]);
 
-  useEffect(
-    () => {
-      getGroupPosts();
-    }, [groupInfo],
-  );
+  useEffect(() => {
+    getGroupPosts();
+  }, [groupInfo]);
 
   // visitors cannot see anything of Secret groups
   // => render No Group Found
@@ -134,24 +142,22 @@ const GroupDetail = (props: any) => {
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideBottomList());
-    rootNavigation.navigate(
-      groupStack.groupAdmin, { groupId },
-    );
+    rootNavigation.navigate(groupStack.groupAdmin, { groupId });
   };
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(
-      LINK_GROUP, groupId,
-    ));
-    dispatch(modalActions.showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
+    Clipboard.setString(getLink(LINK_GROUP, groupId));
+    dispatch(
+      modalActions.showHideToastMessage({
+        content: 'common:text_link_copied_to_clipboard',
+      }),
+    );
   };
 
   const onPressShare = () => {
     dispatch(modalActions.hideBottomList());
-    const groupLink = getLink(
-      LINK_GROUP, groupId,
-    );
+    const groupLink = getLink(LINK_GROUP, groupId);
     try {
       Share.share({ message: groupLink, url: groupLink });
     } catch (error) {
@@ -166,9 +172,7 @@ const GroupDetail = (props: any) => {
 
   const navigateToMembers = () => {
     dispatch(modalActions.clearToastMessage());
-    rootNavigation.navigate(
-      groupStack.groupMembers, { groupId },
-    );
+    rootNavigation.navigate(groupStack.groupMembers, { groupId });
   };
 
   const onPressLeave = () => {
@@ -183,12 +187,10 @@ const GroupDetail = (props: any) => {
     );
   };
 
-  const onGetInfoLayout = useCallback(
-    (e: any) => {
-      // to get the height from the start of the cover image to the end of group info
-      setGroupInfoHeight(e.nativeEvent.layout.height);
-    }, [],
-  );
+  const onGetInfoLayout = useCallback((e: any) => {
+    // to get the height from the start of the cover image to the end of group info
+    setGroupInfoHeight(e.nativeEvent.layout.height);
+  }, []);
 
   const scrollWrapper = (offsetY: number) => {
     headerRef?.current?.setScrollY?.(offsetY);
@@ -264,9 +266,7 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressChat = () => {
-    const link = formatChannelLink(
-      groupInfo.team_name, groupInfo.slug,
-    );
+    const link = formatChannelLink(groupInfo.team_name, groupInfo.slug);
     openUrl(link);
   };
 
@@ -284,7 +284,11 @@ const GroupDetail = (props: any) => {
           onPressChat={isMember ? onPressChat : undefined}
           onRightPress={onPressMenu}
           showStickyHeight={groupInfoHeight}
-          stickyHeaderComponent={!showPrivate && <GroupTabHeader groupId={groupId} isMember={isMember} />}
+          stickyHeaderComponent={
+            !showPrivate && (
+              <GroupTabHeader groupId={groupId} isMember={isMember} />
+            )
+          }
           onPressBack={onGoBack}
         />
         <View testID="group_detail.content" style={styles.contentContainer}>
@@ -306,6 +310,8 @@ const GroupDetail = (props: any) => {
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
+  const insets = useSafeAreaInsets();
+
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.neutral5,
@@ -323,7 +329,8 @@ const themeStyles = (theme: ExtendedTheme) => {
       bottom: 0,
     },
     joinBtn: {
-      paddingVertical: spacing.padding.tiny,
+      paddingBottom: spacing.padding.large + insets.bottom,
+      paddingTop: spacing.padding.large,
     },
   });
 };

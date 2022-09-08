@@ -58,7 +58,7 @@ const GroupContent = ({
     }));
   };
 
-  const renderItem = ({ item }: any) => <PostItem postData={item} testID="group_content.post.item" />;
+  const renderItem = ({ item }: any) => <PostItem postData={item} hasReactPermission={isMember} testID="group_content.post.item" />;
 
   const _onRefresh = () => {
     getGroupPosts();

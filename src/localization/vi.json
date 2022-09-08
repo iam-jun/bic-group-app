@@ -601,7 +601,7 @@
     "reply_to": "Trả lời "
   },
   "error": {
-    "alert_title": "Notice",
+    "alert_title": "Thông báo",
     "no_internet": "No internet",
     "button_confirm": "Got it",
     "http": {
@@ -633,7 +633,7 @@
   "groups": {
     "group_content": {
       "btn_group_tree": "Cấu trúc nhóm",
-      "btn_discover": "Khám phá nhóm",
+      "btn_browse": "Khám phá nhóm",
       "btn_post": "Bài đăng",
       "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
@@ -821,7 +821,8 @@
     "text_other_member_one": "{{count}} người khác là thành viên",
     "text_other_member_other": "{{count}} người khác là thành viên",
     "text_is_member": "là thành viên",
-    "title_discover_groups": "Khám phá các nhóm",
+    "title_browse_groups": "Khám phá các nhóm",
+    "text_must_be_member_first": "Bạn cần là thành viên cộng đồng trước",
     "permission": {
       "title_permission": "Cài đặt quyền",
       "title_system_scheme": "Quyền hệ thống",

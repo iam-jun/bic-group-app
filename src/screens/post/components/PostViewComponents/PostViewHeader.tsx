@@ -20,6 +20,7 @@ export interface PostViewHeaderProps {
   onPressHeader?: () => void;
   onPressMenu?: (e: any) => void;
   onPressShowAudiences?: () => void;
+  disabled?: boolean;
 }
 
 const PostViewHeader: FC<PostViewHeaderProps> = ({
@@ -29,6 +30,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   onPressHeader,
   onPressMenu,
   onPressShowAudiences,
+  disabled = false,
 }: PostViewHeaderProps) => {
   const { t } = useBaseHook();
   const { colors } = useTheme();
@@ -64,7 +66,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   return (
     <TouchableOpacity
       testID="post_view_header"
-      disabled={!isInternetReachable || !onPressHeader}
+      disabled={!isInternetReachable || disabled || !onPressHeader}
       onPress={() => onPressHeader?.()}
       style={styles.headerContainer}
     >

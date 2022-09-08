@@ -136,6 +136,7 @@ const Notification = () => {
                 rootNavigation.navigate(
                   groupStack.communityMembers, {
                     communityId: act.community.id,
+                    isMember: true,
                   },
                 );
               }
@@ -143,6 +144,7 @@ const Notification = () => {
                 rootNavigation.navigate(
                   groupStack.groupMembers, {
                     groupId: act.group.id,
+                    isMember: true,
                   },
                 );
               }
@@ -177,6 +179,7 @@ const Notification = () => {
                   groupStack.communityMembers, {
                     communityId: act.community.id,
                     targetIndex,
+                    isMember: true,
                   },
                 );
               }
@@ -185,6 +188,7 @@ const Notification = () => {
                   groupStack.groupMembers, {
                     groupId: act.group.id,
                     targetIndex,
+                    isMember: true,
                   },
                 );
               }

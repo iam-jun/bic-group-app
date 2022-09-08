@@ -62,7 +62,7 @@ const _PageContent = ({
     }
   };
 
-  const renderItem = ({ item }: any) => <PostItem postData={item} testID="page_content.post.item" />;
+  const renderItem = ({ item }: any) => <PostItem postData={item} hasReactPermission={isMember} testID="page_content.post.item" />;
 
   const _onRefresh = () => {
     dispatch(actions.getCommunityDetail({ communityId }));
