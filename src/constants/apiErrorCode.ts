@@ -17,6 +17,8 @@ const POST = {
 
 const GROUP = {
   SCHEME_NOT_FOUND: 'scheme.not_found',
+  REVOKE_ACCOUNT_OWNER: 'community.revoke_account_owner',
+  LAST_ADMIN_LEAVE: 'group.member.is_last_admin',
 };
 
 const API_ERROR_CODE = {

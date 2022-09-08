@@ -690,7 +690,8 @@
     },
     "error": {
       "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi thoát",
-      "last_admin_inner_group_leave": "Không thể thoát. Bạn là quản trị viên cuối cùng của một nhóm bên trong",
+      "last_admin_inner_group_leave": "Bạn không thể thoát. Bạn là quản trị viên cuối cùng của một nhóm bên trong",
+      "owner_leave_community": "Bạn không thể thoát. Bạn là chủ sở hữu của cộng đồng này.",
       "last_admin_remove": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt một quản trị viên khác trước khi xóa vai trò quản trị viên",
       "last_admin_inner_group_remove": "Không thể loại khỏi nhóm. Người dùng này là quản trị viên cuối cùng của một nhóm bên trong"
     },
