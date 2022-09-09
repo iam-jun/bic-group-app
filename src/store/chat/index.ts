@@ -50,6 +50,6 @@ const chatStore = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useChatStore = createStore<IChatState>('chat-store', chatStore);
+const useChatStore = createStore<IChatState>(chatStore);
 
 export default useChatStore;
