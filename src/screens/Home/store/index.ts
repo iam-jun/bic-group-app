@@ -97,6 +97,6 @@ const homeStore = (set, get) => ({
   },
 });
 
-const useHomeStore = createStore<IHomeState>('home-store', homeStore);
+const useHomeStore = createStore<IHomeState>(homeStore);
 
 export default useHomeStore;

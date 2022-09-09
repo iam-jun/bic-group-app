@@ -17,8 +17,6 @@ const draftPostStore = (set, get) => ({
   reset: () => resetStore(initState, set),
 });
 
-const useDraftPostStore = createStore<IDraftPostState>(
-  'draft-post-store', draftPostStore,
-);
+const useDraftPostStore = createStore<IDraftPostState>(draftPostStore);
 
 export default useDraftPostStore;

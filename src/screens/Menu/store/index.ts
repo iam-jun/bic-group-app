@@ -33,8 +33,6 @@ const joinedCommunitiesStore = (set) => ({
   reset: () => resetStore(initState, set),
 });
 
-const useJoinedCommunitiesStore = createStore<IJoinedCommunitiesState>(
-  'joined-communities-store', joinedCommunitiesStore,
-);
+const useJoinedCommunitiesStore = createStore<IJoinedCommunitiesState>(joinedCommunitiesStore);
 
 export default useJoinedCommunitiesStore;
