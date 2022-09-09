@@ -105,6 +105,8 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           />
         </View>
       </View>
+      {!!onPressMenu
+      && (
       <View style={{ marginRight: spacing.margin.small }}>
         <Icon
           style={{ alignSelf: 'auto' }}
@@ -113,6 +115,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           onPress={onPressMenu}
         />
       </View>
+      )}
     </TouchableOpacity>
   );
 };

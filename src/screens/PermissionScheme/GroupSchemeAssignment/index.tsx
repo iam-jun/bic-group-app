@@ -47,9 +47,6 @@ const GroupSchemeAssignment = () => {
         cancelBtn: true,
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('communities:permission:btn_continue'),
-        cancelBtnProps: {
-          textColor: theme.colors.neutral80,
-        },
         onCancel: rootNavigation.goBack,
       }));
     } else {

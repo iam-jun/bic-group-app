@@ -1,6 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import Tab from '~/baseComponents/Tab';
 
 import Header from '~/beinComponents/Header';
 import Image from '~/beinComponents/Image';
@@ -14,10 +16,17 @@ import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import PostViewDraft from '~/screens/post/components/PostViewDraft';
+import modalActions from '~/storeRedux/modal/actions';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
 import useDraftPostStore from './store';
+import { DRAFT_POST_TAB_TYPE } from './store/constants';
+
+const HEADER_TAB = [
+  { id: DRAFT_POST_TAB_TYPE.DRAFT_POST, text: 'home:draft_post' },
+  { id: DRAFT_POST_TAB_TYPE.DRAFT_ARTICLES, text: 'home:draft_articles_post' },
+];
 
 const DraftPost = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -27,6 +36,7 @@ const DraftPost = () => {
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
+  const dispatch = useDispatch();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
@@ -58,6 +68,14 @@ const DraftPost = () => {
     }
   };
 
+  const onPressTab = (item: any) => {
+    if (item.id === DRAFT_POST_TAB_TYPE.DRAFT_ARTICLES) {
+      dispatch(modalActions.showAlertNewFeature());
+    } else {
+      getData(true);
+    }
+  };
+
   const renderItem = ({ item }: any) => <PostViewDraft data={item} />;
 
   const renderFooter = () => (
@@ -85,15 +103,18 @@ const DraftPost = () => {
     </View>
   );
 
-  const title = `${t('home:draft_post')}${
-    draftPosts?.length > 0
-      ? ` (${draftPosts.length > 9 ? '9+' : draftPosts.length})`
-      : ''
-  }`;
-
   return (
     <View style={styles.container}>
-      <Header title={title} />
+      <Header title={t('tabs:menus')} removeBorderAndShadow />
+      <View style={styles.tabContainer}>
+        <Tab
+          style={styles.tabs}
+          buttonProps={{ size: 'small', type: 'primary', useI18n: true }}
+          data={HEADER_TAB}
+          type="pill"
+          onPressTab={onPressTab}
+        />
+      </View>
       <ListView
         isFullView
         containerStyle={styles.listContainer}
@@ -118,7 +139,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.gray1,
+      backgroundColor: colors.gray5,
     },
     listContainer: {
       flex: 1,
@@ -136,6 +157,18 @@ const createStyle = (theme: ExtendedTheme) => {
     imgEmpty: {
       width: 250,
       height: 200,
+    },
+    tabContainer: {
+      // height: homeHeaderTabHeight,
+      flexDirection: 'row',
+      paddingVertical: spacing.padding.small,
+      backgroundColor: colors.white,
+    },
+    tabs: {
+      flex: 1,
+      alignItems: 'center',
+      paddingHorizontal: spacing.margin.large,
+      flexDirection: 'row',
     },
   });
 };
