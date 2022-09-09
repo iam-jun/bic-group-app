@@ -28,8 +28,6 @@ const joinedGroupTreeStore = (set) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useJoinedGroupTreeStore = createStore<IJoinedGroupTreeState>(
-  'joined-group-tree-store', joinedGroupTreeStore,
-);
+const useJoinedGroupTreeStore = createStore<IJoinedGroupTreeState>(joinedGroupTreeStore);
 
 export default useJoinedGroupTreeStore;

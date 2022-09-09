@@ -36,8 +36,6 @@ const mentionInputStore = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useMentionInputStore = createStore<IMentionInputState>(
-  'joined-group-tree-store', mentionInputStore,
-);
+const useMentionInputStore = createStore<IMentionInputState>(mentionInputStore);
 
 export default useMentionInputStore;

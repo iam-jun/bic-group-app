@@ -10,12 +10,8 @@ interface ICreateZustand {
   persist?: PersistOptions<any>;
 }
 
-const createStore = <T>(
-  name: string,
-  store,
-  options?: ICreateZustand,
-) => {
-  let _store: any = zustandFlipper(immer(store) as any, name);
+const createStore = <T>(store, options?: ICreateZustand) => {
+  let _store: any = zustandFlipper(immer(store) as any, store.name || 'ZustandStore');
   if (options?.persist) {
     _store = persist(_store, options.persist);
   }

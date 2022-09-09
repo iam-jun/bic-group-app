@@ -6,8 +6,6 @@ const leaveCommunityStore = (set, get) => ({
   doPostLeaveCommunity: leaveCommunity(set, get),
 });
 
-const useLeaveCommunity = createStore<ILeaveCommunityState>(
-  'leave-community-store', leaveCommunityStore,
-);
+const useLeaveCommunity = createStore<ILeaveCommunityState>(leaveCommunityStore);
 
 export default useLeaveCommunity;

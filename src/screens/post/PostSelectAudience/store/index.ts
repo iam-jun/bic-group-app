@@ -27,8 +27,6 @@ const selectAudienceStore = (set, get) => ({
   reset: () => resetStore(initState, set),
 });
 
-const useSelectAudienceStore = createStore<ISelectAudienceState>(
-  'select-audience-store', selectAudienceStore,
-);
+const useSelectAudienceStore = createStore<ISelectAudienceState>(selectAudienceStore);
 
 export default useSelectAudienceStore;

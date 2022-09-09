@@ -35,8 +35,6 @@ const useReactionDetail = (set) => ({
   },
 });
 
-const useReactionDetailStore = createStore<GetReactionDetailState>(
-  'useReactionDetail', useReactionDetail,
-);
+const useReactionDetailStore = createStore<GetReactionDetailState>(useReactionDetail);
 
 export default useReactionDetailStore;
