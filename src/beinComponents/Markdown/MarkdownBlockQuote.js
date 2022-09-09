@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Icon from '~/baseComponents/Icon';
+import { spacing } from '~/theme';
 
 export default class MarkdownBlockQuote extends PureComponent {
   static propTypes = {
@@ -18,6 +19,8 @@ export default class MarkdownBlockQuote extends PureComponent {
   };
 
   render() {
+    const styles = createStyles(this.props.theme);
+
     let icon;
     if (!this.props.continue) {
       // todo update icon
@@ -25,23 +28,30 @@ export default class MarkdownBlockQuote extends PureComponent {
     }
 
     return (
-      <View style={style.container} testID="markdown_block_quote">
-        <View style={style.icon}>{icon}</View>
-        <View style={style.childContainer}>{this.props.children}</View>
+      <View style={styles.container} testID="markdown_block_quote">
+        {/* <View style={styles.icon}>{icon}</View> */}
+        <View style={styles.childContainer}>{this.props.children}</View>
       </View>
     );
   }
 }
 
-const style = StyleSheet.create({
-  container: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-  },
-  childContainer: {
-    flex: 1,
-  },
-  icon: {
-    width: 23,
-  },
-});
+const createStyles = (theme) => {
+  return StyleSheet.create({
+    container: {
+      alignItems: 'flex-start',
+      flexDirection: 'row',
+      borderLeftColor: theme.purple50,
+      borderLeftWidth: 6,
+      paddingLeft: spacing.padding.base,
+      paddingVertical: spacing.padding.small,
+      backgroundColor: theme.gray1
+    },
+    childContainer: {
+      flex: 1,
+    },
+    icon: {
+      width: 23,
+    },
+  })
+}

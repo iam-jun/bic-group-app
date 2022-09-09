@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 
-import { changeOpacity, makeStyleSheetFromTheme } from '../utils/utils';
+import { makeStyleSheetFromTheme } from '../utils/utils';
 import { CODE_FONT_FAMILY } from '../utils/config';
 
 export default class CodeDetail extends React.PureComponent {
@@ -93,8 +93,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
   },
   lineNumbers: {
     alignItems: 'center',
-    backgroundColor: changeOpacity(theme.centerChannelColor, 0.05),
-    borderRightColor: changeOpacity(theme.centerChannelColor, 0.15),
+    backgroundColor: theme.neutral60,
+    borderRightColor: theme.neutral70,
     borderRightWidth: StyleSheet.hairlineWidth,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -105,7 +105,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     alignItems: 'flex-end',
   },
   lineNumbersText: {
-    color: changeOpacity(theme.centerChannelColor, 0.5),
+    color: theme.neutral50,
     fontSize: 12,
     lineHeight: 18,
   },
@@ -126,7 +126,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     }),
   },
   codeText: {
-    color: changeOpacity(theme.centerChannelColor, 0.65),
+    color: theme.neutral60,
     fontFamily: CODE_FONT_FAMILY,
     fontSize: 12,
     lineHeight: 18,

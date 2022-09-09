@@ -4,28 +4,29 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import Md from './Md';
-import colors from '~/theme/theme';
-import { mmTheme } from './utils/config';
 
 import Header from '~/beinComponents/Header';
 import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 import { sizes } from '~/theme/dimension';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 const DeviceHeight = Dimensions.get('window').height;
 
 const Markdown = ({ value, ...rest }) => {
   const dispatch = useDispatch();
-  const theme = mmTheme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
+
   const baseTextStyle = {
-    color: '#282E53',
+    color: colors.neutral70,
     fontFamily: fontFamilies.BeVietnamProLight,
     fontSize: sizes.paragraphM,
   };
   const textStyles = {
     code: {
       alignSelf: 'center',
-      backgroundColor: 'rgba(63,67,80,0.07)',
+      backgroundColor: colors.gray1,
       fontFamily: fontFamilies.JetBrainsMono,
     },
     codeBlock: {
@@ -38,24 +39,24 @@ const Markdown = ({ value, ...rest }) => {
       fontFamily: fontFamilies.BeVietnamProLightItalic,
     },
     error: {
-      color: '#d24b4e',
+      color: colors.danger,
     },
     heading1: {
-      fontSize: sizes.h3,
+      fontSize: sizes.h1,
       fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading1Text: {
       paddingBottom: 8,
     },
     heading2: {
-      fontSize: sizes.h4,
+      fontSize: sizes.h2,
       fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading2Text: {
       paddingBottom: 8,
     },
     heading3: {
-      fontSize: sizes.h5,
+      fontSize: sizes.h3,
       fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading3Text: {
@@ -83,12 +84,12 @@ const Markdown = ({ value, ...rest }) => {
       paddingBottom: 8,
     },
     link: {
-      color: '#386fe5',
+      color: colors.blue50,
     },
     mention: {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.bodyM,
-      color: '#7335C0',
+      color: colors.purple50,
     },
     mention_highlight: {
       backgroundColor: '#ffd470',
@@ -126,7 +127,7 @@ const Markdown = ({ value, ...rest }) => {
             activeOpacity={1}
             style={{
               flex: 1,
-              backgroundColor: theme.centerChannelBg,
+              backgroundColor: colors.white,
               maxHeight: DeviceHeight,
             }}
           >
@@ -148,7 +149,7 @@ const Markdown = ({ value, ...rest }) => {
       autolinkedUrlSchemes={['http', 'https', 'ftp', 'mailto', 'tel']}
       mentionKeys={[]}
       minimumHashtagLength={10}
-      theme={theme}
+      theme={colors}
       value={value}
       baseTextStyle={baseTextStyle}
       blockStyles={blockStyles}
