@@ -14,22 +14,34 @@ import spacing from '~/theme/spacing';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatData';
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import GroupPreviewMembers from './GroupPreviewMembers';
 
 export type GroupAboutContentProps = {
   showPrivate?: boolean;
 };
 
 const GroupAboutContent: FC<GroupAboutContentProps> = ({ showPrivate }) => {
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
 
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const { description, userCount, privacy } = groupData;
+  const {
+    description, userCount, privacy, id, joinStatus,
+  } = groupData;
+  const isMember = joinStatus === groupJoinStatus.member;
 
   const privacyData
     = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
   const { icon, title }: any = privacyData || {};
+
+  const onPressTotalMember = () => {
+    rootNavigation.navigate(groupStack.groupMembers, { groupId: id, isMember });
+  };
 
   const renderDescription = () => {
     if (!description) return null;
@@ -66,9 +78,11 @@ const GroupAboutContent: FC<GroupAboutContentProps> = ({ showPrivate }) => {
             count: userCount,
           },
         )}`}
-        disabled
+        onPress={onPressTotalMember}
         iconProps={{ tintColor: colors.neutral40 }}
+        rightSubIcon="AngleRightSolid"
       />
+      <GroupPreviewMembers />
     </>
   );
 

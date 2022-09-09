@@ -4,7 +4,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import ListView from '~/beinComponents/list/ListView';
@@ -15,12 +14,13 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { Button } from '~/baseComponents';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
-const PreviewMembers = () => {
+const GroupPreviewMembers = () => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
 
-  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const infoDetail = useKeySelector(groupsKeySelector.groupDetail.group);
   const { userCount, members } = infoDetail;
   const otherMembers = userCount - (members?.length || 0);
   const otherMembersDisplay = otherMembers > 99 ? 99 : otherMembers;
@@ -92,7 +92,7 @@ const PreviewMembers = () => {
   );
 };
 
-export default PreviewMembers;
+export default GroupPreviewMembers;
 
 const styles = StyleSheet.create({
   listStyle: {

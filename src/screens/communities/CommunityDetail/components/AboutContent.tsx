@@ -9,7 +9,7 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
-import PreviewMembers from '../../../groups/components/PreviewMembers';
+import PreviewMembers from './PreviewMembers';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatData';
