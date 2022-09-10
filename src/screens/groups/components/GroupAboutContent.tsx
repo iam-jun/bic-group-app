@@ -71,7 +71,7 @@ const GroupAboutContent: FC<GroupAboutContentProps> = ({ showPrivate }) => {
       />
       <MenuItem
         testID="group_about_content.members"
-        icon="UserGroup"
+        icon="UserGroupSolid"
         title={`${formatLargeNumber(userCount)} ${i18next.t(
           'groups:text_members',
           {
@@ -79,7 +79,7 @@ const GroupAboutContent: FC<GroupAboutContentProps> = ({ showPrivate }) => {
           },
         )}`}
         onPress={onPressTotalMember}
-        iconProps={{ tintColor: colors.neutral40 }}
+        iconProps={{ tintColor: colors.neutral20, size: 18 }}
         rightSubIcon="AngleRightSolid"
       />
       <GroupPreviewMembers />

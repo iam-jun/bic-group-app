@@ -89,7 +89,10 @@ const GroupDetail = (props: any) => {
     = !isMember
     && (privacy === groupPrivacy.private
       || (!isMemberCommunity && privacy === groupPrivacy.open));
+
   const buttonShow = useSharedValue(0);
+  const containerPaddingBottom = useSharedValue(0);
+  const heightButtonBottom = useSharedValue(0);
 
   useFocusEffect(() => {
     if (!userId) {
@@ -203,16 +206,33 @@ const GroupDetail = (props: any) => {
     buttonShow.value = offsetY;
   });
 
-  const buttonStyle = useAnimatedStyle(
-    () => ({
-      opacity: interpolate(
-        buttonShow.value,
-        [0, groupInfoHeight - 20, groupInfoHeight],
-        [0, 0, 1],
-      ),
-    }),
-    [groupInfoHeight],
-  );
+  const onButtonBottomLayout = (e: any) => {
+    heightButtonBottom.value = e.nativeEvent.layout.height;
+  };
+
+  const containerAnimation = useAnimatedStyle(() => ({
+    paddingBottom: containerPaddingBottom.value,
+  }));
+
+  const buttonStyle = useAnimatedStyle(() => {
+    const value = interpolate(
+      buttonShow.value,
+      [0, groupInfoHeight - 20, groupInfoHeight],
+      [0, 0, 1],
+    );
+
+    if (value < 1) {
+      containerPaddingBottom.value = 0;
+    }
+
+    if (value >= 1) {
+      containerPaddingBottom.value = heightButtonBottom.value;
+    }
+
+    return {
+      opacity: value,
+    };
+  }, [groupInfoHeight]);
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
@@ -292,12 +312,13 @@ const GroupDetail = (props: any) => {
           }
           onPressBack={onGoBack}
         />
-        <View testID="group_detail.content" style={styles.contentContainer}>
+        <Animated.View testID="group_detail.content" style={[styles.contentContainer, containerAnimation]}>
           {renderGroupContent()}
-        </View>
-        <Animated.View style={[styles.button, buttonStyle]}>
+        </Animated.View>
+        <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
           <GroupJoinCancelButton style={styles.joinBtn} />
         </Animated.View>
+
       </>
     );
   };

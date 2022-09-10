@@ -2,8 +2,10 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { useKeySelector } from '~/hooks/selector';
 
 import { IGroup } from '~/interfaces/IGroup';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
 import GroupAboutContent from '../../components/GroupAboutContent';
 import InfoHeader from '../../components/InfoHeader';
@@ -21,6 +23,7 @@ const GroupPrivateWelcome = ({
 }: GroupPrivateWelcomeProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const { name } = useKeySelector(groupsKeySelector.communityDetail);
 
   return (
     <Animated.ScrollView
@@ -31,7 +34,7 @@ const GroupPrivateWelcome = ({
       onScroll={onScroll}
     >
       <View onLayout={onGetInfoLayout}>
-        <InfoHeader infoDetail={infoDetail} isMember={isMember} />
+        <InfoHeader infoDetail={infoDetail} isMember={isMember} insideCommunityName={name} />
         <View style={styles.space} />
         <GroupJoinCancelButton />
       </View>
