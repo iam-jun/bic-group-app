@@ -47,6 +47,7 @@ import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
 import Text from '~/beinComponents/Text';
 import useLeaveCommunity from './store';
+import NotFound from '~/screens/NotFound/components/NotFound';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -66,6 +67,9 @@ const CommunityDetail = (props: any) => {
     name, joinStatus, privacy, groupId,
   } = infoDetail;
   const isMember = joinStatus === groupJoinStatus.member;
+  const isGettingInfoDetailError = useKeySelector(
+    groupsKeySelector.isGettingInfoDetailError,
+  );
   const isGettingInfoDetail = useKeySelector(
     groupsKeySelector.isGettingInfoDetail,
   );
@@ -263,37 +267,48 @@ const CommunityDetail = (props: any) => {
     };
   }, [buttonHeight]);
 
-  const renderCommunityDetail = () => (
-    <>
-      <Header
-        headerRef={headerRef}
-        title={name}
-        useAnimationTitle
-        rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
-        rightIconProps={{ backgroundColor: theme.colors.white }}
-        onPressChat={isMember ? onPressChat : undefined}
-        onRightPress={onRightPress}
-        showStickyHeight={buttonHeight}
-        stickyHeaderComponent={
+  const onGoBackOnNotFound = () => {
+    // clear all state
+    dispatch(actions.setCommunityDetail({} as ICommunity));
+  };
+
+  const renderCommunityDetail = () => {
+    if (isGettingInfoDetailError) {
+      return <NotFound onGoBack={onGoBackOnNotFound} />;
+    }
+
+    return (
+      <>
+        <Header
+          headerRef={headerRef}
+          title={name}
+          useAnimationTitle
+          rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
+          rightIconProps={{ backgroundColor: theme.colors.white }}
+          onPressChat={isMember ? onPressChat : undefined}
+          onRightPress={onRightPress}
+          showStickyHeight={buttonHeight}
+          stickyHeaderComponent={
           !showPrivate && (
             <CommunityTabHeader communityId={communityId} isMember={isMember} />
           )
         }
-      />
-      <Animated.View
-        testID="community_detail.content"
-        style={[
-          styles.contentContainer,
-          containerAnimation,
-        ]}
-      >
-        {renderCommunityContent()}
-      </Animated.View>
-      <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
-        <CommunityJoinCancelButton style={styles.joinBtn} />
-      </Animated.View>
-    </>
-  );
+        />
+        <Animated.View
+          testID="community_detail.content"
+          style={[
+            styles.contentContainer,
+            containerAnimation,
+          ]}
+        >
+          {renderCommunityContent()}
+        </Animated.View>
+        <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
+          <CommunityJoinCancelButton style={styles.joinBtn} />
+        </Animated.View>
+      </>
+    );
+  };
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>

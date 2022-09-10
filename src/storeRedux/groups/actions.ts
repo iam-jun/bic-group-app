@@ -257,6 +257,10 @@ const groupsActions = {
     type: groupsTypes.SET_GROUP_DETAIL,
     payload,
   }),
+  setGroupDetailError: (payload: boolean) => ({
+    type: groupsTypes.SET_GROUP_DETAIL_ERROR,
+    payload,
+  }),
   editGroupDetail: (payload: {
     data: IGroupDetailEdit;
     editFieldName?: string;
@@ -519,6 +523,10 @@ const groupsActions = {
   }),
   setCommunityLoading: (payload: boolean) => ({
     type: groupsTypes.SET_COMMUNITY_LOADING,
+    payload,
+  }),
+  setCommunityError: (payload: boolean) => ({
+    type: groupsTypes.SET_COMMUNITY_ERROR,
     payload,
   }),
   setCommunityDetail: (payload: ICommunity) => ({
