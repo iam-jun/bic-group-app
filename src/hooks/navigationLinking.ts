@@ -4,16 +4,18 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { linkingConfig, linkingConfigFull } from '~/router/config';
 import mainStack from '~/router/navigator/MainStack/stack';
 
+export const PREFIX_DEEPLINK_GROUP = 'bic://';
+
+const UUID_V4_PATTERN = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
+
 const getLinkingCustomConfig = (
   config: any, navigation: any,
 ) => ({
   ...config,
   subscribe(listener: any) {
     const onReceiveURL = ({ url }: {url: string}) => {
-      if (url.includes('bein:///posts/')) {
-        const data = url?.replace(
-          'bein:///posts/', '',
-        );
+      if (url.includes(`${PREFIX_DEEPLINK_GROUP}/posts/`)) {
+        const data = url?.replace(`${PREFIX_DEEPLINK_GROUP}/posts/`, '');
         const params = data.split('?');
 
         if (params?.length === 1) {
@@ -47,15 +49,15 @@ const getLinkingCustomConfig = (
         } else {
           listener(url);
         }
-      } else if (url.includes('bein:///communities/')) {
-        const communityId = url?.replace(
-          'bein:///communities/', '',
-        );
-        navigation?.navigate?.(
-          mainStack.communityDetail, {
-            communityId,
-          },
-        );
+      } else if (url.match(`groups/${UUID_V4_PATTERN}`)) {
+        const matchResult = url.match(`groups/${UUID_V4_PATTERN}`);
+        const groupId = matchResult?.[0]?.replace('groups/', '');
+
+        navigation?.navigate?.(mainStack.groupDetail, { groupId });
+      } else if (url.match(`${PREFIX_DEEPLINK_GROUP}/communities/${UUID_V4_PATTERN}`)) {
+        const communityId = url?.replace(`${PREFIX_DEEPLINK_GROUP}/communities/`, '');
+
+        navigation?.navigate?.(mainStack.communityDetail, { communityId });
       } else {
         listener(url);
       }

@@ -1,3 +1,4 @@
+import { PREFIX_DEEPLINK_GROUP } from '~/hooks/navigationLinking';
 import getEnv from '~/utils/env';
 
 export const customBackHandlerRoutes = [
@@ -29,7 +30,7 @@ export const bottomTabIconsFocused = {
 export const linkingConfig = {
   prefixes: [
     __DEV__ ? 'http://localhost:8088' : getEnv('SELF_DOMAIN'),
-    'bein://',
+    PREFIX_DEEPLINK_GROUP,
   ],
   config: {
     screens: {
@@ -57,7 +58,7 @@ export const linkingConfig = {
 export const linkingConfigFull = {
   prefixes: [
     __DEV__ ? 'http://localhost:8088' : getEnv('SELF_DOMAIN'),
-    'bein://',
+    PREFIX_DEEPLINK_GROUP,
   ],
   config: {
     screens: {

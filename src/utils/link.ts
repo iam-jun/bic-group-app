@@ -1,10 +1,10 @@
 import { Linking } from 'react-native';
 import { chatSchemes } from '~/constants/chat';
+import { PREFIX_DEEPLINK_GROUP } from '~/hooks/navigationLinking';
 import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
 
 const LINK_POST = 'LINK_POST';
-const LINK_GROUP = 'LINK_GROUP';
 const LINK_COMMENT = 'LINK_COMMENT';
 const LINK_COMMUNITY = 'LINK_COMMUNITY';
 
@@ -50,8 +50,6 @@ const getLink = (
       return `${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
     case LINK_COMMENT:
       return `${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
-    case LINK_GROUP:
-      return `${getEnv('SELF_DOMAIN')}/groups/${id}${formatParams(params)}`;
     case LINK_COMMUNITY:
       return `${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
     default:
@@ -59,8 +57,14 @@ const getLink = (
   }
 };
 
+const getGroupLink = ({
+  communityId, groupId, params,
+}: {
+  communityId: string; groupId: string; params?: any
+}) => `${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
+
 export {
-  LINK_POST, LINK_GROUP, LINK_COMMENT, LINK_COMMUNITY, getLink,
+  LINK_POST, LINK_COMMENT, LINK_COMMUNITY, getLink, getGroupLink,
 };
 
 export const getChatDomain = () => (
@@ -82,9 +86,11 @@ export const formatDMLink = (
   teamId: string, username: string,
 ) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
 
-export function openUrl(url, onError?: (e)=> void, onSuccess?:(e)=> void) {
-  if (url.includes(getEnv('SELF_DOMAIN'))) {
-    const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
+export function openUrl(url: string, onError?: (e: any)=> void, onSuccess?: (e: any)=> void) {
+  // handle url from BIC web to have the same domain format as mobile
+  const urlWithoutWww = url.replace(/(https?:\/\/)?(www.)?/i, 'http://');
+  if (urlWithoutWww.includes(getEnv('SELF_DOMAIN'))) {
+    const newUrl = urlWithoutWww.replace(getEnv('SELF_DOMAIN'), PREFIX_DEEPLINK_GROUP);
     Linking.canOpenURL(newUrl)
       .then((supported) => {
         if (supported) {

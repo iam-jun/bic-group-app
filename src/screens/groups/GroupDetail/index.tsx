@@ -40,7 +40,7 @@ import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import {
-  formatChannelLink, getLink, LINK_GROUP, openUrl,
+  formatChannelLink, getGroupLink, openUrl,
 } from '~/utils/link';
 import { checkLastAdmin } from '../helper';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
@@ -147,7 +147,7 @@ const GroupDetail = (props: any) => {
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
-    Clipboard.setString(getLink(LINK_GROUP, groupId));
+    Clipboard.setString(getGroupLink({ communityId: communityDetail?.id, groupId }));
     dispatch(
       modalActions.showHideToastMessage({
         content: 'common:text_link_copied_to_clipboard',
@@ -157,7 +157,7 @@ const GroupDetail = (props: any) => {
 
   const onPressShare = () => {
     dispatch(modalActions.hideBottomList());
-    const groupLink = getLink(LINK_GROUP, groupId);
+    const groupLink = getGroupLink({ communityId: communityDetail?.id, groupId });
     try {
       Share.share({ message: groupLink, url: groupLink });
     } catch (error) {
