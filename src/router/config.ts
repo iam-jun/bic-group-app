@@ -2,7 +2,7 @@ import getEnv from '~/utils/env';
 
 export const PREFIX_DEEPLINK_GROUP = 'bic://';
 
-export const WEB_SCHEME = 'https://www.';
+export const WEB_SCHEME = 'https://';
 
 export const customBackHandlerRoutes = [
   'home',
