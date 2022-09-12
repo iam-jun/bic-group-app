@@ -293,7 +293,7 @@ const GroupDetail = (props: any) => {
   };
 
   const renderGroupDetail = () => {
-    if (isLoadingGroupDetailError) return <NotFound onGoBack={onGoBackOnNotFound} />;
+    if (isLoadingGroupDetailError) return <NotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
 
     return (
       <>

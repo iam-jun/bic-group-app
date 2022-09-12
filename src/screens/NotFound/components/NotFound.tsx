@@ -11,10 +11,11 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 
 type NotFoundProps = {
+    testID?: string;
     onGoBack?: () => void;
 }
 
-const NotFound: FC<NotFoundProps> = ({ onGoBack }) => {
+const NotFound: FC<NotFoundProps> = ({ testID, onGoBack }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { t } = useBaseHook();
@@ -26,7 +27,7 @@ const NotFound: FC<NotFoundProps> = ({ onGoBack }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <SVGIcon source={NoContent} size={100} />
       <Text.BodyMMedium useI18n style={styles.textContentNotAvailable}>common:content_not_available</Text.BodyMMedium>
       <Text.BodyS useI18n>common:dont_have_permission_to_access</Text.BodyS>
