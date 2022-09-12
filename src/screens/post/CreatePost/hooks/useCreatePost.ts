@@ -298,7 +298,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   useEffect(
     () => {
       const dataChangeList = [
-        isEqual(JSON.stringify(selectingImages), JSON.stringify(prevData?.current?.selectingImages)),
+        isEqual(
+          JSON.stringify(selectingImages),
+          JSON.stringify(prevData?.current?.selectingImages),
+        ),
         isEmpty(differenceWith(
           chosenAudiences,
           prevData?.current?.chosenAudiences,
