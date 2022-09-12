@@ -1,7 +1,7 @@
 import React, {
   useRef, useState, useEffect, useCallback,
 } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions } from 'react-native';
 
 import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet';
@@ -72,19 +72,20 @@ const ReactionDetailBottomSheet = () => {
       isOpen={isOpen}
       onClose={_onClose}
       childrenStyle={{ height: modalHeight }}
+      disableScrollIfPossible={false}
+      HeaderComponent={(
+        <ReactionTabBar
+          reactionCounts={reactionCounts}
+          initReaction={initReaction}
+          onChangeTab={onChangeTab}
+        />
+      )}
       ContentComponent={(
-        <View>
-          <ReactionTabBar
-            reactionCounts={reactionCounts}
-            initReaction={initReaction}
-            onChangeTab={onChangeTab}
-          />
-          <ReactionDetailTab
-            reactionType={selectingReaction || initReaction}
-            getDataParam={getDataParam}
-            onPressItem={onPressItem}
-          />
-        </View>
+        <ReactionDetailTab
+          reactionType={selectingReaction || initReaction}
+          getDataParam={getDataParam}
+          onPressItem={onPressItem}
+        />
       )}
     />
   );
