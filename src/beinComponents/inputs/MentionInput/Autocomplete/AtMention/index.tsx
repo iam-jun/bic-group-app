@@ -51,11 +51,10 @@ const AtMention = ({
   );
 
   const onCursorPositionChange = debounce(
-    ({ position, value }: ICursorPositionChange) => {
+    ({ position, value, groupIds }: ICursorPositionChange) => {
       text.current = value;
-      doRunSearch(value.substring(
-        0, position,
-      ));
+      const textBeforeCursor = value.substring(0, position);
+      doRunSearch(groupIds, textBeforeCursor);
     },
     100,
   );

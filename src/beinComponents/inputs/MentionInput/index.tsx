@@ -59,7 +59,6 @@ const _MentionInput = ({
 
   const setData = useMentionInputStore((state: IMentionInputState) => state.setData);
   const setFullContent = useMentionInputStore((state: IMentionInputState) => state.setFullContent);
-  const setGroupIds = useMentionInputStore((state: IMentionInputState) => state.setGroupIds);
 
   const [keyboardType, setKeyboardType] = useState<KeyboardTypeOptions>('default');
   const { isOpen: isKeyboardOpen } = useKeyboardStatus();
@@ -83,8 +82,6 @@ const _MentionInput = ({
       };
     }, [],
   );
-
-  useEffect(() => setGroupIds(groupIds), [groupIds]);
 
   const getContent = () => componentInputProps?.value;
 
@@ -114,6 +111,7 @@ const _MentionInput = ({
     const param: ICursorPositionChange = {
       position,
       value: text,
+      groupIds,
     };
     DeviceEventEmitter.emit(
       'autocomplete-on-selection-change', param,
@@ -126,6 +124,7 @@ const _MentionInput = ({
     const param: ICursorPositionChange = {
       position: cursorPosition.current,
       value,
+      groupIds,
     };
     DeviceEventEmitter.emit(
       'autocomplete-on-selection-change', param,

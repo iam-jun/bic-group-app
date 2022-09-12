@@ -30,6 +30,7 @@ const MentionBar: FC<MentionBarProps> = ({
   const listRef = useRef<any>();
   const text = useRef('');
   const cursorPosition = useRef(0);
+  const groupIds = useRef('');
 
   const key = useMentionInputStore((state: IMentionInputState) => state.key);
   const data = useMentionInputStore((state: IMentionInputState) => state.data);
@@ -69,14 +70,12 @@ const MentionBar: FC<MentionBarProps> = ({
   );
 
   const onCursorPositionChange = debounce(
-    ({ position, value }: ICursorPositionChange) => {
+    ({ position, value, groupIds: eventGroupIds }: ICursorPositionChange) => {
       text.current = value;
       cursorPosition.current = position;
-      doRunSearch(
-        value.substring(
-          0, position,
-        ),
-      );
+      groupIds.current = eventGroupIds;
+      const textBeforeCursor = value.substring(0, position);
+      doRunSearch(eventGroupIds, textBeforeCursor);
     },
     100,
   );
@@ -102,11 +101,8 @@ const MentionBar: FC<MentionBarProps> = ({
 
   const onLoadMore = () => {
     if (canLoadMore) {
-      doRunSearch(
-        text.current.substring(
-          0, cursorPosition.current,
-        ),
-      );
+      const textBeforeCursor = text.current.substring(0, cursorPosition.current);
+      doRunSearch(groupIds.current, textBeforeCursor);
     }
   };
 

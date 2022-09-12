@@ -17,9 +17,6 @@ const initialState = {
 
 const mentionInputStore = (set, get) => ({
   ...initialState,
-  setGroupIds: (payload: string) => set((state) => {
-    state.groupIds = payload;
-  }),
   setText: (payload: string) => set((state) => {
     state.text = payload;
   }),

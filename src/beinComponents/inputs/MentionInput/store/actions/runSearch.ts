@@ -4,16 +4,22 @@ import IMentionInputState from '../Interface';
 
 const SEARCH_LIMIT = 10;
 
-const runSearch = (set, get) => async (payload: string) => {
+const runSearch = (set, get) => async (groupIds: string, payload: string) => {
+  const {
+    fullContent, loading, data, key, reset,
+  } = get();
+  if (loading) return;
+
   const _matchTerm = getMatchTermForAtMention(payload);
+
+  // if key changed, update new data else load more data
+  const keyChanged = key !== _matchTerm;
 
   if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
     set((state) => {
       state.loading = true;
       state.key = _matchTerm;
     }, 'runSearch');
-
-    const { groupIds, fullContent, data } = get();
 
     try {
       const response = await streamApi.getSearchMentionAudiences({
@@ -28,10 +34,13 @@ const runSearch = (set, get) => async (payload: string) => {
 
       set((state: IMentionInputState) => {
         const newData: any[] = fullContent ? responseData : [];
-
-        state.data = state.data.concat(newData);
+        state.loading = false;
+        state.data = keyChanged ? newData : state.data.concat(newData);
         state.canLoadMore = canLoadMore;
-        if (!canLoadMore) { state.key = null; }
+
+        if (!canLoadMore) {
+          state.key = null;
+        }
       }, 'runSearchSuccess');
     } catch (error) {
       set((state: IMentionInputState) => {
@@ -41,9 +50,7 @@ const runSearch = (set, get) => async (payload: string) => {
       }, 'runSearchError');
     }
   } else {
-    set((state) => {
-      state.data = [];
-    });
+    reset();
   }
 };
 
