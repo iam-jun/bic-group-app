@@ -3,6 +3,7 @@ import { chatSchemes } from '~/constants/chat';
 import { PREFIX_DEEPLINK_GROUP, WEB_SCHEME } from '~/router/config';
 import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
+import ConvertHelper from './convertHelper';
 
 const LINK_POST = 'LINK_POST';
 const LINK_COMMENT = 'LINK_COMMENT';
@@ -36,14 +37,15 @@ const formatParamsVer2 = (params?: any) : string => {
   if (typeof params !== 'object') {
     return '';
   }
-  const keys = Object.keys(params);
+
+  // convert params to snake_case to have the same format as web
+  const paramsInSnakeCase = ConvertHelper.decamelizeKeys(params);
+  const keys = Object.keys(paramsInSnakeCase);
   let result = '';
   if (keys.length > 0) {
-    keys.forEach((
-      item: string, index: number,
-    ) => {
-      if (params[item]) {
-        result += `${(index ? '&' : '') + item}=${params[item]}`;
+    keys.forEach((item: string, index: number) => {
+      if (paramsInSnakeCase[item]) {
+        result += `${(index ? '&' : '') + item}=${paramsInSnakeCase[item]}`;
       }
     });
     return `?${result}`;
@@ -161,15 +163,19 @@ export const matchDeepLink = (url: string) => {
   return null;
 };
 
-export const getURLParams = (params: string) => params
-  .split('&')
-  ?.map((item) => item.split('='))
-  ?.reduce((p, c) => {
-    if (c.length > 1) {
+export const getURLParams = (params: string) => {
+  const newParams = params.split('&')
+    ?.map((item) => item.split('='))
+    ?.reduce((p, c) => {
+      if (c.length > 1) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       // eslint-disable-next-line prefer-destructuring
-      p[c[0]] = c[1];
-    }
-    return p;
-  }, {});
+        p[c[0]] = c[1];
+      }
+      return p;
+    }, {});
+
+  // need to convert to camelCase since the input params are in snake_case
+  return ConvertHelper.camelizeKeys(newParams) as Object;
+};
