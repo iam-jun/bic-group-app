@@ -1,12 +1,21 @@
 import { Linking } from 'react-native';
 import { chatSchemes } from '~/constants/chat';
-import { PREFIX_DEEPLINK_GROUP } from '~/hooks/navigationLinking';
+import { PREFIX_DEEPLINK_GROUP, WEB_SCHEME } from '~/router/config';
 import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
 
 const LINK_POST = 'LINK_POST';
 const LINK_COMMENT = 'LINK_COMMENT';
 const LINK_COMMUNITY = 'LINK_COMMUNITY';
+
+const UUID_V4_PATTERN = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
+
+export const DEEP_LINK_TYPES = {
+  POST_DETAIL: 'post-detail',
+  COMMENT_DETAIL: 'comment-detail',
+  COMMUNTY_DETAIL: 'community-detail',
+  GROUP_DETAIL: 'group-detail',
+};
 
 const formatParams = (params?: any):string => {
   if (typeof params !== 'object') {
@@ -47,11 +56,11 @@ const getLink = (
 ): string => {
   switch (linkType) {
     case LINK_POST:
-      return `${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
+      return `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
     case LINK_COMMENT:
-      return `${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
+      return `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
     case LINK_COMMUNITY:
-      return `${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
+      return `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
     default:
       return '';
   }
@@ -61,7 +70,7 @@ const getGroupLink = ({
   communityId, groupId, params,
 }: {
   communityId: string; groupId: string; params?: any
-}) => `${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
+}) => `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
 
 export {
   LINK_POST, LINK_COMMENT, LINK_COMMUNITY, getLink, getGroupLink,
@@ -86,15 +95,16 @@ export const formatDMLink = (
   teamId: string, username: string,
 ) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
 
-export function openUrl(url: string, onError?: (e: any)=> void, onSuccess?: (e: any)=> void) {
-  // handle url from BIC web to have the same domain format as mobile
-  const urlWithoutWww = url.replace(/(https?:\/\/)?(www.)?/i, 'http://');
-  if (urlWithoutWww.includes(getEnv('SELF_DOMAIN'))) {
-    const newUrl = urlWithoutWww.replace(getEnv('SELF_DOMAIN'), PREFIX_DEEPLINK_GROUP);
-    Linking.canOpenURL(newUrl)
+export function openUrl(url: string, onError?: (e: any) => void, onSuccess?: (e: any) => void) {
+  const selfDomain = getEnv('SELF_DOMAIN');
+  if (url.includes(selfDomain)) {
+    const selfDomainPosition = url.indexOf(selfDomain);
+    const deepLinkUrl = PREFIX_DEEPLINK_GROUP + url.substring(selfDomainPosition).replace(selfDomain, '');
+
+    Linking.canOpenURL(deepLinkUrl)
       .then((supported) => {
         if (supported) {
-          Linking.openURL(newUrl).then(onSuccess).catch(onError);
+          Linking.openURL(deepLinkUrl).then(onSuccess).catch(onError);
         } else {
           Linking.openURL(url).then(onSuccess).catch(onError);
         }
@@ -106,3 +116,60 @@ export function openUrl(url: string, onError?: (e: any)=> void, onSuccess?: (e: 
   }
   Linking.openURL(url).then(onSuccess).catch(onError);
 }
+
+export const matchDeepLink = (url: string) => {
+  if (!url) return null;
+
+  // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb
+  let match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})$`,
+  ).exec(url);
+  if (match) {
+    const postId = match[1];
+    return { type: DEEP_LINK_TYPES.POST_DETAIL, id: postId };
+  }
+
+  // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb?commentId=690541f1-d7ae-4f73-8186-8194c5e2eb5f
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
+  ).exec(url);
+  if (match) {
+    const postId = match[1];
+    const urlParams = match[2];
+    const newParams = getURLParams(urlParams);
+    return { type: DEEP_LINK_TYPES.COMMENT_DETAIL, id: postId, params: newParams };
+  }
+
+  // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})$`,
+  ).exec(url);
+  if (match) {
+    const communityId = match[1];
+    return { type: DEEP_LINK_TYPES.COMMUNTY_DETAIL, id: communityId };
+  }
+
+  // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
+  ).exec(url);
+  if (match) {
+    const groupId = match[2];
+    return { type: DEEP_LINK_TYPES.GROUP_DETAIL, id: groupId };
+  }
+
+  return null;
+};
+
+export const getURLParams = (params: string) => params
+  .split('&')
+  ?.map((item) => item.split('='))
+  ?.reduce((p, c) => {
+    if (c.length > 1) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line prefer-destructuring
+      p[c[0]] = c[1];
+    }
+    return p;
+  }, {});
