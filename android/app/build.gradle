@@ -315,7 +315,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
-
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 
     androidTestImplementation('com.wix:detox:+')
 
