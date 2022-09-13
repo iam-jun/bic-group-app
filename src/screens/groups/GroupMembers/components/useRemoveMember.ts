@@ -1,13 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IGroupMembers } from '~/interfaces/IGroup';
 import modalActions from '~/storeRedux/modal/actions';
 import groupsActions from '../../../../storeRedux/groups/actions';
 import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
+import { Button } from '~/baseComponents';
 
 interface IUseRemoveMember {
   groupId: string;
@@ -16,7 +15,6 @@ interface IUseRemoveMember {
 
 const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme();
 
   const { id: userId, fullname } = selectedMember;
 
@@ -36,9 +34,6 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
       ),
     ContentComponent: Text.BodyS,
     cancelBtn: true,
-    cancelBtnProps: {
-      textColor: theme.colors.purple60,
-    },
     onConfirm: () => removeMember(userId, fullname),
     confirmLabel: i18next.t('groups:modal_confirm_remove_member:button_remove'),
     ConfirmBtnComponent: Button.Danger,

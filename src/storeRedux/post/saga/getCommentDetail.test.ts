@@ -6,8 +6,6 @@ import API_ERROR_CODE from '../../../constants/apiErrorCode';
 import * as modalActions from '../../modal/actions';
 import {
   POST_DETAIL_3,
-  allCommentsByParentIds,
-  allPosts,
   baseCommentData,
 } from '../../../test/mock_data/post';
 import streamApi from '../../../api/StreamApi';
@@ -16,12 +14,6 @@ import getCommentDetail from './getCommentDetail';
 
 describe('Get comments detail saga', () => {
   const commentId = 505;
-  const storeData = {
-    post: {
-      allCommentsByParentIds,
-      allPosts,
-    },
-  };
 
   it('should get comments successfully with required params in the payload', () => {
     const action = {

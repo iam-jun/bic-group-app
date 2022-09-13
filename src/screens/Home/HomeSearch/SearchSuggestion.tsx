@@ -26,7 +26,6 @@ const SearchSuggestion: FC<NFSSuggestionProps> = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');

@@ -192,18 +192,35 @@ exports[`MemberList component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 15,
               },
               Object {
-                "color": "#181C32",
+                "color": "#353E6E",
               },
               undefined,
             ]
           }
         >
-          COMMUNITY_ADMINs • 1
+          COMMUNITY_ADMINs  
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
+                },
+                Object {
+                  "color": "#181C32",
+                },
+                undefined,
+              ]
+            }
+          >
+            1
+          </Text>
         </Text>
       </View>
     </View>
@@ -359,6 +376,7 @@ exports[`MemberList component should render data correctly 1`] = `
             }
           >
             <Text
+              ellipsizeMode="middle"
               numberOfLines={1}
               style={
                 Array [
@@ -438,7 +456,7 @@ exports[`MemberList component should render data correctly 1`] = `
                     "borderRadius": 6,
                     "height": 30,
                     "justifyContent": "center",
-                    "marginHorizontal": 8,
+                    "marginLeft": 8,
                     "padding": 6,
                     "width": 30,
                   },
@@ -476,7 +494,9 @@ exports[`MemberList component should render data correctly 1`] = `
                 Object {
                   "borderRadius": 6,
                 },
-                undefined,
+                Object {
+                  "marginLeft": 8,
+                },
               ]
             }
             testID="member_item.icon_option.button"
@@ -593,18 +613,35 @@ exports[`MemberList component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 15,
               },
               Object {
-                "color": "#181C32",
+                "color": "#353E6E",
               },
               undefined,
             ]
           }
         >
-          COMMUNITY_MEMBERs • 3
+          COMMUNITY_MEMBERs  
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 15,
+                },
+                Object {
+                  "color": "#181C32",
+                },
+                undefined,
+              ]
+            }
+          >
+            3
+          </Text>
         </Text>
       </View>
     </View>
@@ -761,6 +798,7 @@ exports[`MemberList component should render data correctly 1`] = `
               }
             >
               <Text
+                ellipsizeMode="middle"
                 numberOfLines={1}
                 style={
                   Array [
@@ -840,7 +878,7 @@ exports[`MemberList component should render data correctly 1`] = `
                       "borderRadius": 6,
                       "height": 30,
                       "justifyContent": "center",
-                      "marginHorizontal": 8,
+                      "marginLeft": 8,
                       "padding": 6,
                       "width": 30,
                     },
@@ -878,7 +916,9 @@ exports[`MemberList component should render data correctly 1`] = `
                   Object {
                     "borderRadius": 6,
                   },
-                  undefined,
+                  Object {
+                    "marginLeft": 8,
+                  },
                 ]
               }
               testID="member_item.icon_option.button"
@@ -1138,6 +1178,7 @@ exports[`MemberList component should render data correctly 1`] = `
               }
             >
               <Text
+                ellipsizeMode="middle"
                 numberOfLines={1}
                 style={
                   Array [
@@ -1217,7 +1258,7 @@ exports[`MemberList component should render data correctly 1`] = `
                       "borderRadius": 6,
                       "height": 30,
                       "justifyContent": "center",
-                      "marginHorizontal": 8,
+                      "marginLeft": 8,
                       "padding": 6,
                       "width": 30,
                     },
@@ -1255,7 +1296,9 @@ exports[`MemberList component should render data correctly 1`] = `
                   Object {
                     "borderRadius": 6,
                   },
-                  undefined,
+                  Object {
+                    "marginLeft": 8,
+                  },
                 ]
               }
               testID="member_item.icon_option.button"
@@ -1514,6 +1557,7 @@ exports[`MemberList component should render data correctly 1`] = `
             }
           >
             <Text
+              ellipsizeMode="middle"
               numberOfLines={1}
               style={
                 Array [
@@ -1593,7 +1637,7 @@ exports[`MemberList component should render data correctly 1`] = `
                     "borderRadius": 6,
                     "height": 30,
                     "justifyContent": "center",
-                    "marginHorizontal": 8,
+                    "marginLeft": 8,
                     "padding": 6,
                     "width": 30,
                   },
@@ -1631,7 +1675,9 @@ exports[`MemberList component should render data correctly 1`] = `
                 Object {
                   "borderRadius": 6,
                 },
-                undefined,
+                Object {
+                  "marginLeft": 8,
+                },
               ]
             }
             testID="member_item.icon_option.button"

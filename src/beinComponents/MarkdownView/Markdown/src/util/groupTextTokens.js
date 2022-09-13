@@ -6,7 +6,7 @@ export default function groupTextTokens(tokens) {
   let hasGroup = false;
 
   tokens.forEach((
-    token, index,
+    token,
   ) => {
     if (!token.block && !hasGroup) {
       hasGroup = true;

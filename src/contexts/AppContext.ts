@@ -3,10 +3,10 @@ import { AppConfig } from '~/configs';
 
 type AppContextType = {
   language: string;
-  changeLanguage: Function;
+  changeLanguage: (language: string) => void;
 };
 
-export const AppContext = React.createContext({
+export const AppContext = React.createContext<AppContextType>({
   language: AppConfig.defaultLanguage,
-  changeLanguage: (language: string) => null,
-} as AppContextType);
+  changeLanguage: (language: string) => language,
+});

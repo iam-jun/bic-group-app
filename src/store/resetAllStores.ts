@@ -7,6 +7,7 @@ import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
 import useDraftPostStore from '../screens/post/DraftPost/store';
 import useLeaveCommunity from '~/screens/communities/CommunityDetail/store';
+import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 
 const stores = [
   useHomeStore,
@@ -15,6 +16,7 @@ const stores = [
   useDraftPostStore,
   useChatStore,
   useLeaveCommunity,
+  useReactionDetailStore,
 ];
 
 export const resetAllStores = () => {

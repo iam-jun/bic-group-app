@@ -161,6 +161,7 @@
     "text_refresh": "Refresh",
     "text_undo": "Undo",
     "text_search_result_empty": "Sorry, we couldn’t find anything related to your search.",
+    "text_you": "You",
     "content_not_available": "This content is not available",
     "dont_have_permission_to_access": "You don’t have permission to access this page.",
     "btn_go_back_to_home": "Go back to Home"
@@ -405,6 +406,7 @@
     "newsfeed": "News feed",
     "saved_posts": "Saved Posts",
     "draft_post": "Draft Posts",
+    "draft_articles_post": "Draft Articles",
     "title_timeline": "Newsfeed",
     "title_important": "Important",
     "newsfeed_search": {
@@ -747,7 +749,8 @@
     },
     "error": {
       "last_admin_leave": "You are the last admin of this group. Kindly set another admin before leaving",
-      "last_admin_inner_group_leave": "Cannot leave. You are the last admin of an inner group",
+      "last_admin_inner_group_leave": "Cannot leave. You are the last admin of an inner group.",
+      "owner_leave_community": "Cannot leave. You are the owner of this community.",
       "last_admin_remove": "You are the last admin of this group. Kindly set another admin before removing the admin role",
       "last_admin_inner_group_remove": "Cannot remove. This user is the last admin of an inner group"
     },

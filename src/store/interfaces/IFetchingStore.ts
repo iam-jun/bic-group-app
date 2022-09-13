@@ -3,3 +3,5 @@ interface IFetchingStore {
   hasNextPage?: boolean,
   refreshing?: boolean
 }
+
+export default IFetchingStore;

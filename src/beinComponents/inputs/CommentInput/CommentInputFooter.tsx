@@ -30,9 +30,7 @@ export interface CommentInputFooterProps {
 const CommentInputFooter: FC<CommentInputFooterProps> = ({
   useTestID,
   onPressIcon,
-  onPressFile,
   onPressImage,
-  onPressCamera,
   onPressEmoji,
   onPressSend,
   loading,

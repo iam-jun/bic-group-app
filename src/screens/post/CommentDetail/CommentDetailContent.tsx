@@ -357,9 +357,6 @@ const CommentLevel1 = ({
   groupIds,
   onPressMarkSeenPost,
 }: any) => {
-  const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
-
   if (!id) {
     return null;
   }

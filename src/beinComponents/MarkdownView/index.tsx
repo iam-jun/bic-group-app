@@ -75,10 +75,10 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
     .disable(limitMarkdownTypes ? blacklistLimit : blacklistDefault);
 
   if (debugPrintTree) {
-    const html = markdownIt.render(children);
-    const astTree = markdownIt.parse(
-      children, {},
-    );
+    // const html = markdownIt.render(children);
+    // const astTree = markdownIt.parse(
+    //   children, {},
+    // );
   }
 
   const rules = {

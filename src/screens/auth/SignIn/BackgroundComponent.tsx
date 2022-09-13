@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Dimensions, ImageBackground, View, StyleSheet,
 } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import images from '~/resources/images';
@@ -14,8 +13,7 @@ import BackgroundEntries2 from '../../../../assets/images/sign_in_bg_entries_2.s
 const screenWidth = Dimensions.get('window').width;
 
 const BackgroundComponent = ({ children }: {children: React.ReactNode}) => {
-  const theme: ExtendedTheme = useTheme();
-  const styles = themeStyles(theme);
+  const styles = themeStyles();
 
   return (
     <ImageBackground source={images.img_bg_sign_in} style={styles.background}>
@@ -40,7 +38,7 @@ const BackgroundComponent = ({ children }: {children: React.ReactNode}) => {
   );
 };
 
-const themeStyles = (theme: ExtendedTheme) => {
+const themeStyles = () => {
   const insets = useSafeAreaInsets();
   return StyleSheet.create({
     background: {

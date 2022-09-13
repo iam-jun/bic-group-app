@@ -10,12 +10,6 @@ import initialState from '~/storeRedux/initialState';
 afterEach(cleanup);
 
 describe('NotificationItem component', () => {
-  let Platform: any;
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    Platform = require('react-native').Platform;
-  });
-
   it('renders correctly', async () => {
     const state = { ...initialState };
     state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0] } };
@@ -99,7 +93,6 @@ describe('NotificationItem component', () => {
   it('should not show indicator when notification is read', async () => {
     const state = { ...initialState };
     state.notifications.notificationList = { 'b701e4fb-77d4-4f50-8204-154bd557d428': { ...LOAD_MORE_RESPONSE[0], isRead: true } };
-    const store = createTestStore(state);
 
     const onPress = jest.fn();
     const onPressOption = jest.fn();

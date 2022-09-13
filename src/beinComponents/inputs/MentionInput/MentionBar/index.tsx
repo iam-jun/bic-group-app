@@ -7,43 +7,35 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
-import { useKeySelector } from '~/hooks/selector';
 import { IMentionUser } from '~/interfaces/IPost';
-
-import {
-  checkRunSearch,
-  completeMention,
-  ICursorPositionChange,
-} from '~/beinComponents/inputs/MentionInput/helper';
 import Tag from '~/baseComponents/Tag';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
+import useMentionInputStore from '../store';
+import IMentionInputState, { ICursorPositionChange } from '../store/Interface';
 
 interface MentionBarProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
-  type?: string;
   onVisible?: (isVisible: boolean) => void;
 }
 
 const MentionBar: FC<MentionBarProps> = ({
   style,
-  type = 'mentionInput',
   onVisible,
 }: MentionBarProps) => {
   const listRef = useRef<any>();
   const text = useRef('');
   const cursorPosition = useRef(0);
 
-  const dispatch = useDispatch();
-  const { data } = useKeySelector(type);
+  const data = useMentionInputStore((state: IMentionInputState) => state.data);
+  const doRunSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
+  const doCompleteMention = useMentionInputStore((state: IMentionInputState) => state.doCompleteMention);
 
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
 
   const isShow = !!data?.length;
@@ -78,19 +70,19 @@ const MentionBar: FC<MentionBarProps> = ({
     ({ position, value, groupIds }: ICursorPositionChange) => {
       text.current = value;
       cursorPosition.current = position;
-      checkRunSearch(
-        value.substring(
+      doRunSearch({
+        key: value.substring(
           0, position,
-        ), groupIds, dispatch,
-      );
+        ),
+        groupIds,
+      });
     },
     100,
   );
 
   const onPressItem = (item: IMentionUser) => {
-    completeMention({
+    doCompleteMention({
       item,
-      dispatch,
       text: text.current,
       cursorPosition: cursorPosition.current,
     });

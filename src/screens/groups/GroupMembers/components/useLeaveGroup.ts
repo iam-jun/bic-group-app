@@ -1,13 +1,12 @@
 import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import modalActions from '~/storeRedux/modal/actions';
 import groupsActions from '../../../../storeRedux/groups/actions';
 import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
 
 import { handleLeaveInnerGroups } from '../../helper';
+import { Button } from '~/baseComponents';
 
 interface IUseLeaveGroup {
   groupId: string;
@@ -16,7 +15,6 @@ interface IUseLeaveGroup {
 
 const useLeaveGroup = ({ groupId, username }: IUseLeaveGroup) => {
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme();
 
   const doLeaveGroup = () => {
     dispatch(groupsActions.leaveGroup(groupId));
@@ -28,9 +26,6 @@ const useLeaveGroup = ({ groupId, username }: IUseLeaveGroup) => {
     content: i18next.t('groups:modal_confirm_leave_group:description'),
     ContentComponent: Text.BodyS,
     cancelBtn: true,
-    cancelBtnProps: {
-      textColor: theme.colors.purple60,
-    },
     onConfirm: doLeaveGroup,
     confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),
     ConfirmBtnComponent: Button.Danger,

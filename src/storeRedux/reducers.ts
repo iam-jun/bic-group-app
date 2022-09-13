@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 
-import mentionInputReducer from '~/beinComponents/inputs/MentionInput/redux/reducer';
 import types from '~/storeRedux/auth/types';
 import groupsReducer from '~/storeRedux/groups/reducer';
 import homeReducer from '~/storeRedux/home/reducer';
@@ -53,7 +52,6 @@ export const appReducer = combineReducers({
   ),
   menu: menuReducer,
   noInternet: noInternetReducer,
-  mentionInput: mentionInputReducer,
   giphy: giphyReducer,
 });
 

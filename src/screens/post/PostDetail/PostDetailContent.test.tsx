@@ -76,11 +76,6 @@ describe('PostDetailContent component', () => {
 
   it('getPostDetail should be called', () => {
     const spy = jest.spyOn(postActions, 'getPostDetail');
-    const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(
-      <MockedNavigator component={() => <PostDetailContent {...props} />} />,
-      store,
-    );
     expect(spy).toBeCalled();
   });
 

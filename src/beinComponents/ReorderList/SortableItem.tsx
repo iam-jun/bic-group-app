@@ -55,7 +55,7 @@ export const SortableItem = ({
         }
       });
     },
-    onEnd: (event) => {
+    onEnd: () => {
       gestureActive.value = false;
       gestureFinishing.value = true;
       x.value = withTiming(0);

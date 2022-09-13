@@ -2,7 +2,7 @@
 
 import { ExtendedTheme } from '@react-navigation/native';
 import i18next from 'i18next';
-import Button from '~/beinComponents/Button';
+import { Button } from '~/baseComponents';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import Markdown from '~/beinComponents/Markdown';
 import { IUploadType } from '~/configs/resourceConfig';
@@ -75,13 +75,9 @@ export const alertAction = (
       value: content,
     },
     cancelBtn: true,
-    cancelBtnProps: {
-      textColor: theme.colors.purple60,
-    },
     onConfirm: () => doAction(),
     confirmLabel: i18next.t('common:btn_confirm'),
-    ConfirmBtnComponent: Button.Secondary,
-    confirmBtnProps: { highEmphasis: true },
+    ConfirmBtnComponent: Button.Primary,
   };
 
   dispatch(modalActions.showAlert(alertPayload));

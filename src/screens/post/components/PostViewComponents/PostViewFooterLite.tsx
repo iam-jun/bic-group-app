@@ -2,7 +2,6 @@ import React, { FC, ReactElement } from 'react';
 import {
   View, StyleSheet,
 } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
@@ -21,8 +20,6 @@ const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
   seenCountsViewComponent,
 }: PostViewFooterLiteProps) => {
   const { t } = useBaseHook();
-  const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
 
   // if (commentsCount <= 0) {
   //   return null;
