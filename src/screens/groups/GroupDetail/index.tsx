@@ -35,7 +35,6 @@ import { useKeySelector } from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { rootSwitch } from '~/router/stack';
 import GroupContent from '~/screens/groups/GroupDetail/components/GroupContent';
-import NoGroupFound from '~/screens/groups/GroupDetail/components/NoGroupFound';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
@@ -51,6 +50,7 @@ import { useBaseHook } from '~/hooks';
 import GroupJoinCancelButton from './components/GroupJoinCancelButton';
 import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 import { BottomListProps } from '~/components/BottomList';
+import NotFound from '~/screens/NotFound/components/NotFound';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -76,6 +76,9 @@ const GroupDetail = (props: any) => {
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
   const isMemberCommunity = joinStatusCommunity === groupJoinStatus.member;
+  const isLoadingGroupDetailError = useKeySelector(
+    groupsKeySelector.isLoadingGroupDetailError,
+  );
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
@@ -89,7 +92,10 @@ const GroupDetail = (props: any) => {
     = !isMember
     && (privacy === groupPrivacy.private
       || (!isMemberCommunity && privacy === groupPrivacy.open));
+
   const buttonShow = useSharedValue(0);
+  const containerPaddingBottom = useSharedValue(0);
+  const heightButtonBottom = useSharedValue(0);
 
   useFocusEffect(() => {
     if (!userId) {
@@ -133,12 +139,6 @@ const GroupDetail = (props: any) => {
   useEffect(() => {
     getGroupPosts();
   }, [groupInfo]);
-
-  // visitors cannot see anything of Secret groups
-  // => render No Group Found
-  if (!isMember && privacy === groupPrivacy.secret && !loadingPage) {
-    return <NoGroupFound />;
-  }
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideBottomList());
@@ -203,16 +203,33 @@ const GroupDetail = (props: any) => {
     buttonShow.value = offsetY;
   });
 
-  const buttonStyle = useAnimatedStyle(
-    () => ({
-      opacity: interpolate(
-        buttonShow.value,
-        [0, groupInfoHeight - 20, groupInfoHeight],
-        [0, 0, 1],
-      ),
-    }),
-    [groupInfoHeight],
-  );
+  const onButtonBottomLayout = (e: any) => {
+    heightButtonBottom.value = e.nativeEvent.layout.height;
+  };
+
+  const containerAnimation = useAnimatedStyle(() => ({
+    paddingBottom: containerPaddingBottom.value,
+  }));
+
+  const buttonStyle = useAnimatedStyle(() => {
+    const value = interpolate(
+      buttonShow.value,
+      [0, groupInfoHeight - 20, groupInfoHeight],
+      [0, 0, 1],
+    );
+
+    if (value < 1) {
+      containerPaddingBottom.value = 0;
+    }
+
+    if (value >= 1) {
+      containerPaddingBottom.value = heightButtonBottom.value;
+    }
+
+    return {
+      opacity: value,
+    };
+  }, [groupInfoHeight]);
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
@@ -270,8 +287,14 @@ const GroupDetail = (props: any) => {
     openUrl(link);
   };
 
+  const onGoBackOnNotFound = () => {
+    // clear all state
+    dispatch(groupsActions.setGroupDetail(null));
+  };
+
   const renderGroupDetail = () => {
-    if (isEmpty(groupInfo)) return <NoGroupFound />;
+    if (isLoadingGroupDetailError) return <NotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
+
     return (
       <>
         <Header
@@ -291,12 +314,13 @@ const GroupDetail = (props: any) => {
           }
           onPressBack={onGoBack}
         />
-        <View testID="group_detail.content" style={styles.contentContainer}>
+        <Animated.View testID="group_detail.content" style={[styles.contentContainer, containerAnimation]}>
           {renderGroupContent()}
-        </View>
-        <Animated.View style={[styles.button, buttonStyle]}>
+        </Animated.View>
+        <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
           <GroupJoinCancelButton style={styles.joinBtn} />
         </Animated.View>
+
       </>
     );
   };

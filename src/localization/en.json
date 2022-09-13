@@ -161,7 +161,10 @@
     "text_refresh": "Refresh",
     "text_undo": "Undo",
     "text_search_result_empty": "Sorry, we couldn’t find anything related to your search.",
-    "text_you": "You"
+    "text_you": "You",
+    "content_not_available": "This content is not available",
+    "dont_have_permission_to_access": "You don’t have permission to access this page.",
+    "btn_go_back_to_home": "Go back to Home"
   },
   "auth": {
     "text_kickout_title": "Notice",

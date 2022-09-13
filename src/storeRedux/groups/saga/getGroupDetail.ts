@@ -14,6 +14,7 @@ export default function* getGroupDetail({
   try {
     const { groupId, loadingPage } = payload;
 
+    yield put(groupsActions.setGroupDetailError(false));
     if (loadingPage) yield put(groupsActions.setLoadingPage(true));
 
     const resp = yield call(groupApi.getGroupDetail, groupId);
@@ -29,7 +30,7 @@ export default function* getGroupDetail({
     if (!isMember && !isPublic) yield put(groupsActions.setLoadingPage(false));
   } catch (e) {
     console.error('[getGroupDetail]', e);
+    yield put(groupsActions.setGroupDetailError(true));
     yield put(groupsActions.setLoadingPage(false));
-    yield put(groupsActions.setGroupDetail(null));
   }
 }
