@@ -85,7 +85,7 @@ const _PostView: FC<PostViewProps> = ({
   isUseReduxState = true,
   btnReactTestID,
   btnCommentTestID,
-  hasReactPermission,
+  hasReactPermission = true,
 }: PostViewProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();

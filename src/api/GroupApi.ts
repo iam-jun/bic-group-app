@@ -271,6 +271,7 @@ export const groupsApiConfig = {
   getGroupDetail: (groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}`,
+    params: { previewMembers: true },
   }),
   editGroupDetail: (
     groupId: string,
