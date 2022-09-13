@@ -62,10 +62,11 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const loadAsyncVideo = async () => {
     if (video.current && !!url) {
       setLoading(true);
+      const urlExtention = getVideoExtention(url);
       try {
         await video.current?.loadAsync?.({
           uri: url,
-          overrideFileExtensionAndroid: 'm3u8',
+          overrideFileExtensionAndroid: !!urlExtention ? urlExtention : 'm3u8',
         });
         video.current?.playAsync();
         setPlaying(true);
@@ -222,5 +223,8 @@ const createStyle = (theme: ExtendedTheme) => {
     },
   });
 };
+
+// eslint-disable-next-line no-bitwise
+const getVideoExtention = (url: string) => url.slice((url.lastIndexOf('.') - 1 >>> 0) + 2);
 
 export default VideoPlayer;
