@@ -198,9 +198,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
       content: t('post:comment:text_delete_comment'),
       ContentComponent: Text.BodyS,
       cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.purple60,
-      },
       onConfirm: () => {
         const payload: IPayloadDeleteComment = {
           commentId: id,
