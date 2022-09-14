@@ -283,7 +283,7 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressChat = () => {
-    const link = formatChannelLink(groupInfo.team_name, groupInfo.slug);
+    const link = formatChannelLink(groupInfo.teamName || groupInfo.team_name, groupInfo.slug);
     openUrl(link);
   };
 
