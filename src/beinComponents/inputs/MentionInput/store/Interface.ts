@@ -1,4 +1,4 @@
-import { IMentionUser, IParamSearchMentionAudiences } from '~/interfaces/IPost';
+import { IMentionUser } from '~/interfaces/IPost';
 
 export interface ICursorPositionChange {
   position: number;
@@ -19,8 +19,10 @@ interface IMentionInputState {
   cursorPosition: number;
   topPosition: number;
   loading: boolean;
-  data: [];
+  data: any[];
   tempSelected: any;
+  canLoadMore?: boolean;
+  error?: any;
 
   setText: (payload: string) => void;
   setFullContent: (payload: string) => void;
@@ -28,7 +30,7 @@ interface IMentionInputState {
   setCursorPosition: (payload: number) => void;
   addTempSelected: (payload: {[x: string]: any}) => void;
   doCompleteMention: (payload: ICompleteMention) => void;
-  doRunSearch: (payload: IParamSearchMentionAudiences) => void;
+  doRunSearch: (groupIds: string, payload: string) => void;
   reset?: () => void;
 
 }

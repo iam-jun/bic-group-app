@@ -30,15 +30,18 @@ const MentionBar: FC<MentionBarProps> = ({
   const listRef = useRef<any>();
   const text = useRef('');
   const cursorPosition = useRef(0);
+  const groupIds = useRef('');
 
+  const key = useMentionInputStore((state: IMentionInputState) => state.key);
   const data = useMentionInputStore((state: IMentionInputState) => state.data);
+  const canLoadMore = useMentionInputStore((state: IMentionInputState) => state.canLoadMore);
   const doRunSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
   const doCompleteMention = useMentionInputStore((state: IMentionInputState) => state.doCompleteMention);
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const isShow = !!data?.length;
+  const visible = !!data?.length;
 
   useEffect(
     () => {
@@ -54,28 +57,25 @@ const MentionBar: FC<MentionBarProps> = ({
 
   useEffect(
     () => {
-      if (data?.length > 0) {
+      if (key !== null && data?.length > 0) {
         listRef?.current?.scrollToOffset?.({ offset: 0, animated: true });
       }
-    }, [data?.length],
+    }, [key],
   );
 
   useEffect(
     () => {
-      onVisible?.(isShow);
-    }, [isShow],
+      onVisible?.(visible);
+    }, [visible],
   );
 
   const onCursorPositionChange = debounce(
-    ({ position, value, groupIds }: ICursorPositionChange) => {
+    ({ position, value, groupIds: eventGroupIds }: ICursorPositionChange) => {
       text.current = value;
       cursorPosition.current = position;
-      doRunSearch({
-        key: value.substring(
-          0, position,
-        ),
-        groupIds,
-      });
+      groupIds.current = eventGroupIds;
+      const textBeforeCursor = value.substring(0, position);
+      doRunSearch(eventGroupIds, textBeforeCursor);
     },
     100,
   );
@@ -99,7 +99,14 @@ const MentionBar: FC<MentionBarProps> = ({
     />
   );
 
-  if (!isShow) {
+  const onLoadMore = () => {
+    if (canLoadMore) {
+      const textBeforeCursor = text.current.substring(0, cursorPosition.current);
+      doRunSearch(groupIds.current, textBeforeCursor);
+    }
+  };
+
+  if (!visible) {
     return null;
   }
 
@@ -113,6 +120,9 @@ const MentionBar: FC<MentionBarProps> = ({
         data={data}
         keyboardShouldPersistTaps="handled"
         renderItem={renderItem}
+        keyExtractor={(item) => `list-mention-bar-${item.username}`}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
@@ -122,6 +132,7 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
+      flex: 1,
       borderTopWidth: 1,
       borderColor: colors.gray40,
       backgroundColor: colors.white,

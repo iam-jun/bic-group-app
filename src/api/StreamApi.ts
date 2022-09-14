@@ -205,11 +205,8 @@ export const streamApiConfig = {
     url: `${apiProviders.bein.url}users/mentionable`,
     provider: apiProviders.bein,
     params: {
-      group_ids: params.groupIds,
-      user_ids: params.userIds,
+      ...params,
       key: params.key ? params.key : undefined,
-      offset: params.skip,
-      limit: params.take,
     },
   }),
 
