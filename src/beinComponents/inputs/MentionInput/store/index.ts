@@ -4,7 +4,6 @@ import runSearch from './actions/runSearch';
 import IMentionInputState from './Interface';
 
 const initialState = {
-  text: '',
   fullContent: '',
   key: null,
   cursorPosition: -2, // follow MatterMost
@@ -16,17 +15,11 @@ const initialState = {
 
 const mentionInputStore = (set, get) => ({
   ...initialState,
-  setText: (payload: string) => set((state) => {
-    state.text = payload;
-  }),
   setFullContent: (payload: string) => set((state) => {
     state.fullContent = payload;
   }),
   setData: (payload: any[]) => set((state) => {
     state.data = payload;
-  }),
-  setCursorPosition: (payload: number) => set((state) => {
-    state.cursorPosition = payload;
   }),
   addTempSelected: (payload: {[x: string]: any}) => set((state) => {
     state.tempSelected = { ...state.tempSelected, ...payload };
