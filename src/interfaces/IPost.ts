@@ -345,9 +345,9 @@ export interface IGetStreamAudience {
 export interface IParamSearchMentionAudiences {
   key?: string;
   groupIds?: string;
-  userIds?: string;
-  skip?: number;
-  take?: number;
+  offset?: number;
+  limit?: number;
+  sort?: string;
 }
 
 export interface IMentionUser {

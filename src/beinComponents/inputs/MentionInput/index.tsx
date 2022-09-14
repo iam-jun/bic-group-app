@@ -22,7 +22,7 @@ import {
   switchKeyboardForCodeBlocks,
 } from './helper';
 import useMentionInputStore from './store';
-import { ICursorPositionChange } from './store/Interface';
+import IMentionInputState, { ICursorPositionChange } from './store/Interface';
 
 interface Props {
   textInputRef?: any;
@@ -57,9 +57,8 @@ const _MentionInput = ({
   const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
 
-  const {
-    setFullContent, setData,
-  } = useMentionInputStore();
+  const setData = useMentionInputStore((state: IMentionInputState) => state.setData);
+  const setFullContent = useMentionInputStore((state: IMentionInputState) => state.setFullContent);
 
   const [keyboardType, setKeyboardType] = useState<KeyboardTypeOptions>('default');
   const { isOpen: isKeyboardOpen } = useKeyboardStatus();
