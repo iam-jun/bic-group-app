@@ -29,6 +29,8 @@ import { getMentionsFromContent } from '~/screens/post/helper/PostUtils';
 import { IGetFile } from '~/services/fileUploader';
 import useDraftPostStore from '../../DraftPost/store';
 import IDraftPostState from '../../DraftPost/store/Interface';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
+import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -82,7 +84,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
   // const [hasVideoProgress, setHasVideoProgress] = useState(videoUploading);
 
-  const tempMentions = useKeySelector('mentionInput.tempSelected') || {};
+  const tempMentions = useMentionInputStore((state: IMentionInputState) => state.tempSelected);
 
   let initPostData: IPostActivity = {};
 

@@ -13,10 +13,8 @@ export interface ICompleteMention {
 }
 
 interface IMentionInputState {
-  text: string;
   fullContent: string;
   key: string;
-  cursorPosition: number;
   topPosition: number;
   loading: boolean;
   data: any[];
@@ -27,7 +25,6 @@ interface IMentionInputState {
   setText: (payload: string) => void;
   setFullContent: (payload: string) => void;
   setData: (payload: any[]) => void;
-  setCursorPosition: (payload: number) => void;
   addTempSelected: (payload: {[x: string]: any}) => void;
   doCompleteMention: (payload: ICompleteMention) => void;
   doRunSearch: (groupIds: string, payload: string) => void;

@@ -6,7 +6,7 @@ const SEARCH_LIMIT = 10;
 
 const runSearch = (set, get) => async (groupIds: string, payload: string) => {
   const {
-    fullContent, loading, data, key, reset,
+    fullContent, loading, data, key,
   } = get();
   if (loading) return;
 
@@ -50,7 +50,12 @@ const runSearch = (set, get) => async (groupIds: string, payload: string) => {
       }, 'runSearchError');
     }
   } else {
-    reset();
+    set((state: IMentionInputState) => {
+      state.loading = false;
+      state.key = null;
+      state.error = null;
+      state.data = [];
+    }, 'runSearchReset');
   }
 };
 
