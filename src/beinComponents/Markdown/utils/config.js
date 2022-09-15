@@ -13,34 +13,6 @@ export const DeepLinkTypes = {
   PLUGIN: 'plugin',
 };
 
-export const mmTheme = {
-  awayIndicator: '#ffbc1f',
-  buttonBg: '#1c58d9',
-  buttonColor: '#ffffff',
-  centerChannelBg: '#ffffff',
-  centerChannelColor: '#3f4350',
-  codeTheme: 'github',
-  dndIndicator: '#d24b4e',
-  errorTextColor: '#d24b4e',
-  linkColor: '#386fe5',
-  mentionBg: '#ffffff',
-  mentionColor: '#1e325c',
-  mentionHighlightBg: '#ffd470',
-  mentionHighlightLink: '#1b1d22',
-  newMessageSeparator: '#cc8f00',
-  onlineIndicator: '#3db887',
-  sidebarBg: '#1e325c',
-  sidebarHeaderBg: '#192a4d',
-  sidebarHeaderTextColor: '#ffffff',
-  sidebarTeamBarBg: '#14213e',
-  sidebarText: '#ffffff',
-  sidebarTextActiveBorder: '#5d89ea',
-  sidebarTextActiveColor: '#ffffff',
-  sidebarTextHoverBg: '#28427b',
-  sidebarUnreadText: '#ffffff',
-  type: 'Denim',
-};
-
 export const mmConfig = {};
 
 export const languages = {

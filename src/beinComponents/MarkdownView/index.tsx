@@ -150,15 +150,15 @@ const createStyle = (theme: ExtendedTheme) => {
     // Headings
     heading1: {
       fontFamily: fontFamilies.BeVietnamProSemiBold,
-      fontSize: sizes.h3,
+      fontSize: sizes.h1,
     },
     heading2: {
       fontFamily: fontFamilies.BeVietnamProSemiBold,
-      fontSize: sizes.h4,
+      fontSize: sizes.h2,
     },
     heading3: {
       fontFamily: fontFamilies.BeVietnamProSemiBold,
-      fontSize: sizes.h5,
+      fontSize: sizes.h3,
     },
     heading4: {
       fontFamily: fontFamilies.BeVietnamProSemiBold,

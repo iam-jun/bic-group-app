@@ -12,10 +12,6 @@ export function makeStyleSheetFromTheme(getStyleFromTheme) {
   return ThemeUtils.makeStyleFromTheme((theme) => StyleSheet.create(getStyleFromTheme(theme)));
 }
 
-export const { changeOpacity } = ThemeUtils;
-
-export const { blendColors } = ThemeUtils;
-
 export function concatStyles(...styles) {
   return [].concat(styles);
 }
