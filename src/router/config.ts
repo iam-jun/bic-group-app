@@ -2,7 +2,17 @@ import getEnv from '~/utils/env';
 
 export const PREFIX_DEEPLINK_GROUP = 'bic://';
 
-export const WEB_SCHEME = 'https://';
+export const PREFIX_HTTPS = 'https://';
+
+export const PREFIX_HTTPS_WWW = 'https://www.';
+
+export const PREFIX_HTTP = 'http://';
+
+export const BIC_GROUP_DOMAINS = {
+  HTTPS: PREFIX_HTTPS + getEnv('SELF_DOMAIN'),
+  HTTPS_WWW: PREFIX_HTTPS_WWW + getEnv('SELF_DOMAIN'),
+  HTTP: PREFIX_HTTP + getEnv('SELF_DOMAIN'),
+};
 
 export const customBackHandlerRoutes = [
   'home',
@@ -32,7 +42,7 @@ export const bottomTabIconsFocused = {
 
 export const linkingConfig = {
   prefixes: [
-    __DEV__ ? 'http://localhost:8088' : `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}`,
+    __DEV__ ? 'http://localhost:8088' : `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}`,
     PREFIX_DEEPLINK_GROUP,
   ],
 };

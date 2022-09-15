@@ -1,6 +1,9 @@
 import { Linking } from 'react-native';
 import { chatSchemes } from '~/constants/chat';
-import { PREFIX_DEEPLINK_GROUP, WEB_SCHEME } from '~/router/config';
+import {
+  BIC_GROUP_DOMAINS,
+  PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS,
+} from '~/router/config';
 import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
 import ConvertHelper from './convertHelper';
@@ -58,11 +61,11 @@ const getLink = (
 ): string => {
   switch (linkType) {
     case LINK_POST:
-      return `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
+      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
     case LINK_COMMENT:
-      return `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
+      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
     case LINK_COMMUNITY:
-      return `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
+      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
     default:
       return '';
   }
@@ -72,7 +75,7 @@ const getGroupLink = ({
   communityId, groupId, params,
 }: {
   communityId: string; groupId: string; params?: any
-}) => `${WEB_SCHEME}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
+}) => `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
 
 export {
   LINK_POST, LINK_COMMENT, LINK_COMMUNITY, getLink, getGroupLink,
@@ -97,9 +100,17 @@ export const formatDMLink = (
   teamId: string, username: string,
 ) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
 
+const validateBICGroupDomain = (url: string) => {
+  if (!url) return false;
+
+  return Object.values(BIC_GROUP_DOMAINS).some((domain: string) => url.startsWith(domain));
+};
+
 export function openUrl(url: string, onError?: (e: any) => void, onSuccess?: (e: any) => void) {
   const selfDomain = getEnv('SELF_DOMAIN');
-  if (url.includes(selfDomain)) {
+  const isBICGroupDomain = validateBICGroupDomain(url);
+
+  if (isBICGroupDomain) {
     const selfDomainPosition = url.indexOf(selfDomain);
     const deepLinkUrl = PREFIX_DEEPLINK_GROUP + url.substring(selfDomainPosition).replace(selfDomain, '');
 
@@ -116,6 +127,7 @@ export function openUrl(url: string, onError?: (e: any) => void, onSuccess?: (e:
       });
     return;
   }
+
   Linking.openURL(url).then(onSuccess).catch(onError);
 }
 
