@@ -97,13 +97,13 @@ export const formatDMLink = (
   teamId: string, username: string,
 ) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
 
-export const getHostNameFromUrl = (url: string) => {
+export const getHostNameFromUri = (url: string) => {
   if (!url) return '';
 
-  const newUrl = url.replace('https://', '')
-    .replace('http://', '')
+  const specialSeparator = '://';
+  const newUrlWithoutScheme = url.substring(url.indexOf(specialSeparator) + specialSeparator.length)
     .replace('www.', '');
-  const hostName = newUrl.substring(0, newUrl.indexOf('/'));
+  const hostName = newUrlWithoutScheme.substring(0, newUrlWithoutScheme.indexOf('/'));
 
   return hostName;
 };
@@ -111,7 +111,7 @@ export const getHostNameFromUrl = (url: string) => {
 const validateBICGroupDomain = (url: string) => {
   if (!url) return false;
 
-  const hostName = getHostNameFromUrl(url);
+  const hostName = getHostNameFromUri(url);
 
   return hostName === getEnv('SELF_DOMAIN');
 };
