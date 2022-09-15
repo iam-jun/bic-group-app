@@ -4,16 +4,6 @@ export const PREFIX_DEEPLINK_GROUP = 'bic://';
 
 export const PREFIX_HTTPS = 'https://';
 
-export const PREFIX_HTTPS_WWW = 'https://www.';
-
-export const PREFIX_HTTP = 'http://';
-
-export const BIC_GROUP_DOMAINS = {
-  HTTPS: PREFIX_HTTPS + getEnv('SELF_DOMAIN'),
-  HTTPS_WWW: PREFIX_HTTPS_WWW + getEnv('SELF_DOMAIN'),
-  HTTP: PREFIX_HTTP + getEnv('SELF_DOMAIN'),
-};
-
 export const customBackHandlerRoutes = [
   'home',
   'groups',

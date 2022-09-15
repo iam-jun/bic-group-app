@@ -1,9 +1,6 @@
 import { Linking } from 'react-native';
 import { chatSchemes } from '~/constants/chat';
-import {
-  BIC_GROUP_DOMAINS,
-  PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS,
-} from '~/router/config';
+import { PREFIX_DEEPLINK_GROUP, PREFIX_HTTPS } from '~/router/config';
 import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
 import ConvertHelper from './convertHelper';
@@ -100,10 +97,23 @@ export const formatDMLink = (
   teamId: string, username: string,
 ) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
 
+export const getHostNameFromUrl = (url: string) => {
+  if (!url) return '';
+
+  const newUrl = url.replace('https://', '')
+    .replace('http://', '')
+    .replace('www.', '');
+  const hostName = newUrl.substring(0, newUrl.indexOf('/'));
+
+  return hostName;
+};
+
 const validateBICGroupDomain = (url: string) => {
   if (!url) return false;
 
-  return Object.values(BIC_GROUP_DOMAINS).some((domain: string) => url.startsWith(domain));
+  const hostName = getHostNameFromUrl(url);
+
+  return hostName === getEnv('SELF_DOMAIN');
 };
 
 export function openUrl(url: string, onError?: (e: any) => void, onSuccess?: (e: any) => void) {
