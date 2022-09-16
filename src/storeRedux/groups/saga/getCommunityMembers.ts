@@ -42,8 +42,6 @@ export default function* getCommunityMembers({
 
     const members = resp.data;
     Object.keys(members)?.forEach?.((role: string) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       const roles = members[role] || {};
       newDataCount += roles.data?.length || 0;
       newDataObj = {
