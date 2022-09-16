@@ -993,6 +993,7 @@ exports[`SearchResult component should render list search result 1`] = `
                               "overflow": "hidden",
                             },
                             Object {
+                              "backgroundColor": "#FFFFFF",
                               "borderColor": "#F2F5F8",
                               "borderRadius": 24,
                               "borderWidth": 2,
@@ -1366,7 +1367,7 @@ exports[`SearchResult component should render list search result 1`] = `
                     ]
                   }
                 >
-                  5 React
+                  0 React
                 </Text>
                 <View
                   style={

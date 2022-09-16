@@ -307,9 +307,9 @@ export interface IReaction {
   parentCommentId?: string ; // used when retry/cancel adding new comment
   child?: any;
   actor?: IAudienceUser;
-  activity_id: string;
-  userId:string;
-  data:any
+  activity_id?: string;
+  userId?: string;
+  data?: any;
 }
 
 export interface IGetStreamAudienceUser {
@@ -345,9 +345,9 @@ export interface IGetStreamAudience {
 export interface IParamSearchMentionAudiences {
   key?: string;
   groupIds?: string;
-  userIds?: string;
-  skip?: number;
-  take?: number;
+  offset?: number;
+  limit?: number;
+  sort?: string;
 }
 
 export interface IMentionUser {

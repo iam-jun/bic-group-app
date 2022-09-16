@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/baseComponents/Icon';
@@ -21,6 +20,7 @@ export interface PostViewHeaderProps {
   onPressHeader?: () => void;
   onPressMenu?: (e: any) => void;
   onPressShowAudiences?: () => void;
+  disabled?: boolean;
 }
 
 const PostViewHeader: FC<PostViewHeaderProps> = ({
@@ -30,8 +30,8 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   onPressHeader,
   onPressMenu,
   onPressShowAudiences,
+  disabled = false,
 }: PostViewHeaderProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { colors } = useTheme();
   const { rootNavigation } = useRootNavigation();
@@ -43,7 +43,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const avatar = actor?.avatar;
   const actorName = actor?.fullname;
 
-  const onPressActor = (e: any) => {
+  const onPressActor = () => {
     if (!actor.id) return;
     // Double check if userId is username, and lack of type in params
     // const _params: IObject<unknown> = {
@@ -66,7 +66,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   return (
     <TouchableOpacity
       testID="post_view_header"
-      disabled={!isInternetReachable || !onPressHeader}
+      disabled={!isInternetReachable || disabled || !onPressHeader}
       onPress={() => onPressHeader?.()}
       style={styles.headerContainer}
     >
@@ -105,6 +105,8 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           />
         </View>
       </View>
+      {!!onPressMenu
+      && (
       <View style={{ marginRight: spacing.margin.small }}>
         <Icon
           style={{ alignSelf: 'auto' }}
@@ -113,6 +115,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           onPress={onPressMenu}
         />
       </View>
+      )}
     </TouchableOpacity>
   );
 };

@@ -15,10 +15,11 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import menuActions from '~/storeRedux/menu/actions';
 import { useUserIdAuth } from '~/hooks/auth';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
+import useDraftPostStore from '../../post/DraftPost/store';
+import IDraftPostState from '../../post/DraftPost/store/Interface';
 
 export interface HeaderCreatePostProps {
   audience?: any;
@@ -40,8 +41,8 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   const userId = useUserIdAuth();
   const avatar = useKeySelector('menu.myProfile.avatar');
 
-  const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
-  let draftCount = draftPost?.length || 0;
+  const draftPost = useDraftPostStore((state:IDraftPostState) => state.posts) || [];
+  let draftCount: number | string = draftPost?.length || 0;
   if (draftCount > 9) {
     draftCount = '9+';
   }

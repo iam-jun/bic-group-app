@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { changeOpacity, makeStyleSheetFromTheme } from '../utils/utils';
+import { makeStyleSheetFromTheme } from '../utils/utils';
 
 export default class MdTableRow extends React.PureComponent {
   static propTypes = {
@@ -44,10 +44,10 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     flexDirection: 'row',
   },
   rowTopBackground: {
-    backgroundColor: changeOpacity(theme.centerChannelColor, 0.1),
+    backgroundColor: theme.gray5,
   },
   rowBottomBorder: {
-    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderColor: theme.gray20,
     borderBottomWidth: 1,
   },
 }));

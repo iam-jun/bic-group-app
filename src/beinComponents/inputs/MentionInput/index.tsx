@@ -1,6 +1,7 @@
 import { debounce } from 'lodash';
 import React, {
-  useCallback, useImperativeHandle, useRef, useState,
+  useCallback, useEffect,
+  useImperativeHandle, useRef, useState,
 } from 'react';
 import {
   DeviceEventEmitter,
@@ -14,12 +15,14 @@ import {
   ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 import { useKeyboardStatus } from '~/hooks/keyboard';
 
 import Autocomplete from './Autocomplete';
-import { ICursorPositionChange, switchKeyboardForCodeBlocks } from './helper';
+import {
+  switchKeyboardForCodeBlocks,
+} from './helper';
+import useMentionInputStore from './store';
+import IMentionInputState, { ICursorPositionChange } from './store/Interface';
 
 interface Props {
   textInputRef?: any;
@@ -32,8 +35,9 @@ interface Props {
   autocompleteProps?: any;
   style?: StyleProp<ViewStyle>;
   textInputStyle?: StyleProp<TextStyle>;
-  onKeyPress?: (e: any) => void;
   disableAutoComplete?: boolean;
+
+  onKeyPress?: (e: any) => void;
 }
 
 const _MentionInput = ({
@@ -46,11 +50,15 @@ const _MentionInput = ({
   autocompleteProps,
   style,
   textInputStyle,
-  onKeyPress,
   disableAutoComplete,
+
+  onKeyPress,
 }: Props) => {
   const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
+
+  const setData = useMentionInputStore((state: IMentionInputState) => state.setData);
+  const setFullContent = useMentionInputStore((state: IMentionInputState) => state.setFullContent);
 
   const [keyboardType, setKeyboardType] = useState<KeyboardTypeOptions>('default');
   const { isOpen: isKeyboardOpen } = useKeyboardStatus();
@@ -62,9 +70,7 @@ const _MentionInput = ({
   const { colors } = theme;
   const styles = createStyles();
 
-  const dispatch = useDispatch();
-
-  React.useEffect(
+  useEffect(
     () => {
       const onCompleteMentionListener = DeviceEventEmitter.addListener(
         'mention-input-on-complete-mention',
@@ -72,7 +78,7 @@ const _MentionInput = ({
       );
       return () => {
         onCompleteMentionListener?.remove?.();
-        dispatch(actions.setData([]));
+        setData([]);
       };
     }, [],
   );
@@ -113,7 +119,7 @@ const _MentionInput = ({
   };
 
   const onChangeText = (value: string) => {
-    dispatch(actions.setFullContent(value));
+    setFullContent(value);
     componentInputProps.onChangeText?.(value);
     const param: ICursorPositionChange = {
       position: cursorPosition.current,

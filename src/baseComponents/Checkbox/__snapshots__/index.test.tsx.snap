@@ -26,94 +26,101 @@ exports[`Checkbox component should render disabled state with default size mediu
   }
   testID="checkbox"
 >
-  <View
-    style={
-      Object {
-        "backgroundColor": "#FFFFFF",
-        "bottom": 2,
-        "left": 2,
-        "position": "absolute",
-        "right": 2,
-        "top": 2,
-      }
-    }
-  />
-  <View
-    accessibilityState={
-      Object {
-        "disabled": true,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={false}
-    hitSlop={
-      Object {
-        "bottom": 10,
-        "left": 10,
-        "right": 10,
-        "top": 10,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
-  >
+  <View>
     <View
       style={
         Array [
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "backgroundColor": "#FFFFFF",
+            "bottom": 2,
+            "left": 2,
+            "position": "absolute",
+            "right": 2,
+            "top": 2,
           },
-          undefined,
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#EAEDF2",
           },
         ]
+      }
+    />
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
       }
     >
       <View
         style={
           Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
             undefined,
-            undefined,
-            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
           ]
         }
       >
-        <View />
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
       </View>
     </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#D1D4DB",
+          },
+          Object {
+            "marginLeft": 8,
+          },
+        ]
+      }
+    >
+      Label
+    </Text>
   </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#353E6E",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
-        },
-        Object {
-          "color": "#D1D4DB",
-        },
-        Object {
-          "marginLeft": 8,
-        },
-      ]
-    }
-  >
-    Label
-  </Text>
 </View>
 `;
 
@@ -143,94 +150,101 @@ exports[`Checkbox component should render disabled state with size small correct
   }
   testID="checkbox"
 >
-  <View
-    style={
-      Object {
-        "backgroundColor": "#FFFFFF",
-        "bottom": 2,
-        "left": 2,
-        "position": "absolute",
-        "right": 2,
-        "top": 2,
-      }
-    }
-  />
-  <View
-    accessibilityState={
-      Object {
-        "disabled": true,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={false}
-    hitSlop={
-      Object {
-        "bottom": 10,
-        "left": 10,
-        "right": 10,
-        "top": 10,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
-  >
+  <View>
     <View
       style={
         Array [
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "backgroundColor": "#FFFFFF",
+            "bottom": 2,
+            "left": 2,
+            "position": "absolute",
+            "right": 2,
+            "top": 2,
           },
-          undefined,
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#EAEDF2",
           },
         ]
+      }
+    />
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
       }
     >
       <View
         style={
           Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
             undefined,
-            undefined,
-            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
           ]
         }
       >
-        <View />
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
       </View>
     </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 13,
+          },
+          Object {
+            "color": "#D1D4DB",
+          },
+          Object {
+            "marginLeft": 8,
+          },
+        ]
+      }
+    >
+      Label
+    </Text>
   </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#353E6E",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 13,
-        },
-        Object {
-          "color": "#D1D4DB",
-        },
-        Object {
-          "marginLeft": 8,
-        },
-      ]
-    }
-  >
-    Label
-  </Text>
 </View>
 `;
 
@@ -260,94 +274,101 @@ exports[`Checkbox component should render disabled-auto-selected state with defa
   }
   testID="checkbox"
 >
-  <View
-    style={
-      Object {
-        "backgroundColor": "#FFFFFF",
-        "bottom": 2,
-        "left": 2,
-        "position": "absolute",
-        "right": 2,
-        "top": 2,
-      }
-    }
-  />
-  <View
-    accessibilityState={
-      Object {
-        "disabled": true,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={false}
-    hitSlop={
-      Object {
-        "bottom": 10,
-        "left": 10,
-        "right": 10,
-        "top": 10,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
-  >
+  <View>
     <View
       style={
         Array [
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "backgroundColor": "#FFFFFF",
+            "bottom": 2,
+            "left": 2,
+            "position": "absolute",
+            "right": 2,
+            "top": 2,
           },
-          undefined,
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#EAEDF2",
           },
         ]
+      }
+    />
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
       }
     >
       <View
         style={
           Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
             undefined,
-            undefined,
-            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
           ]
         }
       >
-        <View />
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
       </View>
     </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          Object {
+            "marginLeft": 8,
+          },
+        ]
+      }
+    >
+      Label
+    </Text>
   </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#353E6E",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
-        },
-        Object {
-          "color": "#181C32",
-        },
-        Object {
-          "marginLeft": 8,
-        },
-      ]
-    }
-  >
-    Label
-  </Text>
 </View>
 `;
 
@@ -377,94 +398,99 @@ exports[`Checkbox component should render indeterminate state with default size 
   }
   testID="checkbox"
 >
-  <View
-    style={
-      Object {
-        "backgroundColor": "#FFFFFF",
-        "bottom": 2,
-        "left": 2,
-        "position": "absolute",
-        "right": 2,
-        "top": 2,
-      }
-    }
-  />
-  <View
-    accessibilityState={
-      Object {
-        "disabled": true,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={false}
-    hitSlop={
-      Object {
-        "bottom": 10,
-        "left": 10,
-        "right": 10,
-        "top": 10,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
-  >
+  <View>
     <View
       style={
         Array [
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "backgroundColor": "#FFFFFF",
+            "bottom": 2,
+            "left": 2,
+            "position": "absolute",
+            "right": 2,
+            "top": 2,
           },
           undefined,
-          Object {
-            "backgroundColor": undefined,
-          },
         ]
+      }
+    />
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
       }
     >
       <View
         style={
           Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
             undefined,
-            undefined,
-            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
           ]
         }
       >
-        <View />
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
       </View>
     </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          Object {
+            "marginLeft": 8,
+          },
+        ]
+      }
+    >
+      Label
+    </Text>
   </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#353E6E",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
-        },
-        Object {
-          "color": "#181C32",
-        },
-        Object {
-          "marginLeft": 8,
-        },
-      ]
-    }
-  >
-    Label
-  </Text>
 </View>
 `;
 
@@ -494,94 +520,99 @@ exports[`Checkbox component should render selected state with default size mediu
   }
   testID="checkbox"
 >
-  <View
-    style={
-      Object {
-        "backgroundColor": "#FFFFFF",
-        "bottom": 2,
-        "left": 2,
-        "position": "absolute",
-        "right": 2,
-        "top": 2,
-      }
-    }
-  />
-  <View
-    accessibilityState={
-      Object {
-        "disabled": true,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={false}
-    hitSlop={
-      Object {
-        "bottom": 10,
-        "left": 10,
-        "right": 10,
-        "top": 10,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
-  >
+  <View>
     <View
       style={
         Array [
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "backgroundColor": "#FFFFFF",
+            "bottom": 2,
+            "left": 2,
+            "position": "absolute",
+            "right": 2,
+            "top": 2,
           },
           undefined,
-          Object {
-            "backgroundColor": undefined,
-          },
         ]
+      }
+    />
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
       }
     >
       <View
         style={
           Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
             undefined,
-            undefined,
-            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
           ]
         }
       >
-        <View />
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
       </View>
     </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          Object {
+            "marginLeft": 8,
+          },
+        ]
+      }
+    >
+      Label
+    </Text>
   </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#353E6E",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
-        },
-        Object {
-          "color": "#181C32",
-        },
-        Object {
-          "marginLeft": 8,
-        },
-      ]
-    }
-  >
-    Label
-  </Text>
 </View>
 `;
 
@@ -611,93 +642,98 @@ exports[`Checkbox component should render unselect state with default size mediu
   }
   testID="checkbox"
 >
-  <View
-    style={
-      Object {
-        "backgroundColor": "#FFFFFF",
-        "bottom": 2,
-        "left": 2,
-        "position": "absolute",
-        "right": 2,
-        "top": 2,
-      }
-    }
-  />
-  <View
-    accessibilityState={
-      Object {
-        "disabled": true,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={false}
-    hitSlop={
-      Object {
-        "bottom": 10,
-        "left": 10,
-        "right": 10,
-        "top": 10,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
-  >
+  <View>
     <View
       style={
         Array [
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "backgroundColor": "#FFFFFF",
+            "bottom": 2,
+            "left": 2,
+            "position": "absolute",
+            "right": 2,
+            "top": 2,
           },
           undefined,
-          Object {
-            "backgroundColor": undefined,
-          },
         ]
+      }
+    />
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
       }
     >
       <View
         style={
           Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
             undefined,
-            undefined,
-            undefined,
+            Object {
+              "backgroundColor": undefined,
+            },
           ]
         }
       >
-        <View />
+        <View
+          style={
+            Array [
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <View />
+        </View>
       </View>
     </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#353E6E",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          Object {
+            "marginLeft": 8,
+          },
+        ]
+      }
+    >
+      Label
+    </Text>
   </View>
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#353E6E",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 15,
-        },
-        Object {
-          "color": "#181C32",
-        },
-        Object {
-          "marginLeft": 8,
-        },
-      ]
-    }
-  >
-    Label
-  </Text>
 </View>
 `;

@@ -33,9 +33,6 @@ describe('joinCommuniity saga', () => {
           content: `${i18next.t(
             'groups:text_request_join_community',
           )} ${communityName}`,
-          props: {
-            type: 'success',
-          },
         }),
       )
       .run()
@@ -60,9 +57,6 @@ describe('joinCommuniity saga', () => {
           content: `${i18next.t(
             'groups:text_successfully_join_community',
           )} ${communityName}`,
-          props: {
-            type: 'success',
-          },
         }),
       )
       .put(groupsActions.getCommunityDetail({ communityId }))

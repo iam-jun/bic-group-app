@@ -4,7 +4,6 @@ import actions from '~/storeRedux/groups/actions';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import { groupPrivacy } from '~/constants/privacyTypes';
 import groupApi from '~/api/GroupApi';
-import { ICommunity } from '~/interfaces/ICommunity';
 
 export default function* getCommunityDetail({
   payload,
@@ -18,6 +17,7 @@ export default function* getCommunityDetail({
 }) {
   try {
     const { communityId, loadingPage, showLoading } = payload;
+    yield put(actions.setCommunityError(false));
     if (showLoading) yield put(actions.setCommunityLoading(true));
 
     if (loadingPage) yield put(actions.setLoadingPage(true));
@@ -40,8 +40,8 @@ export default function* getCommunityDetail({
     console.error(
       'getCommunityDetail:', err,
     );
+    yield put(actions.setCommunityError(true));
     yield put(actions.setCommunityLoading(false));
     yield put(actions.setLoadingPage(false));
-    yield put(actions.setCommunityDetail({} as ICommunity));
   }
 }

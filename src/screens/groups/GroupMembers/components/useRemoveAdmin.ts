@@ -1,8 +1,7 @@
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 import { useDispatch } from 'react-redux';
+import { Button } from '~/baseComponents';
 
-import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
@@ -16,7 +15,6 @@ interface IUseRemoveAdmin {
 
 const useRemoveAdmin = ({ groupId, selectedMember }: IUseRemoveAdmin) => {
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme();
 
   const { id: userId, fullname } = selectedMember;
 
@@ -30,9 +28,6 @@ const useRemoveAdmin = ({ groupId, selectedMember }: IUseRemoveAdmin) => {
     content: i18next.t('groups:modal_confirm_remove_admin:description'),
     ContentComponent: Text.BodyS,
     cancelBtn: true,
-    cancelBtnProps: {
-      textColor: theme.colors.purple60,
-    },
     onConfirm: doRemoveAdmin,
     confirmLabel: i18next.t('groups:modal_confirm_remove_admin:button_confirm'),
     ConfirmBtnComponent: Button.Danger,

@@ -1,6 +1,6 @@
 import { languages } from '~/configs';
 import { IconType } from '~/resources/icons';
-import { ToastMessageProps } from '~/beinComponents/ToastMessage/NormalToastMessage';
+import { BaseToastProps } from '~/baseComponents/Toast/BaseToast';
 import { BaseBottomSheetProps } from '~/baseComponents/BottomSheet/BaseBottomSheet';
 import { HeaderProps } from '~/beinComponents/Header';
 
@@ -50,9 +50,8 @@ export interface IResponseData {
 
 export interface IToastMessage {
   content: string;
-  props: ToastMessageProps;
+  props?: BaseToastProps;
   duration?: number;
-  toastType?: 'simple' | 'normal' | 'banner';
 }
 
 export interface IPayloadShowModal {

@@ -32,12 +32,13 @@ import postKeySelector from '~/storeRedux/post/keySelector';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { showReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import TimeView from '~/beinComponents/TimeView';
 import ReactionView from '~/beinComponents/ReactionView';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
+import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 
 export interface CommentViewProps {
   postId: string;
@@ -61,6 +62,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const dispatch = useDispatch();
+  const addTempSelected = useMentionInputStore((state:IMentionInputState) => state.addTempSelected);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -184,11 +186,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const _onPressReply = () => {
     const actor: any = commentData?.actor || {};
     const username = actor?.data?.username || actor?.username || '';
-    dispatch(
-      actions.addTempSelected({
-        [username]: { id: actor?.id, ...actor },
-      }),
-    );
+    addTempSelected({
+      [username]: { id: actor?.id, ...actor },
+    });
     onPressReply?.(commentData);
   };
 
@@ -198,9 +198,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
       content: t('post:comment:text_delete_comment'),
       ContentComponent: Text.BodyS,
       cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.purple60,
-      },
       onConfirm: () => {
         const payload: IPayloadDeleteComment = {
           commentId: id,

@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { cleanup } from '@testing-library/react-native';
 
-import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import MenuItem from './MenuItem';
 import Icon from '~/baseComponents/Icon';
-import initialState from '~/storeRedux/initialState';
 
 afterEach(cleanup);
 
@@ -12,7 +11,6 @@ describe('Menu Item component', () => {
   const title = 'Menu Item Title';
   const testID = 'menu_item.test';
   const icon = 'Calendar';
-  const mockStore = configureStore([]);
 
   it('renders correctly', () => {
     const rendered = renderWithRedux(<MenuItem title={title} />).toJSON();
@@ -115,37 +113,6 @@ describe('Menu Item component', () => {
     const { getByTestId } = rendered;
     const btnComponent = getByTestId(testID);
     expect(btnComponent.props?.accessibilityState?.disabled).toBe(true);
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
-
-  it('should render badge Number when type= draftPost', () => {
-    const storeData = { ...initialState };
-    storeData.post.draftPosts.posts = [{}];
-    const store = mockStore(storeData);
-
-    const rendered = renderWithRedux(
-      <MenuItem title={title} type="draftPost" />,
-      store,
-    );
-
-    const btnComponent = rendered.getByTestId('menu_item.badge_number');
-    expect(btnComponent).toBeDefined();
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
-
-  it('should render badge Number when type= draftPost and draftPost.length > 9', () => {
-    const storeData = { ...initialState };
-    storeData.post.draftPosts.posts = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
-    const store = mockStore(storeData);
-
-    const rendered = renderWithRedux(
-      <MenuItem title={title} type="draftPost" badgeColor="red" />,
-      store,
-    );
-
-    const btnComponent = rendered.getByTestId('menu_item.badge_number.number');
-
-    expect(btnComponent.children?.[0]).toBe('9+');
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 });

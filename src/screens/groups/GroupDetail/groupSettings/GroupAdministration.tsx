@@ -23,7 +23,7 @@ const GroupAdministration = (props: any) => {
   const { groupId } = params || {};
 
   const theme: ExtendedTheme = useTheme();
-  const styles = themeStyles(theme);
+  const styles = themeStyles();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { name } = useKeySelector(groupsKeySelector.groupDetail.group);
@@ -135,19 +135,15 @@ const GroupAdministration = (props: any) => {
 
 export default GroupAdministration;
 
-const themeStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    container: {
-      paddingTop: spacing.padding.large,
-    },
-    headerTitle: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.base,
-    },
-    divider: {
-      height: 5,
-    },
-  });
-};
+const themeStyles = () => StyleSheet.create({
+  container: {
+    paddingTop: spacing.padding.large,
+  },
+  headerTitle: {
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.base,
+  },
+  divider: {
+    height: 5,
+  },
+});

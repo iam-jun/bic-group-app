@@ -12,7 +12,6 @@ import { Platform, View, Text } from 'react-native';
 
 import NodeEmoji from 'node-emoji';
 import {
-  blendColors,
   concatStyles,
   makeStyleSheetFromTheme,
   getScheme,
@@ -264,6 +263,7 @@ export default class Md extends PureComponent {
 
     return (
       <MarkdownCodeBlock
+        theme={this.props.theme}
         content={content}
         language={props.language}
         textStyle={this.props.textStyles.codeBlock}
@@ -272,15 +272,17 @@ export default class Md extends PureComponent {
     );
   };
 
-  renderBlockQuote = ({ children, ...otherProps }) => (
+  renderBlockQuote = ({ children, ...otherProps }) => {
+    return (
     <MarkdownBlockQuote
+      theme={this.props.theme}
       iconStyle={this.props.blockStyles.quoteBlockIcon}
       {...otherProps}
     >
       {children}
     </MarkdownBlockQuote>
   );
-
+  }
   renderList = ({
     children, start, tight, type,
   }) => (
@@ -327,14 +329,14 @@ export default class Md extends PureComponent {
   };
 
   renderTable = ({ children, numColumns }) => (
-    <MarkdownTable showModal={this.props.showModal} numColumns={numColumns}>
+    <MarkdownTable theme={this.props.theme} showModal={this.props.showModal} numColumns={numColumns}>
       {children}
     </MarkdownTable>
   );
 
-  renderTableRow = (args) => <MarkdownTableRow {...args} />;
+  renderTableRow = (args) => <MarkdownTableRow theme={this.props.theme} {...args} />;
 
-  renderTableCell = (args) => <MarkdownTableCell {...args} />;
+  renderTableCell = (args) => <MarkdownTableCell theme={this.props.theme} {...args} />;
 
   renderLink = (data) => {
     const { href, children } = data;
@@ -386,17 +388,6 @@ export default class Md extends PureComponent {
 }
 
 const getStyleSheet = makeStyleSheetFromTheme((theme) => {
-  // Android has trouble giving text transparency depending on how it's nested,
-  // so we calculate the resulting colour manually
-  const editedOpacity = Platform.select({
-    ios: 0.3,
-    android: 1.0,
-  });
-  const editedColor = Platform.select({
-    ios: theme.centerChannelColor,
-    android: blendColors(theme.centerChannelBg, theme.centerChannelColor, 0.3),
-  });
-
   return {
     block: {
       alignItems: 'flex-start',
@@ -404,8 +395,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
       flexWrap: 'wrap',
     },
     editedIndicatorText: {
-      color: editedColor,
-      opacity: editedOpacity,
+      color: theme.neutral30,
     },
     atMentionOpacity: {
       opacity: 1,

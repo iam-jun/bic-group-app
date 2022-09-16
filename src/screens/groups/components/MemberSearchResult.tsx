@@ -8,11 +8,12 @@ import {
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
-
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import MemberItem from './MemberItem';
 import spacing from '~/theme/spacing';
+import Image from '~/beinComponents/Image';
+import Text from '~/beinComponents/Text';
+import images from '~/resources/images';
 
 interface MemberSearchResultProps {
   canManageMember: boolean;
@@ -45,22 +46,22 @@ const MemberSearchResult = ({
     if (loading) return null;
     return (
       <View style={styles.textNoResults}>
-        <Text.BodyM
-          color={theme.colors.gray50}
+        <Image
+          resizeMode="contain"
+          style={styles.imgEmpty}
+          source={images.img_empty_search_post}
+        />
+        <Text.BodyS
+          style={styles.noResultText}
+          color={theme.colors.neutral40}
           useI18n
           testID="member_search_result.no_results"
         >
-          common:text_no_results_found
-        </Text.BodyM>
+          common:text_search_no_results
+        </Text.BodyS>
       </View>
     );
   };
-
-  const renderHeaderComponent = () => (
-    <View style={styles.textSearchResults}>
-      <Text.BodyM useI18n>common:text_search_results</Text.BodyM>
-    </View>
-  );
 
   const renderListFooter = () => {
     if (!loading && canLoadMore && data.length > 0) {
@@ -78,11 +79,11 @@ const MemberSearchResult = ({
     <FlatList
       testID="flatlist"
       data={data}
+      style={styles.list}
       renderItem={renderItem}
       keyExtractor={(
         item, index,
       ) => `search_item_${item}_${index}`}
-      ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}
       showsVerticalScrollIndicator={false}
@@ -97,24 +98,34 @@ const MemberSearchResult = ({
           />
         ) : undefined
       }
-      ItemSeparatorComponent={() => <ViewSpacing height={4} />}
+      ItemSeparatorComponent={() => <ViewSpacing height={8} />}
     />
   );
 };
 
 const styles = StyleSheet.create({
+  list: {
+    marginVertical: spacing.margin.small,
+  },
   textSearchResults: {
     marginHorizontal: spacing.margin.large,
     marginVertical: spacing.margin.base,
   },
   textNoResults: {
     alignItems: 'center',
-    marginVertical: 100,
+    margin: spacing.margin.large,
   },
   listFooter: {
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  imgEmpty: {
+    width: 150,
+    aspectRatio: 1,
+  },
+  noResultText: {
+    textAlign: 'center',
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   StyleSheet, View, TouchableOpacity, Dimensions,
 } from 'react-native';
@@ -56,7 +56,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   const itemValue = useKeySelector(notificationSelector.getNotificationById(id));
 
-  const _itemValue = React.useMemo(
+  const _itemValue = useMemo(
     () => {
       if (
         itemValue !== undefined
@@ -69,8 +69,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       }
     }, [itemValue, onPress, onPressOption, testID, id],
   );
+
   const {
-    activities, isRead, updatedAt, extra, verb, actorCount,
+    isRead, updatedAt, extra, actorCount,
   }: any = _itemValue || {};
 
   if (isEmpty(_itemValue)) return null;

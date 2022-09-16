@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { changeOpacity, makeStyleSheetFromTheme } from '../utils/utils';
+import { makeStyleSheetFromTheme } from '../utils/utils';
 
 export const CELL_MIN_WIDTH = 96;
 export const CELL_MAX_WIDTH = 192;
@@ -37,7 +37,7 @@ export default class MdTableCell extends React.PureComponent {
 const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
   cell: {
     flex: 1,
-    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderColor: theme.gray20,
     justifyContent: 'flex-start',
     padding: 8,
   },

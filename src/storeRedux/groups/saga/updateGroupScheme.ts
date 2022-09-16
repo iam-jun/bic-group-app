@@ -37,10 +37,6 @@ export default function* updateGroupScheme({
       navigation.goBack();
       const toastMessage: IToastMessage = {
         content: 'communities:permission:text_update_scheme_success',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
     }

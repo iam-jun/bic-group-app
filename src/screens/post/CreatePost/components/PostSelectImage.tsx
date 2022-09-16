@@ -28,7 +28,7 @@ const PostSelectImage = () => {
     for (let imageIndex = 0; imageIndex < selectedImagesDraft.length; imageIndex++) {
       const image = selectedImagesDraft[imageIndex];
       if (imageIndex === index) {
-        newList.push({ ...image, fileName });
+        newList.push({ ...image, fileName, uploading: false });
         // eslint-disable-next-line no-continue
         continue;
       }

@@ -8,7 +8,6 @@ import homeSaga from '~/storeRedux/home/saga';
 import notifications from '~/storeRedux/notification/saga';
 import menuSaga from '~/storeRedux/menu/saga';
 import noInternetSaga from '~/storeRedux/network/saga';
-import mentionInputSaga from '~/beinComponents/inputs/MentionInput/redux/saga';
 import giphySaga from './giphy/saga';
 
 export default function* rootSagas() {
@@ -22,7 +21,6 @@ export default function* rootSagas() {
     notifications(),
     menuSaga(),
     noInternetSaga(),
-    mentionInputSaga(),
     giphySaga(),
   ]);
 }

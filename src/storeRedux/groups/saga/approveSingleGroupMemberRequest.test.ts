@@ -48,14 +48,6 @@ describe('approveSingleGroupMemberRequest saga', () => {
     .put(
       modalActions.showHideToastMessage({
         content: `Approved user ${fullName}`,
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-          rightIcon: 'UserGroup',
-          rightText: 'Members',
-          onPressRight: callback,
-        },
-        toastType: 'normal',
       }),
     )
     .put(groupsActions.getGroupDetail({ groupId }))

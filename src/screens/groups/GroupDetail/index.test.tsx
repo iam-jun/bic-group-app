@@ -37,10 +37,8 @@ describe('GroupDetail component', () => {
     );
     const detailView = wrapper.getByTestId('group_detail.content');
     expect(detailView).toBeDefined();
-    const listView = wrapper.getByTestId('list_view');
+    const listView = wrapper.getByTestId('flatlist');
     expect(listView).toBeDefined();
-    const groupTopBar = wrapper.getByTestId('group_top_bar');
-    expect(groupTopBar).toBeDefined();
   });
 
   it('renders GroupPrivateWelcome when user is a visitor to a private group', () => {
@@ -65,24 +63,7 @@ describe('GroupDetail component', () => {
     state.groups.loadingPage = false;
     // @ts-ignore
     state.groups.groupDetail = { group: {} };
-    const store = createTestStore(state);
-
-    const wrapper = renderWithRedux(
-      <MockedNavigator component={component} />,
-      store,
-    );
-    const groupPrivateWelcome = wrapper.getByTestId('no_group_found');
-    expect(groupPrivateWelcome).toBeDefined();
-  });
-
-  it('renders NoGroupFound when user is not a member and the group is secret', () => {
-    const state = { ...initialState };
-    state.groups.loadingPage = false;
-    state.groups.groupDetail = {
-      ...groupDetailData,
-      joinStatus: 1,
-      group: { ...groupDetailData.group, privacy: 'SECRET' },
-    };
+    state.groups.isLoadingGroupDetailError = true;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(

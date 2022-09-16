@@ -101,6 +101,7 @@ const icons = {
   menu: fontAwesomeIcons.Ellipsis,
   search: fontAwesomeIcons.MagnifyingGlass,
   iconCheckCircle: fontAwesomeIcons.CircleCheck,
+  iconExpand: fontAwesomeIcons.UpRightAndDownLeftFromCenter,
 
   // PRIVACY
   iconPublic: fontAwesomeIcons.GlobeSolid,

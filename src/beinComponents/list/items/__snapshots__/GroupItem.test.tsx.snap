@@ -236,6 +236,7 @@ exports[`Group Item component renders correctly 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
                         "borderRadius": 4,
                         "borderWidth": 2,
@@ -287,99 +288,14 @@ exports[`Group Item component renders correctly 1`] = `
               },
               Object {},
               Object {
-                "maxWidth": 200,
-                "paddingTop": 2,
+                "justifyContent": "center",
+                "width": "100%",
               },
             ]
           }
         >
           EVOL Community
         </Text>
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  undefined,
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
-          </View>
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#212745",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 13,
-                },
-                Object {
-                  "color": "#767D93",
-                },
-                Object {
-                  "marginHorizontal": 4,
-                },
-              ]
-            }
-          >
-            24
-          </Text>
-        </View>
       </View>
     </View>
   </View>
@@ -635,6 +551,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
                         "borderRadius": 4,
                         "borderWidth": 2,
@@ -686,99 +603,14 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
               },
               Object {},
               Object {
-                "maxWidth": 200,
-                "paddingTop": 2,
+                "justifyContent": "center",
+                "width": "100%",
               },
             ]
           }
         >
           EVOL Community
         </Text>
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  undefined,
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
-          </View>
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#212745",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 13,
-                },
-                Object {
-                  "color": "#767D93",
-                },
-                Object {
-                  "marginHorizontal": 4,
-                },
-              ]
-            }
-          >
-            24
-          </Text>
-        </View>
       </View>
     </View>
   </View>
@@ -950,6 +782,7 @@ exports[`Group Item component should render default prop 1`] = `
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
                         "borderRadius": 4,
                         "borderWidth": 2,
@@ -1001,99 +834,14 @@ exports[`Group Item component should render default prop 1`] = `
               },
               Object {},
               Object {
-                "maxWidth": 200,
-                "paddingTop": 2,
+                "justifyContent": "center",
+                "width": "100%",
               },
             ]
           }
         >
           EVOL Community
         </Text>
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  undefined,
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
-          </View>
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#212745",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 13,
-                },
-                Object {
-                  "color": "#767D93",
-                },
-                Object {
-                  "marginHorizontal": 4,
-                },
-              ]
-            }
-          >
-            24
-          </Text>
-        </View>
       </View>
     </View>
   </View>
@@ -1336,6 +1084,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                         "overflow": "hidden",
                       },
                       Object {
+                        "backgroundColor": "#FFFFFF",
                         "borderColor": "#F2F5F8",
                         "borderRadius": 4,
                         "borderWidth": 2,
@@ -1387,99 +1136,14 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
               },
               Object {},
               Object {
-                "maxWidth": 200,
-                "paddingTop": 2,
+                "justifyContent": "center",
+                "width": "100%",
               },
             ]
           }
         >
           EVOL Community
         </Text>
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  undefined,
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View />
-              </View>
-            </View>
-          </View>
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#212745",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 13,
-                },
-                Object {
-                  "color": "#767D93",
-                },
-                Object {
-                  "marginHorizontal": 4,
-                },
-              ]
-            }
-          >
-            24
-          </Text>
-        </View>
       </View>
     </View>
   </View>

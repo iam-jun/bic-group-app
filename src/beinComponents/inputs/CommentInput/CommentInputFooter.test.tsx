@@ -16,18 +16,7 @@ describe('CommentInputFooter component', () => {
   });
 
   it('renders correctly mention bar with item', async () => {
-    const storeData = { ...initialState };
-    storeData.mentionInput.data = [
-      {
-        id: 7,
-        username: 'testaccount2',
-        fullname: 'Test account 2',
-        avatar:
-          'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
-      },
-    ] as any;
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<CommentInputFooter />, store);
+    const wrapper = renderWithRedux(<CommentInputFooter />);
     expect(wrapper).toMatchSnapshot();
   });
 });

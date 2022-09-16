@@ -157,7 +157,14 @@
     "members": "Members",
     "text_remove": "Remove",
     "all": "All",
-    "in": "in"
+    "in": "in",
+    "text_refresh": "Refresh",
+    "text_undo": "Undo",
+    "text_search_result_empty": "Sorry, we couldn’t find anything related to your search.",
+    "text_you": "You",
+    "content_not_available": "This content is not available",
+    "dont_have_permission_to_access": "You don’t have permission to access this page.",
+    "btn_go_back_to_home": "Go back to Home"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -399,6 +406,7 @@
     "newsfeed": "News feed",
     "saved_posts": "Saved Posts",
     "draft_post": "Draft Posts",
+    "draft_articles_post": "Draft Articles",
     "title_timeline": "Newsfeed",
     "title_important": "Important",
     "newsfeed_search": {
@@ -675,7 +683,7 @@
   "groups": {
     "group_content": {
       "btn_group_tree": "Group Tree",
-      "btn_discover": "Discover Groups",
+      "btn_browse": "Browse Groups",
       "btn_post": "Post",
       "btn_channel": "Channel",
       "btn_about": "About",
@@ -687,7 +695,7 @@
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
-    "text_search_member": "Search member",
+    "text_search_member": "Search member...",
     "text_search": "Search people",
     "group_menu": {
       "label_admin_tools": "Admin Tools",
@@ -741,7 +749,8 @@
     },
     "error": {
       "last_admin_leave": "You are the last admin of this group. Kindly set another admin before leaving",
-      "last_admin_inner_group_leave": "Cannot leave. You are the last admin of an inner group",
+      "last_admin_inner_group_leave": "Cannot leave. You are the last admin of an inner group.",
+      "owner_leave_community": "Cannot leave. You are the owner of this community.",
       "last_admin_remove": "You are the last admin of this group. Kindly set another admin before removing the admin role",
       "last_admin_inner_group_remove": "Cannot remove. This user is the last admin of an inner group"
     },
@@ -851,11 +860,12 @@
     "text_we_will_notify_you": "We will notify you when this features is ready."
   },
   "internet_connection": {
-    "online": "You are back online",
-    "offline": "You are currently offline. Please check it and try again",
+    "online": "Internet connection was restored",
+    "offline": "You are currently offline",
     "system_issue": {
       "title": "System Issue Occurred",
-      "desc": "Please re-login to continue"
+      "desc": "Please re-login to continue",
+      "toast": "Action cannot be proceeded due to system issue"
     }
   },
   "communities": {
@@ -878,21 +888,22 @@
     },
     "empty_groups": {
       "title": "No group found",
-      "description": "Discover groups to join one."
+      "description": "Browse groups to join one."
     },
     "community_menu": {
       "your_communities_text": "You've joined",
       "manage_text": "You manage",
       "discover_text": "Discover"
     },
-    "text_join_community_button": "Join this community",
-    "text_join_group_button": "Join this group",
+    "text_join_community_button": "Join",
+    "text_join_group_button": "Join",
     "text_join_community_description": "Join this community to view or participate on discussions",
     "text_join_group_description": "Join this group to view or participate on discussions",
     "text_other_member_one": "{{count}} other are members",
     "text_other_member_other": "{{count}} others are members",
     "text_is_member": "is a member",
-    "title_discover_groups": "Discover Groups",
+    "title_browse_groups": "Browse Groups",
+    "text_must_be_member_first": "You need to be a member of the community first",
     "permission": {
       "title_permission": "Permission",
       "title_system_scheme": "System Scheme",
@@ -976,6 +987,12 @@
         "confirm": "Turn off",
         "approve_all": "Yes, Approve All"
       }
+    },
+    "modal_confirm_leave_community": {
+      "title": "Leave this community",
+      "description": "Are you sure you want to leave ",
+      "button_leave": "Leave",
+      "success_message": "You have left the community"
     }
   },
   "upload": {

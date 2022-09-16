@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   StyleProp,
@@ -65,6 +65,14 @@ const DateInput: React.FC<DateInputProps> = ({
   });
   const [isSelecting, setSelecting] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (mode === 'date') {
+      setText(formatDate(value, 'DD/MM/YYYY'));
+    } else {
+      setText(formatDate(value, 'hh:mm A', undefined, 9999));
+    }
+  }, [value]);
+
   const getIcon = () => {
     if (mode === 'date') return 'Calendar';
     return 'Clock';
@@ -76,13 +84,13 @@ const DateInput: React.FC<DateInputProps> = ({
 
   const _onConfirm = (date: Date) => {
     onConfirm(date);
-    if (mode === 'date') {
-      const newDate = formatDate(date, 'DD/MM/YYYY');
-      setText(newDate);
-    } else {
-      const newDate = formatDate(date, 'hh:mm A', undefined, 9999);
-      setText(newDate);
-    }
+    // if (mode === 'date') {
+    //   const newDate = formatDate(date, 'DD/MM/YYYY');
+    //   setText(newDate);
+    // } else {
+    //   const newDate = formatDate(date, 'hh:mm A', undefined, 9999);
+    //   setText(newDate);
+    // }
     _onClosePopup();
   };
 

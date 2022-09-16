@@ -28,7 +28,7 @@ const ManagedCommunities = ({
   onPressMenu,
 }: ManagedCommunitiesProps) => {
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const dispatch = useDispatch();
 
   const {
@@ -116,7 +116,7 @@ const ManagedCommunities = ({
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => StyleSheet.create({
+const createStyles = () => StyleSheet.create({
   listFooter: {
     height: 100,
     justifyContent: 'center',
