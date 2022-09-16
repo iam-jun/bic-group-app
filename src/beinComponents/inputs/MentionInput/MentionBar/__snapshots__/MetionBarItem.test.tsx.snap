@@ -106,6 +106,7 @@ exports[`MentionBarItem component renders correctly 1`] = `
                 "overflow": "hidden",
               },
               Object {
+                "backgroundColor": "#FFFFFF",
                 "borderColor": "#F2F5F8",
                 "borderRadius": 12,
                 "borderWidth": 2,

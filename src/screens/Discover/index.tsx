@@ -1,10 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
 import spacing from '~/theme/spacing';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities';
 import YourCommunities from '~/screens/Discover/components/YourCommunities';
@@ -24,9 +22,7 @@ const Index = () => {
   const theme = useTheme();
   const { elevations } = theme;
   const styles = themeStyles(theme);
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
 
   const [isOpenSearchCommunity, setIsOpenSearchCommunity] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);

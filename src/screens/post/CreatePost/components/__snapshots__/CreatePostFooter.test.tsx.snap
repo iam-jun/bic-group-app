@@ -4,293 +4,410 @@ exports[`CreatePostFooter component renders correctly 1`] = `
 <View>
   <View
     collapsable={false}
-    forwardedRef={[Function]}
-    onGestureHandlerEvent={[Function]}
-    onGestureHandlerStateChange={[Function]}
     style={Object {}}
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
-          "borderColor": "#E3E6F2",
-          "borderWidth": 1,
-          "flexDirection": "row",
-          "height": 52,
-          "paddingHorizontal": 16,
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#E3E6F2",
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "height": 52,
+            "justifyContent": "space-between",
+            "paddingHorizontal": 16,
+          },
+          undefined,
+        ]
       }
       testID="post_toolbar"
     >
       <View
         style={
           Object {
-            "height": 36,
-            "justifyContent": "center",
-            "width": 36,
+            "flexDirection": "row",
           }
         }
       >
         <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "opacity": 1,
+              "height": 36,
+              "justifyContent": "center",
+              "width": 36,
             }
           }
-          testID="post_toolbar.markdown_preview"
         >
           <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                undefined,
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
             }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="post_toolbar.add_photo"
           >
             <View
               style={
                 Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
                   undefined,
-                  undefined,
-                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
                 ]
               }
             >
-              <View />
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View />
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "height": 36,
+              "justifyContent": "center",
+              "width": 36,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="post_toolbar.add_video"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View />
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "height": 36,
+              "justifyContent": "center",
+              "width": 36,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="post_toolbar.add_file"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View />
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "height": 36,
+              "justifyContent": "center",
+              "width": 36,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="post_toolbar.markdown_preview"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View />
+              </View>
             </View>
           </View>
         </View>
       </View>
       <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "height": 36,
-            "justifyContent": "center",
-            "width": 36,
-          }
+          Array [
+            Object {
+              "borderRadius": 6,
+            },
+            undefined,
+          ]
         }
+        testID="header.menuIcon.button"
       >
         <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderRadius": 6,
+                "elevation": 2,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.12,
+                "shadowRadius": 1.5,
+              },
+              undefined,
+              Object {
+                "backgroundColor": "#FFFFFF",
+                "height": 36,
+                "paddingHorizontal": 12,
+              },
+            ]
           }
-          testID="post_toolbar.add_photo"
+          testID="button.content"
         >
           <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                undefined,
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
+              Object {
+                "opacity": 1,
+              }
             }
           >
             <View
               style={
                 Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
                   undefined,
-                  undefined,
-                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
                 ]
               }
             >
-              <View />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Object {
-            "height": 36,
-            "justifyContent": "center",
-            "width": 36,
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="post_toolbar.add_video"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                undefined,
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Object {
-            "height": 36,
-            "justifyContent": "center",
-            "width": 36,
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="post_toolbar.add_file"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                undefined,
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View />
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="button.icon"
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -351,15 +468,14 @@ exports[`CreatePostFooter component renders correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#FFFFFF",
-                "borderColor": "#7335C0",
-                "borderRadius": 4,
-                "borderWidth": 1,
-                "marginRight": 4,
-                "padding": 8,
-              }
+              Array [
+                Object {
+                  "borderRadius": 6,
+                },
+                Object {
+                  "marginRight": 4,
+                },
+              ]
             }
             testID="header.button"
           >
@@ -368,30 +484,41 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
+                    "borderRadius": 6,
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "paddingVertical": 4,
                   },
                   undefined,
+                  Object {
+                    "backgroundColor": "#7335C0",
+                    "height": 36,
+                    "paddingHorizontal": 12,
+                  },
                 ]
               }
-              testID="button_wrapper.content"
+              testID="button.content"
             >
               <Text
                 style={
                   Array [
                     Object {
                       "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
+                      "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
                     Object {
-                      "color": "#7335C0",
+                      "color": "#FFFFFF",
                     },
-                    Object {
-                      "textAlign": "center",
-                    },
+                    Array [
+                      Object {
+                        "textAlign": "center",
+                      },
+                      undefined,
+                    ],
                   ]
                 }
+                testID="button.text"
               >
                 Done
               </Text>
@@ -498,6 +625,7 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                           "overflow": "hidden",
                         },
                         Object {
+                          "backgroundColor": "#FFFFFF",
                           "borderColor": "#F2F5F8",
                           "borderRadius": 24,
                           "borderWidth": 2,
@@ -527,7 +655,13 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 </View>
               </View>
             </View>
-            <View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
               <Text
                 style={
                   Array [

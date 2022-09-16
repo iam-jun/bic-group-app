@@ -8,7 +8,9 @@ import { ReactionType } from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import spacing from '~/theme/spacing';
-import useReactionDetail from './useReactionDetail';
+import useReactionDetailStore from './store';
+import IReactionDetailState from './store/Interface';
+import { IParamGetReactionDetail } from '~/interfaces/IPost';
 
 export interface ReactionDetailTabProps {
   reactionType: ReactionType;
@@ -27,32 +29,36 @@ const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
-  const { data = [], loading, getReactionDetail } = useReactionDetail();
+  const data = useReactionDetailStore((state:IReactionDetailState) => state.data) || [];
+  const loading = useReactionDetailStore((state:IReactionDetailState) => state.loading);
+  const doGetReactionDetail = useReactionDetailStore((state:IReactionDetailState) => state.doGetReactionDetail);
+  const doLoadMoreReactionDetail = useReactionDetailStore(
+    (state: IReactionDetailState) => state.doLoadMoreReactionDetail,
+  );
+  const canLoadMore = useReactionDetailStore((state: IReactionDetailState) => state.canLoadMore);
+  const reset = useReactionDetailStore((state: IReactionDetailState) => state.reset);
 
   useEffect(
     () => {
       const param = { ...getDataParam, reactionName: reactionType, limit };
-      getReactionDetail(param);
+      doGetReactionDetail(param);
+      return () => {
+        reset();
+      };
     }, [reactionType],
   );
 
   const _onPressItem = useCallback((item: any) => {
     onPressItem?.(item);
-  }, [onPressItem, reactionType, data]);
+  }, [onPressItem, reactionType]);
 
   const onLoadMore = () => {
-    // if (getDataPromise && getDataParam && !!data?.[0]) {
-    //   const param = {
-    //     ...getDataParam, reactionName: reactionType, limit, latestId: data[data.length - 1].reactionId, order: 'ASC',
-    //   };
-    //   getDataPromise?.(param)
-    //     ?.then?.((_data: any) => {
-    //       setData((previousData:any[]) => previousData.concat(_data || []));
-    //     })
-    //     .catch((e: any) => {
-    //       console.error(`\x1b[31m🐣️ ReactionDetailTab get more error ${e}\x1b[0m`);
-    //     });
-    // }
+    if (!!data?.[0] && canLoadMore) {
+      const param = {
+        ...getDataParam, reactionName: reactionType, limit, latestId: data[data.length - 1].reactionId, order: 'ASC',
+      } as IParamGetReactionDetail;
+      doLoadMoreReactionDetail(param);
+    }
   };
 
   const renderItem = (item: any) => (
@@ -77,9 +83,9 @@ const _ReactionDetailTab: FC<ReactionDetailTabProps> = ({
     return null;
   };
 
-  const keyExtractor = useCallback((
-    item, index,
-  ) => `reaction_tab_detail_${item?.id?.toString?.()}`, [data]);
+  const keyExtractor = (
+    item,
+  ) => `reaction_tab_detail_${item?.id?.toString?.()}`;
 
   return (
     <FlatList
@@ -104,5 +110,4 @@ const styles = StyleSheet.create({
 });
 
 const ReactionDetailTab = memo(_ReactionDetailTab);
-ReactionDetailTab.whyDidYouRender = true;
 export default ReactionDetailTab;

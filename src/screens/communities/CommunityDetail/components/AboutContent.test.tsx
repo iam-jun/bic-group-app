@@ -109,49 +109,49 @@ describe('AboutContent component', () => {
     expect(memberText).toBeNull();
   });
 
-  it('should render right icon when user is a member', () => {
-    const state = { ...initialState };
-    // @ts-ignore
-    state.groups.communityDetail = {
-      ...communityDetailData,
-      privacy: 'PRIVATE',
-      members: [previewMemberDetail],
-    };
-    const store = createTestStore(state);
+  // it('should render right icon when user is a member', () => {
+  //   const state = { ...initialState };
+  //   // @ts-ignore
+  //   state.groups.communityDetail = {
+  //     ...communityDetailData,
+  //     privacy: 'PRIVATE',
+  //     members: [previewMemberDetail],
+  //   };
+  //   const store = createTestStore(state);
 
-    const wrapper = renderWithRedux(<AboutContent />, store);
-    const rightIcon = wrapper.getByTestId('menu_item.right_sub_icon');
-    expect(rightIcon).toBeDefined();
-  });
+  //   const wrapper = renderWithRedux(<AboutContent />, store);
+  //   const rightIcon = wrapper.getByTestId('menu_item.right_sub_icon');
+  //   expect(rightIcon).toBeDefined();
+  // });
 
-  it('should render right icon when user is not a member and the privacy is OPEN', () => {
-    const state = { ...initialState };
-    // @ts-ignore
-    state.groups.communityDetail = {
-      ...communityDetailData,
-      privacy: 'OPEN' as COMMUNITY_PRIVACY_TYPE,
-      joinStatus: 1,
-      members: [previewMemberDetail],
-    };
-    const store = createTestStore(state);
+  // it('should render right icon when user is not a member and the privacy is OPEN', () => {
+  //   const state = { ...initialState };
+  //   // @ts-ignore
+  //   state.groups.communityDetail = {
+  //     ...communityDetailData,
+  //     privacy: 'OPEN' as COMMUNITY_PRIVACY_TYPE,
+  //     joinStatus: 1,
+  //     members: [previewMemberDetail],
+  //   };
+  //   const store = createTestStore(state);
 
-    const wrapper = renderWithRedux(<AboutContent />, store);
-    const rightIcon = wrapper.getByTestId('menu_item.right_sub_icon');
-    expect(rightIcon).toBeDefined();
-  });
+  //   const wrapper = renderWithRedux(<AboutContent />, store);
+  //   const rightIcon = wrapper.getByTestId('menu_item.right_sub_icon');
+  //   expect(rightIcon).toBeDefined();
+  // });
 
-  it('should NOT render right icon when user is not a member and the privacy is PRIVATE', () => {
-    const state = { ...initialState };
-    // @ts-ignore
-    state.groups.communityDetail = {
-      ...communityDetailData,
-      privacy: 'PRIVATE',
-      joinStatus: 1,
-    };
-    const store = createTestStore(state);
+  // it('should NOT render right icon when user is not a member and the privacy is PRIVATE', () => {
+  //   const state = { ...initialState };
+  //   // @ts-ignore
+  //   state.groups.communityDetail = {
+  //     ...communityDetailData,
+  //     privacy: 'PRIVATE',
+  //     joinStatus: 1,
+  //   };
+  //   const store = createTestStore(state);
 
-    const wrapper = renderWithRedux(<AboutContent />, store);
-    const rightIcon = wrapper.queryByTestId('menu_item.right_sub_icon');
-    expect(rightIcon).toBeNull();
-  });
+  //   const wrapper = renderWithRedux(<AboutContent />, store);
+  //   const rightIcon = wrapper.queryByTestId('menu_item.right_sub_icon');
+  //   expect(rightIcon).toBeNull();
+  // });
 });

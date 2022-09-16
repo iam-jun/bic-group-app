@@ -4,7 +4,6 @@ import {
   getEndDateText, getLanguages, uploadFile, _openImagePicker,
 } from './helper';
 import * as PermissionUtils from '~/utils/permission';
-import menuTypes from '../../../storeRedux/menu/types';
 
 describe('UserProfile helper', () => {
   it('getLanguages: validate empty array', () => {
@@ -80,11 +79,11 @@ describe('UserProfile helper', () => {
 
     const dispatch = jest.fn();
     const callback = jest.fn();
-    const mockActionUploadImage = () => ({
-      type: menuTypes.UPLOAD_IMAGE,
-      payload: file,
-      callback: jest.fn(),
-    });
+    // const mockActionUploadImage = () => ({
+    //   type: menuTypes.UPLOAD_IMAGE,
+    //   payload: file,
+    //   callback: jest.fn(),
+    // });
 
     // const action = jest.spyOn(menuActions, 'uploadImage')
     //   .mockImplementation(mockActionUploadImage as any);

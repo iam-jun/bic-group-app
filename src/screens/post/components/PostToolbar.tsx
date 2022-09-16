@@ -12,7 +12,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet/index';
 import DocumentPicker from '~/beinComponents/DocumentPicker';
-import Icon from '~/baseComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import Text from '~/beinComponents/Text';
@@ -151,7 +150,7 @@ const PostToolbar = ({
     );
     dispatch(showHideToastMessage({
       content: errorContent,
-      props: { textProps: { useI18n: true }, type: 'error' },
+      props: { type: 'error' },
     }));
     return currentImage.slice(
       0,
@@ -202,28 +201,6 @@ const PostToolbar = ({
   const onPressHelp = () => {
     const DOMAIN = getChatDomain();
     openUrl(`${DOMAIN}/help/formatting`);
-  };
-
-  const renderToolbarButton = (
-    icon: any,
-    testID: string,
-    onPressIcon?: (e: any) => void,
-    shouldHighlight?: boolean,
-  ) => {
-    const defaultTiniColor = onPressIcon ? colors.neutral40 : colors.neutral20;
-    const tintColor = !!shouldHighlight ? colors.purple50 : defaultTiniColor;
-
-    return (
-      <View style={styles.toolbarButton}>
-        <Icon
-          size={24}
-          tintColor={tintColor}
-          icon={icon}
-          buttonTestID={testID}
-          onPress={onPressIcon}
-        />
-      </View>
-    );
   };
 
   const renderToolbar = () => (

@@ -7,7 +7,6 @@ import { homeInitState } from '~/storeRedux/home/reducer';
 import { notiInitState } from '~/storeRedux/notification/reducer';
 import { menuInitState } from '~/storeRedux/menu/reducer';
 import { noInternetInitState } from '~/storeRedux/network/reducer';
-import { mentionInputInitState } from '~/beinComponents/inputs/MentionInput/redux/reducer';
 import { giphyInitState } from './giphy/reducer';
 
 const initialState = {
@@ -20,7 +19,6 @@ const initialState = {
   notifications: notiInitState,
   menu: menuInitState,
   noInternet: noInternetInitState,
-  mentionInput: mentionInputInitState,
   giphy: giphyInitState,
 };
 

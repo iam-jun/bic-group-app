@@ -1,7 +1,5 @@
-import { StyleSheet } from 'react-native';
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
 import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBaseView';
@@ -22,9 +20,7 @@ const GlobalSearch = ({
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
-  const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
-  const styles = createStyles();
 
   const { canLoadMore } = useKeySelector(groupsKeySelector.globalSearch);
 
@@ -105,12 +101,5 @@ const GlobalSearch = ({
     </SearchBaseView>
   );
 };
-
-const createStyles = () => StyleSheet.create({
-  text: {
-    marginTop: 33,
-    alignItems: 'center',
-  },
-});
 
 export default GlobalSearch;

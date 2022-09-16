@@ -14,7 +14,6 @@ import {
   CELL_MIN_WIDTH,
 } from '~/beinComponents/Markdown/MarkdownTableCell/MdTableCell';
 import {
-  changeOpacity,
   makeStyleSheetFromTheme,
   preventDoubleTap,
 } from '~/beinComponents/Markdown/utils/utils';
@@ -225,8 +224,8 @@ export default class MdTable extends React.PureComponent {
       moreRight = (
         <LinearGradient
           colors={[
-            changeOpacity(theme.centerChannelColor, 0.0),
-            changeOpacity(theme.centerChannelColor, 0.1),
+            theme.gray1,
+            theme.gray90,
           ]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
@@ -244,8 +243,8 @@ export default class MdTable extends React.PureComponent {
       moreBelow = (
         <LinearGradient
           colors={[
-            changeOpacity(theme.centerChannelColor, 0.0),
-            changeOpacity(theme.centerChannelColor, 0.1),
+            theme.gray1,
+            theme.gray40,
           ]}
           style={[style.moreBelow, { width }]}
         />
@@ -264,7 +263,7 @@ export default class MdTable extends React.PureComponent {
         >
           <View style={[style.iconContainer, { width: this.getTableWidth() }]}>
             <View style={style.iconButton}>
-              <Icon icon="ExpandArrows" style={style.icon} />
+              <Icon icon="iconExpand" size={14} tintColor={theme.blue50} />
             </View>
           </View>
         </TouchableOpacity>
@@ -316,7 +315,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     }),
   },
   iconButton: {
-    backgroundColor: theme.centerChannelBg,
+    backgroundColor: theme.white,
     marginTop: -32,
     marginRight: -6,
     borderWidth: 1,
@@ -324,25 +323,16 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
-    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderColor: theme.neutral20,
     width: 34,
     height: 34,
-  },
-  icon: {
-    fontSize: 14,
-    color: theme.linkColor,
-    ...Platform.select({
-      ios: {
-        fontSize: 13,
-      },
-    }),
   },
   displayFlex: {
     flex: 1,
   },
   table: {
     width: '100%',
-    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderColor: theme.gray40,
     borderWidth: 1,
   },
   tablePadding: {
@@ -356,14 +346,15 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     height: 20,
     position: 'absolute',
     left: 0,
-    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderColor: theme.gray20,
+    opacity: 0.4,
   },
   moreRight: {
     maxHeight: MAX_HEIGHT,
     position: 'absolute',
     top: 0,
     width: 20,
-    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderColor: theme.gray20,
     borderRightWidth: 1,
   },
 }));

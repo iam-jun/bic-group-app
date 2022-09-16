@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import {
-  changeOpacity,
   getDisplayNameForLanguage,
   makeStyleSheetFromTheme,
   preventDoubleTap,
@@ -152,15 +151,15 @@ export default class MdCodeBlock extends React.PureComponent {
 const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
   container: {
     overflow: 'hidden',
-    borderColor: changeOpacity(theme.centerChannelColor, 0.15),
+    borderColor: theme.gray50,
     borderRadius: 3,
     borderWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
   },
   lineNumbers: {
     alignItems: 'center',
-    backgroundColor: changeOpacity(theme.centerChannelColor, 0.05),
-    borderRightColor: changeOpacity(theme.centerChannelColor, 0.15),
+    backgroundColor: theme.gray5,
+    borderRightColor: theme.gray50,
     borderRightWidth: StyleSheet.hairlineWidth,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -168,7 +167,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     width: 21,
   },
   lineNumbersText: {
-    color: changeOpacity(theme.centerChannelColor, 0.5),
+    color: theme.gray50,
     fontSize: 12,
     lineHeight: 18,
   },
@@ -183,18 +182,18 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     overflow: 'scroll', // Doesn't actually cause a scrollbar, but stops text from wrapping
   },
   codeText: {
-    color: changeOpacity(theme.centerChannelColor, 0.65),
+    color: theme.gray50,
     fontSize: 12,
     lineHeight: 18,
   },
   plusMoreLinesText: {
-    color: changeOpacity(theme.centerChannelColor, 0.4),
+    color: theme.gray40,
     fontSize: 11,
     marginTop: 2,
   },
   language: {
     alignItems: 'center',
-    backgroundColor: theme.sidebarHeaderBg,
+    backgroundColor: theme.neutral70,
     justifyContent: 'center',
     opacity: 0.8,
     padding: 6,
@@ -203,7 +202,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     top: 0,
   },
   languageText: {
-    color: theme.sidebarHeaderTextColor,
+    color: theme.neutral5,
     fontSize: 12,
   },
 }));

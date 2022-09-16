@@ -96,8 +96,7 @@ const DatePickerContainer: FC<DatePickerContainerProps> = ({
   onDone,
 }) => {
   const { t } = useBaseHook();
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   useEffect(() => {
     setSelectedStartDate(selectedStartDate);
@@ -154,7 +153,7 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const currentFilter = getCurrentFilterByTimeRange(
     selectedStartDate,
@@ -262,40 +261,37 @@ const FilterDate: FC<NFSFilterDateProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    container: {
-      paddingBottom: spacing.padding.extraLarge,
-    },
-    textHeader: {
-      marginTop: spacing.margin.tiny,
-      marginBottom: spacing.margin.large,
-      marginHorizontal: spacing.margin.large,
-    },
-    buttonApply: {
-      marginHorizontal: spacing.margin.extraLarge,
-      marginVertical: spacing.margin.small,
-    },
-    buttonDoneDatePicker: {
-      marginHorizontal: spacing.margin.extraLarge,
-      marginBottom: spacing.margin.small,
-      marginTop: spacing.margin.tiny,
-    },
-    rowItemFilter: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: spacing.margin.extraLarge,
-      paddingHorizontal: spacing.padding.large,
-    },
-    tagContainer: {
-      alignSelf: 'baseline',
-    },
-    datePickerContainer: {
-      padding: spacing.padding.large,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  container: {
+    paddingBottom: spacing.padding.extraLarge,
+  },
+  textHeader: {
+    marginTop: spacing.margin.tiny,
+    marginBottom: spacing.margin.large,
+    marginHorizontal: spacing.margin.large,
+  },
+  buttonApply: {
+    marginHorizontal: spacing.margin.extraLarge,
+    marginVertical: spacing.margin.small,
+  },
+  buttonDoneDatePicker: {
+    marginHorizontal: spacing.margin.extraLarge,
+    marginBottom: spacing.margin.small,
+    marginTop: spacing.margin.tiny,
+  },
+  rowItemFilter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.margin.extraLarge,
+    paddingHorizontal: spacing.padding.large,
+  },
+  tagContainer: {
+    alignSelf: 'baseline',
+  },
+  datePickerContainer: {
+    padding: spacing.padding.large,
+  },
+});
 
 export default FilterDate;

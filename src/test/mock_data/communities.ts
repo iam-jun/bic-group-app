@@ -55,6 +55,84 @@ export const communityDetailData = {
   joinStatus: 2,
 };
 
+export const groupDetailData = {
+  group: {
+    id: '047b81a9-c7e3-4c7c-98a4-ccb4f6eb37ef',
+    parentId: 'eba85417-ec3e-49b4-89b4-c5393baecaaf',
+    name: 'Group Test 1',
+    slug: 'group-test-1',
+    description: 'Oh yeah',
+    level: 1,
+    parents: [
+      'eba85417-ec3e-49b4-89b4-c5393baecaaf',
+    ],
+    createdBy: '2cff4f3e-2cad-4d35-a3b0-35f483a22136',
+    icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
+    backgroundImgUrl: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/cover/default_group_cover.png',
+    privacy: 'PRIVATE',
+    chatId: 'rswzfestx78x7j4w78egagyzso',
+    schemeId: '0308f879-3970-4863-8674-a37a6a4bcec0',
+    createdAt: '2022-04-14T08:11:39.703Z',
+    updatedAt: '2022-09-05T02:54:46.243Z',
+    deletedAt: null,
+    settings: {
+      isJoinApproval: false,
+    },
+    totalPendingMembers: 0,
+    userCount: 7,
+    teamName: '27505c',
+    joinStatus: 1,
+    members: [
+      {
+        id: '2cff4f3e-2cad-4d35-a3b0-35f483a22136',
+        fullname: 'Admin',
+        username: 'admin1',
+        avatar: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/78442999-8f69-403e-afc7-d1a9e4083f7d.jpg',
+      },
+      {
+        id: 'b875af82-1113-40fc-9f21-3c2cf9e1e1dc',
+        fullname: 'Lý Quân Nhạc',
+        username: 'quannhac',
+        avatar: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
+      },
+      {
+        id: '6235bc91-2255-4f4b-bcfa-bebcd24e27ac',
+        fullname: 'Linh Linh',
+        username: 'ngoclinh',
+        avatar: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4ff5946f-d64b-48c7-883c-96438aa0f726.jpeg',
+      },
+      {
+        id: 'b1c11b06-3c28-44da-b8c1-18565b7f9341',
+        fullname: 'Nhân Xuyên Long wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
+        username: 'adminnhanlx',
+        avatar: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/f533b670-ca12-4d06-8ca1-f1697cbf6e2f.jpg',
+      },
+      {
+        id: '7b63852c-5249-499a-a32b-6bdaa2761fc2',
+        fullname: 'Trần Nam Anh',
+        username: 'trannamanh',
+        avatar: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/acb214d0-ce96-41bb-aba6-fb5fc89f1afa.jpg',
+      },
+      {
+        id: '58e0aa7e-f0bf-4abf-ab2b-c757e3fed768',
+        fullname: 'longer than 100 characters longer than 100 charactersNeal Hoeger',
+        username: 'usernamer',
+        avatar: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
+      },
+      {
+        id: 'd21ef0ea-d64e-4acf-bf56-55ea95c0ffae',
+        fullname: 'mai 1111',
+        username: 'adadadfdfs',
+        avatar: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
+      },
+    ],
+  },
+  teamName: '27505c',
+  userCount: 7,
+  joinStatus: 1,
+  totalPendingMembers: 0,
+};
+
 export const previewMemberDetail = {
   id: '1',
   username: 'test',

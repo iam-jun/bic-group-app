@@ -72,6 +72,7 @@ exports[`Avatar component renders correctly 1`] = `
               "overflow": "hidden",
             },
             Object {
+              "backgroundColor": "#FFFFFF",
               "borderColor": "#F2F5F8",
               "borderRadius": 4,
               "borderWidth": 2,
@@ -179,6 +180,7 @@ exports[`Avatar component renders correctly badge 1`] = `
               "overflow": "hidden",
             },
             Object {
+              "backgroundColor": "#FFFFFF",
               "borderColor": "#F2F5F8",
               "borderRadius": 4,
               "borderWidth": 2,
@@ -211,107 +213,96 @@ exports[`Avatar component renders correctly badge 1`] = `
       </View>
     </View>
     <View
-      style={
+      accessibilityState={
         Object {
-          "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
-          "borderRadius": 16,
-          "bottom": undefined,
-          "elevation": 2,
-          "height": 32,
-          "justifyContent": "center",
-          "position": "absolute",
-          "right": -8,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-          "top": -8,
-          "width": 32,
+          "disabled": true,
         }
       }
-      testID="avatar.badge"
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      hitSlop={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
     >
       <View
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        hitSlop={
-          Object {
-            "bottom": 10,
-            "left": 10,
-            "right": 10,
-            "top": 10,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderRadius": 4,
+                "justifyContent": "center",
+                "padding": 2,
+                "position": "absolute",
+                "right": 0,
+              },
+              Object {
+                "bottom": undefined,
+                "top": 0,
+              },
+            ],
+            Object {
+              "backgroundColor": "#FFFFFF",
+            },
+          ]
         }
       >
         <View
           style={
             Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-              },
               undefined,
-              Object {
-                "backgroundColor": undefined,
-              },
+              undefined,
+              undefined,
             ]
           }
         >
           <View
-            style={
-              Array [
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
+            testID="avatar.badge"
           >
-            <View>
-              <View
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                  },
+                  Object {
+                    "height": 18.720000000000002,
+                    "width": 18.720000000000002,
+                  },
+                ]
+              }
+            >
+              <Text
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                    },
-                    Object {
-                      "height": 18.720000000000002,
-                      "width": 18.720000000000002,
-                    },
-                  ]
-                }
-              >
-                <Text
-                  style={
-                    Object {
-                      "fontSize": 14.040000000000003,
-                      "textAlignVertical": "bottom",
-                    }
+                  Object {
+                    "fontSize": 14.040000000000003,
+                    "textAlignVertical": "bottom",
                   }
-                />
-              </View>
+                }
+              />
             </View>
           </View>
         </View>
@@ -607,6 +598,7 @@ exports[`Avatar component renders correctly badge check 1`] = `
               "overflow": "hidden",
             },
             Object {
+              "backgroundColor": "#FFFFFF",
               "borderColor": "#F2F5F8",
               "borderRadius": 4,
               "borderWidth": 2,
@@ -798,6 +790,7 @@ exports[`Avatar component renders correctly status 1`] = `
               "overflow": "hidden",
             },
             Object {
+              "backgroundColor": "#FFFFFF",
               "borderColor": "#F2F5F8",
               "borderRadius": 4,
               "borderWidth": 2,
@@ -921,6 +914,7 @@ exports[`Avatar component should call props onPressAction 1`] = `
               "overflow": "hidden",
             },
             Object {
+              "backgroundColor": "#FFFFFF",
               "borderColor": "#F2F5F8",
               "borderRadius": 4,
               "borderWidth": 2,

@@ -20,7 +20,6 @@ const ReplyingView = () => {
   const userId = useUserIdAuth();
 
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
 
   const replyTargetUser = replying?.comment?.actor || replying?.parentComment?.actor;

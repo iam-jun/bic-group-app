@@ -8,8 +8,10 @@ export const groupDetailData: IGroupDetail = {
     name: 'EVOL Community',
     slug: 'evol-community-1641809088',
     description: 'The greatest community ever',
-    level: 0,
-    parents: null,
+    level: 1,
+    parents: [
+      '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+    ],
     icon: '',
     backgroundImgUrl: null,
     privacy: 'PUBLIC',

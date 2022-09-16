@@ -17,6 +17,8 @@ import mock from 'react-native-permissions/mock';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 import colors from '~/theme/theme';
 
+jest.mock('zustand');
+
 configure({ adapter: new Adapter() });
 
 global.__reanimatedWorkletInit = jest.fn();

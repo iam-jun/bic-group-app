@@ -8,10 +8,11 @@ import { NotificationsBadgeComponentProps } from '~/beinComponents/Badge/Notific
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/storeRedux/post/keySelector';
 
 import spacing from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
+import useDraftPostStore from '~/screens/post/DraftPost/store';
+import IDraftPostState from '~/screens/post/DraftPost/store/Interface';
 
 interface MenuItemProps {
   RightComponent?: React.ReactNode | React.ReactElement;
@@ -21,7 +22,7 @@ interface MenuItemProps {
   notificationsBadgeProps?: NotificationsBadgeComponentProps;
   badgeColor?: string;
   testID?: string;
-  iconProps?: IconProps;
+  iconProps?: Partial<IconProps>;
   type?: string;
   title: string;
   subTitle?: string;
@@ -56,7 +57,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 
   let badgeNumber;
   if (type === 'draftPost') {
-    const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
+    const draftPost = useDraftPostStore((state:IDraftPostState) => state.posts) || [];
     badgeNumber = draftPost?.length || 0;
     badgeColor = colors.gray40;
     if (badgeNumber > 9) {

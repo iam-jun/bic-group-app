@@ -19,7 +19,7 @@ import { useMyPermissions } from '~/hooks/permissions';
 
 const CommunityAdmin = () => {
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const {
@@ -158,7 +158,7 @@ const CommunityAdmin = () => {
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => StyleSheet.create({
+const createStyles = () => StyleSheet.create({
   container: {
     paddingTop: spacing.padding.large,
   },

@@ -493,19 +493,19 @@ describe('ForgotInputCodePw component', () => {
     };
     const storeData = { ...initialState };
     const setError = jest.fn();
-    const newUseForm1 = {
-      ...useForm,
-      setError,
-    };
+    // const newUseForm1 = {
+    //   ...useForm,
+    //   setError,
+    // };
 
     storeData.auth.forgotPasswordStage = '';
     // storeData.auth.forgotPasswordLoading = false;
     storeData.auth.forgotPasswordError = forgotPasswordError as any;
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(
-      <ForgotInputCodePw useFormData={newUseForm1} />,
-      store,
-    );
+    // const store = mockStore(storeData);
+    // const wrapper = renderWithRedux(
+    //   <ForgotInputCodePw useFormData={newUseForm1} />,
+    //   store,
+    // );
 
     expect(setError).toBeCalledWith('code', {
       type: 'manual',

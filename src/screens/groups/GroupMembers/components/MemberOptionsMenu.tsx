@@ -6,7 +6,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
 
 import { IGroupMembers } from '~/interfaces/IGroup';
 import { useKeySelector } from '~/hooks/selector';
@@ -88,15 +87,8 @@ const MemberOptionsMenu = ({
       content: t('groups:modal_confirm_set_admin:description'),
       ContentComponent: Text.BodyS,
       cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.purple60,
-      },
       onConfirm: doSetAdmin,
       confirmLabel: t('groups:modal_confirm_set_admin:button_confirm'),
-      ConfirmBtnComponent: Button.Secondary,
-      confirmBtnProps: {
-        highEmphasis: true,
-      },
     };
     alertPayload.content = alertPayload.content.replace(
       '{0}',
@@ -118,14 +110,7 @@ const MemberOptionsMenu = ({
       } else {
         dispatch(modalActions.showHideToastMessage({
           content: 'groups:error:last_admin_remove',
-          props: {
-            type: 'error',
-            textProps: { useI18n: true },
-            rightIcon: 'UserGroup',
-            rightText: 'Members',
-            onPressRight: onPressMemberButton,
-          },
-          toastType: 'normal',
+          props: { type: 'error' },
         }));
       }
     }

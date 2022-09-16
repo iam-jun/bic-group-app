@@ -91,6 +91,7 @@ export const groupInitState = {
     list: [],
   },
   loadingPage: false,
+  isLoadingGroupDetailError: false,
   loadingGroupDetail: false,
   groupDetail: {
     group: {},
@@ -189,6 +190,7 @@ export const groupInitState = {
       items: {},
     },
   },
+  isGettingInfoDetailError: false,
   isGettingInfoDetail: false,
   communityDetail: {} as ICommunity,
   communityMembers: {
@@ -419,7 +421,11 @@ function groupsReducer(
           groupScheme: { ...payload },
         },
       };
-
+    case groupsTypes.SET_GROUP_DETAIL_ERROR:
+      return {
+        ...state,
+        isLoadingGroupDetailError: payload,
+      };
     case groupsTypes.GET_GROUP_DETAIL:
       return {
         ...state,
@@ -431,6 +437,7 @@ function groupsReducer(
         loadingCover: false,
         loadingAvatar: false,
         loadingGroupDetail: false,
+        isLoadingGroupDetailError: false,
         groupDetail: {
           group: {}, // init state
           ...action.payload,
@@ -699,6 +706,11 @@ function groupsReducer(
         loadingJoinedGroups: false,
         joinedGroups: payload || [],
       };
+    case groupsTypes.SET_COMMUNITY_ERROR:
+      return {
+        ...state,
+        isGettingInfoDetailError: payload,
+      };
     case groupsTypes.SET_COMMUNITY_LOADING:
       return {
         ...state,
@@ -710,6 +722,7 @@ function groupsReducer(
         loadingCover: false,
         loadingAvatar: false,
         isGettingInfoDetail: false,
+        isGettingInfoDetailError: false,
         communityDetail: payload,
       };
 

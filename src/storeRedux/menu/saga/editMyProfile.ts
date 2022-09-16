@@ -45,13 +45,7 @@ export default function* editMyProfile({
       toastContent = editFieldToastMessage || 'common:text_edit_success';
     }
 
-    const toastMessage: IToastMessage = {
-      content: toastContent,
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    };
+    const toastMessage: IToastMessage = { content: toastContent };
     yield put(modalActions.showHideToastMessage(toastMessage));
     yield put(menuActions.setMyProfile(mapProfile(result.data)));
 

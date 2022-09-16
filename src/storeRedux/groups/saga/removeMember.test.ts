@@ -23,10 +23,6 @@ describe('Remove member saga', () => {
           content: i18next
             .t('common:message_remove_member_success')
             .replace('{n}', userFullname),
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
         }),
       )
       .run();
@@ -43,10 +39,6 @@ describe('Remove member saga', () => {
     .put(
       modalActions.showHideToastMessage({
         content: 'common:text_error_message',
-        props: {
-          textProps: { useI18n: true },
-          type: 'error',
-        },
       }),
     )
     .run());

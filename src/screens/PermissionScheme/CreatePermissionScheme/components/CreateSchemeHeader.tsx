@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEqual } from 'lodash';
 
 import { useDispatch } from 'react-redux';
@@ -33,7 +32,6 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const theme: ExtendedTheme = useTheme();
 
   const { id } = useKeySelector(groupsKeySelector.communityDetail) || {};
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
@@ -73,7 +71,6 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
         cancelBtn: true,
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('communities:permission:btn_continue'),
-        cancelBtnProps: { textColor: theme.colors.neutral80 },
         onCancel: () => rootNavigation.goBack(),
       }));
     } else {

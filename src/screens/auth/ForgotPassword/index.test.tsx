@@ -17,11 +17,11 @@ import * as navigationHook from '~/hooks/navigation';
 afterEach(cleanup);
 
 describe('ForgotPassword screen', () => {
-  let Keyboard: any;
+  // let Keyboard: any;
 
-  beforeEach(() => {
-    Keyboard = require('react-native').Keyboard;
-  });
+  // beforeEach(() => {
+  //   Keyboard = require('react-native').Keyboard;
+  // });
 
   afterEach(() => {
     jest.clearAllMocks();

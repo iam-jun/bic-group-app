@@ -8,7 +8,6 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import appConfig from '~/configs/appConfig';
-import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -22,6 +21,7 @@ import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
+import useDraftPostStore from '../DraftPost/store';
 
 export interface CreatePostProps {
   route?: {
@@ -35,12 +35,12 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const screenParams = route?.params || {};
 
   const dispatch = useDispatch();
-  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
+
+  const { doGetDraftPosts } = useDraftPostStore();
 
   const useCreatePostData = useCreatePost({
     screenParams,
@@ -149,7 +149,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const onPressDraftPost = () => {
     if (isNewsfeed) {
-      dispatch(postActions.getDraftPosts({ isRefresh: true }));
+      doGetDraftPosts({ isRefresh: true });
       rootNavigation.navigate(homeStack.draftPost);
     }
   };
@@ -160,10 +160,6 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const onPressSettings = () => {
     rootNavigation.navigate(homeStack.postSettings);
-  };
-
-  const onPressInput = () => {
-    refTextInput.current?.setFocus();
   };
 
   const now = new Date();

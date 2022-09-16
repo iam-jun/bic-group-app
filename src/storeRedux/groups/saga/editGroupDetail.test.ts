@@ -27,10 +27,6 @@ describe('Edit group detail saga', () => {
           content: `${action.payload.editFieldName} ${i18next.t(
             'common:text_updated_successfully',
           )}`,
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
         }),
       )
       .put(groupsActions.setGroupDetail(resp?.data))
@@ -68,10 +64,6 @@ describe('Edit group detail saga', () => {
           content: `${action.payload.editFieldName} ${i18next.t(
             'common:text_updated_successfully',
           )}`,
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
         }),
       )
       .put(groupsActions.setGroupDetail(resp?.data))
@@ -94,10 +86,6 @@ describe('Edit group detail saga', () => {
       .put(
         modalActions.showHideToastMessage({
           content: 'common:text_error_message',
-          props: {
-            textProps: { useI18n: true },
-            type: 'error',
-          },
         }),
       )
       .put(groupsActions.setLoadingAvatar(false))

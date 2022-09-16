@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import mainStack from '~/router/navigator/MainStack/stack';
@@ -23,8 +22,6 @@ const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
   const styles = createStyle(
     theme, insets,
   );
-  const { colors } = theme;
-  const { t } = useBaseHook();
 
   React.useEffect(
     () => {
@@ -41,7 +38,6 @@ const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
 
   const dataList = useKeySelector(postKeySelector.seenPostList.dataList);
   const canLoadMore = useKeySelector(postKeySelector.seenPostList.canLoadMore);
-  const total = useKeySelector(postKeySelector.seenPostList.total);
   const onPressCloseBottomSheet = () => {
     dispatch(modalActions.hideModal());
   };

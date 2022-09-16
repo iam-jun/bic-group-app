@@ -19,12 +19,14 @@ import {
 import PostViewHeader from '~/screens/post/components/PostViewComponents/PostViewHeader';
 import PostViewContent from '~/screens/post/components/PostViewComponents/PostViewContent';
 import PostViewImportant from '~/screens/post/components/PostViewComponents/PostViewImportant';
-import Button from '~/beinComponents/Button';
 import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import BottomListItem from '~/components/BottomList/BottomListItem';
+import useDraftPostStore from '../DraftPost/store';
+import { Button } from '~/baseComponents';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import Divider from '~/beinComponents/Divider';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -48,6 +50,8 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 
   const userId = useUserIdAuth();
 
+  const { doGetDraftPosts } = useDraftPostStore();
+
   const {
     id,
     actor,
@@ -60,7 +64,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     createdAt,
   } = data || {};
 
-  const { images, videos } = media || {};
+  const { images, videos, files } = media || {};
   const { isImportant, importantExpiredAt } = setting || {};
 
   const disableButtonPost = publishing
@@ -73,27 +77,24 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           e?.meta?.message
           || e?.meta?.errors?.[0]?.message
           || 'common:text_error_message',
-      props: { textProps: { useI18n: true }, type: 'error' },
+      props: { type: 'error' },
     }));
   };
 
   const refreshDraftPosts = () => {
     if (userId) {
       const payload: IPayloadGetDraftPosts = { isRefresh: true };
-      dispatch(postActions.getDraftPosts(payload));
+      doGetDraftPosts(payload);
     }
   };
 
-  const onPressPost = () => {
+  const onPressPublish = () => {
     if (id) {
       setPublishing(true);
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         onSuccess: () => {
-          dispatch(showHideToastMessage({
-            content: 'post:draft:text_draft_published',
-            props: { textProps: { useI18n: true }, type: 'success' },
-          }));
+          dispatch(showHideToastMessage({ content: 'post:draft:text_draft_published' }));
           refreshDraftPosts();
         },
         onError: () => setPublishing(false),
@@ -120,10 +121,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         )
         .then((response) => {
           if (response?.data) {
-            dispatch(showHideToastMessage({
-              content: 'post:draft:text_draft_deleted',
-              props: { textProps: { useI18n: true }, type: 'success' },
-            }));
+            dispatch(showHideToastMessage({ content: 'post:draft:text_draft_deleted' }));
             refreshDraftPosts();
           }
         })
@@ -136,37 +134,14 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const onPressDelete = () => {
     dispatch(modalActions.hideModal());
     dispatch(modalActions.showAlert({
-      title: t('post:draft:title_delete_draft_post'),
-      content: t('post:draft:text_delete_draft_post'),
+      title: t('post:title_delete_post'),
+      content: t('post:content_delete_post'),
       cancelBtn: true,
       cancelLabel: t('common:btn_cancel'),
       confirmLabel: t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+      confirmBtnProps: { type: 'ghost' },
       onConfirm: onDelete,
-    }));
-  };
-
-  const onPressCalendar = () => {
-    dispatch(modalActions.hideModal());
-    dispatch(modalActions.showAlertNewFeature());
-  };
-
-  const onPressMenu = () => {
-    dispatch(modalActions.showModal({
-      isOpen: true,
-      ContentComponent: (
-        <View>
-          <BottomListItem
-            leftIcon="Calendar"
-            title={t('post:draft:btn_menu_schedule')}
-            onPress={onPressCalendar}
-          />
-          <BottomListItem
-            leftIcon="TrashCan"
-            title={t('post:draft:btn_menu_delete')}
-            onPress={onPressDelete}
-          />
-        </View>
-      ),
     }));
   };
 
@@ -179,18 +154,25 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       );
     }
     return (
-      <View style={styles.footerButtonContainer}>
-        <Button.Secondary
+      <View style={[styles.row, styles.footerButtonContainer]}>
+        <View style={styles.row}>
+          <Button.Danger
+            type="ghost"
+            icon="TrashCan"
+            onPress={onPressDelete}
+          />
+          <ViewSpacing width={16} />
+          <Button.Secondary type="ghost" icon="PenToSquare" onPress={onPressEdit} />
+        </View>
+        <Button.Primary
+          useI18n
+          size="medium"
           loading={publishing}
           disabled={disableButtonPost}
-          style={styles.footerButton}
-          onPress={onPressPost}
+          onPress={onPressPublish}
         >
-          {t('post:draft:btn_post_now')}
-        </Button.Secondary>
-        <Button.Secondary style={styles.footerButton} onPress={onPressEdit}>
-          {t('post:draft:btn_edit')}
-        </Button.Secondary>
+          common:btn_publish
+        </Button.Primary>
       </View>
     );
   };
@@ -202,21 +184,25 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         expireTime={importantExpiredAt}
         markedReadPost={false}
       />
-      <View style={style}>
+      <View style={[styles.container, style]}>
         <PostViewHeader
           audience={audience}
           actor={actor}
           time={createdAt}
-          onPressMenu={onPressMenu}
         />
         <PostViewContent
           postId={id || ''}
           content={content}
           images={images}
           videos={videos}
+          files={files}
           isPostDetail={isPostDetail}
         />
+        <View style={styles.divider}>
+          <Divider color={colors.neutral5} />
+        </View>
         {renderFooter()}
+        <ViewSpacing height={8} />
       </View>
     </View>
   );
@@ -228,18 +214,21 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       backgroundColor: colors.white,
     },
-    footerButtonContainer: {
+    row: {
       flexDirection: 'row',
-      paddingHorizontal: spacing.padding.tiny,
     },
-    footerButton: {
-      flex: 1,
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.tiny,
+    footerButtonContainer: {
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.small,
+      justifyContent: 'space-between',
     },
     draftText: {
       marginVertical: spacing.margin.small,
       marginHorizontal: spacing.margin.large,
+    },
+    divider: {
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.base,
     },
   });
 };

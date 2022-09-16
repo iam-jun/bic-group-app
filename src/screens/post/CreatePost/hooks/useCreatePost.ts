@@ -27,6 +27,10 @@ import { useBaseHook } from '~/hooks';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { getMentionsFromContent } from '~/screens/post/helper/PostUtils';
 import { IGetFile } from '~/services/fileUploader';
+import useDraftPostStore from '../../DraftPost/store';
+import IDraftPostState from '../../DraftPost/store/Interface';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
+import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -80,7 +84,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
   // const [hasVideoProgress, setHasVideoProgress] = useState(videoUploading);
 
-  const tempMentions = useKeySelector('mentionInput.tempSelected') || {};
+  const tempMentions = useMentionInputStore((state: IMentionInputState) => state.tempSelected);
 
   let initPostData: IPostActivity = {};
 
@@ -89,7 +93,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   }
 
   if (draftPostId) {
-    const draftPosts = useKeySelector(postKeySelector.draft.posts) || [];
+    const draftPosts = useDraftPostStore((state:IDraftPostState) => state.posts) || [];
     initPostData = draftPosts?.find((item: IPostActivity) => item?.id === draftPostId);
   }
 
@@ -296,11 +300,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   useEffect(
     () => {
       const dataChangeList = [
-        isEmpty(differenceWith(
-          selectingImages,
-          prevData?.current?.selectingImages,
-          isEqual,
-        )),
+        isEqual(
+          JSON.stringify(selectingImages),
+          JSON.stringify(prevData?.current?.selectingImages),
+        ),
         isEmpty(differenceWith(
           chosenAudiences,
           prevData?.current?.chosenAudiences,
@@ -446,7 +449,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         if (imageError) {
           dispatch(modalActions.showHideToastMessage({
             content: imageError,
-            props: { textProps: { useI18n: true }, type: 'error' },
+            props: { type: 'error' },
           }));
         }
         return;
@@ -526,7 +529,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     if (imageError) {
       dispatch(modalActions.showHideToastMessage({
         content: imageError,
-        props: { textProps: { useI18n: true }, type: 'error' },
+        props: { type: 'error' },
       }));
       return 'attachmentError';
     }

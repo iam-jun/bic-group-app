@@ -19,8 +19,6 @@ import {
   ICreatePostImage,
   ICreatePostSettings,
   ICreatePostCurrentSettings,
-  IPayloadGetDraftPosts,
-  IPayloadSetDraftPosts,
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
   IPayloadAddToAllPost,
@@ -112,10 +110,6 @@ const postActions = {
   }),
   setCreatePostInitAudiences: (payload?: IPostAudience) => ({
     type: postTypes.SET_CREATE_POST_INIT_AUDIENCES,
-    payload,
-  }),
-  setDraftPosts: (payload?: IPayloadSetDraftPosts) => ({
-    type: postTypes.SET_DRAFT_POSTS,
     payload,
   }),
   setCreatePostCurrentSettings: (payload: ICreatePostCurrentSettings) => ({
@@ -238,10 +232,6 @@ const postActions = {
   }),
   getPostDetail: (payload: IPayloadGetPostDetail) => ({
     type: postTypes.GET_POST_DETAIL,
-    payload,
-  }),
-  getDraftPosts: (payload?: IPayloadGetDraftPosts) => ({
-    type: postTypes.GET_DRAFT_POSTS,
     payload,
   }),
   postPublishDraftPost: (payload: IPayloadPublishDraftPost) => ({

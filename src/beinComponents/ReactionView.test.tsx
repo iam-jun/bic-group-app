@@ -24,7 +24,7 @@ describe('ReactionView component', () => {
     const rendered = renderWithRedux(
       <ReactionView
         style={{}}
-        ownerReactions={ownReactions[0]}
+        ownerReactions={ownReactions}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -44,7 +44,7 @@ describe('ReactionView component', () => {
     const onLongPressReaction = jest.fn();
     const rendered = renderWithRedux(
       <ReactionView
-        ownerReactions={ownReactions[0]}
+        ownerReactions={ownReactions}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -120,32 +120,6 @@ describe('ReactionView component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it('renders correctly with props style', () => {
-    const onAddReaction = jest.fn();
-    const onRemoveReaction = jest.fn();
-    const onPressSelectReaction = jest.fn();
-    const onLongPressReaction = jest.fn();
-    const rendered = renderWithRedux(
-      <ReactionView
-        style={{ backgroundColor: '#FF9800' }}
-        ownerReactions={ownReactions[0]}
-        reactionsCount={reactionCounts}
-        showSelectReactionWhenEmpty
-        onAddReaction={onAddReaction}
-        onRemoveReaction={onRemoveReaction}
-        onPressSelectReaction={onPressSelectReaction}
-        onLongPressReaction={onLongPressReaction}
-      />,
-      store,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-    const reractionViewComp = rendered.getByTestId('reaction_view');
-    expect(reractionViewComp).toBeDefined();
-    expect(reractionViewComp.props.style[1]).toMatchObject({
-      backgroundColor: '#FF9800',
-    });
-  });
-
   it('renders correctly with props onPressSelectReaction ', () => {
     const onAddReaction = jest.fn();
     const onRemoveReaction = jest.fn();
@@ -177,7 +151,7 @@ describe('ReactionView component', () => {
     const rendered = renderWithRedux(
       <ReactionView
         style={{}}
-        ownerReactions={ownReactions[0]}
+        ownerReactions={ownReactions}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -225,7 +199,7 @@ describe('ReactionView component', () => {
     const rendered = renderWithRedux(
       <ReactionView
         style={{}}
-        ownerReactions={ownReactions[0]}
+        ownerReactions={ownReactions}
         reactionsCount={reactionCounts}
         showSelectReactionWhenEmpty
         onAddReaction={onAddReaction}
@@ -236,6 +210,7 @@ describe('ReactionView component', () => {
       store,
     );
     const reactComponent = rendered.getByTestId('reaction.button.sweat_smile');
+    expect(reactComponent).toBeDefined();
     fireEvent.press(reactComponent);
     expect(onRemoveReaction).toBeCalledWith('sweat_smile');
   });
@@ -250,10 +225,10 @@ const ownReactions = [
     id: '165',
     postId: '46',
     reactionName: 'sweat_smile',
-    createdBy: '58',
+    createdBy: 58,
     createdAt: '2022-04-21T03:05:36.908Z',
   },
-] as unknown as IOwnReaction[];
+] as IOwnReaction;
 
 const reactionCounts = {
   0: {

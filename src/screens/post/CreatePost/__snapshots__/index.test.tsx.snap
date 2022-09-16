@@ -95,8 +95,8 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   "backgroundColor": "#FFFFFF",
                   "flexDirection": "row",
                   "minHeight": 44,
-                  "overflow": "hidden",
                   "paddingTop": 0,
+                  "paddingVertical": 4,
                 },
                 Object {
                   "elevation": 2,
@@ -108,7 +108,10 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   "shadowOpacity": 0.12,
                   "shadowRadius": 1.5,
                 },
-                undefined,
+                Object {
+                  "borderBottomColor": "#E3E6F2",
+                  "borderBottomWidth": 1,
+                },
               ]
             }
             testID="header.content"
@@ -315,7 +318,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                     }
                     testID="button.text"
                   >
-                    Post
+                    Publish
                   </Text>
                 </View>
               </View>
@@ -334,20 +337,9 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
           </View>
         </View>
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "flex": 1,
-              "opacity": 1,
             }
           }
         >
@@ -373,115 +365,66 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   "alignItems": "center",
                   "flexDirection": "row",
                   "opacity": 1,
-                  "paddingHorizontal": 24,
+                  "paddingHorizontal": 16,
                   "paddingVertical": 8,
                 }
               }
               testID="create_post_chosen_audiences"
             >
-              <View
+              <Text
+                numberOfLines={2}
                 style={
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "flexDirection": "row",
-                  }
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 15,
+                    },
+                    Object {
+                      "color": "#353E6E",
+                    },
+                    Object {},
+                  ]
                 }
               >
+                Post to 
                 <Text
                   style={
                     Array [
                       Object {
                         "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 13,
+                        "fontFamily": "BeVietnamPro-Medium",
+                        "fontSize": 15,
                       },
                       Object {
-                        "color": "#767D93",
+                        "color": "#212745",
                       },
-                      Object {
-                        "marginRight": 4,
-                        "marginVertical": 8,
-                      },
+                      undefined,
                     ]
                   }
                 >
-                  Send to 
-                  <Text
-                    style={
-                      Array [
-                        Object {
-                          "color": "#181C32",
-                          "fontFamily": "BeVietnamPro-SemiBold",
-                          "fontSize": 13,
-                        },
-                        Object {},
-                        undefined,
-                      ]
-                    }
-                    testID="create_post_chosen_audiences.names"
-                  >
-                    EVOL Community
-                  </Text>
+                  1
                 </Text>
-              </View>
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "opacity": 1,
-                  }
-                }
-              >
-                <View
+                : 
+                <Text
                   style={
                     Array [
                       Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Medium",
+                        "fontSize": 15,
+                      },
+                      Object {
+                        "color": "#212745",
                       },
                       undefined,
-                      Object {
-                        "backgroundColor": undefined,
-                      },
                     ]
                   }
+                  testID="create_post_chosen_audiences.names"
                 >
-                  <View
-                    style={
-                      Array [
-                        undefined,
-                        undefined,
-                        undefined,
-                      ]
-                    }
-                  >
-                    <View />
-                  </View>
-                </View>
-              </View>
+                  EVOL Community
+                </Text>
+              </Text>
             </View>
             <View
               style={
@@ -568,12 +511,16 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                     </TextInput>
                   </View>
                   <View
-                    collapsable={false}
-                    style={Object {}}
-                  />
-                  <View
                     onLayout={[Function]}
-                  />
+                  >
+                    <View
+                      style={
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                        }
+                      }
+                    />
+                  </View>
                   <View
                     accessible={true}
                     collapsable={false}
@@ -605,71 +552,320 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       testID="button_wrapper.content"
                     />
                   </View>
+                  <View
+                    collapsable={false}
+                    style={Object {}}
+                  />
                 </View>
               </View>
             </View>
           </RCTScrollView>
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "flexWrap": "wrap",
-                "justifyContent": "flex-end",
-                "padding": 16,
-              }
-            }
-          >
+          <View>
             <View
-              accessible={true}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#EAEDF2",
-                  "borderRadius": 4,
-                  "padding": 8,
-                }
-              }
-              testID="create_post.btn_post_settings"
+              collapsable={false}
+              style={Object {}}
             >
               <View
                 style={
                   Array [
                     Object {
                       "alignItems": "center",
+                      "backgroundColor": "#FFFFFF",
+                      "borderColor": "#E3E6F2",
+                      "borderWidth": 1,
                       "flexDirection": "row",
-                      "justifyContent": "center",
+                      "height": 52,
+                      "justifyContent": "space-between",
+                      "paddingHorizontal": 16,
                     },
                     undefined,
                   ]
                 }
-                testID="button_wrapper.content"
+                testID="post_toolbar"
               >
                 <View
-                  accessibilityState={
+                  style={
                     Object {
-                      "disabled": true,
+                      "flexDirection": "row",
                     }
                   }
+                >
+                  <View
+                    style={
+                      Object {
+                        "height": 36,
+                        "justifyContent": "center",
+                        "width": 36,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityState={
+                        Object {
+                          "disabled": false,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      hitSlop={
+                        Object {
+                          "bottom": 10,
+                          "left": 10,
+                          "right": 10,
+                          "top": 10,
+                        }
+                      }
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "opacity": 1,
+                        }
+                      }
+                      testID="post_toolbar.add_photo"
+                    >
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
+                            undefined,
+                            Object {
+                              "backgroundColor": undefined,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            Array [
+                              undefined,
+                              undefined,
+                              undefined,
+                            ]
+                          }
+                        >
+                          <View />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "height": 36,
+                        "justifyContent": "center",
+                        "width": 36,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityState={
+                        Object {
+                          "disabled": false,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      hitSlop={
+                        Object {
+                          "bottom": 10,
+                          "left": 10,
+                          "right": 10,
+                          "top": 10,
+                        }
+                      }
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "opacity": 1,
+                        }
+                      }
+                      testID="post_toolbar.add_video"
+                    >
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
+                            undefined,
+                            Object {
+                              "backgroundColor": undefined,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            Array [
+                              undefined,
+                              undefined,
+                              undefined,
+                            ]
+                          }
+                        >
+                          <View />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "height": 36,
+                        "justifyContent": "center",
+                        "width": 36,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityState={
+                        Object {
+                          "disabled": false,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      hitSlop={
+                        Object {
+                          "bottom": 10,
+                          "left": 10,
+                          "right": 10,
+                          "top": 10,
+                        }
+                      }
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "opacity": 1,
+                        }
+                      }
+                      testID="post_toolbar.add_file"
+                    >
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
+                            undefined,
+                            Object {
+                              "backgroundColor": undefined,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            Array [
+                              undefined,
+                              undefined,
+                              undefined,
+                            ]
+                          }
+                        >
+                          <View />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "height": 36,
+                        "justifyContent": "center",
+                        "width": 36,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityState={
+                        Object {
+                          "disabled": true,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      hitSlop={
+                        Object {
+                          "bottom": 10,
+                          "left": 10,
+                          "right": 10,
+                          "top": 10,
+                        }
+                      }
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "opacity": 1,
+                        }
+                      }
+                      testID="post_toolbar.markdown_preview"
+                    >
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
+                            undefined,
+                            Object {
+                              "backgroundColor": undefined,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          style={
+                            Array [
+                              undefined,
+                              undefined,
+                              undefined,
+                            ]
+                          }
+                        >
+                          <View />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <View
                   accessible={true}
-                  collapsable={false}
-                  focusable={false}
-                  hitSlop={
-                    Object {
-                      "bottom": 10,
-                      "left": 10,
-                      "right": 10,
-                      "top": 10,
-                    }
-                  }
+                  focusable={true}
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -678,354 +874,99 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Object {
-                      "opacity": 1,
-                    }
+                    Array [
+                      Object {
+                        "borderRadius": 6,
+                      },
+                      undefined,
+                    ]
                   }
+                  testID="header.menuIcon.button"
                 >
                   <View
                     style={
                       Array [
                         Object {
                           "alignItems": "center",
+                          "borderRadius": 6,
+                          "elevation": 2,
                           "flexDirection": "row",
+                          "justifyContent": "center",
+                          "shadowColor": "rgba(0, 0, 0, 1)",
+                          "shadowOffset": Object {
+                            "height": 2,
+                            "width": 0,
+                          },
+                          "shadowOpacity": 0.12,
+                          "shadowRadius": 1.5,
                         },
+                        undefined,
                         Object {
-                          "marginHorizontal": 8,
-                        },
-                        Object {
-                          "backgroundColor": undefined,
+                          "backgroundColor": "#FFFFFF",
+                          "height": 36,
+                          "paddingHorizontal": 12,
                         },
                       ]
                     }
+                    testID="button.content"
                   >
                     <View
+                      accessibilityState={
+                        Object {
+                          "disabled": true,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={false}
+                      hitSlop={
+                        Object {
+                          "bottom": 10,
+                          "left": 10,
+                          "right": 10,
+                          "top": 10,
+                        }
+                      }
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
                       style={
-                        Array [
-                          undefined,
-                          undefined,
-                          undefined,
-                        ]
-                      }
-                    >
-                      <View
-                        testID="button_wrapper.icon"
-                      />
-                    </View>
-                  </View>
-                </View>
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#212745",
-                        "fontFamily": "BeVietnamPro-Light",
-                        "fontSize": 15,
-                      },
-                      Object {
-                        "color": "#181C32",
-                      },
-                      Object {
-                        "fontSize": 14,
-                      },
-                    ]
-                  }
-                >
-                  Post Settings
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View>
-            <View
-              collapsable={false}
-              forwardedRef={[Function]}
-              onGestureHandlerEvent={[Function]}
-              onGestureHandlerStateChange={[Function]}
-              style={Object {}}
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#FFFFFF",
-                    "borderColor": "#E3E6F2",
-                    "borderWidth": 1,
-                    "flexDirection": "row",
-                    "height": 52,
-                    "paddingHorizontal": 16,
-                  }
-                }
-                testID="post_toolbar"
-              >
-                <View
-                  style={
-                    Object {
-                      "height": 36,
-                      "justifyContent": "center",
-                      "width": 36,
-                    }
-                  }
-                >
-                  <View
-                    accessibilityState={
-                      Object {
-                        "disabled": true,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      Object {
-                        "opacity": 1,
-                      }
-                    }
-                    testID="post_toolbar.markdown_preview"
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
-                          undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
-                        ]
+                        Object {
+                          "opacity": 1,
+                        }
                       }
                     >
                       <View
                         style={
                           Array [
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
                             undefined,
-                            undefined,
-                            undefined,
+                            Object {
+                              "backgroundColor": undefined,
+                            },
                           ]
                         }
                       >
-                        <View />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "height": 36,
-                      "justifyContent": "center",
-                      "width": 36,
-                    }
-                  }
-                >
-                  <View
-                    accessibilityState={
-                      Object {
-                        "disabled": false,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      Object {
-                        "opacity": 1,
-                      }
-                    }
-                    testID="post_toolbar.add_photo"
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
-                          undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
-                        ]
-                      }
-                    >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "height": 36,
-                      "justifyContent": "center",
-                      "width": 36,
-                    }
-                  }
-                >
-                  <View
-                    accessibilityState={
-                      Object {
-                        "disabled": false,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      Object {
-                        "opacity": 1,
-                      }
-                    }
-                    testID="post_toolbar.add_video"
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
-                          undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
-                        ]
-                      }
-                    >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View />
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "height": 36,
-                      "justifyContent": "center",
-                      "width": 36,
-                    }
-                  }
-                >
-                  <View
-                    accessibilityState={
-                      Object {
-                        "disabled": false,
-                      }
-                    }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    hitSlop={
-                      Object {
-                        "bottom": 10,
-                        "left": 10,
-                        "right": 10,
-                        "top": 10,
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      Object {
-                        "opacity": 1,
-                      }
-                    }
-                    testID="post_toolbar.add_file"
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "flexDirection": "row",
-                          },
-                          undefined,
-                          Object {
-                            "backgroundColor": undefined,
-                          },
-                        ]
-                      }
-                    >
-                      <View
-                        style={
-                          Array [
-                            undefined,
-                            undefined,
-                            undefined,
-                          ]
-                        }
-                      >
-                        <View />
+                        <View
+                          style={
+                            Array [
+                              undefined,
+                              undefined,
+                              undefined,
+                            ]
+                          }
+                        >
+                          <View
+                            testID="button.icon"
+                          />
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -1086,15 +1027,14 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       onResponderTerminationRequest={[Function]}
                       onStartShouldSetResponder={[Function]}
                       style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#FFFFFF",
-                          "borderColor": "#7335C0",
-                          "borderRadius": 4,
-                          "borderWidth": 1,
-                          "marginRight": 4,
-                          "padding": 8,
-                        }
+                        Array [
+                          Object {
+                            "borderRadius": 6,
+                          },
+                          Object {
+                            "marginRight": 4,
+                          },
+                        ]
                       }
                       testID="header.button"
                     >
@@ -1103,30 +1043,41 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           Array [
                             Object {
                               "alignItems": "center",
+                              "borderRadius": 6,
                               "flexDirection": "row",
                               "justifyContent": "center",
+                              "paddingVertical": 4,
                             },
                             undefined,
+                            Object {
+                              "backgroundColor": "#7335C0",
+                              "height": 36,
+                              "paddingHorizontal": 12,
+                            },
                           ]
                         }
-                        testID="button_wrapper.content"
+                        testID="button.content"
                       >
                         <Text
                           style={
                             Array [
                               Object {
                                 "color": "#212745",
-                                "fontFamily": "BeVietnamPro-Light",
+                                "fontFamily": "BeVietnamPro-Medium",
                                 "fontSize": 15,
                               },
                               Object {
-                                "color": "#7335C0",
+                                "color": "#FFFFFF",
                               },
-                              Object {
-                                "textAlign": "center",
-                              },
+                              Array [
+                                Object {
+                                  "textAlign": "center",
+                                },
+                                undefined,
+                              ],
                             ]
                           }
+                          testID="button.text"
                         >
                           Done
                         </Text>
@@ -1233,6 +1184,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                                     "overflow": "hidden",
                                   },
                                   Object {
+                                    "backgroundColor": "#FFFFFF",
                                     "borderColor": "#F2F5F8",
                                     "borderRadius": 24,
                                     "borderWidth": 2,
@@ -1262,7 +1214,13 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           </View>
                         </View>
                       </View>
-                      <View>
+                      <View
+                        style={
+                          Object {
+                            "flex": 1,
+                          }
+                        }
+                      >
                         <Text
                           style={
                             Array [

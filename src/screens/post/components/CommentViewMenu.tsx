@@ -93,13 +93,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
     dispatch(modalActions.hideModal());
     if (content) {
       Clipboard.setString(content);
-      dispatch(showHideToastMessage({
-        content: 'common:text_copied_to_clipboard',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
-      }));
+      dispatch(showHideToastMessage({ content: 'common:text_copied_to_clipboard' }));
     }
   };
 
@@ -111,13 +105,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         parentId: parentCommentId || '',
       },
     ));
-    dispatch(showHideToastMessage({
-      content: 'post:comment_link_copied',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
-    }));
+    dispatch(showHideToastMessage({ content: 'post:comment_link_copied' }));
   };
 
   const renderReactItem = (

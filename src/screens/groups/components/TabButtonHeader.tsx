@@ -13,7 +13,7 @@ interface TabButtonHeaderProps {
 }
 
 const TabButtonHeader = ({
-  isMember, onPressDiscover, onPressAbout, onPressMembers,
+  onPressDiscover, onPressAbout, onPressMembers,
 }: TabButtonHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -34,10 +34,10 @@ const TabButtonHeader = ({
           <ViewSpacing width={spacing.margin.small} />
         </>
       )}
-      {isMember && onPressDiscover && (
+      {onPressDiscover && (
         <>
           <PillTabButton useI18n testID="tab_button_header.discover_btn" size="medium" onPress={onPressDiscover}>
-            groups:group_content:btn_discover
+            groups:group_content:btn_browse
           </PillTabButton>
           <ViewSpacing width={spacing.margin.small} />
         </>

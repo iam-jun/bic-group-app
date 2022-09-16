@@ -30,7 +30,9 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
     style={
       Object {
         "flexDirection": "row",
-        "margin": 16,
+        "paddingBottom": 24,
+        "paddingHorizontal": 16,
+        "paddingTop": 12,
       }
     }
   >
@@ -45,14 +47,15 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#DDDFE4",
-          "borderRadius": 4,
-          "flex": 1,
-          "marginRight": 8,
-          "padding": 8,
-        }
+        Array [
+          Object {
+            "borderRadius": 6,
+          },
+          Object {
+            "flex": 1,
+            "marginRight": 8,
+          },
+        ]
       }
       testID="button_approve_decline_all_requests.decline"
     >
@@ -61,30 +64,102 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
+              "borderRadius": 6,
               "flexDirection": "row",
               "justifyContent": "center",
+              "paddingVertical": 4,
             },
             undefined,
+            Object {
+              "backgroundColor": "#BAC0DE",
+              "height": 36,
+              "paddingHorizontal": 12,
+            },
           ]
         }
-        testID="button_wrapper.content"
+        testID="button.content"
       >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="button.icon"
+              />
+            </View>
+          </View>
+        </View>
         <Text
           style={
             Array [
               Object {
                 "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
+                "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
               Object {
-                "color": "#181C32",
+                "color": "#212745",
               },
-              Object {
-                "textAlign": "center",
-              },
+              Array [
+                Object {
+                  "textAlign": "center",
+                },
+                Object {
+                  "marginLeft": 8,
+                },
+              ],
             ]
           }
+          testID="button.text"
         >
           Decline All
         </Text>
@@ -101,13 +176,14 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#9E6FD8",
-          "borderRadius": 4,
-          "flex": 1,
-          "padding": 8,
-        }
+        Array [
+          Object {
+            "borderRadius": 6,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
       }
       testID="button_approve_decline_all_requests.approve"
     >
@@ -116,30 +192,102 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
+              "borderRadius": 6,
               "flexDirection": "row",
               "justifyContent": "center",
+              "paddingVertical": 4,
             },
             undefined,
+            Object {
+              "backgroundColor": "#7335C0",
+              "height": 36,
+              "paddingHorizontal": 12,
+            },
           ]
         }
-        testID="button_wrapper.content"
+        testID="button.content"
       >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="button.icon"
+              />
+            </View>
+          </View>
+        </View>
         <Text
           style={
             Array [
               Object {
                 "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
+                "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
               Object {
                 "color": "#FFFFFF",
               },
-              Object {
-                "textAlign": "center",
-              },
+              Array [
+                Object {
+                  "textAlign": "center",
+                },
+                Object {
+                  "marginLeft": 8,
+                },
+              ],
             ]
           }
+          testID="button.text"
         >
           Approve All
         </Text>

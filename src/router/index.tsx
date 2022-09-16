@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
-import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
+import Toast from '~/baseComponents/Toast';
 import { AppConfig } from '~/configs';
 import { IUserResponse } from '~/interfaces/IAuth';
 import InternetConnectionStatus from '~/components/network/InternetConnectionStatus';
@@ -100,7 +100,7 @@ const RootNavigator = (): React.ReactElement => {
           <AlertModal />
           <SystemIssueModal />
           <LoadingModal />
-          <ToastMessage />
+          <Toast />
           <InternetConnectionStatus />
         </Host>
       </NavigationContainer>

@@ -40,10 +40,6 @@ describe('updateCommunityScheme saga', () => {
     .put(
       modalActions.showHideToastMessage({
         content: 'communities:permission:text_update_scheme_success',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
       }),
     )
     .run()

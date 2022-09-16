@@ -3,6 +3,7 @@ module.exports = {
   preset: 'react-native',
   testRunner: 'jest-circus/runner',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  modulePathIgnorePatterns: ['<rootDir>/src/storeRedux/'],
   moduleNameMapper: {
     '\\.svg': '<rootDir>/__mocks__/svgMock.js',
   },
@@ -27,6 +28,7 @@ module.exports = {
     '!src/theme/**/*.{js,jsx,ts,tsx}',
     '!src/beinComponents/Markdown/**/*.{js,jsx,ts,tsx}',
     '!src/beinComponents/MarkdownView/**/*.{js,jsx,ts,tsx}',
+    '!src/storeRedux/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.stories.{js,jsx,ts,tsx}',
   ],
   setupFiles: ['<rootDir>/src/test/setup.js'],

@@ -22,10 +22,6 @@ export default function* removeGroupAdmin({
 
     const toastMessage: IToastMessage = {
       content: 'groups:modal_confirm_remove_admin:success_message',
-      props: {
-        textProps: { useI18n: true },
-        type: 'success',
-      },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
 

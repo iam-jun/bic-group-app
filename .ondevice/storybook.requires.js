@@ -45,6 +45,7 @@ const getStories = () => {
     require("../src/baseComponents/Reaction/index.stories.tsx"),
     require("../src/baseComponents/Tab/index.stories.tsx"),
     require("../src/baseComponents/Tag/index.stories.tsx"),
+    require("../src/baseComponents/Toast/index.stories.tsx"),
     require("../src/baseComponents/Toggle/index.stories.tsx"),
   ];
 };

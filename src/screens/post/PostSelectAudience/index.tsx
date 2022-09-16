@@ -35,9 +35,9 @@ import {
 import { ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
-import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store/selectAudienceStore';
 import SearchInput from '~/baseComponents/Input/SearchInput';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
+import useSelectAudienceStore from './store';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -83,7 +83,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const { chosenAudiences } = createPostData || {};
 
   const {
-    tree, search, dispatchGetAudienceTree, dispatchGetAudienceSearch, reset: resetStore,
+    tree, search, doGetAudienceTree, doGetAudienceSearch, reset: resetStore,
   } = useSelectAudienceStore();
   const { data: dataTree = [], loading: loadingTree } = tree || {};
   const { data: dataSearch = [], loading: loadingSearch, key: searchKey } = search || {};
@@ -106,10 +106,10 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     () => {
       if (isFirstStep) {
         dispatch(postActions.clearCreatPostData());
-        dispatchGetAudienceTree();
+        doGetAudienceTree();
       } else {
         // with old version, it will show last search result lists, but new flow has tree, so we need re-fetch
-        dispatchGetAudienceTree();
+        doGetAudienceTree();
       }
 
       return () => {
@@ -234,7 +234,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 
   const onSearch = debounce(
     (searchText: string) => {
-      dispatchGetAudienceSearch(searchText);
+      doGetAudienceSearch(searchText);
     }, 500,
   );
 

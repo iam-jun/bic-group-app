@@ -32,9 +32,6 @@ export default function* cancelJoinCommunity({
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_cancel_join_community')} ${communityName}`,
-      props: {
-        type: 'success',
-      },
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));

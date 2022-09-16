@@ -39,10 +39,7 @@ function* putEditComment({
     const newComment = { ...comment, ...data, edited: true };
     newComment.updatedAt = new Date().toISOString();
     yield put(postActions.addToAllComments(newComment));
-    yield put(modalActions.showHideToastMessage({
-      content: 'post:edit_comment_success',
-      props: { textProps: { useI18n: true }, type: 'success' },
-    }));
+    yield put(modalActions.showHideToastMessage({ content: 'post:edit_comment_success' }));
     yield timeOut(500);
     navigation.goBack();
     yield put(postActions.setCreateComment({ loading: false, content: '' }));

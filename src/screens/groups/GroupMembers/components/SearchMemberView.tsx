@@ -1,12 +1,9 @@
-import { StyleSheet, View } from 'react-native';
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { debounce } from 'lodash';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
-import Text from '~/beinComponents/Text';
 import { IGroupMembers } from '~/interfaces/IGroup';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import { useKeySelector } from '~/hooks/selector';
@@ -32,12 +29,12 @@ const SearchMemberView = ({
   onPressMenu,
 }: SearchMemberViewProps) => {
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
-  const styles = createStyles();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
-    'groups', groupId, [
+    'groups',
+    groupId,
+    [
       PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
       PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
     ],
@@ -78,33 +75,16 @@ const SearchMemberView = ({
       onClose={onClose}
       onChangeText={onSearchMembers}
     >
-      {searchText ? (
+      {!!searchText && (
         <MemberSearchResult
           canManageMember={canManageMember}
           memberSearchData={groupSearchMembers}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}
         />
-      ) : (
-        <View style={styles.text}>
-          <Text.BodyS
-            color={theme.colors.gray50}
-            testID="search_member_view.type_search"
-            useI18n
-          >
-            common:text_type_search_keyword
-          </Text.BodyS>
-        </View>
       )}
     </SearchBaseView>
   );
 };
-
-const createStyles = () => StyleSheet.create({
-  text: {
-    marginTop: 33,
-    alignItems: 'center',
-  },
-});
 
 export default SearchMemberView;
