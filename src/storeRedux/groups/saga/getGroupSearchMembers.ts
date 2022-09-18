@@ -21,8 +21,6 @@ export default function* getGroupSearchMembers({
 
     if (!canLoadMore) return;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const resp = yield call(
       groupApi.getGroupMembers, groupId, {
         limit: appConfig.recordsPerPage,
@@ -35,8 +33,8 @@ export default function* getGroupSearchMembers({
     let newDataArr: any = [];
     const members = resp.data;
     Object.keys(members)?.forEach?.((role: string) => {
-      newDataCount += members[role].data.length;
-      newDataArr = [...newDataArr, ...members[role].data];
+      newDataCount += members[role]?.data?.length || 0;
+      newDataArr = [...newDataArr, ...members[role]?.data || []];
     });
 
     // update search results data

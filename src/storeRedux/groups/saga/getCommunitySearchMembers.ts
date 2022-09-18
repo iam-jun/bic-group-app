@@ -35,9 +35,7 @@ export default function* getCommunitySearchMembers({
     let newDataArr: any = [];
     const members = resp.data;
     Object.keys(members)?.forEach?.((role: string) => {
-      // @ts-ignore
       newDataCount += members[role]?.data?.length || 0;
-      // @ts-ignore
       newDataArr = [...newDataArr, ...members[role]?.data || []];
     });
 
