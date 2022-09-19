@@ -1,33 +1,28 @@
+import getJoinedGroupTree from './actions/getJoinedGroupTree';
 import { createStore, resetStore } from '~/store/utils';
-import groupApi from '~/api/GroupApi';
-import IJoinedGroupTreeState from './Interface';
+import ICommunityJoinedGroupTreeState from './Interface';
 
 const initialState = {
   data: {},
   loading: false,
+  searchKey: '',
+  searchResult: [],
 };
 
-const communityJoinedGroupTreeStore = (set) => ({
+const communityJoinedGroupTreeStore = (set, get) => ({
   ...initialState,
-  getJoinedGroupTree: (id: string) => {
-    set((state) => {
-      state.loading = true;
-    });
-    groupApi.getCommunityGroups(id, { listBy: 'tree' }).then((response) => {
-      set((state) => {
-        state.loading = false;
-        state.data[id] = response.data || [];
-      }, 'getJoinedGroupTree');
-    }).catch((error) => {
-      console.error('\x1b[35m🐣️ joinedGroupTree error ', error, '\x1b[0m');
-      set((state) => {
-        state.loading = false;
-      }, 'getJoinedGroupTree');
-    });
+  actions: {
+    setSearchKey: (key: string) => {
+      set((state: ICommunityJoinedGroupTreeState) => {
+        state.searchKey = key;
+      });
+    },
+
+    getJoinedGroupTree: getJoinedGroupTree(set, get),
   },
   reset: () => resetStore(initialState, set),
 });
 
-const useCommunityJoinedGroupTreeStore = createStore<IJoinedGroupTreeState>(communityJoinedGroupTreeStore);
+const useCommunityJoinedGroupTreeStore = createStore<ICommunityJoinedGroupTreeState>(communityJoinedGroupTreeStore);
 
 export default useCommunityJoinedGroupTreeStore;

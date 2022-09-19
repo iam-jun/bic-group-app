@@ -1,11 +1,16 @@
 import { IGroup } from '~/interfaces/IGroup';
 import IBaseStore from '~/store/interfaces/IBaseStore';
 
-interface IJoinedGroupTreeState extends IBaseStore {
-  data: {[key: string]: IGroup},
+interface ICommunityJoinedGroupTreeState extends IBaseStore {
+  data: {[key: string]: IGroup[]},
   loading: boolean,
+  searchKey: string,
+  searchResult: IGroup[],
 
-  getJoinedGroupTree: any
+  actions: {
+    setSearchKey: (key: string) => void,
+    getJoinedGroupTree: any,
+  }
 }
 
-export default IJoinedGroupTreeState;
+export default ICommunityJoinedGroupTreeState;

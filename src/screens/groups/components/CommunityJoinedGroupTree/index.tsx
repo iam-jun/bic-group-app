@@ -1,13 +1,12 @@
 import React, { FC, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { SearchInput } from '~/baseComponents/Input';
-import useJoinedGroupTreeStore from '~/screens/groups/components/CommunityJoinedGroupTree/store';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
+import useCommunityJoinedGroupTreeStore from './store';
 import modalActions from '~/storeRedux/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -35,12 +34,15 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
 
   const id = communityId || teamName;
 
-  const joinedGroupTreeStore = useJoinedGroupTreeStore();
-  const { loading, getJoinedGroupTree } = joinedGroupTreeStore;
-  const joinedGroups = get(joinedGroupTreeStore, `data.${id}`);
+  const actions = useCommunityJoinedGroupTreeStore((state) => state.actions);
+  const loading = useCommunityJoinedGroupTreeStore((state) => state.loading);
+  const data = useCommunityJoinedGroupTreeStore((state) => state.data);
+  const searchKey = useCommunityJoinedGroupTreeStore((state) => state.searchKey);
+  const searchResult = useCommunityJoinedGroupTreeStore((state) => state.searchResult);
+  const joinedGroups: IGroup[] = data?.[id] || [];
 
   useEffect(() => {
-    getJoinedGroupTree(communityId);
+    actions.getJoinedGroupTree(communityId);
   }, [communityId]);
 
   const onPressGroup = (group: IGroup) => {
@@ -57,6 +59,10 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
         },
       );
     }
+  };
+
+  const onChangeText = (text: string) => {
+    actions.setSearchKey(text);
   };
 
   const renderItem = ({ item }: any) => (
@@ -81,29 +87,63 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
     );
   };
 
-  const renderHeader = () => (
-    <View>
-      <SearchInput />
-    </View>
-  );
+  const renderSearchResult = () => {
+    if (!searchKey) {
+      return null;
+    }
+    console.log(
+      '\x1b[34m🐣️ index CommunityJoinedGroupTree',
+      `${JSON.stringify(searchResult, undefined, 2)}\x1b[0m`,
+    );
+    return (
+      <View style={styles.searchResultContainer} />
+    );
+  };
 
   return (
-    <FlatList
-      keyExtractor={(item) => `joined_group_${item?.id}`}
-      data={joinedGroups || []}
-      renderItem={renderItem}
-      ListEmptyComponent={renderEmpty}
-      ListHeaderComponent={renderHeader}
-    />
+    <View style={styles.container}>
+      <SearchInput
+        style={styles.searchInput}
+        placeholder={t('input:search_group')}
+        onChangeText={onChangeText}
+      />
+      <View style={styles.contentContainer}>
+        <FlatList
+          keyExtractor={(item) => `joined_group_${item?.id}`}
+          data={joinedGroups || []}
+          renderItem={renderItem}
+          ListEmptyComponent={renderEmpty}
+        />
+        {renderSearchResult()}
+      </View>
+    </View>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
+    container: {
+      flex: 1,
+      borderTopWidth: 1,
+      borderColor: colors.gray5,
+    },
+    contentContainer: { flex: 1 },
     emptyContainer: {
       alignItems: 'center',
       paddingHorizontal: spacing.padding.large,
+      backgroundColor: colors.neutral,
+    },
+    searchInput: {
+      marginVertical: spacing.margin.small,
+      marginHorizontal: spacing.margin.large,
+    },
+    searchResultContainer: {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
       backgroundColor: colors.neutral,
     },
   });
