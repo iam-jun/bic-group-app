@@ -8,6 +8,7 @@ const initialState = {
   loading: false,
   searchKey: '',
   searchResult: [],
+  searchHasNextPage: true,
 };
 
 const communityJoinedGroupTreeStore = (set, get) => ({
@@ -18,6 +19,7 @@ const communityJoinedGroupTreeStore = (set, get) => ({
         state.searchKey = key;
         if (!key) {
           state.searchResult = [];
+          state.searchHasNextPage = true;
         }
       }, 'setSearchKey');
     },

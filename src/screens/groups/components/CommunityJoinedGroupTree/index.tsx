@@ -111,7 +111,7 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
           renderItem={renderItem}
           ListEmptyComponent={renderEmpty}
         />
-        <JoinedGroupSearch onPressItem={onPressGroup} />
+        <JoinedGroupSearch communityId={communityId} onPressItem={onPressGroup} />
       </View>
     </View>
   );

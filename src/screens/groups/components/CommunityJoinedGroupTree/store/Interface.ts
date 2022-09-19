@@ -6,11 +6,12 @@ interface ICommunityJoinedGroupTreeState extends IBaseStore {
   loading: boolean,
   searchKey: string,
   searchResult: IGroup[],
+  searchHasNextPage: boolean,
 
   actions: {
     setSearchKey: (key: string) => void,
     getJoinedGroupTree: (communityId: string) => void,
-    getJoinedGroupSearch: (communityId: string, key: string) => void,
+    getJoinedGroupSearch: (communityId: string, key: string, isLoadMore?: boolean) => void,
   }
 }
 

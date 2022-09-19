@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import React, { FC } from 'react';
 import {
   View, StyleSheet, FlatList,
@@ -12,16 +13,25 @@ import spacing from '~/theme/spacing';
 import useCommunityJoinedGroupTreeStore from './store';
 
 export interface JoinedGroupSearchProps {
+  communityId?: string;
   onPressItem?: (item) => void;
 }
 
-const JoinedGroupSearch: FC<JoinedGroupSearchProps> = ({ onPressItem }: JoinedGroupSearchProps) => {
+const JoinedGroupSearch: FC<JoinedGroupSearchProps> = ({ communityId, onPressItem }: JoinedGroupSearchProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
+  const actions = useCommunityJoinedGroupTreeStore((state) => state.actions);
   const loading = useCommunityJoinedGroupTreeStore((state) => state.loading);
   const searchKey = useCommunityJoinedGroupTreeStore((state) => state.searchKey);
   const searchResult = useCommunityJoinedGroupTreeStore((state) => state.searchResult);
+  const hasNextPage = useCommunityJoinedGroupTreeStore((state) => state.searchHasNextPage);
+
+  const onEndReach = debounce(() => {
+    if (hasNextPage) {
+      actions.getJoinedGroupSearch(communityId, searchKey, true);
+    }
+  });
 
   const renderItem = ({ item }: any) => (
     <GroupItem
@@ -34,8 +44,8 @@ const JoinedGroupSearch: FC<JoinedGroupSearchProps> = ({ onPressItem }: JoinedGr
   );
 
   const renderEmpty = () => {
-    if (loading) {
-      return <LoadingIndicator />;
+    if (loading || hasNextPage) {
+      return null;
     }
     return (
       <EmptyScreen
@@ -44,6 +54,13 @@ const JoinedGroupSearch: FC<JoinedGroupSearchProps> = ({ onPressItem }: JoinedGr
         description="communities:text_your_groups_search_empty"
       />
     );
+  };
+
+  const renderFooter = () => {
+    if (!loading && !hasNextPage) {
+      return null;
+    }
+    return <LoadingIndicator />;
   };
 
   if (!searchKey) {
@@ -57,6 +74,8 @@ const JoinedGroupSearch: FC<JoinedGroupSearchProps> = ({ onPressItem }: JoinedGr
         data={searchResult || []}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
+        ListFooterComponent={renderFooter}
+        onEndReached={onEndReach}
       />
     </View>
   );
