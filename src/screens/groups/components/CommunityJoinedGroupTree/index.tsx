@@ -4,7 +4,8 @@ import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import useJoinedGroupTreeStore from '~/screens/groups/store';
+import { SearchInput } from '~/baseComponents/Input';
+import useJoinedGroupTreeStore from '~/screens/groups/components/CommunityJoinedGroupTree/store';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import modalActions from '~/storeRedux/modal/actions';
@@ -80,12 +81,19 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
     );
   };
 
+  const renderHeader = () => (
+    <View>
+      <SearchInput />
+    </View>
+  );
+
   return (
     <FlatList
       keyExtractor={(item) => `joined_group_${item?.id}`}
       data={joinedGroups || []}
       renderItem={renderItem}
       ListEmptyComponent={renderEmpty}
+      ListHeaderComponent={renderHeader}
     />
   );
 };

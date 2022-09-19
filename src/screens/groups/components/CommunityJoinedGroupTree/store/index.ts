@@ -7,7 +7,7 @@ const initialState = {
   loading: false,
 };
 
-const joinedGroupTreeStore = (set) => ({
+const communityJoinedGroupTreeStore = (set) => ({
   ...initialState,
   getJoinedGroupTree: (id: string) => {
     set((state) => {
@@ -28,6 +28,6 @@ const joinedGroupTreeStore = (set) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useJoinedGroupTreeStore = createStore<IJoinedGroupTreeState>(joinedGroupTreeStore);
+const useCommunityJoinedGroupTreeStore = createStore<IJoinedGroupTreeState>(communityJoinedGroupTreeStore);
 
-export default useJoinedGroupTreeStore;
+export default useCommunityJoinedGroupTreeStore;
