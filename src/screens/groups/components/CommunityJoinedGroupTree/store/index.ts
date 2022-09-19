@@ -1,3 +1,4 @@
+import getJoinedGroupSearch from './actions/getJoinedGroupSearch';
 import getJoinedGroupTree from './actions/getJoinedGroupTree';
 import { createStore, resetStore } from '~/store/utils';
 import ICommunityJoinedGroupTreeState from './Interface';
@@ -15,10 +16,14 @@ const communityJoinedGroupTreeStore = (set, get) => ({
     setSearchKey: (key: string) => {
       set((state: ICommunityJoinedGroupTreeState) => {
         state.searchKey = key;
-      });
+        if (!key) {
+          state.searchResult = [];
+        }
+      }, 'setSearchKey');
     },
 
     getJoinedGroupTree: getJoinedGroupTree(set, get),
+    getJoinedGroupSearch: getJoinedGroupSearch(set, get),
   },
   reset: () => resetStore(initialState, set),
 });

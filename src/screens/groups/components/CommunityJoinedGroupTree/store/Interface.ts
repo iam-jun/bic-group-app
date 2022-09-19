@@ -9,7 +9,8 @@ interface ICommunityJoinedGroupTreeState extends IBaseStore {
 
   actions: {
     setSearchKey: (key: string) => void,
-    getJoinedGroupTree: any,
+    getJoinedGroupTree: (communityId: string) => void,
+    getJoinedGroupSearch: (communityId: string, key: string) => void,
   }
 }
 
