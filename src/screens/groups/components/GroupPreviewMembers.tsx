@@ -73,7 +73,6 @@ const GroupPreviewMembers = () => {
         data={members}
         renderItem={renderItem}
         listStyle={styles.listStyle}
-        scrollEnabled={false}
         renderItemSeparator={() => <ViewSpacing width={spacing.margin.tiny} />}
         ListFooterComponent={() => (
           <View>
@@ -86,6 +85,7 @@ const GroupPreviewMembers = () => {
             )}
           </View>
         )}
+        alwaysBounceHorizontal={false}
       />
       {renderMembersDescription()}
     </>

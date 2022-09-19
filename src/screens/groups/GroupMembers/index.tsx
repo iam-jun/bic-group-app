@@ -24,7 +24,7 @@ import GroupMemberRequests from './GroupMemberRequests';
 import { IconType } from '~/resources/icons';
 
 const _GroupMembers = ({ route }: any) => {
-  const { groupId, targetIndex, isMember } = route.params;
+  const { groupId, targetIndex, isMemberCommunity } = route.params;
 
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
@@ -147,7 +147,7 @@ const _GroupMembers = ({ route }: any) => {
     buttonProps: { icon: 'Plus', style: styles.addButton, useI18n: true },
   };
 
-  const showSearchMember = isMember && {
+  const showSearchMember = isMemberCommunity && {
     icon: 'search' as IconType,
     onPressIcon: onPressSearch,
   };

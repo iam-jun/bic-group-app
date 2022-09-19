@@ -6,10 +6,10 @@ import TabButtonHeader from '../../components/TabButtonHeader';
 
 interface GroupTabHeaderProps {
   groupId: string;
-  isMember: boolean
+  isMemberCommunity: boolean;
 }
 
-const GroupTabHeader = ({ groupId, isMember }: GroupTabHeaderProps) => {
+const GroupTabHeader = ({ groupId, isMemberCommunity }: GroupTabHeaderProps) => {
   const { rootNavigation } = useRootNavigation();
 
   const onPressAbout = () => {
@@ -17,12 +17,11 @@ const GroupTabHeader = ({ groupId, isMember }: GroupTabHeaderProps) => {
   };
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.groupMembers, { groupId, isMember });
+    rootNavigation.navigate(groupStack.groupMembers, { groupId, isMemberCommunity });
   };
 
   return (
     <TabButtonHeader
-      isMember={isMember}
       onPressAbout={onPressAbout}
       onPressMembers={onPressMembers}
     />

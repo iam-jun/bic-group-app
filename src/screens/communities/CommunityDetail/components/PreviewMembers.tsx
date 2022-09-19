@@ -73,7 +73,6 @@ const PreviewMembers = () => {
         data={members}
         renderItem={renderItem}
         listStyle={styles.listStyle}
-        scrollEnabled={false}
         renderItemSeparator={() => <ViewSpacing width={spacing.margin.tiny} />}
         ListFooterComponent={() => (
           <View>
@@ -86,6 +85,7 @@ const PreviewMembers = () => {
             )}
           </View>
         )}
+        alwaysBounceHorizontal={false}
       />
       {renderMembersDescription()}
     </>
