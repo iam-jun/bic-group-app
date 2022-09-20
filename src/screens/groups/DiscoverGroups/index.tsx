@@ -3,41 +3,33 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  FlatList,
   RefreshControl,
+  FlatList,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
+import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import EmptyScreen from '~/components/EmptyScreen';
-import Divider from '~/beinComponents/Divider';
-import DiscoverItem from '../components/DiscoverItem';
 
 import actions from '../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { useRootNavigation } from '~/hooks/navigation';
-import spacing from '~/theme/spacing';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import modalActions from '~/storeRedux/modal/actions';
-import { useBaseHook } from '~/hooks';
+import CommunityGroupCard from '~/components/CommunityGroupCard';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import images from '~/resources/images';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
   const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
-  const { t } = useBaseHook();
 
   const {
     ids, items, loading, canLoadMore,
   } = useKeySelector(groupsKeySelector.discoverGroups);
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { joinStatus } = communityDetail;
-  const isMemberOfCommunity = joinStatus === groupJoinStatus.member;
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
     dispatch(actions.getDiscoverGroups({ communityId, isRefreshing }));
@@ -57,57 +49,33 @@ const DiscoverGroups = ({ route }: any) => {
     getDiscoverGroups(true);
   };
 
-  const onPressGroup = (groupId: string) => {
-    rootNavigation.navigate(
-      groupStack.groupDetail, { groupId },
-    );
-  };
+  const onSearchText = debounce(
+    (searchText: string) => {
+      console.log('searchText', searchText);
 
-  const onPressJoin = (
-    groupId: string, groupName: string,
-  ) => {
-    if (!isMemberOfCommunity) {
-      dispatch(modalActions.showAlert({
-        title: t('error:alert_title'),
-        content: t('communities:text_must_be_member_first'),
-        confirmLabel: t('common:text_ok'),
-      }));
-      return;
-    }
-    dispatch(actions.joinNewGroup({ groupId, groupName }));
-  };
-
-  const onPressCancel = (
-    groupId: string, groupName: string,
-  ) => {
-    dispatch(actions.cancelJoinGroup({ groupId, groupName }));
-  };
-
-  const onSearchText = (_searchText: string) => {
-    // TODO: Add search
-  };
+      // communityId && dispatch(groupsActions.getYourGroupsSearch({ communityId, key: searchText }));
+    }, 300,
+  );
 
   const renderItem = ({ item, index }: {item: number; index: number}) => {
-    const currentItem = items[item];
+    const currentItem = {
+      ...items[item],
+      community: { name: communityDetail?.name, id: communityDetail?.id },
+    };
     return (
-      <DiscoverItem
-        item={currentItem}
-        testID={`discover_groups_item_${index}`}
-        onPressView={onPressGroup}
-        onPressJoin={onPressJoin}
-        onPressCancel={onPressCancel}
-      />
+      <CommunityGroupCard item={currentItem} testID={`browse_groups_item_${index}`} />
     );
   };
 
   const renderEmptyComponent = () => {
     if (loading) return null;
     return (
-      <EmptyScreen
-        source="addUsers"
-        title="communities:empty_groups:title"
-        description="communities:empty_groups:description"
-      />
+      <View style={{ backgroundColor: theme.colors.white, flex: 1 }}>
+        <EmptyScreen
+          source={images.img_empty_search_post}
+          description="communities:empty_groups:description"
+        />
+      </View>
     );
   };
 
@@ -122,12 +90,14 @@ const DiscoverGroups = ({ route }: any) => {
   );
 
   return (
-    <ScreenWrapper isFullView>
+    <ScreenWrapper isFullView style={{ backgroundColor: theme.colors.gray5 }}>
       <Header
         titleTextProps={{ useI18n: true }}
         title="communities:title_browse_groups"
         onSearchText={onSearchText}
       />
+      <ViewSpacing height={12} />
+
       <FlatList
         testID="flatlist"
         data={ids}
@@ -139,7 +109,7 @@ const DiscoverGroups = ({ route }: any) => {
         onEndReachedThreshold={0.1}
         ListEmptyComponent={renderEmptyComponent}
         ListFooterComponent={renderListFooter}
-        ItemSeparatorComponent={() => <Divider style={styles.divider} />}
+        ItemSeparatorComponent={() => <ViewSpacing height={16} />}
         refreshControl={(
           <RefreshControl
             refreshing={loading}
@@ -160,7 +130,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  divider: {
-    marginVertical: spacing.margin.tiny,
-  },
+
 });

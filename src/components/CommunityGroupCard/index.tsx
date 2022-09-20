@@ -13,7 +13,6 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
 import { Avatar, Button } from '~/baseComponents';
 import { formatLargeNumber } from '~/utils/formatData';
-import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';
 import { isGroup } from '~/screens/groups/helper';
 import { ICommunity } from '~/interfaces/ICommunity';
@@ -123,43 +122,48 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
             <View style={styles.containerInfo}>
               <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
-              <Tag
-                style={styles.tagContainer}
-                type="secondary"
-                size="small"
-                label={t(
-                  isGroup(level) ? 'common:text_group' : 'common:text_community',
-                )}
-              />
-              <ViewSpacing height={spacing.margin.xSmall} />
               <View style={styles.row}>
-                <View style={[styles.row, styles.privacyView]}>
+                <View style={styles.row}>
                   <Icon
                     style={styles.iconSmall}
                     icon={privacyIcon}
                     size={16}
-                    tintColor={colors.gray50}
+                    tintColor={colors.neutral20}
                   />
-                  <Text.BodyS color={colors.neutral40} useI18n>
+                  <Text.BodySMedium color={colors.neutral40} useI18n>
                     {privacyTitle}
-                  </Text.BodyS>
-                </View>
-                <ViewSpacing width={spacing.margin.extraLarge} />
-                <View style={styles.row}>
-                  <Text.BodySMedium style={styles.textNumberMember}>
-                    {formatLargeNumber(userCount)}
                   </Text.BodySMedium>
-                  <Text.BodyS color={colors.neutral40} useI18n>
-                    common:members
-                  </Text.BodyS>
                 </View>
+                <ViewSpacing width={spacing.margin.large} />
+                <View style={styles.row}>
+                  <Icon
+                    style={styles.iconSmall}
+                    icon={isGroup(level) ? 'PeoplePantsSimple' : 'PeopleGroup'}
+                    size={16}
+                    tintColor={colors.neutral20}
+                  />
+                  <Text.BodySMedium color={colors.neutral40}>
+                    {t(
+                      isGroup(level) ? 'common:text_group' : 'common:text_community',
+                    )}
+                  </Text.BodySMedium>
+                </View>
+              </View>
+              <ViewSpacing width={spacing.margin.xSmall} />
+              <View style={styles.row}>
+                <Text.BodySMedium style={styles.textNumberMember}>
+                  {formatLargeNumber(userCount)}
+                </Text.BodySMedium>
+                <Text.BodyS color={colors.neutral40} useI18n>
+                  common:members
+                </Text.BodyS>
               </View>
             </View>
           </View>
           {!!description && (
             <>
-              <ViewSpacing height={10} />
-              <Text.BodyM numberOfLines={2}>{`${description}`}</Text.BodyM>
+              <ViewSpacing height={8} />
+              <Text.ParagraphM numberOfLines={2}>{`${description}`}</Text.ParagraphM>
             </>
           )}
         </View>
@@ -189,9 +193,6 @@ const themeStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    privacyView: {
-      width: 100,
-    },
     containerInfo: {
       flex: 1,
       marginLeft: 10,
@@ -205,9 +206,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     textNameCommunityOnGroup: {
       marginBottom: spacing.margin.tiny,
-    },
-    tagContainer: {
-      alignSelf: 'baseline',
     },
   });
 };

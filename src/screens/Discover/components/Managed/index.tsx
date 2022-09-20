@@ -76,7 +76,7 @@ const ListEmpty: FC<ListEmptyProps> = ({ type }) => {
 
   return (
     <View testID={testID}>
-      <EmptyScreen source="searchUsers" description={description} />
+      <EmptyScreen icon="searchUsers" description={description} />
     </View>
   );
 };

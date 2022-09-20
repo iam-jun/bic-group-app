@@ -161,6 +161,8 @@ import { faClapperboardPlay } from '@fortawesome/pro-regular-svg-icons/faClapper
 import { faMarkdown } from '@fortawesome/free-brands-svg-icons/faMarkdown';
 import { faCommentDots as faCommentDotsSolid } from '@fortawesome/pro-solid-svg-icons/faCommentDots';
 import { faUpRightAndDownLeftFromCenter as faUpRightAndDownLeftFromCenterSolid } from '@fortawesome/pro-solid-svg-icons/faUpRightAndDownLeftFromCenter';
+import { faPeopleGroup } from '@fortawesome/pro-solid-svg-icons/faPeopleGroup';
+import { faPeoplePantsSimple } from '@fortawesome/pro-solid-svg-icons/faPeoplePantsSimple';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -342,6 +344,8 @@ export const initFontAwesomeIcon = () => {
     faMarkdown,
     faCommentDotsSolid,
     faUpRightAndDownLeftFromCenterSolid,
+    faPeopleGroup,
+    faPeoplePantsSimple,
   );
 };
 
@@ -508,6 +512,8 @@ export const fontAwesomeIcons = {
   Markdown: 'fa-brands fa-markdown',
   CommentDotsSolid: 'fa-solid fa-comment-dots',
   UpRightAndDownLeftFromCenter: 'fa-solid fa-up-right-and-down-left-from-center',
+  PeopleGroup: 'fa-solid fa-people-group',
+  PeoplePantsSimple: 'fa-solid fa-people-pants-simple',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
