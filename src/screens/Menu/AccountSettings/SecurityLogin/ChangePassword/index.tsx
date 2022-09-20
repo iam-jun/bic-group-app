@@ -46,7 +46,6 @@ const ChangePassword = () => {
 
   useEffect(
     () => {
-      console.log('errCurrentPassword', errCurrentPassword);
       if (errCurrentPassword) {
         setError(
           'password', {
