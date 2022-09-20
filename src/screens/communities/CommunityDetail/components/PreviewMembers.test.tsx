@@ -12,7 +12,7 @@ describe('PreviewMembers component', () => {
 
   it('should render avatar list correctly', () => {
     const wrapper = renderWithRedux(<PreviewMembers userCount={10} members={members} />);
-    const listView = wrapper.getByTestId('list_view.flat_list');
+    const listView = wrapper.getByTestId('flatlist');
     expect(listView.props.data.length).toBe(previewMemberData.length);
     expect(wrapper).toMatchSnapshot();
   });

@@ -26,6 +26,8 @@ type AboutContentProps = {
   onPressMember?: () => void;
 }
 
+export const CONTAINER_HORIZONTAL_PADDING = spacing.padding.large;
+
 const AboutContent: FC<AboutContentProps> = ({ profileInfo, showPrivate, onPressMember }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -86,7 +88,7 @@ const AboutContent: FC<AboutContentProps> = ({ profileInfo, showPrivate, onPress
   );
 
   return (
-    <View style={styles.wapper}>
+    <View style={styles.wrapper}>
       <ViewSpacing height={spacing.padding.large} />
       <View style={styles.container} testID="about_content">
         {renderDescription()}
@@ -114,7 +116,7 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
-    wapper: {
+    wrapper: {
       flex: 1,
       backgroundColor: colors.neutral5,
     },
@@ -122,7 +124,7 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.large,
-      paddingHorizontal: spacing.padding.large,
+      paddingHorizontal: CONTAINER_HORIZONTAL_PADDING,
     },
     titleDescription: {
       marginBottom: spacing.margin.small,

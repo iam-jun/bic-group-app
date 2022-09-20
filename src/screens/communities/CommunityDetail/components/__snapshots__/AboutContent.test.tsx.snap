@@ -365,510 +365,502 @@ exports[`AboutContent component should render correctly 1`] = `
         </View>
       </View>
     </View>
-    <View
-      style={Object {}}
-      testID="list_view"
-    >
-      <RCTScrollView
-        ItemSeparatorComponent={[Function]}
-        ListFooterComponent={[Function]}
-        data={
-          Array [
-            Object {
-              "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
-              "fullname": "Test Name",
-              "id": "1",
-              "username": "test",
-            },
-            Object {
-              "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
-              "fullname": "Test Name",
-              "id": "1",
-              "username": "test",
-            },
-          ]
-        }
-        getItem={[Function]}
-        getItemCount={[Function]}
-        horizontal={true}
-        initialNumToRender={10}
-        keyExtractor={[Function]}
-        onContentSizeChange={[Function]}
-        onEndReached={[Function]}
-        onEndReachedThreshold={0.1}
-        onLayout={[Function]}
-        onMomentumScrollBegin={[Function]}
-        onMomentumScrollEnd={[Function]}
-        onScroll={[Function]}
-        onScrollBeginDrag={[Function]}
-        onScrollEndDrag={[Function]}
-        removeClippedSubviews={false}
-        renderItem={[Function]}
-        scrollEnabled={false}
-        scrollEventThrottle={50}
-        showsVerticalScrollIndicator={true}
-        stickyHeaderIndices={Array []}
-        style={
+    <RCTScrollView
+      ItemSeparatorComponent={[Function]}
+      ListFooterComponent={[Function]}
+      data={
+        Array [
           Object {
-            "marginTop": 4,
-          }
+            "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
+            "fullname": "Test Name",
+            "id": "1",
+            "username": "test",
+          },
+          Object {
+            "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
+            "fullname": "Test Name",
+            "id": "1",
+            "username": "test",
+          },
+        ]
+      }
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={true}
+      initialNumToRender={15}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEnabled={false}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "marginTop": 4,
         }
-        testID="list_view.flat_list"
-        viewabilityConfigCallbackPairs={Array []}
-      >
-        <View>
+      }
+      testID="flatlist"
+      viewabilityConfigCallbackPairs={Array []}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
           <View
-            onLayout={[Function]}
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
+              Object {
+                "opacity": 1,
+              }
             }
+            testID="button_wrapper"
           >
             <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
-                Object {
-                  "opacity": 1,
-                }
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 32,
+                    "width": 32,
+                  },
+                  undefined,
+                ]
               }
-              testID="button_wrapper"
+              testID="avatar"
             >
               <View
                 style={
                   Array [
-                    Object {
-                      "borderRadius": 4,
-                      "height": 28,
-                      "width": 28,
-                    },
-                    undefined,
-                  ]
-                }
-                testID="avatar"
-              >
-                <View
-                  style={
                     Array [
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 28,
-                          "width": 28,
-                        },
-                        Object {
-                          "borderRadius": 14,
-                        },
-                      ],
-                      Object {},
-                    ]
-                  }
-                  testID="avatar_container"
-                >
-                  <View
-                    onLayout={[Function]}
-                    style={
                       Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
-                    }
-                  >
-                    <View
-                      collapsable={false}
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderColor": "#F2F5F8",
-                            "borderRadius": 14,
-                            "borderWidth": 2,
-                            "height": 28,
-                            "justifyContent": "center",
-                            "width": 28,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "backgroundColor": "#FFFFFF",
-                            "borderColor": "#F2F5F8",
-                            "borderRadius": 14,
-                            "borderWidth": 2,
-                            "height": 28,
-                            "width": 28,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={
-                          Object {
-                            "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
-                          }
-                        }
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                        testID="avatar.image"
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View
-              style={
-                Object {
-                  "height": undefined,
-                  "paddingHorizontal": undefined,
-                  "paddingVertical": undefined,
-                  "width": 2,
-                }
-              }
-            />
-          </View>
-          <View
-            onLayout={[Function]}
-            style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
-            }
-          >
-            <View
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "opacity": 1,
-                }
-              }
-              testID="button_wrapper"
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "borderRadius": 4,
-                      "height": 28,
-                      "width": 28,
-                    },
-                    undefined,
-                  ]
-                }
-                testID="avatar"
-              >
-                <View
-                  style={
-                    Array [
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 28,
-                          "width": 28,
-                        },
-                        Object {
-                          "borderRadius": 14,
-                        },
-                      ],
-                      Object {},
-                    ]
-                  }
-                  testID="avatar_container"
-                >
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
-                    }
-                  >
-                    <View
-                      collapsable={false}
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderColor": "#F2F5F8",
-                            "borderRadius": 14,
-                            "borderWidth": 2,
-                            "height": 28,
-                            "justifyContent": "center",
-                            "width": 28,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "backgroundColor": "#FFFFFF",
-                            "borderColor": "#F2F5F8",
-                            "borderRadius": 14,
-                            "borderWidth": 2,
-                            "height": 28,
-                            "width": 28,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={
-                          Object {
-                            "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
-                          }
-                        }
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                        testID="avatar.image"
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            onLayout={[Function]}
-          >
-            <View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "borderRadius": 4,
-                      "height": 28,
-                      "width": 28,
-                    },
-                    Object {
-                      "marginLeft": 2,
-                    },
-                  ]
-                }
-                testID="avatar"
-              >
-                <View
-                  style={
-                    Array [
-                      Array [
-                        Object {
-                          "borderRadius": 4,
-                          "height": 28,
-                          "width": 28,
-                        },
-                        Object {
-                          "borderRadius": 14,
-                        },
-                      ],
-                      Object {
-                        "backgroundColor": "#A4A9B7",
+                        "borderRadius": 4,
+                        "height": 32,
+                        "width": 32,
                       },
-                    ]
+                      Object {
+                        "borderRadius": 16,
+                      },
+                    ],
+                    Object {},
+                  ]
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
                   }
-                  testID="avatar_container"
                 >
                   <View
-                    onLayout={[Function]}
+                    collapsable={false}
                     style={
                       Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
                       }
                     }
                   >
                     <View
-                      collapsable={false}
                       style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "borderColor": "#F2F5F8",
-                            "borderRadius": 14,
-                            "borderWidth": 2,
-                            "height": 28,
-                            "justifyContent": "center",
-                            "width": 28,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "backgroundColor": "#FFFFFF",
-                            "borderColor": "#F2F5F8",
-                            "borderRadius": 14,
-                            "borderWidth": 2,
-                            "height": 28,
-                            "width": 28,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        source={null}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                        testID="avatar.image"
-                      />
-                    </View>
-                  </View>
-                  <View
-                    style={
-                      Array [
-                        Array [
-                          Object {
-                            "borderRadius": 4,
-                            "height": 28,
-                            "width": 28,
-                          },
-                          Object {
-                            "borderRadius": 14,
-                          },
-                        ],
                         Object {
                           "alignItems": "center",
-                          "backgroundColor": "#282E53",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
                           "justifyContent": "center",
-                          "position": "absolute",
+                          "width": 32,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
+                          "width": 32,
                         },
                       ]
                     }
                   >
-                    <Text
-                      style={
-                        Array [
-                          Object {
-                            "color": "#353E6E",
-                            "fontFamily": "BeVietnamPro-Medium",
-                            "fontSize": 9,
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                          },
-                          undefined,
-                        ]
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={
+                        Object {
+                          "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
+                        }
                       }
-                    >
-                      +
-                      3
-                    </Text>
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "height": undefined,
+                "paddingHorizontal": undefined,
+                "paddingVertical": undefined,
+                "width": 2,
+              }
+            }
+          />
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="button_wrapper"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 32,
+                    "width": 32,
+                  },
+                  undefined,
+                ]
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 32,
+                        "width": 32,
+                      },
+                      Object {
+                        "borderRadius": 16,
+                      },
+                    ],
+                    Object {},
+                  ]
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    collapsable={false}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
+                          "justifyContent": "center",
+                          "width": 32,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
+                          "width": 32,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={
+                        Object {
+                          "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg",
+                        }
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
                   </View>
                 </View>
               </View>
             </View>
           </View>
         </View>
-      </RCTScrollView>
-    </View>
+        <View
+          onLayout={[Function]}
+        >
+          <View>
+            <View
+              style={
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 32,
+                    "width": 32,
+                  },
+                  Object {
+                    "marginLeft": 2,
+                  },
+                ]
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "borderRadius": 4,
+                        "height": 32,
+                        "width": 32,
+                      },
+                      Object {
+                        "borderRadius": 16,
+                      },
+                    ],
+                    Object {
+                      "backgroundColor": "#A4A9B7",
+                    },
+                  ]
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    collapsable={false}
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
+                          "justifyContent": "center",
+                          "width": 32,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                          "borderColor": "#F2F5F8",
+                          "borderRadius": 16,
+                          "borderWidth": 2,
+                          "height": 32,
+                          "width": 32,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+                <View
+                  style={
+                    Array [
+                      Array [
+                        Object {
+                          "borderRadius": 4,
+                          "height": 32,
+                          "width": 32,
+                        },
+                        Object {
+                          "borderRadius": 16,
+                        },
+                      ],
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#282E53",
+                        "justifyContent": "center",
+                        "position": "absolute",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "#353E6E",
+                          "fontFamily": "BeVietnamPro-Medium",
+                          "fontSize": 9,
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    +
+                    3
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
     <Text
       style={
         Array [
@@ -881,7 +873,7 @@ exports[`AboutContent component should render correctly 1`] = `
             "color": "#353E6E",
           },
           Object {
-            "marginTop": 8,
+            "marginTop": 6,
           },
         ]
       }

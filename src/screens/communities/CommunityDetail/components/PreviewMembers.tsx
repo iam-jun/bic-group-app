@@ -1,10 +1,9 @@
-import { StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
-import ListView from '~/beinComponents/list/ListView';
 
 import { IPreviewMember } from '~/interfaces/ICommunity';
 import spacing from '~/theme/spacing';
@@ -14,18 +13,34 @@ import mainTabStack from '~/router/navigator/MainStack/stack';
 import { Button } from '~/baseComponents';
 import { useBaseHook } from '~/hooks';
 import { formatLargeNumber } from '~/utils/formatData';
+import { dimension } from '~/theme';
+import { AvatarType } from '~/baseComponents/Avatar/AvatarComponent';
+import { CONTAINER_HORIZONTAL_PADDING } from './AboutContent';
 
 interface Props {
   userCount: number;
   members: IPreviewMember[];
 }
 
+const ITEM_SPACING = 2;
+const AVATAR_VARIANT = 'small' as AvatarType;
+
 const PreviewMembers = ({ userCount, members }: Props) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
 
-  const otherMembers = userCount - (members?.length || 0);
+  if (!members || members?.length === 0) {
+    return null;
+  }
+
+  const numberOfAvatarsFitScreen = calculateNumberOfAvatarsFitScreen();
+  const numberOfMembersToShow = members.length > numberOfAvatarsFitScreen
+    ? numberOfAvatarsFitScreen - 1 // removed the last avatar to show moreAvatar item
+    : numberOfAvatarsFitScreen;
+  const membersDataToShow = members.slice(0, numberOfMembersToShow);
+
+  const otherMembers = userCount - membersDataToShow.length;
   const otherMembersDisplay = otherMembers > 99 ? 99 : otherMembers;
 
   const onPressAvatar = (previewMember: IPreviewMember) => {
@@ -36,7 +51,7 @@ const PreviewMembers = ({ userCount, members }: Props) => {
 
   const renderItem = ({ item }: { item: IPreviewMember }) => (
     <Button onPress={() => onPressAvatar(item)}>
-      <Avatar.XSmall isRounded source={item.avatar} />
+      <Avatar variant={AVATAR_VARIANT} isRounded source={item.avatar} />
     </Button>
   );
 
@@ -65,43 +80,57 @@ const PreviewMembers = ({ userCount, members }: Props) => {
     );
   };
 
-  if (!members || members?.length === 0) {
-    return null;
-  }
+  const renderMoreAvatar = () => (
+    <View>
+      {!!otherMembersDisplay && (
+        <Avatar
+          variant={AVATAR_VARIANT}
+          isRounded
+          counter={otherMembersDisplay}
+          style={styles.moreAvatar}
+        />
+      )}
+    </View>
+  );
 
   return (
     <>
-      <ListView
+      <FlatList
+        testID="flatlist"
         horizontal
-        data={members}
+        data={membersDataToShow}
         renderItem={renderItem}
-        listStyle={styles.listStyle}
+        style={styles.listStyle}
         scrollEnabled={false}
-        renderItemSeparator={() => <ViewSpacing width={2} />}
-        ListFooterComponent={() => (
-          <View>
-            {!!otherMembersDisplay && (
-              <Avatar.XSmall
-                isRounded
-                counter={otherMembersDisplay}
-                style={{ marginLeft: 2 }}
-              />
-            )}
-          </View>
-        )}
+        initialNumToRender={15}
+        ItemSeparatorComponent={() => <ViewSpacing width={ITEM_SPACING} />}
+        ListFooterComponent={renderMoreAvatar}
+        keyExtractor={(item, index) => `preview_members_${item}_${index}`}
       />
       {renderMembersDescription()}
     </>
   );
 };
 
-export default PreviewMembers;
-
 const styles = StyleSheet.create({
   listStyle: {
     marginTop: spacing.margin.tiny,
   },
   memberDescriptionText: {
-    marginTop: spacing.margin.small,
+    marginTop: spacing.margin.xSmall,
   },
+  moreAvatar: { marginLeft: ITEM_SPACING },
 });
+
+const calculateNumberOfAvatarsFitScreen = () => {
+  const headTailHorizontalPadding = CONTAINER_HORIZONTAL_PADDING * 2;
+  const avatarAndItemSeparatorWidth = dimension.avatarSizes[AVATAR_VARIANT] + ITEM_SPACING;
+
+  const numberOfAvatarsFitScreen = Math.floor(
+    (dimension.deviceWidth - headTailHorizontalPadding) / avatarAndItemSeparatorWidth,
+  );
+
+  return numberOfAvatarsFitScreen;
+};
+
+export default PreviewMembers;
