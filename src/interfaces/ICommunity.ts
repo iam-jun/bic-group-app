@@ -37,7 +37,7 @@ export interface IParamGetCommunityMembers {
   limit?: number;
 }
 
-export type COMMUNITY_ROLE = 'COMMUNITY_ADMIN' | 'COMMUNITY_MEMBER';
+export type COMMUNITY_ROLE = 'Community Admin' | 'Member';
 
 export interface ICommunityMembers extends IPreviewMember {
   roles: {name: COMMUNITY_ROLE};

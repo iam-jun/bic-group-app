@@ -56,6 +56,7 @@
     "text_ok": "OK",
     "text_error": "Error",
     "text_error_message": "Something went wrong",
+    "text_success_message": "Success",
     "text_important_posts": "Important Posts",
     "text_loading": "Loading...",
     "text_save": "Save",
@@ -712,10 +713,9 @@
     },
     "member_menu": {
       "label_view_profile": "View profile",
-      "label_send_message": "Send message",
-      "label_set_as_admin": "Set as admin",
-      "label_revoke_admin_role": "Revoke admin role",
-      "label_remove_member": "Remove member",
+      "label_set_as_admin": "Set Admin Role",
+      "label_revoke_admin_role": "Remove Admin Role",
+      "label_remove_member": "Remove Member",
       "label_leave_group": "Leave Group"
     },
     "private_group_welcome_message": {
@@ -994,6 +994,11 @@
       "description": "Are you sure you want to leave ",
       "button_leave": "Leave",
       "success_message": "You have left the community"
+    },
+    "modal_confirm_remove_member": {
+      "title": "Remove member",
+      "content": "Are you sure to remove this member from your community?",
+      "button_remove": "Remove"
     }
   },
   "upload": {
