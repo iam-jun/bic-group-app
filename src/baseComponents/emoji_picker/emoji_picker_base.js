@@ -534,7 +534,7 @@ export const getStyleSheetFromTheme = ((theme) => StyleSheet.create({
     justifyContent: 'center',
   },
   notFoundIcon: {
-    backgroundColor: changeOpacity(theme.centerChannelColor, 0.04),
+    backgroundColor: theme.neutral80,
     width: 120,
     height: 120,
     borderRadius: 60,

@@ -8,6 +8,7 @@ import {
   Platform,
   FlatList,
 } from 'react-native';
+import emoji from 'emoji-datasource';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import emojiShortNameBlacklist from '~/beinComponents/emoji/emojiShortNameBlacklist';
 import SearchInput from '~/beinComponents/inputs/SearchInput';

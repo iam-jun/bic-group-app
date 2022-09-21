@@ -9,6 +9,7 @@ import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import { useBaseHook } from '~/hooks';
 import { dimension } from '~/theme';
 import EmojiNameToast from './components/EmojiNameToast';
+import Emoji_picker from '~/baseComponents/emoji_picker';
 
 export interface ReactionViewProps {
   onPressReaction: (key: string) => void;
@@ -91,10 +92,10 @@ const SelectReactionView: FC<ReactionViewProps> = ({
           height={contentHeight}
           onEmojiSelected={onPressReaction}
         /> */}
-        {/* <EmojiPicker
+        <Emoji_picker
           testID="add_reaction.emoji_picker"
           onEmojiPress={onPressReaction}
-        /> */}
+        />
       </View>
       <EmojiNameToast testID="select_reaction_view.emoji_name_toast" toastRef={emojiRef} />
     </View>

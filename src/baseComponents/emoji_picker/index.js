@@ -1,13 +1,15 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-
+import React from 'react';
 import Fuse from 'fuse.js';
-import { connect } from 'react-redux';
 import { useTheme } from '@react-navigation/native';
 
 import { useDeviceOrientation, useDimensions } from '@react-native-community/hooks';
-import EmojiPicker from './emoji_picker';
-import { CategoryNames, EmojiIndicesByAlias, EmojiIndicesByCategory } from '../Emoji/emojis';
+import EmojiPickerComponent from './emoji_picker';
+import {
+  CategoryMessage,
+  CategoryNames, CategoryTranslations, EmojiIndicesByAlias, EmojiIndicesByCategory, Emojis,
+} from '../Emoji/emojis';
 
 function getSkin(emoji) {
   if ('skin_variations' in emoji) {
@@ -19,7 +21,20 @@ function getSkin(emoji) {
   return null;
 }
 
+function fillEmoji(indice) {
+  const emoji = Emojis[indice];
+  if (!emoji) {
+    return null;
+  }
+
+  return {
+    name: 'short_name' in emoji ? emoji.short_name : emoji.name,
+    aliases: 'short_names' in emoji ? emoji.short_names : [],
+  };
+}
+
 export const selectEmojisByName = () => {
+  const skinTone = 'default';
   const emoticons = new Set();
   EmojiIndicesByAlias.entries((key, index) => {
     const skin = getSkin(Emojis[index]);
@@ -34,7 +49,31 @@ export const selectEmojisByName = () => {
   return Array.from(emoticons);
 };
 
+const icons = {
+  recent: 'clock-outline',
+  'smileys-emotion': 'emoticon-happy-outline',
+  'people-body': 'eye-outline',
+  'animals-nature': 'leaf-outline',
+  'food-drink': 'food-apple',
+  'travel-places': 'airplane-variant',
+  activities: 'basketball',
+  objects: 'lightbulb-outline',
+  symbols: 'heart-outline',
+  flags: 'flag-outline',
+  custom: 'emoticon-custom-outline',
+};
+
+const categoryToI18n = {};
+CategoryNames.forEach((name) => {
+  categoryToI18n[name] = {
+    id: CategoryTranslations.get(name),
+    defaultMessage: CategoryMessage.get(name),
+    icon: icons[name],
+  };
+});
+
 export const selectEmojisBySection = () => {
+  const skinTone = 'default';
   const customEmojiItems = [];
   const recentEmojis = [];
   // for (const [key] of customEmojis) {
@@ -65,10 +104,10 @@ export const selectEmojisBySection = () => {
   return emoticons;
 };
 
-function mapStateToProps(state) {
+const EmojiPicker = (ownProps) => {
   const theme = useTheme();
-  const emojisBySection = selectEmojisBySection(state);
-  const emojis = selectEmojisByName(state);
+  const emojisBySection = selectEmojisBySection();
+  const emojis = selectEmojisByName();
   const dimension = useDimensions();
   const orientation = useDeviceOrientation();
   const options = {
@@ -81,7 +120,8 @@ function mapStateToProps(state) {
   const list = emojis.length ? emojis : [];
   const fuse = new Fuse(list, options);
 
-  return {
+  const props = {
+    ...ownProps,
     fuse,
     theme,
     emojis,
@@ -89,17 +129,9 @@ function mapStateToProps(state) {
     deviceWidth: dimension.screen.width,
     isLandscape: orientation.landscape,
     customEmojisEnabled: true,
-    customEmojiPage: state.views.emoji.emojiPickerCustomPage,
+    // customEmojiPage: state.views.emoji.emojiPickerCustomPage,
   };
-}
+  return <EmojiPickerComponent {...props} />;
+};
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     actions: bindActionCreators({
-//       getCustomEmojis,
-//       incrementEmojiPickerPage,
-//     }, dispatch),
-//   };
-// }
-
-export default connect(mapStateToProps)(EmojiPicker);
+export default EmojiPicker;
