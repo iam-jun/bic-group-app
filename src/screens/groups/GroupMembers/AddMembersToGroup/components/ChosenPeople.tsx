@@ -50,7 +50,7 @@ const ChosenPeople = ({ selectedUsers, onSelectUser }: Props) => {
 
       <FlatList
         horizontal
-        style={[styles.marginHorizontal, styles.list]}
+        style={styles.marginHorizontal}
         data={selectedUsers}
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
@@ -67,11 +67,11 @@ const createStyles = () => StyleSheet.create({
   itemSelectedUser: {
     width: 70,
     alignItems: 'center',
+    paddingTop: spacing.padding.base,
   },
   marginHorizontal: {
     marginHorizontal: spacing.margin.large,
   },
-  list: { marginTop: spacing.margin.base },
 });
 
 export default ChosenPeople;
