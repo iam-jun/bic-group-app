@@ -38,7 +38,7 @@ const JoinedGroupSearch: FC<JoinedGroupSearchProps> = ({ communityId, onPressIte
       {...item}
       showPrivacyAvatar
       showInfo={false}
-      onPressGroup={onPressItem}
+      onPressItem={onPressItem}
       groupStyle={styles.itemGroupSearch}
     />
   );
