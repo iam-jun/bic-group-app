@@ -2,7 +2,6 @@ import React, { FC, useEffect, useRef } from 'react';
 import {
   Image, View, StyleSheet, LayoutChangeEvent,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import Button from '~/beinComponents/Button';
 import { margin, padding } from '~/theme/spacing';
 import Tab from '~/baseComponents/Tab';
@@ -82,11 +81,20 @@ const SelectReactionView: FC<ReactionViewProps> = ({
         style={[styles.tabContainter, { height: contentHeight, maxHeight: ITEM_SIZE * MAX_ROWS }]}
         onLayout={onLayout}
       >
-        <ScrollView style={styles.list}>
+        {/* <ScrollView style={styles.list}>
           <View style={styles.listContainer}>
             {Object.keys(data).map((item) => renderItem(item))}
           </View>
-        </ScrollView>
+        </ScrollView> */}
+        {/* <EmojiBoard
+          width={dimension.deviceWidth}
+          height={contentHeight}
+          onEmojiSelected={onPressReaction}
+        /> */}
+        {/* <EmojiPicker
+          testID="add_reaction.emoji_picker"
+          onEmojiPress={onPressReaction}
+        /> */}
       </View>
       <EmojiNameToast testID="select_reaction_view.emoji_name_toast" toastRef={emojiRef} />
     </View>

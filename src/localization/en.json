@@ -1032,5 +1032,10 @@
   "discard_alert": {
     "title": "Discard Changes?",
     "content": "If you discard now, you’ll lose any changes you’ve made."
+  },
+  "emoji_categories": {
+    "all": "All",
+    "reacently": "Recently",
+    "smiley": "Smileys & Emotion",
   }
 }
