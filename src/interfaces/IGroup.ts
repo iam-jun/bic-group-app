@@ -157,7 +157,6 @@ export interface IGroupGetMembers {
 
 export interface IGroupAddMembers {
   groupId: string;
-  userIds: string[];
 }
 
 export interface IGroupSetAdmin {

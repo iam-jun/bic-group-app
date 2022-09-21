@@ -79,6 +79,7 @@ import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 import updateCommunityJoinSetting from './updateCommunityJoinSetting';
 import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
+import { IUser } from '~/interfaces/IAuth';
 
 export default function* groupsSaga() {
   yield takeLatest(
@@ -343,51 +344,87 @@ function* getJoinableUsers({
 }) {
   try {
     const { groups } = yield select();
-    const { offset, data } = groups.users;
+    const { data, extra } = groups.users;
+
+    yield put(groupsActions.setJoinableUsers({ loading: data.length === 0 }));
 
     const { groupId, params } = payload;
     const response: IResponseData = yield call(
       groupApi.getJoinableUsers,
       groupId,
-      { offset, limit: appConfig.recordsPerPage, ...params },
+      {
+        offset: data.length + extra.length,
+        limit: appConfig.recordsPerPage,
+        ...params,
+      },
     );
     const result = mapData(response.data);
+    const canLoadMore = result.length === appConfig.recordsPerPage;
 
     if (data.length === 0) {
-      yield put(groupsActions.setJoinableUsers(result));
-      if (result.length === appConfig.recordsPerPage) {
+      yield put(groupsActions.setJoinableUsers({
+        loading: false,
+        data: result,
+        canLoadMore,
+        params,
+      }));
+
+      // load more data in advance if possible
+      if (canLoadMore) {
         yield put(groupsActions.getJoinableUsers(payload));
       }
     } else {
-      yield put(groupsActions.setExtraJoinableUsers(result));
+      // store load more data to future merge, avoid waiting from API
+      yield put(groupsActions.setExtraJoinableUsers({
+        extra: result,
+        canLoadMore,
+      }));
     }
-  } catch (err) {
-    console.error(
-      '\x1b[33m',
-      'getUsers catch: ',
-      JSON.stringify(
-        err, undefined, 2,
-      ),
-      '\x1b[0m',
-    );
-    yield call(showError, err);
+  } catch (error) {
+    console.error('getJoinableUsers error:', error);
+    yield call(showError, error);
   }
 }
 
 function* mergeExtraJoinableUsers() {
   const { groups } = yield select();
-  const { canLoadMore, loading, params } = groups.users;
-  const { id: groupId } = groups?.groupDetail?.group || {};
+  const {
+    data, extra, canLoadMore, loading, params,
+  } = groups.users;
+
+  yield put(groupsActions.setMergeExtraJoinableUsers({
+    data: [...data, ...extra],
+    extra: [],
+  }));
+
   if (!loading && canLoadMore) {
-    yield put(groupsActions.getJoinableUsers({ groupId, params }));
+    // continue to load more data in advance if possible
+    const { id: groupId } = groups?.groupDetail?.group || {};
+    if (groupId) {
+      yield put(groupsActions.getJoinableUsers({ groupId, params }));
+    }
   }
 }
 
 function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
   try {
-    const { groupId, userIds } = payload;
+    const { groups } = yield select();
+    const { data: joinableUsers } = groups.users;
+    const { selectedUsers } = groups;
 
-    yield call(groupApi.addUsers, groupId, userIds);
+    const { groupId } = payload;
+    const selectedUserIds = selectedUsers.map((user: IUser) => user.id);
+    yield call(groupApi.addUsers, groupId, selectedUserIds);
+
+    // removed added users from current joinable user list
+    const newUpdatedJoinableUsers = joinableUsers.filter(
+      (user: IUser) => !selectedUserIds.includes(user.id),
+    );
+    yield put(groupsActions.setJoinableUsers({
+      data: newUpdatedJoinableUsers,
+    }));
+
+    yield put(groupsActions.clearSelectedUsers());
 
     // refresh group detail after adding new members
     yield refreshGroupMembers(groupId);

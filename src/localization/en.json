@@ -92,7 +92,7 @@
     },
     "title_modal_confirm_add_member": "Add members",
     "button_add_member": "Add member",
-    "message_add_member_success_group": "Add members to group successfully",
+    "message_add_member_success_group": "Added members to group successfully",
     "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",

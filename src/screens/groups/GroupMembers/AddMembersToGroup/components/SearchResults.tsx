@@ -83,6 +83,7 @@ const SearchResults = ({
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.5}
+        keyboardShouldPersistTaps="handled"
       />
     </>
   );

@@ -32,13 +32,9 @@ const AddMembersToGroup = (props: any) => {
   const [searchText, setSearchText] = useState<string>('');
 
   useEffect(
-    () => {
+    () => () => {
       dispatch(groupsActions.resetJoinableUsers());
-      dispatch(groupsActions.getJoinableUsers({ groupId }));
-
-      return () => {
-        dispatch(groupsActions.clearSelectedUsers());
-      };
+      dispatch(groupsActions.clearSelectedUsers());
     },
     [],
   );
@@ -67,9 +63,7 @@ const AddMembersToGroup = (props: any) => {
   };
 
   const onPressAdd = () => {
-    const userIds = selectedUsers.map((user: IUser) => user.id);
-    dispatch(groupsActions.addMembers({ groupId, userIds }));
-    dispatch(groupsActions.clearSelectedUsers());
+    dispatch(groupsActions.addMembers({ groupId }));
   };
 
   return (
