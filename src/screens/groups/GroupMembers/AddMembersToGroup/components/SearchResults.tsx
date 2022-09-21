@@ -79,10 +79,11 @@ const SearchResults = ({
       <FlatList
         data={data}
         style={styles.flex1}
+        initialNumToRender={15}
         ListEmptyComponent={renderEmpty}
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.2}
         keyboardShouldPersistTaps="handled"
       />
     </>

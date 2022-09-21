@@ -392,6 +392,8 @@ function* mergeExtraJoinableUsers() {
     data, extra, canLoadMore, loading, params,
   } = groups.users;
 
+  if (extra.length === 0) return;
+
   yield put(groupsActions.setMergeExtraJoinableUsers({
     data: [...data, ...extra],
     extra: [],
