@@ -22,7 +22,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   const [hidePassword, setHidePassword] = React.useState(true);
   const EyeIcon = (
     <Icon
-      icon={hidePassword ? 'iconEye' : 'iconEyeOff'}
+      icon={hidePassword ? 'iconEyeOff' : 'iconEye'}
       size={24}
       onPress={() => setHidePassword(!hidePassword)}
       tintColor={iconColor || colors.neutral80}
