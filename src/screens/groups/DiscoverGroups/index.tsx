@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,32 +7,37 @@ import {
   FlatList,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import EmptyScreen from '~/components/EmptyScreen';
 
-import actions from '../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
+import useDiscoverGroupsStore from './store';
+import IDiscoverGroupsState from './store/Interface';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
   const theme: ExtendedTheme = useTheme();
-  const dispatch = useDispatch();
 
+  const headerRef = useRef();
+
+  const [searchText, setSearchText] = useState('');
+
+  const doGetDiscoverGroups = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doGetDiscoverGroups);
   const {
-    ids, items, loading, canLoadMore,
-  } = useKeySelector(groupsKeySelector.discoverGroups);
+    ids, items, loading, canLoadMore, noGroupInCommuntity,
+  } = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state);
+
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
-    dispatch(actions.getDiscoverGroups({ communityId, isRefreshing }));
+    doGetDiscoverGroups({ communityId, isRefreshing });
   };
 
   useEffect(
@@ -47,23 +52,28 @@ const DiscoverGroups = ({ route }: any) => {
 
   const onRefresh = () => {
     getDiscoverGroups(true);
+    // @ts-ignore
+    if (headerRef.current) headerRef.current?.setSearchText?.('');
   };
 
   const onSearchText = debounce(
-    (searchText: string) => {
-      console.log('searchText', searchText);
-
-      // communityId && dispatch(groupsActions.getYourGroupsSearch({ communityId, key: searchText }));
-    }, 300,
+    (text: string) => {
+      setSearchText(text);
+      doGetDiscoverGroups({ isRefreshing: true, communityId, params: { key: text } });
+    }, 500,
   );
 
   const renderItem = ({ item, index }: {item: number; index: number}) => {
     const currentItem = {
       ...items[item],
-      community: { name: communityDetail?.name, id: communityDetail?.id },
+      community: { ...communityDetail },
     };
     return (
-      <CommunityGroupCard item={currentItem} testID={`browse_groups_item_${index}`} />
+      <CommunityGroupCard
+        item={currentItem}
+        testID={`browse_groups_item_${index}`}
+        showAlertJoinTheCommunityFirst
+      />
     );
   };
 
@@ -73,7 +83,9 @@ const DiscoverGroups = ({ route }: any) => {
       <View style={{ backgroundColor: theme.colors.white, flex: 1 }}>
         <EmptyScreen
           source={images.img_empty_search_post}
-          description="communities:empty_groups:description"
+          description={!!searchText ? 'common:text_search_no_results'
+            : noGroupInCommuntity ? 'communities:browse_groups:no_groups'
+              : 'communities:browse_groups:joined_all_groups'}
         />
       </View>
     );
@@ -92,32 +104,36 @@ const DiscoverGroups = ({ route }: any) => {
   return (
     <ScreenWrapper isFullView style={{ backgroundColor: theme.colors.gray5 }}>
       <Header
+        headerRef={headerRef}
         titleTextProps={{ useI18n: true }}
         title="communities:title_browse_groups"
         onSearchText={onSearchText}
+        autoFocusSearch
       />
       <ViewSpacing height={12} />
-
-      <FlatList
-        testID="flatlist"
-        data={ids}
-        renderItem={renderItem}
-        keyExtractor={(
-          item, index,
-        ) => `groups_${item}_${index}`}
-        onEndReached={onLoadMore}
-        onEndReachedThreshold={0.1}
-        ListEmptyComponent={renderEmptyComponent}
-        ListFooterComponent={renderListFooter}
-        ItemSeparatorComponent={() => <ViewSpacing height={16} />}
-        refreshControl={(
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            tintColor={theme.colors.gray40}
-          />
+      {ids?.length > 0
+        ? (
+          <FlatList
+            testID="flatlist"
+            data={ids}
+            renderItem={renderItem}
+            style={{ flex: 1 }}
+            keyExtractor={(
+              item, index,
+            ) => `groups_${item}_${index}`}
+            onEndReached={onLoadMore}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={renderListFooter}
+            ItemSeparatorComponent={() => <ViewSpacing height={16} />}
+            refreshControl={(
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={onRefresh}
+                tintColor={theme.colors.gray40}
+              />
         )}
-      />
+          />
+        ) : renderEmptyComponent()}
     </ScreenWrapper>
   );
 };

@@ -38,7 +38,6 @@ import getCommunityDetail from './getCommunityDetail';
 import getDiscoverCommunities from '~/storeRedux/groups/saga/getDiscoverCommunities';
 import getYourGroupsSearch from '~/storeRedux/groups/saga/getYourGroupsSearch';
 import getCommunityMembers from './getCommunityMembers';
-import getDiscoverGroups from './getDiscoverGroups';
 import getManagedCommunities from './getManagedCommunities';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupMembers from './getGroupMembers';
@@ -253,9 +252,6 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,
     getCommunitySearchMembers,
-  );
-  yield takeLatest(
-    groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups,
   );
   yield takeLatest(
     groupsTypes.JOIN_COMMUNITY, joinCommunity,

@@ -29,7 +29,6 @@ import { IObject } from '~/interfaces/common';
 import {
   ICommunity,
   IParamGetCommunityMembers,
-  IParamGetDiscoverGroups,
   ISetMembers,
   ISetCommunitySearchMembers,
   IParamGetCommunities,
@@ -561,23 +560,6 @@ const groupsActions = {
   }),
   resetCommunitySearchMembers: () => ({
     type: groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS,
-  }),
-  getDiscoverGroups: (payload: {
-    communityId: string;
-    isRefreshing?: boolean;
-    params?: IParamGetDiscoverGroups;
-  }) => ({
-    type: groupsTypes.GET_DISCOVER_GROUPS,
-    payload,
-  }),
-  setDiscoverGroups: (payload: {
-    loading?: boolean;
-    canLoadMore?: boolean;
-    ids?: string[];
-    items?: IObject<IGroup>;
-  }) => ({
-    type: groupsTypes.SET_DISCOVER_GROUPS,
-    payload,
   }),
   editDiscoverGroupItem: (payload: {id: string; data: any}) => ({
     type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,

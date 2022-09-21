@@ -8,6 +8,7 @@ import useChatStore from '~/store/chat';
 import useDraftPostStore from '../screens/post/DraftPost/store';
 import useLeaveCommunity from '~/screens/communities/CommunityDetail/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
+import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 
 const stores = [
   useHomeStore,
@@ -17,6 +18,7 @@ const stores = [
   useChatStore,
   useLeaveCommunity,
   useReactionDetailStore,
+  useDiscoverGroupsStore,
 ];
 
 export const resetAllStores = () => {

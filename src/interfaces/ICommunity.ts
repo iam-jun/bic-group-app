@@ -52,6 +52,12 @@ export interface IParamGetDiscoverGroups {
   previewMembers?: boolean;
 }
 
+export interface IPayloadGetDiscoverGroups{
+  communityId: string;
+  isRefreshing?: boolean;
+  params?: IParamGetDiscoverGroups;
+}
+
 export interface ISetMembers {
   loading?: boolean;
   canLoadMore?: boolean;

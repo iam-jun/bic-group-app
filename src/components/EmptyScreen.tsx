@@ -6,6 +6,7 @@ import Text from '~/beinComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import { IconType } from '~/resources/icons';
 import Image from '~/beinComponents/Image';
+import { spacing } from '~/theme';
 
 interface EmptyScreenProps {
   icon?: IconType;
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 30,
+    paddingHorizontal: spacing.padding.extraLarge,
   },
   text: {
     textAlign: 'center',

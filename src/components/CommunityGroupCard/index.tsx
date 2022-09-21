@@ -16,13 +16,16 @@ import { formatLargeNumber } from '~/utils/formatData';
 import { useBaseHook } from '~/hooks';
 import { isGroup } from '~/screens/groups/helper';
 import { ICommunity } from '~/interfaces/ICommunity';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import modalActions from '~/storeRedux/modal/actions';
 
 type CommunityGroupCardProps = {
   item: any;
   testID?: string;
+  showAlertJoinTheCommunityFirst?: boolean;
 };
 
-const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
+const Index: FC<CommunityGroupCardProps> = ({ item, testID, showAlertJoinTheCommunityFirst }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
@@ -71,6 +74,14 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
   };
 
   const onJoin = () => {
+    if (!!showAlertJoinTheCommunityFirst && community?.joinStatus === groupJoinStatus.visitor) {
+      dispatch(modalActions.showAlert({
+        title: t('communities:browse_groups:guest_view_alert:title'),
+        content: t('communities:browse_groups:guest_view_alert:content'),
+        confirmLabel: t('common:text_ok'),
+      }));
+      return;
+    }
     if (isGroup(level)) {
       dispatch(groupsActions.joinNewGroup({ groupId: id, groupName: name }));
       return;

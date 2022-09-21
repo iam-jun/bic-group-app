@@ -6,6 +6,7 @@ import IJoinedGroupTreeState from '~/screens/groups/store/Interface';
 import IDraftPostState from '~/screens/post/DraftPost/store/Interface';
 import ILeaveCommunityState from '~/screens/communities/CommunityDetail/store/interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
+import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
 
 export interface BicStore {
   // screens
@@ -22,7 +23,8 @@ export interface BicStore {
     leaveCommunity: ILeaveCommunityState,
   },
   groups: {
-    joinedGroupTreeStore: IJoinedGroupTreeState
+    joinedGroupTreeStore: IJoinedGroupTreeState,
+    discoverGroups: IDiscoverGroupsState
   }
   Home: {
     homeStore: IHomeState,

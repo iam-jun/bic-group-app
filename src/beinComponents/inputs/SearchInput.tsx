@@ -76,7 +76,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([styles.container, style])}>
+    <View style={[styles.container, style]}>
       <View style={styles.itemContainer}>
         <Icon
           style={styles.searchIcon}

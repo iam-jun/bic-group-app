@@ -755,15 +755,6 @@ function groupsReducer(
         },
       };
     }
-
-    case groupsTypes.SET_DISCOVER_GROUPS:
-      return {
-        ...state,
-        discoverGroups: {
-          ...discoverGroups,
-          ...payload,
-        },
-      };
     case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
       return {
         ...state,

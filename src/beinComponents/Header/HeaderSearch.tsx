@@ -153,7 +153,6 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       height: dimension?.headerHeight || 44,
       position: 'absolute',
-      bottom: 0,
       left: 0,
       right: 0,
       flexDirection: 'row',
