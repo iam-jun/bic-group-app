@@ -94,7 +94,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({
       <Animated.View style={[styles.container, containerAnimatedStyle]}>
         <Animated.View style={[styles.logoContainer, logoAnimatedStyle]}>
           <View style={styles.logo}>
-            <SvgIcon source={BicHomeLogo} width={105} height={18} />
+            <SvgIcon source={BicHomeLogo} width={145} height={28} />
           </View>
         </Animated.View>
         <View style={styles.tabContainer}>
