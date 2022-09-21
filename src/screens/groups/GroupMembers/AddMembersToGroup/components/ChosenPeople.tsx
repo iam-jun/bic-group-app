@@ -30,7 +30,7 @@ const ChosenPeople = ({ selectedUsers, onSelectUser }: Props) => {
         onPressAction={() => onSelectUser(item)}
       />
       <ViewSpacing height={spacing.margin.small} />
-      <Text.BodyS numberOfLines={1} ellipsizeMode="tail" color={theme.colors.neutral40}>
+      <Text.BodyS maxLength={10} color={theme.colors.neutral40}>
         {item.name}
       </Text.BodyS>
     </View>
@@ -55,6 +55,7 @@ const ChosenPeople = ({ selectedUsers, onSelectUser }: Props) => {
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <ViewSpacing width={spacing.margin.base} />}
+        keyboardShouldPersistTaps="handled"
       />
     </View>
   );
@@ -65,7 +66,6 @@ const createStyles = () => StyleSheet.create({
     marginBottom: spacing.margin.extraLarge,
   },
   itemSelectedUser: {
-    width: 70,
     alignItems: 'center',
     paddingTop: spacing.padding.base,
   },
