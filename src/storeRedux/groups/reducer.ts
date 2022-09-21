@@ -124,8 +124,7 @@ export const groupInitState = {
     offset: 0,
     canLoadMore: true,
   },
-  // eslint-disable-next-line no-array-constructor
-  selectedUsers: new Array<IUser>(),
+  selectedUsers: [] as IUser[],
 
   loadingAvatar: false,
   loadingCover: false,

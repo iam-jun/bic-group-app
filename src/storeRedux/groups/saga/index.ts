@@ -16,9 +16,6 @@ import { IResponseData, IToastMessage } from '~/interfaces/common';
 import { mapData } from '../../../screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
-import { withNavigation } from '~/router/helper';
-import { rootNavigationRef } from '~/router/refs';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
@@ -82,8 +79,6 @@ import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 import updateCommunityJoinSetting from './updateCommunityJoinSetting';
 import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
-
-const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
   yield takeLatest(
@@ -397,32 +392,14 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
     // refresh group detail after adding new members
     yield refreshGroupMembers(groupId);
 
-    const userAddedCount = userIds.length;
-
     const toastMessage: IToastMessage = {
-      content: i18next
-        .t(`common:message_add_member_success:${
-          userAddedCount > 1 ? 'many' : '1'
-        }`)
-        .replace(
-          '{n}', userAddedCount.toString(),
-        ),
+      content: i18next.t('common:message_add_member_success_group'),
+      props: { type: 'success' },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-
-    navigation.navigate(
-      groupStack.groupMembers, { groupId },
-    );
-  } catch (err) {
-    console.error(
-      '\x1b[33m',
-      'addMembers catch: ',
-      JSON.stringify(
-        err, undefined, 2,
-      ),
-      '\x1b[0m',
-    );
-    yield call(showError, err);
+  } catch (error) {
+    console.error('addMembers error:', error);
+    yield call(showError, error);
   }
 }
 

@@ -11,9 +11,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import MemberItem from './MemberItem';
 import spacing from '~/theme/spacing';
-import Image from '~/beinComponents/Image';
-import Text from '~/beinComponents/Text';
-import images from '~/resources/images';
+import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 
 interface MemberSearchResultProps {
   canManageMember: boolean;
@@ -44,23 +42,7 @@ const MemberSearchResult = ({
 
   const renderEmptyComponent = () => {
     if (loading) return null;
-    return (
-      <View style={styles.textNoResults}>
-        <Image
-          resizeMode="contain"
-          style={styles.imgEmpty}
-          source={images.img_empty_search_post}
-        />
-        <Text.BodyS
-          style={styles.noResultText}
-          color={theme.colors.neutral40}
-          useI18n
-          testID="member_search_result.no_results"
-        >
-          common:text_search_no_results
-        </Text.BodyS>
-      </View>
-    );
+    return <NoSearchResultsFound />;
   };
 
   const renderListFooter = () => {
