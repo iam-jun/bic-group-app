@@ -5,9 +5,9 @@ import Animated from 'react-native-reanimated';
 import { useKeySelector } from '~/hooks/selector';
 
 import { IGroup } from '~/interfaces/IGroup';
+import AboutContent from '~/screens/communities/CommunityDetail/components/AboutContent';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
-import GroupAboutContent from '../../components/GroupAboutContent';
 import InfoHeader from '../../components/InfoHeader';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
 
@@ -24,6 +24,7 @@ const GroupPrivateWelcome = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { name } = useKeySelector(groupsKeySelector.communityDetail);
+  const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
 
   return (
     <Animated.ScrollView
@@ -39,7 +40,7 @@ const GroupPrivateWelcome = ({
         <GroupJoinCancelButton />
       </View>
 
-      <GroupAboutContent showPrivate />
+      <AboutContent profileInfo={groupDetail} showPrivate />
     </Animated.ScrollView>
   );
 };

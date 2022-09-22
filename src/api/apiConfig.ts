@@ -2,21 +2,28 @@ import { AxiosRequestConfig } from 'axios';
 
 import getEnv from '~/utils/env';
 
+const apiUrls = {
+  GROUP: `${getEnv('BEIN_API')}/v1/group/`,
+  FEED: `${getEnv('BEIN_API')}/v1/feed/`,
+  NOTIFICATION: `${getEnv('BEIN_API')}/v1/notification/`,
+  UPLOAD: `${getEnv('BEIN_API')}/v1/upload/`,
+};
+
 export const apiProviders = {
   bein: {
-    url: getEnv('BEIN_API'),
+    url: apiUrls.GROUP,
     name: 'Bein',
   },
   beinFeed: {
-    url: getEnv('BEIN_FEED'),
+    url: apiUrls.FEED,
     name: 'BeinFeed',
   },
   beinNotification: {
-    url: `${getEnv('BEIN_NOTIFICATION')}`,
+    url: apiUrls.NOTIFICATION,
     name: 'BeinNotification',
   },
   beinUpload: {
-    url: `${getEnv('BEIN_UPLOAD')}`,
+    url: apiUrls.UPLOAD,
     name: 'BeinUpload',
   },
 };
