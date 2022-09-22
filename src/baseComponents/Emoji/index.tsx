@@ -3,14 +3,10 @@
 import React from 'react';
 import { EmojiIndicesByAlias, Emojis } from './emojis';
 
-import EmojiComponent from './EmojiComponent';
+import EmojiComponent, { EmojiProps } from './EmojiComponent';
 import { getCustomEmojisByName } from '~/utils/emoji_utils';
 
-type OwnProps = {
-    emojiName: string;
-}
-
-function Emoji(ownProps: OwnProps) {
+function Emoji(ownProps: EmojiProps) {
   const { emojiName } = ownProps;
   //   const customEmojis = getCustomEmojisByName(state);
   //   const customEmojis = getCustomEmojisByName(state);
@@ -34,6 +30,7 @@ function Emoji(ownProps: OwnProps) {
   }
 
   const props = {
+    ...ownProps,
     imageUrl,
     assetImage,
     displayTextOnly,
@@ -41,7 +38,7 @@ function Emoji(ownProps: OwnProps) {
   };
 
   return (
-    <EmojiComponent {...ownProps} {...props} />
+    <EmojiComponent {...props} />
   );
 }
 

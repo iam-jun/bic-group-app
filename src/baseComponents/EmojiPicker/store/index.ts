@@ -3,7 +3,9 @@ import {
   resetStore,
   createStore,
 } from '~/store/utils';
-import { getRenderableEmojis, selectEmojisByName, selectEmojisBySection } from './utils';
+import {
+  getRenderableEmojis, searchEmojis, selectEmojisByName, selectEmojisBySection,
+} from './utils';
 import { dimension } from '~/theme';
 import IEmojiPickerState from './Interface';
 
@@ -11,11 +13,17 @@ const initialState = {
   data: [],
   filteredData: [],
   fuse: null,
+  currentSectionIndex: 0,
 };
 
-const emojiPickerStore = (set, _get) => ({
+const emojiPickerStore = (set, get) => ({
   ...initialState,
   actions: {
+    setCurrentSectionIndex: (index: number) => {
+      set((state) => {
+        state.currentSectionIndex = index;
+      });
+    },
     buildEmojis: async () => {
       const emojis = selectEmojisByName();
       const options = {
@@ -34,6 +42,19 @@ const emojiPickerStore = (set, _get) => ({
         state.data = renderableEmojis;
         state.fuse = fuse;
       }, 'buildEmojis');
+    },
+    search: (term: string) => {
+      const { fuse } = get();
+      const filteredData = searchEmojis(fuse, term);
+      set((state) => {
+        state.filteredData = filteredData;
+      });
+    },
+    resetData: () => {
+      set((state) => {
+        state.filteredData = [];
+        state.currentSectionIndex = 0;
+      });
     },
   },
   reset: () => resetStore(initialState, set),

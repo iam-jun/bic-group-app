@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Image from '~/beinComponents/Image';
 
-type Props = {
+export type EmojiProps = {
 
     /*
          * Emoji text name.
@@ -22,12 +22,12 @@ type Props = {
     /*
      * Image URL for the emoji.
      */
-    imageUrl: string;
+    imageUrl?: string;
 
     /*
      * asset name in case it is bundled with the app
      */
-    assetImage: any;
+    assetImage?: any;
 
     /*
      * Set to render only the text and no image.
@@ -41,7 +41,7 @@ type Props = {
     testID?: string;
 }
 
-const EmojiComponent: React.FC<Props> = (props: Props) => {
+const EmojiComponent: React.FC<EmojiProps> = (props: EmojiProps) => {
   const {
     customEmojiStyle,
     displayTextOnly,

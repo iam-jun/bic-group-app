@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect, useImperativeHandle, useRef, useState,
+} from 'react';
 import {
   FlatList,
   Platform,
@@ -13,11 +15,9 @@ import { default as RNSectionListGetItemLayout } from 'react-native-section-list
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Emoji from '../Emoji';
 
-import EmojiPickerRow from './emoji_picker_row';
-import Icon from '../Icon';
+import EmojiPickerRow from './components/EmojiPickRow';
 import Text from '~/beinComponents/Text';
 import NoSearchResult from '~/components/NoSearchResult';
-import { padding } from '~/theme/spacing';
 import useEmojiPickerStore from './store';
 import IEmojiPickerState from './store/Interface';
 import { measureEmojiSections } from './store/utils';
@@ -25,17 +25,28 @@ import {
   EMOJI_GUTTER, EMOJI_SIZE, SCROLLVIEW_NATIVE_ID, SECTION_HEADER_HEIGHT, SECTION_MARGIN,
 } from './store/constant';
 import { dimension } from '~/theme';
+import EmojiSectionIcons from './components/EmojiSectionIcons';
+import { padding } from '~/theme/spacing';
 
-const EmojiPicker = ({ searchTerm, ...props }: any) => {
+export interface EmojiPickerProps {
+  emojiPickerRef?: any;
+  bottomOffset?: number;
+  onEmojiPress: (name: string) => void
+}
+
+const EmojiPicker = ({
+  emojiPickerRef, bottomOffset = 0, onEmojiPress,
+}: EmojiPickerProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = getStyleSheetFromTheme(theme);
   const { deviceWidth } = dimension;
   const scrollToSectionTries = useRef(0);
   const emojiSectionIndexByOffset = useRef([]);
   const emojis = useEmojiPickerStore((state: IEmojiPickerState) => state.data);
+  const currentSectionIndex = useEmojiPickerStore((state: IEmojiPickerState) => state.currentSectionIndex);
   const filteredEmojis = useEmojiPickerStore((state: IEmojiPickerState) => state.filteredData);
+  const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
   const [jumpToSection, setJumpToSection] = useState(false);
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   // const rebuildEmojis = false;
 
   const sectionListRef = useRef<SectionList>();
@@ -48,23 +59,6 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
     getItemHeight: () => (EMOJI_SIZE + 7) + (EMOJI_GUTTER * 2),
     getSectionHeaderHeight: () => SECTION_HEADER_HEIGHT,
   });
-
-  // componentDidUpdate(prevProps) {
-  //   rebuildEmojis = false;
-  //   if (props.deviceWidth !== prevProps.deviceWidth) {
-  //     rebuildEmojis = true;
-
-  //     if (searchBarRef) {
-  //       searchBarRef.blur();
-  //     }
-  //   }
-
-  //   if (props.emojis !== prevProps.emojis) {
-  //     rebuildEmojis = true;
-  //   }
-
-  //   setRebuiltEmojis();
-  // }
 
   // const setRebuiltEmojis = (searchBarAnimationComplete = true) => {
   //   if (rebuildEmojis && searchBarAnimationComplete) {
@@ -108,6 +102,19 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
   //   setFiltedEmojis([]);
   // };
 
+  useImperativeHandle(
+    emojiPickerRef, () => ({
+      scrollToSectionIndex,
+    }),
+  );
+
+  const scrollToSectionIndex = (
+    index,
+  ) => {
+    scrollToSectionTries.current = 0;
+    scrollToSection(index);
+  };
+
   const renderItem = ({ item, section }) => (
     <View testID={section.defaultMessage}>
       <EmojiPickerRow
@@ -115,15 +122,15 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
         emojiGutter={EMOJI_GUTTER}
         emojiSize={EMOJI_SIZE}
         items={item.items}
-        onEmojiPress={(name) => props.onEmojiPress(`:${name}:`)}
+        onEmojiPress={(name) => onEmojiPress(name)}
       />
     </View>
   );
 
-  const renderListComponent = (shorten) => {
+  const renderListComponent = (shorten = 2) => {
     let listComponent;
-    if (searchTerm) {
-      const contentContainerStyle = filteredEmojis.length ? null : styles.flex;
+    if (filteredEmojis.length > 0) {
+      const contentContainerStyle = [styles.flex];
 
       listComponent = (
         <FlatList
@@ -157,7 +164,7 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
           renderSectionHeader={renderSectionHeader}
           sections={emojis}
           showsVerticalScrollIndicator={false}
-          style={[styles.sectionList, { width: deviceWidth - (SECTION_MARGIN * 2) }]}
+          style={[styles.sectionList, { width: deviceWidth - (SECTION_MARGIN * shorten) }]}
         />
       );
     }
@@ -169,7 +176,7 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
 
   const flatListRenderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => props.onEmojiPress(`:${item}:`)}
+      onPress={() => onEmojiPress(`${item}`)}
       style={styles.flatListRow}
     >
       <View style={styles.flatListEmoji}>
@@ -202,7 +209,7 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
     }
 
     if (nextIndex !== currentSectionIndex) {
-      setCurrentSectionIndex(nextIndex);
+      actions.setCurrentSectionIndex(nextIndex);
     }
   };
 
@@ -214,7 +221,7 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
 
   const scrollToSection = (index) => {
     setJumpToSection(true);
-    setCurrentSectionIndex(index);
+    actions.setCurrentSectionIndex(index);
     sectionListRef.current?.scrollToLocation({
       sectionIndex: index,
       itemIndex: 0,
@@ -237,53 +244,24 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
       key={section.title}
     >
       <Text.SubtitleS
+        useI18n
         style={styles.sectionTitle}
       >
-        {section.id}
+        {`emoji_categories:${section.id}`}
       </Text.SubtitleS>
     </View>
   );
 
-  const handleSectionIconPress = (
-    index,
-    // isCustomSection = false
-  ) => {
-    scrollToSectionTries.current = 0;
-    scrollToSection(index);
-
-    // if (isCustomSection && props.customEmojiPage === 0) {
-    //   loadMoreCustomEmojis();
-    // }
-  };
-
-  const renderSectionIcons = () => {
-    const { theme } = props;
-    const styles = getStyleSheetFromTheme(theme);
-
-    return emojis.map((section, index) => {
-      const onPress = () => handleSectionIconPress(index);
-      const tintColor = index === currentSectionIndex
-        ? theme.colors.gray60
-        : theme.colors.gray40;
-
-      return (
-        <Icon
-          style={styles.sectionIconContainer}
-          icon={section.icon}
-          tintColor={tintColor}
-          size={17}
-          onPress={onPress}
-        />
-      );
-    });
-  };
-
   const renderEmptyList = () => <NoSearchResult />;
 
   return (
-    <View>
+    <View style={styles.container}>
       {renderListComponent(2)}
-      {renderSectionIcons}
+      <EmojiSectionIcons
+        visible={filteredEmojis.length === 0}
+        bottomOffset={bottomOffset}
+        onPress={scrollToSectionIndex}
+      />
     </View>
   );
 };
@@ -291,34 +269,12 @@ const EmojiPicker = ({ searchTerm, ...props }: any) => {
 export const getStyleSheetFromTheme = ((theme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    flex: {
-      flex: 1,
-    },
-    bottomContent: {
-      borderTopWidth: 1,
-      borderTopColor: colors.gray20,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '100%',
-      padding: padding.base,
-      backgroundColor: colors.neutral1,
-      ...theme.elevations.e1,
-    },
-    bottomContentWrapper: {
-      width: '100%',
-      flexDirection: 'row',
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      height: 35,
-    },
     container: {
       flex: 1,
       alignItems: 'center',
     },
-    searchBar: {
-      padding: padding.base,
+    flex: {
+      flex: 1,
     },
     emojiText: {
       color: '#000',
@@ -338,11 +294,11 @@ export const getStyleSheetFromTheme = ((theme) => {
       height: 40,
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: padding.small,
-      borderTopWidth: 1,
-      borderColor: colors.gray40,
-      borderLeftWidth: 1,
-      borderRightWidth: 1,
+      paddingHorizontal: padding.base,
+      // borderTopWidth: 1,
+      // borderColor: colors.gray40,
+      // borderLeftWidth: 1,
+      // borderRightWidth: 1,
       overflow: 'hidden',
     },
     flexCenter: {

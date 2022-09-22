@@ -179,9 +179,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const onEmojiSelected = (emoji: string) => {
     dispatch(modalActions.hideModal());
+    // [TO-DO] handle cursor position
     if (emoji) {
-      setText(text + emoji);
-      onChangeText?.(text + emoji);
+      setText(`${text} :${emoji}:`);
+      onChangeText?.(`${text} :${emoji}:`);
       _textInputRef.current.focus();
     }
   };

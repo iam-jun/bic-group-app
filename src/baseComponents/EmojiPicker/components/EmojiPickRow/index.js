@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import _ from 'lodash';
-import Emoji from '../Emoji';
+import Emoji from '../../../Emoji';
 
 export default class EmojiPickerRow extends Component {
   shouldComponentUpdate(nextProps) {

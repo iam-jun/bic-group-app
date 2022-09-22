@@ -144,6 +144,7 @@ export const searchEmojis = (fuse: any, searchTerm: string) => {
 
     return values;
   }, []);
+
   const data = results.sort(sorter);
 
   return data;

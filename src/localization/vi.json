@@ -958,5 +958,18 @@
   "discard_alert": {
     "title": "Huỷ bỏ những thay đổi?",
     "content": "Nếu bạn huỷ bỏ ngay bây giờ, bạn sẽ mất những thay đổi nào mà bạn đã thực hiện."
+  },
+  "emoji_categories": {
+    "custom": "Tùy chỉnh",
+    "recently": "Gần đây",
+    "smileys-emotion": "Biểu cảm và khuôn mặt",
+    "people-body": "Mọi người",
+    "animals-nature": "Động vật và thiên nhiên",
+    "food-drink": "Thức ăn và đồ uống",
+    "travel-places": "Du lịch và địa điểm",
+    "activities": "Hoạt động",
+    "objects": "Vật thể",
+    "symbols": "Ký hiệu",
+    "flags": "Cờ"
   }
 }

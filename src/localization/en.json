@@ -1035,8 +1035,16 @@
     "content": "If you discard now, you’ll lose any changes you’ve made."
   },
   "emoji_categories": {
-    "all": "All",
-    "reacently": "Recently",
-    "smiley": "Smileys & Emotion",
+    "custom": "Custom",
+    "recently": "Recently",
+    "smileys-emotion": "Smileys & Emotion",
+    "people-body": "People & Body",
+    "animals-nature": "Animals & Nature",
+    "food-drink": "Food & Drink",
+    "travel-places": "Travel & Places",
+    "activities": "Activities",
+    "objects": "Objects",
+    "symbols": "Symbols",
+    "flags": "Flags"
   }
 }
