@@ -329,7 +329,7 @@ const SignIn = () => {
           >
             <View style={styles.paddingView}>
               <Animated.Image
-                source={images.logo_beincomm}
+                source={images.logo_beincomm_reverse}
                 style={[{ alignSelf: 'center' }, logoContainerStyle]}
               />
               <View style={{ backgroundColor: 'yellow' }} />
