@@ -233,6 +233,8 @@ export interface IGetCommunityGroup {
   previewMembers?: boolean;
   key?: string;
   listBy?: 'tree' | 'flat';
+  limit?: number;
+  offset?: number;
 }
 
 export interface IPayloadGroupSchemeAssignments {
