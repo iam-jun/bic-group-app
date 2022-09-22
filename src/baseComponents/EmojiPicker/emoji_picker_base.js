@@ -25,10 +25,11 @@ import EmojiPickerRow from './emoji_picker_row';
 import Icon from '../Icon';
 import Text from '~/beinComponents/Text';
 import NoSearchResult from '~/components/NoSearchResult';
+import { padding } from '~/theme/spacing';
 
 const EMOJI_SIZE = 30;
 const EMOJI_GUTTER = 7;
-const EMOJIS_PER_PAGE = 200;
+// const EMOJIS_PER_PAGE = 200;
 const SECTION_HEADER_HEIGHT = 28;
 const SECTION_MARGIN = 15;
 export const SCROLLVIEW_NATIVE_ID = 'emojiPicker';
@@ -183,6 +184,10 @@ export default class EmojiPicker extends PureComponent {
   };
 
   searchEmojis = (searchTerm) => {
+    if (!searchTerm) {
+      return this.cancelSearch();
+    }
+
     const { fuse } = this.props;
     const searchTermLowerCase = searchTerm.toLowerCase();
 
@@ -259,7 +264,7 @@ export default class EmojiPicker extends PureComponent {
           initialNumToRender={50}
           keyboardShouldPersistTaps="always"
           keyboardDismissMode="interactive"
-          ListFooterComponent={this.renderFooter}
+          // ListFooterComponent={this.renderFooter}
           nativeID={SCROLLVIEW_NATIVE_ID}
         //   onEndReached={this.loadMoreCustomEmojis}
           onEndReachedThreshold={Platform.OS === 'ios' ? 0 : 1}
@@ -287,7 +292,7 @@ export default class EmojiPicker extends PureComponent {
 
     return (
       <TouchableOpacity
-        onPress={() => this.props.onEmojiPress(item)}
+        onPress={() => this.props.onEmojiPress(`:${item}:`)}
         style={style.flatListRow}
       >
         <View style={style.flatListEmoji}>
@@ -297,30 +302,30 @@ export default class EmojiPicker extends PureComponent {
             size={20}
           />
         </View>
-        <Text style={style.flatListEmojiName}>{`:${item}:`}</Text>
+        <Text.BodyM style={style.flatListEmojiName}>{`:${item}:`}</Text.BodyM>
       </TouchableOpacity>
     );
   };
 
-  loadMoreCustomEmojis = async () => {
-    if (!this.props.customEmojisEnabled) {
-      return;
-    }
+  // loadMoreCustomEmojis = async () => {
+  //   if (!this.props.customEmojisEnabled) {
+  //     return;
+  //   }
 
-    const { data } = await this.props.actions.getCustomEmojis(this.props.customEmojiPage, EMOJIS_PER_PAGE);
-    this.setState({ loadingMore: false });
+  //   const { data } = await this.props.actions.getCustomEmojis(this.props.customEmojiPage, EMOJIS_PER_PAGE);
+  //   this.setState({ loadingMore: false });
 
-    if (!data) {
-      return;
-    }
+  //   if (!data) {
+  //     return;
+  //   }
 
-    if (data.length < EMOJIS_PER_PAGE) {
-      this.setState({ missingPages: false });
-      return;
-    }
+  //   if (data.length < EMOJIS_PER_PAGE) {
+  //     this.setState({ missingPages: false });
+  //     return;
+  //   }
 
-    this.props.actions.incrementEmojiPickerPage();
-  };
+  //   this.props.actions.incrementEmojiPickerPage();
+  // };
 
   onScroll = (e) => {
     if (this.state.jumpToSection) {
@@ -394,7 +399,10 @@ export default class EmojiPicker extends PureComponent {
     );
   };
 
-  handleSectionIconPress = (index, isCustomSection = false) => {
+  handleSectionIconPress = (
+    index,
+    // isCustomSection = false
+  ) => {
     this.scrollToSectionTries = 0;
     this.scrollToSection(index);
 
@@ -410,7 +418,7 @@ export default class EmojiPicker extends PureComponent {
     return this.state.emojis.map((section, index) => {
       const onPress = () => this.handleSectionIconPress(index, section.key === 'custom');
       const tintColor = index === this.state.currentSectionIndex
-        ? theme.colors.gray70
+        ? theme.colors.gray60
         : theme.colors.gray40;
 
       return (
@@ -440,14 +448,7 @@ export default class EmojiPicker extends PureComponent {
     );
   };
 
-  renderEmptyList = () => {
-    const { theme } = this.props;
-    const styles = getStyleSheetFromTheme(theme);
-
-    return (
-      <NoSearchResult />
-    );
-  };
+  renderEmptyList = () => <NoSearchResult />;
 }
 
 export const getStyleSheetFromTheme = ((theme) => {
@@ -457,12 +458,14 @@ export const getStyleSheetFromTheme = ((theme) => {
       flex: 1,
     },
     bottomContent: {
-    // backgroundColor: changeOpacity(theme.centerChannelColor, 0.1),
-    // borderTopColor: changeOpacity(theme.centerChannelColor, 0.3),
       borderTopWidth: 1,
+      borderTopColor: colors.gray20,
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: '100%',
+      padding: padding.base,
+      // backgroundColor: colors.neutral1,
+      ...theme.elevations.e1,
     },
     bottomContentWrapper: {
       ...Platform.select({
@@ -477,13 +480,15 @@ export const getStyleSheetFromTheme = ((theme) => {
           flexDirection: 'row',
         },
       }),
-      backgroundColor: colors.neutral1,
       height: 35,
     },
     container: {
-      alignItems: 'center',
-      backgroundColor: colors.neutral1,
       flex: 1,
+      alignItems: 'center',
+      // backgroundColor: colors.neutral1,
+    },
+    searchBar: {
+      padding: padding.base,
     },
     emojiText: {
       color: '#000',
@@ -491,22 +496,21 @@ export const getStyleSheetFromTheme = ((theme) => {
     },
     flatList: {
       flex: 1,
-      backgroundColor: colors.neutral1,
+      // backgroundColor: colors.neutral1,
       alignSelf: 'stretch',
     },
     flatListEmoji: {
       marginRight: 5,
     },
     flatListEmojiName: {
-      fontSize: 13,
       color: colors.neutral90,
     },
     flatListRow: {
       height: 40,
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: 8,
-      backgroundColor: colors.neutral1,
+      paddingHorizontal: padding.small,
+      // backgroundColor: colors.neutral1,
       borderTopWidth: 1,
       borderColor: colors.gray40,
       borderLeftWidth: 1,
@@ -533,7 +537,6 @@ export const getStyleSheetFromTheme = ((theme) => {
       height: 35,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'blue',
     },
     sectionIconHighlight: {
       color: colors.gray40,

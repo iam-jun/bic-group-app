@@ -2,9 +2,9 @@
 // See LICENSE.txt for license information.
 
 import emojiRegex from 'emoji-regex';
-import { STATIC_EMOJI } from '~/resources/emoji';
 
 import { Emojis, EmojiIndicesByAlias } from '~/baseComponents/Emoji/emojis';
+import custom_emojis from '~/resources/custom_emojis';
 
 const RE_NAMED_EMOJI = /(:([a-zA-Z0-9_+-]+):)/g;
 
@@ -34,13 +34,13 @@ const RE_EMOTICON = {
 const MAX_JUMBO_EMOJIS = 4;
 
 function isEmoticon(text) {
-  for (const emoticon of Object.keys(RE_EMOTICON)) {
+  Object.keys(RE_EMOTICON).forEach((emoticon) => {
     const reEmoticon = RE_EMOTICON[emoticon];
     const matchEmoticon = text.match(reEmoticon);
     if (matchEmoticon && matchEmoticon[0] === text) {
       return true;
     }
-  }
+  });
 
   return false;
 }
@@ -61,33 +61,29 @@ export function hasEmojisOnly(message, customEmojis) {
   }
 
   let emojiCount = 0;
-  for (const chunk of chunks) {
+  chunks.forEach((chunk) => {
     if (doesMatchNamedEmoji(chunk)) {
       const emojiName = chunk.substring(1, chunk.length - 1);
       if (EmojiIndicesByAlias.has(emojiName)) {
-        emojiCount++;
-        continue;
+        emojiCount += 1;
       }
 
       if (customEmojis && customEmojis.has(emojiName)) {
-        emojiCount++;
-        continue;
+        emojiCount += 1;
       }
-    }
 
-    const matchUnicodeEmoji = chunk.match(RE_UNICODE_EMOJI);
-    if (matchUnicodeEmoji && matchUnicodeEmoji.join('') === chunk) {
-      emojiCount += matchUnicodeEmoji.length;
-      continue;
-    }
+      const matchUnicodeEmoji = chunk.match(RE_UNICODE_EMOJI);
+      if (matchUnicodeEmoji && matchUnicodeEmoji.join('') === chunk) {
+        emojiCount += matchUnicodeEmoji.length;
+      }
 
-    if (isEmoticon(chunk)) {
-      emojiCount++;
-      continue;
-    }
+      if (isEmoticon(chunk)) {
+        emojiCount += 1;
+      }
 
-    return { isEmojiOnly: false, isJumboEmoji: false };
-  }
+      return { isEmojiOnly: false, isJumboEmoji: false };
+    }
+  });
 
   return {
     isEmojiOnly: true,
@@ -148,13 +144,13 @@ export function compareEmojis(emojiA, emojiB, searchedName) {
   if (typeof emojiA === 'string') {
     aName = emojiA;
   } else {
-    aName = 'short_name' in emojiA ? emojiA.short_name : emojiA.name;
+    aName = emojiA?.short_name ? emojiA.short_name : emojiA.name;
   }
   let bName;
   if (typeof emojiB === 'string') {
     bName = emojiB;
   } else {
-    bName = 'short_name' in emojiB ? emojiB.short_name : emojiB.name;
+    bName = emojiB?.short_name ? emojiB.short_name : emojiB.name;
   }
 
   if (!searchedName) {
@@ -189,7 +185,7 @@ export function compareEmojis(emojiA, emojiB, searchedName) {
 }
 
 export const getCustomEmojisByName = (name) => {
-  if (!STATIC_EMOJI[name]) { return null; }
+  if (!custom_emojis[name]) { return null; }
 
-  return STATIC_EMOJI[name];
+  return custom_emojis[name];
 };

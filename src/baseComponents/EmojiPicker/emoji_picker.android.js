@@ -20,26 +20,11 @@ export default class EmojiPicker extends EmojiPickerBase {
           testID={testID}
           style={styles.searchBar}
         >
-          <SearchInput testID={searchBarTestID} value={searchTerm} />
-          {/* <SearchBar
+          <SearchInput
             testID={searchBarTestID}
-            ref={this.setSearchBarRef}
-            placeholder={formatMessage({ id: 'search_bar.search', defaultMessage: 'Search' })}
-            cancelTitle={formatMessage({ id: 'mobile.post.cancel', defaultMessage: 'Cancel' })}
-            backgroundColor="transparent"
-            inputHeight={33}
-            inputStyle={searchBarInput}
-            placeholderTextColor={changeOpacity(theme.centerChannelColor, 0.5)}
-            tintColorSearch={changeOpacity(theme.centerChannelColor, 0.8)}
-            tintColorDelete={changeOpacity(theme.centerChannelColor, 0.5)}
-            titleCancelColor={theme.centerChannelColor}
-            onChangeText={this.changeSearchTerm}
-            onCancelButtonPress={this.cancelSearch}
-            autoCapitalize="none"
             value={searchTerm}
-            keyboardAppearance={getKeyboardAppearanceFromTheme(theme)}
-            onAnimationComplete={this.setRebuiltEmojis}
-          /> */}
+            onChangeText={this.changeSearchTerm}
+          />
         </View>
         <View style={styles.container}>
           {this.renderListComponent(2)}

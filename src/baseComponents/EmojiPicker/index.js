@@ -9,13 +9,13 @@ import EmojiPickerComponent from './emoji_picker';
 import {
   CategoryNames, EmojiIndicesByAlias, EmojiIndicesByCategory, Emojis,
 } from '../Emoji/emojis';
-import { STATIC_EMOJI } from '~/resources/emoji';
+import custom_emojis from '~/resources/custom_emojis';
 
 function getSkin(emoji) {
   if (emoji?.skin_variations) {
     return 'default';
   }
-  if (emoji.skins) {
+  if (emoji?.skins) {
     return emoji.skins && emoji.skins[0];
   }
   return null;
@@ -36,22 +36,19 @@ function fillEmoji(indice) {
 export const selectEmojisByName = () => {
   const skinTone = 'default';
   const emoticons = new Set();
-  EmojiIndicesByAlias.entries((key, index) => {
-    const skin = getSkin(Emojis[index]);
+  EmojiIndicesByAlias.forEach((value, key) => {
+    const skin = getSkin(Emojis[key]);
     if (!skin || skin === skinTone) {
       emoticons.add(key);
     }
   });
-
-  // for (const [key] of customEmojis.entries()) {
-  //   emoticons.add(key);
-  // }
+  Object.keys(custom_emojis).forEach((key) => emoticons.add(key));
   return Array.from(emoticons);
 };
 
 const icons = {
-  recent: 'iconCatEmoticon',
-  'smileys-emotion': 'iconCatRecent',
+  recent: 'iconCatRecent',
+  'smileys-emotion': 'iconCatEmoticon',
   'people-body': 'iconCatPeople',
   'animals-nature': 'iconCatAnimal',
   'food-drink': 'iconCatFood',
@@ -65,7 +62,7 @@ const icons = {
 
 export const selectEmojisBySection = () => {
   const skinTone = 'default';
-  const customEmojiItems = Object.keys(STATIC_EMOJI);
+  const customEmojiItems = Object.keys(custom_emojis).map((key) => custom_emojis[key]);
   const recentEmojis = [];
   // for (const [key] of customEmojis) {
   //   customEmojiItems.push({
@@ -85,7 +82,6 @@ export const selectEmojisBySection = () => {
 
   const recentItems = recentEmojis.map((emoji) => ({ name: emoji }));
   const filteredCategories = CategoryNames.filter((category) => category !== 'recent' || recentItems.length > 0);
-
   const emoticons = filteredCategories.map((category) => {
     const items = EmojiIndicesByCategory.get(skinTone).get(category).map(fillEmoji);
     const data = items;

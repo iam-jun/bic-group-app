@@ -16,22 +16,19 @@ function Emoji(ownProps: OwnProps) {
   //   const customEmojis = getCustomEmojisByName(state);
   //   const serverUrl = Client4.getUrl();
   const customEmoji = getCustomEmojisByName(emojiName);
-  let imageUrl = '';
+  const imageUrl = '';
   let unicode;
   let assetImage = '';
-  let isCustomEmoji = false;
   let displayTextOnly = false;
-  if (EmojiIndicesByAlias.has(emojiName)) {
+  if (customEmoji) {
+    assetImage = customEmoji.path;
+  } else if (EmojiIndicesByAlias.has(emojiName)) {
     const emoji = Emojis[EmojiIndicesByAlias.get(emojiName)!];
     if (emoji.category === 'custom') {
       assetImage = emoji.fileName;
-      isCustomEmoji = true;
     } else {
       unicode = emoji.image;
     }
-  } else if (customEmoji) {
-    imageUrl = customEmoji;
-    isCustomEmoji = true;
   } else {
     displayTextOnly = true;
   }
@@ -39,7 +36,6 @@ function Emoji(ownProps: OwnProps) {
   const props = {
     imageUrl,
     assetImage,
-    isCustomEmoji,
     displayTextOnly,
     unicode,
   };

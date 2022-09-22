@@ -21,7 +21,6 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
-import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Icon from '~/baseComponents/Icon';
 import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -188,17 +187,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onPressIcon = () => {
-    const payload = {
-      isOpen: true,
-      ContentComponent: (
-        <EmojiBoard
-          width={dimension.deviceWidth}
-          height={280}
-          onEmojiSelected={onEmojiSelected}
-        />
-      ),
-    };
-    dispatch(modalActions.showModal(payload));
+    dispatch(modalActions.setShowReactionBottomSheet(
+      { visible: true, callback: onEmojiSelected },
+    ));
   };
 
   const handleUpload = () => {

@@ -8,10 +8,9 @@ import {
   StyleSheet,
   Text,
   TextStyle,
+  ImageStyle,
 } from 'react-native';
-import FastImage, { ImageStyle } from 'react-native-fast-image';
-
-const assetImages = new Map();
+import Image from '~/beinComponents/Image';
 
 type Props = {
 
@@ -28,12 +27,7 @@ type Props = {
     /*
      * asset name in case it is bundled with the app
      */
-    assetImage: string;
-
-    /*
-     * Set if this is a custom emoji.
-     */
-    isCustomEmoji: boolean;
+    assetImage: any;
 
     /*
      * Set to render only the text and no image.
@@ -98,16 +92,12 @@ const EmojiComponent: React.FC<Props> = (props: Props) => {
   if (assetImage) {
     const key = Platform.OS === 'android' ? (`${assetImage}-${height}-${width}`) : null;
 
-    const image = assetImages.get(assetImage);
-    if (!image) {
-      return null;
-    }
     return (
-      <FastImage
+      <Image
         key={key}
-        source={image}
+        source={assetImage}
         style={[customEmojiStyle, { width, height }]}
-        resizeMode={FastImage.resizeMode.contain}
+        resizeMode="contain"
         testID={testID}
       />
     );
@@ -122,12 +112,12 @@ const EmojiComponent: React.FC<Props> = (props: Props) => {
   const key = Platform.OS === 'android' ? (`${imageUrl}-${height}-${width}`) : null;
 
   return (
-    <FastImage
+    <Image
       key={key}
+      testID={testID}
       style={[customEmojiStyle, { width, height }]}
       source={{ uri: imageUrl }}
-      resizeMode={FastImage.resizeMode.contain}
-      testID={testID}
+      resizeMode="contain"
     />
   );
 };

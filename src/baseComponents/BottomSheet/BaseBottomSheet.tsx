@@ -69,6 +69,7 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
           handleStyle={handleStyle}
           modalStyle={[styles.modalStyle, modalStyle]}
           overlayStyle={overlayStyle}
+          // Ignore insets bottom when keyboard is opened
           childrenStyle={[styles.childrenStyle, childrenStyle]}
           flatListProps={flatListProps}
           {...props}
@@ -94,7 +95,7 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
     paddingTop: spacing.padding.extraLarge,
   },
   childrenStyle: {
-    paddingBottom: insets.bottom + (spacing.padding.large || 16),
+    paddingBottom: insets.bottom + spacing.padding.large,
   },
 });
 
