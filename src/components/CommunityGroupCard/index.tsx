@@ -7,7 +7,7 @@ import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ButtonDiscover from './ButtonDiscover';
+import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
@@ -19,13 +19,13 @@ import { ICommunity } from '~/interfaces/ICommunity';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import modalActions from '~/storeRedux/modal/actions';
 
-type DiscoverCardProps = {
+type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
 };
 
-const DiscoverCard: FC<DiscoverCardProps> = ({ item, testID, shouldShowAlertJoinTheCommunityFirst }) => {
+const CommunityGroupCard: FC<CommunityGroupCardProps> = ({ item, testID, shouldShowAlertJoinTheCommunityFirst }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
@@ -180,7 +180,7 @@ const DiscoverCard: FC<DiscoverCardProps> = ({ item, testID, shouldShowAlertJoin
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
-      <ButtonDiscover
+      <ButtonCommunityGroupCard
         joinStatus={joinStatus}
         onView={onView}
         onJoin={onJoin}
@@ -221,4 +221,4 @@ const themeStyles = (theme: ExtendedTheme) => {
   });
 };
 
-export default DiscoverCard;
+export default CommunityGroupCard;

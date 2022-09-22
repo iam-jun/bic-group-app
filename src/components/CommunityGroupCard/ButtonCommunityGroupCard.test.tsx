@@ -1,8 +1,8 @@
 import React from 'react';
-import ButtonDiscover from './ButtonDiscover';
+import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import { fireEvent, languages, renderWithRedux } from '../../test/testUtils';
 
-describe('ButtonDiscover component', () => {
+describe('ButtonCommunityGroupCard component', () => {
   it('given joinStatus = 1, should render button join', () => {
     const joinStatus = 1;
     const onView = jest.fn();
@@ -10,7 +10,7 @@ describe('ButtonDiscover component', () => {
     const onCancel = jest.fn();
 
     const wrapper = renderWithRedux(
-      <ButtonDiscover
+      <ButtonCommunityGroupCard
         joinStatus={joinStatus}
         onView={onView}
         onJoin={onJoin}
@@ -29,7 +29,7 @@ describe('ButtonDiscover component', () => {
     const onCancel = jest.fn();
 
     const wrapper = renderWithRedux(
-      <ButtonDiscover
+      <ButtonCommunityGroupCard
         joinStatus={joinStatus}
         onView={onView}
         onJoin={onJoin}
@@ -48,7 +48,7 @@ describe('ButtonDiscover component', () => {
     const onCancel = jest.fn();
 
     const wrapper = renderWithRedux(
-      <ButtonDiscover
+      <ButtonCommunityGroupCard
         joinStatus={joinStatus}
         onView={onView}
         onJoin={onJoin}

@@ -15,7 +15,7 @@ import EmptyScreen from '~/components/EmptyScreen';
 
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
-import DiscoverCard from '~/components/DiscoverCard';
+import CommunityGroupCard from '~/components/CommunityGroupCard';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
 import useDiscoverGroupsStore from './store';
@@ -69,7 +69,7 @@ const DiscoverGroups = ({ route }: any) => {
       community: { ...communityDetail },
     };
     return (
-      <DiscoverCard
+      <CommunityGroupCard
         item={currentItem}
         testID={`browse_groups_item_${index}`}
         shouldShowAlertJoinTheCommunityFirst

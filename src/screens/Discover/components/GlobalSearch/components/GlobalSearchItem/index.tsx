@@ -6,7 +6,7 @@ import Text from '~/beinComponents/Text';
 import { communityPrivacyListDetail } from '~/constants/privacyTypes';
 import { margin, padding } from '~/theme/spacing';
 import { Avatar, Button } from '~/baseComponents';
-import ButtonDiscover from '~/components/DiscoverCard/ButtonDiscover';
+import ButtonCommunityGroupCard from '~/components/CommunityGroupCard/ButtonCommunityGroupCard';
 import { isGroup } from '~/screens/groups/helper';
 
 interface GlobalSearchItemProps {
@@ -48,7 +48,7 @@ const GlobalSearchItem = ({
           <View style={styles.chip}>
             <Text.BodyXS useI18n color={colors.blue50}>{itemType}</Text.BodyXS>
           </View>
-          <ButtonDiscover
+          <ButtonCommunityGroupCard
             joinStatus={joinStatus}
             size="small"
             onView={_onView}
