@@ -23,9 +23,15 @@ type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
+  isResetCommunityDetail?:boolean;
 };
 
-const CommunityGroupCard: FC<CommunityGroupCardProps> = ({ item, testID, shouldShowAlertJoinTheCommunityFirst }) => {
+const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
+  item,
+  testID,
+  isResetCommunityDetail = true,
+  shouldShowAlertJoinTheCommunityFirst,
+}) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
@@ -53,7 +59,9 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({ item, testID, shouldS
   };
 
   const onGoBackFromGroupDetail = () => {
-    dispatch(groupsActions.setCommunityDetail({} as ICommunity));
+    if (!!isResetCommunityDetail) {
+      dispatch(groupsActions.setCommunityDetail({} as ICommunity));
+    }
     rootNavigation.goBack();
   };
 

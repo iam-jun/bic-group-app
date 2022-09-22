@@ -167,9 +167,8 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     searchInput: { flex: 1, backgroundColor: undefined },
     searchContainer: {
-      height: 40,
+      height: 32,
       overflow: 'hidden',
-      backgroundColor: colors.neutral5,
       borderRadius: spacing.borderRadius.pill,
     },
     icon: {

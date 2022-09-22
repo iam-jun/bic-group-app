@@ -75,6 +75,7 @@ const DiscoverGroups = ({ route }: any) => {
         item={currentItem}
         testID={`browse_groups_item_${index}`}
         shouldShowAlertJoinTheCommunityFirst
+        isResetCommunityDetail={false}
       />
     );
   };
@@ -82,14 +83,12 @@ const DiscoverGroups = ({ route }: any) => {
   const renderEmptyComponent = () => {
     if (loading) return null;
     return (
-      <View style={{ backgroundColor: theme.colors.white, flex: 1 }}>
-        <EmptyScreen
-          source={images.img_empty_search_post}
-          description={!!searchText ? 'common:text_search_no_results'
-            : noGroupInCommuntity ? 'communities:browse_groups:no_groups'
-              : 'communities:browse_groups:joined_all_groups'}
-        />
-      </View>
+      <EmptyScreen
+        source={images.img_empty_search_post}
+        description={!!searchText ? 'common:text_search_no_results'
+          : noGroupInCommuntity ? 'communities:browse_groups:no_groups'
+            : 'communities:browse_groups:joined_all_groups'}
+      />
     );
   };
 
