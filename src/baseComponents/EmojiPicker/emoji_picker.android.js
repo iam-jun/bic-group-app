@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { View } from 'react-native';
-import { SearchInput } from '../Input';
 
 import EmojiPickerBase, { getStyleSheetFromTheme } from './emoji_picker_base';
 
@@ -20,22 +19,22 @@ export default class EmojiPicker extends EmojiPickerBase {
           testID={testID}
           style={styles.searchBar}
         >
-          <SearchInput
+          {/* <SearchInput
             testID={searchBarTestID}
             value={searchTerm}
             onChangeText={this.changeSearchTerm}
-          />
+          /> */}
         </View>
         <View style={styles.container}>
           {this.renderListComponent(2)}
-          {!searchTerm
-                    && (
-                    <View style={styles.bottomContentWrapper}>
-                      <View style={styles.bottomContent}>
-                        {this.renderSectionIcons()}
-                      </View>
-                    </View>
-                    )}
+          {/* {!searchTerm
+            && (
+            <View style={styles.bottomContentWrapper}>
+              <View style={styles.bottomContent}>
+                {this.renderSectionIcons()}
+              </View>
+            </View>
+            )} */}
         </View>
       </>
     );

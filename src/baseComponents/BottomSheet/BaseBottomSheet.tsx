@@ -69,7 +69,6 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
           handleStyle={handleStyle}
           modalStyle={[styles.modalStyle, modalStyle]}
           overlayStyle={overlayStyle}
-          // Ignore insets bottom when keyboard is opened
           childrenStyle={[styles.childrenStyle, childrenStyle]}
           flatListProps={flatListProps}
           {...props}
