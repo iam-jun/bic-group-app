@@ -45,7 +45,7 @@ export default class EmojiPickerRow extends Component {
       );
     }
 
-    const name = 'short_name' in emoji ? emoji.short_name : emoji.name;
+    const name = emoji?.short_name ? emoji.short_name : emoji.name;
 
     return (
       <TouchableOpacity

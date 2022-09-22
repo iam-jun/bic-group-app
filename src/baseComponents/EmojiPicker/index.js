@@ -7,15 +7,15 @@ import { useTheme } from '@react-navigation/native';
 import { useDeviceOrientation, useDimensions } from '@react-native-community/hooks';
 import EmojiPickerComponent from './emoji_picker';
 import {
-  CategoryMessage,
-  CategoryNames, CategoryTranslations, EmojiIndicesByAlias, EmojiIndicesByCategory, Emojis,
+  CategoryNames, EmojiIndicesByAlias, EmojiIndicesByCategory, Emojis,
 } from '../Emoji/emojis';
+import { STATIC_EMOJI } from '~/resources/emoji';
 
 function getSkin(emoji) {
-  if ('skin_variations' in emoji) {
+  if (emoji?.skin_variations) {
     return 'default';
   }
-  if ('skins' in emoji) {
+  if (emoji.skins) {
     return emoji.skins && emoji.skins[0];
   }
   return null;
@@ -28,8 +28,8 @@ function fillEmoji(indice) {
   }
 
   return {
-    name: 'short_name' in emoji ? emoji.short_name : emoji.name,
-    aliases: 'short_names' in emoji ? emoji.short_names : [],
+    name: emoji?.short_name ? emoji.short_name : emoji.name,
+    aliases: emoji?.short_name ? emoji.short_name : [],
   };
 }
 
@@ -50,37 +50,39 @@ export const selectEmojisByName = () => {
 };
 
 const icons = {
-  recent: 'clock-outline',
-  'smileys-emotion': 'emoticon-happy-outline',
-  'people-body': 'eye-outline',
-  'animals-nature': 'leaf-outline',
-  'food-drink': 'food-apple',
-  'travel-places': 'airplane-variant',
-  activities: 'basketball',
-  objects: 'lightbulb-outline',
-  symbols: 'heart-outline',
-  flags: 'flag-outline',
-  custom: 'emoticon-custom-outline',
+  recent: 'iconCatEmoticon',
+  'smileys-emotion': 'iconCatRecent',
+  'people-body': 'iconCatPeople',
+  'animals-nature': 'iconCatAnimal',
+  'food-drink': 'iconCatFood',
+  'travel-places': 'iconCatTravel',
+  activities: 'iconCatActivity',
+  objects: 'iconCatObject',
+  symbols: 'iconCatSymbol',
+  flags: 'iconCatFlag',
+  custom: 'iconCatCustom',
 };
-
-const categoryToI18n = {};
-CategoryNames.forEach((name) => {
-  categoryToI18n[name] = {
-    id: CategoryTranslations.get(name),
-    defaultMessage: CategoryMessage.get(name),
-    icon: icons[name],
-  };
-});
 
 export const selectEmojisBySection = () => {
   const skinTone = 'default';
-  const customEmojiItems = [];
+  const customEmojiItems = Object.keys(STATIC_EMOJI);
   const recentEmojis = [];
   // for (const [key] of customEmojis) {
   //   customEmojiItems.push({
   //     name: key,
   //   });
   // }
+
+  // const categoryToI18n = {};
+  // CategoryNames.forEach((name) => {
+  //   categoryToI18n[name] = {
+  //     id: CategoryTranslations.get(name),
+  //     // defaultMessage: CategoryMessage.get(name),
+  //     defaultMessage: name,
+  //     icon: icons[name],
+  //   };
+  // });
+
   const recentItems = recentEmojis.map((emoji) => ({ name: emoji }));
   const filteredCategories = CategoryNames.filter((category) => category !== 'recent' || recentItems.length > 0);
 
@@ -93,8 +95,9 @@ export const selectEmojisBySection = () => {
       data.push(...recentItems);
     }
     const section = {
-      ...categoryToI18n[category],
-      key: category,
+      // ...categoryToI18n[category],
+      id: category,
+      icon: icons[category],
       data,
     };
 

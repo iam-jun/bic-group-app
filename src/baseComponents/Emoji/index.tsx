@@ -1,17 +1,16 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import { connect } from 'react-redux';
-
+import React from 'react';
 import { EmojiIndicesByAlias, Emojis } from './emojis';
 
-import Emoji from './Emoji';
+import EmojiComponent from './EmojiComponent';
 import { getCustomEmojisByName } from '~/utils/emoji_utils';
 
 type OwnProps = {
     emojiName: string;
 }
 
-function mapStateToProps(state: any, ownProps: OwnProps) {
+function Emoji(ownProps: OwnProps) {
   const { emojiName } = ownProps;
   //   const customEmojis = getCustomEmojisByName(state);
   //   const customEmojis = getCustomEmojisByName(state);
@@ -37,13 +36,17 @@ function mapStateToProps(state: any, ownProps: OwnProps) {
     displayTextOnly = true;
   }
 
-  return {
+  const props = {
     imageUrl,
     assetImage,
     isCustomEmoji,
     displayTextOnly,
     unicode,
   };
+
+  return (
+    <EmojiComponent {...ownProps} {...props} />
+  );
 }
 
-export default connect(mapStateToProps)(Emoji);
+export default Emoji;

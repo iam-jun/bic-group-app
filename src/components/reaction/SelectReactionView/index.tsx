@@ -1,15 +1,12 @@
 import React, { FC, useEffect, useRef } from 'react';
-import {
-  Image, View, StyleSheet, LayoutChangeEvent,
-} from 'react-native';
-import Button from '~/beinComponents/Button';
+import { View, StyleSheet, LayoutChangeEvent } from 'react-native';
 import { margin, padding } from '~/theme/spacing';
 import Tab from '~/baseComponents/Tab';
 import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import { useBaseHook } from '~/hooks';
 import { dimension } from '~/theme';
 import EmojiNameToast from './components/EmojiNameToast';
-import Emoji_picker from '~/baseComponents/emoji_picker';
+import EmojiPicker from '~/baseComponents/EmojiPicker';
 
 export interface ReactionViewProps {
   onPressReaction: (key: string) => void;
@@ -48,18 +45,6 @@ const SelectReactionView: FC<ReactionViewProps> = ({
     emojiRef?.current?.show?.(emoji);
   };
 
-  const renderItem = (item: any) => (
-    <Button
-      key={`select_reaction_${item}`}
-      testID={`select_reaction_view.item_${item}`}
-      style={[styles.item, { width: ITEM_SIZE, height: ITEM_SIZE }]}
-      onPress={() => _onPressReaction(item)}
-      onLongPress={() => _onEmojiLongPress(item)}
-    >
-      <Image style={[styles.icon, { width: EMOJI_SIZE }]} resizeMode="contain" source={data[item]} />
-    </Button>
-  );
-
   const onPressTab = (_, index:number) => {
     setSelectedIndex(index);
   };
@@ -92,7 +77,7 @@ const SelectReactionView: FC<ReactionViewProps> = ({
           height={contentHeight}
           onEmojiSelected={onPressReaction}
         /> */}
-        <Emoji_picker
+        <EmojiPicker
           testID="add_reaction.emoji_picker"
           onEmojiPress={onPressReaction}
         />

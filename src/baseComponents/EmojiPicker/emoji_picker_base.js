@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable react/no-unused-class-component-methods */
 /* eslint-disable react/forbid-prop-types */
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
@@ -22,6 +24,7 @@ import { dimension } from '~/theme';
 import EmojiPickerRow from './emoji_picker_row';
 import Icon from '../Icon';
 import Text from '~/beinComponents/Text';
+import NoSearchResult from '~/components/NoSearchResult';
 
 const EMOJI_SIZE = 30;
 const EMOJI_GUTTER = 7;
@@ -381,12 +384,12 @@ export default class EmojiPicker extends PureComponent {
         style={styles.sectionTitleContainer}
         key={section.title}
       >
-        <Text
+        <Text.SubtitleS
           id={section.id}
           style={styles.sectionTitle}
         >
-          {section.defaultMessage}
-        </Text>
+          {section.id}
+        </Text.SubtitleS>
       </View>
     );
   };
@@ -406,19 +409,18 @@ export default class EmojiPicker extends PureComponent {
 
     return this.state.emojis.map((section, index) => {
       const onPress = () => this.handleSectionIconPress(index, section.key === 'custom');
+      const tintColor = index === this.state.currentSectionIndex
+        ? theme.colors.gray70
+        : theme.colors.gray40;
 
       return (
-        <TouchableOpacity
-          key={section.key}
-          onPress={onPress}
+        <Icon
           style={styles.sectionIconContainer}
-        >
-          <Icon
-            name={section.icon}
-            size={17}
-            style={[styles.sectionIcon, (index === this.state.currentSectionIndex && styles.sectionIconHighlight)]}
-          />
-        </TouchableOpacity>
+          icon={section.icon}
+          tintColor={tintColor}
+          size={17}
+          onPress={onPress}
+        />
       );
     });
   };
@@ -440,163 +442,116 @@ export default class EmojiPicker extends PureComponent {
 
   renderEmptyList = () => {
     const { theme } = this.props;
-    const { searchTerm } = this.state;
     const styles = getStyleSheetFromTheme(theme);
 
     return (
-      <View style={[styles.flex, styles.flexCenter]}>
-        <View style={styles.flexCenter}>
-          <View style={styles.notFoundIcon}>
-            <Icon
-              name="magnify"
-              size={72}
-              color={theme.buttonBg}
-            />
-          </View>
-          <Text style={[styles.notFoundText, styles.notFoundText20]}>
-            {'No results found for '}
-          </Text>
-          <Text style={[styles.notFoundText, styles.notFoundText15]}>
-            Check the spelling or try another search.
-          </Text>
-        </View>
-      </View>
+      <NoSearchResult />
     );
   };
 }
 
-export const getStyleSheetFromTheme = ((theme) => StyleSheet.create({
-  flex: {
-    flex: 1,
-  },
-  bottomContent: {
+export const getStyleSheetFromTheme = ((theme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    flex: {
+      flex: 1,
+    },
+    bottomContent: {
     // backgroundColor: changeOpacity(theme.centerChannelColor, 0.1),
     // borderTopColor: changeOpacity(theme.centerChannelColor, 0.3),
-    borderTopWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  bottomContentWrapper: {
-    ...Platform.select({
-      android: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-      },
-      ios: {
-        width: '100%',
-        flexDirection: 'row',
-      },
-    }),
-    backgroundColor: theme.neutral1,
-    height: 35,
-  },
-  container: {
-    alignItems: 'center',
-    backgroundColor: theme.neutral1,
-    flex: 1,
-  },
-  emojiText: {
-    color: '#000',
-    fontWeight: 'bold',
-  },
-  flatList: {
-    flex: 1,
-    backgroundColor: theme.neutral1,
-    alignSelf: 'stretch',
-  },
-  flatListEmoji: {
-    marginRight: 5,
-  },
-  flatListEmojiName: {
-    fontSize: 13,
-    color: theme.neutral90,
-  },
-  flatListRow: {
-    height: 40,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    backgroundColor: theme.centerChannelBg,
-    borderTopWidth: 1,
-    // borderTopColor: changeOpacity(theme.centerChannelColor, 0.2),
-    borderLeftWidth: 1,
-    // borderLeftColor: changeOpacity(theme.centerChannelColor, 0.2),
-    borderRightWidth: 1,
-    // borderRightColor: changeOpacity(theme.centerChannelColor, 0.2),
-    overflow: 'hidden',
-  },
-  flexCenter: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  notFoundIcon: {
-    backgroundColor: theme.neutral80,
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notFoundText: {
-    color: theme.centerChannelColor,
-    marginTop: 16,
-  },
-  notFoundText20: {
-    fontSize: 20,
-    fontWeight: 600,
-  },
-  notFoundText15: {
-    fontSize: 15,
-  },
-  searchBar: {
-    // backgroundColor: changeOpacity(theme.centerChannelColor, 0.2),
-    paddingVertical: 5,
-    ...Platform.select({
-      ios: {
-        paddingLeft: 8,
-      },
-    }),
-    height: 50,
-  },
-  sectionList: {
-    ...Platform.select({
-      android: {
-        marginBottom: 35,
-      },
-    }),
-  },
-  sectionIcon: {
-    color: theme.neutral90,
-  },
-  sectionIconContainer: {
-    flex: 1,
-    height: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  sectionIconHighlight: {
-    color: theme.centerChannelColor,
-  },
-  sectionTitle: {
-    color: theme.neutral90,
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  sectionTitleContainer: {
-    height: SECTION_HEADER_HEIGHT,
-    justifyContent: 'center',
-    backgroundColor: theme.neutral1,
-  },
-  loading: {
-    flex: 1,
-    alignItems: 'center',
-  },
-}));
+      borderTopWidth: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
+    },
+    bottomContentWrapper: {
+      ...Platform.select({
+        android: {
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+        ios: {
+          width: '100%',
+          flexDirection: 'row',
+        },
+      }),
+      backgroundColor: colors.neutral1,
+      height: 35,
+    },
+    container: {
+      alignItems: 'center',
+      backgroundColor: colors.neutral1,
+      flex: 1,
+    },
+    emojiText: {
+      color: '#000',
+      fontWeight: 'bold',
+    },
+    flatList: {
+      flex: 1,
+      backgroundColor: colors.neutral1,
+      alignSelf: 'stretch',
+    },
+    flatListEmoji: {
+      marginRight: 5,
+    },
+    flatListEmojiName: {
+      fontSize: 13,
+      color: colors.neutral90,
+    },
+    flatListRow: {
+      height: 40,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 8,
+      backgroundColor: colors.neutral1,
+      borderTopWidth: 1,
+      borderColor: colors.gray40,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      overflow: 'hidden',
+    },
+    flexCenter: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    sectionList: {
+      ...Platform.select({
+        android: {
+          marginBottom: 35,
+        },
+      }),
+    },
+    sectionIcon: {
+      color: colors.neutral60,
+    },
+    sectionIconContainer: {
+      flex: 1,
+      height: 35,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'blue',
+    },
+    sectionIconHighlight: {
+      color: colors.gray40,
+    },
+    sectionTitle: {
+      color: colors.gray40,
+    },
+    sectionTitleContainer: {
+      height: SECTION_HEADER_HEIGHT,
+      justifyContent: 'center',
+      backgroundColor: colors.neutral1,
+    },
+    loading: {
+      flex: 1,
+      alignItems: 'center',
+    },
+  });
+});
 
 const propTypes = {
   testID: PropTypes.string,

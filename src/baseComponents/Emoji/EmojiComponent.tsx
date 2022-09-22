@@ -47,7 +47,7 @@ type Props = {
     testID?: string;
 }
 
-const Emoji: React.FC<Props> = (props: Props) => {
+const EmojiComponent: React.FC<Props> = (props: Props) => {
   const {
     customEmojiStyle,
     displayTextOnly,
@@ -132,4 +132,4 @@ const Emoji: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default Emoji;
+export default EmojiComponent;
