@@ -1,39 +1,45 @@
 import { View, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
-import i18next from 'i18next';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
-import MenuItem from '~/beinComponents/list/items/MenuItem';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
-import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import { groupPrivacyListDetail, GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
 import PreviewMembers from './PreviewMembers';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatData';
-import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import { useBaseHook } from '~/hooks';
+import { Button } from '~/baseComponents';
+import { IconType } from '~/resources/icons';
+import Icon from '~/baseComponents/Icon';
+import { IPreviewMember } from '~/interfaces/ICommunity';
 
 type AboutContentProps = {
+  profileInfo: {
+    description: string;
+    userCount?: number;
+    privacy?: GROUP_PRIVACY_TYPE;
+    members?: IPreviewMember[]
+  };
   showPrivate?: boolean;
+  onPressMember?: () => void;
 }
 
-const AboutContent: FC<AboutContentProps> = ({ showPrivate }) => {
-  const { rootNavigation } = useRootNavigation();
+export const CONTAINER_HORIZONTAL_PADDING = spacing.padding.large;
+
+const AboutContent: FC<AboutContentProps> = ({ profileInfo, showPrivate, onPressMember }) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
-  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const { t } = useBaseHook();
+
   const {
-    description, userCount, privacy, id, joinStatus,
-  } = infoDetail;
+    description, userCount, privacy, members,
+  } = profileInfo;
   const privacyData
     = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
-  const isMember = joinStatus === groupJoinStatus.member;
 
   const renderDescription = () => {
     if (!description) return null;
@@ -51,10 +57,6 @@ const AboutContent: FC<AboutContentProps> = ({ showPrivate }) => {
     );
   };
 
-  const onPressTotalMember = () => {
-    rootNavigation.navigate(groupStack.communityMembers, { communityId: id, isMember });
-  };
-
   if (showPrivate) {
     return (
       <View testID="about_content" style={styles.container}>
@@ -63,29 +65,46 @@ const AboutContent: FC<AboutContentProps> = ({ showPrivate }) => {
     );
   }
 
+  const renderItem = ({
+    leftIcon,
+    content,
+    testID,
+    rightIcon,
+    onPress,
+  }: {
+    leftIcon: IconType;
+    content: string;
+    testID?: string;
+    rightIcon?: IconType;
+    onPress?: () => void;
+  }) => (
+    <Button disabled={!onPress} style={styles.itemContainer} onPress={onPress} testID={testID}>
+      <Icon icon={leftIcon} size={18} tintColor={colors.neutral20} />
+      <Text.BodySMedium color={colors.neutral40} style={styles.itemContentText} useI18n>
+        {content}
+      </Text.BodySMedium>
+      {!!rightIcon && <Icon icon={rightIcon} size={12} tintColor={colors.neutral40} />}
+    </Button>
+  );
+
   return (
-    <View style={styles.wapper}>
+    <View style={styles.wrapper}>
       <ViewSpacing height={spacing.padding.large} />
       <View style={styles.container} testID="about_content">
         {renderDescription()}
-        <MenuItem
-          testID="about_content.privacy"
-          icon={iconPrivacy}
-          title={i18next.t(privacyTitle)}
-          disabled
-          iconProps={{ tintColor: colors.neutral20, size: 16 }}
-        />
-        <MenuItem
-          testID="about_content.members"
-          icon="UserGroupSolid"
-          title={`${formatLargeNumber(userCount)} ${i18next.t('groups:text_members', {
-            count: userCount,
-          })}`}
-          onPress={onPressTotalMember}
-          iconProps={{ tintColor: colors.neutral20, size: 18 }}
-          rightSubIcon="AngleRightSolid"
-        />
-        <PreviewMembers />
+        {renderItem({
+          testID: 'about_content.privacy',
+          leftIcon: iconPrivacy,
+          content: t(privacyTitle),
+        })}
+        {renderItem({
+          testID: 'about_content.members',
+          leftIcon: 'UserGroupSolid',
+          content: `${formatLargeNumber(userCount)}`,
+          rightIcon: 'AngleRightSolid',
+          onPress: onPressMember,
+        })}
+        <PreviewMembers userCount={userCount} members={members} />
       </View>
     </View>
   );
@@ -97,7 +116,7 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
-    wapper: {
+    wrapper: {
       flex: 1,
       backgroundColor: colors.neutral5,
     },
@@ -105,13 +124,22 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.large,
+      paddingHorizontal: CONTAINER_HORIZONTAL_PADDING,
     },
     titleDescription: {
       marginBottom: spacing.margin.small,
     },
     descriptionSection: {
-      paddingHorizontal: spacing.padding.large,
-      marginBottom: spacing.margin.big,
+      marginBottom: spacing.margin.large,
+    },
+    itemContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: spacing.padding.base,
+    },
+    itemContentText: {
+      marginHorizontal: spacing.margin.small,
+      flex: 1,
     },
   });
 };

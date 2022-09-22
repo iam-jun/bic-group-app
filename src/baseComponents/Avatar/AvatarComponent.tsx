@@ -220,10 +220,10 @@ const AvatarComponent: React.FC<AvatarProps> = ({
         />
         {counter ? (
           <View style={[avatarStyle, styles.textStyle]}>
-            <Text.BodyS color={theme.colors.white}>
+            <Text.BadgeXS color={theme.colors.white}>
               +
               {counter}
-            </Text.BodyS>
+            </Text.BadgeXS>
           </View>
         ) : null}
         {renderStatus()}
@@ -238,11 +238,6 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 const creatStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {
-      backgroundColor: colors.gray1,
-      padding: 2,
-      borderRadius: borderRadius.small,
-    },
     tiny: {
       width: dimension.avatarSizes.tiny,
       height: dimension.avatarSizes.tiny,
@@ -279,7 +274,7 @@ const creatStyle = (theme: ExtendedTheme) => {
       borderRadius: spacing.borderRadius.small,
     },
     textStyle: {
-      backgroundColor: colors.transparent1,
+      backgroundColor: colors.neutral60,
       position: 'absolute',
       justifyContent: 'center',
       alignItems: 'center',
