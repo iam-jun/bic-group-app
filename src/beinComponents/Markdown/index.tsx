@@ -42,43 +42,43 @@ const Markdown = ({ value, ...rest }) => {
       color: colors.danger,
     },
     heading1: {
-      fontSize: sizes.h1,
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontSize: sizes.mdH1,
+      fontFamily: fontFamilies.BeVietnamProMedium,
     },
     heading1Text: {
       paddingBottom: 8,
     },
     heading2: {
-      fontSize: sizes.h2,
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontSize: sizes.mdH2,
+      fontFamily: fontFamilies.BeVietnamProMedium,
     },
     heading2Text: {
       paddingBottom: 8,
     },
     heading3: {
-      fontSize: sizes.h3,
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontSize: sizes.mdH3,
+      fontFamily: fontFamilies.BeVietnamProMedium,
     },
     heading3Text: {
       paddingBottom: 8,
     },
     heading4: {
-      fontSize: sizes.h5,
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontSize: sizes.mdH4,
+      fontFamily: fontFamilies.BeVietnamProMedium,
     },
     heading4Text: {
       paddingBottom: 8,
     },
     heading5: {
       fontSize: sizes.h5,
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontFamily: fontFamilies.BeVietnamProMedium,
     },
     heading5Text: {
       paddingBottom: 8,
     },
     heading6: {
       fontSize: sizes.h5,
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontFamily: fontFamilies.BeVietnamProMedium,
     },
     heading6Text: {
       paddingBottom: 8,

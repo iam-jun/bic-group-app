@@ -149,27 +149,27 @@ const createStyle = (theme: ExtendedTheme) => {
 
     // Headings
     heading1: {
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
-      fontSize: sizes.h1,
+      fontFamily: fontFamilies.BeVietnamProMedium,
+      fontSize: sizes.mdH1,
     },
     heading2: {
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
-      fontSize: sizes.h2,
+      fontFamily: fontFamilies.BeVietnamProMedium,
+      fontSize: sizes.mdH2,
     },
     heading3: {
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
-      fontSize: sizes.h3,
+      fontFamily: fontFamilies.BeVietnamProMedium,
+      fontSize: sizes.mdH3,
     },
     heading4: {
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
-      fontSize: sizes.h5,
+      fontFamily: fontFamilies.BeVietnamProMedium,
+      fontSize: sizes.mdH4,
     },
     heading5: {
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontFamily: fontFamilies.BeVietnamProMedium,
       fontSize: sizes.h5,
     },
     heading6: {
-      fontFamily: fontFamilies.BeVietnamProSemiBold,
+      fontFamily: fontFamilies.BeVietnamProMedium,
       fontSize: sizes.h5,
     },
 

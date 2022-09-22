@@ -72,6 +72,10 @@ export const sizes = {
   captionS: 11,
   code: 16,
   error: 16,
+  mdH1: 22,
+  mdH2: 20,
+  mdH3: 18,
+  mdH4: 16,
 };
 
 /* Line Height used for Text */
