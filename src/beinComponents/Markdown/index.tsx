@@ -21,7 +21,7 @@ const Markdown = ({ value, ...rest }) => {
   const baseTextStyle = {
     color: colors.neutral70,
     fontFamily: fontFamilies.BeVietnamProLight,
-    fontSize: sizes.paragraphM,
+    fontSize: sizes.mdParagraph,
   };
   const textStyles = {
     code: {
@@ -70,14 +70,14 @@ const Markdown = ({ value, ...rest }) => {
       paddingBottom: 8,
     },
     heading5: {
-      fontSize: sizes.h5,
+      fontSize: sizes.mdParagraph,
       fontFamily: fontFamilies.BeVietnamProMedium,
     },
     heading5Text: {
       paddingBottom: 8,
     },
     heading6: {
-      fontSize: sizes.h5,
+      fontSize: sizes.mdParagraph,
       fontFamily: fontFamilies.BeVietnamProMedium,
     },
     heading6Text: {
@@ -88,7 +88,7 @@ const Markdown = ({ value, ...rest }) => {
     },
     mention: {
       fontFamily: fontFamilies.BeVietnamProLight,
-      fontSize: sizes.bodyM,
+      fontSize: sizes.mdParagraph,
       color: colors.purple50,
     },
     mention_highlight: {

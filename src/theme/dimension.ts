@@ -76,6 +76,7 @@ export const sizes = {
   mdH2: 20,
   mdH3: 18,
   mdH4: 16,
+  mdParagraph: 14,
 };
 
 /* Line Height used for Text */

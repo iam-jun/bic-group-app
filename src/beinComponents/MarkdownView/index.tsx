@@ -166,11 +166,11 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     heading5: {
       fontFamily: fontFamilies.BeVietnamProMedium,
-      fontSize: sizes.h5,
+      fontSize: sizes.mdParagraph,
     },
     heading6: {
       fontFamily: fontFamilies.BeVietnamProMedium,
-      fontSize: sizes.h5,
+      fontSize: sizes.mdParagraph,
     },
 
     // Horizontal Rule
