@@ -160,7 +160,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({ item, testID, shouldS
                   </Text.BodySMedium>
                 </View>
               </View>
-              <ViewSpacing width={spacing.margin.xSmall} />
+              <ViewSpacing height={spacing.margin.xSmall} />
               <View style={styles.row}>
                 <Text.BodySMedium style={styles.textNumberMember}>
                   {formatLargeNumber(userCount)}

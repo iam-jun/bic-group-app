@@ -20,10 +20,12 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
 import useDiscoverGroupsStore from './store';
 import IDiscoverGroupsState from './store/Interface';
+import { useBaseHook } from '~/hooks';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
   const theme: ExtendedTheme = useTheme();
+  const { t } = useBaseHook();
 
   const headerRef = useRef();
 
@@ -109,6 +111,7 @@ const DiscoverGroups = ({ route }: any) => {
         title="communities:title_browse_groups"
         onSearchText={onSearchText}
         autoFocusSearch
+        searchPlaceholder={t('input:search_group')}
       />
       <ViewSpacing height={12} />
       {ids?.length > 0
