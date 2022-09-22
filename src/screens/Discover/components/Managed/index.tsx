@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import CommunityGroupCard from '~/components/CommunityGroupCard';
+import DiscoverCard from '~/components/DiscoverCard';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Text from '~/beinComponents/Text';
@@ -42,7 +42,7 @@ const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
       ? `managed_owner_item_${id}`
       : `managed_manage_item_${id}`;
 
-  return <CommunityGroupCard item={item} testID={testID} />;
+  return <DiscoverCard item={item} testID={testID} />;
 };
 
 const SectionTitle: FC<SectionTitleProps> = ({ title }) => {

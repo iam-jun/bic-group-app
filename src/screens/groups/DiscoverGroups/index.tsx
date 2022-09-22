@@ -15,7 +15,7 @@ import EmptyScreen from '~/components/EmptyScreen';
 
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
-import CommunityGroupCard from '~/components/CommunityGroupCard';
+import DiscoverCard from '~/components/DiscoverCard';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
 import useDiscoverGroupsStore from './store';
@@ -32,7 +32,7 @@ const DiscoverGroups = ({ route }: any) => {
   const doGetDiscoverGroups = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doGetDiscoverGroups);
   const {
     ids, items, loading, canLoadMore, noGroupInCommuntity,
-  } = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state);
+  } = useDiscoverGroupsStore();
 
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
 
@@ -69,10 +69,10 @@ const DiscoverGroups = ({ route }: any) => {
       community: { ...communityDetail },
     };
     return (
-      <CommunityGroupCard
+      <DiscoverCard
         item={currentItem}
         testID={`browse_groups_item_${index}`}
-        showAlertJoinTheCommunityFirst
+        shouldShowAlertJoinTheCommunityFirst
       />
     );
   };

@@ -10,7 +10,7 @@ import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
-import CommunityGroupCard from '~/components/CommunityGroupCard';
+import DiscoverCard from '~/components/DiscoverCard';
 
 const DiscoverCommunities = () => {
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ const DiscoverCommunities = () => {
     const currentItem = items[item];
 
     return (
-      <CommunityGroupCard
+      <DiscoverCard
         item={currentItem}
         testID={`discover_communities_item_${index}`}
       />

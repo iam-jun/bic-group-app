@@ -7,7 +7,7 @@ import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ButtonCommunityGroupCardAction from './ButtonCommunityGroupCardAction';
+import ButtonDiscover from './ButtonDiscover';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
@@ -19,13 +19,13 @@ import { ICommunity } from '~/interfaces/ICommunity';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import modalActions from '~/storeRedux/modal/actions';
 
-type CommunityGroupCardProps = {
+type DiscoverCardProps = {
   item: any;
   testID?: string;
-  showAlertJoinTheCommunityFirst?: boolean;
+  shouldShowAlertJoinTheCommunityFirst?: boolean;
 };
 
-const Index: FC<CommunityGroupCardProps> = ({ item, testID, showAlertJoinTheCommunityFirst }) => {
+const DiscoverCard: FC<DiscoverCardProps> = ({ item, testID, shouldShowAlertJoinTheCommunityFirst }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
@@ -74,7 +74,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID, showAlertJoinTheComm
   };
 
   const onJoin = () => {
-    if (!!showAlertJoinTheCommunityFirst && community?.joinStatus === groupJoinStatus.visitor) {
+    if (!!shouldShowAlertJoinTheCommunityFirst && community?.joinStatus === groupJoinStatus.visitor) {
       dispatch(modalActions.showAlert({
         title: t('communities:browse_groups:guest_view_alert:title'),
         content: t('communities:browse_groups:guest_view_alert:content'),
@@ -180,7 +180,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID, showAlertJoinTheComm
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
-      <ButtonCommunityGroupCardAction
+      <ButtonDiscover
         joinStatus={joinStatus}
         onView={onView}
         onJoin={onJoin}
@@ -221,4 +221,4 @@ const themeStyles = (theme: ExtendedTheme) => {
   });
 };
 
-export default Index;
+export default DiscoverCard;

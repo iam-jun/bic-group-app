@@ -7,7 +7,7 @@ interface ButtonActionProps extends ButtonProps {
   onPress: () => void;
 }
 
-interface ButtonCommunityGroupCardActionProps extends ButtonProps {
+interface ButtonDiscoverProps extends ButtonProps {
   joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
   onJoin?: () => void;
   onView?: () => void;
@@ -78,8 +78,8 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, ...props }) => {
   }
 };
 
-const ButtonCommunityGroupCardAction: FC<
-ButtonCommunityGroupCardActionProps
+const ButtonDiscover: FC<
+ButtonDiscoverProps
 > = ({
   onView, onCancel, onJoin, joinStatus, ...props
 }) => {
@@ -110,4 +110,4 @@ ButtonCommunityGroupCardActionProps
   );
 };
 
-export default ButtonCommunityGroupCardAction;
+export default ButtonDiscover;

@@ -15,7 +15,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
-import CommunityGroupCard from '~/components/CommunityGroupCard';
+import DiscoverCard from '~/components/DiscoverCard';
 
 type GroupItemProps = {
   id: string;
@@ -26,7 +26,7 @@ const GroupItem: FC<GroupItemProps> = ({ id }) => {
   const { items } = joinedAllGroups;
 
   return (
-    <CommunityGroupCard item={items[id]} testID={`your_groups_item_${id}`} />
+    <DiscoverCard item={items[id]} testID={`your_groups_item_${id}`} />
   );
 };
 
