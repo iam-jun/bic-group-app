@@ -8,6 +8,8 @@ interface IDiscoverGroupsState extends IBaseStore, IFetchingStore {
     items: any,
     canLoadMore: boolean,
     noGroupInCommuntity: boolean,
+    doJoinNewGroup?: (groupId: string) => void,
+    doCancelJoinGroup?: (groupId: string) => void,
     doGetDiscoverGroups?: (payload: IPayloadGetDiscoverGroups) => void,
     doGetCommunityGroups?: (communityId: string) => void;
 }

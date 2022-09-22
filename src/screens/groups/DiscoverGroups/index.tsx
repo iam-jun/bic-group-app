@@ -32,6 +32,8 @@ const DiscoverGroups = ({ route }: any) => {
   const [searchText, setSearchText] = useState('');
 
   const doGetDiscoverGroups = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doGetDiscoverGroups);
+  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
+  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
   const {
     ids, items, loading, canLoadMore, noGroupInCommuntity,
   } = useDiscoverGroupsStore();
@@ -47,6 +49,18 @@ const DiscoverGroups = ({ route }: any) => {
       getDiscoverGroups(true); // refreshing whenever open
     }, [communityId],
   );
+
+  const handleJoinGroup = (groupId: string) => {
+    joinNewGroup(groupId);
+  };
+
+  const handleCancelJoinGroup = (groupId: string) => {
+    cancelJoinGroup(groupId);
+  };
+
+  const handleGoBackFromGroupDetail = () => {
+    doGetDiscoverGroups({ isRefreshing: true, communityId, params: { key: searchText } });
+  };
 
   const onLoadMore = () => {
     canLoadMore && getDiscoverGroups();
@@ -76,6 +90,9 @@ const DiscoverGroups = ({ route }: any) => {
         testID={`browse_groups_item_${index}`}
         shouldShowAlertJoinTheCommunityFirst
         isResetCommunityDetail={false}
+        onJoin={handleJoinGroup}
+        onCancel={handleCancelJoinGroup}
+        onGoBackFromGroupDetail={handleGoBackFromGroupDetail}
       />
     );
   };
