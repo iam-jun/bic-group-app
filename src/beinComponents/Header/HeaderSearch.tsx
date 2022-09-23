@@ -17,7 +17,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import i18next from 'i18next';
 
-import SearchInput from '~/beinComponents/inputs/SearchInput';
+import { SearchInput } from '~/baseComponents/Input';
 import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
@@ -169,7 +169,6 @@ const createStyle = (theme: ExtendedTheme) => {
     searchContainer: {
       height: 32,
       overflow: 'hidden',
-      borderRadius: spacing.borderRadius.pill,
     },
     icon: {
       height: 48,
