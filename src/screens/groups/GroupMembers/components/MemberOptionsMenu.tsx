@@ -48,7 +48,7 @@ const MemberOptionsMenu = ({
     groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
   );
-  const canManageRole = hasPermissionsOnScopeWithId(
+  const canAssignUnassignRole = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
@@ -147,7 +147,7 @@ const MemberOptionsMenu = ({
       onClose={onOptionsClosed}
       ContentComponent={(
         <View>
-          {canManageRole && (
+          {!!canAssignUnassignRole && (
             selectedMember?.isAdmin ? (
               renderItem({
                 testID: 'member_options_menu.remove_admin',
@@ -161,7 +161,7 @@ const MemberOptionsMenu = ({
                 onPress: () => onPressMenuOption('set-admin'),
               })
             ))}
-          {canRemoveMember && selectedMember?.username !== user?.username && (
+          {!!canRemoveMember && selectedMember?.username !== user?.username && (
             renderItem({
               testID: 'member_options_menu.remove_member',
               content: 'groups:member_menu:label_remove_member',

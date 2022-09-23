@@ -43,6 +43,11 @@ const MemberOptionsMenu = ({
     communityId,
     PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
   );
+  const canAssignUnassignRole = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE_IN_COMMUNITY,
+  );
 
   const onPressMenuOption = (type: 'set-admin' | 'remove-admin' | 'remove-member') => {
     modalizeRef.current?.close();
@@ -91,7 +96,22 @@ const MemberOptionsMenu = ({
       onClose={onOptionsClosed}
       ContentComponent={(
         <View>
-          {canRemoveMember && selectedMember?.username !== user?.username && (
+          {!!canAssignUnassignRole && (
+            selectedMember?.isAdmin ? (
+              renderItem({
+                testID: 'member_options_menu.remove_admin',
+                content: 'groups:member_menu:label_revoke_admin_role',
+                onPress: () => onPressMenuOption('remove-admin'),
+              })
+            ) : (
+              renderItem({
+                testID: 'member_options_menu.set_admin',
+                content: 'groups:member_menu:label_set_as_admin',
+                onPress: () => onPressMenuOption('set-admin'),
+              })
+            )
+          )}
+          {!!canRemoveMember && selectedMember?.username !== user?.username && (
             renderItem({
               testID: 'member_options_menu.remove_member',
               content: 'groups:member_menu:label_remove_member',
