@@ -37,7 +37,7 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   const INITIAL_KEYBOARD_HEIGHT = 336;
   const modalizeRef = useRef<Modalize>();
 
-  const [type, setType] = React.useState('giphy');
+  const [type, setType] = React.useState('emoji');
   const [visible, setVisible] = React.useState(false);
   const [keyboardHeight, setKeyboardHeight] = React.useState(INITIAL_KEYBOARD_HEIGHT);
   const [searchQuery, setSearchQuery] = React.useState('');
