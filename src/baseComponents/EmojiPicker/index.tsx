@@ -144,9 +144,8 @@ const EmojiPicker = ({
     >
       <View style={styles.flatListEmoji}>
         <Emoji
-          emojiName={item}
-          textStyle={styles.emojiText}
           size={20}
+          emojiName={item}
         />
       </View>
       <Text.BodyM style={styles.flatListEmojiName}>
@@ -231,10 +230,6 @@ export const getStyleSheetFromTheme = ((theme) => {
     },
     flex: {
       flex: 1,
-    },
-    emojiText: {
-      color: '#000',
-      fontWeight: 'bold',
     },
     flatList: {
       flex: 1,

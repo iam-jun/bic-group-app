@@ -53,7 +53,7 @@ const EmojiComponent: React.FC<EmojiProps> = (props: EmojiProps) => {
     textStyle,
   } = props;
 
-  let { size } = props;
+  let { size = 20 } = props;
   let fontSize = size;
   if (!size && textStyle) {
     const flatten = StyleSheet.flatten(textStyle);
@@ -72,16 +72,17 @@ const EmojiComponent: React.FC<EmojiProps> = (props: EmojiProps) => {
     );
   }
 
-  const width = size;
-  const height = size;
-
   if (unicode && !imageUrl) {
     const codeArray = unicode.split('-');
     const code = codeArray.reduce((acc, c) => acc + String.fromCodePoint(parseInt(c, 16)), '');
 
     return (
       <Text
-        style={[textStyle, { fontSize: size }]}
+        style={[textStyle, {
+          fontSize: size,
+          color: '#000',
+          fontWeight: 'bold',
+        }]}
         testID={testID}
       >
         {code}
@@ -89,6 +90,8 @@ const EmojiComponent: React.FC<EmojiProps> = (props: EmojiProps) => {
     );
   }
 
+  const width = size * 1.2;
+  const height = size * 1.2;
   if (assetImage) {
     const key = Platform.OS === 'android' ? (`${assetImage}-${height}-${width}`) : null;
 
