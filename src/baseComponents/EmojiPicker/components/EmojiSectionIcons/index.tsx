@@ -1,67 +1,105 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
+import Animated, {
+  FadeInUp, FadeOutDown, useAnimatedStyle, useSharedValue, withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useKeyboard } from '@react-native-community/hooks';
+import { Portal } from 'react-native-portalize';
 import useEmojiPickerStore from '../../store';
 import IEmojiPickerState from '../../store/Interface';
 import Icon from '~/baseComponents/Icon';
 import { padding } from '~/theme/spacing';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 interface Props {
   visible: boolean;
-  bottomOffset: number;
   onPress: (index: number) => void
 }
 
 const CONTAINER_HEIGHT = 35;
 
-const EmojiSectionIcons = ({ visible, bottomOffset, onPress }: Props) => {
+const EmojiSectionIcons = ({ visible, onPress }: Props) => {
   const theme: ExtendedTheme = useTheme();
+  const insets = useSafeAreaInsets();
+  const { keyboardShown } = useKeyboard();
+  const defaultPaddingBottom = insets.bottom;
+  const showValue = useSharedValue(defaultPaddingBottom);
+
   const styles = themeStyles(theme);
   const emojis = useEmojiPickerStore((state: IEmojiPickerState) => state.data);
+  const filteredData = useEmojiPickerStore((state: IEmojiPickerState) => state.filteredData);
   const currentSectionIndex = useEmojiPickerStore((state: IEmojiPickerState) => state.currentSectionIndex);
-  const insets = useSafeAreaInsets();
 
-  const bottom = bottomOffset > 0 ? bottomOffset - insets.bottom + padding.small : 0;
-  const height = bottomOffset > 0 ? CONTAINER_HEIGHT + insets.bottom + padding.small : CONTAINER_HEIGHT + padding.small;
+  useEffect(() => {
+    if (keyboardShown) hide();
+    else show();
+  }, [keyboardShown]);
 
-  if (!visible) return null;
+  const bottomViewStyle = useAnimatedStyle(() => ({
+    height: showValue.value,
+  }));
+
+  const show = () => {
+    showValue.value = withTiming(
+      defaultPaddingBottom, undefined,
+    );
+  };
+
+  const hide = () => {
+    showValue.value = withTiming(
+      0, undefined,
+    );
+  };
+
+  if (!visible || filteredData.length > 0) return null;
 
   return (
-    <View style={[styles.bottomContentWrapper, { bottom, height }]}>
-      <View style={styles.bottomContent}>
-        {emojis.map((section, index) => {
-          const tintColor = index === currentSectionIndex
-            ? theme.colors.gray60
-            : theme.colors.gray40;
-          return (
-            <Icon
-              style={styles.icon}
-              icon={section.icon}
-              tintColor={tintColor}
-              size={17}
-              onPress={() => onPress(index)}
-            />
-          );
-        })}
+    <Portal>
+      <View style={styles.bottomContainer}>
+        <Animated.View style={styles.bottomContentWrapper} entering={FadeInUp} exiting={FadeOutDown}>
+          <View style={styles.bottomContent}>
+            {emojis.map((section, index) => {
+              const tintColor = index === currentSectionIndex
+                ? theme.colors.gray60
+                : theme.colors.gray40;
+              return (
+                <Icon
+                  style={styles.icon}
+                  icon={section.icon}
+                  tintColor={tintColor}
+                  size={17}
+                  onPress={() => onPress(index)}
+                />
+              );
+            })}
+          </View>
+        </Animated.View>
+        <Animated.View style={bottomViewStyle} />
+        <KeyboardSpacer />
       </View>
-    </View>
+    </Portal>
+
   );
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
+    bottomContainer: {
+      width: '100%',
+      alignSelf: 'flex-end',
+      position: 'absolute',
+      bottom: 0,
+      backgroundColor: colors.neutral1,
+    },
     bottomContentWrapper: {
       width: '100%',
       flexDirection: 'row',
       alignItems: 'flex-start',
       height: CONTAINER_HEIGHT,
       backgroundColor: colors.neutral1,
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
     },
     bottomContent: {
       borderTopWidth: 1,

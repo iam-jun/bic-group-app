@@ -18,24 +18,35 @@ import { Portal } from 'react-native-portalize';
 import { AppConfig } from '~/configs';
 import { dimension } from '~/theme';
 import spacing from '~/theme/spacing';
-import { EmojiBoardProps } from '../emoji/EmojiBoard';
-import SearchInput from '../inputs/SearchInput';
-import LoadingIndicator from '../LoadingIndicator';
+import { EmojiBoardProps } from '../../beinComponents/emoji/EmojiBoard';
+import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
+import LoadingIndicator from '../../beinComponents/LoadingIndicator';
+import EmojiPicker from '~/baseComponents/EmojiPicker';
+import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
+import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
+import { SearchInput } from '~/baseComponents/Input';
 
 export interface Props extends Partial<EmojiBoardProps> {
   stickerViewRef: any;
-  onMediaSelect: (media: GiphyMedia) => void;
+  onGifSelected?: (media: string|GiphyMedia) => void;
+  onEmojiSelected?: (emoji: string) => void;
+
 }
 
-const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
+const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props) => {
   const INITIAL_KEYBOARD_HEIGHT = 336;
   const modalizeRef = useRef<Modalize>();
 
+  const [type, setType] = React.useState('giphy');
+  const [visible, setVisible] = React.useState(false);
   const [keyboardHeight, setKeyboardHeight] = React.useState(INITIAL_KEYBOARD_HEIGHT);
   const [searchQuery, setSearchQuery] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [modalTopOffset, setModalTopOffset] = React.useState(0);
   const _stickerViewRef = stickerViewRef || useRef();
+  const emojiPickerRef: any = useRef();
+
+  const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
 
   const request = searchQuery
     ? GiphyContent.search({ searchQuery })
@@ -62,19 +73,26 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
     height: height.value,
   }));
 
-  const show = () => {
+  const show = (type:'gif'|'emoji') => {
+    setType(type);
+    setVisible(true);
     modalizeRef.current?.open('default');
     Keyboard.dismiss();
   };
 
   const hide = () => {
+    setVisible(false);
     modalizeRef.current?.close();
   };
 
   const onChangeText = debounce(
     (value: string) => {
-      setLoading(true);
-      setSearchQuery(value);
+      if (type === 'giphy') {
+        setLoading(true);
+        setSearchQuery(value);
+      } else {
+        actions.search(value);
+      }
     }, AppConfig.searchTriggerTime,
   );
 
@@ -83,10 +101,14 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
     setLoading(false);
   };
 
-  const _onMediaSelect = (e: NativeSyntheticEvent<{
+  const onGifPress = (e: NativeSyntheticEvent<{
     media: GiphyMedia;
   }>) => {
-    onMediaSelect(e.nativeEvent.media);
+    onGifSelected(e.nativeEvent.media);
+  };
+
+  const onEmojiPress = (emojiName: string) => {
+    onEmojiSelected(emojiName);
   };
 
   // Only trigger when opend, closed event is not triggered
@@ -132,6 +154,41 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
     }),
   );
 
+  const scrollToSectionIndex = (index: number) => {
+    emojiPickerRef.current?.scrollToSectionIndex(index);
+  };
+
+  const renderComponent = () => {
+    if (type === 'giphy') {
+      return (
+        <View>
+          {loading && <LoadingIndicator style={styles.loading} />}
+          <GiphyGridView
+            testID="sticker_view.grid_view"
+            content={request}
+            cellPadding={4}
+                // Must render GiphyGridView to trigger onContentUpdate but make it invisible
+            style={[styles.gridView, loading && { height: 0 }]}
+            onContentUpdate={onContentUpdate}
+            onMediaSelect={onGifPress}
+          />
+        </View>
+      );
+    }
+    return (
+      <View style={styles.emojiView}>
+        <EmojiPicker
+          emojiPickerRef={emojiPickerRef}
+          onEmojiPress={onEmojiPress}
+        />
+        <EmojiSectionIcons
+          visible={visible}
+          onPress={scrollToSectionIndex}
+        />
+      </View>
+    );
+  };
+
   return (
     <View testID="sticker_view" style={styles.container}>
       <Animated.View style={animatedStyle} />
@@ -162,24 +219,13 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
             <View style={styles.header}>
               <SearchInput
                 testID="sticker_view.search_input"
-                placeholder={i18next.t('post:comment:search_giphy')}
+                placeholder={i18next.t(`sticker:search_${type}`)}
                 value={searchQuery}
                 onFocus={onSearchFocus}
                 onChangeText={onChangeText}
               />
             </View>
-            <View>
-              {loading && <LoadingIndicator style={styles.loading} />}
-              <GiphyGridView
-                testID="sticker_view.grid_view"
-                content={request}
-                cellPadding={4}
-                // Must render GiphyGridView to trigger onContentUpdate but make it invisible
-                style={[styles.gridView, loading && { height: 0 }]}
-                onContentUpdate={onContentUpdate}
-                onMediaSelect={_onMediaSelect}
-              />
-            </View>
+            {renderComponent()}
           </View>
         </Modalize>
       </Portal>
@@ -197,6 +243,9 @@ const createStyle = (theme: ExtendedTheme) => {
     stickerView: {
       marginTop: spacing.margin.small,
       height: '100%',
+    },
+    emojiView: {
+      flex: 1,
     },
     header: {
       paddingVertical: spacing.margin.base,

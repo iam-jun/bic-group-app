@@ -1,7 +1,6 @@
 import { GiphyMedia, GiphyMediaView } from '@giphy/react-native-sdk';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
-  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -27,7 +26,7 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import StickerView from '~/beinComponents/StickerView';
+import StickerView from '~/components/StickerView';
 import Text from '~/beinComponents/Text';
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
@@ -106,6 +105,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
+  const cursorPosition = useRef(0);
 
   const handleSetTextInputHeight = (newHeight: number) => {
     if (newHeight === textTextInputHeight) return;
@@ -174,23 +174,42 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onPressEmoji = () => {
-    stickerViewRef?.current?.show?.();
+    stickerViewRef?.current?.show?.('giphy');
   };
 
   const onEmojiSelected = (emoji: string) => {
+    stickerViewRef?.current?.hide?.();
+
     dispatch(modalActions.hideModal());
     // [TO-DO] handle cursor position
     if (emoji) {
-      setText(`${text} :${emoji}: `);
-      onChangeText?.(`${text} :${emoji}: `);
+      let firstStr = text.substring(0, cursorPosition.current);
+      if (!firstStr.endsWith(' ')) {
+        firstStr += ' ';
+      }
+      let lastStr = text.substring(cursorPosition.current, text.length);
+      if (!lastStr.startsWith(' ')) {
+        lastStr = ` ${lastStr}`;
+      }
+      const completeStr = `${firstStr}:${emoji}:${lastStr}`;
+      setText(completeStr);
+      onChangeText?.(completeStr);
       _textInputRef.current.focus();
     }
   };
 
+  const onGifSelected = (gif: GiphyMedia) => {
+    stickerViewRef?.current?.hide?.();
+
+    setSelectedImage(undefined);
+    setSelectedGiphy(gif);
+  };
+
   const onPressIcon = () => {
-    dispatch(modalActions.setShowReactionBottomSheet(
-      { visible: true, callback: onEmojiSelected },
-    ));
+    // dispatch(modalActions.setShowReactionBottomSheet(
+    //   { visible: true, callback: onEmojiSelected },
+    // ));
+    stickerViewRef?.current?.show?.('emoji');
   };
 
   const handleUpload = () => {
@@ -261,17 +280,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onSelectionChange = (event: any) => {
+    const position = event.nativeEvent.selection.end;
+    cursorPosition.current = position;
     onSelectionChange?.(event);
   };
-
-  const onMediaSelect = useCallback(
-    (media: GiphyMedia) => {
-      setSelectedImage(undefined);
-      stickerViewRef?.current?.hide?.();
-      setSelectedGiphy(media);
-    },
-    [text],
-  );
 
   const calculateTextInputHeight = (height: number) => {
     let newHeight = Math.min(Math.max(DEFAULT_HEIGHT, height), LIMIT_HEIGHT);
@@ -462,7 +474,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
       </View>
       <StickerView
         stickerViewRef={stickerViewRef}
-        onMediaSelect={onMediaSelect}
+        onGifSelected={onGifSelected}
+        onEmojiSelected={onEmojiSelected}
       />
       {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
     </View>

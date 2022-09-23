@@ -1,64 +1,35 @@
-import React, {
-  useCallback, useEffect, useRef, useState,
-} from 'react';
-import {
-  LayoutRectangle, StyleSheet, TextInput, View,
-} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 import { useDispatch } from 'react-redux';
-import { useKeyboard } from '@react-native-community/hooks';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { useKeySelector } from '~/hooks/selector';
 import * as modalActions from '~/storeRedux/modal/actions';
 import commonKeySelector from '~/storeRedux/modal/keySelector';
-import { margin, padding } from '~/theme/spacing';
+import { margin } from '~/theme/spacing';
 import { SearchInput } from '~/baseComponents/Input';
 import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
 import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
 import EmojiPicker from '~/baseComponents/EmojiPicker';
-import BaseBottomSheet from '~/baseComponents/BottomSheet/BaseBottomSheet';
+import BottomSheet from '~/baseComponents/BottomSheet';
+import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
+import { useBaseHook } from '~/hooks';
 
 const SNAP_HEIGHT = 400;
 
 const ReactionBottomSheet = () => {
   const reactionSheetRef: any = useRef();
+  const emojiPickerRef: any = useRef();
   const searchInputRef = useRef<TextInput>();
+  const { t } = useBaseHook();
+
+  const [sectionIconsVisible, setSectionIconsVisible] = useState(false);
 
   const dispatch = useDispatch();
-  const { keyboardShown } = useKeyboard();
-  const insets = useSafeAreaInsets();
-  const defaultPaddingBottom = insets.bottom + padding.large;
-  const showValue = useSharedValue(defaultPaddingBottom);
   const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
-
-  const [bottomOffset, setBottomOffset] = useState(SNAP_HEIGHT);
-  const layoutHeight = useRef(0);
 
   const data = useKeySelector(commonKeySelector.reactionBottomSheet);
   const { visible, callback } = data || {};
-
-  useEffect(() => {
-    if (keyboardShown) hide();
-    else show();
-  }, [keyboardShown]);
-
-  const bottomViewStyle = useAnimatedStyle(() => ({
-    height: showValue.value,
-  }));
-
-  const show = () => {
-    showValue.value = withTiming(
-      defaultPaddingBottom, undefined,
-    );
-  };
-
-  const hide = () => {
-    showValue.value = withTiming(
-      0, undefined,
-    );
-  };
 
   const _onPressReaction = (key: string) => {
     callback?.(key);
@@ -67,7 +38,12 @@ const ReactionBottomSheet = () => {
 
   const _onClose = () => {
     actions.resetData();
+    setSectionIconsVisible(false);
     dispatch(modalActions.setShowReactionBottomSheet());
+  };
+
+  const onOpen = () => {
+    setSectionIconsVisible(true);
   };
 
   const onSearchFocus = () => reactionSheetRef.current?.open('top');
@@ -79,45 +55,47 @@ const ReactionBottomSheet = () => {
   const onPositionChange = (position: 'top' | 'initial') => {
     if (position === 'initial') {
       searchInputRef.current?.blur();
-      setBottomOffset(layoutHeight.current - SNAP_HEIGHT);
-    } else {
-      setBottomOffset(0);
     }
   };
 
-  const onLayout = useCallback((nativeEvent: {layout: LayoutRectangle}) => {
-    layoutHeight.current = nativeEvent.layout.height;
-  }, []);
+  const scrollToSectionIndex = (index) => {
+    emojiPickerRef.current?.scrollToSectionIndex(index);
+  };
 
   return (
-    <BaseBottomSheet
-      modalizeRef={reactionSheetRef}
-      isOpen={visible}
-      snapPoint={SNAP_HEIGHT}
-      adjustToContentHeight={false}
-      closeSnapPointStraightEnabled={false}
-      onClose={_onClose}
-      onLayout={onLayout}
-      childrenStyle={styles.childrenStyle}
-      onPositionChange={onPositionChange}
-      scrollViewProps={{
-        keyboardShouldPersistTaps: 'handled',
-        keyboardDismissMode: 'interactive',
-        contentContainerStyle: styles.contentContainerStyle,
-      }}
-      ContentComponent={(
-        <View style={styles.container}>
-          <SearchInput
-            style={styles.searchInput}
-            inputRef={searchInputRef}
-            onChangeText={onChangeText}
-            onFocus={onSearchFocus}
-          />
-          <EmojiPicker bottomOffset={bottomOffset} onEmojiPress={_onPressReaction} />
-          <Animated.View style={bottomViewStyle} />
-        </View>
+    <View style={styles.container}>
+      <BottomSheet
+        modalizeRef={reactionSheetRef}
+        isOpen={visible}
+        snapPoint={SNAP_HEIGHT}
+        adjustToContentHeight={false}
+        closeSnapPointStraightEnabled={false}
+        onClose={_onClose}
+        onOpen={onOpen}
+        onPositionChange={onPositionChange}
+        scrollViewProps={{
+          keyboardShouldPersistTaps: 'handled',
+          keyboardDismissMode: 'interactive',
+          contentContainerStyle: styles.contentContainerStyle,
+        }}
+        ContentComponent={(
+          <View style={styles.container}>
+            <SearchInput
+              style={styles.searchInput}
+              inputRef={searchInputRef}
+              placeholder={t('sticker:search_emoji')}
+              onChangeText={onChangeText}
+              onFocus={onSearchFocus}
+            />
+            <EmojiPicker
+              emojiPickerRef={emojiPickerRef}
+              onEmojiPress={_onPressReaction}
+            />
+          </View>
       )}
-    />
+      />
+      <EmojiSectionIcons visible={sectionIconsVisible} onPress={scrollToSectionIndex} />
+    </View>
   );
 };
 
@@ -125,17 +103,14 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     height: '100%',
   },
-  childrenStyle: {
-    paddingBottom: 0,
-  },
   container: {
     flex: 1,
-    paddingTop: padding.large,
   },
   searchInput: {
     marginHorizontal: margin.base,
     marginBottom: margin.base,
   },
+
 });
 
 export default ReactionBottomSheet;

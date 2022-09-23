@@ -2,7 +2,6 @@ import React, {
   useEffect, useImperativeHandle, useRef, useState,
 } from 'react';
 import {
-  FlatList,
   Platform,
   SectionList,
   StyleSheet,
@@ -13,6 +12,7 @@ import {
 import { default as RNSectionListGetItemLayout } from 'react-native-section-list-get-item-layout';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import Emoji from '../Emoji';
 
 import EmojiPickerRow from './components/EmojiPickRow';
@@ -25,17 +25,15 @@ import {
   EMOJI_GUTTER, EMOJI_SIZE, SCROLLVIEW_NATIVE_ID, SECTION_HEADER_HEIGHT, SECTION_MARGIN,
 } from './store/constant';
 import { dimension } from '~/theme';
-import EmojiSectionIcons from './components/EmojiSectionIcons';
 import { padding } from '~/theme/spacing';
 
 export interface EmojiPickerProps {
   emojiPickerRef?: any;
-  bottomOffset?: number;
   onEmojiPress: (name: string) => void
 }
 
 const EmojiPicker = ({
-  emojiPickerRef, bottomOffset = 0, onEmojiPress,
+  emojiPickerRef, onEmojiPress,
 }: EmojiPickerProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = getStyleSheetFromTheme(theme);
@@ -60,48 +58,6 @@ const EmojiPicker = ({
     getSectionHeaderHeight: () => SECTION_HEADER_HEIGHT,
   });
 
-  // const setRebuiltEmojis = (searchBarAnimationComplete = true) => {
-  //   if (rebuildEmojis && searchBarAnimationComplete) {
-  //     rebuildEmojis = false;
-  //     const emojis = renderableEmojis(props.emojisBySection, props.deviceWidth);
-  //     setEmojis(emojis);
-  //   }
-  // };
-
-  // const changeSearchTerm = (rawText) => {
-  //   const searchTerm = filterEmojiSearchInput(rawText);
-  //   const nextState = {
-  //     searchTerm: rawText,
-  //   };
-  //   const prevSearchTerm = state.searchTerm;
-  //   setState(nextState);
-
-  //   if (!searchTerm) {
-  //     nextState.currentSectionIndex = 0;
-  //     return;
-  //   }
-
-  //   clearTimeout(searchTermTimeout);
-  //   if (prevSearchTerm === '') {
-  //     const filteredEmojis = searchEmojis(searchTerm);
-  //     setState({
-  //       filteredEmojis,
-  //     });
-  //   } else {
-  //     searchTermTimeout = setTimeout(() => {
-  //       const filteredEmojis = searchEmojis(searchTerm);
-  //       setState({
-  //         filteredEmojis,
-  //       });
-  //     }, 100);
-  //   }
-  // };
-
-  // const cancelSearch = () => {
-  //   setCurrentSectionIndex(0);
-  //   setFiltedEmojis([]);
-  // };
-
   useImperativeHandle(
     emojiPickerRef, () => ({
       scrollToSectionIndex,
@@ -115,6 +71,11 @@ const EmojiPicker = ({
     scrollToSection(index);
   };
 
+  const onSearchEmojiPress = (emoji: string) => {
+    onEmojiPress(emoji);
+    actions.resetData();
+  };
+
   const renderItem = ({ item, section }) => (
     <View testID={section.defaultMessage}>
       <EmojiPickerRow
@@ -122,7 +83,7 @@ const EmojiPicker = ({
         emojiGutter={EMOJI_GUTTER}
         emojiSize={EMOJI_SIZE}
         items={item.items}
-        onEmojiPress={(name) => onEmojiPress(name)}
+        onEmojiPress={onEmojiPress}
       />
     </View>
   );
@@ -133,7 +94,9 @@ const EmojiPicker = ({
       const contentContainerStyle = [styles.flex];
 
       listComponent = (
-        <FlatList
+        <Animated.FlatList
+          entering={FadeInUp}
+          exiting={FadeOutDown}
           contentContainerStyle={contentContainerStyle}
           data={filteredEmojis}
           keyboardShouldPersistTaps="always"
@@ -176,7 +139,7 @@ const EmojiPicker = ({
 
   const flatListRenderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => onEmojiPress(`${item}`)}
+      onPress={() => onSearchEmojiPress(`${item}`)}
       style={styles.flatListRow}
     >
       <View style={styles.flatListEmoji}>
@@ -196,8 +159,6 @@ const EmojiPicker = ({
     if (jumpToSection) {
       return;
     }
-
-    // clearTimeout(setIndexTimeout);
 
     const { contentOffset } = e.nativeEvent;
     let nextIndex = emojiSectionIndexByOffset.current.findIndex((offset) => contentOffset.y <= offset);
@@ -257,11 +218,6 @@ const EmojiPicker = ({
   return (
     <View style={styles.container}>
       {renderListComponent(2)}
-      <EmojiSectionIcons
-        visible={filteredEmojis.length === 0}
-        bottomOffset={bottomOffset}
-        onPress={scrollToSectionIndex}
-      />
     </View>
   );
 };
@@ -295,10 +251,6 @@ export const getStyleSheetFromTheme = ((theme) => {
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: padding.base,
-      // borderTopWidth: 1,
-      // borderColor: colors.gray40,
-      // borderLeftWidth: 1,
-      // borderRightWidth: 1,
       overflow: 'hidden',
     },
     flexCenter: {
