@@ -19,6 +19,7 @@ import { useBaseHook } from '~/hooks';
 import { useMyPermissions } from '~/hooks/permissions';
 import { Button } from '~/baseComponents';
 import useRemoveGroupMemberStore from '../store';
+import { MemberOptionMenuActions } from '~/screens/communities/CommunityMembers/components/MemberOptionsMenu';
 
 interface MemberOptionsMenuProps {
   groupId: string;
@@ -38,6 +39,8 @@ const MemberOptionsMenu = ({
   const dispatch = useDispatch();
   const { user } = useAuth();
   const { t } = useBaseHook();
+  const isMe = selectedMember?.username === user?.username;
+
   const deleteRemoveGroupMember = useRemoveGroupMemberStore(
     (state) => state.actions.deleteRemoveGroupMember,
   );
@@ -56,18 +59,18 @@ const MemberOptionsMenu = ({
   const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const alertRemovingAdmin = useRemoveAdmin({ groupId, selectedMember });
 
-  const onPressMenuOption = (type: 'set-admin' | 'remove-admin' | 'remove-member') => {
+  const onPressMenuOption = (type: MemberOptionMenuActions) => {
     modalizeRef.current?.close();
     switch (type) {
-      case 'set-admin':
+      case MemberOptionMenuActions.SetAdminRole:
         alertSettingAdmin();
         break;
 
-      case 'remove-admin':
+      case MemberOptionMenuActions.RemoveAdminRole:
         onPressRemoveAdmin();
         break;
 
-      case 'remove-member':
+      case MemberOptionMenuActions.RemoveMember:
         onPressRemoveMember();
         break;
 
@@ -141,33 +144,51 @@ const MemberOptionsMenu = ({
     </Button>
   );
 
+  const renderRemoveAdminRoleOption = () => {
+    if (canAssignUnassignRole && selectedMember?.isAdmin) {
+      return renderItem({
+        testID: 'member_options_menu.remove_admin',
+        content: 'groups:member_menu:label_revoke_admin_role',
+        onPress: () => onPressMenuOption(MemberOptionMenuActions.RemoveAdminRole),
+      });
+    }
+
+    return null;
+  };
+
+  const renderSetAdminRoleOption = () => {
+    if (canAssignUnassignRole && !selectedMember?.isAdmin) {
+      return renderItem({
+        testID: 'member_options_menu.set_admin',
+        content: 'groups:member_menu:label_set_as_admin',
+        onPress: () => onPressMenuOption(MemberOptionMenuActions.SetAdminRole),
+      });
+    }
+
+    return null;
+  };
+
+  const renderRemoveMemberOption = () => {
+    if (canRemoveMember && !isMe) {
+      return renderItem({
+        testID: 'member_options_menu.remove_member',
+        content: 'groups:member_menu:label_remove_member',
+        onPress: () => onPressMenuOption(MemberOptionMenuActions.RemoveMember),
+      });
+    }
+
+    return null;
+  };
+
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
       onClose={onOptionsClosed}
       ContentComponent={(
         <View>
-          {!!canAssignUnassignRole && (
-            selectedMember?.isAdmin ? (
-              renderItem({
-                testID: 'member_options_menu.remove_admin',
-                content: 'groups:member_menu:label_revoke_admin_role',
-                onPress: () => onPressMenuOption('remove-admin'),
-              })
-            ) : (
-              renderItem({
-                testID: 'member_options_menu.set_admin',
-                content: 'groups:member_menu:label_set_as_admin',
-                onPress: () => onPressMenuOption('set-admin'),
-              })
-            ))}
-          {!!canRemoveMember && selectedMember?.username !== user?.username && (
-            renderItem({
-              testID: 'member_options_menu.remove_member',
-              content: 'groups:member_menu:label_remove_member',
-              onPress: () => onPressMenuOption('remove-member'),
-            })
-          )}
+          {renderRemoveAdminRoleOption()}
+          {renderSetAdminRoleOption()}
+          {renderRemoveMemberOption()}
         </View>
       )}
     />
