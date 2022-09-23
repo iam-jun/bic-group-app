@@ -19,7 +19,7 @@ import { useBaseHook } from '~/hooks';
 import { useMyPermissions } from '~/hooks/permissions';
 import { Button } from '~/baseComponents';
 import useRemoveGroupMemberStore from '../store';
-import { MemberOptionMenuActions } from '~/screens/communities/CommunityMembers/components/MemberOptionsMenu';
+import { MemberOptions } from '~/screens/communities/CommunityMembers/components/MemberOptionsMenu';
 
 interface MemberOptionsMenuProps {
   groupId: string;
@@ -59,18 +59,18 @@ const MemberOptionsMenu = ({
   const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const alertRemovingAdmin = useRemoveAdmin({ groupId, selectedMember });
 
-  const onPressMenuOption = (type: MemberOptionMenuActions) => {
+  const onPressMenuOption = (type: MemberOptions) => {
     modalizeRef.current?.close();
     switch (type) {
-      case MemberOptionMenuActions.SetAdminRole:
+      case MemberOptions.SetAdminRole:
         alertSettingAdmin();
         break;
 
-      case MemberOptionMenuActions.RemoveAdminRole:
+      case MemberOptions.RemoveAdminRole:
         onPressRemoveAdmin();
         break;
 
-      case MemberOptionMenuActions.RemoveMember:
+      case MemberOptions.RemoveMember:
         onPressRemoveMember();
         break;
 
@@ -149,7 +149,7 @@ const MemberOptionsMenu = ({
       return renderItem({
         testID: 'member_options_menu.remove_admin',
         content: 'groups:member_menu:label_revoke_admin_role',
-        onPress: () => onPressMenuOption(MemberOptionMenuActions.RemoveAdminRole),
+        onPress: () => onPressMenuOption(MemberOptions.RemoveAdminRole),
       });
     }
 
@@ -161,7 +161,7 @@ const MemberOptionsMenu = ({
       return renderItem({
         testID: 'member_options_menu.set_admin',
         content: 'groups:member_menu:label_set_as_admin',
-        onPress: () => onPressMenuOption(MemberOptionMenuActions.SetAdminRole),
+        onPress: () => onPressMenuOption(MemberOptions.SetAdminRole),
       });
     }
 
@@ -173,7 +173,7 @@ const MemberOptionsMenu = ({
       return renderItem({
         testID: 'member_options_menu.remove_member',
         content: 'groups:member_menu:label_remove_member',
-        onPress: () => onPressMenuOption(MemberOptionMenuActions.RemoveMember),
+        onPress: () => onPressMenuOption(MemberOptions.RemoveMember),
       });
     }
 

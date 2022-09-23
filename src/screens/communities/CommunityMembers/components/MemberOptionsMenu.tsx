@@ -21,7 +21,7 @@ interface MemberOptionsMenuProps {
   onOptionsClosed: () => void;
 }
 
-export enum MemberOptionMenuActions {
+export enum MemberOptions {
   SetAdminRole = 'set-admin',
   RemoveAdminRole = 'remove-admin',
   RemoveMember = 'remove-member'
@@ -57,10 +57,10 @@ const MemberOptionsMenu = ({
     PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE_IN_COMMUNITY,
   );
 
-  const onPressMenuOption = (type: MemberOptionMenuActions) => {
+  const onPressMenuOption = (type: MemberOptions) => {
     modalizeRef.current?.close();
     switch (type) {
-      case MemberOptionMenuActions.RemoveMember:
+      case MemberOptions.RemoveMember:
         onPressRemoveMember();
         break;
 
@@ -103,7 +103,7 @@ const MemberOptionsMenu = ({
       return renderItem({
         testID: 'member_options_menu.remove_admin',
         content: 'groups:member_menu:label_revoke_admin_role',
-        onPress: () => onPressMenuOption(MemberOptionMenuActions.RemoveAdminRole),
+        onPress: () => onPressMenuOption(MemberOptions.RemoveAdminRole),
       });
     }
 
@@ -115,7 +115,7 @@ const MemberOptionsMenu = ({
       return renderItem({
         testID: 'member_options_menu.set_admin',
         content: 'groups:member_menu:label_set_as_admin',
-        onPress: () => onPressMenuOption(MemberOptionMenuActions.SetAdminRole),
+        onPress: () => onPressMenuOption(MemberOptions.SetAdminRole),
       });
     }
 
@@ -127,7 +127,7 @@ const MemberOptionsMenu = ({
       return renderItem({
         testID: 'member_options_menu.remove_member',
         content: 'groups:member_menu:label_remove_member',
-        onPress: () => onPressMenuOption(MemberOptionMenuActions.RemoveMember),
+        onPress: () => onPressMenuOption(MemberOptions.RemoveMember),
       });
     }
 
