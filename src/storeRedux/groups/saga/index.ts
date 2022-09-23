@@ -26,7 +26,6 @@ import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
 import getGroupPosts from './getGroupPosts';
 import mergeExtraGroupPosts from './mergeExtraGroupPosts';
-import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -188,9 +187,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.CANCEL_JOIN_GROUP, cancelJoinGroup,
-  );
-  yield takeLatest(
-    groupsTypes.REMOVE_MEMBER, removeMember,
   );
   yield takeLatest(
     groupsTypes.LEAVE_GROUP, leaveGroup,

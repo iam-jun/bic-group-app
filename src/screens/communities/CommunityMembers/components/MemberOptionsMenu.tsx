@@ -53,7 +53,6 @@ const MemberOptionsMenu = ({
 
       default:
         dispatch(modalActions.showAlertNewFeature());
-        break;
     }
   };
 

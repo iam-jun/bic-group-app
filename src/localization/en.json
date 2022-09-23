@@ -735,9 +735,8 @@
       "success_message": "Member Role Saved"
     },
     "modal_confirm_remove_member": {
-      "title": "Remove this member",
-      "alert_inner_groups": "This member will also be removed from {0} other inner groups:",
-      "final_alert": "Are you sure to remove this member?",
+      "title": "Remove member",
+      "content": "Are you sure to remove this member from your group?",
       "button_remove": "Remove"
     },
     "modal_confirm_leave_group": {

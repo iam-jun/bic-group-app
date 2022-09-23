@@ -7,6 +7,7 @@ import IDraftPostState from '~/screens/post/DraftPost/store/Interface';
 import ILeaveCommunityState from '~/screens/communities/CommunityDetail/store/interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
 import IRemoveCommunityMemberState from '~/screens/communities/CommunityMembers/store/Interface';
+import IRemoveGroupMemberState from '~/screens/groups/GroupMembers/store/Interface';
 
 export interface BicStore {
   // screens
@@ -21,7 +22,7 @@ export interface BicStore {
   },
   communities: {
     leaveCommunity: ILeaveCommunityState;
-    removeCommunityMembers: IRemoveCommunityMemberState;
+    removeCommunityMemberStore: IRemoveCommunityMemberState;
   },
   groups: {
     components: {
@@ -29,6 +30,7 @@ export interface BicStore {
         communityJoinedGroupTreeStore: ICommunityJoinedGroupTreeState
       }
     }
+    removeGroupMemberStore: IRemoveGroupMemberState;
   }
   Home: {
     homeStore: IHomeState,

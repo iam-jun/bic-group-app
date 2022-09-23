@@ -688,10 +688,9 @@
       "success_message": "Đã lưu thay đổi"
     },
     "modal_confirm_remove_member": {
-      "title": "Xóa khỏi nhóm",
-      "alert_inner_groups": "Thành viên này cũng sẽ bị xóa khỏi {0} nhóm khác:",
-      "final_alert": "Bạn có chắc muốn xóa người này khỏi nhóm?",
-      "button_remove": "Xác nhận"
+      "title": "Xóa thành viên",
+      "content": "Bạn có muốn xóa thành viên này?",
+      "button_remove": "Xóa"
     },
     "error": {
       "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi thoát",

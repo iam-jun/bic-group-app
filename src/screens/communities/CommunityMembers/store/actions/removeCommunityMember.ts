@@ -1,6 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
+import { IGroupMembers } from '~/interfaces/IGroup';
 import Store from '~/storeRedux';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
@@ -11,7 +12,8 @@ const removeCommunityMember = () => async (
   try {
     const response = await groupApi.removeCommunityMembers(communityId, [userId]);
 
-    removeMemberFromMemberList(userId);
+    const newUpdatedData = removeMemberFromMemberList(userId, 'community');
+    Store.store.dispatch(groupsActions.setCommunityMembers(newUpdatedData));
 
     // to update userCount
     Store.store.dispatch(groupsActions.getCommunityDetail({ communityId }));
@@ -22,7 +24,7 @@ const removeCommunityMember = () => async (
     };
     Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
   } catch (error) {
-    console.error('removeCommunityMembers error:', error);
+    console.error('removeCommunityMember error:', error);
 
     // TODO: use showError helper once merged with BEIN-8192
     Store.store.dispatch(modalActions.showHideToastMessage({
@@ -36,19 +38,21 @@ const removeCommunityMember = () => async (
 
 export default removeCommunityMember;
 
-const removeMemberFromMemberList = (userId: string) => {
+export const removeMemberFromMemberList = (userId: string, type: 'community' | 'group') => {
   const { groups } = Store.store.getState();
-  const { communityMembers } = groups;
+  const membersData = groups[`${type}Members`] || {};
 
   let updatedData = {};
   let offset = 0;
 
-  Object.keys(communityMembers).forEach(
+  Object.keys(membersData).forEach(
     (role: string) => {
-      const memberRoleData = communityMembers[role].data;
-      if (memberRoleData) {
+      const memberRoleData = membersData[role].data;
+      if (memberRoleData
+        && membersData[role].name
+        && membersData[role].userCount) {
         const newData = memberRoleData.filter(
-          (item: ICommunityMembers) => item.id !== userId,
+          (item: ICommunityMembers | IGroupMembers) => item.id !== userId,
         );
 
         // need to update this for loading more data
@@ -57,7 +61,7 @@ const removeMemberFromMemberList = (userId: string) => {
         updatedData = {
           ...updatedData,
           [role]: {
-            ...communityMembers[role],
+            ...membersData[role],
             data: newData,
             userCount: newData.length,
           },
@@ -66,8 +70,8 @@ const removeMemberFromMemberList = (userId: string) => {
     },
   );
 
-  Store.store.dispatch(groupsActions.setCommunityMembers({
+  return {
     ...updatedData,
     offset,
-  }));
+  };
 };
