@@ -24,7 +24,7 @@ const joinNewGroup = (set, get) => async (groupId: string) => {
       };
       set((state:IDiscoverGroupsState) => {
         state.items[groupId] = { ...currentItem };
-      }, 'console.errorSuccess');
+      }, 'joinNewGroupSuccess');
       const toastMessage: IToastMessage = {
         content: `${i18next.t('groups:text_request_join_group')} ${groupName}`,
       };
@@ -38,7 +38,8 @@ const joinNewGroup = (set, get) => async (groupId: string) => {
     Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
     set((state:IDiscoverGroupsState) => {
       delete (state.items[groupId]);
-    }, 'console.errorSuccess');
+      state.ids = state.ids.filter((item) => item !== groupId);
+    }, 'joinNewGroupSuccessInPublicGroup');
   } catch (error) {
     console.error('joinNewGroup catch', error);
     Store.store.dispatch(modalActions.showHideToastMessage({
