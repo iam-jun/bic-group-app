@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import Animated, {
   FadeInUp, FadeOutDown, useAnimatedStyle, useSharedValue, withTiming,
 } from 'react-native-reanimated';
@@ -77,7 +77,7 @@ const EmojiSectionIcons = ({ visible, onPress }: Props) => {
           </View>
         </Animated.View>
         <Animated.View style={bottomViewStyle} />
-        <KeyboardSpacer />
+        {Platform.OS === 'ios' && <KeyboardSpacer />}
       </View>
     </Portal>
 
