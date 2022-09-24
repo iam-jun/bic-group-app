@@ -1,9 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import NodeEmoji from 'node-emoji';
 import {
   ActivityIndicator,
-  Image,
   StyleProp,
   StyleSheet,
   View,
@@ -12,10 +10,11 @@ import {
 
 import Text from '~/beinComponents/Text';
 import commonActions, { IAction } from '~/constants/commonActions';
-import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import spacing, { margin, padding } from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
 import Button from '../Button';
+import Emoji from '../Emoji';
+import { sizes } from '~/theme/dimension';
 
 interface ReactionProps {
   testId?: string;
@@ -54,28 +53,6 @@ const Reaction: React.FC<ReactionProps> = ({
       setIsSelected(selected);
     }, [selected],
   );
-
-  let emoji = null;
-  const nodeEmoji = NodeEmoji.find(icon || '')?.emoji || '';
-
-  if (nodeEmoji) {
-    emoji = (
-      <Text.NumberS style={styles.nodeEmoji} testID={`reaction.${icon}`}>
-        {nodeEmoji}
-      </Text.NumberS>
-    );
-  }
-
-  if (!emoji) {
-    const imageEmoji = STATIC_EMOJI[icon] || ANIMATED_EMOJI[icon];
-    if (imageEmoji) {
-      emoji = (
-        <Image style={styles.emoji} resizeMode="contain" source={imageEmoji} />
-      );
-    }
-  }
-
-  if (!emoji) return null;
 
   const _onChangeValue = () => {
     const newValue = !isSelected;
@@ -116,7 +93,10 @@ const Reaction: React.FC<ReactionProps> = ({
           testID="reaction.children"
           style={styles.emojiContainer}
         >
-          {emoji}
+          <Emoji
+            emojiName={icon}
+            size={sizes.numberS}
+          />
           <Text.NumberS
             testID="reaction.children.text"
             style={styles.text}
@@ -154,13 +134,6 @@ const createStyles = (
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    nodeEmoji: {
-      fontSize: 14,
-    },
-    emoji: {
-      width: 14,
-      aspectRatio: 1,
     },
     text: {
       marginLeft: margin.tiny,
