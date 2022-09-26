@@ -67,6 +67,21 @@ const DiscoverCommunities = () => {
     getData({ isRefreshing: true });
   };
 
+  const handleJoin = (id: string, name: string) => {
+    dispatch(
+      groupsActions.joinCommunity({ communityId: id, communityName: name }),
+    );
+  };
+
+  const handleCancel = (id: string, name: string) => {
+    dispatch(
+      groupsActions.cancelJoinCommunity({
+        communityId: id,
+        communityName: name,
+      }),
+    );
+  };
+
   const renderItem: ListRenderItem<number> = ({ item, index }) => {
     const currentItem = items[item];
 
@@ -74,6 +89,8 @@ const DiscoverCommunities = () => {
       <CommunityGroupCard
         item={currentItem}
         testID={`discover_communities_item_${index}`}
+        onJoin={handleJoin}
+        onCancel={handleCancel}
       />
     );
   };

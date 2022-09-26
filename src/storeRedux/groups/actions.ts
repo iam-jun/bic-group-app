@@ -333,15 +333,6 @@ const groupsActions = {
     type: groupsTypes.REMOVE_GROUP_ADMIN,
     payload,
   }),
-
-  joinNewGroup: (payload: {groupId: string; groupName: string}) => ({
-    type: groupsTypes.JOIN_NEW_GROUP,
-    payload,
-  }),
-  cancelJoinGroup: (payload: {groupId: string; groupName: string}) => ({
-    type: groupsTypes.CANCEL_JOIN_GROUP,
-    payload,
-  }),
   leaveGroup: (payload: string) => ({
     type: groupsTypes.LEAVE_GROUP,
     payload,
@@ -560,10 +551,6 @@ const groupsActions = {
   }),
   resetCommunitySearchMembers: () => ({
     type: groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS,
-  }),
-  editDiscoverGroupItem: (payload: {id: string; data: any}) => ({
-    type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
-    payload,
   }),
   joinCommunity: (payload: {communityId: string; communityName: string}) => ({
     type: groupsTypes.JOIN_COMMUNITY,

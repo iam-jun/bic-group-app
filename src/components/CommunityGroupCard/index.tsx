@@ -24,9 +24,8 @@ type CommunityGroupCardProps = {
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
   isResetCommunityDetail?:boolean;
-  onJoin?: (groupId: string)=>void;
-  onCancel?: (groupId: string)=>void;
-  onGoBackFromGroupDetail?: ()=> void;
+  onJoin?: (id: string, name: string, isGroup?: boolean)=>void;
+  onCancel?: (id: string, name: string, isGroup?: boolean)=>void;
 };
 
 const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
@@ -36,7 +35,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   shouldShowAlertJoinTheCommunityFirst,
   onJoin,
   onCancel,
-  onGoBackFromGroupDetail,
 }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -69,7 +67,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       dispatch(groupsActions.setCommunityDetail({} as ICommunity));
     }
     rootNavigation.goBack();
-    onGoBackFromGroupDetail?.();
   };
 
   const onView = () => {
@@ -98,35 +95,14 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       return;
     }
     if (!!onJoin) {
-      onJoin(id);
-      return;
+      onJoin(id, name, isGroup(level));
     }
-    if (isGroup(level)) {
-      dispatch(groupsActions.joinNewGroup({ groupId: id, groupName: name }));
-      return;
-    }
-
-    dispatch(
-      groupsActions.joinCommunity({ communityId: id, communityName: name }),
-    );
   };
 
   const handleCancel = () => {
     if (!!onCancel) {
-      onCancel(id);
-      return;
+      onCancel(id, name, isGroup(level));
     }
-    if (isGroup(level)) {
-      dispatch(groupsActions.cancelJoinGroup({ groupId: id, groupName: name }));
-      return;
-    }
-
-    dispatch(
-      groupsActions.cancelJoinCommunity({
-        communityId: id,
-        communityName: name,
-      }),
-    );
   };
 
   const onViewCommunity = () => {

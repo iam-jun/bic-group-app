@@ -16,6 +16,14 @@ const initState: IDiscoverGroupsState = {
 const discoverGroupsStore = (set, get) => ({
   ...initState,
 
+  doSetGroupStatus: (groupId: string, status: number) => {
+    if (!groupId) return;
+    const currentState: IDiscoverGroupsState = get();
+    set((state:IDiscoverGroupsState) => {
+      state.items[groupId] = { ...currentState.items[groupId], joinStatus: status };
+    }, 'setGroupStatus');
+  },
+
   doJoinNewGroup: joinNewGroup(set, get),
   doCancelJoinGroup: cancelJoinGroup(set, get),
   doGetDiscoverGroups: getDiscoverGroups(set, get),

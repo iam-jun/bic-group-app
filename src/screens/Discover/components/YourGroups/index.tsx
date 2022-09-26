@@ -26,7 +26,10 @@ const GroupItem: FC<GroupItemProps> = ({ id }) => {
   const { items } = joinedAllGroups;
 
   return (
-    <CommunityGroupCard item={items[id]} testID={`your_groups_item_${id}`} />
+    <CommunityGroupCard
+      item={items[id]}
+      testID={`your_groups_item_${id}`}
+    />
   );
 };
 

@@ -20,13 +20,11 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
-import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
 import getGroupPosts from './getGroupPosts';
 import mergeExtraGroupPosts from './mergeExtraGroupPosts';
-import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -45,7 +43,6 @@ import getGroupSearchMembers from './getGroupSearchMembers';
 import joinCommunity from './joinCommunity';
 import cancelJoinCommunity from './cancelJoinCommunity';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
-import groupJoinStatus from '~/constants/groupJoinStatus';
 import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
 import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
 import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
@@ -181,15 +178,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.ADD_MEMBERS, addMembers,
-  );
-  yield takeLatest(
-    groupsTypes.JOIN_NEW_GROUP, joinNewGroup,
-  );
-  yield takeLatest(
-    groupsTypes.CANCEL_JOIN_GROUP, cancelJoinGroup,
-  );
-  yield takeLatest(
-    groupsTypes.REMOVE_MEMBER, removeMember,
   );
   yield takeLatest(
     groupsTypes.LEAVE_GROUP, leaveGroup,
@@ -418,54 +406,6 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
       ),
       '\x1b[0m',
     );
-    yield call(showError, err);
-  }
-}
-
-function* cancelJoinGroup({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: string; groupName: string};
-}) {
-  const { groupId, groupName } = payload;
-  try {
-    yield call(groupApi.cancelJoinGroup, groupId);
-
-    // update button Join/Cancel/View status on Discover groups
-    yield put(
-      groupsActions.editDiscoverGroupItem({
-        id: groupId,
-        data: { joinStatus: groupJoinStatus.visitor },
-      }),
-    );
-
-    yield put(groupsActions.getGroupDetail({ groupId }));
-
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_cancel_join_group')} ${groupName}`,
-    };
-
-    yield put(modalActions.showHideToastMessage(toastMessage));
-  } catch (err: any) {
-    console.error('cancelJoinGroup catch', err);
-
-    if (
-      err?.meta?.message
-      === 'You have been approved to be a member of this group'
-    ) {
-      const toastMessage: IToastMessage = {
-        content: `${i18next.t('groups:text_approved_member_group')}`,
-      };
-      yield put(modalActions.showHideToastMessage(toastMessage));
-      yield put(groupsActions.getGroupDetail({
-        groupId,
-        loadingPage: true,
-      }));
-
-      return;
-    }
-
     yield call(showError, err);
   }
 }

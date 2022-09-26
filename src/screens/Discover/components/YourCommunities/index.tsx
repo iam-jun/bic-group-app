@@ -40,6 +40,21 @@ const YourCommunities = () => {
     getData({ isRefreshing: true });
   };
 
+  const handleJoin = (id: string, name: string) => {
+    dispatch(
+      groupsActions.joinCommunity({ communityId: id, communityName: name }),
+    );
+  };
+
+  const handleCancel = (id: string, name: string) => {
+    dispatch(
+      groupsActions.cancelJoinCommunity({
+        communityId: id,
+        communityName: name,
+      }),
+    );
+  };
+
   const renderEmptyComponent = () => {
     if (loading) return null;
     return (
@@ -57,6 +72,8 @@ const YourCommunities = () => {
       <CommunityGroupCard
         item={currentItem}
         testID={`your_communities_item_${index}`}
+        onJoin={handleJoin}
+        onCancel={handleCancel}
       />
     );
   };

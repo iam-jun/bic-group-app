@@ -58,16 +58,13 @@ const DiscoverGroups = ({ route }: any) => {
     cancelJoinGroup(groupId);
   };
 
-  const handleGoBackFromGroupDetail = () => {
-    doGetDiscoverGroups({ isRefreshing: true, communityId, params: { key: searchText } });
-  };
-
   const onLoadMore = () => {
     canLoadMore && getDiscoverGroups();
   };
 
   const onRefresh = () => {
     getDiscoverGroups(true);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (headerRef.current) headerRef.current?.setSearchText?.('');
   };
@@ -92,7 +89,6 @@ const DiscoverGroups = ({ route }: any) => {
         isResetCommunityDetail={false}
         onJoin={handleJoinGroup}
         onCancel={handleCancelJoinGroup}
-        onGoBackFromGroupDetail={handleGoBackFromGroupDetail}
       />
     );
   };
