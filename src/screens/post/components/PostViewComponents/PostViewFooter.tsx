@@ -6,13 +6,13 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import { IReactionCounts } from '~/interfaces/IPost';
 import { IconType } from '~/resources/icons';
-import * as modalActions from '~/storeRedux/modal/actions';
 import { getTotalReactions, validateReactionCount } from './helper';
 import dimension from '~/theme/dimension';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatData';
+import modalActions from '~/storeRedux/modal/actions';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -58,18 +58,6 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   };
 
   const onPressReact = () => {
-    // const payload = {
-    //   isOpen: true,
-    //   ContentComponent: (
-    //     <EmojiBoard
-    //       width={dimension.deviceWidth}
-    //       height={280}
-    //       onEmojiSelected={onEmojiSelected}
-    //     />
-    //   ),
-    // };
-    // dispatch(modalActions.showModal(payload));
-
     dispatch(modalActions.setShowReactionBottomSheet(
       { visible: true, callback: onEmojiSelected },
     ));

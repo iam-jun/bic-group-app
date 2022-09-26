@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import {
+  Platform, StyleSheet, TextInput, View,
+} from 'react-native';
 
 import { useDispatch } from 'react-redux';
 
@@ -14,8 +16,7 @@ import EmojiPicker from '~/baseComponents/EmojiPicker';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
 import { useBaseHook } from '~/hooks';
-
-const SNAP_HEIGHT = 400;
+import { dimension } from '~/theme';
 
 const ReactionBottomSheet = () => {
   const reactionSheetRef: any = useRef();
@@ -30,6 +31,8 @@ const ReactionBottomSheet = () => {
 
   const data = useKeySelector(commonKeySelector.reactionBottomSheet);
   const { visible, callback } = data || {};
+  const isIOS = Platform.OS === 'ios';
+  const SNAP_HEIGHT = isIOS ? 400 : dimension.deviceHeight / 2;
 
   const _onPressReaction = (key: string) => {
     callback?.(key);
@@ -37,7 +40,6 @@ const ReactionBottomSheet = () => {
   };
 
   const _onClose = () => {
-    actions.resetData();
     setSectionIconsVisible(false);
     dispatch(modalActions.setShowReactionBottomSheet());
   };
@@ -46,7 +48,7 @@ const ReactionBottomSheet = () => {
     setSectionIconsVisible(true);
   };
 
-  const onSearchFocus = () => reactionSheetRef.current?.open('top');
+  const onSearchFocus = isIOS ? () => reactionSheetRef.current?.open('top') : undefined;
 
   const onChangeText = (text:string) => {
     actions.search(text);
@@ -67,8 +69,8 @@ const ReactionBottomSheet = () => {
       <BottomSheet
         modalizeRef={reactionSheetRef}
         isOpen={visible}
-        snapPoint={SNAP_HEIGHT}
-        adjustToContentHeight={false}
+        snapPoint={isIOS ? SNAP_HEIGHT : undefined}
+        adjustToContentHeight={!isIOS}
         closeSnapPointStraightEnabled={false}
         onClose={_onClose}
         onOpen={onOpen}
@@ -76,10 +78,11 @@ const ReactionBottomSheet = () => {
         scrollViewProps={{
           keyboardShouldPersistTaps: 'handled',
           keyboardDismissMode: 'interactive',
-          contentContainerStyle: styles.contentContainerStyle,
+          contentContainerStyle: isIOS ? styles.contentContainerStyle : { height: SNAP_HEIGHT },
         }}
+        childrenStyle={{ paddingBottom: 0 }}
         ContentComponent={(
-          <View style={styles.container}>
+          <View style={[styles.container, !isIOS && { height: SNAP_HEIGHT }]}>
             <SearchInput
               style={styles.searchInput}
               inputRef={searchInputRef}
