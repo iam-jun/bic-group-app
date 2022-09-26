@@ -38,6 +38,7 @@ import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import { checkPermission, permissionTypes } from '~/utils/permission';
+import { formatTextWithEmoji } from '~/utils/emojiUtils';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -181,17 +182,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
     stickerViewRef?.current?.hide?.();
 
     dispatch(modalActions.hideModal());
-    // [TO-DO] handle cursor position
     if (emoji) {
-      let firstStr = text.substring(0, cursorPosition.current);
-      if (!firstStr.endsWith(' ')) {
-        firstStr += ' ';
-      }
-      let lastStr = text.substring(cursorPosition.current, text.length);
-      if (!lastStr.startsWith(' ')) {
-        lastStr = ` ${lastStr}`;
-      }
-      const completeStr = `${firstStr}:${emoji}:${lastStr}`;
+      const completeStr = formatTextWithEmoji(text, emoji, cursorPosition);
       setText(completeStr);
       onChangeText?.(completeStr);
       _textInputRef.current.focus();

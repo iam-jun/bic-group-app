@@ -2,7 +2,7 @@ import {
   CategoryNames, EmojiIndicesByAlias, EmojiIndicesByCategory, Emojis,
 } from '~/baseComponents/Emoji/emojis';
 import custom_emojis from '~/resources/custom_emojis';
-import { compareEmojis } from '~/utils/emoji_utils';
+import { compareEmojis } from '~/utils/emojiUtils';
 import {
   CATEGORIES_ICONS, EMOJI_GUTTER, EMOJI_SIZE, SECTION_HEADER_HEIGHT, SECTION_MARGIN,
 } from './constant';

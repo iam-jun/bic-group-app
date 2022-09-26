@@ -1,7 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   StyleProp,
   StyleSheet,
   View,
@@ -78,34 +77,27 @@ const Reaction: React.FC<ReactionProps> = ({
     <Button
       testID={testId || 'reaction'}
       disabled={loading || disabled}
-      style={[styles.container, style]}
+      style={[styles.container, style, loading && { opacity: 0.5 }]}
       onPress={_onChangeValue}
       onLongPress={_onLongPress}
     >
-      {loading ? (
-        <ActivityIndicator
-          testID="reaction.indicator"
-          color={colors.gray20}
-          style={styles.indicator}
+      <View
+        testID="reaction.children"
+        style={styles.emojiContainer}
+      >
+        <Emoji
+          emojiName={icon}
+          size={sizes.numberS}
         />
-      ) : (
-        <View
-          testID="reaction.children"
-          style={styles.emojiContainer}
+        <Text.NumberS
+          testID="reaction.children.text"
+          style={styles.text}
+          color={isSelected ? colors.purple50 : colors.neutral40}
         >
-          <Emoji
-            emojiName={icon}
-            size={sizes.numberS}
-          />
-          <Text.NumberS
-            testID="reaction.children.text"
-            style={styles.text}
-            color={isSelected ? colors.purple50 : colors.neutral40}
-          >
-            {` ${newValue}`}
-          </Text.NumberS>
-        </View>
-      )}
+          {` ${newValue}`}
+        </Text.NumberS>
+      </View>
+
     </Button>
   );
 };

@@ -22,7 +22,6 @@ export interface BaseBottomSheetProps extends ModalizeProps {
   modalStyle?: StyleProp<ViewStyle>;
   childrenStyle?: StyleProp<ViewStyle>;
   overlayStyle?: StyleProp<ViewStyle>;
-  onClose?: () => void;
 }
 
 const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({

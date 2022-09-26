@@ -31,6 +31,11 @@ const EmojiSectionIcons = ({ visible, onPress }: Props) => {
   const emojis = useEmojiPickerStore((state: IEmojiPickerState) => state.data);
   const filteredData = useEmojiPickerStore((state: IEmojiPickerState) => state.filteredData);
   const currentSectionIndex = useEmojiPickerStore((state: IEmojiPickerState) => state.currentSectionIndex);
+  const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
+
+  useEffect(() => {
+    if (!visible) actions.resetData();
+  }, [visible]);
 
   useEffect(() => {
     if (keyboardShown) hide();
@@ -66,10 +71,14 @@ const EmojiSectionIcons = ({ visible, onPress }: Props) => {
                 : theme.colors.gray40;
               return (
                 <Icon
+                  key={`emoji-secion-icon-${index}`}
                   style={styles.icon}
                   icon={section.icon}
                   tintColor={tintColor}
                   size={17}
+                  hitSlop={{
+                    top: 20, bottom: 20, left: 20, right: 20,
+                  }}
                   onPress={() => onPress(index)}
                 />
               );

@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import { debounce } from 'lodash';
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import {
-  Keyboard, NativeSyntheticEvent, StyleSheet, View,
+  Keyboard, NativeSyntheticEvent, Platform, StyleSheet, View,
 } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import Animated, {
@@ -46,6 +46,11 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   const _stickerViewRef = stickerViewRef || useRef();
   const emojiPickerRef: any = useRef();
 
+  const androidHeight = dimension.deviceHeight / 2;
+  const [showAndroidHeight, setShowAndroidHeight] = React.useState(false);
+
+  const isIOS = Platform.OS === 'ios';
+
   const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
 
   const request = searchQuery
@@ -74,14 +79,12 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   }));
 
   const show = (type:'gif'|'emoji') => {
-    setType(type);
-    setVisible(true);
     modalizeRef.current?.open('default');
+    setType(type);
     Keyboard.dismiss();
   };
 
   const hide = () => {
-    setVisible(false);
     modalizeRef.current?.close();
   };
 
@@ -117,6 +120,11 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   };
 
   const onOpen = () => {
+    setVisible(true);
+
+    // For iOS
+    if (!isIOS) return;
+
     setTimeout(
       () => {
         height.value = withTiming(
@@ -126,9 +134,21 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
     );
   };
 
+  const onOpened = () => {
+    // For android
+    if (isIOS) return;
+
+    height.value = withTiming(
+      keyboardHeight, { duration: 400 },
+    );
+  };
+
   const onClose = () => {
+    setVisible(false);
+
     // reset position
     onPositionChange('initial');
+    setShowAndroidHeight(false);
 
     height.value = withTiming(
       0, { duration: 200 },
@@ -136,9 +156,21 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   };
 
   const onSearchFocus = () => {
+    if (!isIOS) {
+      // Can't show modalize fullscreen on Android
+      // Because of keyboard behavior
+      setShowAndroidHeight(true);
+      return;
+    }
     // trigger before modal reach the top to make app looks smooth
     onPositionChange('top');
     modalizeRef.current?.open('top');
+  };
+
+  const onSearchBlur = () => {
+    if (!isIOS) {
+      setShowAndroidHeight(false);
+    }
   };
 
   const onBackPress = () => {
@@ -189,40 +221,42 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
     );
   };
 
+  const containerHeight = showAndroidHeight ? androidHeight : keyboardHeight;
+
   return (
     <View testID="sticker_view" style={styles.container}>
       <Animated.View style={animatedStyle} />
       <Portal>
         <Modalize
           ref={modalizeRef}
-          withOverlay={modalTopOffset !== 0}
+          withOverlay={isIOS && modalTopOffset !== 0}
           handlePosition="inside"
-          snapPoint={keyboardHeight}
+          adjustToContentHeight={!isIOS}
+          snapPoint={isIOS ? keyboardHeight : undefined}
           closeSnapPointStraightEnabled={false}
-          // alwaysOpen={keyboardHeight}
           modalTopOffset={modalTopOffset}
-          // keyboardAvoidingBehavior={'position'}
-          // avoidKeyboardLikeIOS
           scrollViewProps={{
             keyboardShouldPersistTaps: 'handled',
             keyboardDismissMode: 'interactive',
             contentContainerStyle: {
-              height: '100%',
+              height: isIOS ? '100%' : containerHeight,
             },
           }}
           onOpen={onOpen}
+          onOpened={onOpened}
           onClose={onClose}
           onBackButtonPress={onBackPress}
           onPositionChange={onPositionChange}
         >
-          <View style={[styles.stickerView]}>
+          <View style={[styles.stickerView, !isIOS && { height: containerHeight }]}>
             <View style={styles.header}>
               <SearchInput
                 testID="sticker_view.search_input"
                 placeholder={i18next.t(`sticker:search_${type}`)}
                 value={searchQuery}
-                onFocus={onSearchFocus}
                 onChangeText={onChangeText}
+                onFocus={onSearchFocus}
+                onBlur={onSearchBlur}
               />
             </View>
             {renderComponent()}

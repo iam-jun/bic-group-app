@@ -189,3 +189,37 @@ export const getCustomEmojisByName = (name) => {
 
   return custom_emojis[name];
 };
+
+export const getEmojiCode = (emojiName) => {
+  let unicode = `:${emojiName}:`;
+  try {
+    if (EmojiIndicesByAlias.has(emojiName)) {
+      const emoji = Emojis[EmojiIndicesByAlias.get(emojiName)];
+      if (emoji.category !== 'custom') {
+        const emojiUnicode = emoji.image;
+        const codeArray = emojiUnicode.split('-');
+        unicode = codeArray.reduce((acc, c) => acc + String.fromCodePoint(parseInt(c, 16)), '');
+      }
+    }
+  } catch (e) {
+    //
+  }
+  return unicode;
+};
+
+export const formatTextWithEmoji = (text, emoji, cursorPosition) => {
+  if (!cursorPosition) {
+    cursorPosition = text.length;
+  }
+  let firstStr = text.substring(0, cursorPosition.current);
+  if (!firstStr.endsWith(' ')) {
+    firstStr += ' ';
+  }
+  let lastStr = text.substring(cursorPosition.current, text.length);
+  if (!lastStr.startsWith(' ')) {
+    lastStr = ` ${lastStr}`;
+  }
+  const emojiCode = getEmojiCode(emoji);
+
+  return `${firstStr}${emojiCode}${lastStr}`;
+};

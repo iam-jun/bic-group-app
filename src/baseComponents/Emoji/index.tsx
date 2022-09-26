@@ -4,7 +4,7 @@ import React from 'react';
 import { EmojiIndicesByAlias, Emojis } from './emojis';
 
 import EmojiComponent, { EmojiProps } from './EmojiComponent';
-import { getCustomEmojisByName } from '~/utils/emoji_utils';
+import { getCustomEmojisByName } from '~/utils/emojiUtils';
 
 function Emoji(ownProps: EmojiProps) {
   const { emojiName } = ownProps;
