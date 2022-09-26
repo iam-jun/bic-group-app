@@ -78,6 +78,7 @@ import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 import updateCommunityJoinSetting from './updateCommunityJoinSetting';
 import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
+import removeMember from './removeMember';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -178,6 +179,9 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.ADD_MEMBERS, addMembers,
+  );
+  yield takeLatest(
+    groupsTypes.REMOVE_MEMBER, removeMember,
   );
   yield takeLatest(
     groupsTypes.LEAVE_GROUP, leaveGroup,
