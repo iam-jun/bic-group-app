@@ -79,8 +79,8 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   }));
 
   const show = (type:'gif'|'emoji') => {
-    modalizeRef.current?.open('default');
     setType(type);
+    modalizeRef.current?.open('default');
     Keyboard.dismiss();
   };
 
