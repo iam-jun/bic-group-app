@@ -66,11 +66,13 @@
     "text_see_more": "Xem thêm",
     "text_see_less": "Thu gọn",
     "text_send": "Gửi",
+    "text_chosen": "Đang Chọn",
     "error": {
       "file": {
         "over_file_size": "Dung lượng file tối đa 10MB"
       }
     },
+    "message_add_member_success_group": "Thêm thành viên thành công",
     "message_remove_member_success": "Đã xóa {n} khỏi nhóm",
     "label_discard_changes": "Huỷ thay đổi",
     "text_not_saved_changes_warning": "Những thay đổi của bạn chưa được lưu. Bạn có muốn huỷ bỏ những thay đổi này?",

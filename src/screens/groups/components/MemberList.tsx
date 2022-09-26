@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import NoSearchResult from '~/components/NoSearchResult';
+import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import Text from '~/beinComponents/Text';
 import MemberItem from './MemberItem';
 import { getMembersSection } from '../../../storeRedux/groups/selectors';
@@ -39,7 +39,7 @@ const MemberList = ({
   const memberSectionData = getMembersSection(type);
   const { loading, canLoadMore, sectionList } = memberSectionData;
 
-  const renderEmpty = () => (!loading ? <NoSearchResult /> : null);
+  const renderEmpty = () => (!loading ? <NoSearchResultsFound /> : null);
 
   const renderSectionHeader = ({ section: { title, userCount } }: any) => (
     <View style={styles.sectionHeader}>

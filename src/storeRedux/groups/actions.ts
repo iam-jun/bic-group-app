@@ -299,16 +299,31 @@ const groupsActions = {
     type: groupsTypes.GET_JOINABLE_USERS,
     payload,
   }),
-  setJoinableUsers: (payload: IUser[]) => ({
+  setJoinableUsers: (payload: {
+    loading?: boolean;
+    data?: IUser[];
+    canLoadMore?: boolean;
+    params?: any,
+  }) => ({
     type: groupsTypes.SET_JOINABLE_USERS,
     payload,
   }),
-  setExtraJoinableUsers: (payload: IUser[]) => ({
+  setExtraJoinableUsers: (payload: {
+    extra?: IUser[];
+    canLoadMore?: boolean;
+  }) => ({
     type: groupsTypes.SET_EXTRA_JOINABLE_USERS,
     payload,
   }),
   mergeExtraJoinableUsers: () => ({
     type: groupsTypes.MERGE_EXTRA_JOINABLE_USERS,
+  }),
+  setMergeExtraJoinableUsers: (payload: {
+    data: IUser[],
+    extra: IUser[],
+  }) => ({
+    type: groupsTypes.SET_MERGE_EXTRA_JOINABLE_USERS,
+    payload,
   }),
   resetJoinableUsers: () => ({
     type: groupsTypes.RESET_JOINABLE_USERS,

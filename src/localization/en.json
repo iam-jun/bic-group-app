@@ -61,7 +61,7 @@
     "text_save": "Save",
     "text_select": "Select",
     "text_all": "All",
-    "text_chosen": "Chosen",
+    "text_chosen": "Chosen People",
     "text_description": "Description",
     "text_search": "Search",
     "text_search_results": "Search Results",
@@ -92,10 +92,7 @@
     },
     "title_modal_confirm_add_member": "Add members",
     "button_add_member": "Add member",
-    "message_add_member_success": {
-      "1": "{n} member has been added",
-      "many": "{n} members have been added"
-    },
+    "message_add_member_success_group": "Added members to group successfully",
     "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
@@ -694,9 +691,7 @@
     "text_members_other": "members",
     "search_results": "Search results",
     "all_groups": "All groups",
-    "text_invite_members": "Invite members",
     "text_search_member": "Search member...",
-    "text_search": "Search people",
     "group_menu": {
       "label_admin_tools": "Admin Tools",
       "label_copy_group_link": "Copy Link",
