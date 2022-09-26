@@ -94,7 +94,7 @@ const DiscoverGroups = ({ route }: any) => {
   };
 
   const renderEmptyComponent = () => {
-    if (loading) return null;
+    if (loading) return <ActivityIndicator />;
     return (
       <EmptyScreen
         source={images.img_empty_search_post}
