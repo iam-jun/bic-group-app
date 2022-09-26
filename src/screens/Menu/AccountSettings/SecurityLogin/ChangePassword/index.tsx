@@ -153,6 +153,18 @@ const ChangePassword = () => {
           name="password"
           rules={{
             required: t('auth:text_err_password_blank'),
+          }}
+          label={t('auth:input_label_current_password')}
+          placeholder={t('auth:input_label_current_password')}
+          validateValue={validatePassword}
+          autoComplete="off"
+        />
+        <PasswordInputController
+          testID="change_password.new_password"
+          useFormData={useFormData}
+          name="newPassword"
+          rules={{
+            required: t('auth:text_err_password_blank'),
             maxLength: {
               value: 20,
               message: t('auth:text_err_password_characters'),
@@ -163,7 +175,7 @@ const ChangePassword = () => {
             },
             validate: () => {
               if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
-                const value = getValues('password');
+                const value = getValues('newPassword');
                 if (!/(?=.*?[A-Z])/.test(value)) {
                   return t('auth:text_err_password_required_upper_case');
                 }
@@ -178,18 +190,6 @@ const ChangePassword = () => {
                 }
               }
             },
-          }}
-          label={t('auth:input_label_current_password')}
-          placeholder={t('auth:input_label_current_password')}
-          validateValue={validatePassword}
-          autoComplete="off"
-        />
-        <PasswordInputController
-          testID="change_password.new_password"
-          useFormData={useFormData}
-          name="newPassword"
-          rules={{
-            required: t('auth:text_err_password_blank'),
           }}
           loading={changePasswordLoading}
           label={t('auth:input_label_new_password')}
