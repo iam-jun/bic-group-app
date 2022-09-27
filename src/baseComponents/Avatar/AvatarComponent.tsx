@@ -89,7 +89,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
       return null;
     }
 
-    const actionContainerSize = 16;
+    const actionContainerSize = 20;
     const actionIconSize = 12;
 
     return (
@@ -102,7 +102,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           width: actionContainerSize,
           height: actionContainerSize,
           borderRadius: actionContainerSize / 2,
-          backgroundColor: colors.white,
+          backgroundColor: colors.neutral2,
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -112,6 +112,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
             testID="avatar.action_icon.button"
             size={actionIconSize}
             icon={actionIcon}
+            tintColor={colors.neutral40}
             onPress={onPressAction}
           />
         )}

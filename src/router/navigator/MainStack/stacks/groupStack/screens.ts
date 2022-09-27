@@ -4,7 +4,7 @@ import GroupMembers from '~/screens/groups/GroupMembers';
 import GroupAdministration from '~/screens/groups/GroupDetail/groupSettings/GroupAdministration';
 import GeneralInformation from '~/screens/groups/GeneralInformation';
 import EditDescription from '~/screens/groups/GeneralInformation/EditDescription';
-import AddMembersToGroup from '~/screens/groups/AddMembersToGroup';
+import AddMembersToGroup from '~/screens/groups/GroupMembers/AddMembersToGroup';
 import NewFeature from '~/components/NewFeature';
 
 import Communities from '~/screens/communities/Communities';
@@ -50,7 +50,7 @@ const groupScreens = {
   'general-info': GeneralInformation,
   'edit-name': EditName,
   'edit-description': EditDescription,
-  'invite-members': AddMembersToGroup,
+  'add-members': AddMembersToGroup,
 
   // group structure
   'group-structure-settings': GroupStructureSettings,

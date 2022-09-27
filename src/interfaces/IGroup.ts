@@ -157,7 +157,6 @@ export interface IGroupGetMembers {
 
 export interface IGroupAddMembers {
   groupId: string;
-  userIds: string[];
 }
 
 export interface IGroupSetAdmin {
@@ -233,6 +232,8 @@ export interface IGetCommunityGroup {
   previewMembers?: boolean;
   key?: string;
   listBy?: 'tree' | 'flat';
+  limit?: number;
+  offset?: number;
 }
 
 export interface IPayloadGroupSchemeAssignments {

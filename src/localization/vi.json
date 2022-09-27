@@ -66,11 +66,13 @@
     "text_see_more": "Xem thêm",
     "text_see_less": "Thu gọn",
     "text_send": "Gửi",
+    "text_chosen": "Đang Chọn",
     "error": {
       "file": {
         "over_file_size": "Dung lượng file tối đa 10MB"
       }
     },
+    "message_add_member_success_group": "Thêm thành viên thành công",
     "message_remove_member_success": "Đã xóa {n} khỏi nhóm",
     "label_discard_changes": "Huỷ thay đổi",
     "text_not_saved_changes_warning": "Những thay đổi của bạn chưa được lưu. Bạn có muốn huỷ bỏ những thay đổi này?",
@@ -112,7 +114,7 @@
     "text_no_results_found": "Không tìm thấy kết quả",
     "text_search_results": "Kết quả tìm kiếm",
     "text_more": "+(number) khác",
-    "beincomm": "Beincomm",
+    "beincomm": "Beincom",
     "members": "Thành viên",
     "text_remove": "Loại bỏ",
     "btn_approve": "Phê duyệt",
@@ -147,6 +149,7 @@
     "input_label_password": "Mật khẩu",
     "input_label_password_placeholder": "Nhập mật khẩu",
     "input_label_code": "Mã xác thực 6 chữ số",
+    "input_label_current_password": "Mật khẩu hiện tại",
     "input_label_new_password": "Mật khẩu mới",
     "input_label_confirm_new_password": "Xác nhận mật khẩu",
     "btn_sign_in": "Đăng nhập",
@@ -195,7 +198,7 @@
     "text_landing_title": "Everybody needs a place to be in",
     "text_landing_title_group": "Welcome to {0}",
     "text_landing_desc_group": "You are now a part of {0} on Bein. Let’s start with creating your new account.",
-    "text_landing_logo_title": "Chào mừng đến với Beincomm",
+    "text_landing_logo_title": "Chào mừng đến với Beincom",
     "text_landing_logo_description": "Cùng khám phá nhiều cộng đồng hơn!",
     "text_or": "Hoặc",
     "text_forgot_password": "Quên mật khẩu",

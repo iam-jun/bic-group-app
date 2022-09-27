@@ -24,7 +24,7 @@ const groupStack = {
   generalInfo: 'general-info',
   editName: 'edit-name',
   editDescription: 'edit-description',
-  inviteMembers: 'invite-members',
+  addMembers: 'add-members',
 
   // group structure
   groupStructureSettings: 'group-structure-settings',
