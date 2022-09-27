@@ -60,6 +60,7 @@
     "text_done": "Xong",
     "text_uploading": "Đang tải...",
     "text_error_message": "Có gì đó sai sai",
+    "text_success_message": "Thành công",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
@@ -666,11 +667,9 @@
       "label_go_back_home": "Về trang chủ"
     },
     "member_menu": {
-      "label_view_profile": "View profile",
-      "label_direct_message": "Direct message",
       "label_set_as_admin": "Bổ nhiệm làm quản trị viên",
       "label_revoke_admin_role": "Thu hồi vai trò quản trị viên",
-      "label_remove_from_group": "Xóa khỏi nhóm"
+      "label_remove_member": "Xóa thành viên"
     },
     "private_group_welcome_message": {
       "title": "Đây là nhóm kín.",
@@ -689,10 +688,9 @@
       "success_message": "Đã lưu thay đổi"
     },
     "modal_confirm_remove_member": {
-      "title": "Xóa khỏi nhóm",
-      "alert_inner_groups": "Thành viên này cũng sẽ bị xóa khỏi {0} nhóm khác:",
-      "final_alert": "Bạn có chắc muốn xóa người này khỏi nhóm?",
-      "button_remove": "Xác nhận"
+      "title": "Xóa thành viên",
+      "content": "Bạn có muốn xóa thành viên này?",
+      "button_remove": "Xóa"
     },
     "error": {
       "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi thoát",
@@ -921,6 +919,11 @@
       "description": "Bạn có chắc là muốn thoát khỏi ",
       "button_leave": "Thoát",
       "success_message": "Bạn đã thoát khỏi cộng đồng này"
+    },
+    "modal_confirm_remove_member": {
+      "title": "Xóa thành viên",
+      "content": "Bạn có muốn xóa thành viên này?",
+      "button_remove": "Xóa"
     }
   },
   "upload": {

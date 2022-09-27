@@ -43,6 +43,8 @@ const leaveCommunity = (_set, _get) => async (
   } catch (err) {
     console.error('leaveCommunity error:', err);
 
+    // TODO: use showError helper once merged with BEIN-8192
+
     if (err.code === API_ERROR_CODE.GROUP.REVOKE_ACCOUNT_OWNER) {
       return Store.store.dispatch(modalActions.showHideToastMessage({
         content: 'groups:error:owner_leave_community',
@@ -56,8 +58,6 @@ const leaveCommunity = (_set, _get) => async (
         props: { type: 'error' },
       }));
     }
-
-    // TODO: Add dispatch error toast for other cases
   }
 };
 
