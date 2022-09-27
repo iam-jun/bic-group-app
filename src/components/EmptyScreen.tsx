@@ -5,6 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import { IconType } from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 interface EmptyScreenProps {
   source?: IconType;
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    marginVertical: 2,
+    marginVertical: spacing.margin.small,
   },
 });
 

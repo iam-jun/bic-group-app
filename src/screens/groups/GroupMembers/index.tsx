@@ -95,8 +95,7 @@ const _GroupMembers = ({ route }: any) => {
   };
 
   const onPressAdd = () => {
-    dispatch(groupsActions.clearSelectedUsers());
-    rootNavigation.navigate(groupStack.inviteMembers, { groupId });
+    rootNavigation.navigate(groupStack.addMembers, { groupId });
   };
 
   const onPressSearch = () => {
