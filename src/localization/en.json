@@ -61,7 +61,7 @@
     "text_save": "Save",
     "text_select": "Select",
     "text_all": "All",
-    "text_chosen": "Chosen",
+    "text_chosen": "Chosen People",
     "text_description": "Description",
     "text_search": "Search",
     "text_search_results": "Search Results",
@@ -92,10 +92,7 @@
     },
     "title_modal_confirm_add_member": "Add members",
     "button_add_member": "Add member",
-    "message_add_member_success": {
-      "1": "{n} member has been added",
-      "many": "{n} members have been added"
-    },
+    "message_add_member_success_group": "Added members to group successfully",
     "message_remove_member_success": "{n} has been removed from this group",
     "title_mention_all": "All members in this group",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
@@ -153,7 +150,7 @@
     "text_type_search_keyword": "Type search keyword to see the search results",
     "text_no_results_found": "No results found",
     "text_more": "+(number) more",
-    "beincomm": "Beincomm",
+    "beincomm": "Beincom",
     "members": "Members",
     "text_remove": "Remove",
     "all": "All",
@@ -233,7 +230,7 @@
     "text_landing_title": "Everybody needs a place to be in",
     "text_landing_title_group": "Welcome to {0}",
     "text_landing_desc_group": "You are now a part of {0} on Bein. Let’s start with creating your new account.",
-    "text_landing_logo_title": "Welcome to Beincomm",
+    "text_landing_logo_title": "Welcome to Beincom",
     "text_landing_logo_description": "Let’s explore more communities!",
     "text_or": "Or",
     "text_forgot_password": "Forgot password",
@@ -619,8 +616,7 @@
       "text_delete_comment": "When you delete this comment, all of its reply will also be deleted. Continue?",
       "text_delete_comment_error": "Delete comment failed!",
       "text_delete_comment_success": "Comment deleted",
-      "text_edited": "Edited",
-      "search_giphy": "Search GIPHY"
+      "text_edited": "Edited"
     },
     "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
@@ -694,9 +690,7 @@
     "text_members_other": "members",
     "search_results": "Search results",
     "all_groups": "All groups",
-    "text_invite_members": "Invite members",
     "text_search_member": "Search member...",
-    "text_search": "Search people",
     "group_menu": {
       "label_admin_tools": "Admin Tools",
       "label_copy_group_link": "Copy Link",
@@ -899,8 +893,9 @@
     "text_join_group_button": "Join",
     "text_join_community_description": "Join this community to view or participate on discussions",
     "text_join_group_description": "Join this group to view or participate on discussions",
-    "text_other_member_one": "{{count}} other are members",
-    "text_other_member_other": "{{count}} others are members",
+    "text_other_member_one": "{{count}} other",
+    "text_other_member_other": "{{count}} others",
+    "text_are_members": "are members",
     "text_is_member": "is a member",
     "title_browse_groups": "Browse Groups",
     "text_must_be_member_first": "You need to be a member of the community first",
@@ -1040,5 +1035,22 @@
   "discard_alert": {
     "title": "Discard Changes?",
     "content": "If you discard now, you’ll lose any changes you’ve made."
+  },
+  "sticker": {
+    "search_giphy": "Search GIPHY",
+    "search_emoji": "Search Emoji"
+  },
+  "emoji_categories": {
+    "custom": "Custom",
+    "recently": "Recently",
+    "smileys-emotion": "Smileys & Emotion",
+    "people-body": "People & Body",
+    "animals-nature": "Animals & Nature",
+    "food-drink": "Food & Drink",
+    "travel-places": "Travel & Places",
+    "activities": "Activities",
+    "objects": "Objects",
+    "symbols": "Symbols",
+    "flags": "Flags"
   }
 }

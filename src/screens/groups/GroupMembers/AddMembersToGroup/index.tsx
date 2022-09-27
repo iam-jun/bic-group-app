@@ -1,42 +1,49 @@
-import i18next from 'i18next';
 import { debounce } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { StyleSheet } from 'react-native';
 import { IUser } from '~/interfaces/IAuth';
-import groupsActions from '../../../storeRedux/groups/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import appConfig from '~/configs/appConfig';
 
-import MembersSelection from '~/components/MembersSelection';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
+import { useBaseHook } from '~/hooks';
+import { SearchInput } from '~/baseComponents/Input';
+import SearchResults from './components/SearchResults';
+import ChosenPeople from './components/ChosenPeople';
 
 const AddMembersToGroup = (props: any) => {
   const { params } = props.route;
   const { groupId } = params || {};
 
+  const { t } = useBaseHook();
+  const styles = createStyles();
+
   const dispatch = useDispatch();
   const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
   const users = useKeySelector(groupsKeySelector.users);
+  const { loading, data } = users;
 
   const [searchText, setSearchText] = useState<string>('');
 
   useEffect(
-    () => {
+    () => () => {
       dispatch(groupsActions.resetJoinableUsers());
-      dispatch(groupsActions.getJoinableUsers({ groupId }));
-    }, [],
+      dispatch(groupsActions.clearSelectedUsers());
+    },
+    [],
   );
 
   const loadMoreData = () => {
     dispatch(groupsActions.mergeExtraJoinableUsers());
   };
 
-  const _onSelectUser = (user: IUser) => {
+  const onSelectUser = (user: IUser) => {
     dispatch(groupsActions.selectJoinableUsers(user));
   };
 
@@ -47,9 +54,7 @@ const AddMembersToGroup = (props: any) => {
   };
 
   const searchHandler = useCallback(
-    debounce(
-      searchUsers, appConfig.searchTriggerTime,
-    ),
+    debounce(searchUsers, appConfig.searchTriggerTime),
     [],
   );
 
@@ -57,41 +62,48 @@ const AddMembersToGroup = (props: any) => {
     searchHandler(text);
   };
 
-  const onInvitePress = () => {
-    doAddUsers();
-  };
-
-  const doAddUsers = () => {
-    const userIds = selectedUsers.map((user: IUser) => user.id);
-    dispatch(groupsActions.addMembers({ groupId, userIds }));
+  const onPressAdd = () => {
+    dispatch(groupsActions.addMembers({ groupId }));
   };
 
   return (
     <ScreenWrapper testID="AddMembersToGroupScreen" isFullView>
       <Header
-        title={i18next.t('groups:text_invite_members')}
-        buttonText={i18next.t('common:text_invite')}
+        title={t('groups:title_add_members')}
+        buttonText={t('common:text_add')}
         buttonProps={{
           disabled: selectedUsers.length === 0,
         }}
-        onPressButton={onInvitePress}
+        onPressButton={onPressAdd}
       />
-      <ViewSpacing height={spacing.margin.base} />
-      <MembersSelection
-        selectable
-        selectedUsers={selectedUsers}
-        title={!searchText ? 'common:text_all' : 'common:text_search_results'}
-        loading={users.loading}
-        data={users.data}
-        searchInputProps={{
-          onChangeText: onQueryChanged,
-          placeholder: i18next.t('groups:text_search'),
-        }}
-        onLoadMore={loadMoreData}
-        onSelectUser={_onSelectUser}
+
+      <SearchInput
+        autoFocus
+        autoComplete="off"
+        style={styles.searchInput}
+        onChangeText={onQueryChanged}
+        placeholder={t('groups:text_search_member')}
       />
+
+      <ChosenPeople selectedUsers={selectedUsers} onSelectUser={onSelectUser} />
+
+      {!!searchText.trim() && (
+        <SearchResults
+          loading={loading}
+          data={data}
+          selectedUsers={selectedUsers}
+          onLoadMore={loadMoreData}
+          onSelectUser={onSelectUser}
+        />
+      )}
     </ScreenWrapper>
   );
 };
+
+const createStyles = () => StyleSheet.create({
+  searchInput: {
+    margin: spacing.margin.large,
+  },
+});
 
 export default AddMembersToGroup;

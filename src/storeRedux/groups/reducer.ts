@@ -121,11 +121,9 @@ export const groupInitState = {
     loading: false,
     data: [],
     extra: [],
-    offset: 0,
     canLoadMore: true,
   },
-  // eslint-disable-next-line no-array-constructor
-  selectedUsers: new Array<IUser>(),
+  selectedUsers: [] as IUser[],
 
   loadingAvatar: false,
   loadingCover: false,
@@ -525,24 +523,12 @@ function groupsReducer(
         },
       };
 
-    case groupsTypes.GET_JOINABLE_USERS:
-      return {
-        ...state,
-        users: {
-          ...state.users,
-          loading: state.users.data.length === 0,
-          params: payload.params,
-        },
-      };
     case groupsTypes.SET_JOINABLE_USERS:
       return {
         ...state,
         users: {
           ...state.users,
-          loading: false,
-          data: payload,
-          offset: state.users.offset + payload.length,
-          canLoadMore: payload.length === appConfig.recordsPerPage,
+          ...payload,
         },
       };
     case groupsTypes.SET_EXTRA_JOINABLE_USERS:
@@ -550,27 +536,24 @@ function groupsReducer(
         ...state,
         users: {
           ...state.users,
-          extra: payload,
-          offset: state.users.offset + payload.length,
-          canLoadMore: payload.length === appConfig.recordsPerPage,
+          ...payload,
         },
       };
-    case groupsTypes.MERGE_EXTRA_JOINABLE_USERS:
+    case groupsTypes.SET_MERGE_EXTRA_JOINABLE_USERS:
       return {
         ...state,
         users: {
           ...state.users,
-          data: [...state.users.data, ...state.users.extra],
-          extra: [],
+          ...payload,
         },
       };
     case groupsTypes.SELECT_JOINABLE_USERS: {
       const included = selectedUsers.find((item: IUser) => payload.id === item.id);
       return {
         ...state,
-        selectedUsers: !included
-          ? [...selectedUsers, payload]
-          : selectedUsers.filter((user) => user.id !== payload.id),
+        selectedUsers: included
+          ? selectedUsers.filter((user) => user.id !== payload.id)
+          : [...selectedUsers, payload],
       };
     }
     case groupsTypes.CLEAR_SELECTED_USERS:

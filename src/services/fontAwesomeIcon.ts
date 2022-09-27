@@ -163,6 +163,13 @@ import { faCommentDots as faCommentDotsSolid } from '@fortawesome/pro-solid-svg-
 import { faUpRightAndDownLeftFromCenter as faUpRightAndDownLeftFromCenterSolid } from '@fortawesome/pro-solid-svg-icons/faUpRightAndDownLeftFromCenter';
 import { faPeopleGroup } from '@fortawesome/pro-solid-svg-icons/faPeopleGroup';
 import { faPeoplePantsSimple } from '@fortawesome/pro-solid-svg-icons/faPeoplePantsSimple';
+import { faPawSimple } from '@fortawesome/pro-regular-svg-icons/faPawSimple';
+import { faBurgerSoda } from '@fortawesome/pro-regular-svg-icons/faBurgerSoda';
+import { faPlane } from '@fortawesome/pro-regular-svg-icons/faPlane';
+import { faBasketball } from '@fortawesome/pro-regular-svg-icons/faBasketball';
+import { faLightbulb } from '@fortawesome/pro-regular-svg-icons/faLightbulb';
+import { faSymbols } from '@fortawesome/pro-regular-svg-icons/faSymbols';
+import { faFlag } from '@fortawesome/pro-regular-svg-icons/faFlag';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -346,6 +353,13 @@ export const initFontAwesomeIcon = () => {
     faUpRightAndDownLeftFromCenterSolid,
     faPeopleGroup,
     faPeoplePantsSimple,
+    faPawSimple,
+    faBurgerSoda,
+    faPlane,
+    faBasketball,
+    faLightbulb,
+    faSymbols,
+    faFlag,
   );
 };
 
@@ -514,6 +528,13 @@ export const fontAwesomeIcons = {
   UpRightAndDownLeftFromCenter: 'fa-solid fa-up-right-and-down-left-from-center',
   PeopleGroup: 'fa-solid fa-people-group',
   PeoplePantsSimple: 'fa-solid fa-people-pants-simple',
+  PawSimple: 'fa-regular fa-paw-simple',
+  BurgerSoda: 'fa-regular fa-burger-soda',
+  Plane: 'fa-regular fa-plane',
+  Basketball: 'fa-regular fa-basketball',
+  Lightbulb: 'fa-regular fa-lightbulb',
+  Symbols: 'fa-regular fa-symbols',
+  Flag: 'fa-regular fa-flag',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

@@ -123,6 +123,19 @@ const icons = {
   iconTabNotificationActive: fontAwesomeIcons.BellSolid,
   iconTabMenuActive: fontAwesomeIcons.BarsSolid,
 
+  // EMOJI CATEGORIES
+  iconCatEmoticon: fontAwesomeIcons.FaceSmile,
+  iconCatRecent: fontAwesomeIcons.Clock,
+  iconCatPeople: fontAwesomeIcons.User,
+  iconCatAnimal: fontAwesomeIcons.PawSimple,
+  iconCatFood: fontAwesomeIcons.BurgerSoda,
+  iconCatTravel: fontAwesomeIcons.Plane,
+  iconCatActivity: fontAwesomeIcons.Basketball,
+  iconCatObject: fontAwesomeIcons.Lightbulb,
+  iconCatSymbol: fontAwesomeIcons.Symbols,
+  iconCatFlag: fontAwesomeIcons.Flag,
+  iconCatCustom: fontAwesomeIcons.Gear,
+
   // ^ ADD RENAMED ICON HERE
   // IF YOU WANT TO RENAME ICON, ADD TO fontAwesomeIcons FIRST
   ...fontAwesomeIcons,

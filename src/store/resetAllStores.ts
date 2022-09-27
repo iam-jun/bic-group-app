@@ -1,11 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
+import useCommunityJoinedGroupTreeStore from '~/screens/groups/components/CommunityJoinedGroupTree/store';
 import useHomeStore from '~/screens/Home/store';
 import useJoinedCommunitiesStore from '~/screens/Menu/store';
 import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
-import useDraftPostStore from '../screens/post/DraftPost/store';
+import useDraftPostStore from '~/screens/post/DraftPost/store';
 import useLeaveCommunity from '~/screens/communities/CommunityDetail/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
@@ -17,6 +18,7 @@ const stores = [
   useDraftPostStore,
   useChatStore,
   useLeaveCommunity,
+  useCommunityJoinedGroupTreeStore,
   useReactionDetailStore,
   useDiscoverGroupsStore,
 ];

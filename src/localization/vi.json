@@ -66,11 +66,13 @@
     "text_see_more": "Xem thêm",
     "text_see_less": "Thu gọn",
     "text_send": "Gửi",
+    "text_chosen": "Đang Chọn",
     "error": {
       "file": {
         "over_file_size": "Dung lượng file tối đa 10MB"
       }
     },
+    "message_add_member_success_group": "Thêm thành viên thành công",
     "message_remove_member_success": "Đã xóa {n} khỏi nhóm",
     "label_discard_changes": "Huỷ thay đổi",
     "text_not_saved_changes_warning": "Những thay đổi của bạn chưa được lưu. Bạn có muốn huỷ bỏ những thay đổi này?",
@@ -112,7 +114,7 @@
     "text_no_results_found": "Không tìm thấy kết quả",
     "text_search_results": "Kết quả tìm kiếm",
     "text_more": "+(number) khác",
-    "beincomm": "Beincomm",
+    "beincomm": "Beincom",
     "members": "Thành viên",
     "text_remove": "Loại bỏ",
     "btn_approve": "Phê duyệt",
@@ -147,6 +149,7 @@
     "input_label_password": "Mật khẩu",
     "input_label_password_placeholder": "Nhập mật khẩu",
     "input_label_code": "Mã xác thực 6 chữ số",
+    "input_label_current_password": "Mật khẩu hiện tại",
     "input_label_new_password": "Mật khẩu mới",
     "input_label_confirm_new_password": "Xác nhận mật khẩu",
     "btn_sign_in": "Đăng nhập",
@@ -195,7 +198,7 @@
     "text_landing_title": "Everybody needs a place to be in",
     "text_landing_title_group": "Welcome to {0}",
     "text_landing_desc_group": "You are now a part of {0} on Bein. Let’s start with creating your new account.",
-    "text_landing_logo_title": "Chào mừng đến với Beincomm",
+    "text_landing_logo_title": "Chào mừng đến với Beincom",
     "text_landing_logo_description": "Cùng khám phá nhiều cộng đồng hơn!",
     "text_or": "Hoặc",
     "text_forgot_password": "Quên mật khẩu",
@@ -247,7 +250,7 @@
     "title_speaking_languages": "Ngôn ngữ",
     "title_relationship_status": "Tình trạng hôn nhân",
     "title_currency": "Xu",
-    "title_about": "Tiểu sử",
+    "title_about": "Giới thiệu",
     "title_name": "Họ tên",
     "title_gender": "Giới tính",
     "title_birthday": "Sinh nhật",
@@ -574,8 +577,7 @@
       "text_delete_comment": "Nếu xoá, toàn bộ trả lời của bình luận này cũng sẽ bị xoá. Bạn có muốn tiếp tục?",
       "text_delete_comment_error": "Xoá bình luận thất bại!",
       "text_delete_comment_success": "Bình luận đã được xoá",
-      "text_edited": "Đã sửa",
-      "search_giphy": "Tìm kiếm GIPHY"
+      "text_edited": "Đã sửa"
     },
     "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
@@ -824,8 +826,9 @@
     "text_join_group_button": "Tham gia ngay",
     "text_join_community_description": "Tham gia ngay để xem và thảo luận",
     "text_join_group_description": "Tham gia ngay để xem và thảo luận",
-    "text_other_member_one": "{{count}} người khác là thành viên",
-    "text_other_member_other": "{{count}} người khác là thành viên",
+    "text_other_member_one": "{{count}} người khác",
+    "text_other_member_other": "{{count}} người khác",
+    "text_are_members": "là thành viên",
     "text_is_member": "là thành viên",
     "title_browse_groups": "Khám phá các nhóm",
     "text_must_be_member_first": "Bạn cần là thành viên cộng đồng trước",
@@ -965,5 +968,22 @@
   "discard_alert": {
     "title": "Huỷ bỏ những thay đổi?",
     "content": "Nếu bạn huỷ bỏ ngay bây giờ, bạn sẽ mất những thay đổi nào mà bạn đã thực hiện."
+  },
+  "sticker": {
+    "search_giphy": "Tìm kiếm GIPHY",
+    "search_emoji": "Tìm kiếm biểu cảm"
+  },
+  "emoji_categories": {
+    "custom": "Tùy chỉnh",
+    "recently": "Gần đây",
+    "smileys-emotion": "Biểu cảm và khuôn mặt",
+    "people-body": "Mọi người",
+    "animals-nature": "Động vật và thiên nhiên",
+    "food-drink": "Thức ăn và đồ uống",
+    "travel-places": "Du lịch và địa điểm",
+    "activities": "Hoạt động",
+    "objects": "Vật thể",
+    "symbols": "Ký hiệu",
+    "flags": "Cờ"
   }
 }

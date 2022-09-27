@@ -1,70 +1,31 @@
 import React from 'react';
 
-import { createTestStore, renderWithRedux } from '~/test/testUtils';
+import { renderWithRedux } from '~/test/testUtils';
 import PreviewMembers from './PreviewMembers';
-import initialState from '~/storeRedux/initialState';
 import {
-  communityDetailData,
   previewMemberData,
-  memberDetail,
   previewMemberDetail,
 } from '~/test/mock_data/communities';
-import { ICommunity } from '~/interfaces/ICommunity';
 
 describe('PreviewMembers component', () => {
-  it('should render avatar list correctly', () => {
-    const state = { ...initialState };
-    state.groups.communityDetail = {
-      ...communityDetailData,
-      members: previewMemberData,
-    } as ICommunity;
+  const members = previewMemberData;
 
-    const store = createTestStore(state);
-    const wrapper = renderWithRedux(<PreviewMembers />, store);
-    const listView = wrapper.getByTestId('list_view.flat_list');
+  it('should render avatar list correctly', () => {
+    const wrapper = renderWithRedux(<PreviewMembers userCount={10} members={members} />);
+    const listView = wrapper.getByTestId('flatlist');
     expect(listView.props.data.length).toBe(previewMemberData.length);
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render member description text correctly when there is only 1 member', () => {
-    const state = { ...initialState };
-    state.groups.communityDetail = {
-      ...communityDetailData,
-      members: [previewMemberDetail],
-    } as ICommunity;
-    const store = createTestStore(state);
-    const wrapper = renderWithRedux(<PreviewMembers />, store);
-    const memberText = wrapper.getByTestId('preview_members.description');
-    expect(memberText.props.children).toBe(
-      `${memberDetail.fullname} is a member`,
-    );
+    const wrapper = renderWithRedux(<PreviewMembers userCount={1} members={[previewMemberDetail]} />);
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render member description text correctly when there are only 2 members', () => {
-    const state = { ...initialState };
-    state.groups.communityDetail = {
-      ...communityDetailData,
-      userCount: 2,
-      members: [previewMemberDetail, previewMemberDetail],
-    } as ICommunity;
-    const store = createTestStore(state);
-    const wrapper = renderWithRedux(<PreviewMembers />, store);
-    const memberText = wrapper.getByTestId('preview_members.description');
-    expect(memberText.props.children).toBe(
-      `${memberDetail.fullname} and 1 other are members`,
+    const wrapper = renderWithRedux(
+      <PreviewMembers userCount={2} members={[previewMemberDetail, previewMemberDetail]} />,
     );
-  });
-
-  it('should render member description text correctly when there are >2 members', () => {
-    const state = { ...initialState };
-    state.groups.communityDetail = {
-      ...communityDetailData,
-      members: [previewMemberDetail, previewMemberDetail],
-    } as ICommunity;
-    const store = createTestStore(state);
-    const wrapper = renderWithRedux(<PreviewMembers />, store);
-    const memberText = wrapper.getByTestId('preview_members.description');
-    expect(memberText.props.children).toBe(
-      `${memberDetail.fullname} and 4 others are members`,
-    );
+    expect(wrapper).toMatchSnapshot();
   });
 });

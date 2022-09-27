@@ -338,11 +338,6 @@ function postReducer(
         allCommentsByParentIds: allCommentsByPost,
       };
     }
-    case postTypes.SET_SHOW_REACTION_BOTTOM_SHEET:
-      return {
-        ...state,
-        reactionBottomSheet: payload || postInitState.reactionBottomSheet,
-      };
     case postTypes.SET_USERS_SEEN_POST:
       return {
         ...state,
