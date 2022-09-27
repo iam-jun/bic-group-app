@@ -61,7 +61,7 @@ const ManagedCommunities = ({
     if (loading) return null;
     return (
       <EmptyScreen
-        source="addUsers"
+        icon="addUsers"
         title="communities:empty_communities:title"
         description="communities:empty_communities:manage_description"
       />

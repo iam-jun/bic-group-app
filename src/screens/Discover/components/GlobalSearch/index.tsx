@@ -11,6 +11,8 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { isGroup } from '~/screens/groups/helper';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
+import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
+import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 
 type GlobalSearchProps = SearchBaseViewProps
 
@@ -19,6 +21,8 @@ const GlobalSearch = ({
 }: GlobalSearchProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
+  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
+  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
 
   const [searchText, setSearchText] = useState(initSearch || '');
 
@@ -62,7 +66,7 @@ const GlobalSearch = ({
 
   const onJoin = (item: any) => {
     if (isGroup(item.level)) {
-      dispatch(actions.joinNewGroup({ groupId: item.id, groupName: item.name }));
+      joinNewGroup(item.id);
       return;
     }
 
@@ -73,7 +77,7 @@ const GlobalSearch = ({
 
   const onCancel = (item: any) => {
     if (isGroup(item.level)) {
-      dispatch(actions.cancelJoinGroup({ groupId: item.id, groupName: item.name }));
+      cancelJoinGroup(item.id);
       return;
     }
 

@@ -127,12 +127,6 @@ export const groupInitState = {
 
   loadingAvatar: false,
   loadingCover: false,
-  discoverGroups: {
-    loading: true,
-    ids: [],
-    items: {},
-    canLoadMore: true,
-  },
 
   groupMemberRequests: {
     total: 0,
@@ -239,7 +233,6 @@ function groupsReducer(
   const {
     selectedUsers,
     groupMemberRequests,
-    discoverGroups,
     communityMembers,
     communitySearchMembers,
     managedCommunities,
@@ -738,42 +731,6 @@ function groupsReducer(
         },
       };
     }
-
-    case groupsTypes.SET_DISCOVER_GROUPS:
-      return {
-        ...state,
-        discoverGroups: {
-          ...discoverGroups,
-          ...payload,
-        },
-      };
-    case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
-      return {
-        ...state,
-        discoverGroups: {
-          ...discoverGroups,
-          items: {
-            ...discoverGroups.items,
-            [payload.id]: {
-              ...discoverGroups.items[payload.id],
-              ...payload.data,
-            },
-          },
-        },
-        globalSearch: globalSearch?.items && globalSearch.items?.[payload.id]
-          ? {
-            ...globalSearch,
-            items: {
-              ...globalSearch.items,
-              [payload.id]: {
-                ...globalSearch.items[payload.id],
-                ...payload.data,
-              },
-            },
-          }
-          : globalSearch,
-      };
-
     case groupsTypes.SET_MANAGED_COMMUNITIES:
       return {
         ...state,

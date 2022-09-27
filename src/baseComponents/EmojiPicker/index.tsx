@@ -17,7 +17,7 @@ import Emoji from '../Emoji';
 
 import EmojiPickerRow from './components/EmojiPickRow';
 import Text from '~/beinComponents/Text';
-import NoSearchResult from '~/components/NoSearchResult';
+import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import useEmojiPickerStore from './store';
 import IEmojiPickerState from './store/Interface';
 import { measureEmojiSections } from './store/utils';
@@ -212,7 +212,7 @@ const EmojiPicker = ({
     </View>
   );
 
-  const renderEmptyList = () => <NoSearchResult />;
+  const renderEmptyList = () => <NoSearchResultsFound />;
 
   return (
     <View style={styles.container}>

@@ -53,7 +53,7 @@
     "text_set_time": "Đặt Giờ",
     "text_set_date": "Đặt Ngày",
     "text_not_set": "Chưa đặt",
-    "text_ok": "OK",
+    "text_ok": "Ok",
     "text_error": "Lỗi",
     "text_loading": "Đang tải ...",
     "text_retry": "Thử lại",
@@ -919,6 +919,14 @@
       "description": "Bạn có chắc là muốn thoát khỏi ",
       "button_leave": "Thoát",
       "success_message": "Bạn đã thoát khỏi cộng đồng này"
+    },
+    "browse_groups":{
+      "no_groups": "Không có nhóm nào trong cộng đồng này.",
+      "joined_all_groups": "Không có thêm nhóm nào để khám phá. Bạn đã tham gia hoàn toàn vào tất cả các nhóm trong cộng đồng này.",
+      "guest_view_alert": {
+        "title": "Chú ý",
+        "content": "Trước tiên, bạn cần phải là một thành viên của cộng đồng"
+      }
     },
     "modal_confirm_remove_member": {
       "title": "Xóa thành viên",

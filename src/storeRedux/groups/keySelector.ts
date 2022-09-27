@@ -33,7 +33,6 @@ const groupsKeySelector = {
   isGettingInfoDetail: 'groups.isGettingInfoDetail',
   communityMembers: 'groups.communityMembers',
   communitySearchMembers: 'groups.communitySearchMembers',
-  discoverGroups: 'groups.discoverGroups',
   communityMemberRequests: 'groups.communityMemberRequests',
   permission: {
     categories: 'groups.permissionScheme.categories',
