@@ -17,13 +17,11 @@ import { mapData } from '../../../screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
-import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
 import getGroupPosts from './getGroupPosts';
 import mergeExtraGroupPosts from './mergeExtraGroupPosts';
-import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -35,7 +33,6 @@ import getCommunityDetail from './getCommunityDetail';
 import getDiscoverCommunities from '~/storeRedux/groups/saga/getDiscoverCommunities';
 import getYourGroupsSearch from '~/storeRedux/groups/saga/getYourGroupsSearch';
 import getCommunityMembers from './getCommunityMembers';
-import getDiscoverGroups from './getDiscoverGroups';
 import getManagedCommunities from './getManagedCommunities';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupMembers from './getGroupMembers';
@@ -43,7 +40,6 @@ import getGroupSearchMembers from './getGroupSearchMembers';
 import joinCommunity from './joinCommunity';
 import cancelJoinCommunity from './cancelJoinCommunity';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
-import groupJoinStatus from '~/constants/groupJoinStatus';
 import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
 import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
 import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
@@ -180,15 +176,6 @@ export default function* groupsSaga() {
     groupsTypes.ADD_MEMBERS, addMembers,
   );
   yield takeLatest(
-    groupsTypes.JOIN_NEW_GROUP, joinNewGroup,
-  );
-  yield takeLatest(
-    groupsTypes.CANCEL_JOIN_GROUP, cancelJoinGroup,
-  );
-  yield takeLatest(
-    groupsTypes.REMOVE_MEMBER, removeMember,
-  );
-  yield takeLatest(
     groupsTypes.LEAVE_GROUP, leaveGroup,
   );
   yield takeLatest(
@@ -249,9 +236,6 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,
     getCommunitySearchMembers,
-  );
-  yield takeLatest(
-    groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups,
   );
   yield takeLatest(
     groupsTypes.JOIN_COMMUNITY, joinCommunity,
@@ -439,54 +423,6 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
   } catch (error) {
     console.error('addMembers error:', error);
     yield call(showError, error);
-  }
-}
-
-function* cancelJoinGroup({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: string; groupName: string};
-}) {
-  const { groupId, groupName } = payload;
-  try {
-    yield call(groupApi.cancelJoinGroup, groupId);
-
-    // update button Join/Cancel/View status on Discover groups
-    yield put(
-      groupsActions.editDiscoverGroupItem({
-        id: groupId,
-        data: { joinStatus: groupJoinStatus.visitor },
-      }),
-    );
-
-    yield put(groupsActions.getGroupDetail({ groupId }));
-
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_cancel_join_group')} ${groupName}`,
-    };
-
-    yield put(modalActions.showHideToastMessage(toastMessage));
-  } catch (err: any) {
-    console.error('cancelJoinGroup catch', err);
-
-    if (
-      err?.meta?.message
-      === 'You have been approved to be a member of this group'
-    ) {
-      const toastMessage: IToastMessage = {
-        content: `${i18next.t('groups:text_approved_member_group')}`,
-      };
-      yield put(modalActions.showHideToastMessage(toastMessage));
-      yield put(groupsActions.getGroupDetail({
-        groupId,
-        loadingPage: true,
-      }));
-
-      return;
-    }
-
-    yield call(showError, err);
   }
 }
 

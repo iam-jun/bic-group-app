@@ -1,9 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import NodeEmoji from 'node-emoji';
 import {
-  ActivityIndicator,
-  Image,
   StyleProp,
   StyleSheet,
   View,
@@ -12,10 +9,11 @@ import {
 
 import Text from '~/beinComponents/Text';
 import commonActions, { IAction } from '~/constants/commonActions';
-import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import spacing, { margin, padding } from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
 import Button from '../Button';
+import Emoji from '../Emoji';
+import { sizes } from '~/theme/dimension';
 
 interface ReactionProps {
   testId?: string;
@@ -55,28 +53,6 @@ const Reaction: React.FC<ReactionProps> = ({
     }, [selected],
   );
 
-  let emoji = null;
-  const nodeEmoji = NodeEmoji.find(icon || '')?.emoji || '';
-
-  if (nodeEmoji) {
-    emoji = (
-      <Text.NumberS style={styles.nodeEmoji} testID={`reaction.${icon}`}>
-        {nodeEmoji}
-      </Text.NumberS>
-    );
-  }
-
-  if (!emoji) {
-    const imageEmoji = STATIC_EMOJI[icon] || ANIMATED_EMOJI[icon];
-    if (imageEmoji) {
-      emoji = (
-        <Image style={styles.emoji} resizeMode="contain" source={imageEmoji} />
-      );
-    }
-  }
-
-  if (!emoji) return null;
-
   const _onChangeValue = () => {
     const newValue = !isSelected;
 
@@ -101,31 +77,27 @@ const Reaction: React.FC<ReactionProps> = ({
     <Button
       testID={testId || 'reaction'}
       disabled={loading || disabled}
-      style={[styles.container, style]}
+      style={[styles.container, style, loading && { opacity: 0.5 }]}
       onPress={_onChangeValue}
       onLongPress={_onLongPress}
     >
-      {loading ? (
-        <ActivityIndicator
-          testID="reaction.indicator"
-          color={colors.gray20}
-          style={styles.indicator}
+      <View
+        testID="reaction.children"
+        style={styles.emojiContainer}
+      >
+        <Emoji
+          emojiName={icon}
+          size={sizes.numberS}
         />
-      ) : (
-        <View
-          testID="reaction.children"
-          style={styles.emojiContainer}
+        <Text.NumberS
+          testID="reaction.children.text"
+          style={styles.text}
+          color={isSelected ? colors.purple50 : colors.neutral40}
         >
-          {emoji}
-          <Text.NumberS
-            testID="reaction.children.text"
-            style={styles.text}
-            color={isSelected ? colors.purple50 : colors.neutral40}
-          >
-            {` ${newValue}`}
-          </Text.NumberS>
-        </View>
-      )}
+          {` ${newValue}`}
+        </Text.NumberS>
+      </View>
+
     </Button>
   );
 };
@@ -154,13 +126,6 @@ const createStyles = (
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    nodeEmoji: {
-      fontSize: 14,
-    },
-    emoji: {
-      width: 14,
-      aspectRatio: 1,
     },
     text: {
       marginLeft: margin.tiny,

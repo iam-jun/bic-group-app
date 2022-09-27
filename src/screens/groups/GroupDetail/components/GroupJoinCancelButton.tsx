@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import groupsActions from '../../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
+import useDiscoverGroupsStore from '../../DiscoverGroups/store';
+import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -21,12 +22,14 @@ const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
   const {
     privacy,
     id: groupId,
-    name: groupName,
   } = infoDetail;
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const { joinStatus: joinStatusCommunity } = useKeySelector(groupsKeySelector.communityDetail);
   const isMember = joinStatus === groupJoinStatus.member;
   const isMemberOfCommunity = joinStatusCommunity === groupJoinStatus.member;
+
+  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
+  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
 
   if (isMember) return null;
 
@@ -40,11 +43,11 @@ const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
       return;
     }
 
-    dispatch(groupsActions.joinNewGroup({ groupId, groupName }));
+    joinNewGroup(groupId);
   };
 
   const onPressCancelRequest = () => {
-    dispatch(groupsActions.cancelJoinGroup({ groupId, groupName }));
+    cancelJoinGroup(groupId);
   };
 
   return (

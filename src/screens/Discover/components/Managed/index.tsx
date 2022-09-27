@@ -17,6 +17,8 @@ import { spacing } from '~/theme';
 import Divider from '~/beinComponents/Divider';
 import groupsActions from '~/storeRedux/groups/actions';
 import EmptyScreen from '~/components/EmptyScreen';
+import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
+import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
 
 type GroupItemProps = {
   id: string;
@@ -33,6 +35,10 @@ type ListEmptyProps = {
 
 const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
   const managed = useKeySelector(groupsKeySelector.managed);
+  const dispatch = useDispatch();
+
+  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
+  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
 
   const { owner, manage } = managed;
   const item
@@ -41,8 +47,34 @@ const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
     = section === 'discover:owner'
       ? `managed_owner_item_${id}`
       : `managed_manage_item_${id}`;
+  const handleJoin = (id: string, name: string, isGroup?: boolean) => {
+    if (isGroup) {
+      joinNewGroup(id);
+    } else {
+      dispatch(
+        groupsActions.joinCommunity({ communityId: id, communityName: name }),
+      );
+    }
+  };
 
-  return <CommunityGroupCard item={item} testID={testID} />;
+  const handleCancelJoin = (id: string, name: string, isGroup?: boolean) => {
+    if (isGroup) { cancelJoinGroup(id); } else {
+      dispatch(
+        groupsActions.cancelJoinCommunity({
+          communityId: id,
+          communityName: name,
+        }),
+      );
+    }
+  };
+  return (
+    <CommunityGroupCard
+      item={item}
+      testID={testID}
+      onCancel={handleCancelJoin}
+      onJoin={handleJoin}
+    />
+  );
 };
 
 const SectionTitle: FC<SectionTitleProps> = ({ title }) => {
@@ -76,7 +108,7 @@ const ListEmpty: FC<ListEmptyProps> = ({ type }) => {
 
   return (
     <View testID={testID}>
-      <EmptyScreen source="searchUsers" description={description} />
+      <EmptyScreen icon="searchUsers" description={description} />
     </View>
   );
 };

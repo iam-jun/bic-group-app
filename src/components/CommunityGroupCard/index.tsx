@@ -7,23 +7,35 @@ import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ButtonCommunityGroupCardAction from './ButtonCommunityGroupCardAction';
+import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/storeRedux/groups/actions';
 import { Avatar, Button } from '~/baseComponents';
 import { formatLargeNumber } from '~/utils/formatData';
-import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';
 import { isGroup } from '~/screens/groups/helper';
 import { ICommunity } from '~/interfaces/ICommunity';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import modalActions from '~/storeRedux/modal/actions';
 
 type CommunityGroupCardProps = {
   item: any;
   testID?: string;
+  shouldShowAlertJoinTheCommunityFirst?: boolean;
+  isResetCommunityDetail?:boolean;
+  onJoin?: (id: string, name: string, isGroup?: boolean)=>void;
+  onCancel?: (id: string, name: string, isGroup?: boolean)=>void;
 };
 
-const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
+const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
+  item,
+  testID,
+  isResetCommunityDetail = true,
+  shouldShowAlertJoinTheCommunityFirst,
+  onJoin,
+  onCancel,
+}) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
@@ -50,8 +62,10 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
     dispatch(groupsActions.getCommunityDetail({ communityId: community.id, loadingPage, showLoading: true }));
   };
 
-  const onGoBackFromGroupDetail = () => {
-    dispatch(groupsActions.setCommunityDetail({} as ICommunity));
+  const handleGoBackFromGroupDetail = () => {
+    if (!!isResetCommunityDetail) {
+      dispatch(groupsActions.setCommunityDetail({} as ICommunity));
+    }
     rootNavigation.goBack();
   };
 
@@ -61,7 +75,7 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
       // so before navigate to group detail we need to fetch community detail
       // and clear community detail when go back from group detail
       getCommunityDetail(true);
-      rootNavigation.navigate(groupStack.groupDetail, { groupId: id, onGoBack: onGoBackFromGroupDetail });
+      rootNavigation.navigate(groupStack.groupDetail, { groupId: id, onGoBack: handleGoBackFromGroupDetail });
       return;
     }
 
@@ -71,29 +85,24 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
     rootNavigation.navigate(groupStack.communityDetail, { communityId: community ? community.id : id });
   };
 
-  const onJoin = () => {
-    if (isGroup(level)) {
-      dispatch(groupsActions.joinNewGroup({ groupId: id, groupName: name }));
+  const handleJoin = () => {
+    if (!!shouldShowAlertJoinTheCommunityFirst && community?.joinStatus === groupJoinStatus.visitor) {
+      dispatch(modalActions.showAlert({
+        title: t('communities:browse_groups:guest_view_alert:title'),
+        content: t('communities:browse_groups:guest_view_alert:content'),
+        confirmLabel: t('common:text_ok'),
+      }));
       return;
     }
-
-    dispatch(
-      groupsActions.joinCommunity({ communityId: id, communityName: name }),
-    );
+    if (!!onJoin) {
+      onJoin(id, name, isGroup(level));
+    }
   };
 
-  const onCancel = () => {
-    if (isGroup(level)) {
-      dispatch(groupsActions.cancelJoinGroup({ groupId: id, groupName: name }));
-      return;
+  const handleCancel = () => {
+    if (!!onCancel) {
+      onCancel(id, name, isGroup(level));
     }
-
-    dispatch(
-      groupsActions.cancelJoinCommunity({
-        communityId: id,
-        communityName: name,
-      }),
-    );
   };
 
   const onViewCommunity = () => {
@@ -123,53 +132,58 @@ const Index: FC<CommunityGroupCardProps> = ({ item, testID }) => {
             <View style={styles.containerInfo}>
               <Text.H6 numberOfLines={2}>{name}</Text.H6>
               <ViewSpacing height={spacing.margin.tiny} />
-              <Tag
-                style={styles.tagContainer}
-                type="secondary"
-                size="small"
-                label={t(
-                  isGroup(level) ? 'common:text_group' : 'common:text_community',
-                )}
-              />
-              <ViewSpacing height={spacing.margin.xSmall} />
               <View style={styles.row}>
-                <View style={[styles.row, styles.privacyView]}>
+                <View style={styles.row}>
                   <Icon
                     style={styles.iconSmall}
                     icon={privacyIcon}
                     size={16}
-                    tintColor={colors.gray50}
+                    tintColor={colors.neutral20}
                   />
-                  <Text.BodyS color={colors.neutral40} useI18n>
+                  <Text.BodySMedium color={colors.neutral40} useI18n>
                     {privacyTitle}
-                  </Text.BodyS>
-                </View>
-                <ViewSpacing width={spacing.margin.extraLarge} />
-                <View style={styles.row}>
-                  <Text.BodySMedium style={styles.textNumberMember}>
-                    {formatLargeNumber(userCount)}
                   </Text.BodySMedium>
-                  <Text.BodyS color={colors.neutral40} useI18n>
-                    common:members
-                  </Text.BodyS>
                 </View>
+                <ViewSpacing width={spacing.margin.large} />
+                <View style={styles.row}>
+                  <Icon
+                    style={styles.iconSmall}
+                    icon={isGroup(level) ? 'PeoplePantsSimple' : 'PeopleGroup'}
+                    size={16}
+                    tintColor={colors.neutral20}
+                  />
+                  <Text.BodySMedium color={colors.neutral40}>
+                    {t(
+                      isGroup(level) ? 'common:text_group' : 'common:text_community',
+                    )}
+                  </Text.BodySMedium>
+                </View>
+              </View>
+              <ViewSpacing height={spacing.margin.xSmall} />
+              <View style={styles.row}>
+                <Text.BodySMedium style={styles.textNumberMember}>
+                  {formatLargeNumber(userCount)}
+                </Text.BodySMedium>
+                <Text.BodyS color={colors.neutral40} useI18n>
+                  common:members
+                </Text.BodyS>
               </View>
             </View>
           </View>
           {!!description && (
             <>
-              <ViewSpacing height={10} />
-              <Text.BodyM numberOfLines={2}>{`${description}`}</Text.BodyM>
+              <ViewSpacing height={8} />
+              <Text.ParagraphM numberOfLines={2}>{`${description}`}</Text.ParagraphM>
             </>
           )}
         </View>
       </Button>
       <ViewSpacing height={spacing.margin.base} />
-      <ButtonCommunityGroupCardAction
+      <ButtonCommunityGroupCard
         joinStatus={joinStatus}
         onView={onView}
-        onJoin={onJoin}
-        onCancel={onCancel}
+        onJoin={handleJoin}
+        onCancel={handleCancel}
       />
     </View>
   );
@@ -189,9 +203,6 @@ const themeStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    privacyView: {
-      width: 100,
-    },
     containerInfo: {
       flex: 1,
       marginLeft: 10,
@@ -206,10 +217,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     textNameCommunityOnGroup: {
       marginBottom: spacing.margin.tiny,
     },
-    tagContainer: {
-      alignSelf: 'baseline',
-    },
   });
 };
 
-export default Index;
+export default CommunityGroupCard;

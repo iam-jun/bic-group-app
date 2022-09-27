@@ -17,7 +17,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import i18next from 'i18next';
 
-import SearchInput from '~/beinComponents/inputs/SearchInput';
+import { SearchInput } from '~/baseComponents/Input';
 import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
@@ -153,7 +153,6 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       height: dimension?.headerHeight || 44,
       position: 'absolute',
-      bottom: 0,
       left: 0,
       right: 0,
       flexDirection: 'row',
@@ -168,10 +167,8 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     searchInput: { flex: 1, backgroundColor: undefined },
     searchContainer: {
-      height: 40,
+      height: 32,
       overflow: 'hidden',
-      backgroundColor: colors.neutral5,
-      borderRadius: spacing.borderRadius.pill,
     },
     icon: {
       height: 48,

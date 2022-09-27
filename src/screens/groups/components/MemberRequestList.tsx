@@ -55,7 +55,7 @@ const MemberRequestList = ({
     return (
       <EmptyScreen
         size={120}
-        source="addUsers"
+        icon="addUsers"
         title="groups:text_no_pending_members_notice"
         description={`groups:text_pending_request_notice_${type}`}
         ButtonComponent={canAddMember && (

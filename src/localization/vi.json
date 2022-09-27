@@ -53,13 +53,14 @@
     "text_set_time": "Đặt Giờ",
     "text_set_date": "Đặt Ngày",
     "text_not_set": "Chưa đặt",
-    "text_ok": "OK",
+    "text_ok": "Ok",
     "text_error": "Lỗi",
     "text_loading": "Đang tải ...",
     "text_retry": "Thử lại",
     "text_done": "Xong",
     "text_uploading": "Đang tải...",
     "text_error_message": "Có gì đó sai sai",
+    "text_success_message": "Thành công",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
@@ -577,8 +578,7 @@
       "text_delete_comment": "Nếu xoá, toàn bộ trả lời của bình luận này cũng sẽ bị xoá. Bạn có muốn tiếp tục?",
       "text_delete_comment_error": "Xoá bình luận thất bại!",
       "text_delete_comment_success": "Bình luận đã được xoá",
-      "text_edited": "Đã sửa",
-      "search_giphy": "Tìm kiếm GIPHY"
+      "text_edited": "Đã sửa"
     },
     "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
@@ -667,11 +667,9 @@
       "label_go_back_home": "Về trang chủ"
     },
     "member_menu": {
-      "label_view_profile": "View profile",
-      "label_direct_message": "Direct message",
       "label_set_as_admin": "Bổ nhiệm làm quản trị viên",
       "label_revoke_admin_role": "Thu hồi vai trò quản trị viên",
-      "label_remove_from_group": "Xóa khỏi nhóm"
+      "label_remove_member": "Xóa thành viên"
     },
     "private_group_welcome_message": {
       "title": "Đây là nhóm kín.",
@@ -690,10 +688,9 @@
       "success_message": "Đã lưu thay đổi"
     },
     "modal_confirm_remove_member": {
-      "title": "Xóa khỏi nhóm",
-      "alert_inner_groups": "Thành viên này cũng sẽ bị xóa khỏi {0} nhóm khác:",
-      "final_alert": "Bạn có chắc muốn xóa người này khỏi nhóm?",
-      "button_remove": "Xác nhận"
+      "title": "Xóa thành viên",
+      "content": "Bạn có muốn xóa thành viên này?",
+      "button_remove": "Xóa"
     },
     "error": {
       "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi thoát",
@@ -922,6 +919,19 @@
       "description": "Bạn có chắc là muốn thoát khỏi ",
       "button_leave": "Thoát",
       "success_message": "Bạn đã thoát khỏi cộng đồng này"
+    },
+    "browse_groups":{
+      "no_groups": "Không có nhóm nào trong cộng đồng này.",
+      "joined_all_groups": "Không có thêm nhóm nào để khám phá. Bạn đã tham gia hoàn toàn vào tất cả các nhóm trong cộng đồng này.",
+      "guest_view_alert": {
+        "title": "Chú ý",
+        "content": "Trước tiên, bạn cần phải là một thành viên của cộng đồng"
+      }
+    },
+    "modal_confirm_remove_member": {
+      "title": "Xóa thành viên",
+      "content": "Bạn có muốn xóa thành viên này?",
+      "button_remove": "Xóa"
     }
   },
   "upload": {
@@ -961,5 +971,22 @@
   "discard_alert": {
     "title": "Huỷ bỏ những thay đổi?",
     "content": "Nếu bạn huỷ bỏ ngay bây giờ, bạn sẽ mất những thay đổi nào mà bạn đã thực hiện."
+  },
+  "sticker": {
+    "search_giphy": "Tìm kiếm GIPHY",
+    "search_emoji": "Tìm kiếm biểu cảm"
+  },
+  "emoji_categories": {
+    "custom": "Tùy chỉnh",
+    "recently": "Gần đây",
+    "smileys-emotion": "Biểu cảm và khuôn mặt",
+    "people-body": "Mọi người",
+    "animals-nature": "Động vật và thiên nhiên",
+    "food-drink": "Thức ăn và đồ uống",
+    "travel-places": "Du lịch và địa điểm",
+    "activities": "Hoạt động",
+    "objects": "Vật thể",
+    "symbols": "Ký hiệu",
+    "flags": "Cờ"
   }
 }
