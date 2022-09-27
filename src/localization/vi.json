@@ -577,8 +577,7 @@
       "text_delete_comment": "Nếu xoá, toàn bộ trả lời của bình luận này cũng sẽ bị xoá. Bạn có muốn tiếp tục?",
       "text_delete_comment_error": "Xoá bình luận thất bại!",
       "text_delete_comment_success": "Bình luận đã được xoá",
-      "text_edited": "Đã sửa",
-      "search_giphy": "Tìm kiếm GIPHY"
+      "text_edited": "Đã sửa"
     },
     "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
@@ -961,5 +960,22 @@
   "discard_alert": {
     "title": "Huỷ bỏ những thay đổi?",
     "content": "Nếu bạn huỷ bỏ ngay bây giờ, bạn sẽ mất những thay đổi nào mà bạn đã thực hiện."
+  },
+  "sticker": {
+    "search_giphy": "Tìm kiếm GIPHY",
+    "search_emoji": "Tìm kiếm biểu cảm"
+  },
+  "emoji_categories": {
+    "custom": "Tùy chỉnh",
+    "recently": "Gần đây",
+    "smileys-emotion": "Biểu cảm và khuôn mặt",
+    "people-body": "Mọi người",
+    "animals-nature": "Động vật và thiên nhiên",
+    "food-drink": "Thức ăn và đồ uống",
+    "travel-places": "Du lịch và địa điểm",
+    "activities": "Hoạt động",
+    "objects": "Vật thể",
+    "symbols": "Ký hiệu",
+    "flags": "Cờ"
   }
 }

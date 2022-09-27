@@ -1,7 +1,6 @@
 import { GiphyMedia, GiphyMediaView } from '@giphy/react-native-sdk';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
-  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -21,14 +20,13 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
-import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import Icon from '~/baseComponents/Icon';
 import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import StickerView from '~/beinComponents/StickerView';
+import StickerView from '~/components/StickerView';
 import Text from '~/beinComponents/Text';
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
@@ -40,6 +38,7 @@ import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import { checkPermission, permissionTypes } from '~/utils/permission';
+import { formatTextWithEmoji } from '~/utils/emojiUtils';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -107,6 +106,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
+  const cursorPosition = useRef(0);
 
   const handleSetTextInputHeight = (newHeight: number) => {
     if (newHeight === textTextInputHeight) return;
@@ -175,30 +175,33 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onPressEmoji = () => {
-    stickerViewRef?.current?.show?.();
+    stickerViewRef?.current?.show?.('giphy');
   };
 
   const onEmojiSelected = (emoji: string) => {
+    stickerViewRef?.current?.hide?.();
+
     dispatch(modalActions.hideModal());
     if (emoji) {
-      setText(text + emoji);
-      onChangeText?.(text + emoji);
+      const completeStr = formatTextWithEmoji(text, emoji, cursorPosition);
+      setText(completeStr);
+      onChangeText?.(completeStr);
       _textInputRef.current.focus();
     }
   };
 
+  const onGifSelected = (gif: GiphyMedia) => {
+    stickerViewRef?.current?.hide?.();
+
+    setSelectedImage(undefined);
+    setSelectedGiphy(gif);
+  };
+
   const onPressIcon = () => {
-    const payload = {
-      isOpen: true,
-      ContentComponent: (
-        <EmojiBoard
-          width={dimension.deviceWidth}
-          height={280}
-          onEmojiSelected={onEmojiSelected}
-        />
-      ),
-    };
-    dispatch(modalActions.showModal(payload));
+    // dispatch(modalActions.setShowReactionBottomSheet(
+    //   { visible: true, callback: onEmojiSelected },
+    // ));
+    stickerViewRef?.current?.show?.('emoji');
   };
 
   const handleUpload = () => {
@@ -269,17 +272,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onSelectionChange = (event: any) => {
+    const position = event.nativeEvent.selection.end;
+    cursorPosition.current = position;
     onSelectionChange?.(event);
   };
-
-  const onMediaSelect = useCallback(
-    (media: GiphyMedia) => {
-      setSelectedImage(undefined);
-      stickerViewRef?.current?.hide?.();
-      setSelectedGiphy(media);
-    },
-    [text],
-  );
 
   const calculateTextInputHeight = (height: number) => {
     let newHeight = Math.min(Math.max(DEFAULT_HEIGHT, height), LIMIT_HEIGHT);
@@ -470,7 +466,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
       </View>
       <StickerView
         stickerViewRef={stickerViewRef}
-        onMediaSelect={onMediaSelect}
+        onGifSelected={onGifSelected}
+        onEmojiSelected={onEmojiSelected}
       />
       {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
     </View>

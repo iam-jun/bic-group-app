@@ -36,7 +36,6 @@ import {
 } from '~/interfaces/IPost';
 import { IGroup } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
-import { ReactionType } from '~/constants/reactions';
 import { IFilePicked } from '~/interfaces/common';
 import { IGetFile } from '~/services/imageUploader';
 
@@ -123,15 +122,6 @@ const postActions = {
   }),
   setAllCommentsByParentIds: (payload: {[x: string]: IReaction}) => ({
     type: postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS,
-    payload,
-  }),
-  setShowReactionBottomSheet: (payload?: {
-    show?: boolean;
-    title?: string;
-    position?: {x: number; y: number};
-    callback?: (reactionId: ReactionType) => void;
-  }) => ({
-    type: postTypes.SET_SHOW_REACTION_BOTTOM_SHEET,
     payload,
   }),
   setPostSelectAudienceState: (payload?: {

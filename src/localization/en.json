@@ -616,8 +616,7 @@
       "text_delete_comment": "When you delete this comment, all of its reply will also be deleted. Continue?",
       "text_delete_comment_error": "Delete comment failed!",
       "text_delete_comment_success": "Comment deleted",
-      "text_edited": "Edited",
-      "search_giphy": "Search GIPHY"
+      "text_edited": "Edited"
     },
     "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
@@ -1028,5 +1027,22 @@
   "discard_alert": {
     "title": "Discard Changes?",
     "content": "If you discard now, you’ll lose any changes you’ve made."
+  },
+  "sticker": {
+    "search_giphy": "Search GIPHY",
+    "search_emoji": "Search Emoji"
+  },
+  "emoji_categories": {
+    "custom": "Custom",
+    "recently": "Recently",
+    "smileys-emotion": "Smileys & Emotion",
+    "people-body": "People & Body",
+    "animals-nature": "Animals & Nature",
+    "food-drink": "Food & Drink",
+    "travel-places": "Travel & Places",
+    "activities": "Activities",
+    "objects": "Objects",
+    "symbols": "Symbols",
+    "flags": "Flags"
   }
 }
