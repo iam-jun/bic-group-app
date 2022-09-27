@@ -366,15 +366,6 @@ const groupsActions = {
     payload,
   }),
 
-  removeMember: (payload: {
-    groupId: string;
-    userId: string;
-    userFullname: string;
-  }) => ({
-    type: groupsTypes.REMOVE_MEMBER,
-    payload,
-  }),
-
   getGroupMemberRequests: (payload: {
     groupId: string;
     isRefreshing?: boolean;

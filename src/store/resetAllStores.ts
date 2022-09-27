@@ -10,6 +10,8 @@ import useDraftPostStore from '~/screens/post/DraftPost/store';
 import useLeaveCommunity from '~/screens/communities/CommunityDetail/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
+import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
+import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
 
 const stores = [
   useHomeStore,
@@ -21,6 +23,8 @@ const stores = [
   useCommunityJoinedGroupTreeStore,
   useReactionDetailStore,
   useDiscoverGroupsStore,
+  useRemoveCommunityMemberStore,
+  useRemoveGroupMemberStore,
 ];
 
 export const resetAllStores = () => {
