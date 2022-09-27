@@ -6,50 +6,18 @@ import {
   renderWithRedux,
   fireEvent,
   createTestStore,
-  getHookReduxWrapper,
-  renderHook,
-  act,
 } from '~/test/testUtils';
 import MemberOptionsMenu from './MemberOptionsMenu';
 import initialState from '~/storeRedux/initialState';
 import { IGroupMembers } from '~/interfaces/IGroup';
-import useRemoveMember from './useRemoveMember';
-import * as helper from '../../helper';
 import modalActions from '~/storeRedux/modal/actions';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
   const groupId = '1';
   const onOptionsClosed = jest.fn();
-  const selectedMember = {};
-
-  it('renders leave group option correctly', () => {
-    const spy = jest.spyOn(helper, 'checkLastAdmin');
-
-    const state = { ...initialState };
-    state.auth.user = { username: 'testname1' };
-    const store = createTestStore(state);
-
-    const selectedMember = { id: '1', username: 'testname1' };
-    const { getByTestId } = renderWithRedux(
-      <MemberOptionsMenu
-        groupId={groupId}
-        selectedMember={selectedMember}
-        modalizeRef={baseSheetRef}
-        onOptionsClosed={onOptionsClosed}
-      />,
-      store,
-    );
-    const itemComponent = getByTestId('member_options_menu.leave_group');
-    expect(itemComponent).toBeDefined();
-    expect(itemComponent.props).toHaveProperty('onClick');
-    fireEvent.press(itemComponent);
-    expect(spy).toBeCalled();
-  });
 
   it('renders Remove member option correctly when admin clicks on another user', () => {
-    const spy = jest.spyOn(helper, 'checkLastAdmin');
-
     const state = { ...initialState };
     // @ts-ignore
     state.groups.groupDetail.canManageMember = true;
@@ -73,7 +41,6 @@ describe('MemberOptionsMenu component', () => {
     expect(itemComponent).toBeDefined();
     expect(itemComponent.props).toHaveProperty('onClick');
     fireEvent.press(itemComponent);
-    expect(spy).toBeCalled();
   });
 
   it('should not render Remove member option correctly when admins click on themselves', () => {
@@ -98,72 +65,6 @@ describe('MemberOptionsMenu component', () => {
     );
     const itemComponent = queryByTestId('member_options_menu.remove_member');
     expect(itemComponent).toBeNull();
-  });
-
-  it('getInnerGroupsNames should be done when there is no inner groups', () => {
-    const renderInnerGroupsAlert = jest.fn();
-    const state = { ...initialState };
-    const store = createTestStore(state);
-
-    const wrapper = getHookReduxWrapper(store);
-    const { result } = renderHook(
-      () => useRemoveMember({ groupId, selectedMember }),
-      {
-        wrapper,
-      },
-    );
-    let pressResult;
-    act(() => {
-      pressResult = result.current.getInnerGroupsNames(
-        [],
-        renderInnerGroupsAlert,
-      );
-    });
-    expect(pressResult).toBe(0);
-  });
-
-  it('getInnerGroupsNames should be done when there is 1 inner group', () => {
-    const renderInnerGroupsAlert = jest.fn();
-    const state = { ...initialState };
-    const store = createTestStore(state);
-
-    const wrapper = getHookReduxWrapper(store);
-    const { result } = renderHook(
-      () => useRemoveMember({ groupId, selectedMember }),
-      {
-        wrapper,
-      },
-    );
-    let pressResult;
-    act(() => {
-      pressResult = result.current.getInnerGroupsNames(
-        ['inner group 1'],
-        renderInnerGroupsAlert,
-      );
-    });
-    expect(pressResult).toBe(1);
-  });
-
-  it('getInnerGroupsNames should be done when there are at least 2 inner groups', () => {
-    const renderInnerGroupsAlert = jest.fn();
-    const state = { ...initialState };
-    const store = createTestStore(state);
-
-    const wrapper = getHookReduxWrapper(store);
-    const { result } = renderHook(
-      () => useRemoveMember({ groupId, selectedMember }),
-      {
-        wrapper,
-      },
-    );
-    let pressResult;
-    act(() => {
-      pressResult = result.current.getInnerGroupsNames(
-        ['inner group 1', 'inner group 2', 'inner group 3'],
-        renderInnerGroupsAlert,
-      );
-    });
-    expect(pressResult).toBe(1);
   });
 
   it('should render Remove admin option correctly', () => {

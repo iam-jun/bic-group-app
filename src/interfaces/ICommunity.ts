@@ -37,11 +37,10 @@ export interface IParamGetCommunityMembers {
   limit?: number;
 }
 
-export type COMMUNITY_ROLE = 'COMMUNITY_ADMIN' | 'COMMUNITY_MEMBER';
-
 export interface ICommunityMembers extends IPreviewMember {
-  roles: {name: COMMUNITY_ROLE};
+  roles: {name: string};
   chatUserId: string;
+  isAdmin?: boolean;
 }
 
 export interface IParamGetDiscoverGroups {
@@ -50,6 +49,12 @@ export interface IParamGetDiscoverGroups {
   limit?: number;
   sort?: string;
   previewMembers?: boolean;
+}
+
+export interface IPayloadGetDiscoverGroups{
+  communityId: string;
+  isRefreshing?: boolean;
+  params?: IParamGetDiscoverGroups;
 }
 
 export interface ISetMembers {

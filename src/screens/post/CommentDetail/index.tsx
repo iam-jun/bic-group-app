@@ -100,7 +100,7 @@ const CommentDetail = (props: any) => {
 
       {showPrivacyPost ? (
         <EmptyScreen
-          source="iconLock"
+          icon="iconLock"
           size={120}
           title="post:text_restricted_permission"
           description="post:text_restricted_permission_description"

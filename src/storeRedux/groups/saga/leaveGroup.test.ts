@@ -8,7 +8,6 @@ import groupsActions from '../actions';
 import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
 import { groupPrivacy } from '../../../constants/privacyTypes';
-import groupJoinStatus from '../../../constants/groupJoinStatus';
 
 describe('Leave Group Saga', () => {
   let Platform: any;
@@ -32,12 +31,6 @@ describe('Leave Group Saga', () => {
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([[matchers.call.fn(groupApi.leaveGroup), {}]])
-      .put(
-        groupsActions.editDiscoverGroupItem({
-          id: action.payload,
-          data: { joinStatus: groupJoinStatus.visitor },
-        }),
-      )
       .call(navigationReplace)
       .put(groupsActions.getGroupDetail({ groupId: action.payload }))
       .put(
@@ -58,12 +51,6 @@ describe('Leave Group Saga', () => {
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([[matchers.call.fn(groupApi.leaveGroup), {}]])
-      .put(
-        groupsActions.editDiscoverGroupItem({
-          id: action.payload,
-          data: { joinStatus: groupJoinStatus.visitor },
-        }),
-      )
       .call(navigateToGroup, action.payload)
       .put(groupsActions.getGroupDetail({ groupId: action.payload }))
       .put(

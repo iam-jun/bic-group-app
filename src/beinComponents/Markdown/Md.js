@@ -31,6 +31,7 @@ import {
   pullOutImages,
 } from './utils/transform';
 import AtMention from './AtMention';
+import Emoji from '~/baseComponents/Emoji';
 
 export default class Md extends PureComponent {
   static propTypes = {
@@ -212,11 +213,13 @@ export default class Md extends PureComponent {
 
   renderChannelLink = ({ context, channelName }) => this.renderText({ context, literal: `~${channelName}` });
 
-  // Just render unicode emoji, image custom emoji need a story
-  renderEmoji = ({ emojiName, literal }) => (
-    <Text style={this.props.baseTextStyle}>
-      {NodeEmoji.find(emojiName || '')?.emoji || literal}
-    </Text>
+  renderEmoji = ({ context, emojiName, literal }) => (
+    <Emoji
+      emojiName={emojiName}
+      literal={literal}
+      testID='markdown_emoji'
+      textStyle={this.computeTextStyle(this.props.baseTextStyle, context)}
+    />
   );
 
   renderHashtag = ({ context, hashtag }) => {

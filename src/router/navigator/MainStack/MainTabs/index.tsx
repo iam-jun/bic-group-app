@@ -13,6 +13,8 @@ import notificationsActions from '~/storeRedux/notification/actions';
 import giphyActions from '~/storeRedux/giphy/actions';
 import { screens } from './screens';
 import { initPushTokenMessage } from '~/services/firebase';
+import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
+import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -23,6 +25,7 @@ const MainTabs = () => {
   useNotificationSocket();
 
   const dispatch = useDispatch();
+  const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
 
   const userId = useUserIdAuth();
   const giphyAPIKey = useKeySelector('giphy.APIKey');
@@ -35,7 +38,7 @@ const MainTabs = () => {
       if (!userId) {
         return;
       }
-
+      actions.buildEmojis();
       dispatch(groupsActions.getMyPermissions());
       dispatch(giphyActions.getAPIKey());
       dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
