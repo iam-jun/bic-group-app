@@ -20,7 +20,17 @@ const appConfig = {
   limitReactionCount: 21,
   maxFiles: 25,
   totalFileSize: 25 * 1024 * 1000, // kb => byte = 25Mb
-  fileUploadTimeout: 5 * 60 * 1000, // 5 minutes
+  fileUploadTimeout: 5 * 60 * 1000, // 5 minutes,
+  superUsers: [
+    'namanh@evolgroup.vn',
+    'dieplamminhthu@evolgroup.vn',
+    'thuquyen@evolgroup.vn',
+    'phuongkhanh@evolgroup.vn',
+    'sison@evolgroup.vn',
+    'ngoclinh@evolgroup.vn',
+    'kimmai@evolgroup.vn',
+    'ngoccuong@evolgroup.vn',
+  ],
 };
 
 export default appConfig;
