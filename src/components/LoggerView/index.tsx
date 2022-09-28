@@ -129,7 +129,7 @@ const LoggerView = () => {
 
   const renderItemMenu = (createdAt: string, content: string, copyContent: any) => (
     <View style={styles.itemMenu}>
-      <Text.BadgeL>{content}</Text.BadgeL>
+      <Text.BadgeL maxLength={20}>{content}</Text.BadgeL>
       <Text.BadgeL>{createdAt}</Text.BadgeL>
       <Button.Secondary
         style={styles.settingButton}
@@ -294,7 +294,7 @@ const LoggerView = () => {
             <Button.Danger onPress={reset}>Clear</Button.Danger>
           </View>
         </View>
-        <View style={styles.body}>
+        <View style={styles.content}>
           <FlatList
             ref={listRef}
             data={logs}
@@ -303,9 +303,9 @@ const LoggerView = () => {
             onEndReached={onEndReached}
             onScroll={onScroll}
             onContentSizeChange={onContentSizeChange}
-            contentContainerStyle={{
-              flexGrow: 1,
-            }}
+            // contentContainerStyle={{
+            //   flexGrow: 1,
+            // }}
             ItemSeparatorComponent={() => <ViewSpacing height={16} />}
             keyExtractor={(item, index) => `debug-logger-item-${index}`}
           />
@@ -334,7 +334,11 @@ const LoggerView = () => {
   });
 
   return (
-    <PanGestureHandler onGestureEvent={gestureHandler}>
+    <PanGestureHandler
+      failOffsetY={[-5, 5]}
+      activeOffsetX={[-5, 5]}
+      onGestureEvent={gestureHandler}
+    >
       <Animated.View
         style={[
           styles.container,
@@ -371,7 +375,6 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
     height: '100%',
     position: 'absolute',
     backgroundColor: '#F8F9FF',
-    paddingBottom: insets.bottom,
     paddingTop: insets.top,
     // alignItems: 'center',
     // justifyContent: 'center',
@@ -405,8 +408,11 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
   title: {
     flexShrink: 1,
   },
+  content: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
   body: {
-    // flex: 1,
     padding: 16,
   },
   tag: {
