@@ -79,3 +79,4 @@ GoogleService-Info-Staging.plist
 .nyc_output
 coverage
 .tmp
+/ios/I/
