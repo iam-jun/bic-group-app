@@ -160,12 +160,6 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <HomeHeader
-        style={styles.headerContainer}
-        yShared={yShared}
-        onPressSearch={onPressSearch}
-        onPressChat={navigateToChat}
-      />
       <NewsfeedList
         data={homePosts}
         refreshing={refreshing}
@@ -174,6 +168,12 @@ const Home = () => {
         onRefresh={onRefresh}
         onScrollY={onScrollY}
         activeTab={activeTab}
+      />
+      <HomeHeader
+        style={styles.headerContainer}
+        yShared={yShared}
+        onPressSearch={onPressSearch}
+        onPressChat={navigateToChat}
       />
       <View style={styles.statusBar} />
       <NewsfeedSearch searchViewRef={searchViewRef} style={styles.searchContainer} />
