@@ -5,7 +5,7 @@ import {
 } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import zustandFlipper from 'react-native-flipper-zustand';
-import { zustandLogger } from '../components/LogView/utils';
+import { zustandLogger } from '../components/LoggerView/utils';
 
 interface ICreateZustand {
   persist?: PersistOptions<any>;

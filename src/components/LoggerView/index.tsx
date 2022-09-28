@@ -1,16 +1,18 @@
 import {
   DeviceEventEmitter,
-  FlatList, Modal, StyleSheet, View,
+  FlatList, Modal, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
 import React, {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useDispatch } from 'react-redux';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Animated, { ZoomInEasyUp, ZoomOutEasyDown } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle, useSharedValue, withSpring, ZoomInEasyUp, ZoomOutEasyDown,
+} from 'react-native-reanimated';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Portal } from 'react-native-portalize';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 import { Button } from '~/baseComponents';
 import Markdown from '~/beinComponents/Markdown';
 import Text from '~/beinComponents/Text';
@@ -19,21 +21,28 @@ import getEnv from '~/utils/env';
 import { ILogger, LogType } from './Interface';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Checkbox from '~/baseComponents/Checkbox';
+import { dimension } from '~/theme';
+import MarkdownView from '~/beinComponents/MarkdownView';
 
 export const EVENT_LOGGER_TAG = 'debug-logger-on-new-log';
 const MAX_LOGS = 200;
 
-const LogView = () => {
+const LoggerView = () => {
   const insets = useSafeAreaInsets();
   const styles = createStyles(insets);
   const [logs, setLogs] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
   const [settingVisible, setSettingVisible] = useState(false);
-  const [settings, setSettings] = useState(['api', 'auto-scroll']);
+  const [settings, setSettings] = useState([LogType.API, 'auto-scroll']);
   const dispatch = useDispatch();
   const listRef = useRef<FlatList>();
   const offset = useRef(0);
   const isEndReached = useRef(true);
+
+  const defaultX = dimension.deviceWidth / 2 - 32;
+  const defaultY = dimension.deviceHeight / 2;
+  const translateX = useSharedValue(defaultX);
+  const translateY = useSharedValue(defaultY);
 
   const host = getEnv('BEIN_API');
 
@@ -46,10 +55,21 @@ const LogView = () => {
       return () => {
         listener?.remove?.();
       };
-    }, [logs],
+    }, [logs, settings],
   );
 
+  useEffect(() => {
+    if (!settings.includes(LogType.API)) {
+      setLogs(logs.filter((log) => log.type !== LogType.API));
+    }
+    if (!settings.includes(LogType.ZUSTAND)) {
+      setLogs(logs.filter((log) => log.type !== LogType.ZUSTAND));
+    }
+  }, [settings]);
+
   const onNewLog = (log: ILogger) => {
+    if (!settings.includes(log.type)) return;
+
     const newLogs = [...logs];
     if (newLogs.length >= MAX_LOGS) {
       newLogs.shift();
@@ -188,15 +208,15 @@ const LogView = () => {
 
   const closeSettings = () => setSettingVisible(false);
 
-  const onSettingChange = (type: string, isChecked: boolean) => {
+  const onSettingChange = useCallback((type: string, isChecked: boolean) => {
     if (isChecked) {
       setSettings([...settings, type]);
     } else {
       setSettings(settings.filter((setting) => setting !== type));
     }
-  };
+  }, [settings]);
 
-  const renderSettingItem = (type:string, label:string) => (
+  const renderSettingItem = (type: string, label: string) => (
     <Checkbox
       style={styles.space16}
       label={label}
@@ -205,25 +225,38 @@ const LogView = () => {
     />
   );
 
-  const renderSettings = () => (
-    <Modal transparent visible={settingVisible} animationType="slide">
-      <View style={styles.settingsModal}>
-        <View style={styles.settingsMenu}>
-          <View style={styles.menubar}>
-            <Text.BadgeL>Settings</Text.BadgeL>
-          </View>
-          <View style={styles.body}>
-            {renderSettingItem('api', 'API Request')}
-            {renderSettingItem('zustand', 'Zustand')}
-            {renderSettingItem('auto-scroll', 'Auto scroll to top')}
-            <Button.Secondary onPress={closeSettings}>
-              Close & Save
-            </Button.Secondary>
+  const renderSettings = () => {
+    const env = {
+      SELF_DOMAIN: getEnv('SELF_DOMAIN'),
+      BEIN_CHAT_DEEPLINK: getEnv('BEIN_CHAT_DEEPLINK'),
+      APP_GROUP_PACKAGE_NAME_IOS: getEnv('APP_GROUP_PACKAGE_NAME_IOS'),
+      APP_GROUP_PACKAGE_NAME_ANDROID: getEnv('APP_GROUP_PACKAGE_NAME_ANDROID'),
+    };
+
+    return (
+      <Modal transparent visible={settingVisible} animationType="slide">
+        <View style={styles.settingsModal}>
+          <View style={styles.settingsMenu}>
+            <View style={styles.menubar}>
+              <Text.BadgeL>Settings</Text.BadgeL>
+            </View>
+            <View style={styles.body}>
+              <Text.BadgeM>App ENV</Text.BadgeM>
+              <MarkdownView>{formatJson(env)}</MarkdownView>
+            </View>
+            <View style={styles.body}>
+              {renderSettingItem(LogType.API, 'API Request')}
+              {renderSettingItem(LogType.ZUSTAND, 'Zustand')}
+              {renderSettingItem('auto-scroll', 'Auto scroll to top')}
+              <Button.Secondary onPress={closeSettings}>
+                Close
+              </Button.Secondary>
+            </View>
           </View>
         </View>
-      </View>
-    </Modal>
-  );
+      </Modal>
+    );
+  };
 
   const renderModal = () => {
     if (!visible) return null;
@@ -261,9 +294,32 @@ const LogView = () => {
     );
   };
 
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
+  }));
+
+  const gestureHandler = useAnimatedGestureHandler({
+    onStart: (_, ctx: any) => {
+      ctx.startX = translateX.value;
+      ctx.startY = translateY.value;
+    },
+    onActive: (event, ctx) => {
+      translateX.value = ctx.startX + event.translationX;
+      translateY.value = ctx.startY + event.translationY;
+    },
+    onEnd: (_) => {
+      translateX.value = withSpring(defaultX);
+      // translateY.value = withSpring(0);
+    },
+  });
+
   return (
-    <Portal>
-      <View style={[styles.container, visible && styles.containerExpanded]}>
+    <PanGestureHandler onGestureEvent={gestureHandler}>
+      <Animated.View
+        style={[
+          styles.container,
+          visible ? styles.containerExpanded : animatedStyle]}
+      >
         <TouchableOpacity onPress={open}>
           <View style={styles.icon}>
             <Text>🐞</Text>
@@ -271,8 +327,8 @@ const LogView = () => {
         </TouchableOpacity>
         {renderModal()}
         {renderSettings()}
-      </View>
-    </Portal>
+      </Animated.View>
+    </PanGestureHandler>
   );
 };
 
@@ -287,6 +343,7 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
     // flex: 1,
     width: '100%',
     height: '100%',
+    backgroundColor: '#F8F9FF',
   },
   modal: {
     // flex: 1,
@@ -354,7 +411,7 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
     backgroundColor: 'rgba(17, 21, 26, 0.6)',
   },
   settingsMenu: {
-    width: 250,
+    width: '90%',
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
   },
@@ -366,4 +423,4 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
   },
 });
 
-export default LogView;
+export default LoggerView;

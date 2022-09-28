@@ -23,7 +23,7 @@ import mainTabStack from './stack';
 import MainTabs from '~/router/navigator/MainStack/MainTabs';
 import { AppConfig } from '~/configs';
 import BottomList from '~/components/BottomList';
-import LogView from '~/components/LogView';
+import LoggerView from '~/components/LoggerView';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +35,7 @@ const MainStack = (): React.ReactElement => {
 
   const navState = useNavigationState((state: any) => state);
   const drawerVisible = useKeySelector('app.drawerVisible');
+  const debuggerVisible = useKeySelector('app.debuggerVisible');
 
   useBackHandler(() => {
     const activeRoute = getActiveRouteState(navState);
@@ -74,7 +75,8 @@ const MainStack = (): React.ReactElement => {
       <UserProfilePreviewBottomSheet />
       <CommonModal />
       <BottomList />
-      <LogView />
+      {debuggerVisible && <LoggerView /> }
+      {/* <LoggerView /> */}
     </View>
   );
 };
