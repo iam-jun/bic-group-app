@@ -1,10 +1,9 @@
-import { put, select } from 'redux-saga/effects';
-import { get, isEmpty } from 'lodash';
+import { put, select, call } from 'redux-saga/effects';
+import { cloneDeep, get, isEmpty } from 'lodash';
 
 import postActions from '~/storeRedux/post/actions';
-import homeKeySelector from '~/storeRedux/home/keySelector';
-import homeActions from '~/storeRedux/home/actions';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
+import useHomeStore from '~/screens/Home/store';
 
 function* updatePostsContainingVideoInProgress({
   payload,
@@ -32,16 +31,22 @@ function* updatePostsContainingVideoInProgress({
           payload?.extra?.type
           === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL
         ) {
-          const homePosts = yield select((state) => get(
-            state, homeKeySelector.homePosts,
-          )) || [];
-          const newHomePosts = [
-            { ...payload.activities[0] },
-            ...homePosts,
-          ] as any;
+          const homePosts = useHomeStore.getState().tabNewsfeed.data || [];
+          const filterPosts = homePosts.filter((item) => item.id === postId);
+          const isExisted = filterPosts.length > 0;
+          if (!isExisted) {
+            const newHomePosts = [
+              { ...payload.activities[0] },
+              ...homePosts,
+            ] as any;
 
-          yield put(homeActions.setHomePosts(newHomePosts));
-          yield put(postActions.addToAllPosts({ data: { ...payload.activities[0] } }));
+            const data = cloneDeep(newHomePosts);
+            /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+            // @ts-ignore
+            yield call(useHomeStore.getState().setTabNewsfeed, { data });
+
+            yield put(postActions.addToAllPosts({ data: { ...payload.activities[0] } }));
+          }
         }
       }
     }
