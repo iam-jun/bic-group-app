@@ -17,7 +17,9 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import authActions from '~/storeRedux/auth/actions';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
-import { Toggle } from '~/baseComponents';
+import { useKeySelector } from '~/hooks/selector';
+import menuKeySelector from '~/storeRedux/menu/keySelector';
+import { AppConfig } from '~/configs';
 
 const MenuSettings = () => {
   const { rootNavigation } = useRootNavigation();
@@ -26,6 +28,8 @@ const MenuSettings = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const isProduction = getEnv('APP_ENV') === APP_ENV.PRODUCTION;
+  const debuggerVisible = useKeySelector('app.debuggerVisible');
+  const myProfile = useKeySelector(menuKeySelector.myProfile);
 
   const onLogout = () => {
     const alertPayload = {
@@ -37,6 +41,15 @@ const MenuSettings = () => {
       confirmLabel: t('auth:text_sign_out'),
     };
     dispatch(modalActions.showAlert(alertPayload));
+  };
+
+  const onPressHelp = () => {
+    const isSuperUser = AppConfig.superUsers.includes(myProfile?.email);
+    if (isProduction && !isSuperUser) {
+      dispatch(modalActions.showAlertNewFeature());
+    } else {
+      dispatch(appActions.setDebuggerVisible(!debuggerVisible));
+    }
   };
 
   const settingItems = [
@@ -58,7 +71,7 @@ const MenuSettings = () => {
     {
       icon: 'MessagesQuestion',
       title: t('menu:title_help_support'),
-      onPress: () => dispatch(modalActions.showAlertNewFeature()),
+      onPress: onPressHelp,
     },
   ];
 
@@ -69,27 +82,12 @@ const MenuSettings = () => {
     rootNavigation.navigate(menuStack.componentCollection);
   };
 
-  const onPressDebugger = (isChecked: boolean) => {
-    dispatch(appActions.setDebuggerVisible(isChecked));
-  };
-
   const renderItem = ({ icon, title, onPress }: any) => (
     <Button key={title + icon} style={styles.itemContainer} onPress={onPress}>
       <Icon tintColor={theme.colors.neutral20} icon={icon} />
       <Text.BodyMMedium style={styles.textTitle} numberOfLines={1}>{title}</Text.BodyMMedium>
     </Button>
   );
-
-  const renderDebugItem = () => {
-    if (isProduction) return null;
-
-    return (
-      <View style={styles.itemContainer}>
-        <Toggle onValueChanged={onPressDebugger} />
-        <Text.BodyMMedium style={styles.textTitle}>Show Debugger</Text.BodyMMedium>
-      </View>
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -98,7 +96,6 @@ const MenuSettings = () => {
         <Text.SubtitleXS onPress={onPressAppVersion}>{getEnv('APP_VERSION')}</Text.SubtitleXS>
       </View>
       {settingItems.map(renderItem)}
-      {renderDebugItem()}
       <Button style={styles.itemContainer} onPress={onLogout}>
         <Icon tintColor={theme.colors.purple20} icon="ArrowRightFromBracket" />
         <Text.BodyMMedium style={styles.textLogout} numberOfLines={1}>{t('menu:title_logout')}</Text.BodyMMedium>
