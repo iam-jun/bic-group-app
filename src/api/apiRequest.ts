@@ -7,22 +7,25 @@ import moment from 'moment';
 import DeviceInfo from 'react-native-device-info';
 import { put } from 'redux-saga/effects';
 
+import { DeviceEventEmitter } from 'react-native';
 import {
   apiProviders,
   HttpApiRequestConfig,
   HttpApiResponseFormat,
 } from '~/api/apiConfig';
+import { notificationApiConfig } from '~/api/NotificationApi';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
+import { uuidRegex } from '~/constants/commonRegex';
+import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
+import { EVENT_LOGGER_TAG } from '~/components/LogView';
+import { LogType } from '~/components/LogView/Interface';
+import resetAllStores from '~/store/resetAllStores';
 import Store from '~/storeRedux';
+import groupsActions from '~/storeRedux/groups/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 import noInternetActions from '~/storeRedux/network/actions';
 import { ActionTypes, createAction } from '~/utils';
-import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ConvertHelper from '~/utils/convertHelper';
-import groupsActions from '~/storeRedux/groups/actions';
-import { uuidRegex } from '~/constants/commonRegex';
-import { notificationApiConfig } from '~/api/NotificationApi';
-import resetAllStores from '~/store/resetAllStores';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -216,6 +219,8 @@ const handleResponseError = async (error: AxiosError): Promise<HttpApiResponseFo
   //   await timeout(5000);
   // }
 
+  DeviceEventEmitter.emit(EVENT_LOGGER_TAG, { type: LogType.API, data: error });
+
   if (error.response) {
     const responseTokenExpired = error.response.status === 401
       || error.response?.data?.code === API_ERROR_CODE.AUTH.TOKEN_EXPIRED;
@@ -280,6 +285,8 @@ const interceptorsResponseSuccess = (response: AxiosResponse) => {
     response.data
     && response.headers?.['content-type']?.includes?.('application/json')
   ) {
+    DeviceEventEmitter.emit(EVENT_LOGGER_TAG, { type: LogType.API, data: response });
+
     response.data = ConvertHelper.camelizeKeys(response.data, {
       excludeValueOfKey: ['reactions_count'],
       excludeKey: [uuidRegex],

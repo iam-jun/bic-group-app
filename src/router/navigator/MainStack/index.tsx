@@ -23,6 +23,7 @@ import mainTabStack from './stack';
 import MainTabs from '~/router/navigator/MainStack/MainTabs';
 import { AppConfig } from '~/configs';
 import BottomList from '~/components/BottomList';
+import LogView from '~/components/LogView';
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +74,7 @@ const MainStack = (): React.ReactElement => {
       <UserProfilePreviewBottomSheet />
       <CommonModal />
       <BottomList />
+      <LogView />
     </View>
   );
 };
