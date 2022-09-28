@@ -8,10 +8,11 @@ import Icon from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
+import Divider from '~/beinComponents/Divider';
+import { useKeySelector } from '~/hooks/selector';
+import postKeySelector from '~/storeRedux/post/keySelector';
 
 const NoticePanel = () => {
   const theme: ExtendedTheme = useTheme();
@@ -20,7 +21,6 @@ const NoticePanel = () => {
   const dispatch = useDispatch();
 
   const total = useKeySelector(postKeySelector.allPostContainingVideoInProgress);
-
   const onPress = () => {
     dispatch(postActions.setAllPostContainingVideoInProgress({
       total: 0,
@@ -35,26 +35,29 @@ const NoticePanel = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text.BodySMedium testID="notice_panel.title">{title}</Text.BodySMedium>
-        <Text.BodyS useI18n style={styles.description}>
-          home:notice_post_video_uploading:description
-        </Text.BodyS>
+    <>
+      <Divider color={theme.colors.gray5} size={spacing.margin.large} />
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Text.BodySMedium testID="notice_panel.title">{title}</Text.BodySMedium>
+          <Text.BodyS useI18n style={styles.description}>
+            home:notice_post_video_uploading:description
+          </Text.BodyS>
+        </View>
+        <ButtonWrapper
+          testID="notice_panel.button_close"
+          style={styles.closeButton}
+          activeOpacity={0.9}
+          onPress={onPress}
+        >
+          <Icon
+            size={16}
+            tintColor={theme.colors.neutral80}
+            icon="iconClose"
+          />
+        </ButtonWrapper>
       </View>
-      <ButtonWrapper
-        testID="notice_panel.button_close"
-        style={styles.closeButton}
-        activeOpacity={0.9}
-        onPress={onPress}
-      >
-        <Icon
-          size={16}
-          tintColor={theme.colors.neutral80}
-          icon="iconClose"
-        />
-      </ButtonWrapper>
-    </View>
+    </>
   );
 };
 
@@ -79,7 +82,6 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.small,
       alignItems: 'center',
-      marginBottom: spacing.margin.base,
     },
   });
 };

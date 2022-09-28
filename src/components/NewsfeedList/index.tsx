@@ -30,13 +30,14 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import { useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
-import NoticePanel from '~/screens/Home/components/NoticePanel';
 import { IPostActivity } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';
+import NoticePanel from '~/screens/Home/components/NoticePanel';
+import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -301,6 +302,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         />
       )}
       ListEmptyComponent={renderEmpty}
+      style={styles.mainColor}
     />
   );
 
@@ -326,15 +328,18 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
               progressViewOffset={refreshControlOffset}
               refreshing={!!refreshing}
               onRefresh={() => onRefresh?.()}
+              style={styles.refreshControl}
             />
           )}
           showsHorizontalScrollIndicator={false}
           onRefresh={onRefresh}
           onEndReached={_onEndReached}
           onEndReachedThreshold={0.5}
-          ListHeaderComponent={<NewsfeedListHeader HeaderComponent={HeaderComponent} />}
+          ListHeaderComponent={<NewsfeedListHeader HeaderComponent={HeaderComponent} activeTab={activeTab} />}
           ListFooterComponent={renderFooter}
           ItemSeparatorComponent={() => <ViewSpacing height={8} />}
+          style={styles.mainColor}
+          contentContainerStyle={styles.mainColor}
         />
       ) : renderListEmpty() }
       {renderPlaceholder()}
@@ -343,17 +348,23 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 };
 
-const NewsfeedListHeader = ({ HeaderComponent }: any) => {
+const NewsfeedListHeader = ({ HeaderComponent, activeTab }: any) => {
   const insets = useSafeAreaInsets();
   const theme = useTheme() as any;
   const styles = createStyle(
     theme, insets,
   );
 
+  const isNewsfeed = activeTab === HOME_TAB_TYPE.NEWSFEED;
+
   return (
     <View style={styles.headerContainer}>
       {!!HeaderComponent && HeaderComponent}
-      <NoticePanel />
+      {isNewsfeed
+        ? (
+          <NoticePanel />
+        )
+        : null}
       <View style={styles.headerDivider} />
     </View>
   );
@@ -368,10 +379,6 @@ const createStyle = (
       flex: 1,
     },
     headerDivider: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
       height: spacing.margin.large,
       backgroundColor: colors.gray5,
     },
@@ -396,7 +403,7 @@ const createStyle = (
       backgroundColor: colors.neutral1,
     },
     headerContainer: {
-      height: insets.top + dimension.homeHeaderHeight + spacing.margin.large,
+      paddingTop: insets.top + dimension.homeHeaderHeight,
       backgroundColor: colors.neutral,
       width: '100%',
     },
@@ -419,6 +426,8 @@ const createStyle = (
       marginBottom: spacing.margin.extraLarge,
       color: colors.neutral50,
     },
+    mainColor: { backgroundColor: theme.colors.gray5 },
+    refreshControl: { position: 'absolute', zIndex: 2 },
   });
 };
 
