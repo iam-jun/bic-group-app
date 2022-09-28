@@ -166,6 +166,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       onScrollToIndexFailed={onScrollToIndexFailed}
       snapToInterval={itemWidth}
       style={styles.container}
+      contentContainerStyle={styles.contentContainerStyle}
       renderItem={renderItem}
       keyExtractor={(
         item, index,
@@ -181,7 +182,6 @@ const createStyle = (theme: ExtendedTheme) => {
       borderBottomWidth: 1,
       borderColor: colors.neutral5,
       paddingVertical: spacing.padding.base,
-      paddingHorizontal: spacing.padding.base,
     },
     tabItem: {
       height: 32,
@@ -198,6 +198,9 @@ const createStyle = (theme: ExtendedTheme) => {
     emoji: {
       width: 14,
       aspectRatio: 1,
+    },
+    contentContainerStyle: {
+      paddingHorizontal: spacing.padding.base,
     },
   });
 };
