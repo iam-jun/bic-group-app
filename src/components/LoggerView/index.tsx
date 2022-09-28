@@ -59,9 +59,9 @@ const LoggerView = () => {
     const user = await getUserFromSharedPreferences();
     if (user) {
       setAuthSessions({
-        username: user.name,
+        username: user.username,
         name: user.name,
-        email: user.name,
+        email: user.email,
         activeSessions: user.activeSessions,
       });
     }
