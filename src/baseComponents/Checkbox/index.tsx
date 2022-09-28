@@ -1,5 +1,5 @@
 import {
-  StyleProp, StyleSheet, TouchableOpacity, ViewStyle, View,
+  StyleProp, StyleSheet, ViewStyle, View,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import Icon from '~/baseComponents/Icon';
 import Text, { TextVariant } from '~/beinComponents/Text';
 import { IconType } from '~/resources/icons';
 import { spacing } from '~/theme';
+import Button from '../Button';
 
 export interface CheckboxProps {
   testID?: string;
@@ -94,13 +95,12 @@ const Checkbox = ({
   const { textVariant, iconSize } = checkBoxStyles[size];
 
   return (
-    <TouchableOpacity
+    <Button
       testID={testID}
-      style={[styles.container, style]}
       disabled={!!disabled || !!indeterminate}
       onPress={onChangeValue}
     >
-      <View>
+      <View style={[styles.container, style]}>
         <View style={[styles.backgroundView, disabled && styles.backgroundViewDisabled]} />
         <Icon icon={iconName} size={iconSize} tintColor={iconColor} />
         {!!label && (
@@ -114,7 +114,7 @@ const Checkbox = ({
         </Text>
         )}
       </View>
-    </TouchableOpacity>
+    </Button>
   );
 };
 

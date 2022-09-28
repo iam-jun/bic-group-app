@@ -93,8 +93,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
   },
   lineNumbers: {
     alignItems: 'center',
-    backgroundColor: theme.neutral60,
-    borderRightColor: theme.neutral70,
+    backgroundColor: theme.gray5,
+    borderRightColor: theme.gray50,
     borderRightWidth: StyleSheet.hairlineWidth,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -105,7 +105,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     alignItems: 'flex-end',
   },
   lineNumbersText: {
-    color: theme.neutral50,
+    color: theme.gray50,
     fontSize: 12,
     lineHeight: 18,
   },
@@ -126,7 +126,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
     }),
   },
   codeText: {
-    color: theme.neutral60,
+    color: theme.gray50,
     fontFamily: CODE_FONT_FAMILY,
     fontSize: 12,
     lineHeight: 18,

@@ -24,6 +24,10 @@ export default {
     type: Actions.SET_DRAWER_VISIBLE,
     payload,
   }),
+  setDebuggerVisible: (payload: boolean) => ({
+    type: Actions.SET_DEBUGGER_VISIBLE,
+    payload,
+  }),
 };
 
 // export const setupPushToken = () => ({
