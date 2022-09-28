@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -24,16 +24,12 @@ const LinkPreviewer = ({ text, showClose }: LinkPreviewerProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const [link, setLink] = useState<string | null | undefined>('');
   const [visible, setVisible] = useState<boolean>(false);
   const linkPreviews = useKeySelector('app.linkPreviews');
 
-  useEffect(() => {
-    const urls = getUrlFromText(text, []);
-    if (urls?.length > 0) {
-      setLink(urls[urls.length - 1]);
-    }
-  }, [text]);
+  // do not use link as state because FlashList in newsfeed cache component state
+  const urls = useMemo(() => getUrlFromText(text, []), [text]);
+  const link = urls?.[0];
 
   useEffect(() => {
     if (link && !linkPreviews?.[link]) {

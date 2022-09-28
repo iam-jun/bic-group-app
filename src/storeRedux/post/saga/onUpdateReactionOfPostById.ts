@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import { put, select } from 'redux-saga/effects';
 
 import { IOwnReaction, IReactionCounts } from '~/interfaces/IPost';
@@ -15,9 +15,10 @@ export default function* onUpdateReactionOfPostById(
       state, postKeySelector.postById(postId),
     ));
     if (post) {
-      post.reactionsCount = reactionCounts;
-      post.ownerReactions = ownReaction;
-      yield put(postActions.addToAllPosts({ data: post }));
+      const newPost = cloneDeep(post);
+      newPost.reactionsCount = reactionCounts;
+      newPost.ownerReactions = ownReaction;
+      yield put(postActions.addToAllPosts({ data: newPost }));
     }
   } catch (e) {
     console.error(
