@@ -1,6 +1,6 @@
 import {
   DeviceEventEmitter,
-  FlatList, Modal, StyleSheet, TouchableOpacity, View,
+  FlatList, Modal, ScrollView, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
 import React, {
   useCallback, useEffect, useRef, useState,
@@ -23,6 +23,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Checkbox from '~/baseComponents/Checkbox';
 import { dimension } from '~/theme';
 import MarkdownView from '~/beinComponents/MarkdownView';
+import { getUserFromSharedPreferences } from '~/services/sharePreferences';
 
 export const EVENT_LOGGER_TAG = 'debug-logger-on-new-log';
 const MAX_LOGS = 200;
@@ -30,10 +31,12 @@ const MAX_LOGS = 200;
 const LoggerView = () => {
   const insets = useSafeAreaInsets();
   const styles = createStyles(insets);
+
   const [logs, setLogs] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
   const [settingVisible, setSettingVisible] = useState(false);
   const [settings, setSettings] = useState([LogType.API, 'auto-scroll']);
+  const [authSession, setAuthSessions] = useState(null);
   const dispatch = useDispatch();
   const listRef = useRef<FlatList>();
   const offset = useRef(0);
@@ -45,6 +48,28 @@ const LoggerView = () => {
   const translateY = useSharedValue(defaultY);
 
   const host = getEnv('BEIN_API');
+  const env = {
+    SELF_DOMAIN: getEnv('SELF_DOMAIN'),
+    BEIN_CHAT_DEEPLINK: getEnv('BEIN_CHAT_DEEPLINK'),
+    APP_GROUP_PACKAGE_NAME_IOS: getEnv('APP_GROUP_PACKAGE_NAME_IOS'),
+    APP_GROUP_PACKAGE_NAME_ANDROID: getEnv('APP_GROUP_PACKAGE_NAME_ANDROID'),
+  };
+
+  const checkAuthSessions = async () => {
+    const user = await getUserFromSharedPreferences();
+    if (user) {
+      setAuthSessions({
+        username: user.username,
+        name: user.name,
+        email: user.email,
+        activeSessions: user.activeSessions,
+      });
+    }
+  };
+
+  useEffect(() => {
+    checkAuthSessions();
+  }, []);
 
   useEffect(
     () => {
@@ -225,38 +250,33 @@ const LoggerView = () => {
     />
   );
 
-  const renderSettings = () => {
-    const env = {
-      SELF_DOMAIN: getEnv('SELF_DOMAIN'),
-      BEIN_CHAT_DEEPLINK: getEnv('BEIN_CHAT_DEEPLINK'),
-      APP_GROUP_PACKAGE_NAME_IOS: getEnv('APP_GROUP_PACKAGE_NAME_IOS'),
-      APP_GROUP_PACKAGE_NAME_ANDROID: getEnv('APP_GROUP_PACKAGE_NAME_ANDROID'),
-    };
-
-    return (
-      <Modal transparent visible={settingVisible} animationType="slide">
-        <View style={styles.settingsModal}>
-          <View style={styles.settingsMenu}>
-            <View style={styles.menubar}>
-              <Text.BadgeL>Settings</Text.BadgeL>
-            </View>
-            <View style={styles.body}>
-              <Text.BadgeM>App ENV</Text.BadgeM>
-              <MarkdownView>{formatJson(env)}</MarkdownView>
-            </View>
+  const renderSettings = () => (
+    <Modal transparent visible={settingVisible} animationType="slide">
+      <View style={styles.settingsModal}>
+        <View style={styles.settingsMenu}>
+          <View style={styles.menubar}>
+            <Text.BadgeL>Settings</Text.BadgeL>
+            <Button.Secondary onPress={closeSettings}>
+              Close
+            </Button.Secondary>
+          </View>
+          <ScrollView>
             <View style={styles.body}>
               {renderSettingItem(LogType.API, 'API Request')}
               {renderSettingItem(LogType.ZUSTAND, 'Zustand')}
               {renderSettingItem('auto-scroll', 'Auto scroll to top')}
-              <Button.Secondary onPress={closeSettings}>
-                Close
-              </Button.Secondary>
             </View>
-          </View>
+            <View style={styles.appInfo}>
+              <Text.BadgeM>App ENV</Text.BadgeM>
+              <MarkdownView>{formatJson(env)}</MarkdownView>
+              <Text.BadgeM>Auth session</Text.BadgeM>
+              <MarkdownView>{formatJson(authSession)}</MarkdownView>
+            </View>
+          </ScrollView>
         </View>
-      </Modal>
-    );
-  };
+      </View>
+    </Modal>
+  );
 
   const renderModal = () => {
     if (!visible) return null;
@@ -414,12 +434,17 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
     width: '90%',
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
+    marginTop: insets.top,
+    marginBottom: insets.bottom,
   },
   horizontal: {
     flexDirection: 'row',
   },
   space16: {
     marginBottom: 16,
+  },
+  appInfo: {
+    paddingHorizontal: 16,
   },
 });
 
