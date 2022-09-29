@@ -263,7 +263,7 @@ const LoggerView = () => {
           <ScrollView>
             <View style={styles.body}>
               {renderSettingItem(LogType.API, 'API Request')}
-              {renderSettingItem(LogType.ZUSTAND, 'Zustand')}
+              {/* {renderSettingItem(LogType.ZUSTAND, 'Zustand')} */}
               {renderSettingItem('auto-scroll', 'Auto scroll to top')}
             </View>
             <View style={styles.appInfo}>
