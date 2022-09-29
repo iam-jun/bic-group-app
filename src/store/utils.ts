@@ -5,15 +5,15 @@ import {
 } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import zustandFlipper from 'react-native-flipper-zustand';
-import { zustandLogger } from '../components/LoggerView/utils';
 
 interface ICreateZustand {
   persist?: PersistOptions<any>;
 }
 
 const createStore = <T>(store, options?: ICreateZustand) => {
-  const storeName = store.name || 'ZustandStore';
-  let _store: any = zustandLogger(zustandFlipper(immer(store) as any, storeName), storeName);
+  // const storeName = store.name || 'ZustandStore';
+  // let _store: any = zustandLogger(zustandFlipper(immer(store) as any, storeName), storeName);
+  let _store: any = zustandFlipper(immer(store) as any, store.name || 'ZustandStore');
   if (options?.persist) {
     _store = persist(_store, options.persist);
   }
