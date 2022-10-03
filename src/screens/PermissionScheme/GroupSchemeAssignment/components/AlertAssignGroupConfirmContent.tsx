@@ -112,7 +112,10 @@ export const prepareData = (
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.small,
+  },
   itemContainer: {
     marginTop: spacing.margin.base,
   },
