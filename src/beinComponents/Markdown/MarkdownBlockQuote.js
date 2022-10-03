@@ -45,7 +45,8 @@ const createStyles = (theme) => {
       borderLeftWidth: 6,
       paddingLeft: spacing.padding.base,
       paddingVertical: spacing.padding.small,
-      backgroundColor: theme.gray1
+      backgroundColor: theme.gray1,
+      marginBottom: spacing.margin.base,
     },
     childContainer: {
       flex: 1,

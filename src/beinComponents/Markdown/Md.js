@@ -32,6 +32,7 @@ import {
 } from './utils/transform';
 import AtMention from './AtMention';
 import Emoji from '~/baseComponents/Emoji';
+import { spacing } from '~/theme';
 
 export default class Md extends PureComponent {
   static propTypes = {
@@ -229,7 +230,7 @@ export default class Md extends PureComponent {
     return <Text style={this.props.baseTextStyle}>{hashtag}</Text>;
   };
 
-  renderParagraph = ({ children, first }) => {
+  renderParagraph = ({ children, first, context }) => {
     if (!children || children.length === 0) {
       return <View />;
     }
@@ -239,9 +240,11 @@ export default class Md extends PureComponent {
     if (!first) {
       blockStyle.push(this.props.blockStyles.adjacentParagraph);
     }
+    
+    const styleParagraph = context?.length === 0 ? style.paragraph : {};
 
     return (
-      <View style={blockStyle}>
+      <View style={[blockStyle, styleParagraph,]}>
         <Text>{children}</Text>
       </View>
     );
@@ -253,8 +256,10 @@ export default class Md extends PureComponent {
       this.props.blockStyles[`heading${level}`],
     ];
     const textStyle = this.props.blockStyles[`heading${level}Text`];
+    const style = getStyleSheet(this.props.theme);
+
     return (
-      <View style={containerStyle}>
+      <View style={[containerStyle,style.paragraph]}>
         <Text style={textStyle}>{children}</Text>
       </View>
     );
@@ -288,11 +293,15 @@ export default class Md extends PureComponent {
   }
   renderList = ({
     children, start, tight, type,
-  }) => (
+  }) => {
+    const style = getStyleSheet(this.props.theme);
+
+    return <View style={style.paragraph}>
     <MarkdownList ordered={type !== 'bullet'} start={start} tight={tight}>
       {children}
     </MarkdownList>
-  );
+    </View>
+  }
 
   renderListItem = ({ children, context, ...otherProps }) => {
     const level = context.filter((type) => type === 'list').length;
@@ -396,6 +405,9 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
       alignItems: 'flex-start',
       flexDirection: 'row',
       flexWrap: 'wrap',
+    },
+    paragraph: {
+      marginBottom: spacing.margin.base,
     },
     editedIndicatorText: {
       color: theme.neutral30,
