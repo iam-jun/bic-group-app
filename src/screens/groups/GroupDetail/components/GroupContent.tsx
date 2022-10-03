@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  RefreshControl, StyleSheet, View,
-} from 'react-native';
+import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
@@ -40,8 +38,15 @@ const GroupContent = ({
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === groupJoinStatus.member;
   const { id: groupId, teamName } = groupData;
-  const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
-  const { id: communityId, name: communityName } = useKeySelector(groupsKeySelector.communityDetail);
+  const refreshingGroupPosts = useKeySelector(
+    groupsKeySelector.refreshingGroupPosts,
+  );
+  const {
+    id: communityId,
+    name: communityName,
+    joinStatus: communityJoinStatus,
+  } = useKeySelector(groupsKeySelector.communityDetail);
+  const isMemberCommunity = communityJoinStatus === groupJoinStatus.member;
 
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {
@@ -50,15 +55,28 @@ const GroupContent = ({
   };
 
   const onPressGroupTree = () => {
-    dispatch(modalActions.showModal({
-      isOpen: true,
-      isFullScreen: true,
-      titleFullScreen: communityName,
-      ContentComponent: (<CommunityJoinedGroupTree communityId={communityId} teamName={teamName} />),
-    }));
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        isFullScreen: true,
+        titleFullScreen: communityName,
+        ContentComponent: (
+          <CommunityJoinedGroupTree
+            communityId={communityId}
+            teamName={teamName}
+          />
+        ),
+      }),
+    );
   };
 
-  const renderItem = ({ item }: any) => <PostItem postData={item} hasReactPermission={isMember} testID="group_content.post.item" />;
+  const renderItem = ({ item }: any) => (
+    <PostItem
+      postData={item}
+      hasReactPermission={isMember}
+      testID="group_content.post.item"
+    />
+  );
 
   const _onRefresh = () => {
     getGroupPosts();
@@ -72,7 +90,7 @@ const GroupContent = ({
         insideCommunityName={communityName}
         onPressGroupTree={onPressGroupTree}
       />
-      <GroupTabHeader groupId={groupId} isMember={isMember} />
+      <GroupTabHeader groupId={groupId} isMemberCommunity={isMemberCommunity} />
       <GroupJoinCancelButton />
     </View>
   );
@@ -88,7 +106,9 @@ const GroupContent = ({
       ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListFooterComponent={<ViewSpacing height={spacing.padding.base} />}
-      ItemSeparatorComponent={() => <ViewSpacing height={spacing.margin.base} />}
+      ItemSeparatorComponent={() => (
+        <ViewSpacing height={spacing.margin.base} />
+      )}
       onEndReached={loadMoreData}
       onEndReachedThreshold={0.5}
       showsVerticalScrollIndicator

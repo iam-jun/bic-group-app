@@ -6,7 +6,6 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 
 interface TabButtonHeaderProps {
-  isMember: boolean
   onPressDiscover?: () => void;
   onPressAbout?: () => void;
   onPressMembers?: () => void;

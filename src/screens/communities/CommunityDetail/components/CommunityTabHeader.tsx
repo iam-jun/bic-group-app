@@ -26,7 +26,6 @@ const CommunityTabHeader = ({ communityId, isMember }: CommunityTabHeaderProps) 
 
   return (
     <TabButtonHeader
-      isMember={isMember}
       onPressAbout={onPressAbout}
       onPressMembers={onPressMembers}
       onPressDiscover={onPressDiscover}

@@ -309,7 +309,7 @@ const GroupDetail = (props: any) => {
           showStickyHeight={groupInfoHeight}
           stickyHeaderComponent={
             !showPrivate && (
-              <GroupTabHeader groupId={groupId} isMember={isMember} />
+              <GroupTabHeader groupId={groupId} isMemberCommunity={isMemberCommunity} />
             )
           }
           onPressBack={onGoBack}
