@@ -20,6 +20,7 @@ import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
   IAudienceGroup,
   IAudienceUser,
+  ILinkPreview,
   IOwnReaction,
   IPayloadReactToPost,
   IPostActivity,
@@ -107,6 +108,7 @@ const _PostView: FC<PostViewProps> = ({
   let setting: IPostSetting;
   let commentsCount: number;
   let totalUsersSeen: number;
+  let linkPreview: ILinkPreview;
 
   if (isUseReduxState) {
     actor = useKeySelector(postKeySelector.postActorById(postId));
@@ -132,6 +134,7 @@ const _PostView: FC<PostViewProps> = ({
     totalUsersSeen = useKeySelector(
       postKeySelector.postTotalUsersSeenById(postId),
     );
+    linkPreview = useKeySelector(postKeySelector.postLinkPreviewById(postId));
   } else {
     actor = postData?.actor;
     audience = postData?.audience;
@@ -147,6 +150,7 @@ const _PostView: FC<PostViewProps> = ({
     ownerReactions = postData?.ownerReactions || [];
     reactionsCount = postData?.reactionsCount || {};
     totalUsersSeen = postData?.totalUsersSeen || 0;
+    linkPreview = postData?.linkPreview || null;
   }
 
   const { images, videos, files } = media || {};
@@ -373,6 +377,7 @@ const _PostView: FC<PostViewProps> = ({
           files={files}
           isPostDetail={isPostDetail}
           onPressMarkSeenPost={onPressMarkSeenPost}
+          linkPreview={linkPreview}
         />
         {!isLite && (
           <SeenCountsView

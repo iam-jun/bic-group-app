@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import { useRootNavigation } from '~/hooks/navigation';
-import { IActivityDataImage, IMarkdownAudience } from '~/interfaces/IPost';
+import { IActivityDataImage, ILinkPreview, IMarkdownAudience } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import PostPhotoPreview from '~/screens/post/components/PostPhotoPreview';
 import Image from '~/beinComponents/Image';
@@ -18,7 +18,7 @@ import FilesView from '../FilesView';
 import CopyableView from '~/beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
 import spacing from '~/theme/spacing';
-import LinkPreviewer from '~/components/LinkPreviewer';
+import LinkPreview from '~/components/LinkPreview';
 
 export interface PostViewContentProps {
   postId: string;
@@ -30,6 +30,7 @@ export interface PostViewContentProps {
   isLite?: boolean;
   isDraft?: boolean;
   onPressMarkSeenPost?: () => void;
+  linkPreview?: ILinkPreview;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
@@ -42,6 +43,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isLite,
   isDraft,
   onPressMarkSeenPost,
+  linkPreview,
 }: PostViewContentProps) => {
   const { rootNavigation } = useRootNavigation();
 
@@ -147,7 +149,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
           {(!images || images?.length === 0)
           && (!videos || videos?.length === 0)
           && isEmpty(files)
-          && <LinkPreviewer text={content} />}
+          && !!linkPreview
+          && <LinkPreview data={linkPreview} />}
 
           <FilesView
             files={files}

@@ -62,6 +62,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     isDraft,
     isProcessing,
     createdAt,
+    linkPreview,
   } = data || {};
 
   const { images, videos, files } = media || {};
@@ -197,6 +198,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           videos={videos}
           files={files}
           isPostDetail={isPostDetail}
+          linkPreview={linkPreview}
         />
         <View style={styles.divider}>
           <Divider color={colors.neutral5} />

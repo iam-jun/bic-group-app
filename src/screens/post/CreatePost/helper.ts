@@ -2,7 +2,11 @@ import { Platform } from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
 import appConfig from '~/configs/appConfig';
 import { IFilePicked } from '~/interfaces/common';
-import { IActivityDataFile, IActivityDataImage } from '~/interfaces/IPost';
+import {
+  IActivityDataFile,
+  IActivityDataImage,
+  ILinkPreviewCreatePost,
+} from '~/interfaces/IPost';
 import i18n from '~/localization';
 import FileUploader from '~/services/fileUploader';
 import { showHideToastMessage } from '~/storeRedux/modal/actions';
@@ -32,7 +36,8 @@ export const validateImages = (
       });
     } else {
       const { file, fileName } = item || {};
-      const { url, uploading, result } = ImageUploader.getInstance().getFile(fileName) || {};
+      const { url, uploading, result }
+        = ImageUploader.getInstance().getFile(fileName) || {};
       if (uploading) {
         imageUploading = true;
         imageError = t('post:error_wait_uploading');
@@ -64,7 +69,8 @@ export const validateVideo = (
   if (selectingVideo?.id) {
     video = selectingVideo;
   } else {
-    const filename = selectingVideo?.fileName
+    const filename
+      = selectingVideo?.fileName
       || selectingVideo?.filename
       || selectingVideo?.name;
     const { uploading, result } = FileUploader.getInstance().getFile(filename);
@@ -94,9 +100,10 @@ export const calculateInputHeight = (
     newInputHeight = maxInputHeight;
   }
   if (isAnimated) {
-    newInputHeight = isKeyboardOpen && newInputHeight > minInputHeight
-      ? minInputHeight
-      : newInputHeight;
+    newInputHeight
+      = isKeyboardOpen && newInputHeight > minInputHeight
+        ? minInputHeight
+        : newInputHeight;
   }
   const toastHeight = isShowToastAutoSave ? TOAST_MIN_HEIGHT : 0;
   const newHeight = Math.max(
@@ -113,16 +120,12 @@ export const isAndroidAnimated = () => {
   const isAndroid = Platform.OS === 'android';
   if (isAndroid) {
     const systemVersion = deviceInfoModule.getSystemVersion();
-    deviceVersion = parseInt(
-      systemVersion, 10,
-    );
+    deviceVersion = parseInt(systemVersion, 10);
   }
   return isAndroid && deviceVersion === 8;
 };
 
-export const validateFiles = (
-  selectingFiles: IFilePicked[], t: any,
-) => {
+export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
   let fileError = '';
   let fileUploading = false;
   const files: IActivityDataFile[] = [];
@@ -136,7 +139,8 @@ export const validateFiles = (
         origin_name: item?.name,
       });
     } else {
-      const { url, uploading, result } = FileUploader.getInstance().getFile(item.name) || {};
+      const { url, uploading, result }
+        = FileUploader.getInstance().getFile(item.name) || {};
       if (uploading) {
         fileUploading = true;
         fileError = t('post:error_wait_uploading');
@@ -174,25 +178,25 @@ export const validateFilesPicker = (
     }
   });
 
-  if (results.length < files.length) toastMessage = i18n.t('upload:text_file_over_size');
+  if (results.length < files.length) {
+    toastMessage = i18n.t('upload:text_file_over_size');
+  }
 
   if (results.length > remainningFilesCount) {
-    toastMessage = i18n.t(
-      'upload:text_file_over_length', {
-        max_files: appConfig.maxFiles,
-      },
-    );
+    toastMessage = i18n.t('upload:text_file_over_length', {
+      max_files: appConfig.maxFiles,
+    });
 
-    results = results.slice(
-      0, remainningFilesCount,
-    );
+    results = results.slice(0, remainningFilesCount);
   }
 
   if (toastMessage) {
-    dispatch(showHideToastMessage({
-      content: toastMessage,
-      props: { type: 'error' },
-    }));
+    dispatch(
+      showHideToastMessage({
+        content: toastMessage,
+        props: { type: 'error' },
+      }),
+    );
   }
 
   return results;
@@ -218,4 +222,33 @@ export const clearExistingFiles = (
     }
   });
   return fileResult;
+};
+
+export const createNewArrayLinkPreview = (
+  urls: string[],
+  lstLinkPreview: ILinkPreviewCreatePost[],
+) => {
+  const mapUrlExisted = lstLinkPreview.reduce(
+    (acc, cur) => ({
+      ...acc,
+      [cur.url]: cur,
+    }),
+    {},
+  );
+  const newLinkPreviews: ILinkPreviewCreatePost[] = urls
+    .filter((item) => !mapUrlExisted[item])
+    .map((item) => ({
+      url: item,
+    }));
+  return [...lstLinkPreview, ...newLinkPreviews];
+};
+
+export const removeLinkPreviewNoLongerExists = (
+  urls: string[],
+  lstLinkPreview: ILinkPreviewCreatePost[],
+) => {
+  const newLinkPreviews: ILinkPreviewCreatePost[] = lstLinkPreview.filter(
+    (item) => urls.includes(item.url),
+  );
+  return newLinkPreviews;
 };
