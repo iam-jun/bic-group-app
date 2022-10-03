@@ -105,8 +105,8 @@ export interface ICreatePostImage {
 
 export interface ICreatePostSettings {
   important?: IActivityImportant;
-  canComment?: boolean,
-  canReact?: boolean,
+  canComment?: boolean;
+  canReact?: boolean;
   count: number;
 }
 
@@ -153,12 +153,13 @@ export interface IPostActivity {
   createdAt?: string;
   createdBy?: string;
   totalUsersSeen?: number;
+  linkPreview?: ILinkPreview;
 }
 
 export type IOwnReaction = Array<IReaction>;
 
 export type IReactionCounts = {
-  [x: string]: {[reactionKind: string]: number};
+  [x: string]: { [reactionKind: string]: number };
 };
 
 export interface IAllPosts {
@@ -179,7 +180,7 @@ export interface IPostCreatePost {
   setting?: any;
   mentions?: any;
   isDraft?: boolean;
-
+  linkPreview?: ILinkPreview;
   createFromGroupId?: string;
 }
 
@@ -286,11 +287,11 @@ export interface IRequestGetPostComment {
   childLimit?: number;
 }
 
-export interface IPayloadGetCommentsById{
+export interface IPayloadGetCommentsById {
   isMerge?: boolean;
   position?: string;
   commentId?: string;
-  params?: IRequestGetPostComment,
+  params?: IRequestGetPostComment;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
 
@@ -304,7 +305,7 @@ export interface IReaction {
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
-  parentCommentId?: string ; // used when retry/cancel adding new comment
+  parentCommentId?: string; // used when retry/cancel adding new comment
   child?: any;
   actor?: IAudienceUser;
   activity_id?: string;
@@ -550,4 +551,20 @@ export interface IGetSeenPostListSheet {
   postId: string;
   offset?: number;
   canLoadMore?: boolean;
+}
+export interface IPayloadUpdateLinkPreview {
+  selectedLinkIndex?: number;
+  lstLinkPreview?: ILinkPreviewCreatePost[];
+}
+
+export interface ILinkPreview {
+  url: string;
+  domain: string;
+  title: string;
+  image: string;
+  description: string;
+}
+
+export interface ILinkPreviewCreatePost extends Partial<ILinkPreview> {
+  isLoading?: boolean;
 }

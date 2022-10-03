@@ -35,6 +35,10 @@ export const postInitState = {
     },
     initAudiences: null,
     isSavingDraftPost: false,
+    linkPreview: {
+      selectedLinkIndex: -1,
+      lstLinkPreview: [],
+    },
   },
   createComment: {
     loading: false,
@@ -450,6 +454,17 @@ function postReducer(
         },
       };
     }
+    case postTypes.UPDATE_LINK_PREVIEW:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          linkPreview: {
+            ...state.createPost.linkPreview,
+            ...payload,
+          },
+        },
+      };
 
     default:
       return state;

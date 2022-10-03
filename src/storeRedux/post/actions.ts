@@ -33,6 +33,7 @@ import {
   IPayloadPutMarkSeenPost,
   IGetSeenPostListSheet,
   IPayloadRemoveAudiencesOfPost,
+  IPayloadUpdateLinkPreview,
 } from '~/interfaces/IPost';
 import { IGroup } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
@@ -309,6 +310,10 @@ const postActions = {
   }),
   removePostAudiences: (payload:IPayloadRemoveAudiencesOfPost) => ({
     type: postTypes.REMOVE_POST_AUDIENCES,
+    payload,
+  }),
+  updateLinkPreview: (payload: IPayloadUpdateLinkPreview) => ({
+    type: postTypes.UPDATE_LINK_PREVIEW,
     payload,
   }),
 };

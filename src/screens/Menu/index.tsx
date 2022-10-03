@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -18,6 +18,7 @@ import MenuShortcut from '~/screens/Menu/components/MenuShortcut';
 import MenuSettings from '~/screens/Menu/components/MenuSettings';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import useJoinedCommunitiesStore from './store';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -28,16 +29,32 @@ const Menu = (): React.ReactElement => {
 
   const currentUserId = useUserIdAuth();
 
+  const getJoinedCommunities = useJoinedCommunitiesStore((state) => state.getJoinedCommunities);
+  const loading = useJoinedCommunitiesStore((state) => state.loading);
+
   useEffect(
     () => {
       if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
     }, [],
   );
 
+  const onRefresh = () => {
+    getJoinedCommunities();
+  };
+
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <MenuHeader />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={(
+          <RefreshControl
+            refreshing={!!loading}
+            onRefresh={onRefresh}
+            tintColor={colors.gray40}
+          />
+)}
+      >
         <MenuDiscoverCommunity />
         <Button style={styles.buttonDiscover} onPress={() => rootNavigation.navigate(menuStack.discover)}>
           <Icon icon="CompassSolid" tintColor={colors.neutral20} />

@@ -1,84 +1,88 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
-import { useKeySelector } from '~/hooks/selector';
-import appActions from '~/storeRedux/app/actions';
 import spacing from '~/theme/spacing';
-import { getUrlFromText } from '~/utils/common';
 import { openUrl } from '~/utils/link';
 import { Button } from '~/baseComponents';
 import images from '~/resources/images';
 import Icon from '~/baseComponents/Icon';
+import { ILinkPreview, ILinkPreviewCreatePost } from '~/interfaces/IPost';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
-interface LinkPreviewerProps {
-  text?: string;
+type LinkPreviewProps = {
+  data: ILinkPreviewCreatePost | ILinkPreview;
+  loadLinkPreview?: (url: string) => void;
+  onClose?: () => void;
   showClose?: boolean;
-}
+};
 
-const LinkPreviewer = ({ text, showClose }: LinkPreviewerProps) => {
-  const dispatch = useDispatch();
+const LinkPreview: FC<LinkPreviewProps> = ({
+  data,
+  loadLinkPreview,
+  onClose,
+  showClose = false,
+}) => {
+  const {
+    url, domain, title, image,
+  } = data;
+  const { isLoading } = data as ILinkPreviewCreatePost;
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const [visible, setVisible] = useState<boolean>(false);
-  const linkPreviews = useKeySelector('app.linkPreviews');
-
-  // do not use link as state because FlashList in newsfeed cache component state
-  const urls = useMemo(() => getUrlFromText(text, []), [text]);
-  const link = urls?.[0];
 
   useEffect(() => {
-    if (link && !linkPreviews?.[link]) {
-      dispatch(appActions.getLinkPreview(link));
+    if (url && !title && !domain && !isLoading) {
+      loadLinkPreview?.(url);
     }
-  }, [link]);
-
-  // link preview must have title at least
-  if (!link || !linkPreviews?.[link]?.title) return null;
+  }, [url, title, domain, isLoading]);
 
   const onPress = () => {
-    openUrl(link);
+    openUrl(url);
   };
 
-  const onClose = () => {
-    setVisible(true);
+  const onCloseLinkPreview = () => {
+    onClose?.();
   };
 
-  if (!!visible) return null;
+  if (!url || (!title && !domain && !isLoading)) return null;
+
+  if (isLoading) {
+    return (
+      <View style={[styles.container, styles.loadingView]}>
+        <LoadingIndicator size="small" />
+      </View>
+    );
+  }
 
   return (
     <Button onPress={onPress}>
       <View style={styles.container}>
-        {!!linkPreviews?.[link]?.image && (
+        {!!image && (
           <Image
             style={styles.thumbnail}
-            source={linkPreviews[link].image}
+            source={image}
             placeholderSource={images.img_thumbnail_default}
           />
         )}
         <View style={styles.metadata}>
           <Text.BodyS numberOfLines={1} color={colors.neutral80}>
-            {linkPreviews?.[link]?.domain}
+            {domain}
           </Text.BodyS>
           <Text.H6 numberOfLines={2} style={styles.title}>
-            {linkPreviews?.[link].title}
+            {title}
           </Text.H6>
         </View>
-        {
-          !!showClose
-              && (
-              <TouchableOpacity
-                onPress={onClose}
-                style={styles.buttonClose}
-              >
-                <Icon size={12} tintColor={colors.neutral40} icon="Xmark" />
-              </TouchableOpacity>
-              )
-        }
+        {!!showClose && (
+          <TouchableOpacity
+            onPress={onCloseLinkPreview}
+            style={styles.buttonClose}
+          >
+            <Icon size={12} tintColor={colors.neutral40} icon="Xmark" />
+          </TouchableOpacity>
+        )}
       </View>
     </Button>
   );
@@ -96,6 +100,10 @@ const createStyle = (theme: ExtendedTheme) => {
       borderRadius: spacing.borderRadius.large,
       marginVertical: spacing.margin.small,
       marginHorizontal: spacing.margin.large,
+    },
+    loadingView: {
+      justifyContent: 'center',
+      height: 82,
     },
     metadata: {
       flex: 1,
@@ -126,4 +134,4 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-export default LinkPreviewer;
+export default LinkPreview;

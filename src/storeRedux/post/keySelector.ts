@@ -13,6 +13,7 @@ const postKeySelector = {
     initAudiences: 'post.createPost.initAudiences',
     chosenAudiences: 'post.createPost.chosenAudiences',
     content: 'post.createPost.data.content',
+    linkPreview: 'post.createPost.linkPreview',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
   replyingComment: 'post.replyingComment',
@@ -47,6 +48,7 @@ const postKeySelector = {
   postMarkedReadById: (id: string) => `post.allPosts.${id}.markedReadPost`,
   postMarkedReadSuccessById: (id: string) => `post.allPosts.${id}.markedReadSuccess`,
   postTotalUsersSeenById: (id: string) => `post.allPosts.${id}.totalUsersSeen`,
+  postLinkPreviewById: (id: string) => `post.allPosts.${id}.linkPreview`,
 
   // Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',
