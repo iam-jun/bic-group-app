@@ -29,7 +29,6 @@ import { IObject } from '~/interfaces/common';
 import {
   ICommunity,
   IParamGetCommunityMembers,
-  IParamGetDiscoverGroups,
   ISetMembers,
   ISetCommunitySearchMembers,
   IParamGetCommunities,
@@ -299,16 +298,31 @@ const groupsActions = {
     type: groupsTypes.GET_JOINABLE_USERS,
     payload,
   }),
-  setJoinableUsers: (payload: IUser[]) => ({
+  setJoinableUsers: (payload: {
+    loading?: boolean;
+    data?: IUser[];
+    canLoadMore?: boolean;
+    params?: any,
+  }) => ({
     type: groupsTypes.SET_JOINABLE_USERS,
     payload,
   }),
-  setExtraJoinableUsers: (payload: IUser[]) => ({
+  setExtraJoinableUsers: (payload: {
+    extra?: IUser[];
+    canLoadMore?: boolean;
+  }) => ({
     type: groupsTypes.SET_EXTRA_JOINABLE_USERS,
     payload,
   }),
   mergeExtraJoinableUsers: () => ({
     type: groupsTypes.MERGE_EXTRA_JOINABLE_USERS,
+  }),
+  setMergeExtraJoinableUsers: (payload: {
+    data: IUser[],
+    extra: IUser[],
+  }) => ({
+    type: groupsTypes.SET_MERGE_EXTRA_JOINABLE_USERS,
+    payload,
   }),
   resetJoinableUsers: () => ({
     type: groupsTypes.RESET_JOINABLE_USERS,
@@ -334,15 +348,6 @@ const groupsActions = {
     type: groupsTypes.REMOVE_GROUP_ADMIN,
     payload,
   }),
-
-  joinNewGroup: (payload: {groupId: string; groupName: string}) => ({
-    type: groupsTypes.JOIN_NEW_GROUP,
-    payload,
-  }),
-  cancelJoinGroup: (payload: {groupId: string; groupName: string}) => ({
-    type: groupsTypes.CANCEL_JOIN_GROUP,
-    payload,
-  }),
   leaveGroup: (payload: string) => ({
     type: groupsTypes.LEAVE_GROUP,
     payload,
@@ -358,15 +363,6 @@ const groupsActions = {
   }),
   setLoadingPage: (payload: boolean) => ({
     type: groupsTypes.SET_LOADING_PAGE,
-    payload,
-  }),
-
-  removeMember: (payload: {
-    groupId: string;
-    userId: string;
-    userFullname: string;
-  }) => ({
-    type: groupsTypes.REMOVE_MEMBER,
     payload,
   }),
 
@@ -561,27 +557,6 @@ const groupsActions = {
   }),
   resetCommunitySearchMembers: () => ({
     type: groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS,
-  }),
-  getDiscoverGroups: (payload: {
-    communityId: string;
-    isRefreshing?: boolean;
-    params?: IParamGetDiscoverGroups;
-  }) => ({
-    type: groupsTypes.GET_DISCOVER_GROUPS,
-    payload,
-  }),
-  setDiscoverGroups: (payload: {
-    loading?: boolean;
-    canLoadMore?: boolean;
-    ids?: string[];
-    items?: IObject<IGroup>;
-  }) => ({
-    type: groupsTypes.SET_DISCOVER_GROUPS,
-    payload,
-  }),
-  editDiscoverGroupItem: (payload: {id: string; data: any}) => ({
-    type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
-    payload,
   }),
   joinCommunity: (payload: {communityId: string; communityName: string}) => ({
     type: groupsTypes.JOIN_COMMUNITY,

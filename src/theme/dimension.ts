@@ -1,5 +1,6 @@
 /* Declare Dimensions */
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
+import deviceInfoModule from 'react-native-device-info';
 
 const guidelineBaseWidth = 375;
 
@@ -72,6 +73,11 @@ export const sizes = {
   captionS: 11,
   code: 16,
   error: 16,
+  mdH1: 22,
+  mdH2: 20,
+  mdH3: 18,
+  mdH4: 16,
+  mdParagraph: 14,
 };
 
 /* Line Height used for Text */
@@ -185,6 +191,7 @@ export const permissionRoleSectionHeaderHeight = 56;
 export const homeHeaderLogoHeight = 48;
 export const homeHeaderTabHeight = 44;
 export const homeHeaderHeight = homeHeaderLogoHeight + homeHeaderTabHeight;
+const isPhoneWithInsets = Platform.OS === 'ios' && deviceInfoModule.hasNotch();
 
 export const scaleSize = (size: number): number => (DeviceWidth / guidelineBaseWidth) * size;
 
@@ -205,4 +212,5 @@ export default {
   bottomBarHeight,
   deviceWidth: DeviceWidth,
   deviceHeight: DeviceHeight,
+  isPhoneWithInsets,
 };

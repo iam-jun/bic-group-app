@@ -51,7 +51,7 @@ const PrivateWelcome = ({
         <CommunityJoinCancelButton style={styles.btnJoin} />
       </View>
 
-      <AboutContent showPrivate />
+      <AboutContent profileInfo={infoDetail} showPrivate />
     </Animated.ScrollView>
   );
 };

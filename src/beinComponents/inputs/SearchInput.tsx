@@ -76,7 +76,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <View style={StyleSheet.flatten([styles.container, style])}>
+    <View style={[styles.container, style]}>
       <View style={styles.itemContainer}>
         <Icon
           style={styles.searchIcon}
@@ -118,10 +118,12 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       height: 40,
-      borderRadius: 20,
-      backgroundColor: colors.neutral5,
+      borderRadius: spacing.borderRadius.pill,
+      backgroundColor: colors.white,
       justifyContent: 'center',
-      paddingHorizontal: 16,
+      paddingHorizontal: spacing.padding.small,
+      borderColor: colors.purple50,
+      borderWidth: 1,
     },
     itemContainer: {
       flexDirection: 'row',
@@ -134,8 +136,8 @@ const createStyles = (theme: ExtendedTheme) => {
       flex: 1,
       height: '100%',
       fontFamily: fontFamilies.BeVietnamProLight,
-      fontSize: dimension?.sizes.bodyM,
-      color: colors.neutral80,
+      fontSize: dimension?.sizes.bodyS,
+      color: colors.neutral60,
     },
   });
 };

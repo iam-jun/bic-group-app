@@ -24,7 +24,7 @@ import { IGroup } from '~/interfaces/IGroup';
 import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IUser } from '~/interfaces/IAuth';
-import NoSearchResult from '~/components/NoSearchResult';
+import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
@@ -269,7 +269,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     if (loading) {
       return null;
     }
-    return <NoSearchResult />;
+    return <NoSearchResultsFound />;
   };
 
   return (

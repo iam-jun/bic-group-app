@@ -5,16 +5,20 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import { IconType } from '~/resources/icons';
+import Image from '~/beinComponents/Image';
+import spacing from '~/theme/spacing';
 
 interface EmptyScreenProps {
-  source?: IconType;
+  icon?: IconType;
   title?: string;
   description?: string;
   size?: number;
   ButtonComponent?: any;
+  source?: string;
 }
 
 const EmptyScreen = ({
+  icon,
   source,
   title,
   description,
@@ -25,7 +29,14 @@ const EmptyScreen = ({
 
   return (
     <View testID="empty_screen" style={styles.container}>
-      {!!source && <Icon icon={source} size={size} />}
+      {!!icon && <Icon icon={icon} size={size} />}
+      {!!source && (
+      <Image
+        resizeMode="contain"
+        style={styles.imgEmpty}
+        source={source}
+      />
+      )}
       {!!title && (
         <Text.BodyMMedium color={theme.colors.neutral70} style={styles.text} useI18n>
           {title}
@@ -46,10 +57,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 30,
+    paddingHorizontal: spacing.padding.extraLarge,
   },
   text: {
     textAlign: 'center',
-    marginVertical: 2,
+    marginVertical: spacing.margin.small,
+  },
+  imgEmpty: {
+    width: 150,
+    aspectRatio: 1,
   },
 });
 

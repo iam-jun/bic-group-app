@@ -14,6 +14,7 @@ import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 import Tag from '~/baseComponents/Tag';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface NFSFilterCreatedByProps {
   selectedCreatedBy?: any;
@@ -32,7 +33,8 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   const userId = useUserIdAuth();
 
   const [staged, setStaged] = useState(0);
-  const [selectedCreatedByState, setSelectedCreatedByState] = useState(selectedCreatedBy);
+  const [selectedCreatedByState, setSelectedCreatedByState]
+    = useState(selectedCreatedBy);
 
   const _onSelect = (selected?: any) => {
     setSelectedCreatedByState(selected);
@@ -49,30 +51,42 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   };
 
   const renderSpecificRightComponent = () => (
-    <View>
-      {(!selectedCreatedByState || selectedCreatedByState.id === userId) && (
-        <Button.Secondary onPress={() => setStaged(1)} type="ghost">
-          {selectedCreatedByState?.name || t('common:text_select')}
-        </Button.Secondary>
-      )}
-      {selectedCreatedByState && selectedCreatedByState.id !== userId && (
+    <View style={styles.specificRightView}>
+      <Button.Secondary
+        disabled={
+          selectedCreatedByState && selectedCreatedByState.id !== userId
+        }
+        onPress={() => setStaged(1)}
+        type="ghost"
+      >
+        {t('common:text_select')}
+      </Button.Secondary>
+    </View>
+  );
+
+  const renderTagSpecificPerson = () => {
+    if (!selectedCreatedByState || selectedCreatedByState.id === userId) {
+      return null;
+    }
+
+    return (
+      <View style={styles.tagContainer}>
         <Tag
-          style={styles.tagContainer}
+          style={styles.tag}
           type="secondary"
           size="small"
           label={selectedCreatedByState.name}
           onActionPress={() => setStaged(1)}
           icon="Xmark"
           onPressIcon={() => setSelectedCreatedByState(undefined)}
+          textProps={{ numberOfLines: 1 }}
         />
-      )}
-    </View>
-  );
+      </View>
+    );
+  };
 
   if (staged === 1) {
-    return (
-      <FilterCreateBySpecific onSelect={_onSelect} onBack={onBack} />
-    );
+    return <FilterCreateBySpecific onSelect={_onSelect} onBack={onBack} />;
   }
 
   return (
@@ -100,16 +114,15 @@ const FilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
           )}
         </View>
       </Button>
-      <View style={styles.rowItemFilter}>
+      <View style={[styles.rowItemFilter, { marginBottom: 0 }]}>
         <Text.BodyMMedium useI18n>
           home:newsfeed_search:filter_created_by_specific
         </Text.BodyMMedium>
         {renderSpecificRightComponent()}
       </View>
-      <Button.Secondary
-        onPress={onPressApply}
-        style={styles.buttonApply}
-      >
+      {renderTagSpecificPerson()}
+      <ViewSpacing height={spacing.margin.extraLarge} />
+      <Button.Secondary onPress={onPressApply} style={styles.buttonApply}>
         {t('home:newsfeed_search:apply')}
       </Button.Secondary>
     </TouchableOpacity>
@@ -137,13 +150,24 @@ const createStyle = () => StyleSheet.create({
     alignItems: 'center',
     marginBottom: spacing.margin.extraLarge,
     paddingHorizontal: spacing.padding.large,
+    flex: 1,
   },
   buttonApply: {
     marginHorizontal: spacing.margin.extraLarge,
     marginVertical: spacing.margin.small,
   },
   tagContainer: {
-    alignSelf: 'baseline',
+    marginHorizontal: spacing.margin.large,
+    marginTop: spacing.margin.small,
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+  tag: {
+    paddingLeft: spacing.padding.xSmall,
+  },
+  specificRightView: {
+    flex: 1,
+    alignItems: 'flex-end',
   },
 });
 

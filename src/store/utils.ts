@@ -11,6 +11,8 @@ interface ICreateZustand {
 }
 
 const createStore = <T>(store, options?: ICreateZustand) => {
+  // const storeName = store.name || 'ZustandStore';
+  // let _store: any = zustandLogger(zustandFlipper(immer(store) as any, storeName), storeName);
   let _store: any = zustandFlipper(immer(store) as any, store.name || 'ZustandStore');
   if (options?.persist) {
     _store = persist(_store, options.persist);

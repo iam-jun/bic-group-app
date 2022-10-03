@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Text from '~/beinComponents/Text';
 
@@ -14,13 +13,13 @@ import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import useAuth from '~/hooks/auth';
 import modalActions from '~/storeRedux/modal/actions';
 import groupsActions from '../../../../storeRedux/groups/actions';
-import { checkLastAdmin, handleLeaveInnerGroups } from '../../helper';
-import useRemoveMember from './useRemoveMember';
 import useRemoveAdmin from './useRemoveAdmin';
-import useLeaveGroup from './useLeaveGroup';
 import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
 import { useMyPermissions } from '~/hooks/permissions';
+import { Button } from '~/baseComponents';
+import useRemoveGroupMemberStore from '../store';
+import { MemberOptions } from '~/screens/communities/CommunityMembers/components/MemberOptionsMenu';
 
 interface MemberOptionsMenuProps {
   groupId: string;
@@ -36,47 +35,47 @@ const MemberOptionsMenu = ({
   onOptionsClosed,
 }: MemberOptionsMenuProps) => {
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const dispatch = useDispatch();
   const { user } = useAuth();
   const { t } = useBaseHook();
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const isMe = selectedMember?.username === user?.username;
 
+  const deleteRemoveGroupMember = useRemoveGroupMemberStore(
+    (state) => state.actions.deleteRemoveGroupMember,
+  );
+
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canRemoveMember = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
   );
-  const canManageRole = hasPermissionsOnScopeWithId(
+  const canAssignUnassignRole = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
   );
   const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
-  const { getInnerGroupsNames } = useRemoveMember({
-    groupId,
-    selectedMember,
-  });
   const alertRemovingAdmin = useRemoveAdmin({ groupId, selectedMember });
-  const alertLeaveGroup = useLeaveGroup({ groupId, username: user?.username });
 
-  const onPressMenuOption = (type: 'set-admin' | 'remove-admin' | 'remove-member' | 'leave-group') => {
+  const onPressMenuOption = (type: MemberOptions) => {
     modalizeRef.current?.close();
     switch (type) {
-      case 'set-admin':
+      case MemberOptions.SetAdminRole:
         alertSettingAdmin();
         break;
-      case 'remove-admin':
+
+      case MemberOptions.RemoveAdminRole:
         onPressRemoveAdmin();
         break;
-      case 'remove-member':
+
+      case MemberOptions.RemoveMember:
         onPressRemoveMember();
         break;
-      case 'leave-group':
-        onPressLeave();
-        break;
+
       default:
         dispatch(modalActions.showAlertNewFeature());
-        break;
     }
   };
 
@@ -116,81 +115,69 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const onPressMemberButton = () => {
-    dispatch(modalActions.clearToastMessage());
+  const onConfirmRemoveMember = () => {
+    if (selectedMember?.id) {
+      deleteRemoveGroupMember({ groupId, userId: selectedMember.id });
+    }
   };
 
   const onPressRemoveMember = () => {
-    if (selectedMember?.id) {
-      return checkLastAdmin(
-        groupId,
-        selectedMember.id,
-        dispatch,
-        () => alertRemovingMember(selectedMember),
-        onPressMemberButton,
-        'remove',
-      );
+    dispatch(modalActions.showAlert({
+      title: t('groups:modal_confirm_remove_member:title'),
+      content: t('groups:modal_confirm_remove_member:content'),
+      confirmLabel: t('groups:modal_confirm_remove_member:button_remove'),
+      cancelBtn: true,
+      onConfirm: onConfirmRemoveMember,
+    }));
+  };
+
+  const renderItem = ({ content, testID, onPress }: {content: string; testID?: string; onPress: () => void}) => (
+    <Button onPress={onPress}>
+      <Text.BodyM
+        testID={testID}
+        color={colors.neutral40}
+        style={styles.menuOption}
+        useI18n
+      >
+        {content}
+      </Text.BodyM>
+    </Button>
+  );
+
+  const renderRemoveAdminRoleOption = () => {
+    if (canAssignUnassignRole && selectedMember?.isAdmin) {
+      return renderItem({
+        testID: 'member_options_menu.remove_admin',
+        content: 'groups:member_menu:label_revoke_admin_role',
+        onPress: () => onPressMenuOption(MemberOptions.RemoveAdminRole),
+      });
     }
+
+    return null;
   };
 
-  const alertRemovingMember = (selectedMember: IGroupMembers) => {
-    selectedMember?.username
-      && handleLeaveInnerGroups(
-        groupId,
-        selectedMember.username,
-        dispatch,
-        getAlertPayloadWithInnerGroups,
-      );
-  };
-
-  const getAlertPayloadWithInnerGroups = (innerGroups: any) => {
-    getInnerGroupsNames(
-      innerGroups, renderInnerGroupsAlert,
-    );
-  };
-
-  const renderInnerGroupsAlert = (
-    message: string, innerGroups: string[],
-  ) => {
-    const first3groups = innerGroups.slice(
-      0, 3,
-    );
-    const count = innerGroups.length;
-
-    const groupsList = () => (
-      <View style={styles.alertRemoveGroupsList}>
-        {first3groups.map((
-          name, index,
-        ) => (
-          <Text.BodyM key={index} style={styles.alertRemoveGroupsListItem}>
-            •
-            {' '}
-            {name}
-          </Text.BodyM>
-        ))}
-        {count > 3 && <Text.BodyS>...</Text.BodyS>}
-      </View>
-    );
-
-    return (
-      <>
-        <Text.BodyS>{message}</Text.BodyS>
-        {groupsList()}
-      </>
-    );
-  };
-
-  const onPressLeave = () => {
-    // check if the current user is the last admin before leaving group
-    if (selectedMember?.id) {
-      return checkLastAdmin(
-        groupId,
-        selectedMember.id,
-        dispatch,
-        alertLeaveGroup,
-        onPressMemberButton,
-      );
+  const renderSetAdminRoleOption = () => {
+    if (canAssignUnassignRole && !selectedMember?.isAdmin) {
+      return renderItem({
+        testID: 'member_options_menu.set_admin',
+        content: 'groups:member_menu:label_set_as_admin',
+        onPress: () => onPressMenuOption(MemberOptions.SetAdminRole),
+      });
     }
+
+    return null;
+  };
+
+  const renderRemoveMemberOption = () => {
+    if (canRemoveMember && !isMe) {
+      return renderItem({
+        testID: 'member_options_menu.remove_member',
+        content: 'groups:member_menu:label_remove_member',
+        onPress: () => onPressMenuOption(MemberOptions.RemoveMember),
+      });
+    }
+
+    return null;
   };
 
   return (
@@ -198,52 +185,10 @@ const MemberOptionsMenu = ({
       modalizeRef={modalizeRef}
       onClose={onOptionsClosed}
       ContentComponent={(
-        <View style={styles.bottomSheet}>
-          {canManageRole
-            && (selectedMember?.isAdmin ? (
-              <PrimaryItem
-                testID="member_options_menu.remove_admin"
-                style={styles.menuOption}
-                leftIcon="Star"
-                leftIconProps={{ icon: 'Star', size: 24 }}
-                title={t('groups:member_menu:label_revoke_admin_role')}
-                onPress={() => onPressMenuOption('remove-admin')}
-              />
-            ) : (
-              <PrimaryItem
-                testID="member_options_menu.set_admin"
-                style={styles.menuOption}
-                leftIcon="Star"
-                leftIconProps={{ icon: 'Star', size: 24 }}
-                title={t('groups:member_menu:label_set_as_admin')}
-                onPress={() => onPressMenuOption('set-admin')}
-              />
-            ))}
-          {canRemoveMember && selectedMember?.username !== user?.username && (
-            <PrimaryItem
-              testID="member_options_menu.remove_member"
-              style={styles.menuOption}
-              leftIcon="UserXmark"
-              leftIconProps={{
-                icon: 'UserXmark',
-                size: 24,
-                tintColor: theme.colors.red60,
-              }}
-              title={t('groups:member_menu:label_remove_member')}
-              titleProps={{ color: theme.colors.red60 }}
-              onPress={() => onPressMenuOption('remove-member')}
-            />
-          )}
-          {selectedMember?.username === user?.username && (
-            <PrimaryItem
-              testID="member_options_menu.leave_group"
-              style={styles.menuOption}
-              leftIcon="ArrowRightFromArc"
-              leftIconProps={{ icon: 'ArrowRightFromArc', size: 24 }}
-              title={t('groups:member_menu:label_leave_group')}
-              onPress={() => onPressMenuOption('leave-group')}
-            />
-          )}
+        <View>
+          {renderRemoveAdminRoleOption()}
+          {renderSetAdminRoleOption()}
+          {renderRemoveMemberOption()}
         </View>
       )}
     />
@@ -251,18 +196,9 @@ const MemberOptionsMenu = ({
 };
 
 const styles = StyleSheet.create({
-  bottomSheet: {
-    paddingVertical: spacing.padding.tiny,
-  },
   menuOption: {
-    height: 44,
     paddingHorizontal: spacing.padding.large,
-  },
-  alertRemoveGroupsList: {
-    marginBottom: spacing.margin.small,
-  },
-  alertRemoveGroupsListItem: {
-    marginLeft: spacing.margin.small,
+    paddingVertical: spacing.padding.base,
   },
 });
 

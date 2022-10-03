@@ -12,8 +12,6 @@ PODS:
     - ReactCommon
   - EXConstants (13.1.1):
     - ExpoModulesCore
-  - EXErrorRecovery (3.1.0):
-    - ExpoModulesCore
   - EXFileSystem (14.0.0):
     - ExpoModulesCore
   - EXFont (10.1.0):
@@ -131,22 +129,22 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.8.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.7.0):
+  - GoogleUtilities/Environment (7.8.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.7.0):
+  - GoogleUtilities/Logger (7.8.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/Network (7.7.0):
+  - GoogleUtilities/Network (7.8.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.7.0)"
-  - GoogleUtilities/Reachability (7.7.0):
+  - "GoogleUtilities/NSData+zlib (7.8.0)"
+  - GoogleUtilities/Reachability (7.8.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.7.0):
+  - GoogleUtilities/UserDefaults (7.8.0):
     - GoogleUtilities/Logger
   - hermes-engine (0.11.0)
   - libevent (2.1.12)
@@ -410,11 +408,11 @@ PODS:
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
-  - react-native-safe-area-context (4.3.3):
+  - react-native-safe-area-context (4.3.1):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React-Core
+    - React
     - ReactCommon/turbomodule/core
   - react-native-slider (4.3.1):
     - React-Core
@@ -516,6 +514,8 @@ PODS:
     - React
   - ReactNativeExceptionHandler (2.10.10):
     - React-Core
+  - ReactNativeKeyboardTrackingView (5.7.0):
+    - React
   - RNAWSCognito (5.2.9):
     - React-Core
   - RNCAsyncStorage (1.17.9):
@@ -537,7 +537,7 @@ PODS:
     - Firebase/Messaging (= 8.4.0)
     - React-Core
     - RNFBApp
-  - RNFlashList (1.2.1):
+  - RNFlashList (1.3.0):
     - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
@@ -586,9 +586,9 @@ PODS:
   - RNScreens (3.15.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.2.4):
+  - RNSentry (4.5.0):
     - React-Core
-    - Sentry (= 7.23.0)
+    - Sentry (= 7.25.1)
   - RNSVG (12.4.4):
     - React-Core
   - RNVectorIcons (8.1.0):
@@ -599,9 +599,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.23.0):
-    - Sentry/Core (= 7.23.0)
-  - Sentry/Core (7.23.0)
+  - Sentry (7.25.1):
+    - Sentry/Core (= 7.25.1)
+  - Sentry/Core (7.25.1)
   - SocketRocket (0.6.0)
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
@@ -615,7 +615,6 @@ DEPENDENCIES:
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXAV (from `../node_modules/expo-av/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - Expo (from `../node_modules/expo/ios`)
@@ -690,6 +689,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeAutogrowTextinput (from `../node_modules/react-native-autogrow-textinput`)
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
+  - ReactNativeKeyboardTrackingView (from `../node_modules/react-native-keyboard-tracking-view`)
   - RNAWSCognito (from `../node_modules/amazon-cognito-identity-js`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
@@ -758,8 +758,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-av/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
-  EXErrorRecovery:
-    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
@@ -856,6 +854,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-autogrow-textinput"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
+  ReactNativeKeyboardTrackingView:
+    :path: "../node_modules/react-native-keyboard-tracking-view"
   RNAWSCognito:
     :path: "../node_modules/amazon-cognito-identity-js"
   RNCAsyncStorage:
@@ -905,7 +905,6 @@ SPEC CHECKSUMS:
   EXApplication: d6562af1204162e0ac46d341a7d4e5dc720b33de
   EXAV: 88f61c5af8415715b7ee51f084c1020235b85c56
   EXConstants: fdbe52259365b6a6faaa5e99a3b82cfa6bc2eb61
-  EXErrorRecovery: 3ce46e5d42e53c0371ff048a7f0cbc959968ef4a
   EXFileSystem: 2aa2d9289f84bca9532b9ccbd81504fa31eb1ded
   EXFont: 04235cc22e6fef86028feb67db452978dc6f240f
   Expo: 1133eaf0e12dc265ac82a256f3815401b7570f96
@@ -932,7 +931,7 @@ SPEC CHECKSUMS:
   giphy-react-native-sdk: 9ce33f9af818f12c6914f29b3433218d95122397
   glog: 476ee3e89abb49e07f822b48323c51c57124b572
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
-  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
   hermes-engine: 84e3af1ea01dd7351ac5d8689cbbea1f9903ffc3
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 60305b2e989864154bd9be3d772730f08fc6a59c
@@ -962,7 +961,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: 1c7676413ab265759c7b3da205efab163f5366ef
   react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
-  react-native-safe-area-context: b456e1c40ec86f5593d58b275bd0e9603169daca
+  react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
   react-native-slider: d3ae4270cf8a8cc45a69912db0cc42b151560d5a
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
@@ -978,6 +977,7 @@ SPEC CHECKSUMS:
   ReactCommon: 095366164a276d91ea704ce53cb03825c487a3f2
   ReactNativeAutogrowTextinput: 571f3260e200d91ea22fab160452f26d2fd5d55b
   ReactNativeExceptionHandler: b11ff67c78802b2f62eed0e10e75cb1ef7947c60
+  ReactNativeKeyboardTrackingView: 02137fac3b2ebd330d74fa54ead48b14750a2306
   RNAWSCognito: b967f462350ac749f2ff36426f84cdbf5689f576
   RNCAsyncStorage: b2489b49e38c85e10ed45a888d13a2a4c7b32ea1
   RNCClipboard: 99fc8ad669a376b756fbc8098ae2fd05c0ed0668
@@ -986,7 +986,7 @@ SPEC CHECKSUMS:
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBApp: 97b2da195d4606716b284a7c8a988dd8ed5cec41
   RNFBMessaging: ee81245484ef7e835975d09c2cd4000dfa2ae5e7
-  RNFlashList: 5318fc0772902ffa55170b35caa95ad5a69da3ef
+  RNFlashList: 5116f2de2f543f01bfc30b22d5942d5af84b43df
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNInAppBrowser: 48b95ba7a4eaff5cc223bca338d3e319561dbd1b
@@ -994,12 +994,12 @@ SPEC CHECKSUMS:
   RNReactNativeSharedGroupPreferences: de0121a4224c267bc7e9fb16c398f3f087c8da81
   RNReanimated: 5c8c17e26787fd8984cd5accdc70fef2ca70aafd
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
-  RNSentry: 7495ba091f09f12902d8cf916024efd99b058efe
+  RNSentry: a034d0e81e3d3c04b770dd2df953fe634d372d22
   RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: a0d4563fa4ddacba31fdcc35daaa8573d87224d6
+  Sentry: dd29c18c32b0af9269949f079cf631d581ca76ca
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952

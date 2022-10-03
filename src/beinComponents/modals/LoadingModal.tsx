@@ -32,7 +32,7 @@ const LoadingModal = () => {
           <Image
             resizeMode="contain"
             style={styles.logo}
-            source={images.logo_beincomm}
+            source={images.logo_beincomm_reverse}
           />
         </View>
       </ImageBackground>

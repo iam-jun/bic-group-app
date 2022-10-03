@@ -22,7 +22,6 @@ export interface BaseBottomSheetProps extends ModalizeProps {
   modalStyle?: StyleProp<ViewStyle>;
   childrenStyle?: StyleProp<ViewStyle>;
   overlayStyle?: StyleProp<ViewStyle>;
-  onClose?: () => void;
 }
 
 const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
@@ -94,7 +93,7 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
     paddingTop: spacing.padding.extraLarge,
   },
   childrenStyle: {
-    paddingBottom: insets.bottom + (spacing.padding.large || 16),
+    paddingBottom: insets.bottom + spacing.padding.large,
   },
 });
 

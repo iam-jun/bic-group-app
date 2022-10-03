@@ -1,12 +1,9 @@
-import { StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import i18next from 'i18next';
 
-import { useKeySelector } from '~/hooks/selector';
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
-import ListView from '~/beinComponents/list/ListView';
 
 import { IPreviewMember } from '~/interfaces/ICommunity';
 import spacing from '~/theme/spacing';
@@ -14,15 +11,36 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { Button } from '~/baseComponents';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import { useBaseHook } from '~/hooks';
+import { formatLargeNumber } from '~/utils/formatData';
+import { dimension } from '~/theme';
+import { AvatarType } from '~/baseComponents/Avatar/AvatarComponent';
+import { CONTAINER_HORIZONTAL_PADDING } from './AboutContent';
 
-const PreviewMembers = () => {
+interface Props {
+  userCount: number;
+  members: IPreviewMember[];
+}
+
+const ITEM_SPACING = 2;
+const AVATAR_VARIANT = 'small' as AvatarType;
+
+const PreviewMembers = ({ userCount, members }: Props) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
+  const { t } = useBaseHook();
 
-  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { userCount, members } = infoDetail;
-  const otherMembers = userCount - (members?.length || 0);
+  if (!members || members?.length === 0) {
+    return null;
+  }
+
+  const numberOfAvatarsFitScreen = calculateNumberOfAvatarsFitScreen();
+  const numberOfMembersToShow = members.length > numberOfAvatarsFitScreen
+    ? numberOfAvatarsFitScreen - 1 // removed the last avatar to show moreAvatar item
+    : numberOfAvatarsFitScreen;
+  const membersDataToShow = members.slice(0, numberOfMembersToShow);
+
+  const otherMembers = userCount - membersDataToShow.length;
   const otherMembersDisplay = otherMembers > 99 ? 99 : otherMembers;
 
   const onPressAvatar = (previewMember: IPreviewMember) => {
@@ -33,22 +51,21 @@ const PreviewMembers = () => {
 
   const renderItem = ({ item }: { item: IPreviewMember }) => (
     <Button onPress={() => onPressAvatar(item)}>
-      <Avatar.XSmall isRounded source={item.avatar} />
+      <Avatar variant={AVATAR_VARIANT} isRounded source={item.avatar} />
     </Button>
   );
 
   const renderMembersDescription = () => {
-    let memberText: string;
+    let descriptionText: any = (
+      <>
+        {` ${t('post:and')} `}
+        <Text.BodyMMedium>{t('communities:text_other_member', { count: formatLargeNumber(userCount - 1) })}</Text.BodyMMedium>
+        {` ${t('communities:text_are_members')}`}
+      </>
+    );
+
     if (members?.length === 1) {
-      memberText = `${members[0]?.fullname} ${i18next.t(
-        'communities:text_is_member',
-      )}`;
-    } else {
-      memberText = `${members[0]?.fullname} ${i18next.t(
-        'post:and',
-      )} ${i18next.t('communities:text_other_member', {
-        count: userCount - 1,
-      })}`;
+      descriptionText = ` ${t('communities:text_is_member')}`;
     }
 
     return (
@@ -57,50 +74,63 @@ const PreviewMembers = () => {
         color={theme.colors.neutral40}
         style={styles.memberDescriptionText}
       >
-        {memberText}
+        <Text.BodyMMedium>{members[0]?.fullname}</Text.BodyMMedium>
+        {descriptionText}
       </Text.BodyM>
     );
   };
 
-  if (!members) {
-    return null;
-  }
+  const renderMoreAvatar = () => (
+    <View>
+      {!!otherMembersDisplay && (
+        <Avatar
+          variant={AVATAR_VARIANT}
+          isRounded
+          counter={otherMembersDisplay}
+          style={styles.moreAvatar}
+        />
+      )}
+    </View>
+  );
 
   return (
     <>
-      <ListView
+      <FlatList
+        testID="flatlist"
         horizontal
-        data={members}
+        data={membersDataToShow}
         renderItem={renderItem}
-        listStyle={styles.listStyle}
-        renderItemSeparator={() => <ViewSpacing width={spacing.margin.tiny} />}
-        ListFooterComponent={() => (
-          <View>
-            {!!otherMembersDisplay && (
-              <Avatar.XSmall
-                isRounded
-                counter={otherMembersDisplay}
-                style={{ marginLeft: spacing.margin.tiny }}
-              />
-            )}
-          </View>
-        )}
-        alwaysBounceHorizontal={false}
+        style={styles.listStyle}
+        scrollEnabled={false}
+        initialNumToRender={15}
+        ItemSeparatorComponent={() => <ViewSpacing width={ITEM_SPACING} />}
+        ListFooterComponent={renderMoreAvatar}
+        keyExtractor={(item, index) => `preview_members_${item}_${index}`}
       />
       {renderMembersDescription()}
     </>
   );
 };
 
-export default PreviewMembers;
-
 const styles = StyleSheet.create({
   listStyle: {
     marginTop: spacing.margin.tiny,
-    marginHorizontal: spacing.margin.large,
   },
   memberDescriptionText: {
-    marginTop: spacing.margin.tiny,
-    marginHorizontal: spacing.margin.large,
+    marginTop: spacing.margin.xSmall,
   },
+  moreAvatar: { marginLeft: ITEM_SPACING },
 });
+
+const calculateNumberOfAvatarsFitScreen = () => {
+  const headTailHorizontalPadding = CONTAINER_HORIZONTAL_PADDING * 2;
+  const avatarAndItemSeparatorWidth = dimension.avatarSizes[AVATAR_VARIANT] + ITEM_SPACING;
+
+  const numberOfAvatarsFitScreen = Math.floor(
+    (dimension.deviceWidth - headTailHorizontalPadding) / avatarAndItemSeparatorWidth,
+  );
+
+  return numberOfAvatarsFitScreen;
+};
+
+export default PreviewMembers;

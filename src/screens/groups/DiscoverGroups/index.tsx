@@ -1,46 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
   ActivityIndicator,
-  FlatList,
   RefreshControl,
+  FlatList,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
+import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import EmptyScreen from '~/components/EmptyScreen';
-import Divider from '~/beinComponents/Divider';
-import DiscoverItem from '../components/DiscoverItem';
 
-import actions from '../../../storeRedux/groups/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { useRootNavigation } from '~/hooks/navigation';
-import spacing from '~/theme/spacing';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import modalActions from '~/storeRedux/modal/actions';
+import CommunityGroupCard from '~/components/CommunityGroupCard';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import images from '~/resources/images';
+import useDiscoverGroupsStore from './store';
+import IDiscoverGroupsState from './store/Interface';
 import { useBaseHook } from '~/hooks';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
   const theme: ExtendedTheme = useTheme();
-  const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
 
+  const headerRef = useRef();
+
+  const [searchText, setSearchText] = useState('');
+
+  const doGetDiscoverGroups = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doGetDiscoverGroups);
+  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
+  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
   const {
-    ids, items, loading, canLoadMore,
-  } = useKeySelector(groupsKeySelector.discoverGroups);
+    ids, items, loading, canLoadMore, noGroupInCommuntity,
+  } = useDiscoverGroupsStore();
+
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { joinStatus } = communityDetail;
-  const isMemberOfCommunity = joinStatus === groupJoinStatus.member;
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
-    dispatch(actions.getDiscoverGroups({ communityId, isRefreshing }));
+    doGetDiscoverGroups({ communityId, isRefreshing });
   };
 
   useEffect(
@@ -49,64 +50,57 @@ const DiscoverGroups = ({ route }: any) => {
     }, [communityId],
   );
 
+  const handleJoinGroup = (groupId: string) => {
+    joinNewGroup(groupId);
+  };
+
+  const handleCancelJoinGroup = (groupId: string) => {
+    cancelJoinGroup(groupId);
+  };
+
   const onLoadMore = () => {
     canLoadMore && getDiscoverGroups();
   };
 
   const onRefresh = () => {
     getDiscoverGroups(true);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (headerRef.current) headerRef.current?.setSearchText?.('');
   };
 
-  const onPressGroup = (groupId: string) => {
-    rootNavigation.navigate(
-      groupStack.groupDetail, { groupId },
-    );
-  };
-
-  const onPressJoin = (
-    groupId: string, groupName: string,
-  ) => {
-    if (!isMemberOfCommunity) {
-      dispatch(modalActions.showAlert({
-        title: t('error:alert_title'),
-        content: t('communities:text_must_be_member_first'),
-        confirmLabel: t('common:text_ok'),
-      }));
-      return;
-    }
-    dispatch(actions.joinNewGroup({ groupId, groupName }));
-  };
-
-  const onPressCancel = (
-    groupId: string, groupName: string,
-  ) => {
-    dispatch(actions.cancelJoinGroup({ groupId, groupName }));
-  };
-
-  const onSearchText = (_searchText: string) => {
-    // TODO: Add search
-  };
+  const onSearchText = debounce(
+    (text: string) => {
+      setSearchText(text);
+      doGetDiscoverGroups({ isRefreshing: true, communityId, params: { key: text } });
+    }, 500,
+  );
 
   const renderItem = ({ item, index }: {item: number; index: number}) => {
-    const currentItem = items[item];
+    const currentItem = {
+      ...items[item],
+      community: { ...communityDetail },
+    };
     return (
-      <DiscoverItem
+      <CommunityGroupCard
         item={currentItem}
-        testID={`discover_groups_item_${index}`}
-        onPressView={onPressGroup}
-        onPressJoin={onPressJoin}
-        onPressCancel={onPressCancel}
+        testID={`browse_groups_item_${index}`}
+        shouldShowAlertJoinTheCommunityFirst
+        isResetCommunityDetail={false}
+        onJoin={handleJoinGroup}
+        onCancel={handleCancelJoinGroup}
       />
     );
   };
 
   const renderEmptyComponent = () => {
-    if (loading) return null;
+    if (loading) return <ActivityIndicator />;
     return (
       <EmptyScreen
-        source="addUsers"
-        title="communities:empty_groups:title"
-        description="communities:empty_groups:description"
+        source={images.img_empty_search_post}
+        description={!!searchText ? 'common:text_search_no_results'
+          : noGroupInCommuntity ? 'communities:browse_groups:no_groups'
+            : 'communities:browse_groups:joined_all_groups'}
       />
     );
   };
@@ -122,32 +116,39 @@ const DiscoverGroups = ({ route }: any) => {
   );
 
   return (
-    <ScreenWrapper isFullView>
+    <ScreenWrapper isFullView style={{ backgroundColor: theme.colors.gray5 }}>
       <Header
+        headerRef={headerRef}
         titleTextProps={{ useI18n: true }}
         title="communities:title_browse_groups"
         onSearchText={onSearchText}
+        autoFocusSearch
+        searchPlaceholder={t('input:search_group')}
       />
-      <FlatList
-        testID="flatlist"
-        data={ids}
-        renderItem={renderItem}
-        keyExtractor={(
-          item, index,
-        ) => `groups_${item}_${index}`}
-        onEndReached={onLoadMore}
-        onEndReachedThreshold={0.1}
-        ListEmptyComponent={renderEmptyComponent}
-        ListFooterComponent={renderListFooter}
-        ItemSeparatorComponent={() => <Divider style={styles.divider} />}
-        refreshControl={(
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            tintColor={theme.colors.gray40}
-          />
+      <ViewSpacing height={12} />
+      {ids?.length > 0
+        ? (
+          <FlatList
+            testID="flatlist"
+            data={ids}
+            renderItem={renderItem}
+            style={{ flex: 1 }}
+            keyExtractor={(
+              item, index,
+            ) => `groups_${item}_${index}`}
+            onEndReached={onLoadMore}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={renderListFooter}
+            ItemSeparatorComponent={() => <ViewSpacing height={16} />}
+            refreshControl={(
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={onRefresh}
+                tintColor={theme.colors.gray40}
+              />
         )}
-      />
+          />
+        ) : renderEmptyComponent()}
     </ScreenWrapper>
   );
 };
@@ -160,7 +161,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  divider: {
-    marginVertical: spacing.margin.tiny,
-  },
+
 });

@@ -298,17 +298,14 @@ export const groupsApiConfig = {
     method: 'post',
     data: { userIds },
   }),
-  removeUsers: (
+  removeGroupMembers: (
     groupId: string,
     userIds: string[],
-    type?: string,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/users/remove`,
     method: 'put',
-    data: {
-      [type || 'userIds']: userIds,
-    },
+    data: { userIds },
   }),
   joinGroup: (groupId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -467,6 +464,12 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/leave`,
     method: 'post',
+  }),
+  removeCommunityMembers: (communityId: string, userIds: string[]): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/members`,
+    method: 'delete',
+    data: { userIds },
   }),
   getCommunityMemberRequests: (
     communityId: string,
@@ -779,8 +782,8 @@ const groupApi = {
     groupsApiConfig.getJoinableUsers, groupId, params,
   ),
   addUsers: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.addUsers, groupId, userIds),
-  removeUsers: (groupId: string, userIds: string[], type?: string) => withHttpRequestPromise(
-    groupsApiConfig.removeUsers, groupId, userIds, type,
+  removeGroupMembers: (groupId: string, userIds: string[]) => withHttpRequestPromise(
+    groupsApiConfig.removeGroupMembers, groupId, userIds,
   ),
   joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
@@ -855,6 +858,11 @@ const groupApi = {
     groupsApiConfig.cancelJoinCommunity, communityId,
   ),
   leaveCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, communityId),
+  removeCommunityMembers: (communityId: string, userIds: string[]) => withHttpRequestPromise(
+    groupsApiConfig.removeCommunityMembers,
+    communityId,
+    userIds,
+  ),
   getCommunityMemberRequests: (communityId: string, params: any) => withHttpRequestPromise(
     groupsApiConfig.getCommunityMemberRequests,
     communityId,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { StyleSheet, View } from 'react-native';
@@ -19,6 +19,7 @@ import modalActions from '~/storeRedux/modal/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IconType } from '~/resources/icons';
+import MemberOptionsMenu from './components/MemberOptionsMenu';
 
 export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
@@ -37,6 +38,8 @@ const CommunityMembers = ({ route }: any) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(targetIndex || 0);
   const [isOpen, setIsOpen] = useState(false);
   const { ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const [selectedMember, setSelectedMember] = useState<ICommunityMembers>();
+  const baseSheetRef: any = useRef();
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
@@ -55,8 +58,13 @@ const CommunityMembers = ({ route }: any) => {
     PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
   );
 
-  const onPressMenu = (_item: ICommunityMembers) => {
-    dispatch(modalActions.showAlertNewFeature());
+  const clearSelectedMember = () => setSelectedMember(undefined);
+
+  const onPressMenu = (item: ICommunityMembers) => {
+    if (!item || !item.id) return;
+
+    setSelectedMember(item);
+    baseSheetRef.current?.open();
   };
 
   const onPressAdd = () => {
@@ -139,6 +147,13 @@ const CommunityMembers = ({ route }: any) => {
       <View style={styles.memberList}>
         {renderContent()}
       </View>
+
+      <MemberOptionsMenu
+        communityId={communityId}
+        modalizeRef={baseSheetRef}
+        selectedMember={selectedMember || {} as ICommunityMembers}
+        onOptionsClosed={clearSelectedMember}
+      />
 
       <SearchMemberView
         isOpen={isOpen}

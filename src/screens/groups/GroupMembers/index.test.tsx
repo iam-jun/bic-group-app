@@ -50,7 +50,7 @@ describe('GroupMembers component', () => {
     const inviteBtn = wrapper.getByTestId('group_members.invite');
     expect(inviteBtn).toBeDefined();
     fireEvent.press(inviteBtn);
-    expect(navigate).toBeCalledWith(groupStack.inviteMembers, { groupId });
+    expect(navigate).toBeCalledWith(groupStack.addMembers, { groupId });
   });
 
   it('should NOT render Invite member button correctly when user cannot manage member', () => {

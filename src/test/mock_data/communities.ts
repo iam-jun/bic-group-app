@@ -1,5 +1,3 @@
-import { COMMUNITY_ROLE } from '../../interfaces/ICommunity';
-
 export const communities = [
   {
     id: 0,
@@ -143,13 +141,13 @@ export const previewMemberDetail = {
 
 export const adminDetail = {
   ...previewMemberDetail,
-  roles: { name: 'COMMUNITY_ADMIN' as COMMUNITY_ROLE },
+  roles: { name: 'COMMUNITY_ADMIN' },
   chatUserId: 'tg6kmc6cmybgwpcif9znngyyebe',
 };
 
 export const memberDetail = {
   ...previewMemberDetail,
-  roles: { name: 'MEMBER' as COMMUNITY_ROLE },
+  roles: { name: 'MEMBER' },
   chatUserId: 'tg6kmc6cmybgwpcif9znngyyebe',
 };
 
