@@ -51,7 +51,7 @@ const TextInputController: React.FC<Props> = ({
     <TextInput
       testID={testID}
       placeholder={placeholder}
-      error={errors?.code}
+      error={errors?.[name]}
       value={value}
       onChangeText={(text) => {
         onChange(text.trim());

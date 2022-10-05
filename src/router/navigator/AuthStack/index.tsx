@@ -24,7 +24,7 @@ const AuthStack = () => {
     }, [currentUserId],
   );
   return (
-    <Stack.Navigator initialRouteName={authStacks.landing}>
+    <Stack.Navigator initialRouteName={authStacks.signIn}>
       {Object.entries(authScreens).map(([name, component]) => (
         <Stack.Screen
           options={AppConfig.defaultScreenOptions}

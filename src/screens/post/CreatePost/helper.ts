@@ -224,6 +224,11 @@ export const clearExistingFiles = (
   return fileResult;
 };
 
+export const getLstNotRemovedLinkPreview = (
+  urls: string[],
+  lstRemovedLinkPreview: string[],
+) => urls.filter((item) => !lstRemovedLinkPreview.includes(item));
+
 export const createNewArrayLinkPreview = (
   urls: string[],
   lstLinkPreview: ILinkPreviewCreatePost[],
@@ -252,3 +257,8 @@ export const removeLinkPreviewNoLongerExists = (
   );
   return newLinkPreviews;
 };
+
+export const filterRemovedLinkPreviewNoLongerExists = (
+  urls: string[],
+  lstRemovedLinkPreview: string[],
+) => lstRemovedLinkPreview.filter((item) => urls.includes(item));

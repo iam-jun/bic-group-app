@@ -206,23 +206,23 @@ const TextInput: React.FC<TextInputProps> = ({
           </View>
         </View>
         {!!helperText && (
-        <View style={[styles.helperContainer, helperStyle]}>
-          {!!error && (
-          <Icon
-            testID="text_input.error_icon"
-            icon="CircleExclamation"
-            size={16}
-            tintColor={colors.red40}
-            style={styles.errorIconStyle}
-          />
-          )}
-          <View style={styles.helperTextStyle}>
-            <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
-              {helperText}
-              {renderHelperAction()}
-            </Text.BodyXS>
+          <View style={[styles.helperContainer, helperStyle]}>
+            {!!error && (
+              <Icon
+                testID="text_input.error_icon"
+                icon="CircleExclamation"
+                size={14}
+                tintColor={colors.red40}
+                style={styles.errorIconStyle}
+              />
+            )}
+            <View style={styles.helperTextStyle}>
+              <Text.BodyXS testID="text_input.text_helper" {..._textHelperProps}>
+                {helperText}
+                {renderHelperAction()}
+              </Text.BodyXS>
+            </View>
           </View>
-        </View>
         )}
       </View>
     </View>
@@ -271,8 +271,7 @@ const themeStyles = (
       marginBottom: !horizontal ? spacing.margin.small : 0,
       maxWidth: horizontal ? dimension.deviceWidth / 3 : dimension.deviceWidth,
     },
-    errorIconStyle: {
-    },
+    errorIconStyle: {},
     helperTextStyle: {
       paddingHorizontal: spacing.padding.tiny,
       flex: 1,
