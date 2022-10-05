@@ -8,71 +8,49 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Platform,
-  Dimensions,
   ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Animated, {
-  Extrapolate,
-  interpolate,
   useAnimatedStyle,
-  useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useKeyboard } from '@react-native-community/hooks';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import { createTextStyle } from '~/beinComponents/Text/textStyle';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
-import * as validation from '~/constants/commonRegex';
-import { useBaseHook } from '~/hooks';
 import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
-import images from '~/resources/images';
 import * as modalActions from '~/storeRedux/modal/actions';
-// import SignInOAuth from '../components/SignInOAuth';
 import actions from '../../../storeRedux/auth/actions';
 import {
   getUserFromSharedPreferences,
   isAppInstalled,
 } from '~/services/sharePreferences';
-import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
-import TextInputController from '~/beinComponents/inputs/TextInputController';
-import getEnv from '~/utils/env';
-import BackgroundComponent from './BackgroundComponent';
 import spacing from '~/theme/spacing';
-import { APP_ENV } from '~/configs/appConfig';
 import { useRootNavigation } from '~/hooks/navigation';
 import authStacks from '~/router/navigator/AuthStack/stack';
 import { Button } from '~/baseComponents';
-
-const screenWidth = Dimensions.get('window').width;
-
-const LOGO_SIZE = 96;
-const LOGO_SMALL_SIZE = 48;
-const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 24 * 2);
+import InputEmail from './components/InputEmail';
+import InputPassword from './components/InputPassword';
+import LogoImage from './components/LogoImage';
 
 const SignIn = () => {
   useAuthAmplifyHub();
-  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
   const { loading, signingInError } = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
   const [authSessions, setAuthSessions] = useState<any>(null);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const inputPasswordRef = useRef<any>();
-  const inputEmailRef = useRef<any>();
-  const keyboardHeightValue = useSharedValue(0);
-  const keyboard = useKeyboard();
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const { colors } = theme;
 
   const useFormData = useForm();
   const {
@@ -133,65 +111,6 @@ const SignIn = () => {
     }, [signingInError],
   );
 
-  const showEvent = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
-
-  const dismissEvent = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
-
-  useEffect(
-    () => {
-      const keyboardWillShowListener = Keyboard.addListener(
-        showEvent, (event) => {
-          if (event.endCoordinates?.height) {
-            keyboardHeightValue.value = withTiming(
-              1,
-              {
-                duration: 200,
-              },
-              () => {
-                //
-              },
-            );
-          }
-        },
-      );
-      const keyboardWillHideListener = Keyboard.addListener(
-        dismissEvent, () => {
-          keyboardHeightValue.value = withTiming(
-            0,
-            {
-              duration: 200,
-            },
-            () => {
-              //
-            },
-          );
-        },
-      );
-
-      return () => {
-        keyboardWillHideListener.remove();
-        keyboardWillShowListener.remove();
-      };
-    }, [],
-  );
-
-  useEffect(
-    () => {
-      if (
-        keyboard?.keyboardHeight
-      && keyboardHeight !== keyboard?.keyboardHeight
-      ) {
-        setKeyboardHeight(keyboard?.keyboardHeight);
-      }
-    }, [keyboard?.keyboardHeight],
-  );
-
-  useEffect(
-    () => {
-      inputEmailRef.current?.focus();
-    }, [],
-  );
-
   const checkAuthSessions = async () => {
     const email = getValues('email');
     if (!!email) return;
@@ -199,14 +118,10 @@ const SignIn = () => {
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
-      setValue(
-        'email', user?.email,
-      );
+      setValue('email', user?.email);
       setAuthSessions(user);
     } else {
-      setValue(
-        'email', '',
-      );
+      setValue('email', '');
       setAuthSessions(null);
     }
   };
@@ -272,36 +187,88 @@ const SignIn = () => {
 
   const goToForgotPassword = () => rootNavigation.navigate(authStacks.forgotPassword);
 
-  const logoContainerStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: interpolate(
-          keyboardHeightValue.value,
-          [0, 1],
-          [0, MARGIN_LEFT_LOGO],
-          Extrapolate.CLAMP,
-        ),
-      },
-    ],
-    height: interpolate(
-      keyboardHeightValue.value,
-      [0, 1],
-      [LOGO_SIZE, LOGO_SMALL_SIZE],
-      Extrapolate.CLAMP,
-    ),
-    width: interpolate(
-      keyboardHeightValue.value,
-      [0, 1],
-      [LOGO_SIZE, LOGO_SMALL_SIZE],
-      Extrapolate.CLAMP,
-    ),
-  }));
-
   const optionsStyle = useAnimatedStyle(() => ({
     opacity: withTiming(
       loading ? 1 : 0, { duration: 500 },
     ),
   }));
+
+  const renderLogoImage = () => (
+    <LogoImage />
+  );
+
+  const renderDescription = () => (
+    <Text.H3 testID="sign_in.title" color={colors.neutral80} style={styles.title} useI18n>
+      auth:text_sign_in_welcome_back
+    </Text.H3>
+  );
+
+  const renderInputEmail = () => (
+    <InputEmail
+      useFormData={useFormData}
+      signingInError={signingInError}
+      loading={loading}
+      authSessions={authSessions}
+      clearFieldError={clearFieldError}
+      checkDisableSignIn={checkDisableSignIn}
+      onSubmitEmail={onSubmitEmail}
+    />
+  );
+
+  const renderInputPassword = () => (
+    <InputPassword
+      inputPasswordRef={inputPasswordRef}
+      useFormData={useFormData}
+      loading={loading}
+      clearFieldError={clearFieldError}
+      checkDisableSignIn={checkDisableSignIn}
+      onSignIn={onSignIn}
+    />
+  );
+
+  const renderForgotPassword = () => (
+    <TouchableOpacity
+      testID="sign_in.btn_forgot_password"
+      style={styles.forgotPassword}
+      onPress={goToForgotPassword}
+    >
+      <Text.BodyS color={colors.blue50} useI18n>
+        auth:btn_forgot_password
+      </Text.BodyS>
+    </TouchableOpacity>
+  );
+
+  const renderButtonSignIn = () => (
+    <Button.Primary
+      testID="sign_in.btn_login"
+      style={styles.btnSignIn}
+      size="large"
+      type="solid"
+      disabled={disableSignIn}
+      onPress={onSignIn}
+      useI18n
+    >
+      auth:btn_sign_in
+    </Button.Primary>
+  );
+
+  const renderSignUp = () => (
+    <View style={styles.signUpContainer}>
+      <Text.BodyS color={theme.colors.neutral40} useI18n>
+        auth:text_sign_up_desc
+      </Text.BodyS>
+      <TouchableOpacity
+        testID="btnSignInForgotPassword"
+        // onPress={() => navigation.navigate(authStack.signup)}
+        onPress={handleSignUpNotFunctioning}
+      >
+        <Text.BodySMedium color={colors.blue50} useI18n>
+          auth:btn_sign_up_now
+        </Text.BodySMedium>
+      </TouchableOpacity>
+    </View>
+  );
+
   const renderLoading = () => {
     if (!loading) return null;
     return (
@@ -313,149 +280,30 @@ const SignIn = () => {
 
   return (
     <ScreenWrapper testID="sign_in" style={styles.root} isFullView>
-      <BackgroundComponent>
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-          keyboardShouldPersistTaps="handled"
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <TouchableWithoutFeedback
+          testID="sign_in.button_hide_keyboard"
+          onPress={hideKeyboard}
+          accessible={false}
+          style={styles.flex1}
         >
-          <TouchableWithoutFeedback
-            testID="sign_in.button_hide_keyboard"
-            onPress={hideKeyboard}
-            accessible={false}
-            style={styles.flex1}
-          >
-            <View style={styles.paddingView}>
-              <Animated.Image
-                source={images.logo_beincomm_reverse}
-                style={[{ alignSelf: 'center' }, logoContainerStyle]}
-              />
-              <View style={{ backgroundColor: 'yellow' }} />
-              <Text.H4 testID="sign_in.title" style={styles.title} useI18n>
-                auth:text_sign_in_desc
-              </Text.H4>
-              <Text.BodyM style={styles.label} useI18n>
-                auth:input_label_email
-              </Text.BodyM>
-              <TextInputController
-                textInputRef={inputEmailRef}
-                testID="sign_in.input_email"
-                autoFocus
-                useFormData={useFormData}
-                name="email"
-                rules={{
-                  required: t('auth:text_err_email_blank'),
-                  pattern: {
-                    value: validation.emailRegex,
-                    message: t('auth:text_err_email_format'),
-                  },
-                }}
-                validateValue={() => {
-                  clearFieldError('email');
-                  checkDisableSignIn();
-                }}
-                placeholder="example@gmail.com"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                style={styles.inputEmailContainer}
-                inputStyle={styles.input}
-                helperContent={signingInError}
-                editable={!authSessions && !loading}
-                onSubmitEditing={onSubmitEmail}
-                placeholderTextColor={theme.colors.gray40}
-                textColor={theme.colors.white}
-                helperTextProps={{
-                  style: styles.errorText,
-                }}
-              />
-              <PasswordInputController
-                ref={inputPasswordRef}
-                useFormData={useFormData}
-                testID="sign_in.input_password"
-                name="password"
-                label={t('auth:input_label_password')}
-                labelProps={{ color: theme.colors.white }}
-                rules={{
-                  required: t('auth:text_err_password_blank'),
-                  maxLength: {
-                    value: 20,
-                    message: t('auth:text_err_password_characters'),
-                  },
-                  minLength: {
-                    value: 6,
-                    message: t('auth:text_err_password_characters'),
-                  },
-                  validate: () => {
-                    if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
-                      const value = getValues('password');
-                      if (!/(?=.*?[A-Z])/.test(value)) {
-                        return t('auth:text_err_password_required_upper_case');
-                      }
-                      if (!/(?=.*?[a-z])/.test(value)) {
-                        return t('auth:text_err_password_required_lower_case');
-                      }
-                      if (!/(?=.*?[0-9])/.test(value)) {
-                        return t('auth:text_err_password_required_number');
-                      }
-                      if (!/(?=.*?[^\w\s])/.test(value)) {
-                        return t('auth:text_err_password_required_symbols');
-                      }
-                    }
-                  },
-                }}
-                placeholder={t('auth:input_label_password_placeholder')}
-                validateValue={() => {
-                  clearFieldError('password');
-                  checkDisableSignIn();
-                }}
-                onSubmitEditing={onSignIn}
-                inputStyle={styles.input}
-                style={styles.inputPassword}
-                placeholderTextColor={theme.colors.gray40}
-                iconColor={theme.colors.white}
-                textColor={theme.colors.white}
-                helperStyle={styles.errorText}
-                editable={!loading}
-              />
-              <TouchableOpacity
-                testID="sign_in.btn_forgot_password"
-                onPress={goToForgotPassword}
-              >
-                <Text.BodyS style={styles.transparentButton} useI18n>
-                  auth:btn_forgot_password
-                </Text.BodyS>
-              </TouchableOpacity>
-              <Button.Primary
-                testID="sign_in.btn_login"
-                style={styles.btnSignIn}
-                type="ghost"
-                disabled={disableSignIn}
-                onPress={onSignIn}
-                useI18n
-              >
-                auth:btn_sign_in
-              </Button.Primary>
-
-              <View style={styles.signUpContainer}>
-                <Text.BodyM color={theme.colors.white} useI18n>
-                  auth:text_sign_up_desc
-                </Text.BodyM>
-                <TouchableOpacity
-                  testID="btnSignInForgotPassword"
-                  // onPress={() => navigation.navigate(authStack.signup)}
-                  onPress={handleSignUpNotFunctioning}
-                >
-                  <Text.H5 style={styles.transparentButton} useI18n>
-                    auth:btn_sign_up_now
-                  </Text.H5>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </ScrollView>
-      </BackgroundComponent>
+          <View style={styles.paddingView}>
+            {renderLogoImage()}
+            {renderDescription()}
+            {renderInputEmail()}
+            {renderInputPassword()}
+            {renderForgotPassword()}
+            {renderButtonSignIn()}
+            {renderSignUp()}
+          </View>
+        </TouchableWithoutFeedback>
+      </ScrollView>
       {renderLoading()}
     </ScreenWrapper>
   );
@@ -463,7 +311,7 @@ const SignIn = () => {
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
-  const textStyle = createTextStyle(theme);
+  const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
     root: {
@@ -471,6 +319,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     container: {
       flex: 1,
+      paddingTop: insets.top,
       alignContent: 'center',
       width: '100%',
     },
@@ -480,59 +329,20 @@ const themeStyles = (theme: ExtendedTheme) => {
     flex1: { flex: 1 },
     paddingView: {
       flex: 1,
-      paddingHorizontal: spacing.padding.extraLarge,
+      paddingHorizontal: spacing.padding.big,
       paddingTop: spacing.padding.extraLarge,
     },
-    smallLogo: {
-      position: 'absolute',
-      left: 0,
-      width: LOGO_SMALL_SIZE,
-      height: LOGO_SMALL_SIZE,
-    },
     title: {
-      marginTop: spacing.margin.extraLarge,
-      marginBottom: spacing.margin.large,
-      color: colors.white,
-    },
-    label: {
-      color: colors.white,
-    },
-    inputEmailContainer: {
-      marginVertical: spacing.margin.small,
-    },
-    input: {
-      borderColor: colors.white,
-      backgroundColor: 'transparent',
-    },
-    inputPassword: {
-      marginVertical: spacing.margin.small,
-    },
-    forgotButton: {
-      color: colors.white,
-    },
-    transparentButton: {
-      color: colors.white,
-      fontWeight: '600',
+      marginTop: spacing.margin.large,
+      marginBottom: spacing.margin.extraLarge,
     },
     btnSignIn: {
-      marginTop: spacing.margin.large,
+      marginTop: spacing.margin.big,
     },
     signUpContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
-      fontWeight: '400',
-      marginTop: spacing.margin.extraLarge,
-    },
-    buttonSignupText: {
-      ...textStyle.h6,
-      color: colors.purple60,
-      fontWeight: '500',
-    },
-    errorText: {
-      backgroundColor: colors.white,
-      paddingHorizontal: spacing.padding.small,
-      paddingVertical: spacing.padding.tiny,
-      marginTop: spacing.margin.tiny,
+      marginTop: spacing.margin.base,
     },
     loading: {
       position: 'absolute',
@@ -544,6 +354,9 @@ const themeStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.transparent1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    forgotPassword: {
+      marginTop: spacing.margin.base,
     },
   });
 };
