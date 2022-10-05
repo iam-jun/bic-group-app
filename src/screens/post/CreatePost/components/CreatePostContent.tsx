@@ -64,7 +64,8 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
 
   const { loading, data } = createPostData || {};
   const { content } = data || {};
-  const { selectedLinkIndex, lstLinkPreview } = linkPreview;
+  const { lstLinkPreview } = linkPreview;
+  const currentLinkPreview = lstLinkPreview[lstLinkPreview.length - 1];
 
   const [photosHeight, setPhotosHeight] = React.useState<number>(0);
   const [inputHeight, setInputHeight] = React.useState<number>(0);
@@ -200,9 +201,9 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
               }}
               disabled={loading}
             />
-            {selectedLinkIndex !== -1 && (
+            {currentLinkPreview && (
               <LinkPreview
-                data={lstLinkPreview[selectedLinkIndex]}
+                data={currentLinkPreview}
                 loadLinkPreview={loadLinkPreview}
                 onClose={onCloseLinkPreview}
                 showClose
