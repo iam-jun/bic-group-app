@@ -4,7 +4,7 @@ import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 
 const initState = {
   data: undefined,
-  loading: false,
+  loading: true,
 };
 
 const joinedCommunitiesStore = (set) => ({
