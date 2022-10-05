@@ -553,8 +553,8 @@ export interface IGetSeenPostListSheet {
   canLoadMore?: boolean;
 }
 export interface IPayloadUpdateLinkPreview {
-  selectedLinkIndex?: number;
   lstLinkPreview?: ILinkPreviewCreatePost[];
+  lstRemovedLinkPreview?: string[];
 }
 
 export interface ILinkPreview {

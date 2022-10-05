@@ -36,8 +36,8 @@ export const postInitState = {
     initAudiences: null,
     isSavingDraftPost: false,
     linkPreview: {
-      selectedLinkIndex: -1,
       lstLinkPreview: [],
+      lstRemovedLinkPreview: [],
     },
   },
   createComment: {

@@ -12,7 +12,6 @@ import modalActions from '~/storeRedux/modal/actions';
 import {
   IAudience,
   ICreatePostParams,
-  ILinkPreviewCreatePost,
   IParamGetPostAudiences,
   IParamPutEditPost,
   IPayloadPutEditDraftPost,
@@ -83,9 +82,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     loadLinkPreview,
   } = useLinkPreview();
 
-  const { selectedLinkIndex, lstLinkPreview } = linkPreview;
+  const { lstLinkPreview } = linkPreview;
+  const currentLinkPreview = lstLinkPreview[lstLinkPreview.length - 1];
   const isLoadingLinkPreview
-    = lstLinkPreview?.[selectedLinkIndex]?.isLoading || false;
+    = currentLinkPreview?.isLoading || false;
 
   const { images, imageUploading } = validateImages(selectingImages, t);
   const { video, videoUploading } = validateVideo(selectingVideo, t);
@@ -143,7 +143,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   );
   const isInitSelectedLinkPreviewChanged = !isEqual(
     initSelectedLinkPreviewRef.current,
-    lstLinkPreview?.[selectedLinkIndex],
+    currentLinkPreview,
   );
 
   const [sPostData, setPostData] = React.useState<IPostActivity>({
@@ -415,15 +415,13 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     const newMentions = getMentionsFromContent(_content, tempMentions);
     const mentions = { ...initPostData?.mentions, ...newMentions };
 
-    const linkPreviewCreatePost: ILinkPreviewCreatePost
-      = lstLinkPreview?.[selectedLinkIndex];
-    const linkPreview = linkPreviewCreatePost
+    const linkPreview = currentLinkPreview
       ? {
-        url: linkPreviewCreatePost.url,
-        domain: linkPreviewCreatePost.domain,
-        title: linkPreviewCreatePost.title,
-        image: linkPreviewCreatePost.image,
-        description: linkPreviewCreatePost.description,
+        url: currentLinkPreview.url,
+        domain: currentLinkPreview.domain,
+        title: currentLinkPreview.title,
+        image: currentLinkPreview.image,
+        description: currentLinkPreview.description,
       }
       : null;
 

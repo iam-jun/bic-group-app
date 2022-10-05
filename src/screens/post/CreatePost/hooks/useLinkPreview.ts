@@ -6,7 +6,12 @@ import { ILinkPreviewCreatePost } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import { getUrlFromText } from '~/utils/common';
-import { createNewArrayLinkPreview, removeLinkPreviewNoLongerExists } from '../helper';
+import {
+  createNewArrayLinkPreview,
+  filterRemovedLinkPreviewNoLongerExists,
+  getLstNotRemovedLinkPreview,
+  removeLinkPreviewNoLongerExists,
+} from '../helper';
 
 const useLinkPreview = () => {
   const dispatch = useDispatch();
@@ -14,7 +19,7 @@ const useLinkPreview = () => {
   const refHandleLinkPreview = useRef<any>();
 
   const linkPreview = useKeySelector(postKeySelector.createPost.linkPreview);
-  const { selectedLinkIndex, lstLinkPreview } = linkPreview;
+  const { lstLinkPreview, lstRemovedLinkPreview } = linkPreview;
 
   const debounceHandleLinkPreview = (text: string) => {
     if (refHandleLinkPreview?.current) {
@@ -38,39 +43,66 @@ const useLinkPreview = () => {
       if (additionalLinkPreview) {
         dispatch(
           postActions.updateLinkPreview({
-            selectedLinkIndex: additionalLinkPreview.length - 1,
             lstLinkPreview: [...additionalLinkPreview],
           }),
         );
       }
+      // reset lstRemovedLinkPreview
+      dispatch(
+        postActions.updateLinkPreview({
+          lstRemovedLinkPreview: [],
+        }),
+      );
       return;
     }
 
-    // create new array link preview with no duplicate url
-    const newLstLinkPreview = createNewArrayLinkPreview(urls, lstLinkPreview);
-    // remove link preview in newLstLinkPreview if it no longer exists in urls
-    const lstValidLinkPreview = removeLinkPreviewNoLongerExists(
+    // get links that not removed
+    const lstNotRemovedLinkPreview = getLstNotRemovedLinkPreview(
       urls,
+      lstRemovedLinkPreview,
+    );
+    // create new array link preview with no duplicate url
+    const newLstLinkPreview = createNewArrayLinkPreview(
+      lstNotRemovedLinkPreview,
+      lstLinkPreview,
+    );
+    // remove link preview in newLstLinkPreview if it no longer exists in lstNotRemovedLinkPreview
+    const lstValidLinkPreview = removeLinkPreviewNoLongerExists(
+      lstNotRemovedLinkPreview,
       newLstLinkPreview,
     );
-    let lstLinkPreviewUpdate = [...lstValidLinkPreview];
+    // remove items in lstRemovedLinkPreview if that no longer exist in urls
+    const lstRemovedLinkPreviewUpdate = filterRemovedLinkPreviewNoLongerExists(
+      urls,
+      lstRemovedLinkPreview,
+    );
 
+    let lstLinkPreviewUpdate = [...lstValidLinkPreview];
     if (additionalLinkPreview) {
-      lstLinkPreviewUpdate = [...lstLinkPreviewUpdate, ...additionalLinkPreview];
+      lstLinkPreviewUpdate = [
+        ...lstLinkPreviewUpdate,
+        ...additionalLinkPreview,
+      ];
     }
 
     dispatch(
       postActions.updateLinkPreview({
-        selectedLinkIndex: lstLinkPreviewUpdate.length - 1,
         lstLinkPreview: lstLinkPreviewUpdate,
+        lstRemovedLinkPreview: lstRemovedLinkPreviewUpdate,
       }),
     );
   };
 
   const onCloseLinkPreview = () => {
+    const newLstLinkPreview = [...lstLinkPreview];
+    const newLstRemovedLinkPreview = [...lstRemovedLinkPreview];
+    const removedLinkPreviewItem = newLstLinkPreview.pop();
+    newLstRemovedLinkPreview.push(removedLinkPreviewItem.url);
+
     dispatch(
       postActions.updateLinkPreview({
-        selectedLinkIndex: selectedLinkIndex - 1,
+        lstLinkPreview: newLstLinkPreview,
+        lstRemovedLinkPreview: newLstRemovedLinkPreview,
       }),
     );
   };
