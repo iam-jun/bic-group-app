@@ -1,5 +1,6 @@
 import React from 'react';
 import { useController } from 'react-hook-form';
+import { TextInput as RNTextInput } from 'react-native';
 import PasswordInput, { PasswordInputProps } from '~/baseComponents/Input/PasswordInput';
 
 import { IObject } from '~/interfaces/common';
@@ -12,7 +13,6 @@ interface Props extends PasswordInputProps {
   testID: string;
   placeholder: string;
   validateValue?: () => void;
-  ref?: any;
   iconColor?: string;
 }
 
@@ -24,7 +24,6 @@ const PasswordInputController: React.FC<Props> = ({
   testID,
   placeholder,
   validateValue,
-  ref,
   ...props
 }) => {
   const {
@@ -43,7 +42,6 @@ const PasswordInputController: React.FC<Props> = ({
 
   return (
     <PasswordInput
-      ref={ref}
       testID={testID}
       placeholder={placeholder}
       error={errors?.[name]}
@@ -61,4 +59,10 @@ const PasswordInputController: React.FC<Props> = ({
   );
 };
 
-export default PasswordInputController;
+const _PasswordInputController = React.forwardRef((
+  props: Props, ref?: React.Ref<RNTextInput>,
+) => (
+  <PasswordInputController passwordInputRef={ref} {...props} />
+));
+
+export default _PasswordInputController;
