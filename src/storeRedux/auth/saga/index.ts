@@ -11,6 +11,7 @@ import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import {
   getUserFromSharedPreferences,
+  isAppInstalled,
   saveUserToSharedPreferences,
 } from '~/services/sharePreferences';
 import * as actionsCommon from '~/storeRedux/modal/actions';
@@ -154,14 +155,23 @@ function* signOut({ payload }: any) {
     yield Auth.signOut();
     // Check if chat auth session is still active
     const sessionData: IObject<any> = yield getUserFromSharedPreferences();
-    if ((sessionData?.activeSessions || []).length < 2) {
-      yield saveUserToSharedPreferences(null);
-    } else {
+    const isInstalled = isAppInstalled();
+    const activeSessions = sessionData?.activeSessions || {};
+
+    /**
+      * if BIC chat is installed and has active session
+      *  just only remove chat session
+      */
+    if (isInstalled && activeSessions.chat) {
+      delete activeSessions?.community;
       const data = {
         ...sessionData,
-        activeSessions: sessionData.activeSessions.filter((item: string) => item !== 'community'),
+        activeSessions,
       };
       yield saveUserToSharedPreferences(data);
+    } else {
+      // clear all session
+      yield saveUserToSharedPreferences(null);
     }
     FileUploader.getInstance()?.resetData?.();
     ImageUploader.getInstance()?.resetData?.();

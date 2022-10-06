@@ -36,7 +36,7 @@ export default function* signInSuccess({
     role: payload?.username,
   };
   const sessionData: IObject<any> = yield getUserFromSharedPreferences();
-  const activeSessions = sessionData?.activeSessions || [];
+  const activeSessions = sessionData?.activeSessions || {};
   // For sharing data between Group and Chat
   yield saveUserToSharedPreferences({
     username: userResponse.username,
@@ -44,7 +44,7 @@ export default function* signInSuccess({
     name,
     token: userResponse.signInUserSession.idToken?.jwtToken,
     exp: userResponse.signInUserSession.idToken?.payload?.exp,
-    activeSessions: [...activeSessions, 'community'],
+    activeSessions: { ...activeSessions, community: new Date().toDateString() },
   });
 
   yield put(actions.setUser(userResponse));
