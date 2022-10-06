@@ -1,14 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import emojiRegex from 'emoji-regex';
-
 import { Emojis, EmojiIndicesByAlias } from '~/baseComponents/Emoji/emojis';
 import custom_emojis from '~/resources/custom_emojis';
-
-const RE_NAMED_EMOJI = /(:([a-zA-Z0-9_+-]+):)/g;
-
-const RE_UNICODE_EMOJI = emojiRegex();
 
 const RE_EMOTICON = {
   slightly_smiling_face: /(^|\s)(:-?\))(?=$|\s)/g, // :)
@@ -31,82 +25,8 @@ const RE_EMOTICON = {
   broken_heart: /(^|\s)(<\/3|&lt;&#x2F;3)(?=$|\s)/g, // </3
 };
 
-const MAX_JUMBO_EMOJIS = 4;
-
-function isEmoticon(text) {
-  Object.keys(RE_EMOTICON).forEach((emoticon) => {
-    const reEmoticon = RE_EMOTICON[emoticon];
-    const matchEmoticon = text.match(reEmoticon);
-    if (matchEmoticon && matchEmoticon[0] === text) {
-      return true;
-    }
-  });
-
-  return false;
-}
-
 export function getEmoticonName(value) {
   return Object.keys(RE_EMOTICON).find((key) => value.match(RE_EMOTICON[key]) !== null);
-}
-
-export function hasEmojisOnly(message, customEmojis) {
-  if (!message || message.length === 0 || (/^\s{4}/).test(message)) {
-    return { isEmojiOnly: false, isJumboEmoji: false };
-  }
-
-  const chunks = message.trim().replace(/\n/g, ' ').split(' ').filter((m) => m && m.length > 0);
-
-  if (chunks.length === 0) {
-    return { isEmojiOnly: false, isJumboEmoji: false };
-  }
-
-  let emojiCount = 0;
-  chunks.forEach((chunk) => {
-    if (doesMatchNamedEmoji(chunk)) {
-      const emojiName = chunk.substring(1, chunk.length - 1);
-      if (EmojiIndicesByAlias.has(emojiName)) {
-        emojiCount += 1;
-      }
-
-      if (customEmojis && customEmojis.has(emojiName)) {
-        emojiCount += 1;
-      }
-
-      const matchUnicodeEmoji = chunk.match(RE_UNICODE_EMOJI);
-      if (matchUnicodeEmoji && matchUnicodeEmoji.join('') === chunk) {
-        emojiCount += matchUnicodeEmoji.length;
-      }
-
-      if (isEmoticon(chunk)) {
-        emojiCount += 1;
-      }
-
-      return { isEmojiOnly: false, isJumboEmoji: false };
-    }
-  });
-
-  return {
-    isEmojiOnly: true,
-    isJumboEmoji: emojiCount > 0 && emojiCount <= MAX_JUMBO_EMOJIS,
-  };
-}
-
-export function doesMatchNamedEmoji(emojiName) {
-  const match = emojiName.match(RE_NAMED_EMOJI);
-
-  if (match && match[0] === emojiName) {
-    return true;
-  }
-
-  return false;
-}
-
-export function getEmojiByName(emojiName) {
-  if (EmojiIndicesByAlias.has(emojiName)) {
-    return Emojis[EmojiIndicesByAlias.get(emojiName)];
-  }
-
-  return null;
 }
 
 // Since there is no shared logic between the web and mobile app

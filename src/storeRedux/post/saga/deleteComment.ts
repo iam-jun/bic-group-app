@@ -1,15 +1,15 @@
-import { put, select } from 'redux-saga/effects';
-import { get } from 'lodash';
+import { put } from 'redux-saga/effects';
+import { cloneDeep } from 'lodash';
 import {
   ICommentData,
   IPayloadDeleteComment,
   IReaction,
 } from '~/interfaces/IPost';
+import useCommentsStore from '~/store/entities/comments';
+import usePostsStore from '~/store/entities/posts';
 import * as modalActions from '~/storeRedux/modal/actions';
 import streamApi from '~/api/StreamApi';
 import { IToastMessage } from '~/interfaces/common';
-import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 
 export default function* deleteComment({
   payload,
@@ -22,16 +22,14 @@ export default function* deleteComment({
     console.error('\x1b[31m🐣️ deleteComment commentId not found\x1b[0m');
     return;
   }
-  const allComments = yield select((state) => get(
-    state, postKeySelector.allComments,
-  )) || {};
+  const allComments = useCommentsStore.getState().comments || {};
   const comment: ICommentData = allComments?.[commentId] || {};
   try {
     yield streamApi.deleteComment(commentId);
 
     // update allCommentsByParentId
-    const allCommentsByParentIds = yield select((state) => state?.post?.allCommentsByParentIds) || {};
-    let commentsOfPost = allCommentsByParentIds[postId] || [];
+    const allCommentsByParentIds = useCommentsStore.getState().commentsByParentId || {};
+    let commentsOfPost = cloneDeep(allCommentsByParentIds[postId]) || [];
     if (parentCommentId) {
       // find comment index
       const pIndex = commentsOfPost?.findIndex?.((cmt: IReaction) => cmt?.id === parentCommentId);
@@ -57,21 +55,21 @@ export default function* deleteComment({
       );
       newParentComment.child.list = newParentComment.child?.list?.filter?.((cmt: IReaction) => cmt?.id !== commentId);
 
-      yield put(postActions.addToAllComments(newParentComment));
+      useCommentsStore.getState().actions.addToComments(newParentComment);
     } else {
       // remove comment
       commentsOfPost = commentsOfPost?.filter?.((cmt: IReaction) => cmt?.id !== commentId);
     }
-    yield put(postActions.updateAllCommentsByParentIdsWithComments({
+    useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
       id: postId,
       comments: [...commentsOfPost],
       isMerge: false,
-    }));
+    });
 
     // update reaction counts, should minus comment and all reply counts
     const childrenCommentCount = comment?.totalReply || 0;
-    const allPosts = yield select((state) => state?.post?.allPosts) || {};
-    const newAllPosts = { ...allPosts };
+    const allPosts = usePostsStore.getState().posts || {};
+    const newAllPosts = cloneDeep(allPosts);
     const post = newAllPosts[postId] || {};
     post.commentsCount = Math.max(
       0,
@@ -87,8 +85,8 @@ export default function* deleteComment({
     //     );
     //   }
     // }
-    newAllPosts[postId] = { ...post };
-    yield put(postActions.setAllPosts(newAllPosts));
+    newAllPosts[postId] = cloneDeep(post);
+    usePostsStore.getState().actions.setPosts(newAllPosts);
 
     // show toast success
     const toastMessage: IToastMessage = {

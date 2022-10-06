@@ -209,6 +209,7 @@ const Notification = () => {
                 rootNavigation.navigate(
                   groupStack.groupDetail, {
                     groupId: act.group.id,
+                    communityId: act?.group?.communityId,
                   },
                 );
               }

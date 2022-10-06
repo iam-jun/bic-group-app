@@ -1,7 +1,7 @@
 import { ICommunity } from '~/interfaces/ICommunity';
-import IBaseStore from '~/store/interfaces/IBaseStore';
+import IBaseState from '~/store/interfaces/IBaseState';
 
-interface IJoinedCommunitiesState extends IBaseStore{
+interface IJoinedCommunitiesState extends IBaseState{
   data?: ICommunity[],
   loading: boolean,
   getJoinedCommunities: (params?: {

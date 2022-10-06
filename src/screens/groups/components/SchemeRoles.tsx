@@ -3,11 +3,10 @@ import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import RoleItem from '~/screens/PermissionScheme/CreatePermissionScheme/components/RoleItem';
 import { IPermission, IRole } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 
 export interface SchemeRolesProps {
   roles: IRole[];
@@ -29,9 +28,9 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const permissionCategories = useKeySelector(groupsKeySelector.permission.categories);
+  const permissionCategories = usePermissionSchemeStore((state) => state.categories);
 
-  const memberRoleIndex = useKeySelector(groupsKeySelector.permission.creatingScheme.memberRoleIndex);
+  const memberRoleIndex = usePermissionSchemeStore((state) => state.creatingScheme.memberRoleIndex);
 
   if (!roles || !permissionCategories) {
     return null;

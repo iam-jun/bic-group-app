@@ -17,6 +17,8 @@ import DeviceInfo from 'react-native-device-info';
 
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
+import useCommentsStore from '~/store/entities/comments';
+import commentsSelector from '~/store/entities/comments/selectors';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import postActions from '~/storeRedux/post/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
@@ -73,7 +75,7 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const comment: ICommentData = useKeySelector(postKeySelector.commentById(commentId)) || {};
+  const comment: ICommentData = useCommentsStore(commentsSelector.getComment(commentId));
   const oldContent = comment?.content;
   const oldImages = comment?.media?.images;
 

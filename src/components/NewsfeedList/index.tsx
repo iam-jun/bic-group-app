@@ -22,6 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
+import { HOME_TAB_TYPE } from '~/screens/Home/store/Interface';
 import dimension from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
@@ -37,7 +38,6 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';
 import NoticePanel from '~/screens/Home/components/NoticePanel';
-import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 
 export interface NewsfeedListProps {
   data?: any;

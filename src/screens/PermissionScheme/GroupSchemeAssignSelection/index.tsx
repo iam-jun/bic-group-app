@@ -3,22 +3,19 @@ import {
   View, StyleSheet, FlatList, TouchableOpacity,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Animated, { ZoomIn } from 'react-native-reanimated';
 
 import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Icon from '~/baseComponents/Icon';
-import groupsActions from '~/storeRedux/groups/actions';
 import {
   changeSchemeIdOfGroup,
   handleSelectNewGroupScheme,
 } from '~/screens/PermissionScheme/GroupSchemeAssignSelection/helper';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../store';
 
 export interface GroupSchemeManagementProps {
   route?: {
@@ -34,18 +31,17 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const initGroup = route?.params?.group;
   const [selectingIndex, setSelectingIndex] = useState<number>();
 
-  const { data = [], currentAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning)
+  const actions = usePermissionSchemeStore((state) => state.actions);
+  const { data = [], currentAssignments } = usePermissionSchemeStore((state) => state.assignGroupScheme.assigning)
     || {};
-  const { data: groupAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
+  const { data: groupAssignments } = usePermissionSchemeStore((state) => state.assignGroupScheme.assignments) || {};
+  const { data: schemes } = usePermissionSchemeStore((state) => state.schemes) || {};
+  const { groupSchemes = [] } = schemes || {};
 
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-
-  const { data: schemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const { groupSchemes = [] } = schemes || {};
 
   useEffect(() => {
     const index = groupSchemes?.findIndex(
@@ -72,10 +68,10 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         schemeId,
         currentAssignments,
       );
-      dispatch(groupsActions.setGroupSchemeAssigning({
+      actions.setGroupSchemeAssigning({
         data: newData,
         currentAssignments: newAssignments,
-      }));
+      });
     }
   };
 

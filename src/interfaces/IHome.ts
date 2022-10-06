@@ -1,7 +1,3 @@
-export interface IPayloadGetHomePost {
-  isRefresh?: boolean;
-}
-
 export interface IPayloadSetNewsfeedSearch {
   isShow?: boolean;
   isSuggestion?: boolean;

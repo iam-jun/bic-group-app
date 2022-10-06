@@ -3,27 +3,28 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import useCommunitiesStore from '~/store/comunities';
+import ICommunitiesState from '~/store/comunities/Interface';
 import AboutContent from '../CommunityDetail/components/AboutContent';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
-const CommunityAbout = () => {
-  const { rootNavigation } = useRootNavigation();
+const CommunityAbout = (props: any) => {
+  const { params } = props.route;
+  const communityId = params?.communityId;
   const { t } = useBaseHook();
-  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { name, id, joinStatus } = infoDetail;
-  const isMember = joinStatus === groupJoinStatus.member;
+  const { rootNavigation } = useRootNavigation();
+  const data = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
+  const isMember = data?.joinStatus === GroupJoinStatus.MEMBER;
 
   const onPressTotalMember = () => {
-    rootNavigation.navigate(groupStack.communityMembers, { communityId: id, isMember });
+    rootNavigation.navigate(groupStack.communityMembers, { communityId, isMember });
   };
 
   return (
     <ScreenWrapper isFullView>
-      <Header title={`${t('settings:title_about')} ${name}`} />
-      <AboutContent profileInfo={infoDetail} onPressMember={onPressTotalMember} />
+      <Header title={`${t('settings:title_about')} ${data?.name}`} />
+      <AboutContent profileInfo={data as any} onPressMember={onPressTotalMember} />
     </ScreenWrapper>
   );
 };

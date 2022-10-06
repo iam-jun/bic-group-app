@@ -5,7 +5,7 @@ import groupApi from '../../../api/GroupApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import { IParamGetCommunities } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
-import { mapItems } from '../../../screens/groups/helper/mapper';
+import { mapItems } from '~/screens/groups/helper/mapper';
 
 export default function* getDiscoverCommunities({
   payload,

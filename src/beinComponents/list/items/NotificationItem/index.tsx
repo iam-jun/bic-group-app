@@ -16,6 +16,11 @@ import spacing from '~/theme/spacing';
 
 const { width: screenWidth } = Dimensions.get('window');
 
+const NOTIFICATION_TYPE_HIDE_AVATAR = [
+  NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL,
+  NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL,
+];
+
 export interface NotificationItemProps {
   // activities: IGetStreamNotificationActivity[];
   // verb: string;
@@ -54,21 +59,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   if (!id) return null;
 
-  const itemValue = useKeySelector(notificationSelector.getNotificationById(id));
-
-  const _itemValue = useMemo(
-    () => {
-      if (
-        itemValue !== undefined
-      && itemValue !== null
-      && !isEqual(
-        JSON.stringify(itemValue), JSON.stringify(_itemValue),
-      )
-      ) {
-        return itemValue;
-      }
-    }, [itemValue, onPress, onPressOption, testID, id],
+  const itemValue = useKeySelector(
+    notificationSelector.getNotificationById(id),
   );
+
+  const _itemValue = useMemo(() => {
+    if (
+      itemValue !== undefined
+      && itemValue !== null
+      && !isEqual(JSON.stringify(itemValue), JSON.stringify(_itemValue))
+    ) {
+      return itemValue;
+    }
+  }, [itemValue, onPress, onPressOption, testID, id]);
 
   const {
     isRead, updatedAt, extra, actorCount,
@@ -94,10 +97,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
   };
 
-  const notShowAvatar = extra?.type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL
-    || extra?.type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL;
+  const isShowAvatar = !NOTIFICATION_TYPE_HIDE_AVATAR.includes(extra?.type);
 
-  // render notification item
   return (
     <TouchableOpacity
       testID={testID}
@@ -112,12 +113,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         },
       ]}
     >
-      {notShowAvatar ? (
-        <View
-          style={[
-            { flexDirection: 'row', flex: 1, justifyContent: 'flex-start' },
-          ]}
-        >
+      {!isShowAvatar ? (
+        <View style={[styles.containerStart, { flexDirection: 'row' }]}>
           {renderIndicator(styles.indicatorMargin)}
           <NotificationContent
             description={extra?.description || ''}
@@ -130,7 +127,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             flex: 1,
           }}
         >
-          <View style={[styles.row, { flex: 1, justifyContent: 'flex-start' }]}>
+          <View style={[styles.row, styles.containerStart]}>
             {renderIndicator()}
             <NotificationAvatar
               actors={extra.actors}
@@ -197,6 +194,10 @@ const createStyles = (theme: ExtendedTheme) => {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    containerStart: {
+      flex: 1,
+      justifyContent: 'flex-start',
     },
     stateIndicatorUnread: {
       width: 6,

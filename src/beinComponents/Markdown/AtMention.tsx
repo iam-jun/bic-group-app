@@ -5,7 +5,6 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
 
-import { useKeySelector } from '~/hooks/selector';
 import { IMarkdownAudience } from '~/interfaces/IPost';
 
 import { fontFamilies } from '~/theme/fonts';
@@ -13,20 +12,27 @@ import useMentionInputStore from '../inputs/MentionInput/store';
 import IMentionInputState from '../inputs/MentionInput/store/Interface';
 
 interface Props {
-  selector: string;
   mentionName: string;
+  dataStore: any;
+  dataSelector: any;
   style?: StyleProp<TextStyle>;
   onPress?: (audience: IMarkdownAudience, e: any) => void;
 }
 
 const AtMention = ({
-  mentionName, selector, style, onPress,
+  mentionName, dataStore, dataSelector, style, onPress,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
-  let audience = useKeySelector(`${selector}.${mentionName}`);
-  const tempSelectedUser = useMentionInputStore((state: IMentionInputState) => state.tempSelected)
+  let audience;
+  if (dataStore && dataSelector) {
+    const mentions = dataStore?.(dataSelector) || {};
+    audience = mentions?.[mentionName]
+  }
+  const tempSelectedUser = useMentionInputStore(
+    (state: IMentionInputState) => state.tempSelected?.[mentionName]
+  )
 
   if (!audience) {
     audience = tempSelectedUser || {};

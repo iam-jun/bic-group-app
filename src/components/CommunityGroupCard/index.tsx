@@ -2,6 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { spacing } from '~/theme';
 import Text from '~/beinComponents/Text';
@@ -10,14 +11,14 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import groupsActions from '~/storeRedux/groups/actions';
 import { Avatar, Button } from '~/baseComponents';
 import { formatLargeNumber } from '~/utils/formatData';
 import { useBaseHook } from '~/hooks';
 import { isGroup } from '~/screens/groups/helper';
-import { ICommunity } from '~/interfaces/ICommunity';
-import groupJoinStatus from '~/constants/groupJoinStatus';
 import modalActions from '~/storeRedux/modal/actions';
+import useCommunitiesStore from '~/store/comunities';
+import ICommunitiesState from '~/store/comunities/Interface';
+import groupsActions from '~/storeRedux/groups/actions';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -57,14 +58,15 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   const privacyData: any
     = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon, title: privacyTitle } = privacyData || {};
+  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
-  const getCommunityDetail = (loadingPage = false) => {
-    dispatch(groupsActions.getCommunityDetail({ communityId: community.id, loadingPage, showLoading: true }));
-  };
-
-  const handleGoBackFromGroupDetail = () => {
+  const onGoBackFromGroupDetail = () => {
+  /**
+     * [TO-DO] Consider to remove this line
+     * Because lately we've stored separated communties
+     */
     if (!!isResetCommunityDetail) {
-      dispatch(groupsActions.setCommunityDetail({} as ICommunity));
+      dispatch(groupsActions.clearGroupPosts());
     }
     rootNavigation.goBack();
   };
@@ -74,19 +76,29 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       // in group detail we need some infomation from community detail,
       // so before navigate to group detail we need to fetch community detail
       // and clear community detail when go back from group detail
-      getCommunityDetail(true);
-      rootNavigation.navigate(groupStack.groupDetail, { groupId: id, onGoBack: handleGoBackFromGroupDetail });
+      actions.getCommunity(community.id);
+
+      rootNavigation.navigate(
+        groupStack.groupDetail,
+        {
+          groupId: id,
+          onGoBack: onGoBackFromGroupDetail,
+        },
+      );
       return;
     }
 
     // if a community has community field, then it is in manage api
     // so need to pick id from community field
     // otherwise pick id by normal
-    rootNavigation.navigate(groupStack.communityDetail, { communityId: community ? community.id : id });
+    rootNavigation.navigate(
+      groupStack.communityDetail,
+      { communityId: community ? community.id : id },
+    );
   };
 
   const handleJoin = () => {
-    if (!!shouldShowAlertJoinTheCommunityFirst && community?.joinStatus === groupJoinStatus.visitor) {
+    if (!!shouldShowAlertJoinTheCommunityFirst && community?.joinStatus === GroupJoinStatus.VISITOR) {
       dispatch(modalActions.showAlert({
         title: t('communities:browse_groups:guest_view_alert:title'),
         content: t('communities:browse_groups:guest_view_alert:content'),

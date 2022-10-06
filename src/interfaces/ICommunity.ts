@@ -1,11 +1,11 @@
-import { COMMUNITY_PRIVACY_TYPE } from '~/constants/privacyTypes';
+import { CommunityPrivacyType } from '~/constants/privacyTypes';
 
 export interface ICommunity {
   id: string;
   groupId: string;
   name: string;
   slug: string;
-  privacy: COMMUNITY_PRIVACY_TYPE;
+  privacy: CommunityPrivacyType;
   description: string;
   icon: string;
   backgroundImgUrl: string;
@@ -14,6 +14,8 @@ export interface ICommunity {
   userCount: number;
   joinStatus?: number;
   members?: IPreviewMember[];
+  teamName?: string;
+  settings?: { isJoinApproval: boolean; }
 }
 
 export interface IParamGetCommunities {
@@ -76,5 +78,5 @@ export interface ICommunityDetailEdit {
   description?: string | null;
   icon?: string;
   backgroundImgUrl?: string;
-  privacy?: COMMUNITY_PRIVACY_TYPE;
+  privacy?: CommunityPrivacyType;
 }

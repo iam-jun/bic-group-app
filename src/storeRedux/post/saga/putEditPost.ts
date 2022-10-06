@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import i18n from 'i18next';
-import { IPayloadPutEditPost } from '~/interfaces/IPost';
+import { IPayloadAddToAllPost, IPayloadPutEditPost } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -37,7 +38,7 @@ export default function* putEditPost({
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
       const post = response?.data;
-      yield put(postActions.addToAllPosts({ data: post }));
+      usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
       yield put(modalActions.showHideToastMessage({
         content: msgSuccess || 'post:text_edit_post_success',
       }));

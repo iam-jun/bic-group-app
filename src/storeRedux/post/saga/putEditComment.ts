@@ -1,5 +1,6 @@
 import { put, select } from 'redux-saga/effects';
 import { IPayloadPutEditComment } from '~/interfaces/IPost';
+import useCommentsStore from '~/store/entities/comments';
 import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -7,7 +8,7 @@ import modalActions from '~/storeRedux/modal/actions';
 import { timeOut } from '~/utils/common';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
-import { getMentionsFromContent } from '~/screens/post/helper/PostUtils';
+import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -38,7 +39,7 @@ function* putEditComment({
 
     const newComment = { ...comment, ...data, edited: true };
     newComment.updatedAt = new Date().toISOString();
-    yield put(postActions.addToAllComments(newComment));
+    useCommentsStore.getState().actions.addToComments(newComment);
     yield put(modalActions.showHideToastMessage({ content: 'post:edit_comment_success' }));
     yield timeOut(500);
     navigation.goBack();

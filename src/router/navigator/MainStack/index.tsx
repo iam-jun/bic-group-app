@@ -6,7 +6,6 @@ import { useBackHandler } from '@react-native-community/hooks';
 import { useDispatch } from 'react-redux';
 
 import CommonModal from '~/components/CommonModal';
-import UserProfilePreviewBottomSheet from '~/components/Preview/UserProfilePreviewBottomSheet';
 import ReactionBottomSheet from '~/components/reaction/ReactionBottomSheet';
 import ReactionDetailBottomSheet from '~/components/reaction/ReactionDetailBottomSheet';
 import {
@@ -72,7 +71,6 @@ const MainStack = (): React.ReactElement => {
       <MenuSidebarDrawer />
       <ReactionBottomSheet />
       <ReactionDetailBottomSheet />
-      <UserProfilePreviewBottomSheet />
       <CommonModal />
       <BottomList />
       {debuggerVisible && <LoggerView /> }

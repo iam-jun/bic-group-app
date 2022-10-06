@@ -4,10 +4,12 @@ import { useDispatch } from 'react-redux';
 
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
+import useCommunitiesStore from '~/store/comunities';
+import ICommunitiesState from '~/store/comunities/Interface';
 import useDiscoverGroupsStore from '../../DiscoverGroups/store';
 import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
 
@@ -24,9 +26,11 @@ const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
     id: groupId,
   } = infoDetail;
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
-  const { joinStatus: joinStatusCommunity } = useKeySelector(groupsKeySelector.communityDetail);
-  const isMember = joinStatus === groupJoinStatus.member;
-  const isMemberOfCommunity = joinStatusCommunity === groupJoinStatus.member;
+  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
+  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
+  const joinStatusCommunity = community?.joinStatus;
+  const isMember = joinStatus === GroupJoinStatus.MEMBER;
+  const isMemberOfCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
 
   const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
   const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);

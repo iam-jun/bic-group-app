@@ -1,9 +1,9 @@
 import { put, select, call } from 'redux-saga/effects';
 
 import groupsActions from '~/storeRedux/groups/actions';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import { groupPrivacy } from '~/constants/privacyTypes';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import groupApi from '~/api/GroupApi';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 
 export default function* getGroupDetail({
   payload,
@@ -22,10 +22,10 @@ export default function* getGroupDetail({
 
     const { groups } = yield select();
     const joinStatus = groups?.groupDetail?.joinStatus;
-    const isMember = joinStatus === groupJoinStatus.member;
+    const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
     const privacy = groups?.groupDetail?.group?.privacy;
-    const isPublic = privacy === groupPrivacy.public;
+    const isPublic = privacy === GroupPrivacyType.PUBLIC;
 
     if (!isMember && !isPublic) yield put(groupsActions.setLoadingPage(false));
   } catch (e) {

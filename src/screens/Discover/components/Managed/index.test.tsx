@@ -1,129 +1,65 @@
-import React from 'react';
-import initialState from '~/storeRedux/initialState';
-import { configureStore, renderWithRedux } from '~/test/testUtils';
-import { listOwnCommunity, listManage } from '~/test/mock_data/communities';
-import Managed from '.';
+import { act, renderHook } from '@testing-library/react-hooks';
+import groupApi from '~/api/GroupApi';
+import { useManagedStore } from './store';
+import { responseManage, responseOwnCommunity } from './store/__mocks__/data';
 
 describe('Managed Screen', () => {
-  it('given an empty list owner, should render empty component', () => {
-    const mockData = {
-      isRefresh: false,
-      owner: {
-        canLoadMore: false,
-        ids: [],
-        items: {},
-      },
-      manage: {
-        isLoading: false,
-        canLoadMore: true,
-        ids: [],
-        items: {},
-      },
-    };
-    const mockStore = configureStore([]);
-    const storeData = {
-      ...initialState,
-      groups: {
-        ...initialState.groups,
-        managed: mockData,
-      },
-    };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<Managed />, store);
-    const emptyComp = wrapper.queryByTestId('list_empty_owner');
-    expect(emptyComp).not.toBeNull();
+  it('should refresh data when call doGetOwnerCommunity', async () => {
+    const spy = jest.spyOn(groupApi, 'getOwnerCommunity').mockImplementation(
+      () => Promise.resolve(responseOwnCommunity) as any,
+    );
+    const { result, waitForNextUpdate } = renderHook(() => useManagedStore());
+
+    act(() => {
+      result.current.actions.getOwnerCommunity();
+    });
+    await waitForNextUpdate();
+    expect(spy).toBeCalled();
+    expect(result.current.owner.hasNextPage).toBe(false);
+    expect(result.current.owner.ids.length).toBe(responseOwnCommunity.data.length);
   });
 
-  it('given n items in list owner, Flatlist should render n items', () => {
-    const mockData = {
-      isRefresh: false,
-      owner: {
-        canLoadMore: false,
-        ids: [...listOwnCommunity.map((item) => item.id)],
-        items: listOwnCommunity.reduce((accumulator, currentItem) => ({
-          ...accumulator,
-          [currentItem.id]: currentItem,
-        }), {}),
-      },
-      manage: {
-        isLoading: false,
-        canLoadMore: true,
-        ids: [],
-        items: {},
-      },
-    };
-    const mockStore = configureStore([]);
-    const storeData = {
-      ...initialState,
-      groups: {
-        ...initialState.groups,
-        managed: mockData,
-      },
-    };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<Managed />, store);
-    const items = wrapper.queryAllByTestId(/managed_owner_item_/);
-    expect(items.length).toBe(listOwnCommunity.length);
+  it('given no param, should load more data doGetManagedCommunityAndGroup', async () => {
+    const spy = jest.spyOn(groupApi, 'getManagedCommunityAndGroup').mockImplementation(
+      () => Promise.resolve(responseManage) as any,
+    );
+
+    const { result, waitForNextUpdate } = renderHook(() => useManagedStore());
+
+    act(() => {
+      result.current.actions.getManagedCommunityAndGroup();
+    });
+    expect(result.current.manage.loading).toBe(true);
+    await waitForNextUpdate();
+    expect(spy).toBeCalled();
+    expect(result.current.manage.hasNextPage).toBe(false);
+    expect(result.current.manage.loading).toBe(false);
+    expect(result.current.manage.ids.length).toBe(responseManage.data.length);
   });
 
-  it('given an empty list manage, should render empty component', () => {
-    const mockData = {
-      isRefresh: false,
-      owner: {
-        canLoadMore: true,
-        ids: [],
-        items: {},
-      },
-      manage: {
-        isLoading: false,
-        canLoadMore: false,
-        ids: [],
-        items: {},
-      },
-    };
-    const mockStore = configureStore([]);
-    const storeData = {
-      ...initialState,
-      groups: {
-        ...initialState.groups,
-        managed: mockData,
-      },
-    };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<Managed />, store);
-    const emptyComp = wrapper.queryByTestId('list_empty_manage');
-    expect(emptyComp).not.toBeNull();
-  });
+  it('given param isRefreshing, should refresh data doGetManagedCommunityAndGroup', async () => {
+    const fakeIds = responseManage.data.map((item) => item.id);
+    const spy = jest.spyOn(groupApi, 'getManagedCommunityAndGroup').mockImplementation(
+      () => Promise.resolve(responseManage) as any,
+    );
 
-  it('given n items in list manage, Flatlist should render n items', () => {
-    const mockData = {
-      isRefresh: false,
-      owner: {
-        canLoadMore: true,
-        ids: [],
-        items: {},
-      },
-      manage: {
-        isLoading: false,
-        canLoadMore: true,
-        ids: [...listManage.map((item) => item.id)],
-        items: listManage.reduce((accumulator, currentItem) => ({
-          ...accumulator,
-          [currentItem.id]: currentItem,
-        }), {}),
-      },
-    };
-    const mockStore = configureStore([]);
-    const storeData = {
-      ...initialState,
-      groups: {
-        ...initialState.groups,
-        managed: mockData,
-      },
-    };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<Managed />, store);
-    const items = wrapper.queryAllByTestId(/managed_manage_item_/);
-    expect(items.length).toBe(listManage.length);
+    const { result, waitForNextUpdate } = renderHook(() => useManagedStore());
+    act(() => {
+      useManagedStore.setState({
+        owner: {
+          hasNextPage: true,
+          ids: [...fakeIds, ...fakeIds],
+        } as any,
+      }, false);
+    });
+    act(() => {
+      result.current.actions.getManagedCommunityAndGroup(true);
+    });
+    expect(result.current.manage.loading).toBe(false);
+    await waitForNextUpdate();
+    expect(spy).toBeCalled();
+    expect(result.current.manage.hasNextPage).toBe(false);
+    expect(result.current.manage.loading).toBe(false);
+    expect(result.current.manage.ids.length).toBe(fakeIds.length);
   });
 });

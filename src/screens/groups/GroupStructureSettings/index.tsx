@@ -8,35 +8,35 @@ import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import { GroupItemProps } from '~/beinComponents/list/items/GroupItem';
 import modalActions from '~/storeRedux/modal/actions';
 import GroupStructureMenu from '~/screens/groups/GroupStructureSettings/components/GroupStructureMenu';
-import groupsActions from '~/storeRedux/groups/actions';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import { getGroupFromTreeById } from '~/screens/groups/helper';
+import { getGroupFromTreeById, isGroup } from '~/screens/groups/helper';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
+import useGroupStructureStore from './store';
 
 export interface GroupStructureSettingsProps {
   style?: StyleProp<ViewStyle>;
+  route: any
 }
 
-const GroupStructureSettings: FC<GroupStructureSettingsProps> = () => {
+const GroupStructureSettings: FC<GroupStructureSettingsProps> = (props: GroupStructureSettingsProps) => {
+  const { params } = props.route;
+  const communityId = params?.communityId;
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail) || {};
-
-  const { data: communityTree, loading } = useKeySelector(groupsKeySelector.groupStructure.communityTree);
+  const { communityTree, actions } = useGroupStructureStore();
+  const { data: dataTree, loading } = communityTree || {};
 
   useEffect(
     () => {
-      dispatch(groupsActions.getGroupStructureCommunityTree({ communityId }));
+      actions.getGroupStructureCommunityTree({ communityId });
     }, [],
   );
 
@@ -45,20 +45,21 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = () => {
     let groupLevel1NoSibling = false;
     if (level === 1 && group?.parents?.[0]) {
       const groupParent = getGroupFromTreeById(
-        communityTree, group.parents[0],
+        dataTree, group.parents[0],
       );
       groupLevel1NoSibling = isEmpty(groupParent.children) || groupParent?.children?.length === 1;
     }
-    const disableMove = !!communityId || groupLevel1NoSibling;
+    const disableMove = !isGroup(level) || groupLevel1NoSibling;
     const disableReorder = isEmpty(childrenUiIds) || childrenUiIds?.length === 1; // props generated when render UI tree
     const groupFromTree: IGroup = getGroupFromTreeById(
-      communityTree,
+      dataTree,
       group?.id,
     );
     dispatch(modalActions.showModal({
       isOpen: true,
       ContentComponent: (
         <GroupStructureMenu
+          communityId={communityId}
           group={groupFromTree}
           disableMove={disableMove}
           disableReorder={disableReorder}
@@ -76,9 +77,9 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = () => {
         {loading ? (
           <LoadingIndicator style={styles.loading} />
         ) : (
-          communityTree && (
+          dataTree && (
             <FlatGroupItem
-              {...communityTree}
+              {...dataTree}
               disableOnPressItem
               disableHorizontal
               showInfo={false}

@@ -9,10 +9,7 @@ export const menuInitState = {
   loadingMyProfile: false,
   isLanguageModalOpen: false,
 
-  loadingUserProfile: false,
-  userProfile: {} as IUserProfile,
   userWorkExperience: [],
-  showUserNotFound: false,
 
   myProfile: {} as IUserProfile,
   myWorkExperience: [],
@@ -40,34 +37,6 @@ const menuReducer = (
   const { countryCodeList, locationList } = state;
 
   switch (type) {
-    case menuTypes.GET_USER_PROFILE:
-      return {
-        ...state,
-        loadingUserProfile: true,
-      };
-    case menuTypes.SET_USER_PROFILE:
-      return {
-        ...state,
-        loadingUserProfile: false,
-        loadingCover: false,
-        loadingAvatar: false,
-        userProfile: {
-          ...state.userProfile,
-          ...payload,
-        },
-      };
-    case menuTypes.SET_SHOW_USER_NOT_FOUND:
-      return {
-        ...state,
-        showUserNotFound: true,
-      };
-    case menuTypes.CLEAR_USER_PROFILE:
-      return {
-        ...state,
-        userProfile: menuInitState.userProfile,
-        showUserNotFound: menuInitState.showUserNotFound,
-      };
-
     case menuTypes.GET_MY_PROFILE:
       return {
         ...state,

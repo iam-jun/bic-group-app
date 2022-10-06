@@ -1,9 +1,9 @@
-import { GROUP_ASSIGNMENTS } from '../../../../test/mock_data/group';
+import { GROUP_ASSIGNMENTS } from '~/test/mock_data/group';
 import {
   findGroupInAssignmentsById,
   prepareData,
 } from './AlertAssignGroupConfirmContent';
-import { languages } from '../../../../test/testUtils';
+import { languages } from '~/test/testUtils';
 
 describe('AlertAssignGroupConfirmContent', () => {
   it('findGroupInAssignmentsById should return group level 0', () => {

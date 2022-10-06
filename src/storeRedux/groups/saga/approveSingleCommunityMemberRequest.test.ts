@@ -12,7 +12,12 @@ describe('approveSingleCommunityMemberRequest saga', () => {
   const communityId = '1';
   const requestId = '2';
   const fullName = 'Test User Name';
-  const action = { type: 'string', payload: { communityId, requestId, fullName } };
+  const action = {
+    type: 'string',
+    payload: {
+      communityId, requestId, fullName, callback: jest.fn(),
+    },
+  };
 
   const state = {
     groups: {
@@ -46,7 +51,6 @@ describe('approveSingleCommunityMemberRequest saga', () => {
         content: `Approved user ${fullName}`,
       }),
     )
-    .put(groupsActions.getCommunityDetail({ communityId }))
     .run()
     .then(({ allEffects }: any) => {
       expect(allEffects?.length).toEqual(5);

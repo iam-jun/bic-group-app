@@ -1,14 +1,13 @@
-import { get } from 'lodash';
-import { call, select } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
 import {
   ICommentData,
   IPayloadReactToComment,
   IReaction,
 } from '~/interfaces/IPost';
+import useCommentsStore from '~/store/entities/comments';
 import showError from '~/storeRedux/commonSaga/showError';
 import streamApi from '../../../api/StreamApi';
-import postKeySelector from '../keySelector';
 import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
 
 export default function* deleteReactToComment({
@@ -82,9 +81,7 @@ function* removeReactionLocal(
   reactionId: string,
   comment: ICommentData,
 ): any {
-  const cmt = yield select((s) => get(
-    s, postKeySelector.commentById(id),
-  )) || {};
+  const cmt = useCommentsStore.getState().comments?.[id];
   const reactionsCount = cmt.reactionsCount || {};
   const ownerReactions = cmt.ownerReactions || [];
 

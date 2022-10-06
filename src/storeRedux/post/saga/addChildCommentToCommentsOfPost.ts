@@ -1,9 +1,8 @@
-import { put, select } from 'redux-saga/effects';
-import { get, isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import { ICommentData } from '~/interfaces/IPost';
-import postKeySelector from '~/storeRedux/post/keySelector';
-import postActions from '~/storeRedux/post/actions';
+import useCommentsStore from '~/store/entities/comments';
 
+// eslint-disable-next-line require-yield
 function* addChildCommentToCommentsOfPost({
   postId,
   commentId,
@@ -17,33 +16,32 @@ function* addChildCommentToCommentsOfPost({
   shouldAddChildrenCount?: boolean;
   meta?: any;
 }) {
-  const postComments: ICommentData[] = yield select((state) => get(
-    state, postKeySelector
-      .commentsByParentId(postId),
-  )) || [];
+  const postComments: ICommentData[] = useCommentsStore.getState().commentsByParentId?.[postId] || [];
   for (let i = 0; i < postComments.length; i++) {
     if (postComments[i].id === commentId) {
+      const newPostComments = cloneDeep(postComments[i]);
       const child = postComments[i].child?.list || [];
       const newChild = child.concat(childComments) || [];
       // If manual add comment by create comment, should update children counts
       // Load more children comment do not add children counts
       if (shouldAddChildrenCount) {
-        postComments[i].totalReply = (postComments[i].totalReply || 0) + 1;
+        newPostComments.totalReply = (newPostComments.totalReply || 0) + 1;
       }
       if (!isEmpty(meta)) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        postComments[i].child.meta = { ...postComments[i]?.child?.meta, ...meta };
+        newPostComments.child.meta = { ...newPostComments?.child?.meta, ...meta };
       }
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      postComments[i].child.list = newChild;
+      newPostComments.child.list = newChild;
 
-      yield put(postActions.updateAllCommentsByParentIdsWithComments({
+      useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
         id: postId,
-        comments: new Array(postComments[i]),
+        comments: new Array(newPostComments),
         isMerge: true,
-      }));
+        commentId,
+      });
       return;
     }
   }

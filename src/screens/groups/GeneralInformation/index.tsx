@@ -14,7 +14,7 @@ import { uploadTypes } from '~/configs/resourceConfig';
 import {
   groupPrivacyListDetail,
   communityPrivacyListDetail,
-  groupPrivacy,
+  GroupPrivacyType,
 } from '~/constants/privacyTypes';
 import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/storeRedux/groups/actions';
@@ -27,6 +27,8 @@ import InfoView from './components/InfoView';
 import { alertAction, _openImagePicker } from './helper';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
+import useCommunitiesStore from '~/store/comunities';
+import ICommunitiesState from '~/store/comunities/Interface';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -36,6 +38,7 @@ const GeneralInformation = (props: any) => {
   const { colors } = theme;
   const dispatch = useDispatch();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   const baseSheetRef: any = useRef();
   let avatar: string;
@@ -57,7 +60,7 @@ const GeneralInformation = (props: any) => {
     organizationPrivacy = groupDetail?.privacy || '';
     total = useKeySelector(groupsKeySelector.groupMemberRequests)?.total || 0;
   } else {
-    const communityDetail = useKeySelector(groupsKeySelector.communityDetail) || {};
+    const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[id]);
     avatar = communityDetail?.icon || '';
     backgroundUrl = communityDetail?.backgroundImgUrl || '';
     canEditInfo = hasPermissionsOnScopeWithId('communities', id, PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO);
@@ -73,24 +76,22 @@ const GeneralInformation = (props: any) => {
       if (type === 'group') {
         dispatch(groupsActions.getGroupDetail({ groupId: id }));
       } else {
-        dispatch(groupsActions.getCommunityDetail({ communityId: id }));
+        getCommunityDetail();
       }
     }, [id],
   );
 
+  const getCommunityDetail = () => actions.getCommunity(id);
+
   const openGroupPrivacyModal = () => baseSheetRef?.current?.open?.();
 
   const editPrivacy = (item: any) => {
+    const data = { id, privacy: item.type };
+    const editFieldName = i18next.t('common:text_privacy');
     if (type === 'group') {
-      dispatch(groupsActions.editGroupDetail({
-        data: { id, privacy: item.type },
-        editFieldName: i18next.t('common:text_privacy'),
-      }));
+      dispatch(groupsActions.editGroupDetail({ data, editFieldName }));
     } else {
-      dispatch(groupsActions.editCommunityDetail({
-        data: { id, privacy: item.type },
-        editFieldName: i18next.t('common:text_privacy'),
-      }));
+      actions.editCommunityDetail(data, editFieldName);
     }
   };
 
@@ -98,9 +99,11 @@ const GeneralInformation = (props: any) => {
     if (type === 'group') {
       dispatch(groupsActions.approveAllGroupMemberRequests({ groupId: id, total }));
     } else {
-      dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId: id, total }));
+      dispatch(groupsActions.approveAllCommunityMemberRequests(
+        { communityId: id, total },
+      ));
     }
-    editPrivacy({ type: groupPrivacy.public });
+    editPrivacy({ type: GroupPrivacyType.PUBLIC });
   };
 
   const declineAllGroupMemberRequests = () => {
@@ -109,14 +112,14 @@ const GeneralInformation = (props: any) => {
     } else {
       dispatch(groupsActions.declineAllCommunityMemberRequests({ communityId: id, total }));
     }
-    editPrivacy({ type: groupPrivacy.secret });
+    editPrivacy({ type: GroupPrivacyType.SECRET });
   };
 
   const onPrivacyMenuPress = (item: any) => {
     baseSheetRef.current?.close();
 
-    if (organizationPrivacy === groupPrivacy.private && total > 0) {
-      if (item.type === groupPrivacy.public) {
+    if (organizationPrivacy === GroupPrivacyType.PRIVATE && total > 0) {
+      if (item.type === GroupPrivacyType.PUBLIC) {
         alertAction(
           dispatch,
           theme,
@@ -126,7 +129,7 @@ const GeneralInformation = (props: any) => {
         );
       }
 
-      if (item.type === groupPrivacy.secret) {
+      if (item.type === GroupPrivacyType.SECRET) {
         alertAction(
           dispatch,
           theme,

@@ -18,7 +18,7 @@ export const getPostViewMenu = (
   postId: string,
   isPostDetail: boolean,
   isDraftPost: boolean,
-  handleDeltePostError: (listIdAudiences: string[]) => void,
+  handleDeletePostError: (listIdAudiences: string[]) => void,
 ) => {
   const onPressEdit = () => {
     dispatch(modalActions.hideBottomList());
@@ -75,7 +75,7 @@ export const getPostViewMenu = (
         onConfirm: () => dispatch(postActions.deletePost({
           id: postId,
           isDraftPost,
-          callbackError: handleDeltePostError,
+          callbackError: handleDeletePostError,
         })),
       }),
     );

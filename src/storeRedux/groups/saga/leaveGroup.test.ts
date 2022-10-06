@@ -7,7 +7,8 @@ import leaveGroup, { navigateToGroup, navigationReplace } from './leaveGroup';
 import groupsActions from '../actions';
 import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
-import { groupPrivacy } from '../../../constants/privacyTypes';
+import GroupJoinStatus from '../../../constants/GroupJoinStatus';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 
 describe('Leave Group Saga', () => {
   let Platform: any;
@@ -24,13 +25,19 @@ describe('Leave Group Saga', () => {
     Platform.OS = 'ios';
     const state = {
       groups: {
-        groupDetail: { group: { privacy: groupPrivacy.secret } },
+        groupDetail: { group: { privacy: GroupPrivacyType.SECRET } },
       },
     };
 
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([[matchers.call.fn(groupApi.leaveGroup), {}]])
+      .put(
+        groupsActions.editDiscoverGroupItem({
+          id: action.payload,
+          data: { joinStatus: GroupJoinStatus.VISITOR },
+        }),
+      )
       .call(navigationReplace)
       .put(groupsActions.getGroupDetail({ groupId: action.payload }))
       .put(
@@ -45,12 +52,18 @@ describe('Leave Group Saga', () => {
 
   it('leaves non-secret group successfully', () => {
     const state = {
-      groups: { groupDetail: { group: { privacy: groupPrivacy.public } } },
+      groups: { groupDetail: { group: { privacy: GroupPrivacyType.PUBLIC } } },
     };
 
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([[matchers.call.fn(groupApi.leaveGroup), {}]])
+      .put(
+        groupsActions.editDiscoverGroupItem({
+          id: action.payload,
+          data: { joinStatus: GroupJoinStatus.VISITOR },
+        }),
+      )
       .call(navigateToGroup, action.payload)
       .put(groupsActions.getGroupDetail({ groupId: action.payload }))
       .put(
@@ -65,7 +78,7 @@ describe('Leave Group Saga', () => {
 
   it('should show error when calling server and error occurs', () => {
     const state = {
-      groups: { groupDetail: { group: { privacy: groupPrivacy.public } } },
+      groups: { groupDetail: { group: { privacy: GroupPrivacyType.PUBLIC } } },
     };
     const error = { meta: { message: 'Some error occurs!' } };
 

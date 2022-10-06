@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import Header from '~/beinComponents/Header';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import CommentDetailContent from './CommentDetailContent';
 import EmptyScreen from '~/components/EmptyScreen';
 import Button from '~/beinComponents/Button';
@@ -31,7 +33,7 @@ const CommentDetail = (props: any) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const actor = useKeySelector(postKeySelector.postActorById(postId));
+  const actor = usePostsStore(postsSelector.getActor(postId));
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
 

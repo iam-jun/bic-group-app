@@ -8,22 +8,20 @@ import {
   RefreshControl,
   ListRenderItem,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/components/EmptyScreen';
-import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/storeRedux/groups/actions';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
+import { useYourGroupsStore } from './store';
 
 type GroupItemProps = {
   id: string;
 };
 
 const GroupItem: FC<GroupItemProps> = ({ id }) => {
-  const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
-  const { items } = joinedAllGroups;
+  const {
+    items,
+  } = useYourGroupsStore();
 
   return (
     <CommunityGroupCard
@@ -34,10 +32,11 @@ const GroupItem: FC<GroupItemProps> = ({ id }) => {
 };
 
 const renderEmptyComponent = () => {
-  const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
-  const { canLoadMore } = joinedAllGroups;
+  const {
+    hasNextPage,
+  } = useYourGroupsStore();
 
-  if (canLoadMore) {
+  if (hasNextPage) {
     return null;
   }
 
@@ -51,10 +50,11 @@ const renderEmptyComponent = () => {
 };
 
 const renderListFooter = () => {
-  const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
-  const { isLoading, canLoadMore } = joinedAllGroups;
+  const {
+    loading,
+  } = useYourGroupsStore();
 
-  if (!isLoading || !canLoadMore) return null;
+  if (!loading) return null;
 
   return (
     <View style={styles.listFooter} testID="your_groups.loading_more_indicator">
@@ -74,25 +74,25 @@ const renderItem: ListRenderItem<string> = ({ item }) => (
 const keyExtractor = (item) => `yourgroups_${item}`;
 
 const YourGroups = () => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
 
-  const joinedAllGroups = useKeySelector(groupsKeySelector.joinedAllGroups);
-  const { isRefresh, canLoadMore, ids } = joinedAllGroups;
+  const {
+    refreshing, hasNextPage, ids, actions,
+  } = useYourGroupsStore();
 
   const onLoadMore = () => {
-    if (canLoadMore) {
-      dispatch(groupsActions.getJoinedAllGroups());
+    if (hasNextPage) {
+      actions.getYourGroups();
     }
   };
 
   const onRefresh = () => {
-    dispatch(groupsActions.getJoinedAllGroups({ isRefresh: true }));
+    actions.getYourGroups(true);
   };
 
   useEffect(() => {
     if (ids.length === 0) {
-      dispatch(groupsActions.getJoinedAllGroups());
+      actions.getYourGroups();
     }
   }, []);
 
@@ -109,7 +109,7 @@ const YourGroups = () => {
       ListHeaderComponent={Separator}
       refreshControl={(
         <RefreshControl
-          refreshing={isRefresh}
+          refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
         />

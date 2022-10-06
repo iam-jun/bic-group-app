@@ -161,10 +161,6 @@ export default class MdLink extends PureComponent {
     // }
   };
 
-  handleLinkCopy = () => {
-    Clipboard.setString(this.props.href);
-  };
-
   render() {
     const children = ExperimentalNormalizeMarkdownLinks
       ? this.parseChildren()

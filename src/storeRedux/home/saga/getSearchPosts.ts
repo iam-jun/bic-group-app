@@ -4,8 +4,9 @@ import {
   IParamPostNewRecentSearchKeyword,
   IPayloadGetSearchPosts,
 } from '~/interfaces/IHome';
+import { IPayloadAddToAllPost } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 import homeActions from '~/storeRedux/home/actions';
-import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
 
 export default function* getSearchPosts({
@@ -57,7 +58,8 @@ export default function* getSearchPosts({
       streamApi.getSearchPost, params,
     );
     data = data.concat(response?.list);
-    yield put(postActions.addToAllPosts({ data, handleComment: false }));
+    usePostsStore.getState().actions.addToPosts({ data, handleComment: false } as IPayloadAddToAllPost);
+
     yield put(homeActions.setNewsfeedSearch({
       loadingResult: false,
       searchResults: data,

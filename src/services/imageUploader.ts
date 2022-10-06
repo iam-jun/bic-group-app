@@ -26,11 +26,6 @@ export interface IUploadParam {
   onError?: (e: any) => void;
 }
 
-export interface ICancelUploadParam {
-  uploadType?: IUploadType | string;
-  file: IFilePicked;
-}
-
 export default class ImageUploader {
   static INSTANCE: ImageUploader | null = null;
 

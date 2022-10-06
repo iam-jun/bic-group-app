@@ -3,6 +3,7 @@ import { cleanup } from '@testing-library/react-native';
 
 import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import GroupItem from './GroupItem';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 
 afterEach(cleanup);
 
@@ -31,7 +32,7 @@ describe('Group Item component', () => {
     parentUiId: 'tree',
     parentId: undefined,
     parents: null,
-    privacy: 'PUBLIC',
+    privacy: GroupPrivacyType.PUBLIC,
     slug: 'evol-community-1641809088',
     subTitle: 0,
     testID: 'group_item.test',
@@ -158,7 +159,7 @@ describe('Group Item component', () => {
       parentUiId: 'tree',
       parentId: undefined,
       parents: null,
-      privacy: 'PUBLIC',
+      privacy: GroupPrivacyType.PUBLIC,
       slug: 'evol-community-1641809088',
       subTitle: 0,
       title: 0,

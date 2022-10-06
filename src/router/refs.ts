@@ -6,11 +6,6 @@ export const rootNavigationRef:
   | null
   | undefined = React.createRef();
 
-export const leftNavigationRef:
-  | RefObject<NavigationContainerRef<any>>
-  | null
-  | undefined = React.createRef();
-
 export const rightNavigationRef:
   | RefObject<NavigationContainerRef<any>>
   | null

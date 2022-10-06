@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types/Auth';
 import { Auth } from 'aws-amplify';
 import i18n from 'i18next';
 import { put, takeLatest } from 'redux-saga/effects';
@@ -32,9 +31,6 @@ const navigation = withNavigation(rootNavigationRef);
 export default function* authSaga() {
   yield takeLatest(
     types.SIGN_IN, signIn,
-  );
-  yield takeLatest(
-    types.SIGN_IN_OAUTH, signInOAuth,
   );
   yield takeLatest(
     types.SIGN_UP, signUp,
@@ -97,24 +93,6 @@ function* changePassword({
     yield put(actions.setChangePasswordLoading(false));
     yield put(actions.setChangePasswordError({ errCurrentPassword, errBox }));
     yield showErrorWithDefinedMessage(errBox);
-  }
-}
-
-function* signInOAuth({
-  payload,
-}: {
-  type: string;
-  payload: CognitoHostedUIIdentityProvider;
-}) {
-  try {
-    yield put(actions.setLoading(true));
-    yield Auth.federatedSignIn({ provider: payload });
-  } catch (e) {
-    yield put(actions.setLoading(false));
-    console.error(
-      '\x1b[34m🐣️ index signInOAuth',
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
   }
 }
 

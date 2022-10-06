@@ -47,13 +47,6 @@ export const modalInitState = {
     callback: undefined,
   },
 
-  userProfilePreview: {
-    isOpen: false,
-    userId: undefined,
-    params: {},
-    position: { x: -1, y: -1 },
-  },
-
   bottomList: {
     isOpen: false,
     data: [],
@@ -150,11 +143,6 @@ function commonReducer(
       return {
         ...state,
         reactionBottomSheet: payload || modalInitState.reactionBottomSheet,
-      };
-    case actions.SET_USER_PROFILE_PREVIEW_BOTTOM_SHEET:
-      return {
-        ...state,
-        userProfilePreview: payload || modalInitState.userProfilePreview,
       };
     case actions.SET_BOTTOM_LIST:
       return {

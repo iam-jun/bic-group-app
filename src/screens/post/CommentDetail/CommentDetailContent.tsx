@@ -14,6 +14,10 @@ import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, ICommentData } from '~/interfaces/IPost';
+import useCommentsStore from '~/store/entities/comments';
+import commentsSelector from '~/store/entities/comments/selectors';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import modalActions from '~/storeRedux/modal/actions';
 
 import CommentInputView from '../components/CommentInputView';
@@ -52,12 +56,12 @@ const CommentDetailContent = (props: any) => {
     = params || {};
   const id = postId;
 
-  const actor = useKeySelector(postKeySelector.postActorById(id));
-  const audience = useKeySelector(postKeySelector.postAudienceById(id));
+  const actor = usePostsStore(postsSelector.getActor(id));
+  const audience = usePostsStore(postsSelector.getAudience(id));
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-  const comments = useKeySelector(postKeySelector.commentsByParentId(id));
+  const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
   const {
     childrenComments = [],
     newCommentData,

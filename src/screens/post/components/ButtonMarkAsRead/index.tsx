@@ -5,10 +5,10 @@ import {
 import { useDispatch } from 'react-redux';
 
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import postActions from '~/storeRedux/post/actions';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import { spacing } from '~/theme';
 import { Button } from '~/baseComponents';
 
@@ -31,7 +31,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 }: ButtonMarkAsReadProps) => {
   const [loading, setLoading] = useState(false);
 
-  const markReadSuccess = useKeySelector(postKeySelector.postMarkedReadSuccessById(postId));
+  const markReadSuccess = usePostsStore(postsSelector.getMarkedReadSuccess(postId));
 
   const { t } = useBaseHook();
   const dispatch = useDispatch();

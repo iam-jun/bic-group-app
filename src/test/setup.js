@@ -156,7 +156,6 @@ jest.doMock('react-native', () => {
   const {
     Platform,
     StyleSheet,
-    ViewPropTypes,
     PermissionsAndroid,
     ImagePickerManager,
     requireNativeComponent,
@@ -244,7 +243,6 @@ jest.doMock('react-native', () => {
         Version: 12,
       },
       StyleSheet,
-      ViewPropTypes,
       PermissionsAndroid,
       ImagePickerManager,
       requireNativeComponent,

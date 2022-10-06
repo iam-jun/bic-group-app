@@ -2,34 +2,32 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import SystemScheme from '~/screens/PermissionScheme/components/SystemScheme';
-import CommunityScheme from '~/screens/PermissionScheme/components/CommunityScheme';
+import GeneralScheme from '~/screens/PermissionScheme/components/GeneralScheme';
 import GroupScheme from '~/screens/PermissionScheme/components/GroupScheme';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
+import usePermissionSchemeStore from './store';
 
-const PermissionScheme = () => {
-  const dispatch = useDispatch();
+const PermissionScheme = (props: any) => {
+  const { params } = props.route;
+  const communityId = params?.communityId;
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail) || {};
+  const actions = usePermissionSchemeStore((state) => state.actions);
 
   useEffect(
     () => {
       if (communityId) {
-        dispatch(groupsActions.getSchemes({ communityId }));
-        dispatch(groupsActions.getCommunityScheme({ communityId }));
+        actions.getSchemes({ communityId });
+        actions.getGeneralScheme(communityId);
       }
 
       return () => {
-        dispatch(groupsActions.setSchemes());
-        dispatch(groupsActions.setCommunityScheme());
+        actions.resetToInitState('schemes');
+        actions.resetToInitState('generalScheme');
       };
     }, [communityId],
   );
@@ -39,8 +37,8 @@ const PermissionScheme = () => {
       <Header title={t('communities:permission:title_permission')} />
       <ScrollView>
         <SystemScheme />
-        <CommunityScheme />
-        <GroupScheme />
+        <GeneralScheme communityId={communityId} />
+        <GroupScheme communityId={communityId} />
       </ScrollView>
     </View>
   );

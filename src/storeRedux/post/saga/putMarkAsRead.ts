@@ -1,10 +1,8 @@
-import { call, put, select } from 'redux-saga/effects';
-import { get } from 'lodash';
+import { call } from 'redux-saga/effects';
 import streamApi from '~/api/StreamApi';
 import showError from '~/storeRedux/commonSaga/showError';
-import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
-import postKeySelector from '~/storeRedux/post/keySelector';
-import postActions from '~/storeRedux/post/actions';
+import { IPayloadAddToAllPost, IPayloadPutMarkAsRead } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 
 function* putMarkAsRead({
   payload,
@@ -24,16 +22,14 @@ function* putMarkAsRead({
     const isSuccess = !!response?.data;
     callback?.(isSuccess);
     if (isSuccess) {
-      const post = yield select((state) => get(
-        state, postKeySelector.postById(postId),
-      ));
-      yield put(postActions.addToAllPosts({
+      const post = usePostsStore.getState()?.posts?.[postId] || {};
+      usePostsStore.getState().actions.addToPosts({
         data: {
           ...post,
           markedReadPost: true,
           markedReadSuccess: true,
         },
-      }));
+      } as IPayloadAddToAllPost);
     }
   } catch (e) {
     callback?.(false);

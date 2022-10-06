@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Button from '~/beinComponents/Button';
+import Button, { ButtonProps } from '~/beinComponents/Button';
 import { IReactionCounts } from '~/interfaces/IPost';
 import { IconType } from '~/resources/icons';
 import { getTotalReactions, validateReactionCount } from './helper';
@@ -63,21 +63,13 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
     ));
   };
 
-  const renderReactButtonItem = (
-    title: string,
+  const renderButtonItem = (
+    buttonProps: ButtonProps,
     icon: IconType,
-    onPress: any,
-    onLongPress: any,
-    disabled?: boolean,
-    testID?: string,
   ) => (
     <View style={styles.buttonReactContainer}>
       <Button
-        testID={testID}
-        useI18n
-        onPress={onPress}
-        onLongPress={onLongPress}
-        disabled={disabled}
+        {...buttonProps}
         leftIcon={icon}
         leftIconProps={{
           icon,
@@ -89,46 +81,57 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
           color: colors.neutral80,
         }}
         style={styles.buttonReact}
-      >
-        {title}
-      </Button>
+      />
     </View>
   );
+
+  const renderReactButtonItem = () => {
+    if (!validReactionCount || !canReact) return null;
+
+    return (
+      <>
+        {
+        renderButtonItem({
+          testID: btnReactTestID,
+          children: labelReactionCount,
+          onPress: onPressReact,
+          onLongPress: onPressReact,
+        },
+        'iconReact')
+      }
+      </>
+    );
+  };
+
+  const renderCommentButtonItem = () => {
+    if (!canComment) return null;
+
+    return renderButtonItem({
+      testID: btnCommentTestID,
+      children: labelButtonComment,
+      disabled: !onPressComment,
+      onPress: onPressComment,
+      onLongPress: onPressComment,
+    },
+    'MessageDots');
+  };
 
   const renderCannotReactView = () => (
     <View style={[styles.emptyView, styles.disbaledReactComment]}>
-      <Text.BodyS color={theme.colors.neutral20} useI18n>post:text_cannot_comment_and_react</Text.BodyS>
+      <Text.BodyS color={theme.colors.neutral20} useI18n>
+        post:text_cannot_comment_and_react
+      </Text.BodyS>
     </View>
   );
 
-  if (!hasReactPermission) {
+  if (!hasReactPermission || (!canComment && !canReact)) {
     return renderCannotReactView();
   }
 
   return (
     <View style={[styles.reactButtons, !canComment && !canReact && styles.disbaledReactComment]}>
-      {(validReactionCount && !!canReact) && (
-        <>
-          {renderReactButtonItem(
-            labelReactionCount,
-            'iconReact',
-            onPressReact,
-            onPressReact,
-            false,
-            btnReactTestID,
-          )}
-        </>
-      )}
-      {!!canComment
-       && renderReactButtonItem(
-         labelButtonComment,
-         'MessageDots',
-         onPressComment,
-         onPressComment,
-         !onPressComment,
-         btnCommentTestID,
-       )}
-      {!canComment && !canReact && renderCannotReactView()}
+      {renderReactButtonItem()}
+      {renderCommentButtonItem()}
     </View>
   );
 };

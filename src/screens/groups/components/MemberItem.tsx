@@ -11,11 +11,11 @@ import useAuth from '~/hooks/auth';
 import { formatDMLink, openUrl } from '~/utils/link';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import spacing, { borderRadius } from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import { useBaseHook } from '~/hooks';
+import useCommunitiesStore from '~/store/comunities';
+import ICommunitiesState from '~/store/comunities/Interface';
 
 interface MemberItemProps {
   item: any;
@@ -23,13 +23,16 @@ interface MemberItemProps {
   onPressMenu: (item: any) => void;
 }
 
-const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => {
+const MemberItem = ({
+  item, canManageMember, onPressMenu,
+}: MemberItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const { user } = useAuth();
-  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
+  const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
+  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[currentCommunityId]);
 
   const {
     id, fullname, avatar, username,
@@ -46,9 +49,7 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
 
   const onPressChat = () => {
     if (!username) return;
-    const link = formatDMLink(
-      communityDetail.slug, username,
-    );
+    const link = formatDMLink(community?.slug, username);
     openUrl(link);
   };
 

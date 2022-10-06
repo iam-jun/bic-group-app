@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
@@ -8,29 +8,33 @@ import Icon from '~/baseComponents/Icon';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
 import TimeView from '~/beinComponents/TimeView';
-import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainTabStack from '~/router/navigator/MainStack/stack';
+import { getAudiencesText } from './helper';
+import { Button } from '~/baseComponents';
+import { useKeySelector } from '~/hooks/selector';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
   time?: any;
   actor: any;
-  onPressHeader?: () => void;
-  onPressMenu?: (e: any) => void;
-  onPressShowAudiences?: () => void;
   disabled?: boolean;
+
+  onPressMenu?: (e: any) => void;
+  onPressHeader?: () => void;
+  onPressShowAudiences?: () => void;
 }
 
 const PostViewHeader: FC<PostViewHeaderProps> = ({
   audience,
   time,
   actor,
-  onPressHeader,
-  onPressMenu,
-  onPressShowAudiences,
   disabled = false,
+
+  onPressMenu,
+  onPressHeader,
+  onPressShowAudiences,
 }: PostViewHeaderProps) => {
   const { t } = useBaseHook();
   const { colors } = useTheme();
@@ -55,38 +59,30 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
     rootNavigation.navigate(
       mainTabStack.userProfile, payload,
     );
-
-    // const payload = {
-    //   userId: actor.id,
-    // };
-
-    // dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
   return (
-    <TouchableOpacity
+    <Button
       testID="post_view_header"
-      disabled={!isInternetReachable || disabled || !onPressHeader}
-      onPress={() => onPressHeader?.()}
       style={styles.headerContainer}
+      disabled={disabled || !onPressHeader}
+      onPress={onPressHeader}
     >
-      <TouchableOpacity
-        disabled={!isInternetReachable}
-        onPress={onPressActor}
+      <Button
         style={styles.avatar}
+        onPress={onPressActor}
       >
         <Avatar.Medium isRounded source={avatar} />
-      </TouchableOpacity>
+      </Button>
       <View style={styles.flex1}>
-        <TouchableOpacity
-          disabled={!isInternetReachable}
-          onPress={onPressActor}
+        <Button
           style={{ alignSelf: 'flex-start' }}
+          onPress={onPressActor}
         >
           <Text.H5 numberOfLines={1} testID="post_view_header.actor">
             {actorName}
           </Text.H5>
-        </TouchableOpacity>
+        </Button>
         <View style={styles.textToAudience}>
           <Text.H6 useI18n style={styles.textTo}>
             post:to
@@ -105,41 +101,18 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           />
         </View>
       </View>
-      {!!onPressMenu
-      && (
-      <View style={{ marginRight: spacing.margin.small }}>
-        <Icon
-          style={{ alignSelf: 'auto' }}
-          icon="menu"
-          testID="post_view_header.menu"
-          onPress={onPressMenu}
-        />
-      </View>
+      {!!onPressMenu && (
+        <View style={{ marginRight: spacing.margin.small }}>
+          <Icon
+            style={{ alignSelf: 'auto' }}
+            icon="menu"
+            testID="post_view_header.menu"
+            onPress={onPressMenu}
+          />
+        </View>
       )}
-    </TouchableOpacity>
+    </Button>
   );
-};
-
-const getAudiencesText = (
-  aud?: IPostAudience, t?: any,
-) => {
-  const limitLength = 25;
-  let result = '';
-  const { groups = [], users = [] } = aud || {};
-  const total = groups.length + users.length;
-  result = groups?.[0]?.name || users?.[0]?.fullname || '';
-  const left = total - 1;
-  if (result?.length > limitLength) {
-    result = `${result.substr(
-      0, limitLength,
-    )}...`;
-  } else if (left > 0) {
-    result = `${result},...`;
-  }
-  if (left > 0) {
-    result = `${result} +${left} ${t?.('post:other_places')}`;
-  }
-  return result;
 };
 
 const styles = StyleSheet.create({

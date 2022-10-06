@@ -63,7 +63,8 @@ export default class Md extends PureComponent {
     disableGallery: PropTypes.bool,
     showModal: PropTypes.func,
     onPressAudience: PropTypes.func,
-    selector: PropTypes.string,
+    dataStore: PropTypes.any,
+    dataSelector: PropTypes.any,
     textTestID: PropTypes.string,
   };
 
@@ -204,13 +205,14 @@ export default class Md extends PureComponent {
   );
 
   renderAtMention = ({ mentionName }) => (
-    <AtMention
-      mentionName={mentionName}
-      style={[this.props.textStyles?.mention || this.props.baseTextStyle]}
-      selector={this.props.selector}
-      onPress={this.props.onPressAudience}
-    />
-  );
+      <AtMention
+          mentionName={mentionName}
+          style={[this.props.textStyles?.mention || this.props.baseTextStyle]}
+          dataStore={this.props.dataStore}
+          dataSelector={this.props.dataSelector}
+          onPress={this.props.onPressAudience}
+      />
+  )
 
   renderChannelLink = ({ context, channelName }) => this.renderText({ context, literal: `~${channelName}` });
 

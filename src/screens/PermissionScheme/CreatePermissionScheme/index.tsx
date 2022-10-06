@@ -7,10 +7,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { cloneDeep } from 'lodash';
 
-import { useDispatch } from 'react-redux';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
 import { useBaseHook } from '~/hooks';
 import InputSchemeInfo from '~/screens/PermissionScheme/CreatePermissionScheme/components/InputSchemeInfo';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
@@ -24,6 +20,7 @@ import CreateSchemeHeader from '~/screens/PermissionScheme/CreatePermissionSchem
 import SelectSchemeRolesView from '~/screens/PermissionScheme/CreatePermissionScheme/components/SelectSchemeRolesView';
 import RoleHeaderAnimated from '~/screens/groups/components/RoleHeaderAnimated';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../store';
 
 export interface CreatePermissionSchemeProps {
   route?: {
@@ -31,6 +28,7 @@ export interface CreatePermissionSchemeProps {
       isEdit?: boolean;
       initScheme?: IScheme;
       schemeId?: string;
+      communityId: string;
     };
   };
 }
@@ -42,17 +40,17 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   const translationY = useSharedValue(0);
 
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const isEdit = route?.params?.isEdit;
   const initScheme = route?.params?.initScheme;
   const schemeId = route?.params?.schemeId;
+  const communityId = route?.params?.communityId;
 
-  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail);
-  const permissionCategories = useKeySelector(groupsKeySelector.permission.categories);
-  const systemScheme = useKeySelector(groupsKeySelector.permission.systemScheme);
+  const permissionCategories = usePermissionSchemeStore((state) => state.categories);
+  const actions = usePermissionSchemeStore((state) => state.actions);
+  const systemScheme = usePermissionSchemeStore((state) => state.systemScheme);
 
   const loading = permissionCategories?.loading || systemScheme?.loading;
   const loadDataFailed = !permissionCategories?.loading
@@ -73,28 +71,28 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     () => {
       if (isEdit && initScheme) {
         const memberRoleIndex = getMemberRoleIndex(cloneDeep(initScheme));
-        dispatch(groupsActions.setCreatingScheme({
+        actions.setCreatingScheme({
           data: cloneDeep(initScheme),
           memberRoleIndex,
-        }));
+        });
 
         if (schemeId) {
         /**
          * init group scheme doesn't have field `roles`
          * need to get full detail to edit roles
          */
-          dispatch(groupsActions.getGroupScheme({ communityId, schemeId }));
+          actions.getGroupScheme({ communityId, schemeId });
         }
       }
       if (!permissionCategories?.loading) {
-        dispatch(groupsActions.getPermissionCategories(schemeId ? 'GROUP' : 'COMMUNITY'));
+        actions.getPermissionCategories(schemeId ? 'GROUP' : 'COMMUNITY');
       }
       if (!systemScheme?.data && !systemScheme?.loading) {
-        dispatch(groupsActions.getSystemScheme());
+        actions.getSystemScheme();
       }
       return () => {
-        dispatch(groupsActions.setCreatingScheme());
-        dispatch(groupsActions.setGroupScheme());
+        actions.resetToInitState('creatingScheme');
+        actions.resetToInitState('groupScheme');
       };
     }, [],
   );
@@ -103,7 +101,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     () => {
       if (systemScheme?.data && !isEdit) {
         const { newScheme, memberRoleIndex } = getNewSchemeFromSystemScheme(systemScheme.data);
-        dispatch(groupsActions.setCreatingScheme({ data: newScheme, memberRoleIndex }));
+        actions.setCreatingScheme({ data: newScheme, memberRoleIndex });
       }
     }, [systemScheme?.data],
   );
@@ -111,7 +109,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   const onPressPermission = (
     permission: IPermission, roleIndex: number,
   ) => {
-    dispatch(groupsActions.updateCreatingSchemePermission({ permission, roleIndex }));
+    actions.updateCreatingSchemePermission({ permission, roleIndex });
   };
 
   const renderContent = () => {
@@ -150,6 +148,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
         loadDataFailed={loadDataFailed}
         isEdit={isEdit}
         schemeId={schemeId}
+        communityId={communityId}
       />
       {renderContent()}
     </View>

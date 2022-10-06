@@ -3,7 +3,7 @@ import appConfig from '~/configs/appConfig';
 import { ICommunity, IParamGetCommunities } from '~/interfaces/ICommunity';
 import showError from '~/storeRedux/commonSaga/showError';
 import groupApi from '../../../api/GroupApi';
-import { mapItems } from '../../../screens/groups/helper/mapper';
+import { mapItems } from '~/screens/groups/helper/mapper';
 import groupsActions from '../actions';
 
 export default function* getCommunitySearch({

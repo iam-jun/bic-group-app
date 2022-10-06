@@ -1,24 +1,20 @@
-import { cloneDeep, get } from 'lodash';
-import { put, select } from 'redux-saga/effects';
+import { cloneDeep } from 'lodash';
+import { IOwnReaction, IPayloadAddToAllPost, IReactionCounts } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 
-import { IOwnReaction, IReactionCounts } from '~/interfaces/IPost';
-import postActions from '../actions';
-import postKeySelector from '../keySelector';
-
+// eslint-disable-next-line require-yield
 export default function* onUpdateReactionOfPostById(
   postId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
 ): any {
   try {
-    const post = yield select((state) => get(
-      state, postKeySelector.postById(postId),
-    ));
+    const post = usePostsStore.getState()?.posts?.[postId] || {};
     if (post) {
       const newPost = cloneDeep(post);
       newPost.reactionsCount = reactionCounts;
       newPost.ownerReactions = ownReaction;
-      yield put(postActions.addToAllPosts({ data: newPost }));
+      usePostsStore.getState().actions.addToPosts({ data: newPost } as IPayloadAddToAllPost);
     }
   } catch (e) {
     console.error(

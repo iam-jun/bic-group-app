@@ -12,7 +12,7 @@ import {
 import * as navigationHook from '../../../hooks/navigation';
 
 import Communities from './index';
-import { communities } from '../../../test/mock_data/communities';
+import { communities } from '~/test/mock_data/communities';
 import groupsActions from '../../../storeRedux/groups/actions';
 import groupsTypes from '../../../storeRedux/groups/types';
 import MockedNavigator from '../../../test/MockedNavigator';

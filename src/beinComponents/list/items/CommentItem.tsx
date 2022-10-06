@@ -21,7 +21,7 @@ export interface CommentItemProps {
   index?: number;
   onPressReply?: (data: ICommentData, section?: any, index?: number) => void;
   onPressLoadMore?: (data: any) => void;
-  isNotReplyingComment?: boolean;
+  isReplyingComment?: boolean;
   onPressMarkSeenPost?: ()=> void;
 }
 
@@ -35,7 +35,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   index,
   onPressReply,
   onPressLoadMore,
-  isNotReplyingComment,
+  isReplyingComment = true,
   onPressMarkSeenPost,
 }: CommentItemProps) => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
 
   const _onPressReply = useCallback(
     () => {
-      if (!isNotReplyingComment) {
+      if (isReplyingComment) {
         dispatch(postActions.setPostDetailReplyingComment({
           comment: commentData,
           parentComment: commentParent,

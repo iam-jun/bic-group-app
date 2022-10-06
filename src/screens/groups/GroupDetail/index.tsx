@@ -26,8 +26,7 @@ import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePl
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import { groupPrivacy } from '~/constants/privacyTypes';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useAuth, { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
@@ -51,31 +50,36 @@ import GroupJoinCancelButton from './components/GroupJoinCancelButton';
 import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 import { BottomListProps } from '~/components/BottomList';
 import NotFound from '~/screens/NotFound/components/NotFound';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
+import useCommunitiesStore from '~/store/comunities';
+import ICommunitiesState from '~/store/comunities/Interface';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
-  const { groupId, communityId, onGoBack } = params || {};
+  const { groupId, onGoBack } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
 
   const { user } = useAuth();
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
-  const { t } = useBaseHook();
+  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy } = groupInfo;
-  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
+  const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const { name: communityName, joinStatus: joinStatusCommunity }
-    = communityDetail;
+    = communityDetail || {};
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
-  const isMember = joinStatus === groupJoinStatus.member;
-  const isMemberCommunity = joinStatusCommunity === groupJoinStatus.member;
+  const isMember = joinStatus === GroupJoinStatus.MEMBER;
+  const isMemberCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
   const isLoadingGroupDetailError = useKeySelector(
     groupsKeySelector.isLoadingGroupDetailError,
   );
@@ -90,8 +94,8 @@ const GroupDetail = (props: any) => {
   ]);
   const showPrivate
     = !isMember
-    && (privacy === groupPrivacy.private
-      || (!isMemberCommunity && privacy === groupPrivacy.open));
+    && (privacy === GroupPrivacyType.PRIVATE
+      || (!isMemberCommunity && privacy === GroupPrivacyType.OPEN));
 
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
@@ -118,8 +122,8 @@ const GroupDetail = (props: any) => {
     httpApiRequest > makeGetStreamRequest */
     const privilegeToFetchPost
       = isMember
-      || privacy === groupPrivacy.public
-      || privacy === groupPrivacy.open;
+      || privacy === GroupPrivacyType.PUBLIC
+      || privacy === GroupPrivacyType.OPEN;
 
     if (loadingGroupDetail || isEmpty(groupInfo) || !privilegeToFetchPost) {
       return;
@@ -132,7 +136,7 @@ const GroupDetail = (props: any) => {
   useEffect(() => {
     getGroupDetail();
     if (communityId && communityId !== communityDetail?.id) {
-      dispatch(groupsActions.getCommunityDetail({ communityId }));
+      actions.getCommunity(communityId);
     }
   }, [groupId]);
 
@@ -241,6 +245,7 @@ const GroupDetail = (props: any) => {
           onGetInfoLayout={onGetInfoLayout}
           infoDetail={groupInfo}
           isMember={isMember}
+          communityName={communityName}
         />
       );
     }

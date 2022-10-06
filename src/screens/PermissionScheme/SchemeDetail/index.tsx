@@ -6,16 +6,13 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { IScheme } from '~/interfaces/IGroup';
 import SchemeRoles from '~/screens/groups/components/SchemeRoles';
 import RoleHeaderAnimated from '~/screens/groups/components/RoleHeaderAnimated';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../store';
 
 export interface SchemeDetailProps {
   route?: {
@@ -31,20 +28,19 @@ const SchemeDetail: FC<SchemeDetailProps> = ({
   const [anchorRole, setAnchorRole] = useState({});
   const translationY = useSharedValue(0);
 
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const permissionCategories = useKeySelector(groupsKeySelector.permission.categories);
-  const { loading } = permissionCategories || {};
+  const loading = usePermissionSchemeStore((state) => state.categories.loading);
+  const actions = usePermissionSchemeStore((state) => state.actions);
 
   const initScheme = route?.params?.scheme;
   const { name, roles } = initScheme || {};
 
   useEffect(
     () => {
-      if (!permissionCategories?.loading) {
-        dispatch(groupsActions.getPermissionCategories());
+      if (!loading) {
+        actions.getPermissionCategories();
       }
     }, [],
   );

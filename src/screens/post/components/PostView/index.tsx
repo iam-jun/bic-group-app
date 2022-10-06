@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { isEqual } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import React, {
   FC, memo, useCallback, useState,
 } from 'react';
@@ -15,7 +15,6 @@ import { ReactionType } from '~/constants/reactions';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
   IAudienceGroup,
@@ -30,6 +29,8 @@ import {
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import {
   ButtonMarkAsRead,
   PostViewContent,
@@ -39,12 +40,11 @@ import {
   PostViewImportant,
 } from '../PostViewComponents';
 import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
 import SeenCountsView from '../SeenCountsView';
-import UsersSeenPostBottomSheet from '../UsersSeenPostBottomSheet';
+import UserInterestedPost from '../UserInterestedPost';
 import { getPostViewMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
 import { useMyPermissions } from '~/hooks/permissions';
@@ -58,10 +58,6 @@ export interface PostViewProps {
   testID?: string;
   postId: string;
   isPostDetail?: boolean;
-  onPressComment?: (postId: string) => void;
-  onPressHeader?: (postId: string) => void;
-  onContentLayout?: () => void;
-  onPress?: () => void;
   pressNavigateToDetail?: boolean;
   isLite?: boolean;
   postData?: IPostActivity;
@@ -69,6 +65,11 @@ export interface PostViewProps {
   btnReactTestID?: string;
   btnCommentTestID?: string;
   hasReactPermission?: boolean;
+
+  onPress?: () => void;
+  onPressHeader?: (postId: string) => void;
+  onContentLayout?: () => void;
+  onPressComment?: (postId: string) => void;
 }
 
 const _PostView: FC<PostViewProps> = ({
@@ -76,10 +77,6 @@ const _PostView: FC<PostViewProps> = ({
   testID = 'post_view',
   postId,
   isPostDetail = false,
-  onPressComment,
-  onPressHeader,
-  onContentLayout,
-  onPress,
   pressNavigateToDetail,
   isLite,
   postData,
@@ -87,6 +84,11 @@ const _PostView: FC<PostViewProps> = ({
   btnReactTestID,
   btnCommentTestID,
   hasReactPermission = true,
+
+  onPress,
+  onPressHeader,
+  onPressComment,
+  onContentLayout,
 }: PostViewProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -111,30 +113,22 @@ const _PostView: FC<PostViewProps> = ({
   let linkPreview: ILinkPreview;
 
   if (isUseReduxState) {
-    actor = useKeySelector(postKeySelector.postActorById(postId));
-    audience = useKeySelector(postKeySelector.postAudienceById(postId));
-    isDraft = useKeySelector(postKeySelector.postIsDraftById(postId));
-    createdAt = useKeySelector(postKeySelector.postCreatedAtById(postId));
-    media = useKeySelector(postKeySelector.postMediaById(postId));
-    content = useKeySelector(postKeySelector.postContentById(postId));
-    highlight = useKeySelector(postKeySelector.postHighlightById(postId));
-    setting = useKeySelector(postKeySelector.postSettingById(postId));
-    deleted = useKeySelector(postKeySelector.postDeletedById(postId));
-    markedReadPost = useKeySelector(postKeySelector.postMarkedReadById(postId));
-    commentsCount = useKeySelector(
-      postKeySelector.postCommentsCountById(postId),
-    );
+    actor = usePostsStore(postsSelector.getActor(postId));
+    audience = usePostsStore(postsSelector.getAudience(postId));
+    isDraft = usePostsStore(postsSelector.getIsDraft(postId));
+    createdAt = usePostsStore(postsSelector.getCreatedAt(postId));
+    media = usePostsStore(postsSelector.getMedia(postId));
+    content = usePostsStore(postsSelector.getContent(postId));
+    highlight = usePostsStore(postsSelector.getHighlight(postId));
+    setting = usePostsStore(postsSelector.getSetting(postId));
+    deleted = usePostsStore(postsSelector.getDeleted(postId));
+    markedReadPost = usePostsStore(postsSelector.getMarkedRead(postId));
+    commentsCount = usePostsStore(postsSelector.getCommentsCount(postId));
 
-    ownerReactions = useKeySelector(
-      postKeySelector.postOwnerReactionById(postId),
-    );
-    reactionsCount = useKeySelector(
-      postKeySelector.postReactionCountsById(postId),
-    );
-    totalUsersSeen = useKeySelector(
-      postKeySelector.postTotalUsersSeenById(postId),
-    );
-    linkPreview = useKeySelector(postKeySelector.postLinkPreviewById(postId));
+    ownerReactions = usePostsStore(postsSelector.getOwnerReaction(postId));
+    reactionsCount = usePostsStore(postsSelector.getReactionCounts(postId));
+    totalUsersSeen = usePostsStore(postsSelector.getTotalUsersSeen(postId));
+    linkPreview = usePostsStore(postsSelector.getLinkPreview(postId));
   } else {
     actor = postData?.actor;
     audience = postData?.audience;
@@ -156,8 +150,12 @@ const _PostView: FC<PostViewProps> = ({
   const { images, videos, files } = media || {};
   const {
     isImportant, importantExpiredAt, canComment, canReact,
-  }
-    = setting || {};
+  } = setting || {};
+
+  const isEmptyPost = !content
+    && (!images || images?.length === 0)
+    && (!videos || videos?.length === 0)
+    && isEmpty(files);
 
   const userId = useUserIdAuth();
 
@@ -189,54 +187,56 @@ const _PostView: FC<PostViewProps> = ({
     );
   };
 
-  const handleDeltePostError = (listIdAudiences: string[]) => {
-    if (listIdAudiences?.length > 0 && audience?.groups?.length > 0) {
-      const listAudiences = listIdAudiences.map((audienceId) => {
-        const _audience = audience.groups.find(
-          (audience: IAudienceGroup) => audience?.id === audienceId,
-        );
-        return _audience;
-      });
-      if (canDeleteOwnPost) {
-        dispatch(
-          modalActions.showAlert({
-            title: t('post:title_delete_audiences_of_post'),
-            children: (
-              <AlertDeleteAudiencesConfirmContent
-                data={listAudiences}
-                canDeleteOwnPost={canDeleteOwnPost}
-              />
-            ),
-            cancelBtn: true,
-            confirmLabel: t('common:text_remove'),
-            ConfirmBtnComponent: Button.Danger,
-            onConfirm: () => dispatch(
-              postActions.removePostAudiences({
-                id: postId,
-                listAudiences: listIdAudiences,
-              }),
-            ),
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            confirmBtnProps: { type: 'ghost' },
-          }),
-        );
-      } else {
-        dispatch(
-          modalActions.showAlert({
-            title: t('post:title_delete_audiences_of_post'),
-            children: (
-              <AlertDeleteAudiencesConfirmContent
-                data={listAudiences}
-                canDeleteOwnPost={canDeleteOwnPost}
-              />
-            ),
-            cancelBtn: true,
-            cancelLabel: t('common:btn_close'),
-            onConfirm: null,
-          }),
-        );
-      }
+  const handleDeletePostError = (listIdAudiences: string[]) => {
+    if (listIdAudiences?.length <= 0 || audience?.groups?.length <= 0) {
+      return;
+    }
+
+    const listAudiences = listIdAudiences.map((audienceId) => {
+      const _audience = audience.groups.find(
+        (audience: IAudienceGroup) => audience?.id === audienceId,
+      );
+      return _audience;
+    });
+    if (canDeleteOwnPost) {
+      dispatch(
+        modalActions.showAlert({
+          title: t('post:title_delete_audiences_of_post'),
+          children: (
+            <AlertDeleteAudiencesConfirmContent
+              data={listAudiences}
+              canDeleteOwnPost={canDeleteOwnPost}
+            />
+          ),
+          cancelBtn: true,
+          confirmLabel: t('common:text_remove'),
+          ConfirmBtnComponent: Button.Danger,
+          onConfirm: () => dispatch(
+            postActions.removePostAudiences({
+              id: postId,
+              listAudiences: listIdAudiences,
+            }),
+          ),
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          confirmBtnProps: { type: 'ghost' },
+        }),
+      );
+    } else {
+      dispatch(
+        modalActions.showAlert({
+          title: t('post:title_delete_audiences_of_post'),
+          children: (
+            <AlertDeleteAudiencesConfirmContent
+              data={listAudiences}
+              canDeleteOwnPost={canDeleteOwnPost}
+            />
+          ),
+          cancelBtn: true,
+          cancelLabel: t('common:btn_close'),
+          onConfirm: null,
+        }),
+      );
     }
   };
 
@@ -250,7 +250,7 @@ const _PostView: FC<PostViewProps> = ({
       postId,
       isPostDetail,
       isDraft,
-      handleDeltePostError,
+      handleDeletePostError,
     );
 
     dispatch(
@@ -294,8 +294,8 @@ const _PostView: FC<PostViewProps> = ({
       modalActions.showModal({
         isOpen: true,
         isFullScreen: true,
-        titleFullScreen: t('post:title_seen_by'),
-        ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
+        titleFullScreen: t('post:label_seen_by'),
+        ContentComponent: <UserInterestedPost postId={postId} />,
       }),
     );
   };
@@ -371,6 +371,7 @@ const _PostView: FC<PostViewProps> = ({
         <PostViewContent
           postId={postId}
           isLite={isLite}
+          isEmptyPost={isEmptyPost}
           content={isLite && highlight ? highlight : content}
           images={images}
           videos={videos}

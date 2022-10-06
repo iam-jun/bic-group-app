@@ -1,10 +1,9 @@
-import { get } from 'lodash';
-import { call, select } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
 import { IOwnReaction, IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 import showError from '~/storeRedux/commonSaga/showError';
 import streamApi from '../../../api/StreamApi';
-import postKeySelector from '../keySelector';
 import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
 export default function* putReactionToPost({
@@ -17,9 +16,7 @@ export default function* putReactionToPost({
     id, reactionId, ownReaction, reactionCounts,
   } = payload;
   try {
-    const post1 = yield select((s) => get(
-      s, postKeySelector.postById(id),
-    ));
+    const post1 = usePostsStore.getState()?.posts?.[id] || {};
     const cReactionCounts1 = post1.reactionsCount || {};
     const cOwnReaction1 = post1.ownerReactions || [];
 
@@ -67,9 +64,7 @@ export default function* putReactionToPost({
       // Disable update data base on response because of
       // calculate wrong value when receive socket msg
       if (response?.data) {
-        const post2 = yield select((s) => get(
-          s, postKeySelector.postById(id),
-        ));
+        const post2 = usePostsStore.getState()?.posts?.[id] || {};
         const cReactionCounts2 = post2.reactionsCount || {};
         const cOwnReaction2 = post2.ownerReactions || [];
         const newOwnReaction2: IOwnReaction = [...cOwnReaction2];

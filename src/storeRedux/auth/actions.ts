@@ -55,11 +55,6 @@ export default {
     payload,
   }),
 
-  signInOAuth: (payload: string) => ({
-    type: types.SIGN_IN_OAUTH,
-    payload,
-  }),
-
   signInSuccess: (payload: IUserResponse) => ({
     type: types.SIGN_IN_SUCCESS,
     payload,

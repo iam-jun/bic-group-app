@@ -1,8 +1,8 @@
 import { IPayloadGetDiscoverGroups } from '~/interfaces/ICommunity';
-import IBaseStore from '~/store/interfaces/IBaseStore';
-import IFetchingStore from '~/store/interfaces/IFetchingStore';
+import IBaseState from '~/store/interfaces/IBaseState';
+import IFetchingState from '~/store/interfaces/IFetchingState';
 
-interface IDiscoverGroupsState extends IBaseStore, IFetchingStore {
+interface IDiscoverGroupsState extends IBaseState, IFetchingState {
     loading: boolean,
     ids: any[],
     items: any,

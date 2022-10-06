@@ -171,28 +171,30 @@ const ListView: React.FC<ListViewProps> = ({
     );
   };
   const _renderLoading = () => {
-    if (loading) {
-      if (renderLoading) {
-        return renderLoading();
-      }
-      if (LoadingPlaceholder) {
-        return (
-          <View testID="list_view.loading_placeholder">
-            {Array.from(Array(10).keys()).map((item) => (
-              <LoadingPlaceholder key={`loading_placeholder_${item}`} />
-            ))}
-          </View>
-        );
-      }
+    if (!loading) return;
+
+    if (renderLoading) {
+      return renderLoading();
+    }
+
+    if (LoadingPlaceholder) {
       return (
-        <View style={{ marginTop: spacing.margin.large }}>
-          <ActivityIndicator
-            color={colors.gray40}
-            testID="list_view.indicator.loading"
-          />
+        <View testID="list_view.loading_placeholder">
+          {Array.from(Array(10).keys()).map((item) => (
+            <LoadingPlaceholder key={`loading_placeholder_${item}`} />
+          ))}
         </View>
       );
     }
+
+    return (
+      <View style={{ marginTop: spacing.margin.large }}>
+        <ActivityIndicator
+          color={colors.gray40}
+          testID="list_view.indicator.loading"
+        />
+      </View>
+    );
   };
 
   return (

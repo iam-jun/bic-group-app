@@ -10,17 +10,23 @@ import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import { IGroup } from '~/interfaces/IGroup';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import modalActions from '~/storeRedux/modal/actions';
 import AlertAssignGroupConfirmContent from '~/screens/PermissionScheme/GroupSchemeAssignment/components/AlertAssignGroupConfirmContent';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../store';
 
-const GroupSchemeAssignment = () => {
+ interface Props {
+  route?: {
+    params?: {
+      communityId: string;
+    };
+  };
+}
+
+const GroupSchemeAssignment = ({ route }: Props) => {
   const { t } = useBaseHook();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -28,16 +34,18 @@ const GroupSchemeAssignment = () => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail);
-  const { loadingSchemes, allSchemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
+  const communityId = route?.params?.communityId;
+  const { loading: loadingSchemes, allSchemes } = usePermissionSchemeStore((state) => state.schemes) || {};
   const { loading: loadingAssignments, data: initAssignments }
-        = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
+        = usePermissionSchemeStore((state) => state.assignGroupScheme.assignments) || {};
 
   const {
     loading: loadingAssigning,
     data: dataAssigning,
     currentAssignments,
-  } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning) || {};
+  } = usePermissionSchemeStore((state) => state.assignGroupScheme.assigning) || {};
+
+  const actions = usePermissionSchemeStore((state) => state.actions);
 
   const onPressBack = () => {
     if (!isEmpty(dataAssigning)) {
@@ -64,14 +72,13 @@ const GroupSchemeAssignment = () => {
   useEffect(
     () => {
       if (!loadingSchemes) {
-        dispatch(groupsActions.getSchemes({ communityId }));
+        actions.getSchemes({ communityId });
       }
       if (!loadingAssignments) {
-        dispatch(groupsActions.getGroupSchemeAssignments({ communityId }));
+        actions.getGroupSchemeAssignments({ communityId });
       }
       return () => {
-        dispatch(groupsActions.setGroupSchemeAssignments());
-        dispatch(groupsActions.setGroupSchemeAssigning());
+        actions.resetToInitState('assignGroupScheme');
       };
     }, [],
   );
@@ -79,20 +86,20 @@ const GroupSchemeAssignment = () => {
   useEffect(
     () => {
       if (initAssignments) {
-        dispatch(groupsActions.setGroupSchemeAssigning({
+        actions.setGroupSchemeAssigning({
           data: [],
           currentAssignments: cloneDeep(initAssignments),
-        }));
+        });
       }
     }, [initAssignments],
   );
 
-  const putGroupSchemeAssignments = debounce(() => {
-    dispatch(groupsActions.putGroupSchemeAssignments({
+  const assignSchemesToGroups = debounce(() => {
+    actions.assignSchemesToGroups({
       communityId,
       data: dataAssigning,
       currentAssignments,
-    }));
+    });
   });
 
   const onPressAssign = () => {
@@ -102,7 +109,7 @@ const GroupSchemeAssignment = () => {
         cancelBtn: true,
         cancelLabel: t('common:btn_cancel'),
         confirmLabel: t('communities:permission:btn_assign'),
-        onConfirm: putGroupSchemeAssignments,
+        onConfirm: assignSchemesToGroups,
         style: { width: '90%' },
         children: <AlertAssignGroupConfirmContent />,
       }));

@@ -11,13 +11,13 @@ import Animated, {
   Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming,
 } from 'react-native-reanimated';
 import SvgIcon from '~/baseComponents/Icon/SvgIcon';
+import { HOME_TAB_TYPE } from '~/screens/Home/store/Interface';
 
 import BicHomeLogo from '../../../../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';
 import HomeHeaderButton from '~/screens/Home/components/HomeHeaderButton';
 import { homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
 import Tab from '~/baseComponents/Tab';
-import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 import useHomeStore from '~/screens/Home/store';
 
 export interface HomeHeaderProps {
@@ -42,7 +42,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
 
-  const { activeTab, setActiveTab } = useHomeStore();
+  const { activeTab, actions } = useHomeStore();
 
   const logoAnimatedStyle = useAnimatedStyle(() => ({
     height: interpolate(_yShared.value,
@@ -85,7 +85,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({
   );
 
   const onPressTab = (item: any) => {
-    setActiveTab(item.id);
+    actions.setActiveTab(item.id);
   };
 
   return (

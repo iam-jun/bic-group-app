@@ -23,38 +23,40 @@ const NotificationAvatar = ({
 }: Props) => {
   if (!actors?.length) return null;
 
-  const listAvatarWidth = dimension.deviceWidth - 16 * 2 - timerWidth - (isRead ? 0 : 16);
+  const listAvatarMaxWidth = dimension.deviceWidth - 16 * 2 - timerWidth - (isRead ? 0 : 16);
   let _listAvatarWidth = 0;
   const listAvatar = actors.map((
     item: any, index: number,
   ) => {
-    if (index < MAX_AVATAR && _listAvatarWidth <= listAvatarWidth) {
-      _listAvatarWidth = (index + 1) * (AVATAR_WIDTH + 8);
-      if (
-        index < MAX_AVATAR - 1
-        && listAvatarWidth - _listAvatarWidth >= AVATAR_WIDTH + 8
-      ) {
-        return (
-          <View key={item?.id} style={styles.item}>
-            <Avatar.Small
-              testI="notification_avatar.single"
-              source={item?.avatar}
-              isRounded
-            />
-          </View>
-        );
-      }
+    if (index >= MAX_AVATAR || _listAvatarWidth > listAvatarMaxWidth) {
+      return null;
+    }
+
+    _listAvatarWidth = (index + 1) * (AVATAR_WIDTH + 8);
+    if (
+      index < MAX_AVATAR - 1
+        && listAvatarMaxWidth - _listAvatarWidth >= AVATAR_WIDTH + 8
+    ) {
       return (
         <View key={item?.id} style={styles.item}>
           <Avatar.Small
             testI="notification_avatar.single"
             source={item?.avatar}
             isRounded
-            counter={actorCount - index - 1}
           />
         </View>
       );
-    } return null;
+    }
+    return (
+      <View key={item?.id} style={styles.item}>
+        <Avatar.Small
+          testI="notification_avatar.single"
+          source={item?.avatar}
+          isRounded
+          counter={actorCount - index - 1}
+        />
+      </View>
+    );
   });
   return <View style={styles.container}>{listAvatar}</View>;
 };

@@ -16,9 +16,9 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import mainStack from '~/router/navigator/MainStack/stack';
+import useHomeStore from '~/screens/Home/store';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import homeActions from '~/storeRedux/home/actions';
 import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
 import { formatDMLink, openUrl } from '~/utils/link';
@@ -27,11 +27,17 @@ import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import { BasicInfo, Contact, Experiences } from './fragments';
 import CoverHeader from './fragments/CoverHeader';
 import UserHeader from './fragments/UserHeader';
+import useUserProfileStore from './store';
 
 const UserProfile = (props: any) => {
   const { userId, params } = props?.route?.params || {};
 
-  const userProfileData = useKeySelector(menuKeySelector.userProfile);
+  const userProfileData = useUserProfileStore((state) => state.data);
+  const loading = useUserProfileStore((state) => state.loading);
+  const error = useUserProfileStore((state) => state.error);
+  const doGetUserProfile = useUserProfileStore((state) => state.doGetUserProfile);
+  const reset = useUserProfileStore((state) => state.reset);
+
   const {
     fullname,
     description,
@@ -48,11 +54,9 @@ const UserProfile = (props: any) => {
     birthday,
     latestWork,
   } = userProfileData || {};
-  const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const { username: currentUsername, id } = myProfileData || {};
-  const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
   const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
   const [avatarState, setAvatarState] = useState<string>(avatar);
@@ -69,21 +73,12 @@ const UserProfile = (props: any) => {
   const isFocused = useIsFocused();
   const isCurrentUser = userId === currentUserId || userId === currentUsername;
 
-  const getUserProfile = () => {
-    dispatch(menuActions.clearUserProfile());
-    if (userId) {
-      dispatch(menuActions.getUserProfile({ userId, params }));
-      dispatch(menuActions.getUserWorkExperience(userId));
-    }
-  };
+  const homeActions = useHomeStore((state) => state.actions);
 
   useEffect(() => {
-    setAvatarState(userProfileData?.avatar);
-    setBgImgState(userProfileData?.backgroundImgUrl);
-  }, [userProfileData]);
+    isFocused && doGetUserProfile({ userId, params });
+    userId && dispatch(menuActions.getUserWorkExperience(userId));
 
-  useEffect(() => {
-    isFocused && getUserProfile();
     const { avatar: _avatar, backgroundImgUrl: _bgIm } = myProfileData;
     if (
       userId?.toString?.() === currentUserId?.toString?.()
@@ -91,10 +86,17 @@ const UserProfile = (props: any) => {
     ) {
       if (avatarState !== _avatar || _bgIm !== bgImgState) {
         dispatch(menuActions.getMyProfile({ userId, params }));
-        dispatch(homeActions.getHomePosts({ isRefresh: true }));
+        homeActions.refreshHome();
       }
     }
+
+    return () => reset();
   }, [isFocused, userId]);
+
+  useEffect(() => {
+    setAvatarState(userProfileData?.avatar);
+    setBgImgState(userProfileData?.backgroundImgUrl);
+  }, [userProfileData]);
 
   useEffect(
     () => {
@@ -103,7 +105,7 @@ const UserProfile = (props: any) => {
       || userId?.toString?.() === currentUsername?.toString?.()
       ) {
         if (isChangeImg === 'avatar') {
-          dispatch(homeActions.getHomePosts({ isRefresh: true }));
+          homeActions.refreshHome();
           setAvatarState(myProfileData?.avatar);
         } else if (isChangeImg === 'backgroundImgUrl') {
           setBgImgState(myProfileData?.backgroundImgUrl);
@@ -116,9 +118,7 @@ const UserProfile = (props: any) => {
     setIsChangeImg(fieldName);
   };
 
-  const onEditProfileButton = () => rootNavigation.navigate(
-    mainStack.userEdit, { userId },
-  );
+  const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit);
 
   const onPressChat = isCurrentUser ? undefined : () => {
     if (!isEmpty(joinedCommunities)) {
@@ -155,12 +155,13 @@ const UserProfile = (props: any) => {
     </View>
   );
 
-  if (showUserNotFound) return <NoUserFound />;
+  if (error) return <NoUserFound />;
+  // TODO: to handle more error cases in the future
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
       <Header onPressChat={onPressChat} />
-      {loadingUserProfile ? (
+      {loading ? (
         renderLoading()
       ) : (
         <ScrollView
