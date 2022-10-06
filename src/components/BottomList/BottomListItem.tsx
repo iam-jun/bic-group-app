@@ -11,7 +11,6 @@ import spacing from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
 
 export interface BottomListItemProps {
-  onPress?: () => void;
   disabled?: boolean;
   testID?: string;
   type?: string;
@@ -21,6 +20,9 @@ export interface BottomListItemProps {
   rightIcon?: IconType;
   rightIconProps?: IconProps;
   style?: StyleProp<ViewStyle>;
+  upcoming?: boolean;
+
+  onPress?: () => void;
 }
 
 const BottomListItem: React.FC<BottomListItemProps> = ({
@@ -30,15 +32,16 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   rightIcon,
   rightIconProps,
   style,
-  onPress,
   disabled,
   testID,
+  upcoming,
+  onPress,
 }: BottomListItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = themeStyles();
+  const styles = themeStyles(theme);
 
   return (
     <TouchableOpacity
@@ -56,9 +59,15 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
           {...leftIconProps}
         />
         )}
-        <Text.ButtonM style={styles.title} color={colors.neutral40} testID="menu_item.title" useI18n>
+        <Text.BodyM style={styles.title} color={colors.neutral60} testID="menu_item.title" useI18n>
           {title}
-        </Text.ButtonM>
+        </Text.BodyM>
+        {!!upcoming
+        && (
+        <View style={styles.upcomingStyle}>
+          <Text.BadgeXS color={colors.purple50} useI18n>common:text_upcoming</Text.BadgeXS>
+        </View>
+        )}
         {
           rightIcon && <Icon icon={rightIcon} size={20} {...rightIconProps} />
         }
@@ -67,7 +76,7 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   );
 };
 
-const themeStyles = () => StyleSheet.create({
+const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
   container: {
     flexDirection: 'row',
     paddingVertical: spacing.padding.base,
@@ -78,6 +87,13 @@ const themeStyles = () => StyleSheet.create({
     marginRight: spacing.margin.small,
   },
   title: {
+  },
+  upcomingStyle: {
+    backgroundColor: theme.colors.purple2,
+    borderRadius: spacing.borderRadius.small,
+    marginLeft: spacing.margin.small,
+    paddingVertical: 2,
+    paddingHorizontal: spacing.padding.xSmall,
   },
 });
 

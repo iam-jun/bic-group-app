@@ -9,7 +9,6 @@ import {
   View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/baseComponents/Icon';
@@ -165,7 +164,7 @@ const _NotificationList = ({
   const keyExtractor = (item: any) => JSON.stringify(item);
 
   return (
-    <View style={{ flex: 1, width: screenWidth }}>
+    <View style={styles.container}>
       {!loadingNotifications ? (
         <ListView
           listRef={listRef}
@@ -192,13 +191,13 @@ const _NotificationList = ({
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const insets = useSafeAreaInsets();
   const { colors } = theme;
   return StyleSheet.create({
-    screenContainer: {
-      paddingTop: insets.top,
+    container: {
       flex: 1,
-      backgroundColor: colors.white,
+      width: screenWidth,
+      backgroundColor: colors.gray5,
+      paddingTop: spacing.padding.large,
     },
     list: {},
     listContainer: {

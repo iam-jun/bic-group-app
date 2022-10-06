@@ -130,7 +130,8 @@
     "text_you": "Bạn",
     "content_not_available": "Nội dung không tồn tại",
     "dont_have_permission_to_access": "Bạn không có quyền truy cập trang này",
-    "btn_go_back_to_home": "Quay về trang chủ"
+    "btn_go_back_to_home": "Quay về trang chủ",
+    "text_upcoming": "Sắp tới"
   },
   "auth": {
     "text_kickout_title": "Notice",
