@@ -98,6 +98,7 @@ const createStyle = (
   const { colors } = theme;
   return StyleSheet.create({
     container: {
+      flex: 1,
       paddingHorizontal: spacing.padding.small,
       paddingBottom: 0,
       borderTopWidth: 1,
