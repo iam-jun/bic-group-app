@@ -1,23 +1,26 @@
-import { StyleSheet, View } from 'react-native';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import MarkdownView from '~/beinComponents/MarkdownView';
+import TimeView from '~/beinComponents/TimeView';
+import spacing from '~/theme/spacing';
 
 interface Props {
   description: string;
   content?: string;
+  updatedAt?: string;
+
 }
 
-// this function is used to determine type of each notification
-// then render them with defference content corresponding their type
 const NotificationContent = ({
   description,
   content,
+  updatedAt,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
+  const { colors } = theme;
 
   return (
     <View testID="notification_content" style={styles.container}>
@@ -25,31 +28,32 @@ const NotificationContent = ({
         {description}
       </MarkdownView>
       {!!content && (
-        <Text.BodyS
+        <Text.BodyM
           testID="notification_content.content"
-          numberOfLines={1}
-          style={styles.subContent}
+          numberOfLines={2}
+          color={colors.neutral60}
         >
           {content}
-        </Text.BodyS>
+        </Text.BodyM>
       )}
+      <TimeView
+        testID="notification_item.time_view"
+        time={updatedAt}
+        style={styles.timeCreated}
+        type="short"
+        textProps={{ variant: 'bodyS', color: colors.neutral40 }}
+      />
     </View>
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    header: {
-      flexDirection: 'row',
-    },
-    subContent: {
-      color: colors.gray50,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  timeCreated: {
+    marginTop: spacing.margin.tiny,
+  },
+});
 
 export default NotificationContent;

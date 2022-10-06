@@ -15,7 +15,7 @@ import {
   IRequestGetPostComment,
   IRequestPostComment,
   IRequestReplyComment,
-  IRequestGetUsersSeenPost,
+  IRequestGetUsersInterestedPost,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -250,8 +250,8 @@ export const streamApiConfig = {
       postId: params?.postId || '',
     },
   }),
-  getUsersSeenPost: (
-    params: IRequestGetUsersSeenPost,
+  getUsersInterestedPost: (
+    params: IRequestGetUsersInterestedPost,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}feeds/seen/user`,
@@ -409,7 +409,9 @@ const streamApi = {
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),
-  getSeenList: (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(streamApiConfig.getUsersSeenPost, params),
+  getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
+    streamApiConfig.getUsersInterestedPost, params,
+  ),
 };
 
 export default streamApi;

@@ -6,6 +6,7 @@ import { createTestStore, renderWithRedux, fireEvent } from '~/test/testUtils';
 import GroupContent from './GroupContent';
 import initialState from '~/storeRedux/initialState';
 import { groupDetailData, groupPostData } from '~/test/mock_data/group';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 
 describe('GroupContent component', () => {
   const getGroupPosts = jest.fn();
@@ -83,7 +84,7 @@ describe('GroupContent component', () => {
     state.groups.groupDetail = {
       ...groupDetailData,
       joinStatus: 1,
-      group: { ...groupDetailData.group, privacy: 'PRIVATE' },
+      group: { ...groupDetailData.group, privacy: GroupPrivacyType.PRIVATE },
     };
     const store = createTestStore(state);
 

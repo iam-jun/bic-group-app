@@ -15,10 +15,11 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 
 interface SchemeItemProps {
+  communityId: string
   item: IGroupScheme;
 }
 
-const SchemeItem = ({ item }: SchemeItemProps) => {
+const SchemeItem = ({ communityId, item }: SchemeItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
@@ -34,6 +35,7 @@ const SchemeItem = ({ item }: SchemeItemProps) => {
         isEdit: true,
         initScheme: item,
         schemeId: item.id,
+        communityId,
       },
     );
   };

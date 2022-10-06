@@ -20,11 +20,6 @@ export interface ISetting {
   icon: IconType;
 }
 
-export interface IRightMenu {
-  type: string;
-  title: string;
-}
-
 export interface IFilePicked {
   name: string;
   filename: string;
@@ -63,13 +58,6 @@ export interface IPayloadShowModal {
   props?: BaseBottomSheetProps | any;
   useAppBottomSheet?: boolean;
   closeOutSide?: boolean;
-}
-
-export interface IUserPreview {
-  isOpen?: boolean;
-  userId?: string;
-  params?: IObject<any>;
-  position?: {x: number; y: number};
 }
 
 export interface ILinkPreview {

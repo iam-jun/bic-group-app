@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { IPermission } from '~/interfaces/IGroup';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import SchemeRoles from '~/screens/groups/components/SchemeRoles';
 import { useBaseHook } from '~/hooks';
+import usePermissionSchemeStore from '../../store';
 
 export interface SelectSchemeRolesViewProps {
   onPressPermission?: (permission: IPermission, roleIndex: number) => void;
@@ -16,7 +15,8 @@ const SelectSchemeRolesView: FC<SelectSchemeRolesViewProps> = ({
 }: SelectSchemeRolesViewProps) => {
   const { t } = useBaseHook();
 
-  const roles = useKeySelector(groupsKeySelector.permission.creatingScheme.roles) || [];
+  const creatingSchemeData = usePermissionSchemeStore((state) => state.creatingScheme.data);
+  const { roles = [] } = creatingSchemeData || {};
 
   return (
     <SchemeRoles

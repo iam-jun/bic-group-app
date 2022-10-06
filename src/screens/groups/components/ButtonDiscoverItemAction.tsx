@@ -2,11 +2,11 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 
 import Button from '~/beinComponents/Button';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 export interface ButtonDiscoverItemActionProps {
   data: any;
-  joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
+  joinStatus: GroupJoinStatus;
   onJoin?: (data: any) => void;
   onView?: (data: any) => void;
   onCancel?: (data: any) => void;
@@ -26,16 +26,16 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
     text;
 
   switch (joinStatus) {
-    case groupJoinStatus.unableToJoin:
+    case GroupJoinStatus.UNABLE_TO_JOIN:
       break;
-    case groupJoinStatus.requested:
+    case GroupJoinStatus.REQUESTED:
       text = 'common:btn_cancel';
       break;
-    case groupJoinStatus.visitor:
+    case GroupJoinStatus.VISITOR:
       icon = 'Plus';
       text = 'common:btn_join';
       break;
-    case groupJoinStatus.member:
+    case GroupJoinStatus.MEMBER:
       text = 'common:btn_view';
       break;
     default:
@@ -50,13 +50,13 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
 
   const onPress = () => {
     switch (joinStatus) {
-      case groupJoinStatus.requested:
+      case GroupJoinStatus.REQUESTED:
         onPressCancel();
         break;
-      case groupJoinStatus.visitor:
+      case GroupJoinStatus.VISITOR:
         onPressJoin();
         break;
-      case groupJoinStatus.member:
+      case GroupJoinStatus.MEMBER:
         onPressView();
         break;
       default:

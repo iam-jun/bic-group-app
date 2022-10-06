@@ -9,14 +9,12 @@ import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import groupsActions from '~/storeRedux/groups/actions';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../store';
 
 export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -28,29 +26,27 @@ const SystemScheme: FC<SystemSchemeProps> = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme || {};
-
   const { rootNavigation } = useRootNavigation();
 
-  const { data: communityScheme, loading: loadingCommunityScheme }
-  = useKeySelector(groupsKeySelector.permission.communityScheme) || {};
+  const loading = usePermissionSchemeStore((state) => state.generalScheme.loading);
+  const generalScheme = usePermissionSchemeStore((state) => state.generalScheme.data);
 
-  const systemScheme = useKeySelector(groupsKeySelector.permission.systemScheme) || {};
+  const systemScheme = usePermissionSchemeStore((state) => state.systemScheme);
+  const actions = usePermissionSchemeStore((state) => state.actions);
 
   useEffect(
     () => {
       if (!systemScheme?.data && !systemScheme?.loading) {
-        dispatch(groupsActions.getSystemScheme());
+        actions.getSystemScheme();
       }
     }, [],
   );
 
   const onPressView = () => {
     if (systemScheme?.data) {
-      rootNavigation.navigate(
-        groupStack.schemeDetail, {
-          scheme: cloneDeep(systemScheme.data),
-        },
-      );
+      rootNavigation.navigate(groupStack.schemeDetail, {
+        scheme: cloneDeep(systemScheme.data),
+      });
     }
   };
 
@@ -69,7 +65,7 @@ const SystemScheme: FC<SystemSchemeProps> = () => {
           <Text.H5 style={styles.flex1} useI18n>
             communities:permission:title_system_scheme
           </Text.H5>
-          {!loadingCommunityScheme && !communityScheme && (
+          {!loading && !generalScheme && (
             <TextBadge
               useI18n
               value="common:text_activated"
@@ -86,7 +82,7 @@ const SystemScheme: FC<SystemSchemeProps> = () => {
         >
           communities:permission:btn_view_permission
         </Button.Primary>
-        {!loadingCommunityScheme && communityScheme && (
+        {!loading && generalScheme && (
           <Button.Primary
             onPress={onPressApply}
             useI18n

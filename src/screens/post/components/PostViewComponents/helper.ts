@@ -1,5 +1,6 @@
 import appConfig from '~/configs/appConfig';
 import { blacklistReactions } from '~/constants/reactions';
+import { IPostAudience } from '~/interfaces/IPost';
 
 export const validateReactionCount = (reactionCounts: any) => {
   const count = getTotalReactions(reactionCounts, 'emoji');
@@ -15,4 +16,28 @@ export const getTotalReactions = (reactionCounts: any, type: 'emoji' | 'user') =
     }
   });
   return total;
+};
+
+export const getAudiencesText = (
+  audience?: IPostAudience, t?: any,
+) => {
+  if (!audience) return '';
+
+  const limitLength = 25;
+  const { groups = [], users = [] } = audience;
+  const totalAudiences = groups.length + users.length;
+  const firstAudienceName = groups?.[0]?.name || users?.[0]?.fullname;
+  const remainingAudiences = totalAudiences - 1;
+
+  let audiencesText = firstAudienceName || '';
+
+  if (audiencesText?.length > limitLength) {
+    audiencesText = `${audiencesText.substring(0, limitLength)}...`;
+  } else if (remainingAudiences > 0) {
+    audiencesText = `${audiencesText},...`;
+  }
+  if (remainingAudiences > 0) {
+    audiencesText = `${audiencesText} +${remainingAudiences} ${t?.('post:other_places')}`;
+  }
+  return audiencesText;
 };

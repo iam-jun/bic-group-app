@@ -1,8 +1,10 @@
-import { call, put, select } from 'redux-saga/effects';
-import { get, isEmpty } from 'lodash';
+import { call, put } from 'redux-saga/effects';
+import { isEmpty } from 'lodash';
 
-import { IPayloadGetCommentsById } from '~/interfaces/IPost';
+import { IPayloadAddToAllPost, IPayloadGetCommentsById } from '~/interfaces/IPost';
 import streamApi from '~/api/StreamApi';
+import useCommentsStore from '~/store/entities/comments';
+import usePostsStore from '~/store/entities/posts';
 import postActions from '~/storeRedux/post/actions';
 import showError from '~/storeRedux/commonSaga/showError';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
@@ -32,14 +34,12 @@ function* getCommentDetail({
         isReplace: true,
       };
 
-      yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
-      const post = yield select((state) => get(
-        state, `post.allPosts.${comment?.postId}`, {},
-      ));
+      useCommentsStore.getState().actions.addToCommentsByParentIdWithComments(payload);
+      const post = usePostsStore.getState().posts?.[comment?.postId] || {};
       if (isEmpty(post) && comment?.postId) {
         post.id = comment.postId;
         post.actor = actor;
-        yield put(postActions.addToAllPosts({ data: post }));
+        usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
       }
     }
     callbackLoading?.(false);

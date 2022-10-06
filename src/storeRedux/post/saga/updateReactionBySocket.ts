@@ -1,12 +1,12 @@
-import { get, isEmpty } from 'lodash';
-import { select } from 'redux-saga/effects';
+import { isEmpty } from 'lodash';
 
 import {
   IPayloadUpdateReaction,
   IReactionCounts,
   ISocketReaction,
 } from '~/interfaces/IPost';
-import postKeySelector from '../keySelector';
+import useCommentsStore from '~/store/entities/comments';
+import usePostsStore from '~/store/entities/posts';
 import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
 import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
@@ -28,9 +28,7 @@ export default function* updateReactionBySocket({
   if (!isEmpty(reaction)) {
     // handle reaction to post
     // merge own reaction if reaction's actor is current user
-    const p = (yield select((state) => get(
-      state, postKeySelector.postById(id),
-    ))) || {};
+    const p = usePostsStore.getState()?.posts?.[id] || {};
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
     const isCurrentUser = userId.toString() == reaction?.actor?.id;
     yield onUpdateReactionOfPostById(
@@ -65,10 +63,7 @@ export default function* updateReactionBySocket({
       isCurrentUser = userId == child?.actor?.id;
     }
     // merge own children if reaction's actor is current user
-    const c = (yield select((s) => get(
-      s, postKeySelector.commentById(finalId || 0),
-    )))
-      || {};
+    const c = useCommentsStore.getState().comments?.[finalId] || {};
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
 
     yield onUpdateReactionOfCommentById(

@@ -5,13 +5,13 @@ import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
-import { groupPrivacy } from '~/constants/privacyTypes';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupJoinStatus from '~/constants/groupJoinStatus';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -28,9 +28,9 @@ export default function* leaveGroup({
     yield call(groupApi.leaveGroup, payload);
 
     // update button Join/Cancel/View status on Discover groups
-    yield call(useDiscoverGroupsStore.getState().doSetGroupStatus, payload, groupJoinStatus.visitor);
+    yield call(useDiscoverGroupsStore.getState().doSetGroupStatus, payload, GroupJoinStatus.VISITOR);
 
-    if (privacy === groupPrivacy.secret) {
+    if (privacy === GroupPrivacyType.SECRET) {
       yield call(navigationReplace);
     } else {
       yield call(navigateToGroup, payload);

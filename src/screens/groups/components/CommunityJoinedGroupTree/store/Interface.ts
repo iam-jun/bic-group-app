@@ -1,7 +1,7 @@
 import { IGroup } from '~/interfaces/IGroup';
-import IBaseStore from '~/store/interfaces/IBaseStore';
+import IBaseState from '~/store/interfaces/IBaseState';
 
-interface ICommunityJoinedGroupTreeState extends IBaseStore {
+interface ICommunityJoinedGroupTreeState extends IBaseState {
   data: {[key: string]: IGroup[]},
   loading: boolean,
   searchKey: string,

@@ -1,9 +1,9 @@
 import { call, put } from 'redux-saga/effects';
 
-import { IPayloadRemoveAudiencesOfPost } from '~/interfaces/IPost';
+import { IPayloadAddToAllPost, IPayloadRemoveAudiencesOfPost } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 import modalActions from '~/storeRedux/modal/actions';
 import streamApi from '../../../api/StreamApi';
-import postActions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
 
 export default function* removeAudiencesFromPost({
@@ -30,7 +30,7 @@ export default function* removeAudiencesFromPost({
     });
     if (response?.data) {
       const post = response?.data;
-      yield put(postActions.addToAllPosts({ data: post }));
+      usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
       yield put(
         modalActions.showHideToastMessage({ content: 'post:text_deleted_audiences' }),
       );

@@ -4,7 +4,6 @@ import {
   useTheme,
 } from '@react-navigation/native';
 import React, {
-  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -39,6 +38,10 @@ import { rootSwitch } from '~/router/stack';
 import CommentInputView from '~/screens/post/components/CommentInputView';
 import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
 import PostView from '~/screens/post/components/PostView';
+import useCommentsStore from '~/store/entities/comments';
+import commentsSelector from '~/store/entities/comments/selectors';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import Store from '~/storeRedux';
@@ -78,20 +81,18 @@ const _PostDetailContent = (props: any) => {
   const userId = useUserIdAuth();
 
   const id = post_id;
-  const actor = useKeySelector(postKeySelector.postActorById(id));
-  const deleted = useKeySelector(postKeySelector.postDeletedById(id));
-  const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
-  const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const commentLeft = useKeySelector(
-    postKeySelector.postCommentOnlyCountById(id),
-  );
-  const commentError = useKeySelector(postKeySelector.commentErrorCode);
-  const setting = useKeySelector(postKeySelector.postSettingById(id));
+  const actor = usePostsStore(postsSelector.getActor(id));
+  const deleted = usePostsStore(postsSelector.getDeleted(id));
+  const createdAt = usePostsStore(postsSelector.getCreatedAt(id));
+  const audience = usePostsStore(postsSelector.getAudience(id));
+  const commentLeft = usePostsStore(postsSelector.getCommentOnlyCount(id));
+  const setting = usePostsStore(postsSelector.getSetting(id));
+  const commentList = usePostsStore(postsSelector.getCommentList(id));
 
-  const commentList = useKeySelector(postKeySelector.postCommentListById(id));
+  const commentError = useKeySelector(postKeySelector.commentErrorCode);
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
-  const comments = useKeySelector(postKeySelector.commentsByParentId(id));
+  const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
   const listComment = comments || commentList || [];
   const sectionData = getSectionData(listComment) || [];
 
@@ -363,7 +364,7 @@ const _PostDetailContent = (props: any) => {
         commentData={comment}
         groupIds={groupIds}
         index={index}
-        isNotReplyingComment
+        isReplyingComment={false}
         onPressReply={onPressReplySectionHeader}
         onPressLoadMore={onPressLoadMoreCommentLevel2}
         onPressMarkSeenPost={onPressMarkSeenPost}
@@ -392,7 +393,7 @@ const _PostDetailContent = (props: any) => {
         groupIds={groupIds}
         index={index}
         section={section}
-        isNotReplyingComment
+        isReplyingComment={false}
         onPressReply={onPressReplyCommentItem}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
@@ -566,6 +567,8 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-const PostDetailContent = memo(_PostDetailContent);
-PostDetailContent.whyDidYouRender = true;
-export default PostDetailContent;
+// const PostDetailContent = memo(_PostDetailContent);
+// PostDetailContent.whyDidYouRender = true;
+// export default PostDetailContent;
+
+export default _PostDetailContent;

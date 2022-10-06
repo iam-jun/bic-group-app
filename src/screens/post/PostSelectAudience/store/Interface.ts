@@ -1,6 +1,6 @@
-import IBaseStore from '~/store/interfaces/IBaseStore';
+import IBaseState from '~/store/interfaces/IBaseState';
 
-interface ISelectAudienceState extends IBaseStore {
+interface ISelectAudienceState extends IBaseState {
   tree: {
     data: undefined,
     loading: boolean,

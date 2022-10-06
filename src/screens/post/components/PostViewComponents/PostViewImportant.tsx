@@ -5,6 +5,7 @@ import BannerImportant from '~/baseComponents/Banner';
 
 import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
+import { checkExpiration } from '../../helper/postUtils';
 
 export interface PostViewImportantProps {
   isImportant: boolean;
@@ -27,8 +28,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
     return null;
   }
 
-  const now = new Date();
-  const notExpired = now.getTime() < new Date(expireTime).getTime();
+  const isExpired = checkExpiration(expireTime);
 
   if (isLite) {
     return (
@@ -46,7 +46,9 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
     );
   }
 
-  return notExpired ? <BannerImportant markedAsRead={markedReadPost} /> : null;
+  if (isExpired) return null;
+
+  return <BannerImportant markedAsRead={markedReadPost} />;
 };
 
 const createStyle = (theme: ExtendedTheme) => {

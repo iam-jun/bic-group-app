@@ -1,10 +1,11 @@
 import { put, select, call } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
-import postActions from '~/storeRedux/post/actions';
 import groupApi from '../../../api/GroupApi';
+import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import groupsActions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
+import usePostsStore from '~/store/entities/posts';
 
 export default function* getGroupPosts({
   payload,
@@ -20,7 +21,7 @@ export default function* getGroupPosts({
     const response = yield call(groupApi.getGroupPosts, param);
 
     const result = response.data?.list;
-    yield put(postActions.addToAllPosts({ data: result }));
+    usePostsStore.getState().actions.addToPosts({ data: result } as IPayloadAddToAllPost);
     if (data.length === 0) {
       yield put(groupsActions.setGroupPosts(result));
       if (result.length === appConfig.recordsPerPage) {

@@ -52,7 +52,8 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
 
   const onPressGroup = useCallback((group: IGroup) => {
     dispatch(modalActions.hideModal());
-    if (group.communityId) {
+    const isGroup = group?.level > 0;
+    if (group.communityId && !isGroup) {
       rootNavigation.navigate(mainStack.communityDetail, {
         communityId: group.communityId,
       });

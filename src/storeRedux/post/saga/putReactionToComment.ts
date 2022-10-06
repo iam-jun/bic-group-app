@@ -1,14 +1,14 @@
-import { get, isEmpty } from 'lodash';
-import { call, select } from 'redux-saga/effects';
+import { isEmpty } from 'lodash';
+import { call } from 'redux-saga/effects';
 
 import {
   IOwnReaction,
   IPayloadReactToComment,
   IReaction,
 } from '~/interfaces/IPost';
+import useCommentsStore from '~/store/entities/comments';
 import showError from '~/storeRedux/commonSaga/showError';
 import streamApi from '../../../api/StreamApi';
-import postKeySelector from '../keySelector';
 import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
 
 export default function* putReactionToComment({
@@ -26,9 +26,7 @@ export default function* putReactionToComment({
     return;
   }
   try {
-    const cComment1 = (yield select((s) => get(
-      s, postKeySelector.commentById(id),
-    ))) || comment;
+    const cComment1 = useCommentsStore.getState().comments?.[id] || comment;
     const cReactionCount1 = cComment1.reactionsCount || {};
     const cOwnReaction1 = cComment1.ownerReactions || [];
 
@@ -80,10 +78,7 @@ export default function* putReactionToComment({
       );
 
       if (response?.data) {
-        const cComment2 = (yield select((s) => get(
-          s, postKeySelector.commentById(id),
-        )))
-          || comment;
+        const cComment2 = useCommentsStore.getState().comments?.[id] || comment;
         const cReactionsCount2 = cComment2.reactionsCount || {};
         const cOwnReactions2 = cComment2.ownerReactions || [];
         const newOwnReaction2: IOwnReaction = [...cOwnReactions2];

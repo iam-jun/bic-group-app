@@ -7,18 +7,13 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 import Divider from '~/beinComponents/Divider';
-import groupsActions from '~/storeRedux/groups/actions';
 import EmptyScreen from '~/components/EmptyScreen';
-import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
-import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
+import { useManagedStore } from './store';
 
 type GroupItemProps = {
   id: string;
@@ -34,45 +29,19 @@ type ListEmptyProps = {
 };
 
 const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
-  const managed = useKeySelector(groupsKeySelector.managed);
-  const dispatch = useDispatch();
+  const { owner, manage } = useManagedStore();
 
-  const joinNewGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doJoinNewGroup);
-  const cancelJoinGroup = useDiscoverGroupsStore((state:IDiscoverGroupsState) => state.doCancelJoinGroup);
-
-  const { owner, manage } = managed;
   const item
     = section === 'discover:owner' ? owner.items[id] : manage.items[id];
   const testID
     = section === 'discover:owner'
       ? `managed_owner_item_${id}`
       : `managed_manage_item_${id}`;
-  const handleJoin = (id: string, name: string, isGroup?: boolean) => {
-    if (isGroup) {
-      joinNewGroup(id);
-    } else {
-      dispatch(
-        groupsActions.joinCommunity({ communityId: id, communityName: name }),
-      );
-    }
-  };
 
-  const handleCancelJoin = (id: string, name: string, isGroup?: boolean) => {
-    if (isGroup) { cancelJoinGroup(id); } else {
-      dispatch(
-        groupsActions.cancelJoinCommunity({
-          communityId: id,
-          communityName: name,
-        }),
-      );
-    }
-  };
   return (
     <CommunityGroupCard
       item={item}
       testID={testID}
-      onCancel={handleCancelJoin}
-      onJoin={handleJoin}
     />
   );
 };
@@ -89,13 +58,11 @@ const SectionTitle: FC<SectionTitleProps> = ({ title }) => {
 };
 
 const ListEmpty: FC<ListEmptyProps> = ({ type }) => {
-  const managed = useKeySelector(groupsKeySelector.managed);
-
-  const { manage, owner } = managed;
-  const { canLoadMore: canLoadMoreManage } = manage;
-  const { canLoadMore: canLoadMoreOwner } = owner;
+  const { manage, owner } = useManagedStore();
+  const { hasNextPage: hasNextPageManage } = manage;
+  const { hasNextPage: hasNextPageOwner } = owner;
   const canLoadMoreItem
-    = type === 'owner' ? canLoadMoreOwner : canLoadMoreManage;
+    = type === 'owner' ? hasNextPageOwner : hasNextPageManage;
   const testID = type === 'owner' ? 'list_empty_owner' : 'list_empty_manage';
   const description
     = type === 'owner'
@@ -114,15 +81,14 @@ const ListEmpty: FC<ListEmptyProps> = ({ type }) => {
 };
 
 const Managed = () => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const managed = useKeySelector(groupsKeySelector.managed);
-
-  const { isRefresh, owner, manage } = managed;
+  const {
+    refreshing, owner, manage, actions,
+  } = useManagedStore();
   const { ids: idsOwner } = owner;
-  const { ids: idsManage, canLoadMore, isLoading } = manage;
+  const { ids: idsManage, hasNextPage, loading } = manage;
   const data = [
     {
       title: 'discover:owner',
@@ -135,13 +101,13 @@ const Managed = () => {
   ];
 
   const onLoadMore = () => {
-    if (canLoadMore) {
-      dispatch(groupsActions.getManagedCommunityAndGroup());
+    if (hasNextPage) {
+      actions.getManagedCommunityAndGroup();
     }
   };
 
   const onRefresh = () => {
-    dispatch(groupsActions.getManaged({ isRefresh: true }));
+    actions.getManaged(true);
   };
 
   const renderItem: SectionListRenderItem<
@@ -162,7 +128,7 @@ const Managed = () => {
   const keyExtractor = (item) => `managed-${item}`;
 
   const renderListFooter = () => {
-    if (!isLoading || !canLoadMore) return <View style={styles.listFooter} />;
+    if (!loading) return <View style={styles.listFooter} />;
 
     return (
       <View style={styles.listFooter} testID="your_groups.loading_more_indicator">
@@ -172,7 +138,7 @@ const Managed = () => {
   };
 
   useEffect(() => {
-    dispatch(groupsActions.getManaged({ isRefresh: true }));
+    actions.getManaged(true);
   }, []);
 
   return (
@@ -189,7 +155,7 @@ const Managed = () => {
       onEndReached={onLoadMore}
       refreshControl={(
         <RefreshControl
-          refreshing={isRefresh}
+          refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
         />

@@ -23,7 +23,7 @@ interface InfoHeaderProps {
   onPressGroupTree?: () => void
 }
 
-const InfoHeader = ({
+const _InfoHeader = ({
   infoDetail, isMember, insideCommunityName, onPressGroupTree,
 }: InfoHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -33,19 +33,24 @@ const InfoHeader = ({
   const {
     name, userCount, backgroundImgUrl, icon, privacy,
   } = infoDetail;
-  const privacyData = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((item) => item.type === privacy);
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
 
   const renderCoverAvatar = () => (
     <View testID="info_header.cover" style={styles.coverAvatarContainer}>
       <Image
         style={styles.cover}
-        source={backgroundImgUrl || images.img_cover_default}
+        resizeMode="cover"
+        source={backgroundImgUrl}
+        defaultSource={images.img_cover_default}
       />
       <Avatar.Large
         showBorder
-        source={icon || images.img_user_avatar_default}
         style={styles.avatar}
+        resizeMode="contain"
+        source={icon}
+        defaultSource={images.img_group_avatar_default}
+
       />
     </View>
   );
@@ -117,6 +122,8 @@ const InfoHeader = ({
   );
 };
 
+const InfoHeader = React.memo(_InfoHeader);
+InfoHeader.whyDidYouRender = true;
 export default InfoHeader;
 
 const themeStyles = (theme: ExtendedTheme) => {

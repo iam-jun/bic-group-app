@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import Animated from 'react-native-reanimated';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import groupJoinStatus from '~/constants/groupJoinStatus';
 import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
@@ -16,6 +15,9 @@ import InfoHeader from '../../components/InfoHeader';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
 import modalActions from '~/storeRedux/modal/actions';
 import CommunityJoinedGroupTree from '~/screens/groups/components/CommunityJoinedGroupTree';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
+import useCommunitiesStore from '~/store/comunities';
+import ICommunitiesState from '~/store/comunities/Interface';
 
 interface GroupContentProps {
   getGroupPosts: () => void;
@@ -36,17 +38,13 @@ const GroupContent = ({
   const posts = useKeySelector(groupsKeySelector.posts);
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
-  const isMember = joinStatus === groupJoinStatus.member;
+  const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const { id: groupId, teamName } = groupData;
-  const refreshingGroupPosts = useKeySelector(
-    groupsKeySelector.refreshingGroupPosts,
-  );
-  const {
-    id: communityId,
-    name: communityName,
-    joinStatus: communityJoinStatus,
-  } = useKeySelector(groupsKeySelector.communityDetail);
-  const isMemberCommunity = communityJoinStatus === groupJoinStatus.member;
+  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
+  const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
+  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
+  const communityName = community?.name;
+  const isMemberCommunity = community?.joinStatus === GroupJoinStatus.MEMBER;
 
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {

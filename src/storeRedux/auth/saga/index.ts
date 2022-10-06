@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types/Auth';
 import { Auth } from 'aws-amplify';
 import i18n from 'i18next';
 import { put, takeLatest } from 'redux-saga/effects';
@@ -11,6 +10,7 @@ import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import {
   getUserFromSharedPreferences,
+  isAppInstalled,
   saveUserToSharedPreferences,
 } from '~/services/sharePreferences';
 import * as actionsCommon from '~/storeRedux/modal/actions';
@@ -31,9 +31,6 @@ const navigation = withNavigation(rootNavigationRef);
 export default function* authSaga() {
   yield takeLatest(
     types.SIGN_IN, signIn,
-  );
-  yield takeLatest(
-    types.SIGN_IN_OAUTH, signInOAuth,
   );
   yield takeLatest(
     types.SIGN_UP, signUp,
@@ -99,24 +96,6 @@ function* changePassword({
   }
 }
 
-function* signInOAuth({
-  payload,
-}: {
-  type: string;
-  payload: CognitoHostedUIIdentityProvider;
-}) {
-  try {
-    yield put(actions.setLoading(true));
-    yield Auth.federatedSignIn({ provider: payload });
-  } catch (e) {
-    yield put(actions.setLoading(false));
-    console.error(
-      '\x1b[34m🐣️ index signInOAuth',
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
-  }
-}
-
 function* signUp({ payload }: {type: string; payload: IAuth.ISignUp}) {
   const { username, email, password } = payload;
   try {
@@ -154,14 +133,23 @@ function* signOut({ payload }: any) {
     yield Auth.signOut();
     // Check if chat auth session is still active
     const sessionData: IObject<any> = yield getUserFromSharedPreferences();
-    if ((sessionData?.activeSessions || []).length < 2) {
-      yield saveUserToSharedPreferences(null);
-    } else {
+    const isInstalled = isAppInstalled();
+    const activeSessions = sessionData?.activeSessions || {};
+
+    /**
+      * if BIC chat is installed and has active session
+      *  just only remove chat session
+      */
+    if (isInstalled && activeSessions.chat) {
+      delete activeSessions?.community;
       const data = {
         ...sessionData,
-        activeSessions: sessionData.activeSessions.filter((item: string) => item !== 'community'),
+        activeSessions,
       };
       yield saveUserToSharedPreferences(data);
+    } else {
+      // clear all session
+      yield saveUserToSharedPreferences(null);
     }
     FileUploader.getInstance()?.resetData?.();
     ImageUploader.getInstance()?.resetData?.();

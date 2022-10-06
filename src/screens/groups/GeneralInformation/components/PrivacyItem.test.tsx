@@ -1,4 +1,5 @@
 import React from 'react';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 import initialState from '~/storeRedux/initialState';
 import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import PrivacyItem from './PrivacyItem';
@@ -30,7 +31,7 @@ describe('PrivacyItem component', () => {
   });
 
   it('should show RightComponent', () => {
-    storeData.groups.groupDetail.group.privacy = 'PUBLIC';
+    storeData.groups.groupDetail.group.privacy = GroupPrivacyType.PUBLIC;
     const store = mockStore(storeData);
 
     const rendered = renderWithRedux(<PrivacyItem {...baseProps} />, store);
@@ -43,7 +44,7 @@ describe('PrivacyItem component', () => {
   });
 
   it('should hide RightComponent', () => {
-    storeData.groups.groupDetail.group.privacy = 'PRIVATE';
+    storeData.groups.groupDetail.group.privacy = GroupPrivacyType.PRIVATE;
     const store = mockStore(storeData);
 
     const rendered = renderWithRedux(<PrivacyItem {...baseProps} />, store);

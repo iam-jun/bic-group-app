@@ -4,6 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import getGroupDetail from './getGroupDetail';
 import groupsActions from '../actions';
 import groupApi from '../../../api/GroupApi';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 
 describe('Get group detail saga', () => {
   const action = {
@@ -16,7 +17,7 @@ describe('Get group detail saga', () => {
       group: {
         id: '1',
         name: 'test',
-        privacy: 'PUBLIC',
+        privacy: GroupPrivacyType.PUBLIC,
       },
       joinStatus: 2,
     },

@@ -1,38 +1,36 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Avatar from '~/baseComponents/Avatar';
+import { spacing } from '~/theme';
 import dimension from '~/theme/dimension';
-import spacing from '~/theme/spacing';
 
 interface Props {
   actors: any[];
   actorCount: number;
-  isRead: boolean;
-  timerWidth: number;
 }
 
 const AVATAR_WIDTH = 32;
-const MAX_AVATAR = 7;
+const BUTTON_MORE_WIDTH = 28;
+const LIST_AVATAR_WIDTH = dimension.deviceWidth - (spacing.padding.large * 2)
+  - BUTTON_MORE_WIDTH - spacing.margin.small;
+const MAX_AVATAR = Math.floor(LIST_AVATAR_WIDTH / (AVATAR_WIDTH + 2));
 
 // render avatar group or single avatar
 const NotificationAvatar = ({
   actors = [],
   actorCount,
-  isRead,
-  timerWidth,
 }: Props) => {
   if (!actors?.length) return null;
 
-  const listAvatarWidth = dimension.deviceWidth - 16 * 2 - timerWidth - (isRead ? 0 : 16);
-  let _listAvatarWidth = 0;
+  let currentListAvatarWidth = 0;
   const listAvatar = actors.map((
     item: any, index: number,
   ) => {
-    if (index < MAX_AVATAR && _listAvatarWidth <= listAvatarWidth) {
-      _listAvatarWidth = (index + 1) * (AVATAR_WIDTH + 8);
+    if (index < MAX_AVATAR && currentListAvatarWidth < LIST_AVATAR_WIDTH) {
+      currentListAvatarWidth = (index + 1) * (AVATAR_WIDTH + 2);
       if (
-        index < MAX_AVATAR - 1
-        && listAvatarWidth - _listAvatarWidth >= AVATAR_WIDTH + 8
+        index < (actorCount - 1)
+        && LIST_AVATAR_WIDTH - currentListAvatarWidth >= (AVATAR_WIDTH + 2)
       ) {
         return (
           <View key={item?.id} style={styles.item}>
@@ -54,17 +52,19 @@ const NotificationAvatar = ({
           />
         </View>
       );
-    } return null;
+    }
+    return null;
   });
   return <View style={styles.container}>{listAvatar}</View>;
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
   },
   item: {
-    marginRight: spacing.margin.small,
+    marginRight: 2,
   },
 });
 

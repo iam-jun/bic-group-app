@@ -1,10 +1,9 @@
-import { get } from 'lodash';
-import { call, select } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
 import { IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 import showError from '~/storeRedux/commonSaga/showError';
 import streamApi from '../../../api/StreamApi';
-import postKeySelector from '../keySelector';
 import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
 export default function* deleteReactToPost({
@@ -16,9 +15,7 @@ export default function* deleteReactToPost({
   const {
     id, reactionId, reactionCounts, ownReaction,
   } = payload;
-  const post1 = yield select((s) => get(
-    s, postKeySelector.postById(id),
-  ));
+  const post1 = usePostsStore.getState()?.posts?.[id] || {};
   try {
     const cOwnReaction1 = post1.ownerReactions || [];
     const rId = cOwnReaction1?.find((item: IReaction) => item?.reactionName === reactionId)?.id || '';
@@ -68,9 +65,7 @@ export default function* deleteReactToPost({
 function* removeReactionLocal(
   id: string, reactionId: string,
 ): any {
-  const post2 = yield select((s) => get(
-    s, postKeySelector.postById(id),
-  ));
+  const post2 = usePostsStore.getState()?.posts?.[id] || {};
   const cOwnerReactions2 = post2.ownerReactions || [];
   const cReactionCounts2 = post2.reactionsCount || {};
   const newOwnerReactions2 = cOwnerReactions2?.filter?.((or: IReaction) => or?.reactionName !== reactionId);

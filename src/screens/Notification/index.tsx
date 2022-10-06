@@ -1,33 +1,30 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, {
-  useCallback, useEffect, useRef, useState,
+  useCallback, useEffect, useState,
 } from 'react';
 import { useDispatch } from 'react-redux';
 
+import i18next from 'i18next';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import NotificationBottomSheet from './components/NotificationBottomSheet';
-import NotificationOptionBottomSheet from './components/NotificationOptionBottomSheet';
 import notificationsActions from '../../storeRedux/notification/actions';
 import ScrollableTabBar from './components/ScrollableTabBar';
 import { notificationMenuData } from '~/screens/Notification/constants';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
 import { MEMBER_TAB_TYPES } from '../communities/constants';
+import modalActions from '~/storeRedux/modal/actions';
+import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
 
 const Notification = () => {
-  const menuSheetRef = useRef<any>();
-  const notificationOptionRef = useRef<any>();
-
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const isFocused = useIsFocused();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [selectedNotification, setSelectedNotification] = useState({});
 
   useEffect(
     () => {
@@ -41,16 +38,63 @@ const Notification = () => {
     setActiveIndex(index);
   };
 
-  const onPressItemOption = ({ item, e }: {item: any; e: any}) => {
-    setSelectedNotification(item);
-    notificationOptionRef.current?.open?.(
-      e?.pageX, e?.pageY,
+  const handleMarkNotification = (data: any) => {
+    if (!data?.isRead) {
+      dispatch(notificationsActions.markAsRead({ id: data?.id || '', keyValue: notificationMenuData[activeIndex]?.type || 'tabAll' }));
+    } else {
+      dispatch(notificationsActions.markAsUnRead(data));
+    }
+    dispatch(modalActions.hideBottomList());
+  };
+
+  const onPressItemOption = ({ item }: {item: any}) => {
+    const menuData: any[] = [{
+      id: 1,
+      testID: 'notification.mark_notification_read_or_unread',
+      leftIcon: 'MessageCheck',
+      title: i18next.t(!item?.isRead
+        ? 'notification:mark_as_read'
+        : 'notification:mark_as_unread'),
+      requireIsActor: true,
+      onPress: () => { handleMarkNotification(item); },
+    }, {
+      id: 2,
+      testID: 'notifications.notification_settings',
+      leftIcon: 'Gear',
+      title: i18next.t('notification:notification_settings'),
+      requireIsActor: true,
+      upcoming: true,
+    }];
+    dispatch(
+      // @ts-ignore
+      modalActions.showBottomList({ isOpen: true, data: menuData } as BottomListItemProps),
     );
   };
 
-  const onPressMenu = (e: any) => {
-    menuSheetRef.current?.open?.(
-      e?.pageX, e?.pageY,
+  const handleMarkAllAsRead = () => {
+    dispatch(modalActions.hideBottomList());
+    dispatch(notificationsActions.markAsReadAll('ALL'));
+  };
+
+  const onPressMenu = () => {
+    const menuData: any[] = [{
+      id: 1,
+      testID: 'notifications.mark_all_as_read',
+      leftIcon: 'MessageCheck',
+      title: i18next.t('notification:mark_all_as_read'),
+      requireIsActor: true,
+      onPress: handleMarkAllAsRead,
+    }, {
+      id: 2,
+      testID: 'notifications.notification_settings',
+      leftIcon: 'Gear',
+      title: i18next.t('notification:notification_settings'),
+      requireIsActor: true,
+      upcoming: true,
+    }];
+    dispatch(
+      // @ts-ignore
+      modalActions.showBottomList({ isOpen: true, data: menuData } as BottomListItemProps),
     );
   };
 
@@ -165,6 +209,7 @@ const Notification = () => {
                 rootNavigation.navigate(
                   groupStack.groupDetail, {
                     groupId: act.group.id,
+                    communityId: act?.group?.communityId,
                   },
                 );
               }
@@ -230,7 +275,7 @@ const Notification = () => {
       <Header
         title="tabs:notification"
         titleTextProps={{ useI18n: true }}
-        removeBorderAndShadow={false}
+        removeBorderAndShadow
         hideBack
         onPressMenu={onPressMenu}
       />
@@ -240,15 +285,6 @@ const Notification = () => {
         onPressItemOption={onPressItemOption}
         onChangeTab={onPressFilterItem}
         activeIndex={activeIndex}
-      />
-      <NotificationBottomSheet
-        modalizeRef={menuSheetRef}
-        flag={notificationMenuData[activeIndex]?.type || 'ALL'}
-      />
-      <NotificationOptionBottomSheet
-        modalizeRef={notificationOptionRef}
-        data={selectedNotification}
-        keyValue={notificationMenuData[activeIndex]?.type || 'tabAll'}
       />
     </ScreenWrapper>
   );

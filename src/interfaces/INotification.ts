@@ -1,29 +1,3 @@
-import {
-  IGetStreamAudience,
-  IGetStreamCommentData,
-  IGetStreamUser,
-  IReaction,
-} from './IPost';
-
-export interface IGetStreamNotificationActivity {
-  id: string;
-  actor: IGetStreamUser;
-  content?: string;
-  media: any;
-  mentions?: any;
-  reactionsCount?: any;
-  audience: IGetStreamAudience;
-  comment?: IGetStreamCommentData;
-  reaction?: IReaction;
-  createdAt?: string;
-  updatedAt: string;
-}
-
-export interface ILoadNewNotifications {
-  notiGroupId: string;
-  limit: number;
-}
-
 export interface IDeleteNotifications {
   notiGroupIds: string[];
 }
@@ -39,14 +13,6 @@ export interface IParamGetNotifications {
   flag?: 'ALL' | 'UNREAD' | 'MENTION' | 'IMPORTANT';
   keyValue?: string;
   isRefresh?: boolean;
-}
-
-export interface INotiExtraData {
-  type?: string;
-  actor: IGetStreamUser;
-  content?: string;
-  description?: string;
-  media?: any;
 }
 
 export interface IParamSetNotifications {

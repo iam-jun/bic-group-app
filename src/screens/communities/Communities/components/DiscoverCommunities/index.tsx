@@ -22,6 +22,8 @@ import images from '~/resources/images';
 import { scaleSize } from '~/theme/dimension';
 import DiscoverItem from '~/screens/groups/components/DiscoverItem';
 import spacing from '~/theme/spacing';
+import useCommunitiesStore from '~/store/comunities';
+import ICommunitiesState from '~/store/comunities/Interface';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -40,13 +42,13 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   } = data || {};
 
   const dispatch = useDispatch();
+  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+
   const theme: ExtendedTheme = useTheme();
 
-  useEffect(
-    () => {
-      getData({ refreshNoLoading: true });
-    }, [],
-  );
+  useEffect(() => {
+    getData({ refreshNoLoading: true });
+  }, []);
 
   const getData = (params?: {
     isRefreshing?: boolean;
@@ -67,13 +69,13 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   const onPressJoin = (
     communityId: string, communityName: string,
   ) => {
-    dispatch(groupsActions.joinCommunity({ communityId, communityName }));
+    actions.joinCommunity(communityId, communityName);
   };
 
   const onPressCancel = (
     communityId: string, communityName: string,
   ) => {
-    dispatch(groupsActions.cancelJoinCommunity({ communityId, communityName }));
+    actions.cancelJoinCommunity(communityId, communityName);
   };
 
   const renderEmptyComponent = () => {

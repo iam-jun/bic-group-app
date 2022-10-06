@@ -1,57 +1,48 @@
-import React from 'react';
-import initialState from '~/storeRedux/initialState';
-import { configureStore, renderWithRedux } from '~/test/testUtils';
-import { listDiscoverCommunities } from '~/test/mock_data/communities';
-import DiscoverCommunities from '.';
+import { act, renderHook } from '@testing-library/react-hooks';
+import groupApi from '~/api/GroupApi';
+import { useDiscoverCommunitiesStore } from './store';
+import { responseDiscoverCommunity } from './store/__mocks__/data';
 
 describe('DiscoverCommunities Screen', () => {
-  it('given an empty list & canLoadMore = false, should render empty component', () => {
-    const mockStore = configureStore([]);
-    const storeData = {
-      ...initialState,
-      groups: {
-        discoverCommunities: {
-          loading: false,
-          canLoadMore: false,
-          ids: [],
-          items: {},
-        },
-      },
-    };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<DiscoverCommunities />, store);
-    const emptyComp = wrapper.queryByTestId('empty_screen');
-    expect(emptyComp).not.toBeNull();
+  it('given no params, should call api getDiscoverCommunities with the next page', async () => {
+    const spy = jest.spyOn(groupApi, 'getDiscoverCommunities').mockImplementation(
+      () => Promise.resolve(responseDiscoverCommunity) as any,
+    );
+
+    const { result, waitForNextUpdate } = renderHook(() => useDiscoverCommunitiesStore());
+    act(() => {
+      result.current.actions.getDiscoverCommunities();
+    });
+    expect(result.current.loading).toBe(true);
+    await waitForNextUpdate();
+    expect(spy).toBeCalled();
+    expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.loading).toBe(false);
+    expect(result.current.ids.length).toBe(responseDiscoverCommunity.data.length);
   });
 
-  it('should not render empty component with default state', () => {
-    const mockStore = configureStore([]);
-    const storeData = { ...initialState };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<DiscoverCommunities />, store);
-    const emptyComp = wrapper.queryByTestId('empty_screen');
-    expect(emptyComp).toBeNull();
-  });
+  it('given param isRefreshing, should refresh data', async () => {
+    const fakeIds = responseDiscoverCommunity.data.map((item) => item.id);
+    const spy = jest.spyOn(groupApi, 'getDiscoverCommunities').mockImplementation(
+      () => Promise.resolve(responseDiscoverCommunity) as any,
+    );
 
-  it('given n items, Flatlist should render n items', () => {
-    const mockStore = configureStore([]);
-    const storeData = {
-      ...initialState,
-      groups: {
-        discoverCommunities: {
-          loading: false,
-          canLoadMore: true,
-          ids: [...listDiscoverCommunities.map((item) => item.id)],
-          items: listDiscoverCommunities.reduce((accumulator, currentItem) => ({
-            ...accumulator,
-            [currentItem.id]: currentItem,
-          }), {}),
-        },
-      },
-    };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<DiscoverCommunities />, store);
-    const items = wrapper.queryAllByTestId(/discover_communities_item_/);
-    expect(items.length).toBe(listDiscoverCommunities.length);
+    const { result, waitForNextUpdate } = renderHook(() => useDiscoverCommunitiesStore());
+    act(() => {
+      useDiscoverCommunitiesStore.setState({
+        ids: [...fakeIds, ...fakeIds],
+      }, false);
+    });
+    act(() => {
+      result.current.actions.getDiscoverCommunities(true);
+    });
+    expect(result.current.loading).toBe(false);
+    expect(result.current.refreshing).toBe(true);
+    await waitForNextUpdate();
+    expect(spy).toBeCalled();
+    expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.loading).toBe(false);
+    expect(result.current.refreshing).toBe(false);
+    expect(result.current.ids.length).toBe(fakeIds.length);
   });
 });

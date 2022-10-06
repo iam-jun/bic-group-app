@@ -1,33 +1,27 @@
 /* eslint-disable no-console */
-import { get, isArray } from 'lodash';
 import {
   call, put, select, takeEvery, takeLatest,
 } from 'redux-saga/effects';
 
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {
-  ICommentData,
   IParamGetPostAudiences,
-  IParamGetPostDetail, IPayloadCreateComment,
-  IPayloadCreatePost,
+  IParamGetPostDetail, IPayloadAddToAllPost, IPayloadCreateComment,
   IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
-  IPayloadUpdateCommentsById,
   IPostActivity,
   IReaction,
 } from '~/interfaces/IPost';
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import useHomeStore from '~/screens/Home/store';
+import usePostsStore from '~/store/entities/posts';
 import groupsActions from '~/storeRedux/groups/actions';
-import homeActions from '~/storeRedux/home/actions';
 import streamApi from '~/api/StreamApi';
-import { sortComments } from '~/screens/post/helper/PostUtils';
 import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
-import addToAllPosts from '~/storeRedux/post/saga/addToAllPosts';
 import getCommentsByPostId from '~/storeRedux/post/saga/getCommentsByPostId';
 import postCreateNewComment from '~/storeRedux/post/saga/postCreateNewComment';
 import putEditComment from '~/storeRedux/post/saga/putEditComment';
@@ -42,23 +36,18 @@ import deleteReactToComment from './deleteReactToComment';
 import deleteReactToPost from './deleteReactToPost';
 import getCommentDetail from './getCommentDetail';
 import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
-import getSeenPost from './getSeenPost';
 import putMarkSeenPost from './putMarKSeenPost';
 import putReactionToComment from './putReactionToComment';
 import putReactionToPost from './putReactionToPost';
 import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
 import deletePost from './deletePost';
 import updateReactionBySocket from './updateReactionBySocket';
-import updateUnReactionBySocket from './updateUnReactionBySocket';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/post/DraftPost/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* postSaga() {
-  yield takeEvery(
-    postTypes.POST_CREATE_NEW_POST, postCreateNewPost,
-  );
   yield takeEvery(
     postTypes.POST_CREATE_NEW_COMMENT, postCreateNewComment,
   );
@@ -77,12 +66,6 @@ export default function* postSaga() {
   yield takeEvery(
     postTypes.DELETE_COMMENT, deleteComment,
   );
-  yield takeLatest(
-    postTypes.ADD_TO_ALL_POSTS, addToAllPosts,
-  );
-  yield takeLatest(
-    postTypes.ADD_TO_ALL_COMMENTS, addToAllComments,
-  );
   yield takeEvery(
     postTypes.POST_REACT_TO_POST, putReactionToPost,
   );
@@ -94,14 +77,6 @@ export default function* postSaga() {
   );
   yield takeEvery(
     postTypes.DELETE_REACT_TO_COMMENT, deleteReactToComment,
-  );
-  yield takeLatest(
-    postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
-    updateAllCommentsByParentIds,
-  );
-  yield takeLatest(
-    postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
-    updateAllCommentsByParentIdsWithComments,
   );
   yield takeLatest(
     postTypes.GET_COMMENTS_BY_POST_ID, getCommentsByPostId,
@@ -124,20 +99,12 @@ export default function* postSaga() {
   yield takeLatest(
     postTypes.PUT_MARK_SEEN_POST, putMarkSeenPost,
   );
-
-  yield takeLatest(
-    postTypes.UPDATE_UN_REACTION_BY_SOCKET,
-    updateUnReactionBySocket,
-  );
   yield takeLatest(
     postTypes.GET_COMMENT_DETAIL, getCommentDetail,
   );
   yield takeEvery(
     postTypes.GET_CREATE_POST_INIT_AUDIENCES,
     getCreatePostInitAudiences,
-  );
-  yield takeLatest(
-    postTypes.GET_USERS_SEEN_POST, getSeenPost,
   );
   yield takeLatest(
     postTypes.DELETE_POST_LOCAL, deletePostLocal,
@@ -154,62 +121,6 @@ export default function* postSaga() {
     postTypes.REMOVE_POST_AUDIENCES,
     removeAudiencesFromPost,
   );
-}
-
-function* postCreateNewPost({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadCreatePost;
-}): any {
-  const { data, createFromGroupId } = payload || {};
-  if (!data) {
-    return;
-  }
-  try {
-    const creatingPost = yield select((state) => state?.post?.createPost?.loading);
-    if (creatingPost) {
-      console.log('\x1b[31m🐣️ saga postCreateNewPost: creating\x1b[0m');
-      return;
-    }
-    yield put(postActions.setLoadingCreatePost(true));
-    const response = yield call(
-      streamApi.postCreateNewPost, data,
-    );
-    if (response.data) {
-      const postData: IPostActivity = response.data;
-      yield put(postActions.addToAllPosts({ data: postData }));
-
-      if (data?.isDraft) {
-        yield call(useDraftPostStore.getState().doGetDraftPosts, {});
-      } else if (createFromGroupId) {
-        yield put(groupsActions.clearGroupPosts());
-        yield put(groupsActions.getGroupPosts(createFromGroupId));
-      } else {
-        yield put(homeActions.getHomePosts({ isRefresh: true }));
-      }
-
-      yield timeOut(500);
-      if (data?.isDraft) {
-        yield put(modalActions.showHideToastMessage({
-          content: 'post:draft:text_draft_saved',
-        }));
-        navigation?.goBack?.();
-      } else {
-        navigation.replace(
-          homeStack.postDetail, { post_id: postData?.id },
-        );
-      }
-      yield timeOut(1000);
-      yield put(postActions.setLoadingCreatePost(false));
-    } else {
-      // todo handle post error
-      yield put(postActions.setLoadingCreatePost(false));
-    }
-  } catch (e) {
-    yield put(postActions.setLoadingCreatePost(false));
-    yield showError(e);
-  }
 }
 
 function* postRetryAddComment({
@@ -237,74 +148,6 @@ function* postRetryAddComment({
   yield postCreateNewComment({ type, payload: currentComment });
 }
 
-function* addToAllComments({
-  payload,
-}: {
-  type: string;
-  payload: ICommentData[] | ICommentData;
-}): any {
-  try {
-    const allComments = yield select((state) => state?.post?.allComments) || {};
-    const newAllComments = { ...allComments };
-    if (isArray(payload) && payload.length > 0) {
-      payload.forEach((item: ICommentData) => {
-        if (item?.id) {
-          newAllComments[item.id] = item;
-        }
-      });
-    } else if (payload && 'id' in payload && payload.id) {
-      newAllComments[payload.id] = payload;
-    }
-    yield put(postActions.setAllComments(newAllComments));
-  } catch (e) {
-    console.log(
-      '\x1b[31m🐣️ saga addToAllComments error:',
-      `${JSON.stringify(
-        e, undefined, 2,
-      )}\x1b[0m`,
-    );
-  }
-}
-
-function* updateAllCommentsByParentIds({
-  payload,
-}: {
-  type: string;
-  payload: {[postId: string]: IReaction[]};
-}): any {
-  const allCommentsByParentIds = yield select((state) => state?.post?.allCommentsByParentIds) || {};
-  const newData = { ...allCommentsByParentIds, ...payload };
-  yield put(postActions.setAllCommentsByParentIds({ ...newData }));
-}
-
-function* updateAllCommentsByParentIdsWithComments({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadUpdateCommentsById;
-}): any {
-  const {
-    id, comments, isMerge, isReplace, commentId,
-  } = payload || {};
-  const allComments = yield select((state) => get(
-    state, postKeySelector.allCommentsByParentIds,
-  ))
-   || {};
-  const commentsById = allComments[id] || [];
-  let newComments: ICommentData[];
-
-  if (isMerge) {
-    newComments = [...new Set([...commentsById, ...comments])];
-  } else if (isReplace) {
-    newComments = commentsById?.filter?.((item: ICommentData) => item.id != commentId);
-    newComments = [...new Set([...newComments, ...comments])];
-  } else {
-    newComments = comments;
-  }
-  allComments[id] = sortComments(newComments);
-  yield put(postActions.setAllCommentsByParentIds(allComments));
-}
-
 function* postPublishDraftPost({
   payload,
 }: {
@@ -324,34 +167,36 @@ function* postPublishDraftPost({
       streamApi.postPublishDraftPost, draftPostId,
     );
     yield put(postActions.setLoadingCreatePost(false));
-    if (res.data) {
-      onSuccess?.();
-      const postData: IPostActivity = res.data;
-      yield put(postActions.addToAllPosts({ data: postData }));
-      if (res.data?.isProcessing) {
-        yield put(modalActions.showHideToastMessage({
-          content: 'post:draft:text_processing_publish',
-        }));
-        navigation.goBack();
-        yield put(postActions.getAllPostContainingVideoInProgress());
-      } else if (replaceWithDetail) {
-        navigation.replace(
-          homeStack.postDetail, { post_id: postData?.id },
-        );
-      }
-      if (createFromGroupId) {
-        yield put(groupsActions.clearGroupPosts());
-        yield put(groupsActions.getGroupPosts(createFromGroupId));
-      }
-      const payloadGetDraftPosts: IPayloadGetDraftPosts = {
-        isRefresh: true,
-      };
-      yield put(homeActions.getHomePosts({ isRefresh: true }));
-      yield call(useDraftPostStore.getState().doGetDraftPosts, payloadGetDraftPosts);
-    } else {
+
+    if (!res.data) {
       onError?.();
       yield showError(res);
+      return;
     }
+
+    onSuccess?.();
+    const postData: IPostActivity = res.data;
+    usePostsStore.getState().actions.addToPosts({ data: postData } as IPayloadAddToAllPost);
+    if (res.data?.isProcessing) {
+      yield put(modalActions.showHideToastMessage({
+        content: 'post:draft:text_processing_publish',
+      }));
+      navigation.goBack();
+      yield put(postActions.getAllPostContainingVideoInProgress());
+    } else if (replaceWithDetail) {
+      navigation.replace(
+        homeStack.postDetail, { post_id: postData?.id },
+      );
+    }
+    if (createFromGroupId) {
+      yield put(groupsActions.clearGroupPosts());
+      yield put(groupsActions.getGroupPosts(createFromGroupId));
+    }
+    const payloadGetDraftPosts: IPayloadGetDraftPosts = {
+      isRefresh: true,
+    };
+    useHomeStore.getState().actions.refreshHome();
+    yield call(useDraftPostStore.getState().doGetDraftPosts, payloadGetDraftPosts);
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
     onError?.();
@@ -436,8 +281,11 @@ function* getPostDetail({
       streamApi.getPostDetail, params,
     );
     yield timeOut(500);
-    yield put(postActions.addToAllPosts({ data: response?.data || {}, handleComment: true }));
+    usePostsStore.getState().actions.addToPosts(
+      { data: response?.data || {}, handleComment: true } as IPayloadAddToAllPost,
+    );
     callbackLoading?.(false, true);
+    yield put(postActions.setLoadingGetPostDetail(false));
   } catch (e: any) {
     yield timeOut(500);
     yield put(postActions.setLoadingGetPostDetail(false));
@@ -485,12 +333,10 @@ function* deletePostLocal({ payload }: {type: string; payload: string}): any {
     return;
   }
   try {
-    const post = yield select((state) => get(
-      state, postKeySelector.postById(payload),
-    ));
+    const post = usePostsStore.getState()?.posts?.[payload] || {};
     if (post) {
       post.deleted = true;
-      yield put(postActions.addToAllPosts({ data: post }));
+      usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
     }
   } catch (e) {
     yield showError(e);

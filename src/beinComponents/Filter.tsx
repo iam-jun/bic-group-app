@@ -26,14 +26,19 @@ import Text from './Text';
 
 const { width: screenWidth } = Dimensions.get('window');
 export interface FilterProps {
+  translateX: Animated.SharedValue<number>;
+  data?: {id: number; text: string; icon?: string; type: string}[];
+  activeIndex?: number;
   filterRef?: React.Ref<ScrollView>;
   testID?: string;
   itemTestID?: string;
   style?: StyleProp<ViewStyle>;
-  data?: {id: number; text: string; icon?: string; type: string}[];
-  activeIndex?: number;
+  showItemBorder?: boolean;
+  activeColor?: string;
+  activeBackgroundColor?: string;
+  inactiveColor?: string;
+
   onPress: (item: any, index: number) => void;
-  translateX: Animated.SharedValue<number>;
 }
 
 const FilterComponent: React.FC<FilterProps> = ({
@@ -44,6 +49,10 @@ const FilterComponent: React.FC<FilterProps> = ({
   onPress,
   activeIndex = 0,
   translateX,
+  showItemBorder = true,
+  activeColor,
+  activeBackgroundColor,
+  inactiveColor,
 }: FilterProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = useMemo(
@@ -85,6 +94,9 @@ const FilterComponent: React.FC<FilterProps> = ({
     item: any, index: number,
   ) => {
     const isSelected = index === activeIndex;
+    const itemStyle = [styles.itemContainer, showItemBorder ? styles.itemBorder : {}];
+    const defaultTextColor = theme.colors.neutral80;
+    const textColor = isSelected ? activeColor || defaultTextColor : inactiveColor || defaultTextColor;
     return (
       <View
         style={styles.itemView}
@@ -102,7 +114,7 @@ const FilterComponent: React.FC<FilterProps> = ({
       >
         <TouchableOpacity
           activeOpacity={0.25}
-          style={[styles.itemContainer]}
+          style={itemStyle}
           testID={`${itemTestID || 'item_filter'}_${item.id}`}
           onPress={() => {
             _onPress(
@@ -120,7 +132,7 @@ const FilterComponent: React.FC<FilterProps> = ({
               style={styles.icon}
             />
           )}
-          <Text variant={isSelected ? 'bodyMMedium' : 'bodyM'} useI18n>
+          <Text color={textColor} variant={isSelected ? 'bodyMMedium' : 'bodyM'} useI18n>
             {item.text}
           </Text>
         </TouchableOpacity>
@@ -183,6 +195,11 @@ const FilterComponent: React.FC<FilterProps> = ({
     borderWidth: measurements[0]?.height ? 1 : 0,
   }));
 
+  const itemActiveStyle = activeBackgroundColor ? {
+    backgroundColor: activeBackgroundColor,
+    borderColor: activeBackgroundColor,
+  } : styles.itemActiveColor;
+
   return (
     <View testID={testID || 'filter'} style={[styles.container, style]}>
       <PanGestureHandler onGestureEvent={panGestureEvent}>
@@ -198,7 +215,8 @@ const FilterComponent: React.FC<FilterProps> = ({
             <Animated.View
               style={[
                 { ...StyleSheet.absoluteFillObject },
-                styles.itemSelectedContainer,
+                styles.itemActive,
+                itemActiveStyle,
                 activeStyle,
               ]}
             />
@@ -228,16 +246,20 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.transparent,
       flexDirection: 'row',
       paddingVertical: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
-      borderRadius: 100,
+      paddingHorizontal: spacing.padding.base,
+    },
+    itemBorder: {
       borderWidth: 1,
+      borderRadius: 100,
       borderColor: colors.neutral5,
     },
-    itemSelectedContainer: {
-      borderColor: colors.gray40,
-      backgroundColor: colors.gray40,
+    itemActive: {
       borderRadius: 100,
       zIndex: -1,
+    },
+    itemActiveColor: {
+      borderColor: colors.gray40,
+      backgroundColor: colors.gray40,
     },
     iconLeftStyle: { marginRight: spacing.margin.base },
     icon: {

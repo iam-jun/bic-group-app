@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Filter from '~/beinComponents/Filter';
 import NotificationList from './NotificationList';
 import spacing from '~/theme/spacing';
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
   filterStyle: {
     paddingVertical: spacing.padding.small,
     borderBottomWidth: 0,
+    borderTopWidth: 0,
   },
 });
 
@@ -38,6 +40,8 @@ const ScrollableTabBar = ({
   onChangeTab,
   activeIndex = 0,
 }: Props) => {
+  const theme: ExtendedTheme = useTheme();
+
   const scrollViewRef = useRef<any>();
   const filterRef = useRef<any>();
   const translateX = useSharedValue(0);
@@ -99,12 +103,17 @@ const ScrollableTabBar = ({
         testID="notification.filter"
         itemTestID="notification.filter.item"
         style={styles.filterStyle}
+        showItemBorder={false}
+        activeBackgroundColor={theme.colors.purple2}
+        activeColor={theme.colors.purple50}
+        inactiveColor={theme.colors.neutral40}
         data={data}
         onPress={(
           item: any, index: number,
         ) => {
           _onChangeTab(index);
         }}
+
       />
       <Animated.ScrollView
         ref={scrollViewRef}

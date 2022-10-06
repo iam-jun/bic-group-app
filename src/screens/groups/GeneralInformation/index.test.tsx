@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React from 'react';
 import * as redux from 'react-redux';
-import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import { groupPrivacyListDetail, GroupPrivacyType } from '~/constants/privacyTypes';
 import groupsActions from '../../../storeRedux/groups/actions';
 import initialState from '~/storeRedux/initialState';
 import MockedNavigator from '~/test/MockedNavigator';
@@ -61,7 +61,7 @@ describe('GeneralInformation component', () => {
   });
 
   it('should call change privacy when group\'s privacy is public', () => {
-    storeData.groups.groupDetail.group.privacy = 'PUBLIC';
+    storeData.groups.groupDetail.group.privacy = GroupPrivacyType.PUBLIC;
     // storeData.groups.groupDetail.total_pending_members = 0;
     const store = mockStore(storeData);
 
@@ -81,7 +81,7 @@ describe('GeneralInformation component', () => {
   });
 
   it('should call alert when change privacy to public', () => {
-    storeData.groups.groupDetail.group.privacy = 'PRIVATE';
+    storeData.groups.groupDetail.group.privacy = GroupPrivacyType.PRIVATE;
     // storeData.groups.groupDetail.total_pending_members = 3;
     const store = mockStore(storeData);
 
@@ -100,7 +100,7 @@ describe('GeneralInformation component', () => {
   });
 
   it('should call alert when change privacy to secret', () => {
-    storeData.groups.groupDetail.group.privacy = 'PRIVATE';
+    storeData.groups.groupDetail.group.privacy = GroupPrivacyType.PRIVATE;
     // storeData.groups.groupDetail.total_pending_members = 3;
     const store = mockStore(storeData);
 

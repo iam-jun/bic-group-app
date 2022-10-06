@@ -14,21 +14,6 @@ const menuActions = {
     payload,
   }),
 
-  getUserProfile: (payload: IGetUserProfile) => ({
-    type: menuTypes.GET_USER_PROFILE,
-    payload,
-  }),
-  setUserProfile: (payload: IUserProfile | null) => ({
-    type: menuTypes.SET_USER_PROFILE,
-    payload,
-  }),
-  setShowUserNotFound: () => ({
-    type: menuTypes.SET_SHOW_USER_NOT_FOUND,
-  }),
-  clearUserProfile: () => ({
-    type: menuTypes.CLEAR_USER_PROFILE,
-  }),
-
   getMyProfile: (payload: IGetUserProfile) => ({
     type: menuTypes.GET_MY_PROFILE,
     payload,

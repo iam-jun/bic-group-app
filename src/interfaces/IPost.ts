@@ -95,6 +95,9 @@ export interface ICommentData {
   reactionsOfActor?: IOwnReaction;
   reaction?: IReaction;
   giphy?: IGiphy;
+  giphyId?: string;
+  giphyUrl?: string;
+  edited?: boolean;
 }
 
 export interface ICreatePostImage {
@@ -153,6 +156,8 @@ export interface IPostActivity {
   createdAt?: string;
   createdBy?: string;
   totalUsersSeen?: number;
+  deleted?: boolean;
+  markedReadSuccess?: boolean;
   linkPreview?: ILinkPreview;
 }
 
@@ -167,7 +172,7 @@ export interface IAllPosts {
 }
 
 export interface IAllComments {
-  [id: string]: IReaction;
+  [id: string]: ICommentData;
 }
 
 export interface IPostCreatePost {
@@ -390,7 +395,7 @@ export interface IPayloadReactToPost {
 
 export interface IPayloadReactToComment {
   id: string;
-  comment: IReaction;
+  comment: ICommentData;
   postId?: string;
   parentCommentId?: string;
   reactionId: ReactionType;
@@ -409,11 +414,6 @@ export interface IParamDeleteReaction {
   reactionId: string;
   targetId: string;
   reactionName: string;
-}
-
-export interface IParamPutReactionToComment {
-  commentId: string;
-  data: string[];
 }
 
 export interface IPayloadUpdateCommentsById {
@@ -440,13 +440,6 @@ export interface IPostSettingsParams extends ICreatePostParams {
 export interface IPayloadReplying {
   comment: ICommentData;
   parentComment?: ICommentData;
-}
-
-export interface IPayloadSetDraftPosts {
-  posts?: IPostActivity[];
-  canLoadMore?: boolean;
-  loading?: boolean;
-  refreshing?: boolean;
 }
 
 export interface IParamGetDraftPosts {
@@ -482,11 +475,6 @@ export interface IPayloadPutEditDraftPost {
   publishNow: boolean;
   callback?: any;
   createFromGroupId?: string;
-}
-
-export interface IPayloadPutEditAutoSave {
-  id: string;
-  data: IPostCreatePost;
 }
 
 export interface IParamGetPostAudiences {
@@ -537,7 +525,7 @@ export interface IGetStreamCommentData {
   reactionsCount?: IReactionCounts;
   child?: IGetStreamCommentData;
 }
-export interface IRequestGetUsersSeenPost {
+export interface IRequestGetUsersInterestedPost {
   postId: string;
   limit?: number;
   offset?: number;

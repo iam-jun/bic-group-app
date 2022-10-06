@@ -5,6 +5,7 @@ import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import GroupDetail from '.';
 import initialState from '~/storeRedux/initialState';
 import { groupDetailData } from '~/test/mock_data/group';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 
 describe('GroupDetail component', () => {
   const component = () => (
@@ -46,7 +47,7 @@ describe('GroupDetail component', () => {
     state.groups.groupDetail = {
       ...groupDetailData,
       joinStatus: 1,
-      group: { ...groupDetailData.group, privacy: 'PRIVATE' },
+      group: { ...groupDetailData.group, privacy: GroupPrivacyType.PRIVATE },
     };
     const store = createTestStore(state);
 

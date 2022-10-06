@@ -1,4 +1,0 @@
-export const HOME_TAB_TYPE = {
-  NEWSFEED: 'NEWSFEED',
-  IMPORTANT: 'IMPORTANT',
-};

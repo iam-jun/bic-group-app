@@ -12,21 +12,23 @@ import { useDispatch } from 'react-redux';
 import { useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NewsfeedList from '~/components/NewsfeedList';
+import { useBaseHook } from '~/hooks';
 import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ITabTypes } from '~/interfaces/IRouter';
 import NewsfeedSearch from '~/screens/Home/HomeSearch';
+import { HOME_TAB_TYPE } from '~/screens/Home/store/Interface';
 import homeActions from '~/storeRedux/home/actions';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import menuActions from '~/storeRedux/menu/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
 import HomeHeader from '~/screens/Home/components/HomeHeader';
 import useHomeStore from '~/screens/Home/store';
-import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -35,6 +37,7 @@ const Home = () => {
   const yShared = useSharedValue(0);
 
   const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const dispatch = useDispatch();
@@ -44,7 +47,7 @@ const Home = () => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const {
-    activeTab, tabImportant, tabNewsfeed, getTabData,
+    activeTab, tabImportant, tabNewsfeed, actions,
   } = useHomeStore();
   const tabData = activeTab === HOME_TAB_TYPE.NEWSFEED ? tabNewsfeed : tabImportant;
   const { data: homePosts, canLoadMore, refreshing } = tabData;
@@ -71,11 +74,11 @@ const Home = () => {
   );
 
   const getData = (isRefresh?: boolean) => {
-    getTabData(activeTab, isRefresh);
+    actions.getTabData(activeTab, isRefresh);
   };
 
   useEffect(() => {
-    getTabData(activeTab, true);
+    actions.getTabData(activeTab, true);
     yShared.value = withDelay(withTiming(0), 200);
   }, [activeTab]);
 
@@ -141,7 +144,12 @@ const Home = () => {
   };
 
   const navigateToChat = () => {
-    openUrl(getEnv('BEIN_CHAT_DEEPLINK'));
+    openUrl(getEnv('BEIN_CHAT_DEEPLINK'), () => {
+      dispatch(modalActions.showAlert({
+        title: t('home:title_install_chat'),
+        content: t('home:text_desc_install_chat'),
+      }));
+    });
   };
 
   const onEndReach = useCallback(

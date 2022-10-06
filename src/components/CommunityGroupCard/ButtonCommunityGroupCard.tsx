@@ -1,30 +1,30 @@
 import React, { FC } from 'react';
 import Button, { ButtonProps } from '~/baseComponents/Button';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 interface ButtonActionProps extends ButtonProps {
-  joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
+  joinStatus:GroupJoinStatus;
   onPress: () => void;
 }
 
 interface ButtonCommunityGroupCardProps extends ButtonProps {
-  joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
+  joinStatus: GroupJoinStatus;
   onJoin?: () => void;
   onView?: () => void;
   onCancel?: () => void;
 }
 
 const getTextButton = (
-  joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus],
+  joinStatus: GroupJoinStatus,
 ) => {
   switch (joinStatus) {
-    case groupJoinStatus.unableToJoin:
+    case GroupJoinStatus.UNABLE_TO_JOIN:
       return '';
-    case groupJoinStatus.requested:
+    case GroupJoinStatus.REQUESTED:
       return 'common:btn_cancel_request';
-    case groupJoinStatus.visitor:
+    case GroupJoinStatus.VISITOR:
       return 'common:btn_join';
-    case groupJoinStatus.member:
+    case GroupJoinStatus.MEMBER:
       return 'common:btn_view';
     default:
       return 'common:btn_view';
@@ -35,9 +35,9 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, ...props }) => {
   const textButton = getTextButton(joinStatus);
 
   switch (joinStatus) {
-    case groupJoinStatus.unableToJoin:
+    case GroupJoinStatus.UNABLE_TO_JOIN:
       return null;
-    case groupJoinStatus.requested:
+    case GroupJoinStatus.REQUESTED:
       return (
         <Button.Neutral
           useI18n
@@ -46,7 +46,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, ...props }) => {
           {textButton}
         </Button.Neutral>
       );
-    case groupJoinStatus.visitor:
+    case GroupJoinStatus.VISITOR:
       return (
         <Button.Secondary
           useI18n
@@ -55,7 +55,7 @@ const ButtonAction: FC<ButtonActionProps> = ({ joinStatus, ...props }) => {
           {textButton}
         </Button.Secondary>
       );
-    case groupJoinStatus.member:
+    case GroupJoinStatus.MEMBER:
       return (
         <Button.Secondary
           type="ghost"
@@ -91,13 +91,13 @@ ButtonCommunityGroupCardProps
 
   const onPress = () => {
     switch (joinStatus) {
-      case groupJoinStatus.requested:
+      case GroupJoinStatus.REQUESTED:
         onPressCancel();
         break;
-      case groupJoinStatus.visitor:
+      case GroupJoinStatus.VISITOR:
         onPressJoin();
         break;
-      case groupJoinStatus.member:
+      case GroupJoinStatus.MEMBER:
         onPressView();
         break;
       default:

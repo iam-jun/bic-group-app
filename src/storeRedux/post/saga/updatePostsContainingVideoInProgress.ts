@@ -1,5 +1,7 @@
-import { put, select, call } from 'redux-saga/effects';
 import { cloneDeep, get, isEmpty } from 'lodash';
+import { put, select } from 'redux-saga/effects';
+import { IPayloadAddToAllPost } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 
 import postActions from '~/storeRedux/post/actions';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
@@ -43,9 +45,8 @@ function* updatePostsContainingVideoInProgress({
             const data = cloneDeep(newHomePosts);
             /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
             // @ts-ignore
-            yield call(useHomeStore.getState().setTabNewsfeed, { data });
-
-            yield put(postActions.addToAllPosts({ data: { ...payload.activities[0] } }));
+            yield call(useHomeStore.getState().actions.setTabNewsfeed, { data });
+            usePostsStore.getState().actions.addToPosts({ data: { ...payload.activities[0] } } as IPayloadAddToAllPost);
           }
         }
       }

@@ -1,11 +1,14 @@
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import { put, select } from 'redux-saga/effects';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import { IPayloadCreateComment, IReaction } from '~/interfaces/IPost';
+import useCommentsStore from '~/store/entities/comments';
+import usePostsStore from '~/store/entities/posts';
 import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
 import showError from '~/storeRedux/commonSaga/showError';
 import addChildCommentToCommentsOfPost from '~/storeRedux/post/saga/addChildCommentToCommentsOfPost';
-import { getMentionsFromContent } from '~/screens/post/helper/PostUtils';
+import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
 import modalActions from '~/storeRedux/modal/actions';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 
@@ -54,11 +57,11 @@ function* postCreateNewComment({
     // retrying doesn't need this step
     if (preComment) {
       if (!parentCommentId) {
-        yield put(postActions.updateAllCommentsByParentIdsWithComments({
+        useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
           id: postId,
           comments: new Array(preComment),
           isMerge: true,
-        }));
+        });
       } else {
         yield addChildCommentToCommentsOfPost({
           postId,
@@ -77,7 +80,7 @@ function* postCreateNewComment({
     yield put(postActions.setPostDetailReplyingComment());
 
     // get mentions from temp selected in mention input
-    const tempMentions = yield select((state) => state?.mentionInput?.tempSelected);
+    const tempMentions = useMentionInputStore.getState().tempSelected;
     commentData.mentions = getMentionsFromContent(
       commentData?.content,
       tempMentions,
@@ -106,8 +109,8 @@ function* postCreateNewComment({
       return;
     }
     // update comment_count
-    const allPosts = yield select((state) => state?.post?.allPosts) || {};
-    const newAllPosts = { ...allPosts };
+    const allPosts = usePostsStore.getState().posts || {};
+    const newAllPosts = cloneDeep(allPosts);
     const post = newAllPosts[postId] || {};
     post.commentsCount = (post.commentsCount || 0) + 1;
     if (!parentCommentId) {
@@ -119,14 +122,13 @@ function* postCreateNewComment({
       post.comments = postComments;
     }
     newAllPosts[postId] = post;
-    yield put(postActions.setAllPosts(newAllPosts));
+    usePostsStore.getState().actions.setPosts(newAllPosts);
 
     // update comments or child comments again when receiving from API
 
     if (parentCommentId) {
-      const allComments = yield select((state) => state?.post?.allComments) || {};
-      const newAllComments = { ...allComments };
-      const newParentComment = { ...newAllComments[parentCommentId] };
+      const allComments = useCommentsStore.getState().comments || {};
+      const newParentComment = cloneDeep(allComments[parentCommentId]);
       newParentComment.totalReply = Math.max(
         0,
         newParentComment.totalReply + 1,
@@ -135,18 +137,18 @@ function* postCreateNewComment({
         list: newParentComment.child?.list?.concat([resComment]) || [],
       };
 
-      yield put(postActions.addToAllComments([resComment, newParentComment]));
+      useCommentsStore.getState().actions.addToComments([resComment, newParentComment]);
     } else {
-      yield put(postActions.addToAllComments(resComment));
+      useCommentsStore.getState().actions.addToComments(resComment);
     }
 
-    yield put(postActions.updateCommentAPI({
+    useCommentsStore.getState().actions.updateCreatedComment({
       status: 'success',
       localId: localId || preComment?.localId,
       postId,
       resultComment: resComment,
       parentCommentId,
-    }));
+    });
 
     yield put(postActions.setCreateComment({ loading: false, content: '' }));
     onSuccess?.(); // call second time to make sure content is cleared on low performance device
@@ -156,13 +158,13 @@ function* postCreateNewComment({
     );
     if (preComment && !parentCommentId) {
       // retrying doesn't need to update status because status = 'failed' already
-      yield put(postActions.updateCommentAPI({
+      useCommentsStore.getState().actions.updateCreatedComment({
         status: 'failed',
         localId: preComment?.localId,
         postId,
         resultComment: {} as IReaction,
         parentCommentId,
-      }));
+      });
     }
     yield put(postActions.setCreateComment({ loading: false }));
     if (!!parentCommentId && e?.code === API_ERROR_CODE.POST.commentDeleted) {

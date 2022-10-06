@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { createTestStore, fireEvent, renderWithRedux } from '../../../../test/testUtils';
+import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import GroupJoined from './GroupJoined';
-import { communityDetailData } from '../../../../test/mock_data/communities';
+import { communityDetailData } from '~/test/mock_data/communities';
 import modalActions from '../../../../storeRedux/modal/actions';
-import { groupDetailData } from '../../../../test/mock_data/group';
+import { groupDetailData } from '~/test/mock_data/group';
 
 describe('GroupJoined component', () => {
   it('should render tree as default', async () => {

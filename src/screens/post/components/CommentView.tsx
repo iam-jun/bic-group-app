@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -16,7 +17,6 @@ import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import { ReactionType } from '~/constants/reactions';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
   ICommentData,
@@ -27,8 +27,12 @@ import {
 import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/post/components/CommentMediaView';
 import CommentViewMenu from '~/screens/post/components/CommentViewMenu';
+import useCommentsStore from '~/store/entities/comments';
+import ICommentsState from '~/store/entities/comments/Interface';
+import commentsSelector from '~/store/entities/comments/selectors';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import postActions from '~/storeRedux/post/actions';
-import postKeySelector from '~/storeRedux/post/keySelector';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { showReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
@@ -69,8 +73,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const currentUserId = useUserIdAuth();
 
-  const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
-  const setting = useKeySelector(postKeySelector.postSettingById(postId));
+  const comment = useCommentsStore(commentsSelector.getComment(commentData?.id));
+  const setting = usePostsStore(postsSelector.getSetting(postId));
+  const cancelCommentFailed = useCommentsStore((state) => state.actions.cancelCommentFailed);
 
   const _commentData = comment || commentData || {};
   const {
@@ -121,20 +126,19 @@ const _CommentView: React.FC<CommentViewProps> = ({
     progress.value = withTiming(value, { duration });
   };
 
-  const onPressUser = (e?: any) => {
+  const navigateToUserProfile = (userId: string) => {
+    rootNavigation.navigate(mainStack.userProfile, { userId });
+  };
+
+  const onPressUser = () => {
     const id = actor?.id;
     if (!id) return;
-
-    const payload = {
-      userId: id,
-      position: { x: e?.pageX, y: e?.pageY },
-    };
-    dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
+    navigateToUserProfile(id);
   };
 
   const onPressAudience = useCallback((audience: IMarkdownAudience) => {
     if (!audience) return;
-    rootNavigation.navigate(mainStack.userProfile, { userId: audience.id });
+    navigateToUserProfile(audience.id);
   }, []);
 
   const onAddReaction = (reactionId: ReactionType) => {
@@ -293,8 +297,13 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onPressCancel = () => {
-    dispatch(postActions.postCancelFailedComment(commentData));
+    cancelCommentFailed(commentData);
   };
+
+  const mentionDataSelector = useCallback(
+    (state: ICommentsState) => get(state, `comments.${id}.mentions`),
+    [id],
+  );
 
   const renderErrorState = () => commentStatus === 'failed' && (
   <View style={styles.errorLine}>
@@ -356,13 +365,14 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
-                  selector={`${postKeySelector.allComments}.${id}.mentions`}
+                  dataStore={useCommentsStore}
+                  dataSelector={mentionDataSelector}
                   onPressAudience={onPressAudience}
                   onToggleShowTextContent={onPressMarkSeenPost}
                 />
               </View>
               <CommentMediaView
-                giphy={giphy}
+                giphy={giphy as any}
                 media={media}
                 onLongPress={onLongPress}
               />

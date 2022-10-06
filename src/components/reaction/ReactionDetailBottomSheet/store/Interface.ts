@@ -1,8 +1,8 @@
 import { IParamGetReactionDetail } from '~/interfaces/IPost';
-import IBaseStore from '~/store/interfaces/IBaseStore';
-import IFetchingStore from '~/store/interfaces/IFetchingStore';
+import IBaseState from '~/store/interfaces/IBaseState';
+import IFetchingState from '~/store/interfaces/IFetchingState';
 
-interface IReactionDetailState extends IBaseStore, IFetchingStore{
+interface IReactionDetailState extends IBaseState, IFetchingState{
   data: any[],
   loading: boolean,
   canLoadMore: boolean,

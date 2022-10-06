@@ -5,13 +5,11 @@ import { isEqual } from 'lodash';
 import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import groupsActions from '~/storeRedux/groups/actions';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 
 import { IScheme } from '~/interfaces/IGroup';
+import usePermissionSchemeStore from '../../store';
 
 export interface CreateSchemeHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -20,6 +18,7 @@ export interface CreateSchemeHeaderProps {
   loadDataFailed: boolean;
   isEdit?: boolean;
   schemeId?: string;
+  communityId? : string;
 }
 
 const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
@@ -28,20 +27,23 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   loadDataFailed,
   isEdit,
   schemeId,
+  communityId,
 }: CreateSchemeHeaderProps) => {
   const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
-  const { id } = useKeySelector(groupsKeySelector.communityDetail) || {};
-  const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
-  const desc = useKeySelector(groupsKeySelector.permission.creatingScheme.description);
-  const creating = useKeySelector(groupsKeySelector.permission.creatingScheme.creating);
-  const roles = useKeySelector(groupsKeySelector.permission.creatingScheme.roles);
-  const groupScheme = useKeySelector(groupsKeySelector.permission.groupScheme) || {};
+  const actions = usePermissionSchemeStore((state) => state.actions);
+  const groupSchemeData = usePermissionSchemeStore((state) => state.groupScheme.data) || {};
+  const creating = usePermissionSchemeStore((state) => state.creatingScheme.creating);
+  const creatingSchemeData = usePermissionSchemeStore((state) => state.creatingScheme.data);
+  const {
+    name, description, roles,
+  } = creatingSchemeData || {};
+
   const {
     name: initName,
-    description: initDesc,
+    description: initDescription,
     roles: initRoles,
   } = initScheme || {};
 
@@ -50,20 +52,21 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const onPress = () => {
     if (isEdit) {
       if (schemeId) {
-        dispatch(groupsActions.updateGroupScheme({ communityId: id, schemeId }));
-      } else dispatch(groupsActions.updateCommunityScheme({ communityId: id }));
+        actions.updateGroupScheme({ communityId, schemeId });
+      } else actions.updateGeneralScheme(communityId);
     } else {
-      dispatch(groupsActions.postCreateSchemePermission({ communityId: id }));
+      actions.createGeneralScheme(communityId);
     }
   };
 
   const onPressBack = () => {
     if (
       name !== initName
-      || desc !== initDesc
+      || description !== initDescription
       || !isEqual(
-        roles, initRoles || groupScheme?.roles,
-      ) // initRoles = undefined for group
+        roles,
+        initRoles || groupSchemeData?.roles, // initRoles = undefined for group
+      )
     ) {
       dispatch(modalActions.showAlert({
         title: t('communities:permission:text_title_discard_create_scheme'),

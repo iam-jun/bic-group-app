@@ -130,7 +130,8 @@
     "text_you": "Bạn",
     "content_not_available": "Nội dung không tồn tại",
     "dont_have_permission_to_access": "Bạn không có quyền truy cập trang này",
-    "btn_go_back_to_home": "Quay về trang chủ"
+    "btn_go_back_to_home": "Quay về trang chủ",
+    "text_upcoming": "Sắp tới"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -361,6 +362,8 @@
     "draft_articles_post": "Bài báo nháp",
     "title_timeline": "Bản tin",
     "title_important": "Quan trọng",
+    "title_install_chat": "Không tìm thấy BIC Chat",
+    "text_desc_install_chat": "Vui lòng cài đặt BIC Chat để sử dụng tính năng này",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
       "clear": "Xoá hết",
@@ -417,7 +420,6 @@
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
     "title_edit_images": "Sửa ảnh",
-    "title_seen_by": "Quan tâm bởi",
     "title_post_to": "Đăng tới",
     "mention_title": "Có thể nhắc đến những người là đối tượng của bài viết",
     "mention_empty_content": "Không tìm thấy",

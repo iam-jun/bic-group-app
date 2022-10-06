@@ -12,6 +12,8 @@ import Text from '~/beinComponents/Text';
 import Toggle from '~/baseComponents/Toggle';
 
 import { useRootNavigation } from '~/hooks/navigation';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import modalActions from '~/storeRedux/modal/actions';
 
 import { useBaseHook } from '~/hooks';
@@ -28,6 +30,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
 import { DateInput } from '~/baseComponents/Input';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { checkExpiration } from '../helper/postUtils';
 
 export interface PostSettingsProps {
   route?: {
@@ -50,7 +53,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const { postId } = screenParams;
   if (postId) {
     useCreatePost({ screenParams });
-    chosenAudiences = useKeySelector(postKeySelector.postAudienceById(postId))?.groups;
+    chosenAudiences = usePostsStore(postsSelector.getAudience(postId))?.groups;
   } else {
     chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
   }
@@ -181,7 +184,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const renderImportant = () => {
     const { active, expires_time } = sImportant || {};
-    const notExpired = new Date().getTime() < new Date(expires_time).getTime();
+    const isExpired = checkExpiration(expires_time);
 
     return (
       <View style={styles.content}>
@@ -195,7 +198,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
             <Text.SubtitleM style={[styles.flex1]} useI18n>
               post:mark_as_important
             </Text.SubtitleM>
-            {(active && notExpired) ? (
+            {(active && !isExpired) ? (
               <Text.BodyXS
                 useI18n
                 testID="post_settings.expire_time_desc"
@@ -220,7 +223,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
             disableBuiltInState
           />
         </View>
-        {!!active && (listAudiencesWithoutPermission?.length < 1 || notExpired) && renderImportantDate()}
+        {!!active && (listAudiencesWithoutPermission?.length < 1 || !isExpired) && renderImportantDate()}
       </View>
     );
   };

@@ -1,35 +1,48 @@
-import React from 'react';
-import initialState from '~/storeRedux/initialState';
-import { configureStore, renderWithRedux } from '~/test/testUtils';
-import { listYourCommunities } from '~/test/mock_data/communities';
-import YourCommunities from '.';
+import { act, renderHook } from '@testing-library/react-hooks';
+import groupApi from '~/api/GroupApi';
+import { useYourCommunitiesStore } from './store';
+import { responseDiscoverCommunity } from './store/__mocks__/data';
 
 describe('YourCommunities Screen', () => {
-  it('given an empty list, should render empty component', () => {
-    const mockStore = configureStore([]);
-    const storeData = {
-      ...initialState,
-    };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<YourCommunities />, store);
-    const emptyComp = wrapper.queryByTestId('empty_screen');
-    expect(emptyComp).not.toBeNull();
+  it('given no params, should call api getJoinedCommunities with the next page', async () => {
+    const spy = jest.spyOn(groupApi, 'getJoinedCommunities').mockImplementation(
+      () => Promise.resolve(responseDiscoverCommunity) as any,
+    );
+
+    const { result, waitForNextUpdate } = renderHook(() => useYourCommunitiesStore());
+    act(() => {
+      result.current.actions.getYourCommunities();
+    });
+    expect(result.current.loading).toBe(true);
+    await waitForNextUpdate();
+    expect(spy).toBeCalled();
+    expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.loading).toBe(false);
+    expect(result.current.ids.length).toBe(responseDiscoverCommunity.data.length);
   });
 
-  it('given n items, Flatlist should render n items', () => {
-    const mockStore = configureStore([]);
-    const storeData = {
-      ...initialState,
-      groups: {
-        joinedCommunities: {
-          loading: false,
-          data: [...listYourCommunities],
-        },
-      },
-    };
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<YourCommunities />, store);
-    const items = wrapper.queryAllByTestId(/your_communities_item_/);
-    expect(items.length).toBe(listYourCommunities.length);
+  it('given param isRefreshing, should refresh data', async () => {
+    const fakeIds = responseDiscoverCommunity.data.map((item) => item.id);
+    const spy = jest.spyOn(groupApi, 'getJoinedCommunities').mockImplementation(
+      () => Promise.resolve(responseDiscoverCommunity) as any,
+    );
+
+    const { result, waitForNextUpdate } = renderHook(() => useYourCommunitiesStore());
+    act(() => {
+      useYourCommunitiesStore.setState({
+        ids: [...fakeIds, ...fakeIds],
+      }, false);
+    });
+    act(() => {
+      result.current.actions.getYourCommunities(true);
+    });
+    expect(result.current.loading).toBe(false);
+    expect(result.current.refreshing).toBe(true);
+    await waitForNextUpdate();
+    expect(spy).toBeCalled();
+    expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.loading).toBe(false);
+    expect(result.current.refreshing).toBe(false);
+    expect(result.current.ids.length).toBe(fakeIds.length);
   });
 });

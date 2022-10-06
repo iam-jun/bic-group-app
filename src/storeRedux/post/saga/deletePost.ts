@@ -1,11 +1,9 @@
-import { get } from 'lodash';
-import { call, put, select } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 
-import { IPayloadDeletePost } from '~/interfaces/IPost';
+import { IPayloadAddToAllPost, IPayloadDeletePost } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 import modalActions from '~/storeRedux/modal/actions';
 import streamApi from '../../../api/StreamApi';
-import postActions from '../actions';
-import postKeySelector from '../keySelector';
 import { timeOut } from '~/utils/common';
 import showError from '~/storeRedux/commonSaga/showError';
 
@@ -23,9 +21,13 @@ export default function* deletePost({
   try {
     const response = yield streamApi.deletePost(id, isDraftPost);
     if (response?.data) {
-      const post = yield select((state) => get(state, postKeySelector.postById(id)));
-      post.deleted = true;
-      yield put(postActions.addToAllPosts({ data: post }));
+      const post = usePostsStore.getState()?.posts?.[id] || {};
+      const deletedPost = {
+        ...post,
+        deleted: true,
+      };
+      usePostsStore.getState().actions.addToPosts({ data: deletedPost } as IPayloadAddToAllPost);
+
       yield timeOut(500);
 
       yield put(

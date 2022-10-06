@@ -18,10 +18,6 @@ const noInternetActions = {
   showSystemIssueThenLogout: () => ({
     type: types.SHOW_SYSTEM_ISSUE_THEN_LOGOUT,
   }),
-
-  hideSystemIssueAndLogout: () => ({
-    type: types.HIDE_SYSTEM_ISSUE_AND_LOGOUT,
-  }),
 };
 
 export default noInternetActions;

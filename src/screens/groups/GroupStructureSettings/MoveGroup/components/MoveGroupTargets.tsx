@@ -7,14 +7,13 @@ import Animated, {
   LightSpeedInLeft,
   ZoomIn,
 } from 'react-native-reanimated';
-import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 import Text from '~/beinComponents/Text';
-import groupsActions from '~/storeRedux/groups/actions';
 import Icon from '~/baseComponents/Icon';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
+import useGroupStructureStore from '../../store';
 
 export interface MoveGroupTargetsProps {
   communityId: string;
@@ -32,19 +31,20 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
   onPressItem,
 }: MoveGroupTargetsProps) => {
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  const groupStructureActions = useGroupStructureStore((state) => state.actions);
+
   const _onPressItem = (item: any) => {
     onPressItem?.(item);
-    dispatch(groupsActions.setGroupStructureMoveSelecting(item));
+    groupStructureActions.setGroupStructureMoveSelecting(item);
   };
 
   const onChangeSearch = debounce(
     (key: string) => {
-      dispatch(groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }));
+      groupStructureActions.getGroupStructureMoveTargets({ communityId, groupId, key });
     }, 300,
   );
 

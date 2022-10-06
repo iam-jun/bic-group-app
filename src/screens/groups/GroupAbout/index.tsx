@@ -7,7 +7,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import AboutContent from '~/screens/communities/CommunityDetail/components/AboutContent';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 const GroupAbout = () => {
   const { rootNavigation } = useRootNavigation();
@@ -15,7 +15,7 @@ const GroupAbout = () => {
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, id } = groupInfo;
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
-  const isMember = joinStatus === groupJoinStatus.member;
+  const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
   const onPressTotalMember = () => {
     rootNavigation.navigate(groupStack.groupMembers, { groupId: id, isMember });

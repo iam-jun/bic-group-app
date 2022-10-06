@@ -1,6 +1,6 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { isEmpty } from 'lodash';
+import { get, isEmpty } from 'lodash';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -11,9 +11,10 @@ import Image from '~/beinComponents/Image';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 
 import Markdown from '~/beinComponents/Markdown';
-import postKeySelector from '../../../../storeRedux/post/keySelector';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
+import usePostsStore from '~/store/entities/posts';
+import IPostsState from '~/store/entities/posts/Interface';
 import FilesView from '../FilesView';
 import CopyableView from '~/beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
@@ -22,6 +23,7 @@ import LinkPreview from '~/components/LinkPreview';
 
 export interface PostViewContentProps {
   postId: string;
+  isEmptyPost?: boolean;
   content?: string;
   images?: IActivityDataImage[];
   videos?: any[];
@@ -35,6 +37,7 @@ export interface PostViewContentProps {
 
 const PostViewContent: FC<PostViewContentProps> = ({
   postId,
+  isEmptyPost,
   content = '',
   images = [],
   videos = [],
@@ -55,26 +58,22 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
   }).current;
 
-  if (
-    !content
-    && (!images || images?.length === 0)
-    && (!videos || videos?.length === 0)
-    && isEmpty(files)
-  ) {
-    return null;
-  }
+  const mentionSelector = useCallback(
+    (state: IPostsState) => get(state, `posts.${postId}.mentions`),
+    [postId],
+  );
 
   const renderContent = () => {
     if (isLite) {
       const imageName = images?.[0]?.name;
-      const imageSource = images?.[0]?.url
-        || (imageName
-          ? imageName?.includes?.('http')
-            ? imageName
-            : getResourceUrl(
-              'postImage', imageName,
-            )
-          : '');
+      const imageUrl = images?.[0]?.url;
+      const isNetworkImage = typeof imageName === 'string' && imageName?.startsWith?.('http');
+      const imageSourceFromName = isNetworkImage
+        ? imageName
+        : getResourceUrl('postImage', imageName);
+
+      const imageSource = imageUrl || imageSourceFromName || '';
+
       return (
         <View testID="post_view_content.lite_container" style={styles.row}>
           <View style={styles.flex1}>
@@ -86,7 +85,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
               useMarkdown
               useMarkdownIt
               limitMarkdownTypes
-              selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
+              dataStore={usePostsStore}
+              dataSelector={mentionSelector}
               onPressAudience={onPressMentionAudience}
               onToggleShowTextContent={onPressMarkSeenPost}
             />
@@ -102,7 +102,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
         <CopyableView content={escapeMarkDown(content)}>
           <Markdown
             value={content}
-            selector={`${postKeySelector.allPosts}.${postId}.mentions`}
+            dataStore={usePostsStore}
+            dataSelector={mentionSelector}
             onPressAudience={onPressMentionAudience}
           />
         </CopyableView>
@@ -117,12 +118,15 @@ const PostViewContent: FC<PostViewContentProps> = ({
         useMarkdown
         toggleOnPress
         copyEnabled
-        selector={`${postKeySelector.allPosts}.${postId}.mentions`}
+        dataStore={usePostsStore}
+        dataSelector={mentionSelector}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
       />
     );
   };
+
+  if (isEmptyPost) return null;
 
   return (
     <View>

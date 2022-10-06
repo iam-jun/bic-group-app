@@ -8,6 +8,8 @@ import {
   validateImages,
   validateVideo,
 } from '~/screens/post/CreatePost/helper';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import modalActions from '~/storeRedux/modal/actions';
 import {
   IAudience,
@@ -25,7 +27,7 @@ import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import { useBaseHook } from '~/hooks';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
-import { getMentionsFromContent } from '~/screens/post/helper/PostUtils';
+import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
 import { IGetFile } from '~/services/fileUploader';
 import useDraftPostStore from '../../DraftPost/store';
 import IDraftPostState from '../../DraftPost/store/Interface';
@@ -100,7 +102,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   let initPostData: IPostActivity = {};
 
   if (postId) {
-    initPostData = useKeySelector(postKeySelector.postById(postId));
+    initPostData = usePostsStore(postsSelector.getPost(postId));
   }
 
   if (draftPostId) {

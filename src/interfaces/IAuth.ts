@@ -81,8 +81,8 @@ export interface IUserProfile {
   city?: string;
   country?: string;
   latestWork?: {
-    company?: string;
-    titlePosition?: string;
+    company: string;
+    titlePosition: string;
   };
 }
 

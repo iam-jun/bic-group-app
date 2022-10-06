@@ -11,7 +11,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import Text from '~/beinComponents/Text';
 import MemberItem from './MemberItem';
-import { getMembersSection } from '../../../storeRedux/groups/selectors';
+import { getMembersSection } from '~/storeRedux/groups/selectors';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';

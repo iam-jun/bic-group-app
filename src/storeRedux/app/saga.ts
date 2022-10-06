@@ -3,6 +3,7 @@ import { timeOut } from '~/utils/common';
 import actions from './actions';
 import types from './constants';
 import groupApi from '~/api/GroupApi';
+import showError from '../commonSaga/showError';
 
 export default function* saga() {
   yield takeLatest(
@@ -10,6 +11,9 @@ export default function* saga() {
   );
   yield takeEvery(
     types.GET_LINK_PREVIEW, getLinkPreview,
+  );
+  yield takeLatest(
+    types.SET_SHOW_ERROR, showError,
   );
   // yield takeLatest(types.SETUP_PUSH_TOKEN, setupPushToken);
   // yield takeLatest(types.COPY_DEVICE_TOKEN, copyDeviceToken);

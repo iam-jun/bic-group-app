@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import groupApi from '~/api/GroupApi';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
@@ -11,11 +11,11 @@ const joinNewGroup = (set, get) => async (groupId: string) => {
   try {
     const currentState: IDiscoverGroupsState = get();
     const currentRequestState = currentState.items[groupId]?.joinStatus || 0;
-    if (currentRequestState === groupJoinStatus.member) return;
+    if (currentRequestState === GroupJoinStatus.MEMBER) return;
 
     const response = await groupApi.joinGroup(groupId);
     const joinStatus = response?.data?.joinStatus;
-    const hasRequested = joinStatus === groupJoinStatus.requested;
+    const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
     const groupName = currentState.items[groupId]?.name;
 
     const currentItem = {

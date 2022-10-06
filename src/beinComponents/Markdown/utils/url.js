@@ -22,28 +22,6 @@ export function removeProtocol(url = '') {
   return url.replace(/(^\w+:|^)\/\//, '');
 }
 
-export function extractFirstLink(text) {
-  const pattern = /(^|[\s\n]|<br\/?>)((?:https?|ftp):\/\/[-A-Z0-9+\u0026\u2019@#/%?=()~_|!:,.;]*[-A-Z0-9+\u0026@#/%=~()_|])/i;
-  let inText = text;
-
-  // strip out code blocks
-  inText = inText.replace(/`[^`]*`/g, '');
-
-  // strip out inline markdown images
-  inText = inText.replace(/!\[[^\]]*]\([^)]*\)/g, '');
-
-  const match = pattern.exec(inText);
-  if (match) {
-    return match[0].trim();
-  }
-
-  return '';
-}
-
-export function isYoutubeLink(link) {
-  return link.trim().match(ytRegex);
-}
-
 export function isImageLink(link) {
   let linkWithoutQuery = link;
   if (link.indexOf('?') !== -1) {
@@ -75,19 +53,6 @@ export function normalizeProtocol(url) {
 
   const protocol = url.substring(0, index);
   return protocol.toLowerCase() + url.substring(index);
-}
-
-export function getShortenedURL(url = '', getLength = 27) {
-  if (url.length > 35) {
-    const subLength = getLength - 14;
-    return (
-      `${url.substring(0, 10)
-      }...${
-        url.substring(url.length - subLength, url.length)
-      }/`
-    );
-  }
-  return `${url}/`;
 }
 
 export function cleanUpUrlable(input) {
@@ -178,28 +143,6 @@ export function matchDeepLink(url, serverURL, siteURL) {
   }
 
   return null;
-}
-
-export function getYouTubeVideoId(link) {
-  // https://youtube.com/watch?v=<id>
-  let match = /youtube\.com\/watch\?\S*\bv=([a-zA-Z0-9_-]{6,11})/g.exec(link);
-  if (match) {
-    return match[1];
-  }
-
-  // https://youtube.com/embed/<id>
-  match = /youtube\.com\/embed\/([a-zA-Z0-9_-]{6,11})/g.exec(link);
-  if (match) {
-    return match[1];
-  }
-
-  // https://youtu.be/<id>
-  match = /youtu.be\/([a-zA-Z0-9_-]{6,11})/g.exec(link);
-  if (match) {
-    return match[1];
-  }
-
-  return '';
 }
 
 export async function getURLAndMatch(href, serverURL, siteURL) {

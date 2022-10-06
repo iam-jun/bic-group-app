@@ -5,10 +5,8 @@ import {
   IShowAlert,
 } from '~/interfaces/IModal';
 import {
-  IObject,
   IPayloadShowModal,
   IToastMessage,
-  IUserPreview,
 } from '~/interfaces/common';
 import { ReactionType } from '~/constants/reactions';
 import { BottomListProps } from '~/components/BottomList';
@@ -107,24 +105,6 @@ export const setShowReactionBottomSheet = (payload?: {
   payload,
 });
 
-export const setUserProfilePreviewBottomSheet = (payload: IUserPreview) => ({
-  type: Actions.SET_USER_PROFILE_PREVIEW_BOTTOM_SHEET,
-  payload,
-});
-
-export const showUserProfilePreviewBottomSheet = (payload: {
-  userId?: string;
-  params?: IObject<any>;
-  position?: {x: number; y: number};
-}) => ({
-  type: Actions.SHOW_USER_PROFILE_PREVIEW_BOTTOM_SHEET,
-  payload,
-});
-
-export const hideUserProfilePreviewBottomSheet = () => ({
-  type: Actions.HIDE_USER_PROFILE_PREVIEW_BOTTOM_SHEET,
-});
-
 export const showSeenPeopleListBottomSheet = () => ({
   type: Actions.SHOW_SEEN_PEOPLE_LIST_BOTTOM_SHEET,
 });
@@ -160,9 +140,6 @@ const modalActions = {
   showReactionDetailBottomSheet,
   clearReactionDetailBottomSheet,
   setShowReactionBottomSheet,
-  setUserProfilePreviewBottomSheet,
-  showUserProfilePreviewBottomSheet,
-  hideUserProfilePreviewBottomSheet,
   showSeenPeopleListBottomSheet,
   showBottomList,
   setBottomList,
