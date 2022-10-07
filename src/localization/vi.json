@@ -744,7 +744,7 @@
   "notification": {
     "mark_all_as_read": "Đánh dấu đã đọc tất cả",
     "mark_all_as_read_success": "Tất cả các thông báo đã được đánh dấu là đã đọc",
-    "notification_settings": "Cài đặt thông báo",
+    "turn_off_notification": "Tắt thông báo",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
     "mentioned_you_in_a_comment": "mentioned you in a comment",
@@ -759,7 +759,7 @@
     "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
     "replied_to_comment_you_replied": "replied to a comment you replied",
     "no_more_notification": "Đã hiện hết thông báo",
-    "no_notification_found": "Bạn không có thông báo nào đang chờ",
+    "no_notification_found": "Bạn không có thông báo nào",
     "you_joined_group": "You joined {group_name}",
     "number_people": "{number} people",
     "number_times": "{number} times",
