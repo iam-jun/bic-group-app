@@ -18,7 +18,7 @@ const chatStore = (set, get) => ({
     try {
       const response = await chatApi.init();
       const data = response?.data;
-      const result = convertArrayToObject(data);
+      const result = convertArrayToObject(data, 'channelId');
 
       set({ unreadChannels: result }, 'initChat');
     } catch (error) {

@@ -24,6 +24,7 @@ import {
   IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
 } from '~/interfaces/IHome';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
+import { IParamGetArticleDetail, IParamGetArticles } from '~/interfaces/IArticle';
 
 const DEFAULT_LIMIT = 10;
 
@@ -261,6 +262,20 @@ export const streamApiConfig = {
       offset: params?.offset || 0,
     },
   }),
+  getArticles: (
+    params: IParamGetArticles,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles`,
+    params,
+  }),
+  getArticleDetail: (
+    id: string, params?: IParamGetArticleDetail,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${id}`,
+    params,
+  }),
 };
 
 const streamApi = {
@@ -408,6 +423,12 @@ const streamApi = {
   ),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
+  ),
+  getArticles: (params: IParamGetArticles) => withHttpRequestPromise(
+    streamApiConfig.getArticles, params,
+  ),
+  getArticleDetail: (id: string, params?: IParamGetArticles) => withHttpRequestPromise(
+    streamApiConfig.getArticleDetail, id, params,
   ),
   getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
     streamApiConfig.getUsersInterestedPost, params,

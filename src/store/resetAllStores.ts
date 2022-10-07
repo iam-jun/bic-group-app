@@ -14,6 +14,8 @@ import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
+import useArticleStore from './article';
+import useArticleListStore from '~/screens/articles/ArticleList/store';
 import useUserInterestedPostStore from '~/screens/post/components/UserInterestedPost/store';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
 import { useManagedStore } from '~/screens/Discover/components/Managed/store';
@@ -43,6 +45,8 @@ const stores = [
   useDiscoverGroupsStore,
   useRemoveCommunityMemberStore,
   useRemoveGroupMemberStore,
+  useArticleStore,
+  useArticleListStore,
   useUserInterestedPostStore,
   useDiscoverCommunitiesStore,
   useManagedStore,
@@ -51,7 +55,7 @@ const stores = [
 ];
 
 export const resetAllStores = () => {
-  stores.forEach((store: any) => store.getState().reset());
+  stores.forEach((store: any) => store.getState().reset?.());
 };
 
 export default resetAllStores;

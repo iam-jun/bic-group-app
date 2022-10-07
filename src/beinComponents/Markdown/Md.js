@@ -6,11 +6,10 @@ import { Parser, Node } from 'commonmark';
 import Renderer from 'commonmark-react-renderer';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Platform, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 // import AtMention from '@components/at_mention';
 
-import NodeEmoji from 'node-emoji';
 import {
   concatStyles,
   makeStyleSheetFromTheme,
@@ -56,6 +55,7 @@ export default class Md extends PureComponent {
     textStyles: PropTypes.object,
     theme: PropTypes.object,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    disableImage: PropTypes.bool,
     disableHashtags: PropTypes.bool,
     disableAtMentions: PropTypes.bool,
     disableChannelLink: PropTypes.bool,
@@ -63,22 +63,25 @@ export default class Md extends PureComponent {
     disableGallery: PropTypes.bool,
     showModal: PropTypes.func,
     onPressAudience: PropTypes.func,
+    selector: PropTypes.string,
+    mentions: PropTypes.array,
     dataStore: PropTypes.any,
     dataSelector: PropTypes.any,
     textTestID: PropTypes.string,
   };
 
   static defaultProps = {
+    value: '',
     textStyles: {},
     blockStyles: {},
-    onLongPress: () => true,
+    disableImage: true,
     disableHashtags: false,
     disableAtMentions: false,
     disableChannelLink: false,
     disableAtChannelMentionHighlight: false,
     disableGallery: false,
-    value: '',
     showModal: () => true,
+    onLongPress: () => true,
   };
 
   constructor(props) {
@@ -195,24 +198,36 @@ export default class Md extends PureComponent {
   );
 
   // Just render as link because of not have metadata from server
-  renderImage = ({ src }) => (
-    <Text
-      testID={this.props.textTestID || 'markdown_text'}
-      style={this.props.baseTextStyle}
-    >
-      {src}
-    </Text>
-  );
+  renderImage = ({ src, alt, linkDestination }) => {
+
+    if(linkDestination){
+      /**
+       * Because text formatter is difference between web and mobile
+       * we must treat alt props as mediaType
+       */ 
+      const mediaType = alt;
+      switch(mediaType) {
+        case 'video': 
+          return <VideoPlayer src={linkDestination} thumbnail={src}  />
+        // other cases will be implemented later
+      }
+    }
+    
+    if(!this.props.disableImage){
+      return <Image style={this.props.blockStyles.image} source={src} />
+    }
+
+    return <MarkdownLink href={src}>{src}</MarkdownLink>;
+  }
 
   renderAtMention = ({ mentionName }) => (
-      <AtMention
-          mentionName={mentionName}
-          style={[this.props.textStyles?.mention || this.props.baseTextStyle]}
-          dataStore={this.props.dataStore}
-          dataSelector={this.props.dataSelector}
-          onPress={this.props.onPressAudience}
-      />
-  )
+    <AtMention
+      mentionName={mentionName}
+      style={[this.props.textStyles?.mention || this.props.baseTextStyle]}
+      mentions={this.props.mentions}
+      onPress={this.props.onPressAudience}
+    />
+  );
 
   renderChannelLink = ({ context, channelName }) => this.renderText({ context, literal: `~${channelName}` });
 

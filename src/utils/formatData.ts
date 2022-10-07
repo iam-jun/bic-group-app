@@ -148,11 +148,15 @@ export const formatTextRemoveSpace = (text: string) => {
   );
 };
 
-export const convertArrayToObject = (data: any[]) => (data || []).reduce(
+export const convertArrayToObject = (data: any[], key?: string) => {
+  const _key = key || 'id';
+
+  return (data || []).reduce(
   // eslint-disable-next-line no-return-assign
-  (
-    obj: any, item: any,
+    (
+      obj: any, item: any,
     // eslint-disable-next-line no-sequences
-  ) => ((obj[item.channelId] = item), obj),
-  {},
-);
+    ) => ((obj[item[_key]] = item), obj),
+    {},
+  );
+};

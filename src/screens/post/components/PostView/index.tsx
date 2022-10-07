@@ -111,6 +111,7 @@ const _PostView: FC<PostViewProps> = ({
   let commentsCount: number;
   let totalUsersSeen: number;
   let linkPreview: ILinkPreview;
+  let mentions: any;
 
   if (isUseReduxState) {
     actor = usePostsStore(postsSelector.getActor(postId));
@@ -129,6 +130,7 @@ const _PostView: FC<PostViewProps> = ({
     reactionsCount = usePostsStore(postsSelector.getReactionCounts(postId));
     totalUsersSeen = usePostsStore(postsSelector.getTotalUsersSeen(postId));
     linkPreview = usePostsStore(postsSelector.getLinkPreview(postId));
+    mentions = usePostsStore(postsSelector.getMentions(postId));
   } else {
     actor = postData?.actor;
     audience = postData?.audience;
@@ -145,6 +147,7 @@ const _PostView: FC<PostViewProps> = ({
     reactionsCount = postData?.reactionsCount || {};
     totalUsersSeen = postData?.totalUsersSeen || 0;
     linkPreview = postData?.linkPreview || null;
+    mentions = postData?.mentions;
   }
 
   const { images, videos, files } = media || {};
@@ -376,6 +379,7 @@ const _PostView: FC<PostViewProps> = ({
           images={images}
           videos={videos}
           files={files}
+          mentions={mentions}
           isPostDetail={isPostDetail}
           onPressMarkSeenPost={onPressMarkSeenPost}
           linkPreview={linkPreview}

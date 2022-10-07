@@ -23,15 +23,15 @@ import postActions from '../../../../storeRedux/post/actions';
 import { CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT } from '../constanst';
 import { calculateInputHeight, isAndroidAnimated } from '../helper';
 import ToastAutoSave from './ToastAutoSave';
-import FilesView from '../../components/FilesView';
+import FilesView from '~/components/FilesView';
 import { IGetFile } from '~/services/fileUploader';
-import VideoPlayer from '~/beinComponents/VideoPlayer';
 import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import appConfig from '~/configs/appConfig';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import PostSelectImage from './PostSelectImage';
+import PostVideoPlayer from '../../components/PostVideoPlayer';
 import LinkPreview from '~/components/LinkPreview';
 
 interface Props {
@@ -212,7 +212,7 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
             <View onLayout={onLayoutPhotoPreview}>
               <PostSelectImage />
               {video && video?.thumbnails?.length > 0 ? (
-                <VideoPlayer
+                <PostVideoPlayer
                   data={video}
                   postId={sPostData?.id || ''}
                   onPressClose={onRemoveVideo}

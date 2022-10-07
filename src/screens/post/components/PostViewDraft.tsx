@@ -63,6 +63,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     isProcessing,
     createdAt,
     linkPreview,
+    mentions,
   } = data || {};
 
   const { images, videos, files } = media || {};
@@ -197,6 +198,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           images={images}
           videos={videos}
           files={files}
+          mentions={mentions}
           isPostDetail={isPostDetail}
           linkPreview={linkPreview}
         />

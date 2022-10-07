@@ -1,6 +1,6 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { get, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -11,14 +11,12 @@ import Image from '~/beinComponents/Image';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 
 import Markdown from '~/beinComponents/Markdown';
-import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
-import usePostsStore from '~/store/entities/posts';
-import IPostsState from '~/store/entities/posts/Interface';
-import FilesView from '../FilesView';
+import FilesView from '~/components/FilesView';
 import CopyableView from '~/beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
 import spacing from '~/theme/spacing';
+import PostVideoPlayer from '../PostVideoPlayer';
 import LinkPreview from '~/components/LinkPreview';
 
 export interface PostViewContentProps {
@@ -31,8 +29,9 @@ export interface PostViewContentProps {
   isPostDetail: boolean;
   isLite?: boolean;
   isDraft?: boolean;
-  onPressMarkSeenPost?: () => void;
+  mentions?: any;
   linkPreview?: ILinkPreview;
+  onPressMarkSeenPost?: () => void;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
@@ -45,8 +44,9 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isPostDetail,
   isLite,
   isDraft,
-  onPressMarkSeenPost,
+  mentions,
   linkPreview,
+  onPressMarkSeenPost,
 }: PostViewContentProps) => {
   const { rootNavigation } = useRootNavigation();
 
@@ -57,11 +57,6 @@ const PostViewContent: FC<PostViewContentProps> = ({
       );
     }
   }).current;
-
-  const mentionSelector = useCallback(
-    (state: IPostsState) => get(state, `posts.${postId}.mentions`),
-    [postId],
-  );
 
   const renderContent = () => {
     if (isLite) {
@@ -85,8 +80,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               useMarkdown
               useMarkdownIt
               limitMarkdownTypes
-              dataStore={usePostsStore}
-              dataSelector={mentionSelector}
+              mentions={mentions}
               onPressAudience={onPressMentionAudience}
               onToggleShowTextContent={onPressMarkSeenPost}
             />
@@ -102,8 +96,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         <CopyableView content={escapeMarkDown(content)}>
           <Markdown
             value={content}
-            dataStore={usePostsStore}
-            dataSelector={mentionSelector}
+            mentions={mentions}
             onPressAudience={onPressMentionAudience}
           />
         </CopyableView>
@@ -118,8 +111,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         useMarkdown
         toggleOnPress
         copyEnabled
-        dataStore={usePostsStore}
-        dataSelector={mentionSelector}
+        mentions={mentions}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
       />
@@ -140,7 +132,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
           {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
-            <VideoPlayer data={videos?.[0]} postId={postId} onWatchCheckPoint={onPressMarkSeenPost} />
+            <PostVideoPlayer data={videos?.[0]} postId={postId} onWatchCheckPoint={onPressMarkSeenPost} />
           ) : (
             <UploadingFile
               uploadType={uploadTypes.postVideo}

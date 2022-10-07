@@ -158,7 +158,8 @@ export default class MdTable extends React.PureComponent {
         rows[0].props.children,
       ).length;
 
-      rows = rows.slice(0, maxPreviewColumns).map((row) => {
+      // it should start with 0 but we temporary hide table header
+      rows = rows.slice(1, maxPreviewColumns).map((row) => {
         const children = React.Children.toArray(row.props.children).slice(
           0,
           maxPreviewColumns,
@@ -182,10 +183,11 @@ export default class MdTable extends React.PureComponent {
       isLastRow: true,
     });
 
+      // temporary hide table header
     // Add an extra prop to the first row of the table so that it can have a different background color
-    rows[0] = React.cloneElement(rows[0], {
-      isFirstRow: true,
-    });
+    // rows[0] = React.cloneElement(rows[0], {
+    //   isFirstRow: true,
+    // });
 
     return (
       <TouchableOpacity activeOpacity={1} style={tableStyle}>
