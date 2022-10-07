@@ -24,15 +24,10 @@ function* getNotifications({
     );
 
     if (flag === 'UNREAD' && response?.results?.length < 1) {
-      const joinedCommunities: IObject<any> = yield select((state: any) => state.groups.joinedCommunities.data);
+      const joinedCommunities: IObject<any> = yield select((state: any) => state.groups.joinedCommunities?.ids) || [];
+
       if (joinedCommunities?.length > 0) {
-        const _response: IObject<any> = yield call(
-          notificationsDataHelper.getNotificationList,
-          { flag: 'ALL' },
-        );
-        if (_response?.results?.length > 1) {
-          yield put(notificationsActions.setNoMoreNoti({ keyValue, value: true }));
-        }
+        yield put(notificationsActions.setNoMoreNoti({ keyValue, value: true }));
       }
     }
 

@@ -89,7 +89,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       style={[
         styles.container,
         {
-          backgroundColor: isRead ? theme.colors.white : theme.colors.neutral1,
+          backgroundColor: isRead ? theme.colors.white : theme.colors.purple1,
         },
       ]}
     >

@@ -59,9 +59,9 @@ const Notification = () => {
       onPress: () => { handleMarkNotification(item); },
     }, {
       id: 2,
-      testID: 'notifications.notification_settings',
+      testID: 'notifications.turn_off_notification',
       leftIcon: 'Gear',
-      title: i18next.t('notification:notification_settings'),
+      title: i18next.t('notification:turn_off_notification'),
       requireIsActor: true,
       upcoming: true,
     }];
@@ -86,9 +86,9 @@ const Notification = () => {
       onPress: handleMarkAllAsRead,
     }, {
       id: 2,
-      testID: 'notifications.notification_settings',
+      testID: 'notifications.turn_off_notification',
       leftIcon: 'Gear',
-      title: i18next.t('notification:notification_settings'),
+      title: i18next.t('notification:turn_off_notification'),
       requireIsActor: true,
       upcoming: true,
     }];
