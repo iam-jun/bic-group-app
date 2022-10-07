@@ -1,3 +1,5 @@
+/* eslint-disable unused-imports/no-unused-imports */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { View, StyleSheet } from 'react-native';
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -16,7 +18,7 @@ interface SearchCommunityViewProps extends SearchBaseViewProps {
   onPressCommunity: (id: string) => void;
 }
 
-const SearchCommunityView = ({
+const SearchCommunity = ({
   initSearch,
   onPressCommunity,
   ...props
@@ -26,18 +28,18 @@ const SearchCommunityView = ({
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
 
-  const { canLoadMore } = useKeySelector(groupsKeySelector.communitySearch);
+  // const { canLoadMore } = useKeySelector(groupsKeySelector.communitySearch);
 
   const getCommunitySearch = (searchText: string) => {
-    dispatch(actions.getCommunitySearch({ key: searchText }));
+    // dispatch(actions.getCommunitySearch({ key: searchText }));
   };
 
   const onLoadMore = () => {
-    canLoadMore && getCommunitySearch(searchText);
+    // canLoadMore && getCommunitySearch(searchText);
   };
 
   const searchCommunities = (searchQuery: string) => {
-    dispatch(actions.resetCommunitySearch());
+    // dispatch(actions.resetCommunitySearch());
     setSearchText(searchQuery);
     getCommunitySearch(searchQuery);
   };
@@ -85,4 +87,4 @@ const createStyles = () => StyleSheet.create({
   },
 });
 
-export default SearchCommunityView;
+export default SearchCommunity;

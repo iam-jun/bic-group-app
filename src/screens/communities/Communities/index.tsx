@@ -11,7 +11,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import JoinedCommunities from '~/screens/communities/Communities/components/JoinedCommunities';
 import DiscoverCommunities from '~/screens/communities/Communities/components/DiscoverCommunities';
 import ManagedCommunities from './components/ManagedCommunities';
-import SearchCommunityView from './components/SearchCommunityView';
+import SearchCommunity from './components/SearchCommunity';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
@@ -118,7 +118,7 @@ const Communities: React.FC = () => {
         />
         {renderContent()}
       </View>
-      <SearchCommunityView
+      <SearchCommunity
         isOpen={isOpen}
         onClose={onCloseSearch}
         onPressCommunity={onPressCommunities}

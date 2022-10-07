@@ -983,7 +983,7 @@
       "button_leave": "Leave",
       "success_message": "You have left the community"
     },
-    "browse_groups":{
+    "browse_groups": {
       "no_groups": "No group in this community.",
       "joined_all_groups": "There is no more group to discover. You’ve already joined all groups completely in this community.",
       "guest_view_alert": {
@@ -1021,7 +1021,7 @@
     "file": "file"
   },
   "discover": {
-    "discover_communities": "Discover Communities",
+    "discover_community": "Discover Community",
     "your_communities": "Your Communities",
     "your_groups": "Your Groups",
     "managed": "Managed",

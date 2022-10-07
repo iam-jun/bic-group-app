@@ -3,7 +3,11 @@ import { ICommunityMembers } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
-import { IGroupDetail, IGroupMembers, IJoiningMember } from '~/interfaces/IGroup';
+import {
+  IGroupDetail,
+  IGroupMembers,
+  IJoiningMember,
+} from '~/interfaces/IGroup';
 import { IObject } from '~/interfaces/common';
 
 export const groupInitState = {
@@ -179,14 +183,13 @@ export const groupInitState = {
     ids: [],
     items: {} as IObject<IJoiningMember>,
   },
-
-  communitySearch: {
+  globalSearch: {
     loading: false,
     canLoadMore: true,
     ids: [] as string[],
     items: {},
   },
-  globalSearch: {
+  communitySearch: {
     loading: false,
     canLoadMore: true,
     ids: [] as string[],
@@ -194,9 +197,7 @@ export const groupInitState = {
   },
 };
 
-function groupsReducer(
-  state = groupInitState, action: any = {},
-) {
+function groupsReducer(state = groupInitState, action: any = {}) {
   const { type, payload } = action;
   const {
     selectedUsers,
@@ -358,7 +359,9 @@ function groupsReducer(
         },
       };
     case groupsTypes.SELECT_JOINABLE_USERS: {
-      const included = selectedUsers.find((item: IUser) => payload.id === item.id);
+      const included = selectedUsers.find(
+        (item: IUser) => payload.id === item.id,
+      );
       return {
         ...state,
         selectedUsers: included
@@ -542,18 +545,19 @@ function groupsReducer(
             },
           },
         },
-        globalSearch: globalSearch?.items && globalSearch.items?.[payload.id]
-          ? {
-            ...globalSearch,
-            items: {
-              ...globalSearch.items,
-              [payload.id]: {
-                ...globalSearch.items[payload.id],
-                ...payload.data,
+        globalSearch:
+          globalSearch?.items && globalSearch.items?.[payload.id]
+            ? {
+              ...globalSearch,
+              items: {
+                ...globalSearch.items,
+                [payload.id]: {
+                  ...globalSearch.items[payload.id],
+                  ...payload.data,
+                },
               },
-            },
-          }
-          : globalSearch,
+            }
+            : globalSearch,
       };
 
     case groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS:
@@ -598,20 +602,6 @@ function groupsReducer(
             },
           },
         },
-      };
-
-    case groupsTypes.SET_COMMUNITY_SEARCH:
-      return {
-        ...state,
-        communitySearch: {
-          ...state.communitySearch,
-          ...payload,
-        },
-      };
-    case groupsTypes.RESET_COMMUNITY_SEARCH:
-      return {
-        ...state,
-        communitySearch: groupInitState.communitySearch,
       };
     case groupsTypes.SET_GLOBAL_SEARCH:
       return {
