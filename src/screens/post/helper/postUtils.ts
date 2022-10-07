@@ -1,4 +1,7 @@
+import { orderBy } from 'lodash';
+import { PixelRatio } from 'react-native';
 import { ICommentData } from '~/interfaces/IPost';
+import { dimension } from '~/theme';
 
 export const sortComments = (comments: ICommentData[]) => {
   let newComments: any[] = comments || [];
@@ -36,6 +39,22 @@ export const getMentionsFromContent = (
     }
   });
   return mentions;
+};
+
+export const getThumbnailImageLink = (thumbnails: any[]): string => {
+  const deviceWidthPixel = PixelRatio.get() * dimension.deviceWidth;
+  if (thumbnails?.length > 0) {
+    const newThumbnails = orderBy(
+      thumbnails, ['width'], ['asc'],
+    );
+    for (let index = 0; index < thumbnails.length; index++) {
+      if (newThumbnails[index]?.width >= deviceWidthPixel) {
+        return newThumbnails[index]?.url;
+      }
+    }
+    return newThumbnails[thumbnails.length - 1]?.url;
+  }
+  return '';
 };
 
 export const checkExpiration = (expireTime: string) => new Date().getTime() >= new Date(expireTime).getTime();

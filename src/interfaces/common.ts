@@ -86,3 +86,8 @@ export interface ISearchReq {
   offset: number,
   key?: string,
 }
+
+export enum SortOder {
+  ASC = 'ASC',
+  DESC = 'DESC'
+}

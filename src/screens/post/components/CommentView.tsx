@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -28,7 +27,6 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import CommentMediaView from '~/screens/post/components/CommentMediaView';
 import CommentViewMenu from '~/screens/post/components/CommentViewMenu';
 import useCommentsStore from '~/store/entities/comments';
-import ICommentsState from '~/store/entities/comments/Interface';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
@@ -88,6 +86,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
     createdAt,
     updatedAt,
     edited,
+    mentions,
   } = _commentData;
   const giphy
     = _commentData.giphy
@@ -300,11 +299,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
     cancelCommentFailed(commentData);
   };
 
-  const mentionDataSelector = useCallback(
-    (state: ICommentsState) => get(state, `comments.${id}.mentions`),
-    [id],
-  );
-
   const renderErrorState = () => commentStatus === 'failed' && (
   <View style={styles.errorLine}>
     <Text.BodySMedium color={colors.red60} useI18n>
@@ -365,8 +359,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
-                  dataStore={useCommentsStore}
-                  dataSelector={mentionDataSelector}
+                  mentions={mentions}
                   onPressAudience={onPressAudience}
                   onToggleShowTextContent={onPressMarkSeenPost}
                 />
