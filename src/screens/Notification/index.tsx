@@ -60,7 +60,7 @@ const Notification = () => {
     }, {
       id: 2,
       testID: 'notifications.turn_off_notification',
-      leftIcon: 'Gear',
+      leftIcon: 'BellSlash',
       title: i18next.t('notification:turn_off_notification'),
       requireIsActor: true,
       upcoming: true,

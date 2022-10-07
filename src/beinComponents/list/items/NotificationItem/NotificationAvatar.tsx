@@ -22,6 +22,8 @@ const NotificationAvatar = ({
 }: Props) => {
   if (!actors?.length) return null;
 
+  const rightActorCount = actorCount >= actors.length ? actorCount : actors.length;
+
   let currentListAvatarWidth = 0;
   const listAvatar = actors.map((
     item: any, index: number,
@@ -29,8 +31,10 @@ const NotificationAvatar = ({
     if (index < MAX_AVATAR && currentListAvatarWidth < LIST_AVATAR_WIDTH) {
       currentListAvatarWidth = (index + 1) * (AVATAR_WIDTH + 2);
       if (
-        index < (actorCount - 1)
-        && LIST_AVATAR_WIDTH - currentListAvatarWidth >= (AVATAR_WIDTH + 2)
+        (index < (rightActorCount - 1)
+        && LIST_AVATAR_WIDTH - currentListAvatarWidth >= (AVATAR_WIDTH + 2))
+         || (index === (rightActorCount - 1)
+        && LIST_AVATAR_WIDTH - currentListAvatarWidth >= 0)
       ) {
         return (
           <View key={item?.id} style={styles.item}>
@@ -48,7 +52,7 @@ const NotificationAvatar = ({
             testI="notification_avatar.single"
             source={item?.avatar}
             isRounded
-            counter={actorCount - index - 1}
+            counter={rightActorCount - index}
           />
         </View>
       );
