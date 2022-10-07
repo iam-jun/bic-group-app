@@ -26,8 +26,7 @@ import { IObject } from '~/interfaces/common';
 import {
   IParamGetCommunityMembers,
   ISetMembers,
-  ISetCommunitySearchMembers,
-  IParamGetCommunities, IParamGetDiscoverGroups,
+  ISetCommunitySearchMembers, IParamGetDiscoverGroups,
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
@@ -468,23 +467,6 @@ const groupsActions = {
   editCommunityMemberRequest: (payload: {id: string; data: any}) => ({
     type: groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST,
     payload,
-  }),
-
-  getCommunitySearch: (payload: IParamGetCommunities) => ({
-    type: groupsTypes.GET_COMMUNITY_SEARCH,
-    payload,
-  }),
-  setCommunitySearch: (payload: {
-    loading?: boolean;
-    canLoadMore?: boolean;
-    ids?: string[];
-    items?: any;
-  }) => ({
-    type: groupsTypes.SET_COMMUNITY_SEARCH,
-    payload,
-  }),
-  resetCommunitySearch: () => ({
-    type: groupsTypes.RESET_COMMUNITY_SEARCH,
   }),
   getJoinedAllGroups: (payload: IGetJoinedAllGroups = {}) => ({
     type: groupsTypes.GET_JOINED_ALL_GROUPS,

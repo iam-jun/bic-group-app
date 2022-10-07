@@ -917,7 +917,7 @@
       "button_leave": "Thoát",
       "success_message": "Bạn đã thoát khỏi cộng đồng này"
     },
-    "browse_groups":{
+    "browse_groups": {
       "no_groups": "Không có nhóm nào trong cộng đồng này.",
       "joined_all_groups": "Không có thêm nhóm nào để khám phá. Bạn đã tham gia hoàn toàn vào tất cả các nhóm trong cộng đồng này.",
       "guest_view_alert": {
@@ -955,7 +955,7 @@
     "file": "tệp"
   },
   "discover": {
-    "discover_communities": "Khám phá cộng đồng",
+    "discover_community": "Khám phá cộng đồng",
     "your_communities": "Cộng đồng đã tham gia",
     "your_groups": "Nhóm đã tham gia",
     "managed": "Quản lý",
