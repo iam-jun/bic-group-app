@@ -10,6 +10,7 @@ import {
   createNewArrayLinkPreview,
   filterRemovedLinkPreviewNoLongerExists,
   getLstNotRemovedLinkPreview,
+  removeLinkPreviewExistsInAdditionalLinkPreview,
   removeLinkPreviewNoLongerExists,
 } from '../helper';
 
@@ -79,8 +80,14 @@ const useLinkPreview = () => {
 
     let lstLinkPreviewUpdate = [...lstValidLinkPreview];
     if (additionalLinkPreview) {
+      // remove link in lstLinkPreviewUpdate if it exists in additionalLinkPreview
+      const lstLinkPreviewNotInAdditionalLinkPreview
+        = removeLinkPreviewExistsInAdditionalLinkPreview(
+          lstLinkPreviewUpdate,
+          additionalLinkPreview,
+        );
       lstLinkPreviewUpdate = [
-        ...lstLinkPreviewUpdate,
+        ...lstLinkPreviewNotInAdditionalLinkPreview,
         ...additionalLinkPreview,
       ];
     }
