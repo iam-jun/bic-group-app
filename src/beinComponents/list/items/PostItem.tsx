@@ -1,6 +1,9 @@
 import React, { memo } from 'react';
 import { IPostActivity } from '~/interfaces/IPost';
+import ArticleItem from '~/screens/articles/components/ArticleItem';
 import PostView from '~/screens/post/components/PostView';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 
 export interface PostItemProps {
   postId?: string;
@@ -14,18 +17,21 @@ export interface PostItemProps {
 const PostItem = ({
   postId,
   postData,
-  testID,
-  btnReactTestID,
-  btnCommentTestID,
-  hasReactPermission,
-}: any) => (
-  <PostView
-    postId={postId || postData?.id}
-    testID={testID}
-    btnReactTestID={btnReactTestID}
-    btnCommentTestID={btnCommentTestID}
-    hasReactPermission={hasReactPermission}
-  />
-);
+  ...props
+}: any) => {
+  let _postData = postData;
+  if (!_postData) _postData = usePostsStore(postsSelector.getPost(postId));
+
+  if (_postData?.isArticle) {
+    return <ArticleItem id={postId} />;
+  }
+
+  return (
+    <PostView
+      postId={postId || postData?.id}
+      {...props}
+    />
+  );
+};
 
 export default memo(PostItem);

@@ -14,7 +14,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import spacing, { borderRadius } from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import { useBaseHook } from '~/hooks';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 
 interface MemberItemProps {
   item: any;

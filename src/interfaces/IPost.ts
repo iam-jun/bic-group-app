@@ -159,6 +159,7 @@ export interface IPostActivity {
   deleted?: boolean;
   markedReadSuccess?: boolean;
   linkPreview?: ILinkPreview;
+  isArticle?: boolean;
 }
 
 export type IOwnReaction = Array<IReaction>;

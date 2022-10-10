@@ -3,7 +3,7 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
-import useCommunitiesStore from '~/store/entities/comunities';
+import useCommunitiesStore from '~/store/entities/communities';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
 import groupsActions from '~/storeRedux/groups/actions';

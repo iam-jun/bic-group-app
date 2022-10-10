@@ -27,7 +27,7 @@ import InfoView from './components/InfoView';
 import { alertAction, _openImagePicker } from './helper';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useCommunityController from '~/screens/communities/store';
 
 const GeneralInformation = (props: any) => {

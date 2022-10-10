@@ -8,7 +8,7 @@ import groupsActions from '~/storeRedux/groups/actions';
 import MemberRequestList from '~/screens/groups/components/MemberRequestList';
 import CommunityApproveDeclineAllRequests from './components/CommunityApproveDeclineAllRequests';
 import JoinRequestSetting from './components/JoinRequestSetting';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useCommunityController from '../../store';
 
 interface CommunityMemberRequestsProps {

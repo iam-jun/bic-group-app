@@ -14,7 +14,7 @@ import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useSearchJoinedCommunitiesStore } from './store';
 import { isGroup } from '~/screens/groups/helper';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 interface CommunitySearchResultsProps {

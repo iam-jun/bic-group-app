@@ -50,7 +50,7 @@ import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 import { BottomListProps } from '~/components/BottomList';
 import NotFound from '~/screens/NotFound/components/NotFound';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 
 const GroupDetail = (props: any) => {

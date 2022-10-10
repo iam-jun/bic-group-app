@@ -20,7 +20,7 @@ const initialState = {
 
 };
 
-const articleStore = (set, get) => ({
+const articlesStore = (set, get) => ({
   ...initialState,
   actions: {
     getArticleDetail: getArticleDetail(set, get),
@@ -28,6 +28,6 @@ const articleStore = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useArticleStore = createStore<IArticlesState>(articleStore);
+const useArticlesStore = createStore<IArticlesState>(articlesStore);
 
-export default useArticleStore;
+export default useArticlesStore;

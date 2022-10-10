@@ -8,7 +8,7 @@ import { IMarkdownAudience } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 import spacing, { margin } from '~/theme/spacing';
-import useArticleStore, { IArticlesState } from '~/store/entities/article';
+import useArticlesStore, { IArticlesState } from '~/store/entities/articles';
 import { PostViewFooter } from '~/screens/post/components/PostViewComponents';
 import { useBaseHook } from '~/hooks';
 import Header from '~/beinComponents/Header';
@@ -26,8 +26,8 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const data = useArticleStore((state: IArticlesState) => state.items[id]);
-  const actions = useArticleStore((state: IArticlesState) => state.actions);
+  const data = useArticlesStore((state: IArticlesState) => state.items[id]);
+  const actions = useArticlesStore((state: IArticlesState) => state.actions);
   const {
     title, content, audience, actor, createdAt, commentCount,
     reactionsCount, setting, mentions, hashtags,

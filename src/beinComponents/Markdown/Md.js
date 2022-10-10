@@ -202,20 +202,21 @@ export default class Md extends PureComponent {
   // Just render as link because of not have metadata from server
   renderImage = ({ src, alt, linkDestination }) => {
 
-    if(linkDestination){
-      /**
-       * Because text formatter is difference between web and mobile
-       * we must treat alt props as mediaType
-       */ 
-      const mediaType = alt;
-      switch(mediaType) {
-        case 'video': 
-          return <VideoPlayer src={linkDestination} thumbnail={src}  />
-        // other cases will be implemented later
-      }
-    }
-    
     if(!this.props.disableImage){
+
+      if(linkDestination){
+        /**
+         * Because text formatter is difference between web and mobile
+         * we must treat alt props as mediaType
+         */ 
+        const mediaType = alt;
+        switch(mediaType) {
+          case 'video': 
+            return <VideoPlayer src={linkDestination} thumbnail={src}  />
+          // other cases will be implemented later
+        }
+      }
+      
       return <Image style={this.props.blockStyles.image} source={src} />
     }
 

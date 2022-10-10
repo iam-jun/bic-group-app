@@ -26,7 +26,6 @@ import { HOME_TAB_TYPE } from '~/screens/Home/store/Interface';
 import dimension from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
-import PostView from '~/screens/post/components/PostView';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import { useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
@@ -38,6 +37,7 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';
 import NoticePanel from '~/screens/Home/components/NoticePanel';
+import PostItem from '~/beinComponents/list/items/PostItem';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -218,7 +218,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   const renderItem = ({ item }: any) => (
-    <PostView
+    <PostItem
       postId={item.id}
       style={styles.itemStyle}
       testID="newsfeed_list.post.item"

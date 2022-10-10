@@ -4,13 +4,15 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import spacing, { margin } from '~/theme/spacing';
-import useArticleStore, { IArticlesState } from '~/store/entities/article';
+import useArticlesStore, { IArticlesState } from '~/store/entities/articles';
 import { PostViewFooter } from '~/screens/post/components/PostViewComponents';
 import { useBaseHook } from '~/hooks';
 import ArticleHeader from '../ArticleHeader';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 
 export interface ArticleItemProps {
   id: string;
@@ -23,7 +25,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
   // const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const data = useArticleStore((state: IArticlesState) => state.items[id]);
+  let data = useArticlesStore((state: IArticlesState) => state.items[id]);
+  const postData = usePostsStore(postsSelector.getPost(id));
+  if (!data) data = postData;
+
   const {
     title, audience, actor, createdAt, commentCount, reactionsCount, setting, cover, summary,
   } = data || {};

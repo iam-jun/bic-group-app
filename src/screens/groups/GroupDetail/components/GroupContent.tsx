@@ -16,7 +16,7 @@ import GroupJoinCancelButton from './GroupJoinCancelButton';
 import modalActions from '~/storeRedux/modal/actions';
 import CommunityJoinedGroupTree from '~/screens/groups/components/CommunityJoinedGroupTree';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useMounted from '~/hooks/mounted';

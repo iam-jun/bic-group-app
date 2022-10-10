@@ -1,5 +1,5 @@
 import streamApi from '~/api/StreamApi';
-import useArticleStore from '~/store/entities/article';
+import useArticlesStore from '~/store/entities/articles';
 import { convertArrayToObject } from '~/utils/formatData';
 import { IArticleListState } from '../Interface';
 
@@ -29,8 +29,8 @@ const getArticles = (set, get) => async () => {
       state.hasNextPage = meta?.hasNextPage;
     }, 'getArticleListSuccess');
 
-    const { items } = useArticleStore.getState();
-    useArticleStore.setState({ items: { ...items, ...newItems } });
+    const { items } = useArticlesStore.getState();
+    useArticlesStore.setState({ items: { ...items, ...newItems } });
   } catch (error) {
     set((state) => {
       state.loading = true;

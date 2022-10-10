@@ -14,7 +14,7 @@ import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 
 const CommunityAdmin = (props: any) => {
   const { params } = props.route;
