@@ -4,7 +4,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import AboutContent from '../CommunityDetail/components/AboutContent';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 

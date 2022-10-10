@@ -36,7 +36,7 @@ import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
 import Text from '~/beinComponents/Text';
 import NotFound from '~/screens/NotFound/components/NotFound';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import PlaceholderView from './components/PlaceholderView';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';

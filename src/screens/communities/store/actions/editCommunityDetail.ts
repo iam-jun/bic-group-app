@@ -1,5 +1,5 @@
 import { ICommunityDetailEdit } from '~/interfaces/ICommunity';
-import useCommunitiesStore from '~/store/entities/comunities';
+import useCommunitiesStore from '~/store/entities/communities';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
 import groupApi from '../../../../api/GroupApi';

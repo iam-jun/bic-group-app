@@ -19,7 +19,7 @@ import images from '~/resources/images';
 import useDiscoverGroupsStore from './store';
 import IDiscoverGroupsState from './store/Interface';
 import { useBaseHook } from '~/hooks';
-import useCommunitiesStore from '~/store/entities/comunities';
+import useCommunitiesStore from '~/store/entities/communities';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;

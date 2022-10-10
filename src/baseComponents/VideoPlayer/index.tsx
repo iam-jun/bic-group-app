@@ -13,7 +13,7 @@ export interface VideoPlayerRef {
   pause: () => void,
 }
 
-const SUPPORTED_VIDEOS = ['mp4', 'mov', 'webm', 'wmv', 'avi'];
+const SUPPORTED_VIDEOS = ['mp4', 'mov', 'webm', 'wmv', 'avi', 'm3u8'];
 
 export interface VideoPlayerProps extends VideoProps {
   src: string;

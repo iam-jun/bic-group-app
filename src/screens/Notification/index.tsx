@@ -86,9 +86,9 @@ const Notification = () => {
       onPress: handleMarkAllAsRead,
     }, {
       id: 2,
-      testID: 'notifications.turn_off_notification',
+      testID: 'notifications.notification_settings',
       leftIcon: 'Gear',
-      title: i18next.t('notification:turn_off_notification'),
+      title: i18next.t('notification:notification_settings'),
       requireIsActor: true,
       upcoming: true,
     }];

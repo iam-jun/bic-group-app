@@ -8,13 +8,13 @@ import useChatStore from '~/store/chat';
 import useDraftPostStore from '../screens/post/DraftPost/store';
 import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
-import useCommunitiesStore from './entities/comunities';
+import useCommunitiesStore from './entities/communities';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
 import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
-import useArticleStore from './entities/article';
+import useArticlesStore from './entities/articles';
 import useArticleListStore from '~/screens/articles/ArticleList/store';
 import useUserInterestedPostStore from '~/screens/post/components/UserInterestedPost/store';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
@@ -48,7 +48,7 @@ const stores = [
   useDiscoverGroupsStore,
   useRemoveCommunityMemberStore,
   useRemoveGroupMemberStore,
-  useArticleStore,
+  useArticlesStore,
   useArticleListStore,
   useUserInterestedPostStore,
   useDiscoverCommunitiesStore,

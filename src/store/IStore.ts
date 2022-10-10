@@ -15,7 +15,7 @@ import IRemoveCommunityMemberState from '~/screens/communities/CommunityMembers/
 import IRemoveGroupMemberState from '~/screens/groups/GroupMembers/store/Interface';
 import IUserInterestedPostState from '~/screens/post/components/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
-import { ICommunitiesState } from './entities/comunities';
+import { ICommunitiesState } from './entities/communities';
 import { IDiscoverCommunitiesSearchState } from '~/screens/Discover/components/SearchDiscoverCommunity/store/Interface';
 import { IManagedState } from '~/screens/communities/Communities/components/Managed/store/Interface';
 import { IYourCommunitiesState } from '~/screens/communities/Communities/components/YourCommunities/store/Interface';

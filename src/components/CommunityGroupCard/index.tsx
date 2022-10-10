@@ -16,7 +16,7 @@ import { formatLargeNumber } from '~/utils/formatData';
 import { useBaseHook } from '~/hooks';
 import { isGroup } from '~/screens/groups/helper';
 import modalActions from '~/storeRedux/modal/actions';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import Tag from '~/baseComponents/Tag';
 
 type CommunityGroupCardProps = {

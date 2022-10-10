@@ -3,12 +3,13 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
-import useCommunitiesStore from '~/store/entities/comunities';
+import useCommunitiesStore from '~/store/entities/communities';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '~/api/GroupApi';
+import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
 
 const cancelJoinCommunity
   = (_set, _get) => async (communityId: string, communityName: string) => {
@@ -26,6 +27,11 @@ const cancelJoinCommunity
       useDiscoverCommunitiesStore
         .getState()
         .actions.setDiscoverCommunities(communityId, {
+          joinStatus: GroupJoinStatus.VISITOR,
+        });
+      useDiscoverCommunitiesSearchStore
+        .getState()
+        .actions.setDiscoverCommunitiesSearchItem(communityId, {
           joinStatus: GroupJoinStatus.VISITOR,
         });
 

@@ -11,7 +11,7 @@ import useJoinedCommunitiesStore from '~/screens/Menu/store';
 import Store from '~/storeRedux';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
 import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
-import useCommunitiesStore from '~/store/entities/comunities';
+import useCommunitiesStore from '~/store/entities/communities';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
