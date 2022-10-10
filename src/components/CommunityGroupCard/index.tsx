@@ -16,16 +16,13 @@ import { formatLargeNumber } from '~/utils/formatData';
 import { useBaseHook } from '~/hooks';
 import { isGroup } from '~/screens/groups/helper';
 import modalActions from '~/storeRedux/modal/actions';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
-import groupsActions from '~/storeRedux/groups/actions';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
 import Tag from '~/baseComponents/Tag';
 
 type CommunityGroupCardProps = {
   item: any;
   testID?: string;
   shouldShowAlertJoinTheCommunityFirst?: boolean;
-  isResetCommunityDetail?:boolean;
   onJoin?: (id: string, name: string, isGroup?: boolean)=>void;
   onCancel?: (id: string, name: string, isGroup?: boolean)=>void;
 };
@@ -33,7 +30,6 @@ type CommunityGroupCardProps = {
 const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   item,
   testID,
-  isResetCommunityDetail = true,
   shouldShowAlertJoinTheCommunityFirst,
   onJoin,
   onCancel,
@@ -61,17 +57,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   const { icon: privacyIcon, title: privacyTitle } = privacyData || {};
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
-  const onGoBackFromGroupDetail = () => {
-  /**
-     * [TO-DO] Consider to remove this line
-     * Because lately we've stored separated communties
-     */
-    if (!!isResetCommunityDetail) {
-      dispatch(groupsActions.clearGroupPosts());
-    }
-    rootNavigation.goBack();
-  };
-
   const onView = () => {
     if (isGroup(level)) {
       // in group detail we need some infomation from community detail,
@@ -83,7 +68,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
         groupStack.groupDetail,
         {
           groupId: id,
-          onGoBack: onGoBackFromGroupDetail,
         },
       );
       return;

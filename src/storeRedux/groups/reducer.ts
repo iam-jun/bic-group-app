@@ -1,6 +1,5 @@
 import { cloneDeep } from 'lodash';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
-import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
 import {
@@ -80,16 +79,6 @@ export const groupInitState = {
     canLoadMore: true,
     data: [] as IGroupMembers[],
   },
-
-  refreshingGroupPosts: false,
-  posts: {
-    loading: false,
-    data: [],
-    extra: [],
-    offset: 0,
-    canLoadMore: true,
-  },
-
   users: {
     loading: false,
     data: [],
@@ -245,17 +234,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...payload,
         },
       };
-
-    case groupsTypes.GET_GROUP_POSTS:
-      return {
-        ...state,
-        refreshingGroupPosts: true,
-        posts: {
-          ...state.posts,
-          loading: state.posts.data.length === 0,
-          params: payload.params,
-        },
-      };
     case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
       return {
         ...state,
@@ -269,45 +247,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...payload,
         },
       };
-
-    case groupsTypes.SET_GROUP_POSTS:
-      return {
-        ...state,
-        refreshingGroupPosts: false,
-        posts: {
-          ...state.posts,
-          loading: false,
-          data: payload,
-          offset: state.posts.offset + payload.length,
-          canLoadMore: payload.length === appConfig.recordsPerPage,
-        },
-      };
-    case groupsTypes.SET_EXTRA_GROUP_POSTS:
-      return {
-        ...state,
-        refreshingGroupPosts: false,
-        posts: {
-          ...state.posts,
-          extra: payload,
-          offset: state.posts.offset + payload.length,
-          canLoadMore: payload.length === appConfig.recordsPerPage,
-        },
-      };
-    case groupsTypes.MERGE_EXTRA_GROUP_POSTS:
-      return {
-        ...state,
-        posts: {
-          ...state.posts,
-          data: [...state.posts.data, ...state.posts.extra],
-          extra: [],
-        },
-      };
-    case groupsTypes.CLEAR_GROUP_POSTS:
-      return {
-        ...state,
-        posts: groupInitState.posts,
-      };
-
     case groupsTypes.EDIT_GROUP_DETAIL:
       return {
         ...state,

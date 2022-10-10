@@ -3,7 +3,8 @@ import { IPostActivity } from '~/interfaces/IPost';
 import PostView from '~/screens/post/components/PostView';
 
 export interface PostItemProps {
-  postData: IPostActivity;
+  postId?: string;
+  postData?: IPostActivity;
   testID?: string;
   btnReactTestID?: string;
   btnCommentTestID?: string;
@@ -11,6 +12,7 @@ export interface PostItemProps {
 }
 
 const PostItem = ({
+  postId,
   postData,
   testID,
   btnReactTestID,
@@ -18,7 +20,7 @@ const PostItem = ({
   hasReactPermission,
 }: any) => (
   <PostView
-    postId={postData?.id}
+    postId={postId || postData?.id}
     testID={testID}
     btnReactTestID={btnReactTestID}
     btnCommentTestID={btnCommentTestID}

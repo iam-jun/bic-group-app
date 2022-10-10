@@ -4,10 +4,10 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import Animated from 'react-native-reanimated';
+import { isEmpty } from 'lodash';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
 import GroupTabHeader from './GroupTabHeader';
@@ -16,17 +16,17 @@ import GroupJoinCancelButton from './GroupJoinCancelButton';
 import modalActions from '~/storeRedux/modal/actions';
 import CommunityJoinedGroupTree from '~/screens/groups/components/CommunityJoinedGroupTree';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useTimelineStore, { ITimelineState } from '~/store/timeline';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import useMounted from '~/hooks/mounted';
 
 interface GroupContentProps {
-  getGroupPosts: () => void;
   onScroll: (e: any) => void;
   onGetInfoLayout: (e: any) => void;
 }
 
 const GroupContent = ({
-  getGroupPosts,
   onScroll,
   onGetInfoLayout,
 }: GroupContentProps) => {
@@ -34,21 +34,27 @@ const GroupContent = ({
   const { colors } = theme || {};
   const styles = themeStyles();
   const dispatch = useDispatch();
+  const isMounted = useMounted();
 
-  const posts = useKeySelector(groupsKeySelector.posts);
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const { id: groupId, teamName } = groupData;
   const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const communityName = community?.name;
   const isMemberCommunity = community?.joinStatus === GroupJoinStatus.MEMBER;
 
+  const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
+  const groupPost = useTimelineStore((state: ITimelineState) => state.items[groupId]);
+  const { ids: posts, loading, refreshing: isRefreshingPost } = groupPost || {};
+  const isLoadingPosts = (!isMounted || loading) && !isRefreshingPost;
+
+  const isLoadingMore = !isEmpty(posts) && isLoadingPosts;
+
   const loadMoreData = () => {
-    if (posts.extra.length !== 0) {
-      dispatch(groupsActions.mergeExtraGroupPosts(groupId));
+    if (groupPost.hasNextPage) {
+      timelineActions.getPosts(groupId);
     }
   };
 
@@ -70,14 +76,14 @@ const GroupContent = ({
 
   const renderItem = ({ item }: any) => (
     <PostItem
-      postData={item}
+      postId={item}
       hasReactPermission={isMember}
       testID="group_content.post.item"
     />
   );
 
   const _onRefresh = () => {
-    getGroupPosts();
+    timelineActions.getPosts(groupId, true);
   };
 
   const renderHeader = () => (
@@ -90,32 +96,45 @@ const GroupContent = ({
       />
       <GroupTabHeader groupId={groupId} isMemberCommunity={isMemberCommunity} />
       <GroupJoinCancelButton />
+      {isLoadingPosts && renderLoading()}
     </View>
   );
+
+  const renderLoading = () => (
+    <View style={styles.loading}>
+      <LoadingIndicator />
+    </View>
+  );
+
+  const renderFooter = () => {
+    if (isLoadingMore) return renderLoading();
+
+    return <ViewSpacing height={spacing.margin.base} />;
+  };
+
+  const renderItemSeparator = () => <ViewSpacing height={spacing.margin.base} />;
 
   return (
     <Animated.FlatList
       testID="flatlist"
       style={styles.listContainer}
-      data={posts.data}
+      data={isMounted ? posts : []}
       renderItem={renderItem}
       onScroll={onScroll}
       scrollEventThrottle={16}
-      ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
-      ListFooterComponent={<ViewSpacing height={spacing.padding.base} />}
-      ItemSeparatorComponent={() => (
-        <ViewSpacing height={spacing.margin.base} />
-      )}
+      ListHeaderComponent={renderHeader}
+      ListFooterComponent={renderFooter}
+      ItemSeparatorComponent={renderItemSeparator}
       onEndReached={loadMoreData}
       onEndReachedThreshold={0.5}
       showsVerticalScrollIndicator
       keyExtractor={(item: any, index: number) => `list-item-${item.id}-${index}`}
       refreshControl={(
         <RefreshControl
-          refreshing={refreshingGroupPosts}
-          onRefresh={_onRefresh}
+          refreshing={isRefreshingPost}
           tintColor={colors.gray40}
+          onRefresh={_onRefresh}
         />
       )}
     />
@@ -131,6 +150,9 @@ const themeStyles = () => StyleSheet.create({
   },
   createPost: {
     marginTop: spacing.margin.small,
+  },
+  loading: {
+    padding: spacing.padding.small,
   },
 });
 

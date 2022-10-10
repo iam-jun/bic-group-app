@@ -27,8 +27,8 @@ import InfoView from './components/InfoView';
 import { alertAction, _openImagePicker } from './helper';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunityController from '~/screens/communities/store';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -38,6 +38,7 @@ const GeneralInformation = (props: any) => {
   const { colors } = theme;
   const dispatch = useDispatch();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const controller = useCommunityController((state) => state.actions);
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   const baseSheetRef: any = useRef();
@@ -91,7 +92,7 @@ const GeneralInformation = (props: any) => {
     if (type === 'group') {
       dispatch(groupsActions.editGroupDetail({ data, editFieldName }));
     } else {
-      actions.editCommunityDetail(data, editFieldName);
+      controller.editCommunityDetail(data, editFieldName);
     }
   };
 

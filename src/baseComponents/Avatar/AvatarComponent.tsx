@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-  ImageStyle, StyleProp, StyleSheet, View, ViewStyle,
+  StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ImageStyle } from 'react-native-fast-image';
 import Icon from '~/baseComponents/Icon';
 import Image, { ImageProps } from '~/beinComponents/Image';
 import { IconType } from '~/resources/icons';
@@ -40,8 +41,8 @@ export interface AvatarProps extends ImageProps {
   counter?: number;
   customSize?: number;
   customStyle?: StyleProp<ImageStyle>;
-  onPressAction?: () => void;
   backgroundColor?: string;
+  onPressAction?: () => void;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -62,8 +63,8 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   counter,
   customSize,
   customStyle,
-  onPressAction,
   backgroundColor,
+  onPressAction,
   ...props
 }: AvatarProps) => {
   const theme: ExtendedTheme = useTheme();

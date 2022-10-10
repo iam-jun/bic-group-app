@@ -39,7 +39,6 @@ const SearchResult = () => {
       isLite
       pressNavigateToDetail
       postData={item}
-      isUseReduxState={false}
     />
   );
 

@@ -8,8 +8,8 @@ import groupsActions from '~/storeRedux/groups/actions';
 import MemberRequestList from '~/screens/groups/components/MemberRequestList';
 import CommunityApproveDeclineAllRequests from './components/CommunityApproveDeclineAllRequests';
 import JoinRequestSetting from './components/JoinRequestSetting';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useCommunityController from '../../store';
 
 interface CommunityMemberRequestsProps {
   communityId: string
@@ -27,6 +27,7 @@ const CommunityMemberRequests = ({
   onPressAdd,
 }: CommunityMemberRequestsProps) => {
   const dispatch = useDispatch();
+  const controller = useCommunityController((state) => state.actions);
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
   const data = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
 
@@ -68,7 +69,7 @@ const CommunityMemberRequests = ({
   };
 
   const onUpdateJoinSetting = (isJoinApproval: boolean) => {
-    actions.updateCommunityJoinSetting(communityId, isJoinApproval);
+    controller.updateCommunityJoinSetting(communityId, isJoinApproval);
   };
 
   const onPressApproveAll = () => {

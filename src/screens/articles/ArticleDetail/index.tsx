@@ -8,8 +8,7 @@ import { IMarkdownAudience } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 import spacing, { margin } from '~/theme/spacing';
-import useArticleStore from '~/store/article';
-import { IArticlesState } from '~/store/article/Interface';
+import useArticleStore, { IArticlesState } from '~/store/entities/article';
 import { PostViewFooter } from '~/screens/post/components/PostViewComponents';
 import { useBaseHook } from '~/hooks';
 import Header from '~/beinComponents/Header';
@@ -31,9 +30,8 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
   const actions = useArticleStore((state: IArticlesState) => state.actions);
   const {
     title, content, audience, actor, createdAt, commentCount,
-    reactionsCount, setting, mentions,
+    reactionsCount, setting, mentions, hashtags,
   } = data || {};
-  const hashtags = ['learing', 'crypto'];
   const labelButtonComment = `${commentCount ? `${commentCount} ` : ''}${t(
     'post:button_comment',
   )}`;

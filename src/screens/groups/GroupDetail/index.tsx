@@ -25,7 +25,6 @@ import Header from '~/beinComponents/Header';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useAuth, { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -51,8 +50,8 @@ import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 import { BottomListProps } from '~/components/BottomList';
 import NotFound from '~/screens/NotFound/components/NotFound';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
+import useTimelineStore, { ITimelineState } from '~/store/timeline';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -86,7 +85,10 @@ const GroupDetail = (props: any) => {
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
-  const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
+  const isLoadingGroup = useKeySelector(groupsKeySelector.loadingPage);
+  const hasNoDataInStore = !groupInfo;
+  const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
+
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId('groups', groupId, [
     PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
@@ -96,6 +98,9 @@ const GroupDetail = (props: any) => {
     = !isMember
     && (privacy === GroupPrivacyType.PRIVATE
       || (!isMemberCommunity && privacy === GroupPrivacyType.OPEN));
+
+  const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
+  const groupPost = useTimelineStore((state: ITimelineState) => state.items[groupId]);
 
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
@@ -129,8 +134,9 @@ const GroupDetail = (props: any) => {
       return;
     }
 
-    dispatch(groupsActions.clearGroupPosts());
-    dispatch(groupsActions.getGroupPosts(groupId));
+    // dispatch(groupsActions.clearGroupPosts());
+    timelineActions.resetTimeline(groupId);
+    timelineActions.getPosts(groupId);
   }, [groupId, isMember, privacy, loadingGroupDetail, groupInfo]);
 
   useEffect(() => {
@@ -141,7 +147,7 @@ const GroupDetail = (props: any) => {
   }, [groupId]);
 
   useEffect(() => {
-    getGroupPosts();
+    if (isEmpty(groupPost?.ids)) { getGroupPosts(); }
   }, [groupInfo]);
 
   const onPressAdminTools = () => {
@@ -235,41 +241,6 @@ const GroupDetail = (props: any) => {
     };
   }, [groupInfoHeight]);
 
-  const renderGroupContent = () => {
-    // visitors can only see "About" of Private group
-
-    if (showPrivate) {
-      return (
-        <GroupPrivateWelcome
-          onScroll={onScrollHandler}
-          onGetInfoLayout={onGetInfoLayout}
-          infoDetail={groupInfo}
-          isMember={isMember}
-          communityName={communityName}
-        />
-      );
-    }
-
-    return (
-      <GroupContent
-        getGroupPosts={getGroupPosts}
-        onScroll={onScrollHandler}
-        onGetInfoLayout={onGetInfoLayout}
-      />
-    );
-  };
-
-  const renderPlaceholder = () => (
-    <View style={styles.contentContainer} testID="group_detail.placeholder">
-      <View>
-        <GroupProfilePlaceholder disableRandom />
-        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
-        <PostViewPlaceholder disableRandom />
-        <PostViewPlaceholder disableRandom />
-      </View>
-    </View>
-  );
-
   const onPressMenu = () => {
     const headerMenuData = getHeaderMenu({
       type: 'group',
@@ -296,6 +267,40 @@ const GroupDetail = (props: any) => {
     // clear all state
     dispatch(groupsActions.setGroupDetail(null));
   };
+
+  const renderGroupContent = () => {
+    // visitors can only see "About" of Private group
+
+    if (showPrivate) {
+      return (
+        <GroupPrivateWelcome
+          onScroll={onScrollHandler}
+          onGetInfoLayout={onGetInfoLayout}
+          infoDetail={groupInfo}
+          isMember={isMember}
+          communityName={communityName}
+        />
+      );
+    }
+
+    return (
+      <GroupContent
+        onScroll={onScrollHandler}
+        onGetInfoLayout={onGetInfoLayout}
+      />
+    );
+  };
+
+  const renderPlaceholder = () => (
+    <View style={styles.contentContainer} testID="group_detail.placeholder">
+      <View>
+        <GroupProfilePlaceholder disableRandom />
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+        <PostViewPlaceholder disableRandom />
+        <PostViewPlaceholder disableRandom />
+      </View>
+    </View>
+  );
 
   const renderGroupDetail = () => {
     if (isLoadingGroupDetailError) return <NotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
@@ -331,9 +336,9 @@ const GroupDetail = (props: any) => {
   };
 
   return (
-    <ScreenWrapper style={styles.screenContainer} isFullView>
-      {loadingPage ? renderPlaceholder() : renderGroupDetail()}
-    </ScreenWrapper>
+    <View style={styles.screenContainer}>
+      {shouldShowPlaceholder ? renderPlaceholder() : renderGroupDetail()}
+    </View>
   );
 };
 
@@ -343,6 +348,7 @@ const themeStyles = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     screenContainer: {
+      flex: 1,
       backgroundColor: colors.neutral5,
     },
     contentContainer: {

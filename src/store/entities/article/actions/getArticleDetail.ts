@@ -1,5 +1,5 @@
 import streamApi from '~/api/StreamApi';
-import { IArticlesState } from '../Interface';
+import { IArticlesState } from '..';
 
 const getArticleDetail = (set, get) => async (id: string) => {
   const { requestings }: IArticlesState = get();
@@ -8,15 +8,9 @@ const getArticleDetail = (set, get) => async (id: string) => {
 
   set((state) => { state.requestings[id] = true; });
 
-  // const params = {
-  //   offset: ids.length,
-  //   limit: 20,
-  // };
-
   try {
     const response = await streamApi.getArticleDetail(id);
     const data = response?.data;
-    // const { list, meta } = data || {};
 
     set((state) => {
       state.items[id] = data;

@@ -19,7 +19,7 @@ import images from '~/resources/images';
 import useDiscoverGroupsStore from './store';
 import IDiscoverGroupsState from './store/Interface';
 import { useBaseHook } from '~/hooks';
-import useCommunitiesStore from '~/store/comunities';
+import useCommunitiesStore from '~/store/entities/comunities';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
@@ -85,7 +85,6 @@ const DiscoverGroups = ({ route }: any) => {
         item={currentItem}
         testID={`browse_groups_item_${index}`}
         shouldShowAlertJoinTheCommunityFirst
-        // isResetCommunityDetail={false}
         onJoin={handleJoinGroup}
         onCancel={handleCancelJoinGroup}
       />

@@ -1,7 +1,7 @@
 import React, {
   useState, useEffect, useRef, useCallback,
 } from 'react';
-import { StyleSheet, DeviceEventEmitter } from 'react-native';
+import { StyleSheet, DeviceEventEmitter, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
@@ -16,8 +16,6 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import groupActions from '~/storeRedux/groups/actions';
 import ContentView from './components/ContentView';
 import CommunityJoinCancelButton from './components/CommunityJoinCancelButton';
 import {
@@ -38,15 +36,14 @@ import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
 import Text from '~/beinComponents/Text';
 import NotFound from '~/screens/NotFound/components/NotFound';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
 import PlaceholderView from './components/PlaceholderView';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useMounted from '~/hooks/mounted';
+import useTimelineStore, { ITimelineState } from '~/store/timeline';
+import useCommunityController from '../store';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -64,16 +61,27 @@ const CommunityDetail = (props: any) => {
   const { t } = useBaseHook();
   const isMounted = useMounted();
 
+  // community detail
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
-  const isFetchingData = useCommunitiesStore((state: ICommunitiesState) => state.requestings[communityId]);
-  const error = useCommunitiesStore((state: ICommunitiesState) => state.errors[communityId]);
-  const data = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
+  const controller = useCommunityController((state) => state.actions);
+  const isLoadingCommunity = useCommunitiesStore(useCallback((
+    state: ICommunitiesState,
+  ) => state.requestings[communityId], [communityId]));
+  const error = useCommunitiesStore(useCallback((
+    state: ICommunitiesState,
+  ) => state.errors[communityId], [communityId]));
+
+  const community = useCommunitiesStore(useCallback((
+    state: ICommunitiesState,
+  ) => state.data[communityId] || {} as ICommunity, [communityId]));
+
   const {
     name, joinStatus, privacy, groupId,
-  } = data || {};
+  } = community;
 
-  const posts = useKeySelector(groupsKeySelector.posts);
-  const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
+  // posts
+  const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
+  const communityPost = useTimelineStore(useCallback((state: ITimelineState) => state.items[groupId], [groupId]));
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
@@ -94,32 +102,35 @@ const CommunityDetail = (props: any) => {
     actions.getCommunity(communityId);
   };
 
-  const getPosts = useCallback(() => {
+  const getPosts = useCallback((isRefresh?: boolean) => {
     /* Avoid getting group posts of the nonexisting group,
       which will lead to endless fetching group posts in
       httpApiRequest > makeGetStreamRequest */
     const privilegeToFetchPost = isMember || privacy === CommunityPrivacyType.PUBLIC;
 
-    if (isFetchingData || isEmpty(data) || !privilegeToFetchPost) {
+    if (isLoadingCommunity || isEmpty(community) || !privilegeToFetchPost) {
       return;
     }
-
-    dispatch(groupActions.clearGroupPosts());
-    dispatch(groupActions.getGroupPosts(groupId));
-  }, [groupId, isMember, privacy, isFetchingData, data]);
+    // By default, the community is treated as the root group
+    // So, we should get posts of community by groupId instead of communityId
+    timelineActions.getPosts(groupId, isRefresh);
+  }, [groupId, isMember, privacy, isLoadingCommunity, community]);
 
   useEffect(() => {
+    // timelineActions.resetTimeline(groupId);
+
     if (isMounted) {
       getCommunityDetail();
-      dispatch(groupActions.clearGroupPosts());
     }
   }, [isMounted, communityId]);
 
-  useEffect(() => getPosts(), [data]);
+  useEffect(() => { if (isEmpty(communityPost?.ids)) getPosts(); }, [community]);
 
   const onRefresh = useCallback((isGetPost: boolean) => {
     getCommunityDetail();
-    if (isGetPost) { getPosts(); }
+    if (isGetPost) {
+      timelineActions.getPosts(groupId, true);
+    }
   }, [communityId]);
 
   const onPressAdminTools = () => {
@@ -136,7 +147,7 @@ const CommunityDetail = (props: any) => {
   };
 
   const onConfirmLeaveCommunity = async () => {
-    actions.leaveCommunity(communityId, privacy);
+    controller.leaveCommunity(communityId, privacy);
   };
 
   const onPressLeave = () => {
@@ -180,7 +191,7 @@ const CommunityDetail = (props: any) => {
 
   const onPressChat = () => {
     const link = formatChannelLink(
-      data.slug,
+      community.slug,
       chatSchemes.DEFAULT_CHANNEL,
     );
     openUrl(link);
@@ -235,10 +246,9 @@ const CommunityDetail = (props: any) => {
     actions.resetCommunity(communityId);
   };
 
-  const isLoadingCommunity = !!isFetchingData;
-  const hasNoDataInStore = !data;
-  const isLoadingPosts = (posts.loading && posts.data.length === 0) && !refreshingGroupPosts;
-  const shouldShowPlaceholder = !isMounted || hasNoDataInStore || isLoadingCommunity || isLoadingPosts;
+  const hasNoDataInStore = !groupId;
+
+  const shouldShowPlaceholder = !isMounted || hasNoDataInStore;
 
   if (shouldShowPlaceholder) {
     return <PlaceholderView style={styles.contentContainer} headerStyle={styles.header} />;
@@ -254,7 +264,7 @@ const CommunityDetail = (props: any) => {
     : <CommunityTabHeader communityId={communityId} isMember={isMember} />;
 
   return (
-    <ScreenWrapper style={styles.screenContainer} isFullView>
+    <View style={styles.screenContainer}>
       <Header
         headerRef={headerRef}
         title={name}
@@ -273,9 +283,9 @@ const CommunityDetail = (props: any) => {
         ]}
       >
         <ContentView
-          community={data || {} as ICommunity}
-          isFetchingData={isFetchingData}
+          community={community}
           isMember={isMember}
+          isFetchingData={isLoadingCommunity}
           isPrivateCommunity={isPrivateCommunity}
           onRefresh={onRefresh}
           onScroll={onScrollHandler}
@@ -285,21 +295,20 @@ const CommunityDetail = (props: any) => {
       <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
         <CommunityJoinCancelButton
           style={styles.joinBtn}
-          community={data || {} as ICommunity}
+          community={community || {} as ICommunity}
           isMember={isMember}
         />
       </Animated.View>
-    </ScreenWrapper>
+    </View>
   );
 };
-
-export default CommunityDetail;
 
 const themeStyles = (theme: ExtendedTheme, insets: EdgeInsets) => {
   const { colors } = theme;
 
   return StyleSheet.create({
     screenContainer: {
+      flex: 1,
       backgroundColor: colors.gray5,
     },
     contentContainer: {
@@ -325,3 +334,5 @@ const themeStyles = (theme: ExtendedTheme, insets: EdgeInsets) => {
     },
   });
 };
+
+export default CommunityDetail;

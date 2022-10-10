@@ -3,7 +3,6 @@ import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import { ICommentData } from '~/interfaces/IPost';
 import CommentView from '~/screens/post/components/CommentView';
@@ -13,29 +12,29 @@ import spacing from '~/theme/spacing';
 
 export interface CommentItemProps {
   postId: string;
+  index?: number;
+  section?: any;
   groupIds: string;
   commentData: ICommentData;
   commentParent?: ICommentData;
   contentBackgroundColor?: string;
-  section?: any;
-  index?: number;
-  onPressReply?: (data: ICommentData, section?: any, index?: number) => void;
-  onPressLoadMore?: (data: any) => void;
   isReplyingComment?: boolean;
+  onPressLoadMore?: (data: any) => void;
   onPressMarkSeenPost?: ()=> void;
+  onPressReply?: (data: ICommentData, section?: any, index?: number) => void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
   postId,
+  index,
   groupIds,
+  section,
   commentData,
   commentParent,
   contentBackgroundColor,
-  section,
-  index,
+  isReplyingComment = true,
   onPressReply,
   onPressLoadMore,
-  isReplyingComment = true,
   onPressMarkSeenPost,
 }: CommentItemProps) => {
   const dispatch = useDispatch();
@@ -59,11 +58,13 @@ const CommentItem: React.FC<CommentItemProps> = ({
     }, [commentData, commentParent, section, index],
   );
 
-  const _onPressLoadMore = useCallback(
-    () => {
-      onPressLoadMore && onPressLoadMore(commentData);
-    }, [commentData],
-  );
+  // const _onPressLoadMore = useCallback(
+  //   () => {
+  //     onPressLoadMore && onPressLoadMore(commentData);
+  //   }, [commentData],
+  // );
+
+  const _onPressLoadMore = () => onPressLoadMore?.(commentData);
 
   const childCommentCount = commentData?.totalReply || 0;
 
@@ -83,17 +84,15 @@ const CommentItem: React.FC<CommentItemProps> = ({
         contentBackgroundColor={contentBackgroundColor}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
-      {showLoadPrevious ? (
+      {showLoadPrevious && (
         <LoadMoreComment
           style={styles.childLoadMore}
           title={t('post:text_load_previous_replies')}
           postId={postId}
           commentId={commentData?.id}
           idLessThan={idLessThan}
-          onPress={onPressLoadMore ? _onPressLoadMore : undefined}
+          onPress={_onPressLoadMore}
         />
-      ) : (
-        <ViewSpacing height={0} />
       )}
     </View>
   );

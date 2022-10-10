@@ -347,7 +347,7 @@ const _PostDetailContent = (props: any) => {
     (commentData: any) => {
       navigateToCommentDetailScreen(commentData);
     },
-    [sectionData],
+    [],
   );
 
   const renderSectionHeader = (sectionData: any) => {

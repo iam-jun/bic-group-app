@@ -7,7 +7,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
-import useCommunitiesStore from '~/store/comunities';
+import useCommunitiesStore from '~/store/entities/comunities';
 
 interface Props {
   item: any;

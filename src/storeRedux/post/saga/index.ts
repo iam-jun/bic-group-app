@@ -19,7 +19,6 @@ import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import useHomeStore from '~/screens/Home/store';
 import usePostsStore from '~/store/entities/posts';
-import groupsActions from '~/storeRedux/groups/actions';
 import streamApi from '~/api/StreamApi';
 import postActions from '~/storeRedux/post/actions';
 import getCommentsByPostId from '~/storeRedux/post/saga/getCommentsByPostId';
@@ -44,6 +43,7 @@ import deletePost from './deletePost';
 import updateReactionBySocket from './updateReactionBySocket';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
 import useDraftPostStore from '../../../screens/post/DraftPost/store';
+import useTimelineStore from '~/store/timeline';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -189,8 +189,7 @@ function* postPublishDraftPost({
       );
     }
     if (createFromGroupId) {
-      yield put(groupsActions.clearGroupPosts());
-      yield put(groupsActions.getGroupPosts(createFromGroupId));
+      useTimelineStore.getState().actions.getPosts(createFromGroupId);
     }
     const payloadGetDraftPosts: IPayloadGetDraftPosts = {
       isRefresh: true,
