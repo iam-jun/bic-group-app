@@ -176,7 +176,9 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   const isEditDraftPost = !!initPostData?.id && draftPostId;
   const isSettingsHasChange
     = initPostData?.setting?.isImportant !== important?.active
-    || initPostData?.setting?.importantExpiredAt !== important?.expires_time;
+    || initPostData?.setting?.importantExpiredAt !== important?.expires_time
+    || initPostData?.setting?.canComment !== canComment
+    || initPostData?.setting?.canReact !== canReact;
 
   // Disable button post if loading, empty content, empty audience or edit post but nothing changed
   const disableButtonPost
