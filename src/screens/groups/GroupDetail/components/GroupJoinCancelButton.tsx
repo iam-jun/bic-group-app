@@ -8,8 +8,7 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/comunities';
 import useDiscoverGroupsStore from '../../DiscoverGroups/store';
 import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
 

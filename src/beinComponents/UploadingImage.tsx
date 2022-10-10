@@ -139,7 +139,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       style={[styles.container, { width, height }, style]}
     >
       {imageUrl ? (
-        <Image source={imageUrl} useOnLayoutSize={false} style={styles.image} />
+        <Image source={imageUrl} style={styles.image} />
       ) : (
         <View style={styles.contentContainer}>
           <LoadingIndicator size="large" />

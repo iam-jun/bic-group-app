@@ -237,7 +237,6 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
           style={{
             width: dimension.deviceWidth,
             height: dimension.deviceHeight,
-            resizeMode: 'contain',
           }}
           source={{ uri: imageUrls?.[activeIndex]?.url }}
         />

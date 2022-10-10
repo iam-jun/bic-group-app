@@ -1,9 +1,18 @@
+import { IObject } from '~/interfaces/common';
+import IBaseState from '~/store/interfaces/IBaseState';
 import {
   resetStore,
   createStore,
 } from '~/store/utils';
-import { IArticlesState } from './Interface';
 import getArticleDetail from './actions/getArticleDetail';
+
+export interface IArticlesState extends IBaseState {
+  items: IObject<any>,
+  requestings: IObject<boolean>;
+  actions: {
+    getArticleDetail: (id: string) => void,
+  }
+}
 
 const initialState = {
   items: {},

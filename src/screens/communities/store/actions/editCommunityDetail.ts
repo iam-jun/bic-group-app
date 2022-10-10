@@ -1,10 +1,11 @@
 import { ICommunityDetailEdit } from '~/interfaces/ICommunity';
+import useCommunitiesStore from '~/store/entities/comunities';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
-import groupApi from '../../../api/GroupApi';
+import groupApi from '../../../../api/GroupApi';
 import showToastEditSuccess from './showToastEditSuccess';
 
-const editCommunityDetail = (set, _) => async (
+const editCommunityDetail = (_set, _get) => async (
   data: ICommunityDetailEdit,
   editFieldName?: string,
   callback?: () => void,
@@ -13,9 +14,7 @@ const editCommunityDetail = (set, _) => async (
     const communityId = data.id;
     const response = await groupApi.editCommunityDetail(communityId, data);
     if (response?.data) {
-      set((state) => {
-        state.data[communityId] = { ...state.data[communityId], ...response.data };
-      }, 'editCommunityDetail');
+      useCommunitiesStore.getState().actions.updatecommunity(communityId, response.data);
     }
 
     if (editFieldName) showToastEditSuccess(editFieldName);

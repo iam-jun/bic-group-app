@@ -14,7 +14,7 @@ import SearchDiscoverCommunityItem from './SearchDiscoverCommunityItem';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useDiscoverCommunitiesSearchStore } from './store';
-import useCommunitiesStore from '~/store/comunities';
+import useCommunityController from '~/screens/communities/store';
 
 interface SearchDiscoverCommunityResultsProps {
   onLoadMore?: () => void;
@@ -30,7 +30,7 @@ const SearchDiscoverCommunityResults = ({
     hasNextPage, loading, ids, items,
   } = useDiscoverCommunitiesSearchStore();
 
-  const actionsCommunitiesStore = useCommunitiesStore((state) => state.actions);
+  const communityController = useCommunityController((state) => state.actions);
 
   const onView = (item: any) => {
     rootNavigation.navigate(groupStack.communityDetail, { communityId: item.id });
@@ -38,12 +38,12 @@ const SearchDiscoverCommunityResults = ({
 
   const onJoin = (item: any) => {
     const { id, name } = item;
-    actionsCommunitiesStore.joinCommunity(id, name);
+    communityController.joinCommunity(id, name);
   };
 
   const onCancel = (item: any) => {
     const { id, name } = item;
-    actionsCommunitiesStore.cancelJoinCommunity(id, name);
+    communityController.cancelJoinCommunity(id, name);
   };
 
   const renderItem = ({ item }: {item: string}) => {

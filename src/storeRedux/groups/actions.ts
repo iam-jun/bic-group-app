@@ -101,28 +101,6 @@ const groupsActions = {
     type: groupsTypes.EDIT_GROUP_DETAIL,
     payload,
   }),
-
-  getGroupPosts: (payload: string) => ({
-    type: groupsTypes.GET_GROUP_POSTS,
-    payload,
-  }),
-  setGroupPosts: (payload: IGroup[]) => ({
-    type: groupsTypes.SET_GROUP_POSTS,
-    payload,
-  }),
-  setExtraGroupPosts: (payload: IGroup[]) => ({
-    type: groupsTypes.SET_EXTRA_GROUP_POSTS,
-    payload,
-  }),
-  mergeExtraGroupPosts: (payload: string) => ({
-    type: groupsTypes.MERGE_EXTRA_GROUP_POSTS,
-    payload,
-  }),
-
-  clearGroupPosts: () => ({
-    type: groupsTypes.CLEAR_GROUP_POSTS,
-  }),
-
   selectJoinableUsers: (payload: IUser) => ({
     type: groupsTypes.SELECT_JOINABLE_USERS,
     payload,

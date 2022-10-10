@@ -118,7 +118,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
           size={10}
           style={styles.icon}
         />
-        <Button onPress={onPressLoadMore} testID="load_more_comments.button">
+        <Button testID="load_more_comments.button" onPress={onPressLoadMore}>
           <Text.BodyXSMedium style={styles.textLoadMoreComment} useI18n>
             {title}
           </Text.BodyXSMedium>

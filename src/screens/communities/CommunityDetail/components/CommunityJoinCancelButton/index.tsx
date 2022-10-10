@@ -2,8 +2,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 import { ICommunity } from '~/interfaces/ICommunity';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunityController from '~/screens/communities/store';
 import JoinCancelButton from '../../../../groups/components/JoinCancelButton';
 
 interface CommunityJoinCancelButtonProps {
@@ -19,7 +18,7 @@ const CommunityJoinCancelButton = ({ style, isMember, community }: CommunityJoin
     id,
     name,
   } = community;
-  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+  const actions = useCommunityController((state) => state.actions);
 
   if (isMember) return null;
 

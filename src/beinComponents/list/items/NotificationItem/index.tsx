@@ -50,21 +50,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   if (!id) return null;
 
-  const itemValue = useKeySelector(notificationSelector.getNotificationById(id));
-
-  const _itemValue = useMemo(
-    () => {
-      if (
-        itemValue !== undefined
-      && itemValue !== null
-      && !isEqual(
-        JSON.stringify(itemValue), JSON.stringify(_itemValue),
-      )
-      ) {
-        return itemValue;
-      }
-    }, [itemValue, onPress, onPressOption, testID, id],
+  const itemValue = useKeySelector(
+    notificationSelector.getNotificationById(id),
   );
+
+  const _itemValue = useMemo(() => {
+    if (
+      itemValue !== undefined
+      && itemValue !== null
+      && !isEqual(JSON.stringify(itemValue), JSON.stringify(_itemValue))
+    ) {
+      return itemValue;
+    }
+  }, [itemValue, onPress, onPressOption, testID, id]);
 
   const {
     isRead, updatedAt, extra, actorCount,
@@ -78,7 +76,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     return isNotShowAvatar === -1;
   }, [extra?.type]);
 
-  // render notification item
   return (
     <TouchableOpacity
       testID={testID}

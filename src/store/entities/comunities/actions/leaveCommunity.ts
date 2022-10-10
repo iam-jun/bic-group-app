@@ -9,8 +9,6 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import useJoinedCommunitiesStore from '~/screens/Menu/store';
 import Store from '~/storeRedux';
-import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
-import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -27,13 +25,6 @@ const leaveCommunity = (_set, get) => async (
       id: communityId,
       data: { joinStatus: GroupJoinStatus.VISITOR },
     }));
-
-    useDiscoverCommunitiesStore
-      .getState()
-      .actions.setDiscoverCommunities(communityId, { joinStatus: GroupJoinStatus.VISITOR });
-    useDiscoverCommunitiesSearchStore
-      .getState()
-      .actions.setDiscoverCommunitiesSearchItem(communityId, { joinStatus: GroupJoinStatus.VISITOR });
 
     if (privacy === CommunityPrivacyType.SECRET) {
       rootNavigation.popToTop();

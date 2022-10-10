@@ -7,7 +7,6 @@ import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 import ICommunityJoinedGroupTreeState from '~/screens/groups/components/CommunityJoinedGroupTree/store/Interface';
 import IDraftPostState from '~/screens/post/DraftPost/store/Interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
-import ICommunitiesState from './comunities/Interface';
 import IUserProfileState from '~/screens/Menu/UserProfile/store/Interface';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
 import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
@@ -16,6 +15,7 @@ import IRemoveCommunityMemberState from '~/screens/communities/CommunityMembers/
 import IRemoveGroupMemberState from '~/screens/groups/GroupMembers/store/Interface';
 import IUserInterestedPostState from '~/screens/post/components/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
+import { ICommunitiesState } from './entities/comunities';
 import { IDiscoverCommunitiesSearchState } from '~/screens/Discover/components/SearchDiscoverCommunity/store/Interface';
 import { IManagedState } from '~/screens/communities/Communities/components/Managed/store/Interface';
 import { IYourCommunitiesState } from '~/screens/communities/Communities/components/YourCommunities/store/Interface';

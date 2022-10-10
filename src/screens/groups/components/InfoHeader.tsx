@@ -2,7 +2,6 @@ import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Image from '~/beinComponents/Image';
 import Icon from '~/baseComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
@@ -15,6 +14,7 @@ import { useBaseHook } from '~/hooks';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { IGroup } from '~/interfaces/IGroup';
 import { formatLargeNumber } from '~/utils/formatData';
+import Image from '~/beinComponents/Image';
 
 interface InfoHeaderProps {
   infoDetail: ICommunity | IGroup;
@@ -41,16 +41,15 @@ const _InfoHeader = ({
       <Image
         style={styles.cover}
         resizeMode="cover"
-        source={backgroundImgUrl}
+        source={{ uri: backgroundImgUrl }}
         defaultSource={images.img_cover_default}
       />
       <Avatar.Large
         showBorder
         style={styles.avatar}
         resizeMode="contain"
-        source={icon}
+        source={{ uri: icon }}
         defaultSource={images.img_group_avatar_default}
-
       />
     </View>
   );

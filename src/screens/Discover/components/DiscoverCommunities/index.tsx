@@ -7,8 +7,8 @@ import EmptyScreen from '~/components/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
-import useCommunitiesStore from '~/store/comunities';
 import { useDiscoverCommunitiesStore } from './store';
+import useCommunityController from '~/screens/communities/store';
 
 const DiscoverCommunities = () => {
   const theme: ExtendedTheme = useTheme();
@@ -17,7 +17,7 @@ const DiscoverCommunities = () => {
     ids, items, loading, refreshing, hasNextPage, actions,
   } = useDiscoverCommunitiesStore();
 
-  const actionsCommunitiesStore = useCommunitiesStore((state) => state.actions);
+  const communityController = useCommunityController((state) => state.actions);
 
   const renderEmptyComponent = () => {
     if (hasNextPage) {
@@ -57,11 +57,11 @@ const DiscoverCommunities = () => {
   };
 
   const handleJoin = (id: string, name: string) => {
-    actionsCommunitiesStore.joinCommunity(id, name);
+    communityController.joinCommunity(id, name);
   };
 
   const handleCancel = (id: string, name: string) => {
-    actionsCommunitiesStore.cancelJoinCommunity(id, name);
+    communityController.cancelJoinCommunity(id, name);
   };
 
   const renderItem: ListRenderItem<string> = ({ item, index }) => {

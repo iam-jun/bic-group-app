@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { call, put } from 'redux-saga/effects';
 import { IToastMessage } from '~/interfaces/common';
-import useCommunitiesStore from '~/store/comunities';
+import useCommunitiesStore from '~/store/entities/comunities';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '../../../api/GroupApi';

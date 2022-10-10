@@ -32,6 +32,8 @@ import {
 import AtMention from './AtMention';
 import Emoji from '~/baseComponents/Emoji';
 import { spacing } from '~/theme';
+import Image from '../Image';
+import { VideoPlayer } from '~/baseComponents';
 
 export default class Md extends PureComponent {
   static propTypes = {

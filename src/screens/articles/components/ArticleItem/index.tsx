@@ -4,8 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import spacing, { margin } from '~/theme/spacing';
-import useArticleStore from '~/store/article';
-import { IArticlesState } from '~/store/article/Interface';
+import useArticleStore, { IArticlesState } from '~/store/entities/article';
 import { PostViewFooter } from '~/screens/post/components/PostViewComponents';
 import { useBaseHook } from '~/hooks';
 import ArticleHeader from '../ArticleHeader';

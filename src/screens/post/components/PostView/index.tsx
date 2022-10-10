@@ -18,19 +18,11 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
   IAudienceGroup,
-  IAudienceUser,
-  ILinkPreview,
-  IOwnReaction,
   IPayloadReactToPost,
   IPostActivity,
-  IPostAudience,
-  IPostSetting,
-  IReactionCounts,
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 import {
   ButtonMarkAsRead,
   PostViewContent,
@@ -52,6 +44,8 @@ import AlertDeleteAudiencesConfirmContent from '../AlertDeleteAudiencesConfirmCo
 import PostAudiencesModal from '~/screens/post/components/PostAudiencesModal';
 import { Button } from '~/baseComponents';
 import { getTotalReactions } from '../PostViewComponents/helper';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 
 export interface PostViewProps {
   style?: any;
@@ -61,7 +55,6 @@ export interface PostViewProps {
   pressNavigateToDetail?: boolean;
   isLite?: boolean;
   postData?: IPostActivity;
-  isUseReduxState?: boolean;
   btnReactTestID?: string;
   btnCommentTestID?: string;
   hasReactPermission?: boolean;
@@ -80,7 +73,6 @@ const _PostView: FC<PostViewProps> = ({
   pressNavigateToDetail,
   isLite,
   postData,
-  isUseReduxState = true,
   btnReactTestID,
   btnCommentTestID,
   hasReactPermission = true,
@@ -96,59 +88,13 @@ const _PostView: FC<PostViewProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  let actor: IAudienceUser | undefined;
-  let audience: IPostAudience | undefined;
-  let deleted: boolean;
-  let markedReadPost: boolean;
-  let ownerReactions: IOwnReaction;
-  let reactionsCount: IReactionCounts;
-  let isDraft: boolean;
-  let createdAt: string | undefined;
-  let media: any;
-  let content: string;
-  let highlight: string;
-  let setting: IPostSetting;
-  let commentsCount: number;
-  let totalUsersSeen: number;
-  let linkPreview: ILinkPreview;
-  let mentions: any;
+  let _postData = postData;
+  if (!_postData) _postData = usePostsStore(postsSelector.getPost(postId));
 
-  if (isUseReduxState) {
-    actor = usePostsStore(postsSelector.getActor(postId));
-    audience = usePostsStore(postsSelector.getAudience(postId));
-    isDraft = usePostsStore(postsSelector.getIsDraft(postId));
-    createdAt = usePostsStore(postsSelector.getCreatedAt(postId));
-    media = usePostsStore(postsSelector.getMedia(postId));
-    content = usePostsStore(postsSelector.getContent(postId));
-    highlight = usePostsStore(postsSelector.getHighlight(postId));
-    setting = usePostsStore(postsSelector.getSetting(postId));
-    deleted = usePostsStore(postsSelector.getDeleted(postId));
-    markedReadPost = usePostsStore(postsSelector.getMarkedRead(postId));
-    commentsCount = usePostsStore(postsSelector.getCommentsCount(postId));
-
-    ownerReactions = usePostsStore(postsSelector.getOwnerReaction(postId));
-    reactionsCount = usePostsStore(postsSelector.getReactionCounts(postId));
-    totalUsersSeen = usePostsStore(postsSelector.getTotalUsersSeen(postId));
-    linkPreview = usePostsStore(postsSelector.getLinkPreview(postId));
-    mentions = usePostsStore(postsSelector.getMentions(postId));
-  } else {
-    actor = postData?.actor;
-    audience = postData?.audience;
-    isDraft = postData?.isDraft || false;
-    createdAt = postData?.createdAt || '';
-    media = postData?.media;
-    content = postData?.content || '';
-    highlight = postData?.highlight || '';
-    setting = postData?.setting || {};
-    markedReadPost = postData?.markedReadPost || false;
-    deleted = false;
-    commentsCount = postData?.commentsCount || 0;
-    ownerReactions = postData?.ownerReactions || [];
-    reactionsCount = postData?.reactionsCount || {};
-    totalUsersSeen = postData?.totalUsersSeen || 0;
-    linkPreview = postData?.linkPreview || null;
-    mentions = postData?.mentions;
-  }
+  const {
+    actor, audience, isDraft, createdAt, media, content, highlight, setting, deleted,
+    markedReadPost, commentsCount, ownerReactions, reactionsCount, totalUsersSeen, linkPreview, mentions,
+  } = _postData || {};
 
   const { images, videos, files } = media || {};
   const {
@@ -220,8 +166,6 @@ const _PostView: FC<PostViewProps> = ({
               listAudiences: listIdAudiences,
             }),
           ),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           confirmBtnProps: { type: 'ghost' },
         }),
       );

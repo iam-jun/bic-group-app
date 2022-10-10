@@ -4,16 +4,14 @@ import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
-import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
-import ICommunitiesState from '../Interface';
 
 const joinCommunity
   = (_set, get) => async (communityId: string, communityName: string) => {
-    const { actions }: ICommunitiesState = get();
+    const { actions } = get();
     try {
       const response = await groupApi.joinCommunity(communityId);
       const joinStatus = response?.data?.joinStatus;
@@ -26,12 +24,10 @@ const joinCommunity
           data: { joinStatus },
         }),
       );
+
       useDiscoverCommunitiesStore
         .getState()
         .actions.setDiscoverCommunities(communityId, { joinStatus });
-      useDiscoverCommunitiesSearchStore
-        .getState()
-        .actions.setDiscoverCommunitiesSearchItem(communityId, { joinStatus });
 
       actions.getCommunity(communityId);
 

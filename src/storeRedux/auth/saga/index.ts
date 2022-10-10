@@ -133,7 +133,7 @@ function* signOut({ payload }: any) {
     yield Auth.signOut();
     // Check if chat auth session is still active
     const sessionData: IObject<any> = yield getUserFromSharedPreferences();
-    const isInstalled = isAppInstalled();
+    const isInstalled = yield isAppInstalled();
     const activeSessions = sessionData?.activeSessions || {};
 
     /**

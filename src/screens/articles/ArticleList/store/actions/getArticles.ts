@@ -1,5 +1,5 @@
 import streamApi from '~/api/StreamApi';
-import useArticleStore from '~/store/article';
+import useArticleStore from '~/store/entities/article';
 import { convertArrayToObject } from '~/utils/formatData';
 import { IArticleListState } from '../Interface';
 

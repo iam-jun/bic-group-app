@@ -11,10 +11,9 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { isGroup } from '~/screens/groups/helper';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
+import useCommunityController from '~/screens/communities/store';
 
 type GlobalSearchProps = SearchBaseViewProps
 
@@ -29,7 +28,7 @@ const GlobalSearch = ({
   const [searchText, setSearchText] = useState(initSearch || '');
 
   const { canLoadMore } = useKeySelector(groupsKeySelector.globalSearch);
-  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+  const actions = useCommunityController((state) => state.actions);
 
   const getGlobalSearch = (searchText: string) => {
     if (!searchText) return;

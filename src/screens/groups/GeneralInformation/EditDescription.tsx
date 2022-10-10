@@ -7,8 +7,7 @@ import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import useCommunitiesStore from '~/store/comunities';
-import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunityController from '~/screens/communities/store';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 
@@ -27,9 +26,7 @@ const EditDescription = (props: any) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const actions = useCommunitiesStore(
-    (state: ICommunitiesState) => state.actions,
-  );
+  const actions = useCommunityController((state) => state.actions);
 
   const [text, setText] = useState<string>(description);
   const _onChangeText = (value: string) => {

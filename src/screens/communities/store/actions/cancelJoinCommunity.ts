@@ -3,17 +3,15 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
-import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
+import useCommunitiesStore from '~/store/entities/comunities';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
-import groupApi from '../../../api/GroupApi';
-import ICommunitiesState from '../Interface';
+import groupApi from '~/api/GroupApi';
 
 const cancelJoinCommunity
-  = (_set, get) => async (communityId: string, communityName: string) => {
-    const { actions }: ICommunitiesState = get();
+  = (_set, _get) => async (communityId: string, communityName: string) => {
     try {
       await groupApi.cancelJoinCommunity(communityId);
 
@@ -24,18 +22,14 @@ const cancelJoinCommunity
           data: { joinStatus: GroupJoinStatus.VISITOR },
         }),
       );
+
       useDiscoverCommunitiesStore
         .getState()
         .actions.setDiscoverCommunities(communityId, {
           joinStatus: GroupJoinStatus.VISITOR,
         });
-      useDiscoverCommunitiesSearchStore
-        .getState()
-        .actions.setDiscoverCommunitiesSearchItem(communityId, {
-          joinStatus: GroupJoinStatus.VISITOR,
-        });
 
-      actions.getCommunity(communityId);
+      useCommunitiesStore.getState().actions.getCommunity(communityId);
 
       const toastMessage: IToastMessage = {
         content: `${i18next.t(
@@ -46,6 +40,7 @@ const cancelJoinCommunity
       Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
     } catch (error: any) {
       console.error('cancelJoinCommunity catch', error);
+
       if (error?.code === approveDeclineCode.APPROVED) {
         Store.store.dispatch(
           groupsActions.editDiscoverCommunityItem({
@@ -53,8 +48,9 @@ const cancelJoinCommunity
             data: { joinStatus: GroupJoinStatus.MEMBER },
           }),
         );
-        actions.getCommunity(communityId);
+        useCommunitiesStore.getState().actions.getCommunity(communityId);
       }
+
       Store.store.dispatch(appActions.setShowError(error));
     }
   };

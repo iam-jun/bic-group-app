@@ -20,8 +20,6 @@ import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
-import getGroupPosts from './getGroupPosts';
-import mergeExtraGroupPosts from './mergeExtraGroupPosts';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -52,8 +50,8 @@ import getOwnerCommunity from './getOwnerCommunity';
 import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
-import useCommunitiesStore from '~/store/comunities';
 import { IUser } from '~/interfaces/IAuth';
+import useCommunityController from '~/screens/communities/store';
 
 export default function* groupsSaga() {
   yield takeLatest(
@@ -74,12 +72,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
-  );
-  yield takeLatest(
-    groupsTypes.GET_GROUP_POSTS, getGroupPosts,
-  );
-  yield takeLatest(
-    groupsTypes.MERGE_EXTRA_GROUP_POSTS, mergeExtraGroupPosts,
   );
   yield takeLatest(
     groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail,
@@ -184,7 +176,7 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       file, id, fieldName, uploadType, destination,
     } = payload;
 
-    const { actions } = useCommunitiesStore.getState();
+    const { actions } = useCommunityController.getState();
 
     yield updateLoadingImageState(
       fieldName, true,
