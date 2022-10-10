@@ -122,18 +122,6 @@ export const groupInitState = {
     ids: [] as string[],
     items: {},
   },
-  discoverCommunities: {
-    loading: true,
-    canLoadMore: true,
-    ids: [],
-    items: {},
-  },
-  managedCommunities: {
-    loading: true,
-    canLoadMore: true,
-    ids: [] as string[],
-    items: {},
-  },
   joinedAllGroups: {
     isRefresh: false,
     isLoading: false,
@@ -204,10 +192,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     groupMemberRequests,
     communityMembers,
     communitySearchMembers,
-    managedCommunities,
     groupMembers,
     groupSearchMembers,
-    discoverCommunities,
     communityMemberRequests,
     globalSearch,
   } = state;
@@ -474,14 +460,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...payload,
         },
       };
-    case groupsTypes.SET_DISCOVER_COMMUNITIES:
-      return {
-        ...state,
-        discoverCommunities: {
-          ...state.discoverCommunities,
-          ...payload,
-        },
-      };
 
     case groupsTypes.GET_COMMUNITY_GROUPS:
       return {
@@ -524,27 +502,9 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     }
-    case groupsTypes.SET_MANAGED_COMMUNITIES:
-      return {
-        ...state,
-        managedCommunities: {
-          ...managedCommunities,
-          ...payload,
-        },
-      };
     case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
       return {
         ...state,
-        discoverCommunities: {
-          ...discoverCommunities,
-          items: {
-            ...discoverCommunities.items,
-            [payload.id]: {
-              ...discoverCommunities.items[payload.id],
-              ...payload.data,
-            },
-          },
-        },
         globalSearch:
           globalSearch?.items && globalSearch.items?.[payload.id]
             ? {

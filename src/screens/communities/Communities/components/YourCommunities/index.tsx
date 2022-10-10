@@ -59,7 +59,7 @@ const YourCommunities = () => {
   };
 
   const renderListFooter = () => {
-    if (!loading) return null;
+    if (!loading) return <Divider color="transparent" size={spacing.padding.large} />;
 
     return (
       <View style={styles.listFooter}>

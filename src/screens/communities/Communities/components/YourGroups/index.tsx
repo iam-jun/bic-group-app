@@ -54,7 +54,7 @@ const renderListFooter = () => {
     loading,
   } = useYourGroupsStore();
 
-  if (!loading) return null;
+  if (!loading) return <Separator />;
 
   return (
     <View style={styles.listFooter} testID="your_groups.loading_more_indicator">

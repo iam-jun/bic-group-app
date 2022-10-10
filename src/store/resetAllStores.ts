@@ -18,9 +18,11 @@ import useArticleStore from './article';
 import useArticleListStore from '~/screens/articles/ArticleList/store';
 import useUserInterestedPostStore from '~/screens/post/components/UserInterestedPost/store';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
-import { useManagedStore } from '~/screens/Discover/components/Managed/store';
-import { useYourCommunitiesStore } from '~/screens/Discover/components/YourCommunities/store';
-import { useYourGroupsStore } from '~/screens/Discover/components/YourGroups/store';
+import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
+import { useManagedStore } from '~/screens/communities/Communities/components/Managed/store';
+import { useYourCommunitiesStore } from '~/screens/communities/Communities/components/YourCommunities/store';
+import { useYourGroupsStore } from '~/screens/communities/Communities/components/YourGroups/store';
+import { useSearchJoinedCommunitiesStore } from '~/screens/communities/Communities/components/SearchCommunity/store';
 
 const stores = [
   // entities
@@ -49,9 +51,11 @@ const stores = [
   useArticleListStore,
   useUserInterestedPostStore,
   useDiscoverCommunitiesStore,
+  useDiscoverCommunitiesSearchStore,
   useManagedStore,
   useYourCommunitiesStore,
   useYourGroupsStore,
+  useSearchJoinedCommunitiesStore,
 ];
 
 export const resetAllStores = () => {

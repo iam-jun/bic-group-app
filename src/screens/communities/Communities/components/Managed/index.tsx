@@ -32,9 +32,9 @@ const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
   const { owner, manage } = useManagedStore();
 
   const item
-    = section === 'discover:owner' ? owner.items[id] : manage.items[id];
+    = section === 'communities:community_menu:owner' ? owner.items[id] : manage.items[id];
   const testID
-    = section === 'discover:owner'
+    = section === 'communities:community_menu:owner'
       ? `managed_owner_item_${id}`
       : `managed_manage_item_${id}`;
 
@@ -66,8 +66,8 @@ const ListEmpty: FC<ListEmptyProps> = ({ type }) => {
   const testID = type === 'owner' ? 'list_empty_owner' : 'list_empty_manage';
   const description
     = type === 'owner'
-      ? 'discover:you_have_not_owner_community'
-      : 'discover:you_have_not_manage_communiy_or_group';
+      ? 'communities:community_menu:you_have_not_owner_community'
+      : 'communities:community_menu:you_have_not_manage_communiy_or_group';
 
   if (canLoadMoreItem) {
     return null;
@@ -91,11 +91,11 @@ const Managed = () => {
   const { ids: idsManage, hasNextPage, loading } = manage;
   const data = [
     {
-      title: 'discover:owner',
+      title: 'communities:community_menu:owner',
       data: idsOwner,
     },
     {
-      title: 'discover:manage',
+      title: 'communities:community_menu:manage',
       data: idsManage,
     },
   ];
@@ -122,7 +122,7 @@ const Managed = () => {
   const renderSectionFooter = ({ section: { title, data } }) => {
     if (data.length !== 0) return null;
 
-    return <ListEmpty type={title === 'discover:owner' ? 'owner' : 'manage'} />;
+    return <ListEmpty type={title === 'communities:community_menu:owner' ? 'owner' : 'manage'} />;
   };
 
   const keyExtractor = (item) => `managed-${item}`;

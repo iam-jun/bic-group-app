@@ -25,8 +25,6 @@ const groupsKeySelector = {
   loadingAvatar: 'groups.loadingAvatar',
   loadingCover: 'groups.loadingCover',
   joinedCommunities: 'groups.joinedCommunities',
-  managedCommunities: 'groups.managedCommunities',
-  discoverCommunitiesData: 'groups.discoverCommunities',
   loadingCommunities: 'groups.communities.loading',
   communityDetail: 'groups.communityDetail',
   communityMembers: 'groups.communityMembers',
