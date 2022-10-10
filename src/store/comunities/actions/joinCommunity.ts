@@ -26,7 +26,6 @@ const joinCommunity
           data: { joinStatus },
         }),
       );
-
       useDiscoverCommunitiesStore
         .getState()
         .actions.setDiscoverCommunities(communityId, { joinStatus });

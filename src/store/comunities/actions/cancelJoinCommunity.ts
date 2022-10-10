@@ -24,7 +24,6 @@ const cancelJoinCommunity
           data: { joinStatus: GroupJoinStatus.VISITOR },
         }),
       );
-
       useDiscoverCommunitiesStore
         .getState()
         .actions.setDiscoverCommunities(communityId, {
@@ -47,7 +46,6 @@ const cancelJoinCommunity
       Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
     } catch (error: any) {
       console.error('cancelJoinCommunity catch', error);
-
       if (error?.code === approveDeclineCode.APPROVED) {
         Store.store.dispatch(
           groupsActions.editDiscoverCommunityItem({
@@ -57,7 +55,6 @@ const cancelJoinCommunity
         );
         actions.getCommunity(communityId);
       }
-
       Store.store.dispatch(appActions.setShowError(error));
     }
   };

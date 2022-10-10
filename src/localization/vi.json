@@ -814,9 +814,13 @@
       "description": "Khám phá các nhóm để tham gia ngay."
     },
     "community_menu": {
-      "your_communities_text": "Bạn đã tham gia",
-      "manage_text": "Bạn quản lý",
-      "discover_text": "Khám phá"
+      "your_communities": "Cộng đồng đã tham gia",
+      "your_groups": "Nhóm đã tham gia",
+      "managed": "Quản lý",
+      "owner": "Sở hữu",
+      "manage": "Quản trị",
+      "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
+      "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào"
     },
     "text_join_community_button": "Tham gia ngay",
     "text_join_group_button": "Tham gia ngay",
@@ -957,13 +961,6 @@
   },
   "discover": {
     "discover_community": "Khám phá cộng đồng",
-    "your_communities": "Cộng đồng đã tham gia",
-    "your_groups": "Nhóm đã tham gia",
-    "managed": "Quản lý",
-    "owner": "Sở hữu",
-    "manage": "Quản trị",
-    "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
-    "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
     "global_search_placeholder": "Tìm kiếm cộng đồng hoặc nhóm..."
   },
   "discard_alert": {

@@ -394,6 +394,16 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
+  searchJoinedCommunities: (
+    params: IParamGetCommunities,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/search/groups`,
+    params: {
+      ...params,
+      key: params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
   getJoinedCommunities: (params: {
     previewMembers?: boolean;
     managed?: boolean;
@@ -824,6 +834,9 @@ const groupApi = {
   ),
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.getDiscoverCommunities, params,
+  ),
+  searchJoinedCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
+    groupsApiConfig.searchJoinedCommunities, params,
   ),
   getJoinedCommunities: (params: {
     previewMembers?: boolean;

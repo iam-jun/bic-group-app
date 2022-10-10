@@ -19,6 +19,7 @@ import modalActions from '~/storeRedux/modal/actions';
 import useCommunitiesStore from '~/store/comunities';
 import ICommunitiesState from '~/store/comunities/Interface';
 import groupsActions from '~/storeRedux/groups/actions';
+import Tag from '~/baseComponents/Tag';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -160,26 +161,24 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
                 <View style={styles.row}>
                   <Icon
                     style={styles.iconSmall}
-                    icon={isGroup(level) ? 'PeoplePantsSimple' : 'PeopleGroup'}
+                    icon="UserGroupSolid"
                     size={16}
                     tintColor={colors.neutral20}
                   />
                   <Text.BodySMedium color={colors.neutral40}>
-                    {t(
-                      isGroup(level) ? 'common:text_group' : 'common:text_community',
-                    )}
+                    {formatLargeNumber(userCount)}
                   </Text.BodySMedium>
                 </View>
               </View>
               <ViewSpacing height={spacing.margin.xSmall} />
-              <View style={styles.row}>
-                <Text.BodySMedium style={styles.textNumberMember}>
-                  {formatLargeNumber(userCount)}
-                </Text.BodySMedium>
-                <Text.BodyS color={colors.neutral40} useI18n>
-                  common:members
-                </Text.BodyS>
-              </View>
+              <Tag
+                style={styles.tagContainer}
+                type="secondary"
+                size="small"
+                label={t(
+                  isGroup(level) ? 'common:text_group' : 'common:text_community',
+                )}
+              />
             </View>
           </View>
           {!!description && (
@@ -223,11 +222,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       marginRight: spacing.margin.small,
       height: 16,
     },
-    textNumberMember: {
-      marginRight: spacing.margin.small,
-    },
     textNameCommunityOnGroup: {
       marginBottom: spacing.margin.tiny,
+    },
+    tagContainer: {
+      alignSelf: 'baseline',
     },
   });
 };

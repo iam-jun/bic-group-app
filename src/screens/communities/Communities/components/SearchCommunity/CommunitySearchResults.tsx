@@ -2,7 +2,6 @@ import {
   View,
   FlatList,
   StyleSheet,
-  RefreshControl,
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
@@ -10,29 +9,59 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import { useKeySelector } from '~/hooks/selector';
 import CommunityItem from '~/screens/groups/components/CommunityItem';
 import spacing from '~/theme/spacing';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useSearchJoinedCommunitiesStore } from './store';
+import { isGroup } from '~/screens/groups/helper';
+import ICommunitiesState from '~/store/comunities/Interface';
+import useCommunitiesStore from '~/store/comunities';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 interface CommunitySearchResultsProps {
   onLoadMore?: () => void;
-  onPressCommunity: (id: string) => void;
   onRefresh?: () => void;
 }
 
 const CommunitySearchResults = ({
   onLoadMore,
-  onPressCommunity,
-  onRefresh,
 }: CommunitySearchResultsProps) => {
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
 
   const {
-    loading, canLoadMore, ids, items,
-  } = useKeySelector(groupsKeySelector.communitySearch);
+    loading, hasNextPage, ids, items,
+  } = useSearchJoinedCommunitiesStore();
+  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
-  const renderItem = ({ item }: {item: number}) => {
+  const onPressCommunity = (communityId: string) => {
+    const item = items[communityId];
+    const { level, id, community } = item;
+
+    if (isGroup(level)) {
+      // in group detail we need some infomation from community detail,
+      // so before navigate to group detail we need to fetch community detail
+      actions.getCommunity(community.id);
+
+      rootNavigation.navigate(
+        groupStack.groupDetail,
+        {
+          groupId: id,
+        },
+      );
+      return;
+    }
+
+    // if a community has community field (manage api, /me/search/groups)
+    // so need to pick id from community field
+    // otherwise pick id by normal
+    rootNavigation.navigate(
+      groupStack.communityDetail,
+      { communityId: community ? community.id : id },
+    );
+  };
+
+  const renderItem = ({ item }: {item: string}) => {
     const currentItem = items[item];
     return (
       <CommunityItem item={currentItem} onPressCommunities={onPressCommunity} />
@@ -62,7 +91,7 @@ const CommunitySearchResults = ({
   );
 
   const renderListFooter = () => {
-    if (!loading && canLoadMore && ids.length > 0) {
+    if (!loading && hasNextPage && ids.length > 0) {
       return (
         <View style={styles.listFooter}>
           <ActivityIndicator testID="community_search_results.loading_more" />
@@ -88,15 +117,6 @@ const CommunitySearchResults = ({
       showsVerticalScrollIndicator={false}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
-      refreshControl={
-        onRefresh ? (
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            tintColor={theme.colors.gray40}
-          />
-        ) : undefined
-      }
       ItemSeparatorComponent={() => <ViewSpacing height={4} />}
     />
   );
