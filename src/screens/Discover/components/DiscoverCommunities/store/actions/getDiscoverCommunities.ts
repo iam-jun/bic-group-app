@@ -1,6 +1,9 @@
 import groupApi from '~/api/GroupApi';
 import { IParamGetCommunities } from '~/interfaces/ICommunity';
 
+const PAGE_SIZE = 21;
+const ORDER_BY = 'name:asc';
+
 const getDiscoverCommunities
   = (set, get) => async (isRefreshing?: boolean) => {
     try {
@@ -17,9 +20,9 @@ const getDiscoverCommunities
       );
 
       const params: IParamGetCommunities = {
-        limit: 21,
+        limit: PAGE_SIZE,
         offset: isRefreshing ? 0 : ids.length,
-        sort: 'name:asc',
+        sort: ORDER_BY,
       };
       const response = await groupApi.getDiscoverCommunities(params);
 
