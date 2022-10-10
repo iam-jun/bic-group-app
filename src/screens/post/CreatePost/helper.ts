@@ -262,3 +262,16 @@ export const filterRemovedLinkPreviewNoLongerExists = (
   urls: string[],
   lstRemovedLinkPreview: string[],
 ) => lstRemovedLinkPreview.filter((item) => urls.includes(item));
+
+export const removeLinkPreviewExistsInAdditionalLinkPreview = (
+  lstLinkPreview: ILinkPreviewCreatePost[],
+  additionalLinkPreview: ILinkPreviewCreatePost[],
+) => {
+  const lstLinkInAdditionalLinkPreview = additionalLinkPreview.map(
+    (item) => item.url,
+  );
+  const lstLinkPreviewNotInAdditionalLinkPreview = lstLinkPreview.filter(
+    (item) => !lstLinkInAdditionalLinkPreview.includes(item.url),
+  );
+  return lstLinkPreviewNotInAdditionalLinkPreview;
+};
