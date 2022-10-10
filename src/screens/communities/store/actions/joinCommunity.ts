@@ -4,6 +4,7 @@ import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
+import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
 import useCommunitiesStore from '~/store/entities/comunities';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
@@ -27,6 +28,9 @@ const joinCommunity
       useDiscoverCommunitiesStore
         .getState()
         .actions.setDiscoverCommunities(communityId, { joinStatus });
+      useDiscoverCommunitiesSearchStore
+        .getState()
+        .actions.setDiscoverCommunitiesSearchItem(communityId, { joinStatus });
 
       useCommunitiesStore.getState().actions.getCommunity(communityId);
 

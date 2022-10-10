@@ -1,6 +1,8 @@
 import groupApi from '~/api/GroupApi';
-import appConfig from '~/configs/appConfig';
 import { IParamGetCommunities } from '~/interfaces/ICommunity';
+
+const PAGE_SIZE = 21;
+const ORDER_BY = 'name:asc';
 
 const getDiscoverCommunities
   = (set, get) => async (isRefreshing?: boolean) => {
@@ -18,8 +20,9 @@ const getDiscoverCommunities
       );
 
       const params: IParamGetCommunities = {
-        limit: appConfig.recordsPerPage,
+        limit: PAGE_SIZE,
         offset: isRefreshing ? 0 : ids.length,
+        sort: ORDER_BY,
       };
       const response = await groupApi.getDiscoverCommunities(params);
 
