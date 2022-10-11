@@ -1,4 +1,4 @@
-import { createStore } from '~/store/utils';
+import { createStore, resetStore } from '~/store/utils';
 import getManaged from './actions/getManaged';
 import getManagedCommunityAndGroup from './actions/getManagedCommunityAndGroup';
 import getOwnerCommunity from './actions/getOwnerCommunity';
@@ -26,6 +26,7 @@ const managedState = (set, get): IManagedState => ({
     getOwnerCommunity: getOwnerCommunity(set, get),
     getManagedCommunityAndGroup: getManagedCommunityAndGroup(set, get),
   },
+  reset: () => resetStore(initManagedState, set),
 });
 
 export const useManagedStore = createStore<IManagedState>(managedState);

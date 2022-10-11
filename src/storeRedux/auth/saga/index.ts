@@ -25,6 +25,7 @@ import showError from '~/storeRedux/commonSaga/showError';
 import FileUploader from '~/services/fileUploader';
 import ImageUploader from '~/services/imageUploader';
 import authStacks from '~/router/navigator/AuthStack/stack';
+import resetAllStores from '~/store/resetAllStores';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -153,11 +154,13 @@ function* signOut({ payload }: any) {
     }
     FileUploader.getInstance()?.resetData?.();
     ImageUploader.getInstance()?.resetData?.();
+    resetAllStores();
   } catch (err) {
     yield showError(err);
     if (!payload) {
       return;
     }
+    resetAllStores();
     navigation.replace(rootSwitch.authStack);
   }
 }
