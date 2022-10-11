@@ -35,8 +35,6 @@ import postActions from '~/storeRedux/post/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import { formatLargeNumber } from '~/utils/formatData';
-import SeenCountsView from '../SeenCountsView';
-import UserInterestedPost from '../UserInterestedPost';
 import { getPostViewMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
 import { useMyPermissions } from '~/hooks/permissions';
@@ -46,6 +44,7 @@ import { Button } from '~/baseComponents';
 import { getTotalReactions } from '../PostViewComponents/helper';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import ContentInterestedUserCount from '~/components/ContentView/components/ContentInterestedUserCount';
 
 export interface PostViewProps {
   style?: any;
@@ -236,35 +235,6 @@ const _PostView: FC<PostViewProps> = ({
     dispatch(modalActions.showReactionDetailBottomSheet(payload));
   };
 
-  const onPressSeenBy = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        isFullScreen: true,
-        titleFullScreen: t('post:label_seen_by'),
-        ContentComponent: <UserInterestedPost postId={postId} />,
-      }),
-    );
-  };
-  const _onPressHeader = () => {
-    if (onPressHeader) {
-      onPressHeader?.(postId);
-    } else {
-      rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
-    }
-  };
-
-  const _onPressComment = () => {
-    if (onPressComment) {
-      onPressComment?.(postId);
-    } else {
-      rootNavigation.navigate(homeStack.postDetail, {
-        post_id: postId,
-        focus_comment: true,
-      });
-    }
-  };
-
   const _onPress = () => {
     if (pressNavigateToDetail) {
       rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
@@ -307,10 +277,11 @@ const _PostView: FC<PostViewProps> = ({
       />
       <View style={[styles.container]} onLayout={() => onContentLayout?.()}>
         <PostViewHeader
+          postId={postId}
           audience={audience}
           actor={actor}
           time={createdAt}
-          onPressHeader={_onPressHeader}
+          onPressHeader={onPressHeader}
           onPressMenu={onPressMenu}
           onPressShowAudiences={onPressShowAudiences}
           disabled={!hasReactPermission}
@@ -329,10 +300,7 @@ const _PostView: FC<PostViewProps> = ({
           linkPreview={linkPreview}
         />
         {!isLite && (
-          <SeenCountsView
-            onPress={onPressSeenBy}
-            seenPeopleCount={totalUsersSeen}
-          />
+          <ContentInterestedUserCount id={postId} interestedUserCount={totalUsersSeen} />
         )}
         {!isLite && !!canReact && (
           <ReactionView
@@ -350,24 +318,25 @@ const _PostView: FC<PostViewProps> = ({
             reactionsCount={Number(numberOfReactions)}
             commentsCount={commentsCount}
             seenCountsViewComponent={(
-              <SeenCountsView
+              <ContentInterestedUserCount
+                id={postId}
+                interestedUserCount={totalUsersSeen}
                 style={styles.seenCountsViewAtBottom}
-                onPress={onPressSeenBy}
-                seenPeopleCount={totalUsersSeen}
               />
             )}
           />
         ) : (
           <PostViewFooter
+            postId={postId}
             labelButtonComment={labelButtonComment}
-            onAddReaction={onAddReaction}
-            onPressComment={_onPressComment}
             btnReactTestID={btnReactTestID}
             btnCommentTestID={btnCommentTestID}
             reactionCounts={reactionsCount}
             canComment={!!canComment}
             canReact={!!canReact}
             hasReactPermission={hasReactPermission}
+            onPressComment={onPressComment}
+            onAddReaction={onAddReaction}
           />
         )}
         {!isLite && (

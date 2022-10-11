@@ -638,7 +638,12 @@
       "button_text": "Back to News Feed"
     },
     "text_important_warning_1": "Cannot set because you don't have this permission at",
-    "text_important_warning_2": ". Please remove them or contact your admin"
+    "text_important_warning_2": ". Please remove them or contact your admin",
+    "article_menu": {
+      "edit": "Edit Article",
+      "copy_link": "Copy Link",
+      "delete": "Delete Article"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

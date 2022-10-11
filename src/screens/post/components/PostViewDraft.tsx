@@ -188,6 +188,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       />
       <View style={[styles.container, style]}>
         <PostViewHeader
+          postId={id || ''}
           audience={audience}
           actor={actor}
           time={createdAt}

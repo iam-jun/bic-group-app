@@ -4,13 +4,13 @@ import { useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
-import Icon from '~/baseComponents/Icon';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
 import TimeView from '~/beinComponents/TimeView';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
+import { getAudiencesText } from '~/screens/post/components/PostViewComponents/helper';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { Button } from '~/baseComponents';
 
@@ -20,7 +20,7 @@ export interface ContentHeaderProps {
   audience?: IPostAudience;
   disabled?: boolean;
 
-  onPressHeader?: () => void;
+  onPressHeader?: (id?: string) => void;
   onPressMenu?: (e: any) => void;
   onPressShowAudiences?: () => void;
 }
@@ -57,10 +57,10 @@ const ContentHeader: FC<ContentHeaderProps> = ({
 
   return (
     <Button
-      testID="post_view_header"
+      testID="content_header"
       style={styles.headerContainer}
       disabled={disabled || !onPressHeader}
-      onPress={onPressHeader}
+      onPress={() => onPressHeader()}
     >
       <Button
         style={styles.avatar}
@@ -73,20 +73,21 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           style={styles.btnActor}
           onPress={onPressActor}
         >
-          <Text.H5 numberOfLines={1} testID="post_view_header.actor">
+          <Text.SubtitleM color={colors.neutral80} numberOfLines={1} testID="content_header.actor">
             {actorName}
-          </Text.H5>
+          </Text.SubtitleM>
         </Button>
         <View style={styles.textToAudience}>
-          <Text.H6 useI18n style={styles.textTo}>
+          <Text.BodyM color={colors.neutral40} useI18n style={styles.textTo}>
             post:to
-          </Text.H6>
-          <Text.H5
-            testID="post_view_header.audiences"
+          </Text.BodyM>
+          <Text.SubtitleM
+            testID="content_header.audiences"
+            color={colors.neutral80}
             onPress={!isInternetReachable ? undefined : onPressShowAudiences}
           >
             {textAudiences}
-          </Text.H5>
+          </Text.SubtitleM>
         </View>
         <View style={styles.rowCenter}>
           <TimeView
@@ -96,39 +97,17 @@ const ContentHeader: FC<ContentHeaderProps> = ({
         </View>
       </View>
       {!!onPressMenu && (
-        <View style={{ marginRight: spacing.margin.small }}>
-          <Icon
-            style={{ alignSelf: 'auto' }}
+        <View style={styles.iconMenu}>
+          <Button.Raise
             icon="menu"
-            testID="post_view_header.menu"
+            size="small"
+            testID="content_header.menu"
             onPress={onPressMenu}
           />
         </View>
       )}
     </Button>
   );
-};
-
-const getAudiencesText = (
-  aud?: IPostAudience, t?: any,
-) => {
-  const limitLength = 25;
-  let result = '';
-  const { groups = [], users = [] } = aud || {};
-  const total = groups.length + users.length;
-  result = groups?.[0]?.name || users?.[0]?.fullname || '';
-  const left = total - 1;
-  if (result?.length > limitLength) {
-    result = `${result.substr(
-      0, limitLength,
-    )}...`;
-  } else if (left > 0) {
-    result = `${result},...`;
-  }
-  if (left > 0) {
-    result = `${result} +${left} ${t?.('post:other_places')}`;
-  }
-  return result;
 };
 
 const styles = StyleSheet.create({
@@ -153,6 +132,10 @@ const styles = StyleSheet.create({
   },
   btnActor: {
     alignSelf: 'flex-start',
+    marginRight: spacing.margin.base,
+  },
+  iconMenu: {
+    marginRight: spacing.margin.large,
   },
 });
 
