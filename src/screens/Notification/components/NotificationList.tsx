@@ -11,7 +11,6 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
-import Icon from '~/baseComponents/Icon';
 import NotificationItem from '~/beinComponents/list/items/NotificationItem';
 import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
@@ -133,19 +132,7 @@ const _NotificationList = ({
     />
   );
 
-  const renderUnReadNotificationsEmpty = () => {
-    if (type === 'UNREAD' && noMoreNotification) {
-      return (
-        <View style={styles.unReadNotifications}>
-          <Icon icon="CircleCheck" size={40} tintColor={theme.colors.success} />
-          <Text.BodyS useI18n style={{ marginTop: spacing.margin.base }}>
-            notification:seen_all_notifications
-          </Text.BodyS>
-        </View>
-      );
-    }
-    return <NoNotificationFound />;
-  };
+  const renderUnReadNotificationsEmpty = () => <NoNotificationFound />;
 
   const _notificationList = React.useMemo(
     () => {

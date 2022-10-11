@@ -9,7 +9,6 @@ import mainStack from '~/router/navigator/MainStack/stack';
 
 import spacing, { margin } from '~/theme/spacing';
 import useArticlesStore, { IArticlesState } from '~/store/entities/articles';
-import { PostViewFooter } from '~/screens/post/components/PostViewComponents';
 import { useBaseHook } from '~/hooks';
 import Header from '~/beinComponents/Header';
 import { IRouteParams } from '~/interfaces/IRouter';
@@ -17,6 +16,7 @@ import ArticleHeader from '../components/ArticleHeader';
 import Markdown from '~/beinComponents/Markdown';
 import Text from '~/beinComponents/Text';
 import HashTags from '../components/HashTags';
+import ArticleFooter from '../components/ArticleFooter';
 
 const ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -74,13 +74,10 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
             onPressAudience={onPressMentionAudience}
           />
           <HashTags data={hashtags} />
-          <PostViewFooter
+          <ArticleFooter
+            articleId={id}
             labelButtonComment={labelButtonComment}
             reactionCounts={reactionsCount}
-        // onAddReaction={onAddReaction}
-        // onPressComment={_onPressComment}
-        // btnReactTestID={btnReactTestID}
-        // btnCommentTestID={btnCommentTestID}
             canReact={setting?.canReact}
             canComment={setting?.canComment}
           />

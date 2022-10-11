@@ -599,7 +599,12 @@
       "button_text": "Quay về News Feed"
     },
     "text_important_warning_1": "Không thể cài đặt Bài viết quan trọng vì bạn không có quyền trong",
-    "text_important_warning_2": ". Vui lòng xoá chúng hoặc liên hệ với quản trị viên của bạn."
+    "text_important_warning_2": ". Vui lòng xoá chúng hoặc liên hệ với quản trị viên của bạn.",
+    "article_menu": {
+      "edit": "Chỉnh sửa bài viết",
+      "copy_link": "Sao chép đường dẫn",
+      "delete": "Xóa bài viết"
+    }
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
