@@ -61,7 +61,6 @@ const themeStyles = () => StyleSheet.create({
     height: 62,
     borderRadius: 50,
     position: 'absolute',
-    top: -31,
   },
   loadingIndicator: {
     width: 74,
