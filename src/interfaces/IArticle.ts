@@ -1,3 +1,4 @@
+import { ILinkPreview } from '~/interfaces/IPost';
 import { SortOder } from './common';
 import { IOrder } from './IHome';
 
@@ -27,4 +28,34 @@ export interface IParamGetArticleDetail {
   child_comment_limit?: number;
   offset: number;
   with_comment?: boolean;
+}
+
+export interface IParamPutEditArticle {
+  articleId: string;
+  data: IEditArticleData;
+}
+
+export interface IEditArticleAudience {
+  userIds: string[];
+  groupIds: string[];
+}
+
+export interface IEditArticleData {
+  title?: string;
+  content?: string;
+  summary?: string;
+  categories?: string[];
+  series?: string[];
+  hashtags?: string[];
+  audience?: IEditArticleAudience;
+  media?: any;
+  setting?: {
+    canShare: boolean,
+    canReact: boolean,
+    canComment: boolean,
+    isImportant: boolean,
+    importantExpiredAt: string
+  };
+  mentions?: any;
+  linkPreview?: ILinkPreview;
 }

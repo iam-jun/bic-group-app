@@ -455,6 +455,9 @@
     "title_help_support": "Help & Support",
     "title_logout": "Log Out"
   },
+  "article": {
+    "title_edit_article": "Edit Article"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
@@ -1038,7 +1041,7 @@
   },
   "discard_alert": {
     "title": "Discard Changes?",
-    "content": "If you discard now, you’ll lose any changes you’ve made."
+    "content": "If you discard now, you'll lose any changes you've made."
   },
   "sticker": {
     "search_giphy": "Search GIPHY",

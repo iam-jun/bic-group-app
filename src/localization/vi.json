@@ -414,6 +414,9 @@
     "title_help_support": "Trung tâm trợ giúp",
     "title_logout": "Đăng xuất"
   },
+  "article": {
+    "title_edit_article": "Sửa Bài Viết"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Chi tiết bài viết",
