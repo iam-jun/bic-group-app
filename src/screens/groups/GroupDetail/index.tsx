@@ -71,7 +71,7 @@ const GroupDetail = (props: any) => {
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
-  const { name, privacy } = groupInfo;
+  const { name, privacy, id: idCurrentGroupDetail } = groupInfo;
   const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
   const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const { name: communityName, joinStatus: joinStatusCommunity }
@@ -85,9 +85,15 @@ const GroupDetail = (props: any) => {
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
-  const isLoadingGroup = useKeySelector(groupsKeySelector.loadingPage);
-  const hasNoDataInStore = !groupInfo;
-  const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
+
+  // Temporarily comment this snippet code
+  // Because old data will show up before being replaced by new data
+  // This is considered a bug by tester
+  // const isLoadingGroup = useKeySelector(groupsKeySelector.loadingPage);
+  // const hasNoDataInStore = !groupInfo;
+  // const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
+
+  const shouldShowPlaceholder = idCurrentGroupDetail !== groupId;
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId('groups', groupId, [
