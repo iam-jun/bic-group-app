@@ -32,18 +32,15 @@ const GroupItem: FC<GroupItemProps> = ({ id, section }) => {
   const { owner, manage } = useManagedStore();
 
   const item
-    = section === 'communities:community_menu:owner' ? owner.items[id] : manage.items[id];
+    = section === 'communities:community_menu:owner'
+      ? owner.items[id]
+      : manage.items[id];
   const testID
     = section === 'communities:community_menu:owner'
       ? `managed_owner_item_${id}`
       : `managed_manage_item_${id}`;
 
-  return (
-    <CommunityGroupCard
-      item={item}
-      testID={testID}
-    />
-  );
+  return <CommunityGroupCard item={item} testID={testID} />;
 };
 
 const SectionTitle: FC<SectionTitleProps> = ({ title }) => {
@@ -80,6 +77,15 @@ const ListEmpty: FC<ListEmptyProps> = ({ type }) => {
   );
 };
 
+const ListEmptyAll = () => (
+  <View>
+    <EmptyScreen
+      icon="searchUsers"
+      description="communities:community_menu:you_dont_have_any_community_group"
+    />
+  </View>
+);
+
 const Managed = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -89,7 +95,7 @@ const Managed = () => {
   } = useManagedStore();
   const { ids: idsOwner } = owner;
   const { ids: idsManage, hasNextPage, loading } = manage;
-  const data = [
+  const data = hasNextPage || idsOwner.length !== 0 || idsManage.length !== 0 ? [
     {
       title: 'communities:community_menu:owner',
       data: idsOwner,
@@ -98,7 +104,7 @@ const Managed = () => {
       title: 'communities:community_menu:manage',
       data: idsManage,
     },
-  ];
+  ] : [];
 
   const onLoadMore = () => {
     if (hasNextPage) {
@@ -122,7 +128,11 @@ const Managed = () => {
   const renderSectionFooter = ({ section: { title, data } }) => {
     if (data.length !== 0) return null;
 
-    return <ListEmpty type={title === 'communities:community_menu:owner' ? 'owner' : 'manage'} />;
+    return (
+      <ListEmpty
+        type={title === 'communities:community_menu:owner' ? 'owner' : 'manage'}
+      />
+    );
   };
 
   const keyExtractor = (item) => `managed-${item}`;
@@ -131,7 +141,10 @@ const Managed = () => {
     if (!loading) return <View style={styles.listFooter} />;
 
     return (
-      <View style={styles.listFooter} testID="your_groups.loading_more_indicator">
+      <View
+        style={styles.listFooter}
+        testID="your_groups.loading_more_indicator"
+      >
         <ActivityIndicator />
       </View>
     );
@@ -160,6 +173,7 @@ const Managed = () => {
           tintColor={theme.colors.gray40}
         />
       )}
+      ListEmptyComponent={() => <ListEmptyAll />}
     />
   );
 };

@@ -25,6 +25,7 @@ export interface ButtonProps extends ButtonWrapperProps {
   loading?: boolean;
   useI18n?: boolean;
   icon?: IconType;
+  iconSize?: number;
 }
 
 export const ButtonComponent: React.FC<ButtonProps> = ({
@@ -37,6 +38,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
   loading,
   useI18n,
   icon,
+  iconSize,
   children,
   ...props
 }: ButtonProps) => {
@@ -50,7 +52,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
 
   const textVariant = TEXT_SIZES[size];
   const buttonHeight = BUTTON_SIZES[size];
-  const iconSize = ICON_SIZES[textVariant];
+  const iconSizeDisplay = iconSize || ICON_SIZES[size];
   const textColor = disabled || loading ? colors.neutral20 : buttonColors.text;
 
   const buttonVariantStyle = {
@@ -61,13 +63,12 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
 
   const renderIcon = () => {
     if (loading || !icon) return null;
-
     return (
       <Icon
         testID="button.icon"
         icon={icon}
         tintColor={textColor}
-        size={iconSize}
+        size={iconSizeDisplay}
       />
     );
   };
@@ -80,7 +81,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
         testID="button.loading"
         color={colors.neutral20}
         style={children ? styles.loading : styles.loadingWithNoMargin}
-        size={iconSize}
+        size={iconSizeDisplay}
       />
     );
   };

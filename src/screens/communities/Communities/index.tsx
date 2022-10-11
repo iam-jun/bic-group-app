@@ -11,9 +11,13 @@ import Managed from './components/Managed';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import SearchCommunity from './components/SearchCommunity';
+import { ICON_SIZES } from '~/baseComponents/Button/constants';
 
 const HEADER_TAB = [
-  { id: 'community-tab-1', text: 'communities:community_menu:your_communities' },
+  {
+    id: 'community-tab-1',
+    text: 'communities:community_menu:your_communities',
+  },
   { id: 'community-tab-2', text: 'communities:community_menu:your_groups' },
   { id: 'community-tab-3', text: 'communities:community_menu:managed' },
 ];
@@ -69,7 +73,11 @@ const Index = () => {
         titleTextProps={{ useI18n: true, style: styles.textHeader }}
         icon="iconSearch"
         onPressIcon={onPressSearch}
-        buttonProps={{ icon: 'CompassSolid', style: styles.buttonHeader }}
+        buttonProps={{
+          icon: 'CompassSolid',
+          iconSize: ICON_SIZES.small,
+          style: styles.buttonHeader,
+        }}
         onPressButton={onDiscoverButtonPress}
       />
       <View style={styles.containerContent}>
@@ -93,6 +101,8 @@ const Index = () => {
     </View>
   );
 };
+
+const SIZE_DISCOVER_BUTTON = 36;
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -120,6 +130,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     buttonHeader: {
       marginLeft: spacing.margin.tiny,
       marginRight: spacing.margin.small,
+      width: SIZE_DISCOVER_BUTTON,
     },
   });
 };
