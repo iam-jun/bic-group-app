@@ -161,7 +161,8 @@ import { faClapperboardPlay } from '@fortawesome/pro-regular-svg-icons/faClapper
 import { faMarkdown } from '@fortawesome/free-brands-svg-icons/faMarkdown';
 import { faCommentDots as faCommentDotsSolid } from '@fortawesome/pro-solid-svg-icons/faCommentDots';
 import { faUpRightAndDownLeftFromCenter as faUpRightAndDownLeftFromCenterSolid } from '@fortawesome/pro-solid-svg-icons/faUpRightAndDownLeftFromCenter';
-import { faPeopleGroup } from '@fortawesome/pro-solid-svg-icons/faPeopleGroup';
+import { faPeopleGroup as faPeopleGroupSolid } from '@fortawesome/pro-solid-svg-icons/faPeopleGroup';
+import { faPeopleGroup } from '@fortawesome/pro-regular-svg-icons/faPeopleGroup';
 import { faPeoplePantsSimple } from '@fortawesome/pro-solid-svg-icons/faPeoplePantsSimple';
 import { faPawSimple } from '@fortawesome/pro-regular-svg-icons/faPawSimple';
 import { faBurgerSoda } from '@fortawesome/pro-regular-svg-icons/faBurgerSoda';
@@ -351,6 +352,7 @@ export const initFontAwesomeIcon = () => {
     faMarkdown,
     faCommentDotsSolid,
     faUpRightAndDownLeftFromCenterSolid,
+    faPeopleGroupSolid,
     faPeopleGroup,
     faPeoplePantsSimple,
     faPawSimple,
@@ -526,7 +528,8 @@ export const fontAwesomeIcons = {
   Markdown: 'fa-brands fa-markdown',
   CommentDotsSolid: 'fa-solid fa-comment-dots',
   UpRightAndDownLeftFromCenter: 'fa-solid fa-up-right-and-down-left-from-center',
-  PeopleGroup: 'fa-solid fa-people-group',
+  PeopleGroupSolid: 'fa-solid fa-people-group',
+  PeopleGroup: 'fa-regular fa-people-group',
   PeoplePantsSimple: 'fa-solid fa-people-pants-simple',
   PawSimple: 'fa-regular fa-paw-simple',
   BurgerSoda: 'fa-regular fa-burger-soda',

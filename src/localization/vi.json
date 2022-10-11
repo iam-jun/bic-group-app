@@ -826,7 +826,8 @@
       "owner": "Sở hữu",
       "manage": "Quản trị",
       "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
-      "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào"
+      "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
+      "you_dont_have_any_community_group": "You don't have any communities or groups"
     },
     "text_join_community_button": "Tham gia ngay",
     "text_join_group_button": "Tham gia ngay",

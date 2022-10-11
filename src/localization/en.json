@@ -891,8 +891,9 @@
       "managed": "Managed",
       "owner": "Own",
       "manage": "Manage",
-      "you_have_not_owner_community": "You have not owner community",
-      "you_have_not_manage_communiy_or_group": "You have not manage communiy or group"
+      "you_have_not_owner_community": "You don't own any communities",
+      "you_have_not_manage_communiy_or_group": "You don't manage any communities or groups",
+      "you_dont_have_any_community_group": "You don't have any communities or groups"
     },
     "text_join_community_button": "Join",
     "text_join_group_button": "Join",
