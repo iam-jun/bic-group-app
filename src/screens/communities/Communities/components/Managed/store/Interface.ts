@@ -1,3 +1,4 @@
+import IBaseState from '~/store/interfaces/IBaseState';
 import IFetchingState from '~/store/interfaces/IFetchingState';
 
 interface IOwnerState extends IFetchingState {
@@ -14,7 +15,7 @@ interface IManageState extends IFetchingState {
   };
 }
 
-export interface IManagedState {
+export interface IManagedState extends IBaseState {
   refreshing: boolean;
   owner: IOwnerState;
   manage: IManageState;
