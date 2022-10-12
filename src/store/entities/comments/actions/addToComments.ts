@@ -7,8 +7,9 @@ const addToComments = (_set, get) => (payload: ICommentData[] | ICommentData) =>
   const newComments = cloneDeep(comments);
   if (isArray(payload) && payload.length > 0) {
     payload.forEach((item: ICommentData) => {
-      if (item?.id) {
-        newComments[item.id] = item;
+      if (item?.id || item?.localId) {
+        const currentId = item.id || item.localId?.toString?.();
+        newComments[currentId] = item;
       }
     });
   } else if (payload && 'id' in payload && payload.id) {

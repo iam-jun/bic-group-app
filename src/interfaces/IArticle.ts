@@ -11,10 +11,10 @@ export interface IParamGetArticles {
   idLte?: number;
   idGt?: number;
   idLt?: number;
-  created_at_gt?: string,
-  created_at_lt?: string,
-  created_at_gte?: string,
-  created_at_lte?: string,
+  createdAtGt?: string,
+  createdAtLt?: string,
+  createdAtGte?: string,
+  createdAtLte?: string,
   categories?: string[],
   series?: string[],
   groupId?: string[],
@@ -22,12 +22,12 @@ export interface IParamGetArticles {
 }
 
 export interface IParamGetArticleDetail {
-  comment_order?: SortOder;
-  child_comment_order?: SortOder;
-  comment_limit?: number;
-  child_comment_limit?: number;
+  commentOrder?: SortOder;
+  childCommentOrder?: SortOder;
+  commentLimit?: number;
+  childCommentLimit?: number;
   offset: number;
-  with_comment?: boolean;
+  withComment?: boolean;
 }
 
 export interface IParamPutEditArticle {

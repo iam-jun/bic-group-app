@@ -1,44 +1,36 @@
-import { call } from 'redux-saga/effects';
-
 import { IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/storeRedux/commonSaga/showError';
+import showError from '~/store/helper/showError';
 import streamApi from '../../../api/StreamApi';
-import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
-export default function* deleteReactToPost({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadReactToPost;
-}): any {
+const deleteReactToPost = (_set, get) => async (payload: IPayloadReactToPost) => {
   const {
     id, reactionId, reactionCounts, ownReaction,
   } = payload;
+  const { actions } = get();
   const post1 = usePostsStore.getState()?.posts?.[id] || {};
   try {
     const cOwnReaction1 = post1.ownerReactions || [];
     const rId = cOwnReaction1?.find((item: IReaction) => item?.reactionName === reactionId)?.id || '';
     if (rId) {
-      yield removeReactionLocal(
+      removeReactionLocal(get)(
         id, reactionId,
       );
-      yield call(
-        streamApi.deleteReaction, {
-          reactionId: rId,
-          target: 'POST',
-          targetId: id,
-          reactionName: reactionId,
-        },
-      );
+      await
+      streamApi.deleteReaction({
+        reactionId: rId,
+        target: 'POST',
+        targetId: id,
+        reactionName: reactionId,
+      });
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(
+    actions.onUpdateReactionOfPostById(
       id, ownReaction, reactionCounts,
     ); // rollback
-    yield showError(e);
+    showError(e);
   }
-}
+};
 
 // function* addReactionLoadingLocal(
 //   id: string,
@@ -62,9 +54,11 @@ export default function* deleteReactToPost({
 //   });
 // }
 
-function* removeReactionLocal(
+const removeReactionLocal = (get) => (
   id: string, reactionId: string,
-): any {
+) => {
+  const { actions } = get();
+
   const post2 = usePostsStore.getState()?.posts?.[id] || {};
   const cOwnerReactions2 = post2.ownerReactions || [];
   const cReactionCounts2 = post2.reactionsCount || {};
@@ -84,7 +78,9 @@ function* removeReactionLocal(
       };
     }
   });
-  yield onUpdateReactionOfPostById(
+  actions.onUpdateReactionOfPostById(
     id, newOwnerReactions2, newReactionCounts2,
   );
-}
+};
+
+export default deleteReactToPost;

@@ -1,53 +1,50 @@
-import { put, select } from 'redux-saga/effects';
 import { IPayloadPutEditComment } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
-import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
-import showError from '~/storeRedux/commonSaga/showError';
-import modalActions from '~/storeRedux/modal/actions';
 import { timeOut } from '~/utils/common';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
+import useCommentInputStore from '~/screens/post/components/CommentInputView/store';
+import showError from '~/store/helper/showError';
+import Store from '~/storeRedux';
+import modalActions from '~/storeRedux/modal/actions';
 
 const navigation = withNavigation(rootNavigationRef);
 
-function* putEditComment({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadPutEditComment;
-}): any {
+const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
   const { id, comment, data } = payload;
   if (!id || !data || !comment) {
     console.error('\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m');
     return;
   }
   try {
-    yield put(postActions.setCreateComment({ loading: true }));
+    useCommentInputStore.getState().actions.setCreateComment({ loading: true });
 
     // get mentions from temp selected in mention input
-    const tempMentions = yield select((state) => state?.mentionInput?.tempSelected);
+    const { mentionInput } = Store.store.getState();
+    const tempMentions = mentionInput?.tempSelected;
     const newMentions = getMentionsFromContent(
       data?.content, tempMentions,
     );
     data.mentions = { ...comment?.mentions, ...newMentions };
 
-    yield streamApi.putEditComment(
+    await streamApi.putEditComment(
       id, data,
     );
 
     const newComment = { ...comment, ...data, edited: true };
     newComment.updatedAt = new Date().toISOString();
     useCommentsStore.getState().actions.addToComments(newComment);
-    yield put(modalActions.showHideToastMessage({ content: 'post:edit_comment_success' }));
-    yield timeOut(500);
-    navigation.goBack();
-    yield put(postActions.setCreateComment({ loading: false, content: '' }));
-  } catch (e) {
-    yield put(postActions.setCreateComment({ loading: false }));
-    yield showError(e);
-  }
-}
 
-export default putEditComment;
+    Store.store.dispatch(modalActions.showHideToastMessage({ content: 'post:edit_comment_success' }));
+    timeOut(500);
+    navigation.goBack();
+    useCommentInputStore.getState().actions.setCreateComment({ loading: false, content: '' });
+  } catch (e) {
+    useCommentInputStore.getState().actions.setCreateComment({ loading: false });
+    showError(e);
+  }
+};
+
+export default editComment;

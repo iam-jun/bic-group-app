@@ -23,6 +23,8 @@ import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
 import useDraftPostStore from '../DraftPost/store';
 import { checkExpiration } from '../helper/postUtils';
+import useCommentInputStore from '../components/CommentInputView/store';
+import ICommentInputState from '../components/CommentInputView/store/Interface';
 
 export interface CreatePostProps {
   route?: {
@@ -34,6 +36,8 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const toolbarRef = useRef<any>();
   const mentionInputRef = useRef<any>();
   const screenParams = route?.params || {};
+
+  const actions = useCommentInputStore((state: ICommentInputState) => state.actions);
 
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -122,7 +126,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         dispatch(postActions.setCreatePostImagesDraft([]));
 
         // clear comment because of comment input view listen emit event change text
-        dispatch(postActions.setCreateComment({ content: '', loading: false }));
+        actions.setCreateComment({ content: '', loading: false });
       };
     }, [],
   );

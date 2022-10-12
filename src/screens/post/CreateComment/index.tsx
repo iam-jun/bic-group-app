@@ -16,11 +16,8 @@ import { useDispatch } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
-import postKeySelector from '~/storeRedux/post/keySelector';
-import postActions from '~/storeRedux/post/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
@@ -29,6 +26,7 @@ import {
   IActivityDataImage,
   ICommentData,
   ICreatePostImage,
+  IPayloadPutEditComment,
 } from '~/interfaces/IPost';
 
 import Header from '~/beinComponents/Header';
@@ -42,6 +40,9 @@ import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import dimension from '~/theme/dimension';
+import useCommentInputStore from '../components/CommentInputView/store';
+import ICommentInputState from '../components/CommentInputView/store/Interface';
+import useEditCommentController from './store';
 
 const inputMinHeight = 66;
 const isAndroid8 = Platform.OS === 'android' && parseInt(
@@ -79,9 +80,10 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
   const oldContent = comment?.content;
   const oldImages = comment?.media?.images;
 
-  const loading = useKeySelector(postKeySelector.createComment.loading);
-  const content = useKeySelector(postKeySelector.createComment.content);
-  const image = useKeySelector(postKeySelector.createComment.image);
+  const editController = useEditCommentController((state) => state.actions);
+  const actions = useCommentInputStore((state: ICommentInputState) => state.actions);
+  const createComment = useCommentInputStore((state: ICommentInputState) => state.createComment);
+  const { loading, content = '', image } = createComment || {};
 
   const isContentHasChange = content !== oldContent;
   const isImageHasChange = selectedImg?.fileName !== oldImages?.[0]?.origin_name;
@@ -96,10 +98,10 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
 
   useEffect(
     () => {
-      dispatch(postActions.setCreateComment({
+      actions.setCreateComment({
         content: oldContent || '',
         image: oldImages?.[0],
-      }));
+      });
       if (oldContent && !mentionInputRef?.current?.getContent?.()) {
         mentionInputRef?.current?.setContent?.(oldContent);
       }
@@ -135,11 +137,12 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
         images.push(imageData);
       }
       const newData: ICommentData = { content, media: { images } };
-      dispatch(postActions.putEditComment({
+      const payload = {
         id: commentId,
         comment,
         data: newData,
-      }));
+      } as IPayloadPutEditComment;
+      editController.editComment(payload);
     }
   };
 
@@ -162,7 +165,7 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
   };
 
   const onChangeText = (text: string) => {
-    dispatch(postActions.setCreateComment({ content: text, image }));
+    actions.setCreateComment({ content: text, image });
   };
 
   const onPressBack = () => {

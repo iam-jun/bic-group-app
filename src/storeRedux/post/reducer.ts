@@ -40,11 +40,6 @@ export const postInitState = {
       lstRemovedLinkPreview: [],
     },
   },
-  createComment: {
-    loading: false,
-    content: '',
-    image: undefined,
-  },
   reactionBottomSheet: {
     show: false,
     title: '',
@@ -135,14 +130,6 @@ function postReducer(
             ...state?.createPost?.currentSettings,
             ...payload,
           },
-        },
-      };
-    case postTypes.SET_CREATE_COMMENT:
-      return {
-        ...state,
-        createComment: {
-          ...state.createComment,
-          ...payload,
         },
       };
     case postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES:

@@ -21,6 +21,8 @@ import menuKeySelector from '~/storeRedux/menu/keySelector';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import ReplyingView from './ReplyingView';
+import useCommentInputStore from './store';
+import ICommentInputState from './store/Interface';
 
 export interface CommentInputViewProps {
   postId: string;
@@ -51,6 +53,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
+  const actions = useCommentInputStore((state: ICommentInputState) => state.actions);
+  const createComment = useCommentInputStore((state: ICommentInputState) => state.createComment);
+  const { content = '', loading } = createComment || {};
+
   const userId = useUserIdAuth();
   const myProfile = useKeySelector(menuKeySelector.myProfile);
   const { fullname, avatar, username } = myProfile;
@@ -64,12 +70,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     replyTargetName = t('post:label_yourself');
   }
 
-  const content = useKeySelector(postKeySelector.createComment.content) || '';
-  const loading = useKeySelector(postKeySelector.createComment.loading);
-
   useEffect(
     () => () => {
-      dispatch(postActions.setCreateComment({ content: '', loading: false }));
+      actions.setCreateComment({ content: '', loading: false });
       dispatch(postActions.setPostDetailReplyingComment());
     },
     [],
@@ -143,13 +146,13 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         preComment,
       };
 
-      dispatch(postActions.postCreateNewComment(payload));
+      actions.createComment(payload);
     }
   };
 
   const onChangeText = (value: string) => {
     _commentInputRef.current.setText(value);
-    dispatch(postActions.setCreateComment({ content: value }));
+    actions.setCreateComment({ content: value });
   };
 
   return (

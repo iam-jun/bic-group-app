@@ -1,36 +1,21 @@
-import { cloneDeep } from 'lodash';
-import { ICommentData, IPayloadUpdateCommentsById } from '~/interfaces/IPost';
-import { sortComments } from '~/screens/post/helper/postUtils';
+import { IPayloadUpdateCommentsById } from '~/interfaces/IPost';
 import ICommentsState from '~/store/entities/comments/Interface';
 
 const addToCommentsByParentIdWithComments = (set, get) => (payload: IPayloadUpdateCommentsById) => {
   const {
-    id, comments, isMerge, isReplace, commentId,
+    id, commentIds, isMerge,
   } = payload || {};
   const { commentsByParentId, actions }: ICommentsState = get() || {};
   const commentsById = commentsByParentId[id] || [];
 
-  let newComments: ICommentData[];
+  let newComments: string[];
   if (isMerge) {
-    // newComments = [...new Set([...commentsById, ...comments])];
-    newComments = removeDuplicateComments(commentsById, comments, commentId);
-  } else if (isReplace) {
-    newComments = removeDuplicateComments(commentsById, comments, commentId);
-
-    // newComments = commentsById?.filter?.((item: ICommentData) => item.id != commentId);
-    // newComments = [...new Set([...newComments, ...comments])];
+    newComments = [...new Set([...commentsById, ...commentIds])];
   } else {
-    newComments = comments;
+    newComments = commentIds;
   }
 
-  const sortedComments = sortComments(newComments);
-
-  actions.setCommentsByParentId({ ...commentsByParentId, [id]: cloneDeep(sortedComments) });
-};
-
-const removeDuplicateComments = (comments1: ICommentData[], comments2: ICommentData[], commentId: string) => {
-  const newComments = comments1?.filter?.((item: ICommentData) => item.id != commentId);
-  return [...new Set([...newComments, ...comments2])];
+  actions.setCommentsByParentId({ ...commentsByParentId, [id]: newComments });
 };
 
 export default addToCommentsByParentIdWithComments;

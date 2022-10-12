@@ -44,6 +44,7 @@ import { getTotalReactions } from '../PostViewComponents/helper';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import ContentInterestedUserCount from '~/components/ContentView/components/ContentInterestedUserCount';
+import useCommonController from '~/screens/store';
 
 export interface PostViewProps {
   style?: any;
@@ -87,6 +88,7 @@ const _PostView: FC<PostViewProps> = ({
   const styles = createStyle(theme);
 
   let _postData = postData;
+  const commonController = useCommonController((state) => state.actions);
   if (!_postData) _postData = usePostsStore(useCallback(postsSelector.getPost(postId), [postId]));
 
   const {
@@ -199,7 +201,7 @@ const _PostView: FC<PostViewProps> = ({
       ownReaction: ownerReactions,
       reactionCounts: reactionsCount,
     };
-    dispatch(postActions.postReactToPost(payload));
+    commonController.putReactionToPost(payload);
     onPressMarkSeenPost();
   };
 
@@ -210,7 +212,7 @@ const _PostView: FC<PostViewProps> = ({
       ownReaction: ownerReactions,
       reactionCounts: reactionsCount,
     };
-    dispatch(postActions.deleteReactToPost(payload));
+    commonController.deleteReactToPost(payload);
   };
 
   const onLongPressReaction = (reactionType: ReactionType) => {

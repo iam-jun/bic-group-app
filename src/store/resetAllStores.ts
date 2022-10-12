@@ -14,7 +14,7 @@ import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
-import useArticlesStore from './entities/articles';
+import useArticlesStore from '../screens/articles/ArticleDetail/store';
 import useArticleListStore from '~/screens/articles/ArticleList/store';
 import useUserInterestedPostStore from '~/screens/post/components/UserInterestedPost/store';
 import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';

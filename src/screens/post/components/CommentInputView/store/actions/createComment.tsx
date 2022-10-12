@@ -1,23 +1,19 @@
 import { cloneDeep, isEmpty } from 'lodash';
-import { put, select } from 'redux-saga/effects';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import { IPayloadCreateComment, IReaction } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
-import showError from '~/storeRedux/commonSaga/showError';
-import addChildCommentToCommentsOfPost from '~/storeRedux/post/saga/addChildCommentToCommentsOfPost';
 import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
 import modalActions from '~/storeRedux/modal/actions';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
+import ICommentInputState from '../Interface';
+import Store from '~/storeRedux';
+import useCommentDetailController from '~/screens/post/CommentDetail/store';
+import postActions from '~/storeRedux/post/actions';
+import showError from '~/store/helper/showError';
 
-function* postCreateNewComment({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadCreateComment;
-}): any {
+const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
   const {
     localId,
     postId,
@@ -43,15 +39,15 @@ function* postCreateNewComment({
     return;
   }
 
+  const { createComment, actions }:ICommentInputState = get() || {};
   try {
-    yield put(postActions.putMarkSeenPost({ postId }));
-    const creatingComment = yield select((state) => state?.post?.createComment?.loading);
-    if (creatingComment) {
+    Store.store.dispatch(postActions.putMarkSeenPost({ postId }));
+    if (!!createComment?.loading) {
       console.error('\x1b[31m🐣️ saga postCreateNewComment: creating\x1b[0m');
       return;
     }
 
-    yield put(postActions.setCreateComment({ loading: true }));
+    actions.setCreateComment({ loading: true });
 
     // update comments or child comments
     // retrying doesn't need this step
@@ -59,12 +55,12 @@ function* postCreateNewComment({
       if (!parentCommentId) {
         useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
           id: postId,
-          comments: new Array(preComment),
+          commentIds: [preComment.localId.toString()],
           isMerge: true,
         });
+        useCommentsStore.getState().actions.addToComments({ ...preComment, id: preComment.localId.toString() });
       } else {
-        yield addChildCommentToCommentsOfPost({
-          postId,
+        useCommentsStore.getState().actions.addChildCommentToComment({
           commentId: parentCommentId,
           childComments: new Array(preComment),
           shouldAddChildrenCount: true,
@@ -72,12 +68,12 @@ function* postCreateNewComment({
       }
     }
     if (!isCommentLevel1Screen) {
-      yield put(postActions.setScrollToLatestItem({ parentCommentId }));
+      Store.store.dispatch(postActions.setScrollToLatestItem({ parentCommentId }));
     } else {
-      yield put(postActions.setScrollCommentsPosition({ position: 'bottom' }));
+      Store.store.dispatch(postActions.setScrollCommentsPosition({ position: 'bottom' }));
     }
 
-    yield put(postActions.setPostDetailReplyingComment());
+    Store.store.dispatch(postActions.setPostDetailReplyingComment());
 
     // get mentions from temp selected in mention input
     const tempMentions = useMentionInputStore.getState().tempSelected;
@@ -88,14 +84,14 @@ function* postCreateNewComment({
 
     let resComment;
     if (parentCommentId) {
-      const response = yield streamApi.postReplyComment({
+      const response = await streamApi.postReplyComment({
         postId,
         parentCommentId,
         data: commentData,
       });
       resComment = response?.data;
     } else {
-      const response = yield streamApi.postNewComment({
+      const response = await streamApi.postNewComment({
         postId,
         data: commentData,
       });
@@ -103,8 +99,8 @@ function* postCreateNewComment({
     }
     onSuccess?.(); // clear content in text input
     if (!!viewMore && !!parentCommentId) {
-      yield put(postActions.getCommentDetail({ commentId: parentCommentId }));
-      yield put(postActions.setCreateComment({ loading: false, content: '' }));
+      useCommentDetailController.getState().actions.getCommentDetail({ commentId: parentCommentId });
+      actions.setCreateComment({ loading: false, content: '' });
       onSuccess?.(); // call second time to make sure content is cleared on low performance device
       return;
     }
@@ -125,22 +121,7 @@ function* postCreateNewComment({
     usePostsStore.getState().actions.setPosts(newAllPosts);
 
     // update comments or child comments again when receiving from API
-
-    if (parentCommentId) {
-      const allComments = useCommentsStore.getState().comments || {};
-      const newParentComment = cloneDeep(allComments[parentCommentId]);
-      newParentComment.totalReply = Math.max(
-        0,
-        newParentComment.totalReply + 1,
-      );
-      newParentComment.child = {
-        list: newParentComment.child?.list?.concat([resComment]) || [],
-      };
-
-      useCommentsStore.getState().actions.addToComments([resComment, newParentComment]);
-    } else {
-      useCommentsStore.getState().actions.addToComments(resComment);
-    }
+    useCommentsStore.getState().actions.addToComments(resComment);
 
     useCommentsStore.getState().actions.updateCreatedComment({
       status: 'success',
@@ -150,7 +131,7 @@ function* postCreateNewComment({
       parentCommentId,
     });
 
-    yield put(postActions.setCreateComment({ loading: false, content: '' }));
+    actions.setCreateComment({ loading: false, content: '' });
     onSuccess?.(); // call second time to make sure content is cleared on low performance device
   } catch (e: any) {
     console.error(
@@ -166,40 +147,40 @@ function* postCreateNewComment({
         parentCommentId,
       });
     }
-    yield put(postActions.setCreateComment({ loading: false }));
+    actions.setCreateComment({ loading: false });
     if (!!parentCommentId && e?.code === API_ERROR_CODE.POST.commentDeleted) {
-      yield put(postActions.setCommentErrorCode(API_ERROR_CODE.POST.commentDeleted));
-      yield put(postActions.removeChildComment({
+      Store.store.dispatch(postActions.setCommentErrorCode(API_ERROR_CODE.POST.commentDeleted));
+      Store.store.dispatch(postActions.removeChildComment({
         localId: preComment?.localId,
         postId,
         parentCommentId,
       }));
 
-      yield put(modalActions.showHideToastMessage({ content: 'post:text_comment_deleted' }));
+      Store.store.dispatch(modalActions.showHideToastMessage({ content: 'post:text_comment_deleted' }));
     } else if (e?.code === API_ERROR_CODE.POST.postDeleted
       || e?.code === API_ERROR_CODE.POST.postCanNotCommentOrReact) {
       if (e?.code === API_ERROR_CODE.POST.postDeleted) {
-        yield put(postActions.setCommentErrorCode(API_ERROR_CODE.POST.postDeleted));
+        Store.store.dispatch(postActions.setCommentErrorCode(API_ERROR_CODE.POST.postDeleted));
       }
       if (parentCommentId) {
-        yield put(postActions.removeChildComment({
+        Store.store.dispatch(postActions.removeChildComment({
           localId: preComment?.localId,
           postId,
           parentCommentId,
         }));
       } else {
-        yield put(postActions.removeCommentLevel1Deleted({
+        Store.store.dispatch(postActions.removeCommentLevel1Deleted({
           postId,
           localId: preComment?.localId,
         }));
       }
-      yield put(modalActions.showHideToastMessage({
+      Store.store.dispatch(modalActions.showHideToastMessage({
         content: e?.code === API_ERROR_CODE.POST.postDeleted ? 'post:text_post_deleted' : e?.meta?.message,
       }));
     } else {
-      yield showError(e);
+      showError(e);
     }
   }
-}
+};
 
-export default postCreateNewComment;
+export default createComment;

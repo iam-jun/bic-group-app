@@ -87,14 +87,12 @@ const _PostDetailContent = (props: any) => {
   const audience = usePostsStore(postsSelector.getAudience(id));
   const commentLeft = usePostsStore(postsSelector.getCommentOnlyCount(id));
   const setting = usePostsStore(postsSelector.getSetting(id));
-  const commentList = usePostsStore(postsSelector.getCommentList(id));
 
   const commentError = useKeySelector(postKeySelector.commentErrorCode);
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
   const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
-  const listComment = comments || commentList || [];
-  const sectionData = getSectionData(listComment) || [];
+  const sectionData = getSectionData(comments) || [];
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
@@ -416,7 +414,7 @@ const _PostDetailContent = (props: any) => {
   const onLayout = useCallback(() => {
     if (!layoutSet.current) {
       layoutSet.current = true;
-      if (focus_comment && listComment?.length > 0) {
+      if (focus_comment && comments?.length > 0) {
         // limit section index to default comment length = 10 to avoid scroll crash.
         // it happen when init with large amount of comment,
         // then scroll, then reload, result only 10 latest comment, scroll to out of index
@@ -427,7 +425,7 @@ const _PostDetailContent = (props: any) => {
         commentInputRef.current?.focus?.();
       }
     }
-  }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
+  }, [layoutSet, sectionData.length, focus_comment, comments?.length]);
 
   const onscroll = () => {
     DeviceEventEmitter.emit('stopAllVideo');
@@ -454,7 +452,7 @@ const _PostDetailContent = (props: any) => {
                 commentLeft={commentLeft}
                 onPressComment={onPressComment}
                 onContentLayout={props?.onContentLayout}
-                idLessThan={listComment?.[0]?.id}
+                idLessThan={comments?.[0]?.id}
               />
             )}
             ListFooterComponent={renderFooter}

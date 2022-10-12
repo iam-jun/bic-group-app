@@ -14,11 +14,13 @@ import { getMsgPackParser } from '~/utils/socket';
 import { useAuthToken, useUserIdAuth } from './auth';
 import ConvertHelper from '~/utils/convertHelper';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
+import useCommonController from '~/screens/store';
 
 const useNotificationSocket = () => {
   const dispatch = useDispatch();
   const token = useAuthToken();
   const userId = useUserIdAuth();
+  const commonController = useCommonController((state) => state.actions);
 
   const handleNotification = (data: any) => {
     switch (data.action) {
@@ -68,7 +70,7 @@ const useNotificationSocket = () => {
       data?.event === notificationEvent.REACT
       || data?.event === notificationEvent.UNREACT
     ) {
-      dispatch(postActions.updateReactionBySocket({ userId, data }));
+      commonController.updateReactionBySocket({ userId, data });
     }
   };
 
