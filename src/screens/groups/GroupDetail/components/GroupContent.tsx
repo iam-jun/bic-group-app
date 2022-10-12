@@ -50,7 +50,7 @@ const GroupContent = ({
   const { ids: posts, loading, refreshing: isRefreshingPost } = groupPost || {};
   const isLoadingPosts = (!isMounted || loading) && !isRefreshingPost;
 
-  const isLoadingMore = !isEmpty(posts) && isLoadingPosts;
+  const isLoadingMore = !isEmpty(posts) && loading;
 
   const loadMoreData = () => {
     if (groupPost.hasNextPage) {
