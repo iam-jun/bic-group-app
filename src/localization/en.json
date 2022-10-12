@@ -967,7 +967,7 @@
       "text_desc_confirm_move_group": " of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
       "text_move_group_search_placeholder": "Search a group"
     },
-    "text_search_communities": "Search Communities",
+    "text_search_communities": "Search...",
     "member_tab_types": {
       "title_member_list": "Member List",
       "title_member_requests": "Member Requests"

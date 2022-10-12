@@ -1,8 +1,11 @@
 import { isEqual } from 'lodash';
 import { useEffect, useMemo } from 'react';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
+import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import { IEditArticleAudience, IEditArticleData, IParamPutEditArticle } from '~/interfaces/IArticle';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
+import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
 import useArticlesStore from '~/store/entities/articles';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
@@ -22,6 +25,10 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
 
   const data = useEditArticleStore((state) => state.data) || {};
   const loading = useEditArticleStore((state) => state.loading);
+
+  const tempMentions = useMentionInputStore(
+    (state: IMentionInputState) => state.tempSelected,
+  );
 
   const groupIds = useMemo(() => data.audience?.groupIds?.join?.(','), [data.audience]);
 
@@ -57,7 +64,13 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
     actions.setTitle(newTitle);
   };
 
+  const updateMentions = () => {
+    const newMentions = getMentionsFromContent(data.content, tempMentions);
+    actions.setMentions(newMentions);
+  };
+
   const handleSave = () => {
+    updateMentions();
     actions.putEditArticle({ articleId, data } as IParamPutEditArticle);
   };
 

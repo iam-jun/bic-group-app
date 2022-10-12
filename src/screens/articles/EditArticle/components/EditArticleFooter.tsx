@@ -3,22 +3,43 @@ import {
   View, StyleSheet,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
+import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import { IconType } from '~/resources/icons';
 import modalActions from '~/storeRedux/modal/actions';
 
 import spacing, { borderRadius } from '~/theme/spacing';
 
 const EditArticleFooter = () => {
+  const showMentionValue = useSharedValue(0);
+
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const dispatch = useDispatch();
 
   const onPress = () => {
     dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const mentionContainerStyle = useAnimatedStyle(() => ({
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    top: spacing.margin.base,
+    flexDirection: 'row',
+    opacity: showMentionValue.value,
+  }));
+
+  const onVisibleMentionBar = (isVisible: boolean) => {
+    if (isVisible) {
+      showMentionValue.value = withTiming(1);
+    } else {
+      showMentionValue.value = withTiming(0);
+    }
   };
 
   const renderButton = (icon: IconType, onPress: any) => (
@@ -36,6 +57,12 @@ const EditArticleFooter = () => {
         {renderButton('InputText', onPress)}
         {renderButton('ChartTreeMap', onPress)}
       </View>
+      <Animated.View style={mentionContainerStyle}>
+        <MentionBar
+          onVisible={onVisibleMentionBar}
+          style={styles.mentionBar}
+        />
+      </Animated.View>
     </View>
   );
 };
@@ -74,6 +101,10 @@ const createStyle = (theme: ExtendedTheme) => {
       height: 36,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    mentionBar: {
+      borderColor: colors.neutral5,
+      borderTopWidth: 0,
     },
   });
 };

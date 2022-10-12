@@ -901,7 +901,7 @@
       "text_desc_confirm_move_group": " của %MOVING_NAME% và các nhóm bên trong sẽ được thêm vào %TARGET_NAME%. Bạn có chắc muốn thực hiện hành động này?",
       "text_move_group_search_placeholder": "Tìm kiếm một nhóm"
     },
-    "text_search_communities": "Tìm kiếm Cộng đồng",
+    "text_search_communities": "Tìm kiếm...",
     "member_tab_types": {
       "title_member_list": " Danh sách thành viên",
       "title_member_requests": "Yêu cầu tham gia"

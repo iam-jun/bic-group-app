@@ -1,6 +1,9 @@
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
@@ -8,6 +11,8 @@ import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';
 import TimeView from '~/beinComponents/TimeView';
 import { useKeySelector } from '~/hooks/selector';
+import PostAudiencesModal from '~/screens/post/components/PostAudiencesModal';
+import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import { getAudiencesText } from '~/screens/post/components/PostViewComponents/helper';
@@ -15,6 +20,8 @@ import mainTabStack from '~/router/navigator/MainStack/stack';
 import { Button } from '~/baseComponents';
 
 export interface ContentHeaderProps {
+  style?: StyleProp<ViewStyle>;
+
   time?: any;
   actor: any;
   audience?: IPostAudience;
@@ -26,6 +33,8 @@ export interface ContentHeaderProps {
 }
 
 const ContentHeader: FC<ContentHeaderProps> = ({
+  style,
+
   time,
   actor,
   audience,
@@ -35,6 +44,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   onPressMenu,
   onPressShowAudiences,
 }: ContentHeaderProps) => {
+  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { colors } = useTheme();
   const { rootNavigation } = useRootNavigation();
@@ -55,12 +65,32 @@ const ContentHeader: FC<ContentHeaderProps> = ({
     );
   };
 
+  const onPressAudience = () => {
+    if (!isInternetReachable) {
+      return;
+    }
+
+    if (onPressShowAudiences) {
+      onPressShowAudiences();
+    } else {
+      dispatch(
+        modalActions.showModal({
+          isOpen: true,
+          isFullScreen: true,
+          titleFullScreen: t('post:title_post_to'),
+          ContentComponent: <PostAudiencesModal data={audience?.groups || []} />,
+        }),
+      );
+    }
+  };
+
   return (
     <Button
       testID="content_header"
-      style={styles.headerContainer}
+      style={[styles.headerContainer, style]}
       disabled={disabled || !onPressHeader}
       onPress={() => onPressHeader()}
+      activeOpacity={1}
     >
       <Button
         style={styles.avatar}
@@ -84,7 +114,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           <Text.SubtitleM
             testID="content_header.audiences"
             color={colors.neutral80}
-            onPress={!isInternetReachable ? undefined : onPressShowAudiences}
+            onPress={onPressAudience}
           >
             {textAudiences}
           </Text.SubtitleM>
@@ -114,6 +144,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     paddingTop: spacing?.margin.small,
+    marginHorizontal: spacing.margin.large,
   },
   flex1: { flex: 1 },
   rowCenter: { flexDirection: 'row', alignItems: 'center' },
@@ -127,7 +158,6 @@ const styles = StyleSheet.create({
   },
   avatar: {
     marginTop: spacing.margin.tiny,
-    marginLeft: spacing.margin.large,
     marginRight: spacing.margin.base,
   },
   btnActor: {
@@ -135,7 +165,6 @@ const styles = StyleSheet.create({
     marginRight: spacing.margin.base,
   },
   iconMenu: {
-    marginRight: spacing.margin.large,
   },
 });
 
