@@ -14,7 +14,7 @@ const editCommunityDetail = (_set, _get) => async (
     const communityId = data.id;
     const response = await groupApi.editCommunityDetail(communityId, data);
     if (response?.data) {
-      useCommunitiesStore.getState().actions.updatecommunity(communityId, response.data);
+      useCommunitiesStore.getState().actions.updateCommunity(communityId, response.data);
     }
 
     if (editFieldName) showToastEditSuccess(editFieldName);

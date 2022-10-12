@@ -10,6 +10,7 @@ import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 const joinCommunity
   = (_set, _get) => async (communityId: string, communityName: string) => {
@@ -17,6 +18,7 @@ const joinCommunity
       const response = await groupApi.joinCommunity(communityId);
       const joinStatus = response?.data?.joinStatus;
       const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
+      const userCount = useCommunitiesStore.getState().data?.[communityId]?.userCount || 0;
 
       // update button Join/Cancel/View status on Discover communities
       Store.store.dispatch(
@@ -32,7 +34,13 @@ const joinCommunity
         .getState()
         .actions.setDiscoverCommunitiesSearchItem(communityId, { joinStatus });
 
-      useCommunitiesStore.getState().actions.getCommunity(communityId);
+      useCommunitiesStore.getState().actions.updateCommunity(
+        communityId,
+        {
+          joinStatus,
+          userCount: hasRequested ? userCount : userCount + 1,
+        } as ICommunity,
+      );
 
       if (hasRequested) {
         const toastMessage: IToastMessage = {
