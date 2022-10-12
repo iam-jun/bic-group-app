@@ -10,6 +10,7 @@ import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '~/api/GroupApi';
 import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 const cancelJoinCommunity
   = (_set, _get) => async (communityId: string, communityName: string) => {
@@ -35,7 +36,10 @@ const cancelJoinCommunity
           joinStatus: GroupJoinStatus.VISITOR,
         });
 
-      useCommunitiesStore.getState().actions.getCommunity(communityId);
+      useCommunitiesStore.getState().actions.updateCommunity(
+        communityId,
+        { joinStatus: GroupJoinStatus.VISITOR } as ICommunity,
+      );
 
       const toastMessage: IToastMessage = {
         content: `${i18next.t(

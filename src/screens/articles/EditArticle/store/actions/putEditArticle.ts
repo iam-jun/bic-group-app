@@ -26,6 +26,7 @@ const putEditArticle = (set, _get) => async (params: IParamPutEditArticle) => {
 
     if (!response?.data) {
       showError(response);
+      return;
     }
 
     const toastMessage: IToastMessage = {

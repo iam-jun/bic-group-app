@@ -39,7 +39,6 @@ import { getPostViewMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
 import { useMyPermissions } from '~/hooks/permissions';
 import AlertDeleteAudiencesConfirmContent from '../AlertDeleteAudiencesConfirmContent';
-import PostAudiencesModal from '~/screens/post/components/PostAudiencesModal';
 import { Button } from '~/baseComponents';
 import { getTotalReactions } from '../PostViewComponents/helper';
 import usePostsStore from '~/store/entities/posts';
@@ -123,17 +122,6 @@ const _PostView: FC<PostViewProps> = ({
     audience?.groups,
     PERMISSION_KEY.GROUP.DELETE_OWN_POST,
   );
-
-  const onPressShowAudiences = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        isFullScreen: true,
-        titleFullScreen: t('post:title_post_to'),
-        ContentComponent: <PostAudiencesModal data={audience?.groups || []} />,
-      }),
-    );
-  };
 
   const handleDeletePostError = (listIdAudiences: string[]) => {
     if (listIdAudiences?.length <= 0 || audience?.groups?.length <= 0) {
@@ -283,7 +271,6 @@ const _PostView: FC<PostViewProps> = ({
           time={createdAt}
           onPressHeader={onPressHeader}
           onPressMenu={onPressMenu}
-          onPressShowAudiences={onPressShowAudiences}
           disabled={!hasReactPermission}
         />
         <PostViewContent

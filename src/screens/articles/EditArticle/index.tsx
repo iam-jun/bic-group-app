@@ -1,17 +1,15 @@
-import { debounce } from 'lodash';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useRef } from 'react';
 import {
-  View, StyleSheet, TextInput, Keyboard,
+  Keyboard, StyleSheet, TextInput, View,
 } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
-import MentionInput from '~/beinComponents/inputs/MentionInput';
-import PostInput from '~/beinComponents/inputs/PostInput';
 import { createTextStyle } from '~/beinComponents/Text/textStyle';
 
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
+import EditArticleContent from '~/screens/articles/EditArticle/components/EditArticleContent';
 import EditArticleFooter from '~/screens/articles/EditArticle/components/EditArticleFooter';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
 import modalActions from '~/storeRedux/modal/actions';
@@ -37,13 +35,10 @@ const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
+  const useEditArticleData = useEditArticle({ articleId });
   const {
-    loading, enableButtonSave, title, content, groupIds, handleContentChange, handleTitleChange, handleSave,
-  } = useEditArticle({ articleId });
-
-  const onChangeContent = debounce((value) => {
-    handleContentChange(value);
-  }, 500);
+    loading, enableButtonSave, title, handleTitleChange, handleSave,
+  } = useEditArticleData || {};
 
   const onChangeTitle = (value) => {
     handleTitleChange(value);
@@ -80,39 +75,24 @@ const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
         onPressButton={onPressSave}
         onPressBack={onPressBack}
       />
-      <TextInput
-        value={title}
-        onChangeText={onChangeTitle}
-        numberOfLines={2}
-        multiline
-        maxLength={TITLE_MAX_LENGTH}
-        style={styles.inputTitle}
-        selectionColor={theme.colors.gray50}
-        placeholderTextColor={theme.colors.neutral20}
-      />
-      <MentionInput
-        disableAutoComplete
-        groupIds={groupIds}
-        mentionInputRef={mentionInputRef}
-        style={styles.flex1}
-        textInputStyle={styles.flex1}
-        autocompleteProps={{
-          modalPosition: 'bottom',
-          title: t('post:mention_title'),
-          emptyContent: t('post:mention_empty_content'),
-          showShadow: true,
-          modalStyle: { maxHeight: 350 },
-        }}
-        ComponentInput={PostInput}
-        componentInputProps={{
-          value: content,
-          onChangeText: onChangeContent,
-          inputRef: refTextInput,
-          scrollEnabled: false,
-        }}
-        disabled={loading}
-      />
-      <EditArticleFooter />
+      <View style={styles.flex1}>
+        <TextInput
+          value={title}
+          onChangeText={onChangeTitle}
+          numberOfLines={2}
+          multiline
+          maxLength={TITLE_MAX_LENGTH}
+          style={styles.inputTitle}
+          selectionColor={theme.colors.gray50}
+          placeholderTextColor={theme.colors.neutral20}
+        />
+        <EditArticleContent
+          useEditArticleData={useEditArticleData}
+          mentionInputRef={mentionInputRef}
+          refTextInput={refTextInput}
+        />
+        <EditArticleFooter />
+      </View>
     </View>
   );
 };

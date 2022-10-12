@@ -22,7 +22,7 @@ export interface ICommunitiesState extends IBaseState {
     errors: IObject<any>;
     actions:{
       getCommunity: (id: string) => void;
-      updatecommunity: (id: string, payload: ICommunity) => void,
+      updateCommunity: (id: string, payload: ICommunity) => void,
       resetCommunity: (id: string) => void;
     }
 }
@@ -37,7 +37,7 @@ const communitiesStore = (set, get) => ({
   ...initialState,
   actions: {
     getCommunity: getCommunity(set, get),
-    updateCommunity: (communityId:string, payload: ICommunity) => {
+    updateCommunity: (communityId: string, payload: ICommunity) => {
       set((state) => {
         state.data[communityId] = { ...state.data[communityId], ...payload };
       }, 'updateCommunity');

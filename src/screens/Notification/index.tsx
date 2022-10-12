@@ -1,23 +1,21 @@
 import { useIsFocused } from '@react-navigation/native';
-import React, {
-  useCallback, useEffect, useState,
-} from 'react';
-import { useDispatch } from 'react-redux';
 
 import i18next from 'i18next';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import notificationsActions from '../../storeRedux/notification/actions';
-import ScrollableTabBar from './components/ScrollableTabBar';
 import { notificationMenuData } from '~/screens/Notification/constants';
+import modalActions from '~/storeRedux/modal/actions';
+import notificationsActions from '../../storeRedux/notification/actions';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
 import { MEMBER_TAB_TYPES } from '../communities/constants';
-import modalActions from '~/storeRedux/modal/actions';
-import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
+import ScrollableTabBar from './components/ScrollableTabBar';
 
 const Notification = () => {
   const dispatch = useDispatch();
@@ -66,6 +64,7 @@ const Notification = () => {
       upcoming: true,
     }];
     dispatch(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       modalActions.showBottomList({ isOpen: true, data: menuData } as BottomListItemProps),
     );
@@ -93,6 +92,7 @@ const Notification = () => {
       upcoming: true,
     }];
     dispatch(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       modalActions.showBottomList({ isOpen: true, data: menuData } as BottomListItemProps),
     );

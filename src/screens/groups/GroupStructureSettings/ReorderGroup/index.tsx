@@ -1,15 +1,15 @@
-import React, { FC, useEffect, useMemo } from 'react';
-import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { FC, useEffect, useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
+import ReorderList from '~/beinComponents/ReorderList';
 
 import { IGroup } from '~/interfaces/IGroup';
-import ReorderList from '~/beinComponents/ReorderList';
+import ReorderGroupHeader from '~/screens/groups/GroupStructureSettings/ReorderGroup/components/ReorderGroupHeader';
 import ReorderGroupInfo from '~/screens/groups/GroupStructureSettings/ReorderGroup/components/ReorderGroupInfo';
 import ReorderGroupItem, {
   ITEM_HEIGHT,
   ITEM_WIDTH,
 } from '~/screens/groups/GroupStructureSettings/ReorderGroup/components/ReorderGroupItem';
-import ReorderGroupHeader from '~/screens/groups/GroupStructureSettings/ReorderGroup/components/ReorderGroupHeader';
 import useGroupStructureStore from '../store';
 
 export interface ReorderGroupProps {
@@ -44,10 +44,6 @@ const ReorderGroup: FC<ReorderGroupProps> = ({ route }: ReorderGroupProps) => {
   const renderItem = (data: IGroup) => <ReorderGroupItem key={`reorder_item_${data?.id}`} group={data} />;
 
   const onChange = (newIndex: number[]) => {
-    console.log(
-      '\x1b[34m🐣️ index onChange',
-      `${JSON.stringify(newIndex, undefined, 2)}\x1b[0m`,
-    );
     const newOrder = newIndex?.map?.((i: number) => children?.[i]?.id);
     groupStructureActions.setGroupStructureReorder({ newOrder });
   };

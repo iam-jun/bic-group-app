@@ -54,6 +54,7 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
       <ScrollView>
         <View style={styles.contentContainer}>
           <ArticleHeader
+            style={styles.articleHeader}
             articleId={id}
             actor={actor}
             time={createdAt}
@@ -108,6 +109,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     title: {
       marginVertical: margin.base,
     },
+    articleHeader: { marginHorizontal: 0 },
   });
 };
 

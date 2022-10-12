@@ -11,6 +11,7 @@ export interface IEditArticleState extends IBaseState {
     setTitle: (title: string) => void;
     setContent: (content: string) => void;
     setAudience: (audience: IEditArticleAudience) => void;
+    setMentions: (mentions: any) => void;
     putEditArticle: (param: IParamPutEditArticle) => void;
   };
 }
@@ -64,6 +65,11 @@ const useEditArticle = (set, get) => ({
       set((state: IEditArticleState) => {
         state.data.audience = audience || {} as IEditArticleAudience;
       }, 'setAudience');
+    },
+    setMentions: (mentions?:any) => {
+      set((state: IEditArticleState) => {
+        state.data.mentions = mentions || {};
+      }, 'setMentions');
     },
     putEditArticle: putEditArticle(set, get),
   },
