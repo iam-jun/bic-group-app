@@ -6,13 +6,14 @@ const getArticleDetail = (set, get) => async (id: string) => {
 
   if (requestings[id]) return;
 
-  set((state) => { state.requestings[id] = true; });
+  set((state) => { state.requestings[id] = true; }, 'getArticleDetail');
 
   try {
     const response = await streamApi.getArticleDetail(id);
     const data = response?.data;
 
     set((state) => {
+      delete state.requestings[id];
       state.items[id] = data;
     }, 'getArticleDetail');
   } catch (error) {

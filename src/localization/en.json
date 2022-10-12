@@ -456,7 +456,8 @@
     "title_logout": "Log Out"
   },
   "article": {
-    "title_edit_article": "Edit Article"
+    "title_edit_article": "Edit Article",
+    "text_edit_article_success": "Article updated successfully"
   },
   "post": {
     "news_feed": "News Feed",

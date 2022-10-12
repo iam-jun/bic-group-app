@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import streamApi from '~/api/StreamApi';
 import { IToastMessage } from '~/interfaces/common';
 import { IParamPutEditArticle } from '~/interfaces/IArticle';
@@ -23,8 +24,12 @@ const putEditArticle = (set, _get) => async (params: IParamPutEditArticle) => {
       state.loading = false;
     }, 'putEditArticle');
 
+    if (!response?.data) {
+      showError(response);
+    }
+
     const toastMessage: IToastMessage = {
-      content: response.meta?.message || 'Success',
+      content: i18next.t('article:text_edit_article_success'),
     };
     navigation.goBack();
     Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
