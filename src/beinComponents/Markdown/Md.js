@@ -32,8 +32,7 @@ import {
 import AtMention from './AtMention';
 import Emoji from '~/baseComponents/Emoji';
 import { spacing } from '~/theme';
-import Image from '../Image';
-import { VideoPlayer } from '~/baseComponents';
+import MarkdownImage from './MarkdownImage';
 
 export default class Md extends PureComponent {
   static propTypes = {
@@ -200,28 +199,9 @@ export default class Md extends PureComponent {
   );
 
   // Just render as link because of not have metadata from server
-  renderImage = ({ src, alt, linkDestination }) => {
-
-    if(!this.props.disableImage){
-
-      if(linkDestination){
-        /**
-         * Because text formatter is difference between web and mobile
-         * we must treat alt props as mediaType
-         */ 
-        const mediaType = alt;
-        switch(mediaType) {
-          case 'video': 
-            return <VideoPlayer src={linkDestination} thumbnail={src}  />
-          // other cases will be implemented later
-        }
-      }
-      
-      return <Image style={this.props.blockStyles.image} source={src} />
-    }
-
-    return <MarkdownLink href={src}>{src}</MarkdownLink>;
-  }
+  renderImage = ({ src, alt, linkDestination }) => (
+    <MarkdownImage  src={src} alt={alt} linkDestination={linkDestination} />
+  )
 
   renderAtMention = ({ mentionName }) => (
     <AtMention

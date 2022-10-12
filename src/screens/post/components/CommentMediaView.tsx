@@ -64,7 +64,7 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
 
   return (
     <View
-      style={StyleSheet.flatten([styles.container, style])}
+      style={[styles.container, style]}
       onLayout={onLayout}
     >
       {renderContent()}

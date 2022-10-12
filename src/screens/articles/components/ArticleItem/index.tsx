@@ -8,12 +8,12 @@ import { useBaseHook } from '~/hooks';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import { scaleCoverHeight } from '~/theme/dimension';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 import ContentInterestedUserCount from '~/components/ContentView/components/ContentInterestedUserCount';
 import ArticleReactions from '../ArticleReactions';
 

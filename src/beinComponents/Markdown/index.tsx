@@ -10,7 +10,6 @@ import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 import { sizes } from '~/theme/dimension';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { margin } from '~/theme/spacing';
 
 const DeviceHeight = Dimensions.get('window').height;
 
@@ -115,12 +114,6 @@ const Markdown = ({ value, ...rest }) => {
     quoteBlockIcon: {
       color: 'rgba(63,67,80,0.5)',
     },
-    image: {
-      width: '100%',
-      // temporary fixed height
-      height: 200,
-      marginVertical: margin.base
-    }
   };
 
   const hideModal = () => dispatch(modalActions.hideModal());

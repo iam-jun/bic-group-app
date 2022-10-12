@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, {
+  FC, useCallback, useEffect, useRef,
+} from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -16,6 +18,7 @@ import ArticleHeader from '../components/ArticleHeader';
 import Markdown from '~/beinComponents/Markdown';
 import Text from '~/beinComponents/Text';
 import HashTags from '../components/HashTags';
+import useMounted from '~/hooks/mounted';
 import ArticleFooter from '../components/ArticleFooter';
 
 const ArticleDetail: FC<IRouteParams> = (props) => {
@@ -26,7 +29,7 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const data = useArticlesStore((state: IArticlesState) => state.items[id]);
+  const data = useArticlesStore(useCallback((state: IArticlesState) => state.items[id], [id]));
   const actions = useArticlesStore((state: IArticlesState) => state.actions);
   const {
     title, content, audience, actor, createdAt, commentCount,
@@ -35,6 +38,8 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
   const labelButtonComment = `${commentCount ? `${commentCount} ` : ''}${t(
     'post:button_comment',
   )}`;
+
+  const isMounted = useMounted();
 
   useEffect(() => {
     actions.getArticleDetail(id);
@@ -47,6 +52,8 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
       );
     }
   }).current;
+
+  if (!isMounted || !data) return null;
 
   return (
     <View style={styles.container}>

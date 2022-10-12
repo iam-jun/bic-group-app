@@ -87,7 +87,7 @@ const _PostView: FC<PostViewProps> = ({
   const styles = createStyle(theme);
 
   let _postData = postData;
-  if (!_postData) _postData = usePostsStore(postsSelector.getPost(postId));
+  if (!_postData) _postData = usePostsStore(useCallback(postsSelector.getPost(postId), [postId]));
 
   const {
     actor, audience, isDraft, createdAt, media, content, highlight, setting, deleted,

@@ -28,7 +28,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const urlExtension = getVideoExtention(src);
 
   if (!SUPPORTED_VIDEOS.includes(urlExtension.toLowerCase())) {
-    return <EmbedVideo src={src} />;
+    return <EmbedVideo {...props} src={src} />;
   }
 
   return <FileVideo {...props} src={src} />;

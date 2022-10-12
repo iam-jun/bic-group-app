@@ -18,23 +18,11 @@ const Image: React.FC<ImageProps> = ({
   const [_source, setSource] = useState(formatSource(source || placeholderSource));
 
   useEffect(() => {
-    updateSource(formatSource(source || placeholderSource));
+    setSource(formatSource(source || placeholderSource, cache));
   }, [source]);
 
   const _onError = () => {
-    placeholderSource && updateSource(placeholderSource);
-  };
-
-  const updateSource = (source: any) => {
-    if (
-      typeof source === 'string'
-      && source.toLowerCase?.().startsWith?.('http')
-    ) {
-      const char = source.includes('?') ? '&' : '?';
-      setSource({ uri: cache ? source : source + char + Date.now() });
-    } else {
-      setSource(source);
-    }
+    placeholderSource && setSource(placeholderSource);
   };
 
   return (
