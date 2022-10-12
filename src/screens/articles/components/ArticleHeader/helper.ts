@@ -1,11 +1,19 @@
 import i18next from 'i18next';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 
-export const getArticleViewMenu = (isActor: boolean) => {
+export const getArticleViewMenu = (
+  { isActor, articleId, navigation }: {isActor: boolean, articleId: string, navigation: any},
+) => {
   const onPress = () => {
     Store.store.dispatch(modalActions.hideBottomList());
     Store.store.dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const onPressEdit = () => {
+    Store.store.dispatch(modalActions.hideBottomList());
+    navigation?.navigate(articleStack.editArticle, { articleId });
   };
 
   const defaultData = [
@@ -15,7 +23,7 @@ export const getArticleViewMenu = (isActor: boolean) => {
       leftIcon: 'FilePen',
       title: i18next.t('post:article_menu:edit'),
       requireIsActor: true,
-      onPress,
+      onPress: onPressEdit,
     },
     {
       id: 2,

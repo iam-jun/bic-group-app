@@ -12,6 +12,7 @@ export const customBackHandlerRoutes = [
   'MainStack',
   'group-scheme-assignment',
   'create-permission-scheme',
+  'edit-article',
 ];
 
 export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';

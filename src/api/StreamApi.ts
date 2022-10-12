@@ -24,7 +24,7 @@ import {
   IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
 } from '~/interfaces/IHome';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
-import { IParamGetArticleDetail, IParamGetArticles } from '~/interfaces/IArticle';
+import { IParamGetArticleDetail, IParamGetArticles, IParamPutEditArticle } from '~/interfaces/IArticle';
 
 const DEFAULT_LIMIT = 10;
 
@@ -113,6 +113,15 @@ export const streamApiConfig = {
       ...params,
     },
   }),
+  putEditArticle: (param: IParamPutEditArticle): HttpApiRequestConfig => {
+    const { articleId, data } = param || {};
+    return {
+      ...defaultConfig,
+      url: `${provider.url}articles/${articleId}`,
+      method: 'put',
+      data,
+    };
+  },
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
     const { postId, data } = param || {};
     return {
@@ -348,6 +357,7 @@ const streamApi = {
   },
   postCreateNewPost: (data: IPostCreatePost) => withHttpRequestPromise(streamApiConfig.postCreateNewPost, data),
   putReaction: (param: IParamPutReaction) => withHttpRequestPromise(streamApiConfig.putReaction, param),
+  putEditArticle: (param: IParamPutEditArticle) => withHttpRequestPromise(streamApiConfig.putEditArticle, param),
   putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
   putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(streamApiConfig.putEditComment, id, data),
   deletePost: (id: string, isDraftPost?: boolean) => withHttpRequestPromise(

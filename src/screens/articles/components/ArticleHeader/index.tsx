@@ -36,7 +36,7 @@ const ArticleHeader: FC<Props> = ({
 
   const onPressMenu = () => {
     Keyboard.dismiss();
-    const data = getArticleViewMenu(isCreator);
+    const data = getArticleViewMenu({ isActor: isCreator, articleId, navigation: rootNavigation });
     dispatch(
       modalActions.showBottomList({ isOpen: true, data } as BottomListProps),
     );
