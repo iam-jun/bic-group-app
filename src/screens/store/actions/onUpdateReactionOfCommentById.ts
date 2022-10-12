@@ -6,13 +6,12 @@ import {
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 
-// eslint-disable-next-line require-yield
-export default function* onUpdateReactionOfCommentById(
+const onUpdateReactionOfCommentById = (_set, _get) => (
   commentId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
   defaultComment?: ICommentData,
-): any {
+) => {
   try {
     const allComments = useCommentsStore.getState().comments || {};
     const comment: ICommentData = allComments?.[commentId] || defaultComment || {};
@@ -26,4 +25,6 @@ export default function* onUpdateReactionOfCommentById(
       '\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m',
     );
   }
-}
+};
+
+export default onUpdateReactionOfCommentById;

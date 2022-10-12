@@ -1,52 +1,45 @@
-import { call } from 'redux-saga/effects';
-
 import {
   ICommentData,
   IPayloadReactToComment,
   IReaction,
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
-import showError from '~/storeRedux/commonSaga/showError';
-import streamApi from '../../../api/StreamApi';
-import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
+import streamApi from '~/api/StreamApi';
+import showError from '~/store/helper/showError';
 
-export default function* deleteReactToComment({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadReactToComment;
-}): any {
+const deleteReactToComment = (_set, get) => async (
+  payload: IPayloadReactToComment,
+) => {
   const {
     id, comment, reactionId, reactionsCount, ownerReactions,
   } = payload;
+  const { actions } = get();
   try {
     const rId = ownerReactions?.find((item: IReaction) => item?.reactionName === reactionId)?.id || '';
     if (rId) {
       // yield addReactionLoadingLocal(id, reactionId, comment);
 
-      yield call(
-        streamApi.deleteReaction, {
-          reactionId: rId,
-          target: 'COMMENT',
-          targetId: id,
-          reactionName: reactionId,
-        },
-      );
+      await streamApi.deleteReaction({
+        reactionId: rId,
+        target: 'COMMENT',
+        targetId: id,
+        reactionName: reactionId,
+      });
 
-      yield removeReactionLocal(
+      removeReactionLocal(get)(
         id, reactionId, comment,
       );
     }
   } catch (e) {
-    yield onUpdateReactionOfCommentById(
+    actions.onUpdateReactionOfCommentById(
       id,
       ownerReactions,
       reactionsCount,
       comment,
     );
-    yield showError(e);
+    showError(e);
   }
-}
+};
 
 // function* addReactionLoadingLocal(
 //   id: string,
@@ -76,11 +69,13 @@ export default function* deleteReactToComment({
 //   );
 // }
 
-function* removeReactionLocal(
+const removeReactionLocal = (get) => (
   id: string,
   reactionId: string,
   comment: ICommentData,
-): any {
+) => {
+  const { actions } = get();
+
   const cmt = useCommentsStore.getState().comments?.[id];
   const reactionsCount = cmt.reactionsCount || {};
   const ownerReactions = cmt.ownerReactions || [];
@@ -103,10 +98,12 @@ function* removeReactionLocal(
     }
   });
 
-  yield onUpdateReactionOfCommentById(
+  actions.onUpdateReactionOfCommentById(
     id,
     newOwnerReactions,
     newReactionCounts,
     comment,
   );
-}
+};
+
+export default deleteReactToComment;

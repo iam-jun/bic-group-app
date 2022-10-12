@@ -12,18 +12,22 @@ interface Props {
   id: string;
   ownerReactions: IOwnReaction;
   reactionsCount: IReactionCounts;
+  onAddReaction?: any;
+  onRemoveReaction?: any;
 }
 
-const ArticleReactions = ({ id, ownerReactions, reactionsCount }: Props) => {
+const ArticleReactions = ({
+  id, ownerReactions, reactionsCount, onAddReaction, onRemoveReaction,
+}: Props) => {
   const dispatch = useDispatch();
   const styles = createStyles();
 
-  const onAddReaction = (_reactionId: ReactionType) => {
-    // TODO: Add function reactions
+  const _onAddReaction = (_reactionId: ReactionType) => {
+    onAddReaction?.(_reactionId);
   };
 
-  const onRemoveReaction = (_reactionId: ReactionType) => {
-    // TODO: Add function remove reactions
+  const _onRemoveReaction = (_reactionId: ReactionType) => {
+    onRemoveReaction?.(_reactionId);
   };
 
   const onLongPressReaction = (reactionType: ReactionType) => {
@@ -42,8 +46,8 @@ const ArticleReactions = ({ id, ownerReactions, reactionsCount }: Props) => {
       style={styles.reactions}
       ownerReactions={ownerReactions}
       reactionsCount={reactionsCount}
-      onAddReaction={onAddReaction}
-      onRemoveReaction={onRemoveReaction}
+      onAddReaction={_onAddReaction}
+      onRemoveReaction={_onRemoveReaction}
       onLongPressReaction={onLongPressReaction}
     />
   );

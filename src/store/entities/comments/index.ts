@@ -1,10 +1,11 @@
-import { IAllComments, ICommentData } from '~/interfaces/IPost';
+import { IAllComments } from '~/interfaces/IPost';
 import addToComments from '~/store/entities/comments/actions/addToComments';
 import addToCommentsByParentId from '~/store/entities/comments/actions/addToCommentsByParentId';
 import addToCommentsByParentIdWithComments from '~/store/entities/comments/actions/addToCommentsByParentIdWithComments';
 import cancelCommentFailed from '~/store/entities/comments/actions/cancelCommentFailed';
 import updateCreatedComment from '~/store/entities/comments/actions/updateCreatedComment';
 import { createStore, resetStore } from '~/store/utils';
+import addChildCommentToComment from './actions/addChildCommentToComment';
 import ICommentsState from './Interface';
 
 const initState: ICommentsState = {
@@ -22,7 +23,7 @@ const commentsStore = (set, get) => ({
       }, 'setComments');
     },
 
-    setCommentsByParentId: (payload?: {[x: string]: ICommentData[]}) => {
+    setCommentsByParentId: (payload?: {[x: string]: string[]}) => {
       set((state: ICommentsState) => {
         state.commentsByParentId = payload || {};
       }, 'setCommentsByParentId');
@@ -33,6 +34,7 @@ const commentsStore = (set, get) => ({
     addToCommentsByParentIdWithComments: addToCommentsByParentIdWithComments(set, get),
     updateCreatedComment: updateCreatedComment(set, get),
     cancelCommentFailed: cancelCommentFailed(set, get),
+    addChildCommentToComment: addChildCommentToComment(set, get),
   },
 
   reset: () => resetStore(initState, set),

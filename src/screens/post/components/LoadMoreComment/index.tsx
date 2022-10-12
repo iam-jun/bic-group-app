@@ -16,13 +16,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import postActions from '~/storeRedux/post/actions';
 import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
+import useLoadMoreCommentsController from './store';
 
 export interface LoadMoreCommentProps {
   style?: StyleProp<ViewStyle>;
@@ -45,7 +44,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
 }: LoadMoreCommentProps) => {
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const dispatch = useDispatch();
+  const controller = useLoadMoreCommentsController((state) => state.actions);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(
@@ -91,18 +90,16 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         setLoadingMore(true);
         setTimeout(
           () => {
-            dispatch(postActions.getCommentsByPostId({
+            controller.getCommentsByPostId({
               params: {
                 postId,
                 order: 'DESC',
                 idLt: idLessThan,
                 idGt: idGreaterThan,
                 parentId: commentId,
-                limit: 10,
               },
-              isMerge: true,
               callbackLoading: (loading) => setLoadingMore(loading),
-            }));
+            });
           }, 150,
         );
       }

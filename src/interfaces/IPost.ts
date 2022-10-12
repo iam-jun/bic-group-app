@@ -160,6 +160,9 @@ export interface IPostActivity {
   markedReadSuccess?: boolean;
   linkPreview?: ILinkPreview;
   isArticle?: boolean;
+  title?: string;
+  summary?: string;
+  hashtags?: string[];
 }
 
 export type IOwnReaction = Array<IReaction>;
@@ -294,7 +297,6 @@ export interface IRequestGetPostComment {
 }
 
 export interface IPayloadGetCommentsById {
-  isMerge?: boolean;
   position?: string;
   commentId?: string;
   params?: IRequestGetPostComment;
@@ -419,7 +421,7 @@ export interface IParamDeleteReaction {
 
 export interface IPayloadUpdateCommentsById {
   id: string;
-  comments: ICommentData[];
+  commentIds: string[];
   isMerge?: boolean;
   isReplace?: boolean;
   commentId?: string;
@@ -556,4 +558,12 @@ export interface ILinkPreview {
 
 export interface ILinkPreviewCreatePost extends Partial<ILinkPreview> {
   isLoading?: boolean;
+}
+
+export interface IAddChildCommentToComment {
+  commentId: string | number;
+  childComments: ICommentData[];
+  shouldAddChildrenCount?: boolean;
+  meta?: any;
+  isAddFirst?: boolean;
 }

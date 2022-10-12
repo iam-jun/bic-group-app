@@ -2,12 +2,11 @@ import { cloneDeep } from 'lodash';
 import { IOwnReaction, IPayloadAddToAllPost, IReactionCounts } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 
-// eslint-disable-next-line require-yield
-export default function* onUpdateReactionOfPostById(
+const onUpdateReactionOfPostById = (_set, _get) => (
   postId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
-): any {
+) => {
   try {
     const post = usePostsStore.getState()?.posts?.[postId] || {};
     if (post) {
@@ -21,4 +20,6 @@ export default function* onUpdateReactionOfPostById(
       '\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m',
     );
   }
-}
+};
+
+export default onUpdateReactionOfPostById;

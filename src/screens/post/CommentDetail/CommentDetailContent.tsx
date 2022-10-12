@@ -31,6 +31,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
+import useCommentDetailController from './store';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -45,6 +46,8 @@ const CommentDetailContent = (props: any) => {
   const { t } = useBaseHook();
   const dispatch = useDispatch();
   const { rootNavigation, goHome } = useRootNavigation();
+
+  const commentDetailController = useCommentDetailController((state) => state.actions);
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
@@ -112,23 +115,21 @@ const CommentDetailContent = (props: any) => {
     }
     if (!postDetailLoadingState && !copyCommentError) {
       dispatch(postActions.setScrollCommentsPosition(null));
-      dispatch(
-        postActions.getCommentDetail({
-          commentId,
-          params: { postId },
-          callbackLoading: (loading: boolean) => {
-            setLoading(loading);
-            if (!loading && !!replyItem) {
-              dispatch(
-                postActions.setPostDetailReplyingComment({
-                  comment: replyItem,
-                  parentComment: commentParent,
-                }),
-              );
-            }
-          },
-        }),
-      );
+      commentDetailController.getCommentDetail({
+        commentId,
+        params: { postId },
+        callbackLoading: (loading: boolean) => {
+          setLoading(loading);
+          if (!loading && !!replyItem) {
+            dispatch(
+              postActions.setPostDetailReplyingComment({
+                comment: replyItem,
+                parentComment: commentParent,
+              }),
+            );
+          }
+        },
+      });
     }
   }, [postDetailLoadingState, copyCommentError]);
 
@@ -256,15 +257,13 @@ const CommentDetailContent = (props: any) => {
       setRefreshing(false);
       return;
     }
-    dispatch(
-      postActions.getCommentDetail({
-        commentId: parentId || commentId,
-        params: { postId },
-        callbackLoading: (_loading: boolean) => {
-          setRefreshing(_loading);
-        },
-      }),
-    );
+    commentDetailController.getCommentDetail({
+      commentId: parentId || commentId,
+      params: { postId },
+      callbackLoading: (_loading: boolean) => {
+        setRefreshing(_loading);
+      },
+    });
   };
 
   const onPressMarkSeenPost = useCallback(() => {

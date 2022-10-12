@@ -22,12 +22,13 @@ const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
     if (item?.id) {
       if (handleComment) {
         const postComments = sortComments(item?.comments?.list || []);
-
-        newCommentsByParentId[item.id] = postComments;
+        const newPostCommentsId = [];
         postComments.forEach((c: ICommentData) => {
           newComments.push(c);
           newComments = newComments.concat(c?.child?.list || []);
+          newPostCommentsId.push(c.id);
         });
+        newCommentsByParentId[item.id] = newPostCommentsId;
       }
       newPosts[item.id] = item;
     }

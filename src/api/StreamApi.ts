@@ -25,6 +25,7 @@ import {
 } from '~/interfaces/IHome';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import { IParamGetArticleDetail, IParamGetArticles, IParamPutEditArticle } from '~/interfaces/IArticle';
+import appConfig from '~/configs/appConfig';
 
 const DEFAULT_LIMIT = 10;
 
@@ -155,7 +156,7 @@ export const streamApiConfig = {
     url: `${provider.url}comments`,
     params: {
       order: params?.order || 'ASC',
-      limit: params?.limit || 10,
+      limit: params?.limit || appConfig.commentLimit,
       offset: params?.offset || 0,
       idGte: params?.idGte,
       idLte: params?.idLte,
@@ -437,7 +438,7 @@ const streamApi = {
   getArticles: (params: IParamGetArticles) => withHttpRequestPromise(
     streamApiConfig.getArticles, params,
   ),
-  getArticleDetail: (id: string, params?: IParamGetArticles) => withHttpRequestPromise(
+  getArticleDetail: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetail, id, params,
   ),
   getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(

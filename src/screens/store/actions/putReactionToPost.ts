@@ -1,20 +1,15 @@
-import { call } from 'redux-saga/effects';
-
 import { IOwnReaction, IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/storeRedux/commonSaga/showError';
+import showError from '~/store/helper/showError';
 import streamApi from '../../../api/StreamApi';
-import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
-export default function* putReactionToPost({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadReactToPost;
-}): any {
+const putReactionToPost = (_set, get) => async (
+  payload: IPayloadReactToPost,
+) => {
   const {
     id, reactionId, ownReaction, reactionCounts,
   } = payload;
+  const { actions } = get();
   try {
     const post1 = usePostsStore.getState()?.posts?.[id] || {};
     const cReactionCounts1 = post1.reactionsCount || {};
@@ -49,17 +44,16 @@ export default function* putReactionToPost({
         newReactionCounts[index.toString()] = item;
       });
 
-      yield onUpdateReactionOfPostById(
+      actions.onUpdateReactionOfPostById(
         id, newOwnReaction1, newReactionCounts,
       );
 
-      const response = yield call(
-        streamApi.putReaction, {
-          reactionName: reactionId,
-          target: 'POST',
-          targetId: id,
-        },
-      );
+      const response = await
+      streamApi.putReaction({
+        reactionName: reactionId,
+        target: 'POST',
+        targetId: id,
+      });
 
       // Disable update data base on response because of
       // calculate wrong value when receive socket msg
@@ -86,7 +80,7 @@ export default function* putReactionToPost({
           newOwnReaction2.push(response.data);
         }
 
-        yield onUpdateReactionOfPostById(
+        actions.onUpdateReactionOfPostById(
           id, [...newOwnReaction2], {
             ...cReactionCounts2,
           },
@@ -95,9 +89,11 @@ export default function* putReactionToPost({
     }
   } catch (e) {
     // disable rollback in case error limit 21 reaction
-    yield onUpdateReactionOfPostById(
+    actions.onUpdateReactionOfPostById(
       id, ownReaction, reactionCounts,
     );
-    yield showError(e);
+    showError(e);
   }
-}
+};
+
+export default putReactionToPost;

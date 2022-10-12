@@ -7,15 +7,8 @@ import {
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
-import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
 
-export default function* updateReactionBySocket({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadUpdateReaction;
-}): any {
+const updateReactionBySocket = (_set, get) => (payload: IPayloadUpdateReaction) => {
   const { userId, data } = payload || {};
   const {
     reactionsCount,
@@ -24,6 +17,7 @@ export default function* updateReactionBySocket({
     comment,
     id,
   } = data as ISocketReaction;
+  const { actions } = get();
 
   if (!isEmpty(reaction)) {
     // handle reaction to post
@@ -31,7 +25,7 @@ export default function* updateReactionBySocket({
     const p = usePostsStore.getState()?.posts?.[id] || {};
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
     const isCurrentUser = userId.toString() == reaction?.actor?.id;
-    yield onUpdateReactionOfPostById(
+    actions.onUpdateReactionOfPostById(
       id,
       isCurrentUser && !!reaction?.reactionName
         ? reactionsOfActor
@@ -66,7 +60,7 @@ export default function* updateReactionBySocket({
     const c = useCommentsStore.getState().comments?.[finalId] || {};
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
 
-    yield onUpdateReactionOfCommentById(
+    actions.onUpdateReactionOfCommentById(
       finalId,
       isCurrentUser && finalReaction?.reactionName
         ? finalOwnerReactions
@@ -75,4 +69,6 @@ export default function* updateReactionBySocket({
       undefined,
     );
   }
-}
+};
+
+export default updateReactionBySocket;

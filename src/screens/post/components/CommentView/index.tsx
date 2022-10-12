@@ -30,7 +30,6 @@ import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import postActions from '~/storeRedux/post/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { showReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
@@ -41,6 +40,9 @@ import TimeView from '~/beinComponents/TimeView';
 import ReactionView from '~/beinComponents/ReactionView';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
+import useCommentInputStore from '../CommentInputView/store';
+import useDeleteCommentController from './store';
+import useCommonController from '~/screens/store';
 
 export interface CommentViewProps {
   postId: string;
@@ -64,6 +66,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const dispatch = useDispatch();
+  const commentInputStore = useCommentInputStore((state) => state.actions);
+  const deleteCommentController = useDeleteCommentController((state) => state.actions);
+
   const addTempSelected = useMentionInputStore((state:IMentionInputState) => state.addTempSelected);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -71,6 +76,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const currentUserId = useUserIdAuth();
 
+  const commonController = useCommonController((state) => state.actions);
   const comment = useCommentsStore(commentsSelector.getComment(commentData?.id));
   const setting = usePostsStore(postsSelector.getSetting(postId));
   const cancelCommentFailed = useCommentsStore((state) => state.actions.cancelCommentFailed);
@@ -151,7 +157,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         ownerReactions,
         reactionsCount,
       };
-      dispatch(postActions.postReactToComment(payload));
+      commonController.putReactionToComment(payload);
       onPressMarkSeenPost?.();
     }
   };
@@ -167,7 +173,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         ownerReactions,
         reactionsCount,
       };
-      dispatch(postActions.deleteReactToComment(payload));
+      commonController.deleteReactToComment(payload);
     }
   };
 
@@ -207,7 +213,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
           parentCommentId,
           postId,
         };
-        dispatch(postActions.deleteComment(payload));
+        deleteCommentController.deleteComment(payload);
       },
       confirmLabel: t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
@@ -292,7 +298,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   );
 
   const onPressRetry = () => {
-    dispatch(postActions.postRetryAddComment(commentData));
+    commentInputStore.retryAddComment(commentData);
   };
 
   const onPressCancel = () => {

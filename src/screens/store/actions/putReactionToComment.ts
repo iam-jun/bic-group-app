@@ -1,5 +1,4 @@
 import { isEmpty } from 'lodash';
-import { call } from 'redux-saga/effects';
 
 import {
   IOwnReaction,
@@ -7,16 +6,10 @@ import {
   IReaction,
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
-import showError from '~/storeRedux/commonSaga/showError';
-import streamApi from '../../../api/StreamApi';
-import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
+import showError from '~/store/helper/showError';
+import streamApi from '~/api/StreamApi';
 
-export default function* putReactionToComment({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadReactToComment;
-}): any {
+const putReactionToComment = (_set, get) => async (payload: IPayloadReactToComment) => {
   const {
     id, comment, postId, reactionId, ownerReactions, reactionsCount,
   } = payload;
@@ -25,6 +18,7 @@ export default function* putReactionToComment({
     console.error('\x1b[31m🐣️ saga putReactionToComment: postId not found\x1b[0m');
     return;
   }
+  const { actions } = get();
   try {
     const cComment1 = useCommentsStore.getState().comments?.[id] || comment;
     const cReactionCount1 = cComment1.reactionsCount || {};
@@ -62,20 +56,19 @@ export default function* putReactionToComment({
           }
         }
       }
-      yield onUpdateReactionOfCommentById(
+      actions.onUpdateReactionOfCommentById(
         id,
         newOwnReaction1,
         newReactionCounts1,
         comment,
       );
 
-      const response = yield call(
-        streamApi.putReaction, {
-          reactionName: reactionId,
-          target: 'COMMENT',
-          targetId: id,
-        },
-      );
+      const response = await
+      streamApi.putReaction({
+        reactionName: reactionId,
+        target: 'COMMENT',
+        targetId: id,
+      });
 
       if (response?.data) {
         const cComment2 = useCommentsStore.getState().comments?.[id] || comment;
@@ -100,7 +93,7 @@ export default function* putReactionToComment({
           newOwnReaction2.push(response.data);
         }
 
-        yield onUpdateReactionOfCommentById(
+        actions.onUpdateReactionOfCommentById(
           id,
           [...newOwnReaction2],
           {
@@ -112,12 +105,14 @@ export default function* putReactionToComment({
     }
   } catch (e) {
     // disable rollback in case error limit 21 reaction
-    yield onUpdateReactionOfCommentById(
+    actions.onUpdateReactionOfCommentById(
       id,
       ownerReactions,
       reactionsCount,
       comment,
     );
-    yield showError(e);
+    showError(e);
   }
-}
+};
+
+export default putReactionToComment;

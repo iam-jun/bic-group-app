@@ -90,7 +90,7 @@ const FileVideo: FC<VideoPlayerProps> = ({
   };
 
   const renderLoading = () => {
-    if (!loading) return null;
+    if (!loading || isPlaying) return null;
 
     return <LoadingIndicator size={60} color={colors.gray20} />;
   };
