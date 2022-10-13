@@ -36,6 +36,7 @@ import ArticleReactions from '../components/ArticleReactions';
 import Divider from '~/beinComponents/Divider';
 import { ReactionType } from '~/constants/reactions';
 import useCommonController from '~/screens/store';
+import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
 
 const ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -57,6 +58,8 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const data = usePostsStore(postsSelector.getPost(id));
+  const canLoadMoreComment = usePostsStore(postsSelector.getCommentOnlyCount(id));
+
   const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
   const sectionData = getSectionData(comments) || [];
 
@@ -242,7 +245,6 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
         actor={actor}
         time={createdAt}
         audience={audience}
-        style={styles.articleHeader}
       />
       <View style={styles.postContainer}>
         <Text.H3
@@ -261,22 +263,32 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
         />
         <HashTags data={hashtags} />
         <Divider />
-        <ArticleReactions
-          id={id}
-          ownerReactions={ownerReactions}
-          reactionsCount={reactionsCount}
-          onAddReaction={onAddReaction}
-          onRemoveReaction={onRemoveReaction}
-        />
-        <ArticleFooter
-          articleId={id}
-          labelButtonComment={labelButtonComment}
-          reactionCounts={reactionsCount}
-          canReact={setting?.canReact}
-          canComment={setting?.canComment}
-          onAddReaction={onAddReaction}
-        />
       </View>
+      <ArticleReactions
+        id={id}
+        ownerReactions={ownerReactions}
+        reactionsCount={reactionsCount}
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+      />
+      <ArticleFooter
+        articleId={id}
+        labelButtonComment={labelButtonComment}
+        reactionCounts={reactionsCount}
+        canReact={setting?.canReact}
+        canComment={setting?.canComment}
+        onAddReaction={onAddReaction}
+      />
+      <Divider style={styles.divider} />
+      {
+         canLoadMoreComment && (
+         <LoadMoreComment
+           title="post:text_load_more_comments"
+           postId={id}
+           idLessThan={comments?.[0]?.id}
+         />
+         )
+        }
     </View>
   );
 
@@ -397,7 +409,9 @@ const themeStyles = (theme: ExtendedTheme) => {
       height: spacing.margin.base,
       backgroundColor: colors.white,
     },
-    articleHeader: { marginHorizontal: 0 },
+    divider: {
+      marginHorizontal: spacing.margin.large,
+    },
   });
 };
 
