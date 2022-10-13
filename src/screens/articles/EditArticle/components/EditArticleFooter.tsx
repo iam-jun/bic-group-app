@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import { IconType } from '~/resources/icons';
 import modalActions from '~/storeRedux/modal/actions';
 
@@ -49,20 +50,23 @@ const EditArticleFooter = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.centerLine} />
-      <View style={styles.buttonContainer}>
-        {renderButton('Users', onPress)}
-        {renderButton('ImageLandscape', onPress)}
-        {renderButton('InputText', onPress)}
-        {renderButton('ChartTreeMap', onPress)}
+    <View>
+      <View style={styles.container}>
+        <View style={styles.centerLine} />
+        <View style={styles.buttonContainer}>
+          {renderButton('Users', onPress)}
+          {renderButton('ImageLandscape', onPress)}
+          {renderButton('InputText', onPress)}
+          {renderButton('ChartTreeMap', onPress)}
+        </View>
+        <Animated.View style={mentionContainerStyle}>
+          <MentionBar
+            onVisible={onVisibleMentionBar}
+            style={styles.mentionBar}
+          />
+        </Animated.View>
       </View>
-      <Animated.View style={mentionContainerStyle}>
-        <MentionBar
-          onVisible={onVisibleMentionBar}
-          style={styles.mentionBar}
-        />
-      </Animated.View>
+      <KeyboardSpacer iosOnly avoidInsetsBottom />
     </View>
   );
 };
@@ -105,6 +109,9 @@ const createStyle = (theme: ExtendedTheme) => {
     mentionBar: {
       borderColor: colors.neutral5,
       borderTopWidth: 0,
+    },
+    bottomSafeArea: {
+      marginBottom: insets.bottom,
     },
   });
 };

@@ -5,7 +5,7 @@ import {
   Modal, StyleSheet, View,
 } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { VideoPlayer } from '~/baseComponents';
+import { Button, VideoPlayer } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import useVideoPlayerStore from '~/store/videoPlayer';
 import { dimension } from '~/theme';
@@ -40,15 +40,18 @@ const VideoPlayerWebView = () => {
       onRequestClose={onClose}
     >
       <View style={styles.container}>
-        <Icon
+        <Button
           style={styles.iconClose}
-          icon="iconClose"
           hitSlop={{
             top: 10, left: 10, right: 10, bottom: 10,
           }}
-          tintColor={theme.colors.white}
           onPress={onClose}
-        />
+        >
+          <Icon
+            icon="iconClose"
+            tintColor={theme.colors.white}
+          />
+        </Button>
         <View style={[styles.video, { marginTop }]} onLayout={onLayout}>
           <VideoPlayer shouldPlay src={video?.src} thumbnail={video?.thumbnail} />
         </View>
@@ -68,7 +71,7 @@ const createStyles = (insets: EdgeInsets) => StyleSheet.create({
   },
   iconClose: {
     position: 'absolute',
-    left: margin.large,
+    right: margin.large,
     top: insets.top + margin.large,
     zIndex: 3,
   },
