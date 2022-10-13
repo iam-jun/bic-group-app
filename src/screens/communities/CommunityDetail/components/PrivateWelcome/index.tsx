@@ -41,7 +41,7 @@ const PrivateWelcome = ({
       refreshControl={
         onRefresh ? (
           <RefreshControl
-            refreshing={isFetching}
+            refreshing={!!isFetching}
             onRefresh={onRefresh}
           />
         ) : undefined
