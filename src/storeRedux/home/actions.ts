@@ -1,8 +1,6 @@
-import { IPostActivity } from '~/interfaces/IPost';
 import homeTypes from './types';
 import {
   IParamGetRecentSearchKeywords,
-  IPayloadGetHomePost,
   IPayloadGetSearchPosts,
   IPayloadSetNewsfeedSearch,
   IPayloadSetNewsfeedSearchFilter,
@@ -12,24 +10,6 @@ import {
 } from '~/interfaces/IHome';
 
 const homeActions = {
-  setLoadingHomePosts: (payload: boolean) => ({
-    type: homeTypes.SET_LOADING_HOME_POSTS,
-    payload,
-  }),
-  setRefreshingHomePosts: (payload: boolean) => ({
-    type: homeTypes.SET_REFRESHING_HOME_POSTS,
-    payload,
-  }),
-  setNoMoreHomePosts: (payload: boolean) => ({
-    type: homeTypes.SET_NO_MORE_HOME_POSTS,
-    payload,
-  }),
-
-  setHomePosts: (payload: IPostActivity) => ({
-    type: homeTypes.SET_HOME_POSTS,
-    payload,
-  }),
-
   setNewsfeedSearch: (payload: IPayloadSetNewsfeedSearch) => ({
     type: homeTypes.SET_NEWSFEED_SEARCH,
     payload,
@@ -37,9 +17,6 @@ const homeActions = {
   setNewsfeedSearchFilter: (payload: IPayloadSetNewsfeedSearchFilter) => ({
     type: homeTypes.SET_NEWSFEED_SEARCH_FILTER,
     payload,
-  }),
-  clearNewsfeedSearchFilter: () => ({
-    type: homeTypes.CLEAR_NEWSFEED_SEARCH_FILTER,
   }),
   setNewsfeedSearchUsers: (payload: IPayloadSetNewsfeedSearchUsers) => ({
     type: homeTypes.SET_NEWSFEED_SEARCH_USERS,
@@ -54,11 +31,6 @@ const homeActions = {
   }),
 
   // FOR SAGA:
-  getHomePosts: (payload: IPayloadGetHomePost) => ({
-    type: homeTypes.GET_HOME_POSTS,
-    payload,
-  }),
-
   getSearchPosts: (payload?: IPayloadGetSearchPosts) => ({
     type: homeTypes.GET_SEARCH_POSTS,
     payload,

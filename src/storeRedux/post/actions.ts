@@ -1,19 +1,8 @@
 import postTypes from './types';
 import {
   IAudience,
-  IPostCreatePost,
   IActivityData,
-  IReaction,
-  IAllPosts,
-  IPayloadReactToPost,
   IPayloadPutEditPost,
-  IPostAudienceSheet,
-  IPayloadUpdateCommentsById,
-  IPayloadGetCommentsById,
-  IAllComments,
-  IPayloadReactToComment,
-  IPayloadPutEditComment,
-  IPayloadCreateComment,
   IPayloadReplying,
   IPayloadGetPostDetail,
   ICreatePostImage,
@@ -21,18 +10,13 @@ import {
   ICreatePostCurrentSettings,
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
-  IPayloadAddToAllPost,
   IPostAudience,
   IParamGetPostAudiences,
-  IPayloadUpdateReaction,
   IPayloadDeletePost,
-  IPayloadDeleteComment,
-  ICommentData,
   IPayloadPutMarkAsRead,
-  ISeenPostListSheet,
   IPayloadPutMarkSeenPost,
-  IGetSeenPostListSheet,
   IPayloadRemoveAudiencesOfPost,
+  IPayloadUpdateLinkPreview,
 } from '~/interfaces/IPost';
 import { IGroup } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
@@ -40,14 +24,6 @@ import { IFilePicked } from '~/interfaces/common';
 import { IGetFile } from '~/services/imageUploader';
 
 const postActions = {
-  setAllPosts: (payload: IAllPosts) => ({
-    type: postTypes.SET_ALL_POSTS,
-    payload,
-  }),
-  setAllComments: (payload: IAllComments) => ({
-    type: postTypes.SET_ALL_COMMENTS,
-    payload,
-  }),
   setLoadingCreatePost: (payload: boolean) => ({
     type: postTypes.SET_LOADING_CREATE_POST,
     payload,
@@ -61,14 +37,6 @@ const postActions = {
   }),
   setCreatePostDataImages: (payload: ICreatePostImage[]) => ({
     type: postTypes.SET_CREATE_POST_DATA_IMAGES,
-    payload,
-  }),
-  setCreateComment: (payload: {
-    loading?: boolean;
-    content?: string;
-    image?: any;
-  }) => ({
-    type: postTypes.SET_CREATE_COMMENT,
     payload,
   }),
   setCreatePostChosenAudiences: (payload: IAudience[]) => ({
@@ -120,10 +88,6 @@ const postActions = {
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,
   }),
-  setAllCommentsByParentIds: (payload: {[x: string]: IReaction}) => ({
-    type: postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS,
-    payload,
-  }),
   setPostSelectAudienceState: (payload?: {
     loading?: boolean;
     selectingAudiences?: (IGroup | IUser)[];
@@ -134,91 +98,20 @@ const postActions = {
   }),
 
   // saga
-  postCreateNewPost: (payload: IPostCreatePost) => ({
-    type: postTypes.POST_CREATE_NEW_POST,
-    payload,
-  }),
-  postCreateNewComment: (payload: IPayloadCreateComment) => ({
-    type: postTypes.POST_CREATE_NEW_COMMENT,
-    payload,
-  }),
-  updateCommentAPI: (payload: {
-    localId?: string | number[];
-    status: 'pending' | 'success' | 'failed';
-    postId: string;
-    resultComment: IReaction;
-    parentCommentId?: string;
-  }) => ({
-    type: postTypes.UPDATE_COMMENT_API,
-    payload,
-  }),
   setScrollToLatestItem: (payload: null | {parentCommentId?: string | number}) => ({
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),
-  postRetryAddComment: (payload: ICommentData) => ({
-    type: postTypes.POST_RETRY_ADD_COMMENT,
-    payload,
-  }),
-  postCancelFailedComment: (payload: ICommentData) => ({
-    type: postTypes.POST_CANCEL_FAILED_COMMENT,
-    payload,
-  }),
-
   putEditPost: (payload: IPayloadPutEditPost) => ({
     type: postTypes.PUT_EDIT_POST,
-    payload,
-  }),
-  putEditComment: (payload: IPayloadPutEditComment) => ({
-    type: postTypes.PUT_EDIT_COMMENT,
     payload,
   }),
   deletePost: (payload: IPayloadDeletePost) => ({
     type: postTypes.DELETE_POST,
     payload,
   }),
-  addToAllPosts: (payload: IPayloadAddToAllPost) => ({
-    type: postTypes.ADD_TO_ALL_POSTS,
-    payload,
-  }),
-  addToAllComments: (payload: ICommentData[] | ICommentData) => ({
-    type: postTypes.ADD_TO_ALL_COMMENTS,
-    payload,
-  }),
-  postReactToPost: (payload: IPayloadReactToPost) => ({
-    type: postTypes.POST_REACT_TO_POST,
-    payload,
-  }),
-  deleteReactToPost: (payload: IPayloadReactToPost) => ({
-    type: postTypes.DELETE_REACT_TO_POST,
-    payload,
-  }),
-  postReactToComment: (payload: IPayloadReactToComment) => ({
-    type: postTypes.POST_REACT_TO_COMMENT,
-    payload,
-  }),
-  deleteReactToComment: (payload: IPayloadReactToComment) => ({
-    type: postTypes.DELETE_REACT_TO_COMMENT,
-    payload,
-  }),
-  setPostAudiencesBottomSheet: (payload: IPostAudienceSheet) => ({
-    type: postTypes.SET_POST_AUDIENCES_BOTTOM_SHEET,
-    payload,
-  }),
   hidePostAudiencesBottomSheet: () => ({
     type: postTypes.HIDE_POST_AUDIENCES_BOTTOM_SHEET,
-  }),
-  updateAllCommentsByParentIds: (payload: {[postId: string]: IReaction[]}) => ({
-    type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
-    payload,
-  }),
-  updateAllCommentsByParentIdsWithComments: (payload: IPayloadUpdateCommentsById) => ({
-    type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
-    payload,
-  }),
-  getCommentsByPostId: (payload: IPayloadGetCommentsById) => ({
-    type: postTypes.GET_COMMENTS_BY_POST_ID,
-    payload,
   }),
   getPostDetail: (payload: IPayloadGetPostDetail) => ({
     type: postTypes.GET_POST_DETAIL,
@@ -236,20 +129,8 @@ const postActions = {
     type: postTypes.GET_CREATE_POST_INIT_AUDIENCES,
     payload,
   }),
-  updateReactionBySocket: (payload: IPayloadUpdateReaction) => ({
-    type: postTypes.UPDATE_REACTION_BY_SOCKET,
-    payload,
-  }),
-  updateUnReactionBySocket: (payload: IPayloadUpdateReaction) => ({
-    type: postTypes.UPDATE_UN_REACTION_BY_SOCKET,
-    payload,
-  }),
   setSavingDraftPost: (payload: boolean) => ({
     type: postTypes.SET_SAVING_DRAFT_POST,
-    payload,
-  }),
-  deleteComment: (payload: IPayloadDeleteComment) => ({
-    type: postTypes.DELETE_COMMENT,
     payload,
   }),
   setScrollCommentsPosition: (payload: null | {position?: string}) => ({
@@ -268,24 +149,12 @@ const postActions = {
     type: postTypes.REMOVE_CHILD_COMMENT,
     payload,
   }),
-  getCommentDetail: (payload: IPayloadGetCommentsById) => ({
-    type: postTypes.GET_COMMENT_DETAIL,
-    payload,
-  }),
   putMarkAsRead: (payload: IPayloadPutMarkAsRead) => ({
     type: postTypes.PUT_MARK_AS_READ,
     payload,
   }),
   removeCommentLevel1Deleted: (payload: any) => ({
     type: postTypes.REMOVE_COMMENT_DELETED,
-    payload,
-  }),
-  getSeenPost: (payload: IGetSeenPostListSheet) => ({
-    type: postTypes.GET_USERS_SEEN_POST,
-    payload,
-  }),
-  setSeenPost: (payload: ISeenPostListSheet) => ({
-    type: postTypes.SET_USERS_SEEN_POST,
     payload,
   }),
   putMarkSeenPost: (payload: IPayloadPutMarkSeenPost) => ({
@@ -309,6 +178,10 @@ const postActions = {
   }),
   removePostAudiences: (payload:IPayloadRemoveAudiencesOfPost) => ({
     type: postTypes.REMOVE_POST_AUDIENCES,
+    payload,
+  }),
+  updateLinkPreview: (payload: IPayloadUpdateLinkPreview) => ({
+    type: postTypes.UPDATE_LINK_PREVIEW,
     payload,
   }),
 };

@@ -6,7 +6,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -14,8 +13,9 @@ import { Avatar } from '~/baseComponents';
 import { avatarSizes } from '~/theme/dimension';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useJoinedCommunitiesStore from '../store';
+import JoinedCommunityPlaceholder from './JoinedCommunityPlaceholder';
 
-const MAX_LENGTH = 10;
+export const MAX_LENGTH = 10;
 
 const MenuDiscoverCommunity = () => {
   const { rootNavigation } = useRootNavigation();
@@ -44,33 +44,41 @@ const MenuDiscoverCommunity = () => {
     </Button>
   );
 
-  const renderEmpty = () => (
-    <View style={styles.emptyContainer}>
-      {loading
-        ? <LoadingIndicator />
-        : (
+  const renderContent = () => {
+    if (loading && data.length === 0) {
+      return (
+        <View style={styles.emptyContainer}>
+          <JoinedCommunityPlaceholder />
+        </View>
+      );
+    }
+
+    if (data.length === 0) {
+      return (
+        <View style={styles.emptyContainer}>
           <Text.SubtitleS color={theme.colors.neutral20} useI18n>
             communities:empty_communities:title
           </Text.SubtitleS>
-        )}
-    </View>
-  );
+        </View>
+      );
+    }
+
+    return (
+      <FlatList
+        data={data?.slice?.(0, MAX_LENGTH)}
+        horizontal
+        style={styles.listContainer}
+        showsHorizontalScrollIndicator={false}
+        renderItem={renderItem}
+        keyExtractor={(item) => `menu-joined-community-${item.id}`}
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>
       <Text.SubtitleS style={styles.textTitle} useI18n>menu:title_your_community</Text.SubtitleS>
-      {data?.length > 0
-        ? (
-          <FlatList
-            data={data?.slice?.(0, MAX_LENGTH)}
-            horizontal
-            style={styles.listContainer}
-            showsHorizontalScrollIndicator={false}
-            renderItem={renderItem}
-            keyExtractor={(item) => `menu-joined-community-${item.id}`}
-          />
-        )
-        : renderEmpty()}
+      {renderContent()}
     </View>
   );
 };

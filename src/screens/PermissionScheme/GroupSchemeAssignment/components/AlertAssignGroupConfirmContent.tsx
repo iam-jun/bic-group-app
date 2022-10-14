@@ -6,11 +6,10 @@ import {
 import i18n from 'i18next';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Icon from '~/baseComponents/Icon';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../../store';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const contentHeight = SCREEN_HEIGHT * 0.4;
@@ -18,9 +17,9 @@ const contentHeight = SCREEN_HEIGHT * 0.4;
 const AlertAssignGroupConfirmContent = () => {
   const { t } = useBaseHook();
 
-  const { allSchemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const { data: initAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
-  const { data: dataAssigning } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning)
+  const { allSchemes } = usePermissionSchemeStore((state) => state.schemes) || {};
+  const { data: initAssignments } = usePermissionSchemeStore((state) => state.assignGroupScheme.assignments) || {};
+  const { data: dataAssigning } = usePermissionSchemeStore((state) => state.assignGroupScheme.assigning)
     || {};
 
   const data = useMemo(
@@ -112,7 +111,10 @@ export const prepareData = (
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.small,
+  },
   itemContainer: {
     marginTop: spacing.margin.base,
   },

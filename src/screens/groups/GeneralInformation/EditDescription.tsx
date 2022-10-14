@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+import useCommunityController from '~/screens/communities/store';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 
@@ -25,6 +26,8 @@ const EditDescription = (props: any) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const actions = useCommunityController((state) => state.actions);
+
   const [text, setText] = useState<string>(description);
   const _onChangeText = (value: string) => {
     setText(value);
@@ -37,21 +40,14 @@ const EditDescription = (props: any) => {
   );
 
   const onSave = () => {
+    const data = { id, description: text?.trim() || null };
+    const editFieldName = i18next.t('common:text_description');
+    const callback = onNavigateBack;
+
     if (type === 'group') {
-      dispatch(groupsActions.editGroupDetail({
-        data: {
-          id,
-          description: text?.trim() ? text?.trim() : null,
-        },
-        editFieldName: i18next.t('common:text_description'),
-        callback: onNavigateBack,
-      }));
+      dispatch(groupsActions.editGroupDetail({ data, editFieldName, callback }));
     } else {
-      dispatch(groupsActions.editCommunityDetail({
-        data: { id, description: text?.trim() ? text.trim() : null },
-        editFieldName: i18next.t('common:text_description'),
-        callback: onNavigateBack,
-      }));
+      actions.editCommunityDetail(data, editFieldName, callback);
     }
   };
 

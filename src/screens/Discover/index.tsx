@@ -3,29 +3,15 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import spacing from '~/theme/spacing';
 import DiscoverCommunities from '~/screens/Discover/components/DiscoverCommunities';
-import YourCommunities from '~/screens/Discover/components/YourCommunities';
-import YourGroups from './components/YourGroups';
-import Managed from './components/Managed';
-import Tab from '~/baseComponents/Tab';
-import GlobalSearch from './components/GlobalSearch';
-
-const HEADER_TAB = [
-  { id: 'discover-tab-1', text: 'discover:discover_communities' },
-  { id: 'discover-tab-2', text: 'discover:your_communities' },
-  { id: 'discover-tab-3', text: 'discover:your_groups' },
-  { id: 'discover-tab-4', text: 'discover:managed' },
-];
+import SearchDiscoverCommunity from './components/SearchDiscoverCommunity';
 
 const Index = () => {
   const theme = useTheme();
-  const { elevations } = theme;
   const styles = themeStyles(theme);
   const { t } = useBaseHook();
 
   const [isOpenSearchCommunity, setIsOpenSearchCommunity] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const onPressSearch = () => {
     setIsOpenSearchCommunity(true);
@@ -35,57 +21,22 @@ const Index = () => {
     setIsOpenSearchCommunity(false);
   };
 
-  const onPressTab = (item: any, index: number) => {
-    setSelectedIndex(index);
-  };
-
-  const renderContent = () => {
-    if (selectedIndex === 0) {
-      return <DiscoverCommunities />;
-    }
-
-    if (selectedIndex === 1) {
-      return <YourCommunities />;
-    }
-
-    if (selectedIndex === 2) {
-      return <YourGroups />;
-    }
-
-    if (selectedIndex === 3) {
-      return <Managed />;
-    }
-
-    return null;
-  };
-
   return (
     <View style={styles.containerScreen}>
       <Header
         removeBorderAndShadow
-        title="menu:title_discover"
+        title="discover:discover_community"
         titleTextProps={{ useI18n: true }}
         icon="iconSearch"
         onPressIcon={onPressSearch}
       />
       <View style={styles.containerContent}>
-        <View style={[styles.containerTabView, elevations.e1]}>
-          <Tab
-            style={styles.tabs}
-            buttonProps={{ type: 'primary', useI18n: true }}
-            data={HEADER_TAB}
-            type="pill"
-            onPressTab={onPressTab}
-            activeIndex={selectedIndex}
-          />
-        </View>
-
-        {renderContent()}
+        <DiscoverCommunities />
       </View>
-      <GlobalSearch
+      <SearchDiscoverCommunity
         isOpen={isOpenSearchCommunity}
-        placeholder={t('discover:global_search_placeholder')}
         onClose={onCloseSearch}
+        placeholder={t('communities:text_search_communities')}
       />
     </View>
   );
@@ -102,14 +53,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     containerContent: {
       flex: 1,
       backgroundColor: colors.gray5,
-    },
-    containerTabView: {
-      paddingBottom: spacing.padding.small,
-      backgroundColor: colors.white,
-    },
-    tabs: {
-      alignItems: 'center',
-      paddingHorizontal: spacing.margin.large,
     },
   });
 };

@@ -1,11 +1,13 @@
 import { cloneDeep } from 'lodash';
-import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
-import appConfig from '~/configs/appConfig';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
-import { IGroupDetail, IGroupMembers, IJoiningMember } from '~/interfaces/IGroup';
+import {
+  IGroupDetail,
+  IGroupMembers,
+  IJoiningMember,
+} from '~/interfaces/IGroup';
 import { IObject } from '~/interfaces/common';
-import { getNewSchemeRolesOnUpdatePermission } from '~/screens/PermissionScheme/CreatePermissionScheme/helper';
 
 export const groupInitState = {
   myPermissions: {
@@ -14,32 +16,6 @@ export const groupInitState = {
     timeGetMyPermissions: null,
   },
   permissionScheme: {
-    categories: {
-      data: undefined,
-      loading: false,
-    },
-    systemScheme: {
-      data: undefined,
-      loading: false,
-    },
-    communityScheme: {
-      loading: false,
-      deleting: false,
-      data: undefined,
-    },
-    schemes: {
-      loading: false,
-      data: {
-        communityScheme: undefined,
-        groupSchemes: undefined,
-      },
-      allSchemes: undefined,
-    },
-    creatingScheme: {
-      data: undefined,
-      memberRoleIndex: 2,
-      creating: false,
-    },
     assignGroupScheme: {
       assignments: {
         loading: false,
@@ -50,10 +26,6 @@ export const groupInitState = {
         data: [],
         currentAssignments: undefined,
       },
-    },
-    groupScheme: {
-      // storing this data for comparing original group scheme and editing scheme
-      data: undefined,
     },
   },
   groupStructure: {
@@ -107,16 +79,6 @@ export const groupInitState = {
     canLoadMore: true,
     data: [] as IGroupMembers[],
   },
-
-  refreshingGroupPosts: false,
-  posts: {
-    loading: false,
-    data: [],
-    extra: [],
-    offset: 0,
-    canLoadMore: true,
-  },
-
   users: {
     loading: false,
     data: [],
@@ -149,18 +111,6 @@ export const groupInitState = {
     ids: [] as string[],
     items: {},
   },
-  discoverCommunities: {
-    loading: true,
-    canLoadMore: true,
-    ids: [],
-    items: {},
-  },
-  managedCommunities: {
-    loading: true,
-    canLoadMore: true,
-    ids: [] as string[],
-    items: {},
-  },
   joinedAllGroups: {
     isRefresh: false,
     isLoading: false,
@@ -184,7 +134,6 @@ export const groupInitState = {
   },
   isGettingInfoDetailError: false,
   isGettingInfoDetail: false,
-  communityDetail: {} as ICommunity,
   communityMembers: {
     loading: true,
     canLoadMore: true,
@@ -211,14 +160,13 @@ export const groupInitState = {
     ids: [],
     items: {} as IObject<IJoiningMember>,
   },
-
-  communitySearch: {
+  globalSearch: {
     loading: false,
     canLoadMore: true,
     ids: [] as string[],
     items: {},
   },
-  globalSearch: {
+  communitySearch: {
     loading: false,
     canLoadMore: true,
     ids: [] as string[],
@@ -226,19 +174,15 @@ export const groupInitState = {
   },
 };
 
-function groupsReducer(
-  state = groupInitState, action: any = {},
-) {
+function groupsReducer(state = groupInitState, action: any = {}) {
   const { type, payload } = action;
   const {
     selectedUsers,
     groupMemberRequests,
     communityMembers,
     communitySearchMembers,
-    managedCommunities,
     groupMembers,
     groupSearchMembers,
-    discoverCommunities,
     communityMemberRequests,
     globalSearch,
   } = state;
@@ -254,164 +198,6 @@ function groupsReducer(
       };
 
     // Group Structure Settings
-    case groupsTypes.SET_GROUP_STRUCTURE:
-      return {
-        ...state,
-        groupStructure: payload ? { ...payload } : groupInitState.groupStructure,
-      };
-    case groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE:
-      return {
-        ...state,
-        groupStructure: {
-          ...state.groupStructure,
-          communityTree: payload
-            ? { ...payload }
-            : groupInitState.groupStructure.communityTree,
-        },
-      };
-    case groupsTypes.SET_GROUP_STRUCTURE_REORDER:
-      return {
-        ...state,
-        groupStructure: {
-          ...state.groupStructure,
-          reorder: payload
-            ? { ...payload }
-            : groupInitState.groupStructure.reorder,
-        },
-      };
-    case groupsTypes.SET_GROUP_STRUCTURE_MOVE:
-      return {
-        ...state,
-        groupStructure: {
-          ...state.groupStructure,
-          move: payload ? { ...payload } : groupInitState.groupStructure.move,
-        },
-      };
-    case groupsTypes.SET_GROUP_STRUCTURE_MOVE_SELECTING:
-      return {
-        ...state,
-        groupStructure: {
-          ...state.groupStructure,
-          move: {
-            ...state.groupStructure.move,
-            selecting: payload,
-          },
-        },
-      };
-    // Permission
-    case groupsTypes.SET_PERMISSION_CATEGORIES:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          categories: payload,
-        },
-      };
-    case groupsTypes.SET_SYSTEM_SCHEME:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          systemScheme: payload,
-        },
-      };
-    case groupsTypes.SET_CREATING_SCHEME:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          creatingScheme: payload
-            ? {
-              ...state.permissionScheme.creatingScheme,
-              ...payload,
-            }
-            : groupInitState.permissionScheme.creatingScheme,
-        },
-      };
-    case groupsTypes.SET_CREATING_SCHEME_DATA:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          creatingScheme: {
-            ...state.permissionScheme.creatingScheme,
-            data: payload
-              ? Object.assign(cloneDeep(state.permissionScheme.creatingScheme.data), payload)
-              : groupInitState.permissionScheme.creatingScheme.data,
-          },
-        },
-      };
-    case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
-      const memberRoleIndex = state.permissionScheme.creatingScheme?.memberRoleIndex;
-      const { permission, roleIndex } = payload || {};
-      const roles = state.permissionScheme.creatingScheme?.data?.roles || [];
-      const newRoles = getNewSchemeRolesOnUpdatePermission(
-        permission,
-        roleIndex,
-        roles,
-        memberRoleIndex,
-      );
-      const newData = Object.assign(
-        cloneDeep(state.permissionScheme.creatingScheme.data),
-        { roles: newRoles },
-      );
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          creatingScheme: {
-            ...state.permissionScheme.creatingScheme,
-            data: newData,
-          },
-        },
-      };
-    }
-    case groupsTypes.SET_COMMUNITY_SCHEME:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          communityScheme: { ...payload },
-        },
-      };
-    case groupsTypes.SET_SCHEMES:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          schemes: payload,
-        },
-      };
-    case groupsTypes.SET_GROUP_SCHEME_ASSIGNMENTS:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          assignGroupScheme: {
-            ...state.permissionScheme.assignGroupScheme,
-            assignments: payload || groupInitState.permissionScheme.assignGroupScheme.assignments,
-          },
-        },
-      };
-    case groupsTypes.SET_GROUP_SCHEME_ASSIGNING:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          assignGroupScheme: {
-            ...state.permissionScheme.assignGroupScheme,
-            assigning: payload || groupInitState.permissionScheme.assignGroupScheme.assigning,
-          },
-        },
-      };
-    case groupsTypes.SET_GROUP_SCHEME:
-      return {
-        ...state,
-        permissionScheme: {
-          ...state.permissionScheme,
-          groupScheme: { ...payload },
-        },
-      };
     case groupsTypes.SET_GROUP_DETAIL_ERROR:
       return {
         ...state,
@@ -448,17 +234,6 @@ function groupsReducer(
           ...payload,
         },
       };
-
-    case groupsTypes.GET_GROUP_POSTS:
-      return {
-        ...state,
-        refreshingGroupPosts: true,
-        posts: {
-          ...state.posts,
-          loading: state.posts.data.length === 0,
-          params: payload.params,
-        },
-      };
     case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
       return {
         ...state,
@@ -472,45 +247,6 @@ function groupsReducer(
           ...payload,
         },
       };
-
-    case groupsTypes.SET_GROUP_POSTS:
-      return {
-        ...state,
-        refreshingGroupPosts: false,
-        posts: {
-          ...state.posts,
-          loading: false,
-          data: payload,
-          offset: state.posts.offset + payload.length,
-          canLoadMore: payload.length === appConfig.recordsPerPage,
-        },
-      };
-    case groupsTypes.SET_EXTRA_GROUP_POSTS:
-      return {
-        ...state,
-        refreshingGroupPosts: false,
-        posts: {
-          ...state.posts,
-          extra: payload,
-          offset: state.posts.offset + payload.length,
-          canLoadMore: payload.length === appConfig.recordsPerPage,
-        },
-      };
-    case groupsTypes.MERGE_EXTRA_GROUP_POSTS:
-      return {
-        ...state,
-        posts: {
-          ...state.posts,
-          data: [...state.posts.data, ...state.posts.extra],
-          extra: [],
-        },
-      };
-    case groupsTypes.CLEAR_GROUP_POSTS:
-      return {
-        ...state,
-        posts: groupInitState.posts,
-      };
-
     case groupsTypes.EDIT_GROUP_DETAIL:
       return {
         ...state,
@@ -548,7 +284,9 @@ function groupsReducer(
         },
       };
     case groupsTypes.SELECT_JOINABLE_USERS: {
-      const included = selectedUsers.find((item: IUser) => payload.id === item.id);
+      const included = selectedUsers.find(
+        (item: IUser) => payload.id === item.id,
+      );
       return {
         ...state,
         selectedUsers: included
@@ -661,14 +399,6 @@ function groupsReducer(
           ...payload,
         },
       };
-    case groupsTypes.SET_DISCOVER_COMMUNITIES:
-      return {
-        ...state,
-        discoverCommunities: {
-          ...state.discoverCommunities,
-          ...payload,
-        },
-      };
 
     case groupsTypes.GET_COMMUNITY_GROUPS:
       return {
@@ -682,26 +412,6 @@ function groupsReducer(
         loadingJoinedGroups: false,
         joinedGroups: payload || [],
       };
-    case groupsTypes.SET_COMMUNITY_ERROR:
-      return {
-        ...state,
-        isGettingInfoDetailError: payload,
-      };
-    case groupsTypes.SET_COMMUNITY_LOADING:
-      return {
-        ...state,
-        isGettingInfoDetail: payload,
-      };
-    case groupsTypes.SET_COMMUNITY_DETAIL:
-      return {
-        ...state,
-        loadingCover: false,
-        loadingAvatar: false,
-        isGettingInfoDetail: false,
-        isGettingInfoDetailError: false,
-        communityDetail: payload,
-      };
-
     case groupsTypes.SET_COMMUNITY_MEMBERS: {
       return {
         ...state,
@@ -731,39 +441,22 @@ function groupsReducer(
         },
       };
     }
-    case groupsTypes.SET_MANAGED_COMMUNITIES:
-      return {
-        ...state,
-        managedCommunities: {
-          ...managedCommunities,
-          ...payload,
-        },
-      };
     case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
       return {
         ...state,
-        discoverCommunities: {
-          ...discoverCommunities,
-          items: {
-            ...discoverCommunities.items,
-            [payload.id]: {
-              ...discoverCommunities.items[payload.id],
-              ...payload.data,
-            },
-          },
-        },
-        globalSearch: globalSearch?.items && globalSearch.items?.[payload.id]
-          ? {
-            ...globalSearch,
-            items: {
-              ...globalSearch.items,
-              [payload.id]: {
-                ...globalSearch.items[payload.id],
-                ...payload.data,
+        globalSearch:
+          globalSearch?.items && globalSearch.items?.[payload.id]
+            ? {
+              ...globalSearch,
+              items: {
+                ...globalSearch.items,
+                [payload.id]: {
+                  ...globalSearch.items[payload.id],
+                  ...payload.data,
+                },
               },
-            },
-          }
-          : globalSearch,
+            }
+            : globalSearch,
       };
 
     case groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS:
@@ -808,20 +501,6 @@ function groupsReducer(
             },
           },
         },
-      };
-
-    case groupsTypes.SET_COMMUNITY_SEARCH:
-      return {
-        ...state,
-        communitySearch: {
-          ...state.communitySearch,
-          ...payload,
-        },
-      };
-    case groupsTypes.RESET_COMMUNITY_SEARCH:
-      return {
-        ...state,
-        communitySearch: groupInitState.communitySearch,
       };
     case groupsTypes.SET_GLOBAL_SEARCH:
       return {

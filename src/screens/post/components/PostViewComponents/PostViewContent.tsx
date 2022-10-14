@@ -4,24 +4,24 @@ import { isEmpty } from 'lodash';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import { useRootNavigation } from '~/hooks/navigation';
-import { IActivityDataImage, IMarkdownAudience } from '~/interfaces/IPost';
+import { IActivityDataImage, ILinkPreview, IMarkdownAudience } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import PostPhotoPreview from '~/screens/post/components/PostPhotoPreview';
 import Image from '~/beinComponents/Image';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 
 import Markdown from '~/beinComponents/Markdown';
-import postKeySelector from '../../../../storeRedux/post/keySelector';
-import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
-import FilesView from '../FilesView';
+import FilesView from '~/components/FilesView';
 import CopyableView from '~/beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
 import spacing from '~/theme/spacing';
-import LinkPreviewer from '~/components/LinkPreviewer';
+import PostVideoPlayer from '../PostVideoPlayer';
+import LinkPreview from '~/components/LinkPreview';
 
 export interface PostViewContentProps {
   postId: string;
+  isEmptyPost?: boolean;
   content?: string;
   images?: IActivityDataImage[];
   videos?: any[];
@@ -29,11 +29,14 @@ export interface PostViewContentProps {
   isPostDetail: boolean;
   isLite?: boolean;
   isDraft?: boolean;
+  mentions?: any;
+  linkPreview?: ILinkPreview;
   onPressMarkSeenPost?: () => void;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
   postId,
+  isEmptyPost,
   content = '',
   images = [],
   videos = [],
@@ -41,6 +44,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isPostDetail,
   isLite,
   isDraft,
+  mentions,
+  linkPreview,
   onPressMarkSeenPost,
 }: PostViewContentProps) => {
   const { rootNavigation } = useRootNavigation();
@@ -53,26 +58,17 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
   }).current;
 
-  if (
-    !content
-    && (!images || images?.length === 0)
-    && (!videos || videos?.length === 0)
-    && isEmpty(files)
-  ) {
-    return null;
-  }
-
   const renderContent = () => {
     if (isLite) {
       const imageName = images?.[0]?.name;
-      const imageSource = images?.[0]?.url
-        || (imageName
-          ? imageName?.includes?.('http')
-            ? imageName
-            : getResourceUrl(
-              'postImage', imageName,
-            )
-          : '');
+      const imageUrl = images?.[0]?.url;
+      const isNetworkImage = typeof imageName === 'string' && imageName?.startsWith?.('http');
+      const imageSourceFromName = isNetworkImage
+        ? imageName
+        : getResourceUrl('postImage', imageName);
+
+      const imageSource = imageUrl || imageSourceFromName || '';
+
       return (
         <View testID="post_view_content.lite_container" style={styles.row}>
           <View style={styles.flex1}>
@@ -84,7 +80,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               useMarkdown
               useMarkdownIt
               limitMarkdownTypes
-              selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
+              mentions={mentions}
               onPressAudience={onPressMentionAudience}
               onToggleShowTextContent={onPressMarkSeenPost}
             />
@@ -100,7 +96,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         <CopyableView content={escapeMarkDown(content)}>
           <Markdown
             value={content}
-            selector={`${postKeySelector.allPosts}.${postId}.mentions`}
+            mentions={mentions}
             onPressAudience={onPressMentionAudience}
           />
         </CopyableView>
@@ -115,12 +111,14 @@ const PostViewContent: FC<PostViewContentProps> = ({
         useMarkdown
         toggleOnPress
         copyEnabled
-        selector={`${postKeySelector.allPosts}.${postId}.mentions`}
+        mentions={mentions}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
       />
     );
   };
+
+  if (isEmptyPost) return null;
 
   return (
     <View>
@@ -134,7 +132,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             onPressMarkSeenPost={onPressMarkSeenPost}
           />
           {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
-            <VideoPlayer data={videos?.[0]} postId={postId} onWatchCheckPoint={onPressMarkSeenPost} />
+            <PostVideoPlayer data={videos?.[0]} postId={postId} onWatchCheckPoint={onPressMarkSeenPost} />
           ) : (
             <UploadingFile
               uploadType={uploadTypes.postVideo}
@@ -147,7 +145,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
           {(!images || images?.length === 0)
           && (!videos || videos?.length === 0)
           && isEmpty(files)
-          && <LinkPreviewer text={content} />}
+          && !!linkPreview
+          && <LinkPreview data={linkPreview} />}
 
           <FilesView
             files={files}

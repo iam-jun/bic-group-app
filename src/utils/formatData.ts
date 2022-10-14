@@ -91,21 +91,6 @@ export const timestampToISODate = (date: any): string => {
   return date;
 };
 
-export const formatPhoneNumber = (text: string) => {
-  if (!text) return text;
-  const cleaned = (`${text}`).replace(
-    /\D/g, '',
-  );
-  const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
-  if (match) {
-    const intlCode = match[1] ? '+1 ' : '';
-    const number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
-
-    return number;
-  }
-  return text;
-};
-
 export const toNumber = (
   _text: string, decimalFixed: number,
 ) => {
@@ -163,11 +148,15 @@ export const formatTextRemoveSpace = (text: string) => {
   );
 };
 
-export const convertArrayToObject = (data: any[]) => (data || []).reduce(
+export const convertArrayToObject = (data: any[], key?: string) => {
+  const _key = key || 'id';
+
+  return (data || []).reduce(
   // eslint-disable-next-line no-return-assign
-  (
-    obj: any, item: any,
+    (
+      obj: any, item: any,
     // eslint-disable-next-line no-sequences
-  ) => ((obj[item.channelId] = item), obj),
-  {},
-);
+    ) => ((obj[item[_key]] = item), obj),
+    {},
+  );
+};

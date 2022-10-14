@@ -8,24 +8,24 @@ import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 
 import { useRootNavigation } from '~/hooks/navigation';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import Text from '~/beinComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 
-const CommunityAdmin = () => {
+const CommunityAdmin = (props: any) => {
+  const { params } = props.route;
+  const communityId = params?.communityId;
+
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
-  const {
-    id: communityId,
-    name,
-  } = useKeySelector(groupsKeySelector.communityDetail);
+  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
+  const name = community?.name || '';
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
@@ -59,11 +59,11 @@ const CommunityAdmin = () => {
   };
 
   const onPressPermission = () => {
-    rootNavigation.navigate(groupStack.permissionScheme);
+    rootNavigation.navigate(groupStack.permissionScheme, { communityId });
   };
 
   const onPressGroupStructure = () => {
-    rootNavigation.navigate(groupStack.groupStructureSettings);
+    rootNavigation.navigate(groupStack.groupStructureSettings, { communityId });
   };
 
   const renderModerating = () => (

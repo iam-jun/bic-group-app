@@ -31,8 +31,8 @@ export interface CollapsibleTextProps extends TextProps {
   copyEnabled?: boolean;
   onPress?: () => void;
   onPressAudience?: (audience: any, e?: any) => any;
-  [x: string]: any;
   onToggleShowTextContent?: () => void;
+  [x: string]: any;
 }
 
 const _CollapsibleText: FC<CollapsibleTextProps> = ({

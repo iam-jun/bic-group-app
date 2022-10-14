@@ -340,7 +340,7 @@ const Header: React.FC<HeaderProps> = ({
             onPress={onPressMenu}
           />
         )}
-        {!!buttonText && onPressButton && (
+        {(!!buttonText || !!buttonProps) && onPressButton && (
           <Button.Primary
             testID="header.button"
             style={{

@@ -1,6 +1,6 @@
-import IBaseStore from '~/store/interfaces/IBaseStore';
+import IBaseState from '~/store/interfaces/IBaseState';
 
-interface IEmojiPickerState extends IBaseStore {
+interface IEmojiPickerState extends IBaseState {
   data: any[],
   filteredData: any[],
   currentSectionIndex: number;

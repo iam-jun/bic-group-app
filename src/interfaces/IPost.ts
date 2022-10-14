@@ -95,6 +95,9 @@ export interface ICommentData {
   reactionsOfActor?: IOwnReaction;
   reaction?: IReaction;
   giphy?: IGiphy;
+  giphyId?: string;
+  giphyUrl?: string;
+  edited?: boolean;
 }
 
 export interface ICreatePostImage {
@@ -105,8 +108,8 @@ export interface ICreatePostImage {
 
 export interface ICreatePostSettings {
   important?: IActivityImportant;
-  canComment?: boolean,
-  canReact?: boolean,
+  canComment?: boolean;
+  canReact?: boolean;
   count: number;
 }
 
@@ -153,12 +156,19 @@ export interface IPostActivity {
   createdAt?: string;
   createdBy?: string;
   totalUsersSeen?: number;
+  deleted?: boolean;
+  markedReadSuccess?: boolean;
+  linkPreview?: ILinkPreview;
+  isArticle?: boolean;
+  title?: string;
+  summary?: string;
+  hashtags?: string[];
 }
 
 export type IOwnReaction = Array<IReaction>;
 
 export type IReactionCounts = {
-  [x: string]: {[reactionKind: string]: number};
+  [x: string]: { [reactionKind: string]: number };
 };
 
 export interface IAllPosts {
@@ -166,7 +176,7 @@ export interface IAllPosts {
 }
 
 export interface IAllComments {
-  [id: string]: IReaction;
+  [id: string]: ICommentData;
 }
 
 export interface IPostCreatePost {
@@ -179,7 +189,7 @@ export interface IPostCreatePost {
   setting?: any;
   mentions?: any;
   isDraft?: boolean;
-
+  linkPreview?: ILinkPreview;
   createFromGroupId?: string;
 }
 
@@ -286,11 +296,10 @@ export interface IRequestGetPostComment {
   childLimit?: number;
 }
 
-export interface IPayloadGetCommentsById{
-  isMerge?: boolean;
+export interface IPayloadGetCommentsById {
   position?: string;
   commentId?: string;
-  params?: IRequestGetPostComment,
+  params?: IRequestGetPostComment;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
 
@@ -304,7 +313,7 @@ export interface IReaction {
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
-  parentCommentId?: string ; // used when retry/cancel adding new comment
+  parentCommentId?: string; // used when retry/cancel adding new comment
   child?: any;
   actor?: IAudienceUser;
   activity_id?: string;
@@ -389,7 +398,7 @@ export interface IPayloadReactToPost {
 
 export interface IPayloadReactToComment {
   id: string;
-  comment: IReaction;
+  comment: ICommentData;
   postId?: string;
   parentCommentId?: string;
   reactionId: ReactionType;
@@ -410,14 +419,9 @@ export interface IParamDeleteReaction {
   reactionName: string;
 }
 
-export interface IParamPutReactionToComment {
-  commentId: string;
-  data: string[];
-}
-
 export interface IPayloadUpdateCommentsById {
   id: string;
-  comments: ICommentData[];
+  commentIds: string[];
   isMerge?: boolean;
   isReplace?: boolean;
   commentId?: string;
@@ -439,13 +443,6 @@ export interface IPostSettingsParams extends ICreatePostParams {
 export interface IPayloadReplying {
   comment: ICommentData;
   parentComment?: ICommentData;
-}
-
-export interface IPayloadSetDraftPosts {
-  posts?: IPostActivity[];
-  canLoadMore?: boolean;
-  loading?: boolean;
-  refreshing?: boolean;
 }
 
 export interface IParamGetDraftPosts {
@@ -481,11 +478,6 @@ export interface IPayloadPutEditDraftPost {
   publishNow: boolean;
   callback?: any;
   createFromGroupId?: string;
-}
-
-export interface IPayloadPutEditAutoSave {
-  id: string;
-  data: IPostCreatePost;
 }
 
 export interface IParamGetPostAudiences {
@@ -536,7 +528,7 @@ export interface IGetStreamCommentData {
   reactionsCount?: IReactionCounts;
   child?: IGetStreamCommentData;
 }
-export interface IRequestGetUsersSeenPost {
+export interface IRequestGetUsersInterestedPost {
   postId: string;
   limit?: number;
   offset?: number;
@@ -550,4 +542,28 @@ export interface IGetSeenPostListSheet {
   postId: string;
   offset?: number;
   canLoadMore?: boolean;
+}
+export interface IPayloadUpdateLinkPreview {
+  lstLinkPreview?: ILinkPreviewCreatePost[];
+  lstRemovedLinkPreview?: string[];
+}
+
+export interface ILinkPreview {
+  url: string;
+  domain: string;
+  title: string;
+  image: string;
+  description: string;
+}
+
+export interface ILinkPreviewCreatePost extends Partial<ILinkPreview> {
+  isLoading?: boolean;
+}
+
+export interface IAddChildCommentToComment {
+  commentId: string | number;
+  childComments: ICommentData[];
+  shouldAddChildrenCount?: boolean;
+  meta?: any;
+  isAddFirst?: boolean;
 }

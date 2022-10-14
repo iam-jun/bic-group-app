@@ -7,6 +7,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
+import useCommunitiesStore from '~/store/entities/communities';
 
 interface Props {
   item: any;
@@ -14,9 +15,12 @@ interface Props {
 }
 
 const PrivacyItem = ({ item, type }: Props) => {
-  const { privacy } = useKeySelector(type === 'group'
-    ? groupsKeySelector.groupDetail.group : groupsKeySelector.communityDetail) || {};
+  const currentCommunityId = useCommunitiesStore((state) => state.currentCommunityId);
+  const community = useCommunitiesStore((state) => state.data[currentCommunityId]);
+  const group = useKeySelector(groupsKeySelector.groupDetail.group);
+  const data = type === 'group' ? group : community;
 
+  const { privacy } = data || {};
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 

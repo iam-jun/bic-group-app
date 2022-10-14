@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import groupJoinStatus from '~/constants/groupJoinStatus';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
 import Store from '~/storeRedux';
 import groupsActions from '~/storeRedux/groups/actions';
@@ -11,7 +11,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
   try {
     const currentState: IDiscoverGroupsState = get();
     const currentRequestState = currentState.items[groupId]?.joinStatus || 0;
-    if (currentRequestState === groupJoinStatus.member) return;
+    if (currentRequestState === GroupJoinStatus.MEMBER) return;
     const groupName = currentState.items[groupId]?.name;
 
     groupApi.cancelJoinGroup(groupId);
@@ -19,7 +19,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
 
     const currentItem = {
       ...currentState.items[groupId],
-      joinStatus: groupJoinStatus.visitor,
+      joinStatus: GroupJoinStatus.VISITOR,
     };
     set((state:IDiscoverGroupsState) => {
       state.items[groupId] = { ...currentItem };

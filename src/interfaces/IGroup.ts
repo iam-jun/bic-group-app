@@ -1,4 +1,4 @@
-import { GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
 import initialState from '~/storeRedux/initialState';
@@ -71,7 +71,7 @@ export interface IGroup {
   createdBy?: string;
   icon?: string;
   backgroundImgUrl?: string | null;
-  privacy?: string;
+  privacy?: GroupPrivacyType;
   chatId?: string;
   schemeId?: string;
   createdAt?: string;
@@ -109,7 +109,7 @@ export interface IGroupDetailEdit {
   level?: number;
   icon?: string;
   backgroundImgUrl?: string;
-  privacy?: GROUP_PRIVACY_TYPE;
+  privacy?: GroupPrivacyType;
 }
 
 export interface IGroupDetail {
@@ -267,4 +267,26 @@ export interface IGetManagedCommunityAndGroupPayload {
 export interface IParamsGetManagedCommunityAndGroup {
   limit?: number;
   offset?: number;
+}
+
+export interface IPayloadGetGroupStructureCommunityTree {
+  communityId: string;
+  showLoading?: boolean;
+}
+
+export interface IPayloadGetGroupStructureMoveTargets {
+    communityId: string;
+    groupId: string;
+    key?: string;
+  }
+
+export interface IPayloadPutGroupStructureMoveToTarget {
+    communityId: string;
+    moveId: string;
+    targetId: string
+  }
+
+export interface IPayloadPutGroupStructureReorder {
+  communityId: string;
+  newOrder: any[];
 }

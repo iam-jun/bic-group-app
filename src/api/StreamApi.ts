@@ -15,7 +15,7 @@ import {
   IRequestGetPostComment,
   IRequestPostComment,
   IRequestReplyComment,
-  IRequestGetUsersSeenPost,
+  IRequestGetUsersInterestedPost,
 } from '~/interfaces/IPost';
 import {
   IParamGetFeed,
@@ -24,6 +24,8 @@ import {
   IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
 } from '~/interfaces/IHome';
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
+import { IParamGetArticleDetail, IParamGetArticles, IParamPutEditArticle } from '~/interfaces/IArticle';
+import appConfig from '~/configs/appConfig';
 
 const DEFAULT_LIMIT = 10;
 
@@ -112,6 +114,15 @@ export const streamApiConfig = {
       ...params,
     },
   }),
+  putEditArticle: (param: IParamPutEditArticle): HttpApiRequestConfig => {
+    const { articleId, data } = param || {};
+    return {
+      ...defaultConfig,
+      url: `${provider.url}articles/${articleId}`,
+      method: 'put',
+      data,
+    };
+  },
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
     const { postId, data } = param || {};
     return {
@@ -145,7 +156,7 @@ export const streamApiConfig = {
     url: `${provider.url}comments`,
     params: {
       order: params?.order || 'ASC',
-      limit: params?.limit || 10,
+      limit: params?.limit || appConfig.commentLimit,
       offset: params?.offset || 0,
       idGte: params?.idGte,
       idLte: params?.idLte,
@@ -250,8 +261,8 @@ export const streamApiConfig = {
       postId: params?.postId || '',
     },
   }),
-  getUsersSeenPost: (
-    params: IRequestGetUsersSeenPost,
+  getUsersInterestedPost: (
+    params: IRequestGetUsersInterestedPost,
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}feeds/seen/user`,
@@ -260,6 +271,20 @@ export const streamApiConfig = {
       limit: params?.limit || 20,
       offset: params?.offset || 0,
     },
+  }),
+  getArticles: (
+    params: IParamGetArticles,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles`,
+    params,
+  }),
+  getArticleDetail: (
+    id: string, params?: IParamGetArticleDetail,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${id}`,
+    params,
   }),
 };
 
@@ -333,6 +358,7 @@ const streamApi = {
   },
   postCreateNewPost: (data: IPostCreatePost) => withHttpRequestPromise(streamApiConfig.postCreateNewPost, data),
   putReaction: (param: IParamPutReaction) => withHttpRequestPromise(streamApiConfig.putReaction, param),
+  putEditArticle: (param: IParamPutEditArticle) => withHttpRequestPromise(streamApiConfig.putEditArticle, param),
   putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(streamApiConfig.putEditPost, param),
   putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(streamApiConfig.putEditComment, id, data),
   deletePost: (id: string, isDraftPost?: boolean) => withHttpRequestPromise(
@@ -409,7 +435,15 @@ const streamApi = {
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
     streamApiConfig.getCommentDetail, commentId, params,
   ),
-  getSeenList: (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(streamApiConfig.getUsersSeenPost, params),
+  getArticles: (params: IParamGetArticles) => withHttpRequestPromise(
+    streamApiConfig.getArticles, params,
+  ),
+  getArticleDetail: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
+    streamApiConfig.getArticleDetail, id, params,
+  ),
+  getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
+    streamApiConfig.getUsersInterestedPost, params,
+  ),
 };
 
 export default streamApi;

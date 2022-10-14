@@ -13,14 +13,13 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import EmptyScreen from '~/components/EmptyScreen';
 
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import images from '~/resources/images';
 import useDiscoverGroupsStore from './store';
 import IDiscoverGroupsState from './store/Interface';
 import { useBaseHook } from '~/hooks';
+import useCommunitiesStore from '~/store/entities/communities';
 
 const DiscoverGroups = ({ route }: any) => {
   const { communityId } = route.params;
@@ -38,7 +37,7 @@ const DiscoverGroups = ({ route }: any) => {
     ids, items, loading, canLoadMore, noGroupInCommuntity,
   } = useDiscoverGroupsStore();
 
-  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const communityDetail = useCommunitiesStore((state) => state.data[communityId]);
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
     doGetDiscoverGroups({ communityId, isRefreshing });
@@ -86,7 +85,6 @@ const DiscoverGroups = ({ route }: any) => {
         item={currentItem}
         testID={`browse_groups_item_${index}`}
         shouldShowAlertJoinTheCommunityFirst
-        isResetCommunityDetail={false}
         onJoin={handleJoinGroup}
         onCancel={handleCancelJoinGroup}
       />

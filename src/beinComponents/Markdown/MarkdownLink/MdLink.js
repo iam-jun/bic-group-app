@@ -132,46 +132,13 @@ export default class MdLink extends PureComponent {
     };
   });
 
-  handleLongPress = async () => {
-    console.log('\x1b[36m🐣️ MdLink handleLongPress\x1b[0m');
-    // const {formatMessage} = this.context.intl;
-    //
-    // // const config = mattermostManaged.getCachedConfig();
-    // const config = mmConfig;
-    //
-    // if (config?.copyAndPasteProtection !== 'true') {
-    //   const cancelText = formatMessage({
-    //     id: 'mobile.post.cancel',
-    //     defaultMessage: 'Cancel',
-    //   });
-    //   const actionText = formatMessage({
-    //     id: 'mobile.markdown.link.copy_url',
-    //     defaultMessage: 'Copy URL',
-    //   });
-    //   BottomSheet.showBottomSheetWithOptions(
-    //     {
-    //       options: [actionText, cancelText],
-    //     },
-    //     value => {
-    //       if (value !== 1) {
-    //         this.handleLinkCopy();
-    //       }
-    //     },
-    //   );
-    // }
-  };
-
-  handleLinkCopy = () => {
-    Clipboard.setString(this.props.href);
-  };
-
   render() {
     const children = ExperimentalNormalizeMarkdownLinks
       ? this.parseChildren()
       : this.props.children;
 
     return (
-      <Text onPress={this.handlePress} onLongPress={this.handleLongPress}>
+      <Text onPress={this.handlePress}>
         {children}
       </Text>
     );

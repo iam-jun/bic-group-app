@@ -3,6 +3,7 @@ import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import commonStack from '~/router/navigator/commonStack/stack';
+import articleStack from './stacks/articleStack/stack';
 
 const mainTabStack = {
   ...groupStack,
@@ -10,6 +11,7 @@ const mainTabStack = {
   ...menuStack,
   ...notiStack,
   ...commonStack,
+  ...articleStack,
 };
 
 export default mainTabStack;

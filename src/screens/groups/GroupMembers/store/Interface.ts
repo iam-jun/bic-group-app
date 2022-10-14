@@ -1,6 +1,6 @@
-import IBaseStore from '~/store/interfaces/IBaseStore';
+import IBaseState from '~/store/interfaces/IBaseState';
 
-interface IRemoveGroupMemberState extends IBaseStore {
+interface IRemoveGroupMemberState extends IBaseState {
   actions: {
     deleteRemoveGroupMember: (payload: {groupId: string; userId: string}) => void;
   }

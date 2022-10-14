@@ -16,12 +16,15 @@ import postActions from '~/storeRedux/post/actions';
 
 import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import { getTotalFileSize } from '../../../storeRedux/post/selectors';
+import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
 import useDraftPostStore from '../DraftPost/store';
+import { checkExpiration } from '../helper/postUtils';
+import useCommentInputStore from '../components/CommentInputView/store';
+import ICommentInputState from '../components/CommentInputView/store/Interface';
 
 export interface CreatePostProps {
   route?: {
@@ -33,6 +36,8 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const toolbarRef = useRef<any>();
   const mentionInputRef = useRef<any>();
   const screenParams = route?.params || {};
+
+  const actions = useCommentInputStore((state: ICommentInputState) => state.actions);
 
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -121,7 +126,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
         dispatch(postActions.setCreatePostImagesDraft([]));
 
         // clear comment because of comment input view listen emit event change text
-        dispatch(postActions.setCreateComment({ content: '', loading: false }));
+        actions.setCreateComment({ content: '', loading: false });
       };
     }, [],
   );
@@ -162,8 +167,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     rootNavigation.navigate(homeStack.postSettings);
   };
 
-  const now = new Date();
-  const notExpired = now.getTime() < new Date(important?.expires_time).getTime();
+  const isExpired = checkExpiration(important?.expires_time);
 
   return (
     <ScreenWrapper isFullView testID="CreatePostScreen">
@@ -184,7 +188,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       />
       <View style={styles.flex1}>
         <View>
-          {!!important?.active && notExpired && <CreatePostBannerImportant expiresTime={important.expires_time} />}
+          {!!important?.active && !isExpired && <CreatePostBannerImportant expiresTime={important.expires_time} />}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />
         </View>

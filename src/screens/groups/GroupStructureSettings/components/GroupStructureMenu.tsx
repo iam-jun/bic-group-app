@@ -12,12 +12,14 @@ import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
 export interface GroupStructureMenuProps {
+  communityId: string
   group?: IGroup;
   disableMove?: boolean;
   disableReorder?: boolean;
 }
 
 const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
+  communityId,
   group,
   disableMove,
   disableReorder,
@@ -30,14 +32,14 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
 
   const onPressReorderGroup = () => {
     rootNavigation.navigate(
-      groupStack.reorderGroup, { group },
+      groupStack.reorderGroup, { group, communityId },
     );
     dispatch(modalActions.hideModal());
   };
 
   const onPressMoveGroup = () => {
     rootNavigation.navigate(
-      groupStack.moveGroup, { group },
+      groupStack.moveGroup, { group, communityId },
     );
     dispatch(modalActions.hideModal());
   };

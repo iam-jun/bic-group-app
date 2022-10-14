@@ -130,7 +130,8 @@
     "text_you": "Bạn",
     "content_not_available": "Nội dung không tồn tại",
     "dont_have_permission_to_access": "Bạn không có quyền truy cập trang này",
-    "btn_go_back_to_home": "Quay về trang chủ"
+    "btn_go_back_to_home": "Quay về trang chủ",
+    "text_upcoming": "Sắp tới"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -140,15 +141,16 @@
     "text_change_password_success_desc": "You have changed password successfully.",
     "text_change_password_success_confirm_button": "Got it",
     "text_sign_in": "Đăng nhập",
-    "text_sign_in_desc": "Chào mừng bạn đã trở lại!",
+    "text_sign_in_welcome_back": "Chào mừng bạn đã trở lại!",
     "text_sign_up": "Đăng ký",
     "text_sign_out": "Đăng xuất",
     "input_label_first_name": "Tên",
     "input_label_last_name": "Họ",
     "input_label_username": "Tên tài khoản",
     "input_label_email": "Email",
+    "input_label_email_placeholder": "Email của bạn",
     "input_label_password": "Mật khẩu",
-    "input_label_password_placeholder": "Nhập mật khẩu",
+    "input_label_password_placeholder": "Mật khẩu của bạn",
     "input_label_code": "Mã xác thực 6 chữ số",
     "input_label_current_password": "Mật khẩu hiện tại",
     "input_label_new_password": "Mật khẩu mới",
@@ -162,7 +164,7 @@
     "btn_send": "Gửi",
     "btn_send_recover_code": "Gửi mã xác thực",
     "btn_forgot_password": "Quên mật khẩu?",
-    "btn_sign_up_now": "Đăng ký ngay.",
+    "btn_sign_up_now": "Liên hệ chúng tôi",
     "btn_back_to_login": "Back to Login",
     "text_err_login_failed": "Sai tài khoản hoặc mật khẩu",
     "text_err_forgot_password": "Định dạng email chưa đúng!",
@@ -195,12 +197,6 @@
     "text_check_email_description": "Bạn sẽ nhận được email xác thực trong một vài phút tới. Vui lòng kiểm tra và làm theo hướng dẫn",
     "navigate_sign_in": "Tới trang đăng nhập",
     "navigate_sign_up": "Tạo tài khoản mới",
-    "btn_landing_start": "Bắt đầu ngay",
-    "text_landing_title": "Everybody needs a place to be in",
-    "text_landing_title_group": "Welcome to {0}",
-    "text_landing_desc_group": "You are now a part of {0} on Bein. Let’s start with creating your new account.",
-    "text_landing_logo_title": "Chào mừng đến với Beincom",
-    "text_landing_logo_description": "Cùng khám phá nhiều cộng đồng hơn!",
     "text_or": "Hoặc",
     "text_forgot_password": "Quên mật khẩu",
     "text_forgot_password_input_desc": "Vui lòng nhập địa chỉ email hoặc số điện thoại di động của bạn để tìm kiếm lại tài khoản của bạn",
@@ -225,6 +221,7 @@
   "tabs": {
     "home": "Trang chủ",
     "communities": "Cộng đồng",
+    "articles": "Bài viết",
     "notification": "Thông báo",
     "menus": "Cài đặt"
   },
@@ -366,6 +363,8 @@
     "draft_articles_post": "Bài báo nháp",
     "title_timeline": "Bản tin",
     "title_important": "Quan trọng",
+    "title_install_chat": "Không tìm thấy BIC Chat",
+    "text_desc_install_chat": "Vui lòng cài đặt BIC Chat để sử dụng tính năng này",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "Xem kết quả tìm kiếm \"%SEARCH_TEXT%\"",
       "clear": "Xoá hết",
@@ -415,6 +414,10 @@
     "title_help_support": "Trung tâm trợ giúp",
     "title_logout": "Đăng xuất"
   },
+  "article": {
+    "title_edit_article": "Sửa Bài Viết",
+    "text_edit_article_success": "Cập nhật bài viết thành công"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Chi tiết bài viết",
@@ -422,7 +425,6 @@
     "title_edit_post": "Sửa bài viết",
     "title_edit_comment": "Sửa bình luận",
     "title_edit_images": "Sửa ảnh",
-    "title_seen_by": "Quan tâm bởi",
     "title_post_to": "Đăng tới",
     "mention_title": "Có thể nhắc đến những người là đối tượng của bài viết",
     "mention_empty_content": "Không tìm thấy",
@@ -601,7 +603,12 @@
       "button_text": "Quay về News Feed"
     },
     "text_important_warning_1": "Không thể cài đặt Bài viết quan trọng vì bạn không có quyền trong",
-    "text_important_warning_2": ". Vui lòng xoá chúng hoặc liên hệ với quản trị viên của bạn."
+    "text_important_warning_2": ". Vui lòng xoá chúng hoặc liên hệ với quản trị viên của bạn.",
+    "article_menu": {
+      "edit": "Chỉnh sửa bài viết",
+      "copy_link": "Sao chép đường dẫn",
+      "delete": "Xóa bài viết"
+    }
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
@@ -746,6 +753,7 @@
   "notification": {
     "mark_all_as_read": "Đánh dấu đã đọc tất cả",
     "mark_all_as_read_success": "Tất cả các thông báo đã được đánh dấu là đã đọc",
+    "turn_off_notification": "Tắt thông báo",
     "notification_settings": "Cài đặt thông báo",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
@@ -761,7 +769,7 @@
     "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
     "replied_to_comment_you_replied": "replied to a comment you replied",
     "no_more_notification": "Đã hiện hết thông báo",
-    "no_notification_found": "Bạn không có thông báo nào đang chờ",
+    "no_notification_found": "Bạn không có thông báo nào",
     "you_joined_group": "You joined {group_name}",
     "number_people": "{number} people",
     "number_times": "{number} times",
@@ -816,9 +824,14 @@
       "description": "Khám phá các nhóm để tham gia ngay."
     },
     "community_menu": {
-      "your_communities_text": "Bạn đã tham gia",
-      "manage_text": "Bạn quản lý",
-      "discover_text": "Khám phá"
+      "your_communities": "Cộng đồng đã tham gia",
+      "your_groups": "Nhóm đã tham gia",
+      "managed": "Quản lý",
+      "owner": "Sở hữu",
+      "manage": "Quản trị",
+      "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
+      "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
+      "you_dont_have_any_community_group": "You don't have any communities or groups"
     },
     "text_join_community_button": "Tham gia ngay",
     "text_join_group_button": "Tham gia ngay",
@@ -888,7 +901,7 @@
       "text_desc_confirm_move_group": " của %MOVING_NAME% và các nhóm bên trong sẽ được thêm vào %TARGET_NAME%. Bạn có chắc muốn thực hiện hành động này?",
       "text_move_group_search_placeholder": "Tìm kiếm một nhóm"
     },
-    "text_search_communities": "Tìm kiếm Cộng đồng",
+    "text_search_communities": "Tìm kiếm...",
     "member_tab_types": {
       "title_member_list": " Danh sách thành viên",
       "title_member_requests": "Yêu cầu tham gia"
@@ -920,7 +933,7 @@
       "button_leave": "Thoát",
       "success_message": "Bạn đã thoát khỏi cộng đồng này"
     },
-    "browse_groups":{
+    "browse_groups": {
       "no_groups": "Không có nhóm nào trong cộng đồng này.",
       "joined_all_groups": "Không có thêm nhóm nào để khám phá. Bạn đã tham gia hoàn toàn vào tất cả các nhóm trong cộng đồng này.",
       "guest_view_alert": {
@@ -958,14 +971,7 @@
     "file": "tệp"
   },
   "discover": {
-    "discover_communities": "Khám phá cộng đồng",
-    "your_communities": "Cộng đồng đã tham gia",
-    "your_groups": "Nhóm đã tham gia",
-    "managed": "Quản lý",
-    "owner": "Sở hữu",
-    "manage": "Quản trị",
-    "you_have_not_owner_community": "Bạn không sở hữu cộng đồng nào",
-    "you_have_not_manage_communiy_or_group": "Bạn không quản lý cộng đồng hoặc nhóm nào",
+    "discover_community": "Khám phá cộng đồng",
     "global_search_placeholder": "Tìm kiếm cộng đồng hoặc nhóm..."
   },
   "discard_alert": {

@@ -6,14 +6,11 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../../store';
 
 export interface InputSchemeInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -25,19 +22,19 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
   const [isFocusDesc, setIsFocusDesc] = useState(false);
 
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
-  const description = useKeySelector(groupsKeySelector.permission.creatingScheme.description);
+  const actions = usePermissionSchemeStore((state) => state.actions);
+  const creatingSchemeData = usePermissionSchemeStore((state) => state.creatingScheme.data);
+  const { name, description } = creatingSchemeData || {};
 
   const onChangeName = (value: string) => {
-    dispatch(groupsActions.setCreatingSchemeData({ name: value, description }));
+    actions.setCreatingSchemeData({ name: value, description });
   };
 
   const onChangeDesc = (value: string) => {
-    dispatch(groupsActions.setCreatingSchemeData({ name, description: value }));
+    actions.setCreatingSchemeData({ name, description: value });
   };
 
   const onFocusDesc = () => {

@@ -35,8 +35,10 @@ export default function* signIn({
     let errorMessage;
     switch (error?.code) {
       case authErrors.NOT_AUTHORIZED_EXCEPTION:
+      case authErrors.USER_NOT_FOUND_EXCEPTION:
         errorMessage = i18n.t('auth:text_err_id_password_not_matched');
         break;
+
       default:
         errorMessage = error?.message || i18n.t('auth:text_err_id_password_not_matched');
     }

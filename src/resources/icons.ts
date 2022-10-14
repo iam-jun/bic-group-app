@@ -111,13 +111,13 @@ const icons = {
 
   // MAIN TAB
   iconTabHome: fontAwesomeIcons.House,
-  iconTabCommunities: fontAwesomeIcons.ShareNodes,
+  iconTabCommunities: fontAwesomeIcons.PeopleGroup,
   iconTabArticle: fontAwesomeIcons.Ballot,
   iconTabWallet: fontAwesomeIcons.Wallet,
   iconTabNotification: fontAwesomeIcons.Bell,
   iconTabMenu: fontAwesomeIcons.Bars,
   iconTabHomeActive: fontAwesomeIcons.HouseSolid,
-  iconTabCommunitiesActive: fontAwesomeIcons.ShareNodesSolid,
+  iconTabCommunitiesActive: fontAwesomeIcons.PeopleGroupSolid,
   iconTabArticleActive: fontAwesomeIcons.BallotSolid,
   iconTabWalletActive: fontAwesomeIcons.WalletSolid,
   iconTabNotificationActive: fontAwesomeIcons.BellSolid,

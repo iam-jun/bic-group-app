@@ -160,15 +160,11 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}system-scheme`,
   }),
-  getCommunityScheme: (communityId: string): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/scheme`,
-  }),
   getGroupSchemeAssignments: (communityId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/group-scheme-assignments`,
   }),
-  putGroupSchemeAssignments: (
+  assignSchemesToGroups: (
     communityId: string,
     data: any[],
   ): HttpApiRequestConfig => ({
@@ -177,7 +173,22 @@ export const groupsApiConfig = {
     method: 'put',
     data: { data },
   }),
-  updateCommunityScheme: (
+  createGeneralScheme: (
+    communityId: string,
+    schemeData: IScheme,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/scheme`,
+    method: 'post',
+    data: {
+      ...schemeData,
+    },
+  }),
+  getGeneralScheme: (communityId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/scheme`,
+  }),
+  updateGeneralScheme: (
     communityId: string,
     schemeData: IScheme,
   ): HttpApiRequestConfig => ({
@@ -188,7 +199,7 @@ export const groupsApiConfig = {
       ...schemeData,
     },
   }),
-  deleteCommunityScheme: (communityId: string): HttpApiRequestConfig => ({
+  deleteGeneralScheme: (communityId: string): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/scheme`,
     method: 'delete',
@@ -212,17 +223,6 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/group-schemes/${schemeId}`,
     method: 'put',
-    data: {
-      ...schemeData,
-    },
-  }),
-  postCreateSchemePermission: (
-    communityId: string,
-    schemeData: IScheme,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/scheme`,
-    method: 'post',
     data: {
       ...schemeData,
     },
@@ -389,6 +389,16 @@ export const groupsApiConfig = {
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}communities/discover`,
+    params: {
+      ...params,
+      key: params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
+  searchJoinedCommunities: (
+    params: IParamGetCommunities,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}me/search/groups`,
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
@@ -666,35 +676,47 @@ const groupApi = {
     groupsApiConfig.getPermissionCategories, scope,
   ),
   getSystemScheme: () => withHttpRequestPromise(groupsApiConfig.getSystemScheme),
-  getCommunityScheme: (communityId: string) => {
-    if (!communityId) {
+  createGeneralScheme: (communityId: string, scheme: IScheme) => {
+    if (!communityId || !scheme) {
       return Promise.reject(
-        new Error('getCommunityScheme invalid communityId'),
+        new Error('createGeneralScheme invalid data'),
       );
     }
     return withHttpRequestPromise(
-      groupsApiConfig.getCommunityScheme,
-      communityId,
-    );
-  },
-  updateCommunityScheme: (communityId: string, scheme: IScheme) => {
-    if (!communityId || !scheme) {
-      return Promise.reject(new Error('updateCommunityScheme invalid data'));
-    }
-    return withHttpRequestPromise(
-      groupsApiConfig.updateCommunityScheme,
+      groupsApiConfig.createGeneralScheme,
       communityId,
       scheme,
     );
   },
-  deleteCommunityScheme: (communityId: string) => {
+  getGeneralScheme: (communityId: string) => {
     if (!communityId) {
       return Promise.reject(
-        new Error('deleteCommunityScheme invalid communityId'),
+        new Error('getGeneralScheme invalid communityId'),
       );
     }
     return withHttpRequestPromise(
-      groupsApiConfig.deleteCommunityScheme,
+      groupsApiConfig.getGeneralScheme,
+      communityId,
+    );
+  },
+  updateGeneralScheme: (communityId: string, scheme: IScheme) => {
+    if (!communityId || !scheme) {
+      return Promise.reject(new Error('updateGeneralScheme invalid data'));
+    }
+    return withHttpRequestPromise(
+      groupsApiConfig.updateGeneralScheme,
+      communityId,
+      scheme,
+    );
+  },
+  deleteGeneralScheme: (communityId: string) => {
+    if (!communityId) {
+      return Promise.reject(
+        new Error('deleteGeneralScheme invalid communityId'),
+      );
+    }
+    return withHttpRequestPromise(
+      groupsApiConfig.deleteGeneralScheme,
       communityId,
     );
   },
@@ -720,10 +742,10 @@ const groupApi = {
     groupsApiConfig.getGroupSchemeAssignments,
     communityId,
   ),
-  putGroupSchemeAssignments: (params: IPayloadGroupSchemeAssignments) => {
+  assignSchemesToGroups: (params: IPayloadGroupSchemeAssignments) => {
     const { communityId, data } = params || {};
     return withHttpRequestPromise(
-      groupsApiConfig.putGroupSchemeAssignments,
+      groupsApiConfig.assignSchemesToGroups,
       communityId,
       data,
     );
@@ -741,18 +763,6 @@ const groupApi = {
       communityId,
       schemeId,
       schemeData,
-    );
-  },
-  postCreateSchemePermission: (communityId: string, scheme: IScheme) => {
-    if (!communityId || !scheme) {
-      return Promise.reject(
-        new Error('postCreateSchemePermission invalid data'),
-      );
-    }
-    return withHttpRequestPromise(
-      groupsApiConfig.postCreateSchemePermission,
-      communityId,
-      scheme,
     );
   },
   getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(
@@ -824,6 +834,9 @@ const groupApi = {
   ),
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
     groupsApiConfig.getDiscoverCommunities, params,
+  ),
+  searchJoinedCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
+    groupsApiConfig.searchJoinedCommunities, params,
   ),
   getJoinedCommunities: (params: {
     previewMembers?: boolean;

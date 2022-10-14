@@ -12,6 +12,8 @@ import Text from '~/beinComponents/Text';
 import postActions from '../../../../storeRedux/post/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import spacing from '~/theme/spacing';
+import useCommentInputStore from './store';
+import ICommentInputState from './store/Interface';
 
 const ReplyingView = () => {
   const dispatch = useDispatch();
@@ -29,7 +31,7 @@ const ReplyingView = () => {
     replyTargetName = i18next.t('post:label_yourself');
   }
 
-  const loading = useKeySelector(postKeySelector.createComment.loading);
+  const loading = useCommentInputStore((state: ICommentInputState) => state.createComment.loading);
 
   if (!replying) {
     return null;

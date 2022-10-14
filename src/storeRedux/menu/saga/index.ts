@@ -5,15 +5,11 @@ import getMyWorkExperience from './getMyWorkExperience';
 import addWorkExperience from './addWorkExperience';
 import editWorkExperience from './editWorkExperience';
 import getWorkExperience from './getWorkExperience';
-import getUserProfile from './getUserProfile';
 import getMyProfile from './getMyProfile';
 import editMyProfile from './editMyProfile';
 import uploadImage from './uploadImage';
 
 export default function* menuSaga() {
-  yield takeLatest(
-    menuTypes.GET_USER_PROFILE, getUserProfile,
-  );
   yield takeLatest(
     menuTypes.GET_MY_PROFILE, getMyProfile,
   );

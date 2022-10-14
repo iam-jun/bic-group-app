@@ -10,9 +10,12 @@ import {
   IPostSetting,
 } from '~/interfaces/IPost';
 import { useKeySelector } from '~/hooks/selector';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import postActions from '~/storeRedux/post/actions';
 import { useRootNavigation } from '~/hooks/navigation';
+import { checkExpiration } from '../helper/postUtils';
 
 const MAX_DAYS = 7;
 
@@ -32,7 +35,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
 
   let initPostData: IPostActivity;
   if (postId) {
-    initPostData = useKeySelector(postKeySelector.postById(postId));
+    initPostData = usePostsStore(postsSelector.getPost(postId));
   }
 
   const {
@@ -222,10 +225,10 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       handlePutUpdateSettings();
       return 'putUpdateSettings';
     }
-    const notExpired = new Date().getTime() < new Date(sImportant?.expires_time).getTime();
+    const isExpired = checkExpiration(sImportant?.expires_time);
 
     const dataDefault = [
-      !!notExpired,
+      !isExpired,
       !sCanComment,
       !sCanReact,
     ];

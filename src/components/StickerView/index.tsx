@@ -18,7 +18,6 @@ import { Portal } from 'react-native-portalize';
 import { AppConfig } from '~/configs';
 import { dimension } from '~/theme';
 import spacing from '~/theme/spacing';
-import { EmojiBoardProps } from '../../beinComponents/emoji/EmojiBoard';
 import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
 import LoadingIndicator from '../../beinComponents/LoadingIndicator';
 import EmojiPicker from '~/baseComponents/EmojiPicker';
@@ -26,7 +25,7 @@ import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
 import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
 import { SearchInput } from '~/baseComponents/Input';
 
-export interface Props extends Partial<EmojiBoardProps> {
+export interface Props {
   stickerViewRef: any;
   onGifSelected?: (media: string|GiphyMedia) => void;
   onEmojiSelected?: (emoji: string) => void;

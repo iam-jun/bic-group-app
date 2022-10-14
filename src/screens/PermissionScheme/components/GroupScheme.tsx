@@ -6,8 +6,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import SchemeItem from './SchemeItem';
 import { IGroupScheme } from '~/interfaces/IGroup';
 import Divider from '~/beinComponents/Divider';
@@ -15,24 +13,28 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../store';
 
 export interface GroupSchemeProps {
   style?: StyleProp<ViewStyle>;
+  communityId: string;
 }
 
-const GroupScheme: FC<GroupSchemeProps> = () => {
+const GroupScheme: FC<GroupSchemeProps> = ({ communityId }) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const { data } = useKeySelector(groupsKeySelector.permission.schemes) || {};
+  const { data } = usePermissionSchemeStore((state) => state.schemes) || {};
   const { groupSchemes } = data || {};
 
   const onPressAssign = () => {
-    rootNavigation.navigate(groupStack.groupSchemeAssignment);
+    rootNavigation.navigate(groupStack.groupSchemeAssignment, { communityId });
   };
 
-  const renderItem = ({ item }: {item: IGroupScheme}) => <SchemeItem item={item} />;
+  const renderItem = (
+    { item }: {item: IGroupScheme},
+  ) => <SchemeItem communityId={communityId} item={item} />;
 
   return (
     <View style={styles.container}>

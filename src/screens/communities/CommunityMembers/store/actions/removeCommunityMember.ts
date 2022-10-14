@@ -16,7 +16,8 @@ const removeCommunityMember = () => async (
     Store.store.dispatch(groupsActions.setCommunityMembers(newUpdatedData));
 
     // to update userCount
-    Store.store.dispatch(groupsActions.getCommunityDetail({ communityId }));
+    // TODO recheck after merge
+    // Store.store.dispatch(groupsActions.getCommunityDetail({ communityId }));
 
     const toastMessage: IToastMessage = {
       content: response?.meta?.message || 'common:text_success_message',

@@ -12,6 +12,7 @@ export const customBackHandlerRoutes = [
   'MainStack',
   'group-scheme-assignment',
   'create-permission-scheme',
+  'edit-article',
 ];
 
 export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';
@@ -19,6 +20,7 @@ export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';
 export const bottomTabIcons = {
   home: 'iconTabHome',
   communities: 'iconTabCommunities',
+  articles: 'iconTabArticle',
   notification: 'iconTabNotification',
   menus: 'iconTabMenu',
 };
@@ -26,6 +28,7 @@ export const bottomTabIcons = {
 export const bottomTabIconsFocused = {
   home: 'iconTabHomeActive',
   communities: 'iconTabCommunitiesActive',
+  articles: 'iconTabArticleActive',
   notification: 'iconTabNotificationActive',
   menus: 'iconTabMenuActive',
 };

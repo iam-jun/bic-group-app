@@ -2,7 +2,7 @@ import {
   changeSchemeIdOfGroup,
   handleSelectNewGroupScheme,
 } from './helper';
-import { GROUP_ASSIGNMENTS } from '../../../test/mock_data/group';
+import { GROUP_ASSIGNMENTS } from '~/test/mock_data/group';
 
 describe('group scheme assign selection helper', () => {
   it('handleSelectNewGroupScheme should add new item if has change with current assignments', () => {

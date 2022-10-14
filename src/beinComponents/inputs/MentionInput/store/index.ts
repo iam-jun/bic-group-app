@@ -17,10 +17,10 @@ const mentionInputStore = (set, get) => ({
   ...initialState,
   setFullContent: (payload: string) => set((state) => {
     state.fullContent = payload;
-  }),
+  }, 'setFullContent'),
   setData: (payload: any[]) => set((state) => {
     state.data = payload;
-  }),
+  }, 'setData'),
   addTempSelected: (payload: {[x: string]: any}) => set((state) => {
     state.tempSelected = { ...state.tempSelected, ...payload };
   }, 'addTempSelected'),

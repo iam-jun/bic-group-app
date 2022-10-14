@@ -6,9 +6,6 @@ import { useDispatch } from 'react-redux';
 import { isEqual } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
 import { IGroup } from '~/interfaces/IGroup';
 import MoveGroupHeaderInfo from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveGroupHeaderInfo';
 import MoveGroupTargets from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveGroupTargets';
@@ -16,11 +13,14 @@ import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 import groupApi from '~/api/GroupApi';
 import modalActions from '~/storeRedux/modal/actions';
+import useGroupStructureStore from '../store';
+import IGroupStructureState from '../store/Interface';
 
 export interface MoveGroupProps {
   route: {
     params: {
       group: IGroup;
+      communityId: string;
     };
   };
 }
@@ -34,16 +34,18 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const initGroup = route?.params?.group;
+  const communityId = route?.params?.communityId;
   const { id: groupId } = initGroup || {};
 
-  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail);
+  const groupStructureActions = useGroupStructureStore((state) => state.actions);
+
   const {
     loading, targetGroups, movingGroup, selecting, key,
-  } = useKeySelector(groupsKeySelector.groupStructure.move) || {};
+  } = useGroupStructureStore((state:IGroupStructureState) => state.move) || {};
 
-  const getMoveTargets = (key = '') => {
+  const getMoveTargets = () => {
     if (communityId && groupId) {
-      dispatch(groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }));
+      groupStructureActions.getGroupStructureMoveTargets({ communityId, groupId });
     }
   };
 
@@ -52,7 +54,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       getMoveTargets();
 
       return () => {
-        dispatch(groupsActions.setGroupStructureMove());
+        groupStructureActions.setGroupStructureMove();
       };
     }, [],
   );
@@ -97,12 +99,12 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
   };
 
   const setLoadingButton = (loading: boolean) => {
-    dispatch(groupsActions.setGroupStructureMove({
+    groupStructureActions.setGroupStructureMove({
       loading,
       key,
       targetGroups,
       movingGroup,
-    }));
+    });
   };
 
   const onPressSave = async () => {
@@ -112,7 +114,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       setLoadingButton(true);
       getMemberWillMove(communityId, { groupId, targetId: selecting.id }).then((moveMemberCount:number) => {
         setLoadingButton(false);
-        dispatch(groupsActions.setGroupStructureMoveSelecting(currentSelecting));
+        groupStructureActions.setGroupStructureMoveSelecting(currentSelecting);
         const title = renderAlertTitle();
         dispatch(
           modalActions.showAlert({
@@ -122,13 +124,11 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
             cancelLabel: t('common:btn_confirm'),
             confirmLabel: t('common:btn_cancel'),
             onCancel: () => {
-              dispatch(
-                groupsActions.putGroupStructureMoveToTarget({
-                  communityId,
-                  moveId: groupId,
-                  targetId: selecting.id,
-                }),
-              );
+              groupStructureActions.putGroupStructureMoveToTarget({
+                communityId,
+                moveId: groupId,
+                targetId: selecting.id,
+              });
             },
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             onConfirm: () => {},
@@ -136,7 +136,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
         );
       }).catch((err:any) => {
         setLoadingButton(false);
-        dispatch(groupsActions.setGroupStructureMoveSelecting(currentSelecting));
+        groupStructureActions.setGroupStructureMoveSelecting(currentSelecting);
         if (!!err?.meta?.message) {
           setErrorMessage(err.meta.message);
         }

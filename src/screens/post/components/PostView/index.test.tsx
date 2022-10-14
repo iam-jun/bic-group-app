@@ -11,7 +11,6 @@ import PostView from '~/screens/post/components/PostView';
 import { POST_DETAIL, POST_DETAIL_2 } from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import postActions from '../../../../storeRedux/post/actions';
 import modalActions from '~/storeRedux/modal/actions';
 
 describe('PostView Component', () => {
@@ -217,17 +216,17 @@ describe('PostView Component', () => {
     expect(spy).toBeCalled();
   });
 
-  it('on press reaction item should dispatch deleteReactToPost', () => {
-    const spy = jest.spyOn(postActions, 'deleteReactToPost');
-    const store = createTestStore(state);
-    const wrapper = renderWithRedux(
-      <PostView postId={POST_DETAIL.id} />,
-      store,
-    );
-    const emojiWink = wrapper.getByTestId('reaction.button.wink');
-    fireEvent.press(emojiWink);
-    expect(spy).toBeCalled();
-  });
+  // it('on press reaction item should dispatch deleteReactToPost', () => {
+  //   const spy = jest.spyOn(postActions, 'deleteReactToPost');
+  //   const store = createTestStore(state);
+  //   const wrapper = renderWithRedux(
+  //     <PostView postId={POST_DETAIL.id} />,
+  //     store,
+  //   );
+  //   const emojiWink = wrapper.getByTestId('reaction.button.wink');
+  //   fireEvent.press(emojiWink);
+  //   expect(spy).toBeCalled();
+  // });
 
   it('on long press reaction item should dispatch showReactionDetailBottomSheet', () => {
     const spy = jest.spyOn(modalActions, 'showReactionDetailBottomSheet');

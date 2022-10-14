@@ -23,16 +23,16 @@ import postActions from '../../../../storeRedux/post/actions';
 import { CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT } from '../constanst';
 import { calculateInputHeight, isAndroidAnimated } from '../helper';
 import ToastAutoSave from './ToastAutoSave';
-import FilesView from '../../components/FilesView';
+import FilesView from '~/components/FilesView';
 import { IGetFile } from '~/services/fileUploader';
-import VideoPlayer from '~/beinComponents/VideoPlayer';
 import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import appConfig from '~/configs/appConfig';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
-import LinkPreviewer from '~/components/LinkPreviewer';
 import PostSelectImage from './PostSelectImage';
+import PostVideoPlayer from '../../components/PostVideoPlayer';
+import LinkPreview from '~/components/LinkPreview';
 
 interface Props {
   groupIds: any[];
@@ -40,9 +40,7 @@ interface Props {
   inputRef: any;
 }
 
-const Content = ({
-  groupIds, useCreatePostData, inputRef,
-}: Props) => {
+const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -59,10 +57,15 @@ const Content = ({
     handleChangeContent,
     handleUploadVideoSuccess,
     handleUploadFileSuccess,
+    linkPreview,
+    onCloseLinkPreview,
+    loadLinkPreview,
   } = useCreatePostData;
 
   const { loading, data } = createPostData || {};
   const { content } = data || {};
+  const { lstLinkPreview } = linkPreview;
+  const currentLinkPreview = lstLinkPreview[lstLinkPreview.length - 1];
 
   const [photosHeight, setPhotosHeight] = React.useState<number>(0);
   const [inputHeight, setInputHeight] = React.useState<number>(0);
@@ -79,21 +82,17 @@ const Content = ({
   const isAnimated = isAndroidAnimated();
   const { totalSize } = getTotalFileSize();
 
-  useEffect(
-    () => {
-      if (content !== contentInput && isAnimated) {
-        setContentInput(content);
-      }
-    }, [content],
-  );
+  useEffect(() => {
+    if (content !== contentInput && isAnimated) {
+      setContentInput(content);
+    }
+  }, [content]);
 
-  useEffect(
-    () => {
-      if (isAnimated) {
-        onLayoutAnimated();
-      }
-    }, [photosHeight, isShowToastAutoSave, inputHeight, isKeyboardOpen],
-  );
+  useEffect(() => {
+    if (isAnimated) {
+      onLayoutAnimated();
+    }
+  }, [photosHeight, isShowToastAutoSave, inputHeight, isKeyboardOpen]);
 
   const onChangeText = (text: string) => {
     if (isAnimated) {
@@ -104,14 +103,12 @@ const Content = ({
 
   const animatedTiming = (height: number) => {
     heightAnimated.stopAnimation();
-    Animated.timing(
-      heightAnimated, {
-        toValue: height,
-        duration: 0,
-        useNativeDriver: false,
-        easing: Easing.ease,
-      },
-    ).start();
+    Animated.timing(heightAnimated, {
+      toValue: height,
+      duration: 0,
+      useNativeDriver: false,
+      easing: Easing.ease,
+    }).start();
     toastRef.current?.startAnimation();
   };
 
@@ -144,14 +141,14 @@ const Content = ({
   };
 
   const onUploadError = (type: string) => {
-    dispatch(modalActions.showHideToastMessage({
-      content: t(
-        'upload:text_upload_error', {
+    dispatch(
+      modalActions.showHideToastMessage({
+        content: t('upload:text_upload_error', {
           file_type: t(`file_type:${type}`),
-        },
-      ),
-      props: { type: 'error' },
-    }));
+        }),
+        props: { type: 'error' },
+      }),
+    );
   };
 
   const onLayoutCloneText = (e: any) => {
@@ -204,11 +201,22 @@ const Content = ({
               }}
               disabled={loading}
             />
-            <LinkPreviewer text={content} showClose />
+            {currentLinkPreview && (
+              <LinkPreview
+                data={currentLinkPreview}
+                loadLinkPreview={loadLinkPreview}
+                onClose={onCloseLinkPreview}
+                showClose
+              />
+            )}
             <View onLayout={onLayoutPhotoPreview}>
               <PostSelectImage />
               {video && video?.thumbnails?.length > 0 ? (
-                <VideoPlayer data={video} postId={sPostData?.id || ''} onPressClose={onRemoveVideo} />
+                <PostVideoPlayer
+                  data={video}
+                  postId={sPostData?.id || ''}
+                  onPressClose={onRemoveVideo}
+                />
               ) : video ? (
                 <UploadingFile
                   uploadType={uploadTypes.postVideo}

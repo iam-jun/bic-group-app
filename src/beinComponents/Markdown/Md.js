@@ -6,11 +6,10 @@ import { Parser, Node } from 'commonmark';
 import Renderer from 'commonmark-react-renderer';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Platform, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 // import AtMention from '@components/at_mention';
 
-import NodeEmoji from 'node-emoji';
 import {
   concatStyles,
   makeStyleSheetFromTheme,
@@ -32,6 +31,8 @@ import {
 } from './utils/transform';
 import AtMention from './AtMention';
 import Emoji from '~/baseComponents/Emoji';
+import { spacing } from '~/theme';
+import MarkdownImage from './MarkdownImage';
 
 export default class Md extends PureComponent {
   static propTypes = {
@@ -55,6 +56,7 @@ export default class Md extends PureComponent {
     textStyles: PropTypes.object,
     theme: PropTypes.object,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    disableImage: PropTypes.bool,
     disableHashtags: PropTypes.bool,
     disableAtMentions: PropTypes.bool,
     disableChannelLink: PropTypes.bool,
@@ -63,20 +65,24 @@ export default class Md extends PureComponent {
     showModal: PropTypes.func,
     onPressAudience: PropTypes.func,
     selector: PropTypes.string,
+    mentions: PropTypes.array,
+    dataStore: PropTypes.any,
+    dataSelector: PropTypes.any,
     textTestID: PropTypes.string,
   };
 
   static defaultProps = {
+    value: '',
     textStyles: {},
     blockStyles: {},
-    onLongPress: () => true,
+    disableImage: true,
     disableHashtags: false,
     disableAtMentions: false,
     disableChannelLink: false,
     disableAtChannelMentionHighlight: false,
     disableGallery: false,
-    value: '',
     showModal: () => true,
+    onLongPress: () => true,
   };
 
   constructor(props) {
@@ -193,20 +199,15 @@ export default class Md extends PureComponent {
   );
 
   // Just render as link because of not have metadata from server
-  renderImage = ({ src }) => (
-    <Text
-      testID={this.props.textTestID || 'markdown_text'}
-      style={this.props.baseTextStyle}
-    >
-      {src}
-    </Text>
-  );
+  renderImage = ({ src, alt, linkDestination }) => (
+    <MarkdownImage  src={src} alt={alt} linkDestination={linkDestination} />
+  )
 
   renderAtMention = ({ mentionName }) => (
     <AtMention
       mentionName={mentionName}
       style={[this.props.textStyles?.mention || this.props.baseTextStyle]}
-      selector={this.props.selector}
+      mentions={this.props.mentions}
       onPress={this.props.onPressAudience}
     />
   );
@@ -229,7 +230,7 @@ export default class Md extends PureComponent {
     return <Text style={this.props.baseTextStyle}>{hashtag}</Text>;
   };
 
-  renderParagraph = ({ children, first }) => {
+  renderParagraph = ({ children, first, context }) => {
     if (!children || children.length === 0) {
       return <View />;
     }
@@ -239,9 +240,11 @@ export default class Md extends PureComponent {
     if (!first) {
       blockStyle.push(this.props.blockStyles.adjacentParagraph);
     }
+    
+    const styleParagraph = context?.length === 0 ? style.paragraph : {};
 
     return (
-      <View style={blockStyle}>
+      <View style={[blockStyle, styleParagraph,]}>
         <Text>{children}</Text>
       </View>
     );
@@ -253,8 +256,10 @@ export default class Md extends PureComponent {
       this.props.blockStyles[`heading${level}`],
     ];
     const textStyle = this.props.blockStyles[`heading${level}Text`];
+    const style = getStyleSheet(this.props.theme);
+
     return (
-      <View style={containerStyle}>
+      <View style={[containerStyle,style.paragraph]}>
         <Text style={textStyle}>{children}</Text>
       </View>
     );
@@ -288,11 +293,15 @@ export default class Md extends PureComponent {
   }
   renderList = ({
     children, start, tight, type,
-  }) => (
+  }) => {
+    const style = getStyleSheet(this.props.theme);
+
+    return <View style={style.paragraph}>
     <MarkdownList ordered={type !== 'bullet'} start={start} tight={tight}>
       {children}
     </MarkdownList>
-  );
+    </View>
+  }
 
   renderListItem = ({ children, context, ...otherProps }) => {
     const level = context.filter((type) => type === 'list').length;
@@ -396,6 +405,9 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
       alignItems: 'flex-start',
       flexDirection: 'row',
       flexWrap: 'wrap',
+    },
+    paragraph: {
+      marginBottom: spacing.margin.base,
     },
     editedIndicatorText: {
       color: theme.neutral30,

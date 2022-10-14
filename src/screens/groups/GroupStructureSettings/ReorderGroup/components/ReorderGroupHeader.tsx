@@ -4,25 +4,26 @@ import { isEqual } from 'lodash';
 import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/storeRedux/groups/actions';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
+import useGroupStructureStore from '../../store';
 
 export interface ReorderGroupHeaderProps {
+  communityId: string;
   initOrder?: any;
   groupName?: string;
 }
 
 const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
+  communityId,
   initOrder,
   groupName,
 }: ReorderGroupHeaderProps) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
-  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail);
-  const { loading, newOrder } = useKeySelector(groupsKeySelector.groupStructure.reorder);
+  const groupStructureActions = useGroupStructureStore((state) => state.actions);
+
+  const { loading, newOrder } = useGroupStructureStore((state) => state.reorder) || {};
 
   const hasChanged = !!newOrder && !isEqual(
     newOrder, initOrder,
@@ -42,7 +43,7 @@ const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
         cancelLabel: t('common:btn_cancel'),
         confirmLabel: t('common:btn_confirm'),
         onConfirm: () => {
-          dispatch(groupsActions.putGroupStructureReorder({ communityId, newOrder }));
+          groupStructureActions.putGroupStructureReorder({ communityId, newOrder });
         },
       }));
     }

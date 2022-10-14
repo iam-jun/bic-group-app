@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 
 import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBaseView';
-import actions from '~/storeRedux/groups/actions';
+import groupsActions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
 import GlobalSearchResults from './components/GlobalSearchResults';
 import { useKeySelector } from '~/hooks/selector';
@@ -13,6 +13,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
+import useCommunityController from '~/screens/communities/store';
 
 type GlobalSearchProps = SearchBaseViewProps
 
@@ -27,11 +28,12 @@ const GlobalSearch = ({
   const [searchText, setSearchText] = useState(initSearch || '');
 
   const { canLoadMore } = useKeySelector(groupsKeySelector.globalSearch);
+  const actions = useCommunityController((state) => state.actions);
 
   const getGlobalSearch = (searchText: string) => {
     if (!searchText) return;
 
-    dispatch(actions.getGlobalSearch(searchText));
+    dispatch(groupsActions.getGlobalSearch(searchText));
   };
 
   const onLoadMore = () => {
@@ -39,7 +41,7 @@ const GlobalSearch = ({
   };
 
   const doGlobalSearch = (searchQuery: string) => {
-    dispatch(actions.resetGlobalSearch());
+    dispatch(groupsActions.resetGlobalSearch());
     setSearchText(searchQuery);
     getGlobalSearch(searchQuery);
   };
@@ -70,9 +72,7 @@ const GlobalSearch = ({
       return;
     }
 
-    dispatch(
-      actions.joinCommunity({ communityId: item.id, communityName: item.name }),
-    );
+    actions.joinCommunity(item.id, item.name);
   };
 
   const onCancel = (item: any) => {
@@ -81,12 +81,7 @@ const GlobalSearch = ({
       return;
     }
 
-    dispatch(
-      actions.cancelJoinCommunity({
-        communityId: item.id,
-        communityName: item.name,
-      }),
-    );
+    actions.cancelJoinCommunity(item.id, item.name);
   };
 
   return (

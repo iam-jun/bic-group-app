@@ -6,14 +6,14 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Button from '~/baseComponents/Button';
 import { spacing } from '~/theme';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import { COMMUNITY_PRIVACY_TYPE, GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
+import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 
 interface JoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
   type: 'community' | 'group';
   joinStatus: number;
-  privacy: GROUP_PRIVACY_TYPE | COMMUNITY_PRIVACY_TYPE;
+  privacy: GroupPrivacyType | CommunityPrivacyType;
   onPressJoin: () => void;
   onPressCancelRequest: () => void;
 }
@@ -24,7 +24,7 @@ const JoinCancelButton = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
-  const hasRequested = joinStatus === groupJoinStatus.requested;
+  const hasRequested = joinStatus === GroupJoinStatus.REQUESTED;
 
   return (
     <View style={[styles.buttonView, style]} testID="join_cancel_button">

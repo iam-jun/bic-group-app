@@ -1,0 +1,55 @@
+import { isEmpty } from 'lodash';
+
+import { IPayloadAddToAllPost, IPayloadGetCommentsById } from '~/interfaces/IPost';
+import streamApi from '~/api/StreamApi';
+import useCommentsStore from '~/store/entities/comments';
+import usePostsStore from '~/store/entities/posts';
+import postActions from '~/storeRedux/post/actions';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
+import { sortComments } from '~/screens/post/helper/postUtils';
+import showError from '~/store/helper/showError';
+import Store from '~/storeRedux';
+
+const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById) => {
+  const { callbackLoading, commentId } = payload || {};
+  try {
+    callbackLoading?.(true);
+    const response = await
+    streamApi.getCommentDetail(commentId, payload.params as any);
+    const { actor, list } = response?.data || {};
+    if (!!actor && list?.length > 0) {
+      const comment = list[0];
+      const sortedComments = sortComments(comment?.child?.list || []);
+      useCommentsStore.getState().actions.addToComments([...sortedComments, comment]);
+
+      const post = usePostsStore.getState().posts?.[comment?.postId] || {};
+      if (isEmpty(post) && comment?.postId) {
+        useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
+          id: comment?.postId,
+          commentIds: [comment.id],
+        });
+
+        post.id = comment.postId;
+        post.actor = actor;
+        usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
+      }
+    }
+    callbackLoading?.(false);
+  } catch (e: any) {
+    console.error(
+      '\x1b[31m🐣️ saga getCommentDetail error: ', e, '\x1b[0m',
+    );
+    if (
+      e?.code === API_ERROR_CODE.POST.postPrivacy
+      || e?.code === API_ERROR_CODE.POST.copiedCommentIsDeleted
+      || e?.code === API_ERROR_CODE.POST.postDeleted
+    ) {
+      Store.store.dispatch(postActions.setCommentErrorCode(e.code));
+    } else {
+      showError(e);
+    }
+    callbackLoading?.(false);
+  }
+};
+
+export default getCommentDetail;

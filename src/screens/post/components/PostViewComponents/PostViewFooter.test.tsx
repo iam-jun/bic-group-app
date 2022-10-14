@@ -10,7 +10,7 @@ afterEach(() => {
 describe('PostViewFooter component', () => {
   it('should render correctly', () => {
     const rendered = renderWithRedux(
-      <PostViewFooter labelButtonComment="Comment" reactionCounts={{}} />,
+      <PostViewFooter postId="test-id" labelButtonComment="Comment" reactionCounts={{}} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
   });

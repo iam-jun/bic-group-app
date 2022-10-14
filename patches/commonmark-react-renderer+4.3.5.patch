@@ -1,5 +1,5 @@
 diff --git a/node_modules/commonmark-react-renderer/src/commonmark-react-renderer.js b/node_modules/commonmark-react-renderer/src/commonmark-react-renderer.js
-index 91b0001..05b80fa 100644
+index 91b0001..75c5ba5 100644
 --- a/node_modules/commonmark-react-renderer/src/commonmark-react-renderer.js
 +++ b/node_modules/commonmark-react-renderer/src/commonmark-react-renderer.js
 @@ -12,7 +12,12 @@ var typeAliases = {
@@ -106,11 +106,14 @@ index 91b0001..05b80fa 100644
      var props = { key: key }, undef;
  
      // `sourcePos` is true if the user wants source information (line/column info from markdown source)
-@@ -194,16 +264,49 @@ function getNodeProps(node, key, opts, renderer) {
+@@ -193,17 +263,51 @@ function getNodeProps(node, key, opts, renderer) {
+             props.title = node.title || undef;
  
              // Commonmark treats image description as children. We just want the text
-             props.alt = node.react.children.join('');
+-            props.alt = node.react.children.join('');
 -            node.react.children = undef;
++            // props.alt = node.react.children.join('');
++            props.alt = node?.firstChild?.literal || 'image';
              break;
          case 'list':
              props.start = node.listStart;
@@ -157,7 +160,7 @@ index 91b0001..05b80fa 100644
      if (typeof renderer !== 'string') {
          props.literal = node.literal;
      }
-@@ -213,9 +316,29 @@ function getNodeProps(node, key, opts, renderer) {
+@@ -213,9 +317,29 @@ function getNodeProps(node, key, opts, renderer) {
          props.children = children.reduce(reduceChildren, []) || null;
      }
  
@@ -187,7 +190,7 @@ index 91b0001..05b80fa 100644
  function getPosition(node) {
      if (!node) {
          return null;
-@@ -238,26 +361,23 @@ function renderNodes(block) {
+@@ -238,26 +362,23 @@ function renderNodes(block) {
          transformLinkUri: this.transformLinkUri,
          transformImageUri: this.transformImageUri,
          softBreak: this.softBreak,
@@ -227,7 +230,7 @@ index 91b0001..05b80fa 100644
  
          // If we have not assigned a document yet, assume the current node is just that
          if (!doc) {
-@@ -270,7 +390,7 @@ function renderNodes(block) {
+@@ -270,7 +391,7 @@ function renderNodes(block) {
          }
  
          // In HTML, we don't want paragraphs inside of list items
@@ -236,7 +239,7 @@ index 91b0001..05b80fa 100644
              continue;
          }
  
-@@ -289,7 +409,7 @@ function renderNodes(block) {
+@@ -289,7 +410,7 @@ function renderNodes(block) {
          if (this.allowNode && (isCompleteParent || !node.isContainer)) {
              var nodeChildren = isCompleteParent ? node.react.children : [];
  
@@ -245,7 +248,7 @@ index 91b0001..05b80fa 100644
              disallowedByUser = !this.allowNode({
                  type: pascalCase(type),
                  renderer: this.renderers[type],
-@@ -298,6 +418,30 @@ function renderNodes(block) {
+@@ -298,6 +419,30 @@ function renderNodes(block) {
              });
          }
  
@@ -276,7 +279,7 @@ index 91b0001..05b80fa 100644
          if (!isDocument && (disallowedByUser || disallowedByConfig)) {
              if (!this.unwrapDisallowed && entering && node.isContainer) {
                  walker.resumeAt(node, false);
-@@ -313,15 +457,25 @@ function renderNodes(block) {
+@@ -313,15 +458,25 @@ function renderNodes(block) {
              );
          }
  
@@ -305,7 +308,7 @@ index 91b0001..05b80fa 100644
                  childProps = typeof renderer === 'string'
                      ? childProps
                      : assign(childProps, {nodeKey: childProps.key});
-@@ -341,6 +495,10 @@ function renderNodes(block) {
+@@ -341,6 +496,10 @@ function renderNodes(block) {
          }
      }
  
@@ -316,7 +319,7 @@ index 91b0001..05b80fa 100644
      return doc.react.children;
  }
  
-@@ -401,21 +559,31 @@ function ReactRenderer(options) {
+@@ -401,21 +560,31 @@ function ReactRenderer(options) {
          renderers: assign({}, defaultRenderers, normalizeRenderers(opts.renderers)),
          escapeHtml: Boolean(opts.escapeHtml),
          skipHtml: Boolean(opts.skipHtml),

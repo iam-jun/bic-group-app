@@ -4,7 +4,7 @@ import memberRequestStatus from '~/constants/memberRequestStatus';
 import { IJoiningMember } from '~/interfaces/IGroup';
 import showError from '~/storeRedux/commonSaga/showError';
 import groupApi from '../../../api/GroupApi';
-import { mapItems } from '../../../screens/groups/helper/mapper';
+import { mapItems } from '~/screens/groups/helper/mapper';
 import groupsActions from '../actions';
 
 export default function* getCommunityMemberRequests({

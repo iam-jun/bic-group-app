@@ -25,9 +25,7 @@ import Header from '~/beinComponents/Header';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import { groupPrivacy } from '~/constants/privacyTypes';
+import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useAuth, { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
@@ -51,38 +49,52 @@ import GroupJoinCancelButton from './components/GroupJoinCancelButton';
 import { getHeaderMenu } from '~/screens/communities/CommunityDetail/helper';
 import { BottomListProps } from '~/components/BottomList';
 import NotFound from '~/screens/NotFound/components/NotFound';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
+import useTimelineStore, { ITimelineState } from '~/store/timeline';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
-  const { groupId, communityId, onGoBack } = params || {};
+  const { groupId, onGoBack } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
 
   const { user } = useAuth();
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
-  const { t } = useBaseHook();
+  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
-  const { name, privacy } = groupInfo;
-  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const { name, privacy, id: idCurrentGroupDetail } = groupInfo;
+  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
+  const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const { name: communityName, joinStatus: joinStatusCommunity }
-    = communityDetail;
+    = communityDetail || {};
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
-  const isMember = joinStatus === groupJoinStatus.member;
-  const isMemberCommunity = joinStatusCommunity === groupJoinStatus.member;
+  const isMember = joinStatus === GroupJoinStatus.MEMBER;
+  const isMemberCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
   const isLoadingGroupDetailError = useKeySelector(
     groupsKeySelector.isLoadingGroupDetailError,
   );
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
-  const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
+
+  // Temporarily comment this snippet code
+  // Because old data will show up before being replaced by new data
+  // This is considered a bug by tester
+  // const isLoadingGroup = useKeySelector(groupsKeySelector.loadingPage);
+  // const hasNoDataInStore = !groupInfo;
+  // const shouldShowPlaceholder = hasNoDataInStore && isLoadingGroup;
+
+  const shouldShowPlaceholder = idCurrentGroupDetail !== groupId;
+
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId('groups', groupId, [
     PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
@@ -90,8 +102,11 @@ const GroupDetail = (props: any) => {
   ]);
   const showPrivate
     = !isMember
-    && (privacy === groupPrivacy.private
-      || (!isMemberCommunity && privacy === groupPrivacy.open));
+    && (privacy === GroupPrivacyType.PRIVATE
+      || (!isMemberCommunity && privacy === GroupPrivacyType.OPEN));
+
+  const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
+  const groupPost = useTimelineStore((state: ITimelineState) => state.items[groupId]);
 
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
@@ -118,26 +133,27 @@ const GroupDetail = (props: any) => {
     httpApiRequest > makeGetStreamRequest */
     const privilegeToFetchPost
       = isMember
-      || privacy === groupPrivacy.public
-      || privacy === groupPrivacy.open;
+      || privacy === GroupPrivacyType.PUBLIC
+      || privacy === GroupPrivacyType.OPEN;
 
     if (loadingGroupDetail || isEmpty(groupInfo) || !privilegeToFetchPost) {
       return;
     }
 
-    dispatch(groupsActions.clearGroupPosts());
-    dispatch(groupsActions.getGroupPosts(groupId));
+    // dispatch(groupsActions.clearGroupPosts());
+    timelineActions.resetTimeline(groupId);
+    timelineActions.getPosts(groupId);
   }, [groupId, isMember, privacy, loadingGroupDetail, groupInfo]);
 
   useEffect(() => {
     getGroupDetail();
     if (communityId && communityId !== communityDetail?.id) {
-      dispatch(groupsActions.getCommunityDetail({ communityId }));
+      actions.getCommunity(communityId);
     }
   }, [groupId]);
 
   useEffect(() => {
-    getGroupPosts();
+    if (isEmpty(groupPost?.ids)) { getGroupPosts(); }
   }, [groupInfo]);
 
   const onPressAdminTools = () => {
@@ -231,40 +247,6 @@ const GroupDetail = (props: any) => {
     };
   }, [groupInfoHeight]);
 
-  const renderGroupContent = () => {
-    // visitors can only see "About" of Private group
-
-    if (showPrivate) {
-      return (
-        <GroupPrivateWelcome
-          onScroll={onScrollHandler}
-          onGetInfoLayout={onGetInfoLayout}
-          infoDetail={groupInfo}
-          isMember={isMember}
-        />
-      );
-    }
-
-    return (
-      <GroupContent
-        getGroupPosts={getGroupPosts}
-        onScroll={onScrollHandler}
-        onGetInfoLayout={onGetInfoLayout}
-      />
-    );
-  };
-
-  const renderPlaceholder = () => (
-    <View style={styles.contentContainer} testID="group_detail.placeholder">
-      <View>
-        <GroupProfilePlaceholder disableRandom />
-        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
-        <PostViewPlaceholder disableRandom />
-        <PostViewPlaceholder disableRandom />
-      </View>
-    </View>
-  );
-
   const onPressMenu = () => {
     const headerMenuData = getHeaderMenu({
       type: 'group',
@@ -292,6 +274,40 @@ const GroupDetail = (props: any) => {
     dispatch(groupsActions.setGroupDetail(null));
   };
 
+  const renderGroupContent = () => {
+    // visitors can only see "About" of Private group
+
+    if (showPrivate) {
+      return (
+        <GroupPrivateWelcome
+          onScroll={onScrollHandler}
+          onGetInfoLayout={onGetInfoLayout}
+          infoDetail={groupInfo}
+          isMember={isMember}
+          communityName={communityName}
+        />
+      );
+    }
+
+    return (
+      <GroupContent
+        onScroll={onScrollHandler}
+        onGetInfoLayout={onGetInfoLayout}
+      />
+    );
+  };
+
+  const renderPlaceholder = () => (
+    <View style={styles.contentContainer} testID="group_detail.placeholder">
+      <View>
+        <GroupProfilePlaceholder disableRandom />
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+        <PostViewPlaceholder disableRandom />
+        <PostViewPlaceholder disableRandom />
+      </View>
+    </View>
+  );
+
   const renderGroupDetail = () => {
     if (isLoadingGroupDetailError) return <NotFound testID="no_group_found" onGoBack={onGoBackOnNotFound} />;
 
@@ -309,7 +325,7 @@ const GroupDetail = (props: any) => {
           showStickyHeight={groupInfoHeight}
           stickyHeaderComponent={
             !showPrivate && (
-              <GroupTabHeader groupId={groupId} isMember={isMember} />
+              <GroupTabHeader groupId={groupId} isMemberCommunity={isMemberCommunity} />
             )
           }
           onPressBack={onGoBack}
@@ -326,9 +342,9 @@ const GroupDetail = (props: any) => {
   };
 
   return (
-    <ScreenWrapper style={styles.screenContainer} isFullView>
-      {loadingPage ? renderPlaceholder() : renderGroupDetail()}
-    </ScreenWrapper>
+    <View style={styles.screenContainer}>
+      {shouldShowPlaceholder ? renderPlaceholder() : renderGroupDetail()}
+    </View>
   );
 };
 
@@ -338,6 +354,7 @@ const themeStyles = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     screenContainer: {
+      flex: 1,
       backgroundColor: colors.neutral5,
     },
     contentContainer: {

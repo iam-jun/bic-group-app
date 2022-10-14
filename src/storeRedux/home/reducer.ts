@@ -1,10 +1,6 @@
 import homeTypes from './types';
 
 export const homeInitState = {
-  loadingHomePosts: false,
-  refreshingHomePosts: false,
-  noMoreHomePosts: false,
-  homePosts: [],
   newsfeedSearch: {
     isShow: false,
     searchText: '',
@@ -39,26 +35,6 @@ const homeReducer = (
   const { type, payload } = action;
 
   switch (type) {
-    case homeTypes.SET_LOADING_HOME_POSTS:
-      return {
-        ...state,
-        loadingHomePosts: payload,
-      };
-    case homeTypes.SET_REFRESHING_HOME_POSTS:
-      return {
-        ...state,
-        refreshingHomePosts: payload,
-      };
-    case homeTypes.SET_NO_MORE_HOME_POSTS:
-      return {
-        ...state,
-        noMoreHomePosts: payload,
-      };
-    case homeTypes.SET_HOME_POSTS:
-      return {
-        ...state,
-        homePosts: payload || [],
-      };
     case homeTypes.SET_NEWSFEED_SEARCH:
       return {
         ...state,

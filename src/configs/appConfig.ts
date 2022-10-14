@@ -21,6 +21,7 @@ const appConfig = {
   maxFiles: 25,
   totalFileSize: 25 * 1024 * 1000, // kb => byte = 25Mb
   fileUploadTimeout: 5 * 60 * 1000, // 5 minutes,
+  commentLimit: 10,
   superUsers: [
     'namanh@evolgroup.vn',
     'dieplamminhthu@evolgroup.vn',

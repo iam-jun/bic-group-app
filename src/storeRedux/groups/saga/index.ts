@@ -13,15 +13,13 @@ import groupsActions from '~/storeRedux/groups/actions';
 import groupsTypes from '~/storeRedux/groups/types';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { IResponseData, IToastMessage } from '~/interfaces/common';
-import { mapData } from '../../../screens/groups/helper/mapper';
+import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
-import getGroupPosts from './getGroupPosts';
-import mergeExtraGroupPosts from './mergeExtraGroupPosts';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -29,16 +27,11 @@ import getJoinedCommunities from './getJoinedCommunities';
 import getCommunityGroups from './getCommunityGroups';
 import getYourGroupsTree from '~/storeRedux/groups/saga/getYourGroupsTree';
 import getYourGroupsList from '~/storeRedux/groups/saga/getYourGroupsList';
-import getCommunityDetail from './getCommunityDetail';
-import getDiscoverCommunities from '~/storeRedux/groups/saga/getDiscoverCommunities';
 import getYourGroupsSearch from '~/storeRedux/groups/saga/getYourGroupsSearch';
 import getCommunityMembers from './getCommunityMembers';
-import getManagedCommunities from './getManagedCommunities';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupMembers from './getGroupMembers';
 import getGroupSearchMembers from './getGroupSearchMembers';
-import joinCommunity from './joinCommunity';
-import cancelJoinCommunity from './cancelJoinCommunity';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
 import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
 import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
@@ -49,38 +42,18 @@ import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
-import getPermissionCategories from '~/storeRedux/groups/saga/getPermissionCategories';
-import getSystemScheme from '~/storeRedux/groups/saga/getSystemScheme';
-import postCreateSchemePermission from '~/storeRedux/groups/saga/postCreateSchemePermission';
-import getSchemes from '~/storeRedux/groups/saga/getSchemes';
-import getCommunityScheme from '~/storeRedux/groups/saga/getCommunityScheme';
-import updateCommunityScheme from './updateCommunityScheme';
-import deleteCommunityScheme from '~/storeRedux/groups/saga/deleteCommunityScheme';
-import getCommunitySearch from './getCommunitySearch';
-import getGroupScheme from './getGroupScheme';
-import updateGroupScheme from './updateGroupScheme';
-import getGroupStructureCommunityTree from '~/storeRedux/groups/saga/getGroupStructureCommunityTree';
-import putGroupStructureReorder from '~/storeRedux/groups/saga/putGroupStructureReorder';
-import getGroupStructureMoveTargets from '~/storeRedux/groups/saga/getGroupStructureMoveTargets';
-import putGroupStructureMoveToTarget from '~/storeRedux/groups/saga/putGroupStructureMoveToTarget';
 import putGroupStructureCollapseStatus from '~/storeRedux/groups/saga/putGroupStructureCollapseStatus';
-import editCommunityDetail from './editCommunityDetail';
-import getGroupSchemeAssignments from '~/storeRedux/groups/saga/getGroupSchemeAssignments';
-import putGroupSchemeAssignments from '~/storeRedux/groups/saga/putGroupSchemeAssignments';
 import getMyPermissions from './getMyPermissions';
 import getJoinedAllGroups from './getJoinedAllGroups';
 import getManaged from './getManaged';
 import getOwnerCommunity from './getOwnerCommunity';
 import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
-import updateCommunityJoinSetting from './updateCommunityJoinSetting';
 import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
+import useCommunityController from '~/screens/communities/store';
 
 export default function* groupsSaga() {
-  yield takeLatest(
-    groupsTypes.UPDATE_COMMUNITY_JOIN_SETTING, updateCommunityJoinSetting,
-  );
   yield takeLatest(
     groupsTypes.UPDATE_GROUP_JOIN_SETTING, updateGroupJoinSetting,
   );
@@ -88,61 +61,8 @@ export default function* groupsSaga() {
     groupsTypes.GET_MY_PERMISSIONS, getMyPermissions,
   );
   yield takeLatest(
-    groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
-    getGroupStructureCommunityTree,
-  );
-  yield takeLatest(
-    groupsTypes.GET_PERMISSION_CATEGORIES,
-    getPermissionCategories,
-  );
-  yield takeLatest(
-    groupsTypes.PUT_GROUP_STRUCTURE_REORDER,
-    putGroupStructureReorder,
-  );
-  yield takeLatest(
-    groupsTypes.GET_GROUP_STRUCTURE_MOVE_TARGETS,
-    getGroupStructureMoveTargets,
-  );
-  yield takeLatest(
-    groupsTypes.PUT_GROUP_STRUCTURE_MOVE_TO_TARGET,
-    putGroupStructureMoveToTarget,
-  );
-  yield takeLatest(
     groupsTypes.PUT_GROUP_STRUCTURE_COLLAPSE_STATUS,
     putGroupStructureCollapseStatus,
-  );
-  yield takeLatest(
-    groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme,
-  );
-  yield takeLatest(
-    groupsTypes.GET_SCHEMES, getSchemes,
-  );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_SCHEME, getCommunityScheme,
-  );
-  yield takeLatest(
-    groupsTypes.UPDATE_COMMUNITY_SCHEME, updateCommunityScheme,
-  );
-  yield takeLatest(
-    groupsTypes.DELETE_COMMUNITY_SCHEME, deleteCommunityScheme,
-  );
-  yield takeLatest(
-    groupsTypes.POST_CREATE_SCHEME_PERMISSION,
-    postCreateSchemePermission,
-  );
-  yield takeLatest(
-    groupsTypes.GET_GROUP_SCHEME, getGroupScheme,
-  );
-  yield takeLatest(
-    groupsTypes.GET_GROUP_SCHEME_ASSIGNMENTS,
-    getGroupSchemeAssignments,
-  );
-  yield takeLatest(
-    groupsTypes.PUT_GROUP_SCHEME_ASSIGNMENTS,
-    putGroupSchemeAssignments,
-  );
-  yield takeLatest(
-    groupsTypes.UPDATE_GROUP_SCHEME, updateGroupScheme,
   );
   yield takeLatest(
     groupsTypes.GET_GROUP_DETAIL, getGroupDetail,
@@ -152,12 +72,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
-  );
-  yield takeLatest(
-    groupsTypes.GET_GROUP_POSTS, getGroupPosts,
-  );
-  yield takeLatest(
-    groupsTypes.MERGE_EXTRA_GROUP_POSTS, mergeExtraGroupPosts,
   );
   yield takeLatest(
     groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail,
@@ -218,17 +132,7 @@ export default function* groupsSaga() {
     groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities,
   );
   yield takeLatest(
-    groupsTypes.GET_MANAGED_COMMUNITIES, getManagedCommunities,
-  );
-  yield takeLatest(
-    groupsTypes.GET_DISCOVER_COMMUNITIES,
-    getDiscoverCommunities,
-  );
-  yield takeLatest(
     groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups,
-  );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail,
   );
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers,
@@ -236,12 +140,6 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,
     getCommunitySearchMembers,
-  );
-  yield takeLatest(
-    groupsTypes.JOIN_COMMUNITY, joinCommunity,
-  );
-  yield takeLatest(
-    groupsTypes.CANCEL_JOIN_COMMUNITY, cancelJoinCommunity,
   );
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
@@ -263,12 +161,6 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
     declineAllCommunityMemberRequests,
   );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_SEARCH, getCommunitySearch,
-  );
-  yield takeLatest(
-    groupsTypes.EDIT_COMMUNITY_DETAIL, editCommunityDetail,
-  );
   yield takeLatest(groupsTypes.GET_JOINED_ALL_GROUPS, getJoinedAllGroups);
   yield takeLatest(groupsTypes.GET_MANAGED, getManaged);
   yield takeLatest(groupsTypes.GET_OWNER_COMMUNITY, getOwnerCommunity);
@@ -283,6 +175,9 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
     const {
       file, id, fieldName, uploadType, destination,
     } = payload;
+
+    const { actions } = useCommunityController.getState();
+
     yield updateLoadingImageState(
       fieldName, true,
     );
@@ -292,23 +187,22 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       uploadType,
     });
 
+    const editData = { id, [fieldName]: data.url };
+    const editFieldName = fieldName === 'icon'
+      ? i18next.t('common:text_avatar')
+      : i18next.t('common:text_cover');
+
     if (destination === 'group') {
       yield put(groupsActions.editGroupDetail({
-        data: { id, [fieldName]: data.url },
-        editFieldName:
-            fieldName === 'icon'
-              ? i18next.t('common:text_avatar')
-              : i18next.t('common:text_cover'),
+        data: editData,
+        editFieldName,
       }));
     } else {
-      yield put(groupsActions.editCommunityDetail({
-        data: { id, [fieldName]: data.url },
-        editFieldName:
-            fieldName === 'icon'
-              ? i18next.t('common:text_avatar')
-              : i18next.t('common:text_cover'),
-      }));
+      actions.editCommunityDetail(editData, editFieldName);
     }
+    yield updateLoadingImageState(
+      payload.fieldName, false,
+    );
   } catch (err) {
     console.error(
       '\x1b[33m', 'uploadImage : error', err, '\x1b[0m',

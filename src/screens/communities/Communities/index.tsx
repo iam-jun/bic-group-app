@@ -1,99 +1,66 @@
-import React, { useRef, useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import Header from '~/beinComponents/Header';
-
-import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import Filter from '../../../beinComponents/Filter';
-import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import JoinedCommunities from '~/screens/communities/Communities/components/JoinedCommunities';
-import DiscoverCommunities from '~/screens/communities/Communities/components/DiscoverCommunities';
-import ManagedCommunities from './components/ManagedCommunities';
-import SearchCommunityView from './components/SearchCommunityView';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
+import Tab from '~/baseComponents/Tab';
+import YourCommunities from './components/YourCommunities';
+import YourGroups from './components/YourGroups';
+import Managed from './components/Managed';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import { useRootNavigation } from '~/hooks/navigation';
+import SearchCommunity from './components/SearchCommunity';
+import { ICON_SIZES } from '~/baseComponents/Button/constants';
 
-const { width: screenWidth } = Dimensions.get('window');
-
-export const communityMenuData = [
+const HEADER_TAB = [
   {
-    id: 1,
-    text: 'communities:community_menu:your_communities_text',
-    type: 'COMMUNITIES',
+    id: 'community-tab-1',
+    text: 'communities:community_menu:your_communities',
   },
-  {
-    id: 2,
-    text: 'communities:community_menu:manage_text',
-    type: 'MANAGE',
-  },
-  {
-    id: 3,
-    text: 'communities:community_menu:discover_text',
-    type: 'DISCOVER',
-  },
+  { id: 'community-tab-2', text: 'communities:community_menu:your_groups' },
+  { id: 'community-tab-3', text: 'communities:community_menu:managed' },
 ];
 
-const Communities: React.FC = () => {
-  const headerRef = useRef<any>();
-
-  const theme: ExtendedTheme = useTheme();
+const Index = () => {
+  const theme = useTheme();
+  const { elevations } = theme;
   const styles = themeStyles(theme);
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
 
+  const [isOpenSearchCommunity, setIsOpenSearchCommunity] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [isOpen, setIsOpen] = useState(false);
-  const translateX = useSharedValue(0);
-
-  const handleBackPress = () => {
-    headerRef?.current?.goBack?.();
-  };
-
-  useBackPressListener(handleBackPress);
 
   const onPressSearch = () => {
-    setIsOpen(true);
+    setIsOpenSearchCommunity(true);
   };
 
-  const onCloseSearch = React.useCallback(
-    () => {
-      setIsOpen(false);
-    }, [],
-  );
+  const onCloseSearch = () => {
+    setIsOpenSearchCommunity(false);
+  };
 
-  const onPress = (
-    item: any, index: number,
-  ) => {
+  const onPressTab = (item: any, index: number) => {
     setSelectedIndex(index);
-    translateX.value = index * screenWidth;
   };
 
-  const onPressDiscover = () => {
-    setSelectedIndex(2);
-    translateX.value = 2 * screenWidth;
-  };
-
-  const onPressCommunities = (communityId: string) => {
-    rootNavigation.navigate(
-      groupStack.communityDetail, { communityId },
-    );
+  const onDiscoverButtonPress = () => {
+    rootNavigation.navigate(menuStack.discover);
   };
 
   const renderContent = () => {
     if (selectedIndex === 0) {
-      return (
-        <JoinedCommunities
-          onPressCommunities={onPressCommunities}
-          onPressDiscover={onPressDiscover}
-        />
-      );
-    } if (selectedIndex === 1) {
-      return <ManagedCommunities onPressCommunities={onPressCommunities} />;
-    } if (selectedIndex === 2) {
-      return <DiscoverCommunities onPressCommunities={onPressCommunities} />;
+      return <YourCommunities />;
     }
+
+    if (selectedIndex === 1) {
+      return <YourGroups />;
+    }
+
+    if (selectedIndex === 2) {
+      return <Managed />;
+    }
+
     return null;
   };
 
@@ -101,32 +68,41 @@ const Communities: React.FC = () => {
     <View style={styles.containerScreen}>
       <Header
         hideBack
-        headerRef={headerRef}
+        removeBorderAndShadow
         title="tabs:communities"
-        titleTextProps={{ useI18n: true }}
+        titleTextProps={{ useI18n: true, style: styles.textHeader }}
         icon="iconSearch"
         onPressIcon={onPressSearch}
+        buttonProps={{
+          icon: 'CompassSolid',
+          iconSize: ICON_SIZES.small,
+          style: styles.buttonHeader,
+        }}
+        onPressButton={onDiscoverButtonPress}
       />
-      <View style={{ flex: 1 }}>
-        <Filter
-          data={communityMenuData}
-          activeIndex={selectedIndex}
-          onPress={onPress}
-          testID="community_menu"
-          itemTestID="item_community_data"
-          translateX={translateX}
-        />
+      <View style={styles.containerContent}>
+        <View style={[styles.containerTabView, elevations.e1]}>
+          <Tab
+            style={styles.tabs}
+            buttonProps={{ type: 'primary', useI18n: true }}
+            data={HEADER_TAB}
+            type="pill"
+            onPressTab={onPressTab}
+            activeIndex={selectedIndex}
+          />
+        </View>
         {renderContent()}
       </View>
-      <SearchCommunityView
-        isOpen={isOpen}
+      <SearchCommunity
+        isOpen={isOpenSearchCommunity}
         onClose={onCloseSearch}
-        onPressCommunity={onPressCommunities}
         placeholder={t('communities:text_search_communities')}
       />
     </View>
   );
 };
+
+const SIZE_DISCOVER_BUTTON = 36;
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -136,22 +112,27 @@ const themeStyles = (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.white,
     },
-    groupContainer: {
+    containerContent: {
       flex: 1,
+      backgroundColor: colors.gray5,
     },
-    searchInput: {
-      flex: 1,
+    containerTabView: {
+      paddingBottom: spacing.padding.small,
+      backgroundColor: colors.white,
     },
-    searchBar: {
-      flexDirection: 'row',
+    tabs: {
       alignItems: 'center',
-      margin: spacing.margin.large,
+      paddingHorizontal: spacing.margin.large,
     },
-    dataList: {
-      marginLeft: spacing.margin.base,
-      marginRight: spacing.margin.large,
+    textHeader: {
+      marginLeft: spacing.margin.small,
+    },
+    buttonHeader: {
+      marginLeft: spacing.margin.tiny,
+      marginRight: spacing.margin.small,
+      width: SIZE_DISCOVER_BUTTON,
     },
   });
 };
 
-export default Communities;
+export default Index;

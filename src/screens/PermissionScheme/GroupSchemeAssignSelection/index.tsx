@@ -3,23 +3,19 @@ import {
   View, StyleSheet, FlatList, TouchableOpacity,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Animated, { ZoomIn } from 'react-native-reanimated';
 
 import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
-import { useRootNavigation } from '~/hooks/navigation';
 import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Icon from '~/baseComponents/Icon';
-import groupsActions from '~/storeRedux/groups/actions';
 import {
   changeSchemeIdOfGroup,
   handleSelectNewGroupScheme,
 } from '~/screens/PermissionScheme/GroupSchemeAssignSelection/helper';
 import spacing from '~/theme/spacing';
+import usePermissionSchemeStore from '../store';
 
 export interface GroupSchemeManagementProps {
   route?: {
@@ -35,22 +31,17 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const initGroup = route?.params?.group;
   const [selectingIndex, setSelectingIndex] = useState<number>();
 
-  const { data = [], currentAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning)
+  const actions = usePermissionSchemeStore((state) => state.actions);
+  const { data = [], currentAssignments } = usePermissionSchemeStore((state) => state.assignGroupScheme.assigning)
     || {};
-  const { data: groupAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
+  const { data: groupAssignments } = usePermissionSchemeStore((state) => state.assignGroupScheme.assignments) || {};
+  const { data: schemes } = usePermissionSchemeStore((state) => state.schemes) || {};
+  const { groupSchemes = [] } = schemes || {};
 
-  const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-
-  const { data: schemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const { groupSchemes = [] } = schemes || {};
-
-  const selectingSchemeId = groupSchemes?.[selectingIndex]?.id;
-  const disableSave = initGroup?.schemeId === selectingSchemeId;
 
   useEffect(() => {
     const index = groupSchemes?.findIndex(
@@ -61,9 +52,10 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
     }
   }, [groupSchemes]);
 
-  const onPressSave = () => {
-    const schemeId = groupSchemes?.[selectingIndex]?.id || null;
+  const updateCurrentAssigningSchemesTree = (currentIndex?: number) => {
+    const schemeId = groupSchemes?.[currentIndex]?.id || null;
     const groupId = initGroup?.groupId;
+
     if (groupId) {
       const newData = handleSelectNewGroupScheme(
         groupId,
@@ -76,22 +68,17 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         schemeId,
         currentAssignments,
       );
-      dispatch(groupsActions.setGroupSchemeAssigning({
+      actions.setGroupSchemeAssigning({
         data: newData,
         currentAssignments: newAssignments,
-      }));
-      rootNavigation.goBack();
+      });
     }
   };
 
-  const onPressItem = (
-    item: IGroup, index: number,
-  ) => {
-    if (selectingIndex !== index) {
-      setSelectingIndex(index);
-    } else {
-      setSelectingIndex(undefined);
-    }
+  const onPressItem = (_item: IGroup, index: number) => {
+    const currentIndex = selectingIndex === index ? undefined : index;
+    setSelectingIndex(currentIndex);
+    updateCurrentAssigningSchemesTree(currentIndex);
   };
 
   const renderItem = ({ item, index }: {item: IGroup; index: number}) => {
@@ -122,17 +109,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
 
   return (
     <View style={styles.container}>
-      <Header
-        title={t('communities:permission:title_group_scheme_assign_selection')}
-        onPressButton={onPressSave}
-        buttonText="common:btn_save"
-        buttonProps={{
-          disabled: disableSave,
-          useI18n: true,
-          style: { borderWidth: 0 },
-          testID: 'group_scheme_assignments.btn_assign',
-        }}
-      />
+      <Header title={t('communities:permission:title_group_scheme_assign_selection')} />
       <FlatList
         data={groupSchemes}
         renderItem={renderItem}

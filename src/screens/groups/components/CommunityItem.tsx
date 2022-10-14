@@ -12,14 +12,14 @@ import spacing from '~/theme/spacing';
 
 interface CommunityItemProps {
   item: ICommunity;
-  onPressCommunities?: (communityId: string) => void;
   onPressMenu?: () => void;
+  onPressCommunities?: (communityId: string) => void;
 }
 
 const CommunityItem = ({
   item,
-  onPressCommunities,
   onPressMenu,
+  onPressCommunities,
 }: CommunityItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;

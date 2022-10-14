@@ -5,7 +5,7 @@ import {
   fireEvent, renderWithRedux, act,
 } from '~/test/testUtils';
 import useDraftPostStore from '../index';
-import { POST_DETAIL } from '../../../../../test/mock_data/post';
+import { POST_DETAIL } from '~/test/mock_data/post';
 
 const Component = () => {
   const {

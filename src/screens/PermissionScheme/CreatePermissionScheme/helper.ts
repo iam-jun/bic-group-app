@@ -34,32 +34,45 @@ export const getNewSchemeRolesOnUpdatePermission = (
   memberRoleIndex: number,
 ) => {
   const newKey = permission?.key || '';
-  const permissions = roles[roleIndex]?.permissions || [];
-  if (permissions.includes?.(newKey)) {
-    // key existed, should remove
-    roles[roleIndex].permissions = permissions.filter((p) => p !== newKey);
+  let permissions = roles[roleIndex]?.permissions || [];
 
-    if (roleIndex === memberRoleIndex) {
-      // unchecking this member's permission will add it to other roles
-      for (let index = 0; index < roles.length; index++) {
-        const currentRole = roles[index];
-        if (
-          index !== roleIndex
-          && !currentRole.permissions?.includes?.(newKey)
+  // key existed, should remove
+  if (permissions.includes?.(newKey)) {
+    permissions = permissions.filter((p) => p !== newKey);
+
+    return roles.map((item, index) => {
+      // current item
+      if (index === roleIndex) return { ...item, permissions };
+
+      // unchecking MEMBER's permission will add it to community & group admin roles
+      if (roleIndex === memberRoleIndex) {
+        // in community & group section
+        if (!item.permissions?.includes?.(newKey)
           && !(
-            currentRole?.type === ROLE_TYPE.GROUP_ADMIN
+            item?.type === ROLE_TYPE.GROUP_ADMIN
             && permission?.scope === 'COMMUNITY'
-          )
+          ) // group admin doesn't have permissions of community scope
         ) {
-          currentRole.permissions.push(newKey);
+          return {
+            ...item,
+            permissions: [...item.permissions, newKey],
+          };
         }
       }
-    }
-  } else {
-    // add key
-    permissions.push(newKey);
+
+      // other items
+      return item;
+    });
   }
-  return [...roles];
+
+  // add key
+  permissions = [...permissions, newKey];
+
+  return roles.map(
+    (item, index) => (
+      index === roleIndex ? { ...item, permissions } : item
+    ),
+  );
 };
 
 export const getMemberRoleIndex = (schemeData: IScheme) => {

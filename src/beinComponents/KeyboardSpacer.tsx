@@ -1,25 +1,30 @@
 import React, { useState, useEffect, FC } from 'react';
 import { Animated, Keyboard, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface KeyboardSpacerProps {
   testID?: string;
   iosOnly?: boolean;
   extraHeight?: number;
+  avoidInsetsBottom?: boolean;
 }
 
 const KeyboardSpacer: FC<KeyboardSpacerProps> = ({
   testID,
   extraHeight = 0,
   iosOnly,
+  avoidInsetsBottom,
 }: KeyboardSpacerProps) => {
   if (iosOnly && Platform.OS !== 'ios') {
     return null;
   }
 
+  const insets = useSafeAreaInsets();
+
   const [height, setHeight] = useState(0);
   const animatedValue = new Animated.Value(0);
   animatedValue.addListener((height) => {
-    setHeight(height.value);
+    setHeight(height.value - (avoidInsetsBottom ? insets.bottom : 0));
   });
   const showEvent = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
 

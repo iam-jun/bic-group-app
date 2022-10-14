@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import { call, put, select } from 'redux-saga/effects';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import { IToastMessage } from '~/interfaces/common';
+import useCommunitiesStore from '~/store/entities/communities';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '../../../api/GroupApi';
@@ -17,8 +18,11 @@ export default function* approveSingleCommunityMemberRequest({
     fullName: string;
   };
 }) {
-  const { communityId, requestId, fullName } = payload;
+  const {
+    communityId, requestId, fullName,
+  } = payload;
   try {
+    const { actions } = useCommunitiesStore.getState();
     yield call(
       groupApi.approveSingleCommunityMemberRequest,
       communityId,
@@ -40,7 +44,8 @@ export default function* approveSingleCommunityMemberRequest({
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getCommunityDetail({ communityId })); // to update userCount
+    // to update userCount
+    actions.getCommunity(communityId);
   } catch (err: any) {
     console.error('approveSingleCommunityMemberRequest: ', err);
 

@@ -20,11 +20,6 @@ export interface ISetting {
   icon: IconType;
 }
 
-export interface IRightMenu {
-  type: string;
-  title: string;
-}
-
 export interface IFilePicked {
   name: string;
   filename: string;
@@ -65,13 +60,6 @@ export interface IPayloadShowModal {
   closeOutSide?: boolean;
 }
 
-export interface IUserPreview {
-  isOpen?: boolean;
-  userId?: string;
-  params?: IObject<any>;
-  position?: {x: number; y: number};
-}
-
 export interface ILinkPreview {
   url: string;
   thumbnail?: string;
@@ -97,4 +85,9 @@ export interface ISearchReq {
   limit: number,
   offset: number,
   key?: string,
+}
+
+export enum SortOder {
+  ASC = 'ASC',
+  DESC = 'DESC'
 }

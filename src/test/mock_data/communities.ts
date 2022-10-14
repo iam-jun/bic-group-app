@@ -1,10 +1,12 @@
+import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
+
 export const communities = [
   {
     id: 0,
     groupId: 0,
     name: 'string',
     slug: 'string',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'string',
     icon: 'string',
     backgroundImgUrl: 'string',
@@ -41,7 +43,7 @@ export const communityDetailData = {
   groupId: '1',
   name: 'EVOL Community',
   slug: 'evol',
-  privacy: 'PUBLIC',
+  privacy: CommunityPrivacyType.PUBLIC,
   description: 'Description',
   icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
   backgroundImgUrl:
@@ -67,7 +69,7 @@ export const groupDetailData = {
     createdBy: '2cff4f3e-2cad-4d35-a3b0-35f483a22136',
     icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
     backgroundImgUrl: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/cover/default_group_cover.png',
-    privacy: 'PRIVATE',
+    privacy: GroupPrivacyType.PRIVATE,
     chatId: 'rswzfestx78x7j4w78egagyzso',
     schemeId: '0308f879-3970-4863-8674-a37a6a4bcec0',
     createdAt: '2022-04-14T08:11:39.703Z',
@@ -212,7 +214,7 @@ export const listDiscoverCommunities = [
     groupId: '1',
     name: 'EVOL Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -228,7 +230,7 @@ export const listDiscoverCommunities = [
     groupId: '1',
     name: 'Dog Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -244,7 +246,7 @@ export const listDiscoverCommunities = [
     groupId: '1',
     name: 'Pig Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -260,7 +262,7 @@ export const listDiscoverCommunities = [
     groupId: '1',
     name: 'Cat Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -276,7 +278,7 @@ export const listDiscoverCommunities = [
     groupId: '1',
     name: 'Chicken Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -296,7 +298,7 @@ export const listYourCommunities = [
     groupId: '1',
     name: 'EVOL Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -311,7 +313,7 @@ export const listYourCommunities = [
     groupId: '1',
     name: 'Dog Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -326,7 +328,7 @@ export const listYourCommunities = [
     groupId: '1',
     name: 'Pig Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -341,7 +343,7 @@ export const listYourCommunities = [
     groupId: '1',
     name: 'Cat Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -356,7 +358,7 @@ export const listYourCommunities = [
     groupId: '1',
     name: 'Chicken Community',
     slug: 'evol',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'Description',
     icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
     backgroundImgUrl:
@@ -378,7 +380,7 @@ export const listYourGroups = [
     parents: [
       '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
     ],
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: null,
     backcgroundImgUrl: null,
     userCount: 22,
@@ -396,7 +398,7 @@ export const listYourGroups = [
     parents: [
       '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
     ],
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     description: 'https://fe.sbx.beincomm.com/groups/2',
     backgroundImgUrl: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/cover/images/original/072b78ab-25d3-462f-b5d7-43644d9b9f80',
     userCount: 30,
@@ -413,7 +415,7 @@ export const listOwnCommunity = [
     id: '88b95fe1-be57-4bb8-b414-30737db1052b',
     groupId: '98d4f395-05f0-488e-b38d-371dbb8a89a7',
     name: 'Hội những ng thích nhạc bolero',
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     slug: '186f8c8a2460',
     description: 'ahihi',
     icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
@@ -429,7 +431,7 @@ export const listManage = [
     icon: 'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
     level: 0,
     parents: [],
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     slug: '72880b4b1e35',
     description: '123. Tuy nhiên, trong cuộc họp báo sau trận đấu Philippines, HLV Park khẳng định: Kết quả giữa Malaysia và Thái Lan chẳng liên quan tới trận đấu của Việt Nam. Tôi cũng không tính toán gì từ trận đấu đó',
     backgroundImgUrl: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/cover/default_group_cover.png',
@@ -448,7 +450,7 @@ export const listManage = [
     parents: [
       '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
     ],
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     slug: '863b7fce-2a88-4441-aa24-4803f7b6d1ec-1641834908',
     description: null,
     backgroundImgUrl: null,
@@ -467,7 +469,7 @@ export const listManage = [
     parents: [
       '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
     ],
-    privacy: 'PUBLIC',
+    privacy: CommunityPrivacyType.PUBLIC,
     slug: 'crypto-inner-circle-1641809088',
     description: 'https://fe.sbx.beincomm.com/groups/2',
     backgroundImgUrl: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/cover/images/original/072b78ab-25d3-462f-b5d7-43644d9b9f80',

@@ -162,7 +162,8 @@
     "text_you": "You",
     "content_not_available": "This content is not available",
     "dont_have_permission_to_access": "You don’t have permission to access this page.",
-    "btn_go_back_to_home": "Go back to Home"
+    "btn_go_back_to_home": "Go back to Home",
+    "text_upcoming": "Upcoming"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -172,15 +173,16 @@
     "text_change_password_success_desc": "You have changed password successfully",
     "text_change_password_success_confirm_button": "Got it",
     "text_sign_in": "Sign In",
-    "text_sign_in_desc": "Welcome back!",
+    "text_sign_in_welcome_back": "Welcome back!",
     "text_sign_up": "Sign Up",
     "text_sign_out": "Log Out",
     "input_label_first_name": "First Name",
     "input_label_last_name": "Last Name",
     "input_label_username": "User Name",
-    "input_label_email": "Email Address",
+    "input_label_email": "Email",
+    "input_label_email_placeholder": "Your email",
     "input_label_password": "Password",
-    "input_label_password_placeholder": "Enter password",
+    "input_label_password_placeholder": "Your password",
     "input_label_code": "6-digit code",
     "input_label_current_password": "Current password",
     "input_label_new_password": "New password",
@@ -194,7 +196,7 @@
     "btn_send": "Send",
     "btn_send_recover_code": "Send code",
     "btn_forgot_password": "Forgot password?",
-    "btn_sign_up_now": "Sign up now.",
+    "btn_sign_up_now": "Contact Us",
     "btn_back_to_login": "Back to Login",
     "text_err_login_failed": "Email or password is wrong!",
     "text_err_forgot_password": "Email is invalid!",
@@ -203,7 +205,7 @@
     "text_change_password_success": "Changed password successfully!",
     "text_resend_otp_success": "Resent OTP successfully. Please check your email!",
     "text_resend_otp_fail": "Resend OTP fail. Please try again!",
-    "text_err_id_password_not_matched": "Email and password doesn't match.",
+    "text_err_id_password_not_matched": "Email and password don't match.",
     "text_err_password_blank": "Password is required!",
     "text_err_new_password_blank": "New password is required!",
     "text_err_password_format_todo_revert": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
@@ -227,12 +229,6 @@
     "text_check_email_description": "You will receive email in a few minute, please check your email and following description.",
     "navigate_sign_in": "Go to Login",
     "navigate_sign_up": "Create account",
-    "btn_landing_start": "Get start",
-    "text_landing_title": "Everybody needs a place to be in",
-    "text_landing_title_group": "Welcome to {0}",
-    "text_landing_desc_group": "You are now a part of {0} on Bein. Let’s start with creating your new account.",
-    "text_landing_logo_title": "Welcome to Beincom",
-    "text_landing_logo_description": "Let’s explore more communities!",
     "text_or": "Or",
     "text_forgot_password": "Forgot password",
     "text_forgot_password_input_desc": "Please enter your email address or mobile number to search for your account.",
@@ -257,7 +253,8 @@
   "tabs": {
     "home": "Home",
     "communities": "Communities",
-    "notification": "Notification",
+    "notification": "Notifications",
+    "articles": "Articles",
     "menus": "Menu"
   },
   "settings": {
@@ -407,6 +404,8 @@
     "draft_articles_post": "Draft Articles",
     "title_timeline": "Newsfeed",
     "title_important": "Important",
+    "title_install_chat": "App not found",
+    "text_desc_install_chat": "Please install BIC Chat",
     "newsfeed_search": {
       "text_cta_see_result_for_search_text": "See result for \"%SEARCH_TEXT%\"",
       "clear": "Clear all",
@@ -456,6 +455,10 @@
     "title_help_support": "Help & Support",
     "title_logout": "Log Out"
   },
+  "article": {
+    "title_edit_article": "Edit Article",
+    "text_edit_article_success": "Article updated successfully"
+  },
   "post": {
     "news_feed": "News Feed",
     "title_post_detail": "Post detail",
@@ -463,7 +466,6 @@
     "title_edit_post": "Edit Post",
     "title_edit_comment": "Edit comment",
     "title_edit_images": "Edit images",
-    "title_seen_by": "Seen by",
     "title_post_to": "Post to",
     "mention_title": "Can only mention people in your selected audiences",
     "mention_empty_content": "No people found",
@@ -640,7 +642,12 @@
       "button_text": "Back to News Feed"
     },
     "text_important_warning_1": "Cannot set because you don't have this permission at",
-    "text_important_warning_2": ". Please remove them or contact your admin"
+    "text_important_warning_2": ". Please remove them or contact your admin",
+    "article_menu": {
+      "edit": "Edit Article",
+      "copy_link": "Copy Link",
+      "delete": "Delete Article"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -811,8 +818,9 @@
     "title_not_found": "Page not found / Bein"
   },
   "notification": {
-    "mark_all_as_read": "Mark all as read",
+    "mark_all_as_read": "Mark all as Read",
     "mark_all_as_read_success": "All notifications marked as read",
+    "turn_off_notification": "Turn off Notification",
     "notification_settings": "Notification Settings",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
@@ -828,17 +836,17 @@
     "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
     "replied_to_comment_you_replied": "replied to a comment you replied",
     "no_more_notification": "No more notification",
-    "no_notification_found": "You have no pending notification",
+    "no_notification_found": "You have no notification",
     "number_people": "{number} people",
     "number_times": "{number} times",
     "text_all": "All",
     "text_unread": "Unread",
     "text_mention": "Mention",
     "text_important": "Important",
-    "mark_as_read": "Mark as read",
-    "mark_as_unread": "Mark as unread",
-    "off_notification_from_group": "Turn off notifications from this group",
-    "seen_all_notifications": "You’ve seen it all"
+    "mark_as_read": "Mark as Read",
+    "mark_as_unread": "Mark as Unread",
+    "off_notification_from_group": "Turn off Notification",
+    "seen_all_notifications": "You have seen it all"
   },
   "new_feature": {
     "title": "New feature",
@@ -882,9 +890,14 @@
       "description": "Browse groups to join one."
     },
     "community_menu": {
-      "your_communities_text": "You've joined",
-      "manage_text": "You manage",
-      "discover_text": "Discover"
+      "your_communities": "Your Communities",
+      "your_groups": "Your Groups",
+      "managed": "Managed",
+      "owner": "Own",
+      "manage": "Manage",
+      "you_have_not_owner_community": "You don't own any communities",
+      "you_have_not_manage_communiy_or_group": "You don't manage any communities or groups",
+      "you_dont_have_any_community_group": "You don't have any communities or groups"
     },
     "text_join_community_button": "Join",
     "text_join_group_button": "Join",
@@ -954,7 +967,7 @@
       "text_desc_confirm_move_group": " of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
       "text_move_group_search_placeholder": "Search a group"
     },
-    "text_search_communities": "Search Communities",
+    "text_search_communities": "Search...",
     "member_tab_types": {
       "title_member_list": "Member List",
       "title_member_requests": "Member Requests"
@@ -986,7 +999,7 @@
       "button_leave": "Leave",
       "success_message": "You have left the community"
     },
-    "browse_groups":{
+    "browse_groups": {
       "no_groups": "No group in this community.",
       "joined_all_groups": "There is no more group to discover. You’ve already joined all groups completely in this community.",
       "guest_view_alert": {
@@ -1024,19 +1037,12 @@
     "file": "file"
   },
   "discover": {
-    "discover_communities": "Discover Communities",
-    "your_communities": "Your Communities",
-    "your_groups": "Your Groups",
-    "managed": "Managed",
-    "owner": "Own",
-    "manage": "Manage",
-    "you_have_not_owner_community": "You have not owner community",
-    "you_have_not_manage_communiy_or_group": "You have not manage communiy or group",
+    "discover_community": "Discover Community",
     "global_search_placeholder": "Search community or group..."
   },
   "discard_alert": {
     "title": "Discard Changes?",
-    "content": "If you discard now, you’ll lose any changes you’ve made."
+    "content": "If you discard now, you'll lose any changes you've made."
   },
   "sticker": {
     "search_giphy": "Search GIPHY",

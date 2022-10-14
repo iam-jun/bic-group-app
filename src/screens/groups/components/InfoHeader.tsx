@@ -2,7 +2,6 @@ import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Image from '~/beinComponents/Image';
 import Icon from '~/baseComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
@@ -15,6 +14,7 @@ import { useBaseHook } from '~/hooks';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { IGroup } from '~/interfaces/IGroup';
 import { formatLargeNumber } from '~/utils/formatData';
+import Image from '~/beinComponents/Image';
 
 interface InfoHeaderProps {
   infoDetail: ICommunity | IGroup;
@@ -23,7 +23,7 @@ interface InfoHeaderProps {
   onPressGroupTree?: () => void
 }
 
-const InfoHeader = ({
+const _InfoHeader = ({
   infoDetail, isMember, insideCommunityName, onPressGroupTree,
 }: InfoHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -33,19 +33,23 @@ const InfoHeader = ({
   const {
     name, userCount, backgroundImgUrl, icon, privacy,
   } = infoDetail;
-  const privacyData = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
+  const privacyData = groupPrivacyListDetail.find((item) => item.type === privacy);
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
 
   const renderCoverAvatar = () => (
     <View testID="info_header.cover" style={styles.coverAvatarContainer}>
       <Image
         style={styles.cover}
-        source={backgroundImgUrl || images.img_cover_default}
+        resizeMode="cover"
+        source={{ uri: backgroundImgUrl }}
+        defaultSource={images.img_cover_default}
       />
       <Avatar.Large
         showBorder
-        source={icon || images.img_user_avatar_default}
         style={styles.avatar}
+        resizeMode="contain"
+        source={{ uri: icon }}
+        defaultSource={images.img_group_avatar_default}
       />
     </View>
   );
@@ -117,6 +121,8 @@ const InfoHeader = ({
   );
 };
 
+const InfoHeader = React.memo(_InfoHeader);
+InfoHeader.whyDidYouRender = true;
 export default InfoHeader;
 
 const themeStyles = (theme: ExtendedTheme) => {

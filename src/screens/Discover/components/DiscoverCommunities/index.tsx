@@ -2,27 +2,25 @@ import React, { useEffect } from 'react';
 import {
   FlatList, StyleSheet, ActivityIndicator, View, RefreshControl, ListRenderItem,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import EmptyScreen from '~/components/EmptyScreen';
-import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/storeRedux/groups/actions';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
+import { useDiscoverCommunitiesStore } from './store';
+import useCommunityController from '~/screens/communities/store';
 
 const DiscoverCommunities = () => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
 
   const {
-    ids, items, loading, canLoadMore,
-  } = data || {};
+    ids, items, loading, refreshing, hasNextPage, actions,
+  } = useDiscoverCommunitiesStore();
+
+  const communityController = useCommunityController((state) => state.actions);
 
   const renderEmptyComponent = () => {
-    if (canLoadMore) {
+    if (hasNextPage) {
       return null;
     }
 
@@ -36,53 +34,37 @@ const DiscoverCommunities = () => {
   };
 
   const renderListFooter = () => {
-    if (loading) return null;
+    if (!loading) return null;
 
     return (
-      canLoadMore
-      && ids.length > 0 && (
-        <View
-          style={styles.listFooter}
-          testID="discover_communities.loading_more_indicator"
-        >
-          <ActivityIndicator />
-        </View>
-      )
+      <View
+        style={styles.listFooter}
+        testID="discover_communities.loading_more_indicator"
+      >
+        <ActivityIndicator />
+      </View>
     );
-  };
-
-  const getData = (params?: {
-    isRefreshing?: boolean;
-    refreshNoLoading?: boolean;
-  }) => {
-    const { isRefreshing, refreshNoLoading } = params || {};
-    dispatch(groupsActions.getDiscoverCommunities({ isRefreshing, refreshNoLoading }));
   };
 
   const onLoadMore = () => {
-    canLoadMore && getData();
+    if (hasNextPage) {
+      actions.getDiscoverCommunities();
+    }
   };
 
   const onRefresh = () => {
-    getData({ isRefreshing: true });
+    actions.getDiscoverCommunities(true);
   };
 
   const handleJoin = (id: string, name: string) => {
-    dispatch(
-      groupsActions.joinCommunity({ communityId: id, communityName: name }),
-    );
+    communityController.joinCommunity(id, name);
   };
 
   const handleCancel = (id: string, name: string) => {
-    dispatch(
-      groupsActions.cancelJoinCommunity({
-        communityId: id,
-        communityName: name,
-      }),
-    );
+    communityController.cancelJoinCommunity(id, name);
   };
 
-  const renderItem: ListRenderItem<number> = ({ item, index }) => {
+  const renderItem: ListRenderItem<string> = ({ item, index }) => {
     const currentItem = items[item];
 
     return (
@@ -97,7 +79,9 @@ const DiscoverCommunities = () => {
 
   useEffect(
     () => {
-      getData({ refreshNoLoading: true });
+      if (ids.length === 0) {
+        actions.getDiscoverCommunities();
+      }
     }, [],
   );
 
@@ -116,7 +100,7 @@ const DiscoverCommunities = () => {
       ListHeaderComponent={() => <Divider color="transparent" size={spacing.padding.large} />}
       refreshControl={(
         <RefreshControl
-          refreshing={loading}
+          refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
         />

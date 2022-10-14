@@ -14,6 +14,10 @@ import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, ICommentData } from '~/interfaces/IPost';
+import useCommentsStore from '~/store/entities/comments';
+import commentsSelector from '~/store/entities/comments/selectors';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import modalActions from '~/storeRedux/modal/actions';
 
 import CommentInputView from '../components/CommentInputView';
@@ -27,6 +31,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
+import useCommentDetailController from './store';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -42,6 +47,8 @@ const CommentDetailContent = (props: any) => {
   const dispatch = useDispatch();
   const { rootNavigation, goHome } = useRootNavigation();
 
+  const commentDetailController = useCommentDetailController((state) => state.actions);
+
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
 
@@ -52,12 +59,12 @@ const CommentDetailContent = (props: any) => {
     = params || {};
   const id = postId;
 
-  const actor = useKeySelector(postKeySelector.postActorById(id));
-  const audience = useKeySelector(postKeySelector.postAudienceById(id));
+  const actor = usePostsStore(postsSelector.getActor(id));
+  const audience = usePostsStore(postsSelector.getAudience(id));
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-  const comments = useKeySelector(postKeySelector.commentsByParentId(id));
+  const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
   const {
     childrenComments = [],
     newCommentData,
@@ -108,23 +115,21 @@ const CommentDetailContent = (props: any) => {
     }
     if (!postDetailLoadingState && !copyCommentError) {
       dispatch(postActions.setScrollCommentsPosition(null));
-      dispatch(
-        postActions.getCommentDetail({
-          commentId,
-          params: { postId },
-          callbackLoading: (loading: boolean) => {
-            setLoading(loading);
-            if (!loading && !!replyItem) {
-              dispatch(
-                postActions.setPostDetailReplyingComment({
-                  comment: replyItem,
-                  parentComment: commentParent,
-                }),
-              );
-            }
-          },
-        }),
-      );
+      commentDetailController.getCommentDetail({
+        commentId,
+        params: { postId },
+        callbackLoading: (loading: boolean) => {
+          setLoading(loading);
+          if (!loading && !!replyItem) {
+            dispatch(
+              postActions.setPostDetailReplyingComment({
+                comment: replyItem,
+                parentComment: commentParent,
+              }),
+            );
+          }
+        },
+      });
     }
   }, [postDetailLoadingState, copyCommentError]);
 
@@ -252,15 +257,13 @@ const CommentDetailContent = (props: any) => {
       setRefreshing(false);
       return;
     }
-    dispatch(
-      postActions.getCommentDetail({
-        commentId: parentId || commentId,
-        params: { postId },
-        callbackLoading: (_loading: boolean) => {
-          setRefreshing(_loading);
-        },
-      }),
-    );
+    commentDetailController.getCommentDetail({
+      commentId: parentId || commentId,
+      params: { postId },
+      callbackLoading: (_loading: boolean) => {
+        setRefreshing(_loading);
+      },
+    });
   };
 
   const onPressMarkSeenPost = useCallback(() => {

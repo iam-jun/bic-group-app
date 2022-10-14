@@ -35,11 +35,10 @@ export const postInitState = {
     },
     initAudiences: null,
     isSavingDraftPost: false,
-  },
-  createComment: {
-    loading: false,
-    content: '',
-    image: undefined,
+    linkPreview: {
+      lstLinkPreview: [],
+      lstRemovedLinkPreview: [],
+    },
   },
   reactionBottomSheet: {
     show: false,
@@ -70,12 +69,6 @@ export const postInitState = {
   },
   loadingGetPostDetail: false,
   commentErrorCode: '',
-  seenPostList: {
-    loading: false,
-    data: [],
-    canLoadMore: true,
-    total: 0,
-  },
   allPostContainingVideoInProgress: {
     total: 0,
     data: [],
@@ -88,16 +81,6 @@ function postReducer(
   const { type, payload } = action;
 
   switch (type) {
-    case postTypes.SET_ALL_POSTS:
-      return {
-        ...state,
-        allPosts: payload,
-      };
-    case postTypes.SET_ALL_COMMENTS:
-      return {
-        ...state,
-        allComments: payload,
-      };
     case postTypes.SET_LOADING_CREATE_POST:
       return {
         ...state,
@@ -147,14 +130,6 @@ function postReducer(
             ...state?.createPost?.currentSettings,
             ...payload,
           },
-        },
-      };
-    case postTypes.SET_CREATE_COMMENT:
-      return {
-        ...state,
-        createComment: {
-          ...state.createComment,
-          ...payload,
         },
       };
     case postTypes.SET_CREATE_POST_CHOSEN_AUDIENCES:
@@ -265,83 +240,10 @@ function postReducer(
         ...state,
         postAudienceSheet: postInitState.postAudienceSheet,
       };
-    case postTypes.SET_ALL_COMMENTS_BY_PARENT_IDS:
-      return {
-        ...state,
-        allCommentsByParentIds: payload,
-        loadingGetPostDetail: false,
-      };
     case postTypes.SET_SCROLL_TO_LATEST_ITEM:
       return {
         ...state,
         scrollToLatestItem: payload,
-      };
-    case postTypes.UPDATE_COMMENT_API: {
-      // update pre-comment with data receiving from API
-      const {
-        status, localId, postId, resultComment, parentCommentId,
-      } = payload;
-      const allCommentsByPost: any = { ...state.allCommentsByParentIds };
-      const postComments = [...allCommentsByPost[postId]];
-      let comment;
-
-      if (parentCommentId) {
-        // find parent comment
-        const parentCommentPosition = postComments.findIndex((item: ICommentData) => item.id === parentCommentId);
-        // find and update target reply comment
-        const child = postComments[parentCommentPosition].child.list || [];
-        const targetPosition = child.findIndex((item: ICommentData) => item?.localId === localId);
-        comment = {
-          ...child[targetPosition],
-          ...resultComment,
-          status,
-        };
-        child[targetPosition] = comment;
-      } else {
-        const position = postComments.findIndex((item: ICommentData) => item?.localId === localId);
-        comment = { ...postComments[position], ...resultComment, status };
-        postComments[position] = comment;
-      }
-
-      allCommentsByPost[postId] = postComments;
-      return {
-        ...state,
-        allCommentsByParentIds: allCommentsByPost,
-      };
-    }
-    case postTypes.POST_CANCEL_FAILED_COMMENT: {
-      // find and remove target reply comment
-      const { localId, parentCommentId, postId } = payload;
-      const allCommentsByPost: any = { ...state.allCommentsByParentIds };
-
-      // eslint-disable-next-line
-      const postComments = [...allCommentsByPost?.[postId]];
-
-      if (parentCommentId) {
-        // find parent comment
-        const parentCommentPosition = postComments.findIndex((item: ICommentData) => item.id === parentCommentId);
-        const child = postComments[parentCommentPosition].child || [];
-        const targetPosition = child.findIndex((item: ICommentData) => item?.localId === localId);
-        child.splice(
-          targetPosition, 1,
-        );
-      } else {
-        const position = postComments.findIndex((item: ICommentData) => item?.localId === localId);
-        postComments.splice(
-          position, 1,
-        );
-      }
-
-      allCommentsByPost[postId] = postComments;
-      return {
-        ...state,
-        allCommentsByParentIds: allCommentsByPost,
-      };
-    }
-    case postTypes.SET_USERS_SEEN_POST:
-      return {
-        ...state,
-        seenPostList: payload || postInitState.seenPostList,
       };
     case postTypes.SET_POST_SELECT_AUDIENCE_STATE:
       return {
@@ -450,6 +352,17 @@ function postReducer(
         },
       };
     }
+    case postTypes.UPDATE_LINK_PREVIEW:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          linkPreview: {
+            ...state.createPost.linkPreview,
+            ...payload,
+          },
+        },
+      };
 
     default:
       return state;

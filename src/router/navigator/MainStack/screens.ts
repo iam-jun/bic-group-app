@@ -3,6 +3,7 @@ import homeScreens from '~/router/navigator/MainStack/stacks/homeStack/screens';
 import menuScreens from '~/router/navigator/MainStack/stacks/menuStack/screens';
 import notiScreens from '~/router/navigator/MainStack/stacks/notiStack/screens';
 import commonScreens from '~/router/navigator/commonStack/screens';
+import articleScreens from './stacks/articleStack/screens';
 
 const mainTabScreens: any = {
   ...groupScreens,
@@ -10,6 +11,7 @@ const mainTabScreens: any = {
   ...menuScreens,
   ...notiScreens,
   ...commonScreens,
+  ...articleScreens,
 };
 
 export default mainTabScreens;

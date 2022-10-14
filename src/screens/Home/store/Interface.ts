@@ -1,6 +1,10 @@
-import { HOME_TAB_TYPE } from '~/screens/Home/constants';
 import { IPostActivity } from '~/interfaces/IPost';
-import IBaseStore from '~/store/interfaces/IBaseStore';
+import IBaseState from '~/store/interfaces/IBaseState';
+
+export const HOME_TAB_TYPE = {
+  NEWSFEED: 'NEWSFEED',
+  IMPORTANT: 'IMPORTANT',
+};
 
 export interface IHomeTab {
   refreshing: boolean,
@@ -8,16 +12,19 @@ export interface IHomeTab {
   canLoadMore: boolean,
 }
 
-interface IHomeState extends IBaseStore{
+interface IHomeState extends IBaseState{
   activeTab: keyof typeof HOME_TAB_TYPE
   tabNewsfeed: IHomeTab,
   tabImportant: IHomeTab
 
-  setActiveTab: (tab: keyof typeof HOME_TAB_TYPE) => void;
-  setTabNewsfeed: (data: IHomeTab) => void;
-  setTabImportant: (data: IHomeTab) => void;
+  actions?: {
+    setActiveTab?: (tab: keyof typeof HOME_TAB_TYPE) => void;
+    setTabNewsfeed?: (data: IHomeTab) => void;
+    setTabImportant?: (data: IHomeTab) => void;
 
-  getTabData: (tabId: keyof typeof HOME_TAB_TYPE, isRefresh?: boolean) => void;
+    getTabData?: (tabId: keyof typeof HOME_TAB_TYPE, isRefresh?: boolean) => void;
+    refreshHome?: () => void;
+  }
 }
 
 export default IHomeState;

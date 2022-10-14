@@ -49,6 +49,7 @@ import { faComments } from '@fortawesome/pro-regular-svg-icons/faComments';
 import { faLocationDot } from '@fortawesome/pro-regular-svg-icons/faLocationDot';
 import { faArrowRightFromArc } from '@fortawesome/pro-regular-svg-icons/faArrowRightFromArc';
 import { faImage } from '@fortawesome/pro-regular-svg-icons/faImage';
+import { faImageLandscape } from '@fortawesome/pro-regular-svg-icons/faImageLandscape';
 import { faImages } from '@fortawesome/pro-regular-svg-icons/faImages';
 import { faPenLine } from '@fortawesome/pro-regular-svg-icons/faPenLine';
 import { faPenLine as faPenLineSolid } from '@fortawesome/pro-solid-svg-icons/faPenLine';
@@ -105,6 +106,7 @@ import { faCommentSmile } from '@fortawesome/pro-regular-svg-icons/faCommentSmil
 import { faCreditCard } from '@fortawesome/pro-regular-svg-icons/faCreditCard';
 import { faCreditCard as faCreditCardSolid } from '@fortawesome/pro-solid-svg-icons/faCreditCard';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
+import { faUsers } from '@fortawesome/pro-regular-svg-icons/faUsers';
 import { faShieldCheck } from '@fortawesome/pro-regular-svg-icons/faShieldCheck';
 import { faDesktop } from '@fortawesome/pro-regular-svg-icons/faDesktop';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
@@ -161,7 +163,8 @@ import { faClapperboardPlay } from '@fortawesome/pro-regular-svg-icons/faClapper
 import { faMarkdown } from '@fortawesome/free-brands-svg-icons/faMarkdown';
 import { faCommentDots as faCommentDotsSolid } from '@fortawesome/pro-solid-svg-icons/faCommentDots';
 import { faUpRightAndDownLeftFromCenter as faUpRightAndDownLeftFromCenterSolid } from '@fortawesome/pro-solid-svg-icons/faUpRightAndDownLeftFromCenter';
-import { faPeopleGroup } from '@fortawesome/pro-solid-svg-icons/faPeopleGroup';
+import { faPeopleGroup as faPeopleGroupSolid } from '@fortawesome/pro-solid-svg-icons/faPeopleGroup';
+import { faPeopleGroup } from '@fortawesome/pro-regular-svg-icons/faPeopleGroup';
 import { faPeoplePantsSimple } from '@fortawesome/pro-solid-svg-icons/faPeoplePantsSimple';
 import { faPawSimple } from '@fortawesome/pro-regular-svg-icons/faPawSimple';
 import { faBurgerSoda } from '@fortawesome/pro-regular-svg-icons/faBurgerSoda';
@@ -169,6 +172,8 @@ import { faPlane } from '@fortawesome/pro-regular-svg-icons/faPlane';
 import { faBasketball } from '@fortawesome/pro-regular-svg-icons/faBasketball';
 import { faLightbulb } from '@fortawesome/pro-regular-svg-icons/faLightbulb';
 import { faSymbols } from '@fortawesome/pro-regular-svg-icons/faSymbols';
+import { faInputText } from '@fortawesome/pro-regular-svg-icons/faInputText';
+import { faChartTreeMap } from '@fortawesome/pro-regular-svg-icons/faChartTreeMap';
 import { faFlag } from '@fortawesome/pro-regular-svg-icons/faFlag';
 
 /**
@@ -240,6 +245,7 @@ export const initFontAwesomeIcon = () => {
     faLocationDot,
     faArrowRightFromArc,
     faImage,
+    faImageLandscape,
     faImages,
     faPenLine,
     faPenLineSolid,
@@ -296,6 +302,7 @@ export const initFontAwesomeIcon = () => {
     faCreditCard,
     faCreditCardSolid,
     faUser,
+    faUsers,
     faShieldCheck,
     faDesktop,
     faCoins,
@@ -351,6 +358,7 @@ export const initFontAwesomeIcon = () => {
     faMarkdown,
     faCommentDotsSolid,
     faUpRightAndDownLeftFromCenterSolid,
+    faPeopleGroupSolid,
     faPeopleGroup,
     faPeoplePantsSimple,
     faPawSimple,
@@ -359,6 +367,8 @@ export const initFontAwesomeIcon = () => {
     faBasketball,
     faLightbulb,
     faSymbols,
+    faInputText,
+    faChartTreeMap,
     faFlag,
   );
 };
@@ -414,6 +424,7 @@ export const fontAwesomeIcons = {
   LocationDot: 'fa-regular fa-location-dot',
   ArrowRightFromArc: 'fa-regular fa-arrow-right-from-arc',
   Image: 'fa-regular fa-image',
+  ImageLandscape: 'fa-regular fa-image-landscape',
   Images: 'fa-regular fa-images',
   PenLine: 'fa-regular fa-pen-line',
   PenLineSolid: 'fa-solid fa-pen-line',
@@ -471,6 +482,7 @@ export const fontAwesomeIcons = {
   CreditCard: 'fa-regular fa-credit-card',
   CreditCardSolid: 'fa-solid fa-credit-card',
   User: 'fa-regular fa-user',
+  Users: 'fa-regular fa-users',
   ShieldCheck: 'fa-regular fa-shield-check',
   Monitor: 'fa-regular fa-desktop',
   Coins: 'fa-regular fa-coins',
@@ -526,7 +538,8 @@ export const fontAwesomeIcons = {
   Markdown: 'fa-brands fa-markdown',
   CommentDotsSolid: 'fa-solid fa-comment-dots',
   UpRightAndDownLeftFromCenter: 'fa-solid fa-up-right-and-down-left-from-center',
-  PeopleGroup: 'fa-solid fa-people-group',
+  PeopleGroupSolid: 'fa-solid fa-people-group',
+  PeopleGroup: 'fa-regular fa-people-group',
   PeoplePantsSimple: 'fa-solid fa-people-pants-simple',
   PawSimple: 'fa-regular fa-paw-simple',
   BurgerSoda: 'fa-regular fa-burger-soda',
@@ -534,6 +547,8 @@ export const fontAwesomeIcons = {
   Basketball: 'fa-regular fa-basketball',
   Lightbulb: 'fa-regular fa-lightbulb',
   Symbols: 'fa-regular fa-symbols',
+  InputText: 'fa-regular fa-input-text',
+  ChartTreeMap: 'fa-regular fa-chart-tree-map',
   Flag: 'fa-regular fa-flag',
 };
 
