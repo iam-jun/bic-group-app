@@ -26,17 +26,22 @@ const deleteComment = (_set, _get) => async (
 
     // update allCommentsByParentId
     const allCommentsByParentIds = useCommentsStore.getState().commentsByParentId || {};
-    let commentsOfPost = cloneDeep(allCommentsByParentIds[postId]) || [];
+    let commentsOfPost = allCommentsByParentIds[postId] || [];
     if (parentCommentId) {
       // update allComments
-      const newAllComments = { ...allComments };
-      const newParentComment = { ...newAllComments[parentCommentId] };
-      newParentComment.totalReply = Math.max(
+      const parentComment = { ...allComments[parentCommentId] };
+      parentComment.totalReply = Math.max(
         0,
-        newParentComment.totalReply - 1,
+        parentComment.totalReply - 1,
       );
-      newParentComment.child.list = newParentComment.child?.list?.filter?.((cmt: IReaction) => cmt?.id !== commentId);
-
+      const newParentCommentChild = parentComment.child?.list?.filter?.((cmt: IReaction) => cmt?.id !== commentId);
+      const newParentComment = {
+        ...parentComment,
+        child: {
+          ...parentComment.child,
+          list: newParentCommentChild,
+        },
+      };
       useCommentsStore.getState().actions.addToComments(newParentComment);
     } else {
       // remove comment
@@ -66,8 +71,7 @@ const deleteComment = (_set, _get) => async (
     //     );
     //   }
     // }
-    newAllPosts[postId] = cloneDeep(post);
-    usePostsStore.getState().actions.setPosts(newAllPosts);
+    usePostsStore.getState().actions.setPosts({ ...newAllPosts, [postId]: post });
 
     // show toast success
     const toastMessage: IToastMessage = {

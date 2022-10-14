@@ -29,7 +29,7 @@ const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsB
       useCommentsStore.getState().actions.addChildCommentToComment({
         commentId,
         childComments: list.reverse(),
-        meta: idGt
+        meta: !!idGt
           ? { hasPreviousPage: meta?.hasPreviousPage }
           : { hasNextPage: meta?.hasNextPage },
         isAddFirst: !idGt,
@@ -46,7 +46,7 @@ const getCommentsByPostId = (_set, _get) => async (payload: IPayloadGetCommentsB
       const allPosts = usePostsStore.getState().posts || {};
       const newAllPosts = { ...allPosts };
       const post = newAllPosts[postId] || {};
-      post.comments.meta.hasNextPage = response?.meta?.hasNextPage;
+      post.comments.meta.hasNextPage = meta?.hasNextPage;
       newAllPosts[postId] = { ...post };
 
       useCommentsStore.getState().actions.addToComments(newAllComments);
