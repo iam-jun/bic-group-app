@@ -12,6 +12,15 @@ const addToCommentsByParentIdWithComments = (set, get) => (payload: IPayloadUpda
   if (isMerge) {
     newComments = [...new Set([...commentsById, ...commentIds])];
   } else {
+    // case for comment from notification
+    if (commentIds.length === 1) {
+      const filterComments = commentsById.filter((item) => item === commentIds[0]);
+      const isExisted = filterComments.length > 0;
+      if (isExisted) {
+        return;
+      }
+    }
+    // normal case from post detail
     newComments = commentIds;
   }
 
