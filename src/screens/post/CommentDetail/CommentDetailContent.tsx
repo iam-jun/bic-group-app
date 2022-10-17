@@ -340,7 +340,7 @@ const CommentDetailContent = (props: any) => {
             tintColor={theme.colors.gray40}
           />
         )}
-        contentContainerStyle={{ backgroundColor: 'white' }}
+        contentContainerStyle={styles.contentContainerStyle}
       />
       <CommentInputView
         commentInputRef={commentInputRef}
@@ -426,6 +426,9 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     footerList: {
       height: spacing.margin.base,
+      backgroundColor: colors.white,
+    },
+    contentContainerStyle: {
       backgroundColor: colors.white,
     },
   });
