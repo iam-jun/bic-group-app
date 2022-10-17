@@ -91,7 +91,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
           postId={postId}
           commentId={commentData?.id}
           idLessThan={idLessThan}
-          onPress={_onPressLoadMore}
+          onPress={!!onPressLoadMore ? _onPressLoadMore : undefined}
         />
       )}
     </View>

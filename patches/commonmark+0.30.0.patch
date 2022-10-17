@@ -4360,7 +4360,7 @@ index c1b33d7..61daeb4 100644
 +    };
 +
 +    // Attempt to parse an at mention
-+    var reAtMention = /^@([a-z][a-z0-9._-]*[^ ._-]+)/i;
++    var reAtMention = /^@([a-z][a-z0-9._-]*[a-z0-9])/i;
 +    var parseAtMention = function(block) {
 +        if (this.brackets) {
 +            // Don't perform autolinking while inside an explicit link
@@ -5868,7 +5868,7 @@ index 5d2a545..312b4a0 100644
 +}
 +
 +// Attempt to parse an at mention
-+var reAtMention = /^@([a-z][a-z0-9._-]*[^ ._-]+)/i;
++var reAtMention = /^@([a-z][a-z0-9._-]*[a-z0-9])/i;
 +var parseAtMention = function(block) {
 +    if (this.brackets) {
 +        // Don't perform autolinking while inside an explicit link

@@ -240,7 +240,7 @@ export default class Md extends PureComponent {
     if (!first) {
       blockStyle.push(this.props.blockStyles.adjacentParagraph);
     }
-    
+
     const styleParagraph = context?.length === 0 ? style.paragraph : {};
 
     return (
@@ -373,6 +373,10 @@ export default class Md extends PureComponent {
   };
 
   render() {
+    if (!this.props.value) {
+      return null;
+    }
+
     let ast = this.parser.parse(this.props.value.toString());
 
     ast = combineTextNodes(ast);
