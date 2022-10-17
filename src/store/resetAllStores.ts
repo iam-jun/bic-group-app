@@ -61,7 +61,11 @@ const stores = [
 ];
 
 export const resetAllStores = () => {
-  stores.forEach((store: any) => store.getState().reset?.());
+  try {
+    stores.forEach((store: any) => store.getState().reset?.());
+  } catch (e) {
+    console.error('\x1b[35m🐣️ resetAllStores resetAllStores Error', e, '\x1b[0m');
+  }
 };
 
 export default resetAllStores;
