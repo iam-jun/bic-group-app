@@ -27,11 +27,11 @@ import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import { useRootNavigation } from '~/hooks/navigation';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import useCommentDetailController from './store';
+import Divider from '~/beinComponents/Divider';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -319,6 +319,7 @@ const CommentDetailContent = (props: any) => {
         renderItem={renderCommentItem}
         ListHeaderComponent={(
           <CommentLevel1
+            color={theme.colors.neutral5}
             headerTitle={headerTitle}
             commentData={newCommentData}
             groupIds={groupIds}
@@ -339,6 +340,7 @@ const CommentDetailContent = (props: any) => {
             tintColor={theme.colors.gray40}
           />
         )}
+        contentContainerStyle={{ backgroundColor: 'white' }}
       />
       <CommentInputView
         commentInputRef={commentInputRef}
@@ -359,6 +361,7 @@ const CommentLevel1 = ({
   commentData,
   groupIds,
   onPressMarkSeenPost,
+  color,
 }: any) => {
   if (!id) {
     return null;
@@ -366,8 +369,9 @@ const CommentLevel1 = ({
 
   return (
     <View>
-      <ViewSpacing
-        height={spacing.padding.large}
+      <Divider
+        size={spacing.padding.large}
+        color={color}
       />
       <CommentItem
         postId={id}
