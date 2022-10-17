@@ -24,15 +24,14 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
 
       const post = usePostsStore.getState().posts?.[comment?.postId] || {};
       if (isEmpty(post) && comment?.postId) {
-        useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
-          id: comment?.postId,
-          commentIds: [comment.id],
-        });
-
         post.id = comment.postId;
         post.actor = actor;
         usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
       }
+      useCommentsStore.getState().actions.addToCommentsByParentIdWithComments({
+        id: comment?.postId,
+        commentIds: [comment.id],
+      });
     }
     callbackLoading?.(false);
   } catch (e: any) {
