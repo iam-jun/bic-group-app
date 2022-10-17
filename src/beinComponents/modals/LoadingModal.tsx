@@ -3,9 +3,9 @@ import {
   StyleSheet,
   View,
   ImageBackground,
-  Modal,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
+import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
@@ -19,8 +19,10 @@ const LoadingModal = () => {
   const { loading } = useKeySelector('modal');
   const { visible } = loading;
 
+  if (!visible) return null;
+
   return (
-    <Modal animationType="fade" visible={visible} style={styles.root}>
+    <Animated.View style={styles.container} entering={FadeInUp} exiting={FadeOutDown}>
       <ImageBackground source={images.img_bg_sign_in} style={styles.background}>
         <View style={styles.logoContainer}>
           <LottieView
@@ -36,13 +38,16 @@ const LoadingModal = () => {
           />
         </View>
       </ImageBackground>
-    </Modal>
+    </Animated.View>
   );
 };
 
 const themeStyles = () => StyleSheet.create({
-  root: {
-    flex: 1,
+  container: {
+    zIndex: 99,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
   },
   background: {
     flex: 1,
