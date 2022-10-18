@@ -29,4 +29,6 @@ const managedState = (set, get): IManagedState => ({
   reset: () => resetStore(initManagedState, set),
 });
 
-export const useManagedStore = createStore<IManagedState>(managedState);
+const useManagedStore = createStore<IManagedState>(managedState);
+
+export default useManagedStore;

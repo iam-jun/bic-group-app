@@ -7,7 +7,7 @@ import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBase
 import Text from '~/beinComponents/Text';
 import appConfig from '~/configs/appConfig';
 import CommunitySearchResults from './CommunitySearchResults';
-import { useSearchJoinedCommunitiesStore } from './store';
+import useSearchJoinedCommunitiesStore from './store';
 
 type SearchCommunityViewProps = SearchBaseViewProps
 

@@ -7,7 +7,7 @@ import EmptyScreen from '~/components/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
-import { useYourCommunitiesStore } from './store';
+import useYourCommunitiesStore from './store';
 
 const YourCommunities = () => {
   const theme: ExtendedTheme = useTheme();

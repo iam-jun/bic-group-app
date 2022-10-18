@@ -18,4 +18,6 @@ const yourCommunitiesState = (set, get): IYourCommunitiesState => ({
   reset: () => resetStore(initYourCommunitiesState, set),
 });
 
-export const useYourCommunitiesStore = createStore<IYourCommunitiesState>(yourCommunitiesState);
+const useYourCommunitiesStore = createStore<IYourCommunitiesState>(yourCommunitiesState);
+
+export default useYourCommunitiesStore;

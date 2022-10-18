@@ -12,7 +12,7 @@ import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/components/EmptyScreen';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
-import { useYourGroupsStore } from './store';
+import useYourGroupsStore from './store';
 
 type GroupItemProps = {
   id: string;

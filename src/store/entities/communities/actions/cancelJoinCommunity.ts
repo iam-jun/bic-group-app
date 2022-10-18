@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
-import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
 import groupsActions from '~/storeRedux/groups/actions';
@@ -22,11 +21,6 @@ const cancelJoinCommunity
           data: { joinStatus: GroupJoinStatus.VISITOR },
         }),
       );
-      useDiscoverCommunitiesStore
-        .getState()
-        .actions.setDiscoverCommunities(communityId, {
-          joinStatus: GroupJoinStatus.VISITOR,
-        });
 
       actions.getCommunity(communityId);
 

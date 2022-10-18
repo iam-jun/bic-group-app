@@ -7,7 +7,7 @@ import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBase
 import Text from '~/beinComponents/Text';
 import appConfig from '~/configs/appConfig';
 import SearchDiscoverCommunityResults from './SearchDiscoverCommunityResults';
-import { useDiscoverCommunitiesSearchStore } from './store';
+import useDiscoverCommunitiesSearchStore from './store';
 
 type SearchDiscoverCommunityProps = SearchBaseViewProps
 
@@ -51,7 +51,7 @@ const SearchDiscoverCommunity = ({
       {...props}
       onChangeText={onSearchCommunities}
     >
-      {searchText ? (
+      {!!searchText ? (
         <SearchDiscoverCommunityResults
           onLoadMore={onLoadMore}
         />
