@@ -77,7 +77,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const currentUserId = useUserIdAuth();
 
   const commonController = useCommonController((state) => state.actions);
-  const comment = useCommentsStore(commentsSelector.getComment(commentData?.id));
+  const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentData?.id), [commentData?.id]));
+
   const setting = usePostsStore(postsSelector.getSetting(postId));
   const cancelCommentFailed = useCommentsStore((state) => state.actions.cancelCommentFailed);
 
@@ -253,6 +254,14 @@ const _CommentView: React.FC<CommentViewProps> = ({
     dispatch(showReactionDetailBottomSheet(payload));
   };
 
+  const onPressRetry = () => {
+    commentInputStore.retryAddComment(commentData);
+  };
+
+  const onPressCancel = () => {
+    cancelCommentFailed(commentData);
+  };
+
   const renderReactionsReplyView = () => (
     isActive && (
       <View style={{ marginTop: spacing.margin.tiny }}>
@@ -297,14 +306,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
     )
   );
 
-  const onPressRetry = () => {
-    commentInputStore.retryAddComment(commentData);
-  };
-
-  const onPressCancel = () => {
-    cancelCommentFailed(commentData);
-  };
-
   const renderErrorState = () => commentStatus === 'failed' && (
   <View style={styles.errorLine}>
     <Text.BodySMedium color={colors.red60} useI18n>
@@ -324,34 +325,30 @@ const _CommentView: React.FC<CommentViewProps> = ({
   return (
     <View>
       <Animated.View style={[styles.container, animatedStyle]}>
-        <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
+        <ButtonWrapper testID="comment_view.avatar" onPress={onPressUser}>
           <Avatar isRounded source={avatar} />
         </ButtonWrapper>
-        <View style={{ flex: 1, marginLeft: spacing.margin.small }}>
+        <View style={styles.commentWrapper}>
           <Button
-            onLongPress={onLongPress}
-            disabled={!isActive}
             testID="comment_view.comment_content"
+            disabled={!isActive}
+            onLongPress={onLongPress}
           >
-            <View style={{ flex: 1 }}>
+            <View style={styles.flex1}>
               <View
-                style={StyleSheet.flatten([
+                style={[
                   styles.contentContainer,
                   contentBackgroundColor
                     ? { backgroundColor: contentBackgroundColor }
                     : {},
-                ])}
+                ]}
               >
                 <View style={styles.header}>
                   <View style={styles.userName}>
                     <ButtonWrapper onPress={onPressUser}>
                       <Text.H5
+                        testID={`comment_view.level_${parentCommentId ? 2 : 1}.user_name`}
                         numberOfLines={1}
-                        testID={
-                          parentCommentId
-                            ? 'comment_view.level_2.user_name'
-                            : 'comment_view.level_1.user_name'
-                        }
                       >
                         {`${fullname}`}
                       </Text.H5>
@@ -360,12 +357,13 @@ const _CommentView: React.FC<CommentViewProps> = ({
                 </View>
                 <CollapsibleText
                   useMarkdown
+                  useMarkdownIt
                   limitMarkdownTypes
-                  parentCommentId={parentCommentId}
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
                   mentions={mentions}
+                  parentCommentId={parentCommentId}
                   onPressAudience={onPressAudience}
                   onToggleShowTextContent={onPressMarkSeenPost}
                 />
@@ -391,11 +389,18 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       flexDirection: 'row',
     },
+    commentWrapper: {
+      flex: 1,
+      marginLeft: spacing.margin.small,
+    },
     contentContainer: {
       flex: 1,
       padding: spacing.padding.small,
       backgroundColor: colors.gray1,
       borderRadius: spacing?.borderRadius.large,
+    },
+    flex1: {
+      flex: 1,
     },
     buttonContainer: {
       flexDirection: 'row',
