@@ -7,7 +7,7 @@ import {
   fireEvent,
   createTestStore,
 } from '~/test/testUtils';
-import MemberOptionsMenu from './MemberOptionsMenu';
+import MemberOptionsMenu from './GroupMemberOptionsMenu';
 import initialState from '~/storeRedux/initialState';
 import { IGroupMembers } from '~/interfaces/IGroup';
 import modalActions from '~/storeRedux/modal/actions';

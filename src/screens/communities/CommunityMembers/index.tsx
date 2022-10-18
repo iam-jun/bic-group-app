@@ -19,7 +19,7 @@ import modalActions from '~/storeRedux/modal/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IconType } from '~/resources/icons';
-import MemberOptionsMenu from './components/MemberOptionsMenu';
+import MemberOptionsMenu from './components/CommunityMemberOptionsMenu';
 
 export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },

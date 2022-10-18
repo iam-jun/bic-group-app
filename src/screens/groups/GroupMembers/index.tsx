@@ -12,7 +12,7 @@ import { IGroupMembers } from '~/interfaces/IGroup';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header, { HeaderProps } from '~/beinComponents/Header';
-import MemberOptionsMenu from './components/MemberOptionsMenu';
+import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
