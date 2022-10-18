@@ -1,5 +1,5 @@
 import React, {
-  FC, useRef, useEffect, useState,
+  FC, useRef, useEffect, useState, useCallback,
 } from 'react';
 import {
   Keyboard,
@@ -76,7 +76,7 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const comment: ICommentData = useCommentsStore(commentsSelector.getComment(commentId));
+  const comment: ICommentData = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
   const oldContent = comment?.content;
   const oldImages = comment?.media?.images;
 

@@ -17,13 +17,13 @@ import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useArticlesStore from '../screens/articles/ArticleDetail/store';
 import useArticleListStore from '~/screens/articles/ArticleList/store';
 import useUserInterestedPostStore from '~/screens/post/components/UserInterestedPost/store';
-import { useDiscoverCommunitiesStore } from '~/screens/Discover/components/DiscoverCommunities/store';
+import useDiscoverCommunitiesStore from '~/screens/Discover/components/DiscoverCommunities/store';
 import useTimelineStore from './timeline';
-import { useDiscoverCommunitiesSearchStore } from '~/screens/Discover/components/SearchDiscoverCommunity/store';
-import { useManagedStore } from '~/screens/communities/Communities/components/Managed/store';
-import { useYourCommunitiesStore } from '~/screens/communities/Communities/components/YourCommunities/store';
-import { useYourGroupsStore } from '~/screens/communities/Communities/components/YourGroups/store';
-import { useSearchJoinedCommunitiesStore } from '~/screens/communities/Communities/components/SearchCommunity/store';
+import useDiscoverCommunitiesSearchStore from '~/screens/Discover/components/SearchDiscoverCommunity/store';
+import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
+import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
+import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
+import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 
 const stores = [
   // entities

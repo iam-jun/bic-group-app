@@ -18,7 +18,6 @@ import {
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
@@ -30,14 +29,11 @@ import { useKeySelector } from '~/hooks/selector';
 import { IUserResponse } from '~/interfaces/IAuth';
 import {
   IAudienceGroup,
-  ICommentData,
   IPayloadGetPostDetail,
 } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { rootSwitch } from '~/router/stack';
 import CommentInputView from '~/screens/post/components/CommentInputView';
-import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
-import PostView from '~/screens/post/components/PostView';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
@@ -50,9 +46,8 @@ import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-
-const defaultList = [{ title: '', type: 'empty', data: [] }];
+import { defaultList, getSectionData } from '../helper/postUtils';
+import PostDetailContentHeader from '../components/PostDetailContentHeader';
 
 const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -91,8 +86,8 @@ const _PostDetailContent = (props: any) => {
   const commentError = useKeySelector(postKeySelector.commentErrorCode);
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
-  const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
-  const sectionData = getSectionData(comments) || [];
+  const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(id), [id]));
+  const sectionData = deleted || !setting?.canComment ? defaultList : getSectionData(comments);
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
@@ -441,18 +436,16 @@ const _PostDetailContent = (props: any) => {
         <View style={styles.postDetailContainer}>
           <SectionList
             ref={listRef}
-            sections={
-              deleted || !setting?.canComment ? defaultList : sectionData
-            }
+            sections={sectionData}
             renderItem={renderCommentItem}
             renderSectionHeader={renderSectionHeader}
             ListHeaderComponent={(
               <PostDetailContentHeader
                 id={id}
                 commentLeft={commentLeft}
-                onPressComment={onPressComment}
-                onContentLayout={props?.onContentLayout}
                 idLessThan={comments?.[0]?.id}
+                onContentLayout={props?.onContentLayout}
+                onPressComment={onPressComment}
               />
             )}
             ListFooterComponent={renderFooter}
@@ -492,58 +485,6 @@ const _PostDetailContent = (props: any) => {
       {renderContent()}
     </View>
   );
-};
-
-const PostDetailContentHeader = ({
-  id,
-  onPressComment,
-  onContentLayout,
-  commentLeft,
-  idLessThan,
-}: any) => {
-  if (!id) {
-    return null;
-  }
-  return (
-    <>
-      <ViewSpacing height={spacing.padding.large} />
-      <PostView
-        postId={id}
-        onPressComment={onPressComment}
-        onContentLayout={onContentLayout}
-        isPostDetail
-        btnReactTestID="post_detail_content.btn_react"
-        btnCommentTestID="post_detail_content.btn_comment"
-      />
-      <Divider />
-      {commentLeft && (
-        <LoadMoreComment
-          title="post:text_load_more_comments"
-          postId={id}
-          idLessThan={idLessThan}
-        />
-      )}
-    </>
-  );
-};
-
-const getSectionData = (listComment: ICommentData[]) => {
-  const result: any[] = [];
-  listComment?.forEach?.((comment, index) => {
-    const item: any = {};
-    const lastChildComment = comment?.child?.list || [];
-    const _data
-      = lastChildComment.length > 0
-        ? [lastChildComment[lastChildComment.length - 1]]
-        : [];
-    item.comment = comment;
-    item.index = index;
-    item.data = _data;
-    result.push(item);
-  });
-  // long post without comment cant scroll to bottom
-  // so need default list with an empty item to trigger scroll
-  return result?.length > 0 ? result : defaultList;
 };
 
 const createStyle = (theme: ExtendedTheme) => {

@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import groupApi from '~/api/GroupApi';
-import { useManagedStore } from './store';
+import useManagedStore from './store';
 import { responseManage, responseOwnCommunity } from './store/__mocks__/data';
 
 describe('Managed Screen', () => {

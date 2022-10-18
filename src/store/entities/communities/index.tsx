@@ -1,30 +1,30 @@
 import { IObject } from '~/interfaces/common';
 import { ICommunity } from '~/interfaces/ICommunity';
 import IBaseState from '~/store/interfaces/IBaseState';
-import {
-  createStore, resetStore,
-} from '../../utils';
+import { createStore, resetStore } from '../../utils';
+import addCommunity from './actions/addCommunity';
 import getCommunity from './actions/getCommunity';
 
 export interface ICommunitiesState extends IBaseState {
-    /**
+  /**
         To handle fetching state.
         For example: loading, refreshings
     * */
-    requestings: IObject<boolean>;
-    data: IObject<ICommunity>;
-    /**
-     * Set currentCommunityId when call doGetCommunity
-     * The screens in the same stack can access
-     * through store (no need to set param when navigating)
-     */
-    currentCommunityId?: string;
-    errors: IObject<any>;
-    actions:{
-      getCommunity: (id: string) => void;
-      updateCommunity: (id: string, payload: ICommunity) => void,
-      resetCommunity: (id: string) => void;
-    }
+  requestings: IObject<boolean>;
+  data: IObject<ICommunity>;
+  /**
+   * Set currentCommunityId when call doGetCommunity
+   * The screens in the same stack can access
+   * through store (no need to set param when navigating)
+   */
+  currentCommunityId?: string;
+  errors: IObject<any>;
+  actions: {
+    getCommunity: (id: string) => void;
+    updateCommunity: (id: string, payload: ICommunity) => void;
+    resetCommunity: (id: string) => void;
+    addCommunity: (data: ICommunity | ICommunity[]) => void;
+  };
 }
 
 const initialState = {
@@ -48,9 +48,9 @@ const communitiesStore = (set, get) => ({
         delete state.errors[id];
       });
     },
+    addCommunity: addCommunity(set, get),
   },
   reset: () => resetStore(initialState, set),
-
 });
 
 const useCommunitiesStore = createStore<ICommunitiesState>(communitiesStore);

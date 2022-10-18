@@ -13,7 +13,7 @@ import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/components/EmptyScreen';
-import { useManagedStore } from './store';
+import useManagedStore from './store';
 
 type GroupItemProps = {
   id: string;

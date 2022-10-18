@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
@@ -24,7 +24,6 @@ const HEADER_TAB = [
 
 const Index = () => {
   const theme = useTheme();
-  const { elevations } = theme;
   const styles = themeStyles(theme);
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
@@ -81,7 +80,7 @@ const Index = () => {
         onPressButton={onDiscoverButtonPress}
       />
       <View style={styles.containerContent}>
-        <View style={[styles.containerTabView, elevations.e1]}>
+        <View style={[styles.containerTabView]}>
           <Tab
             style={styles.tabs}
             buttonProps={{ type: 'primary', useI18n: true }}
@@ -105,7 +104,8 @@ const Index = () => {
 const SIZE_DISCOVER_BUTTON = 36;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
+  const elevation = Platform.OS === 'ios' ? elevations.e1 : null;
 
   return StyleSheet.create({
     containerScreen: {
@@ -119,6 +119,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     containerTabView: {
       paddingBottom: spacing.padding.small,
       backgroundColor: colors.white,
+      ...elevation,
     },
     tabs: {
       alignItems: 'center',

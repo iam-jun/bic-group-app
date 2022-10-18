@@ -1,21 +1,52 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
-  FlatList, StyleSheet, ActivityIndicator, View, RefreshControl, ListRenderItem,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+  RefreshControl,
+  ListRenderItem,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import EmptyScreen from '~/components/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
-import { useDiscoverCommunitiesStore } from './store';
+import useDiscoverCommunitiesStore from './store';
 import useCommunityController from '~/screens/communities/store';
+import useCommunitiesStore from '~/store/entities/communities';
+
+type ItemDiscoverCommunitiesProps = {
+  id: string;
+  index: number;
+  handleJoin: (id: string, name: string) => void;
+  handleCancel: (id: string, name: string) => void;
+};
+
+const ItemDiscoverCommunities: FC<ItemDiscoverCommunitiesProps> = ({
+  id,
+  index,
+  handleJoin,
+  handleCancel,
+}) => {
+  const item = useCommunitiesStore((state) => state.data[id]);
+  return (
+    <CommunityGroupCard
+      item={item}
+      testID={`discover_communities_item_${index}`}
+      onJoin={handleJoin}
+      onCancel={handleCancel}
+    />
+  );
+};
 
 const DiscoverCommunities = () => {
   const theme: ExtendedTheme = useTheme();
 
   const {
-    ids, items, loading, refreshing, hasNextPage, actions,
-  } = useDiscoverCommunitiesStore();
+    ids, loading, refreshing, hasNextPage, actions,
+  }
+    = useDiscoverCommunitiesStore();
 
   const communityController = useCommunityController((state) => state.actions);
 
@@ -64,40 +95,36 @@ const DiscoverCommunities = () => {
     communityController.cancelJoinCommunity(id, name);
   };
 
-  const renderItem: ListRenderItem<string> = ({ item, index }) => {
-    const currentItem = items[item];
-
-    return (
-      <CommunityGroupCard
-        item={currentItem}
-        testID={`discover_communities_item_${index}`}
-        onJoin={handleJoin}
-        onCancel={handleCancel}
-      />
-    );
-  };
-
-  useEffect(
-    () => {
-      if (ids.length === 0) {
-        actions.getDiscoverCommunities();
-      }
-    }, [],
+  const renderItem: ListRenderItem<string> = ({ item, index }) => (
+    <ItemDiscoverCommunities
+      id={item}
+      index={index}
+      handleJoin={handleJoin}
+      handleCancel={handleCancel}
+    />
   );
+
+  useEffect(() => {
+    if (ids.length === 0) {
+      actions.getDiscoverCommunities();
+    }
+  }, []);
 
   return (
     <FlatList
       testID="flatlist"
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(
-        item, index,
-      ) => `community_${item}_${index}`}
+      keyExtractor={(item, index) => `community_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
       ListFooterComponent={renderListFooter}
       onEndReached={onLoadMore}
-      ItemSeparatorComponent={() => <Divider color="transparent" size={spacing.padding.large} />}
-      ListHeaderComponent={() => <Divider color="transparent" size={spacing.padding.large} />}
+      ItemSeparatorComponent={() => (
+        <Divider color="transparent" size={spacing.padding.large} />
+      )}
+      ListHeaderComponent={() => (
+        <Divider color="transparent" size={spacing.padding.large} />
+      )}
       refreshControl={(
         <RefreshControl
           refreshing={refreshing}

@@ -1,10 +1,11 @@
 import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
 import { IParamGetCommunities } from '~/interfaces/ICommunity';
+import useCommunitiesStore from '~/store/entities/communities';
 
 const getDiscoverCommunitiesSearch = (set, get) => async (params: IParamGetCommunities) => {
   try {
-    const { ids, items, hasNextPage } = get();
+    const { ids, hasNextPage } = get();
 
     if (!hasNextPage) return;
 
@@ -27,18 +28,12 @@ const getDiscoverCommunitiesSearch = (set, get) => async (params: IParamGetCommu
 
     const { data, meta } = response;
     const newIds = data.map((item) => item.id);
-    const newItems = data.reduce(
-      (accumulator, currentItem) => ({
-        ...accumulator,
-        [currentItem.id]: currentItem,
-      }),
-      {},
-    );
+
+    useCommunitiesStore.getState().actions.addCommunity(data);
 
     set(
       {
         ids: [...ids, ...newIds],
-        items: { ...items, ...newItems },
         loading: false,
         hasNextPage: meta.hasNextPage,
       },

@@ -20,5 +20,7 @@ const searchJoinedCommunitiesState = (
   reset: () => resetStore(initSearchJoinedCommunitiesState, set),
 });
 
-export const useSearchJoinedCommunitiesStore
+const useSearchJoinedCommunitiesStore
   = createStore<ISearchJoinedCommunitiesState>(searchJoinedCommunitiesState);
+
+export default useSearchJoinedCommunitiesStore;
