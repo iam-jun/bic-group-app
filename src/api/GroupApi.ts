@@ -30,6 +30,24 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
+  assignCommunityAdmin: (
+    communityId: string,
+    userIds: string[],
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/assign-admin`,
+    method: 'put',
+    data: { userIds },
+  }),
+  revokeCommunityAdmin: (
+    communityId: string,
+    userIds: string[],
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/revoke-admin`,
+    method: 'put',
+    data: { userIds },
+  }),
   updateCommunityJoinSetting: (communityId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/settings`,
@@ -570,6 +588,12 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  assignCommunityAdmin: (communityId: string, userIds: string[]) => withHttpRequestPromise(
+    groupsApiConfig.assignCommunityAdmin, communityId, userIds,
+  ),
+  revokeCommunityAdmin: (communityId: string, userIds: string[]) => withHttpRequestPromise(
+    groupsApiConfig.revokeCommunityAdmin, communityId, userIds,
+  ),
   updateCommunityJoinSetting: (communityId: string, isJoinApproval: boolean) => withHttpRequestPromise(
     groupsApiConfig.updateCommunityJoinSetting, communityId, isJoinApproval,
   ),

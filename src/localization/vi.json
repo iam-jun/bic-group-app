@@ -690,9 +690,8 @@
     },
     "modal_confirm_remove_admin": {
       "title": "Thu hồi vai trò quản trị viên",
-      "description": "Bạn có muốn thu hồi vai trò quản trị viên của {0}?",
-      "button_confirm": "Thu hồi",
-      "success_message": "Đã lưu thay đổi"
+      "content": "Bạn có muốn thu hồi vai trò quản trị viên của {0}?",
+      "button_confirm": "Thu hồi"
     },
     "modal_confirm_remove_member": {
       "title": "Xóa thành viên",
@@ -945,6 +944,11 @@
       "title": "Xóa thành viên",
       "content": "Bạn có muốn xóa thành viên này?",
       "button_remove": "Xóa"
+    },
+    "modal_confirm_remove_admin": {
+      "title": "Thu hồi vai trò quản trị viên",
+      "content": "Bạn có muốn thu hồi vai trò quản trị viên của {0}?",
+      "button_confirm": "Thu hồi"
     }
   },
   "upload": {

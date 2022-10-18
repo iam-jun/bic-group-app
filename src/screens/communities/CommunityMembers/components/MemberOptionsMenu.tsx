@@ -13,6 +13,7 @@ import { spacing } from '~/theme';
 import { Button } from '~/baseComponents';
 import Text from '~/beinComponents/Text';
 import useRemoveCommunityMemberStore from '../store';
+import useCommunityController from '../../store';
 
 interface MemberOptionsMenuProps {
   communityId: string;
@@ -44,6 +45,7 @@ const MemberOptionsMenu = ({
   const deleteRemoveCommunityMember = useRemoveCommunityMemberStore(
     (state) => state.actions.deleteRemoveCommunityMember,
   );
+  const actions = useCommunityController((state) => state.actions);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canRemoveMember = hasPermissionsOnScopeWithId(
@@ -60,6 +62,14 @@ const MemberOptionsMenu = ({
   const onPressMenuOption = (type: MemberOptions) => {
     modalizeRef.current?.close();
     switch (type) {
+      case MemberOptions.SetAdminRole:
+        onPressSetAdminRole();
+        break;
+
+      case MemberOptions.RemoveAdminRole:
+        onPressRemoveAdminRole();
+        break;
+
       case MemberOptions.RemoveMember:
         onPressRemoveMember();
         break;
@@ -69,10 +79,32 @@ const MemberOptionsMenu = ({
     }
   };
 
+  const onPressSetAdminRole = () => {
+    if (!selectedMember?.id) return;
+
+    actions.assignCommunityAdmin(communityId, [selectedMember.id]);
+  };
+
+  const onConfirmRemoveAdminRole = () => {
+    actions.revokeCommunityAdmin(communityId, [selectedMember.id]);
+  };
+
+  const onPressRemoveAdminRole = () => {
+    if (!selectedMember?.id) return;
+
+    dispatch(modalActions.showAlert({
+      title: t('communities:modal_confirm_remove_admin:title'),
+      content: t('communities:modal_confirm_remove_admin:content').replace('{0}', selectedMember.fullname),
+      confirmLabel: t('communities:modal_confirm_remove_admin:button_confirm'),
+      cancelBtn: true,
+      onConfirm: onConfirmRemoveAdminRole,
+    }));
+  };
+
   const onConfirmRemoveMember = () => {
-    if (selectedMember?.id) {
-      deleteRemoveCommunityMember({ communityId, userId: selectedMember.id });
-    }
+    if (!selectedMember?.id) return;
+
+    deleteRemoveCommunityMember({ communityId, userId: selectedMember.id });
   };
 
   const onPressRemoveMember = () => {

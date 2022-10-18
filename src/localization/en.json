@@ -729,9 +729,8 @@
     },
     "modal_confirm_remove_admin": {
       "title": "Revoke admin role",
-      "description": "Do you want to revoke {0} as admin of this group?",
-      "button_confirm": "Revoke",
-      "success_message": "Member Role Saved"
+      "content": "Are you sure to revoke {0} as Admin?",
+      "button_confirm": "Revoke"
     },
     "modal_confirm_remove_member": {
       "title": "Remove member",
@@ -1011,6 +1010,11 @@
       "title": "Remove member",
       "content": "Are you sure to remove this member from your community?",
       "button_remove": "Remove"
+    },
+    "modal_confirm_remove_admin": {
+      "title": "Revoke admin role",
+      "content": "Are you sure to revoke {0} as Admin?",
+      "button_confirm": "Revoke"
     }
   },
   "upload": {
