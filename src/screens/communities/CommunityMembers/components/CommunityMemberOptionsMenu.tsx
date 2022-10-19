@@ -52,7 +52,7 @@ const CommunityMemberOptionsMenu = ({
     actions.revokeCommunityAdmin(communityId, [selectedMember.id]);
   };
 
-  const onPressRemoveAdminRole = () => {
+  const onPressRevokeAdminRole = () => {
     if (!selectedMember?.id) return;
 
     dispatch(modalActions.showAlert({
@@ -88,7 +88,7 @@ const CommunityMemberOptionsMenu = ({
       canRemoveMember={canRemoveMember}
       onOptionsClosed={onOptionsClosed}
       onPressSetAdminRole={onPressSetAdminRole}
-      onPressRemoveAdminRole={onPressRemoveAdminRole}
+      onPressRevokeAdminRole={onPressRevokeAdminRole}
       onPressRemoveMember={onPressRemoveMember}
     />
   );
