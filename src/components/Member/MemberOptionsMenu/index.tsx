@@ -19,13 +19,13 @@ interface MemberOptionsMenuProps {
   canRemoveMember: boolean;
   onOptionsClosed: () => void;
   onPressSetAdminRole: () => void;
-  onPressRemoveAdminRole: () => void;
+  onPressRevokeAdminRole: () => void;
   onPressRemoveMember: () => void;
 }
 
 enum MemberOptions {
   SET_ADMIN_ROLE = 'set-admin',
-  REMOVE_ADMIN_ROLE = 'remove-admin',
+  REVOKE_ADMIN_ROLE = 'revoke-admin',
   REMOVE_MEMBER = 'remove-member'
 }
 
@@ -36,7 +36,7 @@ const MemberOptionsMenu = ({
   canRemoveMember,
   onOptionsClosed,
   onPressSetAdminRole,
-  onPressRemoveAdminRole,
+  onPressRevokeAdminRole,
   onPressRemoveMember,
 }: MemberOptionsMenuProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -53,8 +53,8 @@ const MemberOptionsMenu = ({
         onPressSetAdminRole();
         break;
 
-      case MemberOptions.REMOVE_ADMIN_ROLE:
-        onPressRemoveAdminRole();
+      case MemberOptions.REVOKE_ADMIN_ROLE:
+        onPressRevokeAdminRole();
         break;
 
       case MemberOptions.REMOVE_MEMBER:
@@ -79,12 +79,12 @@ const MemberOptionsMenu = ({
     </Button>
   );
 
-  const renderRemoveAdminRoleOption = () => {
+  const renderRevokeAdminRoleOption = () => {
     if (canAssignUnassignRole && selectedMember?.isAdmin) {
       return renderItem({
         testID: 'member_options_menu.remove_admin',
         content: 'groups:member_menu:label_revoke_admin_role',
-        onPress: () => onPressMenuOption(MemberOptions.REMOVE_ADMIN_ROLE),
+        onPress: () => onPressMenuOption(MemberOptions.REVOKE_ADMIN_ROLE),
       });
     }
 
@@ -121,7 +121,7 @@ const MemberOptionsMenu = ({
       onClose={onOptionsClosed}
       ContentComponent={(
         <View>
-          {renderRemoveAdminRoleOption()}
+          {renderRevokeAdminRoleOption()}
           {renderSetAdminRoleOption()}
           {renderRemoveMemberOption()}
         </View>

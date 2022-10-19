@@ -52,7 +52,7 @@ const GroupMemberOptionsMenu = ({
     dispatch(groupsActions.removeGroupAdmin({ groupId, userId: selectedMember.id }));
   };
 
-  const onPressRemoveAdminRole = () => {
+  const onPressRevokeAdminRole = () => {
     if (!selectedMember?.id) return;
 
     dispatch(modalActions.showAlert({
@@ -88,7 +88,7 @@ const GroupMemberOptionsMenu = ({
       canRemoveMember={canRemoveMember}
       onOptionsClosed={onOptionsClosed}
       onPressSetAdminRole={onPressSetAdminRole}
-      onPressRemoveAdminRole={onPressRemoveAdminRole}
+      onPressRevokeAdminRole={onPressRevokeAdminRole}
       onPressRemoveMember={onPressRemoveMember}
     />
   );
