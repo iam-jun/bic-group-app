@@ -71,7 +71,9 @@ export interface IActivityData {
 
 export interface IActivityImportant {
   active?: boolean;
-  expires_time?: string | null;
+  expiresTime?: string | null;
+  chosenSuggestedTime?: string;
+  neverExpires?: boolean;
 }
 
 export interface ICommentData {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { isEqual } from 'lodash';
 import { useDispatch } from 'react-redux';
 import {
   IActivityImportant,
@@ -16,8 +15,10 @@ import postKeySelector from '~/storeRedux/post/keySelector';
 import postActions from '~/storeRedux/post/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { checkExpiration } from '../helper/postUtils';
+import { timeSuggest } from '~/constants/importantTimeSuggest';
 
 const MAX_DAYS = 7;
+const EXPIRES_ON_ENUM = { NEVER: -1, CUSTOM: 0 };
 
 export interface IUsePostSettings {
   postId?: string;
@@ -44,9 +45,12 @@ export const usePostSettings = (params?: IUsePostSettings) => {
 
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState<boolean>(false);
+  const [showCustomExpire, setCustomExpire] = useState<boolean>(false);
   const [sImportant, setImportant] = useState<IActivityImportant>({
     active: false,
-    expires_time: '',
+    expiresTime: null,
+    chosenSuggestedTime: '',
+    neverExpires: important.active && !important.expiresTime,
     ...important,
   });
   const [sCanReact, setCanReact] = useState<boolean>(canReact);
@@ -70,10 +74,10 @@ export const usePostSettings = (params?: IUsePostSettings) => {
 
   useEffect(
     () => {
-      if (!isEqual(
-        important, sImportant,
-      )) {
-        setImportant(important);
+      const isImportantChanged = important.active !== sImportant.active
+      || important.expiresTime !== sImportant.expiresTime;
+      if (isImportantChanged) {
+        setImportant({ ...sImportant, ...important, neverExpires: important.active && !important.expiresTime });
       }
     }, [important],
   );
@@ -85,10 +89,10 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   );
 
   const checkDisableButtonSave = () => {
+    const isImportantChanged = important.active !== sImportant.active
+    || important.expiresTime !== sImportant.expiresTime;
     const dataCount = [
-      isEqual(
-        sImportant, important,
-      ),
+      !isImportantChanged,
       sCanComment === canComment,
       sCanReact === canReact,
       //   shares,
@@ -110,19 +114,19 @@ export const usePostSettings = (params?: IUsePostSettings) => {
         setShowWarning(true);
       }, 500);
     } else {
-      const newImportant = { ...sImportant };
+      const newImportant = { ...sImportant, chosenSuggestedTime: timeSuggest[0].title };
       newImportant.active = !sImportant.active;
-      if (!newImportant.expires_time) {
-        newImportant.expires_time = getMinDate().toDateString();
+      if (!newImportant.expiresTime) {
+        newImportant.expiresTime = getMinDate(true).toISOString();
       }
-      if (newImportant.active && newImportant.expires_time) {
-        const date = new Date(newImportant.expires_time);
+      if (newImportant.active && newImportant.expiresTime) {
+        const date = new Date(newImportant.expiresTime);
         if (date.getTime() < getMinDate().getTime()) {
-          newImportant.expires_time = getMinDate().toISOString();
+          newImportant.expiresTime = getMinDate(true).toISOString();
         }
       }
       if (!newImportant.active) {
-        newImportant.expires_time = currentSettings?.important?.expires_time;
+        newImportant.expiresTime = currentSettings?.important?.expiresTime;
       }
       setImportant(newImportant);
     }
@@ -141,8 +145,8 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       const newImportant = { ...sImportant };
       let expiresTime = '';
       if (date) {
-        const time = sImportant.expires_time
-          ? new Date(sImportant.expires_time)
+        const time = sImportant.expiresTime
+          ? new Date(sImportant.expiresTime)
           : new Date();
         date.setHours(
           time.getHours(), time.getMinutes(), 0, 0,
@@ -152,7 +156,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
           expiresTime = getMinDate().toISOString();
         }
       }
-      newImportant.expires_time = expiresTime;
+      newImportant.expiresTime = expiresTime;
       setImportant(newImportant);
     }
   };
@@ -160,8 +164,8 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   const handleChangeTimePicker = (time?: Date) => {
     if (time) {
       const newImportant = { ...sImportant };
-      const date = sImportant.expires_time
-        ? new Date(sImportant.expires_time)
+      const date = sImportant.expiresTime
+        ? new Date(sImportant.expiresTime)
         : new Date();
 
       date.setHours(
@@ -172,7 +176,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       if (date.getTime() < getMinDate().getTime()) {
         expiresTime = getMinDate().toISOString();
       }
-      newImportant.expires_time = expiresTime;
+      newImportant.expiresTime = expiresTime;
       setImportant(newImportant);
     }
   };
@@ -195,7 +199,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     const newSettings: IPostSetting = { ...setting };
     newSettings.isImportant = sImportant?.active;
     newSettings.importantExpiredAt = sImportant?.active
-      ? sImportant?.expires_time
+      ? sImportant?.expiresTime
       : null;
     newSettings.canComment = sCanComment;
     newSettings.canReact = sCanReact;
@@ -220,12 +224,35 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     return 'dispatchPutEditPost';
   };
 
+  const handleChangeSuggestDate = (chooseDate: any) => {
+    const { title, expiresOn } = chooseDate || {};
+    const newImportant = { ...sImportant, chosenSuggestedTime: title };
+    switch (expiresOn) {
+      case EXPIRES_ON_ENUM.NEVER:
+        newImportant.neverExpires = true;
+        newImportant.expiresTime = null;
+        setCustomExpire(false);
+        break;
+      case EXPIRES_ON_ENUM.CUSTOM:
+        setCustomExpire(true);
+        newImportant.neverExpires = false;
+        newImportant.expiresTime = getMinDate().toISOString();
+        break;
+      default:
+        setCustomExpire(false);
+        newImportant.neverExpires = false;
+        newImportant.expiresTime = getMinDate(true, expiresOn).toISOString();
+        break;
+    }
+    setImportant(newImportant);
+  };
+
   const handlePressSave = () => {
     if (putUpdateSettings) {
       handlePutUpdateSettings();
       return 'putUpdateSettings';
     }
-    const isExpired = checkExpiration(sImportant?.expires_time);
+    const isExpired = checkExpiration(sImportant?.expiresTime) || sImportant.neverExpires;
 
     const dataDefault = [
       !isExpired,
@@ -244,8 +271,12 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     return 'setCreatePostSettings';
   };
 
-  const getMinDate = () => {
+  const getMinDate = (isCustom?: boolean, expiresOnDay?: number) => {
     const currentDate = new Date();
+    if (isCustom) {
+      const defaultDate = currentDate.setDate(currentDate.getDate() + (expiresOnDay || 1));
+      return new Date(defaultDate);
+    }
     const minDate = currentDate.setHours(
       currentDate.getHours() + 1,
       currentDate.getMinutes(),
@@ -267,6 +298,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     showWarning,
     sCanComment,
     sCanReact,
+    showCustomExpire,
     handlePressSave,
     handleToggleImportant,
     handleToggleCanComment,
@@ -274,6 +306,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     handleChangeDatePicker,
     handleChangeTimePicker,
     handlePutUpdateSettings,
+    handleChangeSuggestDate,
     getMinDate,
     getMaxDate,
   };

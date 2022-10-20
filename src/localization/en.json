@@ -57,7 +57,7 @@
     "text_error": "Error",
     "text_error_message": "Something went wrong",
     "text_success_message": "Success",
-    "text_important_posts": "Important Posts",
+    "text_important_post": "Important Post",
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_select": "Select",
@@ -163,7 +163,18 @@
     "content_not_available": "This content is not available",
     "dont_have_permission_to_access": "You don’t have permission to access this page.",
     "btn_go_back_to_home": "Go back to Home",
-    "text_upcoming": "Upcoming"
+    "text_upcoming": "Upcoming",
+    "text_expires_on": "Expires on ",
+    "text_never_expire": "This post will never expire.",
+    "text_day": "{{number}} day",
+    "text_days": "{{number}} days",
+    "text_week": "{{number}} week",
+    "text_weeks": "{{number}} weeks",
+    "text_month": "{{number}} month",
+    "text_months": "{{number}} months",
+    "text_year": "{{number}} year",
+    "text_never": "Never",
+    "text_custom": "Custom"
   },
   "auth": {
     "text_kickout_title": "Notice",

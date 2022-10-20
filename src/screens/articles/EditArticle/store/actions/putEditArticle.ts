@@ -5,7 +5,7 @@ import { IParamPutEditArticle } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { IEditArticleState } from '~/screens/articles/EditArticle/store';
-import useArticlesStore from '~/store/entities/articles';
+import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import showError from '~/store/helper/showError';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';

@@ -61,7 +61,7 @@
     "text_uploading": "Đang tải...",
     "text_error_message": "Có gì đó sai sai",
     "text_success_message": "Thành công",
-    "text_important_posts": "Bài viết quan trọng",
+    "text_important_post": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
     "text_see_more": "Xem thêm",
@@ -131,7 +131,18 @@
     "content_not_available": "Nội dung không tồn tại",
     "dont_have_permission_to_access": "Bạn không có quyền truy cập trang này",
     "btn_go_back_to_home": "Quay về trang chủ",
-    "text_upcoming": "Sắp tới"
+    "text_upcoming": "Sắp tới",
+    "text_expires_on": "Hết hạn vào ",
+    "text_never_expire": "Bài đăng này sẽ không bao giờ hết hạn.",
+    "text_day": "{{number}} ngày",
+    "text_days": "{{number}} ngày",
+    "text_week": "{{number}} tuần",
+    "text_weeks": "{{number}} tuần",
+    "text_month": "{{number}} tháng",
+    "text_months": "{{number}} tháng",
+    "text_year": "{{number}} năm",
+    "text_never": "Không bao giờ",
+    "text_custom": "Tùy chỉnh"
   },
   "auth": {
     "text_kickout_title": "Notice",

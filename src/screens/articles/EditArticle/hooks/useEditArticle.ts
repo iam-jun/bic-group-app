@@ -6,10 +6,10 @@ import { IEditArticleAudience, IEditArticleData, IParamPutEditArticle } from '~/
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
 import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
-import useArticlesStore from '~/store/entities/articles';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { getById } from '~/store/entities/selectors';
+import useArticlesStore from '../../ArticleDetail/store';
 
 export interface IUseEditArticle {
   articleId: string;

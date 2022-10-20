@@ -16,7 +16,7 @@ export const postInitState = {
     chosenAudiences: [],
     important: {
       active: false,
-      expires_time: null,
+      expiresTime: null,
     },
     canComment: true,
     canReact: true,
@@ -28,7 +28,7 @@ export const postInitState = {
     currentSettings: {
       important: {
         active: false,
-        expires_time: null,
+        expiresTime: null,
       },
       canComment: true,
       canReact: true,
