@@ -15,7 +15,8 @@ const Image: React.FC<ImageProps> = ({
   placeholderSource,
   ...props
 }: ImageProps) => {
-  const [_source, setSource] = useState(formatSource(source || placeholderSource));
+  const formattedSource = formatSource(source || placeholderSource, cache);
+  const [_source, setSource] = useState(formattedSource);
 
   useEffect(() => {
     setSource(formatSource(source || placeholderSource, cache));
