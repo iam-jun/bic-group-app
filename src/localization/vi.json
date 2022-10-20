@@ -34,6 +34,7 @@
     "btn_discard": "Bỏ",
     "btn_edit": "Sửa",
     "btn_save": "Lưu",
+    "btn_save_apply": "Lưu & Áp dụng",
     "btn_copy": "Sao chép",
     "btn_publish": "Đăng",
     "btn_done": "Xong",
@@ -897,6 +898,10 @@
     },
     "group_structure": {
       "title_group_structure_settings": "Cài đặt cấu trúc nhóm",
+      "option_menu": {
+        "reorder": "Sắp xếp",
+        "move": "Di chuyển"
+      },
       "title_reorder_group": "Sắp xếp nhóm",
       "title_move_group": "Di chuyển nhóm",
       "text_reorder_success": "Sắp xếp nhóm thành công",
@@ -905,11 +910,13 @@
       "text_no_group": "Không có nhóm nào",
       "text_will_be_move": "sẽ được di chuyển theo",
       "text_move_to": "Di chuyển tới",
-      "text_title_confirm_reorder_group": "Bạn đang thay đổi thứ tự của \"%NAME%\"",
+      "text_title_confirm_reorder_group": "Bạn đang thay đổi thứ tự",
       "text_desc_confirm_reorder_group": "Tất cả thành viên của nhóm này sẽ thấy thay đổi. Bạn có chắc muốn thực hiện hành động này?",
-      "text_title_confirm_move_group": "Bạn đang di chuyển",
-      "text_desc_confirm_move_group": " của %MOVING_NAME% và các nhóm bên trong sẽ được thêm vào %TARGET_NAME%. Bạn có chắc muốn thực hiện hành động này?",
-      "text_move_group_search_placeholder": "Tìm kiếm một nhóm"
+      "text_title_confirm_move_group": "Bạn đang di chuyển nhóm",
+      "text_desc_confirm_move_group": " sẽ được thêm vào {0}. Bạn có chắc muốn thực hiện hành động này?",
+      "text_move_group_search_placeholder": "Tìm kiếm Nhóm...",
+      "text_info_move_group": "Chọn một nhóm để di chuyển. Những nhóm bên trong cũng sẽ di chuyển theo.",
+      "text_included_inner_groups": "và gồm {0} nhóm bên trong"
     },
     "text_search_communities": "Tìm kiếm...",
     "member_tab_types": {

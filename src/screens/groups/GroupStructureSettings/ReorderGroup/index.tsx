@@ -10,6 +10,7 @@ import ReorderGroupItem, {
   ITEM_HEIGHT,
   ITEM_WIDTH,
 } from '~/screens/groups/GroupStructureSettings/ReorderGroup/components/ReorderGroupItem';
+import { spacing } from '~/theme';
 import useGroupStructureStore from '../store';
 
 export interface ReorderGroupProps {
@@ -53,7 +54,6 @@ const ReorderGroup: FC<ReorderGroupProps> = ({ route }: ReorderGroupProps) => {
       <ReorderGroupHeader
         communityId={communityId}
         initOrder={initOrder}
-        groupName={initGroup?.name}
       />
       <ReorderGroupInfo group={initGroup as IGroup} />
       <ReorderList
@@ -78,10 +78,10 @@ const createStyle = (theme: ExtendedTheme) => {
     verticalLine: {
       width: 1,
       position: 'absolute',
-      top: 8,
-      bottom: 8,
-      left: 30,
-      backgroundColor: colors.gray20,
+      top: 0,
+      bottom: 0,
+      left: spacing.margin.large,
+      backgroundColor: colors.neutral5,
     },
   });
 };

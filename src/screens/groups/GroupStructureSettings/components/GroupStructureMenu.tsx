@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -26,7 +25,6 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
 }: GroupStructureMenuProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
-  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme || {};
 
@@ -49,31 +47,23 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
       <PrimaryItem
         testID="group_structure_menu.reorder"
         style={styles.item}
-        leftIcon="LayerGroup"
-        leftIconProps={{
-          icon: 'LayerGroup',
-          size: 24,
-          tintColor: disableReorder ? colors.gray40 : colors.neutral80,
-        }}
         titleProps={{
-          color: disableReorder ? colors.gray40 : colors.neutral80,
+          useI18n: true,
+          variant: 'bodyM',
+          color: disableReorder ? colors.gray40 : colors.neutral60,
         }}
-        title={t('communities:group_structure:title_reorder_group')}
+        title="communities:group_structure:option_menu:reorder"
         onPress={disableReorder || !group ? undefined : onPressReorderGroup}
       />
       <PrimaryItem
-        testID="group_structure_menu.reorder"
+        testID="group_structure_menu.move"
         style={styles.item}
-        leftIcon="ObjectExclude"
-        leftIconProps={{
-          icon: 'ObjectExclude',
-          size: 24,
-          tintColor: disableMove ? colors.gray40 : colors.neutral80,
-        }}
         titleProps={{
-          color: disableMove ? colors.gray40 : colors.neutral80,
+          useI18n: true,
+          variant: 'bodyM',
+          color: disableMove ? colors.gray40 : colors.neutral60,
         }}
-        title={t('communities:group_structure:title_move_group')}
+        title="communities:group_structure:option_menu:move"
         onPress={disableMove || !group ? undefined : onPressMoveGroup}
       />
     </View>
@@ -83,7 +73,7 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
 const styles = StyleSheet.create({
   container: {},
   item: {
-    height: 44,
+    paddingVertical: spacing.padding.base,
     paddingHorizontal: spacing.padding.large,
   },
 });

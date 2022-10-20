@@ -3,13 +3,15 @@ import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Avatar from '~/baseComponents/Avatar';
-import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
 import { getAllChildrenName } from '~/screens/groups/helper';
 import MoveLine from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveLine';
 import spacing from '~/theme/spacing';
+import Icon from '~/baseComponents/Icon';
+import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface MoveGroupHeaderInfoProps {
   group: IGroup;
@@ -20,37 +22,60 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
 }: MoveGroupHeaderInfoProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
 
-  const { icon, name } = group || {};
+  const { privacy, icon, name } = group || {};
+  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
+  const { icon: privacyIcon }: any = privacyData || {};
 
-  const childrenName = getAllChildrenName(group).join?.(', ');
+  const childrenGroups = getAllChildrenName(group);
+
+  const renderGroupName = () => (
+    <Text.BodyMMedium
+      numberOfLines={1}
+      style={styles.textName}
+      color={theme.colors.neutral60}
+    >
+      {name}
+    </Text.BodyMMedium>
+  );
+
+  const renderGroupInfo = () => {
+    if (childrenGroups.length > 0) {
+      return (
+        <View style={styles.flex1}>
+          {renderGroupName()}
+          <ViewSpacing height={2} />
+          <Text.BodyS
+            numberOfLines={1}
+            style={styles.textName}
+            color={theme.colors.neutral60}
+          >
+            {t('communities:group_structure:text_included_inner_groups')
+              .replace('{0}', childrenGroups.length)}
+          </Text.BodyS>
+        </View>
+      );
+    }
+
+    return renderGroupName();
+  };
+
+  const renderAvatar = () => (
+    <View>
+      <Avatar.Base source={icon} />
+      <View style={styles.iconPrivacy}>
+        <Icon size={spacing.margin.base} icon={privacyIcon} tintColor={theme.colors.white} />
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
       <MoveLine />
-      <View style={styles.infoContainer}>
-        <View style={styles.groupNameContainer}>
-          <Avatar.Tiny style={styles.iconGroup} source={icon} />
-          <Text.H6 style={styles.groupName} numberOfLines={1}>
-            {name}
-          </Text.H6>
-        </View>
-        {!!childrenName && (
-          <>
-            <Divider color={colors.gray40} />
-            <View style={styles.childrenInfo}>
-              <Text.BodyS>
-                <Text.BodySMedium>{childrenName}</Text.BodySMedium>
-                {' '}
-                {t('communities:group_structure:text_will_be_move')}
-                {' '}
-                <Text.BodySMedium>{name}</Text.BodySMedium>
-              </Text.BodyS>
-            </View>
-          </>
-        )}
+      <View style={styles.groupInfo}>
+        {renderAvatar()}
+        {renderGroupInfo()}
       </View>
     </View>
   );
@@ -62,40 +87,30 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       flexDirection: 'row',
       marginHorizontal: spacing.margin.extraLarge,
-      marginBottom: spacing.margin.large,
+      marginBottom: spacing.margin.big,
     },
-    infoContainer: {
-      marginLeft: 0,
+    flex1: { flex: 1 },
+    groupInfo: {
       flex: 1,
-      marginTop: spacing.margin.extraLarge,
-      borderWidth: 1,
-      borderColor: colors.gray40,
-      alignSelf: 'flex-start',
-      marginBottom: spacing.margin.extraLarge,
-    },
-    childrenInfo: {
-      padding: spacing.padding.small,
-    },
-    groupNameContainer: {
+      marginVertical: spacing.margin.large,
+      paddingRight: spacing.padding.large,
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.neutral1,
-      paddingVertical: 2,
     },
-    groupName: {
-      flex: 1,
-    },
-    iconGroup: {
-      marginHorizontal: spacing.margin.small,
-      marginVertical: spacing.margin.tiny,
-    },
-    blueDot: {
-      width: 4,
-      height: 4,
-      borderRadius: 2,
+    iconPrivacy: {
+      width: 20,
+      height: 20,
+      position: 'absolute',
+      bottom: -2,
+      right: -2,
+      justifyContent: 'center',
+      alignItems: 'center',
       backgroundColor: colors.blue50,
-      marginTop: spacing.margin.extraLarge,
-      marginRight: spacing.margin.small,
+      borderRadius: spacing.borderRadius.circle,
+    },
+    textName: {
+      flex: 1,
+      marginLeft: spacing.margin.base,
     },
   });
 };

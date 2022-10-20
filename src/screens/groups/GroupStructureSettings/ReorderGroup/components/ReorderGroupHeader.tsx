@@ -10,13 +10,11 @@ import useGroupStructureStore from '../../store';
 export interface ReorderGroupHeaderProps {
   communityId: string;
   initOrder?: any;
-  groupName?: string;
 }
 
 const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
   communityId,
   initOrder,
-  groupName,
 }: ReorderGroupHeaderProps) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
@@ -32,9 +30,7 @@ const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
 
   const onPressSave = () => {
     if (communityId && newOrder) {
-      const title = t('communities:group_structure:text_title_confirm_reorder_group').replaceAll(
-        '%NAME%', groupName,
-      );
+      const title = t('communities:group_structure:text_title_confirm_reorder_group');
       const content = t('communities:group_structure:text_desc_confirm_reorder_group');
       dispatch(modalActions.showAlert({
         title,
