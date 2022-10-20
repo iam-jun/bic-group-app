@@ -1,10 +1,9 @@
 import { GiphyMedia } from '@giphy/react-native-sdk';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
-  FC, useEffect, useRef, useState,
+  FC, useRef, useState,
 } from 'react';
 import {
-  PixelRatio,
   Platform, ScrollView, StyleSheet, View,
 } from 'react-native';
 import { debounce } from 'lodash';
@@ -22,7 +21,8 @@ import getEnv from '~/utils/env';
 import useMounted from '~/hooks/mounted';
 
 enum EventType {
-    ON_LOAD_END = 'onLoadEnd',
+    ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
+    ON_INITIALIZE_END='onInitializeEnd', // after editor initiated content return scrollHeight
     ON_EDITOR_CHANGE = 'onEditorChange',
     ON_SEARCH_MENTION = 'onSearchMention',
     ON_PRESS_BUTTON = 'onPressButton',
@@ -51,7 +51,6 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   const webViewRef = useRef();
   const [isLoaded, setLoaded] = useState(false);
   const [webviewHeight, setWebviewHeight] = useState(0);
-  const initHeight = 600;
   const runSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
   const setFullContent = useMentionInputStore((state: IMentionInputState) => state.setFullContent);
 
@@ -71,11 +70,11 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     },
   };
 
-  useEffect(() => {
-    if (isLoaded) {
-      injectJavaScript(initScript);
-    }
-  }, [isLoaded]);
+  // useEffect(() => {
+  //   if (isLoaded) {
+  //     injectJavaScript(initScript);
+  //   }
+  // }, [content]);
 
   const injectJavaScript = (script: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -115,10 +114,13 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     handleContentChange(value);
   }, 500);
 
-  const onLoadEnd = (payload: any) => {
+  const onLoadEnd = () => {
     setLoaded(true);
-    const height = Number(payload?.scrollHeight || initHeight) / PixelRatio.get();
-    setWebviewHeight(height);
+    injectJavaScript(initScript);
+  };
+
+  const onInnitializeEnd = (payload: any) => {
+    setWebviewHeight(payload?.scrollHeight);
   };
 
   const onChangeText = (payload: any) => {
@@ -145,7 +147,9 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
 
     switch (message?.type) {
       case EventType.ON_LOAD_END:
-        return onLoadEnd(payload);
+        return onLoadEnd();
+      case EventType.ON_INITIALIZE_END:
+        return onInnitializeEnd(payload);
       case EventType.ON_EDITOR_CHANGE:
         return onChangeText(payload);
       case EventType.ON_SEARCH_MENTION:
@@ -159,10 +163,10 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     }
   };
 
+  if (!isMounted) return <LoadingIndicator />;
+
   // mention on android only work on desktop browser
   const userAgent = Platform.OS === 'android' ? USER_AGENT_DESKTOP : undefined;
-
-  if (!isMounted) return <LoadingIndicator />;
 
   return (
     <View style={styles.container}>
@@ -177,8 +181,8 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
           ref={webViewRef}
           style={[styles.webview, readOnly && { height: webviewHeight }]}
           source={{ uri: ARTICLE_EDITOR_URL }}
-          // source={{ uri: 'https://f1f5-222-253-125-178.ap.ngrok.io/article/webview' }}
-          // useWebKit
+          // source={{ uri: 'https://3e08-14-226-252-170.ap.ngrok.io/article/webview' }}
+          useWebKit
           cacheEnabled
           scalesPageToFit
           javaScriptEnabled
@@ -186,7 +190,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
           allowsFullscreenVideo
           saveFormDataDisabled
           hideKeyboardAccessoryView
-          scrollEnabled={false}
+          scrollEnabled={!readOnly}
           nestedScrollEnabled={false}
           userAgent={userAgent}
           androidLayerType="hardware"
@@ -203,7 +207,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
           stickerViewRef={stickerViewRef}
           onGifSelected={onGifSelected}
         />
-        <KeyboardSpacer />
+        <KeyboardSpacer iosOnly />
       </View>
     </View>
   );
@@ -230,7 +234,7 @@ const createStyle = (theme: ExtendedTheme) => {
       bottom: 0,
     },
     mentionBar: {
-      height: 60,
+      height: 50,
     },
   });
 };
