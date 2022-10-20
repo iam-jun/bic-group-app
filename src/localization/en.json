@@ -33,6 +33,7 @@
     "btn_discard": "Discard",
     "btn_edit": "Edit",
     "btn_save": "Save",
+    "btn_save_apply": "Save & Apply",
     "btn_copy": "Copy",
     "btn_publish": "Publish",
     "btn_done": "Done",
@@ -57,7 +58,7 @@
     "text_error": "Error",
     "text_error_message": "Something went wrong",
     "text_success_message": "Success",
-    "text_important_posts": "Important Posts",
+    "text_important_post": "Important Post",
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_select": "Select",
@@ -163,7 +164,18 @@
     "content_not_available": "This content is not available",
     "dont_have_permission_to_access": "You don’t have permission to access this page.",
     "btn_go_back_to_home": "Go back to Home",
-    "text_upcoming": "Upcoming"
+    "text_upcoming": "Upcoming",
+    "text_expires_on": "Expires on ",
+    "text_never_expire": "This post will never expire.",
+    "text_day": "{{number}} day",
+    "text_days": "{{number}} days",
+    "text_week": "{{number}} week",
+    "text_weeks": "{{number}} weeks",
+    "text_month": "{{number}} month",
+    "text_months": "{{number}} months",
+    "text_year": "{{number}} year",
+    "text_never": "Never",
+    "text_custom": "Custom"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -952,19 +964,25 @@
     },
     "group_structure": {
       "title_group_structure_settings": "Group Structure Settings",
+      "option_menu": {
+        "reorder": "Reorder",
+        "move": "Move"
+      },
       "title_reorder_group": "Reorder Group",
       "title_move_group": "Move Group",
       "text_reorder_success": "Reorder group successfully",
       "text_move_success": "Move group successfully",
-      "text_info_reorder": "Drag and drop reorder the group",
+      "text_info_reorder": "Drag and drop to reorder the group",
       "text_no_group": "No group",
       "text_will_be_move": "will be moved according to",
       "text_move_to": "Move to",
-      "text_title_confirm_reorder_group": "You are changing the order of \"%NAME%\"",
+      "text_title_confirm_reorder_group": "You are changing the order",
       "text_desc_confirm_reorder_group": "All members in this group will see these changes. Are you sure to do this?",
-      "text_title_confirm_move_group": "You are moving",
-      "text_desc_confirm_move_group": " of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
-      "text_move_group_search_placeholder": "Search a group"
+      "text_title_confirm_move_group": "You are moving a group",
+      "text_desc_confirm_move_group": " will be added to {0}. Are you sure to do this?",
+      "text_move_group_search_placeholder": "Search Group...",
+      "text_info_move_group": "Select a group for moving. Inner groups of a moving group will be moved also.",
+      "text_included_inner_groups": "and included {0} inner groups"
     },
     "text_search_communities": "Search...",
     "member_tab_types": {

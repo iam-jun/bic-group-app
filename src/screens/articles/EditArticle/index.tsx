@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC, useRef } from 'react';
+import React, { FC } from 'react';
 import {
   Keyboard, StyleSheet, TextInput, View,
 } from 'react-native';
@@ -9,11 +9,10 @@ import { createTextStyle } from '~/beinComponents/Text/textStyle';
 
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import EditArticleContent from '~/screens/articles/EditArticle/components/EditArticleContent';
-import EditArticleFooter from '~/screens/articles/EditArticle/components/EditArticleFooter';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
+import ArticleWebview from '../components/ArticleWebview';
 
 export interface EditArticleProps {
   route?: {
@@ -26,27 +25,16 @@ const TITLE_MAX_LENGTH = 64;
 const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
 
-  const mentionInputRef = useRef<any>();
-  const refTextInput = useRef<any>();
-
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const useEditArticleData = useEditArticle({ articleId });
+  const articleData = useEditArticle({ articleId });
   const {
     loading, enableButtonSave, title, handleTitleChange, handleSave,
-  } = useEditArticleData || {};
-
-  const onChangeTitle = (value) => {
-    handleTitleChange(value);
-  };
-
-  const onPressSave = () => {
-    handleSave();
-  };
+  } = articleData || {};
 
   const onPressBack = () => {
     if (enableButtonSave) {
@@ -66,32 +54,40 @@ const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
 
   useBackPressListener(onPressBack);
 
+  const onChangeTitle = (value) => {
+    handleTitleChange(value);
+  };
+
+  const onPressSave = () => {
+    handleSave();
+  };
+
+  const disabled = !enableButtonSave || loading;
+
   return (
     <View style={styles.container}>
       <Header
         title={t('article:title_edit_article')}
-        buttonProps={{ disabled: !enableButtonSave || loading, loading }}
+        buttonProps={{ disabled, loading }}
         buttonText={t('common:btn_save')}
         onPressButton={onPressSave}
         onPressBack={onPressBack}
       />
       <View style={styles.flex1}>
         <TextInput
-          value={title}
-          onChangeText={onChangeTitle}
-          numberOfLines={2}
           multiline
-          maxLength={TITLE_MAX_LENGTH}
+          value={title}
+          numberOfLines={2}
           style={styles.inputTitle}
+          maxLength={TITLE_MAX_LENGTH}
           selectionColor={theme.colors.gray50}
           placeholderTextColor={theme.colors.neutral20}
+          onChangeText={onChangeTitle}
         />
-        <EditArticleContent
-          useEditArticleData={useEditArticleData}
-          mentionInputRef={mentionInputRef}
-          refTextInput={refTextInput}
+        <ArticleWebview
+          articleData={articleData}
         />
-        <EditArticleFooter />
+        {/* <EditArticleFooter /> */}
       </View>
     </View>
   );

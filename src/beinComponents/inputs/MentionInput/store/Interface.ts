@@ -27,7 +27,7 @@ interface IMentionInputState {
   setData: (payload: any[]) => void;
   addTempSelected: (payload: {[x: string]: any}) => void;
   doCompleteMention: (payload: ICompleteMention) => void;
-  doRunSearch: (groupIds: string, payload: string) => void;
+  doRunSearch: (groupIds: string, payload: string, ignoreMatchTerm?: boolean) => void;
   reset?: () => void;
 
 }

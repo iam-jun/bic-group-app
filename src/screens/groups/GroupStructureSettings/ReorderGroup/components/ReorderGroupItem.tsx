@@ -18,7 +18,7 @@ export interface ReorderGroupItemProps {
 
 const screenWidth = Dimensions.get('window').width;
 
-const MARGIN_HORIZONTAL = 40;
+const MARGIN_HORIZONTAL = 30;
 const MARGIN_VERTICAL = 8;
 export const ITEM_WIDTH = screenWidth - 2 * MARGIN_HORIZONTAL;
 export const ITEM_HEIGHT = 36 + 2 * MARGIN_VERTICAL;
@@ -39,20 +39,21 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
     <View style={[styles.container, style]}>
       <View style={styles.groupInfo}>
         <View style={styles.drag}>
-          <Icon size={16} icon="Bars" tintColor={colors.white} />
+          <Icon size={spacing.margin.base} icon="Bars" tintColor={colors.white} />
         </View>
         <View>
-          <Avatar.Tiny source={icon} />
+          <Avatar.Base source={icon} />
           <View style={styles.iconPrivacy}>
-            <Icon size={spacing.margin.base} icon={privacyIcon} />
+            <Icon size={spacing.margin.base} icon={privacyIcon} tintColor={colors.white} />
           </View>
         </View>
-        <Text.H6
+        <Text.BodyMMedium
           numberOfLines={1}
-          style={{ flex: 1, marginLeft: spacing.margin.small }}
+          style={styles.textName}
+          color={colors.neutral60}
         >
           {name}
-        </Text.H6>
+        </Text.BodyMMedium>
       </View>
     </View>
   );
@@ -72,25 +73,24 @@ const createStyle = (theme: ExtendedTheme) => {
       height: '100%',
       flexDirection: 'row',
       alignItems: 'center',
-      borderWidth: 1,
-      borderColor: colors.neutral5,
-      backgroundColor: colors.white,
     },
     iconPrivacy: {
-      width: spacing.margin.base,
-      height: spacing.margin.base,
+      width: 20,
+      height: 20,
       position: 'absolute',
-      bottom: 0,
-      right: 0,
-      backgroundColor: colors.white,
-      borderRadius: 2,
+      bottom: -2,
+      right: -2,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.blue50,
+      borderRadius: spacing.borderRadius.circle,
     },
     textName: { flex: 1, marginLeft: spacing.margin.small },
     drag: {
-      width: 25,
+      width: 24,
       height: '100%',
-      backgroundColor: colors.gray20,
-      marginRight: spacing.margin.small,
+      backgroundColor: colors.neutral20,
+      marginRight: spacing.margin.base,
       justifyContent: 'center',
       alignItems: 'center',
     },

@@ -71,9 +71,11 @@ const LinkPreview: FC<LinkPreviewProps> = ({
           <Text.BodyS numberOfLines={1} color={colors.neutral80}>
             {domain}
           </Text.BodyS>
-          <Text.H6 numberOfLines={2} style={styles.title}>
-            {title}
-          </Text.H6>
+          {!!title && (
+            <Text.SubtitleM numberOfLines={2} style={styles.title} color={colors.neutral60}>
+              {title}
+            </Text.SubtitleM>
+          )}
         </View>
         {!!showClose && (
           <TouchableOpacity

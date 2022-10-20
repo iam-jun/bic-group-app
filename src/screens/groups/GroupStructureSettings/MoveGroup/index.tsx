@@ -15,6 +15,7 @@ import groupApi from '~/api/GroupApi';
 import modalActions from '~/storeRedux/modal/actions';
 import useGroupStructureStore from '../store';
 import IGroupStructureState from '../store/Interface';
+import Icon from '~/baseComponents/Icon';
 
 export interface MoveGroupProps {
   route: {
@@ -70,17 +71,8 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
   };
 
   const renderAlertTitle = () => (
-    <Text.H4 style={{ flex: 1 }}>
-      {t('communities:group_structure:text_title_confirm_move_group')}
-      <Text.H4 style={styles.highlightText}>
-        {` ${initGroup?.name || ''} `}
-      </Text.H4>
-      <Text.H4>
-        {t('common:text_to')}
-      </Text.H4>
-      <Text.H4 style={styles.highlightText}>
-        {` ${selecting?.name || ''}`}
-      </Text.H4>
+    <Text.H4 useI18n>
+      communities:group_structure:text_title_confirm_move_group
     </Text.H4>
   );
 
@@ -88,8 +80,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     const content = t(
       'communities:group_structure:text_desc_confirm_move_group',
     )
-      .replaceAll('%MOVING_NAME%', initGroup?.name)
-      .replaceAll('%TARGET_NAME%', selecting?.name);
+      .replaceAll('{0}', selecting?.name);
     return (
       <Text.BodyM style={styles.alertContent}>
         <Text.BodyMMedium>{`${number || 0} ${t('groups:text_members_other')}`}</Text.BodyMMedium>
@@ -121,17 +112,15 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
             title,
             children: renderAlertContent(moveMemberCount),
             cancelBtn: true,
-            cancelLabel: t('common:btn_confirm'),
-            confirmLabel: t('common:btn_cancel'),
-            onCancel: () => {
+            confirmLabel: t('common:btn_confirm'),
+            cancelLabel: t('common:btn_cancel'),
+            onConfirm: () => {
               groupStructureActions.putGroupStructureMoveToTarget({
                 communityId,
                 moveId: groupId,
                 targetId: selecting.id,
               });
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onConfirm: () => {},
           }),
         );
       }).catch((err:any) => {
@@ -150,24 +139,49 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     }
   };
 
+  const renderTitleInfo = () => (
+    <View style={styles.title}>
+      <Icon icon="CircleInfo" tintColor={theme.colors.neutral20} size={18} />
+      <Text.BodyS color={theme.colors.neutral40} style={styles.textInfo} useI18n>
+        communities:group_structure:text_info_move_group
+      </Text.BodyS>
+    </View>
+  );
+
+  const renderErrorMessage = () => {
+    if (!errorMessage) return null;
+
+    return (
+      <View style={styles.errorView}>
+        <Icon icon="CircleExclamationSolid" tintColor={theme.colors.red40} size={16} />
+        <Text.BodyS
+          color={theme.colors.red40}
+          style={styles.errorMessage}
+        >
+          {errorMessage}
+        </Text.BodyS>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Header
         title={t('communities:group_structure:title_move_group')}
         onPressButton={onPressSave}
-        buttonText="common:btn_save"
+        buttonText="common:btn_save_apply"
         buttonProps={{
           loading,
           disabled: !selecting || !!errorMessage,
           useI18n: true,
           style: { borderWidth: 0 },
-          testID: 'move_group.btn_save',
+          testID: 'move_group.btn_save_apply',
         }}
       />
       <ScrollView>
+        {renderTitleInfo()}
         <MoveGroupHeaderInfo group={initGroup} />
-        { !!errorMessage
-          && <Text.H6 color={theme.colors.red40} style={styles.errorMessage}>{errorMessage}</Text.H6>}
+        {renderErrorMessage()}
         <MoveGroupTargets
           communityId={communityId}
           groupId={groupId}
@@ -187,15 +201,32 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.white,
     },
+    title: {
+      flexDirection: 'row',
+      padding: spacing.padding.base,
+      margin: spacing.margin.large,
+      backgroundColor: colors.neutral1,
+    },
+    textInfo: {
+      marginHorizontal: spacing.margin.small,
+    },
     alertContent: {
       paddingTop: spacing.padding.tiny,
       paddingBottom: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
     },
-    errorMessage: {
-      marginHorizontal: spacing.margin.large,
-      marginTop: spacing.margin.small,
+    errorView: {
+      flexDirection: 'row',
+      marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.big,
+      marginHorizontal: spacing.padding.large,
+      borderWidth: 1,
+      borderColor: colors.red40,
+      borderRadius: spacing.borderRadius.small,
+      padding: spacing.padding.large,
+    },
+    errorMessage: {
+      marginHorizontal: spacing.margin.small,
     },
     highlightText: {
       color: colors.purple50,

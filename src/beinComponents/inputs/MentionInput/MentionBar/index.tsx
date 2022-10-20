@@ -20,17 +20,21 @@ import IMentionInputState, { ICursorPositionChange } from '../store/Interface';
 interface MentionBarProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
+  groupIds?: string,
   onVisible?: (isVisible: boolean) => void;
+  onCompleteMention?: (user: IMentionUser) => void;
 }
 
 const MentionBar: FC<MentionBarProps> = ({
   style,
+  groupIds: groupIdsParam,
   onVisible,
+  onCompleteMention,
 }: MentionBarProps) => {
   const listRef = useRef<any>();
   const text = useRef('');
   const cursorPosition = useRef(0);
-  const groupIds = useRef('');
+  const groupIds = useRef(groupIdsParam);
 
   const key = useMentionInputStore((state: IMentionInputState) => state.key);
   const data = useMentionInputStore((state: IMentionInputState) => state.data);
@@ -81,6 +85,7 @@ const MentionBar: FC<MentionBarProps> = ({
   );
 
   const onPressItem = (item: IMentionUser) => {
+    onCompleteMention?.(item);
     doCompleteMention({
       item,
       text: text.current,

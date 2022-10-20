@@ -5,7 +5,6 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
-import { IObject } from '~/interfaces/common';
 import Icon from '~/baseComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -21,6 +20,7 @@ import { AvatarType } from '~/baseComponents/Avatar/AvatarComponent';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
+import { Button } from '~/baseComponents';
 
 export interface GroupItemProps extends IParsedGroup {
   groupStyle?: StyleProp<ViewStyle>;
@@ -150,6 +150,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
               testID="group_item.button_wrapper.icon"
               size={14}
               icon={isCollapsing ? 'CirclePlus' : 'CircleMinus'}
+              tintColor={theme.colors.neutral20}
             />
           </View>
         )}
@@ -181,17 +182,21 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 <View style={styles.privacyAvatar}>
                   <Icon
                     icon={privacyIcon}
-                    size={14}
-                    tintColor={theme.colors.gray50}
+                    size={12}
+                    tintColor={theme.colors.white}
                   />
                 </View>
               )}
             </View>
           </View>
           <View style={styles.textContainer}>
-            <Text.H5 style={styles.textName} numberOfLines={nameLines}>
+            <Text.BodyMMedium
+              style={styles.textName}
+              color={theme.colors.neutral60}
+              numberOfLines={nameLines}
+            >
               {name}
-            </Text.H5>
+            </Text.BodyMMedium>
             {_renderExtraInfo?.()}
           </View>
           {onCheckedItem && (
@@ -205,9 +210,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
           )}
           {!!onPressMenu && (
             <View style={styles.btnMenu}>
-              <Icon
-                style={{ alignSelf: 'auto' }}
+              <Button.Raise
                 icon={menuIcon}
+                size="small"
                 testID="group_item.button_menu"
                 onPress={_onPressMenu}
               />
@@ -219,7 +224,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   );
 };
 
-const themeStyles = (theme: IObject<any>) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     textContainer: {
@@ -261,7 +266,7 @@ const themeStyles = (theme: IObject<any>) => {
       flex: 1,
       flexDirection: 'row',
       paddingLeft: spacing.padding.small,
-      paddingVertical: spacing?.padding.tiny,
+      paddingVertical: spacing?.padding.small,
     },
     avatarContainer: {
       width: dimension?.avatarSizes.medium,
@@ -275,17 +280,20 @@ const themeStyles = (theme: IObject<any>) => {
       marginLeft: spacing.margin.tiny,
     },
     privacyAvatar: {
-      width: 16,
-      height: 16,
+      width: 20,
+      height: 20,
       position: 'absolute',
-      bottom: 0,
-      right: 0,
+      bottom: -2,
+      right: -2,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.neutral,
-      borderRadius: spacing.borderRadius.small,
+      backgroundColor: colors.blue50,
+      borderRadius: spacing.borderRadius.circle,
     },
-    btnMenu: { marginRight: 8 },
+    btnMenu: {
+      marginRight: spacing.margin.tiny,
+      justifyContent: 'center',
+    },
   });
 };
 

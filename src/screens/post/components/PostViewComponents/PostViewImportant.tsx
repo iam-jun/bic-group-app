@@ -24,7 +24,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
   const { colors } = theme || {};
   const styles = createStyle(theme);
 
-  if (!isImportant || !expireTime) {
+  if (!isImportant) {
     return null;
   }
 
@@ -46,7 +46,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
     );
   }
 
-  if (isExpired) return null;
+  if (isExpired && !isImportant) return null;
 
   return <BannerImportant markedAsRead={markedReadPost} />;
 };
