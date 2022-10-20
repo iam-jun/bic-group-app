@@ -9,7 +9,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { useRootNavigation } from '~/hooks/navigation';
 import {
-  IAudienceGroup, ICommentData, IMarkdownAudience, IPayloadReactToPost,
+  IAudienceGroup, ICommentData, IMentionUser, IPayloadReactToPost,
 } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 
@@ -19,7 +19,6 @@ import { useBaseHook } from '~/hooks';
 import Header from '~/beinComponents/Header';
 import { IRouteParams } from '~/interfaces/IRouter';
 import ArticleHeader from '../components/ArticleHeader';
-import Markdown from '~/beinComponents/Markdown';
 import Text from '~/beinComponents/Text';
 import HashTags from '../components/HashTags';
 import useMounted from '~/hooks/mounted';
@@ -37,6 +36,7 @@ import Divider from '~/beinComponents/Divider';
 import { ReactionType } from '~/constants/reactions';
 import useCommonController from '~/screens/store';
 import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
+import ArticleWebview from '../components/ArticleWebview';
 
 const ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -67,8 +67,8 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
   const commonController = useCommonController((state) => state.actions);
 
   const {
-    title, content, audience, actor, createdAt, commentsCount,
-    reactionsCount, setting, mentions, hashtags, ownerReactions,
+    title, audience, actor, createdAt, commentsCount,
+    reactionsCount, setting, hashtags, ownerReactions,
   } = data || {};
   const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
     'post:button_comment',
@@ -135,10 +135,10 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
     [],
   );
 
-  const onPressMentionAudience = useRef((audience: IMarkdownAudience) => {
+  const onPressMentionAudience = useRef((user: IMentionUser) => {
     if (audience) {
       rootNavigation.navigate(
-        mainStack.userProfile, { userId: audience.id },
+        mainStack.userProfile, { userId: user.id },
       );
     }
   }).current;
@@ -253,14 +253,19 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
         >
           {title}
         </Text.H3>
-        <Markdown
+        <ArticleWebview
+          readOnly
+          articleData={data}
+          onPressMentionAudience={onPressMentionAudience}
+        />
+        {/* <Markdown
           testID="post_view_content"
           copyEnabled
           disableImage={false}
           value={content}
           mentions={mentions}
           onPressAudience={onPressMentionAudience}
-        />
+        /> */}
         <HashTags data={hashtags} />
         <Divider />
       </View>
@@ -400,10 +405,11 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     postContainer: {
       marginVertical: spacing.margin.small,
-      paddingHorizontal: spacing.margin.large,
+      // paddingHorizontal: spacing.margin.large,
     },
     title: {
       marginVertical: margin.base,
+      marginHorizontal: spacing.margin.large,
     },
     footer: {
       height: spacing.margin.base,
