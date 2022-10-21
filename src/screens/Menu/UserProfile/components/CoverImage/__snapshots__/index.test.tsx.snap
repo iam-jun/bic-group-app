@@ -5,72 +5,146 @@ exports[`CoverImage screen renders correctly 1`] = `
   testID="user_profile.cover_image"
 >
   <View
-    onLayout={[Function]}
     style={
-      Object {
-        "backgroundColor": "transparent",
-        "position": "relative",
-      }
+      Array [
+        Object {
+          "overflow": "hidden",
+        },
+        Array [
+          Object {
+            "width": "100%",
+          },
+          Object {
+            "height": 80,
+          },
+        ],
+      ]
     }
   >
-    <View
-      collapsable={false}
+    <FastImageView
+      onFastImageError={[Function]}
+      resizeMode="cover"
+      source={
+        Object {
+          "testUri": "../../../assets/images/cover_default.png",
+        }
+      }
       style={
         Object {
           "bottom": 0,
           "left": 0,
-          "opacity": 1,
           "position": "absolute",
           "right": 0,
           "top": 0,
         }
       }
-    >
-      <View
-        style={
+    />
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "borderRadius": 6,
+        },
+        Array [
           Object {
-            "alignItems": "center",
-            "backgroundColor": "#f9f9f9",
-            "height": 80,
-            "justifyContent": "center",
-            "width": "100%",
-          }
-        }
-        testID="Image__placeholder"
-      />
-    </View>
+            "position": "absolute",
+            "right": 16,
+            "top": 16,
+          },
+        ],
+      ]
+    }
+    testID="user_profile.cover_image.edit_button"
+  >
     <View
       style={
         Array [
           Object {
-            "overflow": "hidden",
+            "alignItems": "center",
+            "borderRadius": 6,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "paddingVertical": 4,
           },
+          undefined,
           Object {
-            "height": 80,
-            "width": "100%",
+            "backgroundColor": "#EBF4FF",
+            "height": 28,
+            "paddingHorizontal": 8,
           },
         ]
       }
+      testID="button.content"
     >
-      <FastImageView
-        onFastImageError={[Function]}
-        onFastImageLoadEnd={[Function]}
-        resizeMode="cover"
-        source={
+      <View
+        accessibilityState={
           Object {
-            "testUri": "../../../assets/images/cover_default.png",
+            "disabled": true,
           }
         }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
+            "opacity": 1,
           }
         }
-      />
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              testID="button.icon"
+            />
+          </View>
+        </View>
+      </View>
     </View>
   </View>
 </View>

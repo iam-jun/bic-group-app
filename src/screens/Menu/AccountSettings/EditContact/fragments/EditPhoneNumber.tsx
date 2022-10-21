@@ -52,6 +52,7 @@ const EditPhoneNumber = ({
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = createStyles(
     theme, screenHeight,
   );
@@ -147,6 +148,7 @@ const EditPhoneNumber = ({
       style={styles.buttonDropDown}
       contentStyle={styles.buttonDropDownContent}
       rightIcon="AngleDown"
+      rightIconProps={{ tintColor: colors.neutral40, size: 14 }}
       onPress={(e) => onOpenCountryCode(e)}
     >
       {`+${codeValue || '84'}`}
@@ -171,11 +173,13 @@ const EditPhoneNumber = ({
             }}
             error={errorsState?.phoneNumber}
             helperContent={errorsState?.phoneNumber?.message}
+            helperTextProps={{ style: styles.textErrorPhoneNumber }}
             keyboardType="numeric"
             autoCapitalize="none"
             activeOutlineColor={theme.colors.purple50}
-            outlineColor={theme.colors.gray40}
-            style={styles.inputStyle}
+            outlineColor={theme.colors.neutral5}
+            style={styles.inputContainer}
+            inputStyle={styles.inputStyle}
           />
         )}
         rules={{
@@ -199,7 +203,7 @@ const EditPhoneNumber = ({
 
   return (
     <>
-      <TitleComponent icon="Phone" title="settings:title_phone_number" />
+      <TitleComponent title="settings:title_phone_number" />
       <View style={styles.inputsView}>
         {renderCountryCodeInput()}
         {renderPhoneNumberInput()}
@@ -220,25 +224,27 @@ const createStyles = (
     inputsView: {
       flexDirection: 'row',
       alignContent: 'center',
-      marginVertical: spacing.margin.small,
     },
     phoneNumberView: {
       flex: 1,
     },
-    inputStyle: {
+    inputContainer: {
       marginVertical: 0,
+    },
+    inputStyle: {
+      borderRadius: spacing.borderRadius.large,
     },
     listView: {
       paddingHorizontal: spacing.padding.small,
     },
     buttonDropDown: {
-      borderRadius: spacing.borderRadius.small,
+      borderRadius: spacing.borderRadius.large,
       borderWidth: 1,
-      borderColor: colors.gray40,
-      minHeight: 44,
+      borderColor: colors.neutral5,
+      height: 46,
       alignItems: 'stretch',
       justifyContent: 'center',
-      paddingLeft: spacing.padding.base,
+      paddingLeft: spacing.padding.large,
       marginRight: spacing.margin.small,
       minWidth: 80,
     },
@@ -253,6 +259,9 @@ const createStyles = (
     },
     divider: {
       marginTop: spacing.margin.small,
+    },
+    textErrorPhoneNumber: {
+      marginTop: spacing.margin.tiny,
     },
   });
 };

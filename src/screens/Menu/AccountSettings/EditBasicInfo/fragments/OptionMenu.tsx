@@ -6,8 +6,6 @@ import i18next from 'i18next';
 import { IOptionItem } from '~/interfaces/IEditUser';
 
 import BottomSheet from '~/baseComponents/BottomSheet';
-import Divider from '~/beinComponents/Divider';
-import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
@@ -16,7 +14,6 @@ interface OptionMenuProps {
   data: IOptionItem[];
   menuRef: any;
   value: string;
-  title: string;
   onItemPress: (item: any) => void;
   testID?: string;
 }
@@ -24,27 +21,24 @@ interface OptionMenuProps {
 const OptionMenu = ({
   data,
   value,
-  title,
   menuRef,
   onItemPress,
   testID,
 }: OptionMenuProps) => {
   const theme: ExtendedTheme = useTheme();
 
-  const renderItem = ({ item }: {item: IOptionItem}) => (
+  const renderItem = ({ item }: { item: IOptionItem }) => (
     <TouchableOpacity
       testID={`edit_user_info.option_menu.item_${item.type}`}
       onPress={() => onItemPress(item)}
     >
       <PrimaryItem
+        style={styles.containerItem}
         title={i18next.t(item.title)}
+        titleProps={{ variant: 'bodyM' }}
         RightComponent={
           value === item.type ? (
-            <Icon
-              icon="Check"
-              size={24}
-              tintColor={theme.colors.purple60}
-            />
+            <Icon icon="CheckSolid" size={24} tintColor={theme.colors.blue50} />
           ) : undefined
         }
       />
@@ -57,16 +51,10 @@ const OptionMenu = ({
         modalizeRef={menuRef}
         ContentComponent={(
           <View style={styles.contentComponent}>
-            <Text.ButtonS
-              color={theme.colors.gray50}
-              style={styles.chooseText}
-              useI18n
-            >
-              {title}
-            </Text.ButtonS>
-            <Divider />
             {data.map((item: IOptionItem) => (
-              <View key={`${item?.title} ${item?.type}`}>{renderItem({ item })}</View>
+              <View key={`${item?.title} ${item?.type}`}>
+                {renderItem({ item })}
+              </View>
             ))}
           </View>
         )}
@@ -81,5 +69,9 @@ const styles = StyleSheet.create({
   contentComponent: {},
   chooseText: {
     margin: spacing.margin.base,
+  },
+  containerItem: {
+    paddingVertical: spacing.padding.base,
+    paddingHorizontal: spacing.padding.large,
   },
 });

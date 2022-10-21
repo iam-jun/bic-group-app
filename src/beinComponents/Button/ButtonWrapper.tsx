@@ -28,7 +28,7 @@ export interface ButtonWrapperProps {
   leftIcon?: any;
   leftIconProps?: IconProps;
   rightIcon?: any;
-  rightIconProps?: IconProps;
+  rightIconProps?: Partial<IconProps>;
   underlayColor?: string;
   TouchableComponent?: any;
   testID?: string;
@@ -70,7 +70,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const renderIcon = (
-    iconSource: any, iconProps: IconProps | undefined,
+    iconSource: any, iconProps: Partial<IconProps> | undefined,
   ) => {
     if (iconSource) {
       const size = lineHeights[_textVariant];

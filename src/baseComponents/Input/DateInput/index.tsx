@@ -17,9 +17,25 @@ import Icon from '~/baseComponents/Icon';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import { formatDate } from '~/utils/formatData';
 
+const getTextDateDisplay = (
+  value?: string,
+  mode?: 'date' | 'time',
+  placeholder?: string,
+) => {
+  if (!!value) {
+    if (mode === 'date') {
+      return formatDate(value, 'DD/MM/YYYY');
+    }
+    return formatDate(value, 'hh:mm A', undefined, 9999);
+  }
+  if (mode === 'date') return !!placeholder ? placeholder : 'DD/MM/YYYY';
+  return !!placeholder ? placeholder : 'HH:MM';
+};
+
 interface DateInputProps {
   mode: 'date' | 'time';
   testID?: string;
+  testIDValue?: string;
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
   label?: string;
@@ -33,11 +49,13 @@ interface DateInputProps {
   minDate?: Date;
   maxDate?: Date;
   onConfirm: (date: Date) => void;
+  disabled?: boolean;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
   mode,
   testID,
+  testIDValue,
   label,
   style,
   inputStyle,
@@ -49,28 +67,16 @@ const DateInput: React.FC<DateInputProps> = ({
   minDate,
   maxDate,
   onConfirm,
+  disabled,
 }: DateInputProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme, textColor);
-  const [text, setText] = useState<string>(() => {
-    if (!!value) {
-      if (mode === 'date') {
-        return formatDate(value, 'DD/MM/YYYY');
-      }
-      return formatDate(value, 'hh:mm A', undefined, 9999);
-    }
-    if (mode === 'date') return !!placeholder ? placeholder : 'DD/MM/YYYY';
-    return !!placeholder ? placeholder : 'HH:MM';
-  });
+  const [text, setText] = useState<string>(getTextDateDisplay(value, mode, placeholder));
   const [isSelecting, setSelecting] = useState<boolean>(false);
 
   useEffect(() => {
-    if (mode === 'date') {
-      setText(formatDate(value, 'DD/MM/YYYY'));
-    } else {
-      setText(formatDate(value, 'hh:mm A', undefined, 9999));
-    }
+    setText(getTextDateDisplay(value, mode, placeholder));
   }, [value]);
 
   const getIcon = () => {
@@ -111,10 +117,12 @@ const DateInput: React.FC<DateInputProps> = ({
         style={[
           styles.row,
           { borderColor: outlineColor || colors.neutral5 },
+          disabled && { backgroundColor: colors.neutral2 },
           inputStyle,
         ]}
+        disabled={disabled}
       >
-        <Text.BodyM color={colors.neutral40}>{text}</Text.BodyM>
+        <Text.BodyM testID={testIDValue} color={colors.neutral40}>{text}</Text.BodyM>
         <Icon
           icon={getIcon()}
           size={24}

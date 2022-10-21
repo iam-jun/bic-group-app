@@ -1,12 +1,18 @@
 import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from './common';
 
-export type GENDER_TYPE = 'MALE' | 'FEMALE' | 'OTHERS';
-export type RELATIONSHIP_TYPE =
-  | 'SINGLE'
-  | 'IN_A_RELATIONSHIP'
-  | 'ENGAGED'
-  | 'MARRIED';
+export enum GENDER_TYPE {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHERS = 'OTHERS',
+}
+
+export enum RELATIONSHIP_TYPE {
+  SINGLE = 'SINGLE',
+  IN_A_RELATIONSHIP = 'IN_A_RELATIONSHIP',
+  ENGAGED = 'ENGAGED',
+  MARRIED = 'MARRIED',
+}
 
 export interface IUserImageUpload {
   id: string;

@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react-native';
 import * as React from 'react';
+import { renderWithRedux } from '~/test/testUtils';
 
 import ItemExperience from '.';
 
@@ -15,7 +15,7 @@ describe('ItemExperience component', () => {
   };
 
   it('renders correctly', () => {
-    const rendered = render(<ItemExperience {...baseProps} />).toJSON();
-    expect(rendered).toMatchSnapshot();
+    const wrapper = renderWithRedux(<ItemExperience item={baseProps} isCurrentUser />);
+    expect(wrapper).toMatchSnapshot();
   });
 });

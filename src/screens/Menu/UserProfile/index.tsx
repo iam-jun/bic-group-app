@@ -1,4 +1,8 @@
-import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
+import {
+  ExtendedTheme,
+  useIsFocused,
+  useTheme,
+} from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator, ScrollView, StyleSheet, View,
@@ -9,13 +13,9 @@ import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
-import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
-import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import mainStack from '~/router/navigator/MainStack/stack';
 import useHomeStore from '~/screens/Home/store';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
@@ -35,7 +35,9 @@ const UserProfile = (props: any) => {
   const userProfileData = useUserProfileStore((state) => state.data);
   const loading = useUserProfileStore((state) => state.loading);
   const error = useUserProfileStore((state) => state.error);
-  const doGetUserProfile = useUserProfileStore((state) => state.doGetUserProfile);
+  const doGetUserProfile = useUserProfileStore(
+    (state) => state.doGetUserProfile,
+  );
   const reset = useUserProfileStore((state) => state.reset);
 
   const {
@@ -64,10 +66,9 @@ const UserProfile = (props: any) => {
   const [isChangeImg, setIsChangeImg] = useState<string>('');
 
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = themeStyles(theme);
-  const { t } = useBaseHook();
   const dispatch = useDispatch();
-  const { rootNavigation } = useRootNavigation();
 
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
@@ -98,56 +99,37 @@ const UserProfile = (props: any) => {
     setBgImgState(userProfileData?.backgroundImgUrl);
   }, [userProfileData]);
 
-  useEffect(
-    () => {
-      if (
-        userId?.toString?.() === currentUserId?.toString?.()
+  useEffect(() => {
+    if (
+      userId?.toString?.() === currentUserId?.toString?.()
       || userId?.toString?.() === currentUsername?.toString?.()
-      ) {
-        if (isChangeImg === 'avatar') {
-          homeActions.refreshHome();
-          setAvatarState(myProfileData?.avatar);
-        } else if (isChangeImg === 'backgroundImgUrl') {
-          setBgImgState(myProfileData?.backgroundImgUrl);
-        }
+    ) {
+      if (isChangeImg === 'avatar') {
+        homeActions.refreshHome();
+        setAvatarState(myProfileData?.avatar);
+      } else if (isChangeImg === 'backgroundImgUrl') {
+        setBgImgState(myProfileData?.backgroundImgUrl);
       }
-    }, [myProfileData],
-  );
+    }
+  }, [myProfileData]);
 
-  const uploadCallback = (fieldName:string) => {
+  const uploadCallback = (fieldName: string) => {
     setIsChangeImg(fieldName);
   };
 
-  const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit);
-
-  const onPressChat = isCurrentUser ? undefined : () => {
-    if (!isEmpty(joinedCommunities)) {
-      const link = formatDMLink(
-        joinedCommunities?.[0]?.slug,
-        userProfileData.username,
-      );
-      openUrl(link);
-    } else {
-      dispatch(groupsActions.getMyCommunities({ callback: onPressChat }));
-    }
-  };
-
-  const renderButton = () => {
-    if (!isCurrentUser) return null;
-
-    return (
-      <Button.Secondary
-        testID="user_profile.edit"
-        textColor={theme.colors.purple50}
-        style={styles.buttonEdit}
-        leftIcon="PenLine"
-        onPress={onEditProfileButton}
-        borderRadius={spacing.borderRadius.small}
-      >
-        {t('profile:title_edit_profile')}
-      </Button.Secondary>
-    );
-  };
+  const onPressChat = isCurrentUser
+    ? undefined
+    : () => {
+      if (!isEmpty(joinedCommunities)) {
+        const link = formatDMLink(
+          joinedCommunities?.[0]?.slug,
+          userProfileData.username,
+        );
+        openUrl(link);
+      } else {
+        dispatch(groupsActions.getMyCommunities({ callback: onPressChat }));
+      }
+    };
 
   const renderLoading = () => (
     <View testID="user_profile.loading" style={styles.loadingProfile}>
@@ -170,8 +152,7 @@ const UserProfile = (props: any) => {
         >
           <CoverHeader
             id={id}
-            userId={userId}
-            currentUsername={currentUsername}
+            isCurrentUser={isCurrentUser}
             bgImg={bgImgState}
             avatar={avatarState}
             uploadCallback={uploadCallback}
@@ -182,7 +163,7 @@ const UserProfile = (props: any) => {
             latestWork={latestWork}
             description={description}
           />
-          {renderButton()}
+          <Divider color={colors.gray5} size={spacing.padding.large} />
           <View style={styles.infoContainer}>
             <BasicInfo
               fullname={fullname}
@@ -190,17 +171,20 @@ const UserProfile = (props: any) => {
               birthday={birthday}
               language={language}
               relationship={relationshipStatus}
+              isCurrentUser={isCurrentUser}
             />
-            <Divider />
+          </View>
+          <Divider color={colors.gray5} size={spacing.padding.large} />
+          <View style={styles.infoContainer}>
             <Contact
               email={email}
               phone={phone}
               city={city}
               countryCode={countryCode}
+              isCurrentUser={isCurrentUser}
             />
-            <Divider />
-            <Experiences />
           </View>
+          <Experiences isCurrentUser={isCurrentUser} />
         </ScrollView>
       )}
     </ScreenWrapper>
@@ -209,9 +193,7 @@ const UserProfile = (props: any) => {
 
 export default UserProfile;
 
-const themeStyles = (
-  theme: ExtendedTheme,
-) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
@@ -219,7 +201,7 @@ const themeStyles = (
       backgroundColor: colors.white,
     },
     infoContainer: {
-      paddingHorizontal: spacing.padding.extraLarge,
+      padding: spacing.padding.large,
     },
     loadingProfile: {
       marginTop: spacing.margin.extraLarge,
