@@ -704,6 +704,7 @@
   "groups": {
     "group_content": {
       "btn_group_tree": "Group Tree",
+      "btn_your_groups": "Your Groups",
       "btn_browse": "Browse Groups",
       "btn_post": "Post",
       "btn_channel": "Channel",

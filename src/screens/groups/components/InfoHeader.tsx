@@ -5,7 +5,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Icon from '~/baseComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
 import images from '~/resources/images';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
@@ -18,13 +17,11 @@ import Image from '~/beinComponents/Image';
 
 interface InfoHeaderProps {
   infoDetail: ICommunity | IGroup;
-  isMember: boolean;
   insideCommunityName?: string;
-  onPressGroupTree?: () => void
 }
 
 const _InfoHeader = ({
-  infoDetail, isMember, insideCommunityName, onPressGroupTree,
+  infoDetail, insideCommunityName,
 }: InfoHeaderProps) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
@@ -94,19 +91,6 @@ const _InfoHeader = ({
               })}`}
             </Text.BodyM>
           </View>
-          {isMember && (
-            <Button.Secondary
-              useI18n
-              color={theme.colors.blue2}
-              textColor={theme.colors.blue50}
-              borderRadius={spacing.borderRadius.base}
-              textVariant="buttonS"
-              testID="page_content.your_groups_btn"
-              onPress={onPressGroupTree}
-            >
-              groups:group_content:btn_group_tree
-            </Button.Secondary>
-          )}
         </View>
       </View>
     </View>

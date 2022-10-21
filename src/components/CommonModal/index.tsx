@@ -57,7 +57,7 @@ const CommonModal = () => {
         <View testID="common_modal.center" style={styles.fullScreenContainer}>
           {!!headerFullScreenProps ? <ModalHeader {...headerFullScreenProps} /> : (
             <View style={styles.fullScreenHeader}>
-              <Text.H4 style={styles.titleFullScreen} numberOfLines={2}>
+              <Text.H4 style={styles.titleFullScreen} numberOfLines={2} useI18n>
                 {titleFullScreen}
               </Text.H4>
               <Button style={styles.btnClose} onPress={_onClose}>

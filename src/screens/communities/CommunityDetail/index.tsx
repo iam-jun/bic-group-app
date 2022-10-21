@@ -265,7 +265,7 @@ const CommunityDetail = (props: any) => {
 
   const headerComponent = isPrivateCommunity
     ? null
-    : <CommunityTabHeader communityId={communityId} isMember={isMember} />;
+    : <CommunityTabHeader communityId={communityId} isMember={isMember} teamName={community?.teamName} />;
 
   return (
     <View style={styles.screenContainer}>

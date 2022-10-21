@@ -7,9 +7,18 @@ import TabButtonHeader from '../../components/TabButtonHeader';
 interface GroupTabHeaderProps {
   groupId: string;
   isMemberCommunity: boolean;
+  isMember: boolean;
+  communityId: string;
+  teamName: string;
 }
 
-const GroupTabHeader = ({ groupId, isMemberCommunity }: GroupTabHeaderProps) => {
+const GroupTabHeader = ({
+  groupId,
+  isMemberCommunity,
+  isMember,
+  communityId,
+  teamName,
+}: GroupTabHeaderProps) => {
   const { rootNavigation } = useRootNavigation();
 
   const onPressAbout = () => {
@@ -22,6 +31,9 @@ const GroupTabHeader = ({ groupId, isMemberCommunity }: GroupTabHeaderProps) => 
 
   return (
     <TabButtonHeader
+      isMember={isMember}
+      communityId={communityId}
+      teamName={teamName}
       onPressAbout={onPressAbout}
       onPressMembers={onPressMembers}
     />

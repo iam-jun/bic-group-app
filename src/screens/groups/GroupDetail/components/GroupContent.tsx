@@ -1,7 +1,6 @@
 import React from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import Animated from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
@@ -13,8 +12,6 @@ import spacing from '~/theme/spacing';
 import GroupTabHeader from './GroupTabHeader';
 import InfoHeader from '../../components/InfoHeader';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
-import modalActions from '~/storeRedux/modal/actions';
-import CommunityJoinedGroupTree from '~/screens/groups/components/CommunityJoinedGroupTree';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
@@ -33,7 +30,6 @@ const GroupContent = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme || {};
   const styles = themeStyles();
-  const dispatch = useDispatch();
   const isMounted = useMounted();
 
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
@@ -58,22 +54,6 @@ const GroupContent = ({
     }
   };
 
-  const onPressGroupTree = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        isFullScreen: true,
-        titleFullScreen: communityName,
-        ContentComponent: (
-          <CommunityJoinedGroupTree
-            communityId={communityId}
-            teamName={teamName}
-          />
-        ),
-      }),
-    );
-  };
-
   const renderItem = ({ item }: any) => (
     <PostItem
       postId={item}
@@ -90,11 +70,15 @@ const GroupContent = ({
     <View onLayout={onGetInfoLayout}>
       <InfoHeader
         infoDetail={groupData}
-        isMember={isMember}
         insideCommunityName={communityName}
-        onPressGroupTree={onPressGroupTree}
       />
-      <GroupTabHeader groupId={groupId} isMemberCommunity={isMemberCommunity} />
+      <GroupTabHeader
+        groupId={groupId}
+        isMemberCommunity={isMemberCommunity}
+        isMember={isMember}
+        communityId={communityId}
+        teamName={teamName}
+      />
       <GroupJoinCancelButton />
       {isLoadingPosts && renderLoading()}
     </View>
