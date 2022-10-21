@@ -11,14 +11,13 @@ import GroupJoinCancelButton from './GroupJoinCancelButton';
 
 interface GroupPrivateWelcomeProps {
   infoDetail: IGroup;
-  isMember: boolean;
   communityName: string;
   onScroll: (e: any) => void;
   onGetInfoLayout: (e: any) => void;
 }
 
 const GroupPrivateWelcome = ({
-  infoDetail, isMember, communityName, onScroll, onGetInfoLayout,
+  infoDetail, communityName, onScroll, onGetInfoLayout,
 }: GroupPrivateWelcomeProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -34,7 +33,6 @@ const GroupPrivateWelcome = ({
       <View onLayout={onGetInfoLayout}>
         <InfoHeader
           infoDetail={infoDetail}
-          isMember={isMember}
           insideCommunityName={communityName}
         />
         <View style={styles.space} />

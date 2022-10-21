@@ -283,7 +283,6 @@ const GroupDetail = (props: any) => {
           onScroll={onScrollHandler}
           onGetInfoLayout={onGetInfoLayout}
           infoDetail={groupInfo}
-          isMember={isMember}
           communityName={communityName}
         />
       );

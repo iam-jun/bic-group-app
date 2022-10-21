@@ -20,6 +20,12 @@ export default {
         type: 'select',
       },
     },
+    privacyIcon: {
+      options: ['iconPublic', 'iconPrivate', 'iconSecret', 'iconOpen'],
+      control: {
+        type: 'select',
+      },
+    },
   },
 } as ComponentMeta<typeof Avatar>;
 
@@ -61,4 +67,11 @@ Action.args = {
   isRounded: true,
   actionIcon: 'edit',
   onPressAction: () => { alert('onPressAction'); },
+};
+
+export const Privacy = StoryComponent.bind({});
+Privacy.args = {
+  variant: 'large',
+  source: images.img_user_avatar_default,
+  privacyIcon: 'iconPublic',
 };
