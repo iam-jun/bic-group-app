@@ -17,7 +17,7 @@ const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
   set((state: ITimelineState) => {
     state.items[id].loading = true;
     state.items[id].refreshing = isRefresh;
-  });
+  }, `getPosts groupId: ${id}, isRefresh: ${isRefresh} `);
 
   try {
     const offset = isRefresh ? 0 : currentPosts.ids?.length;

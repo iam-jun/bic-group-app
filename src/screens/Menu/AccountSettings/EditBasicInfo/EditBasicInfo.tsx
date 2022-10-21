@@ -25,11 +25,14 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
-import { dataMapping, maxBirthday } from './helper';
+import { dataMapping } from './helper';
 import spacing from '~/theme/spacing';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { DateInput, TextInput } from '~/baseComponents/Input';
 import LanguageOptionMenu from './fragments/LanguageOptionMenu';
+import Text from '~/beinComponents/Text';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import Gender from './fragments/Gender';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
@@ -135,13 +138,6 @@ const EditBasicInfo = () => {
     }
   };
 
-  const onGenderEditOpen = (e: any) => {
-    Keyboard.dismiss();
-    genderSheetRef?.current?.open?.(
-      e?.pageX, e?.pageY,
-    );
-  };
-
   const onRelationshipEditOpen = (e: any) => {
     Keyboard.dismiss();
     relationshipSheetRef?.current?.open?.(
@@ -169,6 +165,7 @@ const EditBasicInfo = () => {
           useI18n: true,
           disabled: !isValid,
           testID: 'edit_basic_info.save',
+          style: styles.btnRightHeader,
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}
@@ -187,37 +184,30 @@ const EditBasicInfo = () => {
           helperText={
             error ? t('profile:text_name_must_not_be_empty') : undefined
           }
-          maxLength={100}
+          maxLength={64}
         />
-        <TitleComponent icon="SquareUser" title="settings:title_gender" />
-        <Button
-          testID="edit_basic_info.gender"
-          textProps={{ color: colors.neutral80, variant: 'bodyM' }}
-          style={styles.buttonDropDown}
-          contentStyle={styles.buttonDropDownContent}
-          rightIcon="AngleDown"
-          onPress={(e) => onGenderEditOpen(e)}
-        >
-          {genderState
-            ? t(genders[genderState])
-            : t('common:text_not_set')}
-        </Button>
+        <Text.BodyXS useI18n>settings:text_input_edit_info_fullname_max_64</Text.BodyXS>
+        <ViewSpacing height={spacing.padding.large} />
+        <TitleComponent title="settings:title_gender" />
+        <Gender genderState={genderState} setGenderState={setGenderState} />
+        <ViewSpacing height={spacing.padding.large} />
         <DateInput
           testID="edit_basic_info.birthday"
+          style={{ marginVertical: 0 }}
           mode="date"
           value={birthdayState}
           label={t('settings:title_birthday')}
-          maxDate={maxBirthday()}
+          maxDate={new Date()}
           onConfirm={onSetBirthday}
+          placeholder={t('common:text_not_set')}
         />
+        <ViewSpacing height={spacing.padding.large} />
         <LanguageOptionMenu
-          title="settings:title_choose_languages"
           onChangeLanguages={_onChangeLanguages}
           selectedLanguages={languageState}
         />
-
+        <ViewSpacing height={spacing.padding.large} />
         <TitleComponent
-          icon="Heart"
           title="settings:title_relationship_status"
         />
         <Button
@@ -226,6 +216,7 @@ const EditBasicInfo = () => {
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           rightIcon="AngleDown"
+          rightIconProps={{ tintColor: colors.neutral40, size: 14 }}
           onPress={(e) => onRelationshipEditOpen(e)}
         >
           {t(RELATIONSHIP_STATUS[relationshipState])
@@ -236,7 +227,6 @@ const EditBasicInfo = () => {
         testID="edit_basic_info.gender_list"
         data={gendersList}
         value={genderState}
-        title="settings:title_choose_gender"
         menuRef={genderSheetRef}
         onItemPress={onGenderItemPress}
       />
@@ -244,7 +234,6 @@ const EditBasicInfo = () => {
         testID="edit_basic_info.relationship_status_list"
         data={relationshipStatusList}
         value={relationshipState}
-        title="settings:title_choose_relationship"
         menuRef={relationshipSheetRef}
         onItemPress={onRelationshipItemPress}
       />
@@ -262,7 +251,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       flex: 1,
     },
     content: {
-      marginHorizontal: spacing.margin.large,
+      padding: spacing.margin.large,
     },
     textEdit: {
       marginBottom: spacing.margin.small,
@@ -273,17 +262,19 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     textinput: {},
     buttonDropDown: {
-      borderRadius: spacing.borderRadius.small,
+      borderRadius: spacing.borderRadius.large,
       borderWidth: 1,
-      borderColor: colors.gray40,
+      borderColor: colors.neutral5,
       minHeight: 44,
       alignItems: 'stretch',
       justifyContent: 'center',
-      paddingLeft: spacing.padding.base,
-      marginVertical: spacing.margin.small,
+      paddingLeft: spacing.padding.large,
     },
     buttonDropDownContent: {
       justifyContent: 'space-between',
+    },
+    btnRightHeader: {
+      marginRight: spacing.margin.small,
     },
   });
 };

@@ -22,6 +22,7 @@ import { ILocation } from '~/interfaces/common';
 import menuActions from '../../../../storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
 import { TextInput } from '~/baseComponents/Input';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const EditContact = () => {
   const theme: ExtendedTheme = useTheme();
@@ -38,10 +39,13 @@ const EditContact = () => {
     email, phone, countryCode, country, city, id,
   } = myProfile || {};
 
-  const [countryCodeState, setCountryCountryCodeState] = useState<string>(countryCode);
+  const [countryCodeState, setCountryCountryCodeState]
+    = useState<string>(countryCode);
   const [countryState, setCountryState] = useState<string>(country);
   const [cityState, setCityState] = useState<string>(city);
-  const phoneNumberEditError = useKeySelector(menuKeySelector.phoneNumberEditError);
+  const phoneNumberEditError = useKeySelector(
+    menuKeySelector.phoneNumberEditError,
+  );
 
   const {
     control,
@@ -54,13 +58,9 @@ const EditContact = () => {
     watch,
   } = useForm();
 
-  useEffect(
-    () => {
-      setValue(
-        'phoneNumber', phone,
-      );
-    }, [],
-  );
+  useEffect(() => {
+    setValue('phoneNumber', phone);
+  }, []);
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -71,14 +71,12 @@ const EditContact = () => {
     }
   };
 
-  useEffect(
-    () => {
-      phoneNumberEditError && showErrors();
-      return () => {
-        dispatch(menuActions.setPhoneNumberEditError(''));
-      };
-    }, [phoneNumberEditError],
-  );
+  useEffect(() => {
+    phoneNumberEditError && showErrors();
+    return () => {
+      dispatch(menuActions.setPhoneNumberEditError(''));
+    };
+  }, [phoneNumberEditError]);
 
   const onSave = async () => {
     const validInputs = await validateInputs();
@@ -107,12 +105,10 @@ const EditContact = () => {
   const validateInputs = async () => trigger('phoneNumber');
 
   const showErrors = () => {
-    setError(
-      'phoneNumber', {
-        type: 'validate',
-        message: phoneNumberEditError,
-      },
-    );
+    setError('phoneNumber', {
+      type: 'validate',
+      message: phoneNumberEditError,
+    });
   };
 
   const clearAllErrors = () => {
@@ -122,9 +118,7 @@ const EditContact = () => {
 
   const onEditLocationOpen = (e: any) => {
     Keyboard.dismiss();
-    locationRef?.current?.open?.(
-      e?.pageX, e?.pageY,
-    );
+    locationRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
   const onLocationItemPress = (item: ILocation) => {
@@ -143,12 +137,10 @@ const EditContact = () => {
     countryState: string,
     cityState: string,
     phoneNumber: string,
-  ) => (
-    countryCode !== countryCodeState
-      || country !== countryState
-      || city !== cityState
-      || phone !== phoneNumber
-  );
+  ) => countryCode !== countryCodeState
+    || country !== countryState
+    || city !== cityState
+    || phone !== phoneNumber;
 
   const isValid = checkIsValid(
     countryCodeState,
@@ -168,11 +160,23 @@ const EditContact = () => {
           useI18n: true,
           disabled: !isValid,
           testID: 'edit_contact.save',
+          style: styles.btnRightHeader,
         }}
         onPressButton={onSave}
       />
-      <ScrollView keyboardShouldPersistTaps="always" scrollEnabled={false}>
-        <View style={styles.infoItem}>
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        scrollEnabled={false}
+        contentContainerStyle={styles.content}
+      >
+        <View>
+          <TextInput
+            label={t('settings:title_email')}
+            testID="edit_contact.email"
+            editable={false}
+            value={email || t('common:text_not_set')}
+          />
+          <ViewSpacing height={spacing.padding.large} />
           <EditPhoneNumber
             countryCode={countryCode}
             phoneNumber={phone}
@@ -181,20 +185,16 @@ const EditContact = () => {
             errorsState={errors}
             clearAllErrors={clearAllErrors}
           />
-          <TextInput
-            label={t('settings:title_email')}
-            testID="edit_contact.email"
-            editable={false}
-            value={email || t('common:text_not_set')}
-          />
-
-          <TitleComponent icon="LocationDot" title="settings:title_address" />
+          <ViewSpacing height={spacing.padding.large} />
+          <TitleComponent title="settings:title_location" />
           <Button
             testID="edit_contact.location"
             textProps={{ color: theme.colors.neutral80, variant: 'bodyM' }}
             style={styles.buttonDropDown}
             contentStyle={styles.buttonDropDownContent}
             onPress={(e) => onEditLocationOpen(e)}
+            rightIcon="AngleDown"
+            rightIconProps={{ tintColor: theme.colors.neutral40, size: 14 }}
           >
             {cityState && countryState
               ? `${cityState}, ${countryState}`
@@ -216,21 +216,23 @@ const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
-    infoItem: {
-      paddingHorizontal: spacing.margin.large,
+    content: {
+      padding: spacing.margin.large,
     },
     buttonDropDown: {
-      borderRadius: spacing.borderRadius.small,
+      borderRadius: spacing.borderRadius.large,
       borderWidth: 1,
-      borderColor: colors.gray40,
+      borderColor: colors.neutral5,
       minHeight: 44,
       alignItems: 'stretch',
       justifyContent: 'center',
-      paddingLeft: spacing.padding.base,
-      marginVertical: spacing.margin.small,
+      paddingLeft: spacing.padding.large,
     },
     buttonDropDownContent: {
       justifyContent: 'space-between',
+    },
+    btnRightHeader: {
+      marginRight: spacing.margin.small,
     },
   });
 };

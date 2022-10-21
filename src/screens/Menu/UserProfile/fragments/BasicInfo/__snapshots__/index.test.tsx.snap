@@ -2,37 +2,143 @@
 
 exports[`BasicInfo component renders correctly 1`] = `
 <View
-  style={
-    Object {
-      "marginTop": 16,
-      "paddingBottom": 12,
-    }
-  }
   testID="user_profile.basic_info"
 >
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#181C32",
-          "fontFamily": "BeVietnamPro-SemiBold",
-          "fontSize": 17,
-        },
-        Object {},
-        Object {
-          "marginBottom": 16,
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 16,
+      }
     }
-    testID="info_section.title"
   >
-    Basic Info
-  </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_section.title"
+    >
+      Basic Info
+    </Text>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "borderRadius": 6,
+          },
+          Array [
+            undefined,
+          ],
+        ]
+      }
+      testID="button_wrapper"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 6,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "paddingVertical": 4,
+            },
+            undefined,
+            Object {
+              "backgroundColor": "#EBF4FF",
+              "height": 28,
+              "paddingHorizontal": 8,
+            },
+          ]
+        }
+        testID="button.content"
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="button.icon"
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
   <View
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
         undefined,
       ]
@@ -67,7 +173,7 @@ exports[`BasicInfo component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }
@@ -78,7 +184,7 @@ exports[`BasicInfo component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
         undefined,
       ]
@@ -113,7 +219,7 @@ exports[`BasicInfo component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }
@@ -126,7 +232,7 @@ exports[`BasicInfo component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
         undefined,
       ]
@@ -161,7 +267,7 @@ exports[`BasicInfo component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }
@@ -172,7 +278,7 @@ exports[`BasicInfo component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
         undefined,
       ]
@@ -207,7 +313,7 @@ exports[`BasicInfo component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }
@@ -218,9 +324,11 @@ exports[`BasicInfo component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
-        undefined,
+        Object {
+          "paddingBottom": 0,
+        },
       ]
     }
     testID="info_item"
@@ -241,7 +349,7 @@ exports[`BasicInfo component renders correctly 1`] = `
       }
       testID="info_item.title"
     >
-      Relationship Status
+      Relationship status
     </Text>
     <Text
       style={
@@ -253,7 +361,7 @@ exports[`BasicInfo component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }

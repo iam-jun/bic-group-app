@@ -8,24 +8,32 @@ interface Props {
   testID?: string;
   isCurrentUser: boolean;
   onPress?: () => void;
-  icon: IconType;
+  icon?: IconType;
+  title: string;
 }
 
-const EditButton = ({
-  style, testID, isCurrentUser, onPress, icon,
+const AddButton = ({
+  style,
+  testID,
+  isCurrentUser,
+  onPress,
+  icon,
+  title,
 }: Props) => {
   if (!isCurrentUser) return null;
 
   return (
-    <Button.Secondary
-      type="ghost"
+    <Button.Primary
       size="small"
       testID={testID}
       style={[style]}
       onPress={onPress}
       icon={icon}
-    />
+      useI18n
+    >
+      {title}
+    </Button.Primary>
   );
 };
 
-export default EditButton;
+export default AddButton;

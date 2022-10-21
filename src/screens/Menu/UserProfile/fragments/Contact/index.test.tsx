@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react-native';
 import * as React from 'react';
+import { renderWithRedux } from '~/test/testUtils';
 
 import Contact from '.';
 
@@ -9,16 +9,17 @@ describe('Contact component', () => {
     phone: 'phone',
     city: 'city',
     countryCode: '84',
+    isCurrentUser: true,
   };
 
   it('renders correctly', () => {
-    const rendered = render(<Contact {...baseProps} />).toJSON();
+    const rendered = renderWithRedux(<Contact {...baseProps} />);
     expect(rendered).toMatchSnapshot();
   });
 
   it('renders location Not set', () => {
     const props = { ...baseProps, city: '' };
-    const rendered = render(<Contact {...props} />).toJSON();
-    expect(rendered).toMatchSnapshot();
+    const wrapper = renderWithRedux(<Contact {...props} />);
+    expect(wrapper).toMatchSnapshot();
   });
 });

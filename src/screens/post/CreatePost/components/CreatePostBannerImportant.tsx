@@ -30,20 +30,22 @@ const CreatePostBannerImportant = ({ style, expiresTime }: CreatePostBannerImpor
         />
         <View style={styles.textView}>
           <Text.SubtitleM useI18n color={colors.neutral70}>common:text_important_post</Text.SubtitleM>
-          {!!expiresTime
-            ? (
-              <Text.BodyM useI18n color={colors.neutral40}>
-                common:text_expires_on
+          {
+            !!expiresTime && !!dateValue ? (
+              <View style={styles.expiresOnTextContainer}>
+                <Text.BodyM useI18n color={colors.neutral40}>
+                  common:text_expires_on
+                </Text.BodyM>
                 <Text.BodyMMedium>
                   {dateValue}
                   .
                 </Text.BodyMMedium>
-              </Text.BodyM>
+              </View>
             )
-            : (
-              <Text.BodyM useI18n color={colors.neutral40}>common:text_never_expire</Text.BodyM>
-            )}
-
+              : (
+                <Text.BodyM useI18n color={colors.neutral40}>common:text_never_expire</Text.BodyM>
+              )
+}
         </View>
       </View>
     </View>
@@ -66,5 +68,9 @@ const createStyles = (theme:ExtendedTheme) => StyleSheet.create({
   },
   textView: {
     marginLeft: spacing.margin.small,
+  },
+  expiresOnTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
   },
 });

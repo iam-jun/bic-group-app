@@ -412,7 +412,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     };
     const setting: any = {};
     setting.isImportant = important?.active;
-    setting.importantExpiredAt = important?.expiresTime || 0;
+    setting.importantExpiredAt = important?.expiresTime || null;
     setting.canComment = canComment;
     setting.canReact = canReact;
 

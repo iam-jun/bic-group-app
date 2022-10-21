@@ -38,10 +38,10 @@ const InfoItem = ({ style, title, value }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: spacing.padding.small,
+    paddingBottom: spacing.padding.large,
   },
   subtitle: {
-    marginTop: spacing.margin.small,
+    marginTop: spacing.margin.tiny,
   },
 });
 

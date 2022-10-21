@@ -37,6 +37,7 @@ import { ReactionType } from '~/constants/reactions';
 import useCommonController from '~/screens/store';
 import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
 import ArticleWebview from '../components/ArticleWebview';
+import { getById } from '~/store/entities/selectors';
 
 const ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -57,7 +58,10 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
 
-  const data = usePostsStore(postsSelector.getPost(id));
+  const articleFromStore = useArticlesStore(useCallback(getById(id), [id]));
+  const articleFromPostStore = usePostsStore(useCallback(postsSelector.getPost(id), []));
+  const data = articleFromStore || articleFromPostStore || {};
+
   const canLoadMoreComment = usePostsStore(postsSelector.getCommentOnlyCount(id));
 
   const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));

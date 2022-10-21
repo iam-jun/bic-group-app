@@ -3,18 +3,16 @@ import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import Avatar from '~/baseComponents/Avatar';
 import images from '~/resources/images';
-import { spacing } from '~/theme';
 import EditButton from '../EditButton';
 
 interface Props {
-  userId: string;
-  currentUsername: string;
+  isCurrentUser: boolean;
   avatar: any;
   onEdit: () => void;
 }
 
 const AvatarImage = ({
-  avatar, userId, currentUsername, onEdit,
+  avatar, isCurrentUser, onEdit,
 }: Props) => {
   const styles = themeStyles();
 
@@ -29,9 +27,9 @@ const AvatarImage = ({
         <EditButton
           testID="user_profile.avatar_image.edit_button"
           style={styles.editAvatar}
-          userId={userId}
-          currentUsername={currentUsername}
+          isCurrentUser={isCurrentUser}
           onPress={onEdit}
+          icon="CameraSolid"
         />
       </View>
     </View>
@@ -47,7 +45,7 @@ const themeStyles = (
   editAvatar: {
     position: 'absolute',
     bottom: 0,
-    right: spacing?.margin.small,
+    right: 0,
   },
 });
 

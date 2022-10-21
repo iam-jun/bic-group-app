@@ -127,10 +127,14 @@ const CommunityDetail = (props: any) => {
   useEffect(() => { if (isEmpty(communityPost?.ids)) getPosts(); }, [community]);
 
   const onRefresh = useCallback((isGetPost: boolean) => {
-    getCommunityDetail();
+    /**
+     * must getPosts before getCommunityDetail
+     * to avoid community data reset and delete groupId
+     */
     if (isGetPost) {
       timelineActions.getPosts(groupId, true);
     }
+    getCommunityDetail();
   }, [communityId]);
 
   const onPressAdminTools = () => {

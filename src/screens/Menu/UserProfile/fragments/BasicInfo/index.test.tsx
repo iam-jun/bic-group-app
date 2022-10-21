@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react-native';
 import * as React from 'react';
+import { renderWithRedux } from '~/test/testUtils';
 
 import BasicInfo from '.';
 
@@ -10,10 +10,13 @@ describe('BasicInfo component', () => {
     birthday: '2022-03-07T07:58:05.436Z',
     language: ['en'],
     relationship: '',
+    userId: '1',
+    currentUsername: '1',
+    isCurrentUser: true,
   };
 
   it('renders correctly', () => {
-    const rendered = render(<BasicInfo {...baseProps} />).toJSON();
-    expect(rendered).toMatchSnapshot();
+    const wrapper = renderWithRedux(<BasicInfo {...baseProps} />);
+    expect(wrapper).toMatchSnapshot();
   });
 });

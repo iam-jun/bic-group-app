@@ -14,7 +14,6 @@ describe('LanguageOptionMenu conponent', () => {
 
     const rendered = renderWithRedux(
       <LanguageOptionMenu
-        title="settings:title_choose_languages"
         onChangeLanguages={onChagneLanguage}
         selectedLanguages={languageState}
       />,
@@ -40,7 +39,6 @@ describe('LanguageOptionMenu conponent', () => {
 
     const rendered = renderWithRedux(
       <LanguageOptionMenu
-        title="settings:title_choose_languages"
         onChangeLanguages={onChagneLanguage}
         selectedLanguages={[]}
       />,

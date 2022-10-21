@@ -31,6 +31,7 @@ import { faEyeSlash } from '@fortawesome/pro-regular-svg-icons/faEyeSlash';
 import { faCopy } from '@fortawesome/pro-regular-svg-icons/faCopy';
 import { faCircleUser } from '@fortawesome/pro-regular-svg-icons/faCircleUser';
 import { faCamera } from '@fortawesome/pro-regular-svg-icons/faCamera';
+import { faCamera as faCameraSolid } from '@fortawesome/pro-solid-svg-icons/faCamera';
 import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { faLockKeyhole } from '@fortawesome/pro-regular-svg-icons/faLockKeyhole';
 import { faLockKeyhole as faLockKeyholeSolid } from '@fortawesome/pro-solid-svg-icons/faLockKeyhole';
@@ -66,6 +67,7 @@ import { faCircleInfo } from '@fortawesome/pro-regular-svg-icons/faCircleInfo';
 import { faShareNodes } from '@fortawesome/pro-regular-svg-icons/faShareNodes';
 import { faShareNodes as faShareNodesSolid } from '@fortawesome/pro-solid-svg-icons/faShareNodes';
 import { faTrashCan } from '@fortawesome/pro-regular-svg-icons/faTrashCan';
+import { faTrashCan as faTrashCanSolid } from '@fortawesome/pro-solid-svg-icons/faTrashCan';
 import { faBookmark } from '@fortawesome/pro-regular-svg-icons/faBookmark';
 import { faBookmark as faBookmarkSolid } from '@fortawesome/pro-solid-svg-icons/faBookmark';
 import { faGaugeHigh } from '@fortawesome/pro-regular-svg-icons/faGaugeHigh';
@@ -76,6 +78,7 @@ import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
 import { faRotateRight } from '@fortawesome/pro-regular-svg-icons/faRotateRight';
 import { faArrowRotateRight } from '@fortawesome/pro-regular-svg-icons/faArrowRotateRight';
 import { faPenToSquare } from '@fortawesome/pro-regular-svg-icons/faPenToSquare';
+import { faPenToSquare as faPenToSquareSolid } from '@fortawesome/pro-solid-svg-icons/faPenToSquare';
 import { faFileLock } from '@fortawesome/pro-regular-svg-icons/faFileLock';
 import { faFilePen } from '@fortawesome/pro-regular-svg-icons/faFilePen';
 import { faDeleteLeft } from '@fortawesome/pro-regular-svg-icons/faDeleteLeft';
@@ -227,6 +230,7 @@ export const initFontAwesomeIcon = () => {
     faCopy,
     faCircleUser,
     faCamera,
+    faCameraSolid,
     faLock,
     faLockKeyhole,
     faLockKeyholeSolid,
@@ -262,6 +266,7 @@ export const initFontAwesomeIcon = () => {
     faShareNodes,
     faShareNodesSolid,
     faTrashCan,
+    faTrashCanSolid,
     faBookmark,
     faBookmarkSolid,
     faGaugeHigh,
@@ -272,6 +277,7 @@ export const initFontAwesomeIcon = () => {
     faRotateRight,
     faArrowRotateRight,
     faPenToSquare,
+    faPenToSquareSolid,
     faFileLock,
     faFilePen,
     faDeleteLeft,
@@ -406,6 +412,7 @@ export const fontAwesomeIcons = {
   Copy: 'fa-regular fa-copy',
   CircleUser: 'fa-regular fa-circle-user',
   Camera: 'fa-regular fa-camera',
+  CameraSolid: 'fa-solid fa-camera',
   Lock: 'fa-regular fa-lock',
   LockKeyhole: 'fa-regular fa-lock-keyhole',
   LockKeyholeSolid: 'fa-solid fa-lock-keyhole',
@@ -441,6 +448,7 @@ export const fontAwesomeIcons = {
   ShareNodes: 'fa-regular fa-share-nodes',
   ShareNodesSolid: 'fa-solid fa-share-nodes',
   TrashCan: 'fa-regular fa-trash-can',
+  TrashCanSolid: 'fa-solid fa-trash-can',
   Bookmark: 'fa-regular fa-bookmark',
   BookmarkSolid: 'fa-solid fa-bookmark',
   GaugeHigh: 'fa-regular fa-gauge-high',
@@ -451,6 +459,7 @@ export const fontAwesomeIcons = {
   RotateRight: 'fa-regular fa-rotate-right',
   ArrowRotateRight: 'fa-regular fa-arrow-rotate-right',
   PenToSquare: 'fa-regular fa-pen-to-square',
+  PenToSquareSolid: 'fa-solid fa-pen-to-square',
   FileLock: 'fa-regular fa-file-lock',
   FilePen: 'fa-regular fa-file-pen',
   DeleteLeft: 'fa-regular fa-delete-left',

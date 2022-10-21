@@ -89,6 +89,7 @@ export interface IUserProfile {
 export interface IGetUserProfile {
   userId: string;
   params?: any;
+  silentLoading?: boolean;
 }
 
 export interface IUserEdit {

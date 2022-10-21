@@ -11,21 +11,21 @@ interface Props {
   icon: IconType;
 }
 
-const EditButton = ({
+const DeleteButton = ({
   style, testID, isCurrentUser, onPress, icon,
 }: Props) => {
   if (!isCurrentUser) return null;
 
   return (
-    <Button.Secondary
-      type="ghost"
-      size="small"
+    <Button.Danger
       testID={testID}
       style={[style]}
-      onPress={onPress}
+      type="ghost"
+      size="small"
       icon={icon}
+      onPress={onPress}
     />
   );
 };
 
-export default EditButton;
+export default DeleteButton;
