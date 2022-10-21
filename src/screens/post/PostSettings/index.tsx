@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  FlatList, ScrollView, StyleSheet, TouchableOpacity, View,
+  FlatList, ScrollView, StyleSheet, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';

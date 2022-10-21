@@ -1,7 +1,7 @@
 import { GiphyMedia } from '@giphy/react-native-sdk';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
-  FC, useRef, useState,
+  FC, useEffect, useRef, useState,
 } from 'react';
 import {
   Platform, ScrollView, StyleSheet, View,
@@ -70,11 +70,12 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     },
   };
 
-  // useEffect(() => {
-  //   if (isLoaded) {
-  //     injectJavaScript(initScript);
-  //   }
-  // }, [content]);
+  useEffect(() => {
+    // reload webview after content change
+    if (readOnly && isLoaded) {
+      injectJavaScript(initScript);
+    }
+  }, [content]);
 
   const injectJavaScript = (script: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

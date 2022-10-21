@@ -22,7 +22,7 @@ const putEditArticle = (set, _get) => async (params: IParamPutEditArticle) => {
     useArticlesStore.getState().actions.getArticleDetail(articleId);
     set((state: IEditArticleState) => {
       state.loading = false;
-    }, 'putEditArticle');
+    }, 'putEditArticleSuccess');
 
     if (!response?.data) {
       showError(response);
@@ -37,7 +37,7 @@ const putEditArticle = (set, _get) => async (params: IParamPutEditArticle) => {
   } catch (error) {
     set((state: IEditArticleState) => {
       state.loading = false;
-    }, 'putEditArticle');
+    }, 'putEditArticleError');
     showError(error);
   }
 };

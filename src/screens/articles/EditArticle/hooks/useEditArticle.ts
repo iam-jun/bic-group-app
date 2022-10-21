@@ -1,4 +1,4 @@
-import { isEqual, isEqualWith } from 'lodash';
+import { isEqual } from 'lodash';
 import { useEffect, useMemo } from 'react';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
@@ -34,8 +34,8 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
   const groupIds = useMemo(() => data.audience?.groupIds?.join?.(','), [data.audience]);
 
   const isHasChange = () => {
-    // const isContentUpdated = article.content !== data.content;
-    const isContentUpdated = !isEqualWith(article.content, data.content);
+    const isContentUpdated = article.content !== data.content;
+    // const isContentUpdated = !isEqualWith(article.content, data.content);
     const isTitleUpdated = article.title !== data.title;
     const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience);
     return isTitleUpdated || isContentUpdated || isAudienceUpdated;
