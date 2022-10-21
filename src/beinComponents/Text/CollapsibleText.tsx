@@ -6,6 +6,7 @@ import {
   StyleProp,
   ViewStyle,
   TouchableWithoutFeedback,
+  StyleSheet,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
@@ -16,6 +17,7 @@ import MarkdownView from '~/beinComponents/MarkdownView';
 import Markdown from '~/beinComponents/Markdown';
 import CopyableView from '../CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
+import spacing from '~/theme/spacing';
 
 export interface CollapsibleTextProps extends TextProps {
   testID?: string;
@@ -29,6 +31,8 @@ export interface CollapsibleTextProps extends TextProps {
   limitMarkdownTypes?: boolean;
   parentCommentId?: string;
   copyEnabled?: boolean;
+  BottomRightComponent?: React.ReactNode | React.ReactElement;
+
   onPress?: () => void;
   onPressAudience?: (audience: any, e?: any) => any;
   onToggleShowTextContent?: () => void;
@@ -47,6 +51,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   limitMarkdownTypes,
   parentCommentId,
   copyEnabled,
+  BottomRightComponent,
   onPress,
   onPressAudience,
   onToggleShowTextContent,
@@ -117,15 +122,18 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
       )}
 
       {!!shortContent && (
-        <Text.SubtitleS
-          testID="collapsible_text.markdown.short_content"
-          onPress={_onToggleShowTextContent}
-          color={colors.neutral50}
-        >
-          {contentShowAll
-            ? t('common:text_see_less')
-            : t('common:text_see_more')}
-        </Text.SubtitleS>
+        <View style={styles.row}>
+          <Text.SubtitleM
+            testID="collapsible_text.markdown.short_content"
+            onPress={_onToggleShowTextContent}
+            color={colors.neutral60}
+          >
+            {contentShowAll
+              ? t('common:text_see_less')
+              : t('common:text_see_more')}
+          </Text.SubtitleM>
+            {BottomRightComponent}
+        </View>
       )}
     </View>
   );
@@ -136,15 +144,18 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
         {!shortContent ? content : contentShowAll ? content : shortContent}
       </Text>
       {!!shortContent && (
-        <Text.SubtitleS
-          testID="collapsible_text.show_text"
-          onPress={_onToggleShowTextContent}
-          color={colors.neutral50}
-        >
-          {contentShowAll
-            ? t('common:text_see_less')
-            : t('common:text_see_more')}
-        </Text.SubtitleS>
+        <View style={styles.row}>
+          <Text.SubtitleM
+            testID="collapsible_text.show_text"
+            onPress={_onToggleShowTextContent}
+            color={colors.neutral60}
+          >
+            {contentShowAll
+              ? t('common:text_see_less')
+              : t('common:text_see_more')}
+          </Text.SubtitleM>
+            {BottomRightComponent}
+        </View>
       )}
     </Text>
   );
@@ -165,6 +176,15 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     </WrapperComponent>
   );
 };
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: spacing.padding.base,
+  },
+});
 
 const CollapsibleText = memo(_CollapsibleText);
 CollapsibleText.whyDidYouRender = true;

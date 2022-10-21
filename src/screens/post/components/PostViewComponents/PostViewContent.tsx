@@ -18,6 +18,8 @@ import { escapeMarkDown } from '~/utils/formatData';
 import spacing from '~/theme/spacing';
 import PostVideoPlayer from '../PostVideoPlayer';
 import LinkPreview from '~/components/LinkPreview';
+import appConfig from '~/configs/appConfig';
+import ContentInterestedUserCount from '~/components/ContentView/components/ContentInterestedUserCount';
 
 export interface PostViewContentProps {
   postId: string;
@@ -31,6 +33,7 @@ export interface PostViewContentProps {
   isDraft?: boolean;
   mentions?: any;
   linkPreview?: ILinkPreview;
+  totalUsersSeen?: number;
   onPressMarkSeenPost?: () => void;
 }
 
@@ -46,6 +49,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isDraft,
   mentions,
   linkPreview,
+  totalUsersSeen,
   onPressMarkSeenPost,
 }: PostViewContentProps) => {
   const { rootNavigation } = useRootNavigation();
@@ -57,6 +61,15 @@ const PostViewContent: FC<PostViewContentProps> = ({
       );
     }
   }).current;
+
+  const renderInterestedUser = () => (
+    <ContentInterestedUserCount
+      id={postId}
+      interestedUserCount={totalUsersSeen}
+      style={styles.interestedUserCount}
+      showShouldDivider={false}
+    />
+  );
 
   const renderContent = () => {
     if (isLite) {
@@ -81,6 +94,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               useMarkdownIt
               limitMarkdownTypes
               mentions={mentions}
+              BottomRightComponent={renderInterestedUser()}
               onPressAudience={onPressMentionAudience}
               onToggleShowTextContent={onPressMarkSeenPost}
             />
@@ -106,14 +120,15 @@ const PostViewContent: FC<PostViewContentProps> = ({
       <CollapsibleText
         testID="post_view_content"
         content={content}
-        limitLength={400}
-        shortLength={400}
+        limitLength={appConfig.limitPostContentLength}
+        shortLength={appConfig.shortPostContentLength}
         useMarkdown
         toggleOnPress
         copyEnabled
         mentions={mentions}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
+        BottomRightComponent={renderInterestedUser()}
       />
     );
   };
@@ -172,6 +187,13 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: spacing.borderRadius.small,
+  },
+  interestedUserCount: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingHorizontal: 0,
+    margin: 0,
+    alignItems: 'flex-end',
   },
 });
 
