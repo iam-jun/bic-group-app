@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated, {
-  Layout,
+  CurvedTransition,
   LightSpeedInLeft,
   ZoomIn,
 } from 'react-native-reanimated';
@@ -52,7 +52,11 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
   const renderItem = (item: any) => {
     const isActive = selecting?.id === item?.id;
     return (
-      <Animated.View key={`move_group_target_${item?.id}`} entering={LightSpeedInLeft} layout={Layout.springify()}>
+      <Animated.View
+        key={`move_group_target_${item?.id}`}
+        entering={LightSpeedInLeft}
+        layout={CurvedTransition}
+      >
         <TouchableOpacity
           style={[
             styles.itemContainer,
@@ -67,7 +71,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
           >
             {item?.name}
           </Text>
-          <View style={{ minWidth: 20, minHeight: 20 }}>
+          <View style={styles.activeItem}>
             {isActive && (
               <Animated.View entering={ZoomIn}>
                 <Icon icon="Check" tintColor={colors.neutral40} />
@@ -124,6 +128,7 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       borderWidth: 1,
     },
+    activeItem: { minWidth: 20, minHeight: 20 },
   });
 };
 
