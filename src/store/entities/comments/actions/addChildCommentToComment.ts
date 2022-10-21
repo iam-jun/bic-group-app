@@ -13,10 +13,10 @@ const addChildCommentToComment = (_set, get) => (payload: IAddChildCommentToComm
   const commentData = { ...comments[commentId] };
   const child = commentData.child?.list || [];
   const newChild = isAddFirst ? [...childComments, ...child] : child.concat(childComments) || [];
+
   if (shouldAddChildrenCount) {
     commentData.totalReply = (commentData.totalReply || 0) + 1;
   }
-  commentData.child.list = newChild;
   const newCommentData = {
     ...commentData,
     child: {
@@ -24,6 +24,7 @@ const addChildCommentToComment = (_set, get) => (payload: IAddChildCommentToComm
       list: newChild,
     },
   };
+
   actions.addToComments([newCommentData, ...childComments]);
 };
 

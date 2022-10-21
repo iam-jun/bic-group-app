@@ -45,6 +45,7 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import ContentInterestedUserCount from '~/components/ContentView/components/ContentInterestedUserCount';
 import useCommonController from '~/screens/store';
+import appConfig from '~/configs/appConfig';
 
 export interface PostViewProps {
   style?: any;
@@ -251,6 +252,9 @@ const _PostView: FC<PostViewProps> = ({
     );
   }
 
+  const shouldShowInterested = highlight?.length < appConfig.shortPostContentLength
+  || content?.length < appConfig.shortPostContentLength || isPostDetail;
+
   return (
     <TouchableOpacity
       testID={testID}
@@ -287,8 +291,9 @@ const _PostView: FC<PostViewProps> = ({
           isPostDetail={isPostDetail}
           onPressMarkSeenPost={onPressMarkSeenPost}
           linkPreview={linkPreview}
+          totalUsersSeen={totalUsersSeen}
         />
-        {!isLite && (
+        {!isLite && shouldShowInterested && (
           <ContentInterestedUserCount id={postId} interestedUserCount={totalUsersSeen} />
         )}
         {!isLite && !!canReact && (
