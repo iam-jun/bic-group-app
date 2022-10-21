@@ -175,20 +175,11 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         {renderUiLevelLines()}
         {renderToggle()}
         <View style={[styles.itemContainer, groupStyle]}>
-          <View>
-            <View>
-              <Avatar variant={iconVariant} source={icon} />
-              {!!showPrivacyAvatar && (
-                <View style={styles.privacyAvatar}>
-                  <Icon
-                    icon={privacyIcon}
-                    size={12}
-                    tintColor={theme.colors.white}
-                  />
-                </View>
-              )}
-            </View>
-          </View>
+          <Avatar
+            variant={iconVariant}
+            source={icon}
+            privacyIcon={!!showPrivacyAvatar ? privacyIcon : undefined}
+          />
           <View style={styles.textContainer}>
             <Text.BodyMMedium
               style={styles.textName}
@@ -278,17 +269,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     privacyTitle: {
       marginLeft: spacing.margin.tiny,
-    },
-    privacyAvatar: {
-      width: 20,
-      height: 20,
-      position: 'absolute',
-      bottom: -2,
-      right: -2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: colors.blue50,
-      borderRadius: spacing.borderRadius.circle,
     },
     btnMenu: {
       marginRight: spacing.margin.tiny,

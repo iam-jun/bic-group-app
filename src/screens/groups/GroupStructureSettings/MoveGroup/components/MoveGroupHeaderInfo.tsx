@@ -9,7 +9,6 @@ import { IGroup } from '~/interfaces/IGroup';
 import { getAllChildrenName } from '~/screens/groups/helper';
 import MoveLine from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveLine';
 import spacing from '~/theme/spacing';
-import Icon from '~/baseComponents/Icon';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
@@ -22,7 +21,7 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
 }: MoveGroupHeaderInfoProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const { privacy, icon, name } = group || {};
   const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
@@ -61,58 +60,35 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
     return renderGroupName();
   };
 
-  const renderAvatar = () => (
-    <View>
-      <Avatar.Base source={icon} />
-      <View style={styles.iconPrivacy}>
-        <Icon size={spacing.margin.base} icon={privacyIcon} tintColor={theme.colors.white} />
-      </View>
-    </View>
-  );
-
   return (
     <View style={styles.container}>
       <MoveLine />
       <View style={styles.groupInfo}>
-        {renderAvatar()}
+        <Avatar.Base source={icon} privacyIcon={privacyIcon} />
         {renderGroupInfo()}
       </View>
     </View>
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      marginHorizontal: spacing.margin.extraLarge,
-      marginBottom: spacing.margin.big,
-    },
-    flex1: { flex: 1 },
-    groupInfo: {
-      flex: 1,
-      marginVertical: spacing.margin.large,
-      paddingRight: spacing.padding.large,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    iconPrivacy: {
-      width: 20,
-      height: 20,
-      position: 'absolute',
-      bottom: -2,
-      right: -2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: colors.blue50,
-      borderRadius: spacing.borderRadius.circle,
-    },
-    textName: {
-      flex: 1,
-      marginLeft: spacing.margin.base,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    marginHorizontal: spacing.margin.extraLarge,
+    marginBottom: spacing.margin.big,
+  },
+  flex1: { flex: 1 },
+  groupInfo: {
+    flex: 1,
+    marginVertical: spacing.margin.large,
+    paddingRight: spacing.padding.large,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textName: {
+    flex: 1,
+    marginLeft: spacing.margin.base,
+  },
+});
 
 export default MoveGroupHeaderInfo;
