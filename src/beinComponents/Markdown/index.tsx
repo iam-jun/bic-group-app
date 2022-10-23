@@ -10,10 +10,17 @@ import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 import { sizes } from '~/theme/dimension';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { concatStyles } from './utils/utils';
 
 const DeviceHeight = Dimensions.get('window').height;
 
-const Markdown = ({ value, ...rest }) => {
+interface Props {
+  value: string;
+  limitMarkdownTypes?: boolean;
+  [x: string]: any;
+}
+
+const Markdown = ({ value, limitMarkdownTypes, ...rest }: Props) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
@@ -23,24 +30,8 @@ const Markdown = ({ value, ...rest }) => {
     fontFamily: fontFamilies.BeVietnamProLight,
     fontSize: sizes.mdParagraph,
   };
-  const textStyles = {
-    code: {
-      alignSelf: 'center',
-      backgroundColor: colors.gray1,
-      fontFamily: fontFamilies.JetBrainsMono,
-    },
-    codeBlock: {
-      fontFamily: fontFamilies.JetBrainsMono,
-    },
-    del: {
-      textDecorationLine: 'line-through',
-    },
-    emph: {
-      fontFamily: fontFamilies.BeVietnamProLightItalic,
-    },
-    error: {
-      color: colors.danger,
-    },
+
+  const headingStyles = {
     heading1: {
       fontSize: sizes.mdH1,
       fontFamily: fontFamilies.BeVietnamProMedium,
@@ -83,6 +74,27 @@ const Markdown = ({ value, ...rest }) => {
     heading6Text: {
       paddingBottom: 8,
     },
+  };
+
+  let textStyles = {
+    code: {
+      alignSelf: 'center',
+      backgroundColor: colors.gray1,
+      fontFamily: fontFamilies.JetBrainsMono,
+    },
+    codeBlock: {
+      fontFamily: fontFamilies.JetBrainsMono,
+    },
+    del: {
+      textDecorationLine: 'line-through',
+    },
+    emph: {
+      fontFamily: fontFamilies.BeVietnamProLightItalic,
+    },
+    error: {
+      color: colors.danger,
+    },
+   
     link: {
       color: colors.blue50,
     },
@@ -102,6 +114,7 @@ const Markdown = ({ value, ...rest }) => {
       fontWeight: '700',
     },
   };
+  
   const blockStyles = {
     adjacentParagraph: {
       marginTop: 6,
@@ -115,6 +128,7 @@ const Markdown = ({ value, ...rest }) => {
       color: 'rgba(63,67,80,0.5)',
     },
   };
+
 
   const hideModal = () => dispatch(modalActions.hideModal());
 
@@ -144,6 +158,8 @@ const Markdown = ({ value, ...rest }) => {
     );
   };
 
+  const _textStyles = limitMarkdownTypes ? textStyles : {...textStyles, ...headingStyles};
+
   return (
     <Md
       autolinkedUrlSchemes={['http', 'https', 'ftp', 'mailto', 'tel']}
@@ -153,7 +169,8 @@ const Markdown = ({ value, ...rest }) => {
       value={value}
       baseTextStyle={baseTextStyle}
       blockStyles={blockStyles}
-      textStyles={textStyles}
+      textStyles={_textStyles}
+      limitMarkdownTypes={limitMarkdownTypes}
       showModal={showModal}
       {...rest}
     />
