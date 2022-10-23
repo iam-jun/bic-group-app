@@ -15,7 +15,7 @@ import postKeySelector from '~/storeRedux/post/keySelector';
 import postActions from '~/storeRedux/post/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { checkExpiration } from '../helper/postUtils';
-import { timeSuggest } from '~/constants/importantTimeSuggest';
+import { EXPIRES_ON_TYPE, timeSuggest } from '~/constants/importantTimeSuggest';
 
 const MAX_DAYS = 7;
 const EXPIRES_ON_ENUM = { NEVER: -1, CUSTOM: 0 };
@@ -117,12 +117,12 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       const newImportant = { ...sImportant, chosenSuggestedTime: timeSuggest[0].title };
       newImportant.active = !sImportant.active;
       if (!newImportant.expiresTime) {
-        newImportant.expiresTime = getMinDate(true).toISOString();
+        newImportant.expiresTime = getMinDate(true, 1, EXPIRES_ON_TYPE.DAY).toISOString();
       }
       if (newImportant.active && newImportant.expiresTime) {
         const date = new Date(newImportant.expiresTime);
         if (date.getTime() < getMinDate().getTime()) {
-          newImportant.expiresTime = getMinDate(true).toISOString();
+          newImportant.expiresTime = getMinDate(true, 1, EXPIRES_ON_TYPE.DAY).toISOString();
         }
       }
       if (!newImportant.active) {
@@ -225,7 +225,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   };
 
   const handleChangeSuggestDate = (chooseDate: any) => {
-    const { title, expiresOn } = chooseDate || {};
+    const { title, expiresOn, type } = chooseDate || {};
     const newImportant = { ...sImportant, chosenSuggestedTime: title };
     switch (expiresOn) {
       case EXPIRES_ON_ENUM.NEVER:
@@ -241,7 +241,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       default:
         setCustomExpire(false);
         newImportant.neverExpires = false;
-        newImportant.expiresTime = getMinDate(true, expiresOn).toISOString();
+        newImportant.expiresTime = getMinDate(true, expiresOn, type).toISOString();
         break;
     }
     setImportant(newImportant);
@@ -271,11 +271,21 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     return 'setCreatePostSettings';
   };
 
-  const getMinDate = (isCustom?: boolean, expiresOnDay?: number) => {
+  const getMinDate = (isCustom?: boolean, expiresOnDay?: number, type?: string) => {
     const currentDate = new Date();
-    if (isCustom) {
-      const defaultDate = currentDate.setDate(currentDate.getDate() + (expiresOnDay || 1));
-      return new Date(defaultDate);
+    if (isCustom && type) {
+      let defaultDate = 0;
+      switch (type) {
+        case EXPIRES_ON_TYPE.DAY:
+          defaultDate = currentDate.setDate(currentDate.getDate() + (expiresOnDay || 1));
+          return new Date(defaultDate);
+        case EXPIRES_ON_TYPE.MONTH:
+          defaultDate = currentDate.setMonth(currentDate.getMonth() + 1 + (expiresOnDay || 1));
+          return new Date(defaultDate);
+        default:
+          defaultDate = currentDate.setFullYear(currentDate.getFullYear() + (expiresOnDay || 1));
+          return new Date(defaultDate);
+      }
     }
     const minDate = currentDate.setHours(
       currentDate.getHours() + 1,
