@@ -357,7 +357,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
                 </View>
                 <CollapsibleText
                   useMarkdown
-                  useMarkdownIt
                   limitMarkdownTypes
                   shortLength={200}
                   limitLength={200}

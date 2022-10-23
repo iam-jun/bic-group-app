@@ -33,6 +33,7 @@ import AtMention from './AtMention';
 import Emoji from '~/baseComponents/Emoji';
 import { spacing } from '~/theme';
 import MarkdownImage from './MarkdownImage';
+import { blacklistLimit } from './constant';
 
 export default class Md extends PureComponent {
   static propTypes = {
@@ -56,6 +57,7 @@ export default class Md extends PureComponent {
     textStyles: PropTypes.object,
     theme: PropTypes.object,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    limitMarkdownTypes: PropTypes.bool,
     disableImage: PropTypes.bool,
     disableHashtags: PropTypes.bool,
     disableAtMentions: PropTypes.bool,
@@ -65,7 +67,7 @@ export default class Md extends PureComponent {
     showModal: PropTypes.func,
     onPressAudience: PropTypes.func,
     selector: PropTypes.string,
-    mentions: PropTypes.array,
+    mentions: PropTypes.object,
     dataStore: PropTypes.any,
     dataSelector: PropTypes.any,
     textTestID: PropTypes.string,
@@ -75,6 +77,7 @@ export default class Md extends PureComponent {
     value: '',
     textStyles: {},
     blockStyles: {},
+    limitMarkdownTypes: false,
     disableImage: true,
     disableHashtags: false,
     disableAtMentions: false,
@@ -142,6 +145,9 @@ export default class Md extends PureComponent {
       editedIndicator: this.renderEditedIndicator,
     },
     renderParagraphsInLists: true,
+    unwrapDisallowed: true,
+    disallowedTypes: blacklistLimit,
+    // allowedTypes: this.props.limitMarkdownTypes ? allowedTypes : null,
     getExtraPropsForNode: this.getExtraPropsForNode,
   });
 
@@ -258,6 +264,7 @@ export default class Md extends PureComponent {
     const textStyle = this.props.blockStyles[`heading${level}Text`];
     const style = getStyleSheet(this.props.theme);
 
+
     return (
       <View style={[containerStyle,style.paragraph]}>
         <Text style={textStyle}>{children}</Text>
@@ -304,8 +311,8 @@ export default class Md extends PureComponent {
   }
 
   renderListItem = ({ children, context, ...otherProps }) => {
-    const level = context.filter((type) => type === 'list').length;
-
+    const level = this.props.flatList ? 1 : context.filter((type) => type === 'list').length;
+    
     return (
       <MarkdownListItem
         bulletStyle={this.props.baseTextStyle}

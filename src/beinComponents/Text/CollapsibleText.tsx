@@ -114,6 +114,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
               ? 'collapsible_text.level_2.content'
               : 'collapsible_text.level_1.content'
           }
+          limitMarkdownTypes={limitMarkdownTypes}
           onPressAudience={onPressAudience}
           value={
             !shortContent ? content : contentShowAll ? content : shortContent
