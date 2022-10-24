@@ -29,7 +29,8 @@
         android:hardwareAccelerated="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
-        android:requestLegacyExternalStorage="true">
+        android:requestLegacyExternalStorage="true"
+        tools:targetApi="n">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
