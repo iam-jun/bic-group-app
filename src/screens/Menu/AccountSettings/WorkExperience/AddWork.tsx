@@ -386,6 +386,7 @@ const createStyles = (theme: ExtendedTheme) => {
       flex: 1,
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
+      color: colors.neutral80,
     },
     textInputFocus: {
       borderColor: colors.purple50,
