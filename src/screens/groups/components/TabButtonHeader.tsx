@@ -47,7 +47,7 @@ const TabButtonHeader = ({
       style={styles.container}
       contentContainerStyle={styles.buttonContainer}
     >
-      {!!onPressAbout && (
+      {onPressAbout && (
         <>
           <PillTabButton useI18n testID="tab_button_header.about_btn" size="medium" onPress={onPressAbout}>
             groups:group_content:btn_about
@@ -55,7 +55,7 @@ const TabButtonHeader = ({
           <ViewSpacing width={spacing.margin.small} />
         </>
       )}
-      {!!isMember && (
+      {isMember && (
         <>
           <PillTabButton useI18n testID="tab_button_header.your_groups" size="medium" onPress={onPressYourGroups}>
             groups:group_content:btn_your_groups
@@ -63,7 +63,7 @@ const TabButtonHeader = ({
           <ViewSpacing width={spacing.margin.small} />
         </>
       )}
-      {!!onPressDiscover && (
+      {onPressDiscover && (
         <>
           <PillTabButton useI18n testID="tab_button_header.discover_btn" size="medium" onPress={onPressDiscover}>
             groups:group_content:btn_browse
@@ -71,7 +71,7 @@ const TabButtonHeader = ({
           <ViewSpacing width={spacing.margin.small} />
         </>
       )}
-      {!!onPressMembers && (
+      {onPressMembers && (
         <PillTabButton useI18n testID="tab_button_header.members_btn" size="medium" onPress={onPressMembers}>
           groups:group_content:btn_members
         </PillTabButton>
