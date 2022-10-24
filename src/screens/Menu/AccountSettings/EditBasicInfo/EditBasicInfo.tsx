@@ -95,9 +95,8 @@ const EditBasicInfo = () => {
         birthday: birthdayState,
         language: languageState,
         relationshipStatus: relationshipState,
-      }),
+      }, null, () => rootNavigation.goBack()),
     );
-    rootNavigation.goBack();
   };
 
   const onGenderItemPress = (item: IGenderItem) => {
