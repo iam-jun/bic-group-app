@@ -191,6 +191,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
           allowsFullscreenVideo
           saveFormDataDisabled
           hideKeyboardAccessoryView
+          androidHardwareAccelerationDisabled
           scrollEnabled={!readOnly}
           nestedScrollEnabled={false}
           userAgent={userAgent}

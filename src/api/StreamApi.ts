@@ -259,6 +259,8 @@ export const streamApiConfig = {
       limit: params?.limit || 1,
       offset: params?.offset || 0,
       postId: params?.postId || '',
+      childLimit: params?.childLimit || 1,
+      targetChildLimit: params?.targetChildLimit || 10,
     },
   }),
   getUsersInterestedPost: (
@@ -284,7 +286,10 @@ export const streamApiConfig = {
   ): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${id}`,
-    params,
+    params: {
+      ...params,
+      childCommentLimit: params?.childCommentLimit || 10,
+    },
   }),
 };
 
@@ -403,6 +408,7 @@ const streamApi = {
     const requestParams = {
       commentLimit: 10,
       withComment: true,
+      childCommentLimit: 10,
       ...params,
     };
     return withHttpRequestPromise(streamApiConfig.getPostDetail, requestParams);

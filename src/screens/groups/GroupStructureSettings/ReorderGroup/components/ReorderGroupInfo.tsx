@@ -34,12 +34,7 @@ const ReorderGroupInfo: FC<ReorderGroupInfoProps> = ({
 
   const renderParentGroupBlock = () => (
     <View style={styles.groupInfo}>
-      <View>
-        <Avatar.Base source={icon} />
-        <View style={styles.iconPrivacy}>
-          <Icon size={spacing.margin.base} icon={privacyIcon} tintColor={theme.colors.white} />
-        </View>
-      </View>
+      <Avatar.Base source={icon} privacyIcon={privacyIcon} />
       <Text.BodyMMedium
         numberOfLines={2}
         style={styles.textName}
@@ -74,17 +69,6 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     textInfo: {
       marginHorizontal: spacing.margin.small,
-    },
-    iconPrivacy: {
-      width: 20,
-      height: 20,
-      position: 'absolute',
-      bottom: -2,
-      right: -2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: colors.blue50,
-      borderRadius: spacing.borderRadius.circle,
     },
     groupInfo: {
       marginVertical: spacing.margin.large,

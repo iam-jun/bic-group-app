@@ -657,7 +657,7 @@
   "input": {
     "search": "Tìm kiếm người để trò chuyện...",
     "search_group_people": "Tìm kiếm nhóm hoặc người...",
-    "search_group": "Tìm kiếm nhóm",
+    "search_group": "Tìm kiếm nhóm...",
     "search_post": "Tìm kiếm bài viết...",
     "search_country": "Tìm kiếm Đất nước",
     "search_location": "Tìm kiếm Tỉnh/Thành phố"
@@ -665,6 +665,7 @@
   "groups": {
     "group_content": {
       "btn_group_tree": "Cấu trúc nhóm",
+      "btn_your_groups": "Nhóm của bạn",
       "btn_browse": "Khám phá nhóm",
       "btn_post": "Bài đăng",
       "btn_channel": "Kênh",
