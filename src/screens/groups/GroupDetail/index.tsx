@@ -283,7 +283,6 @@ const GroupDetail = (props: any) => {
           onScroll={onScrollHandler}
           onGetInfoLayout={onGetInfoLayout}
           infoDetail={groupInfo}
-          isMember={isMember}
           communityName={communityName}
         />
       );
@@ -325,7 +324,13 @@ const GroupDetail = (props: any) => {
           showStickyHeight={groupInfoHeight}
           stickyHeaderComponent={
             !showPrivate && (
-              <GroupTabHeader groupId={groupId} isMemberCommunity={isMemberCommunity} />
+              <GroupTabHeader
+                groupId={groupId}
+                isMemberCommunity={isMemberCommunity}
+                isMember={isMember}
+                communityId={communityId}
+                teamName={groupInfo.teamName}
+              />
             )
           }
           onPressBack={onGoBack}

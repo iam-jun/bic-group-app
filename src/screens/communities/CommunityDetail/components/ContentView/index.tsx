@@ -1,7 +1,6 @@
 import { View, StyleSheet, RefreshControl } from 'react-native';
 import React, { useCallback } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import Animated from 'react-native-reanimated';
 
 import { isEmpty } from 'lodash';
@@ -11,8 +10,6 @@ import PostItem from '~/beinComponents/list/items/PostItem';
 import spacing from '~/theme/spacing';
 import CommunityTabHeader from '../CommunityTabHeader';
 import InfoHeader from '../../../../groups/components/InfoHeader';
-import CommunityJoinedGroupTree from '~/screens/groups/components/CommunityJoinedGroupTree';
-import modalActions from '~/storeRedux/modal/actions';
 import PrivateWelcome from '../PrivateWelcome';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
@@ -46,7 +43,7 @@ const _ContentView = ({
   const isMounted = useMounted();
 
   const {
-    id, name, teamName, groupId,
+    id, teamName, groupId,
   } = community;
 
   const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
@@ -55,20 +52,6 @@ const _ContentView = ({
 
   const isLoadingPosts = (!isMounted || (isEmpty(posts) && loading)) && !isRefreshingPost;
   const isLoadingMore = isMounted && !isEmpty(posts) && loading;
-
-  const dispatch = useDispatch();
-
-  const onPressYourGroups = () => {
-    // rootNavigation.navigate(
-    //   groupStack.yourGroups, { communityId },
-    // );
-    dispatch(modalActions.showModal({
-      isOpen: true,
-      isFullScreen: true,
-      titleFullScreen: name,
-      ContentComponent: (<CommunityJoinedGroupTree communityId={id} teamName={teamName} />),
-    }));
-  };
 
   const loadMoreData = () => {
     if (communityPost.hasNextPage) { timelineActions.getPosts(groupId); }
@@ -81,12 +64,12 @@ const _ContentView = ({
 
   const renderHeader = useCallback(() => (
     <View onLayout={onButtonLayout}>
-      <InfoHeader infoDetail={community} isMember={isMember} onPressGroupTree={onPressYourGroups} />
-      <CommunityTabHeader communityId={id} isMember={isMember} />
+      <InfoHeader infoDetail={community} />
+      <CommunityTabHeader communityId={id} isMember={isMember} teamName={teamName} />
       <CommunityJoinCancelButton community={community} isMember={isMember} />
       {isLoadingPosts && renderLoading()}
     </View>
-  ), [id, community, isMember, onButtonLayout, onPressYourGroups]);
+  ), [id, teamName, isLoadingPosts, community, isMember, onButtonLayout]);
 
   if (isPrivateCommunity) {
     return (

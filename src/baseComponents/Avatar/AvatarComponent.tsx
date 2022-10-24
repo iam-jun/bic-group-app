@@ -4,13 +4,16 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { ImageStyle } from 'react-native-fast-image';
+
 import Icon from '~/baseComponents/Icon';
 import Image, { ImageProps } from '~/beinComponents/Image';
 import { IconType } from '~/resources/icons';
 import dimension from '~/theme/dimension';
-
 import spacing, { borderRadius } from '~/theme/spacing';
 import Text from '../../beinComponents/Text';
+import {
+  ACTION_CONTAINER_SIZES, ACTION_ICON_SIZES, AVATAR_STYLES, PRIVACY_ICON_SIZES, PRIVACY_ICON_VIEW_SIZES,
+} from './constants';
 
 export type AvatarType =
   | 'tiny'
@@ -42,6 +45,7 @@ export interface AvatarProps extends ImageProps {
   customSize?: number;
   customStyle?: StyleProp<ImageStyle>;
   backgroundColor?: string;
+  privacyIcon?: IconType;
   onPressAction?: () => void;
 }
 
@@ -64,19 +68,23 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   customSize,
   customStyle,
   backgroundColor,
+  privacyIcon,
   onPressAction,
   ...props
 }: AvatarProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = creatStyle(theme);
 
-  const avatarSize = customSize || dimension?.avatarSizes[variant] || 24;
+  const avatarSize = customSize || dimension.avatarSizes[variant] || 24;
   const _borderWidth = borderWidth || dimension.avatarBorderWidth[variant] || 2;
   const _backgroundColor = backgroundColor || colors.neutral;
-  const avatarContainerStyle: StyleProp<ViewStyle> = customStyle || styles[variant];
-  let avatarStyle: StyleProp<ImageStyle> = customStyle || styles[variant];
+  const avatarContainerStyle: StyleProp<ViewStyle> = customStyle || AVATAR_STYLES[variant];
+  let avatarStyle: StyleProp<ImageStyle> = customStyle || AVATAR_STYLES[variant];
   const borderStyle = showBorder ? { borderWidth: _borderWidth, borderColor: borderColor || colors.gray1 } : {};
+
+  const styles = createStyles({
+    theme, avatarSize, badgeBottom, badgeCheckSize, variant,
+  });
 
   if (isRounded) {
     avatarStyle = [
@@ -86,32 +94,17 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   }
 
   const renderAction = () => {
-    if (!onPressAction) {
-      return null;
-    }
-
-    const actionContainerSize = 20;
-    const actionIconSize = 12;
+    if (!onPressAction) return null;
 
     return (
       <View
         testID="avatar.action_icon"
-        style={{
-          position: 'absolute',
-          top: -(spacing?.margin.tiny || 4),
-          right: -(spacing?.margin.tiny || 4),
-          width: actionContainerSize,
-          height: actionContainerSize,
-          borderRadius: actionContainerSize / 2,
-          backgroundColor: colors.neutral2,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        style={styles.actionView}
       >
         {actionIcon && (
           <Icon
             testID="avatar.action_icon.button"
-            size={actionIconSize}
+            size={ACTION_ICON_SIZES}
             icon={actionIcon}
             tintColor={colors.neutral40}
             onPress={onPressAction}
@@ -122,36 +115,18 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   };
 
   const renderStatus = () => {
-    if (!status) {
-      return null;
-    }
-
-    // todo update in specific case
-    const statusSize = avatarSize / 3;
-    const statusColor = colors.success;
+    if (!status) return null;
 
     return (
       <View
         testID="avatar.status"
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          width: statusSize,
-          height: statusSize,
-          borderRadius: statusSize / 2,
-          backgroundColor: statusColor,
-          borderWidth: 1,
-          borderColor: colors.white,
-        }}
+        style={styles.statusView}
       />
     );
   };
 
   const renderBadge = () => {
-    if (!badge) {
-      return null;
-    }
+    if (!badge) return null;
 
     // todo update in specific case
     const badgeContainerSize = avatarSize / 2;
@@ -160,10 +135,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
     return (
       <Icon
         testID="avatar.badge"
-        style={[styles.badge, {
-          top: badgeBottom ? undefined : 0,
-          bottom: badgeBottom ? 0 : undefined,
-        }]}
+        style={[styles.badge, styles.iconBadge]}
         backgroundColor={colors.white}
         size={badgeSize}
         icon={badge}
@@ -172,32 +144,40 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   };
 
   const renderBadgeCheck = () => {
-    if (!badgeCheck) {
-      return null;
-    }
+    if (!badgeCheck) return null;
+
     return (
       <View
         testID="avatar.badge_check"
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          width: badgeCheckSize,
-          height: badgeCheckSize,
-          borderRadius: badgeCheckSize / 2,
-          backgroundColor: colors.success,
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderWidth: 1,
-          borderColor: colors.white,
-          shadowOffset: { width: 0, height: 1 },
-          shadowColor: '#000',
-          shadowOpacity: 0.1,
-          shadowRadius: 1,
-          elevation: 2,
-        }}
+        style={styles.badgeCheckView}
       >
         <Icon size={iconCheckSize} icon="Check" tintColor={colors.neutral80} />
+      </View>
+    );
+  };
+
+  const renderCounter = () => {
+    if (!counter) return null;
+
+    return (
+      <View style={[avatarStyle, styles.textStyle]}>
+        <Text.BadgeXS color={theme.colors.white}>
+          {`+${counter}`}
+        </Text.BadgeXS>
+      </View>
+    );
+  };
+
+  const renderPrivacy = () => {
+    if (!privacyIcon) return null;
+
+    return (
+      <View style={styles.privacyAvatarView}>
+        <Icon
+          icon={privacyIcon}
+          size={PRIVACY_ICON_SIZES[variant]}
+          tintColor={theme.colors.white}
+        />
       </View>
     );
   };
@@ -220,61 +200,32 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           source={source}
           {...props}
         />
-        {counter ? (
-          <View style={[avatarStyle, styles.textStyle]}>
-            <Text.BadgeXS color={theme.colors.white}>
-              +
-              {counter}
-            </Text.BadgeXS>
-          </View>
-        ) : null}
+        {renderCounter()}
         {renderStatus()}
         {renderAction()}
         {renderBadge()}
         {renderBadgeCheck()}
+        {renderPrivacy()}
       </View>
     </View>
   );
 };
 
-const creatStyle = (theme: ExtendedTheme) => {
+const createStyles = ({
+  theme,
+  avatarSize,
+  badgeBottom,
+  badgeCheckSize,
+  variant,
+}: {
+  theme: ExtendedTheme;
+  avatarSize: number;
+  badgeBottom: boolean;
+  badgeCheckSize: number
+  variant?: AvatarType;
+}) => {
   const { colors } = theme;
   return StyleSheet.create({
-    tiny: {
-      width: dimension.avatarSizes.tiny,
-      height: dimension.avatarSizes.tiny,
-      borderRadius: (dimension.avatarSizes.tiny || 16) / 2,
-    },
-    small: {
-      width: dimension.avatarSizes.small,
-      height: dimension.avatarSizes.small,
-      borderRadius: spacing.borderRadius.small,
-    },
-    xSmall: {
-      width: dimension.avatarSizes.xSmall,
-      height: dimension.avatarSizes.xSmall || 28,
-      borderRadius: spacing.borderRadius.small,
-    },
-    base: {
-      width: dimension.avatarSizes.base,
-      height: dimension.avatarSizes.base,
-      borderRadius: spacing.borderRadius.small,
-    },
-    medium: {
-      width: dimension.avatarSizes.medium,
-      height: dimension.avatarSizes.medium,
-      borderRadius: spacing.borderRadius.small,
-    },
-    large: {
-      width: dimension.avatarSizes.large,
-      height: dimension.avatarSizes.large,
-      borderRadius: spacing.borderRadius.small,
-    },
-    xLarge: {
-      width: dimension.avatarSizes.xLarge,
-      height: dimension.avatarSizes.xLarge || 90,
-      borderRadius: spacing.borderRadius.small,
-    },
     textStyle: {
       backgroundColor: colors.neutral60,
       position: 'absolute',
@@ -288,6 +239,61 @@ const creatStyle = (theme: ExtendedTheme) => {
       padding: 2,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    actionView: {
+      position: 'absolute',
+      top: -spacing.margin.tiny,
+      right: -spacing.margin.tiny,
+      width: ACTION_CONTAINER_SIZES,
+      height: ACTION_CONTAINER_SIZES,
+      borderRadius: ACTION_CONTAINER_SIZES / 2,
+      backgroundColor: colors.neutral2,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    statusView: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      width: avatarSize / 3,
+      height: avatarSize / 3,
+      borderRadius: (avatarSize / 3) / 2,
+      backgroundColor: colors.success,
+      borderWidth: 1,
+      borderColor: colors.white,
+    },
+    iconBadge: {
+      top: badgeBottom ? undefined : 0,
+      bottom: badgeBottom ? 0 : undefined,
+    },
+    badgeCheckView: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      width: badgeCheckSize,
+      height: badgeCheckSize,
+      borderRadius: badgeCheckSize / 2,
+      backgroundColor: colors.success,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: colors.white,
+      shadowOffset: { width: 0, height: 1 },
+      shadowColor: '#000',
+      shadowOpacity: 0.1,
+      shadowRadius: 1,
+      elevation: 2,
+    },
+    privacyAvatarView: {
+      width: PRIVACY_ICON_VIEW_SIZES[variant],
+      height: PRIVACY_ICON_VIEW_SIZES[variant],
+      position: 'absolute',
+      bottom: -2,
+      right: -2,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.blue50,
+      borderRadius: spacing.borderRadius.circle,
     },
   });
 };

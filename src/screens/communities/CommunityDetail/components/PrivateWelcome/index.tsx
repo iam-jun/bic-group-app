@@ -48,7 +48,7 @@ const PrivateWelcome = ({
       }
     >
       <View onLayout={onButtonLayout}>
-        <InfoHeader infoDetail={community} isMember={isMember} />
+        <InfoHeader infoDetail={community} />
         <CommunityJoinCancelButton style={styles.btnJoin} community={community} isMember={isMember} />
       </View>
 

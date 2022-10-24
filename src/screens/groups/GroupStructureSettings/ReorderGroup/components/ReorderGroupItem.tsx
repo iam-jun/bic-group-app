@@ -41,12 +41,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
         <View style={styles.drag}>
           <Icon size={spacing.margin.base} icon="Bars" tintColor={colors.white} />
         </View>
-        <View>
-          <Avatar.Base source={icon} />
-          <View style={styles.iconPrivacy}>
-            <Icon size={spacing.margin.base} icon={privacyIcon} tintColor={colors.white} />
-          </View>
-        </View>
+        <Avatar.Base source={icon} privacyIcon={privacyIcon} />
         <Text.BodyMMedium
           numberOfLines={1}
           style={styles.textName}
@@ -73,17 +68,6 @@ const createStyle = (theme: ExtendedTheme) => {
       height: '100%',
       flexDirection: 'row',
       alignItems: 'center',
-    },
-    iconPrivacy: {
-      width: 20,
-      height: 20,
-      position: 'absolute',
-      bottom: -2,
-      right: -2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: colors.blue50,
-      borderRadius: spacing.borderRadius.circle,
     },
     textName: { flex: 1, marginLeft: spacing.margin.small },
     drag: {
