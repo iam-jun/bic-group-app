@@ -296,6 +296,7 @@ export interface IRequestGetPostComment {
   postId: string;
   parentId?: string;
   childLimit?: number;
+  targetChildLimit?: number;
 }
 
 export interface IPayloadGetCommentsById {
