@@ -15,28 +15,30 @@ import spacing from '~/theme/spacing';
 
 export interface CommentInputFooterProps {
   useTestID?: boolean;
+  loading?: boolean;
+  disabledBtnSend?: boolean;
+  isHideBtnSend?: boolean;
+  isDisplayNone?: boolean;
+
   onPressIcon?: () => void;
   onPressFile?: (e: any) => void;
   onPressImage?: (e: any) => void;
   onPressCamera?: (e: any) => void;
   onPressEmoji?: (e: any) => void;
   onPressSend?: (e: any) => void;
-  loading?: boolean;
-  disabledBtnSend?: boolean;
-  isHideBtnSend?: boolean;
-  isDisplayNone?: boolean;
 }
 
 const CommentInputFooter: FC<CommentInputFooterProps> = ({
   useTestID,
-  onPressIcon,
-  onPressImage,
-  onPressEmoji,
-  onPressSend,
   loading,
   disabledBtnSend,
   isHideBtnSend,
   isDisplayNone,
+
+  onPressIcon,
+  onPressImage,
+  onPressEmoji,
+  onPressSend,
 }: CommentInputFooterProps) => {
   const showMentionValue = useSharedValue(0);
   const showCommentInputFooter = useSharedValue(0);
