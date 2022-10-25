@@ -1,4 +1,7 @@
-import { IEditArticleAudience, IEditArticleData, IParamPutEditArticle } from '~/interfaces/IArticle';
+import {
+  ICategory, IEditArticleAudience, IEditArticleData, IPayloadPutEditArticle,
+} from '~/interfaces/IArticle';
+import { IArticleCover } from '~/interfaces/IPost';
 import putEditArticle from '~/screens/articles/EditArticle/store/actions/putEditArticle';
 import IBaseState from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -10,9 +13,14 @@ export interface IEditArticleState extends IBaseState {
     setData: (data: IEditArticleData) => void;
     setTitle: (title: string) => void;
     setContent: (content: string) => void;
+    setSummary: (summary: string) => void;
     setAudience: (audience: IEditArticleAudience) => void;
     setMentions: (mentions: any) => void;
-    putEditArticle: (param: IParamPutEditArticle) => void;
+    setCover: (cover?:IArticleCover) => void;
+    setCategories: (categories?: ICategory[]) => void;
+    addCategory: (category: ICategory) => void;
+    removeCategory: (category: ICategory) => void;
+    putEditArticle: (param: IPayloadPutEditArticle) => void;
   };
 }
 
@@ -38,7 +46,6 @@ const initialState = {
       importantExpiredAt: null,
     },
     mentions: {},
-    linkPreview: {},
   },
 };
 
@@ -61,6 +68,11 @@ const useEditArticle = (set, get) => ({
         state.data.content = content;
       }, 'setContent');
     },
+    setSummary: (summary: string) => {
+      set((state: IEditArticleState) => {
+        state.data.summary = summary;
+      }, 'setSummary');
+    },
     setAudience: (audience?:IEditArticleAudience) => {
       set((state: IEditArticleState) => {
         state.data.audience = audience || {} as IEditArticleAudience;
@@ -70,6 +82,34 @@ const useEditArticle = (set, get) => ({
       set((state: IEditArticleState) => {
         state.data.mentions = mentions || {};
       }, 'setMentions');
+    },
+    setCover: (cover?:IArticleCover) => {
+      set((state: IEditArticleState) => {
+        state.data.coverMedia = cover || {};
+      }, 'setCover');
+    },
+    setCategories: (categories?: ICategory[]) => {
+      set((state: IEditArticleState) => {
+        state.data.categories = categories || [];
+      }, 'setCategories');
+    },
+    addCategory: (category: ICategory) => {
+      const selecting = get().data.categories || [];
+      const isAdded = selecting.findIndex((catItem) => catItem?.name === category?.name) > -1;
+      if (!isAdded) {
+        const newSelecting = [...selecting];
+        newSelecting.push(category);
+        set((state) => {
+          state.data.categories = newSelecting;
+        }, 'addCategory');
+      }
+    },
+    removeCategory: (category: ICategory) => {
+      const selecting = get().data.categories || [];
+      const newSelecting = selecting.filter((catItem) => catItem?.name !== category?.name);
+      set((state) => {
+        state.data.categories = newSelecting;
+      }, 'removeCategory');
     },
     putEditArticle: putEditArticle(set, get),
   },

@@ -74,6 +74,8 @@
     "text_done": "Done",
     "text_uploading": "Uploading...",
     "text_download": "Download",
+    "text_input_description": "Input description...",
+    "text_input_title": "Input title...",
     "text_send": "Send",
     "label_confirm_send_file": "Send this file?",
     "label_confirm_send_image": "Send this photo?",
@@ -481,6 +483,17 @@
   },
   "article": {
     "title_edit_article": "Edit Article",
+    "title_categories": "Categories",
+    "title_edit_title": "Title",
+    "title_edit_description": "Description",
+    "title_edit_cover": "Cover",
+    "title_edit_category": "Category",
+    "title_edit_audience": "Audience",
+    "title_edit_content": "Content",
+    "text_change_cover": "Change cover",
+    "text_add_cover": "Add a cover",
+    "text_selecting_categories": "Your article will be added to",
+    "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully"
   },
   "post": {

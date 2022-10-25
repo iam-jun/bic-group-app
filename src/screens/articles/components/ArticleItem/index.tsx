@@ -52,6 +52,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     ownerReactions,
     titleHighlight,
     summaryHighlight,
+    coverMedia,
   } = postData || {};
   const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
     'post:button_comment',
@@ -102,7 +103,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderImageThumbnail = () => (
     <Image
       style={styles.cover}
-      source={images.img_thumbnail_default}
+      source={coverMedia?.url || images.img_thumbnail_default}
       defaultSource={images.img_thumbnail_default}
     />
   );
@@ -165,7 +166,6 @@ const ArticleItem: FC<ArticleItemProps> = ({
   return (
     <View style={styles.container}>
       {renderHeader()}
-      {/* TODO: Updated cover source once API is ready */}
       {renderImageThumbnail()}
       {renderPreviewSummary()}
       {isLite && renderLite()}
