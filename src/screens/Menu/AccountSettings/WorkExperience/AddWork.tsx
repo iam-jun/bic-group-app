@@ -22,8 +22,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '../../../../storeRedux/menu/actions';
 import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../../storeRedux/menu/keySelector';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
-import { ILocation, IToastMessage } from '~/interfaces/common';
+import { ILocation } from '~/interfaces/common';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import { DateInput, TextInput } from '~/baseComponents/Input';
@@ -42,6 +41,8 @@ const AddWork = () => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
+
+  const scrollRef = useRef<any>(null);
 
   const selectedWorkItem = useKeySelector(menuKeySelector.selectedWorkItem);
 
@@ -67,15 +68,17 @@ const AddWork = () => {
   const [isWorkHere, setIsWorkHere] = useState<boolean>(
     !isEmpty(selectedWorkItem) && currentlyWorkHere !== null
       ? currentlyWorkHere
-      : true,
+      : false,
   );
-  const [startDateValue, setStartDateValue] = useState<string>(
-    startDate || new Date().toISOString(),
+  const [startDateValue, setStartDateValue] = useState<string | null>(
+    startDate || null,
   );
   const [endDateValue, setEndDateValue] = useState<string | null>(
     endDate || null,
   );
-  const [isValidEndDate, setIsValidEndDate] = useState<boolean>(true);
+  const [isValidEndDate, setIsValidEndDate] = useState<boolean>(
+    !!selectedWorkItem,
+  );
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   const locationRef = useRef<any>();
@@ -85,22 +88,39 @@ const AddWork = () => {
     && positionValue.trim().length > 0
     && isValidEndDate;
 
+  const validateDate = (
+    startDate: string | null,
+    endDate: string | null,
+    isCurrentlyWorkHere: boolean,
+  ) => {
+    if (isCurrentlyWorkHere) {
+      if (startDate) setIsValidEndDate(true);
+      else setIsValidEndDate(false);
+    }
+
+    if (!isCurrentlyWorkHere) {
+      if (startDate && endDate) {
+        setIsValidEndDate(
+          new Date(startDateValue).getTime() < new Date(endDateValue).getTime(),
+        );
+        return;
+      }
+      setIsValidEndDate(false);
+    }
+  };
+
   useEffect(() => {
     if (isWorkHere) {
       setEndDateValue(null);
+      validateDate(startDateValue, null, isWorkHere);
     } else {
       setEndDateValue(endDate || null);
+      validateDate(startDateValue, endDate || null, isWorkHere);
     }
   }, [isWorkHere]);
 
   useEffect(() => {
-    if (startDateValue && endDateValue) {
-      setIsValidEndDate(
-        new Date(startDateValue).getTime() < new Date(endDateValue).getTime(),
-      );
-    } else {
-      setIsValidEndDate(true);
-    }
+    validateDate(startDateValue, endDateValue, isWorkHere);
   }, [startDateValue, endDateValue]);
 
   const navigateBack = () => {
@@ -113,31 +133,13 @@ const AddWork = () => {
   };
 
   const onSave = () => {
-    if (!isValidEndDate) {
-      const toastMessage: IToastMessage = {
-        content: 'settings:text_enddate_after_startdate',
-        props: { type: 'error' },
-      };
-      dispatch(showHideToastMessage(toastMessage));
-      return;
-    }
-
-    if (!isWorkHere && !endDateValue) {
-      const toastMessage: IToastMessage = {
-        content: 'settings:text_enddate_must_choose',
-        props: { type: 'error' },
-      };
-      dispatch(showHideToastMessage(toastMessage));
-      return;
-    }
-
     const data = {
       company: companyValue.trim(),
       titlePosition: positionValue.trim(),
       location: locationValue.trim(),
       description: descriptionValue.trim(),
       currentlyWorkHere: isWorkHere,
-      startDate: startDateValue || undefined,
+      startDate: startDateValue,
       endDate: endDateValue,
     };
     selectedWorkItem
@@ -176,6 +178,11 @@ const AddWork = () => {
 
   const onFocusDescription = () => {
     setIsFocus(true);
+    if (Platform.OS === 'ios') {
+      setTimeout(() => {
+        scrollRef.current.scrollToEnd();
+      }, 250);
+    }
   };
 
   const onBlurDescription = () => {
@@ -201,7 +208,7 @@ const AddWork = () => {
         label={t('settings:text_work_at')}
         onChangeText={onChangeCompany}
         maxLength={64}
-        placeholder={t('settings:text_compamny')}
+        placeholder={t('settings:text_company')}
       />
       <Text.BodyXS useI18n>
         settings:text_input_edit_info_fullname_max_64
@@ -217,7 +224,7 @@ const AddWork = () => {
         label={t('settings:text_title_position')}
         onChangeText={onChangePosition}
         maxLength={64}
-        placeholder={t('settings:text_title_position')}
+        placeholder={t('settings:text_enter_position')}
       />
       <Text.BodyXS useI18n>
         settings:text_input_edit_info_fullname_max_64
@@ -230,14 +237,19 @@ const AddWork = () => {
       <TitleComponent title="settings:title_location" />
       <Button
         testID="add_work.location"
-        textProps={{ color: theme.colors.neutral80, variant: 'bodyM' }}
+        textProps={{
+          color: locationValue
+            ? theme.colors.neutral80
+            : theme.colors.neutral20,
+          variant: 'bodyM',
+        }}
         style={styles.buttonDropDown}
         contentStyle={styles.buttonDropDownContent}
         onPress={(e) => onEditLocationOpen(e)}
         rightIcon="AngleDown"
         rightIconProps={{ tintColor: theme.colors.neutral40, size: 14 }}
       >
-        {locationValue || t('common:text_not_set')}
+        {locationValue || t('settings:select_location')}
       </Button>
       <EditLocation
         modalizeRef={locationRef}
@@ -274,11 +286,6 @@ const AddWork = () => {
         placeholder="DD/MM/YYYY"
         disabled={isWorkHere}
       />
-      {!isValidEndDate && (
-        <Text.BodyXS color={colors.red60} useI18n>
-          settings:end_date_must_be_after_start_date
-        </Text.BodyXS>
-      )}
     </View>
   );
 
@@ -294,7 +301,8 @@ const AddWork = () => {
           value={descriptionValue}
           onChangeText={onChangeDescription}
           maxLength={255}
-          placeholder={t('common:text_description')}
+          placeholder={t('settings:enter_description')}
+          placeholderTextColor={colors.neutral20}
           multiline
           textAlignVertical="top"
           onFocus={onFocusDescription}
@@ -341,12 +349,13 @@ const AddWork = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         enabled
         style={{ flex: 1 }}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 30 : 0}
       >
         <ScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           style={styles.container}
+          contentContainerStyle={{ paddingBottom: spacing.padding.large }}
+          ref={scrollRef}
         >
           {renderCompanyInput()}
           {renderTitlePositionInput()}

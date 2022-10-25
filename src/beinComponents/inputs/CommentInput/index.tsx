@@ -47,32 +47,33 @@ export interface ICommentInputSendParam {
 }
 
 export interface CommentInputProps {
+  useTestID?: boolean;
   commentInputRef?: any;
   style?: StyleProp<ViewStyle>;
+  value?: string; // work only on init, not handle change
   placeholder?: string;
-  onChangeText?: (text: string) => void;
-  onPressSend?: (data?: ICommentInputSendParam) => void;
-  onPressSelectImage?: (file: IFilePicked) => void;
-  onPressFile?: (file: IFilePicked) => void;
-  onSelectionChange?:
-    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
-    | undefined;
-  onKeyPress?: (e: any) => void;
   autoFocus?: boolean;
   blurOnSubmit?: boolean;
-  value?: string; // work only on init, not handle change
-  HeaderComponent?: React.ReactNode;
   textInputRef?: any;
   loading?: boolean;
-  disableKeyboardSpacer?: boolean;
-  onContentSizeChange?: (event: any) => void;
   isHandleUpload?: boolean;
   clearWhenUploadDone?: boolean;
   uploadImageType?: IUploadType;
   uploadVideoType?: IUploadType;
   uploadFileType?: IUploadType;
   uploadFilePromise?: any;
-  useTestID?: boolean;
+  disableKeyboardSpacer?: boolean;
+  HeaderComponent?: React.ReactNode;
+
+  onChangeText?: (text: string) => void;
+  onPressSend?: (data?: ICommentInputSendParam) => void;
+  onPressSelectImage?: (file: IFilePicked) => void;
+  onPressFile?: (file: IFilePicked) => void;
+  onContentSizeChange?: (event: any) => void;
+  onSelectionChange?:
+    | ((e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => void)
+    | undefined;
+  onKeyPress?: (e: any) => void;
 }
 
 const DEFAULT_HEIGHT = 44;
@@ -80,26 +81,27 @@ const LIMIT_HEIGHT = 100;
 
 const CommentInput: React.FC<CommentInputProps> = ({
   commentInputRef,
+  useTestID = true,
   style,
+  value,
   placeholder = 'Aa',
+  autoFocus,
+  blurOnSubmit,
+  HeaderComponent,
+  textInputRef,
+  loading = false,
+  isHandleUpload,
+  clearWhenUploadDone,
+  uploadImageType = uploadTypes.commentImage,
+  uploadFilePromise,
+  disableKeyboardSpacer,
+
   onChangeText,
   onPressSend,
   onPressSelectImage,
   onSelectionChange,
   onKeyPress,
-  autoFocus,
-  blurOnSubmit,
-  value,
-  HeaderComponent,
-  textInputRef,
-  loading = false,
-  disableKeyboardSpacer,
   onContentSizeChange,
-  isHandleUpload,
-  clearWhenUploadDone,
-  uploadImageType = uploadTypes.commentImage,
-  uploadFilePromise,
-  useTestID = true,
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
@@ -408,6 +410,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
     );
   };
 
+  const disabledBtnSend = _loading || (!text.trim() && !hasMedia());
+
   return (
     <View>
       <View style={[styles.root, style]}>
@@ -451,16 +455,16 @@ const CommentInput: React.FC<CommentInputProps> = ({
         {renderSelectedMedia()}
         <CommentInputFooter
           useTestID={useTestID}
+          loading={_loading}
+          isHideBtnSend={false}
+          isDisplayNone={text.trim().length === 0}
+          disabledBtnSend={disabledBtnSend}
           onPressIcon={onPressIcon}
           onPressFile={_onPressFile}
           onPressImage={_onPressSelectImage}
           onPressCamera={onPressCamera}
           onPressEmoji={onPressEmoji}
           onPressSend={_onPressSend}
-          loading={_loading}
-          disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
-          isHideBtnSend={false}
-          isDisplayNone={text.trim().length === 0}
         />
 
       </View>

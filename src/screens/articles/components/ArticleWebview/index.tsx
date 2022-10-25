@@ -4,7 +4,7 @@ import React, {
   FC, useEffect, useRef, useState,
 } from 'react';
 import {
-  Platform, ScrollView, StyleSheet, View,
+  Platform, StyleSheet, View,
 } from 'react-native';
 import { debounce } from 'lodash';
 import WebView from 'react-native-webview';
@@ -171,46 +171,48 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        bounces={false}
-        contentContainerStyle={styles.scrollViewContainer}
-        keyboardShouldPersistTaps="handled"
-        showsHorizontalScrollIndicator={false}
-      >
-        { !isLoaded && <LoadingIndicator />}
-        <WebView
-          ref={webViewRef}
-          style={[styles.webview, readOnly && { height: webviewHeight }]}
-          source={{ uri: ARTICLE_EDITOR_URL }}
+      { !isLoaded && <LoadingIndicator /> }
+      <WebView
+        ref={webViewRef}
+        style={[styles.webview, readOnly && { height: webviewHeight }]}
+        source={{ uri: ARTICLE_EDITOR_URL }}
           // source={{ uri: 'https://3e08-14-226-252-170.ap.ngrok.io/article/webview' }}
-          useWebKit
-          cacheEnabled
-          scalesPageToFit
-          javaScriptEnabled
-          domStorageEnabled
-          allowsFullscreenVideo
-          saveFormDataDisabled
-          hideKeyboardAccessoryView
-          androidHardwareAccelerationDisabled
-          scrollEnabled={!readOnly}
-          nestedScrollEnabled={false}
-          userAgent={userAgent}
-          androidLayerType="hardware"
-          injectedJavaScript={CUSTOM_META}
-          showsHorizontalScrollIndicator={false}
-          mediaPlaybackRequiresUserAction={false}
-          automaticallyAdjustContentInsets={false}
-          onMessage={onMessage}
-        />
-      </ScrollView>
-      <View style={styles.mentions}>
-        <MentionBar groupIds={groupIds} style={styles.mentionBar} onCompleteMention={onCompleteMention} />
-        <StickerView
-          stickerViewRef={stickerViewRef}
-          onGifSelected={onGifSelected}
-        />
-        <KeyboardSpacer iosOnly />
-      </View>
+        useWebKit
+        cacheEnabled
+        scalesPageToFit
+        javaScriptEnabled
+        domStorageEnabled
+        allowsFullscreenVideo
+        saveFormDataDisabled
+        hideKeyboardAccessoryView
+        androidHardwareAccelerationDisabled
+        scrollEnabled={!readOnly}
+        nestedScrollEnabled={false}
+        animationEnabled={false}
+        // force open native video player for the best performance
+        allowsInlineMediaPlayback={false}
+        userAgent={userAgent}
+        /**
+         * article detail may crash if androidLayerType set to hardware because of dynamic height
+         * but article editor is very laggy if androidLayerType set to software
+         */
+        androidLayerType={readOnly ? 'software' : 'hardware'}
+        injectedJavaScript={CUSTOM_META}
+        showsHorizontalScrollIndicator={false}
+        mediaPlaybackRequiresUserAction={false}
+        automaticallyAdjustContentInsets={false}
+        onMessage={onMessage}
+      />
+      {!readOnly && (
+        <View style={styles.mentions}>
+          <MentionBar groupIds={groupIds} style={styles.mentionBar} onCompleteMention={onCompleteMention} />
+          <StickerView
+            stickerViewRef={stickerViewRef}
+            onGifSelected={onGifSelected}
+          />
+          <KeyboardSpacer iosOnly />
+        </View>
+      )}
     </View>
   );
 };
@@ -228,6 +230,8 @@ const createStyle = (theme: ExtendedTheme) => {
     webview: {
       width: '100%',
       height: '100%',
+      opacity: 0.99,
+      overflow: 'hidden',
     },
     mentions: {
       width: '100%',

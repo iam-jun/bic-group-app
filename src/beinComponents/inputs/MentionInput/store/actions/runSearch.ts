@@ -20,7 +20,8 @@ const runSearch = (set, get) => async (groupIds: string, payload: string, ignore
   // if key changed, update new data else load more data
   const keyChanged = key !== _matchTerm;
 
-  if (_matchTerm !== null) {
+  // if matchTearm ends with space, it will trigger search again
+  if (_matchTerm !== null && !_matchTerm?.endsWith(' ')) {
     set((state) => {
       state.loading = true;
       state.key = _matchTerm;

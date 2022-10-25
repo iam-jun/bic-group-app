@@ -164,6 +164,8 @@ export interface IPostActivity {
   isArticle?: boolean;
   title?: string;
   summary?: string;
+  titleHighlight?: string;
+  summaryHighlight?: string;
   hashtags?: string[];
 }
 

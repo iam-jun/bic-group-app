@@ -290,14 +290,14 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
               mentionInputRef={mentionInputRef}
               ComponentInput={PostInput}
               componentInputProps={{
-                modalStyle: styles.mentionInputModal,
-                value: content,
                 loading,
+                value: content,
                 isHandleUpload: true,
-                placeholder: t('post:placeholder_write_comment'),
-                onChangeText,
                 scrollEnabled: false,
                 inputRef: refTextInput,
+                modalStyle: styles.mentionInputModal,
+                placeholder: t('post:placeholder_write_comment'),
+                onChangeText,
               }}
               autocompleteProps={{
                 modalPosition: 'bottom',

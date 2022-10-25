@@ -376,8 +376,9 @@
     "text_add_work": "Add Work",
     "text_edit_work": "Edit Work",
     "text_delete_work": "Delete Work",
-    "text_compamny": "Company",
+    "text_company": "Enter company",
     "text_title_position": "Position",
+    "text_enter_position": "Enter position",
     "text_title_division": "Division",
     "text_currently_work_here": "I am currently working here",
     "text_location_optional": "Location (optional)",
@@ -408,7 +409,13 @@
     "text_add_experience": "Add Experience",
     "text_edit_experience": "Edit Experience",
     "text_work_at": "Work at",
-    "end_date_must_be_after_start_date": "End date must be after start date"
+    "end_date_must_be_after_start_date": "End date must be after start date",
+    "enter_name": "Enter name",
+    "select_language": "Select language",
+    "select_relationship": "Select relationship",
+    "enter_phone": "Enter phone",
+    "select_location": "Select location",
+    "enter_description": "Enter description"
   },
   "languages": {
     "title_en": "English",

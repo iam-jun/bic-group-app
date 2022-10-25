@@ -76,7 +76,7 @@ const ItemExperience: FC<ItemExperienceProps> = ({
         </View>
       </View>
       <InfoItem title="settings:text_title_position" value={titlePosition} />
-      <InfoItem title="settings:text_title_division" value={location} />
+      <InfoItem title="settings:title_location" value={location} />
       <InfoItem
         title="common:text_start_date"
         value={formatDate(startDate, 'MMM D, YYYY')}
@@ -94,6 +94,8 @@ const themeStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     titleCompany: {
       flexDirection: 'row',
+      flex: 1,
+      marginRight: spacing.margin.small,
     },
     titleLine: {
       width: 1,
@@ -107,12 +109,11 @@ const themeStyles = (theme: ExtendedTheme) => {
     row: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center',
       paddingBottom: spacing.padding.large,
     },
     rowAction: {
+      marginLeft: spacing.margin.base,
       flexDirection: 'row',
-      alignItems: 'center',
     },
   });
 };

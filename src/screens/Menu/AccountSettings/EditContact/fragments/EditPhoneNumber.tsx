@@ -31,6 +31,7 @@ import { formatTextRemoveSpace } from '~/utils/formatData';
 import menuActions from '../../../../../storeRedux/menu/actions';
 import menuKeySelector from '../../../../../storeRedux/menu/keySelector';
 import TitleComponent from '../../fragments/TitleComponent';
+import { useBaseHook } from '~/hooks';
 
 interface EditPhoneNumberProps {
   onChangeCountryCode: (value: string) => void;
@@ -57,6 +58,8 @@ const EditPhoneNumber = ({
     theme, screenHeight,
   );
   const dispatch = useDispatch();
+
+  const { t } = useBaseHook();
 
   const countryCodeList = useKeySelector(menuKeySelector.countryCodeList);
   const { data, searchResult } = countryCodeList || {};
@@ -180,6 +183,7 @@ const EditPhoneNumber = ({
             outlineColor={theme.colors.neutral5}
             style={styles.inputContainer}
             inputStyle={styles.inputStyle}
+            placeholder={t('settings:enter_phone')}
           />
         )}
         rules={{

@@ -5,7 +5,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import spacing, { margin } from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import usePostsStore from '~/store/entities/posts';
@@ -20,28 +19,47 @@ import { ReactionType } from '~/constants/reactions';
 import { IPayloadReactToPost } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
 import useCommonController from '~/screens/store';
+import { PostViewFooterLite } from '~/screens/post/components/PostViewComponents';
+import { formatLargeNumber } from '~/utils/formatData';
+import { getTotalReactions } from '~/screens/post/components/PostViewComponents/helper';
+import ArticleText from '../ArticleText';
 
 export interface ArticleItemProps {
   id: string;
+  isLite?: boolean;
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
   id,
+  isLite,
 }: ArticleItemProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const { colors } = theme;
   const postData = usePostsStore(postsSelector.getPost(id));
   const commonController = useCommonController((state) => state.actions);
 
   const {
-    title, audience, actor, createdAt, commentsCount, reactionsCount, setting, summary,
-    totalUsersSeen, ownerReactions,
+    title,
+    audience,
+    actor,
+    createdAt,
+    commentsCount,
+    reactionsCount,
+    setting,
+    summary,
+    totalUsersSeen,
+    ownerReactions,
+    titleHighlight,
+    summaryHighlight,
   } = postData || {};
   const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
     'post:button_comment',
   )}`;
+
+  const numberOfReactions = formatLargeNumber(
+    getTotalReactions(reactionsCount, 'user'),
+  );
 
   const dispatch = useDispatch();
 
@@ -82,31 +100,27 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderImageThumbnail = () => (
-    <Image style={styles.cover} source={images.img_thumbnail_default} defaultSource={images.img_thumbnail_default} />
+    <Image
+      style={styles.cover}
+      source={images.img_thumbnail_default}
+      defaultSource={images.img_thumbnail_default}
+    />
   );
 
   const renderPreviewSummary = () => (
     <View style={styles.contentContainer}>
-      <Text.H3
-        testID="article_item.title"
-        color={colors.neutral80}
-      >
-        {title}
-      </Text.H3>
-      {!!summary && (
+      <ArticleText type="title" text={titleHighlight || title} />
+      {(!!summaryHighlight || !!summary) && (
         <>
           <ViewSpacing height={spacing.margin.small} />
-          <Text.ParagraphM color={colors.neutral80}>{summary}</Text.ParagraphM>
+          <ArticleText type="summary" text={summaryHighlight || summary} />
         </>
       )}
     </View>
   );
 
   const renderInterestedBy = () => (
-    <ContentInterestedUserCount
-      id={id}
-      interestedUserCount={totalUsersSeen}
-    />
+    <ContentInterestedUserCount id={id} interestedUserCount={totalUsersSeen} />
   );
 
   const renderReactions = () => (
@@ -130,15 +144,34 @@ const ArticleItem: FC<ArticleItemProps> = ({
     />
   );
 
+  const renderLite = () => (
+    <>
+      <ViewSpacing height={spacing.margin.large} />
+      <PostViewFooterLite
+        reactionsCount={Number(numberOfReactions)}
+        commentsCount={commentsCount}
+        seenCountsViewComponent={(
+          <ContentInterestedUserCount
+            id={id}
+            interestedUserCount={totalUsersSeen}
+            isLite
+            style={styles.interestedView}
+          />
+      )}
+      />
+    </>
+  );
+
   return (
     <View style={styles.container}>
       {renderHeader()}
       {/* TODO: Updated cover source once API is ready */}
       {renderImageThumbnail()}
       {renderPreviewSummary()}
-      {renderInterestedBy()}
-      {renderReactions()}
-      {renderFooter()}
+      {isLite && renderLite()}
+      {!isLite && renderInterestedBy()}
+      {!isLite && renderReactions()}
+      {!isLite && renderFooter()}
     </View>
   );
 };
@@ -160,6 +193,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.purple2,
+    },
+    interestedView: {
+      paddingHorizontal: 0,
+      paddingBottom: 0,
+      paddingTop: 0,
     },
   });
 };

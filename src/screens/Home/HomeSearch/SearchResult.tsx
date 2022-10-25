@@ -17,6 +17,8 @@ import Text from '~/beinComponents/Text';
 import { scaleSize } from '~/theme/dimension';
 import FilterToolbar from '~/screens/Home/HomeSearch/FilterToolbar';
 import spacing from '~/theme/spacing';
+import ArticleItem from '~/screens/articles/components/ArticleItem';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const SearchResult = () => {
   const dispatch = useDispatch();
@@ -29,19 +31,21 @@ const SearchResult = () => {
     searchResults = [],
     searchText = '',
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
-  const filterCreatedBy = useKeySelector(homeKeySelector.newsfeedSearchFilterCreatedBy);
+  const filterCreatedBy = useKeySelector(
+    homeKeySelector.newsfeedSearchFilterCreatedBy,
+  );
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: any) => (item.isArticle ? (
+    <ArticleItem id={item.id} isLite />
+  ) : (
     <PostView
-      style={styles.itemContainer}
       postId={item?.id}
       isLite
       pressNavigateToDetail
       postData={item}
     />
-  );
-
+  ));
   const getData = (isLoadMore = false) => {
     if (searchText) {
       const payload: IPayloadGetSearchPosts = {
@@ -55,11 +59,9 @@ const SearchResult = () => {
     }
   };
 
-  useEffect(
-    () => {
-      getData();
-    }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate],
-  );
+  useEffect(() => {
+    getData();
+  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate]);
 
   const onRefresh = () => {
     // console.log('\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m');
@@ -89,6 +91,8 @@ const SearchResult = () => {
 
   const renderFooter = () => <View style={styles.footer} />;
 
+  const renderSpacing = () => <ViewSpacing height={spacing.margin.large} />;
+
   return (
     <View style={styles.container}>
       <FilterToolbar />
@@ -98,6 +102,8 @@ const SearchResult = () => {
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty()}
         ListFooterComponent={renderFooter()}
+        ListHeaderComponent={renderSpacing}
+        ItemSeparatorComponent={renderSpacing}
         keyExtractor={(item) => `newsfeed_item_${item?.id}`}
         onEndReached={onEndReached}
         refreshControl={(
