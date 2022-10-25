@@ -146,8 +146,7 @@ export default class Md extends PureComponent {
     },
     renderParagraphsInLists: true,
     unwrapDisallowed: true,
-    disallowedTypes: blacklistLimit,
-    // allowedTypes: this.props.limitMarkdownTypes ? allowedTypes : null,
+    disallowedTypes: this.props.limitMarkdownTypes ? blacklistLimit : null,
     getExtraPropsForNode: this.getExtraPropsForNode,
   });
 
