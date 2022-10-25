@@ -8,7 +8,6 @@ export const blacklistLimit = [
   'fence',
   'blockquote',
   'hr',
-  'list',
   'html_block',
   'heading',
   'lheading',
