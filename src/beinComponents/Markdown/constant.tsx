@@ -14,7 +14,6 @@ export const blacklistLimit = [
   'lheading',
   'backticks',
   'emphasis',
-  'link',
   'image',
   'html_inline',
 ];
