@@ -67,6 +67,8 @@
     "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
     "text_see_more": "Xem thêm",
     "text_see_less": "Thu gọn",
+    "text_input_description": "Điền mô tả...",
+    "text_input_title": "Điền tên...",
     "text_send": "Gửi",
     "text_chosen": "Đang Chọn",
     "error": {
@@ -440,6 +442,17 @@
   },
   "article": {
     "title_edit_article": "Sửa Bài Viết",
+    "title_categories": "Danh mục",
+    "title_edit_title": "Tiêu đề",
+    "title_edit_description": "Mô tả",
+    "title_edit_cover": "Ảnh bìa",
+    "title_edit_category": "Danh mục",
+    "title_edit_audience": "Đối tượng",
+    "title_edit_content": "Nội dung",
+    "text_change_cover": "Đổi ảnh bìa",
+    "text_add_cover": "Thêm ảnh bìa",
+    "text_selecting_categories": "Bài viết của bạn sẽ được thêm vào",
+    "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
     "text_edit_article_success": "Cập nhật bài viết thành công"
   },
   "post": {

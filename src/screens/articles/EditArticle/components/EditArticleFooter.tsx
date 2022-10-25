@@ -10,7 +10,9 @@ import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
 
 import spacing, { borderRadius } from '~/theme/spacing';
@@ -18,12 +20,21 @@ import spacing, { borderRadius } from '~/theme/spacing';
 const EditArticleFooter = () => {
   const showMentionValue = useSharedValue(0);
 
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const dispatch = useDispatch();
 
   const onPress = () => {
     dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const onPressDescription = () => {
+    rootNavigation.navigate(articleStack.editArticleSummary);
+  };
+
+  const onPressCategory = () => {
+    rootNavigation.navigate(articleStack.editArticleCategory);
   };
 
   const mentionContainerStyle = useAnimatedStyle(() => ({
@@ -56,8 +67,8 @@ const EditArticleFooter = () => {
         <View style={styles.buttonContainer}>
           {renderButton('Users', onPress)}
           {renderButton('ImageLandscape', onPress)}
-          {renderButton('InputText', onPress)}
-          {renderButton('ChartTreeMap', onPress)}
+          {renderButton('InputText', onPressDescription)}
+          {renderButton('ChartTreeMap', onPressCategory)}
         </View>
         <Animated.View style={mentionContainerStyle}>
           <MentionBar

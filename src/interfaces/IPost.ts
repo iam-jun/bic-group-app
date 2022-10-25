@@ -1,5 +1,6 @@
 import { IFilePicked, IGiphy } from '~/interfaces/common';
 import { ReactionType } from '~/constants/reactions';
+import { ICategory } from '~/interfaces/IArticle';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -139,6 +140,23 @@ export interface IPostComments {
   };
 }
 
+export interface IArticleCover {
+  id?: string;
+  url?: string;
+  type?: string;
+  createdBy?: string;
+  name?: string;
+  originName?: string;
+  width?: number;
+  height?: number;
+  extension?: string;
+  status?: string;
+  size?: number;
+  mimeType?: string;
+  thumbnails?: any,
+  createdAt?: string;
+}
+
 export interface IPostActivity {
   id?: string;
   audience?: IPostAudience;
@@ -167,6 +185,8 @@ export interface IPostActivity {
   titleHighlight?: string;
   summaryHighlight?: string;
   hashtags?: string[];
+  coverMedia?: IArticleCover
+  categories?: ICategory[]
 }
 
 export type IOwnReaction = Array<IReaction>;
@@ -195,12 +215,6 @@ export interface IPostCreatePost {
   isDraft?: boolean;
   linkPreview?: ILinkPreview;
   createFromGroupId?: string;
-}
-
-export interface IPayloadCreatePost {
-  data?: IPostCreatePost;
-  createFromGroupId?: string;
-  callback?: any;
 }
 
 export interface IPayloadCreateComment {
@@ -264,18 +278,6 @@ export interface IPayloadGetPostDetail extends IParamGetPostDetail {
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
 
-export interface IGetStreamUser {
-  createdAt?: string;
-  updatedAt?: string;
-  id?: string | number;
-  data?: {
-    avatar?: string;
-    fullname?: string;
-    username?: string;
-  };
-  avatar?: string;
-}
-
 export interface IRequestPostComment {
   postId: string;
   data: ICommentData;
@@ -324,36 +326,6 @@ export interface IReaction {
   activity_id?: string;
   userId?: string;
   data?: any;
-}
-
-export interface IGetStreamAudienceUser {
-  id?: string;
-  collection?: string;
-  foreign_id: string;
-  data?: {
-    avatar?: string;
-    fullname?: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface IGetStreamAudienceGroup {
-  id?: string;
-  collection?: string;
-  foreign_id: string;
-  data?: {
-    avatar?: string;
-    icon?: string;
-    name?: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface IGetStreamAudience {
-  groups: IGetStreamAudienceGroup[];
-  users: IGetStreamAudienceUser[];
 }
 
 export interface IParamSearchMentionAudiences {
@@ -523,16 +495,6 @@ export interface IPayloadPutMarkSeenPost {
   postId: string;
   callback?: (isSuccess: boolean) => void;
 }
-export interface IGetStreamCommentData {
-  id: string;
-  actor: IGetStreamUser;
-  mentions?: any;
-  content?: string;
-  media?: any;
-  reaction?: IReaction;
-  reactionsCount?: IReactionCounts;
-  child?: IGetStreamCommentData;
-}
 export interface IRequestGetUsersInterestedPost {
   postId: string;
   limit?: number;
@@ -543,11 +505,7 @@ export interface ISeenPostListSheet {
   data: any[];
   canLoadMore?: boolean;
 }
-export interface IGetSeenPostListSheet {
-  postId: string;
-  offset?: number;
-  canLoadMore?: boolean;
-}
+
 export interface IPayloadUpdateLinkPreview {
   lstLinkPreview?: ILinkPreviewCreatePost[];
   lstRemovedLinkPreview?: string[];

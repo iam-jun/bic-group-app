@@ -40,7 +40,7 @@ export default Image;
 const formatSource = (source: any, cache?: boolean) => {
   if (
     typeof source === 'string'
-      && source.toLowerCase?.().startsWith?.('http')
+      && (source.toLowerCase?.().startsWith?.('http') || source.toLowerCase?.().startsWith?.('data:'))
   ) {
     const char = source.includes('?') ? '&' : '?';
     return { uri: cache ? source : source + char + Date.now() };

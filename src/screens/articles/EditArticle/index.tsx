@@ -1,94 +1,61 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import {
-  Keyboard, StyleSheet, TextInput, View,
+  FlatList, StyleSheet, View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import Button from '~/baseComponents/Button';
+import Icon from '~/baseComponents/Icon';
+import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
+import Text from '~/beinComponents/Text';
 import { createTextStyle } from '~/beinComponents/Text/textStyle';
 
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
+import { EditArticleProps } from '~/interfaces/IArticle';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
-import ArticleWebview from '../components/ArticleWebview';
 
-export interface EditArticleProps {
-  route?: {
-    params?: {articleId: string};
-  };
-}
-
-const TITLE_MAX_LENGTH = 64;
+const editOptions = [
+  { title: 'article:title_edit_title', screen: articleStack.editArticleTitle },
+  { title: 'article:title_edit_description', screen: articleStack.editArticleSummary },
+  { title: 'article:title_edit_cover', screen: articleStack.editArticleCover },
+  { title: 'article:title_edit_category', screen: articleStack.editArticleCategory },
+  { title: 'article:title_edit_audience', screen: articleStack.editArticleAudience },
+  { title: 'article:title_edit_content', screen: articleStack.editArticleContent },
+];
 
 const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
 
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const articleData = useEditArticle({ articleId });
-  const {
-    loading, enableButtonSave, title, handleTitleChange, handleSave,
-  } = articleData || {};
+  useEditArticle({ articleId });
 
-  const onPressBack = () => {
-    if (enableButtonSave) {
-      Keyboard.dismiss();
-      dispatch(modalActions.showAlert({
-        title: t('discard_alert:title'),
-        content: t('discard_alert:content'),
-        cancelBtn: true,
-        cancelLabel: t('common:btn_discard'),
-        confirmLabel: t('common:btn_stay_here'),
-        onCancel: () => rootNavigation.goBack(),
-      }));
-      return;
-    }
-    rootNavigation.goBack();
+  const onPressItem = (item: any) => {
+    rootNavigation.navigate(item.screen, { articleId });
   };
 
-  useBackPressListener(onPressBack);
-
-  const onChangeTitle = (value) => {
-    handleTitleChange(value);
-  };
-
-  const onPressSave = () => {
-    handleSave();
-  };
-
-  const disabled = !enableButtonSave || loading;
+  const renderItem = ({ item }: any) => (
+    <Button style={styles.item} onPress={() => onPressItem(item)}>
+      <Text style={styles.itemTitle} useI18n>{item.title}</Text>
+      <Icon icon="AngleRight" />
+    </Button>
+  );
 
   return (
     <View style={styles.container}>
-      <Header
-        title={t('article:title_edit_article')}
-        buttonProps={{ disabled, loading }}
-        buttonText={t('common:btn_save')}
-        onPressButton={onPressSave}
-        onPressBack={onPressBack}
+      <Header title={t('article:title_edit_article')} />
+      <FlatList
+        data={editOptions}
+        renderItem={renderItem}
+        keyExtractor={(item) => `edit_article_item_${item.title}`}
+        ItemSeparatorComponent={() => <Divider margin={spacing.margin.large} />}
       />
-      <View style={styles.flex1}>
-        <TextInput
-          multiline
-          value={title}
-          numberOfLines={2}
-          style={styles.inputTitle}
-          maxLength={TITLE_MAX_LENGTH}
-          selectionColor={theme.colors.gray50}
-          placeholderTextColor={theme.colors.neutral20}
-          onChangeText={onChangeTitle}
-        />
-        <ArticleWebview
-          articleData={articleData}
-        />
-        {/* <EditArticleFooter /> */}
-      </View>
     </View>
   );
 };
@@ -110,6 +77,14 @@ const createStyle = (theme: ExtendedTheme) => {
       borderBottomWidth: 1,
       borderColor: colors.gray5,
       maxHeight: 80,
+    },
+    item: {
+      flexDirection: 'row',
+      paddingVertical: spacing.padding.large,
+      paddingHorizontal: spacing.padding.large,
+    },
+    itemTitle: {
+      flex: 1,
     },
   });
 };
