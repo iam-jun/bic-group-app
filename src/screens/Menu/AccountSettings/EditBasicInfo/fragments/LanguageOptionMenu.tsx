@@ -114,7 +114,10 @@ const LanguageOptionMenu = ({
       <Button
         testID="edit_basic_info.language"
         textProps={{
-          color: colors.neutral80,
+          color:
+            selectedLanguageItems && selectedLanguageItems.length !== 0
+              ? colors.neutral80
+              : colors.neutral20,
           variant: 'bodyM',
           numberOfLines: 1,
           style: { flex: 1 },
@@ -141,7 +144,7 @@ const LanguageOptionMenu = ({
             ))}
           </View>
         ) : (
-          t('common:text_not_set')
+          t('settings:select_language')
         )}
       </Button>
 

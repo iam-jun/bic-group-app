@@ -1,7 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {
-  StyleSheet, Keyboard, ScrollView,
-} from 'react-native';
+import { StyleSheet, Keyboard, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { isEqual } from 'lodash';
@@ -46,7 +44,8 @@ const EditBasicInfo = () => {
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const {
     id, fullname, gender, birthday, relationshipStatus, language,
-  } = myProfileData;
+  }
+    = myProfileData;
 
   const genderSheetRef = useRef<any>();
   const relationshipSheetRef = useRef<any>();
@@ -55,7 +54,8 @@ const EditBasicInfo = () => {
   const [genderState, setGenderState] = useState<GENDER_TYPE>(gender);
   const [birthdayState, setBirthdayState] = useState<string>(birthday);
   const [languageState, setLanguageState] = useState<string[]>(language);
-  const [relationshipState, setRelationshipState] = useState<RELATIONSHIP_TYPE>(relationshipStatus);
+  const [relationshipState, setRelationshipState]
+    = useState<RELATIONSHIP_TYPE>(relationshipStatus);
 
   const [error, setError] = useState<boolean>(false);
 
@@ -68,14 +68,12 @@ const EditBasicInfo = () => {
     birthdayState: string,
     languageState: string[],
     relationshipState: string,
-  ) => (
-    (fullname !== nameState
-        || gender !== genderState
-        || birthday !== birthdayState
-        || !isEqual(language, languageState)
-        || relationshipStatus !== relationshipState)
-      && nameState?.trim?.()?.length > 0
-  );
+  ) => (fullname !== nameState
+      || gender !== genderState
+      || birthday !== birthdayState
+      || !isEqual(language, languageState)
+      || relationshipStatus !== relationshipState)
+    && nameState?.trim?.()?.length > 0;
 
   const isValid = checkIsValid(
     nameState,
@@ -88,14 +86,18 @@ const EditBasicInfo = () => {
   const onSave = () => {
     Keyboard.dismiss();
     dispatch(
-      menuActions.editMyProfile({
-        id,
-        fullname: nameState,
-        gender: genderState,
-        birthday: birthdayState,
-        language: languageState,
-        relationshipStatus: relationshipState,
-      }, null, () => rootNavigation.goBack()),
+      menuActions.editMyProfile(
+        {
+          id,
+          fullname: nameState,
+          gender: genderState,
+          birthday: birthdayState,
+          language: languageState,
+          relationshipStatus: relationshipState,
+        },
+        null,
+        () => rootNavigation.goBack(),
+      ),
     );
   };
 
@@ -122,16 +124,18 @@ const EditBasicInfo = () => {
   const _onPressBack = () => {
     if (isValid) {
       Keyboard.dismiss();
-      dispatch(modalActions.showAlert({
-        title: t('common:label_discard_changes'),
-        cancelBtn: true,
-        isDismissible: false,
-        onConfirm: () => {
-          rootNavigation.goBack();
-        },
-        confirmLabel: t('common:btn_discard'),
-        content: t('common:text_not_saved_changes_warning'),
-      }));
+      dispatch(
+        modalActions.showAlert({
+          title: t('common:label_discard_changes'),
+          cancelBtn: true,
+          isDismissible: false,
+          onConfirm: () => {
+            rootNavigation.goBack();
+          },
+          confirmLabel: t('common:btn_discard'),
+          content: t('common:text_not_saved_changes_warning'),
+        }),
+      );
     } else {
       rootNavigation.goBack();
     }
@@ -139,9 +143,7 @@ const EditBasicInfo = () => {
 
   const onRelationshipEditOpen = (e: any) => {
     Keyboard.dismiss();
-    relationshipSheetRef?.current?.open?.(
-      e?.pageX, e?.pageY,
-    );
+    relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
   const onChangeName = (text: string) => {
@@ -184,8 +186,11 @@ const EditBasicInfo = () => {
             error ? t('profile:text_name_must_not_be_empty') : undefined
           }
           maxLength={64}
+          placeholder={t('settings:enter_name')}
         />
-        <Text.BodyXS useI18n>settings:text_input_edit_info_fullname_max_64</Text.BodyXS>
+        <Text.BodyXS useI18n>
+          settings:text_input_edit_info_fullname_max_64
+        </Text.BodyXS>
         <ViewSpacing height={spacing.padding.large} />
         <TitleComponent title="settings:title_gender" />
         <Gender genderState={genderState} setGenderState={setGenderState} />
@@ -198,7 +203,7 @@ const EditBasicInfo = () => {
           label={t('settings:title_birthday')}
           maxDate={new Date()}
           onConfirm={onSetBirthday}
-          placeholder={t('common:text_not_set')}
+          placeholder="DD/MM/YYYY"
         />
         <ViewSpacing height={spacing.padding.large} />
         <LanguageOptionMenu
@@ -206,12 +211,13 @@ const EditBasicInfo = () => {
           selectedLanguages={languageState}
         />
         <ViewSpacing height={spacing.padding.large} />
-        <TitleComponent
-          title="settings:title_relationship_status"
-        />
+        <TitleComponent title="settings:title_relationship_status" />
         <Button
           testID="edit_basic_info.relationship"
-          textProps={{ color: colors.neutral80, variant: 'bodyM' }}
+          textProps={{
+            color: relationshipState ? colors.neutral80 : colors.neutral20,
+            variant: 'bodyM',
+          }}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           rightIcon="AngleDown"
@@ -219,7 +225,7 @@ const EditBasicInfo = () => {
           onPress={(e) => onRelationshipEditOpen(e)}
         >
           {t(RELATIONSHIP_STATUS[relationshipState])
-            || t('common:text_not_set')}
+            || t('settings:select_relationship')}
         </Button>
       </ScrollView>
       <OptionMenu

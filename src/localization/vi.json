@@ -336,8 +336,9 @@
     "text_add_work": "Thêm công việc",
     "text_edit_work": "Chỉnh sửa công việc",
     "text_delete_work": "Xoá công việc",
-    "text_compamny": "Tên Công ty",
-    "text_title_position": "Vị trí",
+    "text_company": "Nhập tên Công ty",
+    "text_title_position": "Chức danh",
+    "text_enter_position": "Nhập chức danh",
     "text_currently_work_here": "Đang làm việc tại đây",
     "text_location_optional": "Vị trí (không bắt buộc)",
     "text_description_optional": "Mô tả (không bắt buộc)",
@@ -367,7 +368,13 @@
     "text_add_experience": "Thêm kinh nghiệm",
     "text_edit_experience": "Sửa kinh nghiệm",
     "text_work_at": "Làm việc tại",
-    "end_date_must_be_after_start_date": "Ngày kết thúc phải sau ngày bắt đầu"
+    "end_date_must_be_after_start_date": "Ngày kết thúc phải sau ngày bắt đầu",
+    "enter_name": "Nhập tên",
+    "select_language": "Chọn ngôn ngữ",
+    "select_relationship": "Chọn tình trạng hôn nhân",
+    "enter_phone": "Nhập số điện thoại",
+    "select_location": "Chọn vị trí",
+    "enter_description": "Nhập mô tả"
   },
   "languages": {
     "title_en": "English",

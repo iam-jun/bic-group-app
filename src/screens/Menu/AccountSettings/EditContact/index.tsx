@@ -189,7 +189,13 @@ const EditContact = () => {
           <TitleComponent title="settings:title_location" />
           <Button
             testID="edit_contact.location"
-            textProps={{ color: theme.colors.neutral80, variant: 'bodyM' }}
+            textProps={{
+              color:
+                cityState && countryState
+                  ? theme.colors.neutral80
+                  : theme.colors.neutral20,
+              variant: 'bodyM',
+            }}
             style={styles.buttonDropDown}
             contentStyle={styles.buttonDropDownContent}
             onPress={(e) => onEditLocationOpen(e)}
@@ -198,7 +204,7 @@ const EditContact = () => {
           >
             {cityState && countryState
               ? `${cityState}, ${countryState}`
-              : t('common:text_not_set')}
+              : t('settings:select_location')}
           </Button>
         </View>
         <EditLocation
