@@ -67,7 +67,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
       id={postId}
       interestedUserCount={totalUsersSeen}
       style={styles.interestedUserCount}
-      showShouldDivider={false}
+      isLite
     />
   );
 

@@ -316,6 +316,7 @@ const _PostView: FC<PostViewProps> = ({
                 id={postId}
                 interestedUserCount={totalUsersSeen}
                 style={styles.seenCountsViewAtBottom}
+                isLite
               />
             )}
           />
