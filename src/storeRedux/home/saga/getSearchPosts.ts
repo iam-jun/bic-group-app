@@ -63,7 +63,7 @@ export default function* getSearchPosts({
     yield put(homeActions.setNewsfeedSearch({
       loadingResult: false,
       searchResults: data,
-      totalResult: response?.total,
+      totalResult: response?.meta?.total,
     }));
 
     // save keyword to recent search

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  View, StyleSheet, FlatList, RefreshControl,
+  View, StyleSheet, FlatList, ActivityIndicator,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -30,6 +30,7 @@ const SearchResult = () => {
     loadingResult = false,
     searchResults = [],
     searchText = '',
+    totalResult,
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
   const filterCreatedBy = useKeySelector(
     homeKeySelector.newsfeedSearchFilterCreatedBy,
@@ -63,10 +64,6 @@ const SearchResult = () => {
     getData();
   }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate]);
 
-  const onRefresh = () => {
-    // console.log('\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m');
-  };
-
   const onEndReached = () => {
     getData(true);
   };
@@ -89,7 +86,17 @@ const SearchResult = () => {
     );
   };
 
-  const renderFooter = () => <View style={styles.footer} />;
+  const renderFooter = () => {
+    if (totalResult === searchResults.length) return <ViewSpacing height={spacing.margin.large} />;
+
+    return (
+      <View style={styles.footer}>
+        <ActivityIndicator
+          color={colors.gray20}
+        />
+      </View>
+    );
+  };
 
   const renderSpacing = () => <ViewSpacing height={spacing.margin.large} />;
 
@@ -100,20 +107,12 @@ const SearchResult = () => {
         style={styles.flex1}
         data={searchResults || []}
         renderItem={renderItem}
-        ListEmptyComponent={renderEmpty()}
-        ListFooterComponent={renderFooter()}
+        ListEmptyComponent={renderEmpty}
+        ListFooterComponent={renderFooter}
         ListHeaderComponent={renderSpacing}
         ItemSeparatorComponent={renderSpacing}
         keyExtractor={(item) => `newsfeed_item_${item?.id}`}
         onEndReached={onEndReached}
-        refreshControl={(
-          <RefreshControl
-            refreshing={loadingResult}
-            onRefresh={onRefresh}
-            tintColor={colors.purple50}
-            colors={[colors.purple50 || 'grey']}
-          />
-        )}
       />
     </View>
   );
@@ -145,7 +144,7 @@ const createStyle = (theme: ExtendedTheme) => {
       textAlign: 'center',
     },
     footer: {
-      marginBottom: spacing.margin.large,
+      paddingVertical: spacing.margin.large,
     },
   });
 };
