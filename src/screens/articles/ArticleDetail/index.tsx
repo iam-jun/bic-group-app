@@ -419,7 +419,6 @@ const themeStyles = (theme: ExtendedTheme) => {
       bottom: 0,
       backgroundColor: colors.neutral5,
       zIndex: 99,
-      opacity: 0.5,
     },
     postContainerBackground: {
       backgroundColor: colors.white,
