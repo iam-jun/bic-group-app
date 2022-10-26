@@ -18,11 +18,11 @@ import Button from '~/beinComponents/Button';
 import TitleComponent from '../fragments/TitleComponent';
 import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
-import { ILocation } from '~/interfaces/common';
 import menuActions from '../../../../storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
 import { TextInput } from '~/baseComponents/Input';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { ICityResponseItem } from '~/interfaces/IAuth';
 
 const EditContact = () => {
   const theme: ExtendedTheme = useTheme();
@@ -36,12 +36,11 @@ const EditContact = () => {
 
   const myProfile = useKeySelector(menuKeySelector.myProfile);
   const {
-    email, phone, countryCode, country, city, id,
+    email, phone, countryCode, city, id,
   } = myProfile || {};
 
   const [countryCodeState, setCountryCountryCodeState]
-    = useState<string>(countryCode);
-  const [countryState, setCountryState] = useState<string>(country);
+    = useState<string>(countryCode || '+84');
   const [cityState, setCityState] = useState<string>(city);
   const phoneNumberEditError = useKeySelector(
     menuKeySelector.phoneNumberEditError,
@@ -91,7 +90,6 @@ const EditContact = () => {
           id,
           phone: phoneNumber,
           countryCode: phoneNumber ? countryCodeState : null,
-          country: countryState,
           city: cityState,
         },
         t('settings:text_contact_info_update_success'),
@@ -121,8 +119,7 @@ const EditContact = () => {
     locationRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
-  const onLocationItemPress = (item: ILocation) => {
-    setCountryState(item.country);
+  const onLocationItemPress = (item: ICityResponseItem) => {
     setCityState(item.name);
     locationRef?.current?.close();
     Keyboard.dismiss();
@@ -134,17 +131,14 @@ const EditContact = () => {
 
   const checkIsValid = (
     countryCodeState: string,
-    countryState: string,
     cityState: string,
     phoneNumber: string,
   ) => countryCode !== countryCodeState
-    || country !== countryState
     || city !== cityState
     || phone !== phoneNumber;
 
   const isValid = checkIsValid(
     countryCodeState,
-    countryState,
     cityState,
     watch('phoneNumber'),
   );
@@ -178,7 +172,7 @@ const EditContact = () => {
           />
           <ViewSpacing height={spacing.padding.large} />
           <EditPhoneNumber
-            countryCode={countryCode}
+            countryCode={countryCodeState}
             phoneNumber={phone}
             onChangeCountryCode={onChangeCountryCode}
             control={control}
@@ -191,7 +185,7 @@ const EditContact = () => {
             testID="edit_contact.location"
             textProps={{
               color:
-                cityState && countryState
+                cityState
                   ? theme.colors.neutral80
                   : theme.colors.neutral20,
               variant: 'bodyM',
@@ -202,8 +196,8 @@ const EditContact = () => {
             rightIcon="AngleDown"
             rightIconProps={{ tintColor: theme.colors.neutral40, size: 14 }}
           >
-            {cityState && countryState
-              ? `${cityState}, ${countryState}`
+            {cityState
+              ? `${cityState}`
               : t('settings:select_location')}
           </Button>
         </View>

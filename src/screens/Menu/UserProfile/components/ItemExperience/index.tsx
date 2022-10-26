@@ -33,6 +33,7 @@ const ItemExperience: FC<ItemExperienceProps> = ({
     currentlyWorkHere,
     endDate,
     location,
+    description,
   } = item;
   const dispatch = useDispatch();
   const { t } = useBaseHook();
@@ -84,6 +85,10 @@ const ItemExperience: FC<ItemExperienceProps> = ({
       <InfoItem
         title="common:text_end_date"
         value={getEndDateText(t, currentlyWorkHere, endDate)}
+      />
+      <InfoItem
+        title="common:text_description"
+        value={description}
       />
     </View>
   );

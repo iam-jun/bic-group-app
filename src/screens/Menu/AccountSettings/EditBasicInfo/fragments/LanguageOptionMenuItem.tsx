@@ -15,7 +15,7 @@ const LanguageOptionMenuItem: FC<LanguageOptionMenuItemProps> = ({
   language,
   onChoose,
 }) => {
-  const { fullName, selected } = language;
+  const { name, selected } = language;
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
@@ -25,7 +25,7 @@ const LanguageOptionMenuItem: FC<LanguageOptionMenuItemProps> = ({
       contentStyle={styles.contentContainer}
       onPress={() => onChoose(language)}
     >
-      <Text.BodyMMedium>{fullName}</Text.BodyMMedium>
+      <Text.BodyMMedium>{name}</Text.BodyMMedium>
     </Button>
   );
 };

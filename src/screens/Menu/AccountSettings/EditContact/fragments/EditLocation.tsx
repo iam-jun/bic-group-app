@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import i18next from 'i18next';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useKeyboard } from '@react-native-community/hooks';
@@ -12,16 +11,15 @@ import { useKeyboard } from '@react-native-community/hooks';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../../../../storeRedux/menu/keySelector';
-import menuActions from '../../../../../storeRedux/menu/actions';
 import appConfig from '~/configs/appConfig';
-import { ILocation } from '~/interfaces/common';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
+import useUserProfileStore from '~/screens/Menu/UserProfile/store';
+import { ICityResponseItem } from '~/interfaces/IAuth';
+import { searchText } from '~/utils/common';
 
 interface EditLocationProps {
   modalizeRef: any;
@@ -35,16 +33,21 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
   const styles = createStyles(
     theme, screenHeight,
   );
-  const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
 
-  const locationList = useKeySelector(menuKeySelector.locationList);
-  const { data, searchResult } = locationList || {};
+  const city = useUserProfileStore((state) => state.city);
+
+  const [lstResultSearch, setLstResultSearch] = useState<ICityResponseItem[]>([]);
 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const doSearch = (searchQuery: string) => {
-    searchQuery && dispatch(menuActions.searchLocation(searchQuery));
+    if (searchQuery) {
+      const resultSearch = city.filter((item) => searchText(
+        searchQuery, item.name,
+      ));
+      setLstResultSearch(resultSearch);
+    }
   };
 
   const searchHandler = useCallback(
@@ -63,10 +66,10 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
     setSearchQuery('');
   };
 
-  const renderItem = ({ item }: { item: ILocation }) => (
+  const renderItem = ({ item }: { item: ICityResponseItem }) => (
     <PrimaryItem
       testID="edit_location.item"
-      title={`${item.name}, ${item.country}`}
+      title={`${item.name}`}
       onPress={() => onItemPress?.(item)}
     />
   );
@@ -105,8 +108,8 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
             style={styles.listView}
             scrollEventThrottle={16}
           >
-            {(searchQuery ? searchResult : data || []).map((item: ILocation) => (
-              <View key={`${item?.country} ${item?.type} ${item?.name}`}>
+            {(searchQuery ? lstResultSearch : city).map((item) => (
+              <View key={`${item?.name}-${item?.countryCode}`}>
                 {renderItem({ item })}
               </View>
             ))}

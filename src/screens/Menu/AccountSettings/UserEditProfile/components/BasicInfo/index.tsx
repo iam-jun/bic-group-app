@@ -8,9 +8,9 @@ import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import genders from '~/constants/genders';
 import { formatDate } from '~/utils/formatData';
-import speakingLanguages from '~/constants/speakingLanguages';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { spacing } from '~/theme';
+import { getLanguages } from '~/screens/Menu/UserProfile/helper';
 
 interface Props {
   fullname: string;
@@ -33,9 +33,6 @@ const BasicInfo = ({
   const { colors } = theme;
   const styles = createStyles();
   const { t } = useBaseHook();
-
-  const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
-  const userLanguages = userLanguageList?.join(', ');
 
   return (
     <View>
@@ -74,7 +71,7 @@ const BasicInfo = ({
         />
         <SettingItem
           title="settings:title_speaking_languages"
-          subtitle={userLanguages || t('common:text_not_set')}
+          subtitle={getLanguages(language) || t('common:text_not_set')}
           leftIcon="Comments"
           isTouchDisabled
         />

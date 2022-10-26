@@ -1,19 +1,24 @@
 import { isEmpty } from 'lodash';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IUploadType } from '~/configs/resourceConfig';
-import speakingLanguages from '~/constants/speakingLanguages';
 import { IFilePicked } from '~/interfaces/common';
 import { userProfileImageCropRatio } from '~/theme/dimension';
 import { formatDate } from '~/utils/formatData';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import menuActions from '../../../storeRedux/menu/actions';
+import useUserProfileStore from './store';
 
 export const getLanguages = (language: string[]) => {
   if (isEmpty(language)) return '';
 
+  const mapLanguages = useUserProfileStore.getState().languages.reduce((acc, cur) => ({
+    ...acc,
+    [cur.code]: cur,
+  }), {});
+
   const userLanguageList = language?.map((
     code: string,
-  ) => speakingLanguages[code]?.name);
+  ) => mapLanguages[code]?.name);
 
   return userLanguageList?.join(', ');
 };
@@ -34,7 +39,7 @@ export const getEndDateText = (
 export const formatPhoneNumber = (
   phone: string | null | undefined,
   countryCode: string,
-) => (countryCode ? `(+${countryCode}) ${phone}` : phone);
+) => (countryCode ? `(${countryCode}) ${phone}` : phone);
 
 export const _openImagePicker = async (
   id: string,

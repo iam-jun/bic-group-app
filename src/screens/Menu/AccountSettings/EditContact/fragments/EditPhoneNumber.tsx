@@ -1,8 +1,5 @@
 import i18next from 'i18next';
-import { debounce } from 'lodash';
-import React, {
-  useCallback, useEffect, useRef, useState,
-} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Controller } from 'react-hook-form';
 import {
   Keyboard,
@@ -12,26 +9,20 @@ import {
   View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
-import Divider from '~/beinComponents/Divider';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-import appConfig from '~/configs/appConfig';
 import * as validation from '~/constants/commonRegex';
-import { useKeySelector } from '~/hooks/selector';
-import { ICountryCodeList } from '~/interfaces/common';
 
 import spacing from '~/theme/spacing';
 import { formatTextRemoveSpace } from '~/utils/formatData';
-import menuActions from '../../../../../storeRedux/menu/actions';
-import menuKeySelector from '../../../../../storeRedux/menu/keySelector';
 import TitleComponent from '../../fragments/TitleComponent';
 import { useBaseHook } from '~/hooks';
+import useUserProfileStore from '~/screens/Menu/UserProfile/store';
+import { ICountryResponseItem } from '~/interfaces/IAuth';
 
 interface EditPhoneNumberProps {
   onChangeCountryCode: (value: string) => void;
@@ -57,15 +48,10 @@ const EditPhoneNumber = ({
   const styles = createStyles(
     theme, screenHeight,
   );
-  const dispatch = useDispatch();
+  const country = useUserProfileStore((state) => state.country);
 
   const { t } = useBaseHook();
 
-  const countryCodeList = useKeySelector(menuKeySelector.countryCodeList);
-  const { data, searchResult } = countryCodeList || {};
-
-  const [codeValue, setCodeValue] = useState<string>(countryCode);
-  const [searchQuery, setSearchQuery] = useState<string>('');
   const countryCodeSheetRef = useRef<any>();
 
   useEffect(
@@ -74,39 +60,15 @@ const EditPhoneNumber = ({
     }, [],
   );
 
-  const doSearch = (searchQuery: string) => {
-    searchQuery && dispatch(menuActions.searchCountryCode(searchQuery));
-  };
-
-  const searchHandler = useCallback(
-    debounce(
-      doSearch, appConfig.searchTriggerTime,
-    ),
-    [],
-  );
-
-  const onQueryChanged = (text: string) => {
-    setSearchQuery(text);
-    searchHandler(text);
-  };
-
-  const onCloseModal = () => {
-    setSearchQuery('');
-  };
-
-  const onSelectCountryCode = (item: ICountryCodeList) => {
+  const onSelectCountryCode = (item: ICountryResponseItem) => {
     countryCodeSheetRef.current?.close();
-    setCodeValue(item.code);
-    setSearchQuery('');
-    Keyboard.dismiss();
-    onChangeCountryCode(item.code);
+    onChangeCountryCode(item.countryCode);
   };
 
-  const renderItem = ({ item }: {item: ICountryCodeList}) => (
+  const renderItem = ({ item }: {item: ICountryResponseItem}) => (
     <PrimaryItem
       testID="edit_phone_number.country_code.item"
-      title={`${item.name} (+${item.code})`}
-      leftIcon={item.flag}
+      title={`${item.flag} ${item.name} (${item.countryCode})`}
       titleProps={{ variant: 'bodyM' }}
       onPress={() => onSelectCountryCode(item)}
     />
@@ -115,22 +77,14 @@ const EditPhoneNumber = ({
   const renderCountryCodeList = () => (
     <BottomSheet
       modalizeRef={countryCodeSheetRef}
-      onClose={onCloseModal}
       ContentComponent={(
         <View style={styles.contentComponent}>
-          <SearchInput
-            testID="edit_phone_number.country_code.search"
-            onChangeText={onQueryChanged}
-            placeholder={i18next.t('input:search_country')}
-            style={styles.searchInput}
-          />
-          <Divider style={styles.divider} />
           <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listView}
           >
-            {(searchQuery ? searchResult : data || []).map((item: ICountryCodeList) => renderItem({ item }))}
+            {country.map((item) => renderItem({ item }))}
           </ScrollView>
         </View>
       )}
@@ -154,7 +108,7 @@ const EditPhoneNumber = ({
       rightIconProps={{ tintColor: colors.neutral40, size: 14 }}
       onPress={(e) => onOpenCountryCode(e)}
     >
-      {`+${codeValue || '84'}`}
+      {`${countryCode || '+84'}`}
     </Button>
   );
 
@@ -256,7 +210,7 @@ const createStyles = (
       justifyContent: 'space-between',
     },
     contentComponent: {
-      minHeight: 0.8 * screenHeight,
+      maxHeight: 0.5 * screenHeight,
     },
     searchInput: {
       marginHorizontal: spacing.margin.base,

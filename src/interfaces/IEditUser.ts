@@ -1,5 +1,6 @@
 import { IUploadType } from '~/configs/resourceConfig';
 import { IFilePicked } from './common';
+import { ILanguageResponseItem } from './IAuth';
 
 export enum GENDER_TYPE {
   MALE = 'MALE',
@@ -26,10 +27,7 @@ export interface IGenderItem {
   title: string;
 }
 
-export interface ILanguageItem {
-  code: string;
-  fullName: string;
-  name: string;
+export interface ILanguageItem extends ILanguageResponseItem {
   selected?: boolean;
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   StyleSheet,
   useWindowDimensions,
@@ -9,7 +9,6 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import BottomSheet from '~/baseComponents/BottomSheet';
-import speakingLanguages from '~/constants/speakingLanguages';
 import { ILanguageItem } from '~/interfaces/IEditUser';
 
 import TitleComponent from '../../fragments/TitleComponent';
@@ -19,20 +18,18 @@ import LanguageOptionMenuItem from './LanguageOptionMenuItem';
 import LanguageOptionMenuSelected from './LanguageOptionMenuSelected';
 import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';
+import { ILanguageResponseItem } from '~/interfaces/IAuth';
+import useUserProfileStore from '~/screens/Menu/UserProfile/store';
 
 interface LanguageOptionMenuProps {
   onChangeLanguages: (languages: string[]) => void;
   selectedLanguages: string[];
 }
 
-const speakingLanguagesList = Object.keys(speakingLanguages).map(
-  (code: string) => ({
-    code,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    ...speakingLanguages[code],
-  }),
-);
+const initLstLanguageState = (
+  languages: ILanguageResponseItem[],
+  selectedLanguages: string[] = [],
+): ILanguageItem[] => languages.map((item) => ({ ...item, selected: selectedLanguages?.includes(item.code) }));
 
 const getSelectedLanguages = (languages: ILanguageItem[]) => languages.filter((item) => item.selected);
 
@@ -48,25 +45,16 @@ const LanguageOptionMenu = ({
 
   const styles = themeStyles(theme, screenHeight);
 
-  const [languages, setLanguages] = useState(speakingLanguagesList);
+  const languagesResponse = useUserProfileStore((state) => state.languages);
+  const [languages, setLanguages] = useState(initLstLanguageState(languagesResponse, selectedLanguages));
 
   const languageSheetRef = useRef<any>();
 
-  useEffect(() => {
-    setLanguages(
-      languages.map((lang) => ({
-        ...lang,
-        selected: selectedLanguages?.includes(lang.code),
-      })),
-    );
-  }, [selectedLanguages]);
-
-  const onSelectItem = (language: ILanguageItem) => {
-    const newSelectedItems = languages.reduce(
+  const updateSelectedLanguages = (lstCurrentLanguage: ILanguageItem[]) => {
+    const newSelectedItems = lstCurrentLanguage.reduce(
       (acc: string[], cur: ILanguageItem) => {
         if (
-          (cur.code === language.code && !cur.selected)
-          || (cur.code !== language.code && cur.selected)
+          cur.selected
         ) {
           acc.push(cur.code);
         }
@@ -77,24 +65,52 @@ const LanguageOptionMenu = ({
     onChangeLanguages(newSelectedItems);
   };
 
-  const onRemoveItem = (language?: ILanguageItem) => {
+  const onSelectItem = (language: ILanguageItem) => {
+    setLanguages(
+      languages.map((lang) => {
+        if (lang.code === language.code) {
+          return {
+            ...lang,
+            selected: !lang.selected,
+          };
+        }
+        return lang;
+      }),
+    );
+  };
+
+  const onRemoveItem = (language?: ILanguageItem, isUpdateSelectedLanguages?: boolean) => {
     // remove all
     if (!language) {
-      onChangeLanguages([]);
+      setLanguages(
+        languages.map((lang) => ({
+          ...lang,
+          selected: false,
+        })),
+      );
       return;
     }
 
     // remove specific item
-    const newSelectedItems = languages.reduce(
-      (acc: string[], cur: ILanguageItem) => {
-        if (cur.code !== language.code && cur.selected) {
-          acc.push(cur.code);
-        }
-        return acc;
-      },
-      [],
+    const newLanguagesState = languages.map((lang) => {
+      if (lang.code === language.code) {
+        return {
+          ...lang,
+          selected: false,
+        };
+      }
+      return lang;
+    });
+    setLanguages(
+      newLanguagesState,
     );
-    onChangeLanguages(newSelectedItems);
+    if (isUpdateSelectedLanguages) {
+      updateSelectedLanguages(newLanguagesState);
+    }
+  };
+
+  const onCloseModal = () => {
+    updateSelectedLanguages(languages);
   };
 
   const renderItem = ({ item }: { item: ILanguageItem }) => (
@@ -138,7 +154,7 @@ const LanguageOptionMenu = ({
                   style={styles.tag}
                   label={item.name}
                   icon="Xmark"
-                  onPressIcon={() => onRemoveItem(item)}
+                  onPressIcon={() => onRemoveItem(item, true)}
                 />
               </View>
             ))}
@@ -161,13 +177,14 @@ const LanguageOptionMenu = ({
                 onRemove={onRemoveItem}
               />
               {languages.map((item: ILanguageItem) => (
-                <View key={`${item?.code} ${item?.fullName}`}>
+                <View key={`${item?.code} ${item?.name}`}>
                   {renderItem({ item })}
                 </View>
               ))}
             </ScrollView>
           </View>
         )}
+        onClose={onCloseModal}
       />
     </View>
   );
