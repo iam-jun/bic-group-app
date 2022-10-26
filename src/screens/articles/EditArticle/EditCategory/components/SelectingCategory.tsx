@@ -35,7 +35,7 @@ const SelectingCategory = () => {
   return (
     <View style={styles.container}>
       <Text.SubtitleL style={styles.textTitle} useI18n>article:text_selecting_categories</Text.SubtitleL>
-      <ScrollView horizontal>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {categories.map(renderItem)}
       </ScrollView>
     </View>

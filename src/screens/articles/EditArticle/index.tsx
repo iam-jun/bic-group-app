@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import {
   FlatList, StyleSheet, View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Divider from '~/beinComponents/Divider';
@@ -15,6 +16,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { EditArticleProps } from '~/interfaces/IArticle';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
+import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 const editOptions = [
@@ -22,13 +24,14 @@ const editOptions = [
   { title: 'article:title_edit_description', screen: articleStack.editArticleSummary },
   { title: 'article:title_edit_cover', screen: articleStack.editArticleCover },
   { title: 'article:title_edit_category', screen: articleStack.editArticleCategory },
-  { title: 'article:title_edit_audience', screen: articleStack.editArticleAudience },
+  { title: 'article:title_edit_audience' },
   { title: 'article:title_edit_content', screen: articleStack.editArticleContent },
 ];
 
 const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
 
+  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -37,6 +40,10 @@ const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   useEditArticle({ articleId });
 
   const onPressItem = (item: any) => {
+    if (!item.screen) {
+      dispatch(modalActions.showAlertNewFeature());
+      return;
+    }
     rootNavigation.navigate(item.screen, { articleId });
   };
 

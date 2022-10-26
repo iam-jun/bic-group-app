@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import React, { FC, useEffect } from 'react';
 import {
   View, StyleSheet, FlatList,
@@ -7,6 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { SearchInput } from '~/baseComponents/Input';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener } from '~/hooks/navigation';
@@ -33,6 +34,11 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
   const categoriesData = useEditArticleCategoryStore((state) => state.categories);
   const { items: categoryItems, loading: loadingCategories } = categoriesData || {};
 
+  const searchData = useEditArticleCategoryStore((state) => state.search);
+  const { key: searchKey, items: searchItems } = searchData || {};
+
+  const listData = searchKey ? searchItems : categoryItems;
+
   const {
     handleSave, handleBack, enableButtonSave, loading,
   } = useEditArticle({ articleId });
@@ -45,6 +51,14 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
   }, [categoriesData]);
 
   useBackPressListener(handleBack);
+
+  const onChangeText = debounce((value: string) => {
+    categoryActions.getSearchCategories(value);
+  }, 500);
+
+  const onLoadMore = debounce(() => {
+    categoryActions.getCategories(true);
+  }, 200);
 
   const onAddCategory = (category: ICategory) => {
     editArticleActions.addCategory(category);
@@ -66,6 +80,8 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
     );
   };
 
+  const renderFooter = () => <View style={styles.footer} />;
+
   return (
     <View style={styles.container}>
       <Header
@@ -78,14 +94,20 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
       <SearchInput
         style={styles.searchInput}
         placeholder={t('article:text_search_category_placeholder')}
+        onChangeText={onChangeText}
       />
       <SelectingCategory />
       <Divider />
       <FlatList
-        data={categoryItems || []}
+        data={listData || []}
         renderItem={renderItem}
         keyExtractor={(item) => `category_item_${item?.name || item?.id}`}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.1}
+        initialNumToRender={20}
+        ListFooterComponent={renderFooter()}
       />
+      <KeyboardSpacer iosOnly />
     </View>
   );
 };
@@ -102,6 +124,9 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     label: {
       paddingHorizontal: spacing.padding.large,
+    },
+    footer: {
+      marginBottom: spacing.margin.base,
     },
   });
 };

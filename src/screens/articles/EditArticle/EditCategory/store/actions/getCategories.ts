@@ -3,31 +3,44 @@ import { ICategory, IParamGetCategories } from '~/interfaces/IArticle';
 import { IEditArticleCategoryState } from '..';
 import showError from '~/store/helper/showError';
 
-const getCategories = (set, _get) => async (_isLoadMore, params: IParamGetCategories) => {
+const getCategories = (set, get) => async (isLoadMore) => {
   set((state: IEditArticleCategoryState) => {
     state.categories.loading = true;
   }, 'getCategories');
   try {
-    const response = await streamApi.getCategories(params);
-    set((state: IEditArticleCategoryState) => {
-      state.categories.loading = false;
-    }, 'getCategories');
+    const categoryData = get().categories || {};
+    const params: IParamGetCategories = { offset: 0, limit: 25 };
 
-    // todo handle load more
-
-    if (!response?.data) {
-      showError(response);
+    if (isLoadMore && !categoryData.hasNextPage) {
       return;
     }
 
-    // use only name & id, another field not used yet
-    const categories = response?.data?.list?.map?.(
-      (category: ICategory) => ({ id: category.id, name: category.name }),
-    ) || [];
+    if (isLoadMore) {
+      params.offset = categoryData?.items?.length;
+    }
 
-    set((state: IEditArticleCategoryState) => {
-      state.categories.items = categories;
-    }, 'getCategories');
+    const response = await streamApi.getCategories(params);
+
+    if (response?.data) {
+      // use only name & id, another field not used yet
+      const listResult = response?.data?.list?.map?.(
+        (category: ICategory) => ({ id: category.id, name: category.name }),
+      ) || [];
+      const hasNextPage = response?.data?.meta?.hasNextPage;
+
+      const categories = isLoadMore ? [...categoryData.items, ...listResult] : listResult;
+
+      set((state: IEditArticleCategoryState) => {
+        state.categories.loading = false;
+        state.categories.items = categories;
+        state.categories.hasNextPage = hasNextPage;
+      }, 'getCategories');
+    } else {
+      set((state: IEditArticleCategoryState) => {
+        state.categories.loading = false;
+      }, 'getCategories');
+      showError(response);
+    }
   } catch (e) {
     console.error('\x1b[35m🐣️ getCategories error: ', e, '\x1b[0m');
     showError(e);
