@@ -23,7 +23,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
-import { dataMapping } from './helper';
+import { dataMapping, maxBirthday } from './helper';
 import spacing from '~/theme/spacing';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { DateInput, TextInput } from '~/baseComponents/Input';
@@ -192,16 +192,16 @@ const EditBasicInfo = () => {
           settings:text_input_edit_info_fullname_max_64
         </Text.BodyXS>
         <ViewSpacing height={spacing.padding.large} />
-        <TitleComponent title="settings:title_gender" />
+        <TitleComponent title="settings:title_gender" isOptional />
         <Gender genderState={genderState} setGenderState={setGenderState} />
         <ViewSpacing height={spacing.padding.large} />
+        <TitleComponent title="settings:title_birthday" isOptional />
         <DateInput
           testID="edit_basic_info.birthday"
           style={{ marginVertical: 0 }}
           mode="date"
           value={birthdayState}
-          label={t('settings:title_birthday')}
-          maxDate={new Date()}
+          maxDate={maxBirthday()}
           onConfirm={onSetBirthday}
           placeholder="DD/MM/YYYY"
         />
@@ -211,7 +211,7 @@ const EditBasicInfo = () => {
           selectedLanguages={languageState}
         />
         <ViewSpacing height={spacing.padding.large} />
-        <TitleComponent title="settings:title_relationship_status" />
+        <TitleComponent title="settings:title_relationship_status" isOptional />
         <Button
           testID="edit_basic_info.relationship"
           textProps={{

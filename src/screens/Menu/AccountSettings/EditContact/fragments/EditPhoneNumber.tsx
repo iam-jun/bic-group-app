@@ -161,7 +161,7 @@ const EditPhoneNumber = ({
 
   return (
     <>
-      <TitleComponent title="settings:title_phone_number" />
+      <TitleComponent title="settings:title_phone_number" isOptional />
       <View style={styles.inputsView}>
         {renderCountryCodeInput()}
         {renderPhoneNumberInput()}
