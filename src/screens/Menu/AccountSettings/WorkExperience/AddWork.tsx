@@ -136,7 +136,7 @@ const AddWork = () => {
     const data = {
       company: companyValue.trim(),
       titlePosition: positionValue.trim(),
-      location: locationValue.trim(),
+      location: locationValue.trim() || null,
       description: descriptionValue.trim(),
       currentlyWorkHere: isWorkHere,
       startDate: startDateValue,
