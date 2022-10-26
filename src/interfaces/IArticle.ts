@@ -43,6 +43,7 @@ export interface IParamGetCategories {
   order?: 'ASC' | 'DESC',
   limit?: number;
   offset?: number;
+  name?: string;
 }
 
 export interface IEditArticleAudience {

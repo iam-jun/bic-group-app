@@ -32,7 +32,7 @@ const putEditArticle = (set, _get) => async (params: IPayloadPutEditArticle) => 
     }
 
     const toastMessage: IToastMessage = {
-      content: i18next.t('article:text_edit_article_success'),
+      content: response?.meta?.message || i18next.t('article:text_edit_article_success'),
     };
     navigation.goBack();
     Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));

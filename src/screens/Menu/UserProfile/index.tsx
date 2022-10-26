@@ -35,8 +35,8 @@ const UserProfile = (props: any) => {
   const userProfileData = useUserProfileStore((state) => state.data);
   const loading = useUserProfileStore((state) => state.loading);
   const error = useUserProfileStore((state) => state.error);
-  const doGetUserProfile = useUserProfileStore(
-    (state) => state.doGetUserProfile,
+  const getUserProfile = useUserProfileStore(
+    (state) => state.actions.getUserProfile,
   );
   const reset = useUserProfileStore((state) => state.reset);
 
@@ -77,7 +77,7 @@ const UserProfile = (props: any) => {
   const homeActions = useHomeStore((state) => state.actions);
 
   useEffect(() => {
-    isFocused && doGetUserProfile({ userId, params });
+    isFocused && getUserProfile({ userId, params });
     userId && dispatch(menuActions.getUserWorkExperience(userId));
 
     const { avatar: _avatar, backgroundImgUrl: _bgIm } = myProfileData;

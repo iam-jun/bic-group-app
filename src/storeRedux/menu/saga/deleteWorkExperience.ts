@@ -24,7 +24,7 @@ export default function* deleteWorkExperience({
     if (response?.data) {
       yield put(menuActions.setUserWorkExperience(mapWorkExperience(response.data)));
       const userId = useUserProfileStore.getState().data.id;
-      useUserProfileStore.getState().doGetUserProfile({ userId, silentLoading: true });
+      useUserProfileStore.getState().actions.getUserProfile({ userId, silentLoading: true });
     }
     if (callback) return callback();
   } catch (err) {

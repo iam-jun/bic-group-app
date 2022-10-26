@@ -78,6 +78,18 @@ export const groupsApiConfig = {
     url: `${provider.url}users/${userId}/profile`,
     params,
   }),
+  getLanguages: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}languages`,
+  }),
+  getCountry: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}countries`,
+  }),
+  getCity: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}cities?country_code=84`,
+  }),
   editMyProfile: (userId: string, data: IUserEdit): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}users/${userId}/profile`,
@@ -618,6 +630,15 @@ const groupApi = {
   },
   getUserProfile: (userId: string, params?: any) => withHttpRequestPromise(
     groupsApiConfig.getUserProfile, userId, params,
+  ),
+  getLanguages: () => withHttpRequestPromise(
+    groupsApiConfig.getLanguages,
+  ),
+  getCountry: () => withHttpRequestPromise(
+    groupsApiConfig.getCountry,
+  ),
+  getCity: () => withHttpRequestPromise(
+    groupsApiConfig.getCity,
   ),
   editMyProfile: (params: any) => {
     const { userId, data } = params || {};

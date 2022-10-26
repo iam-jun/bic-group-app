@@ -55,7 +55,7 @@ const Contact = ({
           title="settings:title_phone_number"
           subtitle={
             countryCode && phone
-              ? `(+${countryCode}) ${phone}`
+              ? `(${countryCode}) ${phone}`
               : t('common:text_not_set')
           }
           leftIcon="Phone"

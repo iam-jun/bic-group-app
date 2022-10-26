@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DeviceEventEmitter, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme, useNavigationState } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -23,11 +23,13 @@ import MainTabs from '~/router/navigator/MainStack/MainTabs';
 import { AppConfig } from '~/configs';
 import BottomList from '~/components/BottomList';
 import LoggerView from '~/components/LoggerView';
+import useUserProfileStore from '~/screens/Menu/UserProfile/store';
 
 const Stack = createNativeStackNavigator();
 
 const MainStack = (): React.ReactElement => {
   const dispatch = useDispatch();
+  const actions = useUserProfileStore((state) => state.actions);
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
@@ -49,6 +51,12 @@ const MainStack = (): React.ReactElement => {
     }
     return false;
   });
+
+  useEffect(() => {
+    actions.getLanguages();
+    actions.getCountry();
+    actions.getCity();
+  }, []);
 
   return (
     <View style={styles.container}>
