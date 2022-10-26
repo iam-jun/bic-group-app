@@ -417,7 +417,8 @@
     "select_relationship": "Select relationship",
     "enter_phone": "Enter phone",
     "select_location": "Select location",
-    "enter_description": "Enter description"
+    "enter_description": "Enter description",
+    "optional": "optional"
   },
   "languages": {
     "title_en": "English",

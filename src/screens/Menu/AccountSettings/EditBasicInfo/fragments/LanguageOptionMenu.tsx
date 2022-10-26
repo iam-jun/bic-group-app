@@ -126,7 +126,7 @@ const LanguageOptionMenu = ({
 
   return (
     <View>
-      <TitleComponent title="settings:title_language" />
+      <TitleComponent title="settings:title_language" isOptional />
       <Button
         testID="edit_basic_info.language"
         textProps={{
