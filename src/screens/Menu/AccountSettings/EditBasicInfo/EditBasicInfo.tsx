@@ -23,7 +23,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
-import { dataMapping } from './helper';
+import { dataMapping, maxBirthday } from './helper';
 import spacing from '~/theme/spacing';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { DateInput, TextInput } from '~/baseComponents/Input';
@@ -201,7 +201,7 @@ const EditBasicInfo = () => {
           style={{ marginVertical: 0 }}
           mode="date"
           value={birthdayState}
-          maxDate={new Date()}
+          maxDate={maxBirthday()}
           onConfirm={onSetBirthday}
           placeholder="DD/MM/YYYY"
         />

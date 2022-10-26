@@ -39,7 +39,7 @@ export const getEndDateText = (
 export const formatPhoneNumber = (
   phone: string | null | undefined,
   countryCode: string,
-) => (countryCode ? `(${countryCode}) ${phone}` : phone);
+) => (countryCode && phone ? `(${countryCode}) ${phone}` : '');
 
 export const _openImagePicker = async (
   id: string,
