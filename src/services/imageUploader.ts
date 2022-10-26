@@ -7,6 +7,7 @@ import { makeHttpRequest } from '~/api/apiRequest';
 import { AppConfig } from '~/configs';
 import { IUploadType } from '~/configs/resourceConfig';
 import { uploadApiConfig } from '~/api/UploadApi';
+import { formatBytes } from '~/utils/formatData';
 
 export interface IGetFile {
   id?: string;
@@ -92,7 +93,8 @@ export default class ImageUploader {
       }
     }
     if (file.size > AppConfig.maxFileSize.image) {
-      const error = i18next.t('common:error:file:over_file_size');
+      const error = i18next.t('common:error:file:over_file_size')
+        .replace('{n}', formatBytes(AppConfig.maxFileSize.image, 0));
       console.error(`\x1b[31m🐣️ fileUploader upload error: ${error}\x1b[0m`);
       onError?.(error);
       return Promise.reject({ meta: { message: error } });

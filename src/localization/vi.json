@@ -73,7 +73,7 @@
     "text_chosen": "Đang Chọn",
     "error": {
       "file": {
-        "over_file_size": "Dung lượng file tối đa 10MB"
+        "over_file_size": "Dung lượng file tối đa {n}"
       }
     },
     "message_add_member_success_group": "Thêm thành viên thành công",
@@ -452,6 +452,7 @@
     "title_edit_content": "Nội dung",
     "text_change_cover": "Đổi ảnh bìa",
     "text_add_cover": "Thêm ảnh bìa",
+    "text_select_cover": "Chọn ảnh bìa",
     "text_selecting_categories": "Bài viết của bạn sẽ được thêm vào",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
     "text_edit_article_success": "Cập nhật bài viết thành công"
@@ -563,7 +564,7 @@
     "post_menu_report": "Báo cáo",
     "error_wait_uploading": "Vui lòng chờ tải lên hoàn tất",
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
-    "error_upload_photo_failed": "Tải ảnh lên thất bại!",
+    "error_upload_photo_failed": "Đã có lỗi xảy ra, vui lòng thử lại.",
     "error_reach_upload_photo_limit": "Bài viết tối đa %LIMIT% ảnh",
     "error_post_detail_deleted": "Bài viết không tìm thấy hoặc đã bị xoá",
     "placeholder_create_post": "Bạn đang nghĩ gì...",

@@ -31,6 +31,7 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
   const articleId = route?.params?.articleId;
 
   const [selectingCover, setSelectingCover] = useState<IFilePicked>();
+  const [error, setError] = useState('');
 
   const actions = useEditArticleStore((state) => state.actions);
   const coverMedia: IArticleCover = useEditArticleStore((state) => state.data.coverMedia) || {};
@@ -71,6 +72,19 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
     }
   };
 
+  const onError = (error) => setError(error);
+
+  const renderError = (error: string) => (
+    <View style={[styles.cover, styles.errorContainer]}>
+      <Icon icon="Image" size={30} tintColor={theme.colors.neutral40} />
+      <Text.SubtitleM style={styles.textAddCover} useI18n>article:text_add_cover</Text.SubtitleM>
+      <Text.BodyXS style={styles.textError}>{error}</Text.BodyXS>
+      <Button onPress={onPressSelect}>
+        <Text.LinkS useI18n>article:text_select_cover</Text.LinkS>
+      </Button>
+    </View>
+  );
+
   const renderButton = () => {
     if (!coverMedia?.url) {
       return (
@@ -82,6 +96,9 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
           </View>
         </Button>
       );
+    }
+    if (error) {
+      return null;
     }
     return (
       <View style={styles.centerButtonContainer}>
@@ -111,8 +128,9 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
           width={COVER_WIDTH}
           height={COVER_HEIGHT}
           onUploadSuccess={onUploadSuccess}
+          onError={onError}
+          renderError={renderError}
         />
-        {/* <Image style={styles.cover} source={coverMedia.url} /> */}
         {renderButton()}
       </View>
     </View>
@@ -155,6 +173,15 @@ const createStyle = (theme: ExtendedTheme) => {
       position: 'absolute',
       top: spacing.margin.small,
       right: spacing.margin.small,
+    },
+    errorContainer: {
+      backgroundColor: colors.neutral2,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textError: {
+      color: colors.red40,
+      paddingVertical: spacing.padding.small,
     },
   });
 };
