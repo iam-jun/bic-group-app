@@ -234,7 +234,7 @@ const AddWork = () => {
 
   const renderLocationInput = () => (
     <View style={styles.containerItem}>
-      <TitleComponent title="settings:title_location" />
+      <TitleComponent title="settings:title_location" isOptional />
       <Button
         testID="add_work.location"
         textProps={{
@@ -291,7 +291,7 @@ const AddWork = () => {
 
   const renderDescriptionInput = () => (
     <>
-      <TitleComponent title="common:text_description" />
+      <TitleComponent title="common:text_description" isOptional />
       <View
         testID="add_work.description.view"
         style={[styles.containerDes, isFocus && styles.textInputFocus]}

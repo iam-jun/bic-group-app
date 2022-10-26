@@ -180,7 +180,7 @@ const EditContact = () => {
             clearAllErrors={clearAllErrors}
           />
           <ViewSpacing height={spacing.padding.large} />
-          <TitleComponent title="settings:title_location" />
+          <TitleComponent title="settings:title_location" isOptional />
           <Button
             testID="edit_contact.location"
             textProps={{

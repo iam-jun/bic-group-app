@@ -376,7 +376,8 @@
     "select_relationship": "Chọn tình trạng hôn nhân",
     "enter_phone": "Nhập số điện thoại",
     "select_location": "Chọn vị trí",
-    "enter_description": "Nhập mô tả"
+    "enter_description": "Nhập mô tả",
+    "optional": "tuỳ chọn"
   },
   "languages": {
     "title_en": "English",

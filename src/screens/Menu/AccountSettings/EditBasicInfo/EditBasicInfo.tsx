@@ -192,15 +192,15 @@ const EditBasicInfo = () => {
           settings:text_input_edit_info_fullname_max_64
         </Text.BodyXS>
         <ViewSpacing height={spacing.padding.large} />
-        <TitleComponent title="settings:title_gender" />
+        <TitleComponent title="settings:title_gender" isOptional />
         <Gender genderState={genderState} setGenderState={setGenderState} />
         <ViewSpacing height={spacing.padding.large} />
+        <TitleComponent title="settings:title_birthday" isOptional />
         <DateInput
           testID="edit_basic_info.birthday"
           style={{ marginVertical: 0 }}
           mode="date"
           value={birthdayState}
-          label={t('settings:title_birthday')}
           maxDate={new Date()}
           onConfirm={onSetBirthday}
           placeholder="DD/MM/YYYY"
@@ -211,7 +211,7 @@ const EditBasicInfo = () => {
           selectedLanguages={languageState}
         />
         <ViewSpacing height={spacing.padding.large} />
-        <TitleComponent title="settings:title_relationship_status" />
+        <TitleComponent title="settings:title_relationship_status" isOptional />
         <Button
           testID="edit_basic_info.relationship"
           textProps={{
