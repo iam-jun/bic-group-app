@@ -82,7 +82,7 @@
     "label_confirm_send_video": "Send this video?",
     "error": {
       "file": {
-        "over_file_size": "Your file must be less than 10MB"
+        "over_file_size": "Your file must be less than {n}"
       }
     },
     "label_discard_changes": "Discard Changes",
@@ -492,6 +492,7 @@
     "title_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_add_cover": "Add a cover",
+    "text_select_cover": "Select cover",
     "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully"
@@ -601,7 +602,7 @@
     "post_menu_report": "Report to group Admin",
     "error_wait_uploading": "Please wait until upload finish",
     "error_upload_failed": "Please remove file upload failed or retry",
-    "error_upload_photo_failed": "Upload photo failed!",
+    "error_upload_photo_failed": "An error occurred, please try again.",
     "error_reach_upload_photo_limit": "Post limit %LIMIT% photos",
     "error_post_detail_deleted": "Post not found or deleted",
     "placeholder_create_post": "Write your post here...",
