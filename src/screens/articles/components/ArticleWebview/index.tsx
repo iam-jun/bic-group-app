@@ -13,12 +13,12 @@ import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import StickerView from '~/components/StickerView';
 import { IMentionUser } from '~/interfaces/IPost';
 import { parseSafe } from '~/utils/common';
 import getEnv from '~/utils/env';
 import useMounted from '~/hooks/mounted';
+import { padding } from '~/theme/spacing';
 
 enum EventType {
     ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
@@ -35,6 +35,7 @@ export interface ArticleWebviewProps {
   articleData: any;
   readOnly?: boolean;
 
+  onInitializeEnd?: () => void;
   onPressMentionAudience?: (user: IMentionUser) => void;
 }
 
@@ -42,14 +43,18 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   readOnly,
   articleData,
 
+  onInitializeEnd,
   onPressMentionAudience,
 }: ArticleWebviewProps) => {
   const isMounted = useMounted();
   const theme: ExtendedTheme = useTheme();
+  // mention on android only work on desktop browser
+  const userAgent = Platform.OS === 'android' ? USER_AGENT_DESKTOP : undefined;
+
   // const insets = useSafeAreaInsets();
   const styles = createStyle(theme);
   const webViewRef = useRef();
-  const [isLoaded, setLoaded] = useState(false);
+  const fakeWebViewRef = useRef();
   const [webviewHeight, setWebviewHeight] = useState(0);
   const runSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
   const setFullContent = useMentionInputStore((state: IMentionInputState) => state.setFullContent);
@@ -72,7 +77,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
 
   useEffect(() => {
     // reload webview after content change
-    if (readOnly && isLoaded) {
+    if (readOnly) {
       injectJavaScript(initScript);
     }
   }, [content]);
@@ -116,12 +121,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   }, 500);
 
   const onLoadEnd = () => {
-    setLoaded(true);
     injectJavaScript(initScript);
-  };
-
-  const onInnitializeEnd = (payload: any) => {
-    setWebviewHeight(payload?.scrollHeight);
   };
 
   const onChangeText = (payload: any) => {
@@ -142,6 +142,11 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     if (type === 'gif') openGif();
   };
 
+  const _onInitializeEnd = (payload: any) => {
+    setWebviewHeight(payload?.scrollHeight);
+    onInitializeEnd?.();
+  };
+
   const onMessage = (event: any) => {
     const message = parseSafe(event?.nativeEvent?.data);
     const payload = message?.payload;
@@ -150,7 +155,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
       case EventType.ON_LOAD_END:
         return onLoadEnd();
       case EventType.ON_INITIALIZE_END:
-        return onInnitializeEnd(payload);
+        return _onInitializeEnd(payload);
       case EventType.ON_EDITOR_CHANGE:
         return onChangeText(payload);
       case EventType.ON_SEARCH_MENTION:
@@ -164,31 +169,70 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     }
   };
 
-  if (!isMounted) return <LoadingIndicator />;
+  const onFakeMessage = (event: any) => {
+    const message = parseSafe(event?.nativeEvent?.data);
+    const payload = message?.payload;
 
-  // mention on android only work on desktop browser
-  const userAgent = Platform.OS === 'android' ? USER_AGENT_DESKTOP : undefined;
+    switch (message?.type) {
+      case EventType.ON_LOAD_END:
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        fakeWebViewRef?.current?.injectJavaScript?.(getInjectableJSMessage(initScript));
+        break;
+      case EventType.ON_INITIALIZE_END:
+        setWebviewHeight(payload?.scrollHeight);
+        break;
+      default:
+        return null;
+    }
+  };
 
-  return (
-    <View style={styles.container}>
-      { !isLoaded && <LoadingIndicator /> }
+  const renderFakeWebview = () => {
+    if (Platform.OS !== 'android' || webviewHeight > 0) return null;
+
+    return (
+      <WebView
+        ref={fakeWebViewRef}
+        style={styles.fakeWebview}
+        source={{ uri: ARTICLE_EDITOR_URL }}
+        // source={{ uri: 'http://10.1.1.253:8088/article/webview' }}
+        useWebKit
+        cacheEnabled
+        javaScriptEnabled
+        domStorageEnabled
+        androidHardwareAccelerationDisabled
+        animationEnabled={false}
+        androidLayerType="software"
+        injectedJavaScript={CUSTOM_META}
+        onMessage={onFakeMessage}
+      />
+    );
+  };
+
+  const renderWebview = () => {
+    if (Platform.OS === 'android' && webviewHeight <= 0) return null;
+
+    return (
       <WebView
         ref={webViewRef}
         style={[styles.webview, readOnly && { height: webviewHeight }]}
+        containerStyle={styles.webViewContainer}
         source={{ uri: ARTICLE_EDITOR_URL }}
-          // source={{ uri: 'https://3e08-14-226-252-170.ap.ngrok.io/article/webview' }}
+        // source={{ uri: 'http://10.1.1.253:8088/article/webview' }}
         useWebKit
         cacheEnabled
+        bounces={false}
         scalesPageToFit
         javaScriptEnabled
         domStorageEnabled
-        allowsFullscreenVideo
+        startInLoadingState
         saveFormDataDisabled
+        allowsFullscreenVideo
         hideKeyboardAccessoryView
         androidHardwareAccelerationDisabled
         scrollEnabled={!readOnly}
-        nestedScrollEnabled={false}
         animationEnabled={false}
+        nestedScrollEnabled={false}
         // force open native video player for the best performance
         allowsInlineMediaPlayback={false}
         userAgent={userAgent}
@@ -196,13 +240,23 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
          * article detail may crash if androidLayerType set to hardware because of dynamic height
          * but article editor is very laggy if androidLayerType set to software
          */
-        androidLayerType={readOnly ? 'software' : 'hardware'}
+        androidLayerType="hardware"
         injectedJavaScript={CUSTOM_META}
+        showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         mediaPlaybackRequiresUserAction={false}
         automaticallyAdjustContentInsets={false}
         onMessage={onMessage}
       />
+    );
+  };
+
+  if (!isMounted) return null;
+
+  return (
+    <View style={styles.container}>
+      {renderWebview()}
+      {renderFakeWebview()}
       {!readOnly && (
         <View style={styles.mentions}>
           <MentionBar groupIds={groupIds} style={styles.mentionBar} onCompleteMention={onCompleteMention} />
@@ -214,6 +268,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
         </View>
       )}
     </View>
+
   );
 };
 
@@ -227,11 +282,17 @@ const createStyle = (theme: ExtendedTheme) => {
     scrollViewContainer: {
       flexGrow: 1,
     },
+    webViewContainer: {
+      padding: padding.large,
+    },
     webview: {
       width: '100%',
       height: '100%',
       opacity: 0.99,
       overflow: 'hidden',
+    },
+    fakeWebview: {
+      height: 0,
     },
     mentions: {
       width: '100%',

@@ -483,6 +483,7 @@
     "title_logout": "Log Out"
   },
   "article": {
+    "title_article_detail": "Article Detail",
     "title_edit_article": "Edit Article",
     "title_categories": "Categories",
     "title_edit_title": "Title",

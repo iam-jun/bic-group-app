@@ -38,6 +38,7 @@ import useCommonController from '~/screens/store';
 import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
 import ArticleWebview from '../components/ArticleWebview';
 import { getById } from '~/store/entities/selectors';
+import ArticlePlaceholder from '../components/ArticleWebview/components/ArticlePlaceholder';
 
 const ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -57,6 +58,7 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
 
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoaded, setLoaded] = useState(false);
 
   const articleFromStore = useArticlesStore(useCallback(getById(id), [id]));
   const articleFromPostStore = usePostsStore(useCallback(postsSelector.getPost(id), []));
@@ -74,9 +76,8 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
     title, audience, actor, createdAt, commentsCount,
     reactionsCount, setting, hashtags, ownerReactions,
   } = data || {};
-  const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
-    'post:button_comment',
-  )}`;
+  const commentCountText = commentsCount || '';
+  const labelButtonComment = `${commentCountText}${t('post:button_comment')}`;
 
   const isMounted = useMounted();
 
@@ -215,6 +216,8 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
     }
   };
 
+  const onInitializeEnd = () => setLoaded(true);
+
   const onScrollToIndexFailed = () => {
     countRetryScrollToBottom += 1;
     if (countRetryScrollToBottom < 20) {
@@ -260,16 +263,9 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
         <ArticleWebview
           readOnly
           articleData={data}
+          onInitializeEnd={onInitializeEnd}
           onPressMentionAudience={onPressMentionAudience}
         />
-        {/* <Markdown
-          testID="post_view_content"
-          copyEnabled
-          disableImage={false}
-          value={content}
-          mentions={mentions}
-          onPressAudience={onPressMentionAudience}
-        /> */}
         <HashTags data={hashtags} />
         <Divider />
       </View>
@@ -329,10 +325,26 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
 
     return <View style={styles.footer} />;
   };
-  if (!isMounted || !data) return null;
+
+  const renderLoading = () => {
+    if (isLoaded) return null;
+
+    return (
+      <View style={styles.loadingContainer}>
+        <Header
+          title="article:title_article_detail"
+          titleTextProps={{ useI18n: true }}
+        />
+        <ArticlePlaceholder />
+      </View>
+    );
+  };
+
+  if (!isMounted || !data) return renderLoading();
 
   return (
     <View style={styles.container}>
+      {renderLoading()}
       <Header />
       <View style={styles.contentContainer}>
         <SectionList
@@ -357,11 +369,6 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
             />
             )}
         />
-        {/* <PostPhotoPreview
-        data={images || []}
-        uploadType="postImage"
-        enableGalleryModal
-      /> */}
         {!!setting?.canComment && (
           <CommentInputView
             commentInputRef={commentInputRef}
@@ -399,10 +406,20 @@ const themeStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.gray5,
+      backgroundColor: colors.neutral,
     },
     contentContainer: {
       flex: 1,
+    },
+    loadingContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: colors.neutral5,
+      zIndex: 99,
+      opacity: 0.5,
     },
     postContainerBackground: {
       backgroundColor: colors.white,
