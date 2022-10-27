@@ -1,5 +1,7 @@
 import i18next from 'i18next';
+import { ICommentData } from '~/interfaces/IPost';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import ImageUploader, { IGetFile, IUploadParam } from '~/services/imageUploader';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 
@@ -51,4 +53,46 @@ export const getArticleViewMenu = (
   });
 
   return result;
+};
+
+export const getSectionData = (listComment: ICommentData[]) => {
+  const result: any[] = [];
+  listComment?.forEach?.((comment, index) => {
+    const item: any = {};
+    const lastChildComment = comment?.child?.list || [];
+    const _data
+      = lastChildComment.length > 0
+        ? [lastChildComment[lastChildComment.length - 1]]
+        : [];
+    item.comment = comment;
+    item.index = index;
+    item.data = _data;
+    result.push(item);
+  });
+  // long post without comment cant scroll to bottom
+  // so need default list with an empty item to trigger scroll
+  return result?.length > 0 ? result : [];
+};
+
+export const uploadImage = async ({ file, dispatch, onSuccess }: {
+  file: any, dispatch:any, onSuccess: (file: IGetFile) => void
+}) => {
+  const onError = (error) => {
+    const content = typeof error === 'string' ? error : i18next.t('post:error_upload_photo_failed');
+    dispatch(modalActions.showHideToastMessage({ content }));
+  };
+
+  const uploadType = 'post_image';
+  const param: IUploadParam = {
+    uploadType,
+    file,
+    onSuccess,
+    onError,
+
+  };
+  try {
+    await ImageUploader.getInstance().upload(param);
+  } catch (error) {
+    onError(error);
+  }
 };

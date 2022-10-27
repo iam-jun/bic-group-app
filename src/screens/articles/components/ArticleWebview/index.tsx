@@ -4,21 +4,25 @@ import React, {
   FC, useEffect, useRef, useState,
 } from 'react';
 import {
-  Platform, StyleSheet, View,
+  Platform, StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import { debounce } from 'lodash';
 import WebView from 'react-native-webview';
+import { useDispatch } from 'react-redux';
 import { CUSTOM_META, getInjectableJSMessage, USER_AGENT_DESKTOP } from '~/utils/link';
-import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
-import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
-import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
-import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import StickerView from '~/components/StickerView';
 import { IMentionUser } from '~/interfaces/IPost';
 import { parseSafe } from '~/utils/common';
-import getEnv from '~/utils/env';
-import useMounted from '~/hooks/mounted';
 import { padding } from '~/theme/spacing';
+import getEnv from '~/utils/env';
+import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
+import StickerView from '~/components/StickerView';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
+import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
+import useMounted from '~/hooks/mounted';
+import ImagePicker from '~/beinComponents/ImagePicker';
+import { uploadImage } from '../../helper';
+import { IGetFile } from '~/services/imageUploader';
 
 enum EventType {
     ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
@@ -30,17 +34,22 @@ enum EventType {
 }
 
 const ARTICLE_EDITOR_URL = `https://${getEnv('SELF_DOMAIN')}/article/webview`;
+// const ARTICLE_EDITOR_URL = 'http://10.1.1.253:8088/article/webview';
 
 export interface ArticleWebviewProps {
+  style?: StyleProp<ViewStyle>;
   articleData: any;
   readOnly?: boolean;
+  isLoaded?: boolean;
 
   onInitializeEnd?: () => void;
   onPressMentionAudience?: (user: IMentionUser) => void;
 }
 
 const ArticleWebview: FC<ArticleWebviewProps> = ({
+  style,
   readOnly,
+  isLoaded,
   articleData,
 
   onInitializeEnd,
@@ -48,10 +57,11 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
 }: ArticleWebviewProps) => {
   const isMounted = useMounted();
   const theme: ExtendedTheme = useTheme();
+  const dispatch = useDispatch();
+
   // mention on android only work on desktop browser
   const userAgent = Platform.OS === 'android' ? USER_AGENT_DESKTOP : undefined;
 
-  // const insets = useSafeAreaInsets();
   const styles = createStyle(theme);
   const webViewRef = useRef();
   const fakeWebViewRef = useRef();
@@ -77,7 +87,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
 
   useEffect(() => {
     // reload webview after content change
-    if (readOnly) {
+    if (isLoaded && readOnly) {
       injectJavaScript(initScript);
     }
   }, [content]);
@@ -103,17 +113,20 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     stickerViewRef?.current?.show?.('giphy');
   };
 
-  const onGifSelected = (gif: GiphyMedia) => {
-    stickerViewRef?.current?.hide?.();
-
+  const insertImage = (url) => {
     injectJavaScript({
       type: 'insertNodes',
       payload: {
         type: 'img',
         children: [{ text: 'img' }],
-        url: gif.url,
+        url,
       },
     });
+  };
+
+  const onGifSelected = (gif: GiphyMedia) => {
+    stickerViewRef?.current?.hide?.();
+    insertImage(gif.url);
   };
 
   const onChangeContent = debounce((value) => {
@@ -138,13 +151,32 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     }
   };
 
+  const openGallery = async () => {
+    const image = await ImagePicker.openPickerSingle({
+      mediaType: 'photo',
+    });
+
+    uploadImage({ file: image, dispatch, onSuccess: (file: IGetFile) => insertImage(file?.url) });
+  };
+
   const onPressButton = (type: string) => {
-    if (type === 'gif') openGif();
+    switch (type) {
+      case 'gif':
+        return openGif();
+      case 'image':
+        return openGallery();
+    }
   };
 
   const _onInitializeEnd = (payload: any) => {
-    setWebviewHeight(payload?.scrollHeight);
-    onInitializeEnd?.();
+    // only callback onInitializeEnd on the 1st time
+    if (!isLoaded) {
+      onInitializeEnd?.();
+    }
+
+    if (payload?.scrollHeight >= webviewHeight) {
+      setWebviewHeight(payload?.scrollHeight);
+    }
   };
 
   const onMessage = (event: any) => {
@@ -187,52 +219,48 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     }
   };
 
-  const renderFakeWebview = () => {
-    if (Platform.OS !== 'android' || webviewHeight > 0) return null;
-
-    return (
-      <WebView
-        ref={fakeWebViewRef}
-        style={styles.fakeWebview}
-        source={{ uri: ARTICLE_EDITOR_URL }}
-        // source={{ uri: 'http://10.1.1.253:8088/article/webview' }}
-        useWebKit
-        cacheEnabled
-        javaScriptEnabled
-        domStorageEnabled
-        androidHardwareAccelerationDisabled
-        animationEnabled={false}
-        androidLayerType="software"
-        injectedJavaScript={CUSTOM_META}
-        onMessage={onFakeMessage}
-      />
-    );
-  };
+  const renderFakeWebview = () => (
+    <WebView
+      ref={fakeWebViewRef}
+      style={styles.fakeWebview}
+      source={{ uri: ARTICLE_EDITOR_URL }}
+      useWebKit
+      cacheEnabled
+      javaScriptEnabled
+      domStorageEnabled
+      androidHardwareAccelerationDisabled
+      animationEnabled={false}
+      androidLayerType="software"
+      injectedJavaScript={CUSTOM_META}
+      onMessage={onFakeMessage}
+    />
+  );
 
   const renderWebview = () => {
-    if (Platform.OS === 'android' && webviewHeight <= 0) return null;
+    if (Platform.OS === 'android' && readOnly && webviewHeight === 0) {
+      return renderFakeWebview();
+    }
 
     return (
       <WebView
         ref={webViewRef}
-        style={[styles.webview, readOnly && { height: webviewHeight }]}
-        containerStyle={styles.webViewContainer}
+        style={[styles.webview, style, readOnly && { height: webviewHeight }]}
+        containerStyle={readOnly && styles.webviewContainer}
         source={{ uri: ARTICLE_EDITOR_URL }}
-        // source={{ uri: 'http://10.1.1.253:8088/article/webview' }}
         useWebKit
         cacheEnabled
         bounces={false}
         scalesPageToFit
         javaScriptEnabled
         domStorageEnabled
-        startInLoadingState
         saveFormDataDisabled
         allowsFullscreenVideo
         hideKeyboardAccessoryView
         androidHardwareAccelerationDisabled
-        scrollEnabled={!readOnly}
         animationEnabled={false}
         nestedScrollEnabled={false}
+        scrollEnabled={!readOnly}
+        startInLoadingState={!readOnly}
         // force open native video player for the best performance
         allowsInlineMediaPlayback={false}
         userAgent={userAgent}
@@ -256,7 +284,6 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   return (
     <View style={styles.container}>
       {renderWebview()}
-      {renderFakeWebview()}
       {!readOnly && (
         <View style={styles.mentions}>
           <MentionBar groupIds={groupIds} style={styles.mentionBar} onCompleteMention={onCompleteMention} />
@@ -282,14 +309,14 @@ const createStyle = (theme: ExtendedTheme) => {
     scrollViewContainer: {
       flexGrow: 1,
     },
-    webViewContainer: {
-      padding: padding.large,
-    },
     webview: {
       width: '100%',
       height: '100%',
       opacity: 0.99,
       overflow: 'hidden',
+    },
+    webviewContainer: {
+      paddingHorizontal: padding.large,
     },
     fakeWebview: {
       height: 0,
