@@ -1,5 +1,5 @@
 import React, {
-  FC, useCallback, useEffect, useRef, useState,
+  FC, memo, useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import {
   RefreshControl, SectionList, StyleSheet, View,
@@ -7,22 +7,16 @@ import {
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { useRootNavigation } from '~/hooks/navigation';
-import {
-  IAudienceGroup, ICommentData, IMentionUser, IPayloadReactToPost,
-} from '~/interfaces/IPost';
+import { IAudienceGroup, IMentionUser, IPayloadReactToPost } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 
-import spacing, { margin } from '~/theme/spacing';
+import spacing from '~/theme/spacing';
 import useArticlesStore, { IArticlesState } from '~/screens/articles/ArticleDetail/store';
-import { useBaseHook } from '~/hooks';
 import Header from '~/beinComponents/Header';
 import { IRouteParams } from '~/interfaces/IRouter';
-import ArticleHeader from '../components/ArticleHeader';
-import Text from '~/beinComponents/Text';
-import HashTags from '../components/HashTags';
 import useMounted from '~/hooks/mounted';
-import ArticleFooter from '../components/ArticleFooter';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import CommentInputView from '~/screens/post/components/CommentInputView';
@@ -31,21 +25,17 @@ import commentsSelector from '~/store/entities/comments/selectors';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '~/storeRedux/post/actions';
-import ArticleReactions from '../components/ArticleReactions';
-import Divider from '~/beinComponents/Divider';
 import { ReactionType } from '~/constants/reactions';
 import useCommonController from '~/screens/store';
-import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
-import ArticleWebview from '../components/ArticleWebview';
-import { getById } from '~/store/entities/selectors';
 import ArticlePlaceholder from '../components/ArticleWebview/components/ArticlePlaceholder';
+import ArticleView from '../components/ArticleView';
+import { getSectionData } from '../helper';
 
-const ArticleDetail: FC<IRouteParams> = (props) => {
+const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
   const id = params?.articleId;
   const focusComment = params?.focusComment;
 
-  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -56,42 +46,32 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
   const layoutSet = useRef(false);
   let countRetryScrollToBottom = useRef(0).current;
 
-  const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
-
-  const articleFromStore = useArticlesStore(useCallback(getById(id), [id]));
-  const articleFromPostStore = usePostsStore(useCallback(postsSelector.getPost(id), []));
-  const data = articleFromStore || articleFromPostStore || {};
-
-  const canLoadMoreComment = usePostsStore(postsSelector.getCommentOnlyCount(id));
+  const data = usePostsStore(useCallback(postsSelector.getPost(id), [id])) || {};
 
   const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
-  const sectionData = getSectionData(comments) || [];
+  const sectionData = getSectionData(comments);
 
   const actions = useArticlesStore((state: IArticlesState) => state.actions);
   const commonController = useCommonController((state) => state.actions);
 
   const {
-    title, audience, actor, createdAt, commentsCount,
-    reactionsCount, setting, hashtags, ownerReactions,
-  } = data || {};
-  const commentCountText = commentsCount || '';
-  const labelButtonComment = `${commentCountText}${t('post:button_comment')}`;
+    audience, reactionsCount, setting, ownerReactions,
+  } = data;
+
+  const groupIds = useMemo(() => {
+    if (isEmpty(audience?.groups)) return '';
+
+    const ids = audience.groups.map((g: IAudienceGroup) => g?.id);
+    return ids?.join?.(',');
+  }, [data.audience]);
 
   const isMounted = useMounted();
 
   useEffect(() => {
-    actions.getArticleDetail(id);
-  }, []);
-
-  useEffect(() => {
-    if (audience?.groups?.length > 0) {
-      const ids: any = [];
-      audience.groups.map((g: IAudienceGroup) => ids.push(g?.id));
-      setGroupIds(ids?.join?.(','));
-    }
-  }, [audience?.groups]);
+    if (isMounted) { actions.getArticleDetail(id); }
+  }, [isMounted]);
 
   const onRefresh = () => {
     setRefreshing(false);
@@ -216,7 +196,9 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
     }
   };
 
-  const onInitializeEnd = () => setLoaded(true);
+  const onInitializeEnd = () => {
+    setLoaded(true);
+  };
 
   const onScrollToIndexFailed = () => {
     countRetryScrollToBottom += 1;
@@ -245,57 +227,7 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
     );
   };
 
-  const renderHeader = () => (
-    <View style={styles.postContainerBackground}>
-      <ArticleHeader
-        articleId={id}
-        actor={actor}
-        time={createdAt}
-        audience={audience}
-      />
-      <View style={styles.postContainer}>
-        <Text.H3
-          testID="post_view_content"
-          style={styles.title}
-        >
-          {title}
-        </Text.H3>
-        <ArticleWebview
-          readOnly
-          articleData={data}
-          onInitializeEnd={onInitializeEnd}
-          onPressMentionAudience={onPressMentionAudience}
-        />
-        <HashTags data={hashtags} />
-        <Divider />
-      </View>
-      <ArticleReactions
-        id={id}
-        ownerReactions={ownerReactions}
-        reactionsCount={reactionsCount}
-        onAddReaction={onAddReaction}
-        onRemoveReaction={onRemoveReaction}
-      />
-      <ArticleFooter
-        articleId={id}
-        labelButtonComment={labelButtonComment}
-        reactionCounts={reactionsCount}
-        canReact={setting?.canReact}
-        canComment={setting?.canComment}
-        onAddReaction={onAddReaction}
-      />
-      <Divider style={styles.divider} />
-      {
-         canLoadMoreComment && (
-         <LoadMoreComment
-           title="post:text_load_more_comments"
-           postId={id}
-           idLessThan={comments?.[0]?.id}
-         />
-         )
-        }
-    </View>
-  );
+  const renderSeparator = () => <View />;
 
   const renderSectionHeader = (sectionData: any) => {
     const { section } = sectionData || {};
@@ -352,14 +284,24 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
           sections={sectionData}
           renderItem={renderCommentItem}
           renderSectionHeader={renderSectionHeader}
-          ListHeaderComponent={renderHeader}
+          ListHeaderComponent={(
+            <ArticleView
+              id={id}
+              article={data}
+              isLoaded={isLoaded}
+              firstCommentId=""
+              onAddReaction={onAddReaction}
+              onRemoveReaction={onRemoveReaction}
+              onInitializeEnd={onInitializeEnd}
+              onPressMentionAudience={onPressMentionAudience}
+            />
+            )}
           ListFooterComponent={renderFooter}
           stickySectionHeadersEnabled={false}
-          ItemSeparatorComponent={() => <View />}
+          ItemSeparatorComponent={renderSeparator}
           keyboardShouldPersistTaps="handled"
           onLayout={onLayout}
           onContentSizeChange={onLayout}
-          // onScroll={onscroll}
           onScrollToIndexFailed={onScrollToIndexFailed}
           refreshControl={(
             <RefreshControl
@@ -369,36 +311,18 @@ const ArticleDetail: FC<IRouteParams> = (props) => {
             />
             )}
         />
-        {!!setting?.canComment && (
-          <CommentInputView
-            commentInputRef={commentInputRef}
-            postId={id}
-            groupIds={groupIds}
-            autoFocus={!!focusComment}
-          />
-        )}
+
       </View>
+      {!!setting?.canComment && (
+      <CommentInputView
+        commentInputRef={commentInputRef}
+        postId={id}
+        groupIds={groupIds}
+        autoFocus={!!focusComment}
+      />
+      )}
     </View>
   );
-};
-
-const getSectionData = (listComment: ICommentData[]) => {
-  const result: any[] = [];
-  listComment?.forEach?.((comment, index) => {
-    const item: any = {};
-    const lastChildComment = comment?.child?.list || [];
-    const _data
-      = lastChildComment.length > 0
-        ? [lastChildComment[lastChildComment.length - 1]]
-        : [];
-    item.comment = comment;
-    item.index = index;
-    item.data = _data;
-    result.push(item);
-  });
-  // long post without comment cant scroll to bottom
-  // so need default list with an empty item to trigger scroll
-  return result?.length > 0 ? result : [];
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
@@ -420,25 +344,15 @@ const themeStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.neutral5,
       zIndex: 99,
     },
-    postContainerBackground: {
-      backgroundColor: colors.white,
-    },
-    postContainer: {
-      marginVertical: spacing.margin.small,
-      // paddingHorizontal: spacing.margin.large,
-    },
-    title: {
-      marginVertical: margin.base,
-      marginHorizontal: spacing.margin.large,
-    },
     footer: {
       height: spacing.margin.base,
       backgroundColor: colors.white,
     },
-    divider: {
-      marginHorizontal: spacing.margin.large,
-    },
   });
 };
 
+// export default ArticleDetail;
+
+const ArticleDetail = memo(_ArticleDetail);
+ArticleDetail.whyDidYouRender = true;
 export default ArticleDetail;
