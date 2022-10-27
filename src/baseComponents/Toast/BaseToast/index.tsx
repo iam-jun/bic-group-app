@@ -62,7 +62,14 @@ const BaseToast = ({
             <Text.ButtonS useI18n={useI18n}>{buttonText}</Text.ButtonS>
           </TouchableOpacity>
         )}
-        <Icon icon="iconClose" size={12} tintColor={colors.neutral20} onPress={onPressClose} buttonTestID="toast_button_close" />
+        <Icon
+          icon="iconClose"
+          size={12}
+          ingoreInternet
+          tintColor={colors.neutral20}
+          onPress={onPressClose}
+          buttonTestID="toast_button_close"
+        />
       </View>
     </View>
   );

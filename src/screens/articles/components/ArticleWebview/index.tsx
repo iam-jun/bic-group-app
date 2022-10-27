@@ -8,17 +8,21 @@ import {
 } from 'react-native';
 import { debounce } from 'lodash';
 import WebView from 'react-native-webview';
+import { useDispatch } from 'react-redux';
 import { CUSTOM_META, getInjectableJSMessage, USER_AGENT_DESKTOP } from '~/utils/link';
+import { IMentionUser } from '~/interfaces/IPost';
+import { parseSafe } from '~/utils/common';
+import { padding } from '~/theme/spacing';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import StickerView from '~/components/StickerView';
-import { IMentionUser } from '~/interfaces/IPost';
-import { parseSafe } from '~/utils/common';
 import getEnv from '~/utils/env';
 import useMounted from '~/hooks/mounted';
-import { padding } from '~/theme/spacing';
+import ImagePicker from '~/beinComponents/ImagePicker';
+import { uploadImage } from '../../helper';
+import { IGetFile } from '~/services/imageUploader';
 
 enum EventType {
     ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
@@ -30,6 +34,7 @@ enum EventType {
 }
 
 const ARTICLE_EDITOR_URL = `https://${getEnv('SELF_DOMAIN')}/article/webview`;
+// const ARTICLE_EDITOR_URL = 'http://10.1.1.253:8088/article/webview';
 
 export interface ArticleWebviewProps {
   articleData: any;
@@ -48,6 +53,8 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
 }: ArticleWebviewProps) => {
   const isMounted = useMounted();
   const theme: ExtendedTheme = useTheme();
+  const dispatch = useDispatch();
+
   // mention on android only work on desktop browser
   const userAgent = Platform.OS === 'android' ? USER_AGENT_DESKTOP : undefined;
 
@@ -103,17 +110,20 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     stickerViewRef?.current?.show?.('giphy');
   };
 
-  const onGifSelected = (gif: GiphyMedia) => {
-    stickerViewRef?.current?.hide?.();
-
+  const insertImage = (url) => {
     injectJavaScript({
       type: 'insertNodes',
       payload: {
         type: 'img',
         children: [{ text: 'img' }],
-        url: gif.url,
+        url,
       },
     });
+  };
+
+  const onGifSelected = (gif: GiphyMedia) => {
+    stickerViewRef?.current?.hide?.();
+    insertImage(gif.url);
   };
 
   const onChangeContent = debounce((value) => {
@@ -138,8 +148,21 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     }
   };
 
+  const openGallery = async () => {
+    const image = await ImagePicker.openPickerSingle({
+      mediaType: 'photo',
+    });
+
+    uploadImage({ file: image, dispatch, onSuccess: (file: IGetFile) => insertImage(file?.url) });
+  };
+
   const onPressButton = (type: string) => {
-    if (type === 'gif') openGif();
+    switch (type) {
+      case 'gif':
+        return openGif();
+      case 'image':
+        return openGallery();
+    }
   };
 
   const _onInitializeEnd = (payload: any) => {

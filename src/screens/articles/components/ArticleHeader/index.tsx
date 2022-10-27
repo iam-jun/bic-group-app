@@ -8,7 +8,7 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
-import { getArticleViewMenu } from './helper';
+import { getArticleViewMenu } from '../../helper';
 
 interface Props extends ContentHeaderProps {
   articleId: string
