@@ -152,7 +152,7 @@ const LanguageOptionMenu = ({
                   type="neutral"
                   size="medium"
                   style={styles.tag}
-                  label={item.name}
+                  label={item.local}
                   icon="Xmark"
                   onPressIcon={() => onRemoveItem(item, true)}
                 />
@@ -177,7 +177,7 @@ const LanguageOptionMenu = ({
                 onRemove={onRemoveItem}
               />
               {languages.map((item: ILanguageItem) => (
-                <View key={`${item?.code} ${item?.name}`}>
+                <View key={`${item?.code} ${item?.local}`}>
                   {renderItem({ item })}
                 </View>
               ))}
