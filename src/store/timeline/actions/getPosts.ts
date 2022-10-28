@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import { IPayloadAddToAllPost, IPostActivity } from '~/interfaces/IPost';
+import { IPostActivity } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import { IBaseListState } from '~/store/interfaces/IBaseState';
 import { ITimelineState } from '..';
@@ -17,7 +17,7 @@ const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
   set((state: ITimelineState) => {
     state.items[id].loading = true;
     state.items[id].refreshing = isRefresh;
-  });
+  }, `getPosts groupId: ${id}, isRefresh: ${isRefresh} `);
 
   try {
     const offset = isRefresh ? 0 : currentPosts.ids?.length;
@@ -28,7 +28,7 @@ const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
     };
     const response = await groupApi.getGroupPosts(params);
     const result = response.data?.list || [];
-    usePostsStore.getState().actions.addToPosts({ data: result } as IPayloadAddToAllPost);
+    usePostsStore.getState().actions.addToPosts({ data: result, handleComment: true });
 
     const newIds = result.map((item) => item.id);
     const currentIds = currentPosts.ids || [];

@@ -14,6 +14,9 @@ const getArticleDetail = (set, get) => async (id: string) => {
     const params = { withComment: true, commentLimit: 10 } as IParamGetArticleDetail;
     const response = await streamApi.getArticleDetail(id, params);
     const data = response?.data;
+    set((state) => {
+      delete state.requestings[id];
+    }, 'getArticlesSuccess');
 
     usePostsStore.getState().actions.addToPosts({ data, handleComment: true });
   } catch (error) {

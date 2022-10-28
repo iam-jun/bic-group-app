@@ -39,6 +39,7 @@ const TextArea : React.FC<TextAreaProps> = ({
   onFocus,
   onBlur,
   onChangeText,
+  ...props
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -89,6 +90,8 @@ const TextArea : React.FC<TextAreaProps> = ({
           onChangeText={_onChangeText}
           onFocus={_onFocus}
           onBlur={_onBlur}
+          selectionColor={colors.gray50}
+          {...props}
         />
       </View>
       <Text.BodyXS color={colors.neutral20} style={styles.countNumber}>

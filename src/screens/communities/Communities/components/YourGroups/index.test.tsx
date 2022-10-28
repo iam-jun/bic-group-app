@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import groupApi from '~/api/GroupApi';
-import { useYourGroupsStore } from './store';
+import useYourGroupsStore from './store';
 import { responseYourGroups } from './store/__mocks__/data';
 
 describe('YourGroups Screen', () => {

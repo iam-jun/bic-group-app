@@ -12,8 +12,7 @@ afterEach(cleanup);
 
 describe('AvatarImage screen', () => {
   const baseProps = {
-    userId: '1',
-    currentUsername: 'username',
+    isCurrentUser: true,
     avatar: null,
     coverHeight: 120,
     onEdit: jest.fn(),

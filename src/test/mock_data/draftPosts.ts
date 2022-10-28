@@ -29,7 +29,7 @@ export const LIST_DRAFT_POST = [
     },
     foreign_id: 'b76809ad-ab41-471e-987d-6d39040adc9b',
     id: 'e3f89ee0-99fd-11ec-8080-800122e4fb02',
-    important: { active: false, expires_time: null },
+    important: { active: false, expiresTime: null },
     is_draft: true,
     mentions: { groupIds: [], userIds: [] },
     object: {
@@ -78,7 +78,7 @@ export const LIST_DRAFT_POST = [
     },
     foreign_id: 'b0401830-06fb-4b02-8117-fc5c1e69dde9',
     id: '7939d500-99e0-11ec-8080-8000222c71e4',
-    important: { active: false, expires_time: null },
+    important: { active: false, expiresTime: null },
     is_draft: true,
     mentions: { groupIds: [], userIds: [] },
     object: {
@@ -133,7 +133,7 @@ export const LOAD_MORE_LIST_DRAFT_POST = [
     },
     foreign_id: 'b76809ad-ab41-471e-987d-6d39040adc9b',
     id: 'e3f89ee0-99fd-11ec-8080-99900000997788',
-    important: { active: false, expires_time: null },
+    important: { active: false, expiresTime: null },
     is_draft: true,
     mentions: { groupIds: [], userIds: [] },
     object: {

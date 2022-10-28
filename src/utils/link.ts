@@ -9,6 +9,9 @@ const LINK_POST = 'LINK_POST';
 const LINK_COMMENT = 'LINK_COMMENT';
 const LINK_COMMUNITY = 'LINK_COMMUNITY';
 
+export const CUSTOM_META = 'const meta = document.createElement(\'meta\'); meta.setAttribute(\'content\', \'width=device-width, initial-scale=1, maximum-scale=0.99, user-scalable=0\'); meta.setAttribute(\'name\', \'viewport\'); document.getElementsByTagName(\'head\')[0].appendChild(meta); ';
+export const USER_AGENT_DESKTOP = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0';
+
 const UUID_V4_PATTERN = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
 
 export const DEEP_LINK_TYPES = {
@@ -201,3 +204,16 @@ export const getURLParams = (params: string) => {
   // need to convert to camelCase since the input params are in snake_case
   return ConvertHelper.camelizeKeys(newParams) as Object;
 };
+
+/**
+  *  This script dispatches new custom messaging event
+  */
+export function getInjectableJSMessage(message) {
+  return `
+    (function() {
+      document.dispatchEvent(new MessageEvent('message', {
+        data: ${JSON.stringify(message)}
+      }));
+    })();
+  `;
+}

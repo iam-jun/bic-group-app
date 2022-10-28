@@ -1,58 +1,31 @@
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Icon from '~/baseComponents/Icon';
-import { useUserIdAuth } from '~/hooks/auth';
-import { spacing } from '~/theme';
+import { StyleProp, ViewStyle } from 'react-native';
+import Button from '~/baseComponents/Button';
+import { IconType } from '~/resources/icons';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
   testID?: string;
-  userId: string;
-  currentUsername: string;
+  isCurrentUser: boolean;
   onPress?: () => void;
+  icon: IconType;
 }
 
 const EditButton = ({
-  style, testID, userId, currentUsername, onPress,
+  style, testID, isCurrentUser, onPress, icon,
 }: Props) => {
-  const theme:ExtendedTheme = useTheme();
-  const styles = themeStyles(theme);
-  const currentUserId = useUserIdAuth();
-
-  const isCurrentUser = userId === currentUserId || userId === currentUsername;
-
   if (!isCurrentUser) return null;
 
   return (
-    <ButtonWrapper
+    <Button.Secondary
+      type="ghost"
+      size="small"
       testID={testID}
-      style={[styles.editButton, style]}
-      activeOpacity={0.9}
+      style={[style]}
       onPress={onPress}
-    >
-      <Icon size={16} tintColor={theme.colors.purple60} icon="Camera" />
-    </ButtonWrapper>
+      icon={icon}
+    />
   );
-};
-
-const themeStyles = (
-  theme: ExtendedTheme,
-) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    editButton: {
-      backgroundColor: colors.violet1,
-      width: 24,
-      height: 24,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: spacing?.borderRadius.small,
-      marginLeft: spacing?.padding.small,
-    },
-  });
 };
 
 export default EditButton;

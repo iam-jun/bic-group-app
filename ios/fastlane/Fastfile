@@ -1,6 +1,11 @@
 default_platform(:ios)
 fastlane_require "dotenv"
 
+# Avoid build iOS fail after iTMSTransporter auto updated to 3.0
+before_all do
+  ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true'
+end
+
 platform :ios do
   before_all do
     setup_circle_ci

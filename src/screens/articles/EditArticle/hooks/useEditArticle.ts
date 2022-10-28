@@ -1,26 +1,33 @@
-import { isEqual } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { useEffect, useMemo } from 'react';
+import { Keyboard } from 'react-native';
+import i18next from 'i18next';
+
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
-import { IEditArticleAudience, IEditArticleData, IParamPutEditArticle } from '~/interfaces/IArticle';
+import { IEditArticleAudience, IEditArticleData, IPayloadPutEditArticle } from '~/interfaces/IArticle';
+import { withNavigation } from '~/router/helper';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
 import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
-import useArticlesStore from '~/store/entities/articles';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import { getById } from '~/store/entities/selectors';
+import Store from '~/storeRedux';
+import modalActions from '~/storeRedux/modal/actions';
+import useArticlesStore from '../../ArticleDetail/store';
+
+import { rootNavigationRef } from '~/router/refs';
+
+const navigation = withNavigation(rootNavigationRef);
 
 export interface IUseEditArticle {
   articleId: string;
 }
 
 const useEditArticle = ({ articleId }: IUseEditArticle) => {
-  // todo merge post & article store later
-  const articleFromStore = useArticlesStore(getById(articleId));
-  const articleFromPostStore = usePostsStore(postsSelector.getPost(articleId));
-  const article = articleFromStore || articleFromPostStore || {};
+  const article = usePostsStore(postsSelector.getPost(articleId));
 
+  const articleActions = useArticlesStore((state) => state.actions);
   const actions = useEditArticleStore((state) => state.actions);
 
   const data = useEditArticleStore((state) => state.data) || {};
@@ -33,22 +40,43 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
   const groupIds = useMemo(() => data.audience?.groupIds?.join?.(','), [data.audience]);
 
   const isHasChange = () => {
-    const isContentUpdated = article.content !== data.content;
-    const isTitleUpdated = article.title !== data.title;
+    const isContentUpdated = article.content !== data.content && !isEmpty(data.content);
+    const isSummaryUpdated = article.summary !== data.summary;
+    const isTitleUpdated = article.title !== data.title && !isEmpty(data.title);
+    const isCategoriesUpdated = !isEqual(article.categories, data.categories) && !isEmpty(data.categories);
     const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience);
-    return isTitleUpdated || isContentUpdated || isAudienceUpdated;
+    const isCoverMediaUpdated = (article.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
+    // console.log('\x1b[35m🐣️ useEditArticle isHasChange ', JSON.stringify({
+    //   isTitleUpdated,
+    //   isContentUpdated,
+    //   isSummaryUpdated,
+    //   isCategoriesUpdated,
+    //   isAudienceUpdated,
+    //   isCoverMediaUpdated,
+    // }, null, 2), '\x1b[0m');
+    return !isEmpty(data.content) // empty content lead to bug on edit content webview, always keep content not empty
+      && (isTitleUpdated
+      || isContentUpdated
+      || isSummaryUpdated
+      || isCategoriesUpdated
+      || isAudienceUpdated
+      || isCoverMediaUpdated);
   };
 
   const initEditStoreData = () => {
     const {
-      title, content, audience: audienceObject, mentions,
+      title, content, audience: audienceObject, mentions, summary, categories, coverMedia,
     } = article;
     const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(audienceObject);
     const data: IEditArticleData = {
-      title, content, audience: audienceIds, mentions,
+      title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia,
     };
     actions.setData(data);
   };
+
+  useEffect(() => {
+    if (!article) articleActions.getArticleDetail(articleId);
+  }, []);
 
   useEffect(() => {
     initEditStoreData();
@@ -71,7 +99,23 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
 
   const handleSave = () => {
     updateMentions();
-    actions.putEditArticle({ articleId, data } as IParamPutEditArticle);
+    actions.putEditArticle({ articleId, data } as IPayloadPutEditArticle);
+  };
+
+  const handleBack = () => {
+    if (enableButtonSave) {
+      Keyboard.dismiss();
+      Store.store.dispatch(modalActions.showAlert({
+        title: i18next.t('discard_alert:title'),
+        content: i18next.t('discard_alert:content'),
+        cancelBtn: true,
+        cancelLabel: i18next.t('common:btn_discard'),
+        confirmLabel: i18next.t('common:btn_stay_here'),
+        onCancel: () => navigation.goBack(),
+      }));
+      return;
+    }
+    navigation.goBack();
   };
 
   return {
@@ -83,6 +127,7 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
     handleTitleChange,
     handleContentChange,
     handleSave,
+    handleBack,
   };
 };
 

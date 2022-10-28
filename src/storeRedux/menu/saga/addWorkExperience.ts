@@ -1,6 +1,5 @@
-import { put, call } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 import { IUserAddWorkExperience } from '~/interfaces/IAuth';
-import menuActions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
 import groupApi from '~/api/GroupApi';
 
@@ -32,8 +31,6 @@ export default function* addWorkExperience({
       startDate,
       endDate,
     });
-
-    yield put(menuActions.getMyWorkExperience());
 
     if (callback) return callback();
   } catch (err) {

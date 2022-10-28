@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  View, StyleSheet, FlatList, RefreshControl,
+  View, StyleSheet, FlatList, ActivityIndicator,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -17,6 +17,8 @@ import Text from '~/beinComponents/Text';
 import { scaleSize } from '~/theme/dimension';
 import FilterToolbar from '~/screens/Home/HomeSearch/FilterToolbar';
 import spacing from '~/theme/spacing';
+import ArticleItem from '~/screens/articles/components/ArticleItem';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const SearchResult = () => {
   const dispatch = useDispatch();
@@ -28,20 +30,23 @@ const SearchResult = () => {
     loadingResult = false,
     searchResults = [],
     searchText = '',
+    totalResult,
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
-  const filterCreatedBy = useKeySelector(homeKeySelector.newsfeedSearchFilterCreatedBy);
+  const filterCreatedBy = useKeySelector(
+    homeKeySelector.newsfeedSearchFilterCreatedBy,
+  );
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: any) => (item.isArticle ? (
+    <ArticleItem id={item.id} isLite />
+  ) : (
     <PostView
-      style={styles.itemContainer}
       postId={item?.id}
       isLite
       pressNavigateToDetail
       postData={item}
     />
-  );
-
+  ));
   const getData = (isLoadMore = false) => {
     if (searchText) {
       const payload: IPayloadGetSearchPosts = {
@@ -55,15 +60,9 @@ const SearchResult = () => {
     }
   };
 
-  useEffect(
-    () => {
-      getData();
-    }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate],
-  );
-
-  const onRefresh = () => {
-    // console.log('\x1b[36m🐣️ NewsfeedSearchResult onRefresh\x1b[0m');
-  };
+  useEffect(() => {
+    getData();
+  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate]);
 
   const onEndReached = () => {
     getData(true);
@@ -87,7 +86,19 @@ const SearchResult = () => {
     );
   };
 
-  const renderFooter = () => <View style={styles.footer} />;
+  const renderFooter = () => {
+    if (totalResult === searchResults.length) return <ViewSpacing height={spacing.margin.large} />;
+
+    return (
+      <View style={styles.footer}>
+        <ActivityIndicator
+          color={colors.gray20}
+        />
+      </View>
+    );
+  };
+
+  const renderSpacing = () => <ViewSpacing height={spacing.margin.large} />;
 
   return (
     <View style={styles.container}>
@@ -96,18 +107,12 @@ const SearchResult = () => {
         style={styles.flex1}
         data={searchResults || []}
         renderItem={renderItem}
-        ListEmptyComponent={renderEmpty()}
-        ListFooterComponent={renderFooter()}
+        ListEmptyComponent={renderEmpty}
+        ListFooterComponent={renderFooter}
+        ListHeaderComponent={renderSpacing}
+        ItemSeparatorComponent={renderSpacing}
         keyExtractor={(item) => `newsfeed_item_${item?.id}`}
         onEndReached={onEndReached}
-        refreshControl={(
-          <RefreshControl
-            refreshing={loadingResult}
-            onRefresh={onRefresh}
-            tintColor={colors.purple50}
-            colors={[colors.purple50 || 'grey']}
-          />
-        )}
       />
     </View>
   );
@@ -139,7 +144,7 @@ const createStyle = (theme: ExtendedTheme) => {
       textAlign: 'center',
     },
     footer: {
-      marginBottom: spacing.margin.large,
+      paddingVertical: spacing.margin.large,
     },
   });
 };

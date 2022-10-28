@@ -9,15 +9,14 @@ import { _openImagePicker } from '../../helper';
 
 interface Props {
   id: string;
-  userId: string;
-  currentUsername: string;
+  isCurrentUser: boolean;
   bgImg: any;
   avatar: any;
   uploadCallback: (fieldName: string) => void;
 }
 
 const CoverHeader = ({
-  id, bgImg, userId, currentUsername, avatar, uploadCallback,
+  id, bgImg, isCurrentUser, avatar, uploadCallback,
 }: Props) => {
   const dispatch = useDispatch();
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -53,15 +52,13 @@ const CoverHeader = ({
     >
       <CoverImage
         bgImg={bgImg}
-        userId={userId}
-        currentUsername={currentUsername}
+        isCurrentUser={isCurrentUser}
         coverHeight={coverHeight}
         onEdit={onEditCover}
       />
       <AvatarImage
         avatar={avatar}
-        userId={userId}
-        currentUsername={currentUsername}
+        isCurrentUser={isCurrentUser}
         onEdit={onEditAvatar}
       />
     </View>

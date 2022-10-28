@@ -25,6 +25,7 @@ const completeMention = (set, _) => async (payload: ICompleteMention) => {
   );
   set((state) => {
     state.data = [];
+    state.fullContent = completedDraft;
     state.tempSelected[mention] = { id: item?.id, data: item };
   }, 'completeMention');
 

@@ -2,17 +2,14 @@
 
 exports[`ItemExperience component renders correctly 1`] = `
 <View
-  style={
-    Object {
-      "paddingBottom": 24,
-    }
-  }
   testID="item_experience"
 >
   <View
     style={
       Object {
+        "alignItems": "center",
         "flexDirection": "row",
+        "justifyContent": "space-between",
         "paddingBottom": 16,
       }
     }
@@ -20,29 +17,20 @@ exports[`ItemExperience component renders correctly 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#BAC0DE",
-          "height": 22,
-          "marginRight": 12,
-          "width": 1,
+          "flexDirection": "row",
         }
       }
-    />
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 17,
-          },
-          Object {
-            "color": "#BAC0DE",
-          },
-          undefined,
-        ]
-      }
     >
-      Work at 
+      <View
+        style={
+          Object {
+            "backgroundColor": "#BAC0DE",
+            "height": 22,
+            "marginRight": 12,
+            "width": 1,
+          }
+        }
+      />
       <Text
         style={
           Array [
@@ -51,20 +39,262 @@ exports[`ItemExperience component renders correctly 1`] = `
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 17,
             },
-            Object {},
+            Object {
+              "color": "#BAC0DE",
+            },
             undefined,
           ]
         }
       >
-        company
+        Work at 
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          company
+        </Text>
       </Text>
-    </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Array [
+            Object {
+              "borderRadius": 6,
+            },
+            Array [
+              undefined,
+            ],
+          ]
+        }
+        testID="button_wrapper"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderRadius": 6,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 4,
+              },
+              undefined,
+              Object {
+                "backgroundColor": "#FEECED",
+                "height": 28,
+                "paddingHorizontal": 8,
+              },
+            ]
+          }
+          testID="button.content"
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="button.icon"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "height": undefined,
+            "paddingHorizontal": undefined,
+            "paddingVertical": undefined,
+            "width": 8,
+          }
+        }
+      />
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Array [
+            Object {
+              "borderRadius": 6,
+            },
+            Array [
+              undefined,
+            ],
+          ]
+        }
+        testID="button_wrapper"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderRadius": 6,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 4,
+              },
+              undefined,
+              Object {
+                "backgroundColor": "#EBF4FF",
+                "height": 28,
+                "paddingHorizontal": 8,
+              },
+            ]
+          }
+          testID="button.content"
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="button.icon"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
   </View>
   <View
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
         undefined,
       ]
@@ -99,7 +329,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }
@@ -110,7 +340,7 @@ exports[`ItemExperience component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
         undefined,
       ]
@@ -145,7 +375,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }
@@ -156,7 +386,7 @@ exports[`ItemExperience component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
         undefined,
       ]
@@ -179,7 +409,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       }
       testID="info_item.title"
     >
-      Start Date
+      Start date
     </Text>
     <Text
       style={
@@ -191,7 +421,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }
@@ -202,7 +432,7 @@ exports[`ItemExperience component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "paddingBottom": 8,
+          "paddingBottom": 16,
         },
         undefined,
       ]
@@ -225,7 +455,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       }
       testID="info_item.title"
     >
-      End Date
+      End date
     </Text>
     <Text
       style={
@@ -237,7 +467,7 @@ exports[`ItemExperience component renders correctly 1`] = `
           },
           Object {},
           Object {
-            "marginTop": 8,
+            "marginTop": 4,
           },
         ]
       }

@@ -43,80 +43,158 @@ exports[`AvatarImage screen renders correctly 1`] = `
         testID="avatar_container"
       >
         <View
-          onLayout={[Function]}
           style={
-            Object {
-              "backgroundColor": "transparent",
-              "position": "relative",
-            }
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Array [
+                  Object {
+                    "borderRadius": 4,
+                    "height": 80,
+                    "width": 80,
+                  },
+                  Object {
+                    "borderRadius": 40,
+                  },
+                ],
+                Object {
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
+                },
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                },
+              ],
+            ]
           }
         >
-          <View
-            collapsable={false}
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={
+              Object {
+                "testUri": "../../../assets/images/user_avatar_default.png",
+              }
+            }
             style={
               Object {
                 "bottom": 0,
                 "left": 0,
-                "opacity": 1,
                 "position": "absolute",
                 "right": 0,
                 "top": 0,
               }
             }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#f9f9f9",
-                  "borderColor": "#F2F5F8",
-                  "borderRadius": 40,
-                  "borderWidth": 2,
-                  "height": 80,
-                  "justifyContent": "center",
-                  "width": 80,
-                }
-              }
-              testID="Image__placeholder"
-            />
-          </View>
+            testID="avatar.image"
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "borderRadius": 6,
+          },
+          Array [
+            Object {
+              "bottom": 0,
+              "position": "absolute",
+              "right": 0,
+            },
+          ],
+        ]
+      }
+      testID="user_profile.avatar_image.edit_button"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 6,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "paddingVertical": 4,
+            },
+            undefined,
+            Object {
+              "backgroundColor": "#EBF4FF",
+              "height": 28,
+              "paddingHorizontal": 8,
+            },
+          ]
+        }
+        testID="button.content"
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
           <View
             style={
               Array [
                 Object {
-                  "overflow": "hidden",
+                  "alignItems": "center",
+                  "flexDirection": "row",
                 },
+                undefined,
                 Object {
-                  "backgroundColor": "#FFFFFF",
-                  "borderColor": "#F2F5F8",
-                  "borderRadius": 40,
-                  "borderWidth": 2,
-                  "height": 80,
-                  "width": 80,
+                  "backgroundColor": undefined,
                 },
               ]
             }
           >
-            <FastImageView
-              onFastImageError={[Function]}
-              onFastImageLoadEnd={[Function]}
-              resizeMode="cover"
-              source={
-                Object {
-                  "testUri": "../../../assets/images/user_avatar_default.png",
-                }
-              }
+            <View
               style={
-                Object {
-                  "bottom": 0,
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
               }
-              testID="avatar.image"
-            />
+            >
+              <View
+                testID="button.icon"
+              />
+            </View>
           </View>
         </View>
       </View>

@@ -28,6 +28,7 @@ import FontAwesomeIcon from '~/baseComponents/Icon/FontAwesomeIcon';
 export interface IconProps extends SVGIconProps {
   icon: IconType | number;
   testID?: string;
+  buttonTestID?: string;
   size?: number;
   tintColor?: string;
   backgroundColor?: string;
@@ -36,14 +37,15 @@ export interface IconProps extends SVGIconProps {
   label?: string;
   labelColor?: string;
   labelStyle?: StyleProp<TextStyle>;
-  onPress?: (e: any) => void;
   hitSlop?: {top?: number; bottom?: number; left?: number; right?: number};
-  buttonTestID?: string;
+  ingoreInternet?: boolean;
+  onPress?: (e: any) => void;
 }
 
 const Icon: React.FC<IconProps> = ({
-  style,
   testID,
+  buttonTestID,
+  style,
   iconStyle,
   labelStyle,
   icon,
@@ -52,14 +54,14 @@ const Icon: React.FC<IconProps> = ({
   tintColor,
   labelColor,
   backgroundColor,
-  onPress,
   isButton,
   isLoading,
+  ingoreInternet,
   disabled,
   hitSlop = {
     top: 10, left: 10, bottom: 10, right: 10,
   },
-  buttonTestID,
+  onPress,
 }: IconProps) => {
   const NetInfo = useNetInfo();
   const noInternet = NetInfo.isInternetReachable === false;
@@ -109,9 +111,12 @@ const Icon: React.FC<IconProps> = ({
     _tintColor = undefined;
   }
 
+  const disableByInternet = !ingoreInternet && noInternet;
+  const disabledButton = disableByInternet || disabled || !onPress;
+
   return (
     <TouchableOpacity
-      disabled={noInternet || disabled || !onPress}
+      disabled={disabledButton}
       onPress={onPress}
       hitSlop={hitSlop}
       testID={buttonTestID}

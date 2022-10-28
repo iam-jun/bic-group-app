@@ -28,9 +28,13 @@ import postKeySelector from '../../../storeRedux/post/keySelector';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
-import { DateInput } from '~/baseComponents/Input';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { checkExpiration } from '../helper/postUtils';
+import Icon from '~/baseComponents/Icon';
+import { formatDate } from '~/utils/formatData';
+import { timeSuggest } from '~/constants/importantTimeSuggest';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { DateInput } from '~/baseComponents/Input';
+import { Button } from '~/baseComponents';
 
 export interface PostSettingsProps {
   route?: {
@@ -46,7 +50,8 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const modalizeRef = useRef<any>();
+  const audienceSheetRef = useRef<any>();
+  const expireTimeSheetRef = useRef<any>();
 
   let chosenAudiences: any[];
   const screenParams = route?.params || {};
@@ -79,12 +84,14 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     showWarning,
     sCanComment,
     sCanReact,
+    showCustomExpire,
     handlePressSave,
     handleToggleImportant,
     handleToggleCanComment,
     handleToggleCanReact,
     handleChangeDatePicker,
     handleChangeTimePicker,
+    handleChangeSuggestDate,
     getMinDate,
     getMaxDate,
   } = usePostSettings({ postId, listAudiencesWithoutPermission });
@@ -105,7 +112,16 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   };
 
   const onPressAudiences = () => {
-    modalizeRef.current?.open?.();
+    audienceSheetRef.current?.open?.();
+  };
+
+  const handleDropDown = () => {
+    expireTimeSheetRef.current?.open?.();
+  };
+
+  const handlePressSuggestDate = (item: any) => {
+    expireTimeSheetRef?.current?.close?.();
+    handleChangeSuggestDate(item);
   };
 
   const renderListAudienceWithoutPermission = (list: any[]) => {
@@ -153,38 +169,75 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   };
 
   const renderImportantDate = () => {
-    const { expires_time } = sImportant || {};
+    const { expiresTime, chosenSuggestedTime, neverExpires } = sImportant || {};
+    const dateValue = formatDate(expiresTime, 'MMMM DD, YYYY HH:mm');
+    const timeContent = chosenSuggestedTime || t('common:text_expires_on');
 
     return (
-      <View style={styles.importantButtons}>
-        <DateInput
-          testID="post_settings.important.btn_date"
-          mode="date"
-          value={expires_time}
-          minDate={getMinDate()}
-          maxDate={getMaxDate()}
-          label={t('common:text_end_date')}
-          onConfirm={handleChangeDatePicker}
-          style={{ flex: 1 }}
-        />
-        <ViewSpacing width={16} />
-        <DateInput
-          testID="post_settings.important.btn_time"
-          mode="time"
-          value={expires_time}
-          minDate={getMinDate()}
-          maxDate={getMaxDate()}
-          label={t('common:text_end_hour')}
-          onConfirm={handleChangeTimePicker}
-          style={{ flex: 1 }}
-        />
+      <View>
+        <Button onPress={handleDropDown} style={[styles.row, styles.dropdownStyle]}>
+          <Text.DropdownM
+            useI18n
+            color={chosenSuggestedTime ? colors.neutral60 : colors.neutral20}
+            style={styles.flex1}
+          >
+            {timeContent}
+          </Text.DropdownM>
+          <Icon icon="AngleDown" size={16} tintColor={colors.neutral40} />
+        </Button>
+        {neverExpires
+          ? (
+            <View style={styles.neverExpiresText}>
+              <Icon icon="CircleInfo" size={16} tintColor={colors.neutral20} />
+              <ViewSpacing width={spacing.margin.small} />
+              <Text.BodyXS useI18n color={colors.neutral40}>common:text_never_expire</Text.BodyXS>
+            </View>
+          )
+          : (
+            <View style={styles.expiresOnTextContainer}>
+              <Text.BodyS useI18n color={colors.neutral40} style={styles.expiresOnText}>
+                common:text_expires_on
+              </Text.BodyS>
+              <Text.BodySMedium>
+                {dateValue}
+              </Text.BodySMedium>
+            </View>
+          )}
+        {
+          showCustomExpire
+          && (
+          <View style={styles.importantButtons}>
+            <DateInput
+              testID="post_settings.important.btn_date"
+              mode="date"
+              value={expiresTime}
+              minDate={getMinDate()}
+              maxDate={getMaxDate()}
+              label={t('common:text_end_date')}
+              onConfirm={handleChangeDatePicker}
+              style={styles.flex1}
+            />
+            <ViewSpacing width={16} />
+            <DateInput
+              testID="post_settings.important.btn_time"
+              mode="time"
+              value={expiresTime}
+              minDate={getMinDate()}
+              maxDate={getMaxDate()}
+              label={t('common:text_end_hour')}
+              onConfirm={handleChangeTimePicker}
+              style={styles.flex1}
+            />
+          </View>
+          )
+        }
       </View>
     );
   };
 
   const renderImportant = () => {
-    const { active, expires_time } = sImportant || {};
-    const isExpired = checkExpiration(expires_time);
+    const { active, expiresTime } = sImportant || {};
+    const isExpired = checkExpiration(expiresTime);
 
     return (
       <View style={styles.content}>
@@ -198,16 +251,6 @@ const PostSettings = ({ route }: PostSettingsProps) => {
             <Text.SubtitleM style={[styles.flex1]} useI18n>
               post:mark_as_important
             </Text.SubtitleM>
-            {(active && !isExpired) ? (
-              <Text.BodyXS
-                useI18n
-                testID="post_settings.expire_time_desc"
-                color={colors.neutral40}
-                style={styles.expireTimeDesc}
-              >
-                post:expire_time_desc
-              </Text.BodyXS>
-            ) : null}
             {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
               <Text.BodyXS color={colors.danger} style={styles.warningText}>
                 {`${t('post:text_important_warning_1')}`}
@@ -230,19 +273,43 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const keyExtractor = (item: any) => JSON.stringify(item);
 
-  const renderBottomSheetContent = () => (
+  const renderItem = ({
+    item, titleProps, onPress = undefined, showAvatar = true,
+  }:
+      {item: any, titleProps?: any, showAvatar?:boolean, onPress?: any}) => (
+        <PrimaryItem
+          title={item?.name || item.title}
+          showAvatar={showAvatar}
+          avatar={showAvatar ? (item?.icon || images.img_user_avatar_default) : null}
+          titleProps={titleProps}
+          onPress={onPress}
+        />
+  );
+
+  const renderAudienceItem = ({ item }: {item:any}) => renderItem({ item, titleProps: { variant: 'subtitleM' } });
+
+  const renderExpireTimeItem = ({ item }: {item:any}) => renderItem({
+    item,
+    showAvatar: false,
+    titleProps: { variant: 'bodyM', color: colors.neutral60 },
+    onPress: () => handlePressSuggestDate(item),
+  });
+
+  const renderAudiencesSheet = () => (
     <FlatList
-      style={{ flex: 1, paddingVertical: spacing.padding.tiny, height: 400 }}
+      style={[styles.expireTimeSheet, styles.audiencesSheet]}
       data={listAudiencesWithoutPermission.slice(2)}
       keyExtractor={keyExtractor}
-      renderItem={({ item }:any) => (
-        <PrimaryItem
-          title={item?.name}
-          showAvatar
-          avatar={item?.icon || images.img_user_avatar_default}
-          titleProps={{ variant: 'subtitleM' }}
-        />
-      )}
+      renderItem={renderAudienceItem}
+    />
+  );
+
+  const renderExpireTimeSheet = () => (
+    <FlatList
+      style={styles.expireTimeSheet}
+      data={timeSuggest}
+      keyExtractor={keyExtractor}
+      renderItem={renderExpireTimeItem}
     />
   );
 
@@ -309,8 +376,12 @@ const PostSettings = ({ route }: PostSettingsProps) => {
         </ScrollView>
       </View>
       <BottomSheet
-        modalizeRef={modalizeRef}
-        ContentComponent={renderBottomSheetContent()}
+        modalizeRef={audienceSheetRef}
+        ContentComponent={renderAudiencesSheet()}
+      />
+      <BottomSheet
+        modalizeRef={expireTimeSheetRef}
+        ContentComponent={renderExpireTimeSheet()}
       />
     </ScreenWrapper>
   );
@@ -343,6 +414,37 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     expireTimeDesc: {
       marginTop: spacing.margin.tiny,
+    },
+    dropdownStyle: {
+      backgroundColor: colors.white,
+      paddingVertical: spacing.padding.small,
+      paddingLeft: spacing.padding.large,
+      paddingRight: spacing.padding.base,
+      borderColor: colors.neutral5,
+      borderRadius: spacing.borderRadius.large,
+      borderWidth: 1,
+      marginTop: spacing.margin.large,
+    },
+    expiresOnTextContainer: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
+    expiresOnText: {
+      marginTop: spacing.margin.large,
+    },
+    neverExpiresText: {
+      marginTop: spacing.margin.extraLarge,
+      backgroundColor: colors.gray1,
+      padding: spacing.padding.small,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    expireTimeSheet: {
+      flex: 1,
+      paddingVertical: spacing.padding.tiny,
+    },
+    audiencesSheet: {
+      height: 400,
     },
   });
 };

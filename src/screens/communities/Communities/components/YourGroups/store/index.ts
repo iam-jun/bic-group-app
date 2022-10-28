@@ -18,4 +18,6 @@ const yourGroupsState = (set, get): IYourGroupsState => ({
   reset: () => resetStore(initYourGroupsState, set),
 });
 
-export const useYourGroupsStore = createStore<IYourGroupsState>(yourGroupsState);
+const useYourGroupsStore = createStore<IYourGroupsState>(yourGroupsState);
+
+export default useYourGroupsStore;

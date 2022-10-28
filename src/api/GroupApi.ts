@@ -30,6 +30,24 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
+  assignCommunityAdmin: (
+    communityId: string,
+    userIds: string[],
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/assign-admin`,
+    method: 'put',
+    data: { userIds },
+  }),
+  revokeCommunityAdmin: (
+    communityId: string,
+    userIds: string[],
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/revoke-admin`,
+    method: 'put',
+    data: { userIds },
+  }),
   updateCommunityJoinSetting: (communityId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/settings`,
@@ -59,6 +77,18 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}users/${userId}/profile`,
     params,
+  }),
+  getLanguages: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}languages`,
+  }),
+  getCountry: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}countries`,
+  }),
+  getCity: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}cities?country_code=84`,
   }),
   editMyProfile: (userId: string, data: IUserEdit): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -570,6 +600,12 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
+  assignCommunityAdmin: (communityId: string, userIds: string[]) => withHttpRequestPromise(
+    groupsApiConfig.assignCommunityAdmin, communityId, userIds,
+  ),
+  revokeCommunityAdmin: (communityId: string, userIds: string[]) => withHttpRequestPromise(
+    groupsApiConfig.revokeCommunityAdmin, communityId, userIds,
+  ),
   updateCommunityJoinSetting: (communityId: string, isJoinApproval: boolean) => withHttpRequestPromise(
     groupsApiConfig.updateCommunityJoinSetting, communityId, isJoinApproval,
   ),
@@ -594,6 +630,15 @@ const groupApi = {
   },
   getUserProfile: (userId: string, params?: any) => withHttpRequestPromise(
     groupsApiConfig.getUserProfile, userId, params,
+  ),
+  getLanguages: () => withHttpRequestPromise(
+    groupsApiConfig.getLanguages,
+  ),
+  getCountry: () => withHttpRequestPromise(
+    groupsApiConfig.getCountry,
+  ),
+  getCity: () => withHttpRequestPromise(
+    groupsApiConfig.getCity,
   ),
   editMyProfile: (params: any) => {
     const { userId, data } = params || {};

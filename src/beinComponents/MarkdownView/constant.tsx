@@ -45,7 +45,7 @@ export const blacklistLimit = [
   'table',
   // 'code',
   // 'fence',
-  // 'blockquote',
+  'blockquote',
   'hr',
   'list',
   // 'html_block',

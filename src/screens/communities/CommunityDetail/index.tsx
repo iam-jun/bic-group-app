@@ -127,10 +127,14 @@ const CommunityDetail = (props: any) => {
   useEffect(() => { if (isEmpty(communityPost?.ids)) getPosts(); }, [community]);
 
   const onRefresh = useCallback((isGetPost: boolean) => {
-    getCommunityDetail();
+    /**
+     * must getPosts before getCommunityDetail
+     * to avoid community data reset and delete groupId
+     */
     if (isGetPost) {
       timelineActions.getPosts(groupId, true);
     }
+    getCommunityDetail();
   }, [communityId]);
 
   const onPressAdminTools = () => {
@@ -261,7 +265,7 @@ const CommunityDetail = (props: any) => {
 
   const headerComponent = isPrivateCommunity
     ? null
-    : <CommunityTabHeader communityId={communityId} isMember={isMember} />;
+    : <CommunityTabHeader communityId={communityId} isMember={isMember} teamName={community?.teamName} />;
 
   return (
     <View style={styles.screenContainer}>

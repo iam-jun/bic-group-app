@@ -1,32 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import i18next from 'i18next';
+import React, { useState, useEffect, useRef } from 'react';
 import {
-  View, StyleSheet, ScrollView, TextInput, Keyboard,
+  View,
+  StyleSheet,
+  ScrollView,
+  Keyboard,
+  TextInput as TextInputRN,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import { isEmpty } from 'lodash';
+import moment from 'moment';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import TextInputBein from '~/beinComponents/inputs/TextInput';
-import Icon from '~/baseComponents/Icon';
-import Toggle from '~/baseComponents/Toggle';
 import Text from '~/beinComponents/Text';
-import DateTimePicker from '~/beinComponents/DateTimePicker';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import { fontFamilies } from '~/theme/fonts';
 import menuActions from '../../../../storeRedux/menu/actions';
-import { formatDate } from '~/utils/formatData';
 import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../../storeRedux/menu/keySelector';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
-import { IToastMessage } from '~/interfaces/common';
+import { ILocation } from '~/interfaces/common';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
+import { DateInput, TextInput } from '~/baseComponents/Input';
+import { useBaseHook } from '~/hooks';
+import EditLocation from '../EditContact/fragments/EditLocation';
+import TitleComponent from '../fragments/TitleComponent';
+import Checkbox from '~/baseComponents/Checkbox';
+import { fontFamilies } from '~/theme/fonts';
 import dimension from '~/theme/dimension';
 
 const AddWork = () => {
@@ -36,6 +40,9 @@ const AddWork = () => {
   const styles = createStyles(theme);
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
+
+  const scrollRef = useRef<any>(null);
 
   const selectedWorkItem = useKeySelector(menuKeySelector.selectedWorkItem);
 
@@ -51,30 +58,70 @@ const AddWork = () => {
   } = selectedWorkItem || {};
 
   const [companyValue, setCompanyValue] = useState<string>(company || '');
-  const [positionValue, setPositionValue] = useState<string>(titlePosition || '');
+  const [positionValue, setPositionValue] = useState<string>(
+    titlePosition || '',
+  );
   const [locationValue, setLocationValue] = useState<string>(location || '');
-  const [descriptionValue, setDescriptionValue] = useState<string>(description || '');
-  const [isWorkHere, setIsWorkHere] = useState<boolean>(!isEmpty(selectedWorkItem) && currentlyWorkHere !== null
-    ? currentlyWorkHere
-    : true);
-
-  const [startDateValue, setStartDateValue] = useState<string>(startDate || new Date().toISOString());
-  const [selectingStartDate, setSelectingStartDate] = useState<boolean>(false);
-
-  const [endDateValue, setEndDateValue] = useState<string | null>(endDate || null);
-  const [selectingEndDate, setSelectingEndDate] = useState<boolean>(false);
-
+  const [descriptionValue, setDescriptionValue] = useState<string>(
+    description || '',
+  );
+  const [isWorkHere, setIsWorkHere] = useState<boolean>(
+    !isEmpty(selectedWorkItem) && currentlyWorkHere !== null
+      ? currentlyWorkHere
+      : false,
+  );
+  const [startDateValue, setStartDateValue] = useState<string | null>(
+    startDate || null,
+  );
+  const [endDateValue, setEndDateValue] = useState<string | null>(
+    endDate || null,
+  );
+  const [isValidEndDate, setIsValidEndDate] = useState<boolean>(
+    !!selectedWorkItem,
+  );
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
-  useEffect(
-    () => {
-      if (isWorkHere) {
-        setEndDateValue(null);
-      } else {
-        setEndDateValue(endDate || null);
+  const locationRef = useRef<any>();
+
+  const isEnabledSubmit
+    = companyValue.trim().length > 0
+    && positionValue.trim().length > 0
+    && isValidEndDate;
+
+  const validateDate = (
+    startDate: string | null,
+    endDate: string | null,
+    isCurrentlyWorkHere: boolean,
+  ) => {
+    if (isCurrentlyWorkHere) {
+      if (startDate) setIsValidEndDate(true);
+      else setIsValidEndDate(false);
+    }
+
+    if (!isCurrentlyWorkHere) {
+      if (startDate && endDate) {
+        setIsValidEndDate(
+          new Date(startDateValue).getTime() < new Date(endDateValue).getTime(),
+        );
+        return;
       }
-    }, [isWorkHere],
-  );
+      setIsValidEndDate(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isWorkHere) {
+      setEndDateValue(null);
+      validateDate(startDateValue, null, isWorkHere);
+    } else {
+      setEndDateValue(endDate || null);
+      validateDate(startDateValue, endDate || null, isWorkHere);
+    }
+  }, [isWorkHere]);
+
+  useEffect(() => {
+    validateDate(startDateValue, endDateValue, isWorkHere);
+  }, [startDateValue, endDateValue]);
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -86,51 +133,22 @@ const AddWork = () => {
   };
 
   const onSave = () => {
-    if (
-      endDateValue
-      && new Date(startDateValue).getTime() > new Date(endDateValue).getTime()
-    ) {
-      const toastMessage: IToastMessage = {
-        content: 'settings:text_enddate_after_startdate',
-        props: { type: 'error' },
-      };
-      dispatch(showHideToastMessage(toastMessage));
-      return;
-    }
-
-    if (!isWorkHere && !endDateValue) {
-      const toastMessage: IToastMessage = {
-        content: 'settings:text_enddate_must_choose',
-        props: { type: 'error' },
-      };
-      dispatch(showHideToastMessage(toastMessage));
-      return;
-    }
-
     const data = {
       company: companyValue.trim(),
       titlePosition: positionValue.trim(),
-      location: locationValue.trim(),
+      location: locationValue.trim() || null,
       description: descriptionValue.trim(),
       currentlyWorkHere: isWorkHere,
-      startDate: startDateValue || undefined,
+      startDate: startDateValue,
       endDate: endDateValue,
     };
     selectedWorkItem
-      ? dispatch(menuActions.editWorkExperience(
-        id, data, navigateBack,
-      ))
-      : dispatch(menuActions.addWorkExperience(
-        data, () => {
+      ? dispatch(menuActions.editWorkExperience(id, data, navigateBack))
+      : dispatch(
+        menuActions.addWorkExperience(data, () => {
           navigateBack();
-        },
-      ));
-  };
-
-  const onDelete = () => {
-    dispatch(menuActions.deleteWorkExperience(
-      id, navigateBack,
-    ));
+        }),
+      );
   };
 
   const onChangeCompany = (text: string) => {
@@ -139,10 +157,6 @@ const AddWork = () => {
 
   const onChangePosition = (text: string) => {
     setPositionValue(text);
-  };
-
-  const onChangeLocation = (text: string) => {
-    setLocationValue(text);
   };
 
   const onChangeDescription = (text: string) => {
@@ -154,167 +168,163 @@ const AddWork = () => {
     setIsWorkHere(!isWorkHere);
   };
 
-  const onStartDateEditOpen = () => setSelectingStartDate(true);
-
-  const onStartDateEditClose = () => setSelectingStartDate(false);
-
   const onSetStartDate = (date?: Date) => {
-    if (date) {
-      setStartDateValue(date.toISOString());
-    }
-    setSelectingStartDate(false);
+    setStartDateValue(moment(date).startOf('day').toISOString());
   };
 
-  const onEndDateEditOpen = () => setSelectingEndDate(true);
-
-  const onEndDateEditClose = () => setSelectingEndDate(false);
-
   const onSetEndDate = (date?: Date) => {
-    if (date) {
-      setEndDateValue(date.toISOString());
-    }
-    setSelectingEndDate(false);
+    setEndDateValue(moment(date).startOf('day').toISOString());
   };
 
   const onFocusDescription = () => {
     setIsFocus(true);
+    if (Platform.OS === 'ios') {
+      setTimeout(() => {
+        scrollRef.current.scrollToEnd();
+      }, 250);
+    }
   };
 
   const onBlurDescription = () => {
     setIsFocus(false);
   };
 
+  const onEditLocationOpen = (e: any) => {
+    Keyboard.dismiss();
+    locationRef?.current?.open?.(e?.pageX, e?.pageY);
+  };
+
+  const onLocationItemPress = (item: ILocation) => {
+    setLocationValue(item.name);
+    locationRef?.current?.close();
+    Keyboard.dismiss();
+  };
+
   const renderCompanyInput = () => (
-    <TextInputBein
-      value={companyValue}
-      maxLength={50}
-      testID="add_work.company"
-      onChangeText={onChangeCompany}
-      outlineColor={colors.gray40}
-      activeOutlineColor={colors.purple50}
-      placeholder={i18next.t('settings:text_compamny')}
-    />
-  );
-
-  const renderTitlePositionInput = () => (
-    <TextInputBein
-      value={positionValue}
-      maxLength={50}
-      testID="add_work.title_position"
-      placeholder={i18next.t('settings:text_title_position')}
-      onChangeText={onChangePosition}
-      activeOutlineColor={colors.purple50}
-      outlineColor={colors.gray40}
-    />
-  );
-
-  const renderLocationInput = () => (
-    <TextInputBein
-      value={locationValue}
-      maxLength={25}
-      testID="add_work.location"
-      placeholder={i18next.t('settings:text_location_optional')}
-      onChangeText={onChangeLocation}
-      activeOutlineColor={colors.purple50}
-      outlineColor={colors.gray40}
-    />
-  );
-
-  const renderDescriptionInput = () => (
-    <View
-      testID="add_work.description.view"
-      style={[styles.textInputView, isFocus ? styles.textInputFocus : {}]}
-    >
+    <View style={styles.containerItem}>
       <TextInput
-        value={descriptionValue}
-        maxLength={200}
-        testID="add_work.description"
-        placeholder={i18next.t('settings:text_description_optional')}
-        onChangeText={onChangeDescription}
-        style={styles.textInput}
-        multiline
-        textAlignVertical="top"
-        onFocus={onFocusDescription}
-        onBlur={onBlurDescription}
-        placeholderTextColor={colors.gray50}
+        testID="add_work.company"
+        value={companyValue}
+        label={t('settings:text_work_at')}
+        onChangeText={onChangeCompany}
+        maxLength={64}
+        placeholder={t('settings:text_company')}
       />
+      <Text.BodyXS useI18n>
+        settings:text_input_edit_info_fullname_max_64
+      </Text.BodyXS>
     </View>
   );
 
-  const renderCurrentlyWorkHere = () => (
-    <View style={styles.selectionLineView}>
-      <Text.H6 useI18n>settings:text_currently_work_here</Text.H6>
-      <Toggle
-        isChecked={isWorkHere}
-        testID="add_work.currently_work_here"
-        onValueChanged={onToggleCurrentlyWorkHere}
+  const renderTitlePositionInput = () => (
+    <View style={styles.containerItem}>
+      <TextInput
+        testID="add_work.title_position"
+        value={positionValue}
+        label={t('settings:text_title_position')}
+        onChangeText={onChangePosition}
+        maxLength={64}
+        placeholder={t('settings:text_enter_position')}
+      />
+      <Text.BodyXS useI18n>
+        settings:text_input_edit_info_fullname_max_64
+      </Text.BodyXS>
+    </View>
+  );
+
+  const renderLocationInput = () => (
+    <View style={styles.containerItem}>
+      <TitleComponent title="settings:title_location" isOptional />
+      <Button
+        testID="add_work.location"
+        textProps={{
+          color: locationValue
+            ? theme.colors.neutral80
+            : theme.colors.neutral20,
+          variant: 'bodyM',
+        }}
+        style={styles.buttonDropDown}
+        contentStyle={styles.buttonDropDownContent}
+        onPress={(e) => onEditLocationOpen(e)}
+        rightIcon="AngleDown"
+        rightIconProps={{ tintColor: theme.colors.neutral40, size: 14 }}
+      >
+        {locationValue || t('settings:select_location')}
+      </Button>
+      <EditLocation
+        modalizeRef={locationRef}
+        onItemPress={onLocationItemPress}
       />
     </View>
   );
 
   const renderStartDate = () => (
-    <View style={styles.selectionLineView}>
-      <Text.H6 testID="add_work.start_date.title" useI18n>
-        {isWorkHere ? 'settings:text_since' : 'common:text_start_date'}
-      </Text.H6>
-      <ButtonWrapper
-        testID="add_work.start_date.button"
-        style={styles.buttonDate}
-        onPress={onStartDateEditOpen}
-      >
-        <Icon
-          icon="Calendar"
-          tintColor={colors.gray50}
-          style={styles.calendarIcon}
-        />
-        <Text.BodyS testID="add_work.start_date" color={colors.gray50}>
-          {formatDate(
-            startDateValue, 'MMMM DD, YYYY',
-          )
-              || i18next.t('common:text_not_set')}
-        </Text.BodyS>
-      </ButtonWrapper>
+    <View style={styles.containerItem}>
+      <DateInput
+        testID="add_work.start_date"
+        testIDValue="add_work.start_date.value"
+        style={{ marginVertical: 0 }}
+        mode="date"
+        value={startDateValue}
+        label={t('common:text_start_date')}
+        maxDate={new Date()}
+        onConfirm={onSetStartDate}
+        placeholder="DD/MM/YYYY"
+      />
     </View>
   );
 
-  const renderEndDate = () => {
-    if (isWorkHere) return null;
-    return (
-      <View testID="add_work.end_date_view" style={styles.selectionLineView}>
-        <Text.H6 useI18n>common:text_end_date</Text.H6>
-        <ButtonWrapper
-          testID="add_work.end_date.button"
-          style={styles.buttonDate}
-          onPress={onEndDateEditOpen}
-        >
-          <Icon
-            icon="Calendar"
-            tintColor={colors.gray50}
-            style={styles.calendarIcon}
-          />
+  const renderEndDate = () => (
+    <View style={styles.containerItem}>
+      <DateInput
+        style={{ marginVertical: 0, marginBottom: spacing.margin.tiny }}
+        mode="date"
+        value={endDateValue}
+        label={t('common:text_end_date')}
+        maxDate={new Date()}
+        onConfirm={onSetEndDate}
+        placeholder="DD/MM/YYYY"
+        disabled={isWorkHere}
+      />
+    </View>
+  );
 
-          <Text.BodyS testID="add_work.end_date" color={colors.gray50}>
-            {(endDateValue && formatDate(
-              endDateValue, 'MMMM DD, YYYY',
-            ))
-              || i18next.t('common:text_not_set')}
-          </Text.BodyS>
-        </ButtonWrapper>
-      </View>
-    );
-  };
-
-  const renderDeleteButton = () => (
-    selectedWorkItem && (
-      <Button.Danger
-        testID="add_work.delete"
-        onPress={onDelete}
-        useI18n
-        style={styles.buttonDelete}
+  const renderDescriptionInput = () => (
+    <>
+      <TitleComponent title="common:text_description" isOptional />
+      <View
+        testID="add_work.description.view"
+        style={[styles.containerDes, isFocus && styles.textInputFocus]}
       >
-        settings:text_delete_work
-      </Button.Danger>
-    )
+        <TextInputRN
+          testID="add_work.description"
+          value={descriptionValue}
+          onChangeText={onChangeDescription}
+          maxLength={255}
+          placeholder={t('settings:enter_description')}
+          placeholderTextColor={colors.neutral20}
+          multiline
+          textAlignVertical="top"
+          onFocus={onFocusDescription}
+          onBlur={onBlurDescription}
+          style={styles.textInput}
+        />
+      </View>
+      <View style={styles.desCount}>
+        <Text.BodyXS>{`${descriptionValue.length}/255`}</Text.BodyXS>
+      </View>
+    </>
+  );
+
+  const renderCurrentlyWorkHere = () => (
+    <View style={[styles.selectionLineView, styles.containerItem]}>
+      <Checkbox
+        isChecked={isWorkHere}
+        label="settings:text_currently_work_here"
+        useI18n
+        onPress={onToggleCurrentlyWorkHere}
+      />
+    </View>
   );
 
   return (
@@ -322,61 +332,40 @@ const AddWork = () => {
       <Header
         title={
           selectedWorkItem
-            ? 'settings:text_edit_work'
-            : 'settings:text_add_work'
+            ? 'settings:text_edit_experience'
+            : 'settings:text_add_experience'
         }
         titleTextProps={{ useI18n: true }}
         buttonText={selectedWorkItem ? 'common:text_save' : 'common:text_add'}
         buttonProps={{
           useI18n: true,
-          disabled:
-            !(companyValue?.trim?.() && positionValue?.trim?.()),
+          disabled: !isEnabledSubmit,
           testID: 'add_work.save',
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}
       />
-
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        style={styles.container}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled
+        style={{ flex: 1 }}
       >
-        {renderCompanyInput()}
-        {renderTitlePositionInput()}
-        {renderLocationInput()}
-        {renderDescriptionInput()}
-        <View style={styles.selectionView}>
-          {renderCurrentlyWorkHere()}
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+          contentContainerStyle={{ paddingBottom: spacing.padding.large }}
+          ref={scrollRef}
+        >
+          {renderCompanyInput()}
+          {renderTitlePositionInput()}
+          {renderLocationInput()}
           {renderStartDate()}
           {renderEndDate()}
-        </View>
-        {renderDeleteButton()}
-      </ScrollView>
-
-      {selectingStartDate && (
-        <View testID="add_work.start_date.bottom_sheet">
-          <DateTimePicker
-            isVisible={selectingStartDate}
-            date={new Date()}
-            mode="date"
-            onConfirm={onSetStartDate}
-            onCancel={onStartDateEditClose}
-          />
-        </View>
-      )}
-
-      {selectingEndDate && (
-        <View testID="add_work.end_date.bottom_sheet">
-          <DateTimePicker
-            isVisible={selectingEndDate}
-            date={new Date()}
-            mode="date"
-            onConfirm={onSetEndDate}
-            onCancel={onEndDateEditClose}
-          />
-        </View>
-      )}
+          {renderCurrentlyWorkHere()}
+          {renderDescriptionInput()}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </ScreenWrapper>
   );
 };
@@ -387,22 +376,26 @@ const createStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
-    container: {
-      margin: spacing.margin.large,
+    containerItem: {
+      marginBottom: spacing.margin.large,
     },
-    textInputView: {
-      borderRadius: spacing.borderRadius.small,
-      borderColor: colors.gray40,
+    container: {
+      flex: 1,
+      padding: spacing.padding.large,
+    },
+    containerDes: {
+      height: 120,
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.small,
+      borderRadius: spacing.borderRadius.base,
       borderWidth: 1,
-      padding: spacing.margin.base,
-      marginTop: spacing.margin.small,
-      height: 88,
+      borderColor: colors.neutral5,
     },
     textInput: {
+      flex: 1,
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
       color: colors.neutral80,
-      flex: 1,
     },
     textInputFocus: {
       borderColor: colors.purple50,
@@ -429,6 +422,23 @@ const createStyles = (theme: ExtendedTheme) => {
     },
     buttonDelete: {
       borderRadius: spacing.borderRadius.small,
+    },
+    buttonDropDown: {
+      borderRadius: spacing.borderRadius.large,
+      borderWidth: 1,
+      borderColor: colors.neutral5,
+      minHeight: 44,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      paddingLeft: spacing.padding.large,
+    },
+    buttonDropDownContent: {
+      justifyContent: 'space-between',
+    },
+    desCount: {
+      marginTop: spacing.margin.tiny,
+      alignItems: 'flex-end',
+      marginBottom: spacing.margin.large,
     },
   });
 };

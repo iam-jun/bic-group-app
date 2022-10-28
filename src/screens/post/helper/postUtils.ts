@@ -3,6 +3,8 @@ import { PixelRatio } from 'react-native';
 import { ICommentData } from '~/interfaces/IPost';
 import { dimension } from '~/theme';
 
+export const defaultList = [{ title: '', type: 'empty', data: [] }];
+
 export const sortComments = (comments: ICommentData[]) => {
   let newComments: any[] = comments || [];
   comments?.forEach?.((cmt: ICommentData) => {
@@ -57,3 +59,22 @@ export const getThumbnailImageLink = (thumbnails: any[]): string => {
 };
 
 export const checkExpiration = (expireTime: string) => new Date().getTime() >= new Date(expireTime).getTime();
+
+export const getSectionData = (listComment: ICommentData[]) => {
+  const result: any[] = [];
+  listComment?.forEach?.((comment, index) => {
+    const item: any = {};
+    const lastChildComment = comment?.child?.list || [];
+    const _data
+      = lastChildComment.length > 0
+        ? [lastChildComment[lastChildComment.length - 1]]
+        : [];
+    item.comment = comment;
+    item.index = index;
+    item.data = _data;
+    result.push(item);
+  });
+  // long post without comment cant scroll to bottom
+  // so need default list with an empty item to trigger scroll
+  return result?.length > 0 ? result : defaultList;
+};

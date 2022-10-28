@@ -25,6 +25,8 @@ export interface UploadingImageProps {
   height?: number | string;
   onUploadSuccess?: (url: string, fileName: string) => void;
   onPressRemove?: () => void;
+  onError?: (error) => void;
+  renderError?: any;
 }
 
 const UploadingImage: FC<UploadingImageProps> = ({
@@ -37,6 +39,8 @@ const UploadingImage: FC<UploadingImageProps> = ({
   height,
   onUploadSuccess,
   onPressRemove,
+  onError,
+  renderError,
 }: UploadingImageProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [error, setError] = useState('');
@@ -45,6 +49,10 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
+
+  useEffect(() => {
+    onError?.(error);
+  }, [error]);
 
   const _setImageUrl = (url: string) => {
     if (url.includes('http')) {
@@ -120,6 +128,9 @@ const UploadingImage: FC<UploadingImageProps> = ({
   };
 
   if (error) {
+    if (renderError) {
+      return renderError(error);
+    }
     return (
       <View style={styles.errorContainer}>
         <Icon icon="Image" tintColor={colors.red60} />

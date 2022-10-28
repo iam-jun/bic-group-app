@@ -15,7 +15,8 @@ const Image: React.FC<ImageProps> = ({
   placeholderSource,
   ...props
 }: ImageProps) => {
-  const [_source, setSource] = useState(formatSource(source || placeholderSource));
+  const formattedSource = formatSource(source || placeholderSource, cache);
+  const [_source, setSource] = useState(formattedSource);
 
   useEffect(() => {
     setSource(formatSource(source || placeholderSource, cache));
@@ -39,7 +40,7 @@ export default Image;
 const formatSource = (source: any, cache?: boolean) => {
   if (
     typeof source === 'string'
-      && source.toLowerCase?.().startsWith?.('http')
+      && (source.toLowerCase?.().startsWith?.('http') || source.toLowerCase?.().startsWith?.('data:'))
   ) {
     const char = source.includes('?') ? '&' : '?';
     return { uri: cache ? source : source + char + Date.now() };

@@ -22,7 +22,6 @@ import CreatePostFooter from './components/CreatePostFooter';
 import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
 import useDraftPostStore from '../DraftPost/store';
-import { checkExpiration } from '../helper/postUtils';
 import useCommentInputStore from '../components/CommentInputView/store';
 import ICommentInputState from '../components/CommentInputView/store/Interface';
 
@@ -167,8 +166,6 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
     rootNavigation.navigate(homeStack.postSettings);
   };
 
-  const isExpired = checkExpiration(important?.expires_time);
-
   return (
     <ScreenWrapper isFullView testID="CreatePostScreen">
       <Header
@@ -188,7 +185,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       />
       <View style={styles.flex1}>
         <View>
-          {!!important?.active && !isExpired && <CreatePostBannerImportant expiresTime={important.expires_time} />}
+          {!!important?.active && <CreatePostBannerImportant expiresTime={important.expiresTime} />}
           <CreatePostChosenAudiences disabled={loading} />
           <Divider color={theme.colors.neutral5} />
         </View>

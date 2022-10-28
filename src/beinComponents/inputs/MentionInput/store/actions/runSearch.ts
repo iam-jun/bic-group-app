@@ -4,18 +4,24 @@ import IMentionInputState from '../Interface';
 
 const SEARCH_LIMIT = 10;
 
-const runSearch = (set, get) => async (groupIds: string, payload: string) => {
+const runSearch = (set, get) => async (groupIds: string, payload: string, ignoreMatchTerm: boolean) => {
   const {
     fullContent, loading, data, key,
   } = get();
   if (loading) return;
+  let _matchTerm = null;
 
-  const _matchTerm = getMatchTermForAtMention(payload);
+  if (ignoreMatchTerm) {
+    _matchTerm = payload;
+  } else {
+    _matchTerm = getMatchTermForAtMention(payload);
+  }
 
   // if key changed, update new data else load more data
   const keyChanged = key !== _matchTerm;
 
-  if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
+  // if matchTearm ends with space, it will trigger search again
+  if (_matchTerm !== null && !_matchTerm?.endsWith(' ')) {
     set((state) => {
       state.loading = true;
       state.key = _matchTerm;

@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 
 interface Props {
-  testID?:string;
+  testID?: string;
   title: string;
-  children: React.ReactNode
+  rightTitle?: ReactElement;
+  children: React.ReactNode;
 }
 
-const InfoSection = ({ testID, title, children }: Props) => (
-  <View testID={testID || 'info_section'} style={styles.container}>
-    <Text.H4 testID="info_section.title" useI18n style={styles.title}>{title}</Text.H4>
+const InfoSection = ({
+  testID, title, rightTitle, children,
+}: Props) => (
+  <View testID={testID || 'info_section'}>
+    <View style={styles.row}>
+      <Text.H4 testID="info_section.title" useI18n>
+        {title}
+      </Text.H4>
+      {rightTitle}
+    </View>
     {children}
   </View>
 );
+
 const styles = StyleSheet.create({
-  container: {
-    paddingBottom: spacing.padding.base,
-    marginTop: spacing.margin.large,
-  },
-  title: {
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: spacing.margin.large,
   },
 });

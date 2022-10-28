@@ -3,8 +3,9 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  ListRenderItem,
 } from 'react-native';
-import React from 'react';
+import React, { FC } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -13,12 +14,37 @@ import spacing from '~/theme/spacing';
 import SearchDiscoverCommunityItem from './SearchDiscoverCommunityItem';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { useDiscoverCommunitiesSearchStore } from './store';
+import useDiscoverCommunitiesSearchStore from './store';
 import useCommunityController from '~/screens/communities/store';
+import useCommunitiesStore from '~/store/entities/communities';
 
 interface SearchDiscoverCommunityResultsProps {
   onLoadMore?: () => void;
 }
+
+type SearchDiscoverCommunityItemContainerProps = {
+  id: string;
+  onView: (item: any) => void;
+  onJoin: (item: any) => void;
+  onCancel: (item: any) => void;
+};
+
+const SearchDiscoverCommunityItemContainer: FC<
+  SearchDiscoverCommunityItemContainerProps
+> = ({
+  id, onView, onJoin, onCancel,
+}) => {
+  const item = useCommunitiesStore((state) => state.data[id]);
+  return (
+    <SearchDiscoverCommunityItem
+      testID={`global_search_results.item_${id}`}
+      item={item}
+      onView={onView}
+      onJoin={onJoin}
+      onCancel={onCancel}
+    />
+  );
+};
 
 const SearchDiscoverCommunityResults = ({
   onLoadMore,
@@ -26,14 +52,14 @@ const SearchDiscoverCommunityResults = ({
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
 
-  const {
-    hasNextPage, loading, ids, items,
-  } = useDiscoverCommunitiesSearchStore();
+  const { hasNextPage, loading, ids } = useDiscoverCommunitiesSearchStore();
 
   const communityController = useCommunityController((state) => state.actions);
 
   const onView = (item: any) => {
-    rootNavigation.navigate(groupStack.communityDetail, { communityId: item.id });
+    rootNavigation.navigate(groupStack.communityDetail, {
+      communityId: item.id,
+    });
   };
 
   const onJoin = (item: any) => {
@@ -46,18 +72,14 @@ const SearchDiscoverCommunityResults = ({
     communityController.cancelJoinCommunity(id, name);
   };
 
-  const renderItem = ({ item }: {item: string}) => {
-    const currentItem = items[item];
-    return (
-      <SearchDiscoverCommunityItem
-        testID={`global_search_results.item_${currentItem.id}`}
-        item={currentItem}
-        onView={onView}
-        onJoin={onJoin}
-        onCancel={onCancel}
-      />
-    );
-  };
+  const renderItem: ListRenderItem<string> = ({ item }) => (
+    <SearchDiscoverCommunityItemContainer
+      id={item}
+      onView={onView}
+      onJoin={onJoin}
+      onCancel={onCancel}
+    />
+  );
 
   const renderEmptyComponent = () => {
     if (loading) return null;
@@ -99,9 +121,7 @@ const SearchDiscoverCommunityResults = ({
       data={ids}
       keyboardShouldPersistTaps="handled"
       renderItem={renderItem}
-      keyExtractor={(
-        item, index,
-      ) => `search_item_${item}?.id_${index}`}
+      keyExtractor={(item, index) => `search_item_${item}?.id_${index}`}
       ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}

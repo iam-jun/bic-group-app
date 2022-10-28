@@ -135,7 +135,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
     onSuccess?.(); // call second time to make sure content is cleared on low performance device
   } catch (e: any) {
     console.error(
-      'err:', JSON.stringify(e),
+      'create comment err:', JSON.stringify(e),
     );
     if (preComment && !parentCommentId) {
       // retrying doesn't need to update status because status = 'failed' already

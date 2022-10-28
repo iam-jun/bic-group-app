@@ -24,11 +24,11 @@ describe('Post Setting Screen', () => {
     storeData = { ...initialState };
     storeData.post.createPost.currentSettings = {
       active: false,
-      expires_time: '',
+      expiresTime: '',
     } as any;
     storeData.post.createPost.important = {
       active: false,
-      expires_time: '',
+      expiresTime: '',
     } as any;
   });
 
@@ -77,11 +77,11 @@ describe('Post Setting Screen', () => {
     const storeData = { ...initialState };
     storeData.post.createPost.currentSettings = {
       active: true,
-      expires_time: '2059368665000',
+      expiresTime: '2059368665000',
     } as any;
     storeData.post.createPost.important = {
       active: true,
-      expires_time: '2059368665000',
+      expiresTime: '2059368665000',
     } as any;
 
     const store = createTestStore(storeData);
@@ -215,11 +215,11 @@ describe('Post Setting Screen', () => {
     const initExpiresTime = new Date(next2Days).getTime();
     storeData.post.createPost.currentSettings = {
       active: true,
-      expires_time: initExpiresTime,
+      expiresTime: initExpiresTime,
     } as any;
     storeData.post.createPost.important = {
       active: true,
-      expires_time: initExpiresTime,
+      expiresTime: initExpiresTime,
     } as any;
 
     const currentDate = new Date();
@@ -233,7 +233,7 @@ describe('Post Setting Screen', () => {
     act(() => {
       result.current.handleChangeDatePicker(new Date(tomorrow));
     });
-    const date = new Date(result.current.sImportant?.expires_time || '');
+    const date = new Date(result.current.sImportant?.expiresTime || '');
     expect(date.toISOString()).toEqual(new Date(tomorrow).toISOString());
   });
 
@@ -247,7 +247,7 @@ describe('Post Setting Screen', () => {
     act(() => {
       result.current.handleChangeDatePicker(new Date(yesterday));
     });
-    const date = new Date(result.current.sImportant?.expires_time || '');
+    const date = new Date(result.current.sImportant?.expiresTime || '');
     expect(date.toISOString()).not.toEqual(new Date(yesterday).toISOString());
   });
 
@@ -272,7 +272,7 @@ describe('Post Setting Screen', () => {
     const tomorrowDate = new Date(tomorrow);
     const mixed = tomorrowDate.setHours(0, 0, 0, 0);
 
-    const date = new Date(result.current.sImportant?.expires_time || '');
+    const date = new Date(result.current.sImportant?.expiresTime || '');
     expect(date.toISOString()).toEqual(new Date(mixed).toISOString());
   });
 
@@ -288,7 +288,7 @@ describe('Post Setting Screen', () => {
       result.current.handleChangeTimePicker(new Date(night));
     });
 
-    const date = new Date(result.current.sImportant?.expires_time || '');
+    const date = new Date(result.current.sImportant?.expiresTime || '');
     expect(date.toISOString()).not.toEqual(new Date(night).toISOString());
   });
 
@@ -332,11 +332,11 @@ describe('Post Setting Screen', () => {
         createPost: {
           currentSettings: {
             active: false,
-            expires_time: '',
+            expiresTime: '',
           },
           important: {
             active: false,
-            expires_time: '',
+            expiresTime: '',
           },
         },
       },

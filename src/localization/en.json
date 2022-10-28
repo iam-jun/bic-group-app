@@ -33,6 +33,7 @@
     "btn_discard": "Discard",
     "btn_edit": "Edit",
     "btn_save": "Save",
+    "btn_save_apply": "Save & Apply",
     "btn_copy": "Copy",
     "btn_publish": "Publish",
     "btn_done": "Done",
@@ -57,7 +58,7 @@
     "text_error": "Error",
     "text_error_message": "Something went wrong",
     "text_success_message": "Success",
-    "text_important_posts": "Important Posts",
+    "text_important_post": "Important Post",
     "text_loading": "Loading...",
     "text_save": "Save",
     "text_select": "Select",
@@ -73,13 +74,15 @@
     "text_done": "Done",
     "text_uploading": "Uploading...",
     "text_download": "Download",
+    "text_input_description": "Input description...",
+    "text_input_title": "Input title...",
     "text_send": "Send",
     "label_confirm_send_file": "Send this file?",
     "label_confirm_send_image": "Send this photo?",
     "label_confirm_send_video": "Send this video?",
     "error": {
       "file": {
-        "over_file_size": "Your file must be less than 10MB"
+        "over_file_size": "Your file must be less than {n}"
       }
     },
     "label_discard_changes": "Discard Changes",
@@ -109,8 +112,8 @@
     "avatar_changed": "Avatar changed",
     "cover_changed": "Cover changed",
     "text_present": "Present",
-    "text_start_date": "Start Date",
-    "text_end_date": "End Date",
+    "text_start_date": "Start date",
+    "text_end_date": "End date",
     "text_end_hour": "End Hour",
     "text_group": "Group",
     "text_community": "Community",
@@ -163,7 +166,18 @@
     "content_not_available": "This content is not available",
     "dont_have_permission_to_access": "You don’t have permission to access this page.",
     "btn_go_back_to_home": "Go back to Home",
-    "text_upcoming": "Upcoming"
+    "text_upcoming": "Upcoming",
+    "text_expires_on": "Expires on ",
+    "text_never_expire": "This post will never expire.",
+    "text_day": "{{number}} day",
+    "text_days": "{{number}} days",
+    "text_week": "{{number}} week",
+    "text_weeks": "{{number}} weeks",
+    "text_month": "{{number}} month",
+    "text_months": "{{number}} months",
+    "text_year": "{{number}} year",
+    "text_never": "Never",
+    "text_custom": "Custom"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -278,7 +292,7 @@
     "title_appearance": "Appearance",
     "title_language": "Language",
     "title_speaking_languages": "Speaking Languages",
-    "title_relationship_status": "Relationship Status",
+    "title_relationship_status": "Relationship status",
     "title_currency": "Token",
     "title_about": "About",
     "title_about_bein": "About Bein",
@@ -364,10 +378,11 @@
     "text_add_work": "Add Work",
     "text_edit_work": "Edit Work",
     "text_delete_work": "Delete Work",
-    "text_compamny": "Company",
+    "text_company": "Enter company",
     "text_title_position": "Position",
+    "text_enter_position": "Enter position",
     "text_title_division": "Division",
-    "text_currently_work_here": "Currently work here",
+    "text_currently_work_here": "I am currently working here",
     "text_location_optional": "Location (optional)",
     "text_description_optional": "Description (optional)",
     "text_since": "Since",
@@ -391,7 +406,19 @@
     "title_community_name": "Community Name",
     "title_community_description": "Community Description",
     "text_name_maximum_character": "Maximum 64 characters",
-    "title_edit_organization_name": "Edit Name"
+    "title_edit_organization_name": "Edit Name",
+    "text_input_edit_info_fullname_max_64": "Maximum 64 characters",
+    "text_add_experience": "Add Experience",
+    "text_edit_experience": "Edit Experience",
+    "text_work_at": "Work at",
+    "end_date_must_be_after_start_date": "End date must be after start date",
+    "enter_name": "Enter name",
+    "select_language": "Select language",
+    "select_relationship": "Select relationship",
+    "enter_phone": "Enter phone",
+    "select_location": "Select location",
+    "enter_description": "Enter description",
+    "optional": "optional"
   },
   "languages": {
     "title_en": "English",
@@ -456,7 +483,20 @@
     "title_logout": "Log Out"
   },
   "article": {
+    "title_article_detail": "Article Detail",
     "title_edit_article": "Edit Article",
+    "title_categories": "Categories",
+    "title_edit_title": "Title",
+    "title_edit_description": "Description",
+    "title_edit_cover": "Cover",
+    "title_edit_category": "Category",
+    "title_edit_audience": "Audience",
+    "title_edit_content": "Content",
+    "text_change_cover": "Change cover",
+    "text_add_cover": "Add a cover",
+    "text_select_cover": "Select cover",
+    "text_selecting_categories": "Your article will be added to",
+    "text_search_category_placeholder": "Select your options...",
     "text_edit_article_success": "Article updated successfully"
   },
   "post": {
@@ -564,7 +604,7 @@
     "post_menu_report": "Report to group Admin",
     "error_wait_uploading": "Please wait until upload finish",
     "error_upload_failed": "Please remove file upload failed or retry",
-    "error_upload_photo_failed": "Upload photo failed!",
+    "error_upload_photo_failed": "An error occurred, please try again.",
     "error_reach_upload_photo_limit": "Post limit %LIMIT% photos",
     "error_post_detail_deleted": "Post not found or deleted",
     "placeholder_create_post": "Write your post here...",
@@ -679,7 +719,7 @@
   "input": {
     "search": "Search for someone to chat...",
     "search_group_people": "Search for groups or people...",
-    "search_group": "Search groups",
+    "search_group": "Search groups...",
     "search_post": "Search for posts...",
     "search_country": "Search Country",
     "search_location": "Search for City/Province/Country"
@@ -687,6 +727,7 @@
   "groups": {
     "group_content": {
       "btn_group_tree": "Group Tree",
+      "btn_your_groups": "Your Groups",
       "btn_browse": "Browse Groups",
       "btn_post": "Post",
       "btn_channel": "Channel",
@@ -714,7 +755,7 @@
     },
     "member_menu": {
       "label_set_as_admin": "Set Admin Role",
-      "label_revoke_admin_role": "Remove Admin Role",
+      "label_revoke_admin_role": "Revoke Admin Role",
       "label_remove_member": "Remove Member"
     },
     "private_group_welcome_message": {
@@ -729,9 +770,8 @@
     },
     "modal_confirm_remove_admin": {
       "title": "Revoke admin role",
-      "description": "Do you want to revoke {0} as admin of this group?",
-      "button_confirm": "Revoke",
-      "success_message": "Member Role Saved"
+      "content": "Are you sure to revoke {0} as Admin?",
+      "button_confirm": "Revoke"
     },
     "modal_confirm_remove_member": {
       "title": "Remove member",
@@ -953,19 +993,25 @@
     },
     "group_structure": {
       "title_group_structure_settings": "Group Structure Settings",
+      "option_menu": {
+        "reorder": "Reorder",
+        "move": "Move"
+      },
       "title_reorder_group": "Reorder Group",
       "title_move_group": "Move Group",
       "text_reorder_success": "Reorder group successfully",
       "text_move_success": "Move group successfully",
-      "text_info_reorder": "Drag and drop reorder the group",
+      "text_info_reorder": "Drag and drop to reorder the group",
       "text_no_group": "No group",
       "text_will_be_move": "will be moved according to",
       "text_move_to": "Move to",
-      "text_title_confirm_reorder_group": "You are changing the order of \"%NAME%\"",
+      "text_title_confirm_reorder_group": "You are changing the order",
       "text_desc_confirm_reorder_group": "All members in this group will see these changes. Are you sure to do this?",
-      "text_title_confirm_move_group": "You are moving",
-      "text_desc_confirm_move_group": " of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
-      "text_move_group_search_placeholder": "Search a group"
+      "text_title_confirm_move_group": "You are moving a group",
+      "text_desc_confirm_move_group": " will be added to {0}. Are you sure to do this?",
+      "text_move_group_search_placeholder": "Search Group...",
+      "text_info_move_group": "Select a group for moving. Inner groups of a moving group will be moved also.",
+      "text_included_inner_groups": "and included {0} inner groups"
     },
     "text_search_communities": "Search...",
     "member_tab_types": {
@@ -1011,6 +1057,11 @@
       "title": "Remove member",
       "content": "Are you sure to remove this member from your community?",
       "button_remove": "Remove"
+    },
+    "modal_confirm_remove_admin": {
+      "title": "Revoke admin role",
+      "content": "Are you sure to revoke {0} as Admin?",
+      "button_confirm": "Revoke"
     }
   },
   "upload": {

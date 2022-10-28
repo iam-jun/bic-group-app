@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import groupApi from '~/api/GroupApi';
-import { useDiscoverCommunitiesStore } from './store';
+import useDiscoverCommunitiesStore from './store';
 import { responseDiscoverCommunity } from './store/__mocks__/data';
 
 describe('DiscoverCommunities Screen', () => {

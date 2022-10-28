@@ -18,10 +18,11 @@ import Button from '~/beinComponents/Button';
 import TitleComponent from '../fragments/TitleComponent';
 import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
-import { ILocation } from '~/interfaces/common';
 import menuActions from '../../../../storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
 import { TextInput } from '~/baseComponents/Input';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { ICityResponseItem } from '~/interfaces/IAuth';
 
 const EditContact = () => {
   const theme: ExtendedTheme = useTheme();
@@ -35,13 +36,15 @@ const EditContact = () => {
 
   const myProfile = useKeySelector(menuKeySelector.myProfile);
   const {
-    email, phone, countryCode, country, city, id,
+    email, phone, countryCode, city, id,
   } = myProfile || {};
 
-  const [countryCodeState, setCountryCountryCodeState] = useState<string>(countryCode);
-  const [countryState, setCountryState] = useState<string>(country);
+  const [countryCodeState, setCountryCountryCodeState]
+    = useState<string>(countryCode || '+84');
   const [cityState, setCityState] = useState<string>(city);
-  const phoneNumberEditError = useKeySelector(menuKeySelector.phoneNumberEditError);
+  const phoneNumberEditError = useKeySelector(
+    menuKeySelector.phoneNumberEditError,
+  );
 
   const {
     control,
@@ -54,13 +57,9 @@ const EditContact = () => {
     watch,
   } = useForm();
 
-  useEffect(
-    () => {
-      setValue(
-        'phoneNumber', phone,
-      );
-    }, [],
-  );
+  useEffect(() => {
+    setValue('phoneNumber', phone);
+  }, []);
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -71,14 +70,12 @@ const EditContact = () => {
     }
   };
 
-  useEffect(
-    () => {
-      phoneNumberEditError && showErrors();
-      return () => {
-        dispatch(menuActions.setPhoneNumberEditError(''));
-      };
-    }, [phoneNumberEditError],
-  );
+  useEffect(() => {
+    phoneNumberEditError && showErrors();
+    return () => {
+      dispatch(menuActions.setPhoneNumberEditError(''));
+    };
+  }, [phoneNumberEditError]);
 
   const onSave = async () => {
     const validInputs = await validateInputs();
@@ -93,7 +90,6 @@ const EditContact = () => {
           id,
           phone: phoneNumber,
           countryCode: phoneNumber ? countryCodeState : null,
-          country: countryState,
           city: cityState,
         },
         t('settings:text_contact_info_update_success'),
@@ -107,12 +103,10 @@ const EditContact = () => {
   const validateInputs = async () => trigger('phoneNumber');
 
   const showErrors = () => {
-    setError(
-      'phoneNumber', {
-        type: 'validate',
-        message: phoneNumberEditError,
-      },
-    );
+    setError('phoneNumber', {
+      type: 'validate',
+      message: phoneNumberEditError,
+    });
   };
 
   const clearAllErrors = () => {
@@ -122,13 +116,10 @@ const EditContact = () => {
 
   const onEditLocationOpen = (e: any) => {
     Keyboard.dismiss();
-    locationRef?.current?.open?.(
-      e?.pageX, e?.pageY,
-    );
+    locationRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
-  const onLocationItemPress = (item: ILocation) => {
-    setCountryState(item.country);
+  const onLocationItemPress = (item: ICityResponseItem) => {
     setCityState(item.name);
     locationRef?.current?.close();
     Keyboard.dismiss();
@@ -140,19 +131,14 @@ const EditContact = () => {
 
   const checkIsValid = (
     countryCodeState: string,
-    countryState: string,
     cityState: string,
     phoneNumber: string,
-  ) => (
-    countryCode !== countryCodeState
-      || country !== countryState
-      || city !== cityState
-      || phone !== phoneNumber
-  );
+  ) => countryCode !== countryCodeState
+    || city !== cityState
+    || phone !== phoneNumber;
 
   const isValid = checkIsValid(
     countryCodeState,
-    countryState,
     cityState,
     watch('phoneNumber'),
   );
@@ -168,37 +154,51 @@ const EditContact = () => {
           useI18n: true,
           disabled: !isValid,
           testID: 'edit_contact.save',
+          style: styles.btnRightHeader,
         }}
         onPressButton={onSave}
       />
-      <ScrollView keyboardShouldPersistTaps="always" scrollEnabled={false}>
-        <View style={styles.infoItem}>
-          <EditPhoneNumber
-            countryCode={countryCode}
-            phoneNumber={phone}
-            onChangeCountryCode={onChangeCountryCode}
-            control={control}
-            errorsState={errors}
-            clearAllErrors={clearAllErrors}
-          />
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        scrollEnabled={false}
+        contentContainerStyle={styles.content}
+      >
+        <View>
           <TextInput
             label={t('settings:title_email')}
             testID="edit_contact.email"
             editable={false}
             value={email || t('common:text_not_set')}
           />
-
-          <TitleComponent icon="LocationDot" title="settings:title_address" />
+          <ViewSpacing height={spacing.padding.large} />
+          <EditPhoneNumber
+            countryCode={countryCodeState}
+            phoneNumber={phone}
+            onChangeCountryCode={onChangeCountryCode}
+            control={control}
+            errorsState={errors}
+            clearAllErrors={clearAllErrors}
+          />
+          <ViewSpacing height={spacing.padding.large} />
+          <TitleComponent title="settings:title_location" isOptional />
           <Button
             testID="edit_contact.location"
-            textProps={{ color: theme.colors.neutral80, variant: 'bodyM' }}
+            textProps={{
+              color:
+                cityState
+                  ? theme.colors.neutral80
+                  : theme.colors.neutral20,
+              variant: 'bodyM',
+            }}
             style={styles.buttonDropDown}
             contentStyle={styles.buttonDropDownContent}
             onPress={(e) => onEditLocationOpen(e)}
+            rightIcon="AngleDown"
+            rightIconProps={{ tintColor: theme.colors.neutral40, size: 14 }}
           >
-            {cityState && countryState
-              ? `${cityState}, ${countryState}`
-              : t('common:text_not_set')}
+            {cityState
+              ? `${cityState}`
+              : t('settings:select_location')}
           </Button>
         </View>
         <EditLocation
@@ -216,21 +216,23 @@ const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
-    infoItem: {
-      paddingHorizontal: spacing.margin.large,
+    content: {
+      padding: spacing.margin.large,
     },
     buttonDropDown: {
-      borderRadius: spacing.borderRadius.small,
+      borderRadius: spacing.borderRadius.large,
       borderWidth: 1,
-      borderColor: colors.gray40,
+      borderColor: colors.neutral5,
       minHeight: 44,
       alignItems: 'stretch',
       justifyContent: 'center',
-      paddingLeft: spacing.padding.base,
-      marginVertical: spacing.margin.small,
+      paddingLeft: spacing.padding.large,
     },
     buttonDropDownContent: {
       justifyContent: 'space-between',
+    },
+    btnRightHeader: {
+      marginRight: spacing.margin.small,
     },
   });
 };

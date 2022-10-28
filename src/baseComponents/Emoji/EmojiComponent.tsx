@@ -78,12 +78,14 @@ const EmojiComponent: React.FC<EmojiProps> = (props: EmojiProps) => {
 
     return (
       <Text
+        testID={testID}
+        allowFontScaling
+        adjustsFontSizeToFit
         style={[textStyle, {
           fontSize: size,
           color: '#000',
           fontWeight: 'bold',
         }]}
-        testID={testID}
       >
         {code}
       </Text>

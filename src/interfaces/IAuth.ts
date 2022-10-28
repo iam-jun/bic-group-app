@@ -89,6 +89,7 @@ export interface IUserProfile {
 export interface IGetUserProfile {
   userId: string;
   params?: any;
+  silentLoading?: boolean;
 }
 
 export interface IUserEdit {
@@ -100,7 +101,7 @@ export interface IUserEdit {
   avatar?: string;
   backgroundImgUrl?: string;
   phone?: string;
-  countryCode?: string|null;
+  countryCode?: string | null;
   address?: string;
   language?: string[];
   description?: string;
@@ -133,4 +134,23 @@ export interface IUserAddWorkExperience {
   currentlyWorkHere?: boolean;
   startDate?: string;
   endDate?: string | null;
+}
+
+export interface ILanguageResponseItem {
+  code: string;
+  name: string;
+  local: string;
+}
+
+export interface ICountryResponseItem {
+  name: string;
+  flag: string;
+  isoCode: string;
+  countryCode: string;
+}
+
+export interface ICityResponseItem {
+  name: string;
+  isoCode: string;
+  countryCode: string;
 }

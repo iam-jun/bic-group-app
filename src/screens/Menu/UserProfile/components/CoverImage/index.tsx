@@ -6,15 +6,14 @@ import { spacing } from '~/theme';
 import EditButton from '../EditButton';
 
 interface Props {
-  userId: string;
-  currentUsername: string;
+  isCurrentUser: boolean;
   bgImg: any;
   coverHeight: number;
   onEdit: () => void;
 }
 
 const CoverImage = ({
-  bgImg, userId, currentUsername, coverHeight, onEdit,
+  bgImg, isCurrentUser, coverHeight, onEdit,
 }: Props) => (
   <View testID="user_profile.cover_image">
     <Image
@@ -24,9 +23,9 @@ const CoverImage = ({
     <EditButton
       testID="user_profile.cover_image.edit_button"
       style={styles.editCoverPhoto}
-      userId={userId}
-      currentUsername={currentUsername}
+      isCurrentUser={isCurrentUser}
       onPress={onEdit}
+      icon="CameraSolid"
     />
   </View>
 );
@@ -37,8 +36,8 @@ const styles = StyleSheet.create({
   },
   editCoverPhoto: {
     position: 'absolute',
-    top: spacing.margin.small,
-    right: spacing?.margin.small,
+    top: spacing.margin.large,
+    right: spacing.margin.large,
   },
 });
 

@@ -1,8 +1,5 @@
 import i18next from 'i18next';
-import { debounce } from 'lodash';
-import React, {
-  useCallback, useEffect, useRef, useState,
-} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Controller } from 'react-hook-form';
 import {
   Keyboard,
@@ -12,25 +9,20 @@ import {
   View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
-import Divider from '~/beinComponents/Divider';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-import appConfig from '~/configs/appConfig';
 import * as validation from '~/constants/commonRegex';
-import { useKeySelector } from '~/hooks/selector';
-import { ICountryCodeList } from '~/interfaces/common';
 
 import spacing from '~/theme/spacing';
 import { formatTextRemoveSpace } from '~/utils/formatData';
-import menuActions from '../../../../../storeRedux/menu/actions';
-import menuKeySelector from '../../../../../storeRedux/menu/keySelector';
 import TitleComponent from '../../fragments/TitleComponent';
+import { useBaseHook } from '~/hooks';
+import useUserProfileStore from '~/screens/Menu/UserProfile/store';
+import { ICountryResponseItem } from '~/interfaces/IAuth';
 
 interface EditPhoneNumberProps {
   onChangeCountryCode: (value: string) => void;
@@ -52,16 +44,14 @@ const EditPhoneNumber = ({
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = createStyles(
     theme, screenHeight,
   );
-  const dispatch = useDispatch();
+  const country = useUserProfileStore((state) => state.country);
 
-  const countryCodeList = useKeySelector(menuKeySelector.countryCodeList);
-  const { data, searchResult } = countryCodeList || {};
+  const { t } = useBaseHook();
 
-  const [codeValue, setCodeValue] = useState<string>(countryCode);
-  const [searchQuery, setSearchQuery] = useState<string>('');
   const countryCodeSheetRef = useRef<any>();
 
   useEffect(
@@ -70,39 +60,15 @@ const EditPhoneNumber = ({
     }, [],
   );
 
-  const doSearch = (searchQuery: string) => {
-    searchQuery && dispatch(menuActions.searchCountryCode(searchQuery));
-  };
-
-  const searchHandler = useCallback(
-    debounce(
-      doSearch, appConfig.searchTriggerTime,
-    ),
-    [],
-  );
-
-  const onQueryChanged = (text: string) => {
-    setSearchQuery(text);
-    searchHandler(text);
-  };
-
-  const onCloseModal = () => {
-    setSearchQuery('');
-  };
-
-  const onSelectCountryCode = (item: ICountryCodeList) => {
+  const onSelectCountryCode = (item: ICountryResponseItem) => {
     countryCodeSheetRef.current?.close();
-    setCodeValue(item.code);
-    setSearchQuery('');
-    Keyboard.dismiss();
-    onChangeCountryCode(item.code);
+    onChangeCountryCode(item.countryCode);
   };
 
-  const renderItem = ({ item }: {item: ICountryCodeList}) => (
+  const renderItem = ({ item }: {item: ICountryResponseItem}) => (
     <PrimaryItem
       testID="edit_phone_number.country_code.item"
-      title={`${item.name} (+${item.code})`}
-      leftIcon={item.flag}
+      title={`${item.flag} ${item.name} (${item.countryCode})`}
       titleProps={{ variant: 'bodyM' }}
       onPress={() => onSelectCountryCode(item)}
     />
@@ -111,22 +77,14 @@ const EditPhoneNumber = ({
   const renderCountryCodeList = () => (
     <BottomSheet
       modalizeRef={countryCodeSheetRef}
-      onClose={onCloseModal}
       ContentComponent={(
         <View style={styles.contentComponent}>
-          <SearchInput
-            testID="edit_phone_number.country_code.search"
-            onChangeText={onQueryChanged}
-            placeholder={i18next.t('input:search_country')}
-            style={styles.searchInput}
-          />
-          <Divider style={styles.divider} />
           <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listView}
           >
-            {(searchQuery ? searchResult : data || []).map((item: ICountryCodeList) => renderItem({ item }))}
+            {country.map((item) => renderItem({ item }))}
           </ScrollView>
         </View>
       )}
@@ -147,9 +105,10 @@ const EditPhoneNumber = ({
       style={styles.buttonDropDown}
       contentStyle={styles.buttonDropDownContent}
       rightIcon="AngleDown"
+      rightIconProps={{ tintColor: colors.neutral40, size: 14 }}
       onPress={(e) => onOpenCountryCode(e)}
     >
-      {`+${codeValue || '84'}`}
+      {`${countryCode || '+84'}`}
     </Button>
   );
 
@@ -171,11 +130,14 @@ const EditPhoneNumber = ({
             }}
             error={errorsState?.phoneNumber}
             helperContent={errorsState?.phoneNumber?.message}
+            helperTextProps={{ style: styles.textErrorPhoneNumber }}
             keyboardType="numeric"
             autoCapitalize="none"
             activeOutlineColor={theme.colors.purple50}
-            outlineColor={theme.colors.gray40}
-            style={styles.inputStyle}
+            outlineColor={theme.colors.neutral5}
+            style={styles.inputContainer}
+            inputStyle={styles.inputStyle}
+            placeholder={t('settings:enter_phone')}
           />
         )}
         rules={{
@@ -199,7 +161,7 @@ const EditPhoneNumber = ({
 
   return (
     <>
-      <TitleComponent icon="Phone" title="settings:title_phone_number" />
+      <TitleComponent title="settings:title_phone_number" isOptional />
       <View style={styles.inputsView}>
         {renderCountryCodeInput()}
         {renderPhoneNumberInput()}
@@ -220,25 +182,27 @@ const createStyles = (
     inputsView: {
       flexDirection: 'row',
       alignContent: 'center',
-      marginVertical: spacing.margin.small,
     },
     phoneNumberView: {
       flex: 1,
     },
-    inputStyle: {
+    inputContainer: {
       marginVertical: 0,
+    },
+    inputStyle: {
+      borderRadius: spacing.borderRadius.large,
     },
     listView: {
       paddingHorizontal: spacing.padding.small,
     },
     buttonDropDown: {
-      borderRadius: spacing.borderRadius.small,
+      borderRadius: spacing.borderRadius.large,
       borderWidth: 1,
-      borderColor: colors.gray40,
-      minHeight: 44,
+      borderColor: colors.neutral5,
+      height: 46,
       alignItems: 'stretch',
       justifyContent: 'center',
-      paddingLeft: spacing.padding.base,
+      paddingLeft: spacing.padding.large,
       marginRight: spacing.margin.small,
       minWidth: 80,
     },
@@ -246,13 +210,16 @@ const createStyles = (
       justifyContent: 'space-between',
     },
     contentComponent: {
-      minHeight: 0.8 * screenHeight,
+      maxHeight: 0.5 * screenHeight,
     },
     searchInput: {
       marginHorizontal: spacing.margin.base,
     },
     divider: {
       marginTop: spacing.margin.small,
+    },
+    textErrorPhoneNumber: {
+      marginTop: spacing.margin.tiny,
     },
   });
 };

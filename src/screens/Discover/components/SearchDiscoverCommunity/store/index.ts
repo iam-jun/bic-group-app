@@ -4,7 +4,6 @@ import { IDiscoverCommunitiesSearchState } from './Interface';
 
 const initDiscoverCommunitiesSearchState: IDiscoverCommunitiesSearchState = {
   ids: [],
-  items: {},
   loading: false,
   hasNextPage: true,
 };
@@ -16,21 +15,11 @@ const discoverCommunitiesSearchState = (
   ...initDiscoverCommunitiesSearchState,
   actions: {
     getDiscoverCommunitiesSearch: getDiscoverCommunitiesSearch(set, get),
-    setDiscoverCommunitiesSearchItem: (communityId, data) => {
-      const discoverCommunitySearchItem = get().items[communityId] || {};
-      set({
-        items: {
-          ...get().items,
-          [communityId]: {
-            ...discoverCommunitySearchItem,
-            ...data,
-          },
-        },
-      });
-    },
   },
   reset: () => resetStore(initDiscoverCommunitiesSearchState, set),
 });
 
-export const useDiscoverCommunitiesSearchStore
+const useDiscoverCommunitiesSearchStore
   = createStore<IDiscoverCommunitiesSearchState>(discoverCommunitiesSearchState);
+
+export default useDiscoverCommunitiesSearchStore;

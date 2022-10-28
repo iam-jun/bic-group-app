@@ -12,8 +12,7 @@ afterEach(cleanup);
 
 describe('CoverImage screen', () => {
   const baseProps = {
-    userId: '1',
-    currentUsername: 'username',
+    isCurrentUser: true,
     bgImg: null,
     coverHeight: 120,
     onEdit: jest.fn(),

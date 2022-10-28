@@ -18,12 +18,14 @@ export interface ContentInterestedUserCountProps {
   id: string;
   style?: StyleProp<ViewStyle>;
   interestedUserCount?: number;
+  isLite?: boolean;
 }
 
 const ContentInterestedUserCount = ({
   id,
   style,
   interestedUserCount = 0,
+  isLite,
 }: ContentInterestedUserCountProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -59,7 +61,7 @@ const ContentInterestedUserCount = ({
           <Text.BodySMedium color={colors.neutral40}>{peopleCount}</Text.BodySMedium>
         </Text.BodyS>
       </Button>
-      <Divider style={styles.divider} />
+      {!isLite && <Divider style={styles.divider} />}
     </View>
   );
 };

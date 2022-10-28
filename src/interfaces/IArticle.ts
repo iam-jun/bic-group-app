@@ -1,4 +1,4 @@
-import { ILinkPreview } from '~/interfaces/IPost';
+import { IArticleCover, ILinkPreview } from '~/interfaces/IPost';
 import { SortOder } from './common';
 import { IOrder } from './IHome';
 
@@ -30,9 +30,20 @@ export interface IParamGetArticleDetail {
   withComment?: boolean;
 }
 
-export interface IParamPutEditArticle {
+export interface IPayloadPutEditArticle {
   articleId: string;
   data: IEditArticleData;
+}
+
+export interface IParamPutEditArticle extends Omit<IEditArticleData, 'categories'> {
+  categories: string[];
+}
+
+export interface IParamGetCategories {
+  order?: 'ASC' | 'DESC',
+  limit?: number;
+  offset?: number;
+  name?: string;
 }
 
 export interface IEditArticleAudience {
@@ -44,11 +55,11 @@ export interface IEditArticleData {
   title?: string;
   content?: string;
   summary?: string;
-  categories?: string[];
+  categories?: ICategory[];
   series?: string[];
   hashtags?: string[];
   audience?: IEditArticleAudience;
-  media?: any;
+  coverMedia?: IArticleCover;
   setting?: {
     canShare: boolean,
     canReact: boolean,
@@ -58,4 +69,21 @@ export interface IEditArticleData {
   };
   mentions?: any;
   linkPreview?: ILinkPreview;
+}
+
+export interface ICategory {
+  id: string,
+  name: string,
+  parentId?: string,
+  level?: number,
+  slug?: string,
+  createdBy?: string,
+  createdAt?: string,
+  updatedAt?: string,
+}
+
+export interface EditArticleProps {
+  route?: {
+    params?: {articleId: string};
+  };
 }

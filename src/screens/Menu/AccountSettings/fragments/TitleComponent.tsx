@@ -1,30 +1,29 @@
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import Icon from '~/baseComponents/Icon';
+import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
 interface TitleComponentProps {
-  icon: any;
   title: string;
+  isOptional?: boolean;
 }
 
-const TitleComponent = ({ icon, title }: TitleComponentProps) => {
+const TitleComponent = ({ title, isOptional }: TitleComponentProps) => {
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
 
   return (
     <View style={styles.container}>
-      {!!icon && (
-        <Icon
-          size={24}
-          icon={icon}
-          tintColor={theme.colors.purple50}
-          style={styles.iconStyle}
-        />
+      {!!title && (
+      <Text.BodyM>
+        <Text.BodyM>{t(title)}</Text.BodyM>
+        {isOptional && <Text.BodyM color={colors.neutral20}>{` (${t('settings:optional')})`}</Text.BodyM>}
+      </Text.BodyM>
       )}
-      {!!title && <Text.H5 useI18n>{title}</Text.H5>}
     </View>
   );
 };
@@ -34,7 +33,7 @@ export default TitleComponent;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingTop: spacing.padding.small,
+    paddingBottom: spacing.padding.small,
   },
   iconStyle: {
     marginRight: spacing.margin.small,

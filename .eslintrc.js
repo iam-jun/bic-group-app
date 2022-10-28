@@ -52,6 +52,7 @@ module.exports = {
     'no-nested-ternary': 0,
     'no-unused-vars': 'off',
     'no-alert': 'off',
+    'default-case': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'max-len': ['error', { code: 120, ignoreStrings: true }],
     'function-paren-newline': ['error', 'consistent'],

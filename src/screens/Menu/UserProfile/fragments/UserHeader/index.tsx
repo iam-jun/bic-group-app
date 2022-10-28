@@ -43,7 +43,7 @@ const UserHeader = ({
 const styles = StyleSheet.create({
   headerName: {
     alignItems: 'center',
-    paddingVertical: spacing.margin.base,
+    paddingBottom: spacing.margin.base,
     paddingHorizontal: spacing.margin.large,
   },
   subtitle: {

@@ -84,8 +84,9 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = (props: GroupStr
               disableHorizontal
               showInfo={false}
               onPressMenu={onPressMenu}
-              iconVariant="tiny"
-              nameLines={1}
+              iconVariant="base"
+              nameLines={2}
+              showPrivacyAvatar
             />
           )
         )}

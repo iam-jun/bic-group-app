@@ -1,7 +1,7 @@
 import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IconType } from '~/resources/icons';
 import Text, { TextVariant } from '~/beinComponents/Text';
@@ -12,12 +12,12 @@ import { borderRadius } from '~/theme/spacing';
 export interface RadioProps {
   testID?: string;
   style?: StyleProp<ViewStyle>
-  isChecked?: boolean;
+  isChecked: boolean;
   disabled?: 'disabled' | 'disabled-auto-selected';
   size?: 'small' | 'medium';
   label?: string;
   useI18n?: boolean;
-  onPress?: (isChecked?: boolean) => void;
+  onPress?: () => void;
 }
 
 const Radio = ({
@@ -34,17 +34,10 @@ const Radio = ({
   const styles = createStyles(theme);
   const { colors } = theme;
 
-  const [checked, setChecked] = useState(isChecked);
-  const currentState = disabled || (checked ? 'selected' : 'unselect');
-
-  useEffect(() => {
-    setChecked(isChecked);
-  }, [isChecked]);
+  const currentState = disabled || (isChecked ? 'selected' : 'unselect');
 
   const onChangeValue = () => {
-    const newValue = !checked;
-    onPress?.(newValue);
-    setChecked(newValue);
+    onPress?.();
   };
 
   const radioStyles = {
