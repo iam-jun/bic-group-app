@@ -18,7 +18,7 @@ export const getLanguages = (language: string[]) => {
 
   const userLanguageList = language?.map((
     code: string,
-  ) => mapLanguages[code]?.name);
+  ) => mapLanguages[code]?.local);
 
   return userLanguageList?.join(', ');
 };

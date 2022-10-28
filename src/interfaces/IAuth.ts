@@ -138,7 +138,6 @@ export interface IUserAddWorkExperience {
 
 export interface ILanguageResponseItem {
   code: string;
-  name: string;
   local: string;
 }
 
