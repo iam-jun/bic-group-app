@@ -113,15 +113,14 @@ const SignIn = () => {
 
   const checkAuthSessions = async () => {
     const email = getValues('email');
-    if (!!email) return;
-
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
-      setValue('email', user?.email);
+      if (user?.email && user?.email !== email) {
+        setValue('email', user?.email);
+      }
       setAuthSessions(user);
     } else {
-      setValue('email', '');
       setAuthSessions(null);
     }
   };

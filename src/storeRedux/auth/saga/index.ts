@@ -13,7 +13,7 @@ import {
   isAppInstalled,
   saveUserToSharedPreferences,
 } from '~/services/sharePreferences';
-import * as actionsCommon from '~/storeRedux/modal/actions';
+import modalActions, * as actionsCommon from '~/storeRedux/modal/actions';
 import { ActionTypes } from '~/utils';
 import actions from '../actions';
 import types from '../types';
@@ -128,9 +128,7 @@ function* signUp({ payload }: {type: string; payload: IAuth.ISignUp}) {
 
 function* signOut({ payload }: any) {
   try {
-    if (payload) {
-      navigation.replace(rootSwitch.authStack);
-    }
+    yield put(modalActions.showLoading());
     yield Auth.signOut();
     // Check if chat auth session is still active
     const sessionData: IObject<any> = yield getUserFromSharedPreferences();
@@ -155,6 +153,9 @@ function* signOut({ payload }: any) {
     FileUploader.getInstance()?.resetData?.();
     ImageUploader.getInstance()?.resetData?.();
     resetAllStores();
+    yield put(modalActions.hideLoading());
+
+    navigation.replace(rootSwitch.authStack);
   } catch (err) {
     yield showError(err);
     if (!payload) {

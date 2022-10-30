@@ -53,6 +53,8 @@ const InputEmail = ({
     checkDisableSignIn();
   };
 
+  const editable = !authSessions?.email && !loading;
+
   return (
     <>
       <Text.LabelM color={colors.neutral40} useI18n>
@@ -70,9 +72,9 @@ const InputEmail = ({
         keyboardType="email-address"
         autoCapitalize="none"
         style={styles.inputEmailContainer}
-        inputStyle={styles.input}
+        inputStyle={editable && styles.input}
         helperContent={signingInError}
-        editable={!authSessions?.email && !loading}
+        editable={editable}
         onSubmitEditing={onSubmitEmail}
         placeholderTextColor={colors.neutral20}
         textColor={colors.neutral60}
