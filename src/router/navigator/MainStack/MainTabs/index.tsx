@@ -1,4 +1,3 @@
-import { GiphySDK } from '@giphy/react-native-sdk';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useEffect } from 'react';
 import { DeviceEventEmitter } from 'react-native';
@@ -6,11 +5,9 @@ import { useDispatch } from 'react-redux';
 import { useUserIdAuth } from '~/hooks/auth';
 import useChatSocket from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
-import { useKeySelector } from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/storeRedux/groups/actions';
 import notificationsActions from '~/storeRedux/notification/actions';
-import giphyActions from '~/storeRedux/giphy/actions';
 import { screens } from './screens';
 import { initPushTokenMessage } from '~/services/firebase';
 import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
@@ -28,7 +25,6 @@ const MainTabs = () => {
   const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
 
   const userId = useUserIdAuth();
-  const giphyAPIKey = useKeySelector('giphy.APIKey');
 
   useEffect(
     () => {
@@ -40,7 +36,6 @@ const MainTabs = () => {
       }
       actions.buildEmojis();
       dispatch(groupsActions.getMyPermissions());
-      dispatch(giphyActions.getAPIKey());
       dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
       dispatch(notificationsActions.registerPushToken());
       initPushTokenMessage()
@@ -56,15 +51,6 @@ const MainTabs = () => {
         tokenRefreshSubscription && tokenRefreshSubscription();
       };
     }, [userId],
-  );
-
-  useEffect(
-    () => {
-    // Configure GiphySDK API keys
-      GiphySDK.configure({
-        apiKey: giphyAPIKey,
-      });
-    }, [giphyAPIKey],
   );
 
   return (

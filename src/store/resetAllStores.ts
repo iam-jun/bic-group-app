@@ -26,6 +26,7 @@ import useManagedStore from '~/screens/communities/Communities/components/Manage
 import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
+import useGiphyStore from './giphy';
 
 const stores = [
   // entities
@@ -62,6 +63,7 @@ const stores = [
   useYourGroupsStore,
   useTimelineStore,
   useSearchJoinedCommunitiesStore,
+  useGiphyStore,
 ];
 
 export const resetAllStores = () => {

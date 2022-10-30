@@ -23,6 +23,7 @@ import { IManagedState } from '~/screens/communities/Communities/components/Mana
 import { IYourCommunitiesState } from '~/screens/communities/Communities/components/YourCommunities/store/Interface';
 import { IYourGroupsState } from '~/screens/communities/Communities/components/YourGroups/store/Interface';
 import { ISearchJoinedCommunitiesState } from '~/screens/communities/Communities/components/SearchCommunity/store/Interface';
+import { IGiphyState } from './giphy';
 
 export interface BicStore {
   entities: {
@@ -80,4 +81,5 @@ export interface BicStore {
   chat: IChatState;
   communities: ICommunitiesState;
   removeCommunityMemberStore: IRemoveCommunityMemberState;
+  giphy: IGiphyState;
 }

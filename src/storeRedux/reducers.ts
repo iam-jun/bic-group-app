@@ -14,7 +14,6 @@ import { ActionTypes } from '~/utils';
 import auth from './auth/reducer';
 import noInternetReducer from './network/reducer';
 import app from './app/reducer';
-import giphyReducer from './giphy/reducer';
 import modal from './modal/reducer';
 import { initPushTokenMessage } from '~/services/firebase';
 
@@ -52,7 +51,6 @@ export const appReducer = combineReducers({
   ),
   menu: menuReducer,
   noInternet: noInternetReducer,
-  giphy: giphyReducer,
 });
 
 const rootReducers = (

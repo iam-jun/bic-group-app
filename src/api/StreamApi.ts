@@ -23,13 +23,13 @@ import {
   IParamGetSearchPost,
   IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
 } from '~/interfaces/IHome';
-import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import {
   IParamGetArticleDetail,
   IParamGetArticles,
   IParamGetCategories, IParamPutEditArticle,
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
+import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
 
 const DEFAULT_LIMIT = 10;
 
@@ -41,11 +41,6 @@ const defaultConfig = {
 };
 
 export const streamApiConfig = {
-  getGiphyAPIKey: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}authorization/giphy-key`,
-    params,
-  }),
   getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}feeds/newsfeed`,
@@ -297,10 +292,23 @@ export const streamApiConfig = {
       childCommentLimit: params?.childCommentLimit || 10,
     },
   }),
+  getGiphyTrending: (
+    params: IGetGiphyTrendingParams,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}giphy/trending`,
+    params,
+  }),
+  getSearchGiphy: (
+    params: IGetSearchGiphyParams,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}giphy/search`,
+    params,
+  }),
 };
 
 const streamApi = {
-  getGiphyAPIKey: (params?: any) => withHttpRequestPromise(streamApiConfig.getGiphyAPIKey, params),
   getNewsfeed: async (param: IParamGetFeed) => {
     try {
       const response: any = await makeHttpRequest(streamApiConfig.getNewsfeed(param));
@@ -460,6 +468,12 @@ const streamApi = {
   ),
   getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
     streamApiConfig.getUsersInterestedPost, params,
+  ),
+  getGiphyTrending: (params?: IGetGiphyTrendingParams) => withHttpRequestPromise(
+    streamApiConfig.getGiphyTrending, params,
+  ),
+  getSearchGiphy: (params: IGetSearchGiphyParams) => withHttpRequestPromise(
+    streamApiConfig.getSearchGiphy, params,
   ),
 };
 
