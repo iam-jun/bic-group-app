@@ -7,7 +7,6 @@ import { homeInitState } from '~/storeRedux/home/reducer';
 import { notiInitState } from '~/storeRedux/notification/reducer';
 import { menuInitState } from '~/storeRedux/menu/reducer';
 import { noInternetInitState } from '~/storeRedux/network/reducer';
-import { giphyInitState } from './giphy/reducer';
 
 const initialState = {
   app: appInitState,
@@ -19,7 +18,6 @@ const initialState = {
   notifications: notiInitState,
   menu: menuInitState,
   noInternet: noInternetInitState,
-  giphy: giphyInitState,
 };
 
 export default initialState;

@@ -2,6 +2,8 @@ import uuid from 'react-native-uuid';
 import { TextHighlight } from './types';
 
 export const getTextHighlight = (text: string) => {
+  if (!text) return [];
+
   const regexSplit = /(==[\s\S]+?==)/gim;
   const regexReplace = /(^==+|==+$)/gim;
 
