@@ -152,8 +152,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})$`,
   ).exec(url);
   if (match) {
-    const postId = match[1];
-    return { type: DEEP_LINK_TYPES.POST_DETAIL, id: postId };
+    return { type: DEEP_LINK_TYPES.POST_DETAIL, postId: match[1] };
   }
 
   // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb?commentId=690541f1-d7ae-4f73-8186-8194c5e2eb5f
@@ -161,10 +160,9 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
   ).exec(url);
   if (match) {
-    const postId = match[1];
     const urlParams = match[2];
     const newParams = getURLParams(urlParams);
-    return { type: DEEP_LINK_TYPES.COMMENT_DETAIL, id: postId, params: newParams };
+    return { type: DEEP_LINK_TYPES.COMMENT_DETAIL, postId: match[1], params: newParams };
   }
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
@@ -172,8 +170,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})$`,
   ).exec(url);
   if (match) {
-    const communityId = match[1];
-    return { type: DEEP_LINK_TYPES.COMMUNTY_DETAIL, id: communityId };
+    return { type: DEEP_LINK_TYPES.COMMUNTY_DETAIL, communityId: match[1] };
   }
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8
@@ -181,8 +178,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
   ).exec(url);
   if (match) {
-    const groupId = match[2];
-    return { type: DEEP_LINK_TYPES.GROUP_DETAIL, id: groupId };
+    return { type: DEEP_LINK_TYPES.GROUP_DETAIL, communityId: match[1], groupId: match[2] };
   }
 
   return null;

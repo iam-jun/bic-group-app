@@ -117,8 +117,12 @@ const CommunityDetail = (props: any) => {
   }, [groupId, isMember, privacy, isLoadingCommunity, community]);
 
   useEffect(() => {
-    // timelineActions.resetTimeline(groupId);
+    // only update currentCommunityId when navigating to the community profile
+    useCommunitiesStore.setState({
+      currentCommunityId: communityId,
+    });
 
+    // timelineActions.resetTimeline(groupId);
     if (isMounted) {
       getCommunityDetail();
     }

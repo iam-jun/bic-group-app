@@ -55,7 +55,7 @@ import useTimelineStore, { ITimelineState } from '~/store/timeline';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
-  const { groupId, onGoBack } = params || {};
+  const { groupId, onGoBack, communityId: paramCommunityId } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -72,8 +72,11 @@ const GroupDetail = (props: any) => {
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy, id: idCurrentGroupDetail } = groupInfo;
-  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
+  const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
+  const communityId = paramCommunityId || currentCommunityId;
+  const communityDetail = useCommunitiesStore(
+    useCallback((state: ICommunitiesState) => state.data[communityId], [communityId, groupId]),
+  );
   const { name: communityName, joinStatus: joinStatusCommunity }
     = communityDetail || {};
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
@@ -146,10 +149,11 @@ const GroupDetail = (props: any) => {
   }, [groupId, isMember, privacy, loadingGroupDetail, groupInfo]);
 
   useEffect(() => {
-    getGroupDetail();
-    if (communityId && communityId !== communityDetail?.id) {
+    // Avoid empty object
+    if (!communityDetail?.id) {
       actions.getCommunity(communityId);
     }
+    getGroupDetail();
   }, [groupId]);
 
   useEffect(() => {
@@ -290,6 +294,7 @@ const GroupDetail = (props: any) => {
 
     return (
       <GroupContent
+        community={communityDetail}
         onScroll={onScrollHandler}
         onGetInfoLayout={onGetInfoLayout}
       />

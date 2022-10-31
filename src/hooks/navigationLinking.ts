@@ -16,22 +16,25 @@ const getLinkingCustomConfig = (
       if (match) {
         switch (match.type) {
           case DEEP_LINK_TYPES.POST_DETAIL:
-            navigation?.navigate?.(mainStack.postDetail, { post_id: match.id });
+            navigation?.navigate?.(mainStack.postDetail, { post_id: match.postId });
             break;
 
           case DEEP_LINK_TYPES.COMMENT_DETAIL:
             navigation?.navigate?.(mainStack.commentDetail, {
               ...match.params,
-              postId: match.id,
+              postId: match.postId,
             });
             break;
 
           case DEEP_LINK_TYPES.COMMUNTY_DETAIL:
-            navigation?.navigate?.(mainStack.communityDetail, { communityId: match.id });
+            navigation?.navigate?.(mainStack.communityDetail, { communityId: match.communityId });
             break;
 
           case DEEP_LINK_TYPES.GROUP_DETAIL:
-            navigation?.navigate?.(mainStack.groupDetail, { groupId: match.id });
+            navigation?.navigate?.(mainStack.groupDetail, {
+              communityId: match.communityId,
+              groupId: match.groupId,
+            });
             break;
 
           default:
