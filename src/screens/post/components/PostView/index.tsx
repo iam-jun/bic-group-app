@@ -19,7 +19,7 @@ import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
   IAudienceGroup,
   IPayloadReactToPost,
-  IPostActivity,
+  IPost,
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -54,7 +54,7 @@ export interface PostViewProps {
   isPostDetail?: boolean;
   pressNavigateToDetail?: boolean;
   isLite?: boolean;
-  postData?: IPostActivity;
+  postData?: IPost;
   btnReactTestID?: string;
   btnCommentTestID?: string;
   hasReactPermission?: boolean;

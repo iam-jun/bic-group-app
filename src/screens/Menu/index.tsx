@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import { useUserIdAuth } from '~/hooks/auth';
 
-import menuActions from '~/storeRedux/menu/actions';
 import spacing from '~/theme/spacing';
 import MenuHeader from '~/screens/Menu/components/MenuHeader';
 import MenuDiscoverCommunity from '~/screens/Menu/components/MenuDiscoverCommunity';
@@ -18,23 +16,24 @@ import MenuShortcut from '~/screens/Menu/components/MenuShortcut';
 import MenuSettings from '~/screens/Menu/components/MenuSettings';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import useJoinedCommunitiesStore from './store';
+import useMenuController from './store';
+import useCommonController from '../store';
 
 const Menu = (): React.ReactElement => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const { colors } = theme;
 
   const currentUserId = useUserIdAuth();
+  const actions = useCommonController((state) => state.actions);
 
-  const getJoinedCommunities = useJoinedCommunitiesStore((state) => state.getJoinedCommunities);
-  const loading = useJoinedCommunitiesStore((state) => state.loading);
+  const getJoinedCommunities = useMenuController((state) => state.actions.getJoinedCommunities);
+  const loading = useMenuController((state) => state.loading);
 
   useEffect(
     () => {
-      if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
+      if (currentUserId) actions.getMyProfile({ userId: currentUserId });
     }, [],
   );
 

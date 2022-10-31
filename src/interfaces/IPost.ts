@@ -3,6 +3,44 @@ import { ReactionType } from '~/constants/reactions';
 import { ICategory } from '~/interfaces/IArticle';
 import { IGiphy } from './IGiphy';
 
+export enum POST_TYPE {
+  POST = 'POST',
+  ARTICLE = 'ARTICLE',
+  SERIES = 'SERIES',
+}
+
+export interface IPost {
+  id?: string;
+  audience?: IPostAudience;
+  content?: string;
+  highlight?: string;
+  media?: IPostMedia;
+  setting?: IPostSetting;
+  isDraft?: boolean;
+  isProcessing?: boolean;
+  actor?: IAudienceUser;
+  mentions?: any;
+  commentsCount?: number;
+  comments?: IPostComments;
+  reactionsCount?: IReactionCounts;
+  ownerReactions?: IOwnReaction;
+  markedReadPost?: boolean;
+  createdAt?: string;
+  createdBy?: string;
+  totalUsersSeen?: number;
+  deleted?: boolean;
+  markedReadSuccess?: boolean;
+  linkPreview?: ILinkPreview;
+  type?: keyof typeof POST_TYPE;
+  title?: string;
+  summary?: string;
+  titleHighlight?: string;
+  summaryHighlight?: string;
+  hashtags?: string[];
+  coverMedia?: IArticleCover
+  categories?: ICategory[]
+}
+
 export interface IPostAudience {
   users?: IAudienceUser[];
   groups?: IAudienceGroup[];
@@ -158,38 +196,6 @@ export interface IArticleCover {
   createdAt?: string;
 }
 
-export interface IPostActivity {
-  id?: string;
-  audience?: IPostAudience;
-  content?: string;
-  highlight?: string;
-  media?: IPostMedia;
-  setting?: IPostSetting;
-  isDraft?: boolean;
-  isProcessing?: boolean;
-  actor?: IAudienceUser;
-  mentions?: any;
-  commentsCount?: number;
-  comments?: IPostComments;
-  reactionsCount?: IReactionCounts;
-  ownerReactions?: IOwnReaction;
-  markedReadPost?: boolean;
-  createdAt?: string;
-  createdBy?: string;
-  totalUsersSeen?: number;
-  deleted?: boolean;
-  markedReadSuccess?: boolean;
-  linkPreview?: ILinkPreview;
-  isArticle?: boolean;
-  title?: string;
-  summary?: string;
-  titleHighlight?: string;
-  summaryHighlight?: string;
-  hashtags?: string[];
-  coverMedia?: IArticleCover
-  categories?: ICategory[]
-}
-
 export type IOwnReaction = Array<IReaction>;
 
 export type IReactionCounts = {
@@ -197,7 +203,7 @@ export type IReactionCounts = {
 };
 
 export interface IAllPosts {
-  [id: string]: IPostActivity;
+  [id: string]: IPost;
 }
 
 export interface IAllComments {
@@ -363,7 +369,7 @@ export interface IPostAudienceSheet {
 }
 
 export interface IPayloadAddToAllPost {
-  data: IPostActivity[] | IPostActivity;
+  data: IPost[] | IPost;
   handleComment?: boolean;
 }
 

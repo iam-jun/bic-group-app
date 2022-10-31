@@ -425,6 +425,11 @@
     "notice_post_video_uploading": {
       "title": "Bài viết có video đang xử lý (count)",
       "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
+    },
+    "create_content_options": {
+      "write_post": "Đăng Bài",
+      "write_series": "Đăng Series",
+      "my_draft": "Bài Nháp"
     }
   },
   "menu": {
@@ -444,7 +449,7 @@
   "article": {
     "title_article_detail": "Chi tiết bài viết",
     "title_edit_article": "Sửa Bài Viết",
-    "title_categories": "Danh mục",
+    "title_categories": "Chủ đề",
     "title_edit_title": "Tiêu đề",
     "title_edit_description": "Mô tả",
     "title_edit_cover": "Ảnh bìa",

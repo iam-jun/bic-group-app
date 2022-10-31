@@ -14,7 +14,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import {
   IPayloadGetDraftPosts,
   IPayloadPublishDraftPost,
-  IPostActivity,
+  IPost,
 } from '~/interfaces/IPost';
 import PostViewHeader from '~/screens/post/components/PostViewComponents/PostViewHeader';
 import PostViewContent from '~/screens/post/components/PostViewComponents/PostViewContent';
@@ -30,7 +30,7 @@ import Divider from '~/beinComponents/Divider';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
-  data: IPostActivity;
+  data: IPost;
   isPostDetail?: boolean;
 }
 
@@ -50,7 +50,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 
   const userId = useUserIdAuth();
 
-  const { doGetDraftPosts } = useDraftPostStore();
+  const { actions } = useDraftPostStore();
 
   const {
     id,
@@ -86,7 +86,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const refreshDraftPosts = () => {
     if (userId) {
       const payload: IPayloadGetDraftPosts = { isRefresh: true };
-      doGetDraftPosts(payload);
+      actions.getDraftPosts(payload);
     }
   };
 

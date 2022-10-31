@@ -3,10 +3,6 @@ import groupApi from '~/api/GroupApi';
 const getCommunity = (set, _) => async (id: string) => {
   try {
     set((state) => {
-      state.currentCommunityId = id;
-    });
-
-    set((state) => {
       // Add community id to requestings
       state.requestings[id] = true;
       delete state.errors[id];

@@ -7,7 +7,7 @@ import { rootNavigationRef } from '~/router/refs';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
-import useJoinedCommunitiesStore from '~/screens/Menu/store';
+import useMenuController from '~/screens/Menu/store';
 import Store from '~/storeRedux';
 
 const rootNavigation = withNavigation(rootNavigationRef);
@@ -34,7 +34,7 @@ const leaveCommunity = (_set, get) => async (
 
     // refresh joined communities
     Store.store.dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
-    useJoinedCommunitiesStore.getState().getJoinedCommunities();
+    useMenuController.getState().actions.getJoinedCommunities();
 
     const toastMessage: IToastMessage = {
       content: 'communities:modal_confirm_leave_community:success_message',

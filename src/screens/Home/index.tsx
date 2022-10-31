@@ -21,7 +21,6 @@ import NewsfeedSearch from '~/screens/Home/HomeSearch';
 import { HOME_TAB_TYPE } from '~/screens/Home/store/Interface';
 import homeActions from '~/storeRedux/home/actions';
 import homeKeySelector from '~/storeRedux/home/keySelector';
-import menuActions from '~/storeRedux/menu/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
@@ -29,6 +28,7 @@ import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
 import HomeHeader from '~/screens/Home/components/HomeHeader';
 import useHomeStore from '~/screens/Home/store';
+import useCommonController from '../store';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -41,6 +41,8 @@ const Home = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const dispatch = useDispatch();
+
+  const commonActions = useCommonController((state) => state.actions);
 
   const token = useAuthToken();
 
@@ -122,7 +124,7 @@ const Home = () => {
 
   useEffect(
     () => {
-      if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
+      if (currentUserId) commonActions.getMyProfile({ userId: currentUserId });
     }, [],
   );
 

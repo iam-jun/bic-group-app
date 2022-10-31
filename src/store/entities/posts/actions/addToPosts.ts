@@ -1,5 +1,5 @@
 import { isArray } from 'lodash';
-import { ICommentData, IPayloadAddToAllPost, IPostActivity } from '~/interfaces/IPost';
+import { ICommentData, IPayloadAddToAllPost, IPost } from '~/interfaces/IPost';
 import { sortComments } from '~/screens/post/helper/postUtils';
 import useCommentsStore from '~/store/entities/comments';
 import IPostsState from '../Interface';
@@ -11,14 +11,14 @@ const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
   const newCommentsByParentId: any = {};
   let newComments: ICommentData[] = [];
 
-  let postsToAdd: IPostActivity[] = [];
+  let postsToAdd: IPost[] = [];
   if (isArray(data) && data.length > 0) {
     postsToAdd = postsToAdd.concat(data);
   } else {
-    postsToAdd = new Array(data) as IPostActivity[];
+    postsToAdd = new Array(data) as IPost[];
   }
 
-  postsToAdd.forEach((item: IPostActivity) => {
+  postsToAdd.forEach((item: IPost) => {
     if (item?.id) {
       if (handleComment) {
         const postComments = sortComments(item?.comments?.list || []);

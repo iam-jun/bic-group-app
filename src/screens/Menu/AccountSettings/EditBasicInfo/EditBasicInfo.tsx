@@ -6,7 +6,6 @@ import { isEqual } from 'lodash';
 
 import { useBaseHook } from '~/hooks';
 import genders from '~/constants/genders';
-import menuActions from '~/storeRedux/menu/actions';
 import {
   GENDER_TYPE,
   IGenderItem,
@@ -15,8 +14,6 @@ import {
 } from '~/interfaces/IEditUser';
 import OptionMenu from './fragments/OptionMenu';
 import * as modalActions from '~/storeRedux/modal/actions';
-import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -31,6 +28,8 @@ import LanguageOptionMenu from './fragments/LanguageOptionMenu';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Gender from './fragments/Gender';
+import useCommonController from '~/screens/store';
+import useMenuController from '../../store';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
@@ -41,7 +40,7 @@ const EditBasicInfo = () => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
-  const myProfileData = useKeySelector(menuKeySelector.myProfile);
+  const myProfileData = useCommonController((state) => state.myProfile);
   const {
     id, fullname, gender, birthday, relationshipStatus, language,
   }
@@ -58,6 +57,7 @@ const EditBasicInfo = () => {
     = useState<RELATIONSHIP_TYPE>(relationshipStatus);
 
   const [error, setError] = useState<boolean>(false);
+  const actions = useMenuController((state) => state.actions);
 
   const relationshipStatusList = dataMapping(RELATIONSHIP_STATUS);
   const gendersList = dataMapping(genders);
@@ -85,20 +85,18 @@ const EditBasicInfo = () => {
 
   const onSave = () => {
     Keyboard.dismiss();
-    dispatch(
-      menuActions.editMyProfile(
-        {
-          id,
-          fullname: nameState,
-          gender: genderState,
-          birthday: birthdayState,
-          language: languageState,
-          relationshipStatus: relationshipState,
-        },
-        null,
-        () => rootNavigation.goBack(),
-      ),
-    );
+    actions.editMyProfile({
+      data: {
+        id,
+        fullname: nameState,
+        gender: genderState,
+        birthday: birthdayState,
+        language: languageState,
+        relationshipStatus: relationshipState,
+      },
+      editFieldToastMessage: null,
+      callback: () => rootNavigation.goBack(),
+    });
   };
 
   const onGenderItemPress = (item: IGenderItem) => {

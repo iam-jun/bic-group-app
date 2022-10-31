@@ -26,6 +26,7 @@ import Description from './components/Description';
 import BasicInfo from './components/BasicInfo';
 import Contact from './components/Contact';
 import WorkExperience from './components/WorkExperience';
+import useCommonController from '~/screens/store';
 
 const UserEditProfile = () => {
   const styles = createStyles();
@@ -35,7 +36,7 @@ const UserEditProfile = () => {
 
   const homeActions = useHomeStore((state) => state.actions);
 
-  const myProfile: any = useKeySelector(menuKeySelector.myProfile);
+  const myProfile = useCommonController((state) => state.myProfile);
   const {
     id,
     fullname,

@@ -24,7 +24,7 @@ const editOptions = [
   { title: 'article:title_edit_description', screen: articleStack.editArticleSummary },
   { title: 'article:title_edit_cover', screen: articleStack.editArticleCover },
   { title: 'article:title_edit_category', screen: articleStack.editArticleCategory },
-  { title: 'article:title_edit_audience' },
+  { title: 'article:title_edit_audience', screen: articleStack.editArticleAudience },
   { title: 'article:title_edit_content', screen: articleStack.editArticleContent },
 ];
 

@@ -18,7 +18,7 @@ import {
   IParamPutEditPost,
   IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
-  IPostActivity,
+  IPost,
   IPostCreatePost,
 } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
@@ -99,7 +99,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     (state: IMentionInputState) => state.tempSelected,
   );
 
-  let initPostData: IPostActivity = {};
+  let initPostData: IPost = {};
 
   if (postId) {
     initPostData = usePostsStore(postsSelector.getPost(postId));
@@ -109,7 +109,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     const draftPosts
       = useDraftPostStore((state: IDraftPostState) => state.posts) || [];
     initPostData = draftPosts?.find(
-      (item: IPostActivity) => item?.id === draftPostId,
+      (item: IPost) => item?.id === draftPostId,
     );
   }
 
@@ -148,7 +148,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     currentLinkPreview,
   );
 
-  const [sPostData, setPostData] = React.useState<IPostActivity>({
+  const [sPostData, setPostData] = React.useState<IPost>({
     ...initPostData,
   });
 

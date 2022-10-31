@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import { IPostActivity } from '~/interfaces/IPost';
+import { IPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import { IBaseListState } from '~/store/interfaces/IBaseState';
 import { ITimelineState } from '..';
@@ -11,7 +11,7 @@ const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
 
   // for the 1st time items[id] can be undefined so we must assign object
   if (!items[id]) {
-    set((state: ITimelineState) => { state.items[id] = {} as IBaseListState<IPostActivity>; });
+    set((state: ITimelineState) => { state.items[id] = {} as IBaseListState<IPost>; });
   }
 
   set((state: ITimelineState) => {

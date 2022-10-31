@@ -4,7 +4,7 @@ import {
   IActivityImportant,
   IAudienceUser,
   IPayloadPutEditPost,
-  IPostActivity,
+  IPost,
   IPostCreatePost,
   IPostSetting,
 } from '~/interfaces/IPost';
@@ -34,7 +34,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
 
   const putUpdateSettings = !!postId;
 
-  let initPostData: IPostActivity;
+  let initPostData: IPost;
   if (postId) {
     initPostData = usePostsStore(postsSelector.getPost(postId));
   }

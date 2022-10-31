@@ -17,7 +17,7 @@ import {
   IPayloadReplying,
   IPostMedia,
 } from '~/interfaces/IPost';
-import menuKeySelector from '~/storeRedux/menu/keySelector';
+import useCommonController from '~/screens/store';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import ReplyingView from './ReplyingView';
@@ -58,7 +58,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const { content = '', loading } = createComment || {};
 
   const userId = useUserIdAuth();
-  const myProfile = useKeySelector(menuKeySelector.myProfile);
+  const myProfile = useCommonController((state) => state.myProfile);
   const { fullname, avatar, username } = myProfile;
 
   const replying: IPayloadReplying = useKeySelector(postKeySelector.replyingComment);

@@ -23,6 +23,8 @@ import spacing from '~/theme/spacing';
 import { TextInput } from '~/baseComponents/Input';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { ICityResponseItem } from '~/interfaces/IAuth';
+import useCommonController from '~/screens/store';
+import useMenuController from '../../store';
 
 const EditContact = () => {
   const theme: ExtendedTheme = useTheme();
@@ -34,10 +36,11 @@ const EditContact = () => {
 
   const dispatch = useDispatch();
 
-  const myProfile = useKeySelector(menuKeySelector.myProfile);
+  const myProfile = useCommonController((state) => state.myProfile);
   const {
     email, phone, countryCode, city, id,
   } = myProfile || {};
+  const actions = useMenuController((state) => state.actions);
 
   const [countryCodeState, setCountryCountryCodeState]
     = useState<string>(countryCode || '+84');
@@ -84,20 +87,16 @@ const EditContact = () => {
     }
     const phoneNumber = getValues('phoneNumber');
 
-    dispatch(
-      menuActions.editMyProfile(
-        {
-          id,
-          phone: phoneNumber,
-          countryCode: phoneNumber ? countryCodeState : null,
-          city: cityState,
-        },
-        t('settings:text_contact_info_update_success'),
-        () => {
-          navigateBack();
-        },
-      ),
-    );
+    actions.editMyProfile({
+      data: {
+        id,
+        phone: phoneNumber,
+        countryCode: phoneNumber ? countryCodeState : null,
+        city: cityState,
+      },
+      editFieldToastMessage: t('settings:text_contact_info_update_success'),
+      callback: navigateBack,
+    });
   };
 
   const validateInputs = async () => trigger('phoneNumber');

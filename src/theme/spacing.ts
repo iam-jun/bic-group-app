@@ -18,6 +18,7 @@ export const lineHeight = {
 
 // Padding
 export const padding = {
+  xTiny: 2,
   tiny: 4,
   xSmall: 6,
   small: 8,

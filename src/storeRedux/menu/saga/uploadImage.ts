@@ -6,6 +6,7 @@ import { IUserImageUpload } from '~/interfaces/IEditUser';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import menuActions from '../actions';
 import showError from '~/storeRedux/commonSaga/showError';
+import useMenuController from '~/screens/Menu/store';
 
 export default function* uploadImage({
   payload,
@@ -26,7 +27,9 @@ export default function* uploadImage({
       upload, file, uploadType,
     );
 
-    yield put(menuActions.editMyProfile({ id, [fieldName]: data?.url }));
+    useMenuController.getState().actions.editMyProfile({
+      data: { id, [fieldName]: data?.url },
+    });
     if (callback) return callback();
   } catch (err) {
     console.error(

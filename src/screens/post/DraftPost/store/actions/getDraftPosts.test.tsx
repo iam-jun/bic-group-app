@@ -9,13 +9,13 @@ import { POST_DETAIL } from '~/test/mock_data/post';
 
 const Component = () => {
   const {
-    posts = [], doGetDraftPosts,
+    posts = [], actions,
   } = useDraftPostStore();
 
   return (
     <View>
-      <TouchableOpacity testID="button-get" onPress={() => doGetDraftPosts({ isRefresh: false })} />
-      <TouchableOpacity testID="button-refresh" onPress={() => doGetDraftPosts({ isRefresh: true })} />
+      <TouchableOpacity testID="button-get" onPress={() => actions.getDraftPosts({ isRefresh: false })} />
+      <TouchableOpacity testID="button-refresh" onPress={() => actions.getDraftPosts({ isRefresh: true })} />
       <Text testID="text-count">{posts.length}</Text>
     </View>
   );

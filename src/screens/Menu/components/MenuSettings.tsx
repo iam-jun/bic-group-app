@@ -18,8 +18,8 @@ import authActions from '~/storeRedux/auth/actions';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
 import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '~/storeRedux/menu/keySelector';
 import { AppConfig } from '~/configs';
+import useCommonController from '~/screens/store';
 
 const MenuSettings = () => {
   const { rootNavigation } = useRootNavigation();
@@ -29,7 +29,7 @@ const MenuSettings = () => {
   const styles = createStyle(theme);
   const isProduction = getEnv('APP_ENV') === APP_ENV.PRODUCTION;
   const debuggerVisible = useKeySelector('app.debuggerVisible');
-  const myProfile = useKeySelector(menuKeySelector.myProfile);
+  const myProfile = useCommonController((state) => state.myProfile);
 
   const onLogout = () => {
     const alertPayload = {

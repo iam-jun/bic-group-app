@@ -12,12 +12,14 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { notificationMenuData } from '~/screens/Notification/constants';
 import modalActions from '~/storeRedux/modal/actions';
-import notificationsActions from '../../storeRedux/notification/actions';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
 import { MEMBER_TAB_TYPES } from '../communities/constants';
 import ScrollableTabBar from './components/ScrollableTabBar';
+import useNotificationStore from './store';
+import INotificationsState from './store/Interface';
 
 const Notification = () => {
+  const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const isFocused = useIsFocused();
@@ -27,7 +29,7 @@ const Notification = () => {
   useEffect(
     () => {
       if (isFocused) {
-        dispatch(notificationsActions.markAsSeenAll());
+        notiActions.markAsSeenAll();
       }
     }, [isFocused],
   );
@@ -38,9 +40,9 @@ const Notification = () => {
 
   const handleMarkNotification = (data: any) => {
     if (!data?.isRead) {
-      dispatch(notificationsActions.markAsRead({ id: data?.id || '', keyValue: notificationMenuData[activeIndex]?.type || 'tabAll' }));
+      notiActions.markAsRead(data?.id);
     } else {
-      dispatch(notificationsActions.markAsUnRead(data));
+      notiActions.markAsUnRead(data?.id);
     }
     dispatch(modalActions.hideBottomList());
   };
@@ -72,7 +74,7 @@ const Notification = () => {
 
   const handleMarkAllAsRead = () => {
     dispatch(modalActions.hideBottomList());
-    dispatch(notificationsActions.markAsReadAll('ALL'));
+    notiActions.markAsReadAll('ALL');
   };
 
   const onPressMenu = () => {
@@ -262,10 +264,7 @@ const Notification = () => {
       }
 
       // finally mark the notification as read
-      dispatch(notificationsActions.markAsRead({
-        id: item.id,
-        keyValue: notificationMenuData[activeIndex]?.key || 'tabAll',
-      }));
+      notiActions.markAsRead(item.id);
     },
     [activeIndex],
   );

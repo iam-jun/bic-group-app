@@ -7,12 +7,15 @@ const initState: IDraftPostState = {
   hasNextPage: true,
   loading: false,
   refreshing: false,
+  total: 0,
 };
 
 const draftPostStore = (set, get) => ({
   ...initState,
 
-  doGetDraftPosts: getDraftPosts(set, get),
+  actions: {
+    getDraftPosts: getDraftPosts(set, get),
+  },
 
   reset: () => resetStore(initState, set),
 });

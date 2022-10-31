@@ -15,8 +15,6 @@ import {
 import * as navigationHook from '~/hooks/navigation';
 
 import EditContact from '.';
-import menuActions from '../../../../storeRedux/menu/actions';
-import menuTypes from '../../../../storeRedux/menu/types';
 import { USER_PROFILE } from '~/test/mock_data/menu';
 
 afterEach(cleanup);
@@ -146,15 +144,6 @@ describe('Edit Contact screen', () => {
 
     const rootNavigation = { canGoBack: true, goBack };
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
-
-    const mockActionEditMyProfile = () => ({
-      type: menuTypes.SET_MY_PROFILE,
-      payload: USER_PROFILE,
-    });
-
-    jest
-      .spyOn(menuActions, 'editMyProfile')
-      .mockImplementation(mockActionEditMyProfile as any);
 
     const store = createTestStore(initialState);
 

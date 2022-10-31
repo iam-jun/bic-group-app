@@ -1,8 +1,5 @@
 import {
-  IGetUserProfile,
   IUserAddWorkExperience,
-  IUserEdit,
-  IUserProfile,
   IUserWorkExperience,
 } from '~/interfaces/IAuth';
 import { IUserImageUpload } from '~/interfaces/IEditUser';
@@ -11,15 +8,6 @@ import menuTypes from './types';
 const menuActions = {
   setLanguageModalOpen: (payload: boolean) => ({
     type: menuTypes.SET_LANGUAGE_MODAL_OPEN,
-    payload,
-  }),
-
-  getMyProfile: (payload: IGetUserProfile) => ({
-    type: menuTypes.GET_MY_PROFILE,
-    payload,
-  }),
-  setMyProfile: (payload: IUserProfile | null) => ({
-    type: menuTypes.SET_MY_PROFILE,
     payload,
   }),
 
@@ -69,18 +57,6 @@ const menuActions = {
     payload,
   }),
 
-  editMyProfile(
-    payload: IUserEdit,
-    editFieldToastMessage?: string,
-    callback?: () => void,
-  ) {
-    return {
-      type: menuTypes.EDIT_MY_PROFILE,
-      payload,
-      editFieldToastMessage,
-      callback,
-    };
-  },
   setEmailEditError: (payload: string) => ({
     type: menuTypes.SET_EMAIL_EDIT_ERROR,
     payload,

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Keyboard,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -10,18 +9,17 @@ import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '../../../../storeRedux/menu/actions';
-import menuKeySelector from '../../../../storeRedux/menu/keySelector';
-import { useKeySelector } from '~/hooks/selector';
 import { TextArea } from '~/baseComponents/Input';
+import useCommonController from '~/screens/store';
+import useMenuController from '../../store';
 
 const EditDescription = () => {
   const { t } = useBaseHook();
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
-  const myProfileData = useKeySelector(menuKeySelector.myProfile);
+  const myProfileData = useCommonController((state) => state.myProfile);
   const { id, description } = myProfileData;
+  const actions = useMenuController((state) => state.actions);
 
   const [descriptionText, setDescription] = useState<string>(description);
 
@@ -35,17 +33,15 @@ const EditDescription = () => {
   };
 
   const onSave = () => {
-    dispatch(menuActions.editMyProfile(
-      {
+    actions.editMyProfile({
+      data: {
         id,
         description:
             descriptionText?.trim?.()?.length > 0 ? descriptionText : '',
       },
-      '',
-      () => {
-        navigateBack();
-      },
-    ));
+      editFieldToastMessage: null,
+      callback: navigateBack,
+    });
   };
 
   const onChangeDescription = (text: string) => {

@@ -1,8 +1,8 @@
-import { IAllPosts, IPayloadAddToAllPost, IPostActivity } from '~/interfaces/IPost';
+import { IAllPosts, IPayloadAddToAllPost, IPost } from '~/interfaces/IPost';
 import IBaseState from '~/store/interfaces/IBaseState';
 
 interface IPostsState extends IBaseState{
-  posts: {[id: string]: IPostActivity}
+  posts: {[id: string]: IPost}
   actions?: {
     setPosts?: (payload?: IAllPosts) => void;
     addToPosts?: (payload: IPayloadAddToAllPost) => void;

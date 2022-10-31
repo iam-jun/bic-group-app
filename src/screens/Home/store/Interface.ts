@@ -1,4 +1,4 @@
-import { IPostActivity } from '~/interfaces/IPost';
+import { IPost } from '~/interfaces/IPost';
 import IBaseState from '~/store/interfaces/IBaseState';
 
 export const HOME_TAB_TYPE = {
@@ -8,7 +8,7 @@ export const HOME_TAB_TYPE = {
 
 export interface IHomeTab {
   refreshing: boolean,
-  data: IPostActivity[]
+  data: IPost[]
   canLoadMore: boolean,
 }
 
