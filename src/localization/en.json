@@ -490,11 +490,11 @@
   "article": {
     "title_article_detail": "Article Detail",
     "title_edit_article": "Edit Article",
-    "title_categories": "Categories",
+    "title_categories": "Topics",
     "title_edit_title": "Title",
     "title_edit_description": "Description",
     "title_edit_cover": "Cover",
-    "title_edit_category": "Category",
+    "title_edit_category": "Topics",
     "title_edit_audience": "Audience",
     "title_edit_content": "Content",
     "text_change_cover": "Change cover",
