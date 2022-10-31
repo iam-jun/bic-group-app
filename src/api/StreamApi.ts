@@ -23,6 +23,7 @@ import {
   IParamGetSearchPost,
   IParamPostNewRecentSearchKeyword, IRecentSearchTarget,
 } from '~/interfaces/IHome';
+import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import {
   IParamGetArticleDetail,
   IParamGetArticles,
@@ -41,6 +42,11 @@ const defaultConfig = {
 };
 
 export const streamApiConfig = {
+  getGiphyAPIKey: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}authorization/giphy-key`,
+    params,
+  }),
   getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}feeds/newsfeed`,
@@ -309,6 +315,7 @@ export const streamApiConfig = {
 };
 
 const streamApi = {
+  getGiphyAPIKey: (params?: any) => withHttpRequestPromise(streamApiConfig.getGiphyAPIKey, params),
   getNewsfeed: async (param: IParamGetFeed) => {
     try {
       const response: any = await makeHttpRequest(streamApiConfig.getNewsfeed(param));

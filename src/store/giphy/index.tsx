@@ -5,12 +5,15 @@ import getTrending from './actions/getTrending';
 import IBaseState from '../interfaces/IBaseState';
 import { IGiphy } from '~/interfaces/IGiphy';
 import getSearch from './actions/getSearch';
+import getAPIKey from './actions/getAPIKey';
 
 export interface IGiphyState extends IBaseState {
+    apiKey: string;
     loading: boolean;
     data: IGiphy[];
     searchResults: IGiphy[];
     actions:{
+      getAPIKey: () => void;
       getTrending: () => void;
       getSearch: (id: string) => void;
       clearSearch: () => void;
@@ -18,6 +21,7 @@ export interface IGiphyState extends IBaseState {
 }
 
 const initialState = {
+  apiKey: '',
   data: [],
   searchResults: [],
   loading: false,
@@ -26,6 +30,7 @@ const initialState = {
 const giphyStore = (set, get) => ({
   ...initialState,
   actions: {
+    getAPIKey: getAPIKey(set, get),
     getSearch: getSearch(set, get),
     getTrending: getTrending(set, get),
     clearSearch: () => {
