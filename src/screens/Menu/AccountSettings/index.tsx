@@ -22,10 +22,9 @@ import * as modalActions from '~/storeRedux/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import appActions from '~/storeRedux/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
-import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import spacing from '~/theme/spacing';
 import { accountSettingsMenu } from '~/screens/Menu/AccountSettings/constants';
+import useCommonController from '~/screens/store';
 
 const GeneralSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -37,7 +36,7 @@ const GeneralSettings = () => {
 
   const isFocused = useIsFocused();
 
-  const myProfileData = useKeySelector(menuKeySelector.myProfile);
+  const myProfile = useCommonController((state) => state.myProfile);
 
   useEffect(
     () => {
@@ -56,7 +55,7 @@ const GeneralSettings = () => {
       case 'userProfile':
         return rootNavigation.navigate(
           mainStack.userEdit, {
-            userId: myProfileData?.id,
+            userId: myProfile?.id,
             params: {},
           },
         );

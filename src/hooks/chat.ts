@@ -4,13 +4,12 @@ import { Auth } from 'aws-amplify';
 import { debounce } from 'lodash';
 import { useEffect, useRef } from 'react';
 import { useAuthToken, useAuthTokenExpire, useUserIdAuth } from '~/hooks/auth';
-import menuKeySelector from '~/storeRedux/menu/keySelector';
 
 import chatSocketClient from '~/services/chatSocket';
 import { getTokenAndCallBackBein } from '~/api/apiRequest';
 import useChatStore from '~/store/chat';
 import getEnv from '~/utils/env';
-import { useKeySelector } from './selector';
+import useCommonController from '~/screens/store';
 
 const useChatSocket = () => {
   const isConnectedRef = useRef(true);
@@ -18,7 +17,7 @@ const useChatSocket = () => {
   const userId = useUserIdAuth();
   const token = useAuthToken();
   const tokenExp = useAuthTokenExpire();
-  const myProfile: any = useKeySelector(menuKeySelector.myProfile);
+  const myProfile = useCommonController((state) => state.myProfile);
   // const { initChat, handleChatEvent } = useChatStore();
   const initChat = useChatStore((state) => state.initChat);
   const handleChatEvent = useChatStore((state) => state.handleChatEvent);

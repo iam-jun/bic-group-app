@@ -640,9 +640,9 @@ const groupApi = {
   getCity: () => withHttpRequestPromise(
     groupsApiConfig.getCity,
   ),
-  editMyProfile: (params: any) => {
-    const { userId, data } = params || {};
-    return withHttpRequestPromise(groupsApiConfig.editMyProfile, userId, data);
+  editMyProfile: (params: IUserEdit) => {
+    const { id, ...data } = params || {};
+    return withHttpRequestPromise(groupsApiConfig.editMyProfile, id, data);
   },
   getMyWorkExperience: () => withHttpRequestPromise(groupsApiConfig.getMyWorkExperience),
   addWorkExperience: (data: IAddWorkExperienceReq) => withHttpRequestPromise(

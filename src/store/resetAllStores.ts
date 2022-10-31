@@ -2,7 +2,7 @@ import useCommunityJoinedGroupTreeStore from '~/screens/groups/components/Commun
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from './entities/posts';
 import useHomeStore from '~/screens/Home/store';
-import useJoinedCommunitiesStore from '~/screens/Menu/store';
+import useMenuController from '~/screens/Menu/store';
 import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
 import useDraftPostStore from '../screens/post/DraftPost/store';
@@ -35,7 +35,7 @@ const stores = [
 
   // screens
   useHomeStore,
-  useJoinedCommunitiesStore,
+  useMenuController,
   useSelectAudienceStore,
   useDraftPostStore,
   useChatStore,

@@ -111,7 +111,6 @@ describe('EditDescription screen', () => {
 
     const storeData = { ...initialState };
     storeData.auth.user = user as any;
-    storeData.menu.myProfile = USER_PROFILE as any;
     const store = createTestStore(storeData);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
@@ -151,7 +150,6 @@ describe('EditDescription screen', () => {
 
     const storeData = { ...initialState };
     storeData.auth.user = user as any;
-    storeData.menu.myProfile = USER_PROFILE as any;
     const store = createTestStore(storeData);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);

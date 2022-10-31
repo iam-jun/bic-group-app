@@ -12,7 +12,7 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { Avatar } from '~/baseComponents';
 import { avatarSizes } from '~/theme/dimension';
 import { ICommunity } from '~/interfaces/ICommunity';
-import useJoinedCommunitiesStore from '../store';
+import useMenuController from '../store';
 import JoinedCommunityPlaceholder from './JoinedCommunityPlaceholder';
 
 export const MAX_LENGTH = 10;
@@ -22,10 +22,10 @@ const MenuDiscoverCommunity = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle();
 
-  const { data = [], loading, getJoinedCommunities } = useJoinedCommunitiesStore();
+  const { data = [], loading, actions } = useMenuController();
 
   useEffect(() => {
-    getJoinedCommunities();
+    actions.getJoinedCommunities();
   }, []);
 
   const onPressCommunity = (item: ICommunity) => {

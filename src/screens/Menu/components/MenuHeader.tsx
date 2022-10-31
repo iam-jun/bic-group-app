@@ -7,12 +7,11 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '~/storeRedux/menu/keySelector';
 import dimension from '~/theme/dimension';
 import Avatar from '~/baseComponents/Avatar';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
+import useCommonController from '~/screens/store';
 
 const PADDING_INFO = spacing.padding.large * 2 + dimension.avatarSizes.large;
 
@@ -24,7 +23,7 @@ const MenuHeader = () => {
 
   const {
     id, fullname, avatar, username,
-  } = useKeySelector(menuKeySelector.myProfile) || {};
+  } = useCommonController((state) => state.myProfile) || {};
 
   const goToProfile = () => {
     rootNavigation.navigate(

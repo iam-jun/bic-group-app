@@ -8,11 +8,9 @@ import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
 import MenuSidebarItem from './MenuSidebarItem';
 import Divider from '~/beinComponents/Divider';
 
-import { useKeySelector } from '~/hooks/selector';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import images from '~/resources/images';
-import menuKeySelector from '~/storeRedux/menu/keySelector';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useBaseHook } from '~/hooks';
 import authActions from '~/storeRedux/auth/actions';
@@ -22,6 +20,7 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 import spacing from '~/theme/spacing';
 import settings, { infoMenu, postFeatureMenu, settingsMenu } from '~/router/components/MenuSidebarDrawer/constants';
+import useCommonController from '~/screens/store';
 
 interface MenuSidebarContentProps {
   onCloseSidebar?: () => void;
@@ -42,7 +41,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
   const Container = Platform.OS === 'ios' ? View : ScrollView;
   // ScrollView not work with GestureHandler on iOS, in future if menu setting add more item, should test UI
 
-  const { id, fullname, avatar } = useKeySelector(menuKeySelector.myProfile) || {};
+  const { id, fullname, avatar } = useCommonController((state) => state.myProfile) || {};
 
   const onPressItem = (type: string) => () => {
     onCloseSidebar?.();
