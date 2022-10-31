@@ -43,12 +43,9 @@ const MemberList = ({
 
   const renderSectionHeader = ({ section: { title, userCount } }: any) => (
     <View style={styles.sectionHeader}>
-      <Text.H5
-        color={colors.neutral40}
-      >
-        {`${title}  `}
-        <Text.H5 color={colors.neutral80}>{formatLargeNumber(userCount)}</Text.H5>
-      </Text.H5>
+      <Text.H4 color={colors.neutral40}>
+        {`${title} · ${formatLargeNumber(userCount)}`}
+      </Text.H4>
     </View>
   );
 
@@ -114,11 +111,6 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     content: {
       backgroundColor: colors.white,
-    },
-    itemContainer: {
-      height: undefined,
-      paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.tiny,
     },
     sectionHeader: {
       paddingHorizontal: spacing.padding.large,
