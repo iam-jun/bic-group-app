@@ -21,6 +21,7 @@ export interface BottomListItemProps {
   rightIconProps?: IconProps;
   style?: StyleProp<ViewStyle>;
   upcoming?: boolean;
+  badge?: string;
 
   onPress?: () => void;
 }
@@ -35,6 +36,7 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
   disabled,
   testID,
   upcoming,
+  badge,
   onPress,
 }: BottomListItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -68,6 +70,13 @@ const BottomListItem: React.FC<BottomListItemProps> = ({
           <Text.BadgeXS color={colors.purple50} useI18n>common:text_upcoming</Text.BadgeXS>
         </View>
         )}
+        {!!badge && (
+        <View style={styles.badge}>
+          <Text.BadgeS color={theme.colors.white}>
+            {badge}
+          </Text.BadgeS>
+        </View>
+        )}
         {
           rightIcon && <Icon icon={rightIcon} size={20} {...rightIconProps} />
         }
@@ -94,6 +103,12 @@ const themeStyles = (theme: ExtendedTheme) => StyleSheet.create({
     marginLeft: spacing.margin.small,
     paddingVertical: 2,
     paddingHorizontal: spacing.padding.xSmall,
+  },
+  badge: {
+    backgroundColor: theme.colors.red40,
+    borderRadius: spacing.borderRadius.pill,
+    paddingHorizontal: spacing.padding.tiny,
+    paddingVertical: spacing.padding.xTiny,
   },
 });
 

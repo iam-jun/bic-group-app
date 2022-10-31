@@ -62,14 +62,17 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
   }).current;
 
-  const renderInterestedUser = () => (
-    <ContentInterestedUserCount
-      id={postId}
-      interestedUserCount={totalUsersSeen}
-      style={styles.interestedUserCount}
-      isLite
-    />
-  );
+  let BottomRightComponent = null;
+  if (!isLite) {
+    BottomRightComponent = (
+      <ContentInterestedUserCount
+        id={postId}
+        interestedUserCount={totalUsersSeen}
+        style={styles.interestedUserCount}
+        isLite
+      />
+    );
+  }
 
   const renderContent = () => {
     if (isLite) {
@@ -94,7 +97,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
               useMarkdownIt
               limitMarkdownTypes
               mentions={mentions}
-              BottomRightComponent={renderInterestedUser()}
+              BottomRightComponent={BottomRightComponent}
               onPressAudience={onPressMentionAudience}
               onToggleShowTextContent={onPressMarkSeenPost}
             />
@@ -128,7 +131,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         mentions={mentions}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
-        BottomRightComponent={renderInterestedUser()}
+        BottomRightComponent={BottomRightComponent}
       />
     );
   };

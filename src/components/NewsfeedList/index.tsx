@@ -57,7 +57,6 @@ React.ComponentType<FlashListProps<any>>
 const screenHeight = Dimensions.get('window').height;
 
 const ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT = 180;
-const CREATE_POST_HEADER_HEIGHT = 50;
 
 const _NewsfeedList: FC<NewsfeedListProps> = ({
   data,
@@ -105,22 +104,18 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       const isUp = prevOffsetYShared.value - offsetY > 2;
       const isUp5Percent = ((prevOffsetYShared.value - offsetY) * 100) / screenHeight >= 5;
 
-      const showFloating = offsetY > CREATE_POST_HEADER_HEIGHT;
       emit('stopAllVideo');
       if (isDown5Percent) {
         emit('showHeader', false);
         emit('showBottomBar', false);
-        emit('showFloatingCreatePost', false);
       } else if (isDown && offsetY > 92) {
         emit('showHeader', false);
       }
       if (isUp5Percent) {
         emit('showHeader', true);
         emit('showBottomBar', true);
-        emit('showFloatingCreatePost', showFloating);
       } else if (isUp) {
         emit('showBottomBar', true);
-        emit('showFloatingCreatePost', showFloating);
         if (offsetY < 50) {
           emit('showHeader', true);
         }

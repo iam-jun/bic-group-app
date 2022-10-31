@@ -466,6 +466,11 @@
     "notice_post_video_uploading": {
       "title": "Processing video (count)",
       "description": "The video of your post is being processed. We'll send you a notification when it's completed"
+    },
+    "create_content_options": {
+      "write_post": "Write Post",
+      "write_series": "Write Series",
+      "my_draft": "My Draft"
     }
   },
   "menu": {

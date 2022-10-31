@@ -126,7 +126,7 @@ function* postPublishDraftPost({
       isRefresh: true,
     };
     useHomeStore.getState().actions.refreshHome();
-    yield call(useDraftPostStore.getState().doGetDraftPosts, payloadGetDraftPosts);
+    yield call(useDraftPostStore.getState().actions.getDraftPosts, payloadGetDraftPosts);
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
     onError?.();
@@ -171,7 +171,7 @@ function* putEditDraftPost({
         const payloadGetDraftPosts: IPayloadGetDraftPosts = {
           isRefresh: true,
         };
-        yield call(useDraftPostStore.getState().doGetDraftPosts, payloadGetDraftPosts);
+        yield call(useDraftPostStore.getState().actions.getDraftPosts, payloadGetDraftPosts);
         navigation.goBack();
         yield put(modalActions.showHideToastMessage({
           content: 'post:draft:text_draft_saved',

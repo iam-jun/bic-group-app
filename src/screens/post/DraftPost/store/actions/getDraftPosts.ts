@@ -17,6 +17,7 @@ const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
       set((state: IDraftPostState) => {
         if (isRefresh) {
           state.refreshing = true;
+          state.total = 0;
         } else {
           state.loading = true;
         }
@@ -34,6 +35,7 @@ const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
         state.hasNextPage = response?.canLoadMore;
         state.refreshing = false;
         state.loading = false;
+        state.total = response?.total;
       }, 'getDraftPostsSuccess');
     } else {
       console.warn('\x1b[36m🐣️ action getDraftPosts cant load more\x1b[0m');

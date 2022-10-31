@@ -44,7 +44,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
 
-  const { doGetDraftPosts } = useDraftPostStore();
+  const { actions: draftPostActions } = useDraftPostStore();
 
   const useCreatePostData = useCreatePost({
     screenParams,
@@ -153,7 +153,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const onPressDraftPost = () => {
     if (isNewsfeed) {
-      doGetDraftPosts({ isRefresh: true });
+      draftPostActions.getDraftPosts({ isRefresh: true });
       rootNavigation.navigate(homeStack.draftPost);
     }
   };

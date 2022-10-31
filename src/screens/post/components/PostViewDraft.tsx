@@ -50,7 +50,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 
   const userId = useUserIdAuth();
 
-  const { doGetDraftPosts } = useDraftPostStore();
+  const { actions } = useDraftPostStore();
 
   const {
     id,
@@ -86,7 +86,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const refreshDraftPosts = () => {
     if (userId) {
       const payload: IPayloadGetDraftPosts = { isRefresh: true };
-      doGetDraftPosts(payload);
+      actions.getDraftPosts(payload);
     }
   };
 

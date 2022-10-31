@@ -7,8 +7,11 @@ interface IDraftPostState extends IBaseState, IFetchingState{
   hasNextPage: boolean,
   loading: boolean,
   refreshing: boolean,
+  total: number,
 
-  doGetDraftPosts?: (payload: IPayloadGetDraftPosts) => void;
+  actions?:{
+    getDraftPosts?: (payload: IPayloadGetDraftPosts) => void;
+  }
 }
 
 export default IDraftPostState;
