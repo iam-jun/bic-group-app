@@ -30,6 +30,7 @@ import {
   IParamGetCategories, IParamPutEditArticle,
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
+import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
 
 const DEFAULT_LIMIT = 10;
 
@@ -297,6 +298,20 @@ export const streamApiConfig = {
       childCommentLimit: params?.childCommentLimit || 10,
     },
   }),
+  getGiphyTrending: (
+    params: IGetGiphyTrendingParams,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}giphy/trending`,
+    params,
+  }),
+  getSearchGiphy: (
+    params: IGetSearchGiphyParams,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}giphy/search`,
+    params,
+  }),
 };
 
 const streamApi = {
@@ -460,6 +475,12 @@ const streamApi = {
   ),
   getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
     streamApiConfig.getUsersInterestedPost, params,
+  ),
+  getGiphyTrending: (params?: IGetGiphyTrendingParams) => withHttpRequestPromise(
+    streamApiConfig.getGiphyTrending, params,
+  ),
+  getSearchGiphy: (params: IGetSearchGiphyParams) => withHttpRequestPromise(
+    streamApiConfig.getSearchGiphy, params,
   ),
 };
 

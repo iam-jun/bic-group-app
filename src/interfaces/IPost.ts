@@ -1,6 +1,7 @@
-import { IFilePicked, IGiphy } from '~/interfaces/common';
+import { IFilePicked } from '~/interfaces/common';
 import { ReactionType } from '~/constants/reactions';
 import { ICategory } from '~/interfaces/IArticle';
+import { IGiphy } from './IGiphy';
 
 export interface IPostAudience {
   users?: IAudienceUser[];

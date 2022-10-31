@@ -1,4 +1,3 @@
-import { GiphyMedia } from '@giphy/react-native-sdk';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
   FC, useEffect, useRef, useState,
@@ -23,6 +22,7 @@ import useMounted from '~/hooks/mounted';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { uploadImage } from '../../helper';
 import { IGetFile } from '~/services/imageUploader';
+import { IGiphy } from '~/interfaces/IGiphy';
 
 enum EventType {
     ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
@@ -124,7 +124,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     });
   };
 
-  const onGifSelected = (gif: GiphyMedia) => {
+  const onGifSelected = (gif: IGiphy) => {
     stickerViewRef?.current?.hide?.();
     insertImage(gif.url);
   };

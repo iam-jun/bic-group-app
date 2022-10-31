@@ -37,7 +37,7 @@ const LanguageOptionMenuSelected: FC<LanguageOptionMenuSelectedProps> = ({
                           type="neutral"
                           size="medium"
                           style={styles.tag}
-                          label={item.name}
+                          label={item.local}
                           icon="Xmark"
                           onPressIcon={() => onRemove(item)}
                         />

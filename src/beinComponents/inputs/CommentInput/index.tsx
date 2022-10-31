@@ -1,4 +1,4 @@
-import { GiphyMedia, GiphyMediaView } from '@giphy/react-native-sdk';
+import { GiphyMediaView } from '@giphy/react-native-sdk';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
   useEffect,
@@ -30,7 +30,7 @@ import StickerView from '~/components/StickerView';
 import Text from '~/beinComponents/Text';
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
-import { IFilePicked, IGiphy } from '~/interfaces/common';
+import { IFilePicked } from '~/interfaces/common';
 import { IActivityDataImage } from '~/interfaces/IPost';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import modalActions from '~/storeRedux/modal/actions';
@@ -39,6 +39,7 @@ import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { formatTextWithEmoji } from '~/utils/emojiUtils';
+import { IGiphy } from '~/interfaces/IGiphy';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -122,7 +123,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
-  const [selectedGiphy, setSelectedGiphy] = useState<GiphyMedia>();
+  const [selectedGiphy, setSelectedGiphy] = useState<IGiphy>();
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
@@ -192,7 +193,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   };
 
-  const onGifSelected = (gif: GiphyMedia) => {
+  const onGifSelected = (gif: IGiphy) => {
     stickerViewRef?.current?.hide?.();
 
     setSelectedImage(undefined);
@@ -252,7 +253,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
           content: text,
           giphy: {
             id: selectedGiphy.id,
-            type: selectedGiphy.data.type,
+            type: selectedGiphy.type,
           },
         });
         setSelectedGiphy(undefined);

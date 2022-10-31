@@ -1,11 +1,9 @@
-import { GiphyContent, GiphyGridView, GiphyMedia } from '@giphy/react-native-sdk';
 import { useKeyboard } from '@react-native-community/hooks';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import i18next from 'i18next';
 import { debounce } from 'lodash';
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import {
-  Keyboard, NativeSyntheticEvent, Platform, StyleSheet, View,
+  Keyboard, Platform, StyleSheet, View,
 } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import Animated, {
@@ -19,20 +17,23 @@ import { AppConfig } from '~/configs';
 import { dimension } from '~/theme';
 import spacing from '~/theme/spacing';
 import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
-import LoadingIndicator from '../../beinComponents/LoadingIndicator';
 import EmojiPicker from '~/baseComponents/EmojiPicker';
 import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
 import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
 import { SearchInput } from '~/baseComponents/Input';
+import { useBaseHook } from '~/hooks';
+import GiphyView from '../GiphyView';
+import { IGiphy } from '~/interfaces/IGiphy';
 
 export interface Props {
   stickerViewRef: any;
-  onGifSelected?: (media: string|GiphyMedia) => void;
+  onGifSelected?: (media: IGiphy) => void;
   onEmojiSelected?: (emoji: string) => void;
 
 }
 
 const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props) => {
+  const { t } = useBaseHook();
   const INITIAL_KEYBOARD_HEIGHT = 336;
   const modalizeRef = useRef<Modalize>();
 
@@ -40,7 +41,6 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   const [visible, setVisible] = React.useState(false);
   const [keyboardHeight, setKeyboardHeight] = React.useState(INITIAL_KEYBOARD_HEIGHT);
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [loading, setLoading] = React.useState(true);
   const [modalTopOffset, setModalTopOffset] = React.useState(0);
   const _stickerViewRef = stickerViewRef || useRef();
   const emojiPickerRef: any = useRef();
@@ -51,10 +51,6 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   const isIOS = Platform.OS === 'ios';
 
   const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
-
-  const request = searchQuery
-    ? GiphyContent.search({ searchQuery })
-    : GiphyContent.trending({ mediaType: undefined });
 
   const height = useSharedValue(0);
 
@@ -90,7 +86,6 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   const onChangeText = debounce(
     (value: string) => {
       if (type === 'giphy') {
-        setLoading(true);
         setSearchQuery(value);
       } else {
         actions.search(value);
@@ -98,15 +93,8 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
     }, AppConfig.searchTriggerTime,
   );
 
-  // When content is updated, it means request has been done
-  const onContentUpdate = () => {
-    setLoading(false);
-  };
-
-  const onGifPress = (e: NativeSyntheticEvent<{
-    media: GiphyMedia;
-  }>) => {
-    onGifSelected(e.nativeEvent.media);
+  const onGifPress = (item: IGiphy) => {
+    onGifSelected(item);
   };
 
   const onEmojiPress = (emojiName: string) => {
@@ -144,6 +132,7 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
 
   const onClose = () => {
     setVisible(false);
+    setSearchQuery('');
 
     // reset position
     onPositionChange('initial');
@@ -191,21 +180,9 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
 
   const renderComponent = () => {
     if (type === 'giphy') {
-      return (
-        <View>
-          {loading && <LoadingIndicator style={styles.loading} />}
-          <GiphyGridView
-            testID="sticker_view.grid_view"
-            content={request}
-            cellPadding={4}
-                // Must render GiphyGridView to trigger onContentUpdate but make it invisible
-            style={[styles.gridView, loading && { height: 0 }]}
-            onContentUpdate={onContentUpdate}
-            onMediaSelect={onGifPress}
-          />
-        </View>
-      );
+      return <GiphyView searchQuery={searchQuery} onSelected={onGifPress} />;
     }
+
     return (
       <View style={styles.emojiView}>
         <EmojiPicker
@@ -228,12 +205,13 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
       <Portal>
         <Modalize
           ref={modalizeRef}
-          withOverlay={isIOS && modalTopOffset !== 0}
           handlePosition="inside"
           adjustToContentHeight={!isIOS}
-          snapPoint={isIOS ? keyboardHeight : undefined}
-          closeSnapPointStraightEnabled={false}
+          disableScrollIfPossible={isIOS}
           modalTopOffset={modalTopOffset}
+          closeSnapPointStraightEnabled={false}
+          withOverlay={isIOS && modalTopOffset !== 0}
+          snapPoint={isIOS ? keyboardHeight : undefined}
           scrollViewProps={{
             keyboardShouldPersistTaps: 'handled',
             keyboardDismissMode: 'interactive',
@@ -251,7 +229,7 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
             <View style={styles.header}>
               <SearchInput
                 testID="sticker_view.search_input"
-                placeholder={i18next.t(`sticker:search_${type}`)}
+                placeholder={t(`sticker:search_${type}`)}
                 value={searchQuery}
                 onChangeText={onChangeText}
                 onFocus={onSearchFocus}
