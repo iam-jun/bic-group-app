@@ -291,7 +291,7 @@ export const groupsApiConfig = {
     params: {
       key: params?.key,
       offset: params?.offset || 0,
-      limit: params?.limit || 20,
+      limit: params?.limit || 25,
     },
   }),
   getAudienceTree: (): HttpApiRequestConfig => ({

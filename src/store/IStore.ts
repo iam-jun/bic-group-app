@@ -1,9 +1,9 @@
+import { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { IEditArticleCategoryState } from '~/screens/articles/EditArticle/EditCategory/store';
 import { IEditArticleState } from '~/screens/articles/EditArticle/store';
 import IPostsState from './entities/posts/Interface';
 import ICommentsState from '~/store/entities/comments/Interface';
 import IHomeState from '~/screens/Home/store/Interface';
-import ISelectAudienceState from '~/screens/post/PostSelectAudience/store/Interface';
 import IChatState from '~/store/chat/IChatState';
 import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 import ICommunityJoinedGroupTreeState from '~/screens/groups/components/CommunityJoinedGroupTree/store/Interface';
@@ -30,12 +30,13 @@ export interface BicStore {
     posts: IPostsState;
     comments: ICommentsState;
   };
+  // components
+  SelectAudience: {
+    selectAudienceStore: ISelectAudienceState
+  };
 
   // screens
   post: {
-    PostSelectAudience: {
-      selectAudienceStore: ISelectAudienceState;
-    };
     DraftPost: {
       draftPostStore: IDraftPostState;
     };

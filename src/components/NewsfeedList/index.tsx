@@ -30,7 +30,7 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import { useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
-import { IPostActivity } from '~/interfaces/IPost';
+import { IPost } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
@@ -313,7 +313,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           data={data}
           // bounces={false}
           renderItem={renderItem}
-          keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
+          keyExtractor={(item: IPost) => `newsfeed-list-${item?.id}`}
           estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
           onScroll={onScroll}
           onLoad={onLoaded}

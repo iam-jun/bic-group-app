@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetSearchPosts } from '~/interfaces/IHome';
+import { POST_TYPE } from '~/interfaces/IPost';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import homeActions from '~/storeRedux/home/actions';
 
@@ -37,7 +38,7 @@ const SearchResult = () => {
   );
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
-  const renderItem = ({ item }: any) => (item.isArticle ? (
+  const renderItem = ({ item }: any) => (item.type === POST_TYPE.ARTICLE ? (
     <ArticleItem id={item.id} isLite />
   ) : (
     <PostView

@@ -14,7 +14,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import {
   IPayloadGetDraftPosts,
   IPayloadPublishDraftPost,
-  IPostActivity,
+  IPost,
 } from '~/interfaces/IPost';
 import PostViewHeader from '~/screens/post/components/PostViewComponents/PostViewHeader';
 import PostViewContent from '~/screens/post/components/PostViewComponents/PostViewContent';
@@ -30,7 +30,7 @@ import Divider from '~/beinComponents/Divider';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
-  data: IPostActivity;
+  data: IPost;
   isPostDetail?: boolean;
 }
 

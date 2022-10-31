@@ -11,7 +11,7 @@ import {
   IPayloadGetPostDetail,
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
-  IPostActivity,
+  IPost,
 } from '~/interfaces/IPost';
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
@@ -106,7 +106,7 @@ function* postPublishDraftPost({
     }
 
     onSuccess?.();
-    const postData: IPostActivity = res.data;
+    const postData: IPost = res.data;
     usePostsStore.getState().actions.addToPosts({ data: postData } as IPayloadAddToAllPost);
     if (res.data?.isProcessing) {
       yield put(modalActions.showHideToastMessage({
