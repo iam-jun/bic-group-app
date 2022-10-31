@@ -24,7 +24,8 @@ import { useBaseHook } from '~/hooks';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
-import { useKeySelector } from '~/hooks/selector';
+import useNotificationStore from '~/screens/Notification/store';
+import INotificationsState from '~/screens/Notification/store/Interface';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -42,7 +43,8 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     theme, insets,
   );
 
-  const notiUnseen = useKeySelector('notifications.unseenNumber');
+  const notiUnseen = useNotificationStore((state: INotificationsState) => state.unseenNumber);
+
   const tabBadge = { notification: notiUnseen };
 
   const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;

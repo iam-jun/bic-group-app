@@ -23,6 +23,7 @@ import { IManagedState } from '~/screens/communities/Communities/components/Mana
 import { IYourCommunitiesState } from '~/screens/communities/Communities/components/YourCommunities/store/Interface';
 import { IYourGroupsState } from '~/screens/communities/Communities/components/YourGroups/store/Interface';
 import { ISearchJoinedCommunitiesState } from '~/screens/communities/Communities/components/SearchCommunity/store/Interface';
+import INotificationsState from '~/screens/Notification/store/Interface';
 import { IGiphyState } from './giphy';
 
 export interface BicStore {
@@ -76,6 +77,10 @@ export interface BicStore {
   };
   PermissionScheme: {
     permissionSchemeStore: IPermissionSchemeState;
+  },
+
+  Notifications: {
+    notificationStore: INotificationsState,
   },
 
   // others

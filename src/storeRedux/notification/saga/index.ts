@@ -1,38 +1,14 @@
 import {
-  put, select, takeEvery, takeLatest,
+  put, select, takeEvery,
 } from 'redux-saga/effects';
 import notificationsActions from '~/storeRedux/notification/actions';
 import notificationsTypes from '~/storeRedux/notification/types';
 import { makePushTokenRequest } from '~/api/apiRequest';
-import getNotifications from './getNotifications';
-import markAsReadAll from './markAsReadAll';
-import markAsSeenAll from './markAsSeenAll';
-import markAsRead from './markAsRead';
-import loadMore from './loadMore';
-import markAsUnRead from './markAsUnRead';
 import { initPushTokenMessage } from '~/services/firebase';
 
 export default function* notificationsSaga() {
   yield takeEvery(
-    notificationsTypes.GET_NOTIFICATIONS, getNotifications,
-  );
-  yield takeLatest(
-    notificationsTypes.MARK_AS_READ_ALL, markAsReadAll,
-  );
-  yield takeLatest(
-    notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll,
-  );
-  yield takeLatest(
-    notificationsTypes.MARK_AS_READ, markAsRead,
-  );
-  yield takeEvery(
-    notificationsTypes.LOAD_MORE, loadMore,
-  );
-  yield takeEvery(
     notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken,
-  );
-  yield takeEvery(
-    notificationsTypes.MARK_AS_UNREAD, markAsUnRead,
   );
 }
 

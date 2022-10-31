@@ -1,17 +1,18 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, Dimensions,
+  StyleSheet, View, Dimensions,
 } from 'react-native';
-import { isEmpty, isEqual } from 'lodash';
+import { isEmpty } from 'lodash';
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
 import Icon from '~/baseComponents/Icon';
 
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
-import { useKeySelector } from '~/hooks/selector';
-import notificationSelector from '~/storeRedux/notification/selector';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import spacing from '~/theme/spacing';
+import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
+import notiSelector from '~/screens/Notification/store/selectors';
+import useNotificationStore from '~/screens/Notification/store';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -46,42 +47,28 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const itemValue = useNotificationStore(notiSelector.getNotificationById(id)) || {};
 
-  if (!id) return null;
-
-  const itemValue = useKeySelector(
-    notificationSelector.getNotificationById(id),
-  );
-
-  const _itemValue = useMemo(() => {
-    if (
-      itemValue !== undefined
-      && itemValue !== null
-      && !isEqual(JSON.stringify(itemValue), JSON.stringify(_itemValue))
-    ) {
-      return itemValue;
-    }
-  }, [itemValue, onPress, onPressOption, testID, id]);
+  if (!id || isEmpty(itemValue)) return null;
 
   const {
     isRead, updatedAt, extra, actorCount,
-  }: any = _itemValue || {};
+  }: any = itemValue || {};
 
-  if (isEmpty(_itemValue)) return null;
+  if (isEmpty(itemValue)) return null;
 
-  const showAvatar = useMemo(() => {
+  const checkShowAvatar = () => {
     if (!extra?.type) return false;
     const isNotShowAvatar = NOT_SHOW_AVATAR_LIST.findIndex((item) => item === extra.type);
     return isNotShowAvatar === -1;
-  }, [extra?.type]);
+  };
+  const showAvatar = checkShowAvatar();
 
   return (
-    <TouchableOpacity
+    <ButtonWrapper
       testID={testID}
-      disabled={!isInternetReachable || !onPress}
       onPress={() => {
-        onPress && onPress(_itemValue);
+        onPress && onPress(itemValue);
       }}
       style={[
         styles.container,
@@ -109,11 +96,11 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           updatedAt={updatedAt}
         />
       )}
-      <TouchableOpacity
-        testID="notificationItem.menuIcon.button"
+      <ButtonWrapper
+        testID="notification.menu_button"
         style={styles.icon}
         activeOpacity={0.2}
-        onPress={(e: any) => onPressOption && onPressOption({ e, item: _itemValue })}
+        onPress={(e: any) => onPressOption && onPressOption({ e, item: itemValue })}
         hitSlop={{
           bottom: 20,
           left: 20,
@@ -125,10 +112,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           icon="menu"
           size={20}
           tintColor={colors.neutral40}
-          testID="notificationItem.menuIcon"
+          testID="notification.menu_button.icon"
         />
-      </TouchableOpacity>
-    </TouchableOpacity>
+      </ButtonWrapper>
+    </ButtonWrapper>
   );
 };
 
@@ -155,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(NotificationItem);
+export default NotificationItem;

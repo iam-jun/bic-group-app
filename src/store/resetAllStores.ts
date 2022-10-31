@@ -27,6 +27,7 @@ import useManagedStore from '~/screens/communities/Communities/components/Manage
 import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
+import useNotificationStore from '~/screens/Notification/store';
 import useGiphyStore from './giphy';
 
 const stores = [
@@ -47,6 +48,7 @@ const stores = [
   useUserProfileStore,
   useGroupStructureStore,
   usePermissionSchemeStore,
+  useNotificationStore,
 
   // others
   useChatStore,
