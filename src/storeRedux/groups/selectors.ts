@@ -12,9 +12,9 @@ export const getMembersSection = (type: 'group' | 'community') => useSelector(cr
       const { name, data, userCount } = roleData || {};
 
       if (name && data && userCount) {
-        section.title = `${roleData.name}s`;
-        section.data = roleData.data;
-        section.userCount = roleData.userCount;
+        section.title = `${name}s`;
+        section.data = data;
+        section.userCount = userCount;
         sectionList.push(section);
       }
     });
