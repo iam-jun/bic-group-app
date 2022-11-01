@@ -44,6 +44,6 @@ export const getResourceUrl = (
   uploadType: IUploadType | string,
   fileName: string,
   variant?: IResourceVariant | string,
-) => `${getEnv('BEIN_RESOURCE')}${uploadEndpoints[uploadType]}${
+) => (fileName ? `${getEnv('BEIN_RESOURCE')}${uploadEndpoints[uploadType]}${
   variant || 'original'
-}/${fileName}`;
+}/${fileName}` : '');
