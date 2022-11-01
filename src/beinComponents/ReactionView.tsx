@@ -86,7 +86,6 @@ const ReactionView: FC<ReactionViewProps> = ({
             style={styles.reactionItem}
             value={reactionMap.get(key)}
             icon={key}
-            disableUpdateState
             onLongPress={() => _onLongPressItem(react)}
             loading={_ownReactions?.[react]?.loading}
             selected={!!_ownReactions?.[react]?.id}

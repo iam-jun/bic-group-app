@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -23,7 +23,6 @@ interface ReactionProps {
   onActionPress: (action: IAction) => void;
   onLongPress?: () => void;
   style?: StyleProp<ViewStyle>;
-  disableUpdateState?: boolean;
   loading?: boolean;
   disabled?: boolean;
 }
@@ -36,31 +35,18 @@ const Reaction: React.FC<ReactionProps> = ({
   onActionPress,
   onLongPress,
   style,
-  disableUpdateState,
   loading,
   disabled = false,
 }: ReactionProps) => {
-  const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyles(
-    theme, isSelected, loading,
-  );
 
-  useEffect(
-    () => {
-      setIsSelected(selected);
-    }, [selected],
+  const styles = createStyles(
+    theme, selected, loading,
   );
 
   const _onChangeValue = () => {
-    const newValue = !isSelected;
-
-    if (!disableUpdateState) {
-      setIsSelected(newValue);
-    }
-
-    if (newValue) {
+    if (!selected) {
       onActionPress(commonActions.selectEmoji as IAction);
     } else {
       onActionPress(commonActions.unselectEmoji as IAction);
@@ -92,7 +78,7 @@ const Reaction: React.FC<ReactionProps> = ({
         <Text.NumberS
           testID="reaction.children.text"
           style={styles.text}
-          color={isSelected ? colors.purple50 : colors.neutral40}
+          color={selected ? colors.purple50 : colors.neutral40}
         >
           {` ${newValue}`}
         </Text.NumberS>
