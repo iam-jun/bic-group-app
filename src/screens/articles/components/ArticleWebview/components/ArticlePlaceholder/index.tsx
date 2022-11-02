@@ -10,8 +10,6 @@ import {
   PlaceholderLine,
   PlaceholderMedia,
 } from 'rn-placeholder';
-import Image from '~/beinComponents/Image';
-import images from '~/resources/images';
 import { getRandomInt } from '~/utils/generator';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
@@ -32,12 +30,6 @@ const ArticlePlaceholder: FC<ArticlePlaceholderProps> = ({
 
   return (
     <View testID={testID} style={StyleSheet.flatten([styles.container, style])}>
-      <View style={styles.importantContainer}>
-        <Image style={styles.iconStar} source={images.ic_star_white} />
-        <Placeholder Animation={ShineOverlay} style={styles.flex1}>
-          <PlaceholderMedia style={styles.importantTitle} />
-        </Placeholder>
-      </View>
       <Placeholder
         Animation={ShineOverlay}
         Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}
@@ -63,8 +55,8 @@ const ArticlePlaceholder: FC<ArticlePlaceholderProps> = ({
         />
       </Placeholder>
       <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
-        {Array.from(Array(disableRandom ? 3 : getRandomInt(
-          1, 5,
+        {Array.from(Array(disableRandom ? 5 : getRandomInt(
+          3, 10,
         )).keys()).map((item) => (
           <PlaceholderLine
             key={`line_${item}`}
@@ -80,6 +72,22 @@ const ArticlePlaceholder: FC<ArticlePlaceholderProps> = ({
       </Placeholder>
       <Placeholder Animation={ShineOverlay}>
         <PlaceholderMedia style={styles.image} />
+      </Placeholder>
+      <Placeholder Animation={ShineOverlay} style={styles.bottomContainer}>
+        {Array.from(Array(disableRandom ? 5 : getRandomInt(
+          3, 10,
+        )).keys()).map((item) => (
+          <PlaceholderLine
+            key={`line_${item}`}
+            style={styles.marginBottomSmall}
+          />
+        ))}
+        <PlaceholderLine
+          width={disableRandom ? 45 : getRandomInt(
+            20, 80,
+          )}
+          style={styles.margin0}
+        />
       </Placeholder>
       <View style={styles.buttonWrapper}>
         <View style={styles.buttonContainer}>
@@ -148,6 +156,11 @@ const createStyle = (theme: ExtendedTheme) => {
     contentContainer: {
       paddingHorizontal: spacing.padding.base,
       paddingBottom: 0,
+    },
+    bottomContainer: {
+      paddingHorizontal: spacing.padding.base,
+      paddingBottom: 0,
+      marginTop: 16,
     },
     image: {
       borderRadius: 0,
