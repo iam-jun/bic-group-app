@@ -12,7 +12,6 @@ import { CUSTOM_META, getInjectableJSMessage, USER_AGENT_DESKTOP } from '~/utils
 import { IMentionUser } from '~/interfaces/IPost';
 import { parseSafe } from '~/utils/common';
 import { padding } from '~/theme/spacing';
-import getEnv from '~/utils/env';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import StickerView from '~/components/StickerView';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
@@ -23,6 +22,7 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import { uploadImage } from '../../helper';
 import { IGetFile } from '~/services/imageUploader';
 import { IGiphy } from '~/interfaces/IGiphy';
+import getEnv from '~/utils/env';
 
 enum EventType {
     ON_LOAD_END = 'onLoadEnd', // must post content to editor after editor is mounted
@@ -34,7 +34,7 @@ enum EventType {
 }
 
 const ARTICLE_EDITOR_URL = `https://${getEnv('SELF_DOMAIN')}/article/webview`;
-// const ARTICLE_EDITOR_URL = 'http://10.1.1.253:8088/article/webview';
+// const ARTICLE_EDITOR_URL = 'http://10.1.1.178:8088/article/webview';
 
 export interface ArticleWebviewProps {
   style?: StyleProp<ViewStyle>;
@@ -221,6 +221,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
 
   const renderFakeWebview = () => (
     <WebView
+      key="article-fake-webview"
       ref={fakeWebViewRef}
       style={styles.fakeWebview}
       source={{ uri: ARTICLE_EDITOR_URL }}
@@ -243,6 +244,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
 
     return (
       <WebView
+        key="article-webview"
         ref={webViewRef}
         style={[styles.webview, style, readOnly && { height: webviewHeight }]}
         containerStyle={readOnly && styles.webviewContainer}
