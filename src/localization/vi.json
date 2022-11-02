@@ -145,7 +145,10 @@
     "text_months": "{{number}} tháng",
     "text_year": "{{number}} năm",
     "text_never": "Không bao giờ",
-    "text_custom": "Tùy chỉnh"
+    "text_custom": "Tùy chỉnh",
+    "articles": "Bài viết",
+    "last_updated": "Cập nhật",
+    "audiences": "Đối tượng"
   },
   "auth": {
     "text_kickout_title": "Notice",

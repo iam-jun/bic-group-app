@@ -177,7 +177,10 @@
     "text_months": "{{number}} months",
     "text_year": "{{number}} year",
     "text_never": "Never",
-    "text_custom": "Custom"
+    "text_custom": "Custom",
+    "articles": "Articles",
+    "last_updated": "Last updated",
+    "audiences": "Audiences"
   },
   "auth": {
     "text_kickout_title": "Notice",

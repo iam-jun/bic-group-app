@@ -63,6 +63,7 @@ import { faMagnifyingGlass } from '@fortawesome/pro-regular-svg-icons/faMagnifyi
 import { faMessageDots } from '@fortawesome/pro-regular-svg-icons/faMessageDots';
 import { faMessageCheck } from '@fortawesome/pro-regular-svg-icons/faMessageCheck';
 import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faClock as faClockSolid } from '@fortawesome/pro-solid-svg-icons/faClock';
 import { faCircleInfo } from '@fortawesome/pro-regular-svg-icons/faCircleInfo';
 import { faShareNodes } from '@fortawesome/pro-regular-svg-icons/faShareNodes';
 import { faShareNodes as faShareNodesSolid } from '@fortawesome/pro-solid-svg-icons/faShareNodes';
@@ -178,6 +179,7 @@ import { faSymbols } from '@fortawesome/pro-regular-svg-icons/faSymbols';
 import { faInputText } from '@fortawesome/pro-regular-svg-icons/faInputText';
 import { faChartTreeMap } from '@fortawesome/pro-regular-svg-icons/faChartTreeMap';
 import { faFlag } from '@fortawesome/pro-regular-svg-icons/faFlag';
+import { faFileInvoice as faFileInvoiceSolid } from '@fortawesome/pro-solid-svg-icons/faFileInvoice';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -262,6 +264,7 @@ export const initFontAwesomeIcon = () => {
     faMessageDots,
     faMessageCheck,
     faClock,
+    faClockSolid,
     faCircleInfo,
     faShareNodes,
     faShareNodesSolid,
@@ -376,6 +379,7 @@ export const initFontAwesomeIcon = () => {
     faInputText,
     faChartTreeMap,
     faFlag,
+    faFileInvoiceSolid,
   );
 };
 
@@ -444,6 +448,7 @@ export const fontAwesomeIcons = {
   MessageDots: 'fa-regular fa-message-dots',
   MessageCheck: 'fa-regular fa-message-check',
   Clock: 'fa-regular fa-clock',
+  ClockSolid: 'fa-solid fa-clock',
   CircleInfo: 'fa-regular fa-circle-info',
   ShareNodes: 'fa-regular fa-share-nodes',
   ShareNodesSolid: 'fa-solid fa-share-nodes',
@@ -559,6 +564,7 @@ export const fontAwesomeIcons = {
   InputText: 'fa-regular fa-input-text',
   ChartTreeMap: 'fa-regular fa-chart-tree-map',
   Flag: 'fa-regular fa-flag',
+  FileInvoiceSolid: 'fa-solid fa-file-invoice',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

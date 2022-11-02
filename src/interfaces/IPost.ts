@@ -27,6 +27,7 @@ export interface IPost {
   markedReadPost?: boolean;
   createdAt?: string;
   createdBy?: string;
+  updatedAt?: string;
   totalUsersSeen?: number;
   deleted?: boolean;
   markedReadSuccess?: boolean;
