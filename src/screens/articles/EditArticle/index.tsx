@@ -20,12 +20,12 @@ import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
 const editOptions = [
-  { title: 'article:title_edit_title', screen: articleStack.editArticleTitle },
-  { title: 'article:title_edit_description', screen: articleStack.editArticleSummary },
-  { title: 'article:title_edit_cover', screen: articleStack.editArticleCover },
-  { title: 'article:title_edit_category', screen: articleStack.editArticleCategory },
-  { title: 'article:title_edit_audience', screen: articleStack.editArticleAudience },
-  { title: 'article:title_edit_content', screen: articleStack.editArticleContent },
+  { title: 'article:text_option_edit_title', screen: articleStack.editArticleTitle },
+  { title: 'article:text_option_edit_description', screen: articleStack.editArticleSummary },
+  { title: 'article:text_option_edit_cover', screen: articleStack.editArticleCover },
+  { title: 'article:text_option_edit_category', screen: articleStack.editArticleCategory },
+  { title: 'article:text_option_edit_audience', screen: articleStack.editArticleAudience },
+  { title: 'article:text_option_edit_content', screen: articleStack.editArticleContent },
 ];
 
 const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {

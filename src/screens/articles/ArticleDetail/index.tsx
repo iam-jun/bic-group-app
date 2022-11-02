@@ -48,10 +48,11 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const [refreshing, setRefreshing] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
-  const data = usePostsStore(useCallback(postsSelector.getPost(id), [id])) || {};
+  const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
 
-  const comments = useCommentsStore(commentsSelector.getCommentsByParentId(id));
-  const sectionData = getSectionData(comments);
+  const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(id), [id]));
+  const firstCommentId = comments?.length > 0 ? comments[0]?.id : '';
+  const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
   const actions = useArticlesStore((state: IArticlesState) => state.actions);
   const commonController = useCommonController((state) => state.actions);
@@ -210,35 +211,32 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     }
   };
 
-  const renderCommentItem = (data: any) => {
-    const { item, index, section } = data || {};
-    return (
-      <CommentItem
-        postId={id}
-        commentData={item}
-        commentParent={section?.comment}
-        groupIds={groupIds}
-        index={index}
-        section={section}
-        isReplyingComment={false}
-        onPressReply={onPressReplyCommentItem}
-        onPressMarkSeenPost={onPressMarkSeenPost}
-      />
-    );
-  };
+  const renderCommentItem = (data: any) => (
+    <CommentItem
+      postId={id}
+      index={data?.index}
+      section={data?.section}
+      isReplyingComment={false}
+      commentData={data?.item}
+      groupIds={data?.groupIds}
+      commentParent={data?.section?.comment}
+      onPressReply={onPressReplyCommentItem}
+      onPressMarkSeenPost={onPressMarkSeenPost}
+    />
+  );
 
   const renderSeparator = () => <View />;
 
   const renderSectionHeader = (sectionData: any) => {
-    const { section } = sectionData || {};
-    const { comment, index } = section || {};
+    const data = sectionData?.section;
+
     return (
       <CommentItem
         postId={id}
-        commentData={comment}
+        index={data?.index}
         groupIds={groupIds}
-        index={index}
         isReplyingComment={false}
+        commentData={data?.comment}
         onPressReply={onPressReplySectionHeader}
         onPressLoadMore={onPressLoadMoreCommentLevel2}
         onPressMarkSeenPost={onPressMarkSeenPost}
@@ -267,8 +265,42 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
           title="article:title_article_detail"
           titleTextProps={{ useI18n: true }}
         />
-        <ArticlePlaceholder />
+        <ArticlePlaceholder disableRandom />
       </View>
+    );
+  };
+
+  const ListHeaderComponent = (
+    <ArticleView
+      id={id}
+      article={data}
+      isLoaded={isLoaded}
+      firstCommentId={firstCommentId}
+      onAddReaction={onAddReaction}
+      onRemoveReaction={onRemoveReaction}
+      onInitializeEnd={onInitializeEnd}
+      onPressMentionAudience={onPressMentionAudience}
+    />
+  );
+
+  const RefrestControl = (
+    <RefreshControl
+      testID="post_detail_content.refresh_control"
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+    />
+  );
+
+  const renderCommentInput = () => {
+    if (!setting?.canComment) return null;
+
+    return (
+      <CommentInputView
+        commentInputRef={commentInputRef}
+        postId={id}
+        groupIds={groupIds}
+        autoFocus={!!focusComment}
+      />
     );
   };
 
@@ -282,45 +314,21 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         <SectionList
           ref={listRef}
           sections={sectionData}
-          renderItem={renderCommentItem}
-          renderSectionHeader={renderSectionHeader}
-          ListHeaderComponent={(
-            <ArticleView
-              id={id}
-              article={data}
-              isLoaded={isLoaded}
-              firstCommentId=""
-              onAddReaction={onAddReaction}
-              onRemoveReaction={onRemoveReaction}
-              onInitializeEnd={onInitializeEnd}
-              onPressMentionAudience={onPressMentionAudience}
-            />
-            )}
-          ListFooterComponent={renderFooter}
           stickySectionHeadersEnabled={false}
-          ItemSeparatorComponent={renderSeparator}
           keyboardShouldPersistTaps="handled"
+          refreshControl={RefrestControl}
+          ListHeaderComponent={ListHeaderComponent}
           onLayout={onLayout}
           onContentSizeChange={onLayout}
+          renderItem={renderCommentItem}
+          ListFooterComponent={renderFooter}
+          renderSectionHeader={renderSectionHeader}
+          ItemSeparatorComponent={renderSeparator}
           onScrollToIndexFailed={onScrollToIndexFailed}
-          refreshControl={(
-            <RefreshControl
-              testID="post_detail_content.refresh_control"
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-            )}
         />
 
       </View>
-      {!!setting?.canComment && (
-      <CommentInputView
-        commentInputRef={commentInputRef}
-        postId={id}
-        groupIds={groupIds}
-        autoFocus={!!focusComment}
-      />
-      )}
+      {renderCommentInput()}
     </View>
   );
 };
