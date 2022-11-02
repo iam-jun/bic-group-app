@@ -67,7 +67,7 @@ const EditArticleContent: FC<EditArticleContentProps> = ({ route }: EditArticleC
   return (
     <View style={styles.container}>
       <Header
-        title={t('article:title_edit_article')}
+        title={t('article:title_edit_content')}
         buttonProps={{ disabled, loading }}
         buttonText={t('common:btn_save')}
         onPressButton={onPressSave}
