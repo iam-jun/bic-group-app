@@ -27,6 +27,7 @@ export interface IPost {
   markedReadPost?: boolean;
   createdAt?: string;
   createdBy?: string;
+  updatedAt?: string;
   totalUsersSeen?: number;
   deleted?: boolean;
   markedReadSuccess?: boolean;
@@ -437,6 +438,11 @@ export interface IParamGetDraftPosts {
   idLte?: string;
   idGt?: string;
   idLt?: string;
+  createdAtGt?: string;
+  createdAtLt?: string;
+  createdAtGte?: string;
+  createdAtLte?: string;
+  isFailed?: boolean;
   isProcessing?: boolean;
 }
 

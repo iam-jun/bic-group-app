@@ -16,6 +16,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { EditArticleProps } from '~/interfaces/IArticle';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
+import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 
@@ -30,14 +31,22 @@ const editOptions = [
 
 const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
+  const isDraft = route?.params?.isDraft;
 
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+  const draftActions = useDraftArticleStore((state) => state.actions);
 
   useEditArticle({ articleId });
+
+  const onPressBackToDraft = () => {
+    // For editing draft article, navigating back needs to refresh data
+    draftActions.getDraftArticles({ isRefresh: true });
+    rootNavigation.goBack();
+  };
 
   const onPressItem = (item: any) => {
     if (!item.screen) {
@@ -56,7 +65,7 @@ const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
 
   return (
     <View style={styles.container}>
-      <Header title={t('article:title_edit_article')} />
+      <Header title={t('article:title_edit_article')} onPressBack={isDraft ? onPressBackToDraft : undefined} />
       <FlatList
         data={editOptions}
         renderItem={renderItem}

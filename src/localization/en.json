@@ -177,7 +177,10 @@
     "text_months": "{{number}} months",
     "text_year": "{{number}} year",
     "text_never": "Never",
-    "text_custom": "Custom"
+    "text_custom": "Custom",
+    "articles": "Articles",
+    "last_updated": "Last updated",
+    "audiences": "Audiences"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -428,7 +431,6 @@
     "newsfeed": "News feed",
     "saved_posts": "Saved Posts",
     "draft_post": "Draft Posts",
-    "draft_articles_post": "Draft Articles",
     "title_timeline": "Newsfeed",
     "title_important": "Important",
     "title_install_chat": "App not found",
@@ -544,6 +546,8 @@
     "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you want to delete this post?",
+    "title_delete_article": "Delete Article",
+    "content_delete_article": "Do you want to delete this article?",
     "title_delete_audiences_of_post": "You Cannot Delete This Post",
     "content_delete_audiences_of_post": "You can only remove audiences from your post excepting these audiences below. Are you sure do this?",
     "content_not_able_delete_of_post": "You don't have permission to delete this post because of not allowance from these audiences below.",
@@ -651,6 +655,9 @@
       "btn_keep_selecting": "Keep Selecting"
     },
     "draft": {
+      "title_draft": "Draft",
+      "text_posts": "Posts",
+      "text_articles": "Articles",
       "btn_post_now": "Post Now",
       "btn_edit": "Edit",
       "btn_menu_schedule": "Schedule to Post",
@@ -659,10 +666,13 @@
       "title_delete_draft_post": "Delete Draft Post",
       "text_delete_draft_post": "Are you sure want to delete this draft post?",
       "text_no_draft_posts": "You have no draft post left",
-      "text_draft_published": "Your post has been published",
+      "text_draft_post_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
       "text_draft_deleted": "Your draft has been deleted",
-      "text_processing_publish": "Your video post will be ready soon"
+      "text_processing_publish": "Your video post will be ready soon",
+      "title_no_draft_articles": "No Draft Articles",
+      "text_no_draft_articles": "You have no draft articles left",
+      "text_draft_article_published": "Your article has been published"
     },
     "comment": {
       "title_delete_comment": "Delete this comment",

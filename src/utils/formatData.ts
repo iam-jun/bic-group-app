@@ -160,3 +160,9 @@ export const convertArrayToObject = (data: any[], key?: string) => {
     {},
   );
 };
+
+export const formatNumberWithZeroPrefix = (value: number) => {
+  if (value === undefined || value === null) return '';
+  if (value < 10) return `0${value}`;
+  return value;
+};

@@ -23,7 +23,7 @@ import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import useDraftPostStore from '../DraftPost/store';
+import useDraftPostStore from '../../Draft/DraftPost/store';
 import { Button } from '~/baseComponents';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Divider from '~/beinComponents/Divider';
@@ -96,7 +96,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         onSuccess: () => {
-          dispatch(showHideToastMessage({ content: 'post:draft:text_draft_published' }));
+          dispatch(showHideToastMessage({ content: 'post:draft:text_draft_post_published' }));
           refreshDraftPosts();
         },
         onError: () => setPublishing(false),

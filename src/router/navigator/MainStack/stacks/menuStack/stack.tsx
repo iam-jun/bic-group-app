@@ -10,6 +10,7 @@ const menuStack = {
   addWork: 'add-work',
   discover: 'discover',
   userEditDescription: 'user-edit-descriptions',
+  draft: 'draft',
 };
 
 export default menuStack;

@@ -27,7 +27,9 @@ import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import {
   IParamGetArticleDetail,
   IParamGetArticles,
-  IParamGetCategories, IParamPutEditArticle,
+  IParamGetCategories,
+  IParamGetDraftArticles,
+  IParamPutEditArticle,
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
@@ -312,6 +314,26 @@ export const streamApiConfig = {
     url: `${provider.url}giphy/search`,
     params,
   }),
+  getDraftArticles: (params: IParamGetDraftArticles): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/draft`,
+    params: {
+      offset: params?.offset || 0,
+      limit: params?.limit || 10,
+      isProcessing: params?.isProcessing || false,
+    },
+  }),
+  publishDraftArticle: (draftArticleId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${draftArticleId}/publish`,
+    method: 'put',
+  }),
+  deleteArticle: (id: string, isDraft?: boolean): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${id}`,
+    method: 'delete',
+    ...(isDraft ? { params: { is_draft: true } } : {}),
+  }),
 };
 
 const streamApi = {
@@ -472,6 +494,31 @@ const streamApi = {
   ),
   getArticleDetail: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetail, id, params,
+  ),
+  getDraftArticles: async (param: IParamGetDraftArticles) => {
+    try {
+      const response: any = await makeHttpRequest(
+        streamApiConfig.getDraftArticles(param),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          data: response?.data?.data?.list || [],
+          canLoadMore:
+            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT)
+            <= response?.data?.data?.meta?.total,
+          total: response?.data?.data?.meta?.total,
+        });
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  publishDraftArticle: (draftArticleId: string) => withHttpRequestPromise(
+    streamApiConfig.publishDraftArticle, draftArticleId,
+  ),
+  deleteArticle: (id: string, isDraft?: boolean) => withHttpRequestPromise(
+    streamApiConfig.deleteArticle, id, isDraft,
   ),
   getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
     streamApiConfig.getUsersInterestedPost, params,

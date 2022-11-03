@@ -31,7 +31,7 @@ import putMarkSeenPost from './putMarKSeenPost';
 import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
 import deletePost from './deletePost';
 import removeAudiencesFromPost from './removeAudiencesFromPost';
-import useDraftPostStore from '../../../screens/post/DraftPost/store';
+import useDraftPostStore from '../../../screens/Draft/DraftPost/store';
 import useTimelineStore from '~/store/timeline';
 
 const navigation = withNavigation(rootNavigationRef);

@@ -1,4 +1,6 @@
-import { IArticleCover, ILinkPreview } from '~/interfaces/IPost';
+import {
+  IArticleCover, ILinkPreview, IParamGetDraftPosts,
+} from '~/interfaces/IPost';
 import { SortOder } from './common';
 import { IOrder } from './IHome';
 
@@ -28,6 +30,21 @@ export interface IParamGetArticleDetail {
   childCommentLimit?: number;
   offset: number;
   withComment?: boolean;
+}
+
+export type IParamGetDraftArticles = IParamGetDraftPosts
+
+export interface IPayloadPublishDraftArticle {
+  draftArticleId: string;
+  replaceWithDetail?: boolean;
+  refreshDraftArticles?: boolean;
+  onSuccess?: () => void;
+  onError?: () => void;
+}
+
+export interface IPayloadDeleteArticle {
+  id: string;
+  isDraft?: boolean;
 }
 
 export interface IPayloadPutEditArticle {
@@ -84,6 +101,9 @@ export interface ICategory {
 
 export interface EditArticleProps {
   route?: {
-    params?: {articleId: string};
+    params?: {
+      articleId: string;
+      isDraft?: boolean;
+    };
   };
 }
