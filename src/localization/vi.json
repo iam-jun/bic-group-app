@@ -390,7 +390,6 @@
     "newsfeed": "Bản tin",
     "saved_posts": "Bài viết đã lưu",
     "draft_post": "Bài nháp",
-    "draft_articles_post": "Bài báo nháp",
     "title_timeline": "Bản tin",
     "title_important": "Quan trọng",
     "title_install_chat": "Không tìm thấy BIC Chat",
@@ -506,6 +505,8 @@
     "text_search_result_empty": "Không có kết quả. Vui lòng thử lại...",
     "title_delete_post": "Xoá Bài Viết",
     "content_delete_post": "Bạn có muốn xóa bài viết này?",
+    "title_delete_article": "Xoá Bài Viết",
+    "content_delete_article": "Bạn có muốn xóa bài viết này?",
     "title_delete_audiences_of_post": "Bạn Không Thể Xóa Bài Đăng Này",
     "content_delete_audiences_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
     "content_not_able_delete_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây.",
@@ -615,6 +616,9 @@
       "btn_keep_selecting": "Tiếp tục chọn"
     },
     "draft": {
+      "title_draft": "Nháp",
+      "text_posts": "Bài đăng",
+      "text_articles": "Bài viết",
       "btn_post_now": "Đăng ngay",
       "btn_edit": "Sửa",
       "btn_menu_schedule": "Đặt lịch đăng bài",
@@ -623,10 +627,13 @@
       "text_delete_draft_post": "Bạn có chắc muốn xoá bản nháp này?",
       "title_no_draft_posts": "Không có bài nháp",
       "text_no_draft_posts": "Bạn không còn bài nháp nào",
-      "text_draft_published": "Bài viết của bạn đã được đăng",
+      "text_draft_post_published": "Bài viết của bạn đã được đăng",
       "text_draft_saved": "Bản nháp của bạn đã được lưu",
       "text_draft_deleted": "Bản nháp của bạn đã được xoá",
-      "text_processing_publish": "Bài viết của bạn đang được biên tập"
+      "text_processing_publish": "Bài viết của bạn đang được biên tập",
+      "title_no_draft_articles": "Không có bài nháp",
+      "text_no_draft_articles": "Bạn không còn bài nháp nào",
+      "text_draft_article_published": "Bài viết của bạn đã được đăng"
     },
     "comment": {
       "title_delete_comment": "Xoá bình luận",

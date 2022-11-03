@@ -6,7 +6,7 @@ import useHomeStore from '~/screens/Home/store';
 import useMenuController from '~/screens/Menu/store';
 import useSelectPostAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
-import useDraftPostStore from '../screens/post/DraftPost/store';
+import useDraftPostStore from '../screens/Draft/DraftPost/store';
 import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useCommunitiesStore from './entities/communities';
@@ -29,6 +29,8 @@ import useYourGroupsStore from '~/screens/communities/Communities/components/You
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import useNotificationStore from '~/screens/Notification/store';
 import useGiphyStore from './giphy';
+import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useArticleController from '~/screens/articles/store';
 
 const stores = [
   // entities
@@ -49,6 +51,8 @@ const stores = [
   useGroupStructureStore,
   usePermissionSchemeStore,
   useNotificationStore,
+  useDraftArticleStore,
+  useArticleController,
 
   // others
   useChatStore,

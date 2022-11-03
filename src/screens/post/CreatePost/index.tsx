@@ -21,7 +21,7 @@ import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
-import useDraftPostStore from '../DraftPost/store';
+import useDraftPostStore from '../../Draft/DraftPost/store';
 import useCommentInputStore from '../components/CommentInputView/store';
 import ICommentInputState from '../components/CommentInputView/store/Interface';
 

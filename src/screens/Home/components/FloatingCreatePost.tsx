@@ -13,7 +13,7 @@ import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectA
 import spacing from '~/theme/spacing';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import useDraftPostStore from '~/screens/post/DraftPost/store';
+import useDraftPostStore from '~/screens/Draft/DraftPost/store';
 
 export interface FloatingCreatePostProps {
   audience?: any;

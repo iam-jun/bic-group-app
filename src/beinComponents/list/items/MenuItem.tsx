@@ -11,8 +11,8 @@ import { useKeySelector } from '~/hooks/selector';
 
 import spacing from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
-import useDraftPostStore from '~/screens/post/DraftPost/store';
-import IDraftPostState from '~/screens/post/DraftPost/store/Interface';
+import useDraftPostStore from '~/screens/Draft/DraftPost/store';
+import IDraftPostState from '~/screens/Draft/DraftPost/store/Interface';
 
 interface MenuItemProps {
   RightComponent?: React.ReactNode | React.ReactElement;

@@ -438,6 +438,11 @@ export interface IParamGetDraftPosts {
   idLte?: string;
   idGt?: string;
   idLt?: string;
+  createdAtGt?: string;
+  createdAtLt?: string;
+  createdAtGte?: string;
+  createdAtLte?: string;
+  isFailed?: boolean;
   isProcessing?: boolean;
 }
 

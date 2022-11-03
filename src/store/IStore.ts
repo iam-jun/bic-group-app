@@ -7,7 +7,7 @@ import IHomeState from '~/screens/Home/store/Interface';
 import IChatState from '~/store/chat/IChatState';
 import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 import ICommunityJoinedGroupTreeState from '~/screens/groups/components/CommunityJoinedGroupTree/store/Interface';
-import IDraftPostState from '~/screens/post/DraftPost/store/Interface';
+import IDraftPostState from '~/screens/Draft/DraftPost/store/Interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
 import IUserProfileState from '~/screens/Menu/UserProfile/store/Interface';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
@@ -25,6 +25,8 @@ import { IYourGroupsState } from '~/screens/communities/Communities/components/Y
 import { ISearchJoinedCommunitiesState } from '~/screens/communities/Communities/components/SearchCommunity/store/Interface';
 import INotificationsState from '~/screens/Notification/store/Interface';
 import { IGiphyState } from './giphy';
+import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
+import { IArticleController } from '~/screens/articles/store';
 
 export interface BicStore {
   entities: {
@@ -38,13 +40,11 @@ export interface BicStore {
 
   // screens
   post: {
-    DraftPost: {
-      draftPostStore: IDraftPostState;
-    };
     userInterestedPost: IUserInterestedPostState;
     ReactionDetail: IReactionDetailState;
   };
   articles: {
+    articleController: IArticleController,
     EditArticle: {
       editArticleStore: IEditArticleState,
       EditArticleCategory: {
@@ -82,6 +82,14 @@ export interface BicStore {
   Notifications: {
     notificationStore: INotificationsState,
   },
+  Draft: {
+    DraftArticle: {
+      draftArticleStore: IDraftArticleState;
+    },
+    DraftPost: {
+      draftPostStore: IDraftPostState;
+    };
+  }
 
   // others
   chat: IChatState;

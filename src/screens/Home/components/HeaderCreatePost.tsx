@@ -15,8 +15,8 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
-import useDraftPostStore from '../../post/DraftPost/store';
-import IDraftPostState from '../../post/DraftPost/store/Interface';
+import useDraftPostStore from '../../Draft/DraftPost/store';
+import IDraftPostState from '../../Draft/DraftPost/store/Interface';
 import useCommonController from '~/screens/store';
 
 export interface HeaderCreatePostProps {
