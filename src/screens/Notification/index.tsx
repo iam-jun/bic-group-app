@@ -187,12 +187,27 @@ const Notification = () => {
                 );
               }
               if (act?.group?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupMembers, {
-                    groupId: act.group.id,
-                    isMember: true,
-                  },
-                );
+                /**
+                 * Do community (root group) members đã đổi các endpoints
+                 * từ "communities" -> "groups" nên event noti đã chuyển sang phía group,
+                 * do đó cần check thêm isCommunity để navigate tới đúng screen
+                 */
+                const { isCommunity } = act.group;
+                if (isCommunity) {
+                  rootNavigation.navigate(
+                    groupStack.communityMembers, {
+                      communityId: act.group.communityId,
+                      isMember: true,
+                    },
+                  );
+                } else {
+                  rootNavigation.navigate(
+                    groupStack.groupMembers, {
+                      groupId: act.group.id,
+                      isMember: true,
+                    },
+                  );
+                }
               }
               break;
             case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:

@@ -21,8 +21,6 @@ export default function* getGroupMembers({
 
     if (!isRefreshing && !canLoadMore) return;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const resp = yield call(
       groupApi.getGroupMembers, groupId, {
         limit: appConfig.recordsPerPage,

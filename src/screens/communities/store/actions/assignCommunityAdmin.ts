@@ -5,12 +5,12 @@ import Store from '~/storeRedux';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 
-const assignCommunityAdmin = (_set, _get) => async (communityId: string, userIds: string[]) => {
+const assignCommunityAdmin = (_set, _get) => async (id: string, userIds: string[]) => {
   try {
-    const response = await groupApi.assignCommunityAdmin(communityId, userIds);
+    const response = await groupApi.setGroupAdmin(id, userIds);
 
     Store.store.dispatch(
-      groupsActions.getCommunityMembers({ communityId, isRefreshing: true }),
+      groupsActions.getCommunityMembers({ groupId: id, isRefreshing: true }),
     );
 
     const toastMessage: IToastMessage = {

@@ -103,8 +103,8 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
     actions.putEditArticle({ articleId, data } as IPayloadPutEditArticle);
   };
 
-  const handleBack = () => {
-    if (enableButtonSave) {
+  const handleBack = (showAlert = false) => {
+    if (enableButtonSave || showAlert) {
       Keyboard.dismiss();
       Store.store.dispatch(modalActions.showAlert({
         title: i18next.t('discard_alert:title'),

@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { ICommunityMembers } from '~/interfaces/ICommunity';
+import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberList from '~/screens/groups/components/MemberList';
 import actions from '~/storeRedux/groups/actions';
 import { useMyPermissions } from '~/hooks/permissions';
 
 interface CommunityMemberListProps {
-  communityId: string;
+  community: ICommunity;
   onPressMenu: (item: ICommunityMembers) => void;
 }
 
-const CommunityMemberList = ({ communityId, onPressMenu }: CommunityMemberListProps) => {
+const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProps) => {
+  const { id: communityId, groupId } = community;
   const dispatch = useDispatch();
+
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
     'communities',
@@ -30,11 +32,12 @@ const CommunityMemberList = ({ communityId, onPressMenu }: CommunityMemberListPr
       return () => {
         resetCommunityMembers();
       };
-    }, [communityId],
+    }, [groupId],
   );
 
   const getCommunityMembers = (isRefreshing?: boolean) => {
-    dispatch(actions.getCommunityMembers({ communityId, isRefreshing }));
+    if (!groupId) return;
+    dispatch(actions.getCommunityMembers({ groupId, isRefreshing }));
   };
 
   const resetCommunityMembers = () => {
