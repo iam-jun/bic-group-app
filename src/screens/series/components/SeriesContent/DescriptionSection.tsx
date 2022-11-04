@@ -21,7 +21,7 @@ const DescriptionSection: FC<DescriptionSectionProps> = ({
   if (!description) return null;
 
   return (
-    <View style={[styles.container, style]}>
+    <View testID="description-series" style={[styles.container, style]}>
       <Text.BodyM color={colors.neutral40}>{description}</Text.BodyM>
     </View>
   );

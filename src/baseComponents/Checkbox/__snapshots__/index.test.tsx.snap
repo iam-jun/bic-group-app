@@ -19,14 +19,22 @@ exports[`Checkbox component should render disabled state with default size mediu
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "alignItems": "center",
-      "flexDirection": "row",
       "opacity": 1,
     }
   }
   testID="checkbox"
 >
-  <View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        undefined,
+      ]
+    }
+  >
     <View
       style={
         Array [
@@ -143,14 +151,22 @@ exports[`Checkbox component should render disabled state with size small correct
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "alignItems": "center",
-      "flexDirection": "row",
       "opacity": 1,
     }
   }
   testID="checkbox"
 >
-  <View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        undefined,
+      ]
+    }
+  >
     <View
       style={
         Array [
@@ -267,14 +283,22 @@ exports[`Checkbox component should render disabled-auto-selected state with defa
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "alignItems": "center",
-      "flexDirection": "row",
       "opacity": 1,
     }
   }
   testID="checkbox"
 >
-  <View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        undefined,
+      ]
+    }
+  >
     <View
       style={
         Array [
@@ -391,14 +415,22 @@ exports[`Checkbox component should render indeterminate state with default size 
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "alignItems": "center",
-      "flexDirection": "row",
       "opacity": 1,
     }
   }
   testID="checkbox"
 >
-  <View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        undefined,
+      ]
+    }
+  >
     <View
       style={
         Array [
@@ -513,14 +545,22 @@ exports[`Checkbox component should render selected state with default size mediu
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "alignItems": "center",
-      "flexDirection": "row",
       "opacity": 1,
     }
   }
   testID="checkbox"
 >
-  <View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        undefined,
+      ]
+    }
+  >
     <View
       style={
         Array [
@@ -635,14 +675,22 @@ exports[`Checkbox component should render unselect state with default size mediu
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "alignItems": "center",
-      "flexDirection": "row",
       "opacity": 1,
     }
   }
   testID="checkbox"
 >
-  <View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        undefined,
+      ]
+    }
+  >
     <View
       style={
         Array [

@@ -28,7 +28,7 @@ const SeriesContent: FC<SeriesContentProps> = ({ series }) => {
         <TitleSection
           title={title}
           time={updatedAt}
-          numberOfArticles={9}
+          numberOfArticles={0}
           img={coverMedia?.url}
         />
       </Button>

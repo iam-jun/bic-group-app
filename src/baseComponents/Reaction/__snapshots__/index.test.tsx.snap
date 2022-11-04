@@ -60,20 +60,18 @@ exports[`Reaction component renders correctly 1`] = `
           testID="reaction.children"
         >
           <Text
+            adjustsFontSizeToFit={true}
+            allowFontScaling={true}
             style={
               Array [
+                undefined,
                 Object {
-                  "color": "#353E6E",
-                  "fontFamily": "BeVietnamPro-Medium",
+                  "color": "#000",
                   "fontSize": 13,
-                },
-                Object {},
-                Object {
-                  "fontSize": 14,
+                  "fontWeight": "bold",
                 },
               ]
             }
-            testID="reaction.kissing_closed_eyes"
           >
             😚
           </Text>

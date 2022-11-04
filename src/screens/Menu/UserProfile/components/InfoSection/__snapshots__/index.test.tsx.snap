@@ -2,29 +2,32 @@
 
 exports[`InfoSection component renders correctly 1`] = `
 <View
-  style={
-    Object {
-      "marginTop": 16,
-      "paddingBottom": 12,
-    }
-  }
   testID="info_section"
 >
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#181C32",
-          "fontFamily": "BeVietnamPro-SemiBold",
-          "fontSize": 17,
-        },
-        Object {},
-        Object {
-          "marginBottom": 16,
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 16,
+      }
     }
-    testID="info_section.title"
-  />
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="info_section.title"
+    />
+  </View>
 </View>
 `;

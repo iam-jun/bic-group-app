@@ -1,151 +1,167 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NoticePanel component renders correctly 1`] = `
-<View
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#FFFFFF",
-      "flexDirection": "row",
-      "marginBottom": 12,
-      "paddingHorizontal": 16,
-      "paddingVertical": 8,
-      "width": "100%",
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#EAEDF2",
+          "height": 16,
+          "marginHorizontal": 0,
+          "width": undefined,
+        },
+        Object {},
+      ]
     }
-  }
->
+    testID="divider"
+  />,
   <View
     style={
       Object {
-        "flex": 1,
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "flexDirection": "row",
+        "paddingHorizontal": 16,
+        "paddingVertical": 8,
+        "width": "100%",
       }
     }
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {},
-          undefined,
-        ]
-      }
-      testID="notice_panel.title"
-    >
-      Processing video 
-    </Text>
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 13,
-          },
-          Object {},
-          Object {
-            "color": "#767D93",
-            "marginTop": 2,
-          },
-        ]
-      }
-    >
-      The video of your post is being processed. We'll send you a notification when it's completed
-    </Text>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "marginLeft": 8,
-        "opacity": 1,
-      }
-    }
-    testID="notice_panel.button_close"
   >
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
+        Object {
+          "flex": 1,
+        }
       }
-      testID="button_wrapper.content"
     >
-      <View
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        hitSlop={
-          Object {
-            "bottom": 10,
-            "left": 10,
-            "right": 10,
-            "top": 10,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+      <Text
         style={
-          Object {
-            "opacity": 1,
-          }
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 13,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+        testID="notice_panel.title"
+      >
+        Processing video 
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {},
+            Object {
+              "color": "#767D93",
+              "marginTop": 2,
+            },
+          ]
         }
       >
+        The video of your post is being processed. We'll send you a notification when it's completed
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "marginLeft": 8,
+          "opacity": 1,
+        }
+      }
+      testID="notice_panel.button_close"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
+        }
+        testID="button_wrapper.content"
+      >
         <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-              },
-              undefined,
-              Object {
-                "backgroundColor": undefined,
-              },
-            ]
+            Object {
+              "opacity": 1,
+            }
           }
         >
           <View
             style={
               Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
                 undefined,
-                undefined,
-                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
           >
-            <View />
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
           </View>
         </View>
       </View>
     </View>
-  </View>
-</View>
+  </View>,
+]
 `;

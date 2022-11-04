@@ -63,20 +63,18 @@ exports[`ReactionView component renders correctly 1`] = `
       testID="reaction.children"
     >
       <Text
+        adjustsFontSizeToFit={true}
+        allowFontScaling={true}
         style={
           Array [
+            undefined,
             Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#000",
               "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
+              "fontWeight": "bold",
             },
           ]
         }
-        testID="reaction.grinning"
       >
         😀
       </Text>
@@ -147,20 +145,18 @@ exports[`ReactionView component renders correctly 1`] = `
       testID="reaction.children"
     >
       <Text
+        adjustsFontSizeToFit={true}
+        allowFontScaling={true}
         style={
           Array [
+            undefined,
             Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#000",
               "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
+              "fontWeight": "bold",
             },
           ]
         }
-        testID="reaction.grinning_face_with_star_eyes"
       >
         🤩
       </Text>
@@ -231,20 +227,18 @@ exports[`ReactionView component renders correctly 1`] = `
       testID="reaction.children"
     >
       <Text
+        adjustsFontSizeToFit={true}
+        allowFontScaling={true}
         style={
           Array [
+            undefined,
             Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#000",
               "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
+              "fontWeight": "bold",
             },
           ]
         }
-        testID="reaction.kissing_smiling_eyes"
       >
         😙
       </Text>
@@ -289,8 +283,8 @@ exports[`ReactionView component renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
+        "backgroundColor": "#F4EFFB",
+        "borderColor": "#7335C0",
         "borderRadius": 4,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -315,20 +309,18 @@ exports[`ReactionView component renders correctly 1`] = `
       testID="reaction.children"
     >
       <Text
+        adjustsFontSizeToFit={true}
+        allowFontScaling={true}
         style={
           Array [
+            undefined,
             Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#000",
               "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
+              "fontWeight": "bold",
             },
           ]
         }
-        testID="reaction.sweat_smile"
       >
         😅
       </Text>
@@ -341,7 +333,7 @@ exports[`ReactionView component renders correctly 1`] = `
               "fontSize": 13,
             },
             Object {
-              "color": "#353E6E",
+              "color": "#7335C0",
             },
             Object {
               "marginLeft": 4,
@@ -518,20 +510,18 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       testID="reaction.children"
     >
       <Text
+        adjustsFontSizeToFit={true}
+        allowFontScaling={true}
         style={
           Array [
+            undefined,
             Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#000",
               "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
+              "fontWeight": "bold",
             },
           ]
         }
-        testID="reaction.grinning"
       >
         😀
       </Text>
@@ -602,20 +592,18 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       testID="reaction.children"
     >
       <Text
+        adjustsFontSizeToFit={true}
+        allowFontScaling={true}
         style={
           Array [
+            undefined,
             Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#000",
               "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
+              "fontWeight": "bold",
             },
           ]
         }
-        testID="reaction.grinning_face_with_star_eyes"
       >
         🤩
       </Text>
@@ -686,20 +674,18 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       testID="reaction.children"
     >
       <Text
+        adjustsFontSizeToFit={true}
+        allowFontScaling={true}
         style={
           Array [
+            undefined,
             Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#000",
               "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
+              "fontWeight": "bold",
             },
           ]
         }
-        testID="reaction.kissing_smiling_eyes"
       >
         😙
       </Text>
@@ -744,8 +730,8 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
+        "backgroundColor": "#F4EFFB",
+        "borderColor": "#7335C0",
         "borderRadius": 4,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -770,20 +756,18 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
       testID="reaction.children"
     >
       <Text
+        adjustsFontSizeToFit={true}
+        allowFontScaling={true}
         style={
           Array [
+            undefined,
             Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
+              "color": "#000",
               "fontSize": 13,
-            },
-            Object {},
-            Object {
-              "fontSize": 14,
+              "fontWeight": "bold",
             },
           ]
         }
-        testID="reaction.sweat_smile"
       >
         😅
       </Text>
@@ -796,7 +780,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
               "fontSize": 13,
             },
             Object {
-              "color": "#353E6E",
+              "color": "#7335C0",
             },
             Object {
               "marginLeft": 4,

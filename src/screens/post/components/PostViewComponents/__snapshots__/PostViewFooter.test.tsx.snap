@@ -6,8 +6,9 @@ exports[`PostViewFooter component should render correctly 1`] = `
     Array [
       Object {
         "alignItems": "center",
-        "flexDirection": "row",
-        "height": 44,
+        "backgroundColor": "#F1F2F8",
+        "flex": 1,
+        "justifyContent": "center",
       },
       Object {
         "height": 36,
@@ -16,39 +17,22 @@ exports[`PostViewFooter component should render correctly 1`] = `
     ]
   }
 >
-  <View
+  <Text
     style={
       Array [
         Object {
-          "alignItems": "center",
-          "backgroundColor": "#F1F2F8",
-          "flex": 1,
-          "justifyContent": "center",
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 13,
         },
         Object {
-          "height": 36,
-          "marginTop": 4,
+          "color": "#BAC0DE",
         },
+        undefined,
       ]
     }
   >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 13,
-          },
-          Object {
-            "color": "#BAC0DE",
-          },
-          undefined,
-        ]
-      }
-    >
-      React and comment of this post are not available
-    </Text>
-  </View>
+    React and comment of this post are not available
+  </Text>
 </View>
 `;

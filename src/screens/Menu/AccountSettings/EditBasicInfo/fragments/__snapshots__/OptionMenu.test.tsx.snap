@@ -7,40 +7,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
       <View
         style={Object {}}
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Medium",
-                "fontSize": 13,
-              },
-              Object {
-                "color": "#767D93",
-              },
-              Object {
-                "margin": 12,
-              },
-            ]
-          }
-        >
-          Choose your gender
-        </Text>
-        <View
-          style={
-            Array [
-              Object {
-                "alignSelf": "stretch",
-                "backgroundColor": "#E3E6F2",
-                "height": 1,
-                "marginHorizontal": 0,
-                "width": undefined,
-              },
-              Object {},
-            ]
-          }
-          testID="divider"
-        />
         <View>
           <View
             accessible={true}
@@ -82,8 +48,8 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                     "alignItems": "center",
                     "flexDirection": "row",
                     "opacity": 1,
-                    "paddingHorizontal": 12,
-                    "paddingVertical": 8,
+                    "paddingHorizontal": 16,
+                    "paddingVertical": 12,
                   }
                 }
               >
@@ -99,9 +65,9 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
-                          "fontFamily": "BeVietnamPro-SemiBold",
-                          "fontSize": 13,
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 15,
                         },
                         Object {},
                         undefined,
@@ -156,8 +122,8 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                     "alignItems": "center",
                     "flexDirection": "row",
                     "opacity": 1,
-                    "paddingHorizontal": 12,
-                    "paddingVertical": 8,
+                    "paddingHorizontal": 16,
+                    "paddingVertical": 12,
                   }
                 }
               >
@@ -173,9 +139,9 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
-                          "fontFamily": "BeVietnamPro-SemiBold",
-                          "fontSize": 13,
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 15,
                         },
                         Object {},
                         undefined,
@@ -287,8 +253,8 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                     "alignItems": "center",
                     "flexDirection": "row",
                     "opacity": 1,
-                    "paddingHorizontal": 12,
-                    "paddingVertical": 8,
+                    "paddingHorizontal": 16,
+                    "paddingVertical": 12,
                   }
                 }
               >
@@ -304,9 +270,9 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": "#181C32",
-                          "fontFamily": "BeVietnamPro-SemiBold",
-                          "fontSize": 13,
+                          "color": "#212745",
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 15,
                         },
                         Object {},
                         undefined,
