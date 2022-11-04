@@ -73,8 +73,8 @@ const selectAudienceStore = (set, get) => ({
       const users = state.selecting.users || {};
       const groups = state.selecting.groups || {};
       const newSelectingGroups = { ...groups };
-      const newSelectingIds = getAudienceIdsFromSelecting({ users, groups });
       delete newSelectingGroups[group?.id];
+      const newSelectingIds = getAudienceIdsFromSelecting({ users, groups: newSelectingGroups });
       set((state) => {
         state.selecting.groups = newSelectingGroups;
         state.selectingIds = newSelectingIds;
