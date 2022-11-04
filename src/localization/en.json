@@ -178,6 +178,8 @@
     "text_year": "{{number}} year",
     "text_never": "Never",
     "text_custom": "Custom",
+    "text_add_cover": "Add a cover",
+    "text_optional": "optional",
     "articles": "Articles",
     "last_updated": "Last updated",
     "audiences": "Audiences"
@@ -505,7 +507,6 @@
     "text_option_edit_audience": "Audience",
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
-    "text_add_cover": "Add a cover",
     "text_select_cover": "Select cover",
     "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
@@ -1131,5 +1132,20 @@
     "objects": "Objects",
     "symbols": "Symbols",
     "flags": "Flags"
-  }
+  },
+  "series": {
+    "title_create_series":"Create Series",
+    "title_name": "Name",
+    "text_input_name": "Enter name",
+    "text_update_cover": "Update cover",
+    "menu_text_edit_series": "Edit series",
+    "menu_text_save_series": "Save Series",
+    "menu_text_delete_series": "Delete Series",
+    "content_delete_series": "Do you want to delete this series?",
+    "text_delete_series_success": "Series deleted",
+    "title_delete_audiences_of_series": "You Cannot Delete This Series",
+    "content_delete_audiences_of_series": "You can only remove audiences from your series excepting these audiences below. Are you sure do this?",
+    "content_not_able_delete_of_series": "You don't have permission to delete this series because of not allowance from these audiences below.",
+    "text_deleted_audiences": "Your series has been removed audiences."
+    }
 }

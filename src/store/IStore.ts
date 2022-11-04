@@ -27,6 +27,7 @@ import INotificationsState from '~/screens/Notification/store/Interface';
 import { IGiphyState } from './giphy';
 import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
 import { IArticleController } from '~/screens/articles/store';
+import { ISeriesState } from '~/screens/series/store';
 
 export interface BicStore {
   entities: {
@@ -51,6 +52,9 @@ export interface BicStore {
         editArticleCategoryStore: IEditArticleCategoryState
       }
     }
+  };
+  series: {
+    seriesStore: ISeriesState,
   };
   groups: {
     components: {

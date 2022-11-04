@@ -5,8 +5,8 @@ exports[`UserHeader component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
+      "paddingBottom": 12,
       "paddingHorizontal": 16,
-      "paddingVertical": 12,
     }
   }
   testID="user_profile"
@@ -71,7 +71,9 @@ exports[`UserHeader component renders correctly 1`] = `
             "fontSize": 13,
           },
           Object {},
-          undefined,
+          Object {
+            "textAlign": "center",
+          },
         ]
       }
     >

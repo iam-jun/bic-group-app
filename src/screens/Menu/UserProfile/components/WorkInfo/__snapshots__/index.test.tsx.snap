@@ -20,7 +20,9 @@ exports[`WorkInfo component renders correctly 1`] = `
           "fontSize": 13,
         },
         Object {},
-        undefined,
+        Object {
+          "textAlign": "center",
+        },
       ]
     }
   >

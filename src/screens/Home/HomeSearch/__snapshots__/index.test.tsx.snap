@@ -128,7 +128,8 @@ exports[`NewsfeedSearch component should render search 1`] = `
               "borderRadius": 24,
               "borderWidth": 1,
               "justifyContent": "center",
-              "paddingHorizontal": 16,
+              "paddingLeft": 8,
+              "paddingRight": 12,
             },
             Object {
               "color": "#181C32",
@@ -222,7 +223,7 @@ exports[`NewsfeedSearch component should render search 1`] = `
             onFocus={[Function]}
             onSubmitEditing={[Function]}
             placeholder="Search for posts..."
-            placeholderTextColor="#767D93"
+            placeholderTextColor="#BAC0DE"
             returnKeyType="search"
             selectionColor="#767D93"
             style={
@@ -439,7 +440,8 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
               "borderRadius": 24,
               "borderWidth": 1,
               "justifyContent": "center",
-              "paddingHorizontal": 16,
+              "paddingLeft": 8,
+              "paddingRight": 12,
             },
             Object {
               "color": "#181C32",
@@ -533,7 +535,7 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
             onFocus={[Function]}
             onSubmitEditing={[Function]}
             placeholder="Search for posts..."
-            placeholderTextColor="#767D93"
+            placeholderTextColor="#BAC0DE"
             returnKeyType="search"
             selectionColor="#767D93"
             style={

@@ -7,7 +7,7 @@ const getNotifications = (set, _get) => async (payload?: IParamGetNotifications)
   try {
     set((state: INotificationsState) => {
       if (isRefresh) {
-        state[keyValue].loading = true;
+        state.refreshing = true;
       } else {
         state[keyValue].loading = true;
       }
@@ -26,6 +26,7 @@ const getNotifications = (set, _get) => async (payload?: IParamGetNotifications)
         state[keyValue].data = [...newData];
         state.notificationList = { ...state.notificationList, ...newResponse };
         state.unseenNumber = response.unseen;
+        state.refreshing = false;
       }, 'getNotificationSuccess');
     } else {
       set((state: INotificationsState) => {
@@ -33,11 +34,13 @@ const getNotifications = (set, _get) => async (payload?: IParamGetNotifications)
         state[keyValue].data = [];
         state[keyValue].noMoreData = true;
         state.unseenNumber = response.unseen;
+        state.refreshing = false;
       }, 'getNotificationWithNoNotiSuccess');
     }
   } catch (err) {
     set((state: INotificationsState) => {
       state[keyValue].loading = false;
+      state.refreshing = false;
     }, 'getNotificationError');
     console.error(
       '\x1b[31m🐣️ getNotifications err: ', err, '\x1b[0m',

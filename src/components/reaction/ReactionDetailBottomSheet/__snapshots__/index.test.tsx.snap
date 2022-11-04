@@ -3,73 +3,38 @@
 exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
 <View>
   <View>
-    <View>
-      <RCTScrollView
-        data={Array []}
-        getItem={[Function]}
-        getItemCount={[Function]}
-        getItemLayout={[Function]}
-        horizontal={true}
-        keyExtractor={[Function]}
-        onContentSizeChange={[Function]}
-        onLayout={[Function]}
-        onMomentumScrollBegin={[Function]}
-        onMomentumScrollEnd={[Function]}
-        onScroll={[Function]}
-        onScrollBeginDrag={[Function]}
-        onScrollEndDrag={[Function]}
-        onScrollToIndexFailed={[Function]}
-        removeClippedSubviews={false}
-        renderItem={[Function]}
-        scrollEventThrottle={50}
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={80}
-        stickyHeaderIndices={Array []}
-        style={
-          Object {
-            "borderBottomWidth": 1,
-            "borderColor": "#E3E6F2",
-            "paddingHorizontal": 12,
-            "paddingVertical": 12,
-          }
+    <RCTScrollView
+      ListFooterComponent={[Function]}
+      data={Array []}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "paddingTop": 4,
         }
-        viewabilityConfigCallbackPairs={Array []}
-      >
-        <View />
-      </RCTScrollView>
-      <RCTScrollView
-        ListFooterComponent={[Function]}
-        data={Array []}
-        getItem={[Function]}
-        getItemCount={[Function]}
-        keyExtractor={[Function]}
-        onContentSizeChange={[Function]}
-        onEndReached={[Function]}
-        onLayout={[Function]}
-        onMomentumScrollBegin={[Function]}
-        onMomentumScrollEnd={[Function]}
-        onScroll={[Function]}
-        onScrollBeginDrag={[Function]}
-        onScrollEndDrag={[Function]}
-        removeClippedSubviews={false}
-        renderItem={[Function]}
-        scrollEventThrottle={50}
-        stickyHeaderIndices={Array []}
-        style={
-          Object {
-            "paddingTop": 4,
-          }
-        }
-        testID="reaction_detail_bottomSheet.list_user"
-        viewabilityConfigCallbackPairs={Array []}
-      >
-        <View>
-          <View
-            onLayout={[Function]}
-          />
-        </View>
-      </RCTScrollView>
-    </View>
+      }
+      testID="reaction_detail_bottomSheet.list_user"
+      viewabilityConfigCallbackPairs={Array []}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+        />
+      </View>
+    </RCTScrollView>
   </View>
 </View>
 `;

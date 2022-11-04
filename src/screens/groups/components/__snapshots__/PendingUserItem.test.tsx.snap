@@ -29,7 +29,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
       style={
         Array [
           Object {
-            "borderRadius": 4,
+            "borderRadius": 8,
             "height": 48,
             "width": 48,
           },
@@ -43,7 +43,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           Array [
             Array [
               Object {
-                "borderRadius": 4,
+                "borderRadius": 8,
                 "height": 48,
                 "width": 48,
               },
@@ -57,81 +57,52 @@ exports[`PendingUserItem component should render data correctly 1`] = `
         testID="avatar_container"
       >
         <View
-          onLayout={[Function]}
           style={
-            Object {
-              "backgroundColor": "transparent",
-              "position": "relative",
-            }
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Array [
+                  Object {
+                    "borderRadius": 8,
+                    "height": 48,
+                    "width": 48,
+                  },
+                  Object {
+                    "borderRadius": 24,
+                  },
+                ],
+                Object {
+                  "borderColor": "#F2F5F8",
+                  "borderWidth": 2,
+                },
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                },
+              ],
+            ]
           }
         >
-          <View
-            collapsable={false}
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={
+              Object {
+                "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/949ad541-c16f-4974-a83c-db04f3a393c9.jpg",
+              }
+            }
             style={
               Object {
                 "bottom": 0,
                 "left": 0,
-                "opacity": 1,
                 "position": "absolute",
                 "right": 0,
                 "top": 0,
               }
             }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#f9f9f9",
-                  "borderColor": "#F2F5F8",
-                  "borderRadius": 24,
-                  "borderWidth": 2,
-                  "height": 48,
-                  "justifyContent": "center",
-                  "width": 48,
-                }
-              }
-              testID="Image__placeholder"
-            />
-          </View>
-          <View
-            style={
-              Array [
-                Object {
-                  "overflow": "hidden",
-                },
-                Object {
-                  "backgroundColor": "#FFFFFF",
-                  "borderColor": "#F2F5F8",
-                  "borderRadius": 24,
-                  "borderWidth": 2,
-                  "height": 48,
-                  "width": 48,
-                },
-              ]
-            }
-          >
-            <FastImageView
-              onFastImageError={[Function]}
-              onFastImageLoadEnd={[Function]}
-              resizeMode="cover"
-              source={
-                Object {
-                  "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/949ad541-c16f-4974-a83c-db04f3a393c9.jpg",
-                }
-              }
-              style={
-                Object {
-                  "bottom": 0,
-                  "left": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
-              }
-              testID="avatar.image"
-            />
-          </View>
+            testID="avatar.image"
+          />
         </View>
       </View>
     </View>

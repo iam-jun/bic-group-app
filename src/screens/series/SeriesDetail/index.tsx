@@ -1,9 +1,21 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { Keyboard, StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
+import { BottomListProps } from '~/components/BottomList';
+import { useBaseHook } from '~/hooks';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useMyPermissions } from '~/hooks/permissions';
+import { IAudienceGroup } from '~/interfaces/IPost';
+import AlertDeleteAudiencesConfirmContent from '~/screens/post/components/AlertDeleteAudiencesConfirmContent';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import modalActions from '~/storeRedux/modal/actions';
+import DeletedItem from '../components/DeletedItem';
+import { getSeriesMenu } from '../helper';
+import useSeriesStore, { ISeriesState } from '../store';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
 
 const SeriesDetail = ({ route }: any) => {
@@ -11,12 +23,104 @@ const SeriesDetail = ({ route }: any) => {
   const { seriesId } = params || {};
   const theme = useTheme();
   const styles = createStyle(theme);
+  const userId = useUserIdAuth();
+  const dispatch = useDispatch();
+  const { t } = useBaseHook();
 
-  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId), [seriesId]));
+  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId), [seriesId])) || {};
+
+  const {
+    actor, id, deleted, audience,
+  } = series;
+  const actions = useSeriesStore((state: ISeriesState) => state.actions);
+
+  useEffect(() => {
+    actions.getSeriesDetail(seriesId);
+  }, []);
+
+  const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
+    = useMyPermissions();
+  const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
+    'groups',
+    audience?.groups,
+    PERMISSION_KEY.GROUP.DELETE_OWN_POST,
+  );
+
+  const handleError = (listIdAudiences: string[]) => {
+    if (listIdAudiences?.length <= 0 || audience?.groups?.length <= 0) {
+      return;
+    }
+
+    const listAudiences = listIdAudiences.map((audienceId) => {
+      const _audience = audience.groups.find(
+        (audience: IAudienceGroup) => audience?.id === audienceId,
+      );
+      return _audience;
+    });
+    if (canDeleteOwnPost) {
+      dispatch(
+        modalActions.showAlert({
+          title: t('series:title_delete_audiences_of_series'),
+          children: (
+            <AlertDeleteAudiencesConfirmContent
+              data={listAudiences}
+              textContent={t('series:content_delete_audiences_of_series')}
+            />
+          ),
+          cancelBtn: true,
+          confirmLabel: t('common:text_remove'),
+          ConfirmBtnComponent: Button.Danger,
+          onConfirm: () => {
+            // do something
+          },
+          confirmBtnProps: { type: 'ghost' },
+        }),
+      );
+    } else {
+      dispatch(
+        modalActions.showAlert({
+          title: t('series:title_delete_audiences_of_series'),
+          children: (
+            <AlertDeleteAudiencesConfirmContent
+              data={listAudiences}
+              textContent={t('series:content_not_able_delete_of_series')}
+            />
+          ),
+          cancelBtn: true,
+          cancelLabel: t('common:btn_close'),
+          onConfirm: null,
+        }),
+      );
+    }
+  };
+
+  const handleConfirmDelete = () => {
+    actions.deleteSeries(id, handleError);
+  };
 
   const onRightPress = () => {
-    // do something
+    Keyboard.dismiss();
+    const data = getSeriesMenu({
+      reactionsCount: {},
+      isActor: actor?.id == userId,
+      dispatch,
+      seriesId: id,
+      handleConfirmDelete,
+    });
+
+    dispatch(
+      modalActions.showBottomList({ isOpen: true, data } as BottomListProps),
+    );
   };
+
+  if (deleted) {
+    return (
+      <View style={styles.container}>
+        <Header />
+        <DeletedItem />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -24,6 +128,7 @@ const SeriesDetail = ({ route }: any) => {
         rightIcon="menu"
         onRightPress={onRightPress}
       />
+
       <SeriesDetailHeader series={series} />
       {/* for the next sprint */}
       {/* list SeriesDetailArticleItem */}

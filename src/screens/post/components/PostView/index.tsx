@@ -144,7 +144,7 @@ const _PostView: FC<PostViewProps> = ({
           children: (
             <AlertDeleteAudiencesConfirmContent
               data={listAudiences}
-              canDeleteOwnPost={canDeleteOwnPost}
+              textContent={t('post:content_delete_audiences_of_post')}
             />
           ),
           cancelBtn: true,
@@ -166,7 +166,7 @@ const _PostView: FC<PostViewProps> = ({
           children: (
             <AlertDeleteAudiencesConfirmContent
               data={listAudiences}
-              canDeleteOwnPost={canDeleteOwnPost}
+              textContent={t('post:content_not_able_delete_of_post')}
             />
           ),
           cancelBtn: true,

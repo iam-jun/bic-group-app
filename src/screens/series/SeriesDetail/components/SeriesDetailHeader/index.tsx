@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
@@ -24,7 +25,7 @@ type AudiencesSectionProps = {
 const AudiencesSection: FC<AudiencesSectionProps> = ({ audience }) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const { groups } = audience;
+  const { groups = [] } = audience || {};
   const theme = useTheme();
   const styles = createStyle(theme);
 
@@ -47,6 +48,7 @@ const AudiencesSection: FC<AudiencesSectionProps> = ({ audience }) => {
 
   const renderItem = ({ item }) => (
     <Tag
+      testID="audience-tag"
       style={styles.tagContainer}
       type="secondary"
       size="small"
@@ -131,8 +133,9 @@ const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
         <ViewSpacing height={spacing.margin.large} />
         <Text.H2>{title}</Text.H2>
         <DescriptionSection description={summary} style={styles.description} />
-        <ViewSpacing height={spacing.margin.large} />
-        <InfoSection />
+        {/* for the next sprint */}
+        {/* <ViewSpacing height={spacing.margin.large} />
+        <InfoSection /> */}
       </View>
     </View>
   );

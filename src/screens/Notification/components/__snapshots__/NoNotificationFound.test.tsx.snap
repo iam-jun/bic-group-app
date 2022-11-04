@@ -6,7 +6,7 @@ exports[`NoNotificationFound component renders correctly 1`] = `
     Object {
       "alignItems": "center",
       "flex": 1,
-      "paddingTop": 72,
+      "paddingTop": 24,
     }
   }
 >
@@ -19,16 +19,18 @@ exports[`NoNotificationFound component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#212745",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 13,
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 17,
         },
-        Object {},
+        Object {
+          "color": "#282E53",
+        },
         undefined,
       ]
     }
   >
-    You have no pending notification
+    You have no notification
   </Text>
 </View>
 `;

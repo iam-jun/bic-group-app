@@ -122,13 +122,28 @@ const CommunityDetail = (props: any) => {
       currentCommunityId: communityId,
     });
 
-    // timelineActions.resetTimeline(groupId);
     if (isMounted) {
       getCommunityDetail();
     }
   }, [isMounted, communityId]);
 
-  useEffect(() => { if (isEmpty(communityPost?.ids)) getPosts(); }, [community]);
+  useEffect(() => {
+    if (isEmpty(communityPost?.ids)) {
+      initTimeline();
+    }
+  },
+  [community]);
+
+  useEffect(() => {
+    initTimeline();
+  }, []);
+
+  const initTimeline = () => {
+    // clear timeline whenever going to community detail
+    if (groupId) timelineActions.resetTimeline(groupId);
+
+    getPosts();
+  };
 
   const onRefresh = useCallback((isGetPost: boolean) => {
     /**
