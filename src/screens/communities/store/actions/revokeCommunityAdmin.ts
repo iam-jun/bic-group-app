@@ -5,12 +5,12 @@ import Store from '~/storeRedux';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 
-const revokeCommunityAdmin = (_set, _get) => async (communityId: string, userIds: string[]) => {
+const revokeCommunityAdmin = (_set, _get) => async (id: string, userId: string) => {
   try {
-    const response = await groupApi.revokeCommunityAdmin(communityId, userIds);
+    const response = await groupApi.removeGroupAdmin(id, userId);
 
     Store.store.dispatch(
-      groupsActions.getCommunityMembers({ communityId, isRefreshing: true }),
+      groupsActions.getCommunityMembers({ groupId: id, isRefreshing: true }),
     );
 
     const toastMessage: IToastMessage = {

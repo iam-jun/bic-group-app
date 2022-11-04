@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { ICommunityMembers } from '~/interfaces/ICommunity';
+import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import { useMyPermissions } from '~/hooks/permissions';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
@@ -10,18 +10,19 @@ import useCommunityController from '../../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 
 interface CommunityMemberOptionsMenuProps {
-  communityId: string;
+  community: ICommunity;
   modalizeRef: any;
   selectedMember: ICommunityMembers;
   onOptionsClosed: () => void;
 }
 
 const CommunityMemberOptionsMenu = ({
-  communityId,
+  community,
   modalizeRef,
   selectedMember,
   onOptionsClosed,
 }: CommunityMemberOptionsMenuProps) => {
+  const { id: communityId, groupId } = community;
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
@@ -45,11 +46,11 @@ const CommunityMemberOptionsMenu = ({
   const onPressSetAdminRole = () => {
     if (!selectedMember?.id) return;
 
-    actions.assignCommunityAdmin(communityId, [selectedMember.id]);
+    actions.assignCommunityAdmin(groupId, [selectedMember.id]);
   };
 
   const onConfirmRemoveAdminRole = () => {
-    actions.revokeCommunityAdmin(communityId, [selectedMember.id]);
+    actions.revokeCommunityAdmin(groupId, selectedMember.id);
   };
 
   const onPressRevokeAdminRole = () => {

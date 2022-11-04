@@ -21,7 +21,7 @@ interface ICommunityController {
       data: ICommunityDetailEdit, editFieldName?: string, callback?: () => void
     ) => void;
     assignCommunityAdmin: (id: string, userIds: string[]) => void;
-    revokeCommunityAdmin: (id: string, userIds: string[]) => void;
+    revokeCommunityAdmin: (id: string, userId: string) => void;
   }
 }
 
