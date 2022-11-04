@@ -24,7 +24,7 @@ const timelineStore = (set, get) => ({
     resetTimeline: (id: string) => {
       set((state) => {
         state.items[id] = {};
-      });
+      }, `resetTimeline: ${id}`);
     },
   },
   reset: () => resetStore(initialState, set),
