@@ -29,6 +29,7 @@ import useYourGroupsStore from '~/screens/communities/Communities/components/You
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import useNotificationStore from '~/screens/Notification/store';
 import useGiphyStore from './giphy';
+import useSeriesStore from '~/screens/series/store';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import useArticleController from '~/screens/articles/store';
 
@@ -72,6 +73,7 @@ const stores = [
   useTimelineStore,
   useSearchJoinedCommunitiesStore,
   useGiphyStore,
+  useSeriesStore,
 ];
 
 export const resetAllStores = () => {

@@ -25,7 +25,7 @@ type AudiencesSectionProps = {
 const AudiencesSection: FC<AudiencesSectionProps> = ({ audience }) => {
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
-  const { groups } = audience;
+  const { groups = [] } = audience || {};
   const theme = useTheme();
   const styles = createStyle(theme);
 

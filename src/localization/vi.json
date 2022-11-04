@@ -146,6 +146,8 @@
     "text_year": "{{number}} năm",
     "text_never": "Không bao giờ",
     "text_custom": "Tùy chỉnh",
+    "text_add_cover": "Thêm ảnh bìa",
+    "text_optional": "tuỳ chọn",
     "articles": "Bài viết",
     "last_updated": "Cập nhật",
     "audiences": "Đối tượng"
@@ -464,7 +466,6 @@
     "text_option_edit_audience": "Đối Tượng",
     "text_option_edit_content": "Nội Dung",
     "text_change_cover": "Đổi ảnh bìa",
-    "text_add_cover": "Thêm ảnh bìa",
     "text_select_cover": "Chọn ảnh bìa",
     "text_selecting_categories": "Bài viết của bạn sẽ được thêm vào",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
@@ -1065,5 +1066,20 @@
     "objects": "Vật thể",
     "symbols": "Ký hiệu",
     "flags": "Cờ"
+  },
+  "series": {
+    "title_create_series":"Tạo Loạt Bài Viết",
+    "title_name": "Tên",
+    "text_input_name": "Nhập tên",
+    "text_update_cover": "Đổi ảnh bìa",
+    "menu_text_edit_series": "Chỉnh sửa series",
+    "menu_text_save_series": "Lưu series",
+    "menu_text_delete_series": "Xoá series",
+    "content_delete_series": "Bạn có muốn xóa series này không?",
+    "text_delete_series_success": "Series đã được xoá",
+    "title_delete_audiences_of_series": "Bạn Không Thể Xóa Series Này",
+    "content_delete_audiences_of_series": "Bạn không thể xóa series này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
+    "content_not_able_delete_of_series": "Bạn không thể xóa series này khỏi những đối tượng dưới đây.",
+    "text_deleted_audiences": "Series của bạn đã được xoá khỏi các nhóm đối tượng."
   }
 }

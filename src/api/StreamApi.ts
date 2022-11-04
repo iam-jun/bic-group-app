@@ -33,6 +33,7 @@ import {
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
+import { IParamGetSeriesDetail, IPostCreateSeries } from '~/interfaces/ISeries';
 
 const DEFAULT_LIMIT = 10;
 
@@ -77,7 +78,6 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}recent-searches`,
     method: 'post',
-
     data,
   }),
   deleteClearRecentSearch: (target: IRecentSearchTarget): HttpApiRequestConfig => ({
@@ -314,6 +314,25 @@ export const streamApiConfig = {
     url: `${provider.url}giphy/search`,
     params,
   }),
+  postCreateNewSeries: (
+    params: IPostCreateSeries,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    method: 'post',
+    url: `${provider.url}series`,
+    data: { ...params },
+  }),
+  getSeriesDetail: (id: string,
+    params?: IParamGetSeriesDetail): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/${id}`,
+    params,
+  }),
+  deleteSeries: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/${id}`,
+    method: 'delete',
+  }),
   getDraftArticles: (params: IParamGetDraftArticles): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/draft`,
@@ -529,6 +548,13 @@ const streamApi = {
   getSearchGiphy: (params: IGetSearchGiphyParams) => withHttpRequestPromise(
     streamApiConfig.getSearchGiphy, params,
   ),
+  postCreateNewSeries: (params: IPostCreateSeries) => withHttpRequestPromise(
+    streamApiConfig.postCreateNewSeries, params,
+  ),
+  getSeriesDetail: (id: string, params?: IParamGetSeriesDetail) => withHttpRequestPromise(
+    streamApiConfig.getSeriesDetail, id, params,
+  ),
+  deleteSeries: (id: string) => withHttpRequestPromise(streamApiConfig.deleteSeries, id),
 };
 
 export default streamApi;

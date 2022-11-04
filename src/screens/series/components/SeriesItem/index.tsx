@@ -3,6 +3,7 @@ import React, { FC, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import DeletedItem from '../DeletedItem';
 import SeriesContent from '../SeriesContent';
 import SeriesHeader from '../SeriesHeader';
 
@@ -15,6 +16,11 @@ const SeriesItem: FC<SeriesItemProps> = ({ id: seriesId }) => {
   const styles = createStyle(theme);
 
   const series = usePostsStore(useCallback(postsSelector.getPost(seriesId), [seriesId]));
+  const { deleted } = series;
+
+  if (deleted) {
+    return <DeletedItem />;
+  }
 
   return (
     <View style={styles.container}>

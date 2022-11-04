@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Platform,
+  RefreshControl,
   StyleSheet,
   View,
 } from 'react-native';
@@ -42,7 +43,7 @@ const NotificationList = ({
 
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const notificationTab = useNotificationStore(notiSelector.getTabData(keyValue));
-
+  const refreshing = useNotificationStore((state: INotificationsState) => state.refreshing);
   const {
     data: notificationList,
     isLoadingMore,
@@ -142,9 +143,14 @@ const NotificationList = ({
           renderItemSeparator={() => (
             <Divider size={1} color={theme.colors.neutral5} />
           )}
+          refreshControl={(
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={refreshListNotification}
+              tintColor={theme.colors.gray40}
+            />
+      )}
           data={notificationList}
-          onRefresh={refreshListNotification}
-          refreshing={loadingNotifications}
           ListEmptyComponent={renderUnReadNotificationsEmpty}
           onLoadMore={loadMoreNotifications}
           ListFooterComponent={renderListFooter}
