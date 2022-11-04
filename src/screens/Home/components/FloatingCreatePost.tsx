@@ -14,6 +14,8 @@ import spacing from '~/theme/spacing';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import useDraftPostStore from '~/screens/Draft/DraftPost/store';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 
 export interface FloatingCreatePostProps {
   audience?: any;
@@ -31,11 +33,15 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const {
-    total, actions,
+    total: draftPostTotal, actions: draftPostActions,
   } = useDraftPostStore();
+  const {
+    total: draftArticleTotal, actions: draftArticleActions,
+  } = useDraftArticleStore();
 
   useEffect(() => {
-    actions.getDraftPosts({});
+    draftPostActions.getDraftPosts({});
+    draftArticleActions.getDraftArticles({});
   }, []);
 
   const onCreate = () => {
@@ -55,11 +61,12 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   const goToDraftPost = () => {
     dispatch(modalActions.hideBottomList());
     rootNavigation.navigate(
-      homeStack.draftPost,
+      menuStack.draft,
     );
   };
 
   const onPress = () => {
+    const totalPost = draftPostTotal + draftArticleTotal;
     const data = [{
       id: 1,
       testID: 'create_option.write_post',
@@ -75,7 +82,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
       id: 3,
       testID: 'create_option.my_draft',
       title: t('home:create_content_options:my_draft'),
-      badge: total >= 100 ? '99+' : total > 0 ? total : '',
+      badge: totalPost >= 100 ? '99+' : totalPost > 0 ? totalPost : '',
       style: styles.myDraft,
       onPress: goToDraftPost,
     }];
