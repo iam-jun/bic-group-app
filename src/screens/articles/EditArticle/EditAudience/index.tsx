@@ -60,7 +60,11 @@ const EditArticleAudience: FC<EditArticleProps> = ({ route }: EditArticleProps) 
     selectAudienceActions.setSelectingGroups(newSelectingGroups);
   }, [article.audience]);
 
-  useBackPressListener(handleBack);
+  const onBack = () => {
+    handleBack(isAudienceUpdated);
+  };
+
+  useBackPressListener(onBack);
 
   return (
     <View style={styles.container}>
@@ -69,7 +73,7 @@ const EditArticleAudience: FC<EditArticleProps> = ({ route }: EditArticleProps) 
         buttonProps={{ disabled, loading }}
         buttonText={t('common:btn_save')}
         onPressButton={handleSave}
-        onPressBack={handleBack}
+        onPressBack={onBack}
       />
       <SelectAudience />
     </View>
