@@ -124,7 +124,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     });
   };
 
-  const onGifSelected = (gif: IGiphy) => {
+  const onGiphySelected = (gif: IGiphy) => {
     stickerViewRef?.current?.hide?.();
     insertImage(gif.url);
   };
@@ -291,7 +291,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
           <MentionBar groupIds={groupIds} style={styles.mentionBar} onCompleteMention={onCompleteMention} />
           <StickerView
             stickerViewRef={stickerViewRef}
-            onGifSelected={onGifSelected}
+            onGiphySelected={onGiphySelected}
           />
           <KeyboardSpacer iosOnly />
         </View>
