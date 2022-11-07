@@ -154,7 +154,7 @@ const CommunityDetail = (props: any) => {
       timelineActions.getPosts(groupId, true);
     }
     getCommunityDetail();
-  }, [communityId]);
+  }, [groupId]);
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideBottomList());
