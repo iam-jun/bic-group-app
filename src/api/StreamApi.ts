@@ -334,6 +334,12 @@ export const streamApiConfig = {
     url: `${provider.url}series/${id}`,
     method: 'delete',
   }),
+  editSeries: (id: string, data: IPostCreateSeries): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/${id}`,
+    method: 'put',
+    data,
+  }),
   getDraftArticles: (params: IParamGetDraftArticles): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/draft`,
@@ -353,6 +359,10 @@ export const streamApiConfig = {
     url: `${provider.url}articles/${id}`,
     method: 'delete',
     ...(isDraft ? { params: { is_draft: true } } : {}),
+  }),
+  getTotalDraft: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}posts/total-draft`,
   }),
 };
 
@@ -556,6 +566,10 @@ const streamApi = {
     streamApiConfig.getSeriesDetail, id, params,
   ),
   deleteSeries: (id: string) => withHttpRequestPromise(streamApiConfig.deleteSeries, id),
+  editSeries: (id: string, params: IPostCreateSeries) => withHttpRequestPromise(
+    streamApiConfig.editSeries, id, params,
+  ),
+  getTotalDraft: () => withHttpRequestPromise(streamApiConfig.getTotalDraft),
 };
 
 export default streamApi;

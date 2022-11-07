@@ -19,6 +19,8 @@ export interface CreationSeriesProps {
       seriesId?: string;
       isEditAudience?: boolean;
       isFirstStep?: boolean;
+      isFromDetail?: boolean;
+      initAudienceGroups?: any[];
     };
   };
 }

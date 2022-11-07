@@ -1151,6 +1151,8 @@
     "title_delete_audiences_of_series": "You Cannot Delete This Series",
     "content_delete_audiences_of_series": "You can only remove audiences from your series excepting these audiences below. Are you sure do this?",
     "content_not_able_delete_of_series": "You don't have permission to delete this series because of not allowance from these audiences below.",
-    "text_deleted_audiences": "Your series has been removed audiences."
+    "text_deleted_audiences": "Your series has been removed audiences.",
+    "text_edit_series_success": "Series has been published successfully",
+    "text_edit_series_failed": "Series was failed to publish"
     }
 }

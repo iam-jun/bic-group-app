@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -13,10 +13,9 @@ import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectA
 import spacing from '~/theme/spacing';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import useDraftPostStore from '~/screens/Draft/DraftPost/store';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import streamApi from '~/api/StreamApi';
 
 export interface FloatingCreatePostProps {
   audience?: any;
@@ -33,17 +32,6 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const {
-    total: draftPostTotal, actions: draftPostActions,
-  } = useDraftPostStore();
-  const {
-    total: draftArticleTotal, actions: draftArticleActions,
-  } = useDraftArticleStore();
-
-  useEffect(() => {
-    draftPostActions.getDraftPosts({});
-    draftArticleActions.getDraftArticles({});
-  }, []);
 
   const onCreate = () => {
     dispatch(modalActions.hideBottomList());
@@ -74,8 +62,8 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
     );
   };
 
-  const onPress = () => {
-    const totalPost = draftPostTotal + draftArticleTotal;
+  const onPress = async () => {
+    const { data: totalPost = 0 } = await streamApi.getTotalDraft() || {};
     const data = [{
       id: 1,
       testID: 'create_option.write_post',

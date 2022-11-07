@@ -24,6 +24,7 @@ import { handleBack } from './handler';
 import useDraftPostStore from '../../Draft/DraftPost/store';
 import useCommentInputStore from '../components/CommentInputView/store';
 import ICommentInputState from '../components/CommentInputView/store/Interface';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 export interface CreatePostProps {
   route?: {
@@ -154,7 +155,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const onPressDraftPost = () => {
     if (isNewsfeed) {
       draftPostActions.getDraftPosts({ isRefresh: true });
-      rootNavigation.navigate(homeStack.draftPost);
+      rootNavigation.navigate(menuStack.draft);
     }
   };
 

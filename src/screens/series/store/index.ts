@@ -5,13 +5,16 @@ import { ISeriesData } from '~/interfaces/ISeries';
 import IBaseState from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import deleteSeries from './actions/deleteSeries';
+import editSeries from './actions/editSeries';
 import getSeriesDetail from './actions/getSeriesDetail';
 import postCreateNewSeries from './actions/postCreateNewSeries';
+import removeAudiences from './actions/removeAudiences';
 
 export interface ISeriesState extends IBaseState{
   loading: boolean;
   data: ISeriesData;
   requestings: IObject<boolean>;
+  groups: any[];
 
   actions?: {
     setData: (data: ISeriesData) => void;
@@ -19,9 +22,12 @@ export interface ISeriesState extends IBaseState{
     setSummary: (summary: string) => void;
     setAudience: (audience: IEditArticleAudience) => void;
     setCover: (cover: IArticleCover) => void;
+    setAudienceGroups: (groups: any) => void;
     postCreateNewSeries?: () => void;
     getSeriesDetail: (id: string) => void;
     deleteSeries: (id: string, callbackError: any) => void;
+    editSeries: (id: string, shouldReplaceWithDetail: boolean, onRetry: any) => void;
+    removeAudiences: (id: string, listAudiences: string[]) => void;
   }
 
   reset?: () => void;
@@ -39,6 +45,7 @@ const initialState = {
     },
   },
   requestings: {},
+  groups: [],
 };
 
 const useSeries = (set, get) => ({
@@ -70,9 +77,16 @@ const useSeries = (set, get) => ({
         state.data.coverMedia = cover || {};
       }, 'setCover');
     },
+    setAudienceGroups: (groups) => {
+      set((state: ISeriesState) => {
+        state.groups = Object.values(groups) || [];
+      }, 'setAudienceGroups');
+    },
     postCreateNewSeries: postCreateNewSeries(set, get),
     getSeriesDetail: getSeriesDetail(set, get),
     deleteSeries: deleteSeries(set, get),
+    editSeries: editSeries(set, get),
+    removeAudiences: removeAudiences(set, get),
   },
 
   reset: () => resetStore(initialState, set),

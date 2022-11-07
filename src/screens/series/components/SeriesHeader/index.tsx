@@ -70,9 +70,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
           cancelBtn: true,
           confirmLabel: t('common:text_remove'),
           ConfirmBtnComponent: Button.Danger,
-          onConfirm: () => {
-            // do something
-          },
+          onConfirm: () => actions.removeAudiences(id, listIdAudiences),
           confirmBtnProps: { type: 'ghost' },
         }),
       );
@@ -105,6 +103,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
       isActor: actor?.id == userId,
       dispatch,
       seriesId: id,
+      navigaton: rootNavigation,
       handleConfirmDelete,
     });
 
