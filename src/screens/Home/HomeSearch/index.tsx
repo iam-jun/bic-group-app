@@ -54,13 +54,13 @@ const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
 
   const onFocusSearch = () => {
     dispatch(
-      homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [] }),
+      homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [], groupId }),
     );
   };
 
   const onSubmitSearch = () => {
     dispatch(
-      homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [] }),
+      homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [], groupId }),
     );
   };
 

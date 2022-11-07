@@ -66,7 +66,7 @@ const SearchResult = () => {
 
   useEffect(() => {
     getData();
-  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate]);
+  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId]);
 
   const onEndReached = () => {
     getData(true);
