@@ -47,6 +47,7 @@ const Home = () => {
   const token = useAuthToken();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
 
   const {
     activeTab, tabImportant, tabNewsfeed, actions,
@@ -90,8 +91,20 @@ const Home = () => {
         listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
         headerRef?.current?.hideSearch?.();
       }
+
+      if (tabName !== 'home' && isShow) {
+        /**
+         * The issue happens when a user opens search content modal on newsfeed,
+         * then move to tab `Communities` without closing it, and goes to community profile,
+         * the search modal is then shown unexpectedly.
+         *
+         * That's why we need to clear and close current search on newsfeed first before
+         * moving to another screen.
+         */
+        dispatch(homeActions.clearAllNewsfeedSearch());
+      }
     },
-    [listRef],
+    [listRef, isShow],
   );
 
   useEffect(

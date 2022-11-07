@@ -41,7 +41,7 @@ const SearchResult = () => {
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
   const renderItem = ({ item }: any) => (item.type === POST_TYPE.ARTICLE ? (
-    <ArticleItem id={item.id} isLite />
+    <ArticleItem id={item.id} isLite postData={item} />
   ) : (
     <PostView
       postId={item?.id}
