@@ -18,7 +18,6 @@ import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/
 import { useKeySelector } from '~/hooks/selector';
 import { ITabTypes } from '~/interfaces/IRouter';
 import NewsfeedSearch from '~/screens/Home/HomeSearch';
-import { HOME_TAB_TYPE } from '~/screens/Home/store/Interface';
 import homeActions from '~/storeRedux/home/actions';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
@@ -47,12 +46,15 @@ const Home = () => {
   const token = useAuthToken();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
 
   const {
-    activeTab, tabImportant, tabNewsfeed, actions,
+    contentFilter, attributeFilter, feed, actions,
   } = useHomeStore();
-  const tabData = activeTab === HOME_TAB_TYPE.NEWSFEED ? tabNewsfeed : tabImportant;
-  const { data: homePosts, canLoadMore, refreshing } = tabData;
+  const dataFiltered = feed[contentFilter][attributeFilter];
+  const {
+    data: homePosts, canLoadMore, refreshing,
+  } = dataFiltered;
 
   const isShowSearch = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
 
@@ -76,13 +78,13 @@ const Home = () => {
   );
 
   const getData = (isRefresh?: boolean) => {
-    actions.getTabData(activeTab, isRefresh);
+    actions.getDataFeed(isRefresh);
   };
 
   useEffect(() => {
-    actions.getTabData(activeTab, true);
-    yShared.value = withDelay(withTiming(0), 200);
-  }, [activeTab]);
+    actions.getDataFeed(true);
+    yShared.value = withDelay(200, withTiming(0));
+  }, [contentFilter, attributeFilter]);
 
   useTabPressListener(
     (tabName: ITabTypes) => {
@@ -90,8 +92,20 @@ const Home = () => {
         listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
         headerRef?.current?.hideSearch?.();
       }
+
+      if (tabName !== 'home' && isShow) {
+        /**
+         * The issue happens when a user opens search content modal on newsfeed,
+         * then move to tab `Communities` without closing it, and goes to community profile,
+         * the search modal is then shown unexpectedly.
+         *
+         * That's why we need to clear and close current search on newsfeed first before
+         * moving to another screen.
+         */
+        dispatch(homeActions.clearAllNewsfeedSearch());
+      }
     },
-    [listRef],
+    [listRef, isShow],
   );
 
   useEffect(
@@ -156,12 +170,12 @@ const Home = () => {
 
   const onEndReach = useCallback(
     () => getData(),
-    [activeTab],
+    [contentFilter, attributeFilter],
   );
 
   const onRefresh = useCallback(
     () => getData(true),
-    [activeTab],
+    [contentFilter, attributeFilter],
   );
 
   const onScrollY = (y: number) => {
@@ -177,7 +191,8 @@ const Home = () => {
         onEndReach={onEndReach}
         onRefresh={onRefresh}
         onScrollY={onScrollY}
-        activeTab={activeTab}
+        contentFilter={contentFilter}
+        attributeFilter={attributeFilter}
       />
       <HomeHeader
         style={styles.headerContainer}
@@ -192,7 +207,7 @@ const Home = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
@@ -228,6 +243,7 @@ const createStyle = (theme: ExtendedTheme) => {
       left: 0,
       right: 0,
       zIndex: 1,
+      ...elevations.e2,
     },
   });
 };

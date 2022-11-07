@@ -1,39 +1,57 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useEffect } from 'react';
 import {
-  DeviceEventEmitter, StyleProp,
-  StyleSheet, View, ViewStyle,
+  DeviceEventEmitter,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
 } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { EdgeInsets } from 'react-native-safe-area-context/src/SafeArea.types';
 import Animated, {
-  Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming,
+  Extrapolation,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import SvgIcon from '~/baseComponents/Icon/SvgIcon';
-import { HOME_TAB_TYPE } from '~/screens/Home/store/Interface';
 
 import BicHomeLogo from '../../../../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';
 import HomeHeaderButton from '~/screens/Home/components/HomeHeaderButton';
-import { homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
+import { homeHeaderAttributeContainerHeight, homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
 import Tab from '~/baseComponents/Tab';
 import useHomeStore from '~/screens/Home/store';
+import { ATTRIBUTE_FEED, CONTENT_FEED } from '../store/Interface';
 
 export interface HomeHeaderProps {
   style?: StyleProp<ViewStyle>;
-  yShared?: any,
+  yShared?: any;
   onPressSearch?: () => void;
   onPressChat?: () => void;
 }
 
-const HEADER_TAB = [
-  { id: HOME_TAB_TYPE.NEWSFEED, text: 'home:title_timeline' },
-  { id: HOME_TAB_TYPE.IMPORTANT, text: 'home:title_important' },
+const HEADER_CONTENT_FEED_FILTER = [
+  { id: CONTENT_FEED.ALL, text: 'home:title_feed_content_all' },
+  { id: CONTENT_FEED.POST, text: 'home:title_feed_content_posts' },
+  { id: CONTENT_FEED.ARTICLE, text: 'home:title_feed_content_articles' },
+  { id: CONTENT_FEED.SERIES, text: 'home:title_feed_content_series' },
+];
+
+const HEADER_ATTRIBUTE_FEED_FILTER = [
+  { id: ATTRIBUTE_FEED.ALL, text: 'home:title_feed_attritube_all' },
+  { id: ATTRIBUTE_FEED.IMPORTANT, text: 'home:title_feed_attritube_important' },
 ];
 
 const HomeHeader: FC<HomeHeaderProps> = ({
-  style, yShared, onPressSearch, onPressChat,
+  style,
+  yShared,
+  onPressSearch,
+  onPressChat,
 }: HomeHeaderProps) => {
   const _yShared = yShared || useSharedValue(0);
   const showShared = useSharedValue(1);
@@ -42,50 +60,53 @@ const HomeHeader: FC<HomeHeaderProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
 
-  const { activeTab, actions } = useHomeStore();
+  const { contentFilter, attributeFilter, actions } = useHomeStore();
 
   const logoAnimatedStyle = useAnimatedStyle(() => ({
-    height: interpolate(_yShared.value,
+    height: interpolate(
+      _yShared.value,
       [0, homeHeaderLogoHeight],
       [homeHeaderLogoHeight, 0],
-      Extrapolation.CLAMP),
+      Extrapolation.CLAMP,
+    ),
   }));
 
   const containerAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{
-      translateY:
-        interpolate(showShared.value, [0, 1], [-100, 0]),
-    }],
+    transform: [
+      {
+        translateY: interpolate(showShared.value, [0, 1], [-100, 0]),
+      },
+    ],
   }));
 
   const show = (duration = 200) => {
-    showShared.value = withTiming(
-      1, { duration },
-    );
+    showShared.value = withTiming(1, { duration });
   };
 
   const hide = (duration = 200) => {
-    showShared.value = withTiming(
-      0, { duration },
-    );
+    showShared.value = withTiming(0, { duration });
   };
 
-  useEffect(
-    () => {
-      const listener = DeviceEventEmitter.addListener(
-        'showHeader', (isShow) => {
-          if (!isShow) { hide(); } else { show(); }
-        },
-      );
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener('showHeader', (isShow) => {
+      if (!isShow) {
+        hide();
+      } else {
+        show();
+      }
+    });
 
-      return () => {
-        listener?.remove?.();
-      };
-    }, [],
-  );
+    return () => {
+      listener?.remove?.();
+    };
+  }, []);
 
-  const onPressTab = (item: any) => {
-    actions.setActiveTab(item.id);
+  const onPressContentFilterTab = (item: any) => {
+    actions.setContentFilter(item.id);
+  };
+
+  const onPressAttributeFilterTab = (item: any) => {
+    actions.setAttributeFilter(item.id);
   };
 
   return (
@@ -101,10 +122,25 @@ const HomeHeader: FC<HomeHeaderProps> = ({
           <Tab
             style={styles.tabs}
             buttonProps={{ size: 'small', type: 'primary', useI18n: true }}
-            data={HEADER_TAB}
+            data={HEADER_CONTENT_FEED_FILTER}
             type="pill"
-            onPressTab={onPressTab}
-            activeIndex={HEADER_TAB.findIndex((item) => item.id === activeTab)}
+            onPressTab={onPressContentFilterTab}
+            activeIndex={HEADER_CONTENT_FEED_FILTER.findIndex(
+              (item) => item.id === contentFilter,
+            )}
+          />
+        </View>
+        <View style={styles.attributeContainer}>
+          <Tab
+            style={styles.tabs}
+            buttonProps={{
+              size: 'small', type: 'primary', useI18n: true, style: styles.attributeTab,
+            }}
+            data={HEADER_ATTRIBUTE_FEED_FILTER}
+            onPressTab={onPressAttributeFilterTab}
+            activeIndex={HEADER_ATTRIBUTE_FEED_FILTER.findIndex(
+              (item) => item.id === attributeFilter,
+            )}
           />
         </View>
         <HomeHeaderButton
@@ -118,7 +154,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
-  const { colors } = theme;
+  const { colors, elevations } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.neutral,
@@ -144,11 +180,13 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       height: homeHeaderTabHeight,
       flexDirection: 'row',
       paddingBottom: spacing.padding.small,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.neutral2,
+      marginHorizontal: spacing.margin.large,
     },
     tabs: {
       flex: 1,
       alignItems: 'center',
-      paddingHorizontal: spacing.margin.large,
       flexDirection: 'row',
     },
     tabButton: { marginRight: spacing.margin.small },
@@ -156,6 +194,16 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       position: 'absolute',
       right: spacing.margin.large,
       top: 2,
+    },
+    attributeContainer: {
+      height: homeHeaderAttributeContainerHeight,
+      paddingHorizontal: spacing.padding.small,
+    },
+    attributeTab: {
+      padding: spacing.padding.small,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderBottomWidth: 0,
     },
   });
 };

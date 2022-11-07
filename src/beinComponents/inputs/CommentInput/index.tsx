@@ -1,6 +1,7 @@
 import { GiphyMediaView } from '@giphy/react-native-sdk';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -127,7 +128,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
-  const stickerViewRef = useRef<any>();
+  const emojiViewRef = useRef<any>();
+  const giphyViewRef = useRef<any>();
   const _textInputRef = textInputRef || useRef();
 
   const _loading = loading || uploading;
@@ -178,11 +180,12 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onPressEmoji = () => {
-    stickerViewRef?.current?.show?.('giphy');
+    emojiViewRef?.current?.hide?.();
+    giphyViewRef?.current?.show?.('giphy');
   };
 
-  const onEmojiSelected = (emoji: string) => {
-    stickerViewRef?.current?.hide?.();
+  const onEmojiSelected = useCallback((emoji: string) => {
+    emojiViewRef?.current?.hide?.();
 
     dispatch(modalActions.hideModal());
     if (emoji) {
@@ -191,20 +194,21 @@ const CommentInput: React.FC<CommentInputProps> = ({
       onChangeText?.(completeStr);
       _textInputRef.current.focus();
     }
-  };
+  }, [text, cursorPosition]);
 
-  const onGifSelected = (gif: IGiphy) => {
-    stickerViewRef?.current?.hide?.();
+  const onGiphySelected = useCallback((gif: IGiphy) => {
+    giphyViewRef?.current?.hide?.();
 
     setSelectedImage(undefined);
     setSelectedGiphy(gif);
-  };
+  }, []);
 
   const onPressIcon = () => {
     // dispatch(modalActions.setShowReactionBottomSheet(
     //   { visible: true, callback: onEmojiSelected },
     // ));
-    stickerViewRef?.current?.show?.('emoji');
+    giphyViewRef?.current?.hide?.();
+    emojiViewRef?.current?.show?.('emoji');
   };
 
   const handleUpload = () => {
@@ -266,7 +270,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onFocus = () => {
-    stickerViewRef?.current?.hide?.();
+    giphyViewRef?.current?.hide?.();
+    emojiViewRef?.current?.hide?.();
   };
 
   const _onChangeText = (value: string) => {
@@ -320,7 +325,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const send = () => _onPressSend();
 
   const onBackPress = () => {
-    stickerViewRef?.current?.onBackPress?.();
+    emojiViewRef?.current?.onBackPress?.();
+    giphyViewRef?.current?.onBackPress?.();
   };
 
   useImperativeHandle(commentInputRef, () => ({
@@ -470,9 +476,12 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
       </View>
       <StickerView
-        stickerViewRef={stickerViewRef}
-        onGifSelected={onGifSelected}
+        stickerViewRef={emojiViewRef}
         onEmojiSelected={onEmojiSelected}
+      />
+      <StickerView
+        stickerViewRef={giphyViewRef}
+        onGiphySelected={onGiphySelected}
       />
       {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
     </View>

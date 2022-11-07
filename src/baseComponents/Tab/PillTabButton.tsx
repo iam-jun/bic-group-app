@@ -35,7 +35,7 @@ const PillTabButton = ({
 
   return (
     <TouchableOpacity
-      testID={testID}
+      testID={`${testID}-${isSelected ? 'selected' : 'notselected'}`}
       style={[styles.container, isSelected && styles[type], styles[`${size}Padding`], style]}
       disabled={!isInternetReachable || disabled}
       onPress={onPress}

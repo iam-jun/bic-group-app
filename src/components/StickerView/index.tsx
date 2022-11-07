@@ -1,18 +1,19 @@
 import { useKeyboard } from '@react-native-community/hooks';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
-import React, { useEffect, useImperativeHandle, useRef } from 'react';
+import React, {
+  useCallback, useEffect, useImperativeHandle, useRef,
+} from 'react';
 import {
   Keyboard, Platform, StyleSheet, View,
 } from 'react-native';
-import { Modalize } from 'react-native-modalize';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { Portal } from 'react-native-portalize';
 
+import { Portal } from 'react-native-portalize';
 import { AppConfig } from '~/configs';
 import { dimension } from '~/theme';
 import spacing from '~/theme/spacing';
@@ -24,31 +25,26 @@ import { SearchInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
 import GiphyView from '../GiphyView';
 import { IGiphy } from '~/interfaces/IGiphy';
+import SlideUpModal from '../SlideUpModal';
 
 export interface Props {
   stickerViewRef: any;
-  onGifSelected?: (media: IGiphy) => void;
+  onGiphySelected?: (media: IGiphy) => void;
   onEmojiSelected?: (emoji: string) => void;
 
 }
 
-const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props) => {
+const _StickerView = ({ stickerViewRef, onGiphySelected, onEmojiSelected }: Props) => {
   const { t } = useBaseHook();
   const INITIAL_KEYBOARD_HEIGHT = 336;
-  const modalizeRef = useRef<Modalize>();
+  const modalizeRef = useRef<any>();
 
   const [type, setType] = React.useState('emoji');
   const [visible, setVisible] = React.useState(false);
   const [keyboardHeight, setKeyboardHeight] = React.useState(INITIAL_KEYBOARD_HEIGHT);
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [modalTopOffset, setModalTopOffset] = React.useState(0);
   const _stickerViewRef = stickerViewRef || useRef();
   const emojiPickerRef: any = useRef();
-
-  const androidHeight = dimension.deviceHeight / 2;
-  const [showAndroidHeight, setShowAndroidHeight] = React.useState(false);
-
-  const isIOS = Platform.OS === 'ios';
 
   const actions = useEmojiPickerStore((state: IEmojiPickerState) => state.actions);
 
@@ -58,11 +54,12 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
   const styles = createStyle(theme);
 
   const keyboard = useKeyboard();
+
   useEffect(
     () => {
-      if (
-        keyboard?.keyboardHeight
+      if (keyboard?.keyboardHeight
       && keyboardHeight !== keyboard?.keyboardHeight
+      && keyboard?.keyboardHeight > INITIAL_KEYBOARD_HEIGHT
       ) {
         setKeyboardHeight(keyboard?.keyboardHeight);
       }
@@ -75,12 +72,12 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
 
   const show = (type:'gif'|'emoji') => {
     setType(type);
-    modalizeRef.current?.open('default');
+    modalizeRef.current?.show();
     Keyboard.dismiss();
   };
 
   const hide = () => {
-    modalizeRef.current?.close();
+    modalizeRef.current?.hide();
   };
 
   const onChangeText = debounce(
@@ -93,72 +90,41 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
     }, AppConfig.searchTriggerTime,
   );
 
-  const onGifPress = (item: IGiphy) => {
-    onGifSelected(item);
+  const onGiphyPress = (item: IGiphy) => {
+    onGiphySelected(item);
   };
 
-  const onEmojiPress = (emojiName: string) => {
+  const onEmojiPress = useCallback((emojiName: string) => {
     onEmojiSelected(emojiName);
-  };
-
-  // Only trigger when opend, closed event is not triggered
-  const onPositionChange = (position: 'top' | 'initial') => {
-    setModalTopOffset(position === 'top' ? dimension.headerHeight : 0);
-  };
-
-  const onOpen = () => {
-    setVisible(true);
-
-    // For iOS
-    if (!isIOS) return;
-
-    setTimeout(
-      () => {
-        height.value = withTiming(
-          keyboardHeight, { duration: 400 },
-        );
-      }, 200,
-    );
-  };
+  }, []);
 
   const onOpened = () => {
-    // For android
-    if (isIOS) return;
+    setVisible(true);
 
     height.value = withTiming(
       keyboardHeight, { duration: 400 },
     );
   };
 
-  const onClose = () => {
+  const onClosed = () => {
     setVisible(false);
     setSearchQuery('');
-
-    // reset position
-    onPositionChange('initial');
-    setShowAndroidHeight(false);
 
     height.value = withTiming(
       0, { duration: 200 },
     );
   };
 
+  const onCollapsed = () => Keyboard.dismiss();
+
   const onSearchFocus = () => {
-    if (!isIOS) {
-      // Can't show modalize fullscreen on Android
-      // Because of keyboard behavior
-      setShowAndroidHeight(true);
-      return;
-    }
-    // trigger before modal reach the top to make app looks smooth
-    onPositionChange('top');
-    modalizeRef.current?.open('top');
+    if (Platform.OS === 'android') return;
+
+    modalizeRef.current?.maximise();
   };
 
   const onSearchBlur = () => {
-    if (!isIOS) {
-      setShowAndroidHeight(false);
-    }
+    //
   };
 
   const onBackPress = () => {
@@ -170,7 +136,7 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
     _stickerViewRef, () => ({
       show,
       hide,
-      onBackPress: hide,
+      onBackPress,
     }),
   );
 
@@ -178,12 +144,12 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
     emojiPickerRef.current?.scrollToSectionIndex(index);
   };
 
-  const renderComponent = () => {
-    if (type === 'giphy') {
-      return <GiphyView searchQuery={searchQuery} onSelected={onGifPress} />;
-    }
+  let content = null;
 
-    return (
+  if (type === 'giphy') {
+    content = <GiphyView searchQuery={searchQuery} onSelected={onGiphyPress} />;
+  } else if (type === 'emoji') {
+    content = (
       <View style={styles.emojiView}>
         <EmojiPicker
           emojiPickerRef={emojiPickerRef}
@@ -195,37 +161,26 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
         />
       </View>
     );
-  };
+  }
 
-  const containerHeight = showAndroidHeight ? androidHeight : keyboardHeight;
+  const expandHeight = Platform.OS === 'ios' ? keyboardHeight : undefined;
+  const maxHeight = Platform.OS === 'android' ? keyboardHeight : undefined;
+  const topOffset = Platform.OS === 'ios' ? dimension.headerHeight : undefined;
 
   return (
     <View testID="sticker_view" style={styles.container}>
       <Animated.View style={animatedStyle} />
       <Portal>
-        <Modalize
-          ref={modalizeRef}
-          handlePosition="inside"
-          adjustToContentHeight={!isIOS}
-          disableScrollIfPossible={isIOS}
-          modalTopOffset={modalTopOffset}
-          closeSnapPointStraightEnabled={false}
-          withOverlay={isIOS && modalTopOffset !== 0}
-          snapPoint={isIOS ? keyboardHeight : undefined}
-          scrollViewProps={{
-            keyboardShouldPersistTaps: 'handled',
-            keyboardDismissMode: 'interactive',
-            contentContainerStyle: {
-              height: isIOS ? '100%' : containerHeight,
-            },
-          }}
-          onOpen={onOpen}
+        <SlideUpModal
+          sheetRef={modalizeRef}
+          topOffset={topOffset}
+          maxHeight={maxHeight}
+          expandHeight={expandHeight}
           onOpened={onOpened}
-          onClose={onClose}
-          onBackButtonPress={onBackPress}
-          onPositionChange={onPositionChange}
+          onClosed={onClosed}
+          onCollapsed={onCollapsed}
         >
-          <View style={[styles.stickerView, !isIOS && { height: containerHeight }]}>
+          <View style={[styles.stickerView]}>
             <View style={styles.header}>
               <SearchInput
                 testID="sticker_view.search_input"
@@ -236,9 +191,9 @@ const _StickerView = ({ stickerViewRef, onGifSelected, onEmojiSelected }: Props)
                 onBlur={onSearchBlur}
               />
             </View>
-            {renderComponent()}
+            {content}
           </View>
-        </Modalize>
+        </SlideUpModal>
       </Portal>
     </View>
   );
@@ -252,7 +207,6 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
     },
     stickerView: {
-      marginTop: spacing.margin.small,
       height: '100%',
     },
     emojiView: {
@@ -272,5 +226,5 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 const StickerView = React.memo(_StickerView);
-// StickerView.whyDidYouRender = true;
+StickerView.whyDidYouRender = true;
 export default StickerView;

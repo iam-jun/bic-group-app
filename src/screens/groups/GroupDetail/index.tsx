@@ -52,6 +52,8 @@ import NotFound from '~/screens/NotFound/components/NotFound';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
+import homeActions from '~/storeRedux/home/actions';
+import ContentSearch from '~/screens/Home/HomeSearch';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -114,6 +116,7 @@ const GroupDetail = (props: any) => {
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
   const heightButtonBottom = useSharedValue(0);
+  const searchViewRef = useRef(null);
 
   useFocusEffect(() => {
     if (!userId) {
@@ -278,6 +281,10 @@ const GroupDetail = (props: any) => {
     dispatch(groupsActions.setGroupDetail(null));
   };
 
+  const onPressSearch = () => {
+    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+  };
+
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
 
@@ -339,6 +346,8 @@ const GroupDetail = (props: any) => {
             )
           }
           onPressBack={onGoBack}
+          icon="search"
+          onPressIcon={onPressSearch}
         />
         <Animated.View testID="group_detail.content" style={[styles.contentContainer, containerAnimation]}>
           {renderGroupContent()}
@@ -346,7 +355,7 @@ const GroupDetail = (props: any) => {
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
           <GroupJoinCancelButton style={styles.joinBtn} />
         </Animated.View>
-
+        <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
       </>
     );
   };

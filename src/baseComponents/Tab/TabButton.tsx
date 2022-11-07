@@ -41,7 +41,7 @@ const TabButton = ({
 
   return (
     <TouchableOpacity
-      testID={testID}
+      testID={`${testID}-${isSelected ? 'selected' : 'notselected'}`}
       style={[styles.container, style]}
       disabled={!isInternetReachable || disabled}
       onPress={onPress}
