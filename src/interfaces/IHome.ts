@@ -8,6 +8,7 @@ export interface IPayloadSetNewsfeedSearch {
   searchResults?: any[];
   searchViewRef?: any;
   totalResult?: number;
+  groupId?: string;
 }
 
 export interface IPayloadSetNewsfeedSearchFilter {
@@ -53,6 +54,7 @@ export interface IParamGetSearchPost {
   idLte?: number;
   idGt?: number;
   idLt?: number;
+  groupId?: string;
 }
 
 export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
@@ -81,6 +83,7 @@ export interface IPayloadGetSearchPosts {
   startDate?: string;
   endDate?: string;
   isLoadMore?: boolean;
+  groupId?: string;
 }
 
 export interface ISelectedFilterUser {

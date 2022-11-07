@@ -14,11 +14,11 @@ import spacing from '~/theme/spacing';
 
 interface HomeSearchProps {
   style?: StyleProp<ViewStyle>;
-  onClose?: () => void;
   searchViewRef?: any;
+  groupId?: string;
 }
 
-const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
+const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
   const _searchViewRef = searchViewRef || useRef(null);
 
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
         isSuggestion: false,
         searchResults: [],
         searchText: keyword,
+        groupId,
       }),
     );
     Keyboard.dismiss();

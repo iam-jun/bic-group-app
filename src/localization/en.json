@@ -457,7 +457,7 @@
       "no_recent_search": "No recent searches",
       "apply": "Apply",
       "filter": "Filter",
-      "filter_post_by": "Post By",
+      "filter_post_by": "Created by",
       "filter_created_by_all": "All",
       "filter_created_by_me": "Me",
       "filter_created_by_specific": "Specific person",
@@ -465,7 +465,8 @@
       "seven_days_ago": "7 days ago",
       "thirty_days_ago": "30 days ago",
       "three_months_ago": "3 months ago",
-      "from_to": "From - To"
+      "from_to": "From - To",
+      "text_banner_search": "Searched results are removed all text formats to make sure looking the precise content"
     },
     "notice_post_video_uploading": {
       "title": "Processing video (count)",

@@ -16,7 +16,7 @@ export default function* getSearchPosts({
   type: string;
 }): any {
   const {
-    searchText, actors, startDate, endDate, isLoadMore,
+    searchText, actors, startDate, endDate, isLoadMore, groupId,
   } = payload || {};
   try {
     let data: any[] = [];
@@ -53,6 +53,9 @@ export default function* getSearchPosts({
     }
     if (endDate) {
       params.endTime = endDate;
+    }
+    if (groupId) {
+      params.groupId = groupId;
     }
     const response = yield call(
       streamApi.getSearchPost, params,

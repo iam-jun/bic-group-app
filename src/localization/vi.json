@@ -416,7 +416,7 @@
       "no_recent_search": "Không có tìm kiếm gần đây",
       "apply": "Xác nhận",
       "filter": "Lọc",
-      "filter_post_by": "Đăng bởi",
+      "filter_post_by": "Tạo bởi",
       "filter_created_by_all": "Tất cả",
       "filter_created_by_me": "Chính mình",
       "filter_created_by_specific": "Bài viết của",
@@ -424,7 +424,8 @@
       "seven_days_ago": "7 ngày trước",
       "thirty_days_ago": "30 ngày trước",
       "three_months_ago": "3 tháng trước",
-      "from_to": "Từ ngày - Đến ngày"
+      "from_to": "Từ ngày - Đến ngày",
+      "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nỗi dung chính xác"
     },
     "notice_post_video_uploading": {
       "title": "Bài viết có video đang xử lý (count)",
