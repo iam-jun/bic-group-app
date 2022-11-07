@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
-import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import { uploadTypes } from '~/configs/resourceConfig';
@@ -29,7 +28,6 @@ interface Props {
 const CoverImage = ({
   style, coverMedia, disabled, onUploadSuccess,
 }: Props) => {
-  const { t } = useBaseHook();
   const dispatch = useDispatch();
 
   // const { rootNavigation } = useRootNavigation();
@@ -95,8 +93,9 @@ const CoverImage = ({
           type="ghost"
           size="medium"
           onPress={onPressSelect}
+          useI18n
         >
-          {t('article:text_change_cover')}
+          series:text_update_cover
         </Button.Neutral>
       </View>
     );

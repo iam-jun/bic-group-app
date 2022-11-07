@@ -4,6 +4,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
 import { getLink, LINK_SERIRES } from '~/utils/link';
 import { Button } from '~/baseComponents';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 
 interface Props {
   reactionsCount: any,
@@ -11,6 +12,8 @@ interface Props {
   dispatch:any,
   seriesId: string,
   handleConfirmDelete: ()=> void,
+  navigaton: any,
+  isFromDetail?: boolean,
 }
 
 export const getSeriesMenu = ({
@@ -19,8 +22,20 @@ export const getSeriesMenu = ({
   dispatch,
   seriesId,
   handleConfirmDelete,
+  navigaton,
+  isFromDetail,
 }: Props) => {
   const onPressEdit = () => {
+    dispatch(modalActions.hideBottomList());
+    navigaton?.navigate?.(
+      seriesStack.createSeries, {
+        seriesId,
+        isFromDetail,
+      },
+    );
+  };
+
+  const onPressUpcomingFeature = () => {
     dispatch(modalActions.hideBottomList());
   };
 
@@ -57,7 +72,6 @@ export const getSeriesMenu = ({
       title: i18next.t('series:menu_text_edit_series'),
       requireIsActor: true,
       onPress: onPressEdit,
-      upcoming: true,
     },
     {
       id: 2,
@@ -74,6 +88,7 @@ export const getSeriesMenu = ({
       title: i18next.t('series:menu_text_save_series'),
       requireIsActor: false,
       upcoming: true,
+      onPress: onPressUpcomingFeature,
     },
     {
       id: 4,
@@ -83,6 +98,7 @@ export const getSeriesMenu = ({
       requireIsActor: false,
       requireReactionCounts: true,
       upcoming: true,
+      onPress: onPressUpcomingFeature,
     }, {
       id: 5,
       testID: 'series_menu.delete',

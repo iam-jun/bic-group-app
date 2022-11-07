@@ -15,8 +15,8 @@ const SeriesItem: FC<SeriesItemProps> = ({ id: seriesId }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
 
-  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId), [seriesId]));
-  const { deleted } = series;
+  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
+  const { deleted = false } = series;
 
   if (deleted) {
     return <DeletedItem />;

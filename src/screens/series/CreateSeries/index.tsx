@@ -16,7 +16,7 @@ import { CreationSeriesProps } from '~/interfaces/ISeries';
 import useSeriesStore, { ISeriesState } from '../store';
 
 const CreateSeries = ({ route }: CreationSeriesProps) => {
-  const { seriesId } = route?.params || {};
+  const { seriesId, isFromDetail } = route?.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -49,7 +49,7 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
     handleSummaryChange,
     handleUploadCoverSuccess,
     handlePressAudiences,
-  } = useSeriesCreation({ seriesId });
+  } = useSeriesCreation({ seriesId, isFromDetail });
 
   return (
     <ScreenWrapper isFullView testID="create_series_screen">

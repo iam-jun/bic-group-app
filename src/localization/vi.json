@@ -1085,6 +1085,8 @@
     "title_delete_audiences_of_series": "Bạn Không Thể Xóa Series Này",
     "content_delete_audiences_of_series": "Bạn không thể xóa series này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
     "content_not_able_delete_of_series": "Bạn không thể xóa series này khỏi những đối tượng dưới đây.",
-    "text_deleted_audiences": "Series của bạn đã được xoá khỏi các nhóm đối tượng."
+    "text_deleted_audiences": "Series của bạn đã được xoá khỏi các nhóm đối tượng.",
+    "text_edit_series_success": "Đăng series thành công",
+    "text_edit_series_failed": "Đăng series thất bại"
   }
 }

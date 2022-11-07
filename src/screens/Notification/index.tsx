@@ -10,6 +10,7 @@ import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import { notificationMenuData } from '~/screens/Notification/constants';
 import modalActions from '~/storeRedux/modal/actions';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
@@ -128,7 +129,7 @@ const Notification = () => {
               break;
             }
             case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL: {
-              rootNavigation.navigate(homeStack.draftPost);
+              rootNavigation.navigate(menuStack.draft);
               break;
             }
             case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:

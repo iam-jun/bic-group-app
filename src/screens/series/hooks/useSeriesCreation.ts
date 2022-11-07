@@ -1,7 +1,8 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { Keyboard } from 'react-native';
 import i18next from 'i18next';
 
+import { useCallback, useEffect } from 'react';
 import { withNavigation } from '~/router/helper';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
@@ -13,11 +14,14 @@ import useSeriesStore, { ISeriesState } from '../store';
 import useSelectAudienceStore, { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { IArticleCover } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
+import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
+import { IEditArticleAudience } from '~/interfaces/IArticle';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export interface IUseSeriesCreation {
     seriesId?: string;
+    isFromDetail?: boolean;
 }
 
 const isNonEmptyString = (str: string) => str?.trim?.()?.length > 0;
@@ -37,19 +41,35 @@ const getNames = (
   return result;
 };
 
-const useSeriesCreation = ({ seriesId }: IUseSeriesCreation) => {
+const useSeriesCreation = ({ seriesId, isFromDetail }: IUseSeriesCreation) => {
   let series: any = {};
-  if (!!seriesId) series = usePostsStore(postsSelector.getPost(seriesId));
+  if (!!seriesId) series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
   const data = useSeriesStore((state: ISeriesState) => state.data) || {};
   const loading = useSeriesStore((state: ISeriesState) => state.loading);
+  const dataGroups = useSeriesStore((state: ISeriesState) => state.groups) || {};
+
+  const audienceActions = useSelectAudienceStore((state: ISelectAudienceState) => state.actions);
 
   const chosenAudienceGroups = useSelectAudienceStore((state: ISelectAudienceState) => state.selecting?.groups);
   const names = getNames(
     data.audience?.groupIds, chosenAudienceGroups,
   );
+
+  useEffect(() => {
+    if (!isEmpty(series)) {
+      const newSelectingGroups = {};
+      series.audience?.groups?.forEach((group) => {
+        newSelectingGroups[group?.id] = group;
+      });
+      const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(series.audience);
+      actions.setData({ ...series, audience: audienceIds });
+      actions.setAudienceGroups(series.audience.groups);
+      audienceActions.setSelectingGroups(newSelectingGroups);
+    }
+  }, [series]);
 
   const handleTitleChange = (newTitle: string) => {
     actions.setTitle(newTitle);
@@ -65,7 +85,11 @@ const useSeriesCreation = ({ seriesId }: IUseSeriesCreation) => {
 
   const handleSave = () => {
     Keyboard.dismiss();
-    actions.postCreateNewSeries();
+    if (!!seriesId) {
+      actions.editSeries(seriesId, isFromDetail, () => handleSave());
+    } else {
+      actions.postCreateNewSeries();
+    }
   };
 
   const isHasChange = () => {
@@ -73,11 +97,11 @@ const useSeriesCreation = ({ seriesId }: IUseSeriesCreation) => {
       const isTitleUpdated = series.title !== data.title && isNonEmptyString(data.title);
       const isSummaryUpdated = series.summary !== data.summary && isNonEmptyString(data.summary);
       const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
-      return isTitleUpdated || isCoverMediaUpdated || isSummaryUpdated;
+      const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
+      && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
+      return isTitleUpdated || isCoverMediaUpdated || isSummaryUpdated || isAudienceUpdated;
     }
     return isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
-    // const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience)
-    // && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
   };
 
   const enableButtonSave = isHasChange();
@@ -99,7 +123,8 @@ const useSeriesCreation = ({ seriesId }: IUseSeriesCreation) => {
   };
 
   const handlePressAudiences = () => {
-    navigation.navigate(seriesStack.seriesSelectAudience, { isEditAudience: true });
+    navigation.navigate(seriesStack.seriesSelectAudience,
+      { isEditAudience: true, initAudienceGroups: dataGroups });
   };
 
   return {

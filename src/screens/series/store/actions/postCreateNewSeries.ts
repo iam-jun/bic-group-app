@@ -2,6 +2,7 @@ import streamApi from '~/api/StreamApi';
 import { withNavigation } from '~/router/helper';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { rootNavigationRef } from '~/router/refs';
+import useHomeStore from '~/screens/Home/store';
 import showError from '~/store/helper/showError';
 import { ISeriesState } from '..';
 
@@ -23,6 +24,7 @@ const postCreateNewSeries = (set, get) => async () => {
     }, 'postCreateNewSeriesSuccess');
 
     navigation.replace(seriesStack.seriesDetail, { seriesId: id });
+    useHomeStore.getState().actions.refreshHome();
   } catch (error) {
     set((state: ISeriesState) => {
       state.loading = false;

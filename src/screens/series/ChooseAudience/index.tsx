@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   View, StyleSheet, Keyboard,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { isEmpty } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
@@ -15,9 +15,10 @@ import useSeriesStore, { ISeriesState } from '../store';
 import modalActions from '~/storeRedux/modal/actions';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
+import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
 
 const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
-  const { isFirstStep, isEditAudience } = route?.params || {};
+  const { isFirstStep, isEditAudience, initAudienceGroups = [] } = route?.params || {};
 
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -31,15 +32,38 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
 
   const selectingAudienceIds = useSelectAudienceStore((state) => state.selectingIds);
   const selectAudienceResetStore = useSelectAudienceStore((state) => state.reset);
+  const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
+  const selectingAudienceGroups = useSelectAudienceStore((state) => state.selecting.groups);
+
+  const setInitDataToSelectingAudiences = () => {
+    const newSelectingGroups = {};
+    initAudienceGroups?.forEach((group) => {
+      newSelectingGroups[group?.id] = group;
+    });
+    selectAudienceActions.setSelectingGroups(newSelectingGroups);
+  };
+
+  useEffect(() => {
+    if (initAudienceGroups?.length > 0) {
+      setInitDataToSelectingAudiences();
+    }
+  }, [initAudienceGroups]);
 
   useEffect(() => {
     if (isFirstStep) selectAudienceResetStore();
   }, []);
 
-  const disabled = isEmpty(selectingAudienceIds?.groupIds);
+  const initAudienceIds = useMemo(
+    () => getAudienceIdsFromAudienceObject({ groups: initAudienceGroups }), [initAudienceGroups],
+  );
+
+  const isAudienceUpdated = !isEqual(initAudienceIds, selectingAudienceIds);
+  const isAudienceSelected = !(isEmpty(selectingAudienceIds?.groupIds) && isEmpty(selectingAudienceIds?.userIds));
+
+  const disabled = !(isAudienceUpdated && isAudienceSelected) || loading;
 
   const handleBack = () => {
-    if (!disabled) {
+    if (!disabled || isAudienceUpdated) {
       Keyboard.dismiss();
       dispatch(modalActions.showAlert({
         title: t('discard_alert:title'),
@@ -47,7 +71,10 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
         cancelBtn: true,
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('common:btn_stay_here'),
-        onCancel: () => rootNavigation.goBack(),
+        onCancel: () => {
+          setInitDataToSelectingAudiences();
+          rootNavigation.goBack();
+        },
       }));
       return;
     }
@@ -56,17 +83,15 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
 
   useBackPressListener(handleBack);
 
-  // TODO: need update when edit
-  const isHasChange = false;
-
   const handleSave = () => {
     if (isFirstStep) {
       seriesActions.setAudience(selectingAudienceIds);
+      seriesActions.setAudienceGroups(selectingAudienceGroups);
       rootNavigation.replace(
         seriesStack.createSeries,
       );
     } else if (isEditAudience) {
-      if (isHasChange) {
+      if (isAudienceUpdated) {
         dispatch(modalActions.showAlert({
           title: t('post:create_post:title_audience_changed'),
           content: t('post:create_post:text_discard_change_audience'),
@@ -75,15 +100,18 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
           confirmLabel: t('post:create_post:btn_save_change'),
           onConfirm: () => {
             seriesActions.setAudience(selectingAudienceIds);
+            seriesActions.setAudienceGroups(selectingAudienceGroups);
             rootNavigation.goBack();
           },
         }));
       } else {
         seriesActions.setAudience(selectingAudienceIds);
+        seriesActions.setAudienceGroups(selectingAudienceGroups);
         rootNavigation.goBack();
       }
     } else {
       seriesActions.setAudience(selectingAudienceIds);
+      seriesActions.setAudienceGroups(selectingAudienceGroups);
       rootNavigation.goBack();
     }
   };

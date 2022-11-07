@@ -7,6 +7,7 @@ import Header from '~/beinComponents/Header';
 import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
+import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/screens/post/components/AlertDeleteAudiencesConfirmContent';
@@ -26,8 +27,9 @@ const SeriesDetail = ({ route }: any) => {
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
   const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
 
-  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId), [seriesId])) || {};
+  const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
   const {
     actor, id, deleted, audience,
@@ -70,9 +72,7 @@ const SeriesDetail = ({ route }: any) => {
           cancelBtn: true,
           confirmLabel: t('common:text_remove'),
           ConfirmBtnComponent: Button.Danger,
-          onConfirm: () => {
-            // do something
-          },
+          onConfirm: () => actions.removeAudiences(id, listIdAudiences),
           confirmBtnProps: { type: 'ghost' },
         }),
       );
@@ -105,6 +105,8 @@ const SeriesDetail = ({ route }: any) => {
       isActor: actor?.id == userId,
       dispatch,
       seriesId: id,
+      navigaton: rootNavigation,
+      isFromDetail: true,
       handleConfirmDelete,
     });
 
