@@ -33,7 +33,7 @@ const Tab = ({
         useI18n
         isSelected={isSelected}
         key={`tab-button-${item?.id || item?.text}`}
-        testID={`tab-button-${index}`}
+        testID={`tab-button-${item?.text}`}
         onPress={() => onPressTab?.(item, index)}
         {...buttonProps}
       >

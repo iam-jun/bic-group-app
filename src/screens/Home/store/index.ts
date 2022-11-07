@@ -1,59 +1,78 @@
-import getTabData from '~/screens/Home/store/actions/getTabData';
-import IHomeState, { HOME_TAB_TYPE, IHomeTab } from '~/screens/Home/store/Interface';
+import getDataFeed from '~/screens/Home/store/actions/getDataFeed';
+import IHomeState, {
+  ATTRIBUTE_FEED,
+  CONTENT_FEED,
+  IHomeFeed,
+} from '~/screens/Home/store/Interface';
 import { createStore, resetStore } from '~/store/utils';
 
-const DEFAULT_TAB_DATA = {
-  refreshing: true,
+const DEFAULT_DATA: IHomeFeed = {
+  isLoading: false,
+  refreshing: false,
   data: [],
   canLoadMore: true,
 };
 
+const initFeed = Object.values(CONTENT_FEED).reduce((acc, valueContentFeed) => {
+  const feed: any = { [valueContentFeed]: {} };
+  Object.values(ATTRIBUTE_FEED).forEach((valueAttributeFeed) => {
+    feed[valueContentFeed][valueAttributeFeed] = DEFAULT_DATA;
+  });
+  return {
+    ...acc,
+    ...feed,
+  };
+}, {});
+
 const initState: IHomeState = {
-  activeTab: HOME_TAB_TYPE.NEWSFEED as keyof typeof HOME_TAB_TYPE,
-  tabNewsfeed: DEFAULT_TAB_DATA,
-  tabImportant: DEFAULT_TAB_DATA,
+  contentFilter: CONTENT_FEED.ALL,
+  attributeFilter: ATTRIBUTE_FEED.ALL,
+  feed: initFeed,
 };
 
 const homeStore = (set, get) => ({
   ...initState,
 
   actions: {
-    setActiveTab: (tabId: keyof typeof HOME_TAB_TYPE) => {
-      set(
-        (state: IHomeState) => {
-          state.activeTab = tabId;
-        },
-        'setActiveTab',
-      );
+    setContentFilter: (contentFilter: CONTENT_FEED) => {
+      set((state: IHomeState) => {
+        state.contentFilter = contentFilter;
+      }, 'setContentFilter');
     },
-    setTabNewsfeed: (tab: IHomeTab) => {
-      set(
-        (state: IHomeState) => {
-          state.tabNewsfeed = { ...state.tabNewsfeed, ...tab };
-        },
-        'setTabNewsfeed',
-      );
+    setAttributeFilter: (attributeFilter: ATTRIBUTE_FEED) => {
+      set((state: IHomeState) => {
+        state.attributeFilter = attributeFilter;
+      }, 'setAttributeFilter');
     },
-    setTabImportant: (tab: IHomeTab) => {
-      set(
-        (state: IHomeState) => {
-          state.tabImportant = { ...state.tabImportant, ...tab };
-        },
-        'setTabImportant',
-      );
-    },
+    setDataFeed: (
+      data: IHomeFeed,
+      contentFilter?: CONTENT_FEED,
+      attributeFilter?: ATTRIBUTE_FEED,
+    ) => {
+      const {
+        contentFilter: currentContentFilter,
+        attributeFilter: currentAttributeFilter,
+      } = get();
+      const content = contentFilter || currentContentFilter;
+      const attribute = attributeFilter || currentAttributeFilter;
 
+      set((state: IHomeState) => {
+        state.feed[content][attribute] = {
+          ...state.feed[content][attribute],
+          ...data,
+        };
+      }, 'setDataFeed');
+    },
     refreshHome: () => {
       const { actions }: IHomeState = get();
-      const newsfeedTab = HOME_TAB_TYPE.NEWSFEED as keyof typeof HOME_TAB_TYPE;
-      set(
-        (state: IHomeState) => { state.activeTab = newsfeedTab; },
-        'refreshHome',
-      );
-      actions.getTabData(newsfeedTab, true);
+      set((state: IHomeState) => {
+        state.contentFilter = CONTENT_FEED.ALL;
+        state.attributeFilter = ATTRIBUTE_FEED.ALL;
+      }, 'refreshHome');
+      actions.getDataFeed(true);
     },
 
-    getTabData: getTabData(set, get),
+    getDataFeed: getDataFeed(set, get),
   },
 
   reset: () => resetStore(initState, set),
