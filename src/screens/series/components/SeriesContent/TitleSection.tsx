@@ -33,7 +33,8 @@ const Thumbnail: FC<ThumbnailProps> = ({ numberOfArticles, img }) => {
   return (
     <View>
       <Image resizeMode="cover" source={img} style={styles.img} />
-      <View style={[styles.mask, styles.centerView]}>
+      <View style={styles.mask} />
+      <View style={styles.centerView}>
         <Text.H1 style={styles.textThumbnail} color={colors.white}>
           {numberOfArticles}
         </Text.H1>
@@ -97,15 +98,17 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     mask: {
       borderRadius: borderRadius.large,
-      opacity: 0.65,
+      opacity: 0.45,
       backgroundColor: colors.black,
       ...StyleSheet.absoluteFillObject,
     },
     centerView: {
+      ...StyleSheet.absoluteFillObject,
       justifyContent: 'center',
       alignItems: 'center',
     },
     titleContainer: {
+      flex: 1,
       marginHorizontal: spacing.margin.small,
       marginVertical: spacing.margin.small,
       justifyContent: 'space-between',

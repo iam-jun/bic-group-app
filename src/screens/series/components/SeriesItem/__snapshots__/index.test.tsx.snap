@@ -446,22 +446,29 @@ exports[`SeriesItem component renders correctly 1`] = `
           </View>
           <View
             style={
-              Array [
-                Object {
-                  "backgroundColor": "#000000",
-                  "borderRadius": 8,
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 0.65,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                },
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-              ]
+              Object {
+                "backgroundColor": "#000000",
+                "borderRadius": 8,
+                "bottom": 0,
+                "left": 0,
+                "opacity": 0.45,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
             }
           >
             <Text
@@ -507,6 +514,7 @@ exports[`SeriesItem component renders correctly 1`] = `
         <View
           style={
             Object {
+              "flex": 1,
               "justifyContent": "space-between",
               "marginHorizontal": 8,
               "marginVertical": 8,
