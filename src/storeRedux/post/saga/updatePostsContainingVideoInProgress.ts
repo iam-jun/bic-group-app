@@ -6,7 +6,7 @@ import usePostsStore from '~/store/entities/posts';
 import postActions from '~/storeRedux/post/actions';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import useHomeStore from '~/screens/Home/store';
-import { ATTRIBUTE_FEED, CONTENT_FEED } from '~/screens/Home/store/Interface';
+import { AttributeFeed, ContentFeed } from '~/screens/Home/store/Interface';
 
 function* updatePostsContainingVideoInProgress({
   payload,
@@ -34,7 +34,7 @@ function* updatePostsContainingVideoInProgress({
           === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL
         ) {
           const feed
-            = useHomeStore.getState().feed[CONTENT_FEED.ALL][ATTRIBUTE_FEED.ALL];
+            = useHomeStore.getState().feed[ContentFeed.ALL][AttributeFeed.ALL];
           const homePosts = feed.data || [];
           const filterPosts = homePosts.filter((item) => item === postId);
           const isExisted = filterPosts.length > 0;
@@ -50,8 +50,8 @@ function* updatePostsContainingVideoInProgress({
               .getState()
               .actions.setDataFeed(
                 { ...feed, data: newHomePosts },
-                CONTENT_FEED.ALL,
-                ATTRIBUTE_FEED.ALL,
+                ContentFeed.ALL,
+                AttributeFeed.ALL,
               );
           }
         }

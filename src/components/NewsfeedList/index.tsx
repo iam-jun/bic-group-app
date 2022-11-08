@@ -37,7 +37,7 @@ import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';
 import NoticePanel from '~/screens/Home/components/NoticePanel';
 import PostItem from '~/beinComponents/list/items/PostItem';
-import { ATTRIBUTE_FEED, CONTENT_FEED } from '~/screens/Home/store/Interface';
+import { AttributeFeed, ContentFeed } from '~/screens/Home/store/Interface';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -47,8 +47,8 @@ export interface NewsfeedListProps {
   onRefresh?: () => void;
   onScrollY?: (y: number) => void;
   HeaderComponent?: any;
-  contentFilter?: CONTENT_FEED;
-  attributeFilter?: ATTRIBUTE_FEED;
+  contentFilter?: ContentFeed;
+  attributeFilter?: AttributeFeed;
 }
 
 const AnimatedFlashList = Animated.createAnimatedComponent<
@@ -340,7 +340,7 @@ const NewsfeedListHeader = ({
   const theme = useTheme() as any;
   const styles = createStyle(theme, insets);
 
-  const isNewsfeed = attributeFilter === ATTRIBUTE_FEED.ALL;
+  const isNewsfeed = attributeFilter === AttributeFeed.ALL;
 
   return (
     <View style={styles.headerContainer}>

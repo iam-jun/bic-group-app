@@ -1,7 +1,7 @@
 import getDataFeed from '~/screens/Home/store/actions/getDataFeed';
 import IHomeState, {
-  ATTRIBUTE_FEED,
-  CONTENT_FEED,
+  AttributeFeed,
+  ContentFeed,
   IHomeFeed,
 } from '~/screens/Home/store/Interface';
 import { createStore, resetStore } from '~/store/utils';
@@ -13,9 +13,9 @@ const DEFAULT_DATA: IHomeFeed = {
   canLoadMore: true,
 };
 
-const initFeed = Object.values(CONTENT_FEED).reduce((acc, valueContentFeed) => {
+const initFeed = Object.values(ContentFeed).reduce((acc, valueContentFeed) => {
   const feed: any = { [valueContentFeed]: {} };
-  Object.values(ATTRIBUTE_FEED).forEach((valueAttributeFeed) => {
+  Object.values(AttributeFeed).forEach((valueAttributeFeed) => {
     feed[valueContentFeed][valueAttributeFeed] = DEFAULT_DATA;
   });
   return {
@@ -25,8 +25,8 @@ const initFeed = Object.values(CONTENT_FEED).reduce((acc, valueContentFeed) => {
 }, {});
 
 const initState: IHomeState = {
-  contentFilter: CONTENT_FEED.ALL,
-  attributeFilter: ATTRIBUTE_FEED.ALL,
+  contentFilter: ContentFeed.ALL,
+  attributeFilter: AttributeFeed.ALL,
   feed: initFeed,
 };
 
@@ -34,20 +34,20 @@ const homeStore = (set, get) => ({
   ...initState,
 
   actions: {
-    setContentFilter: (contentFilter: CONTENT_FEED) => {
+    setContentFilter: (contentFilter: ContentFeed) => {
       set((state: IHomeState) => {
         state.contentFilter = contentFilter;
       }, 'setContentFilter');
     },
-    setAttributeFilter: (attributeFilter: ATTRIBUTE_FEED) => {
+    setAttributeFilter: (attributeFilter: AttributeFeed) => {
       set((state: IHomeState) => {
         state.attributeFilter = attributeFilter;
       }, 'setAttributeFilter');
     },
     setDataFeed: (
       data: IHomeFeed,
-      contentFilter?: CONTENT_FEED,
-      attributeFilter?: ATTRIBUTE_FEED,
+      contentFilter?: ContentFeed,
+      attributeFilter?: AttributeFeed,
     ) => {
       const {
         contentFilter: currentContentFilter,
@@ -66,8 +66,8 @@ const homeStore = (set, get) => ({
     refreshHome: () => {
       const { actions }: IHomeState = get();
       set((state: IHomeState) => {
-        state.contentFilter = CONTENT_FEED.ALL;
-        state.attributeFilter = ATTRIBUTE_FEED.ALL;
+        state.contentFilter = ContentFeed.ALL;
+        state.attributeFilter = AttributeFeed.ALL;
       }, 'refreshHome');
       actions.getDataFeed(true);
     },

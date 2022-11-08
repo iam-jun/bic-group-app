@@ -32,6 +32,7 @@ exports[`SeriesContent component render with description view 1`] = `
           "backgroundColor": "#F4EFFB",
           "borderRadius": 8,
           "flexDirection": "row",
+          "height": 90,
         }
       }
     >
@@ -44,8 +45,8 @@ exports[`SeriesContent component render with description view 1`] = `
               },
               Object {
                 "borderRadius": 8,
-                "height": 80,
-                "width": 80,
+                "height": 90,
+                "width": 90,
               },
             ]
           }
@@ -265,6 +266,7 @@ exports[`SeriesContent component render without description view 1`] = `
           "backgroundColor": "#F4EFFB",
           "borderRadius": 8,
           "flexDirection": "row",
+          "height": 90,
         }
       }
     >
@@ -277,8 +279,8 @@ exports[`SeriesContent component render without description view 1`] = `
               },
               Object {
                 "borderRadius": 8,
-                "height": 80,
-                "width": 80,
+                "height": 90,
+                "width": 90,
               },
             ]
           }

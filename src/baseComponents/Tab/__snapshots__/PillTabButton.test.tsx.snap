@@ -33,6 +33,7 @@ exports[`PillTabButton renders selected button with type primary and size medium
       "paddingVertical": 8,
     }
   }
+  testID="hometab-selected"
 >
   <Text
     style={
@@ -90,6 +91,7 @@ exports[`PillTabButton renders selected button with type secondary and size larg
       "paddingVertical": 8,
     }
   }
+  testID="hometab-selected"
 >
   <Text
     style={
@@ -147,6 +149,7 @@ exports[`PillTabButton renders selected button with type secondary and size smal
       "paddingVertical": 6,
     }
   }
+  testID="hometab-selected"
 >
   <Text
     style={
@@ -203,6 +206,7 @@ exports[`PillTabButton renders unselected button with size medium correctly 1`] 
       "paddingVertical": 8,
     }
   }
+  testID="hometab-notselected"
 >
   <Text
     style={

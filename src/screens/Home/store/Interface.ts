@@ -1,11 +1,11 @@
 import IBaseState from '~/store/interfaces/IBaseState';
 
-export enum ATTRIBUTE_FEED {
+export enum AttributeFeed {
   ALL = 'ALL',
   IMPORTANT = 'IMPORTANT',
 }
 
-export enum CONTENT_FEED {
+export enum ContentFeed {
   ALL = 'ALL',
   POST = 'POST',
   ARTICLE = 'ARTICLE',
@@ -20,19 +20,19 @@ export interface IHomeFeed {
 }
 
 export type IFeed = {
-  [T in CONTENT_FEED]: { [S in ATTRIBUTE_FEED]: IHomeFeed };
+  [T in ContentFeed]: { [S in AttributeFeed]: IHomeFeed };
 };
 interface IHomeState extends IBaseState {
-  contentFilter: CONTENT_FEED;
-  attributeFilter: ATTRIBUTE_FEED;
+  contentFilter: ContentFeed;
+  attributeFilter: AttributeFeed;
   feed: IFeed;
   actions?: {
-    setContentFilter?: (contentFilter: CONTENT_FEED) => void;
-    setAttributeFilter?: (attributeFilter: ATTRIBUTE_FEED) => void;
+    setContentFilter?: (contentFilter: ContentFeed) => void;
+    setAttributeFilter?: (attributeFilter: AttributeFeed) => void;
     setDataFeed?: (
       data: IHomeFeed,
-      contentFilter?: CONTENT_FEED,
-      attributeFilter?: ATTRIBUTE_FEED
+      contentFilter?: ContentFeed,
+      attributeFilter?: AttributeFeed
     ) => void;
 
     getDataFeed?: (isRefresh?: boolean) => void;

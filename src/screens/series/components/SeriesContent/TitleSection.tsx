@@ -80,7 +80,7 @@ const TitleSection: FC<TitleSectionProps> = ({
   );
 };
 
-const IMG_SIZE = 80;
+const IMG_SIZE = 90;
 
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
@@ -90,6 +90,7 @@ const createStyle = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       backgroundColor: colors.purple2,
       borderRadius: borderRadius.large,
+      height: IMG_SIZE,
     },
     img: {
       borderRadius: borderRadius.large,
