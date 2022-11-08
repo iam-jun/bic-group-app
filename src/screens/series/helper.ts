@@ -96,7 +96,7 @@ export const getSeriesMenu = ({
       leftIcon: 'iconReact',
       title: i18next.t('post:post_menu_view_reactions'),
       requireIsActor: false,
-      requireReactionCounts: true,
+      // requireReactionCounts: true,
       upcoming: true,
       onPress: onPressUpcomingFeature,
     }, {
