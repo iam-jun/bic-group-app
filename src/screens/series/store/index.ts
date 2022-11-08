@@ -26,7 +26,7 @@ export interface ISeriesState extends IBaseState{
     postCreateNewSeries?: () => void;
     getSeriesDetail: (id: string) => void;
     deleteSeries: (id: string, callbackError: any) => void;
-    editSeries: (id: string, shouldReplaceWithDetail: boolean, onRetry: any) => void;
+    editSeries: (id: string, shouldReplaceWithDetail: boolean, onRetry: any, callbackError: any) => void;
     removeAudiences: (id: string, listAudiences: string[]) => void;
   }
 
