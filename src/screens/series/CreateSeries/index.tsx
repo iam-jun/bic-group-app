@@ -3,6 +3,7 @@ import {
   StyleSheet, ScrollView, Platform, KeyboardAvoidingView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import spacing from '~/theme/spacing';
@@ -14,6 +15,9 @@ import Text from '~/beinComponents/Text';
 import useSeriesCreation from '../hooks/useSeriesCreation';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import useSeriesStore, { ISeriesState } from '../store';
+import { IAudienceGroup } from '~/interfaces/IPost';
+import modalActions from '~/storeRedux/modal/actions';
+import AlertDeleteAudiencesConfirmContent from '~/screens/post/components/AlertDeleteAudiencesConfirmContent';
 
 const CreateSeries = ({ route }: CreationSeriesProps) => {
   const { seriesId, isFromDetail } = route?.params || {};
@@ -21,6 +25,7 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { t } = useBaseHook();
+  const dispatch = useDispatch();
 
   const scrollRef = useRef<any>(null);
 
@@ -28,12 +33,31 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
 
   useEffect(() => () => { resetStore(); }, []);
 
-  const onFoucusInput = () => {
-    if (Platform.OS === 'ios') {
-      setTimeout(() => {
-        scrollRef.current.scrollToEnd();
-      }, 250);
+  const handleEditAudienceError = (listIdAudiences: string[], groupsAudience: any[]) => {
+    if (listIdAudiences?.length <= 0 || groupsAudience?.length <= 0) {
+      return;
     }
+
+    const listAudiences = listIdAudiences.map((audienceId) => {
+      const _audience = groupsAudience.find(
+        (audience: IAudienceGroup) => audience?.id === audienceId,
+      );
+      return _audience;
+    });
+    dispatch(
+      modalActions.showAlert({
+        title: t('series:title_edit_audience_failed'),
+        children: (
+          <AlertDeleteAudiencesConfirmContent
+            data={listAudiences}
+            textContent={t('series:content_edit_audience_failed')}
+          />
+        ),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_close'),
+        onConfirm: null,
+      }),
+    );
   };
 
   const {
@@ -49,7 +73,15 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
     handleSummaryChange,
     handleUploadCoverSuccess,
     handlePressAudiences,
-  } = useSeriesCreation({ seriesId, isFromDetail });
+  } = useSeriesCreation({ seriesId, isFromDetail, handleEditAudienceError });
+
+  const onFoucusInput = () => {
+    if (Platform.OS === 'ios') {
+      setTimeout(() => {
+        scrollRef.current.scrollToEnd();
+      }, 250);
+    }
+  };
 
   return (
     <ScreenWrapper isFullView testID="create_series_screen">

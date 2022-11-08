@@ -11,7 +11,12 @@ import i18n from '~/localization';
 
 const navigation = withNavigation(rootNavigationRef);
 
-const editSeries = (set, get) => async (id: string, shouldReplaceWithDetail: boolean, onRetry: any) => {
+const editSeries = (set, get) => async (
+  id: string,
+  shouldReplaceWithDetail: boolean,
+  onRetry: any,
+  callbackError:any,
+) => {
   if (!id) return;
   const { data, actions }: ISeriesState = get() || {};
   set((state: ISeriesState) => {
@@ -35,14 +40,18 @@ const editSeries = (set, get) => async (id: string, shouldReplaceWithDetail: boo
     set((state: ISeriesState) => {
       state.loading = false;
     }, 'editSeriesError');
-    Store.store.dispatch(modalActions.showHideToastMessage({
-      content: 'series:text_edit_series_failed',
-      props: {
-        type: 'error',
-        buttonText: i18n.t('common:text_retry'),
-        onButtonPress: onRetry,
-      },
-    }));
+    if (error?.meta?.errors?.groups_denied) {
+      callbackError?.(error.meta.errors.groups_denied);
+    } else {
+      Store.store.dispatch(modalActions.showHideToastMessage({
+        content: 'series:text_edit_series_failed',
+        props: {
+          type: 'error',
+          buttonText: i18n.t('common:text_retry'),
+          onButtonPress: onRetry,
+        },
+      }));
+    }
     console.error('editSeriesError', error);
   }
 };

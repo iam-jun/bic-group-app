@@ -22,6 +22,7 @@ const navigation = withNavigation(rootNavigationRef);
 export interface IUseSeriesCreation {
     seriesId?: string;
     isFromDetail?: boolean;
+    handleEditAudienceError?: (listIdAudiences: string[], groupsAudience: any[])=>void;
 }
 
 const isNonEmptyString = (str: string) => str?.trim?.()?.length > 0;
@@ -41,7 +42,7 @@ const getNames = (
   return result;
 };
 
-const useSeriesCreation = ({ seriesId, isFromDetail }: IUseSeriesCreation) => {
+const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: IUseSeriesCreation) => {
   let series: any = {};
   if (!!seriesId) series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
@@ -49,7 +50,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail }: IUseSeriesCreation) => {
 
   const data = useSeriesStore((state: ISeriesState) => state.data) || {};
   const loading = useSeriesStore((state: ISeriesState) => state.loading);
-  const dataGroups = useSeriesStore((state: ISeriesState) => state.groups) || {};
+  const dataGroups = useSeriesStore((state: ISeriesState) => state.groups) || [];
 
   const audienceActions = useSelectAudienceStore((state: ISelectAudienceState) => state.actions);
 
@@ -86,7 +87,12 @@ const useSeriesCreation = ({ seriesId, isFromDetail }: IUseSeriesCreation) => {
   const handleSave = () => {
     Keyboard.dismiss();
     if (!!seriesId) {
-      actions.editSeries(seriesId, isFromDetail, () => handleSave());
+      actions.editSeries(
+        seriesId,
+        isFromDetail,
+        () => handleSave(),
+        (listIdAudiences: string[]) => handleEditAudienceError?.(listIdAudiences, series.audience?.groups || []),
+      );
     } else {
       actions.postCreateNewSeries();
     }
@@ -135,6 +141,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail }: IUseSeriesCreation) => {
     audience: {
       names,
       count: data.audience?.groupIds?.length || 0,
+      groups: dataGroups,
     },
     disableButtonSave: !enableButtonSave,
     handleTitleChange,
