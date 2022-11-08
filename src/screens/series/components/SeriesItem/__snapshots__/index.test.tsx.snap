@@ -411,6 +411,7 @@ exports[`SeriesItem component renders correctly 1`] = `
             "backgroundColor": "#F4EFFB",
             "borderRadius": 8,
             "flexDirection": "row",
+            "height": 90,
           }
         }
       >
@@ -423,8 +424,8 @@ exports[`SeriesItem component renders correctly 1`] = `
                 },
                 Object {
                   "borderRadius": 8,
-                  "height": 80,
-                  "width": 80,
+                  "height": 90,
+                  "width": 90,
                 },
               ]
             }

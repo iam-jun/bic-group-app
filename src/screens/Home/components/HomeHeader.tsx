@@ -26,7 +26,7 @@ import HomeHeaderButton from '~/screens/Home/components/HomeHeaderButton';
 import { homeHeaderAttributeContainerHeight, homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
 import Tab from '~/baseComponents/Tab';
 import useHomeStore from '~/screens/Home/store';
-import { ATTRIBUTE_FEED, CONTENT_FEED } from '../store/Interface';
+import { AttributeFeed, ContentFeed } from '../store/Interface';
 
 export interface HomeHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -36,15 +36,15 @@ export interface HomeHeaderProps {
 }
 
 const HEADER_CONTENT_FEED_FILTER = [
-  { id: CONTENT_FEED.ALL, text: 'home:title_feed_content_all' },
-  { id: CONTENT_FEED.POST, text: 'home:title_feed_content_posts' },
-  { id: CONTENT_FEED.ARTICLE, text: 'home:title_feed_content_articles' },
-  { id: CONTENT_FEED.SERIES, text: 'home:title_feed_content_series' },
+  { id: ContentFeed.ALL, text: 'home:title_feed_content_all' },
+  { id: ContentFeed.POST, text: 'home:title_feed_content_posts' },
+  { id: ContentFeed.ARTICLE, text: 'home:title_feed_content_articles' },
+  { id: ContentFeed.SERIES, text: 'home:title_feed_content_series' },
 ];
 
 const HEADER_ATTRIBUTE_FEED_FILTER = [
-  { id: ATTRIBUTE_FEED.ALL, text: 'home:title_feed_attritube_all' },
-  { id: ATTRIBUTE_FEED.IMPORTANT, text: 'home:title_feed_attritube_important' },
+  { id: AttributeFeed.ALL, text: 'home:title_feed_attritube_all' },
+  { id: AttributeFeed.IMPORTANT, text: 'home:title_feed_attritube_important' },
 ];
 
 const HomeHeader: FC<HomeHeaderProps> = ({
@@ -200,7 +200,8 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       paddingHorizontal: spacing.padding.small,
     },
     attributeTab: {
-      padding: spacing.padding.small,
+      paddingHorizontal: spacing.padding.small,
+      paddingVertical: 0,
       alignItems: 'center',
       justifyContent: 'center',
       borderBottomWidth: 0,
