@@ -77,7 +77,7 @@ const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
       style={style}
       isOpen={isShow}
       onClose={onClose}
-      placeholder={t('input:search_post')}
+      placeholder={t('input:search_content')}
       searchViewRef={_searchViewRef}
       onFocus={onFocusSearch}
       onChangeText={onSearchText}

@@ -101,7 +101,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
   const isHasChange = () => {
     if (!!seriesId) {
       const isTitleUpdated = series.title !== data.title && isNonEmptyString(data.title);
-      const isSummaryUpdated = series.summary !== data.summary && isNonEmptyString(data.summary);
+      const isSummaryUpdated = series.summary !== data.summary;
       const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
       const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
       && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
