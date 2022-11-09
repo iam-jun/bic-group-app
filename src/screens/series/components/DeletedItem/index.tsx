@@ -22,9 +22,9 @@ const DeletedItem = ({ style, title }: DeletedItemProps) => {
   const text = title || t('series:text_delete_series_success');
 
   return (
-    <View style={[styles.container, style]}>
+    <View testID="series.delete_item" style={[styles.container, style]}>
       <Image style={styles.imageDelete} source={resourceImages.img_delete} />
-      <Text.H6 testID="series.label_deleted" useI18n>
+      <Text.H6 testID="series.label_deleted">
         {text}
       </Text.H6>
     </View>

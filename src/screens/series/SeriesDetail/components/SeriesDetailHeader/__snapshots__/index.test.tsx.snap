@@ -266,7 +266,11 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
     <FastImageView
       onFastImageError={[Function]}
       resizeMode="cover"
-      source={null}
+      source={
+        Object {
+          "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+        }
+      }
       style={
         Object {
           "bottom": 0,
@@ -315,11 +319,19 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
         data={
           Array [
             Object {
-              "community_id": "b5c7a117-dcb8-47ba-9677-dc33da0320ba",
+              "communityId": "b5c7a117-dcb8-47ba-9677-dc33da0320ba",
               "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
               "id": "eba85417-ec3e-49b4-89b4-c5393baecaaf",
-              "is_community": true,
+              "isCommunity": true,
               "name": "baobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaob",
+              "privacy": "PUBLIC",
+            },
+            Object {
+              "communityId": "b5c7a117-dcb8-47ba-9677-dc33da045bas",
+              "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
+              "id": "eba85417-ec3e-49b4-89b4-c5393baecddf",
+              "isCommunity": true,
+              "name": "Test",
               "privacy": "PUBLIC",
             },
           ]
@@ -400,6 +412,66 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
                 testID="tag.label"
               >
                 baobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaob
+              </Text>
+            </View>
+          </View>
+          <View
+            onLayout={[Function]}
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                },
+                null,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "alignSelf": "baseline",
+                  "backgroundColor": "#EBF4FF",
+                  "borderRadius": 100,
+                  "flexDirection": "row",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "marginRight": 8,
+                  "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
+                }
+              }
+              testID="audience-tag"
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 11,
+                    },
+                    Object {},
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                  ]
+                }
+                testID="tag.label"
+              >
+                Test
               </Text>
             </View>
           </View>

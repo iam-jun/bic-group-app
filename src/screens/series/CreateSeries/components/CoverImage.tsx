@@ -30,8 +30,6 @@ const CoverImage = ({
 }: Props) => {
   const dispatch = useDispatch();
 
-  // const { rootNavigation } = useRootNavigation();
-
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
@@ -77,7 +75,11 @@ const CoverImage = ({
   const renderButton = () => {
     if (!coverMedia?.url && !error) {
       return (
-        <Button style={[styles.centerButtonContainer, styles.emptyCoverContainer]} onPress={onPressSelect}>
+        <Button
+          testID="create_series.cover_image.button_add"
+          style={[styles.centerButtonContainer, styles.emptyCoverContainer]}
+          onPress={onPressSelect}
+        >
           <Icon icon="Image" size={30} tintColor={theme.colors.neutral40} />
           <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_add_cover</Text.SubtitleM>
         </Button>

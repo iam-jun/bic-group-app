@@ -6,6 +6,7 @@ import SeriesItem from '.';
 import { mockSeries } from '~/test/mock_data/series';
 
 describe('SeriesItem component', () => {
+  const seriesId = '5264f1b3-c8b8-428a-9fb8-7f075f03d0c8';
   it('renders correctly', () => {
     const { result } = renderHook(() => usePostsStore());
 
@@ -13,7 +14,7 @@ describe('SeriesItem component', () => {
       result.current.actions.addToPosts({ data: mockSeries });
     });
 
-    const wrapper = renderWithRedux(<SeriesItem id="5264f1b3-c8b8-428a-9fb8-7f075f03d0c8" />);
+    const wrapper = renderWithRedux(<SeriesItem id={seriesId} />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -24,8 +25,22 @@ describe('SeriesItem component', () => {
       result.current.actions.addToPosts({ data: mockSeries });
     });
 
-    const wrapper = renderWithRedux(<SeriesItem id="5264f1b3-c8b8-428a-9fb8-7f075f03d0c8" />);
+    const wrapper = renderWithRedux(<SeriesItem id={seriesId} />);
     const header = wrapper.getByTestId('content_header');
     fireEvent.press(header);
+  });
+
+  it('renders delete item when series deleted', () => {
+    const { result } = renderHook(() => usePostsStore());
+
+    act(() => {
+      result.current.actions.addToPosts({ data: { ...mockSeries, deleted: true } });
+    });
+
+    const wrapper = renderWithRedux(<SeriesItem id={seriesId} />);
+    expect(wrapper.toJSON()).toMatchSnapshot();
+
+    const deleteComponent = wrapper.getByTestId('series.delete_item');
+    expect(deleteComponent).toBeDefined();
   });
 });

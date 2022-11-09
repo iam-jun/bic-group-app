@@ -65,7 +65,8 @@ const removeReactionLocal
     const cOwnerReactions2 = post2.ownerReactions || [];
     const cReactionCounts2 = post2.reactionsCount || {};
     let newOwnerReactions2 = [];
-    const newReactionCounts2: any = cReactionCounts2;
+    const newReactionCounts2: any = { ...cReactionCounts2 };
+
     if (preRemove) {
       newOwnerReactions2 = cOwnerReactions2?.map?.((or: IReaction) => {
         if (or?.reactionName === reactionId) {
@@ -81,9 +82,10 @@ const removeReactionLocal
         (or: IReaction) => or?.reactionName !== reactionId,
       );
 
-      Object.keys(newReactionCounts2)?.forEach?.((k) => {
-        const _reactionId = Object.keys(newReactionCounts2?.[k])?.[0];
-        const _reactionCount = newReactionCounts2?.[k]?.[_reactionId] || 0;
+      Object.keys(cReactionCounts2)?.forEach?.((k) => {
+        const _reactionId = Object.keys(cReactionCounts2?.[k])?.[0];
+        const _reactionCount = cReactionCounts2?.[k]?.[_reactionId] || 0;
+
         if (reactionId !== _reactionId) {
           newReactionCounts2[k] = { [_reactionId]: _reactionCount };
         } else {
@@ -97,7 +99,7 @@ const removeReactionLocal
     actions.onUpdateReactionOfPostById(
       id,
       newOwnerReactions2,
-      cReactionCounts2,
+      newReactionCounts2,
     );
   };
 

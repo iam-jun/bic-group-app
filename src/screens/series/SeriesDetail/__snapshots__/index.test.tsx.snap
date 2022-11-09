@@ -288,7 +288,11 @@ exports[`SeriesDetail component renders correctly 1`] = `
       <FastImageView
         onFastImageError={[Function]}
         resizeMode="cover"
-        source={null}
+        source={
+          Object {
+            "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+          }
+        }
         style={
           Object {
             "bottom": 0,
@@ -337,11 +341,19 @@ exports[`SeriesDetail component renders correctly 1`] = `
           data={
             Array [
               Object {
-                "community_id": "b5c7a117-dcb8-47ba-9677-dc33da0320ba",
+                "communityId": "b5c7a117-dcb8-47ba-9677-dc33da0320ba",
                 "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
                 "id": "eba85417-ec3e-49b4-89b4-c5393baecaaf",
-                "is_community": true,
+                "isCommunity": true,
                 "name": "baobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaob",
+                "privacy": "PUBLIC",
+              },
+              Object {
+                "communityId": "b5c7a117-dcb8-47ba-9677-dc33da045bas",
+                "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
+                "id": "eba85417-ec3e-49b4-89b4-c5393baecddf",
+                "isCommunity": true,
+                "name": "Test",
                 "privacy": "PUBLIC",
               },
             ]
@@ -425,6 +437,66 @@ exports[`SeriesDetail component renders correctly 1`] = `
                 </Text>
               </View>
             </View>
+            <View
+              onLayout={[Function]}
+              style={
+                Array [
+                  Object {
+                    "flexDirection": "row",
+                  },
+                  null,
+                ]
+              }
+            >
+              <View
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "alignSelf": "baseline",
+                    "backgroundColor": "#EBF4FF",
+                    "borderRadius": 100,
+                    "flexDirection": "row",
+                    "height": 24,
+                    "justifyContent": "center",
+                    "marginRight": 8,
+                    "opacity": 1,
+                    "paddingLeft": 4,
+                    "paddingRight": 8,
+                  }
+                }
+                testID="audience-tag"
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#212745",
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 11,
+                      },
+                      Object {},
+                      Object {
+                        "color": "#007AFF",
+                        "paddingLeft": 4,
+                      },
+                    ]
+                  }
+                  testID="tag.label"
+                >
+                  Test
+                </Text>
+              </View>
+            </View>
           </View>
         </RCTScrollView>
       </View>
@@ -454,6 +526,221 @@ exports[`SeriesDetail component renders correctly 1`] = `
         series 111
       </Text>
     </View>
+  </View>
+</View>
+`;
+
+exports[`SeriesDetail component renders delete item when series deleted 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#EAEDF2",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "zIndex": 2,
+      }
+    }
+    testID="header"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "flexDirection": "row",
+            "minHeight": 44,
+            "paddingTop": 0,
+            "paddingVertical": 4,
+          },
+          Object {
+            "elevation": 2,
+            "shadowColor": "rgba(0, 0, 0, 1)",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.12,
+            "shadowRadius": 1.5,
+          },
+          undefined,
+        ]
+      }
+      testID="header.content"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingLeft": 8,
+            "paddingRight": 8,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 20,
+              "left": 20,
+              "right": 20,
+              "top": 20,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="header.back.button"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Object {
+                  "alignItems": "center",
+                  "height": 44,
+                  "justifyContent": "center",
+                  "padding": 12,
+                  "width": 44,
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="header.back"
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingVertical": 8,
+              },
+              Object {},
+            ]
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "height": 0,
+            "position": "absolute",
+            "top": 0,
+            "width": "100%",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "padding": 16,
+        },
+        undefined,
+      ]
+    }
+    testID="series.delete_item"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Object {
+            "height": 35,
+            "marginRight": 16,
+            "width": 35,
+          },
+        ]
+      }
+    >
+      <FastImageView
+        onFastImageError={[Function]}
+        resizeMode="cover"
+        source={
+          Object {
+            "testUri": "../../../assets/images/img_delete.png",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 13,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="series.label_deleted"
+    >
+      Series deleted
+    </Text>
   </View>
 </View>
 `;

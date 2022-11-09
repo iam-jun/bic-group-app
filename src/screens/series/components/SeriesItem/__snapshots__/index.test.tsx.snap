@@ -236,7 +236,7 @@ exports[`SeriesItem component renders correctly 1`] = `
           }
           testID="content_header.audiences"
         >
-          baobaobaobaobaobaobaobaob...
+          baobaobaobaobaobaobaobaob... +1 others
         </Text>
       </View>
       <View
@@ -433,7 +433,11 @@ exports[`SeriesItem component renders correctly 1`] = `
             <FastImageView
               onFastImageError={[Function]}
               resizeMode="cover"
-              source={null}
+              source={
+                Object {
+                  "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+                }
+              }
               style={
                 Object {
                   "bottom": 0,
@@ -575,12 +579,79 @@ exports[`SeriesItem component renders correctly 1`] = `
                 ]
               }
             >
-              
+              01/11/2022
             </Text>
           </Text>
         </View>
       </View>
     </View>
   </View>
+</View>
+`;
+
+exports[`SeriesItem component renders delete item when series deleted 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "flexDirection": "row",
+        "padding": 16,
+      },
+      undefined,
+    ]
+  }
+  testID="series.delete_item"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "overflow": "hidden",
+        },
+        Object {
+          "height": 35,
+          "marginRight": 16,
+          "width": 35,
+        },
+      ]
+    }
+  >
+    <FastImageView
+      onFastImageError={[Function]}
+      resizeMode="cover"
+      source={
+        Object {
+          "testUri": "../../../assets/images/img_delete.png",
+        }
+      }
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    />
+  </View>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 13,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="series.label_deleted"
+  >
+    Series deleted
+  </Text>
 </View>
 `;
