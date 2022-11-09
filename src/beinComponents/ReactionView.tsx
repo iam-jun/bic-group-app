@@ -87,8 +87,8 @@ const ReactionView: FC<ReactionViewProps> = ({
             value={reactionMap.get(key)}
             icon={key}
             onLongPress={() => _onLongPressItem(react)}
-            loading={_ownReactions?.[react]?.loading}
-            selected={!!_ownReactions?.[react]?.id}
+            loading={!!_ownReactions?.[react]?.loading}
+            selected={!!_ownReactions?.[react]}
             onActionPress={(action) => onActionReaction(react, action)}
             disabled={!hasReactPermission}
           />,
