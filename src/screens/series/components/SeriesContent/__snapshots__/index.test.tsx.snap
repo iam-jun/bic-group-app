@@ -288,7 +288,11 @@ exports[`SeriesContent component render without description view 1`] = `
           <FastImageView
             onFastImageError={[Function]}
             resizeMode="cover"
-            source={null}
+            source={
+              Object {
+                "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+              }
+            }
             style={
               Object {
                 "bottom": 0,
@@ -430,7 +434,7 @@ exports[`SeriesContent component render without description view 1`] = `
               ]
             }
           >
-            
+            01/11/2022
           </Text>
         </Text>
       </View>

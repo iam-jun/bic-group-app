@@ -3,21 +3,18 @@ import { Keyboard } from 'react-native';
 import i18next from 'i18next';
 
 import { useCallback, useEffect } from 'react';
-import { withNavigation } from '~/router/helper';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 
-import { rootNavigationRef } from '~/router/refs';
 import useSeriesStore, { ISeriesState } from '../store';
 import useSelectAudienceStore, { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { IArticleCover } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
 import { IEditArticleAudience } from '~/interfaces/IArticle';
-
-const navigation = withNavigation(rootNavigationRef);
+import { useRootNavigation } from '~/hooks/navigation';
 
 export interface IUseSeriesCreation {
     seriesId?: string;
@@ -43,6 +40,8 @@ const getNames = (
 };
 
 const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: IUseSeriesCreation) => {
+  const { rootNavigation } = useRootNavigation();
+
   let series: any = {};
   if (!!seriesId) series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
@@ -101,11 +100,12 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
   const isHasChange = () => {
     if (!!seriesId) {
       const isTitleUpdated = series.title !== data.title && isNonEmptyString(data.title);
-      const isSummaryUpdated = series.summary !== data.summary;
+      const isRequiredUnEmpty = isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
+      const isSummaryUpdated = series.summary !== data.summary && isRequiredUnEmpty;
       const isCoverMediaUpdated = (series.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
       const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(series.audience), data.audience)
       && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
-      return isTitleUpdated || isCoverMediaUpdated || isSummaryUpdated || isAudienceUpdated;
+      return isTitleUpdated || isCoverMediaUpdated || isAudienceUpdated || isSummaryUpdated;
     }
     return isNonEmptyString(data.title) && !isEmpty(data.coverMedia);
   };
@@ -121,15 +121,15 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
         cancelBtn: true,
         cancelLabel: i18next.t('common:btn_discard'),
         confirmLabel: i18next.t('common:btn_stay_here'),
-        onCancel: () => navigation.goBack(),
+        onCancel: () => rootNavigation.goBack(),
       }));
       return;
     }
-    navigation.goBack();
+    rootNavigation.goBack();
   };
 
   const handlePressAudiences = () => {
-    navigation.navigate(seriesStack.seriesSelectAudience,
+    rootNavigation.navigate(seriesStack.seriesSelectAudience,
       { isEditAudience: true, initAudienceGroups: dataGroups });
   };
 

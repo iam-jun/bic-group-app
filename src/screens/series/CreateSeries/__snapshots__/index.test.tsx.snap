@@ -1,0 +1,769 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateSeries component renders correctly without data 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+      },
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+  testID="create_series_screen"
+>
+  <View
+    style={
+      Object {
+        "zIndex": 2,
+      }
+    }
+    testID="header"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "flexDirection": "row",
+            "minHeight": 44,
+            "paddingTop": 0,
+            "paddingVertical": 4,
+          },
+          Object {
+            "elevation": 2,
+            "shadowColor": "rgba(0, 0, 0, 1)",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.12,
+            "shadowRadius": 1.5,
+          },
+          undefined,
+        ]
+      }
+      testID="header.content"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingLeft": 8,
+            "paddingRight": 8,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 20,
+              "left": 20,
+              "right": 20,
+              "top": 20,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="header.back.button"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Object {
+                  "alignItems": "center",
+                  "height": 44,
+                  "justifyContent": "center",
+                  "padding": 12,
+                  "width": 44,
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="header.back"
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingVertical": 8,
+              },
+              Object {},
+            ]
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              numberOfLines={1}
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 15,
+                  },
+                  Object {},
+                  Object {
+                    "marginRight": 8,
+                  },
+                ]
+              }
+              testID="header.text"
+            >
+              Create Series
+            </Text>
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "borderRadius": 6,
+              },
+              Object {
+                "borderWidth": 0,
+              },
+            ]
+          }
+          testID="create_series.btn_publish"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "borderRadius": 6,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "paddingVertical": 4,
+                },
+                undefined,
+                Object {
+                  "backgroundColor": "#F4EFFB",
+                  "height": 36,
+                  "paddingHorizontal": 12,
+                },
+              ]
+            }
+            testID="button.content"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {
+                    "color": "#BAC0DE",
+                  },
+                  Array [
+                    Object {
+                      "textAlign": "center",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+              testID="button.text"
+            >
+              Publish
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "height": 0,
+            "position": "absolute",
+            "top": 0,
+            "width": "100%",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "borderBottomColor": "#E3E6F2",
+        "borderBottomWidth": 1,
+        "flexDirection": "row",
+        "opacity": 1,
+        "paddingHorizontal": 16,
+        "paddingVertical": 8,
+      }
+    }
+    testID="create_post_chosen_audiences"
+  >
+    <Text
+      numberOfLines={2}
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#353E6E",
+          },
+          Object {},
+        ]
+      }
+    >
+      Post to 
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#282E53",
+            },
+            undefined,
+          ]
+        }
+      >
+        0
+      </Text>
+      : 
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            undefined,
+          ]
+        }
+        testID="create_post_chosen_audiences.names"
+      >
+        
+      </Text>
+    </Text>
+  </View>
+  <View
+    onLayout={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        Object {
+          "paddingBottom": 16,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
+      style={
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "marginTop": 32,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "#F8F9FF",
+                  "borderRadius": 4,
+                  "overflow": "hidden",
+                },
+                Object {
+                  "height": 400,
+                  "width": 750,
+                },
+                Object {
+                  "height": 400,
+                  "width": "100%",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "height": "100%",
+                  "justifyContent": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <ActivityIndicator
+                color="#A4A9B7"
+                size="large"
+                testID="loading_indicator"
+              />
+            </View>
+          </View>
+          <View
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#F1F2F8",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            testID="create_series.cover_image.button_add"
+          >
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View />
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 15,
+                  },
+                  Object {},
+                  Object {
+                    "marginTop": 12,
+                  },
+                ]
+              }
+            >
+              Add a cover
+            </Text>
+          </View>
+        </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              Array [
+                Object {
+                  "marginHorizontal": 16,
+                },
+                Object {
+                  "marginTop": 16,
+                },
+              ],
+            ]
+          }
+        >
+          Name
+        </Text>
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "column",
+                "marginVertical": 4,
+              },
+              Object {
+                "marginHorizontal": 16,
+              },
+            ]
+          }
+          testID="text_input"
+        >
+          <View
+            style={
+              Array [
+                Object {},
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "flexDirection": "row",
+                    "height": 40,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "green",
+                      "borderBottomLeftRadius": 6,
+                      "borderBottomRightRadius": 6,
+                      "borderTopLeftRadius": 6,
+                      "borderTopRightRadius": 6,
+                      "borderWidth": 1,
+                      "flex": 1,
+                      "flexDirection": "row",
+                    },
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                      "borderColor": "#E3E6F2",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "flexDirection": "row",
+                      "height": 40,
+                    }
+                  }
+                >
+                  <TextInput
+                    editable={true}
+                    maxLength={64}
+                    onBlur={[Function]}
+                    onChangeText={[Function]}
+                    onFocus={[Function]}
+                    placeholder="Enter name"
+                    placeholderTextColor="#BAC0DE"
+                    selectionColor="#767D93"
+                    style={
+                      Array [
+                        Object {
+                          "flex": 1,
+                          "fontFamily": "BeVietnamPro-Light",
+                          "fontSize": 15,
+                          "height": 40,
+                          "paddingHorizontal": 16,
+                        },
+                        Object {
+                          "color": "#181C32",
+                        },
+                      ]
+                    }
+                    testID="text_input.input"
+                    value=""
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              Array [
+                Object {
+                  "marginHorizontal": 16,
+                },
+                Object {
+                  "marginTop": 16,
+                },
+              ],
+            ]
+          }
+        >
+          Description
+           
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
+                },
+                Object {
+                  "color": "#BAC0DE",
+                },
+                undefined,
+              ]
+            }
+          >
+            (
+            optional
+            )
+          </Text>
+        </Text>
+        <View
+          style={
+            Array [
+              Object {
+                "padding": 16,
+              },
+              Object {
+                "paddingTop": 8,
+              },
+            ]
+          }
+          testID="text_input.text_area"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "#E3E6F2",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "marginBottom": 6,
+                  "minHeight": 84,
+                  "paddingHorizontal": 12,
+                  "paddingVertical": 6,
+                },
+                Object {
+                  "borderColor": "#E3E6F2",
+                },
+                Object {
+                  "marginTop": 0,
+                  "paddingVertical": 0,
+                },
+              ]
+            }
+          >
+            <TextInput
+              maxLength={255}
+              multiline={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              placeholder="Input description..."
+              placeholderTextColor="#BAC0DE"
+              selectionColor="#767D93"
+              style={
+                Object {
+                  "color": "#353E6E",
+                  "flex": 1,
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
+                }
+              }
+              testID="create_series.description"
+              textAlignVertical="top"
+              value=""
+            />
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 11,
+                },
+                Object {
+                  "color": "#BAC0DE",
+                },
+                Object {
+                  "alignSelf": "flex-end",
+                },
+              ]
+            }
+          >
+            0/255
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;

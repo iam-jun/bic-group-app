@@ -1,0 +1,252 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChosenAudiences component render correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#E3E6F2",
+      "borderBottomWidth": 1,
+      "flexDirection": "row",
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 8,
+    }
+  }
+  testID="create_post_chosen_audiences"
+>
+  <Text
+    numberOfLines={2}
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#353E6E",
+        },
+        Object {},
+      ]
+    }
+  >
+    Post to 
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#282E53",
+          },
+          undefined,
+        ]
+      }
+    >
+      2
+    </Text>
+    : 
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          undefined,
+        ]
+      }
+      testID="create_post_chosen_audiences.names"
+    >
+      audience 1, audience 2
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`ChosenAudiences component render correctly when audiences is empty 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#E3E6F2",
+      "borderBottomWidth": 1,
+      "flexDirection": "row",
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 8,
+    }
+  }
+  testID="create_post_chosen_audiences"
+>
+  <Text
+    numberOfLines={2}
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#353E6E",
+        },
+        Object {},
+      ]
+    }
+  >
+    Post to 
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#282E53",
+          },
+          undefined,
+        ]
+      }
+    >
+      0
+    </Text>
+    : 
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          undefined,
+        ]
+      }
+      testID="create_post_chosen_audiences.names"
+    >
+      
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`ChosenAudiences component should disabled component when prop disabled = true 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#E3E6F2",
+      "borderBottomWidth": 1,
+      "flexDirection": "row",
+      "opacity": 0.5,
+      "paddingHorizontal": 16,
+      "paddingVertical": 8,
+    }
+  }
+  testID="create_post_chosen_audiences"
+>
+  <Text
+    numberOfLines={2}
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#353E6E",
+        },
+        Object {},
+      ]
+    }
+  >
+    Post to 
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#282E53",
+          },
+          undefined,
+        ]
+      }
+    >
+      2
+    </Text>
+    : 
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#181C32",
+          },
+          undefined,
+        ]
+      }
+      testID="create_post_chosen_audiences.names"
+    >
+      audience 1, audience 2
+    </Text>
+  </Text>
+</View>
+`;

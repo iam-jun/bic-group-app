@@ -1,12 +1,12 @@
 import streamApi from '~/api/StreamApi';
-import { withNavigation } from '~/router/helper';
+import routerHelper from '~/router/helper';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { rootNavigationRef } from '~/router/refs';
 import useHomeStore from '~/screens/Home/store';
 import showError from '~/store/helper/showError';
 import { ISeriesState } from '..';
 
-const navigation = withNavigation(rootNavigationRef);
+const navigation = routerHelper.withNavigation(rootNavigationRef);
 
 const postCreateNewSeries = (set, get) => async () => {
   const { data, actions }: ISeriesState = get() || {};
