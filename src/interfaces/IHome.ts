@@ -25,6 +25,7 @@ export interface IPayloadSetNewsfeedSearchUsers {
   data?: any[];
   loading?: boolean;
   canLoadMore?: boolean;
+  groupId?: string;
 }
 
 export interface IPayloadSetNewsfeedSearchRecentKeywords {
