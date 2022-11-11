@@ -332,7 +332,7 @@ export default class Md extends PureComponent {
     />
   );
 
-  renderSoftBreak = () => <Text>{'\n'}</Text>;
+  renderSoftBreak = () => <Text>{'\n\n'}</Text>;
 
   renderHtml = (props) => {
     let rendered = this.renderText(props);

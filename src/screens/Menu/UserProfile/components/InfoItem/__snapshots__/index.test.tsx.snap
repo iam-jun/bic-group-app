@@ -5,7 +5,7 @@ exports[`InfoItem component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "paddingBottom": 8,
+        "paddingBottom": 16,
       },
       undefined,
     ]
@@ -38,7 +38,7 @@ exports[`InfoItem component renders correctly 1`] = `
         },
         Object {},
         Object {
-          "marginTop": 8,
+          "marginTop": 4,
         },
       ]
     }

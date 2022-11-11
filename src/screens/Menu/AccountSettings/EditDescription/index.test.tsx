@@ -8,16 +8,12 @@ import initialState from '~/storeRedux/initialState';
 
 import {
   configureStore,
-  createTestStore,
   fireEvent,
   renderWithRedux,
 } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 
 import EditDescription from '.';
-import menuTypes from '../../../../storeRedux/menu/types';
-import { USER_PROFILE } from '~/test/mock_data/menu';
-import menuActions from '../../../../storeRedux/menu/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 afterEach(cleanup);
@@ -77,34 +73,34 @@ describe('EditDescription screen', () => {
     expect(goBack).toBeCalled();
   });
 
-  it('should update userProfile successfully when click save button ', async () => {
-    Keyboard.dismiss = jest.fn();
+  // it('should update userProfile successfully when click save button ', async () => {
+  //   Keyboard.dismiss = jest.fn();
 
-    const mockActionEditMyProfile = jest.fn().mockImplementation(() => ({
-      type: menuTypes.EDIT_MY_PROFILE,
-      payload: {
-        id: USER_PROFILE.id,
-        description: 'descriptionText',
-      },
-    }));
+  //   const mockActionEditMyProfile = jest.fn().mockImplementation(() => ({
+  //     type: menuTypes.EDIT_MY_PROFILE,
+  //     payload: {
+  //       id: USER_PROFILE.id,
+  //       description: 'descriptionText',
+  //     },
+  //   }));
 
-    jest
-      .spyOn(menuActions, 'editMyProfile')
-      .mockImplementation(mockActionEditMyProfile as any);
+  //   jest
+  //     .spyOn(menuActions, 'editMyProfile')
+  //     .mockImplementation(mockActionEditMyProfile as any);
 
-    const store = createTestStore(initialState);
-    const wrapper = renderWithRedux(<EditDescription />, store);
+  //   const store = createTestStore(initialState);
+  //   const wrapper = renderWithRedux(<EditDescription />, store);
 
-    const buttonComponent = wrapper.getByTestId('edit_description.save');
-    const textInputComponent = wrapper.getByTestId('edit_description');
+  //   const buttonComponent = wrapper.getByTestId('edit_description.save');
+  //   const textInputComponent = wrapper.getByTestId('edit_description');
 
-    fireEvent.changeText(textInputComponent, 'abc');
-    expect(buttonComponent?.props?.accessibilityState?.disabled).toBeFalsy();
+  //   fireEvent.changeText(textInputComponent, 'abc');
+  //   expect(buttonComponent?.props?.accessibilityState?.disabled).toBeFalsy();
 
-    fireEvent.press(buttonComponent);
+  //   fireEvent.press(buttonComponent);
 
-    expect(mockActionEditMyProfile).toBeCalled();
-  });
+  //   expect(mockActionEditMyProfile).toBeCalled();
+  // });
 
   it('should back to userEdit screen successfully if rootNavigation.canGoBack = false ', () => {
     Keyboard.dismiss = jest.fn();

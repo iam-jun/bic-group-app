@@ -145,7 +145,12 @@
     "text_months": "{{number}} tháng",
     "text_year": "{{number}} năm",
     "text_never": "Không bao giờ",
-    "text_custom": "Tùy chỉnh"
+    "text_custom": "Tùy chỉnh",
+    "text_add_cover": "Thêm ảnh bìa",
+    "text_optional": "tuỳ chọn",
+    "articles": "Bài viết",
+    "last_updated": "Cập nhật",
+    "audiences": "Đối tượng"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -387,9 +392,12 @@
     "newsfeed": "Bản tin",
     "saved_posts": "Bài viết đã lưu",
     "draft_post": "Bài nháp",
-    "draft_articles_post": "Bài báo nháp",
-    "title_timeline": "Bản tin",
-    "title_important": "Quan trọng",
+    "title_feed_attritube_all": "Tất cả",
+    "title_feed_attritube_important": "Quan trọng",
+    "title_feed_content_all": "Tất cả",
+    "title_feed_content_posts": "Bài viết",
+    "title_feed_content_articles": "Bài báo",
+    "title_feed_content_series": "Series",
     "title_install_chat": "Không tìm thấy BIC Chat",
     "text_desc_install_chat": "Vui lòng cài đặt BIC Chat để sử dụng tính năng này",
     "newsfeed_search": {
@@ -412,7 +420,7 @@
       "no_recent_search": "Không có tìm kiếm gần đây",
       "apply": "Xác nhận",
       "filter": "Lọc",
-      "filter_post_by": "Đăng bởi",
+      "filter_post_by": "Tạo bởi",
       "filter_created_by_all": "Tất cả",
       "filter_created_by_me": "Chính mình",
       "filter_created_by_specific": "Bài viết của",
@@ -420,11 +428,17 @@
       "seven_days_ago": "7 ngày trước",
       "thirty_days_ago": "30 ngày trước",
       "three_months_ago": "3 tháng trước",
-      "from_to": "Từ ngày - Đến ngày"
+      "from_to": "Từ ngày - Đến ngày",
+      "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nỗi dung chính xác"
     },
     "notice_post_video_uploading": {
       "title": "Bài viết có video đang xử lý (count)",
       "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
+    },
+    "create_content_options": {
+      "write_post": "Đăng Bài",
+      "write_series": "Đăng Series",
+      "my_draft": "Bài Nháp"
     }
   },
   "menu": {
@@ -444,15 +458,19 @@
   "article": {
     "title_article_detail": "Chi tiết bài viết",
     "title_edit_article": "Sửa Bài Viết",
-    "title_categories": "Danh mục",
-    "title_edit_title": "Tiêu đề",
-    "title_edit_description": "Mô tả",
-    "title_edit_cover": "Ảnh bìa",
-    "title_edit_category": "Danh mục",
-    "title_edit_audience": "Đối tượng",
-    "title_edit_content": "Nội dung",
+    "title_edit_title": "Sửa Tiêu Đề",
+    "title_edit_description": "Sửa Mô Tả",
+    "title_edit_cover": "Sửa Ảnh Bìa",
+    "title_edit_category": "Sửa Danh Mục",
+    "title_edit_audience": "Sửa Đối Tượng",
+    "title_edit_content": "Sửa Nội Dung",
+    "text_option_edit_title": "Tiêu Đề",
+    "text_option_edit_description": "Mô Tả",
+    "text_option_edit_cover": "Ảnh Bìa",
+    "text_option_edit_category": "Danh Mục",
+    "text_option_edit_audience": "Đối Tượng",
+    "text_option_edit_content": "Nội Dung",
     "text_change_cover": "Đổi ảnh bìa",
-    "text_add_cover": "Thêm ảnh bìa",
     "text_select_cover": "Chọn ảnh bìa",
     "text_selecting_categories": "Bài viết của bạn sẽ được thêm vào",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
@@ -493,6 +511,8 @@
     "text_search_result_empty": "Không có kết quả. Vui lòng thử lại...",
     "title_delete_post": "Xoá Bài Viết",
     "content_delete_post": "Bạn có muốn xóa bài viết này?",
+    "title_delete_article": "Xoá Bài Viết",
+    "content_delete_article": "Bạn có muốn xóa bài viết này?",
     "title_delete_audiences_of_post": "Bạn Không Thể Xóa Bài Đăng Này",
     "content_delete_audiences_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
     "content_not_able_delete_of_post": "Bạn không thể xóa bài đăng này khỏi những đối tượng dưới đây.",
@@ -602,6 +622,9 @@
       "btn_keep_selecting": "Tiếp tục chọn"
     },
     "draft": {
+      "title_draft": "Nháp",
+      "text_posts": "Bài đăng",
+      "text_articles": "Bài viết",
       "btn_post_now": "Đăng ngay",
       "btn_edit": "Sửa",
       "btn_menu_schedule": "Đặt lịch đăng bài",
@@ -610,10 +633,13 @@
       "text_delete_draft_post": "Bạn có chắc muốn xoá bản nháp này?",
       "title_no_draft_posts": "Không có bài nháp",
       "text_no_draft_posts": "Bạn không còn bài nháp nào",
-      "text_draft_published": "Bài viết của bạn đã được đăng",
+      "text_draft_post_published": "Bài viết của bạn đã được đăng",
       "text_draft_saved": "Bản nháp của bạn đã được lưu",
       "text_draft_deleted": "Bản nháp của bạn đã được xoá",
-      "text_processing_publish": "Bài viết của bạn đang được biên tập"
+      "text_processing_publish": "Bài viết của bạn đang được biên tập",
+      "title_no_draft_articles": "Không có bài nháp",
+      "text_no_draft_articles": "Bạn không còn bài nháp nào",
+      "text_draft_article_published": "Bài viết của bạn đã được đăng"
     },
     "comment": {
       "title_delete_comment": "Xoá bình luận",
@@ -681,7 +707,7 @@
     "search": "Tìm kiếm người để trò chuyện...",
     "search_group_people": "Tìm kiếm nhóm hoặc người...",
     "search_group": "Tìm kiếm nhóm...",
-    "search_post": "Tìm kiếm bài viết...",
+    "search_content": "Tìm kiếm bài viết...",
     "search_country": "Tìm kiếm Đất nước",
     "search_location": "Tìm kiếm Tỉnh/Thành phố"
   },
@@ -1045,5 +1071,24 @@
     "objects": "Vật thể",
     "symbols": "Ký hiệu",
     "flags": "Cờ"
+  },
+  "series": {
+    "title_create_series":"Tạo Loạt Bài Viết",
+    "title_name": "Tên",
+    "text_input_name": "Nhập tên",
+    "text_update_cover": "Đổi ảnh bìa",
+    "menu_text_edit_series": "Chỉnh sửa series",
+    "menu_text_save_series": "Lưu series",
+    "menu_text_delete_series": "Xoá series",
+    "content_delete_series": "Bạn có muốn xóa series này không?",
+    "text_delete_series_success": "Series đã được xoá",
+    "title_delete_audiences_of_series": "Bạn Không Thể Xóa Series Này",
+    "content_delete_audiences_of_series": "Bạn không thể xóa series này khỏi những đối tượng dưới đây. Bạn có muốn tiếp tục?",
+    "content_not_able_delete_of_series": "Bạn không thể xóa series này khỏi những đối tượng dưới đây.",
+    "text_deleted_audiences": "Series của bạn đã được xoá khỏi các nhóm đối tượng.",
+    "text_edit_series_success": "Chỉnh sửa series thành công.",
+    "text_edit_series_failed": "Đăng series thất bại",
+    "title_edit_audience_failed": "Thay đổi đối tượng?",
+    "content_edit_audience_failed": "Bạn không có quyền xóa bài đăng của chính mình trong các nhóm:"
   }
 }

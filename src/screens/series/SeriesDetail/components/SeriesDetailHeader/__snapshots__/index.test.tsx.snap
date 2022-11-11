@@ -1,0 +1,508 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SeriesDetailHeader component render with description view 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "elevation": 2,
+      "marginBottom": 16,
+      "shadowColor": "rgba(0, 0, 0, 1)",
+      "shadowOffset": Object {
+        "height": 2,
+        "width": 0,
+      },
+      "shadowOpacity": 0.12,
+      "shadowRadius": 1.5,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "overflow": "hidden",
+        },
+        Object {
+          "height": 167,
+          "width": 750,
+        },
+      ]
+    }
+  >
+    <FastImageView
+      onFastImageError={[Function]}
+      resizeMode="cover"
+      source={null}
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 16,
+      }
+    }
+  >
+    <View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 17,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+      >
+        Audiences:
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 12,
+            "paddingHorizontal": undefined,
+            "paddingVertical": undefined,
+            "width": undefined,
+          }
+        }
+      />
+      <RCTScrollView
+        data={
+          Array [
+            Object {
+              "community_id": "b5c7a117-dcb8-47ba-9677-dc33da0320ba",
+              "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
+              "id": "eba85417-ec3e-49b4-89b4-c5393baecaaf",
+              "is_community": true,
+              "name": "baobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaob",
+              "privacy": "PUBLIC",
+            },
+          ]
+        }
+        getItem={[Function]}
+        getItemCount={[Function]}
+        horizontal={true}
+        keyExtractor={[Function]}
+        onContentSizeChange={[Function]}
+        onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        showsHorizontalScrollIndicator={false}
+        stickyHeaderIndices={Array []}
+        viewabilityConfigCallbackPairs={Array []}
+      >
+        <View>
+          <View
+            onLayout={[Function]}
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                },
+                null,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "alignSelf": "baseline",
+                  "backgroundColor": "#EBF4FF",
+                  "borderRadius": 100,
+                  "flexDirection": "row",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "marginRight": 8,
+                  "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
+                }
+              }
+              testID="audience-tag"
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 11,
+                    },
+                    Object {},
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                  ]
+                }
+                testID="tag.label"
+              >
+                baobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaob
+              </Text>
+            </View>
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+    <View
+      style={
+        Object {
+          "height": 16,
+          "paddingHorizontal": undefined,
+          "paddingVertical": undefined,
+          "width": undefined,
+        }
+      }
+    />
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 24,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      series 111
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "marginTop": 8,
+          },
+          Object {
+            "marginTop": 16,
+          },
+        ]
+      }
+      testID="description-series"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+      >
+        summary
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`SeriesDetailHeader component render without description view 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "elevation": 2,
+      "marginBottom": 16,
+      "shadowColor": "rgba(0, 0, 0, 1)",
+      "shadowOffset": Object {
+        "height": 2,
+        "width": 0,
+      },
+      "shadowOpacity": 0.12,
+      "shadowRadius": 1.5,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "overflow": "hidden",
+        },
+        Object {
+          "height": 167,
+          "width": 750,
+        },
+      ]
+    }
+  >
+    <FastImageView
+      onFastImageError={[Function]}
+      resizeMode="cover"
+      source={
+        Object {
+          "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+        }
+      }
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 16,
+      }
+    }
+  >
+    <View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 17,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+      >
+        Audiences:
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 12,
+            "paddingHorizontal": undefined,
+            "paddingVertical": undefined,
+            "width": undefined,
+          }
+        }
+      />
+      <RCTScrollView
+        data={
+          Array [
+            Object {
+              "communityId": "b5c7a117-dcb8-47ba-9677-dc33da0320ba",
+              "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
+              "id": "eba85417-ec3e-49b4-89b4-c5393baecaaf",
+              "isCommunity": true,
+              "name": "baobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaob",
+              "privacy": "PUBLIC",
+            },
+            Object {
+              "communityId": "b5c7a117-dcb8-47ba-9677-dc33da045bas",
+              "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
+              "id": "eba85417-ec3e-49b4-89b4-c5393baecddf",
+              "isCommunity": true,
+              "name": "Test",
+              "privacy": "PUBLIC",
+            },
+          ]
+        }
+        getItem={[Function]}
+        getItemCount={[Function]}
+        horizontal={true}
+        keyExtractor={[Function]}
+        onContentSizeChange={[Function]}
+        onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        showsHorizontalScrollIndicator={false}
+        stickyHeaderIndices={Array []}
+        viewabilityConfigCallbackPairs={Array []}
+      >
+        <View>
+          <View
+            onLayout={[Function]}
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                },
+                null,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "alignSelf": "baseline",
+                  "backgroundColor": "#EBF4FF",
+                  "borderRadius": 100,
+                  "flexDirection": "row",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "marginRight": 8,
+                  "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
+                }
+              }
+              testID="audience-tag"
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 11,
+                    },
+                    Object {},
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                  ]
+                }
+                testID="tag.label"
+              >
+                baobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaob
+              </Text>
+            </View>
+          </View>
+          <View
+            onLayout={[Function]}
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                },
+                null,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "alignSelf": "baseline",
+                  "backgroundColor": "#EBF4FF",
+                  "borderRadius": 100,
+                  "flexDirection": "row",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "marginRight": 8,
+                  "opacity": 1,
+                  "paddingLeft": 4,
+                  "paddingRight": 8,
+                }
+              }
+              testID="audience-tag"
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#212745",
+                      "fontFamily": "BeVietnamPro-Light",
+                      "fontSize": 11,
+                    },
+                    Object {},
+                    Object {
+                      "color": "#007AFF",
+                      "paddingLeft": 4,
+                    },
+                  ]
+                }
+                testID="tag.label"
+              >
+                Test
+              </Text>
+            </View>
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+    <View
+      style={
+        Object {
+          "height": 16,
+          "paddingHorizontal": undefined,
+          "paddingVertical": undefined,
+          "width": undefined,
+        }
+      }
+    />
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 24,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      series 111
+    </Text>
+  </View>
+</View>
+`;

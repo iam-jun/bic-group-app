@@ -1,4 +1,4 @@
-import { IUserProfile, IUserWorkExperience } from '~/interfaces/IAuth';
+import { IUserWorkExperience } from '~/interfaces/IAuth';
 import menuTypes from './types';
 import countryCode from '~/constants/countryCode';
 import { ICountryCodeList, ILocation } from '~/interfaces/common';
@@ -6,12 +6,10 @@ import locations from '~/constants/locations';
 import { searchText } from '~/utils/common';
 
 export const menuInitState = {
-  loadingMyProfile: false,
   isLanguageModalOpen: false,
 
   userWorkExperience: [],
 
-  myProfile: {} as IUserProfile,
   myWorkExperience: [],
   emailEditError: '',
   phoneNumberEditError: '',
@@ -37,11 +35,6 @@ const menuReducer = (
   const { countryCodeList, locationList } = state;
 
   switch (type) {
-    case menuTypes.GET_MY_PROFILE:
-      return {
-        ...state,
-        loadingMyProfile: true,
-      };
     case menuTypes.SET_EMAIL_EDIT_ERROR:
       return {
         ...state,
@@ -51,18 +44,6 @@ const menuReducer = (
       return {
         ...state,
         phoneNumberEditError: payload,
-      };
-    case menuTypes.SET_MY_PROFILE:
-      return {
-        ...state,
-        loadingMyProfile: false,
-        loadingCover: false,
-        loadingAvatar: false,
-        myProfile: {
-          ...state.myProfile,
-          ...payload,
-          countryCode: payload.countryCode || '84',
-        },
       };
     case menuTypes.SEARCH_COUNTRY_CODE:
       return {

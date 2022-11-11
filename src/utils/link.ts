@@ -8,6 +8,7 @@ import ConvertHelper from './convertHelper';
 const LINK_POST = 'LINK_POST';
 const LINK_COMMENT = 'LINK_COMMENT';
 const LINK_COMMUNITY = 'LINK_COMMUNITY';
+const LINK_SERIRES = 'LINK_SERIRES';
 
 export const CUSTOM_META = 'const meta = document.createElement(\'meta\'); meta.setAttribute(\'content\', \'width=device-width, initial-scale=1, maximum-scale=0.99, user-scalable=0\'); meta.setAttribute(\'name\', \'viewport\'); document.getElementsByTagName(\'head\')[0].appendChild(meta); ';
 export const USER_AGENT_DESKTOP = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0';
@@ -19,6 +20,7 @@ export const DEEP_LINK_TYPES = {
   COMMENT_DETAIL: 'comment-detail',
   COMMUNTY_DETAIL: 'community-detail',
   GROUP_DETAIL: 'group-detail',
+  SERIES_DETAIL: 'series-detail',
 };
 
 const formatParams = (params?: any):string => {
@@ -66,6 +68,8 @@ const getLink = (
       return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
     case LINK_COMMUNITY:
       return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/communities/${id}${formatParams(params)}`;
+    case LINK_SERIRES:
+      return `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/series/${id}${formatParams(params)}`;
     default:
       return '';
   }
@@ -78,7 +82,7 @@ const getGroupLink = ({
 }) => `${PREFIX_HTTPS}${getEnv('SELF_DOMAIN')}/communities/${communityId}/groups/${groupId}${formatParams(params)}`;
 
 export {
-  LINK_POST, LINK_COMMENT, LINK_COMMUNITY, getLink, getGroupLink,
+  LINK_POST, LINK_COMMENT, LINK_COMMUNITY, LINK_SERIRES, getLink, getGroupLink,
 };
 
 export const getChatDomain = () => (
@@ -152,8 +156,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})$`,
   ).exec(url);
   if (match) {
-    const postId = match[1];
-    return { type: DEEP_LINK_TYPES.POST_DETAIL, id: postId };
+    return { type: DEEP_LINK_TYPES.POST_DETAIL, postId: match[1] };
   }
 
   // bic:///posts/99ca53ec-5195-4e28-9506-c0f602e1becb?commentId=690541f1-d7ae-4f73-8186-8194c5e2eb5f
@@ -161,10 +164,9 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/posts\\/(${UUID_V4_PATTERN})\\?(\\S+)$`,
   ).exec(url);
   if (match) {
-    const postId = match[1];
     const urlParams = match[2];
     const newParams = getURLParams(urlParams);
-    return { type: DEEP_LINK_TYPES.COMMENT_DETAIL, id: postId, params: newParams };
+    return { type: DEEP_LINK_TYPES.COMMENT_DETAIL, postId: match[1], params: newParams };
   }
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201
@@ -172,8 +174,7 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})$`,
   ).exec(url);
   if (match) {
-    const communityId = match[1];
-    return { type: DEEP_LINK_TYPES.COMMUNTY_DETAIL, id: communityId };
+    return { type: DEEP_LINK_TYPES.COMMUNTY_DETAIL, communityId: match[1] };
   }
 
   // bic:///communities/ba6016d4-168f-44de-aca9-4a51055e6201/groups/5578fb11-de70-49e3-9c01-27e26f5b42d8
@@ -181,8 +182,15 @@ export const matchDeepLink = (url: string) => {
     `^${PREFIX_DEEPLINK_GROUP}\\/communities\\/(${UUID_V4_PATTERN})\\/groups\\/(${UUID_V4_PATTERN})$`,
   ).exec(url);
   if (match) {
-    const groupId = match[2];
-    return { type: DEEP_LINK_TYPES.GROUP_DETAIL, id: groupId };
+    return { type: DEEP_LINK_TYPES.GROUP_DETAIL, communityId: match[1], groupId: match[2] };
+  }
+
+  // bic:///series/47e14e0b-ea99-4771-bf20-0f0893788a51
+  match = new RegExp(
+    `^${PREFIX_DEEPLINK_GROUP}\\/series\\/(${UUID_V4_PATTERN})$`,
+  ).exec(url);
+  if (match) {
+    return { type: DEEP_LINK_TYPES.SERIES_DETAIL, seriesId: match[1] };
   }
 
   return null;

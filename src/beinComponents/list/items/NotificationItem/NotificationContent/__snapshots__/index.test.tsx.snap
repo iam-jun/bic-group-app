@@ -75,5 +75,25 @@ exports[`NotificationContent component renders correctly 1`] = `
       </View>
     </View>
   </View>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 13,
+        },
+        Object {
+          "color": "#353E6E",
+        },
+        Object {
+          "marginTop": 4,
+        },
+      ]
+    }
+    testID="notification_item.time_view"
+  >
+    
+  </Text>
 </View>
 `;

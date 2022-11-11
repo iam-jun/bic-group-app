@@ -13,6 +13,7 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 const MenuShortcut = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const MenuShortcut = () => {
   };
 
   const onPressDraft = () => {
-    rootNavigation.navigate(homeStack.draftPost);
+    rootNavigation.navigate(menuStack.draft);
   };
 
   const onPressSavedItems = () => {

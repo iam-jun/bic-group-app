@@ -22,7 +22,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
-import { HOME_TAB_TYPE } from '~/screens/Home/store/Interface';
 import dimension from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
@@ -30,7 +29,7 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import { useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
 import FloatingCreatePost from '~/screens/Home/components/FloatingCreatePost';
-import { IPostActivity } from '~/interfaces/IPost';
+import { IPost } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
@@ -38,6 +37,7 @@ import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';
 import NoticePanel from '~/screens/Home/components/NoticePanel';
 import PostItem from '~/beinComponents/list/items/PostItem';
+import { AttributeFeed, ContentFeed } from '~/screens/Home/store/Interface';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -47,17 +47,17 @@ export interface NewsfeedListProps {
   onRefresh?: () => void;
   onScrollY?: (y: number) => void;
   HeaderComponent?: any;
-  activeTab?: string;
+  contentFilter?: ContentFeed;
+  attributeFilter?: AttributeFeed;
 }
 
 const AnimatedFlashList = Animated.createAnimatedComponent<
-React.ComponentType<FlashListProps<any>>
+  React.ComponentType<FlashListProps<any>>
 >(FlashList as any);
 
 const screenHeight = Dimensions.get('window').height;
 
 const ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT = 180;
-const CREATE_POST_HEADER_HEIGHT = 50;
 
 const _NewsfeedList: FC<NewsfeedListProps> = ({
   data,
@@ -67,7 +67,8 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   onRefresh,
   onScrollY,
   HeaderComponent,
-  activeTab,
+  contentFilter,
+  attributeFilter,
 }: NewsfeedListProps) => {
   const [initializing, setInitializing] = useState(true);
   const listRef = useRef<any>();
@@ -79,56 +80,46 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = createStyle(
-    theme, insets,
-  );
+  const styles = createStyle(theme, insets);
 
   const refreshControlOffset = insets.top + dimension.homeHeaderHeight;
 
-  const emit = (
-    event: string, params?: any,
-  ) => {
-    DeviceEventEmitter.emit(
-      event, params,
-    );
+  const emit = (event: string, params?: any) => {
+    DeviceEventEmitter.emit(event, params);
   };
 
-  const handleScrollY = throttle(
-    (offsetY: number) => {
+  const handleScrollY = throttle((offsetY: number) => {
     // on iOS, pull to refresh will fire onScroll with negative offsetY, ignore to avoid hide header
-      if (offsetY < 0) {
-        return;
-      }
+    if (offsetY < 0) {
+      return;
+    }
 
-      const isDown = offsetY - prevOffsetYShared.value > 2;
-      const isDown5Percent = ((offsetY - prevOffsetYShared.value) * 100) / screenHeight >= 5;
-      const isUp = prevOffsetYShared.value - offsetY > 2;
-      const isUp5Percent = ((prevOffsetYShared.value - offsetY) * 100) / screenHeight >= 5;
+    const isDown = offsetY - prevOffsetYShared.value > 2;
+    const isDown5Percent
+      = ((offsetY - prevOffsetYShared.value) * 100) / screenHeight >= 5;
+    const isUp = prevOffsetYShared.value - offsetY > 2;
+    const isUp5Percent
+      = ((prevOffsetYShared.value - offsetY) * 100) / screenHeight >= 5;
 
-      const showFloating = offsetY > CREATE_POST_HEADER_HEIGHT;
-      emit('stopAllVideo');
-      if (isDown5Percent) {
-        emit('showHeader', false);
-        emit('showBottomBar', false);
-        emit('showFloatingCreatePost', false);
-      } else if (isDown && offsetY > 92) {
-        emit('showHeader', false);
-      }
-      if (isUp5Percent) {
+    emit('stopAllVideo');
+    if (isDown5Percent) {
+      emit('showHeader', false);
+      emit('showBottomBar', false);
+    } else if (isDown && offsetY > 92) {
+      emit('showHeader', false);
+    }
+    if (isUp5Percent) {
+      emit('showHeader', true);
+      emit('showBottomBar', true);
+    } else if (isUp) {
+      emit('showBottomBar', true);
+      if (offsetY < 50) {
         emit('showHeader', true);
-        emit('showBottomBar', true);
-        emit('showFloatingCreatePost', showFloating);
-      } else if (isUp) {
-        emit('showBottomBar', true);
-        emit('showFloatingCreatePost', showFloating);
-        if (offsetY < 50) {
-          emit('showHeader', true);
-        }
       }
+    }
 
-      prevOffsetYShared.value = offsetY;
-    }, 300,
-  );
+    prevOffsetYShared.value = offsetY;
+  }, 300);
 
   const onScroll = (e: any) => {
     // for smooth handle scrollEvent, i want to use useAnimatedScrollHander
@@ -143,20 +134,19 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     setTimeout(() => {
       listRef?.current?.scrollToOffset?.({ animated: false, offset: 0 });
     }, 200);
-  }, [activeTab]);
+  }, [contentFilter, attributeFilter]);
 
-  useFocusEffect(React.useCallback(
-    () => () => {
-    // setTimeout(() => {
-      DeviceEventEmitter.emit(
-        'showHeader', true,
-      );
-      DeviceEventEmitter.emit(
-        'showBottomBar', true,
-      );
-    // }, 100);
-    }, [],
-  ));
+  useFocusEffect(
+    React.useCallback(
+      () => () => {
+        // setTimeout(() => {
+        DeviceEventEmitter.emit('showHeader', true);
+        DeviceEventEmitter.emit('showBottomBar', true);
+        // }, 100);
+      },
+      [],
+    ),
+  );
 
   useTabPressListener(
     (tabName: ITabTypes) => {
@@ -167,45 +157,35 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     [listRef?.current],
   );
 
-  useEffect(
-    () => {
-      if (data?.length === 0) {
-        DeviceEventEmitter.emit('showHeader', true);
-        DeviceEventEmitter.emit('showBottomBar', true);
-      }
-    }, [data?.length],
-  );
+  useEffect(() => {
+    if (data?.length === 0) {
+      DeviceEventEmitter.emit('showHeader', true);
+      DeviceEventEmitter.emit('showBottomBar', true);
+    }
+  }, [data?.length]);
 
-  useEffect(
-    () => {
-      if (!canLoadMore && !refreshing) {
+  useEffect(() => {
+    if (!canLoadMore && !refreshing) {
       // In case newsfeed has only 1 page, canLoadMore false at the first time,
       // set initializing false show footer when item not rendered yet
       // so need delay to wait render, list empty still show
-        setTimeout(
-          () => setInitializing(false), 5000,
-        );
-      }
-    }, [canLoadMore, refreshing],
-  );
+      setTimeout(() => setInitializing(false), 5000);
+    }
+  }, [canLoadMore, refreshing]);
 
-  const _onEndReached = debounce(
-    () => {
-      if (!initializing) {
-        onEndReach?.();
+  const _onEndReached = debounce(() => {
+    if (!initializing) {
+      onEndReach?.();
+    }
+    lockHeaderRef.current = true;
+    setTimeout(() => {
+      if (lockHeaderRef?.current) {
+        lockHeaderRef.current = false;
       }
-      lockHeaderRef.current = true;
-      setTimeout(
-        () => {
-          if (lockHeaderRef?.current) {
-            lockHeaderRef.current = false;
-          }
-        }, 1000,
-      );
-    }, 300,
-  );
+    }, 1000);
+  }, 300);
 
-  const onLoaded = (info: {elapsedTimeInMs: number}) => {
+  const onLoaded = (info: { elapsedTimeInMs: number }) => {
     // eslint-disable-next-line no-console
     console.log(`\x1b[36m🐣️Newsfeed loaded ${info?.elapsedTimeInMs}ms\x1b[0m`);
     if (initializing) {
@@ -219,7 +199,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const renderItem = ({ item }: any) => (
     <PostItem
-      postId={item.id}
+      postId={item}
       style={styles.itemStyle}
       testID="newsfeed_list.post.item"
       btnReactTestID="newsfeed_list.post.btn_react"
@@ -241,7 +221,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   const renderFooter = () => {
-    if (!refreshing && !canLoadMore) {
+    if (refreshing) return null;
+
+    if (!canLoadMore) {
       return (
         <View style={styles.listFooter}>
           <Text.BodyM useI18n color={theme.colors.neutral40}>
@@ -252,6 +234,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         </View>
       );
     }
+
     return (
       <View style={styles.listFooter}>
         <ActivityIndicator
@@ -264,14 +247,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const renderEmpty = () => {
     if (canLoadMore) {
-      return (
-        <View style={styles.emptyIndicator}>
-          <ActivityIndicator
-            testID="newsfeed_list.activity_indicator"
-            color={theme.colors.gray20}
-          />
-        </View>
-      );
+      return null;
     }
     return (
       <View style={styles.emptyContainer}>
@@ -318,7 +294,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           data={data}
           // bounces={false}
           renderItem={renderItem}
-          keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
+          keyExtractor={(item: IPost) => `newsfeed-${contentFilter}-${attributeFilter}-${item}`}
           estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
           onScroll={onScroll}
           onLoad={onLoaded}
@@ -336,44 +312,46 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           onRefresh={onRefresh}
           onEndReached={_onEndReached}
           onEndReachedThreshold={0.5}
-          ListHeaderComponent={<NewsfeedListHeader HeaderComponent={HeaderComponent} activeTab={activeTab} />}
+          ListHeaderComponent={(
+            <NewsfeedListHeader
+              HeaderComponent={HeaderComponent}
+              attributeFilter={attributeFilter}
+            />
+          )}
           ListFooterComponent={renderFooter}
           ItemSeparatorComponent={() => <ViewSpacing height={8} />}
           style={styles.mainColor}
           contentContainerStyle={styles.mainColor}
         />
-      ) : renderListEmpty() }
+      ) : (
+        renderListEmpty()
+      )}
       {renderPlaceholder()}
       <FloatingCreatePost />
     </View>
   );
 };
 
-const NewsfeedListHeader = ({ HeaderComponent, activeTab }: any) => {
+const NewsfeedListHeader = ({
+  HeaderComponent,
+  attributeFilter,
+}: any) => {
   const insets = useSafeAreaInsets();
   const theme = useTheme() as any;
-  const styles = createStyle(
-    theme, insets,
-  );
+  const styles = createStyle(theme, insets);
 
-  const isNewsfeed = activeTab === HOME_TAB_TYPE.NEWSFEED;
+  const isNewsfeed = attributeFilter === AttributeFeed.ALL;
 
   return (
     <View style={styles.headerContainer}>
       {!!HeaderComponent && HeaderComponent}
-      {isNewsfeed
-        ? (
-          <NoticePanel />
-        )
-        : null}
+      {isNewsfeed ? <NoticePanel /> : null}
       <View style={styles.headerDivider} />
     </View>
   );
 };
 
-const createStyle = (
-  theme: ExtendedTheme, insets: any,
-) => {
+const createStyle = (theme: ExtendedTheme, insets: any) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
@@ -429,7 +407,11 @@ const createStyle = (
       color: colors.neutral50,
     },
     background: {
-      width: '100%', height: '60%', position: 'absolute', bottom: 0, backgroundColor: colors.gray5,
+      width: '100%',
+      height: '60%',
+      position: 'absolute',
+      bottom: 0,
+      backgroundColor: colors.gray5,
     },
     mainColor: { backgroundColor: theme.colors.gray5 },
     refreshControl: { position: 'absolute', zIndex: 2 },

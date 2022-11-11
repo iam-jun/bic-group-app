@@ -1,13 +1,14 @@
 import React, { memo } from 'react';
-import { IPostActivity } from '~/interfaces/IPost';
+import { IPost, POST_TYPE } from '~/interfaces/IPost';
 import ArticleItem from '~/screens/articles/components/ArticleItem';
 import PostView from '~/screens/post/components/PostView';
+import { SeriesItem } from '~/screens/series';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 
 export interface PostItemProps {
   postId?: string;
-  postData?: IPostActivity;
+  postData?: IPost;
   testID?: string;
   btnReactTestID?: string;
   btnCommentTestID?: string;
@@ -22,8 +23,12 @@ const PostItem = ({
   let _postData = postData;
   if (!_postData) _postData = usePostsStore(postsSelector.getPost(postId));
 
-  if (_postData?.isArticle) {
+  if (_postData?.type === POST_TYPE.ARTICLE) {
     return <ArticleItem id={postId} />;
+  }
+
+  if (_postData?.type === POST_TYPE.SERIES) {
+    return <SeriesItem id={postId} />;
   }
 
   return (

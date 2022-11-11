@@ -2,11 +2,11 @@ import {
   createStore, resetStore,
 } from '~/store/utils';
 import getPosts from './actions/getPosts';
-import { IPostActivity } from '~/interfaces/IPost';
+import { IPost } from '~/interfaces/IPost';
 import IBaseState, { IBaseListState } from '../interfaces/IBaseState';
 
 export interface ITimelineState extends IBaseState {
-    items: {[x: string]: IBaseListState<IPostActivity>};
+    items: {[x: string]: IBaseListState<IPost>};
     actions:{
       getPosts: (id: string, isRefresh?: boolean) => void;
       resetTimeline: (id: string) => void;
@@ -24,7 +24,7 @@ const timelineStore = (set, get) => ({
     resetTimeline: (id: string) => {
       set((state) => {
         state.items[id] = {};
-      });
+      }, `resetTimeline: ${id}`);
     },
   },
   reset: () => resetStore(initialState, set),

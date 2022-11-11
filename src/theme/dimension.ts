@@ -59,9 +59,9 @@ export const sizes = {
   tabS: 11,
   linkM: 15,
   linkS: 13,
-  badgeL: 15,
-  badgeM: 13,
-  badgeS: 11,
+  badgeL: 16,
+  badgeM: 12,
+  badgeS: 10,
   badgeXS: 9,
   labelL: 17,
   labelM: 15,
@@ -190,7 +190,8 @@ export const permissionRoleSectionHeaderHeight = 56;
 
 export const homeHeaderLogoHeight = 48;
 export const homeHeaderTabHeight = 44;
-export const homeHeaderHeight = homeHeaderLogoHeight + homeHeaderTabHeight;
+export const homeHeaderAttributeContainerHeight = 30;
+export const homeHeaderHeight = homeHeaderLogoHeight + homeHeaderTabHeight + homeHeaderAttributeContainerHeight;
 const isPhoneWithInsets = Platform.OS === 'ios' && deviceInfoModule.hasNotch();
 
 export const scaleSize = (size: number): number => (DeviceWidth / guidelineBaseWidth) * size;

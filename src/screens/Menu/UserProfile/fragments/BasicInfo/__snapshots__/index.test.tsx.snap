@@ -318,7 +318,9 @@ exports[`BasicInfo component renders correctly 1`] = `
         ]
       }
       testID="info_item.value"
-    />
+    >
+      Not set
+    </Text>
   </View>
   <View
     style={

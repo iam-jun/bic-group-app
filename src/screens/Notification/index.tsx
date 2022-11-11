@@ -10,14 +10,17 @@ import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import { notificationMenuData } from '~/screens/Notification/constants';
 import modalActions from '~/storeRedux/modal/actions';
-import notificationsActions from '../../storeRedux/notification/actions';
 import { MEMBER_TABS } from '../communities/CommunityMembers';
 import { MEMBER_TAB_TYPES } from '../communities/constants';
 import ScrollableTabBar from './components/ScrollableTabBar';
+import useNotificationStore from './store';
+import INotificationsState from './store/Interface';
 
 const Notification = () => {
+  const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const isFocused = useIsFocused();
@@ -27,7 +30,7 @@ const Notification = () => {
   useEffect(
     () => {
       if (isFocused) {
-        dispatch(notificationsActions.markAsSeenAll());
+        notiActions.markAsSeenAll();
       }
     }, [isFocused],
   );
@@ -38,9 +41,9 @@ const Notification = () => {
 
   const handleMarkNotification = (data: any) => {
     if (!data?.isRead) {
-      dispatch(notificationsActions.markAsRead({ id: data?.id || '', keyValue: notificationMenuData[activeIndex]?.type || 'tabAll' }));
+      notiActions.markAsRead(data?.id);
     } else {
-      dispatch(notificationsActions.markAsUnRead(data));
+      notiActions.markAsUnRead(data?.id);
     }
     dispatch(modalActions.hideBottomList());
   };
@@ -72,7 +75,7 @@ const Notification = () => {
 
   const handleMarkAllAsRead = () => {
     dispatch(modalActions.hideBottomList());
-    dispatch(notificationsActions.markAsReadAll('ALL'));
+    notiActions.markAsReadAll('ALL');
   };
 
   const onPressMenu = () => {
@@ -126,7 +129,7 @@ const Notification = () => {
               break;
             }
             case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL: {
-              rootNavigation.navigate(homeStack.draftPost);
+              rootNavigation.navigate(menuStack.draft);
               break;
             }
             case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
@@ -185,12 +188,27 @@ const Notification = () => {
                 );
               }
               if (act?.group?.id) {
-                rootNavigation.navigate(
-                  groupStack.groupMembers, {
-                    groupId: act.group.id,
-                    isMember: true,
-                  },
-                );
+                /**
+                 * Do community (root group) members đã đổi các endpoints
+                 * từ "communities" -> "groups" nên event noti đã chuyển sang phía group,
+                 * do đó cần check thêm isCommunity để navigate tới đúng screen
+                 */
+                const { isCommunity } = act.group;
+                if (isCommunity) {
+                  rootNavigation.navigate(
+                    groupStack.communityMembers, {
+                      communityId: act.group.communityId,
+                      isMember: true,
+                    },
+                  );
+                } else {
+                  rootNavigation.navigate(
+                    groupStack.groupMembers, {
+                      groupId: act.group.id,
+                      isMember: true,
+                    },
+                  );
+                }
               }
               break;
             case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
@@ -262,10 +280,7 @@ const Notification = () => {
       }
 
       // finally mark the notification as read
-      dispatch(notificationsActions.markAsRead({
-        id: item.id,
-        keyValue: notificationMenuData[activeIndex]?.key || 'tabAll',
-      }));
+      notiActions.markAsRead(item.id);
     },
     [activeIndex],
   );

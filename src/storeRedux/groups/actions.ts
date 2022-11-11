@@ -292,7 +292,7 @@ const groupsActions = {
     payload,
   }),
   getCommunityMembers: (payload: {
-    communityId: string;
+    groupId: string;
     isRefreshing?: boolean;
     params?: IParamGetCommunityMembers;
   }) => ({

@@ -32,7 +32,7 @@ export interface EmojiPickerProps {
   onEmojiPress: (name: string) => void
 }
 
-const EmojiPicker = ({
+const _EmojiPicker = ({
   emojiPickerRef, onEmojiPress,
 }: EmojiPickerProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -287,4 +287,6 @@ export const getStyleSheetFromTheme = ((theme) => {
   });
 });
 
+const EmojiPicker = React.memo(_EmojiPicker);
+EmojiPicker.whyDidYouRender = true;
 export default EmojiPicker;

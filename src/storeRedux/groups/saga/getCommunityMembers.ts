@@ -12,14 +12,14 @@ export default function* getCommunityMembers({
 }: {
   type: string;
   payload: {
-    communityId: string;
+    groupId: string;
     isRefreshing?: boolean;
     params?: IParamGetCommunityMembers;
   };
 }) {
   try {
     const { groups } = yield select();
-    const { communityId, isRefreshing, params } = payload;
+    const { groupId, isRefreshing, params } = payload;
     const { communityMembers } = groups;
     const { canLoadMore, offset } = communityMembers;
 
@@ -30,7 +30,7 @@ export default function* getCommunityMembers({
     if (!isRefreshing && !canLoadMore) return;
 
     const resp:AxiosResponse = yield call(
-      groupApi.getCommunityMembers, communityId, {
+      groupApi.getGroupMembers, groupId, {
         limit: appConfig.recordsPerPage,
         offset: isRefreshing ? 0 : offset,
         ...params,
@@ -51,8 +51,8 @@ export default function* getCommunityMembers({
           userCount: members[role]?.userCount,
           data:
             isRefreshing || !communityMembers?.[role]?.data
-              ? [...roles.data]
-              : [...communityMembers?.[role]?.data || [], ...roles.data],
+              ? [...roles.data || []]
+              : [...communityMembers?.[role]?.data || [], ...roles.data || []],
         },
       };
     });

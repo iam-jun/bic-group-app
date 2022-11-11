@@ -16,7 +16,7 @@ import ArticleFooter from '../ArticleFooter';
 import ContentInterestedUserCount from '~/components/ContentView/components/ContentInterestedUserCount';
 import ArticleReactions from '../ArticleReactions';
 import { ReactionType } from '~/constants/reactions';
-import { IPayloadReactToPost } from '~/interfaces/IPost';
+import { IPayloadReactToPost, IPost } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
 import useCommonController from '~/screens/store';
 import { PostViewFooterLite } from '~/screens/post/components/PostViewComponents';
@@ -27,16 +27,27 @@ import ArticleText from '../ArticleText';
 export interface ArticleItemProps {
   id: string;
   isLite?: boolean;
+  postData?: IPost;
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
   id,
   isLite,
+  postData,
 }: ArticleItemProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const postData = usePostsStore(postsSelector.getPost(id));
+
+  /**
+   * when searching for content, we need data field `summaryHighlight` to
+   * highlight keyword on content. However, when getting article detail data,
+   * this field is not available. That's why we need `postData` from props
+   * to keep field `summaryHighlight`
+   */
+  let _postData = postData;
+  if (!_postData) _postData = usePostsStore(postsSelector.getPost(id));
+
   const commonController = useCommonController((state) => state.actions);
 
   const {
@@ -53,7 +64,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     titleHighlight,
     summaryHighlight,
     coverMedia,
-  } = postData || {};
+  } = _postData || {};
   const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
     'post:button_comment',
   )}`;

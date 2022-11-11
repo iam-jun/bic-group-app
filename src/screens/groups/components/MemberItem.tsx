@@ -62,10 +62,10 @@ const MemberItem = ({
       onPress={goToUserProfile}
       ContentComponent={(
         <>
-          <Text.BodyMMedium ellipsizeMode="middle" color={colors.neutral70} numberOfLines={1}>
+          <Text.BodyMMedium ellipsizeMode="middle" color={colors.neutral60} numberOfLines={1}>
             {memberName}
           </Text.BodyMMedium>
-          <Text.BodyS color={colors.neutral40} numberOfLines={1}>{`@${username}`}</Text.BodyS>
+          <Text.BodyS color={colors.neutral30} numberOfLines={1}>{`@${username}`}</Text.BodyS>
         </>
       )}
       RightComponent={(

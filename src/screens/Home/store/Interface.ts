@@ -1,30 +1,43 @@
-import { IPostActivity } from '~/interfaces/IPost';
 import IBaseState from '~/store/interfaces/IBaseState';
 
-export const HOME_TAB_TYPE = {
-  NEWSFEED: 'NEWSFEED',
-  IMPORTANT: 'IMPORTANT',
-};
-
-export interface IHomeTab {
-  refreshing: boolean,
-  data: IPostActivity[]
-  canLoadMore: boolean,
+export enum AttributeFeed {
+  ALL = 'ALL',
+  IMPORTANT = 'IMPORTANT',
 }
 
-interface IHomeState extends IBaseState{
-  activeTab: keyof typeof HOME_TAB_TYPE
-  tabNewsfeed: IHomeTab,
-  tabImportant: IHomeTab
+export enum ContentFeed {
+  ALL = 'ALL',
+  POST = 'POST',
+  ARTICLE = 'ARTICLE',
+  SERIES = 'SERIES',
+}
 
+export interface IHomeFeed {
+  isLoading: boolean;
+  refreshing: boolean;
+  data: string[];
+  canLoadMore: boolean;
+}
+
+export type IFeed = {
+  [T in ContentFeed]: { [S in AttributeFeed]: IHomeFeed };
+};
+interface IHomeState extends IBaseState {
+  contentFilter: ContentFeed;
+  attributeFilter: AttributeFeed;
+  feed: IFeed;
   actions?: {
-    setActiveTab?: (tab: keyof typeof HOME_TAB_TYPE) => void;
-    setTabNewsfeed?: (data: IHomeTab) => void;
-    setTabImportant?: (data: IHomeTab) => void;
+    setContentFilter?: (contentFilter: ContentFeed) => void;
+    setAttributeFilter?: (attributeFilter: AttributeFeed) => void;
+    setDataFeed?: (
+      data: IHomeFeed,
+      contentFilter?: ContentFeed,
+      attributeFilter?: AttributeFeed
+    ) => void;
 
-    getTabData?: (tabId: keyof typeof HOME_TAB_TYPE, isRefresh?: boolean) => void;
+    getDataFeed?: (isRefresh?: boolean) => void;
     refreshHome?: () => void;
-  }
+  };
 }
 
 export default IHomeState;

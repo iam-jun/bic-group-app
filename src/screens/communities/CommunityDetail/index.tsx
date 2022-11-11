@@ -44,6 +44,8 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import useMounted from '~/hooks/mounted';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import useCommunityController from '../store';
+import homeActions from '~/storeRedux/home/actions';
+import ContentSearch from '~/screens/Home/HomeSearch';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -84,6 +86,7 @@ const CommunityDetail = (props: any) => {
   const communityPost = useTimelineStore(useCallback((state: ITimelineState) => state.items[groupId], [groupId]));
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
+  const searchViewRef = useRef(null);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId('communities', communityId, [
@@ -117,14 +120,33 @@ const CommunityDetail = (props: any) => {
   }, [groupId, isMember, privacy, isLoadingCommunity, community]);
 
   useEffect(() => {
-    // timelineActions.resetTimeline(groupId);
+    // only update currentCommunityId when navigating to the community profile
+    useCommunitiesStore.setState({
+      currentCommunityId: communityId,
+    });
 
     if (isMounted) {
       getCommunityDetail();
     }
   }, [isMounted, communityId]);
 
-  useEffect(() => { if (isEmpty(communityPost?.ids)) getPosts(); }, [community]);
+  useEffect(() => {
+    if (isEmpty(communityPost?.ids)) {
+      initTimeline();
+    }
+  },
+  [community]);
+
+  useEffect(() => {
+    initTimeline();
+  }, []);
+
+  const initTimeline = () => {
+    // clear timeline whenever going to community detail
+    if (groupId) timelineActions.resetTimeline(groupId);
+
+    getPosts();
+  };
 
   const onRefresh = useCallback((isGetPost: boolean) => {
     /**
@@ -135,7 +157,7 @@ const CommunityDetail = (props: any) => {
       timelineActions.getPosts(groupId, true);
     }
     getCommunityDetail();
-  }, [communityId]);
+  }, [groupId]);
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideBottomList());
@@ -250,6 +272,10 @@ const CommunityDetail = (props: any) => {
     actions.resetCommunity(communityId);
   };
 
+  const onPressSearch = () => {
+    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+  };
+
   const hasNoDataInStore = !groupId;
 
   const shouldShowPlaceholder = !isMounted || hasNoDataInStore;
@@ -278,6 +304,8 @@ const CommunityDetail = (props: any) => {
         stickyHeaderComponent={headerComponent}
         onPressChat={isMember ? onPressChat : undefined}
         onRightPress={onRightPress}
+        icon="search"
+        onPressIcon={onPressSearch}
       />
       <Animated.View
         testID="community_detail.content"
@@ -303,6 +331,7 @@ const CommunityDetail = (props: any) => {
           isMember={isMember}
         />
       </Animated.View>
+      <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
     </View>
   );
 };

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetSearchPosts } from '~/interfaces/IHome';
+import { POST_TYPE } from '~/interfaces/IPost';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import homeActions from '~/storeRedux/home/actions';
 
@@ -19,6 +20,7 @@ import FilterToolbar from '~/screens/Home/HomeSearch/FilterToolbar';
 import spacing from '~/theme/spacing';
 import ArticleItem from '~/screens/articles/components/ArticleItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import Icon from '~/baseComponents/Icon';
 
 const SearchResult = () => {
   const dispatch = useDispatch();
@@ -31,14 +33,15 @@ const SearchResult = () => {
     searchResults = [],
     searchText = '',
     totalResult,
+    groupId,
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
   const filterCreatedBy = useKeySelector(
     homeKeySelector.newsfeedSearchFilterCreatedBy,
   );
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
-  const renderItem = ({ item }: any) => (item.isArticle ? (
-    <ArticleItem id={item.id} isLite />
+  const renderItem = ({ item }: any) => (item.type === POST_TYPE.ARTICLE ? (
+    <ArticleItem id={item.id} isLite postData={item} />
   ) : (
     <PostView
       postId={item?.id}
@@ -54,6 +57,7 @@ const SearchResult = () => {
         actors: filterCreatedBy?.id,
         startDate: filterDate?.startDate,
         endDate: filterDate?.endDate,
+        groupId,
         isLoadMore,
       };
       dispatch(homeActions.getSearchPosts(payload));
@@ -62,7 +66,7 @@ const SearchResult = () => {
 
   useEffect(() => {
     getData();
-  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate]);
+  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId]);
 
   const onEndReached = () => {
     getData(true);
@@ -100,9 +104,19 @@ const SearchResult = () => {
 
   const renderSpacing = () => <ViewSpacing height={spacing.margin.large} />;
 
+  const renderBannerNotice = () => (
+    <View style={styles.bannerView}>
+      <Icon icon="CircleInfo" size={18} tintColor={colors.neutral20} />
+      <Text.BodyS color={colors.neutral40} style={styles.bannerText} useI18n>
+        home:newsfeed_search:text_banner_search
+      </Text.BodyS>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <FilterToolbar />
+      {renderBannerNotice()}
       <FlatList
         style={styles.flex1}
         data={searchResults || []}
@@ -145,6 +159,18 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     footer: {
       paddingVertical: spacing.margin.large,
+    },
+    bannerView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: 2,
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.base,
+      backgroundColor: colors.white,
+    },
+    bannerText: {
+      flex: 1,
+      marginLeft: spacing.margin.small,
     },
   });
 };

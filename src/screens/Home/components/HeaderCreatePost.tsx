@@ -8,18 +8,16 @@ import {
 } from 'react-native';
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
 
-import { useDispatch } from 'react-redux';
 import Avatar from '~/baseComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import { useKeySelector } from '~/hooks/selector';
-import menuActions from '~/storeRedux/menu/actions';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
-import useDraftPostStore from '../../post/DraftPost/store';
-import IDraftPostState from '../../post/DraftPost/store/Interface';
+import useDraftPostStore from '../../Draft/DraftPost/store';
+import IDraftPostState from '../../Draft/DraftPost/store/Interface';
+import useCommonController from '~/screens/store';
 
 export interface HeaderCreatePostProps {
   audience?: any;
@@ -32,14 +30,14 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   style,
   createFromGroupId,
 }: HeaderCreatePostProps) => {
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
-  const avatar = useKeySelector('menu.myProfile.avatar');
+  const actions = useCommonController((state) => state.actions);
+  const { avatar } = useCommonController((state) => state.myProfile);
 
   const draftPost = useDraftPostStore((state:IDraftPostState) => state.posts) || [];
   let draftCount: number | string = draftPost?.length || 0;
@@ -50,7 +48,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   useEffect(
     () => {
       if (!avatar && userId) {
-        dispatch(menuActions.getMyProfile({ userId }));
+        actions.getMyProfile({ userId });
       }
     }, [avatar],
   );

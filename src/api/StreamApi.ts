@@ -27,10 +27,13 @@ import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import {
   IParamGetArticleDetail,
   IParamGetArticles,
-  IParamGetCategories, IParamPutEditArticle,
+  IParamGetCategories,
+  IParamGetDraftArticles,
+  IParamPutEditArticle,
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
+import { IParamGetSeriesDetail, IPostCreateSeries } from '~/interfaces/ISeries';
 
 const DEFAULT_LIMIT = 10;
 
@@ -59,6 +62,7 @@ export const streamApiConfig = {
       idGt: param?.idGt,
       idLt: param?.idLt,
       isImportant: param?.isImportant,
+      type: param?.type,
     },
   }),
   getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
@@ -75,7 +79,6 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}recent-searches`,
     method: 'post',
-
     data,
   }),
   deleteClearRecentSearch: (target: IRecentSearchTarget): HttpApiRequestConfig => ({
@@ -312,6 +315,55 @@ export const streamApiConfig = {
     url: `${provider.url}giphy/search`,
     params,
   }),
+  postCreateNewSeries: (
+    params: IPostCreateSeries,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    method: 'post',
+    url: `${provider.url}series`,
+    data: { ...params },
+  }),
+  getSeriesDetail: (id: string,
+    params?: IParamGetSeriesDetail): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/${id}`,
+    params,
+  }),
+  deleteSeries: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/${id}`,
+    method: 'delete',
+  }),
+  editSeries: (id: string, data: IPostCreateSeries): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/${id}`,
+    method: 'put',
+    data,
+  }),
+  getDraftArticles: (params: IParamGetDraftArticles): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/draft`,
+    params: {
+      offset: params?.offset || 0,
+      limit: params?.limit || 10,
+      isProcessing: params?.isProcessing || false,
+    },
+  }),
+  publishDraftArticle: (draftArticleId: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${draftArticleId}/publish`,
+    method: 'put',
+  }),
+  deleteArticle: (id: string, isDraft?: boolean): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/${id}`,
+    method: 'delete',
+    ...(isDraft ? { params: { is_draft: true } } : {}),
+  }),
+  getTotalDraft: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}posts/total-draft`,
+  }),
 };
 
 const streamApi = {
@@ -473,6 +525,31 @@ const streamApi = {
   getArticleDetail: (id: string, params?: IParamGetArticleDetail) => withHttpRequestPromise(
     streamApiConfig.getArticleDetail, id, params,
   ),
+  getDraftArticles: async (param: IParamGetDraftArticles) => {
+    try {
+      const response: any = await makeHttpRequest(
+        streamApiConfig.getDraftArticles(param),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          data: response?.data?.data?.list || [],
+          canLoadMore:
+            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT)
+            <= response?.data?.data?.meta?.total,
+          total: response?.data?.data?.meta?.total,
+        });
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  publishDraftArticle: (draftArticleId: string) => withHttpRequestPromise(
+    streamApiConfig.publishDraftArticle, draftArticleId,
+  ),
+  deleteArticle: (id: string, isDraft?: boolean) => withHttpRequestPromise(
+    streamApiConfig.deleteArticle, id, isDraft,
+  ),
   getUsersInterestedPost: (params: IRequestGetUsersInterestedPost) => withHttpRequestPromise(
     streamApiConfig.getUsersInterestedPost, params,
   ),
@@ -482,6 +559,17 @@ const streamApi = {
   getSearchGiphy: (params: IGetSearchGiphyParams) => withHttpRequestPromise(
     streamApiConfig.getSearchGiphy, params,
   ),
+  postCreateNewSeries: (params: IPostCreateSeries) => withHttpRequestPromise(
+    streamApiConfig.postCreateNewSeries, params,
+  ),
+  getSeriesDetail: (id: string, params?: IParamGetSeriesDetail) => withHttpRequestPromise(
+    streamApiConfig.getSeriesDetail, id, params,
+  ),
+  deleteSeries: (id: string) => withHttpRequestPromise(streamApiConfig.deleteSeries, id),
+  editSeries: (id: string, params: IPostCreateSeries) => withHttpRequestPromise(
+    streamApiConfig.editSeries, id, params,
+  ),
+  getTotalDraft: () => withHttpRequestPromise(streamApiConfig.getTotalDraft),
 };
 
 export default streamApi;

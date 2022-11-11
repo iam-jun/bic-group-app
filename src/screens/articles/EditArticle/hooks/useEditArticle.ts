@@ -44,7 +44,8 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
     const isSummaryUpdated = article.summary !== data.summary;
     const isTitleUpdated = article.title !== data.title && !isEmpty(data.title);
     const isCategoriesUpdated = !isEqual(article.categories, data.categories) && !isEmpty(data.categories);
-    const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience);
+    // const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience)
+    // && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
     const isCoverMediaUpdated = (article.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
     // console.log('\x1b[35m🐣️ useEditArticle isHasChange ', JSON.stringify({
     //   isTitleUpdated,
@@ -59,7 +60,7 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
       || isContentUpdated
       || isSummaryUpdated
       || isCategoriesUpdated
-      || isAudienceUpdated
+      // || isAudienceUpdated
       || isCoverMediaUpdated);
   };
 
@@ -102,8 +103,8 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
     actions.putEditArticle({ articleId, data } as IPayloadPutEditArticle);
   };
 
-  const handleBack = () => {
-    if (enableButtonSave) {
+  const handleBack = (showAlert = false) => {
+    if (enableButtonSave || showAlert) {
       Keyboard.dismiss();
       Store.store.dispatch(modalActions.showAlert({
         title: i18next.t('discard_alert:title'),

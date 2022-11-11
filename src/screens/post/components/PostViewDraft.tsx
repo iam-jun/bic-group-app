@@ -14,7 +14,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import {
   IPayloadGetDraftPosts,
   IPayloadPublishDraftPost,
-  IPostActivity,
+  IPost,
 } from '~/interfaces/IPost';
 import PostViewHeader from '~/screens/post/components/PostViewComponents/PostViewHeader';
 import PostViewContent from '~/screens/post/components/PostViewComponents/PostViewContent';
@@ -23,14 +23,14 @@ import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
-import useDraftPostStore from '../DraftPost/store';
+import useDraftPostStore from '../../Draft/DraftPost/store';
 import { Button } from '~/baseComponents';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Divider from '~/beinComponents/Divider';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
-  data: IPostActivity;
+  data: IPost;
   isPostDetail?: boolean;
 }
 
@@ -50,7 +50,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 
   const userId = useUserIdAuth();
 
-  const { doGetDraftPosts } = useDraftPostStore();
+  const { actions } = useDraftPostStore();
 
   const {
     id,
@@ -86,7 +86,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const refreshDraftPosts = () => {
     if (userId) {
       const payload: IPayloadGetDraftPosts = { isRefresh: true };
-      doGetDraftPosts(payload);
+      actions.getDraftPosts(payload);
     }
   };
 
@@ -96,7 +96,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
       const payload: IPayloadPublishDraftPost = {
         draftPostId: id,
         onSuccess: () => {
-          dispatch(showHideToastMessage({ content: 'post:draft:text_draft_published' }));
+          dispatch(showHideToastMessage({ content: 'post:draft:text_draft_post_published' }));
           refreshDraftPosts();
         },
         onError: () => setPublishing(false),

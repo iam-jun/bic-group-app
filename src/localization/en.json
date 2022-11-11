@@ -177,7 +177,12 @@
     "text_months": "{{number}} months",
     "text_year": "{{number}} year",
     "text_never": "Never",
-    "text_custom": "Custom"
+    "text_custom": "Custom",
+    "text_add_cover": "Add a cover",
+    "text_optional": "optional",
+    "articles": "Articles",
+    "last_updated": "Last updated",
+    "audiences": "Audiences"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -428,9 +433,12 @@
     "newsfeed": "News feed",
     "saved_posts": "Saved Posts",
     "draft_post": "Draft Posts",
-    "draft_articles_post": "Draft Articles",
-    "title_timeline": "Newsfeed",
-    "title_important": "Important",
+    "title_feed_attritube_all": "All",
+    "title_feed_attritube_important": "Important",
+    "title_feed_content_all": "All",
+    "title_feed_content_posts": "Posts",
+    "title_feed_content_articles": "Articles",
+    "title_feed_content_series": "Series",
     "title_install_chat": "App not found",
     "text_desc_install_chat": "Please install BIC Chat",
     "newsfeed_search": {
@@ -453,19 +461,25 @@
       "no_recent_search": "No recent searches",
       "apply": "Apply",
       "filter": "Filter",
-      "filter_post_by": "Post By",
+      "filter_post_by": "Created by",
       "filter_created_by_all": "All",
       "filter_created_by_me": "Me",
       "filter_created_by_specific": "Specific person",
-      "filter_date": "Date Post",
+      "filter_date": "Date posted",
       "seven_days_ago": "7 days ago",
       "thirty_days_ago": "30 days ago",
       "three_months_ago": "3 months ago",
-      "from_to": "From - To"
+      "from_to": "From - To",
+      "text_banner_search": "Searched results are removed all text formats to make sure looking the precise content"
     },
     "notice_post_video_uploading": {
       "title": "Processing video (count)",
       "description": "The video of your post is being processed. We'll send you a notification when it's completed"
+    },
+    "create_content_options": {
+      "write_post": "Write Post",
+      "write_series": "Write Series",
+      "my_draft": "My Draft"
     }
   },
   "menu": {
@@ -485,15 +499,19 @@
   "article": {
     "title_article_detail": "Article Detail",
     "title_edit_article": "Edit Article",
-    "title_categories": "Categories",
-    "title_edit_title": "Title",
-    "title_edit_description": "Description",
-    "title_edit_cover": "Cover",
-    "title_edit_category": "Category",
-    "title_edit_audience": "Audience",
-    "title_edit_content": "Content",
+    "title_edit_title": "Edit Title",
+    "title_edit_description": "Edit Description",
+    "title_edit_cover": "Edit Cover",
+    "title_edit_category": "Edit Topics",
+    "title_edit_audience": "Edit Audience",
+    "title_edit_content": "Edit Content",
+    "text_option_edit_title": "Title",
+    "text_option_edit_description": "Description",
+    "text_option_edit_cover": "Cover",
+    "text_option_edit_category": "Topics",
+    "text_option_edit_audience": "Audience",
+    "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
-    "text_add_cover": "Add a cover",
     "text_select_cover": "Select cover",
     "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
@@ -534,6 +552,8 @@
     "text_search_result_empty": "Sorry, we couldn't find anything related to your search.",
     "title_delete_post": "Delete Post",
     "content_delete_post": "Do you want to delete this post?",
+    "title_delete_article": "Delete Article",
+    "content_delete_article": "Do you want to delete this article?",
     "title_delete_audiences_of_post": "You Cannot Delete This Post",
     "content_delete_audiences_of_post": "You can only remove audiences from your post excepting these audiences below. Are you sure do this?",
     "content_not_able_delete_of_post": "You don't have permission to delete this post because of not allowance from these audiences below.",
@@ -641,6 +661,9 @@
       "btn_keep_selecting": "Keep Selecting"
     },
     "draft": {
+      "title_draft": "Draft",
+      "text_posts": "Posts",
+      "text_articles": "Articles",
       "btn_post_now": "Post Now",
       "btn_edit": "Edit",
       "btn_menu_schedule": "Schedule to Post",
@@ -649,10 +672,13 @@
       "title_delete_draft_post": "Delete Draft Post",
       "text_delete_draft_post": "Are you sure want to delete this draft post?",
       "text_no_draft_posts": "You have no draft post left",
-      "text_draft_published": "Your post has been published",
+      "text_draft_post_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
       "text_draft_deleted": "Your draft has been deleted",
-      "text_processing_publish": "Your video post will be ready soon"
+      "text_processing_publish": "Your video post will be ready soon",
+      "title_no_draft_articles": "No Draft Articles",
+      "text_no_draft_articles": "You have no draft articles left",
+      "text_draft_article_published": "Your article has been published"
     },
     "comment": {
       "title_delete_comment": "Delete this comment",
@@ -720,7 +746,7 @@
     "search": "Search for someone to chat...",
     "search_group_people": "Search for groups or people...",
     "search_group": "Search groups...",
-    "search_post": "Search for posts...",
+    "search_content": "Search content...",
     "search_country": "Search Country",
     "search_location": "Search for City/Province/Country"
   },
@@ -1111,5 +1137,24 @@
     "objects": "Objects",
     "symbols": "Symbols",
     "flags": "Flags"
-  }
+  },
+  "series": {
+    "title_create_series":"Create Series",
+    "title_name": "Name",
+    "text_input_name": "Enter name",
+    "text_update_cover": "Update cover",
+    "menu_text_edit_series": "Edit series",
+    "menu_text_save_series": "Save Series",
+    "menu_text_delete_series": "Delete Series",
+    "content_delete_series": "Do you want to delete this series?",
+    "text_delete_series_success": "Series deleted",
+    "title_delete_audiences_of_series": "You Cannot Delete This Series",
+    "content_delete_audiences_of_series": "You can only remove audiences from your series excepting these audiences below. Are you sure do this?",
+    "content_not_able_delete_of_series": "You don't have permission to delete this series because of not allowance from these audiences below.",
+    "text_deleted_audiences": "Your series has been removed audiences.",
+    "text_edit_series_success": "Series updated.",
+    "text_edit_series_failed": "Series was failed to publish",
+    "title_edit_audience_failed": "Audience Change?",
+    "content_edit_audience_failed": "You don't have delete own post permission at group:"
+    }
 }

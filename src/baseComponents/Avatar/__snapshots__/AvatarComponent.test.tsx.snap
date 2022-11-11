@@ -5,7 +5,7 @@ exports[`Avatar component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "borderRadius": 4,
+        "borderRadius": 8,
         "height": 64,
         "width": 64,
       },
@@ -18,7 +18,7 @@ exports[`Avatar component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "borderRadius": 4,
+          "borderRadius": 8,
           "height": 64,
           "width": 64,
         },
@@ -28,81 +28,47 @@ exports[`Avatar component renders correctly 1`] = `
     testID="avatar_container"
   >
     <View
-      onLayout={[Function]}
       style={
-        Object {
-          "backgroundColor": "transparent",
-          "position": "relative",
-        }
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Object {
+              "borderRadius": 8,
+              "height": 64,
+              "width": 64,
+            },
+            Object {
+              "borderColor": "#F2F5F8",
+              "borderWidth": 2,
+            },
+            Object {
+              "backgroundColor": "#FFFFFF",
+            },
+          ],
+        ]
       }
     >
-      <View
-        collapsable={false}
+      <FastImageView
+        onFastImageError={[Function]}
+        resizeMode="cover"
+        source={
+          Object {
+            "testUri": "../../../assets/images/bein_logo.png",
+          }
+        }
         style={
           Object {
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
           }
         }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#f9f9f9",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "justifyContent": "center",
-              "width": 64,
-            }
-          }
-          testID="Image__placeholder"
-        />
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "width": 64,
-            },
-          ]
-        }
-      >
-        <FastImageView
-          onFastImageError={[Function]}
-          onFastImageLoadEnd={[Function]}
-          resizeMode="cover"
-          source={
-            Object {
-              "testUri": "../../../assets/images/bein_logo.png",
-            }
-          }
-          style={
-            Object {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
-          }
-          testID="avatar.image"
-        />
-      </View>
+        testID="avatar.image"
+      />
     </View>
   </View>
 </View>
@@ -113,7 +79,7 @@ exports[`Avatar component renders correctly badge 1`] = `
   style={
     Array [
       Object {
-        "borderRadius": 4,
+        "borderRadius": 8,
         "height": 64,
         "width": 64,
       },
@@ -126,7 +92,7 @@ exports[`Avatar component renders correctly badge 1`] = `
     style={
       Array [
         Object {
-          "borderRadius": 4,
+          "borderRadius": 8,
           "height": 64,
           "width": 64,
         },
@@ -136,81 +102,47 @@ exports[`Avatar component renders correctly badge 1`] = `
     testID="avatar_container"
   >
     <View
-      onLayout={[Function]}
       style={
-        Object {
-          "backgroundColor": "transparent",
-          "position": "relative",
-        }
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Object {
+              "borderRadius": 8,
+              "height": 64,
+              "width": 64,
+            },
+            Object {
+              "borderColor": "#F2F5F8",
+              "borderWidth": 2,
+            },
+            Object {
+              "backgroundColor": "#FFFFFF",
+            },
+          ],
+        ]
       }
     >
-      <View
-        collapsable={false}
+      <FastImageView
+        onFastImageError={[Function]}
+        resizeMode="cover"
+        source={
+          Object {
+            "testUri": "../../../assets/images/bein_logo.png",
+          }
+        }
         style={
           Object {
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
           }
         }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#f9f9f9",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "justifyContent": "center",
-              "width": 64,
-            }
-          }
-          testID="Image__placeholder"
-        />
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "width": 64,
-            },
-          ]
-        }
-      >
-        <FastImageView
-          onFastImageError={[Function]}
-          onFastImageLoadEnd={[Function]}
-          resizeMode="cover"
-          source={
-            Object {
-              "testUri": "../../../assets/images/bein_logo.png",
-            }
-          }
-          style={
-            Object {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
-          }
-          testID="avatar.image"
-        />
-      </View>
+        testID="avatar.image"
+      />
     </View>
     <View
       accessibilityState={
@@ -531,7 +463,7 @@ exports[`Avatar component renders correctly badge check 1`] = `
   style={
     Array [
       Object {
-        "borderRadius": 4,
+        "borderRadius": 8,
         "height": 64,
         "width": 64,
       },
@@ -544,7 +476,7 @@ exports[`Avatar component renders correctly badge check 1`] = `
     style={
       Array [
         Object {
-          "borderRadius": 4,
+          "borderRadius": 8,
           "height": 64,
           "width": 64,
         },
@@ -554,81 +486,47 @@ exports[`Avatar component renders correctly badge check 1`] = `
     testID="avatar_container"
   >
     <View
-      onLayout={[Function]}
       style={
-        Object {
-          "backgroundColor": "transparent",
-          "position": "relative",
-        }
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Object {
+              "borderRadius": 8,
+              "height": 64,
+              "width": 64,
+            },
+            Object {
+              "borderColor": "#F2F5F8",
+              "borderWidth": 2,
+            },
+            Object {
+              "backgroundColor": "#FFFFFF",
+            },
+          ],
+        ]
       }
     >
-      <View
-        collapsable={false}
+      <FastImageView
+        onFastImageError={[Function]}
+        resizeMode="cover"
+        source={
+          Object {
+            "testUri": "../../../assets/images/bein_logo.png",
+          }
+        }
         style={
           Object {
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
           }
         }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#f9f9f9",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "justifyContent": "center",
-              "width": 64,
-            }
-          }
-          testID="Image__placeholder"
-        />
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "width": 64,
-            },
-          ]
-        }
-      >
-        <FastImageView
-          onFastImageError={[Function]}
-          onFastImageLoadEnd={[Function]}
-          resizeMode="cover"
-          source={
-            Object {
-              "testUri": "../../../assets/images/bein_logo.png",
-            }
-          }
-          style={
-            Object {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
-          }
-          testID="avatar.image"
-        />
-      </View>
+        testID="avatar.image"
+      />
     </View>
     <View
       style={
@@ -723,7 +621,7 @@ exports[`Avatar component renders correctly status 1`] = `
   style={
     Array [
       Object {
-        "borderRadius": 4,
+        "borderRadius": 8,
         "height": 64,
         "width": 64,
       },
@@ -736,7 +634,7 @@ exports[`Avatar component renders correctly status 1`] = `
     style={
       Array [
         Object {
-          "borderRadius": 4,
+          "borderRadius": 8,
           "height": 64,
           "width": 64,
         },
@@ -746,81 +644,47 @@ exports[`Avatar component renders correctly status 1`] = `
     testID="avatar_container"
   >
     <View
-      onLayout={[Function]}
       style={
-        Object {
-          "backgroundColor": "transparent",
-          "position": "relative",
-        }
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Object {
+              "borderRadius": 8,
+              "height": 64,
+              "width": 64,
+            },
+            Object {
+              "borderColor": "#F2F5F8",
+              "borderWidth": 2,
+            },
+            Object {
+              "backgroundColor": "#FFFFFF",
+            },
+          ],
+        ]
       }
     >
-      <View
-        collapsable={false}
+      <FastImageView
+        onFastImageError={[Function]}
+        resizeMode="cover"
+        source={
+          Object {
+            "testUri": "../../../assets/images/bein_logo.png",
+          }
+        }
         style={
           Object {
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
           }
         }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#f9f9f9",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "justifyContent": "center",
-              "width": 64,
-            }
-          }
-          testID="Image__placeholder"
-        />
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "width": 64,
-            },
-          ]
-        }
-      >
-        <FastImageView
-          onFastImageError={[Function]}
-          onFastImageLoadEnd={[Function]}
-          resizeMode="cover"
-          source={
-            Object {
-              "testUri": "../../../assets/images/bein_logo.png",
-            }
-          }
-          style={
-            Object {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
-          }
-          testID="avatar.image"
-        />
-      </View>
+        testID="avatar.image"
+      />
     </View>
     <View
       style={
@@ -847,7 +711,7 @@ exports[`Avatar component should call props onPressAction 1`] = `
   style={
     Array [
       Object {
-        "borderRadius": 4,
+        "borderRadius": 8,
         "height": 64,
         "width": 64,
       },
@@ -860,7 +724,7 @@ exports[`Avatar component should call props onPressAction 1`] = `
     style={
       Array [
         Object {
-          "borderRadius": 4,
+          "borderRadius": 8,
           "height": 64,
           "width": 64,
         },
@@ -870,94 +734,60 @@ exports[`Avatar component should call props onPressAction 1`] = `
     testID="avatar_container"
   >
     <View
-      onLayout={[Function]}
       style={
-        Object {
-          "backgroundColor": "transparent",
-          "position": "relative",
-        }
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Object {
+              "borderRadius": 8,
+              "height": 64,
+              "width": 64,
+            },
+            Object {
+              "borderColor": "#F2F5F8",
+              "borderWidth": 2,
+            },
+            Object {
+              "backgroundColor": "#FFFFFF",
+            },
+          ],
+        ]
       }
     >
-      <View
-        collapsable={false}
+      <FastImageView
+        onFastImageError={[Function]}
+        resizeMode="cover"
+        source={
+          Object {
+            "testUri": "../../../assets/images/bein_logo.png",
+          }
+        }
         style={
           Object {
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
           }
         }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#f9f9f9",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "justifyContent": "center",
-              "width": 64,
-            }
-          }
-          testID="Image__placeholder"
-        />
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#F2F5F8",
-              "borderRadius": 4,
-              "borderWidth": 2,
-              "height": 64,
-              "width": 64,
-            },
-          ]
-        }
-      >
-        <FastImageView
-          onFastImageError={[Function]}
-          onFastImageLoadEnd={[Function]}
-          resizeMode="cover"
-          source={
-            Object {
-              "testUri": "../../../assets/images/bein_logo.png",
-            }
-          }
-          style={
-            Object {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
-          }
-          testID="avatar.image"
-        />
-      </View>
+        testID="avatar.image"
+      />
     </View>
     <View
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
-          "borderRadius": 8,
-          "height": 16,
+          "backgroundColor": "#F1F2F8",
+          "borderRadius": 10,
+          "height": 20,
           "justifyContent": "center",
           "position": "absolute",
           "right": -4,
           "top": -4,
-          "width": 16,
+          "width": 20,
         }
       }
       testID="avatar.action_icon"

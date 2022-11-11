@@ -15,7 +15,7 @@ import {
   IParamGetDiscoverGroups,
   ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
-import { makeHttpRequest, withHttpRequestPromise } from '~/api/apiRequest';
+import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
 import { IUserEdit } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
@@ -291,7 +291,7 @@ export const groupsApiConfig = {
     params: {
       key: params?.key,
       offset: params?.offset || 0,
-      limit: params?.limit || 20,
+      limit: params?.limit || 25,
     },
   }),
   getAudienceTree: (): HttpApiRequestConfig => ({
@@ -615,19 +615,9 @@ const groupApi = {
   getLinkPreview: (link: string) => withHttpRequestPromise(
     groupsApiConfig.getLinkPreview, link,
   ),
-  getUsers: async (params: IParamsGetUsers) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getUsers(params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getUsers: async (params: IParamsGetUsers) => withHttpRequestPromise(
+    groupsApiConfig.getUsers, params,
+  ),
   getUserProfile: (userId: string, params?: any) => withHttpRequestPromise(
     groupsApiConfig.getUserProfile, userId, params,
   ),
@@ -640,9 +630,9 @@ const groupApi = {
   getCity: () => withHttpRequestPromise(
     groupsApiConfig.getCity,
   ),
-  editMyProfile: (params: any) => {
-    const { userId, data } = params || {};
-    return withHttpRequestPromise(groupsApiConfig.editMyProfile, userId, data);
+  editMyProfile: (params: IUserEdit) => {
+    const { id, ...data } = params || {};
+    return withHttpRequestPromise(groupsApiConfig.editMyProfile, id, data);
   },
   getMyWorkExperience: () => withHttpRequestPromise(groupsApiConfig.getMyWorkExperience),
   addWorkExperience: (data: IAddWorkExperienceReq) => withHttpRequestPromise(

@@ -13,17 +13,19 @@ import GroupTabHeader from './GroupTabHeader';
 import InfoHeader from '../../components/InfoHeader';
 import GroupJoinCancelButton from './GroupJoinCancelButton';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useMounted from '~/hooks/mounted';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 interface GroupContentProps {
+  community: ICommunity;
   onScroll: (e: any) => void;
   onGetInfoLayout: (e: any) => void;
 }
 
 const GroupContent = ({
+  community,
   onScroll,
   onGetInfoLayout,
 }: GroupContentProps) => {
@@ -36,8 +38,7 @@ const GroupContent = ({
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const { id: groupId, teamName } = groupData;
-  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
+  const communityId = community?.id;
   const communityName = community?.name;
   const isMemberCommunity = community?.joinStatus === GroupJoinStatus.MEMBER;
 

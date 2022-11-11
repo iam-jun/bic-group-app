@@ -85,7 +85,7 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
   return (
     <View style={styles.container}>
       <Header
-        title={t('article:title_categories')}
+        title={t('article:title_edit_category')}
         buttonProps={{ disabled, loading }}
         buttonText={t('common:btn_save')}
         onPressButton={handleSave}

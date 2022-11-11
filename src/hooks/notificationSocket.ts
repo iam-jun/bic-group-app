@@ -6,7 +6,6 @@ import {
   notificationActions,
   notificationEvent,
 } from '~/constants/notifications';
-import actions from '~/storeRedux/notification/actions';
 import postActions from '~/storeRedux/post/actions';
 import { parseSafe } from '~/utils/common';
 import getEnv from '~/utils/env';
@@ -15,12 +14,15 @@ import { useAuthToken, useUserIdAuth } from './auth';
 import ConvertHelper from '~/utils/convertHelper';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import useCommonController from '~/screens/store';
+import INotificationsState from '~/screens/Notification/store/Interface';
+import useNotificationStore from '~/screens/Notification/store';
 
 const useNotificationSocket = () => {
   const dispatch = useDispatch();
   const token = useAuthToken();
   const userId = useUserIdAuth();
   const commonController = useCommonController((state) => state.actions);
+  const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
 
   const handleNotification = (data: any) => {
     switch (data.action) {
@@ -33,11 +35,13 @@ const useNotificationSocket = () => {
         ) {
           dispatch(postActions.updateAllPostContainingVideoInProgress(data));
         }
-        return dispatch(actions.attachNotification(data));
+        return notiActions.attach(data);
       case notificationActions.DETACH:
-        return dispatch(actions.detachNotification(data));
+        return notiActions.detach(data);
+
       case notificationActions.UPDATE:
-        return dispatch(actions.updateNotification(data));
+        return notiActions.update(data);
+
       default:
         return null;
     }
@@ -81,7 +85,7 @@ const useNotificationSocket = () => {
         return;
       }
 
-      dispatch(actions.getNotifications());
+      notiActions.getTabData();
 
       const socket = io(
         getEnv('BEIN_API'), {

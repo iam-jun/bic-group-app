@@ -64,7 +64,7 @@ export interface IUserProfile {
   username?: string;
   cognito_uuid?: string;
   stream_uuid?: string;
-  gender?: string;
+  gender?: GENDER_TYPE;
   birthday?: string;
   beinStaffRole?: string;
   createdAt?: string;
@@ -77,13 +77,14 @@ export interface IUserProfile {
   address?: string;
   language?: string[];
   description?: string;
-  relationshipStatus?: string;
+  relationshipStatus?: RELATIONSHIP_TYPE;
   city?: string;
   country?: string;
   latestWork?: {
     company: string;
     titlePosition: string;
   };
+  chatUserId?: string;
 }
 
 export interface IGetUserProfile {

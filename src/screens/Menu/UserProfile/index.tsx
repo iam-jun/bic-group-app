@@ -23,11 +23,11 @@ import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
 import { formatDMLink, openUrl } from '~/utils/link';
 import menuActions from '../../../storeRedux/menu/actions';
-import menuKeySelector from '../../../storeRedux/menu/keySelector';
 import { BasicInfo, Contact, Experiences } from './fragments';
 import CoverHeader from './fragments/CoverHeader';
 import UserHeader from './fragments/UserHeader';
 import useUserProfileStore from './store';
+import useCommonController from '~/screens/store';
 
 const UserProfile = (props: any) => {
   const { userId, params } = props?.route?.params || {};
@@ -57,7 +57,8 @@ const UserProfile = (props: any) => {
     latestWork,
   } = userProfileData || {};
 
-  const myProfileData = useKeySelector(menuKeySelector.myProfile);
+  const actions = useCommonController((state) => state.actions);
+  const myProfileData = useCommonController((state) => state.myProfile);
   const { username: currentUsername, id } = myProfileData || {};
   const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
@@ -86,7 +87,7 @@ const UserProfile = (props: any) => {
       || userId?.toString?.() === currentUsername?.toString?.()
     ) {
       if (avatarState !== _avatar || _bgIm !== bgImgState) {
-        dispatch(menuActions.getMyProfile({ userId, params }));
+        actions.getMyProfile({ userId, params });
         homeActions.refreshHome();
       }
     }

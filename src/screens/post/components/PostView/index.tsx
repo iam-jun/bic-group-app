@@ -19,7 +19,7 @@ import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
 import {
   IAudienceGroup,
   IPayloadReactToPost,
-  IPostActivity,
+  IPost,
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -54,7 +54,7 @@ export interface PostViewProps {
   isPostDetail?: boolean;
   pressNavigateToDetail?: boolean;
   isLite?: boolean;
-  postData?: IPostActivity;
+  postData?: IPost;
   btnReactTestID?: string;
   btnCommentTestID?: string;
   hasReactPermission?: boolean;
@@ -144,7 +144,7 @@ const _PostView: FC<PostViewProps> = ({
           children: (
             <AlertDeleteAudiencesConfirmContent
               data={listAudiences}
-              canDeleteOwnPost={canDeleteOwnPost}
+              textContent={t('post:content_delete_audiences_of_post')}
             />
           ),
           cancelBtn: true,
@@ -166,7 +166,7 @@ const _PostView: FC<PostViewProps> = ({
           children: (
             <AlertDeleteAudiencesConfirmContent
               data={listAudiences}
-              canDeleteOwnPost={canDeleteOwnPost}
+              textContent={t('post:content_not_able_delete_of_post')}
             />
           ),
           cancelBtn: true,

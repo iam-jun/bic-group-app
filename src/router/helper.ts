@@ -238,3 +238,9 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
   }
   return null;
 };
+
+const routerHelper = {
+  withNavigation,
+};
+
+export default routerHelper;

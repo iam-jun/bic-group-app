@@ -14,11 +14,11 @@ import spacing from '~/theme/spacing';
 
 interface HomeSearchProps {
   style?: StyleProp<ViewStyle>;
-  onClose?: () => void;
   searchViewRef?: any;
+  groupId?: string;
 }
 
-const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
+const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
   const _searchViewRef = searchViewRef || useRef(null);
 
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
         isSuggestion: false,
         searchResults: [],
         searchText: keyword,
+        groupId,
       }),
     );
     Keyboard.dismiss();
@@ -53,13 +54,13 @@ const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
 
   const onFocusSearch = () => {
     dispatch(
-      homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [] }),
+      homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [], groupId }),
     );
   };
 
   const onSubmitSearch = () => {
     dispatch(
-      homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [] }),
+      homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [], groupId }),
     );
   };
 
@@ -76,7 +77,7 @@ const HomeSearch = ({ style, searchViewRef }: HomeSearchProps) => {
       style={style}
       isOpen={isShow}
       onClose={onClose}
-      placeholder={t('input:search_post')}
+      placeholder={t('input:search_content')}
       searchViewRef={_searchViewRef}
       onFocus={onFocusSearch}
       onChangeText={onSearchText}

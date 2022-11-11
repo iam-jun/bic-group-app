@@ -7,7 +7,6 @@ exports[`ItemExperience component renders correctly 1`] = `
   <View
     style={
       Object {
-        "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "space-between",
         "paddingBottom": 16,
@@ -17,7 +16,9 @@ exports[`ItemExperience component renders correctly 1`] = `
     <View
       style={
         Object {
+          "flex": 1,
           "flexDirection": "row",
+          "marginRight": 8,
         }
       }
     >
@@ -67,8 +68,8 @@ exports[`ItemExperience component renders correctly 1`] = `
     <View
       style={
         Object {
-          "alignItems": "center",
           "flexDirection": "row",
+          "marginLeft": 12,
         }
       }
     >
@@ -363,7 +364,7 @@ exports[`ItemExperience component renders correctly 1`] = `
       }
       testID="info_item.title"
     >
-      Division
+      Location
     </Text>
     <Text
       style={
@@ -473,6 +474,54 @@ exports[`ItemExperience component renders correctly 1`] = `
       }
       testID="info_item.value"
     />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "paddingBottom": 16,
+        },
+        undefined,
+      ]
+    }
+    testID="info_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#353E6E",
+          },
+          undefined,
+        ]
+      }
+      testID="info_item.title"
+    >
+      Description
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {},
+          Object {
+            "marginTop": 4,
+          },
+        ]
+      }
+      testID="info_item.value"
+    >
+      Not set
+    </Text>
   </View>
 </View>
 `;

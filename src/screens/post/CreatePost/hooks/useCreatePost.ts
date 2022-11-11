@@ -18,7 +18,7 @@ import {
   IParamPutEditPost,
   IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
-  IPostActivity,
+  IPost,
   IPostCreatePost,
 } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
@@ -29,8 +29,8 @@ import { useBaseHook } from '~/hooks';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
 import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
 import { IGetFile } from '~/services/fileUploader';
-import useDraftPostStore from '../../DraftPost/store';
-import IDraftPostState from '../../DraftPost/store/Interface';
+import useDraftPostStore from '../../../Draft/DraftPost/store';
+import IDraftPostState from '../../../Draft/DraftPost/store/Interface';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import useLinkPreview from './useLinkPreview';
@@ -99,7 +99,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     (state: IMentionInputState) => state.tempSelected,
   );
 
-  let initPostData: IPostActivity = {};
+  let initPostData: IPost = {};
 
   if (postId) {
     initPostData = usePostsStore(postsSelector.getPost(postId));
@@ -109,7 +109,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     const draftPosts
       = useDraftPostStore((state: IDraftPostState) => state.posts) || [];
     initPostData = draftPosts?.find(
-      (item: IPostActivity) => item?.id === draftPostId,
+      (item: IPost) => item?.id === draftPostId,
     );
   }
 
@@ -148,7 +148,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     currentLinkPreview,
   );
 
-  const [sPostData, setPostData] = React.useState<IPostActivity>({
+  const [sPostData, setPostData] = React.useState<IPost>({
     ...initPostData,
   });
 

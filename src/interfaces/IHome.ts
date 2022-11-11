@@ -1,3 +1,5 @@
+import { POST_TYPE } from './IPost';
+
 export interface IPayloadSetNewsfeedSearch {
   isShow?: boolean;
   isSuggestion?: boolean;
@@ -8,6 +10,7 @@ export interface IPayloadSetNewsfeedSearch {
   searchResults?: any[];
   searchViewRef?: any;
   totalResult?: number;
+  groupId?: string;
 }
 
 export interface IPayloadSetNewsfeedSearchFilter {
@@ -22,6 +25,7 @@ export interface IPayloadSetNewsfeedSearchUsers {
   data?: any[];
   loading?: boolean;
   canLoadMore?: boolean;
+  groupId?: string;
 }
 
 export interface IPayloadSetNewsfeedSearchRecentKeywords {
@@ -38,6 +42,7 @@ export interface IParamGetFeed {
   idGt?: number;
   idLt?: number;
   isImportant?: boolean;
+  type?: POST_TYPE | undefined;
 }
 
 export interface IParamGetSearchPost {
@@ -53,6 +58,7 @@ export interface IParamGetSearchPost {
   idLte?: number;
   idGt?: number;
   idLt?: number;
+  groupId?: string;
 }
 
 export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
@@ -81,6 +87,7 @@ export interface IPayloadGetSearchPosts {
   startDate?: string;
   endDate?: string;
   isLoadMore?: boolean;
+  groupId?: string;
 }
 
 export interface ISelectedFilterUser {

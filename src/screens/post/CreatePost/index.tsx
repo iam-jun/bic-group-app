@@ -21,9 +21,10 @@ import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
-import useDraftPostStore from '../DraftPost/store';
+import useDraftPostStore from '../../Draft/DraftPost/store';
 import useCommentInputStore from '../components/CommentInputView/store';
 import ICommentInputState from '../components/CommentInputView/store/Interface';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 export interface CreatePostProps {
   route?: {
@@ -44,7 +45,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
 
-  const { doGetDraftPosts } = useDraftPostStore();
+  const { actions: draftPostActions } = useDraftPostStore();
 
   const useCreatePostData = useCreatePost({
     screenParams,
@@ -153,8 +154,8 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   const onPressDraftPost = () => {
     if (isNewsfeed) {
-      doGetDraftPosts({ isRefresh: true });
-      rootNavigation.navigate(homeStack.draftPost);
+      draftPostActions.getDraftPosts({ isRefresh: true });
+      rootNavigation.navigate(menuStack.draft);
     }
   };
 

@@ -52,10 +52,12 @@ import NotFound from '~/screens/NotFound/components/NotFound';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
+import homeActions from '~/storeRedux/home/actions';
+import ContentSearch from '~/screens/Home/HomeSearch';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
-  const { groupId, onGoBack } = params || {};
+  const { groupId, onGoBack, communityId: paramCommunityId } = params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -72,8 +74,11 @@ const GroupDetail = (props: any) => {
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy, id: idCurrentGroupDetail } = groupInfo;
-  const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
-  const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
+  const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
+  const communityId = paramCommunityId || currentCommunityId;
+  const communityDetail = useCommunitiesStore(
+    useCallback((state: ICommunitiesState) => state.data[communityId], [communityId, groupId]),
+  );
   const { name: communityName, joinStatus: joinStatusCommunity }
     = communityDetail || {};
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
@@ -111,6 +116,7 @@ const GroupDetail = (props: any) => {
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
   const heightButtonBottom = useSharedValue(0);
+  const searchViewRef = useRef(null);
 
   useFocusEffect(() => {
     if (!userId) {
@@ -146,10 +152,11 @@ const GroupDetail = (props: any) => {
   }, [groupId, isMember, privacy, loadingGroupDetail, groupInfo]);
 
   useEffect(() => {
-    getGroupDetail();
-    if (communityId && communityId !== communityDetail?.id) {
+    // Avoid empty object
+    if (!communityDetail?.id) {
       actions.getCommunity(communityId);
     }
+    getGroupDetail();
   }, [groupId]);
 
   useEffect(() => {
@@ -274,6 +281,10 @@ const GroupDetail = (props: any) => {
     dispatch(groupsActions.setGroupDetail(null));
   };
 
+  const onPressSearch = () => {
+    dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
+  };
+
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
 
@@ -290,6 +301,7 @@ const GroupDetail = (props: any) => {
 
     return (
       <GroupContent
+        community={communityDetail}
         onScroll={onScrollHandler}
         onGetInfoLayout={onGetInfoLayout}
       />
@@ -334,6 +346,8 @@ const GroupDetail = (props: any) => {
             )
           }
           onPressBack={onGoBack}
+          icon="search"
+          onPressIcon={onPressSearch}
         />
         <Animated.View testID="group_detail.content" style={[styles.contentContainer, containerAnimation]}>
           {renderGroupContent()}
@@ -341,7 +355,7 @@ const GroupDetail = (props: any) => {
         <Animated.View onLayout={onButtonBottomLayout} style={[styles.button, buttonStyle]}>
           <GroupJoinCancelButton style={styles.joinBtn} />
         </Animated.View>
-
+        <ContentSearch searchViewRef={searchViewRef} groupId={groupId} />
       </>
     );
   };

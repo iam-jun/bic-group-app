@@ -1,11 +1,12 @@
+import useSelectAudienceStore from '~/components/SelectAudience/store';
 import useCommunityJoinedGroupTreeStore from '~/screens/groups/components/CommunityJoinedGroupTree/store';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from './entities/posts';
 import useHomeStore from '~/screens/Home/store';
-import useJoinedCommunitiesStore from '~/screens/Menu/store';
-import useSelectAudienceStore from '~/screens/post/PostSelectAudience/store';
+import useMenuController from '~/screens/Menu/store';
+import useSelectPostAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
-import useDraftPostStore from '../screens/post/DraftPost/store';
+import useDraftPostStore from '../screens/Draft/DraftPost/store';
 import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/store';
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useCommunitiesStore from './entities/communities';
@@ -26,7 +27,11 @@ import useManagedStore from '~/screens/communities/Communities/components/Manage
 import useYourCommunitiesStore from '~/screens/communities/Communities/components/YourCommunities/store';
 import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
+import useNotificationStore from '~/screens/Notification/store';
 import useGiphyStore from './giphy';
+import useSeriesStore from '~/screens/series/store';
+import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import useArticleController from '~/screens/articles/store';
 
 const stores = [
   // entities
@@ -35,8 +40,9 @@ const stores = [
 
   // screens
   useHomeStore,
-  useJoinedCommunitiesStore,
+  useMenuController,
   useSelectAudienceStore,
+  useSelectPostAudienceStore,
   useDraftPostStore,
   useChatStore,
   useCommunitiesStore,
@@ -45,6 +51,9 @@ const stores = [
   useUserProfileStore,
   useGroupStructureStore,
   usePermissionSchemeStore,
+  useNotificationStore,
+  useDraftArticleStore,
+  useArticleController,
 
   // others
   useChatStore,
@@ -64,6 +73,7 @@ const stores = [
   useTimelineStore,
   useSearchJoinedCommunitiesStore,
   useGiphyStore,
+  useSeriesStore,
 ];
 
 export const resetAllStores = () => {

@@ -77,7 +77,7 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
   const renderError = (error: string) => (
     <View style={[styles.cover, styles.errorContainer]}>
       <Icon icon="Image" size={30} tintColor={theme.colors.neutral40} />
-      <Text.SubtitleM style={styles.textAddCover} useI18n>article:text_add_cover</Text.SubtitleM>
+      <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_add_cover</Text.SubtitleM>
       <Text.BodyXS style={styles.textError}>{error}</Text.BodyXS>
       <Button onPress={onPressSelect}>
         <Text.LinkS useI18n>article:text_select_cover</Text.LinkS>
@@ -90,7 +90,7 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
       return (
         <Button style={[styles.centerButtonContainer, styles.emptyCoverContainer]} onPress={onPressSelect}>
           <Icon icon="Image" size={30} tintColor={theme.colors.neutral40} />
-          <Text.SubtitleM style={styles.textAddCover} useI18n>article:text_add_cover</Text.SubtitleM>
+          <Text.SubtitleM style={styles.textAddCover} useI18n>common:text_add_cover</Text.SubtitleM>
           <View style={styles.iconCamera}>
             <Icon icon="Camera" tintColor={theme.colors.neutral40} size={22} />
           </View>

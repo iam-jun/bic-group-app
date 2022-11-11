@@ -228,7 +228,7 @@ export const POST_CONTAINING_VIDEO_PROCESS = {
       },
     ],
   },
-  isArticle: false,
+  type: 'POST',
   privacy: 'PUBLIC',
 };
 

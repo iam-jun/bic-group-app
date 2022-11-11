@@ -12,6 +12,7 @@ export default function* getSearchPostUsers({
   try {
     const state = yield select((state) => state?.home?.newsfeedSearchUsers);
     let data = state?.data || [];
+    const { groupId } = yield select((state) => state?.home?.newsfeedSearch);
 
     // if doesnt have payload a.k.a search key => action load more page
     let params: IParamsGetUsers | undefined;
@@ -34,13 +35,14 @@ export default function* getSearchPostUsers({
     }
 
     if (state && params) {
-      const response = yield groupApi.getUsers(params);
-      const newData = data.concat(response || []) || [];
+      const response = yield groupApi.getUsers({ ...params, groupId });
+      const newData = data.concat(response?.data || []) || [];
       const newCanLoadMore = newData?.length > state.data?.length;
       yield put(homeActions.setNewsfeedSearchUsers({
         key: params.key,
         limit: params.limit,
         offset: params.offset,
+        groupId,
         data: newData,
         loading: false,
         canLoadMore: newCanLoadMore,

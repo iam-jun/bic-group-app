@@ -10,11 +10,11 @@ import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import Markdown from '~/beinComponents/Markdown';
-import menuKeySelector from '~/storeRedux/menu/keySelector';
 import Avatar from '~/baseComponents/Avatar';
 import { IAudience } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
+import useCommonController from '~/screens/store';
 
 const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
   const windowDimension = useWindowDimensions();
@@ -25,7 +25,7 @@ const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
     theme, screenHeight,
   );
   const content = useKeySelector(postKeySelector.createPost.content);
-  const { fullname, avatar } = useKeySelector(menuKeySelector.myProfile) || {};
+  const { fullname, avatar } = useCommonController((state) => state.myProfile) || {};
   const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
   const renderTitleHeader = () => (

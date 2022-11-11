@@ -4,7 +4,7 @@ import { Keyboard } from 'react-native';
 import FileUploader from '~/services/fileUploader';
 import modalActions from '~/storeRedux/modal/actions';
 
-import useDraftPostStore from '../DraftPost/store';
+import useDraftPostStore from '../../Draft/DraftPost/store';
 
 export const handleBack = (
   isEditPost: boolean | undefined,
@@ -46,7 +46,7 @@ export const handleBack = (
       }));
       return;
     }
-    useDraftPostStore.getState().doGetDraftPosts({ isRefresh: true });
+    useDraftPostStore.getState().actions.getDraftPosts({ isRefresh: true });
     dispatch(modalActions.showHideToastMessage({
       content: 'post:saved_to_draft',
       props: {

@@ -17,150 +17,207 @@ exports[`StickerView component renders correctly 1`] = `
     }
   />
   <View>
-    <View>
+    <View
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+        }
+      }
+    >
       <View
         style={
           Array [
             Object {
-              "height": "100%",
-              "marginTop": 8,
+              "height": -0,
+            },
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderTopLeftRadius": 20,
+              "borderTopRightRadius": 20,
+              "elevation": 2,
+              "justifyContent": "flex-start",
+              "minHeight": 80,
+              "shadowColor": "rgba(0, 0, 0, 1)",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.12,
+              "shadowRadius": 1.5,
             },
           ]
         }
       >
         <View
+          collapsable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onGestureHandlerEvent={[Function]}
+          onGestureHandlerStateChange={[Function]}
           style={
             Object {
-              "marginHorizontal": 12,
-              "paddingVertical": 12,
+              "alignItems": "center",
+              "justifyContent": "center",
+              "paddingVertical": 10,
             }
           }
         >
           <View
             style={
               Object {
-                "backgroundColor": "#E3E6F2",
-                "borderRadius": 20,
-                "height": 40,
-                "justifyContent": "center",
-                "paddingHorizontal": 16,
+                "backgroundColor": "#EAEDF2",
+                "borderRadius": 8,
+                "height": 4,
+                "width": "15%",
               }
             }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "opacity": 1,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      Object {
-                        "marginRight": 8,
-                      },
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        undefined,
-                        undefined,
-                        undefined,
-                      ]
-                    }
-                  >
-                    <View />
-                  </View>
-                </View>
-              </View>
-              <TextInput
-                autoComplete="off"
-                onChangeText={[Function]}
-                onFocus={[Function]}
-                onSubmitEditing={[Function]}
-                placeholder="Search GIPHY"
-                placeholderTextColor="#767D93"
-                returnKeyType="search"
-                selectionColor="#767D93"
-                style={
-                  Object {
-                    "color": "#181C32",
-                    "flex": 1,
-                    "fontFamily": "BeVietnamPro-Light",
-                    "fontSize": 15,
-                    "height": "100%",
-                  }
-                }
-                testID="sticker_view.search_input"
-                value=""
-              />
-            </View>
-          </View>
+          />
         </View>
-        <View>
-          <GiphyReactNativeGridView
-            cellPadding={4}
-            content={
-              Object {
-                "mediaType": undefined,
-                "requestType": "trending",
-                "searchQuery": "",
-              }
-            }
-            onContentUpdate={[Function]}
-            onMediaSelect={[Function]}
+        <RCTSafeAreaView
+          emulateUnlessSupported={true}
+        >
+          <View
             style={
               Array [
                 Object {
                   "height": "100%",
                 },
-                false,
               ]
             }
-            testID="sticker_view.grid_view"
-          />
-        </View>
+          >
+            <View
+              style={
+                Object {
+                  "marginHorizontal": 12,
+                  "paddingVertical": 12,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "#FFFFFF",
+                      "borderColor": "#E3E6F2",
+                      "borderRadius": 24,
+                      "borderWidth": 1,
+                      "justifyContent": "center",
+                      "paddingLeft": 8,
+                      "paddingRight": 12,
+                    },
+                    undefined,
+                    Object {
+                      "height": 32,
+                    },
+                    false,
+                  ]
+                }
+                testID="search_input"
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <View
+                    accessibilityState={
+                      Object {
+                        "disabled": true,
+                      }
+                    }
+                    accessible={true}
+                    collapsable={false}
+                    focusable={false}
+                    hitSlop={
+                      Object {
+                        "bottom": 10,
+                        "left": 10,
+                        "right": 10,
+                        "top": 10,
+                      }
+                    }
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "opacity": 1,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                          },
+                          Object {
+                            "marginRight": 8,
+                          },
+                          Object {
+                            "backgroundColor": undefined,
+                          },
+                        ]
+                      }
+                    >
+                      <View
+                        style={
+                          Array [
+                            undefined,
+                            undefined,
+                            undefined,
+                          ]
+                        }
+                      >
+                        <View
+                          testID="search_input.icon"
+                        />
+                      </View>
+                    </View>
+                  </View>
+                  <TextInput
+                    autoComplete="off"
+                    onBlur={[Function]}
+                    onChangeText={[Function]}
+                    onFocus={[Function]}
+                    onSubmitEditing={[Function]}
+                    placeholderTextColor="#BAC0DE"
+                    returnKeyType="search"
+                    selectionColor="#767D93"
+                    style={
+                      Object {
+                        "color": "#181C32",
+                        "flex": 1,
+                        "fontFamily": "BeVietnamPro-Light",
+                        "fontSize": 13,
+                        "height": "100%",
+                      }
+                    }
+                    testID="search_input.input"
+                    value=""
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </RCTSafeAreaView>
       </View>
     </View>
   </View>

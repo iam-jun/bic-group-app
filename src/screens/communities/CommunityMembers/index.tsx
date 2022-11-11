@@ -1,4 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, {
+  useState, useRef, useCallback, useEffect,
+} from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { StyleSheet, View } from 'react-native';
@@ -7,7 +9,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header, { HeaderProps } from '~/beinComponents/Header';
 
 import SearchMemberView from './CommunityMemberList/components/SearchMemberView';
-import { ICommunityMembers } from '~/interfaces/ICommunity';
+import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
 import CommunityMemberList from './CommunityMemberList';
 import Tab from '~/baseComponents/Tab';
@@ -20,6 +22,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IconType } from '~/resources/icons';
 import MemberOptionsMenu from './components/CommunityMemberOptionsMenu';
+import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 
 export const MEMBER_TABS = [
   { id: MEMBER_TAB_TYPES.MEMBER_LIST, text: 'communities:member_tab_types:title_member_list' },
@@ -58,6 +61,19 @@ const CommunityMembers = ({ route }: any) => {
     PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
   );
 
+  const community = useCommunitiesStore(useCallback(
+    (state) => state.data[communityId] || {} as ICommunity, [communityId],
+  ));
+  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+
+  useEffect(() => {
+    // In case there's no data available yet when navigating directly
+    // from somewhere else such as notifications
+    if (!community.id) {
+      actions.getCommunity(communityId);
+    }
+  }, [communityId]);
+
   const clearSelectedMember = () => setSelectedMember(undefined);
 
   const onPressMenu = (item: ICommunityMembers) => {
@@ -85,7 +101,7 @@ const CommunityMembers = ({ route }: any) => {
 
   const renderContent = () => {
     if (selectedIndex === 0) {
-      return <CommunityMemberList communityId={communityId} onPressMenu={onPressMenu} />;
+      return <CommunityMemberList community={community} onPressMenu={onPressMenu} />;
     }
 
     if (selectedIndex === 1) {
@@ -149,7 +165,7 @@ const CommunityMembers = ({ route }: any) => {
       </View>
 
       <MemberOptionsMenu
-        communityId={communityId}
+        community={community}
         modalizeRef={baseSheetRef}
         selectedMember={selectedMember || {} as ICommunityMembers}
         onOptionsClosed={clearSelectedMember}
