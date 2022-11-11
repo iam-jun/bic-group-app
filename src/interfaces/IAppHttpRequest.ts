@@ -4,4 +4,5 @@ export interface IParamsGetUsers {
   limit?: number;
   sort?: 'id:asc' | 'id:desc' | 'id:asc,createdAt:desc' | string;
   userIds?: string;
+  groupId?: string
 }
