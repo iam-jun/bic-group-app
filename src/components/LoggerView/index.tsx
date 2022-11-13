@@ -1,29 +1,29 @@
+import Clipboard from '@react-native-clipboard/clipboard';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import {
   DeviceEventEmitter,
   FlatList, Modal, ScrollView, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
-import React, {
-  useCallback, useEffect, useRef, useState,
-} from 'react';
-import Clipboard from '@react-native-clipboard/clipboard';
-import { useDispatch } from 'react-redux';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle, useSharedValue, withSpring, ZoomInEasyUp, ZoomOutEasyDown,
 } from 'react-native-reanimated';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { PanGestureHandler } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
+import Checkbox from '~/baseComponents/Checkbox';
 import Markdown from '~/beinComponents/Markdown';
+import MarkdownView from '~/beinComponents/MarkdownView';
 import Text from '~/beinComponents/Text';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { getUserFromSharedPreferences } from '~/services/sharePreferences';
 import modalActions from '~/storeRedux/modal/actions';
+import { dimension } from '~/theme';
 import getEnv from '~/utils/env';
 import { ILogger, LogType } from './Interface';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Checkbox from '~/baseComponents/Checkbox';
-import { dimension } from '~/theme';
-import MarkdownView from '~/beinComponents/MarkdownView';
-import { getUserFromSharedPreferences } from '~/services/sharePreferences';
 
 export const EVENT_LOGGER_TAG = 'debug-logger-on-new-log';
 const MAX_LOGS = 200;

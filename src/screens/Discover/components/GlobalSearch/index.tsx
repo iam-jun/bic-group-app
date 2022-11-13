@@ -8,7 +8,7 @@ import appConfig from '~/configs/appConfig';
 import GlobalSearchResults from './components/GlobalSearchResults';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import { isGroup } from '~/screens/groups/helper';
+import { isGroup } from '~/helpers/groups';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';

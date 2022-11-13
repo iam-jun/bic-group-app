@@ -1,11 +1,11 @@
-import CreateComment from '~/screens/post/CreateComment';
 import CreatePost from '~/screens/post/CreatePost';
 import PostDetail from '~/screens/post/PostDetail';
 import PostSelectAudience from '~/screens/post/PostSelectAudience';
 import DraftPost from '~/screens/Draft/DraftPost';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PostSettings from '~/screens/post/PostSettings';
-import CommentDetail from '~/screens/post/CommentDetail';
+import CommentDetail from '~/screens/comments/CommentDetail';
+import CreateComment from '~/screens/comments/CreateComment';
 
 const homeScreens = {
   'post-detail': PostDetail,

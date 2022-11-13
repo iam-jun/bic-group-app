@@ -14,17 +14,17 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Portal } from 'react-native-portalize';
-import { AppConfig } from '~/configs';
-import { dimension } from '~/theme';
-import spacing from '~/theme/spacing';
-import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
 import EmojiPicker from '~/baseComponents/EmojiPicker';
+import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
 import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
 import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
 import { SearchInput } from '~/baseComponents/Input';
+import { AppConfig } from '~/configs';
 import { useBaseHook } from '~/hooks';
-import GiphyView from '../GiphyView';
 import { IGiphy } from '~/interfaces/IGiphy';
+import { dimension } from '~/theme';
+import spacing from '~/theme/spacing';
+import GiphyView from '../GiphySelectorView';
 import SlideUpModal from '../SlideUpModal';
 
 export interface Props {

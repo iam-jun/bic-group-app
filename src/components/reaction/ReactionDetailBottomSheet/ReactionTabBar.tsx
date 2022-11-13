@@ -1,30 +1,30 @@
-import React, {
-  FC, useState, useEffect, useRef,
-} from 'react';
-import {
-  FlatList, StyleSheet, Image,
-} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
+import React, {
+  FC, useEffect, useRef, useState,
+} from 'react';
+import {
+  FlatList, Image, StyleSheet,
+} from 'react-native';
 
 import NodeEmoji from 'node-emoji';
 import { blacklistReactions, ReactionType } from '~/constants/reactions';
 
-import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
+import Text from '~/beinComponents/Text';
 import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import { spacing } from '~/theme';
 
 export interface ReactionTabBarProps {
   initReaction?: ReactionType;
-  reactionCounts: any;
+  reactionsCount: any;
   onChangeTab?: (item: any, index: number) => void;
 }
 
 const itemWidth = 80;
 
 const ReactionTabBar: FC<ReactionTabBarProps> = ({
-  reactionCounts,
+  reactionsCount,
   initReaction,
   onChangeTab,
 }: ReactionTabBarProps) => {
@@ -76,10 +76,10 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
 
   useEffect(
     () => {
-      if (reactionCounts) {
+      if (reactionsCount) {
         const reaactionCountMap = new Map();
         const newData: any = [];
-        Object.values(reactionCounts || {})?.forEach((reaction: any) => {
+        Object.values(reactionsCount || {})?.forEach((reaction: any) => {
           const key = Object.keys(reaction || {})?.[0];
           if (key) {
             reaactionCountMap.set(
@@ -104,7 +104,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
         setData([]);
         setActiveIndex(-1);
       }
-    }, [reactionCounts],
+    }, [reactionsCount],
   );
 
   const onScrollToIndexFailed = () => {

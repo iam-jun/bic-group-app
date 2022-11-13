@@ -11,11 +11,11 @@ import SelectAudience from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import useSeriesStore, { ISeriesState } from '../store';
 import modalActions from '~/storeRedux/modal/actions';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
+import useSeriesStore, { ISeriesState } from '../store';
 
 const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
   const { isFirstStep, isEditAudience, initAudienceGroups = [] } = route?.params || {};

@@ -9,7 +9,7 @@ import { IEditArticleAudience, IEditArticleData, IPayloadPutEditArticle } from '
 import { withNavigation } from '~/router/helper';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
-import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
+import { getMentionsFromContent } from '~/helpers/post';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import Store from '~/storeRedux';

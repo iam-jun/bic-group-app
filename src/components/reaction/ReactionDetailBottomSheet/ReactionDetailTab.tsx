@@ -1,16 +1,16 @@
 import React, {
   FC, memo, useCallback, useEffect,
 } from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { ReactionType } from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import { ReactionType } from '~/constants/reactions';
+import { IParamGetReactionDetail } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 import useReactionDetailStore from './store';
 import IReactionDetailState from './store/Interface';
-import { IParamGetReactionDetail } from '~/interfaces/IPost';
 
 export interface ReactionDetailTabProps {
   reactionType: ReactionType;

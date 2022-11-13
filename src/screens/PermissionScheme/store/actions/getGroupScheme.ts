@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import groupApi from '~/api/GroupApi';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
+import APIErrorCode from '~/constants/apiErrorCode';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { sortFixedRoles } from '~/screens/groups/helper';
@@ -32,7 +32,7 @@ const getGroupScheme = (set, get) => async ({ communityId, schemeId }: {communit
   } catch (error) {
     console.error('getGroupScheme error:', error);
 
-    if (error?.code === API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND) {
+    if (error?.code === APIErrorCode.Group.SCHEME_NOT_FOUND) {
       actions.getSchemes({ communityId, isRefreshing: true });
       navigation.goBack();
     }

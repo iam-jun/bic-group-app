@@ -1,9 +1,9 @@
 import modalActions from '~/storeRedux/modal/actions';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
+import APIErrorCode from '~/constants/apiErrorCode';
 import Store from '~/storeRedux';
 
 const showError = (err: any) => {
-  if (err.code === API_ERROR_CODE.COMMON.SYSTEM_ISSUE) return;
+  if (err.code === APIErrorCode.Common.SYSTEM_ISSUE) return;
   Store.store.dispatch(modalActions.showHideToastMessage(
     {
       content:

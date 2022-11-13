@@ -1,6 +1,6 @@
 import React from 'react';
-import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 import { fireEvent, languages, renderWithRedux } from '../../test/testUtils';
+import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 
 describe('ButtonCommunityGroupCard component', () => {
   it('given joinStatus = 1, should render button join', () => {

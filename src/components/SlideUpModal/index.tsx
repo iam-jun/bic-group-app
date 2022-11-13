@@ -1,8 +1,8 @@
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
   MutableRefObject, useImperativeHandle,
 } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import {
   PanGestureHandler,
 } from 'react-native-gesture-handler';

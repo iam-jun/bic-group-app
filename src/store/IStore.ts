@@ -15,7 +15,7 @@ import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
 import IRemoveCommunityMemberState from '~/screens/communities/CommunityMembers/store/Interface';
 import IRemoveGroupMemberState from '~/screens/groups/GroupMembers/store/Interface';
-import IUserInterestedPostState from '~/screens/post/components/UserInterestedPost/store/Interface';
+import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
 import { ICommunitiesState } from './entities/communities';
 import { IDiscoverCommunitiesSearchState } from '~/screens/Discover/components/SearchDiscoverCommunity/store/Interface';

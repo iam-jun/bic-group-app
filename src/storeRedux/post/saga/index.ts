@@ -3,7 +3,7 @@ import {
   call, put, select, takeEvery, takeLatest,
 } from 'redux-saga/effects';
 
-import API_ERROR_CODE from '~/constants/apiErrorCode';
+import APIErrorCode from '~/constants/apiErrorCode';
 import {
   IParamGetPostAudiences,
   IParamGetPostDetail, IPayloadAddToAllPost,
@@ -223,8 +223,8 @@ function* getPostDetail({
       false, false,
     );
     if (
-      e?.code === API_ERROR_CODE.POST.postDeleted
-      || e?.code === API_ERROR_CODE.POST.postPrivacy
+      e?.code === APIErrorCode.Post.POST_DELETED
+      || e?.code === APIErrorCode.Post.POST_PRIVACY
     ) {
       yield put(postActions.deletePostLocal(postId));
       yield put(postActions.setCommentErrorCode(e.code));

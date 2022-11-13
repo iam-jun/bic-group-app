@@ -9,7 +9,7 @@ import { createTextStyle } from '~/beinComponents/Text/textStyle';
 
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import ArticleWebview from '~/screens/articles/components/ArticleWebview';
+import ArticleWebview from '~/components/articles/ArticleWebview';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';

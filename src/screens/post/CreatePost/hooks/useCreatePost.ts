@@ -27,7 +27,7 @@ import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import { useBaseHook } from '~/hooks';
 import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
-import { getMentionsFromContent } from '~/screens/post/helper/postUtils';
+import { getMentionsFromContent } from '~/helpers/post';
 import { IGetFile } from '~/services/fileUploader';
 import useDraftPostStore from '../../../Draft/DraftPost/store';
 import IDraftPostState from '../../../Draft/DraftPost/store/Interface';

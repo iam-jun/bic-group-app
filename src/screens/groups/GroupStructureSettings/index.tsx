@@ -13,10 +13,11 @@ import { GroupItemProps } from '~/beinComponents/list/items/GroupItem';
 import modalActions from '~/storeRedux/modal/actions';
 import GroupStructureMenu from '~/screens/groups/GroupStructureSettings/components/GroupStructureMenu';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import { getGroupFromTreeById, isGroup } from '~/screens/groups/helper';
+import { getGroupFromTreeById } from '~/screens/groups/helper';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 import useGroupStructureStore from './store';
+import { isGroup } from '~/helpers/groups';
 
 export interface GroupStructureSettingsProps {
   style?: StyleProp<ViewStyle>;

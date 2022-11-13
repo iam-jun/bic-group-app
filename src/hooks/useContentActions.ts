@@ -1,0 +1,57 @@
+import { useDispatch } from 'react-redux';
+import { ReactionType } from '~/constants/reactions';
+import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
+import { IPayloadReactToPost } from '~/interfaces/IPost';
+import useCommonController from '~/screens/store';
+import modalActions from '~/storeRedux/modal/actions';
+import postActions from '~/storeRedux/post/actions';
+
+const useContentActions = ({ postId, ownerReactions, reactionsCount }) => {
+  const dispatch = useDispatch();
+
+  const commonController = useCommonController((state) => state.actions);
+
+  const onPressMarkSeenPost = () => {
+    dispatch(postActions.putMarkSeenPost({ postId }));
+  };
+
+  const onAddReaction = (reactionId: ReactionType) => {
+    const payload: IPayloadReactToPost = {
+      id: postId,
+      reactionId,
+      ownReaction: ownerReactions,
+      reactionsCount,
+    };
+    commonController.putReactionToPost(payload);
+    onPressMarkSeenPost();
+  };
+
+  const onRemoveReaction = (reactionId: ReactionType) => {
+    const payload: IPayloadReactToPost = {
+      id: postId,
+      reactionId,
+      ownReaction: ownerReactions,
+      reactionsCount,
+    };
+    commonController.deleteReactToPost(payload);
+  };
+
+  const onLongPressReaction = (reactionType: ReactionType) => {
+    const payload: IPayloadReactionDetailBottomSheet = {
+      isOpen: true,
+      reactionsCount,
+      initReaction: reactionType,
+      getDataParam: { target: 'POST', targetId: postId },
+    };
+    dispatch(modalActions.showReactionDetailBottomSheet(payload));
+  };
+
+  return {
+    onAddReaction,
+    onRemoveReaction,
+    onLongPressReaction,
+    onPressMarkSeenPost,
+  };
+};
+
+export default useContentActions;

@@ -1,6 +1,6 @@
 import { isArray } from 'lodash';
 import { ICommentData, IPayloadAddToAllPost, IPost } from '~/interfaces/IPost';
-import { sortComments } from '~/screens/post/helper/postUtils';
+import { sortComments } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
 import IPostsState from '../Interface';
 

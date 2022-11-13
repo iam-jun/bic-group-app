@@ -5,13 +5,13 @@ import usePostsStore from '~/store/entities/posts';
 const onUpdateReactionOfPostById = (_set, _get) => (
   postId: string,
   ownReaction: IOwnReaction,
-  reactionCounts: IReactionCounts,
+  reactionsCount: IReactionCounts,
 ) => {
   try {
     const post = usePostsStore.getState()?.posts?.[postId] || {};
     if (post) {
       const newPost = cloneDeep(post);
-      newPost.reactionsCount = reactionCounts;
+      newPost.reactionsCount = reactionsCount;
       newPost.ownerReactions = ownReaction;
       usePostsStore.getState().actions.addToPosts({ data: newPost } as IPayloadAddToAllPost);
     }

@@ -19,7 +19,7 @@ import { IFilePicked } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 
-import postActions from '../../../../storeRedux/post/actions';
+import postActions from '~/storeRedux/post/actions';
 import { CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT } from '../constanst';
 import { calculateInputHeight, isAndroidAnimated } from '../helper';
 import ToastAutoSave from './ToastAutoSave';
@@ -31,7 +31,7 @@ import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import PostSelectImage from './PostSelectImage';
-import PostVideoPlayer from '../../components/PostVideoPlayer';
+import PostVideoPlayer from '~/components/posts/PostVideoPlayer';
 import LinkPreview from '~/components/LinkPreview';
 
 interface Props {

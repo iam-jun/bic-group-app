@@ -15,15 +15,15 @@ import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import postActions from '~/storeRedux/post/actions';
 
 import spacing from '~/theme/spacing';
-import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import CreatePostChosenAudiences from '../../../components/posts/CreatePostChosenAudiences';
 import { getTotalFileSize } from '~/storeRedux/post/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import CreatePostBannerImportant from './components/CreatePostBannerImportant';
 import { handleBack } from './handler';
 import useDraftPostStore from '../../Draft/DraftPost/store';
-import useCommentInputStore from '../components/CommentInputView/store';
-import ICommentInputState from '../components/CommentInputView/store/Interface';
+import useCommentInputStore from '../../comments/components/CommentInputView/store';
+import ICommentInputState from '../../comments/components/CommentInputView/store/Interface';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 export interface CreatePostProps {

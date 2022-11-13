@@ -16,7 +16,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
-import ContentView from './components/ContentView';
+import ContentView from './components/CommunityContentView';
 import CommunityJoinCancelButton from './components/CommunityJoinCancelButton';
 import {
   formatChannelLink,

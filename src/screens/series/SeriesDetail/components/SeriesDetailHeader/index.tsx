@@ -8,7 +8,7 @@ import { useBaseHook } from '~/hooks';
 import { dimension, spacing } from '~/theme';
 import Tag from '~/baseComponents/Tag';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import DescriptionSection from '~/screens/series/components/SeriesContent/DescriptionSection';
+import DescriptionSection from '~/components/series/SeriesContent/DescriptionSection';
 import Icon from '~/baseComponents/Icon';
 import { IPost, IPostAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';

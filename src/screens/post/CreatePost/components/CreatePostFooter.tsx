@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import PostToolbar from '~/screens/post/components/PostToolbar';
+import PostToolbar from '~/screens/post/CreatePost/components/PostToolbar';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 
 export interface CreatePostFooterProps {
@@ -16,9 +16,9 @@ export interface CreatePostFooterProps {
   imageDisabled?: boolean;
   videoDisabled?: boolean;
   fileDisabled?: boolean;
+  isSetting?: boolean;
   onPressBack?: () => void;
   onPressSetting: () => void;
-  isSetting?: boolean;
 }
 
 const CreatePostFooter: FC<CreatePostFooterProps> = ({
@@ -27,9 +27,9 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
   imageDisabled,
   videoDisabled,
   fileDisabled,
+  isSetting,
   onPressBack,
   onPressSetting,
-  isSetting,
 }: CreatePostFooterProps) => {
   const showMentionValue = useSharedValue(0);
 

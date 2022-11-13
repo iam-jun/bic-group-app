@@ -1,31 +1,31 @@
-const COMMON = {
+const Common = {
   SUCCESS: 'OK',
   SYSTEM_ISSUE: 0,
 };
 
-const AUTH = {
+const Auth = {
   TOKEN_EXPIRED: 'app.auth_token.expired',
 };
 
-const POST = {
-  commentDeleted: 'app.comment.reply.not_existing.app_error',
-  copiedCommentIsDeleted: 'app.comment.not_existing.app_error',
-  postPrivacy: 'api.forbidden',
-  postDeleted: 'app.post.not_existing.app_error',
-  postCanNotCommentOrReact: 'api.validation_error',
+const Post = {
+  COMMENT_DELETED: 'app.comment.reply.not_existing.app_error',
+  COPIED_COMMENT_IS_DELETED: 'app.comment.not_existing.app_error',
+  POST_PRIVACY: 'api.forbidden',
+  POST_DELETED: 'app.post.not_existing.app_error',
+  POST_CANNOT_COMMENT_OR_REACT: 'api.validation_error',
 };
 
-const GROUP = {
+const Group = {
   SCHEME_NOT_FOUND: 'scheme.not_found',
   REVOKE_ACCOUNT_OWNER: 'community.revoke_account_owner',
   LAST_ADMIN_LEAVE: 'group.member.is_last_admin',
 };
 
-const API_ERROR_CODE = {
-  COMMON,
-  AUTH,
-  POST,
-  GROUP,
+const APIErrorCode = {
+  Common,
+  Auth,
+  Post,
+  Group,
 };
 
-export default API_ERROR_CODE;
+export default APIErrorCode;

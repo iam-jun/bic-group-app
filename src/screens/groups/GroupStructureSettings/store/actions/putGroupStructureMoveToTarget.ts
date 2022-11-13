@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
+import APIErrorCode from '~/constants/apiErrorCode';
 import Store from '~/storeRedux';
 import { IPayloadPutGroupStructureMoveToTarget } from '~/interfaces/IGroup';
 import { withNavigation } from '~/router/helper';
@@ -28,7 +28,7 @@ const putGroupStructureMoveToTarget = (set, get) => async (payload: IPayloadPutG
       moveId,
       targetId);
 
-    if (response?.code === API_ERROR_CODE.COMMON.SUCCESS) {
+    if (response?.code === APIErrorCode.Common.SUCCESS) {
       actions.getGroupStructureCommunityTree({
         communityId,
         showLoading: false,

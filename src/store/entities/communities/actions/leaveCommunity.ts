@@ -6,7 +6,7 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
+import APIErrorCode from '~/constants/apiErrorCode';
 import useMenuController from '~/screens/Menu/store';
 import Store from '~/storeRedux';
 
@@ -46,14 +46,14 @@ const leaveCommunity = (_set, get) => async (
 
     // TODO: use showError helper once merged with BEIN-8192
 
-    if (err.code === API_ERROR_CODE.GROUP.REVOKE_ACCOUNT_OWNER) {
+    if (err.code === APIErrorCode.Group.REVOKE_ACCOUNT_OWNER) {
       return Store.store.dispatch(modalActions.showHideToastMessage({
         content: 'groups:error:owner_leave_community',
         props: { type: 'error' },
       }));
     }
 
-    if (err.code === API_ERROR_CODE.GROUP.LAST_ADMIN_LEAVE) {
+    if (err.code === APIErrorCode.Group.LAST_ADMIN_LEAVE) {
       return Store.store.dispatch(modalActions.showHideToastMessage({
         content: 'groups:error:last_admin_inner_group_leave',
         props: { type: 'error' },
