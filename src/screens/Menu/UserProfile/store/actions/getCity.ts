@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import IUserProfileState from '../Interface';
+import { IUserProfileState } from '../../store';
 
 const getCity = (set) => async () => {
   try {

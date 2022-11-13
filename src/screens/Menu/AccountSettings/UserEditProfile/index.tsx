@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -27,14 +28,17 @@ import BasicInfo from './components/BasicInfo';
 import Contact from './components/Contact';
 import WorkExperience from './components/WorkExperience';
 import useCommonController from '~/screens/store';
+import useAccountSettingsStore from '../store';
 
 const UserEditProfile = () => {
   const styles = createStyles();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
+  const isFocused = useIsFocused();
 
   const homeActions = useHomeStore((state) => state.actions);
+  const accountSettingsActions = useAccountSettingsStore((state) => state.actions);
 
   const myProfile = useCommonController((state) => state.myProfile);
   const {
@@ -59,10 +63,13 @@ const UserEditProfile = () => {
 
   useEffect(
     () => {
-      dispatch(menuActions.getMyWorkExperience());
       homeActions.refreshHome();
     }, [myProfile],
   );
+
+  useEffect(() => {
+    isFocused && accountSettingsActions.getMyWorkExperience();
+  }, [isFocused]);
 
   const goToEditInfo = () => rootNavigation.navigate(mainStack.editBasicInfo);
 

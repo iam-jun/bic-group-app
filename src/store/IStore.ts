@@ -9,7 +9,8 @@ import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 import ICommunityJoinedGroupTreeState from '~/screens/groups/components/CommunityJoinedGroupTree/store/Interface';
 import IDraftPostState from '~/screens/Draft/DraftPost/store/Interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
-import IUserProfileState from '~/screens/Menu/UserProfile/store/Interface';
+import { IUserProfileState } from '~/screens/Menu/UserProfile/store';
+import { IAccountSettingsState } from '~/screens/Menu/AccountSettings/store';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
 import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
@@ -78,6 +79,7 @@ export interface BicStore {
   Menu: {
     joinedCommunitiesStore: IJoinedCommunitiesState;
     userProfileStore: IUserProfileState;
+    accountSettingsStore: IAccountSettingsState;
   };
   PermissionScheme: {
     permissionSchemeStore: IPermissionSchemeState;
