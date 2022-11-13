@@ -6,30 +6,29 @@ import {
 } from 'react-native';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { useDispatch } from 'react-redux';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IAudienceGroup, IMentionUser, IPayloadReactToPost } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 
-import spacing from '~/theme/spacing';
-import useArticlesStore, { IArticlesState } from '~/screens/articles/ArticleDetail/store';
 import Header from '~/beinComponents/Header';
-import { IRouteParams } from '~/interfaces/IRouter';
+import CommentItem from '~/beinComponents/list/items/CommentItem';
+import { ArticlePlaceholder, ArticleView } from '~/components/articles';
+import CommentInputView from '~/screens/comments/components/CommentInputView';
+import { ReactionType } from '~/constants/reactions';
 import useMounted from '~/hooks/mounted';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
-import CommentInputView from '~/screens/post/components/CommentInputView';
+import { IRouteParams } from '~/interfaces/IRouter';
+import useArticlesStore, { IArticlesState } from './store';
+import useCommonController from '~/screens/store';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
-import CommentItem from '~/beinComponents/list/items/CommentItem';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import usePostsStore from '~/store/entities/posts';
+import postsSelector from '~/store/entities/posts/selectors';
 import postActions from '~/storeRedux/post/actions';
-import { ReactionType } from '~/constants/reactions';
-import useCommonController from '~/screens/store';
-import ArticlePlaceholder from '../components/ArticleWebview/components/ArticlePlaceholder';
-import ArticleView from '../components/ArticleView';
-import { getSectionData } from '../helper';
+import spacing from '~/theme/spacing';
+import usePostDetailContentHandler from '~/screens/post/PostDetail/components/PostDetailContent/hooks/usePostDetailContentHandler';
+import { getSectionData } from '~/helpers/post';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -43,15 +42,13 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
-  const layoutSet = useRef(false);
-  let countRetryScrollToBottom = useRef(0).current;
 
   const [refreshing, setRefreshing] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
 
   const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(id), [id]));
-  const firstCommentId = comments?.length > 0 ? comments[0]?.id : '';
+  const firstCommentId = comments[0]?.id || '';
   const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
   const actions = useArticlesStore((state: IArticlesState) => state.actions);
@@ -60,6 +57,16 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const {
     audience, reactionsCount, setting, ownerReactions,
   } = data;
+
+  const {
+    onLayout,
+    onScrollToIndexFailed,
+    onPressReplySectionHeader,
+    onPressLoadMoreCommentLevel2,
+    onPressReplyCommentItem,
+  } = usePostDetailContentHandler({
+    postId: id, comments, sectionData, focusComment, listRef, commentInputRef,
+  });
 
   const groupIds = useMemo(() => {
     if (isEmpty(audience?.groups)) return '';
@@ -83,44 +90,6 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     dispatch(postActions.putMarkSeenPost({ postId: id }));
   }, [id]);
 
-  const navigateToCommentDetailScreen = (
-    commentData: any,
-    replyItem?: any,
-    commentParent?: any,
-  ) => {
-    rootNavigation.navigate(homeStack.commentDetail, {
-      commentId: commentData?.id || 0,
-      postId: id,
-      replyItem,
-      commentParent,
-    });
-  };
-
-  const onPressReplyCommentItem = useCallback(
-    (commentData, section) => {
-      navigateToCommentDetailScreen(
-        section?.comment || {},
-        commentData,
-        section?.comment,
-      );
-    },
-    [sectionData],
-  );
-
-  const onPressReplySectionHeader = useCallback(
-    (commentData) => {
-      navigateToCommentDetailScreen(commentData, commentData);
-    },
-    [sectionData],
-  );
-
-  const onPressLoadMoreCommentLevel2 = useCallback(
-    (commentData: any) => {
-      navigateToCommentDetailScreen(commentData);
-    },
-    [],
-  );
-
   const onPressMentionAudience = useRef((user: IMentionUser) => {
     if (audience) {
       rootNavigation.navigate(
@@ -129,57 +98,12 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     }
   }).current;
 
-  const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
-    if (sectionData.length > 0) {
-      if (sectionIndex > sectionData.length - 1 || sectionIndex === -1) {
-        sectionIndex = sectionData.length - 1;
-      }
-      if (
-        itemIndex > sectionData?.[sectionIndex]?.data?.length
-        || itemIndex === -1
-      ) {
-        itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
-      }
-
-      try {
-        listRef?.current?.scrollToLocation?.({
-          itemIndex,
-          sectionIndex,
-          animated: true,
-        });
-      } catch (error) {
-        // scroll to the first comment to avoid scroll error
-        listRef?.current?.scrollToLocation?.({
-          itemIndex: 0,
-          sectionIndex: 0,
-          animated: true,
-        });
-      }
-    }
-  };
-
-  const onLayout = useCallback(() => {
-    if (!layoutSet.current) {
-      layoutSet.current = true;
-      if (focusComment && comments?.length > 0) {
-        // limit section index to default comment length = 10 to avoid scroll crash.
-        // it happen when init with large amount of comment,
-        // then scroll, then reload, result only 10 latest comment, scroll to out of index
-        const sectionIndex = Math.min(9, sectionData.length - 1);
-        scrollTo(sectionIndex, -1);
-      }
-      if (focusComment) {
-        commentInputRef.current?.focus?.();
-      }
-    }
-  }, [layoutSet, sectionData.length, focusComment, comments?.length]);
-
   const onAddReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {
       id,
       reactionId,
       ownReaction: ownerReactions,
-      reactionCounts: reactionsCount,
+      reactionsCount,
     };
     commonController.putReactionToPost(payload);
     onPressMarkSeenPost();
@@ -191,7 +115,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         id,
         reactionId,
         ownReaction: ownerReactions,
-        reactionCounts: reactionsCount,
+        reactionsCount,
       };
       commonController.deleteReactToPost(payload);
     }
@@ -199,16 +123,6 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const onInitializeEnd = () => {
     setLoaded(true);
-  };
-
-  const onScrollToIndexFailed = () => {
-    countRetryScrollToBottom += 1;
-    if (countRetryScrollToBottom < 20) {
-      setTimeout(() => {
-        scrollTo(-1, -1);
-        // scrollTo(Math.min(9, sectionData.length - 1), -1);
-      }, 100);
-    }
   };
 
   const renderCommentItem = (data: any) => (

@@ -1,6 +1,6 @@
-import { StyleSheet, View } from 'react-native';
-import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';

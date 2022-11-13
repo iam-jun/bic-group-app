@@ -1,4 +1,3 @@
-import { IUserWorkExperience } from '~/interfaces/IAuth';
 import menuTypes from './types';
 import countryCode from '~/constants/countryCode';
 import { ICountryCodeList, ILocation } from '~/interfaces/common';
@@ -8,16 +7,12 @@ import { searchText } from '~/utils/common';
 export const menuInitState = {
   isLanguageModalOpen: false,
 
-  userWorkExperience: [],
-
-  myWorkExperience: [],
   emailEditError: '',
   phoneNumberEditError: '',
   countryCodeList: {
     data: countryCode,
     searchResult: [],
   },
-  selectedWorkItem: {} as IUserWorkExperience,
 
   locationList: {
     data: locations,
@@ -86,22 +81,6 @@ const menuReducer = (
       return {
         ...state,
         loadingCover: payload,
-      };
-
-    case menuTypes.SET_MY_WORK_EXPERIENCE:
-      return {
-        ...state,
-        myWorkExperience: payload || [],
-      };
-    case menuTypes.SET_SELECTED_WORK_ITEM:
-      return {
-        ...state,
-        selectedWorkItem: payload,
-      };
-    case menuTypes.SET_USER_WORK_EXPERIENCE:
-      return {
-        ...state,
-        userWorkExperience: payload || [],
       };
 
     default:

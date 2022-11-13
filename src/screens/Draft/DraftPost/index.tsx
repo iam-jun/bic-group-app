@@ -11,10 +11,10 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 import images from '~/resources/images';
-import PostViewDraft from '~/screens/post/components/PostViewDraft';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
+import PostDraftView from './components/PostDraftView';
 import useDraftPostStore from './store';
 
 const DraftPost = () => {
@@ -53,7 +53,7 @@ const DraftPost = () => {
     }
   };
 
-  const renderItem = ({ item }: any) => <PostViewDraft data={item} />;
+  const renderItem = ({ item }: any) => <PostDraftView data={item} />;
 
   const renderFooter = () => (
     <View>

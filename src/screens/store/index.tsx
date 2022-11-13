@@ -22,14 +22,14 @@ export interface ICommonController extends IBaseState {
   actions: {
     putReactionToPost?: (payload: IPayloadReactToPost) => void;
     onUpdateReactionOfPostById: (
-        postId: string, ownReaction: IOwnReaction, reactionCounts: IReactionCounts,) => void;
+        postId: string, ownReaction: IOwnReaction, reactionsCount: IReactionCounts,) => void;
     deleteReactToPost: (payload: IPayloadReactToPost) => void;
     putReactionToComment: (payload: IPayloadReactToComment) => void;
     deleteReactToComment: (payload: IPayloadReactToComment) =>void;
     onUpdateReactionOfCommentById: (
         commentId: string,
         ownReaction: IOwnReaction,
-        reactionCounts: IReactionCounts,
+        reactionsCount: IReactionCounts,
         defaultComment?: ICommentData,
     )=>void;
     updateReactionBySocket: (payload: IPayloadUpdateReaction)=>void;

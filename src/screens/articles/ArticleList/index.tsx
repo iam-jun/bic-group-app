@@ -3,11 +3,11 @@ import {
 } from 'react-native';
 import React, { FC, useEffect } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import ArticleItem from '../components/ArticleItem';
 import Header from '~/beinComponents/Header';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useArticleListStore from './store';
 import { IArticleListState } from './store/Interface';
+import ContentItem from '~/components/ContentItem';
 
 const ArticleList: FC = () => {
   const theme: ExtendedTheme = useTheme();
@@ -22,7 +22,7 @@ const ArticleList: FC = () => {
   const onEndReached = () => actions.getArticles();
 
   const renderItem = ({ item: id }) => (
-    <ArticleItem id={id} />
+    <ContentItem id={id} />
   );
 
   return (

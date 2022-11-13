@@ -25,7 +25,7 @@ export interface IShowAlert {
 
 export interface IPayloadReactionDetailBottomSheet {
   isOpen: boolean;
-  reactionCounts: IReactionCounts;
+  reactionsCount: IReactionCounts;
   initReaction: ReactionType;
   getDataParam?: any;
 }

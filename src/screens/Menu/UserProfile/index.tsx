@@ -22,7 +22,6 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
 import { formatDMLink, openUrl } from '~/utils/link';
-import menuActions from '../../../storeRedux/menu/actions';
 import { BasicInfo, Contact, Experiences } from './fragments';
 import CoverHeader from './fragments/CoverHeader';
 import UserHeader from './fragments/UserHeader';
@@ -35,9 +34,7 @@ const UserProfile = (props: any) => {
   const userProfileData = useUserProfileStore((state) => state.data);
   const loading = useUserProfileStore((state) => state.loading);
   const error = useUserProfileStore((state) => state.error);
-  const getUserProfile = useUserProfileStore(
-    (state) => state.actions.getUserProfile,
-  );
+  const userProfileActions = useUserProfileStore((state) => state.actions);
   const reset = useUserProfileStore((state) => state.reset);
 
   const {
@@ -78,8 +75,8 @@ const UserProfile = (props: any) => {
   const homeActions = useHomeStore((state) => state.actions);
 
   useEffect(() => {
-    isFocused && getUserProfile({ userId, params });
-    userId && dispatch(menuActions.getUserWorkExperience(userId));
+    isFocused && userProfileActions.getUserProfile({ userId, params });
+    userId && userProfileActions.getWorkExperience(userId);
 
     const { avatar: _avatar, backgroundImgUrl: _bgIm } = myProfileData;
     if (

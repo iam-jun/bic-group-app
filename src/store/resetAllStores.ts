@@ -11,6 +11,7 @@ import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/stor
 import useReactionDetailStore from '~/components/reaction/ReactionDetailBottomSheet/store';
 import useCommunitiesStore from './entities/communities';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';
+import useAccountSettingsStore from '~/screens/Menu/AccountSettings/store';
 import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
@@ -19,7 +20,7 @@ import useEditArticleCategoryStore from '~/screens/articles/EditArticle/EditCate
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
 import useArticlesStore from '../screens/articles/ArticleDetail/store';
 import useArticleListStore from '~/screens/articles/ArticleList/store';
-import useUserInterestedPostStore from '~/screens/post/components/UserInterestedPost/store';
+import useUserInterestedPostStore from '~/components/posts/UserInterestedPost/store';
 import useDiscoverCommunitiesStore from '~/screens/Discover/components/DiscoverCommunities/store';
 import useTimelineStore from './timeline';
 import useDiscoverCommunitiesSearchStore from '~/screens/Discover/components/SearchDiscoverCommunity/store';
@@ -29,9 +30,9 @@ import useYourGroupsStore from '~/screens/communities/Communities/components/You
 import useSearchJoinedCommunitiesStore from '~/screens/communities/Communities/components/SearchCommunity/store';
 import useNotificationStore from '~/screens/Notification/store';
 import useGiphyStore from './giphy';
-import useSeriesStore from '~/screens/series/store';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import useArticleController from '~/screens/articles/store';
+import useSeriesStore from '~/screens/series/store';
 
 const stores = [
   // entities
@@ -49,6 +50,7 @@ const stores = [
   useCommunityJoinedGroupTreeStore,
   useReactionDetailStore,
   useUserProfileStore,
+  useAccountSettingsStore,
   useGroupStructureStore,
   usePermissionSchemeStore,
   useNotificationStore,

@@ -25,7 +25,7 @@ export const mockSeries = {
         name: 'baobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaobaob',
         icon: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp',
         privacy: 'PUBLIC',
-        communityId: 'b5c7a117-dcb8-47ba-9677-dc33da0320ba',
+        communityId: 'e4b06eda-94d6-42d0-8829-d5380bc8f95b',
         isCommunity: true,
       },
       {
@@ -34,7 +34,7 @@ export const mockSeries = {
         icon: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp',
         privacy: 'PUBLIC',
         communityId: 'b5c7a117-dcb8-47ba-9677-dc33da045bas',
-        isCommunity: true,
+        isCommunity: false,
       },
     ],
   },

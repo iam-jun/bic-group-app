@@ -8,7 +8,7 @@ import { useBaseHook } from '~/hooks';
 import { dimension, spacing } from '~/theme';
 import Tag from '~/baseComponents/Tag';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import DescriptionSection from '~/screens/series/components/SeriesContent/DescriptionSection';
+import DescriptionSection from '~/components/series/SeriesContent/DescriptionSection';
 import Icon from '~/baseComponents/Icon';
 import { IPost, IPostAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -48,7 +48,7 @@ const AudiencesSection: FC<AudiencesSectionProps> = ({ audience }) => {
 
   const renderItem = ({ item }) => (
     <Tag
-      testID="audience-tag"
+      testID="series_detail_header.audience_tag"
       style={styles.tagContainer}
       type="secondary"
       size="small"
@@ -57,7 +57,7 @@ const AudiencesSection: FC<AudiencesSectionProps> = ({ audience }) => {
     />
   );
 
-  const keyExtractor = (item) => `audiences-${item.id}`;
+  const keyExtractor = (item) => `audiences_${item.id}`;
 
   return (
     <View>

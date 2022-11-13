@@ -97,7 +97,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                 ]
               }
             >
-              Date Post
+              Date posted
             </Text>
           </View>
           <View
@@ -481,7 +481,7 @@ exports[`SearchResult component should render list search result 1`] = `
                 ]
               }
             >
-              Date Post
+              Date posted
             </Text>
           </View>
           <View
@@ -1629,7 +1629,7 @@ exports[`SearchResult component should render loading search result 1`] = `
                 ]
               }
             >
-              Date Post
+              Date posted
             </Text>
           </View>
           <View

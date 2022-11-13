@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 
 import { useBaseHook } from '~/hooks';
 import { ICommentData } from '~/interfaces/IPost';
-import CommentView from '~/screens/post/components/CommentView';
-import LoadMoreComment from '~/screens/post/components/LoadMoreComment';
+import CommentView from '~/screens/comments/components/CommentView';
+import LoadMoreComment from '~/components/LoadMoreComment';
 import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 

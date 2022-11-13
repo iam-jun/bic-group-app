@@ -7,7 +7,7 @@ const putReactionToPost = (_set, get) => async (
   payload: IPayloadReactToPost,
 ) => {
   const {
-    id, reactionId, ownReaction, reactionCounts,
+    id, reactionId, ownReaction, reactionsCount,
   } = payload;
   const { actions } = get();
   try {
@@ -90,7 +90,7 @@ const putReactionToPost = (_set, get) => async (
   } catch (e) {
     // disable rollback in case error limit 21 reaction
     actions.onUpdateReactionOfPostById(
-      id, ownReaction, reactionCounts,
+      id, ownReaction, reactionsCount,
     );
     showError(e);
   }

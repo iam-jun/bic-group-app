@@ -1,11 +1,13 @@
 import groupApi from '~/api/GroupApi';
 import { createStore, resetStore } from '~/store/utils';
 import IMenuController from '~/screens/Menu/store/Interface';
+import { IUserWorkExperience } from '~/interfaces/IAuth';
 import editMyProfile from './actions/editMyProfile';
 
 const initState = {
   data: undefined,
   loading: true,
+  selectedWorkItem: {},
 };
 
 const menuController = (set) => ({
@@ -33,6 +35,12 @@ const menuController = (set) => ({
     },
 
     editMyProfile: editMyProfile(set),
+
+    setSelectedWorkItem: (payload: IUserWorkExperience) => {
+      set((state: IMenuController) => {
+        state.selectedWorkItem = payload;
+      }, 'setSelectedWorkItem');
+    },
   },
 
   reset: () => resetStore(initState, set),

@@ -10,14 +10,14 @@ import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import { IAudienceGroup } from '~/interfaces/IPost';
-import AlertDeleteAudiencesConfirmContent from '~/screens/post/components/AlertDeleteAudiencesConfirmContent';
+import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import modalActions from '~/storeRedux/modal/actions';
-import DeletedItem from '../components/DeletedItem';
-import { getSeriesMenu } from '../helper';
-import useSeriesStore, { ISeriesState } from '../store';
+import DeletedItem from '../../../components/series/DeletedItem';
+import { getSeriesMenu } from '../../../helpers/series';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
+import useSeriesStore, { ISeriesState } from '../store';
 
 const SeriesDetail = ({ route }: any) => {
   const { params } = route || {};

@@ -9,14 +9,14 @@ import useCommentsStore from '~/store/entities/comments';
 const onUpdateReactionOfCommentById = (_set, _get) => (
   commentId: string,
   ownReaction: IOwnReaction,
-  reactionCounts: IReactionCounts,
+  reactionsCount: IReactionCounts,
   defaultComment?: ICommentData,
 ) => {
   try {
     const allComments = useCommentsStore.getState().comments || {};
     const comment: ICommentData = allComments?.[commentId] || defaultComment || {};
     const newComment = { ...comment };
-    newComment.reactionsCount = reactionCounts;
+    newComment.reactionsCount = reactionsCount;
     newComment.ownerReactions = ownReaction;
     allComments[commentId] = cloneDeep(newComment);
     useCommentsStore.getState().actions.setComments({ ...allComments });

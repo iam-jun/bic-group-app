@@ -1,95 +1,65 @@
-import React, { FC, useEffect } from 'react';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { MasonryFlashList } from '@shopify/flash-list';
-import { StyleSheet, View } from 'react-native';
-import { Button } from '~/baseComponents';
-import { IGiphy } from '~/interfaces/IGiphy';
-import useGiphyStore, { IGiphyState } from '~/store/giphy';
-import { borderRadius, margin, padding } from '~/theme/spacing';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import { calculateRatio } from './helper';
-import Image from '~/beinComponents/Image';
+import {
+  GiphyMedia,
+  GiphyMediaView,
+  GiphyRendition,
+} from '@giphy/react-native-sdk';
+import React, { useRef, useState } from 'react';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Icon from '~/baseComponents/Icon';
 
-// Number from MasonryFlashList warning log
-// Docs: https://shopify.github.io/flash-list/docs/estimated-item-size/
-const ESTIMATED_ITEM_SIZE = 198;
-
-export interface GiphyViewProps {
-    searchQuery?: string;
-
-    onSelected: (item: IGiphy) => void;
+interface Props {
+  style?: StyleProp<ViewStyle>;
+  giphy: GiphyMedia;
 }
 
-const GiphyView: FC<GiphyViewProps> = ({
-  searchQuery,
-  onSelected,
-}) => {
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme);
-  const {
-    data, loading, searchResults, actions,
-  }: IGiphyState = useGiphyStore();
+const GiphyView = ({ style, giphy }: Props) => {
+  const mediaRef = useRef<GiphyMediaView | null>(null);
+  const styles = createStyle();
 
-  useEffect(() => {
-    actions.getTrending();
-  }, []);
+  const [playing, setPlaying] = useState(false);
 
-  useEffect(() => {
-    if (searchQuery) {
-      actions.getSearch(searchQuery);
-    } else actions.clearSearch();
-  }, [searchQuery]);
+  const onGifPress = () => {
+    if (playing) mediaRef.current?.pause();
+    else mediaRef.current?.resume();
 
-  const onEndReached = () => {
-    actions.getSearch(searchQuery);
+    setPlaying(!playing);
   };
-
-  const renderItem = ({ item }: {item: IGiphy}) => {
-    const ratio = calculateRatio(item?.width, item?.height);
-
-    return (
-      <Button onPress={() => onSelected?.(item)}>
-        <Image
-          source={{ uri: item.url }}
-          style={[styles.image, { aspectRatio: ratio || 1 }]}
-        />
-      </Button>
-    );
-  };
-
-  const giphyData = searchQuery ? searchResults : data;
-  const showLoading = loading && giphyData.length === 0;
 
   return (
-    <View style={styles.container}>
-      {showLoading && <LoadingIndicator />}
-      <MasonryFlashList
-        data={giphyData}
-        numColumns={2}
-        estimatedItemSize={ESTIMATED_ITEM_SIZE}
-        showsVerticalScrollIndicator={false}
-        renderItem={renderItem}
-        keyExtractor={(item): string => item.id}
-        onEndReachedThreshold={0.5}
-        onEndReached={onEndReached}
+    <View style={[styles.container, style]}>
+      <GiphyMediaView
+        ref={mediaRef}
+        media={giphy}
+        style={styles.giphy}
+        autoPlay={false}
+        renditionType={GiphyRendition.DownsizedMedium}
       />
+      <ButtonWrapper style={styles.iconPlayGif} onPress={onGifPress}>
+        <Icon icon="iconPlayGif" size={playing ? 0 : 56} />
+      </ButtonWrapper>
     </View>
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingLeft: padding.tiny,
-    },
-    image: {
-      flex: 1,
-      backgroundColor: colors.neutral5,
-      marginBottom: margin.tiny,
-      borderRadius: borderRadius.small,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  giphy: {
+    width: '100%',
+    aspectRatio: 1,
+  },
+  iconPlayGif: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
 export default GiphyView;

@@ -18,7 +18,7 @@ import postActions from '~/storeRedux/post/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import SelectingAudiences from '~/screens/post/components/SelectingAudiences';
+import SelectingAudiences from '~/components/posts/SelectingAudiences';
 
 import { IGroup } from '~/interfaces/IGroup';
 import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';

@@ -1,5 +1,4 @@
-import ArticleDetail from '~/screens/articles/ArticleDetail';
-import EditArticle from '~/screens/articles/EditArticle';
+import { ArticleDetail, EditArticle } from '~/screens/articles';
 import EditAudience from '~/screens/articles/EditArticle/EditAudience';
 import EditCategory from '~/screens/articles/EditArticle/EditCategory';
 import EditContent from '~/screens/articles/EditArticle/EditContent';

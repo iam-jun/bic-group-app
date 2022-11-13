@@ -4,7 +4,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
-import PostItem from '~/beinComponents/list/items/PostItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
@@ -17,6 +16,7 @@ import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useMounted from '~/hooks/mounted';
 import { ICommunity } from '~/interfaces/ICommunity';
+import ContentItem from '~/components/ContentItem';
 
 interface GroupContentProps {
   community: ICommunity;
@@ -56,8 +56,8 @@ const GroupContent = ({
   };
 
   const renderItem = ({ item }: any) => (
-    <PostItem
-      postId={item}
+    <ContentItem
+      id={item}
       hasReactPermission={isMember}
       testID="group_content.post.item"
     />

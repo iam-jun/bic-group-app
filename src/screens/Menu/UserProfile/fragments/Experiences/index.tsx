@@ -2,10 +2,7 @@ import { isEmpty } from 'lodash';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { useKeySelector } from '~/hooks/selector';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
-import menuKeySelector from '../../../../../storeRedux/menu/keySelector';
 import InfoSection from '../../components/InfoSection';
 import ItemExperience from '../../components/ItemExperience';
 import Divider from '~/beinComponents/Divider';
@@ -13,23 +10,25 @@ import { spacing } from '~/theme';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import AddButton from '../../components/AddButton';
-import menuActions from '~/storeRedux/menu/actions';
+import useMenuController from '~/screens/Menu/store';
+import useUserProfileStore from '../../store';
 
 type ExperiencesProps = {
   isCurrentUser: boolean;
 };
 
 const Experiences: FC<ExperiencesProps> = ({ isCurrentUser }) => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const { rootNavigation } = useRootNavigation();
-  const userWorkExperience = useKeySelector(menuKeySelector.userWorkExperience);
+
+  const menuControllerActions = useMenuController((state) => state.actions);
+  const userWorkExperience = useUserProfileStore((state) => state.userWorkExperience);
 
   if (!isCurrentUser && isEmpty(userWorkExperience)) return null;
 
   const addExperience = () => {
-    dispatch(menuActions.setSelectedWorkItem(null));
+    menuControllerActions.setSelectedWorkItem(null);
     rootNavigation.navigate(mainStack.addWork);
   };
 

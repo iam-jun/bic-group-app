@@ -1,14 +1,14 @@
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 
-import spacing from '~/theme/spacing';
 import { IconType } from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 export interface BottomListItemProps {
   disabled?: boolean;

@@ -9,7 +9,6 @@ import {
   Platform,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import { isEmpty } from 'lodash';
 import moment from 'moment';
@@ -19,9 +18,6 @@ import Text from '~/beinComponents/Text';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import menuActions from '../../../../storeRedux/menu/actions';
-import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { ILocation } from '~/interfaces/common';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
@@ -32,19 +28,21 @@ import TitleComponent from '../fragments/TitleComponent';
 import Checkbox from '~/baseComponents/Checkbox';
 import { fontFamilies } from '~/theme/fonts';
 import dimension from '~/theme/dimension';
+import useMenuController from '~/screens/Menu/store';
+import useUserProfileStore from '../../UserProfile/store';
 
 const AddWork = () => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
   const styles = createStyles(theme);
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
 
   const scrollRef = useRef<any>(null);
 
-  const selectedWorkItem = useKeySelector(menuKeySelector.selectedWorkItem);
+  const selectedWorkItem = useMenuController((state) => state.selectedWorkItem);
+  const userProfileActions = useUserProfileStore((state) => state.actions);
 
   const {
     id,
@@ -143,12 +141,8 @@ const AddWork = () => {
       endDate: endDateValue,
     };
     selectedWorkItem
-      ? dispatch(menuActions.editWorkExperience(id, data, navigateBack))
-      : dispatch(
-        menuActions.addWorkExperience(data, () => {
-          navigateBack();
-        }),
-      );
+      ? userProfileActions.editWorkExperience(id, data, navigateBack)
+      : userProfileActions.addWorkExperience(data, navigateBack);
   };
 
   const onChangeCompany = (text: string) => {

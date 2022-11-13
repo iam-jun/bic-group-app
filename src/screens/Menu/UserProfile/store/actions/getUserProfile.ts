@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import { IGetUserProfile } from '~/interfaces/IAuth';
 import { mapProfile } from '~/storeRedux/menu/helper';
-import IUserProfileState from '../Interface';
+import { IUserProfileState } from '../../store';
 
 const getUserProfile
   = (set) => async ({ userId, params, silentLoading }: IGetUserProfile) => {

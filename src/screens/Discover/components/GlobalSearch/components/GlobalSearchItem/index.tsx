@@ -7,7 +7,7 @@ import { communityPrivacyListDetail } from '~/constants/privacyTypes';
 import { margin, padding } from '~/theme/spacing';
 import { Avatar, Button } from '~/baseComponents';
 import ButtonCommunityGroupCard from '~/components/CommunityGroupCard/ButtonCommunityGroupCard';
-import { isGroup } from '~/screens/groups/helper';
+import { isGroup } from '~/helpers/groups';
 
 interface GlobalSearchItemProps {
   testID: string,

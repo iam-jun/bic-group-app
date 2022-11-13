@@ -1,23 +1,23 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { Avatar, Button } from '~/baseComponents';
+import Icon from '~/baseComponents/Icon';
+import Tag from '~/baseComponents/Tag';
+import Text from '~/beinComponents/Text';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
-import { spacing } from '~/theme';
-import Text from '~/beinComponents/Text';
-import Icon from '~/baseComponents/Icon';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
+import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { Avatar, Button } from '~/baseComponents';
-import { formatLargeNumber } from '~/utils/formatData';
-import { useBaseHook } from '~/hooks';
-import { isGroup } from '~/screens/groups/helper';
-import modalActions from '~/storeRedux/modal/actions';
+import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
-import Tag from '~/baseComponents/Tag';
+import modalActions from '~/storeRedux/modal/actions';
+import { spacing } from '~/theme';
+import { formatLargeNumber } from '~/utils/formatData';
+import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 
 type CommunityGroupCardProps = {
   item: any;

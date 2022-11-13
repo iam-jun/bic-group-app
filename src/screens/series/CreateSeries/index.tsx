@@ -17,7 +17,7 @@ import { CreationSeriesProps } from '~/interfaces/ISeries';
 import useSeriesStore, { ISeriesState } from '../store';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import modalActions from '~/storeRedux/modal/actions';
-import AlertDeleteAudiencesConfirmContent from '~/screens/post/components/AlertDeleteAudiencesConfirmContent';
+import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
 
 const CreateSeries = ({ route }: CreationSeriesProps) => {
   const { seriesId, isFromDetail } = route?.params || {};
