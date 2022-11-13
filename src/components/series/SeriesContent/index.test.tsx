@@ -6,13 +6,13 @@ import { mockSeries, mockSeriesWithSummary } from '../../../test/mock_data/serie
 describe('SeriesContent component', () => {
   it('given description = null, should render without description view', () => {
     const wrapper = renderWithRedux(<SeriesContent series={mockSeries} />);
-    const descriptionView = wrapper.queryByTestId('description-series');
+    const descriptionView = wrapper.queryByTestId('series_detail_header.description');
     expect(descriptionView).toBeNull();
   });
 
   it('given description !== null, should render description view', () => {
     const wrapper = renderWithRedux(<SeriesContent series={mockSeriesWithSummary} />);
-    const descriptionView = wrapper.queryByTestId('description-series');
+    const descriptionView = wrapper.queryByTestId('series_detail_header.description');
     expect(descriptionView).toBeDefined();
   });
 

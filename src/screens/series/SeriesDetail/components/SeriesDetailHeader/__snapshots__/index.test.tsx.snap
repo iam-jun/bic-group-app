@@ -147,7 +147,7 @@ exports[`SeriesDetailHeader component render with description view 1`] = `
                   "paddingRight": 8,
                 }
               }
-              testID="audience-tag"
+              testID="series_detail_header.audience_tag"
             >
               <Text
                 style={
@@ -209,7 +209,7 @@ exports[`SeriesDetailHeader component render with description view 1`] = `
           },
         ]
       }
-      testID="description-series"
+      testID="series_detail_header.description"
     >
       <Text
         style={
@@ -319,7 +319,7 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
         data={
           Array [
             Object {
-              "communityId": "b5c7a117-dcb8-47ba-9677-dc33da0320ba",
+              "communityId": "e4b06eda-94d6-42d0-8829-d5380bc8f95b",
               "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
               "id": "eba85417-ec3e-49b4-89b4-c5393baecaaf",
               "isCommunity": true,
@@ -330,7 +330,7 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
               "communityId": "b5c7a117-dcb8-47ba-9677-dc33da045bas",
               "icon": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/4224d221-3998-4963-892a-346d7522185f.webp",
               "id": "eba85417-ec3e-49b4-89b4-c5393baecddf",
-              "isCommunity": true,
+              "isCommunity": false,
               "name": "Test",
               "privacy": "PUBLIC",
             },
@@ -392,7 +392,7 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
                   "paddingRight": 8,
                 }
               }
-              testID="audience-tag"
+              testID="series_detail_header.audience_tag"
             >
               <Text
                 style={
@@ -452,7 +452,7 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
                   "paddingRight": 8,
                 }
               }
-              testID="audience-tag"
+              testID="series_detail_header.audience_tag"
             >
               <Text
                 style={

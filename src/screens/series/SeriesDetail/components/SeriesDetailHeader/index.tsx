@@ -48,7 +48,7 @@ const AudiencesSection: FC<AudiencesSectionProps> = ({ audience }) => {
 
   const renderItem = ({ item }) => (
     <Tag
-      testID="audience-tag"
+      testID="series_detail_header.audience_tag"
       style={styles.tagContainer}
       type="secondary"
       size="small"
@@ -57,7 +57,7 @@ const AudiencesSection: FC<AudiencesSectionProps> = ({ audience }) => {
     />
   );
 
-  const keyExtractor = (item) => `audiences-${item.id}`;
+  const keyExtractor = (item) => `audiences_${item.id}`;
 
   return (
     <View>

@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as React from 'react';
+import streamApi from '~/api/StreamApi';
 import usePostsStore from '~/store/entities/posts';
 import modalActions from '~/storeRedux/modal/actions';
 import { mockSeries } from '~/test/mock_data/series';
@@ -7,6 +8,7 @@ import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import CreateSeries from '.';
 import * as navigationHook from '~/hooks/navigation';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
+import useSeriesStore from '../store';
 
 describe('CreateSeries component', () => {
   const seriesId = '5264f1b3-c8b8-428a-9fb8-7f075f03d0c8';
@@ -17,10 +19,6 @@ describe('CreateSeries component', () => {
   beforeEach(() => {
     Keyboard = require('react-native').Keyboard;
     Platform = require('react-native').Platform;
-    jest.clearAllMocks();
-  });
-
-  afterEach(() => {
     jest.clearAllMocks();
   });
 
@@ -134,5 +132,121 @@ describe('CreateSeries component', () => {
     const buttonBack = wrapper.getByTestId('header.back');
     fireEvent.press(buttonBack);
     expect(goBack).toBeCalled();
+  });
+
+  it('should call api edit series success when save series edited', () => {
+    Keyboard.dismiss = jest.fn();
+    Platform.OS = 'ios';
+
+    const response = {
+      code: 200,
+      data: {
+        ...mockSeries,
+        title: 'titleComponent',
+        summary: 'summaryComponent',
+      },
+      meta: {},
+    };
+
+    const spyApiEditSeries = jest.spyOn(streamApi, 'editSeries').mockImplementation(
+      () => Promise.resolve(response) as any,
+    );
+
+    jest.useFakeTimers();
+
+    const { result: postStoreResult } = renderHook(() => usePostsStore());
+
+    act(() => {
+      postStoreResult.current.actions.addToPosts({ data: mockSeries });
+    });
+
+    const wrapper = renderWithRedux(<CreateSeries route={{ params: { seriesId } }} />);
+
+    const titleComponent = wrapper.getByTestId('text_input.input');
+    expect(titleComponent).toBeDefined();
+    act(() => {
+      fireEvent.changeText(titleComponent, 'titleComponent');
+    });
+
+    const summaryComponent = wrapper.getByTestId('create_series.description');
+    expect(summaryComponent).toBeDefined();
+    act(() => {
+      fireEvent.changeText(summaryComponent, 'summaryComponent');
+    });
+
+    const buttonSave = wrapper.getByTestId('create_series.btn_publish');
+    act(() => {
+      fireEvent.press(buttonSave);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(Keyboard.dismiss).toBeCalled();
+    expect(spyApiEditSeries).toBeCalled();
+  });
+
+  it('should call api edit series failed and show alert when save audience can not remove', () => {
+    Keyboard.dismiss = jest.fn();
+    Platform.OS = 'android';
+
+    const error = {
+      code: 'api.validation_error',
+      data: 'undefined',
+      meta: {
+        errors: {
+          groups_denied: [
+            'eba85417-ec3e-49b4-89b4-c5393baecaaf',
+          ],
+        },
+        message: "You don't have delete own post permission at group Community AB",
+        stack: null,
+      },
+    };
+
+    const spyApiEditSeries = jest.spyOn(streamApi, 'editSeries').mockImplementation(
+      () => Promise.reject(error) as any,
+    );
+
+    const spyModalActions = jest.spyOn(modalActions, 'showAlert');
+
+    jest.useFakeTimers();
+
+    const { result: postStoreResult } = renderHook(() => usePostsStore());
+    const { result: seriesStoreResult } = renderHook(() => useSeriesStore());
+
+    act(() => {
+      postStoreResult.current.actions.addToPosts({ data: mockSeries });
+    });
+
+    const wrapper = renderWithRedux(<CreateSeries route={{ params: { seriesId } }} />);
+
+    const groups = {
+      groupIds: ['eba85417-ec3e-49b4-89b4-c5393baecddf'],
+      userIds: [],
+    };
+    act(() => {
+      seriesStoreResult.current.actions.setAudience(groups);
+    });
+
+    const buttonSave = wrapper.getByTestId('create_series.btn_publish');
+    act(() => {
+      fireEvent.press(buttonSave);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(Keyboard.dismiss).toBeCalled();
+    expect(spyApiEditSeries).toBeCalled();
+    expect(spyModalActions).toBeCalled();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
   });
 });

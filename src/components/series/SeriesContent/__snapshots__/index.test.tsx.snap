@@ -211,7 +211,7 @@ exports[`SeriesContent component render with description view 1`] = `
         undefined,
       ]
     }
-    testID="description-series"
+    testID="series_detail_header.description"
   >
     <Text
       style={
