@@ -144,6 +144,10 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const renderSectionHeader = (sectionData: any) => {
     const data = sectionData?.section;
 
+    if (sectionData?.section?.type === 'empty') {
+      return <View />;
+    }
+
     return (
       <CommentItem
         postId={id}
