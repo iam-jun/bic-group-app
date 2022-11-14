@@ -5,5 +5,6 @@ export default {
   CANNOT_DECLINE_ALL: 'joining_request.decline_all_failed',
   NOT_FOUND: 'joining_request.not_found',
   APPROVED: 'joining_request.approved',
+  DECLINED: 'joining_request.declined',
   CANCELED: 'joining_request.canceled',
 };
