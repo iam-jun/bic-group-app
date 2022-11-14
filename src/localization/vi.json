@@ -429,7 +429,7 @@
       "thirty_days_ago": "30 ngày trước",
       "three_months_ago": "3 tháng trước",
       "from_to": "Từ ngày - Đến ngày",
-      "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nỗi dung chính xác"
+      "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nội dung chính xác"
     },
     "notice_post_video_uploading": {
       "title": "Bài viết có video đang xử lý (count)",
@@ -1073,7 +1073,7 @@
     "flags": "Cờ"
   },
   "series": {
-    "title_create_series":"Tạo Loạt Bài Viết",
+    "title_create_series": "Tạo Loạt Bài Viết",
     "title_name": "Tên",
     "text_input_name": "Nhập tên",
     "text_update_cover": "Đổi ảnh bìa",

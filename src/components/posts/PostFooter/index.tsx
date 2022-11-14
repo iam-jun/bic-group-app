@@ -9,6 +9,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import { formatLargeNumber } from '~/utils/formatData';
 import { useBaseHook } from '~/hooks';
 import { ContentFooterLite, ContentFooterLiteProps } from '~/components/ContentView';
+import { getTotalReactions } from '~/helpers/post';
 
 export interface PostFooterProps extends Partial<ContentFooterProps>, Partial< Omit<ContentFooterLiteProps, 'reactionsCount'>> {
   postId: string;
@@ -53,7 +54,7 @@ const PostFooter: FC<PostFooterProps> = ({
       <ContentFooterLite
         {...props}
         id={postId}
-        reactionsCount={Number(reactionsCount)}
+        reactionsCount={getTotalReactions(reactionsCount, 'user')}
         commentsCount={commentsCount}
         totalUsersSeen={totalUsersSeen}
       />

@@ -2,14 +2,12 @@ import { isEmpty } from 'lodash';
 import React, { FC, useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Image from '~/beinComponents/Image';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import PostPhotoPreview from '~/components/posts/PostPhotoPreview';
-import { getResourceUrl, uploadTypes } from '~/configs/resourceConfig';
+import { uploadTypes } from '~/configs/resourceConfig';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IMarkdownAudience } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
-
 import CopyableView from '~/beinComponents/CopyableView';
 import Markdown from '~/beinComponents/Markdown';
 import UploadingFile from '~/beinComponents/UploadingFile';
@@ -75,38 +73,23 @@ const PostBody: FC<PostBodyProps> = ({
 
   const renderContent = () => {
     if (isLite) {
-      const imageName = images?.[0]?.name;
-      const imageUrl = images?.[0]?.url;
-      const isNetworkImage = typeof imageName === 'string' && imageName?.startsWith?.('http');
-      const imageSourceFromName = isNetworkImage
-        ? imageName
-        : getResourceUrl('postImage', imageName);
-
-      const imageSource = imageUrl || imageSourceFromName || '';
-
       return (
-        <View testID="post_view_content.lite_container" style={styles.row}>
-          <View style={styles.flex1}>
-            <CollapsibleText
-              testID="post_view_content"
-              content={content}
-              limitLength={400}
-              shortLength={400}
-              useMarkdown
-              useMarkdownIt
-              limitMarkdownTypes
-              mentions={mentions}
-              BottomRightComponent={renderBottomRightComponent()}
-              onPressAudience={onPressMentionAudience}
-              onToggleShowTextContent={onPressMarkSeenPost}
-            />
-          </View>
-          {!!imageSource && (
-            <Image style={styles.imageLite} source={imageSource} />
-          )}
-        </View>
+        <CollapsibleText
+          testID="post_view_content"
+          content={content}
+          limitLength={appConfig.limitPostContentLength}
+          shortLength={appConfig.shortPostContentLength}
+          useMarkdown
+          useMarkdownIt
+          limitMarkdownTypes
+          mentions={mentions}
+          BottomRightComponent={renderBottomRightComponent()}
+          onPressAudience={onPressMentionAudience}
+          onToggleShowTextContent={onPressMarkSeenPost}
+        />
       );
     }
+
     if (isPostDetail) {
       return (
         <CopyableView content={escapeMarkDown(content)}>
@@ -118,6 +101,7 @@ const PostBody: FC<PostBodyProps> = ({
         </CopyableView>
       );
     }
+
     return (
       <CollapsibleText
         testID="post_view_content"
@@ -146,39 +130,35 @@ const PostBody: FC<PostBodyProps> = ({
   return (
     <View>
       <View style={styles.contentContainer}>{renderContent()}</View>
-      {!isLite && (
-        <>
-          <PostPhotoPreview
-            data={images || []}
-            uploadType="postImage"
-            enableGalleryModal
-            onPressMarkSeenPost={onPressMarkSeenPost}
+      <>
+        <PostPhotoPreview
+          data={images || []}
+          uploadType="postImage"
+          enableGalleryModal
+          onPressMarkSeenPost={onPressMarkSeenPost}
+        />
+        {isShowVideoPlayer ? (
+          <PostVideoPlayer
+            data={videos?.[0]}
+            postId={postId}
+            onWatchCheckPoint={onPressMarkSeenPost}
           />
-          {isShowVideoPlayer ? (
-            <PostVideoPlayer
-              data={videos?.[0]}
-              postId={postId}
-              onWatchCheckPoint={onPressMarkSeenPost}
-            />
-          ) : (
-            <UploadingFile
-              uploadType={uploadTypes.postVideo}
-              file={videos?.[0]}
-              disableClose
-            />
-          )}
-
-          {showLinkPreviewer && <LinkPreview data={linkPreview} />}
-
-          <FilesView
-            files={files}
+        ) : (
+          <UploadingFile
+            uploadType={uploadTypes.postVideo}
+            file={videos?.[0]}
             disableClose
-            showDownload
-            onPressDownload={onPressMarkSeenPost}
-            collapsible={!isPostDetail}
           />
-        </>
-      )}
+        )}
+        <FilesView
+          files={files}
+          disableClose
+          showDownload
+          onPressDownload={onPressMarkSeenPost}
+          collapsible={!isPostDetail}
+        />
+        {showLinkPreviewer && <LinkPreview data={linkPreview} />}
+      </>
     </View>
   );
 };
