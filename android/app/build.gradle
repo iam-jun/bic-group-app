@@ -143,7 +143,7 @@ android {
             resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
             resolutionStrategy { force 'androidx.appcompat:appcompat:1.3.1' }
         }
-        applicationId "com.evol.bein.group"
+        applicationId "com.beincom.group"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode project.hasProperty('versionCode') ? project.property('versionCode') as int : 1
@@ -153,7 +153,7 @@ android {
         missingDimensionStrategy 'react-native-camera', 'general'
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        resValue "string", "build_config_package", "com.evol.bein.group"
+        resValue "string", "build_config_package", "com.beincom.group"
 
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
@@ -236,24 +236,23 @@ android {
         }
     }
     signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
+        dev {
+            storeFile file('development.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-    }
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
+        stg {
+            storeFile file('staging.keystore')
+            storePassword 'Ts3N3G6nEPs$'
+            keyAlias 'bic-staging'
+            keyPassword 'Ts3N3G6nEPs$'
         }
-        release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
+        pro {
+            storeFile file('production.keystore')
+            storePassword 'DtNX#a7gLLB4'
+            keyAlias 'bic'
+            keyPassword 'DtNX#a7gLLB4'
         }
     }
     flavorDimensions "version"
@@ -264,9 +263,9 @@ android {
             versionNameSuffix "-dev"
             resValue "string", "app_name", "BIC Group Development"
             resValue "string", "facebook_app_id", "362084341568821"
-            resValue "string", "provider_authorities", "com.evol.bein.group.development.SharedProvider"
-            resValue "string", "provider_read_permission", "com.evol.bein.group.development.READ_DATABASE"
-            resValue "string", "provider_write_permission", "com.evol.bein.group.development.WRITE_DATABASE"
+            resValue "string", "provider_authorities", "com.beincom.group.development.SharedProvider"
+            resValue "string", "provider_read_permission", "com.beincom.group.development.READ_DATABASE"
+            resValue "string", "provider_write_permission", "com.beincom.group.development.WRITE_DATABASE"
         }
         staging {
             dimension "version"
@@ -274,17 +273,33 @@ android {
             versionNameSuffix "-stag"
             resValue "string", "app_name", "BIC Group Staging"
             resValue "string", "facebook_app_id", "362084341568821"
-            resValue "string", "provider_authorities", "com.evol.bein.group.staging.SharedProvider"
-            resValue "string", "provider_read_permission", "com.evol.bein.group.staging.READ_DATABASE"
-            resValue "string", "provider_write_permission", "com.evol.bein.group.staging.WRITE_DATABASE"
+            resValue "string", "provider_authorities", "com.beincom.group.staging.SharedProvider"
+            resValue "string", "provider_read_permission", "com.beincom.group.staging.READ_DATABASE"
+            resValue "string", "provider_write_permission", "com.beincom.group.staging.WRITE_DATABASE"
         }
         production {
             dimension "version"
             resValue "string", "app_name", "BIC Group"
             resValue "string", "facebook_app_id", "362084341568821"
-            resValue "string", "provider_authorities", "com.evol.bein.group.SharedProvider"
-            resValue "string", "provider_read_permission", "com.evol.bein.group.READ_DATABASE"
-            resValue "string", "provider_write_permission", "com.evol.bein.group.WRITE_DATABASE"
+            resValue "string", "provider_authorities", "com.beincom.group.SharedProvider"
+            resValue "string", "provider_read_permission", "com.beincom.group.READ_DATABASE"
+            resValue "string", "provider_write_permission", "com.beincom.group.WRITE_DATABASE"
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig null
+            productFlavors.development.signingConfig signingConfigs.dev
+            productFlavors.staging.signingConfig signingConfigs.stg
+            productFlavors.production.signingConfig signingConfigs.pro
+        }
+        release {
+            productFlavors.development.signingConfig signingConfigs.dev
+            productFlavors.staging.signingConfig signingConfigs.stg
+            productFlavors.production.signingConfig signingConfigs.pro
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
         }
     }
 

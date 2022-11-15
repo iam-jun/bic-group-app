@@ -5,12 +5,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '12.0'
 install! 'cocoapods', :deterministic_uuids => false
 
-project 'bein_group',
+project 'bic_group',
   'DebugStaging' => :debug,
   'ReleaseStaging' => :release,
   'ReleaseDevelopment' => :release
 
-target 'bein_group' do
+target 'bic_group' do
   use_expo_modules!
   post_integrate do |installer|
     begin
@@ -19,7 +19,7 @@ target 'bein_group' do
       Pod::UI.warn e
     end
   end
-  project 'bein_group'
+  project 'bic_group'
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -36,7 +36,7 @@ target 'bein_group' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
 
-  target 'bein_groupTests' do
+  target 'bic_groupTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -54,5 +54,13 @@ target 'bein_group' do
   post_install do |installer|
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    installer.pods_project.targets.each do |target|
+      # Fix require team for Pods library on XCode 14
+      if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+        target.build_configurations.each do |config|
+          config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        end
+      end
+    end
   end
 end
