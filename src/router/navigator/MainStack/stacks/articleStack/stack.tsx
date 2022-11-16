@@ -7,6 +7,7 @@ const articleStack = {
   editArticleCover: 'edit-article-cover',
   editArticleAudience: 'edit-article-audience',
   articleDetail: 'article-detail',
+  editArticleSeries: 'edit-article-series',
 };
 
 export default articleStack;

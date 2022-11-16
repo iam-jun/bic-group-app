@@ -47,6 +47,7 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
     // const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience)
     // && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
     const isCoverMediaUpdated = (article.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
+    const isSeriesUpdated = !isEqual(article?.series, data.series);
     // console.log('\x1b[35m🐣️ useEditArticle isHasChange ', JSON.stringify({
     //   isTitleUpdated,
     //   isContentUpdated,
@@ -61,22 +62,23 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
       || isSummaryUpdated
       || isCategoriesUpdated
       // || isAudienceUpdated
-      || isCoverMediaUpdated);
+      || isCoverMediaUpdated
+      || isSeriesUpdated);
   };
 
   const initEditStoreData = () => {
     const {
-      title, content, audience: audienceObject, mentions, summary, categories, coverMedia,
+      title, content, audience: audienceObject, mentions, summary, categories, coverMedia, series,
     } = article;
     const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(audienceObject);
     const data: IEditArticleData = {
-      title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia,
+      title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia, series,
     };
     actions.setData(data);
   };
 
   useEffect(() => {
-    if (!article) articleActions.getArticleDetail(articleId);
+    articleActions.getArticleDetail(articleId);
   }, []);
 
   useEffect(() => {

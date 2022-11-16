@@ -68,12 +68,17 @@ export interface IEditArticleAudience {
   groupIds: string[];
 }
 
+export interface IEditArticleSeries {
+  id?: string;
+  title?: string;
+}
+
 export interface IEditArticleData {
   title?: string;
   content?: string;
   summary?: string;
   categories?: ICategory[];
-  series?: string[];
+  series?: IEditArticleSeries[];
   hashtags?: string[];
   audience?: IEditArticleAudience;
   coverMedia?: IArticleCover;

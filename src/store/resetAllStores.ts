@@ -33,6 +33,7 @@ import useGiphyStore from './giphy';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import useArticleController from '~/screens/articles/store';
 import useSeriesStore from '~/screens/series/store';
+import useEditArticleSeriesStore from '~/screens/articles/EditArticle/EditSeries/store';
 
 const stores = [
   // entities
@@ -76,6 +77,7 @@ const stores = [
   useSearchJoinedCommunitiesStore,
   useGiphyStore,
   useSeriesStore,
+  useEditArticleSeriesStore,
 ];
 
 export const resetAllStores = () => {

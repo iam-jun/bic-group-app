@@ -19,7 +19,9 @@ const putEditArticle = (set, _get) => async (params: IPayloadPutEditArticle) => 
   }, 'putEditArticle');
   try {
     const categories = data?.categories?.map?.((category) => category?.id);
-    const params = { ...data, categories };
+    const series = data?.series?.map?.((item) => item?.id);
+
+    const params = { ...data, categories, series } as any;
     const response = await streamApi.putEditArticle(articleId, params);
     useArticlesStore.getState().actions.getArticleDetail(articleId);
     set((state: IEditArticleState) => {
