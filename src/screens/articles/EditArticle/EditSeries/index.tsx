@@ -8,7 +8,7 @@ import { SearchInput } from '~/baseComponents/Input';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener } from '~/hooks/navigation';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { EditArticleProps, IEditArticleSeries } from '~/interfaces/IArticle';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
 import spacing from '~/theme/spacing';
@@ -19,13 +19,17 @@ import useEditArticleSeriesStore from './store';
 import useEditArticleStore from '../store';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import appConfig from '~/configs/appConfig';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 const EditArticleSeries: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
 
+  const { rootNavigation } = useRootNavigation();
+
   const serieActions = useEditArticleSeriesStore((state) => state.actions);
   const selectedSeries = useEditArticleStore((state) => state.data.series);
   const editArticleActions = useEditArticleStore((state) => state.actions);
+  const isPublishing = useEditArticleStore((state) => state.isPublishing);
 
   const seriesData = useEditArticleSeriesStore((state) => state.listSeries);
   const groupIds = useEditArticleStore((state) => state.data.audience.groupIds);
@@ -46,10 +50,10 @@ const EditArticleSeries: FC<EditArticleProps> = ({ route }: EditArticleProps) =>
   }, []);
 
   const {
-    handleSave, handleBack, enableButtonSave, loading,
+    handleSave, handleBack, enableButtonSave, loading, enableButtonNext,
   } = useEditArticle({ articleId });
 
-  const disabled = !enableButtonSave || loading;
+  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
 
   useBackPressListener(handleBack);
 
@@ -80,14 +84,22 @@ const EditArticleSeries: FC<EditArticleProps> = ({ route }: EditArticleProps) =>
     onSearch(text);
   };
 
+  const goNextStep = () => {
+    rootNavigation.navigate(articleStack.editArticleContent, { articleId });
+  };
+
+  const goBack = () => {
+    rootNavigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Header
-        title={t('article:title_edit_series')}
+        title={t('article:text_option_edit_series')}
         buttonProps={{ disabled, loading }}
-        buttonText={t('common:btn_save')}
-        onPressButton={handleSave}
-        onPressBack={handleBack}
+        buttonText={t(isPublishing ? 'common:btn_next' : 'common:btn_save')}
+        onPressButton={isPublishing ? goNextStep : handleSave}
+        onPressBack={isPublishing ? goBack : handleBack}
       />
       <SearchInput
         size="large"

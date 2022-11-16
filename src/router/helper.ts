@@ -1,8 +1,10 @@
 import React, { RefObject } from 'react';
 import {
+  CommonActions,
   NavigationContainerRef,
   NavigationState,
   PartialState,
+  RouteProp,
   StackActions,
 } from '@react-navigation/native';
 
@@ -18,6 +20,7 @@ export interface Props {
   canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
+  replaceListScreenByNewScreen: (replaces: string[], newScreen: RouteProp<any>) => void;
   goBack: () => void;
   popToTop: () => void;
   nestedNavigate: (
@@ -64,6 +67,34 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
     }
   };
 
+  const replaceListScreenByNewScreen = (
+    replaces: string[],
+    newScreen: RouteProp<any>,
+  ) => {
+    navigationRef?.current?.dispatch((state) => {
+      const newRoutes = state.routes.filter(
+        (route) => !replaces.includes(route.name),
+      );
+      const indexScreenExisted = newRoutes.findIndex(
+        (route) => route.name === newScreen.name,
+      );
+      if (indexScreenExisted !== -1) {
+        newRoutes[indexScreenExisted] = {
+          ...newRoutes[indexScreenExisted],
+          params: newScreen.params,
+        };
+      } else {
+        newRoutes.push(newScreen);
+      }
+
+      return CommonActions.reset({
+        ...state,
+        routes: newRoutes,
+        index: indexScreenExisted !== -1 ? indexScreenExisted : newRoutes.length - 1,
+      });
+    });
+  };
+
   const goBack = () => {
     navigationRef?.current?.goBack?.();
   };
@@ -94,6 +125,7 @@ export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<a
     canGoBack,
     navigate,
     replace,
+    replaceListScreenByNewScreen,
     goBack,
     popToTop,
     nestedNavigate,

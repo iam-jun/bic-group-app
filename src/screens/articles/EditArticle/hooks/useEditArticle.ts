@@ -22,9 +22,10 @@ const navigation = withNavigation(rootNavigationRef);
 
 export interface IUseEditArticle {
   articleId: string;
+  needToPublish?: boolean;
 }
 
-const useEditArticle = ({ articleId }: IUseEditArticle) => {
+const useEditArticle = ({ articleId, needToPublish }: IUseEditArticle) => {
   const article = usePostsStore(postsSelector.getPost(articleId));
 
   const articleActions = useArticlesStore((state) => state.actions);
@@ -32,6 +33,7 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
 
   const data = useEditArticleStore((state) => state.data) || {};
   const loading = useEditArticleStore((state) => state.loading);
+  const isPublishing = useEditArticleStore((state) => state.isPublishing);
 
   const tempMentions = useMentionInputStore(
     (state: IMentionInputState) => state.tempSelected,
@@ -66,15 +68,25 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
       || isSeriesUpdated);
   };
 
+  const isEnableButtonNext = () => {
+    const isTitleValid = !isEmpty(data.title);
+    const isContentValid = !isEmpty(data.content);
+    const isCategoriesValid = !isEmpty(data.categories);
+    // isAudienceValid self check at src/screens/articles/EditArticle/EditAudience/index.tsx
+
+    return isTitleValid && isContentValid && isCategoriesValid;
+  };
+
   const initEditStoreData = () => {
     const {
-      title, content, audience: audienceObject, mentions, summary, categories, coverMedia, series,
+      id, title, content, audience: audienceObject, mentions, summary, categories, coverMedia, series,
     } = article;
     const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(audienceObject);
     const data: IEditArticleData = {
-      title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia, series,
+      id, title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia, series,
     };
     actions.setData(data);
+    actions.setIsPublishing(needToPublish);
   };
 
   useEffect(() => {
@@ -82,10 +94,14 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
   }, []);
 
   useEffect(() => {
-    initEditStoreData();
+    // for editing draft article, dont init data again
+    if (article && !isPublishing) {
+      initEditStoreData();
+    }
   }, [article]);
 
   const enableButtonSave = isHasChange();
+  const enableButtonNext = isEnableButtonNext();
 
   const handleContentChange = (newContent: string) => {
     actions.setContent(newContent);
@@ -124,6 +140,7 @@ const useEditArticle = ({ articleId }: IUseEditArticle) => {
   return {
     loading,
     enableButtonSave,
+    enableButtonNext,
     title: data.title,
     content: data.content,
     groupIds,

@@ -9,6 +9,7 @@ import { createStore, resetStore } from '~/store/utils';
 export interface IEditArticleState extends IBaseState {
   loading: boolean;
   data: IEditArticleData;
+  isPublishing: boolean;
   actions: {
     setData: (data: IEditArticleData) => void;
     setTitle: (title: string) => void;
@@ -20,6 +21,7 @@ export interface IEditArticleState extends IBaseState {
     setCategories: (categories?: ICategory[]) => void;
     addCategory: (category: ICategory) => void;
     removeCategory: (category: ICategory) => void;
+    setIsPublishing: (isPublishing: boolean) => void;
     setSeries: (series?: IEditArticleSeries[]) => void;
     addSeries: (series: IEditArticleSeries) => void;
     removeSeries: (series: IEditArticleSeries) => void;
@@ -30,6 +32,7 @@ export interface IEditArticleState extends IBaseState {
 const initialState = {
   loading: false,
   data: {
+    id: '',
     title: '',
     content: '',
     summary: '',
@@ -50,6 +53,7 @@ const initialState = {
     },
     mentions: {},
   },
+  isPublishing: false,
 };
 
 const useEditArticle = (set, get) => ({
@@ -113,6 +117,11 @@ const useEditArticle = (set, get) => ({
       set((state) => {
         state.data.categories = newSelecting;
       }, 'removeCategory');
+    },
+    setIsPublishing: (isPublishing: boolean) => {
+      set((state: IEditArticleState) => {
+        state.isPublishing = isPublishing;
+      }, 'setIsPublishing');
     },
     setSeries: (series?: IEditArticleSeries[]) => {
       set((state: IEditArticleState) => {

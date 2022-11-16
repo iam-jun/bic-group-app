@@ -1144,7 +1144,7 @@
     "flags": "Flags"
   },
   "series": {
-    "title_create_series":"Create Series",
+    "title_create_series": "Create Series",
     "title_name": "Name",
     "text_input_name": "Enter name",
     "text_update_cover": "Update cover",
@@ -1161,5 +1161,5 @@
     "text_edit_series_failed": "Series was failed to publish",
     "title_edit_audience_failed": "Audience Change?",
     "content_edit_audience_failed": "You don't have delete own post permission at group:"
-    }
+  }
 }

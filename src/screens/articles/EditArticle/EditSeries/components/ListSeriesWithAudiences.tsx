@@ -40,7 +40,7 @@ const ListSeriesWithAudiences = ({
   };
 
   const renderItem = ({ item }: any) => {
-    const isChecked = selectedData.findIndex((selected) => selected?.id === item?.id) > -1;
+    const isChecked = selectedData?.findIndex((selected) => selected?.id === item?.id) > -1;
     return (
       <View style={styles.container}>
         <View style={styles.row}>

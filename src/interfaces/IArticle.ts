@@ -74,6 +74,7 @@ export interface IEditArticleSeries {
 }
 
 export interface IEditArticleData {
+  id?: string;
   title?: string;
   content?: string;
   summary?: string;
