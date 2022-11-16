@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, cleanup } from '@testing-library/react-native';
 
-import InfoSection from '.';
+import InfoCard from '.';
 
 describe('InfoSection component', () => {
   const baseProps = {
@@ -12,7 +12,7 @@ describe('InfoSection component', () => {
   afterEach(cleanup);
 
   it('renders correctly', () => {
-    const rendered = render(<InfoSection {...baseProps} />).toJSON();
+    const rendered = render(<InfoCard {...baseProps} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 });

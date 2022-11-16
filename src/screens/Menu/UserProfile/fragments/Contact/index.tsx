@@ -1,10 +1,12 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { useRootNavigation } from '~/hooks/navigation';
 import { InfoItem } from '../../components';
 import EditButton from '../../components/EditButton';
-import InfoSection from '../../components/InfoSection';
+import InfoCard from '~/components/InfoCard';
 import { formatPhoneNumber } from '../../helper';
 import mainStack from '~/router/navigator/MainStack/stack';
+import { spacing } from '~/theme';
 
 interface Props {
   email: string;
@@ -36,10 +38,11 @@ const Contact = ({
   );
 
   return (
-    <InfoSection
+    <InfoCard
       testID="user_profile.contact"
       title="settings:title_contact"
       rightTitle={BtnEditContact}
+      style={styles.container}
     >
       <InfoItem title="settings:title_email" value={email} />
       <InfoItem
@@ -51,8 +54,15 @@ const Contact = ({
         value={city}
         style={{ paddingBottom: 0 }}
       />
-    </InfoSection>
+    </InfoCard>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingBottom: spacing.padding.large,
+  },
+});
 
 export default Contact;

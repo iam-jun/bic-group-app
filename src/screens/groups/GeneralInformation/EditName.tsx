@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+import Divider from '~/beinComponents/Divider';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -56,19 +57,15 @@ const EditName = (props: any) => {
       isFullView
     >
       <Header
-        title={`settings:title_${type}_name`}
+        title={`settings:title_edit_${type}_name`}
         titleTextProps={{ useI18n: true }}
         buttonText="common:btn_save"
-        buttonProps={{
-          useI18n: true,
-        }}
+        buttonProps={{ useI18n: true }}
         onPressButton={onSave}
       />
+      <Divider color={theme.colors.gray5} size={spacing.padding.large} />
 
       <View style={styles.content}>
-        <Text.H6 color={theme.colors.neutral80} useI18n>
-          settings:title_edit_name
-        </Text.H6>
         <View style={styles.inputView}>
           <TextInput
             style={styles.textEdit}
@@ -79,7 +76,7 @@ const EditName = (props: any) => {
             testID={`edit_${type}_name.text`}
           />
         </View>
-        <Text.BodyS color={theme.colors.gray50} useI18n>
+        <Text.BodyS color={theme.colors.neutral40} useI18n>
           settings:text_name_maximum_character
         </Text.BodyS>
       </View>
@@ -101,17 +98,15 @@ const themeStyles = (theme: ExtendedTheme) => {
       marginHorizontal: spacing.margin.large,
     },
     textEdit: {
-      minHeight: 60,
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
-      color: colors.neutral80,
+      color: colors.neutral60,
     },
     inputView: {
-      marginTop: spacing.margin.large,
       marginBottom: spacing.margin.tiny,
-      borderRadius: 6,
+      borderRadius: spacing.borderRadius.base,
       borderWidth: 1,
-      borderBottomColor: colors.neutral80,
+      borderColor: colors.neutral5,
       padding: spacing.margin.base,
       minHeight: 60,
     },

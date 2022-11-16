@@ -29,6 +29,7 @@ import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useCommunityController from '~/screens/communities/store';
+import Divider from '~/beinComponents/Divider';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -36,6 +37,8 @@ const GeneralInformation = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const styles = createStyles(theme);
+
   const dispatch = useDispatch();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const controller = useCommunityController((state) => state.actions);
@@ -171,14 +174,16 @@ const GeneralInformation = (props: any) => {
       style={styles.container}
       isFullView
     >
-      <Header title={i18next.t('settings:title_general_information')} />
+      <Header title={i18next.t('settings:title_edit_profile_info')} />
       <ScrollView>
+        <Divider color={colors.gray5} size={spacing.padding.large} />
         <AvatarImage
           avatar={avatar}
           testID="general_information.avatar"
           onEditAvatar={onEditAvatar}
           canEditInfo={canEditInfo}
         />
+        <Divider color={colors.gray5} size={spacing.padding.large} />
         <CoverImage
           backgroundUrl={backgroundUrl}
           testID="general_information.cover"
@@ -199,13 +204,13 @@ const GeneralInformation = (props: any) => {
           modalizeRef={baseSheetRef}
           ContentComponent={(
             <View style={styles.contentBottomSheet}>
-              <Text.H5
+              <Text.H4
                 color={colors.neutral80}
                 style={styles.privacyTypeText}
                 useI18n
               >
                 settings:title_privacy_type
-              </Text.H5>
+              </Text.H4>
               <ListView
                 data={
                   type === 'group' ? groupPrivacyListDetail : communityPrivacyListDetail
@@ -222,17 +227,19 @@ const GeneralInformation = (props: any) => {
 
 export default GeneralInformation;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  contentBottomSheet: {
-    marginHorizontal: spacing.margin.base,
-    marginTop: spacing.margin.large,
-  },
-  privacyTypeText: {
-    marginLeft: spacing.margin.base,
-    marginBottom: spacing.margin.small,
-    fontSize: 18,
-  },
-});
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.gray5,
+    },
+    contentBottomSheet: {
+      paddingHorizontal: spacing.padding.large,
+      paddingTop: spacing.padding.small,
+    },
+    privacyTypeText: {
+      marginBottom: spacing.margin.big,
+    },
+  });
+};

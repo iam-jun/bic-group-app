@@ -162,26 +162,22 @@ const UserProfile = (props: any) => {
             description={description}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
-          <View style={styles.infoContainer}>
-            <BasicInfo
-              fullname={fullname}
-              gender={gender}
-              birthday={birthday}
-              language={language}
-              relationship={relationshipStatus}
-              isCurrentUser={isCurrentUser}
-            />
-          </View>
+          <BasicInfo
+            fullname={fullname}
+            gender={gender}
+            birthday={birthday}
+            language={language}
+            relationship={relationshipStatus}
+            isCurrentUser={isCurrentUser}
+          />
           <Divider color={colors.gray5} size={spacing.padding.large} />
-          <View style={styles.infoContainer}>
-            <Contact
-              email={email}
-              phone={phone}
-              city={city}
-              countryCode={countryCode}
-              isCurrentUser={isCurrentUser}
-            />
-          </View>
+          <Contact
+            email={email}
+            phone={phone}
+            city={city}
+            countryCode={countryCode}
+            isCurrentUser={isCurrentUser}
+          />
           <Experiences isCurrentUser={isCurrentUser} />
         </ScrollView>
       )}
@@ -198,16 +194,8 @@ const themeStyles = (theme: ExtendedTheme) => {
     container: {
       backgroundColor: colors.white,
     },
-    infoContainer: {
-      padding: spacing.padding.large,
-    },
     loadingProfile: {
       marginTop: spacing.margin.extraLarge,
-    },
-    buttonEdit: {
-      marginHorizontal: spacing.margin.large,
-      borderWidth: 1,
-      borderColor: colors.purple50,
     },
   });
 };
