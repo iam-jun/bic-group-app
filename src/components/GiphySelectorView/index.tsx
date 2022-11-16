@@ -1,18 +1,9 @@
-import React, { FC, useEffect } from 'react';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { MasonryFlashList } from '@shopify/flash-list';
-import { StyleSheet, View } from 'react-native';
-import { Button } from '~/baseComponents';
+import React, { FC } from 'react';
+import { NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import { GiphyContent, GiphyGridView, GiphyMedia } from '@giphy/react-native-sdk';
 import { IGiphy } from '~/interfaces/IGiphy';
-import useGiphyStore, { IGiphyState } from '~/store/giphy';
-import { borderRadius, margin, padding } from '~/theme/spacing';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import { calculateRatio } from './helper';
-import Image from '~/beinComponents/Image';
-
-// Number from MasonryFlashList warning log
-// Docs: https://shopify.github.io/flash-list/docs/estimated-item-size/
-const ESTIMATED_ITEM_SIZE = 198;
+import { margin } from '~/theme/spacing';
 
 export interface GiphyViewProps {
     searchQuery?: string;
@@ -20,76 +11,51 @@ export interface GiphyViewProps {
     onSelected: (item: IGiphy) => void;
 }
 
-const GiphySelectorView: FC<GiphyViewProps> = ({
+const GiphyView: FC<GiphyViewProps> = ({
   searchQuery,
   onSelected,
 }) => {
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme);
-  const {
-    data, loading, searchResults, actions,
-  }: IGiphyState = useGiphyStore();
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
-    actions.getTrending();
-  }, []);
+  const request = searchQuery
+    ? GiphyContent.search({ searchQuery })
+    : GiphyContent.trending({ mediaType: undefined });
 
-  useEffect(() => {
-    if (searchQuery) {
-      actions.getSearch(searchQuery);
-    } else actions.clearSearch();
-  }, [searchQuery]);
-
-  const onEndReached = () => {
-    actions.getSearch(searchQuery);
+  const onMediaSelect = (e: NativeSyntheticEvent<{
+    media: GiphyMedia;
+  }>) => {
+    onSelected({
+      id: e?.nativeEvent?.media?.id,
+    });
   };
 
-  const renderItem = ({ item }: {item: IGiphy}) => {
-    const ratio = calculateRatio(item?.width, item?.height);
-
-    return (
-      <Button onPress={() => onSelected?.(item)}>
-        <Image
-          source={{ uri: item.url }}
-          style={[styles.image, { aspectRatio: ratio || 1 }]}
-        />
-      </Button>
-    );
+  // When content is updated, it means request has been done
+  const onContentUpdate = () => {
+    setLoading(false);
   };
-
-  const giphyData = searchQuery ? searchResults : data;
-  const showLoading = loading && giphyData.length === 0;
 
   return (
-    <View style={styles.container}>
-      {showLoading && <LoadingIndicator />}
-      <MasonryFlashList
-        data={giphyData}
-        numColumns={2}
-        estimatedItemSize={ESTIMATED_ITEM_SIZE}
-        showsVerticalScrollIndicator={false}
-        renderItem={renderItem}
-        keyExtractor={(item): string => item.id}
-        onEndReachedThreshold={0.5}
-        onEndReached={onEndReached}
+    <View>
+      {loading && <LoadingIndicator style={styles.loading} />}
+      <GiphyGridView
+        testID="sticker_view.grid_view"
+        content={request}
+        cellPadding={4}
+        // Must render GiphyGridView to trigger onContentUpdate but make it invisible
+        style={[styles.gridView, loading && { height: 0 }]}
+        onContentUpdate={onContentUpdate}
+        onMediaSelect={onMediaSelect}
       />
     </View>
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingLeft: padding.tiny,
-    },
-    image: {
-      flex: 1,
-      backgroundColor: colors.neutral5,
-      marginBottom: margin.tiny,
-      borderRadius: borderRadius.small,
-    },
-  });
-};
-export default GiphySelectorView;
+const styles = StyleSheet.create({
+  gridView: {
+    height: '100%',
+  },
+  loading: {
+    marginTop: margin.base,
+  },
+});
+export default GiphyView;
