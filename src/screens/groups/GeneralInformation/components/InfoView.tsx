@@ -56,9 +56,9 @@ const InfoView = ({
     <>
       <View style={styles.privacyHeader}>
         <Icon icon={privacyItem.icon} tintColor={colors.neutral20} />
-        <Text.BodyMMedium color={colors.neutral60} style={styles.privacyText} useI18n>
+        <Text.BodyM color={colors.neutral60} style={styles.privacyText} useI18n>
           {privacyItem.title}
-        </Text.BodyMMedium>
+        </Text.BodyM>
       </View>
 
       <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>

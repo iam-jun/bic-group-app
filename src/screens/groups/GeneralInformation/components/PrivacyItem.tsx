@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/baseComponents/Icon';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import Text from '~/beinComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
@@ -24,28 +24,42 @@ const PrivacyItem = ({ item, type }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
+  const isChecked = privacy === item.type;
+
   return (
-    <PrimaryItem
-      testID={`general_information.privacy.${item.type}`.toLowerCase()}
-      title={item.title}
-      titleProps={{ variant: 'h5', useI18n: true }}
-      subTitle={item.subtitle}
-      subTitleProps={{ variant: 'bodyS', numberOfLines: 0, useI18n: true }}
-      LeftComponent={
-        <Icon style={styles.bottomSheetLeftIcon} icon={item.icon} />
-      }
-      RightComponent={
-        privacy === item.type ? (
-          <Icon icon="Check" size={24} tintColor={colors.purple60} />
-        ) : undefined
-      }
-    />
+    <>
+      <View style={styles.privacyHeader}>
+        <View style={styles.privacy}>
+          <Icon icon={item.icon} tintColor={colors.neutral20} />
+          <Text.BodyM color={colors.neutral60} style={styles.privacyText} useI18n>
+            {item.title}
+          </Text.BodyM>
+        </View>
+
+        {isChecked && <Icon icon="Check" tintColor={colors.blue50} />}
+      </View>
+
+      <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>
+        {item.subtitle}
+      </Text.BodyM>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  bottomSheetLeftIcon: {
-    marginRight: spacing.margin.large,
+  privacyHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  privacy: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  privacyText: {
+    marginHorizontal: spacing.margin.small,
+  },
+  descriptionPrivacyText: {
+    marginTop: spacing.margin.base,
   },
 });
 

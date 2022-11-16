@@ -348,6 +348,7 @@
     "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users.",
     "title_open": "Open",
     "title_open_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
+    "title_privacy_note": "All members and admins will receive a notification that the privacy settings have changed.",
     "title_edit_description": "Edit Description",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",

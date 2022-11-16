@@ -1,13 +1,12 @@
 import i18next from 'i18next';
 import React, { useEffect, useRef } from 'react';
 import {
-  ScrollView, StyleSheet, TouchableOpacity, View,
+  FlatList, ScrollView, StyleSheet, TouchableOpacity, View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Header from '~/beinComponents/Header';
-import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import { uploadTypes } from '~/configs/resourceConfig';
@@ -30,6 +29,7 @@ import { useMyPermissions } from '~/hooks/permissions';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useCommunityController from '~/screens/communities/store';
 import Divider from '~/beinComponents/Divider';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -43,6 +43,7 @@ const GeneralInformation = (props: any) => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const controller = useCommunityController((state) => state.actions);
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+  const privacyList = type === 'group' ? groupPrivacyListDetail : communityPrivacyListDetail;
 
   const baseSheetRef: any = useRef();
   let avatar: string;
@@ -211,12 +212,19 @@ const GeneralInformation = (props: any) => {
               >
                 settings:title_privacy_type
               </Text.H4>
-              <ListView
-                data={
-                  type === 'group' ? groupPrivacyListDetail : communityPrivacyListDetail
-                }
+              <FlatList
+                style={styles.listView}
+                data={privacyList}
                 renderItem={renderPrivacyItem}
+                scrollEnabled={false}
+                keyExtractor={(item, index) => `privacy-list-detail-${item.type}-${index}`}
+                ItemSeparatorComponent={() => <ViewSpacing height={spacing.margin.extraLarge} />}
               />
+              <View style={styles.noteView}>
+                <Text.BodySMedium color={colors.neutral40} useI18n>
+                  settings:title_privacy_note
+                </Text.BodySMedium>
+              </View>
             </View>
           )}
         />
@@ -235,11 +243,20 @@ const createStyles = (theme: ExtendedTheme) => {
       backgroundColor: colors.gray5,
     },
     contentBottomSheet: {
-      paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.small,
     },
     privacyTypeText: {
       marginBottom: spacing.margin.big,
+      marginHorizontal: spacing.margin.large,
+    },
+    listView: {
+      marginHorizontal: spacing.margin.large,
+    },
+    noteView: {
+      backgroundColor: colors.gray1,
+      marginTop: spacing.margin.big,
+      paddingHorizontal: spacing.margin.large,
+      paddingVertical: spacing.margin.base,
     },
   });
 };
