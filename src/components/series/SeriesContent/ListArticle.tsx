@@ -1,12 +1,15 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { Button } from '~/baseComponents';
 import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 import { formatNumberWithZeroPrefix } from '~/utils/formatData';
+import { useRootNavigation } from '~/hooks/navigation';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 type ListArticleProps = {
-  lstArticle: any;
+  listArticle: any;
 };
 
 type ArticleItemProps = {
@@ -16,32 +19,41 @@ type ArticleItemProps = {
 
 const ArticleItem: FC<ArticleItemProps> = ({ index, article }) => {
   const theme = useTheme();
+  const { rootNavigation } = useRootNavigation();
   const { colors } = theme;
   const styles = createStyle(theme);
   const { title } = article;
 
+  const goToArticleDetail = () => {
+    rootNavigation.navigate(articleStack.articleDetail, { articleId: article?.id, focusComment: true });
+  };
+
   return (
-    <View style={styles.articleItemContainer}>
-      <Text.H4>{formatNumberWithZeroPrefix(index)}</Text.H4>
+    <Button
+      style={styles.articleItemContainer}
+      onPress={goToArticleDetail}
+      testID="list_article.article_item"
+    >
+      <Text.H4 color={colors.neutral20}>{formatNumberWithZeroPrefix(index)}</Text.H4>
       <Text style={styles.slash}>/</Text>
       <View style={{ flex: 1 }}>
         <Text.BadgeL color={colors.neutral80} numberOfLines={2}>
           {title}
         </Text.BadgeL>
       </View>
-    </View>
+    </Button>
   );
 };
 
-const ListArticle: FC<ListArticleProps> = ({ lstArticle }) => {
+const ListArticle: FC<ListArticleProps> = ({ listArticle }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
 
-  if (lstArticle.length === 0) return null;
+  if (listArticle?.length === 0) return null;
 
   return (
-    <View>
-      {lstArticle.map((item, index) => (
+    <View style={styles.container}>
+      {listArticle?.map((item, index) => (
         <>
           <ArticleItem
             key={`artc-series-${item.id}`}
@@ -60,7 +72,7 @@ const createStyle = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     container: {
-      marginTop: spacing.margin.large,
+      paddingBottom: spacing.padding.xTiny,
     },
     articleItemContainer: {
       flex: 1,
