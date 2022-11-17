@@ -349,6 +349,10 @@
     "title_open": "Open",
     "title_open_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
     "title_privacy_note": "All members and admins will receive a notification that the privacy settings have changed.",
+    "text_secret_community_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the community.",
+    "text_secret_group_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the group.",
+    "text_private_community_banner_message": "According to the privacy, the join request setting is also turned on to make sure your community is completely private (Recommend)",
+    "text_private_group_banner_message": "According to the privacy, the join request setting is also turned on to make sure your group is completely private (Recommend)",
     "title_edit_description": "Edit Description",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
@@ -1055,6 +1059,7 @@
       "description_on_group": "Members must ask for approval to join group",
       "description_off_community": "Members can join community without asking for approval",
       "description_off_group": "Members can join group without asking for approval",
+      "description_disabled": "The setting is not available because of the Secret privacy",
       "pop_up_on": {
         "title": "You are turning on the join request setting",
         "content_community": "You have to approve a join request to allow member to join your community. Are you sure to do this?",

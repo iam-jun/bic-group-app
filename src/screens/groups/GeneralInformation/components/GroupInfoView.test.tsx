@@ -1,4 +1,5 @@
 import React from 'react';
+import { GroupPrivacyType } from '~/constants/privacyTypes';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import initialState from '~/storeRedux/initialState';
@@ -11,7 +12,7 @@ describe('GroupInfoView component', () => {
     onPressPrivacy: jest.fn(),
     name: 'Name',
     description: 'Description',
-    privacy: 'PRIVACY',
+    privacy: GroupPrivacyType.PRIVATE,
     canEditPrivacy: false,
     canEditInfo: false,
   };

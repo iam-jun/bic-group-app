@@ -7,15 +7,18 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
 import Text from '~/beinComponents/Text';
-import { CommunityPrivacyDetail, GroupPrivacyDetail, IPrivacyItem } from '~/constants/privacyTypes';
+import {
+  CommunityPrivacyDetail, CommunityPrivacyType, GroupPrivacyDetail, GroupPrivacyType, IPrivacyItem,
+} from '~/constants/privacyTypes';
 import InfoCard from '~/components/InfoCard';
 import Divider from '~/beinComponents/Divider';
+import { CheckBox } from '~/baseComponents';
 
 interface Props {
   id: string;
   name: string;
   description: string;
-  privacy: string;
+  privacy: CommunityPrivacyType | GroupPrivacyType;
   canEditPrivacy: boolean;
   canEditInfo: boolean;
   type: 'community' | 'group';
@@ -35,10 +38,15 @@ const InfoView = ({
 }: Props) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles();
+  const styles = createStyles(theme);
   const { colors } = theme;
   const privacyScopeDetail = type === 'community' ? CommunityPrivacyDetail : GroupPrivacyDetail;
   const privacyItem: IPrivacyItem = privacyScopeDetail[privacy];
+
+  const isPrivatePrivacy = privacy === CommunityPrivacyType.PRIVATE
+  || privacy === GroupPrivacyType.PRIVATE;
+  const isSecretPrivacy = privacy === CommunityPrivacyType.SECRET
+    || privacy === GroupPrivacyType.SECRET;
 
   const editDescription = () => {
     rootNavigation.navigate(
@@ -64,6 +72,25 @@ const InfoView = ({
       <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>
         {privacyItem.subtitle}
       </Text.BodyM>
+
+      {isSecretPrivacy && (
+        <View style={styles.privacyBannerView}>
+          <Icon icon="CircleInfo" tintColor={colors.neutral20} size={18} />
+          <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
+            {`settings:text_secret_${type}_banner_message`}
+          </Text.BodyS>
+        </View>
+      )}
+
+      {/* TODO: Will complete function in task BEIN-9639 */}
+      {isPrivatePrivacy && (
+        <View style={styles.privacyBannerView}>
+          <CheckBox size="small" isChecked />
+          <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
+            {`settings:text_private_${type}_banner_message`}
+          </Text.BodyS>
+        </View>
+      )}
     </>
   );
 
@@ -90,7 +117,6 @@ const InfoView = ({
       <InfoCard
         title="settings:title_privacy"
         onEdit={canEditPrivacy ? onPressPrivacy : undefined}
-        style={styles.infoCard}
       >
         {renderPrivacyView()}
       </InfoCard>
@@ -98,24 +124,42 @@ const InfoView = ({
   );
 };
 
-const createStyles = () => StyleSheet.create({
-  container: {
-    marginVertical: spacing.margin.large,
-  },
-  infoCard: {
-    paddingHorizontal: spacing.padding.large,
-    paddingBottom: spacing.padding.large,
-  },
-  privacyHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  privacyText: {
-    marginHorizontal: spacing.margin.small,
-  },
-  descriptionPrivacyText: {
-    marginTop: spacing.margin.base,
-  },
-});
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+
+  return StyleSheet.create({
+    container: {
+      marginVertical: spacing.margin.large,
+    },
+    infoCard: {
+      paddingHorizontal: spacing.padding.large,
+      paddingBottom: spacing.padding.large,
+    },
+    privacyHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginHorizontal: spacing.margin.large,
+    },
+    privacyText: {
+      marginHorizontal: spacing.margin.small,
+    },
+    descriptionPrivacyText: {
+      marginTop: spacing.margin.base,
+      marginHorizontal: spacing.margin.large,
+      marginBottom: spacing.margin.large,
+    },
+    privacyBannerView: {
+      flexDirection: 'row',
+      backgroundColor: colors.gray1,
+      marginBottom: spacing.margin.large,
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.base,
+    },
+    bannerText: {
+      flex: 1,
+      marginHorizontal: spacing.margin.small,
+    },
+  });
+};
 
 export default InfoView;

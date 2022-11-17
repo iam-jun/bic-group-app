@@ -18,13 +18,13 @@ interface Props {
 }
 
 const InfoCard = ({
-  style, testID, title, rightTitle, children, onEdit,
+  style, testID = 'info_card', title, rightTitle, children, onEdit,
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   return (
-    <View style={styles.container} testID={testID || 'info_card'}>
+    <View style={styles.container} testID={testID}>
       <View style={styles.row}>
         <Text.H4 testID="info_card.title" useI18n>
           {title}

@@ -309,6 +309,10 @@
     "title_open": "Mở",
     "title_open_subtitle_group": "Tất cả các thành viên trong cùng một cộng đồng có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả các thành viên. Đối với tất cả người dùng đã đăng ký không thuộc cộng đồng, nội dung và hoạt động bên trong sẽ không hiển thị với họ.",
     "title_privacy_note": "Tất cả thành viên và ban quản trị sẽ nhận được thông báo về sự thay đổi này.",
+    "text_secret_community_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ bị khóa và tất cả yêu cầu tham gia sẽ bị từ chối. Thành viên phải được mời mới được tham gia cộng đồng này.",
+    "text_secret_group_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ bị khóa và tất cả yêu cầu tham gia sẽ bị từ chối. Thành viên phải được mời mới được tham gia nhóm này.",
+    "text_private_community_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ được bật để chắc chắn rằng cộng đồng của bạn hoàn toàn riêng tư (Khuyến nghị)",
+    "text_private_group_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ được bật để chắc chắn rằng nhóm của bạn hoàn toàn riêng tư (Khuyến nghị)",
     "title_edit_description": "Chỉnh sửa Mô tả",
     "title_logout_from_all_devices": "Đăng xuất khỏi tất cả thiết bị",
     "title_edit_basic_info": "Chỉnh sửa Thông tin cơ bản",
@@ -989,6 +993,7 @@
       "description_on_group": "Người dùng phải được phê duyệt mới được tham gia",
       "description_off_community": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
       "description_off_group": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "description_disabled": "Thiết lập này không khả dụng do đang trong quyền riêng tư Bí mật",
       "pop_up_on": {
         "title": "Mở thiết lập phê duyệt yêu cầu tham gia",
         "content_community": "Bạn phải phê duyệt yêu cầu thành viên. Bạn chắc chứ?",

@@ -59,9 +59,9 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingBottom: spacing.padding.large,
     },
     avatar: {
-      width: 145,
-      height: 145,
-      borderRadius: spacing.borderRadius.small,
+      width: 120,
+      height: 120,
+      borderRadius: spacing.borderRadius.large,
     },
     imageButton: {
       alignItems: 'center',

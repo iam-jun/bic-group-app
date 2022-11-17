@@ -176,7 +176,7 @@ const GeneralInformation = (props: any) => {
       isFullView
     >
       <Header title={i18next.t('settings:title_edit_profile_info')} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Divider color={colors.gray5} size={spacing.padding.large} />
         <AvatarImage
           avatar={avatar}

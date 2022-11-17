@@ -32,7 +32,7 @@ const CommunityMemberRequests = ({
   const data = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
 
   const { canLoadMore, ids, total } = useKeySelector(groupsKeySelector.communityMemberRequests);
-  const { id, settings } = data || {};
+  const { id, settings, privacy } = data || {};
   const { isJoinApproval } = settings || {};
 
   useEffect(
@@ -82,6 +82,7 @@ const CommunityMemberRequests = ({
         <JoinRequestSetting
           type="community"
           total={total}
+          privacy={privacy}
           isJoinApproval={isJoinApproval}
           onUpdateJoinSetting={onUpdateJoinSetting}
           onPressApproveAll={onPressApproveAll}
