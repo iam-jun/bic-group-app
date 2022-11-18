@@ -45,10 +45,14 @@ const EditPrivacy = (props: any) => {
     const editFieldName = i18next.t('common:text_privacy');
 
     if (type === 'group') {
-      dispatch(groupsActions.updateGroupJoinSetting({ groupId: id, isJoinApproval: joinSettingState }));
+      if (shouldSelectPrivatePrivacy) {
+        dispatch(groupsActions.updateGroupJoinSetting({ groupId: id, isJoinApproval: joinSettingState }));
+      }
       dispatch(groupsActions.editGroupDetail({ data, editFieldName, callback: onNavigateBack }));
     } else {
-      controller.updateCommunityJoinSetting(id, joinSettingState);
+      if (shouldSelectPrivatePrivacy) {
+        controller.updateCommunityJoinSetting(id, joinSettingState);
+      }
       controller.editCommunityDetail(data, editFieldName, onNavigateBack);
     }
   };
