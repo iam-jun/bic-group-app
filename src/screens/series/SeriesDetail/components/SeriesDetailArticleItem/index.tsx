@@ -10,9 +10,10 @@ import ContentArticleItem from './ContentArticleItem';
 type SeriesDetailArticleItemProps = {
     article: IPost;
     index: number;
+    seriesId: string;
 }
 
-const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({ article, index }) => {
+const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({ article, index, seriesId }) => {
   const {
     actor, coverMedia, summary,
   } = article || {};
@@ -21,7 +22,7 @@ const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({ article, in
 
   return (
     <View style={styles.container}>
-      <TitleArticle index={index} article={article} />
+      <TitleArticle index={index} article={article} seriesId={seriesId} />
       <ViewSpacing height={spacing.margin.extraLarge} />
       <ContentArticleItem actor={actor} coverMedia={coverMedia} summary={summary} />
     </View>

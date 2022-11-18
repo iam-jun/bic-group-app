@@ -9,6 +9,7 @@ import editSeries from './actions/editSeries';
 import getSeriesDetail from './actions/getSeriesDetail';
 import postCreateNewSeries from './actions/postCreateNewSeries';
 import removeAudiences from './actions/removeAudiences';
+import { reorderArticles } from './actions/reorderArticles';
 
 export interface ISeriesState extends IBaseState{
   loading: boolean;
@@ -28,6 +29,7 @@ export interface ISeriesState extends IBaseState{
     deleteSeries: (id: string, callbackError: any) => void;
     editSeries: (id: string, shouldReplaceWithDetail: boolean, onRetry: any, callbackError: any) => void;
     removeAudiences: (id: string, listAudiences: string[]) => void;
+    reorderArticles: (id: string, indexArticlesOrder: number[]) => void;
   }
 
   reset?: () => void;
@@ -87,6 +89,7 @@ const useSeries = (set, get) => ({
     deleteSeries: deleteSeries(set, get),
     editSeries: editSeries(set, get),
     removeAudiences: removeAudiences(set, get),
+    reorderArticles: reorderArticles(set, get),
   },
 
   reset: () => resetStore(initialState, set),
