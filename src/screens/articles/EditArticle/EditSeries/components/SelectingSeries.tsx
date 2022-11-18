@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
@@ -35,9 +35,9 @@ const SelectingSeries = ({ data, onRemoveItem }: Props) => {
       <Text.SubtitleL useI18n>
         article:text_selecting_categories
       </Text.SubtitleL>
-      <View style={styles.listTag}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {data?.map?.(renderItem)}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -45,11 +45,6 @@ const SelectingSeries = ({ data, onRemoveItem }: Props) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: spacing.padding.large,
-  },
-  listTag: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
   },
   tabStyle: {
     marginTop: spacing.margin.xSmall,
