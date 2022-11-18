@@ -1109,6 +1109,11 @@
     "text_edit_series_success": "Chỉnh sửa series thành công.",
     "text_edit_series_failed": "Đăng series thất bại",
     "title_edit_audience_failed": "Thay đổi đối tượng?",
-    "content_edit_audience_failed": "Bạn không có quyền xóa bài đăng của chính mình trong các nhóm:"
+    "content_edit_audience_failed": "Bạn không có quyền xóa bài đăng của chính mình trong các nhóm:",
+    "reorder_article": "Xắp Sếp Bài Báo",
+    "text_info_reorder": "Kéo và thả để sắp xếp bài báo",
+    "reorder_successful": "Sắp xếp thành công",
+    "notice_changing_the_order": "Bạn đang thay đổi thứ tự bài báo",
+    "notice_sure_to_do_this": "Bạn có muốn thực hiện sự thay đổi này không?"
   }
 }

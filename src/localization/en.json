@@ -1175,6 +1175,11 @@
     "text_edit_series_success": "Series updated.",
     "text_edit_series_failed": "Series was failed to publish",
     "title_edit_audience_failed": "Audience Change?",
-    "content_edit_audience_failed": "You don't have delete own post permission at group:"
+    "content_edit_audience_failed": "You don't have delete own post permission at group:",
+    "reorder_article": "Reorder Article",
+    "text_info_reorder": "Drag and drop to reorder the article",
+    "reorder_successful": "Reorder successful",
+    "notice_changing_the_order": "You are changing the order",
+    "notice_sure_to_do_this": "Are you sure to do this?"
   }
 }

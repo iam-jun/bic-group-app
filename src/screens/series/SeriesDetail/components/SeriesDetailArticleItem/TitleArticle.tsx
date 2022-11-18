@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { View, StyleSheet, Keyboard } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import modalActions from '~/storeRedux/modal/actions';
 import Text from '~/beinComponents/Text';
@@ -16,9 +16,10 @@ import { BottomListProps } from '~/components/BottomList';
 type TitleArticleProps = {
     index: number;
     article: IPost;
+    seriesId: string;
 }
 
-const TitleArticle: FC<TitleArticleProps> = ({ index, article }) => {
+const TitleArticle: FC<TitleArticleProps> = ({ index, article, seriesId }) => {
   const { title, actor, id } = article || {};
   const theme = useTheme();
   const { colors } = theme;
@@ -29,11 +30,11 @@ const TitleArticle: FC<TitleArticleProps> = ({ index, article }) => {
   const dispatch = useDispatch();
 
   const onPressMenu = () => {
-    Keyboard.dismiss();
     const data = getSeriesDetailArticleItemMenu({
       isActor: isCreator,
       articleId: id,
       navigation: rootNavigation,
+      seriesId,
     });
 
     dispatch(modalActions.showBottomList({ isOpen: true, data } as BottomListProps));

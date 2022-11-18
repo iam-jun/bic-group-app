@@ -135,6 +135,7 @@ const SeriesDetail = ({ route }: any) => {
     <SeriesDetailArticleItem
       index={index + 1}
       article={item}
+      seriesId={id}
     />
   );
 
