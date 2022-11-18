@@ -4,49 +4,56 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/baseComponents/Icon';
 import Text from '~/beinComponents/Text';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import spacing from '~/theme/spacing';
-import useCommunitiesStore from '~/store/entities/communities';
+import { IconType } from '~/resources/icons';
+import { Button } from '~/baseComponents';
+import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
 
 interface Props {
-  item: any;
-  type: 'group' | 'community';
+  value: GroupPrivacyType | CommunityPrivacyType;
+  icon: IconType;
+  title: string;
+  subtitle: string
+  selectedPrivacy: string;
+  onPress: (key: string) => void;
 }
 
-const PrivacyItem = ({ item, type }: Props) => {
-  const currentCommunityId = useCommunitiesStore((state) => state.currentCommunityId);
-  const community = useCommunitiesStore((state) => state.data[currentCommunityId]);
-  const group = useKeySelector(groupsKeySelector.groupDetail.group);
-  const data = type === 'group' ? group : community;
-
-  const { privacy } = data || {};
+const PrivacyItem = ({
+  value, icon, title, subtitle, selectedPrivacy, onPress,
+}: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const isSelected = selectedPrivacy === value;
 
-  const isChecked = privacy === item.type;
+  const _onPress = () => {
+    onPress?.(value);
+  };
 
   return (
-    <>
+    <Button style={styles.container} onPress={_onPress}>
       <View style={styles.privacyHeader}>
         <View style={styles.privacy}>
-          <Icon icon={item.icon} tintColor={colors.neutral20} />
+          <Icon icon={icon} tintColor={colors.neutral20} />
           <Text.BodyM color={colors.neutral60} style={styles.privacyText} useI18n>
-            {item.title}
+            {title}
           </Text.BodyM>
         </View>
 
-        {isChecked && <Icon icon="Check" tintColor={colors.blue50} />}
+        {isSelected && <Icon icon="Check" tintColor={colors.blue50} />}
       </View>
 
       <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>
-        {item.subtitle}
+        {subtitle}
       </Text.BodyM>
-    </>
+    </Button>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.base,
+  },
   privacyHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',

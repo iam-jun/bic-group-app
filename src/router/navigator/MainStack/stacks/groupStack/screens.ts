@@ -23,6 +23,7 @@ import ReorderGroup from '~/screens/groups/GroupStructureSettings/ReorderGroup';
 import EditName from '~/screens/groups/GeneralInformation/EditName';
 import GroupSchemeAssignment from '~/screens/PermissionScheme/GroupSchemeAssignment';
 import GroupSchemeAssignSelection from '~/screens/PermissionScheme/GroupSchemeAssignSelection';
+import EditPrivacy from '~/screens/groups/GeneralInformation/EditPrivacy';
 
 const groupScreens = {
   // permission scheme
@@ -50,6 +51,7 @@ const groupScreens = {
   'general-info': GeneralInformation,
   'edit-name': EditName,
   'edit-description': EditDescription,
+  'edit-privacy': EditPrivacy,
   'add-members': AddMembersToGroup,
 
   // group structure

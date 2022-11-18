@@ -21,9 +21,8 @@ interface Props {
   privacy: CommunityPrivacyType | GroupPrivacyType;
   canEditPrivacy: boolean;
   canEditInfo: boolean;
+  isJoinApproval: boolean;
   type: 'community' | 'group';
-
-  onPressPrivacy?: () => void;
 }
 
 const InfoView = ({
@@ -33,8 +32,8 @@ const InfoView = ({
   privacy,
   canEditInfo,
   canEditPrivacy,
+  isJoinApproval,
   type,
-  onPressPrivacy,
 }: Props) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -48,15 +47,25 @@ const InfoView = ({
   const isSecretPrivacy = privacy === CommunityPrivacyType.SECRET
     || privacy === GroupPrivacyType.SECRET;
 
-  const editDescription = () => {
+  const privateCheckboxType = isJoinApproval ? 'disabled-auto-selected' : 'disabled';
+
+  const onPressEditDescription = () => {
     rootNavigation.navigate(
       groupStack.editDescription, { id, description, type },
     );
   };
 
-  const editName = () => {
+  const onPressEditName = () => {
     rootNavigation.navigate(
       groupStack.editName, { id, name, type },
+    );
+  };
+
+  const onPressEditPrivacy = () => {
+    rootNavigation.navigate(
+      groupStack.editPrivacy, {
+        id, privacy, type, isJoinApproval,
+      },
     );
   };
 
@@ -82,10 +91,9 @@ const InfoView = ({
         </View>
       )}
 
-      {/* TODO: Will complete function in task BEIN-9639 */}
       {isPrivatePrivacy && (
         <View style={styles.privacyBannerView}>
-          <CheckBox size="small" isChecked />
+          <CheckBox size="small" disabled={privateCheckboxType} />
           <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
             {`settings:text_private_${type}_banner_message`}
           </Text.BodyS>
@@ -98,7 +106,7 @@ const InfoView = ({
     <View style={styles.container}>
       <InfoCard
         title={`settings:title_${type}_name`}
-        onEdit={canEditInfo ? editName : undefined}
+        onEdit={canEditInfo ? onPressEditName : undefined}
         style={styles.infoCard}
       >
         <Text.BodyM color={colors.neutral60}>{name}</Text.BodyM>
@@ -107,7 +115,7 @@ const InfoView = ({
 
       <InfoCard
         title={`settings:title_${type}_description`}
-        onEdit={canEditInfo ? editDescription : undefined}
+        onEdit={canEditInfo ? onPressEditDescription : undefined}
         style={styles.infoCard}
       >
         <Text.BodyM color={colors.neutral60}>{description}</Text.BodyM>
@@ -116,7 +124,7 @@ const InfoView = ({
 
       <InfoCard
         title="settings:title_privacy"
-        onEdit={canEditPrivacy ? onPressPrivacy : undefined}
+        onEdit={canEditPrivacy ? onPressEditPrivacy : undefined}
       >
         {renderPrivacyView()}
       </InfoCard>

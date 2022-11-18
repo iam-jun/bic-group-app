@@ -354,6 +354,7 @@
     "text_private_community_banner_message": "According to the privacy, the join request setting is also turned on to make sure your community is completely private (Recommend)",
     "text_private_group_banner_message": "According to the privacy, the join request setting is also turned on to make sure your group is completely private (Recommend)",
     "title_edit_description": "Edit Description",
+    "title_edit_privacy": "Edit Privacy",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
     "title_edit_name": "Edit Name",

@@ -15,6 +15,7 @@ describe('GroupInfoView component', () => {
     privacy: GroupPrivacyType.PRIVATE,
     canEditPrivacy: false,
     canEditInfo: false,
+    isJoinApproval: true,
   };
 
   const mockStore = configureStore([]);

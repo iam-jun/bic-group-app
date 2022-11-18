@@ -1,18 +1,21 @@
 import groupApi from '~/api/GroupApi';
+import { ICommunity } from '~/interfaces/ICommunity';
+import useCommunitiesStore from '~/store/entities/communities';
 import Store from '~/storeRedux';
 import appActions from '~/storeRedux/app/actions';
 
-const updateCommunityJoinSetting = (_, get) => async (
+const updateCommunityJoinSetting = (_, _get) => async (
   id: string,
   isJoinApproval: boolean,
 ) => {
-  const { actions } = get();
-
   try {
     await groupApi.updateCommunityJoinSetting(id, isJoinApproval);
 
     // to update isJoinApproval status
-    actions.getCommunity(id);
+    useCommunitiesStore.getState().actions.updateCommunity(
+      id,
+      { settings: { isJoinApproval } } as ICommunity,
+    );
   } catch (error) {
     console.error('updateCommunityJoinSetting error:', error);
     Store.store.dispatch(appActions.setShowError(error));
