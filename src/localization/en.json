@@ -525,7 +525,12 @@
     "text_select_cover": "Select cover",
     "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
-    "text_edit_article_success": "Article updated successfully"
+    "text_edit_article_success": "Article updated successfully",
+    "remove_audiences_contains_series_title": "Remove Audience",
+    "remove_audiences_contains_series_content":"The following series were removed from this article: ${series}. Process anyway?",
+    "remove_series_title": "Remove Series",
+    "remove_series_content": "You don't have create article permission at series: ${series}. Do you want to remove series?",
+    "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?"
   },
   "post": {
     "news_feed": "News Feed",

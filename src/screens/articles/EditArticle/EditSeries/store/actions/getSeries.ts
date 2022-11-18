@@ -24,7 +24,7 @@ const getSeries = (set, get) => async (isLoadMore :boolean, params?: IGetSeries)
 
     const listResult = response?.data?.list || [];
     const series = isLoadMore ? [...listSeries.items, ...listResult] : listResult;
-    const hasNextPage = series.length < response?.data?.meta?.total;
+    const hasNextPage = response?.data?.meta?.hasNextPage;
 
     set((state: IEditArticleSeriesState) => {
       state.listSeries.loading = false;

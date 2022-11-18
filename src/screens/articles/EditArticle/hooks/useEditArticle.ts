@@ -1,11 +1,12 @@
 import { isEmpty, isEqual } from 'lodash';
 import { useEffect, useMemo } from 'react';
 import { Keyboard } from 'react-native';
-import i18next from 'i18next';
 
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
-import { IEditArticleAudience, IEditArticleData, IPayloadPutEditArticle } from '~/interfaces/IArticle';
+import {
+  IEditAritcleError, IEditArticleAudience, IEditArticleData, IEditArticleSeries, IPayloadPutEditArticle,
+} from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
@@ -15,17 +16,21 @@ import postsSelector from '~/store/entities/posts/selectors';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 import useArticlesStore from '../../ArticleDetail/store';
+import { useBaseHook } from '~/hooks';
 
 import { rootNavigationRef } from '~/router/refs';
+import Button from '~/baseComponents/Button';
+import { EditArticleErrorType } from '~/constants/article';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export interface IUseEditArticle {
   articleId: string;
   needToPublish?: boolean;
+  handleSaveAudienceError?: (listIdAudiences: string[]) => void;
 }
 
-const useEditArticle = ({ articleId, needToPublish }: IUseEditArticle) => {
+const useEditArticle = ({ articleId, needToPublish, handleSaveAudienceError }: IUseEditArticle) => {
   const article = usePostsStore(postsSelector.getPost(articleId));
 
   const articleActions = useArticlesStore((state) => state.actions);
@@ -40,6 +45,8 @@ const useEditArticle = ({ articleId, needToPublish }: IUseEditArticle) => {
   );
 
   const groupIds = useMemo(() => data.audience?.groupIds?.join?.(','), [data.audience]);
+
+  const { t } = useBaseHook();
 
   const isHasChange = () => {
     const isContentUpdated = article.content !== data.content && !isEmpty(data.content);
@@ -90,7 +97,7 @@ const useEditArticle = ({ articleId, needToPublish }: IUseEditArticle) => {
   };
 
   useEffect(() => {
-    articleActions.getArticleDetail(articleId);
+    if (!article) articleActions.getArticleDetail(articleId);
   }, []);
 
   useEffect(() => {
@@ -116,20 +123,66 @@ const useEditArticle = ({ articleId, needToPublish }: IUseEditArticle) => {
     actions.setMentions(newMentions);
   };
 
+  const prepareNewSeriesData = (seriesDenied: string[]) => {
+    const newSeries = [];
+    data.series.forEach((series: IEditArticleSeries) => {
+      const isDenied = seriesDenied.findIndex((id) => series?.id === id) > -1;
+      if (!isDenied) newSeries.push(series);
+    });
+    return { ...data, series: newSeries };
+  };
+
+  const handleSaveError = ({ type, ids }: IEditAritcleError) => {
+    if (type === EditArticleErrorType.SERIES_DENIED) {
+      const listSeriesName = [];
+      ids.forEach((id) => {
+        const seriesData = data.series.find(
+          (series: IEditArticleSeries) => series?.id === id,
+        );
+        listSeriesName.push(seriesData.title);
+      });
+      const text = listSeriesName.join(', ');
+
+      const content = !!handleSaveAudienceError
+      // eslint-disable-next-line no-template-curly-in-string
+        ? t('article:remove_audiences_contains_series_content').replace('${series}', text)
+      // eslint-disable-next-line no-template-curly-in-string
+        : t('article:remove_series_content').replace('${series}', text);
+
+      Store.store.dispatch(modalActions.showAlert({
+        title: !!handleSaveAudienceError ? t('article:remove_audiences_contains_series_title') : t('article:remove_series_title'),
+        content,
+        cancelBtn: true,
+        confirmLabel: t('communities:permission:btn_continue'),
+        ConfirmBtnComponent: Button.Danger,
+        onConfirm: () => actions.putEditArticle(
+          { articleId, data: prepareNewSeriesData(ids) } as IPayloadPutEditArticle,
+          (data: IEditAritcleError) => handleSaveError(data),
+        ),
+        confirmBtnProps: { type: 'ghost' },
+      }));
+    } else {
+      handleSaveAudienceError?.(ids);
+    }
+  };
+
   const handleSave = () => {
     updateMentions();
-    actions.putEditArticle({ articleId, data } as IPayloadPutEditArticle);
+    actions.putEditArticle(
+      { articleId, data } as IPayloadPutEditArticle,
+      (data: IEditAritcleError) => handleSaveError(data),
+    );
   };
 
   const handleBack = (showAlert = false) => {
     if (enableButtonSave || showAlert) {
       Keyboard.dismiss();
       Store.store.dispatch(modalActions.showAlert({
-        title: i18next.t('discard_alert:title'),
-        content: i18next.t('discard_alert:content'),
+        title: t('discard_alert:title'),
+        content: t('discard_alert:content'),
         cancelBtn: true,
-        cancelLabel: i18next.t('common:btn_discard'),
-        confirmLabel: i18next.t('common:btn_stay_here'),
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('common:btn_stay_here'),
         onCancel: () => navigation.goBack(),
       }));
       return;

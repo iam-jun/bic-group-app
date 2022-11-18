@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import uuid from 'react-native-uuid';
 import streamApi from '~/api/StreamApi';
 import { IToastMessage } from '~/interfaces/common';
-import { IPayloadPublishDraftArticle, IPayloadPutEditArticle } from '~/interfaces/IArticle';
+import { IEditAritcleError, IPayloadPublishDraftArticle, IPayloadPutEditArticle } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { IEditArticleState } from '~/screens/articles/EditArticle/store';
@@ -12,10 +12,14 @@ import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import { EditArticleErrorType } from '~/constants/article';
 
 const navigation = withNavigation(rootNavigationRef);
 
-const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
+const putEditArticle = (set, get) => async (
+  params: IPayloadPutEditArticle,
+  callbackError?: (data: IEditAritcleError) => void,
+) => {
   const { articleId, data } = params || {};
   set((state: IEditArticleState) => {
     state.loading = true;
@@ -82,7 +86,19 @@ const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
     set((state: IEditArticleState) => {
       state.loading = false;
     }, 'putEditArticleError');
-    showError(error);
+    if (error?.meta?.errors?.series_denied) {
+      callbackError?.({
+        type: EditArticleErrorType.SERIES_DENIED,
+        ids: error.meta.errors.series_denied,
+      });
+    } else if (error?.meta?.errors?.groups_denied) {
+      callbackError?.({
+        type: EditArticleErrorType.SERIES_DENIED,
+        ids: error.meta.errors.groups_denied,
+      });
+    } else {
+      showError(error);
+    }
   }
 };
 

@@ -18,6 +18,10 @@ import postsSelector from '~/store/entities/posts/selectors';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { spacing } from '~/theme';
 import { getAudienceIdsFromAudienceObject } from '../helper';
+import { AlertDeleteAudiences } from '~/components/posts';
+import modalActions from '~/storeRedux/modal/actions';
+import Store from '~/storeRedux';
+import { IAudienceGroup } from '~/interfaces/IPost';
 
 export interface EditArticleAudienceProps {
   style?: StyleProp<ViewStyle>;
@@ -42,6 +46,7 @@ const EditArticleAudience: FC<EditArticleProps> = ({ route }: EditArticleProps) 
 
   const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
   const selectingAudienceIds = useSelectAudienceStore((state) => state.selectingIds);
+  const selectingAudienceGroups = useSelectAudienceStore((state) => state.selecting.groups);
 
   // self check instead of use enableButtonNext from hook to avoid delay
   const isAudienceValidForNext = !isEmpty(selectingAudienceIds?.groupIds) || !isEmpty(selectingAudienceIds?.userIds);
@@ -50,9 +55,33 @@ const EditArticleAudience: FC<EditArticleProps> = ({ route }: EditArticleProps) 
   const isAudienceValidForSave = !isEqual(initAudienceIds, selectingAudienceIds)
     && !(isEmpty(selectingAudienceIds?.groupIds) && isEmpty(selectingAudienceIds?.userIds));
 
+  const handleSaveError = (listIdAudiences: string[]) => {
+    const audienceGroups = Object.values(selectingAudienceGroups);
+    if (listIdAudiences?.length <= 0 || audienceGroups?.length <= 0) {
+      return;
+    }
+
+    const listAudiences = listIdAudiences.map((audienceId) => {
+      const _audience = audienceGroups.find(
+        (audience: IAudienceGroup) => audience?.id === audienceId,
+      );
+      return _audience;
+    });
+    Store.store.dispatch(modalActions.showAlert({
+      title: t('article:remove_audiences_contains_series_title'),
+      children: <AlertDeleteAudiences
+        data={listAudiences}
+        textContent={t('series:content_not_able_delete_of_series')}
+      />,
+      cancelBtn: true,
+      cancelLabel: t('common:btn_close'),
+      onConfirm: null,
+    }));
+  };
+
   const {
     handleBack, handleSave, loading,
-  } = useEditArticle({ articleId });
+  } = useEditArticle({ articleId, handleSaveAudienceError: handleSaveError });
 
   const disabled = (isPublishing ? !isAudienceValidForNext : !isAudienceValidForSave) || loading;
 

@@ -1,5 +1,5 @@
 import {
-  ICategory, IEditArticleAudience, IEditArticleData, IEditArticleSeries, IPayloadPutEditArticle,
+  ICategory, IEditAritcleError, IEditArticleAudience, IEditArticleData, IEditArticleSeries, IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
 import putEditArticle from '~/screens/articles/EditArticle/store/actions/putEditArticle';
@@ -25,7 +25,10 @@ export interface IEditArticleState extends IBaseState {
     setSeries: (series?: IEditArticleSeries[]) => void;
     addSeries: (series: IEditArticleSeries) => void;
     removeSeries: (series: IEditArticleSeries) => void;
-    putEditArticle: (param: IPayloadPutEditArticle) => void;
+    putEditArticle: (
+      params: IPayloadPutEditArticle,
+      callbackError: (data: IEditAritcleError) => void,
+      ) => void;
   };
 }
 

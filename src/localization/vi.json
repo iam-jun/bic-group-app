@@ -484,7 +484,12 @@
     "text_select_cover": "Chọn ảnh bìa",
     "text_selecting_categories": "Bài viết của bạn sẽ được thêm vào",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
-    "text_edit_article_success": "Cập nhật bài viết thành công"
+    "text_edit_article_success": "Cập nhật bài viết thành công",
+    "remove_audiences_contains_series_title": "Xoá đối tượng",
+    "remove_audiences_contains_series_content":"Các series sau sẽ bị xóa khỏi bài viết này: ${series}. Vẫn tiếp tục?",
+    "remove_series_title": "Xoá Series",
+    "remove_series_content": "Bạn không có quyền tạo bài viết tại series: ${series}. Vẫn tiếp tục?",
+    "content_delete_audiences": "Bạn chỉ có thể xóa đối tượng khỏi bài viết của mình ngoại trừ những đối tượng bên dưới. Bạn chắc chắn chứ?"
   },
   "post": {
     "news_feed": "News Feed",

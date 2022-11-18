@@ -113,3 +113,8 @@ export interface EditArticleProps {
     };
   };
 }
+
+export interface IEditAritcleError {
+  ids: string[],
+  type: string,
+}
