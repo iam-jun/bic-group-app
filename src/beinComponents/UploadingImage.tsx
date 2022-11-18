@@ -149,7 +149,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
     <View
       style={[styles.container, { width, height }, style]}
     >
-      {imageUrl ? (
+      {!!imageUrl ? (
         <Image source={imageUrl} style={styles.image} />
       ) : (
         <View style={styles.contentContainer}>

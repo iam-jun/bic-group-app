@@ -29,6 +29,7 @@ import { IGiphyState } from './giphy';
 import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
+import { IEditArticleSeriesState } from '~/screens/articles/EditArticle/EditSeries/store';
 
 export interface BicStore {
   entities: {
@@ -50,7 +51,8 @@ export interface BicStore {
     EditArticle: {
       editArticleStore: IEditArticleState,
       EditArticleCategory: {
-        editArticleCategoryStore: IEditArticleCategoryState
+        editArticleCategoryStore: IEditArticleCategoryState,
+        editArticleSeriesStore: IEditArticleSeriesState,
       }
     }
   };

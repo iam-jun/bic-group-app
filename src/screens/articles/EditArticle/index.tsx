@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   FlatList, StyleSheet, View,
 } from 'react-native';
@@ -8,6 +8,7 @@ import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
+import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import Text from '~/beinComponents/Text';
 import { createTextStyle } from '~/beinComponents/Text/textStyle';
 
@@ -15,10 +16,11 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { EditArticleProps } from '~/interfaces/IArticle';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
+import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
+import useEditArticleStore from './store';
 
 const editOptions = [
   { title: 'article:text_option_edit_title', screen: articleStack.editArticleTitle },
@@ -26,6 +28,7 @@ const editOptions = [
   { title: 'article:text_option_edit_cover', screen: articleStack.editArticleCover },
   { title: 'article:text_option_edit_category', screen: articleStack.editArticleCategory },
   { title: 'article:text_option_edit_audience', screen: articleStack.editArticleAudience },
+  { title: 'article:text_option_edit_series', screen: articleStack.editArticleSeries },
   { title: 'article:text_option_edit_content', screen: articleStack.editArticleContent },
 ];
 
@@ -33,14 +36,28 @@ const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
   const isDraft = route?.params?.isDraft;
 
+  const resetEditArticleStore = useEditArticleStore((state) => state.reset);
+  const resetMentionInputStore = useMentionInputStore((state) => state.reset);
+
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const draftActions = useDraftArticleStore((state) => state.actions);
+  const articleActions = useArticlesStore((state: IArticlesState) => state.actions);
 
-  useEditArticle({ articleId });
+  useEffect(() => {
+    if (!!articleId) articleActions.getArticleDetail(articleId);
+  }, []);
+
+  useEffect(
+    () => () => {
+      resetEditArticleStore();
+      resetMentionInputStore();
+    },
+    [],
+  );
 
   const onPressBackToDraft = () => {
     // For editing draft article, navigating back needs to refresh data

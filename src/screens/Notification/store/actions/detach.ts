@@ -4,21 +4,20 @@ const detach = (set, get) => (payload: any) => {
   const data: INotificationsState = get();
 
   const newNotificationList: any = { ...data };
-  const removeDetachNoti = (value: string) => {
-    newNotificationList[value].data = newNotificationList[
-      value
-    ]?.data?.filter?.((item: any) => item !== payload?.id) || [];
-  };
-  removeDetachNoti('tabAll');
-  removeDetachNoti('tabUnread');
-  removeDetachNoti('tabMention');
-  removeDetachNoti('tabImportant');
+  const removeDetachNoti = (value: string) => newNotificationList[
+    value
+  ]?.data?.filter?.((item: any) => item !== payload?.id) || [];
+
+  const tabAllData = removeDetachNoti('tabAll');
+  const tabUnreadData = removeDetachNoti('tabUnread');
+  const tabMentionData = removeDetachNoti('tabMention');
+  const tabImportantData = removeDetachNoti('tabImportant');
 
   set((state: INotificationsState) => {
-    state.tabAll.data = newNotificationList.tabAll?.data;
-    state.tabUnread.data = newNotificationList.tabUnread?.data;
-    state.tabMention.data = newNotificationList.tabMention?.data;
-    state.tabImportant.data = newNotificationList.tabImportant?.data;
+    state.tabAll.data = tabAllData;
+    state.tabImportant.data = tabImportantData;
+    state.tabMention.data = tabMentionData;
+    state.tabUnread.data = tabUnreadData;
     state.unseenNumber = Math.max(state.unseenNumber - 1, 0);
   }, 'detachNotification');
 };

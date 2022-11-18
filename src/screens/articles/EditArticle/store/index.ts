@@ -1,5 +1,5 @@
 import {
-  ICategory, IEditArticleAudience, IEditArticleData, IPayloadPutEditArticle,
+  ICategory, IEditAritcleError, IEditArticleAudience, IEditArticleData, IEditArticleSeries, IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
 import putEditArticle from '~/screens/articles/EditArticle/store/actions/putEditArticle';
@@ -9,6 +9,7 @@ import { createStore, resetStore } from '~/store/utils';
 export interface IEditArticleState extends IBaseState {
   loading: boolean;
   data: IEditArticleData;
+  isPublishing: boolean;
   actions: {
     setData: (data: IEditArticleData) => void;
     setTitle: (title: string) => void;
@@ -20,13 +21,21 @@ export interface IEditArticleState extends IBaseState {
     setCategories: (categories?: ICategory[]) => void;
     addCategory: (category: ICategory) => void;
     removeCategory: (category: ICategory) => void;
-    putEditArticle: (param: IPayloadPutEditArticle) => void;
+    setIsPublishing: (isPublishing: boolean) => void;
+    setSeries: (series?: IEditArticleSeries[]) => void;
+    addSeries: (series: IEditArticleSeries) => void;
+    removeSeries: (series: IEditArticleSeries) => void;
+    putEditArticle: (
+      params: IPayloadPutEditArticle,
+      callbackError: (data: IEditAritcleError) => void,
+      ) => void;
   };
 }
 
 const initialState = {
   loading: false,
   data: {
+    id: '',
     title: '',
     content: '',
     summary: '',
@@ -47,6 +56,7 @@ const initialState = {
     },
     mentions: {},
   },
+  isPublishing: false,
 };
 
 const useEditArticle = (set, get) => ({
@@ -110,6 +120,34 @@ const useEditArticle = (set, get) => ({
       set((state) => {
         state.data.categories = newSelecting;
       }, 'removeCategory');
+    },
+    setIsPublishing: (isPublishing: boolean) => {
+      set((state: IEditArticleState) => {
+        state.isPublishing = isPublishing;
+      }, 'setIsPublishing');
+    },
+    setSeries: (series?: IEditArticleSeries[]) => {
+      set((state: IEditArticleState) => {
+        state.data.series = series || [];
+      }, 'setSeries');
+    },
+    addSeries: (seriesData: IEditArticleSeries) => {
+      const selecting = get().data.series || [];
+      const isAdded = selecting.findIndex((item) => item?.id === seriesData?.id) > -1;
+      if (!isAdded) {
+        const newSelecting = [...selecting];
+        newSelecting.push(seriesData);
+        set((state) => {
+          state.data.series = newSelecting;
+        }, 'addSeries');
+      }
+    },
+    removeSeries: (seriesData: IEditArticleSeries) => {
+      const selecting = get().data.series || [];
+      const newSelecting = selecting.filter((item) => item?.id !== seriesData?.id);
+      set((state) => {
+        state.data.series = newSelecting;
+      }, 'removeSeries');
     },
     putEditArticle: putEditArticle(set, get),
   },

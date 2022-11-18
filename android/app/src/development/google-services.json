@@ -1,10 +1,55 @@
 {
   "project_info": {
     "project_number": "297061761843",
+    "firebase_url": "https://bein-group-development-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "bein-group-development",
     "storage_bucket": "bein-group-development.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297061761843:android:fa47a033c7e72657583446",
+        "android_client_info": {
+          "package_name": "com.beincom.group.development"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297061761843-aeu5etsut95jpb4ac71pukanm7qhc5ii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beincom.group.development",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "297061761843-h9d9sr1a5r85d8ckt35nedndh4eqraaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7ptFAkxv_uIyHDSs8TdvSVhvZJMZfCnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297061761843-h9d9sr1a5r85d8ckt35nedndh4eqraaj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "297061761843-0e3d491dv6vos5uiicdihidjbrgf4pmu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.evol.bein.group"
+              }
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:297061761843:android:74947d963eb857da583446",

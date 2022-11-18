@@ -50,7 +50,7 @@ const ArticleView: FC<ArticleViewProps> = ({
   const canLoadMoreComment = usePostsStore(useCallback(postsSelector.getCommentOnlyCount(id), []));
 
   const commentCountText = commentsCount || '';
-  const labelButtonComment = `${commentCountText}${t('post:button_comment')}`;
+  const labelButtonComment = `${commentCountText} ${t('post:button_comment')}`;
 
   return (
     <View style={styles.container}>

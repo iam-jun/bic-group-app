@@ -1,12 +1,14 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { IPost } from '~/interfaces/IPost';
 import DeletedItem from '../DeletedItem';
 import SeriesContent from '../SeriesContent';
 import SeriesHeader from '../SeriesHeader';
+import SeriesFooter from '../SeriesFooter';
 
 type SeriesItemProps = {
-    data: any;
+    data: IPost;
 }
 
 const SeriesItem: FC<SeriesItemProps> = ({ data: series }) => {
@@ -26,6 +28,7 @@ const SeriesItem: FC<SeriesItemProps> = ({ data: series }) => {
         disabled={false}
       />
       <SeriesContent series={series} />
+      <SeriesFooter series={series} />
     </View>
   );
 };

@@ -10,7 +10,7 @@ import Header from '~/beinComponents/Header';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener } from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import { EditArticleProps, ICategory } from '~/interfaces/IArticle';
 import CategoryItem from '~/screens/articles/EditArticle/EditCategory/components/CategoryItem';
 import SelectingCategory from '~/screens/articles/EditArticle/EditCategory/components/SelectingCategory';
@@ -18,9 +18,12 @@ import useEditArticleCategoryStore from '~/screens/articles/EditArticle/EditCate
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
 import spacing from '~/theme/spacing';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
+
+  const { rootNavigation } = useRootNavigation();
 
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -30,6 +33,7 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
 
   const selectedCategories = useEditArticleStore((state) => state.data.categories);
   const editArticleActions = useEditArticleStore((state) => state.actions);
+  const isPublishing = useEditArticleStore((state) => state.isPublishing);
 
   const categoriesData = useEditArticleCategoryStore((state) => state.categories);
   const { items: categoryItems, loading: loadingCategories } = categoriesData || {};
@@ -40,17 +44,16 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
   const listData = searchKey ? searchItems : categoryItems;
 
   const {
-    handleSave, handleBack, enableButtonSave, loading,
+    handleBack, handleSave, enableButtonSave, enableButtonNext, loading,
   } = useEditArticle({ articleId });
-  const disabled = !enableButtonSave || loading;
+
+  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
 
   useEffect(() => {
     if (isEmpty(categoryItems) && !loadingCategories) {
       categoryActions.getCategories();
     }
   }, [categoriesData]);
-
-  useBackPressListener(handleBack);
 
   const onChangeText = debounce((value: string) => {
     categoryActions.getSearchCategories(value);
@@ -82,14 +85,22 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
 
   const renderFooter = () => <View style={styles.footer} />;
 
+  const goNextStep = () => {
+    rootNavigation.navigate(articleStack.editArticleAudience, { articleId });
+  };
+
+  const goBack = () => {
+    rootNavigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Header
-        title={t('article:title_edit_category')}
-        buttonProps={{ disabled, loading }}
-        buttonText={t('common:btn_save')}
-        onPressButton={handleSave}
-        onPressBack={handleBack}
+        title={t('article:text_option_edit_category')}
+        buttonProps={{ disabled, loading, style: styles.btnNext }}
+        buttonText={t(isPublishing ? 'common:btn_next' : 'common:btn_save')}
+        onPressButton={isPublishing ? goNextStep : handleSave}
+        onPressBack={isPublishing ? goBack : handleBack}
       />
       <SearchInput
         style={styles.searchInput}
@@ -127,6 +138,9 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     footer: {
       marginBottom: spacing.margin.base,
+    },
+    btnNext: {
+      marginRight: spacing.margin.small,
     },
   });
 };

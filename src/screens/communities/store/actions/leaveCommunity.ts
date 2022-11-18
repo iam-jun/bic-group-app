@@ -10,6 +10,7 @@ import APIErrorCode from '~/constants/apiErrorCode';
 import useMenuController from '~/screens/Menu/store';
 import Store from '~/storeRedux';
 import useCommunitiesStore from '~/store/entities/communities';
+import useYourCommunitiesStore from '../../Communities/components/YourCommunities/store';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -35,6 +36,7 @@ const leaveCommunity = (_set, _get) => async (
     // refresh joined communities
     Store.store.dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
     useMenuController.getState().actions.getJoinedCommunities();
+    useYourCommunitiesStore.getState().actions.getYourCommunities(true);
 
     const toastMessage: IToastMessage = {
       content: 'communities:modal_confirm_leave_community:success_message',

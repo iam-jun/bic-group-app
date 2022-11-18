@@ -17,6 +17,7 @@ import Divider from '~/beinComponents/Divider';
 export interface ContentInterestedUserCountProps {
   id: string;
   style?: StyleProp<ViewStyle>;
+  labelColor?: string;
   interestedUserCount?: number;
   isLite?: boolean;
 }
@@ -24,6 +25,7 @@ export interface ContentInterestedUserCountProps {
 const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
   id,
   style,
+  labelColor,
   interestedUserCount = 0,
   isLite,
 }) => {
@@ -31,7 +33,7 @@ const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const dispatch = useDispatch();
-
+  const labelColorInterested = labelColor || colors.neutral40;
   const peopleCount = formatLargeNumber(interestedUserCount);
 
   const onPressInterestedBy = () => {
@@ -53,12 +55,12 @@ const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
         testID="content_interested_user_count.button"
       >
         <Text.BodyS
-          color={colors.neutral40}
+          color={labelColorInterested}
           numberOfLines={1}
           testID="content_interested_user_count.show_text"
         >
           {t('post:label_seen_by')}
-          <Text.BodySMedium color={colors.neutral40}>{peopleCount}</Text.BodySMedium>
+          <Text.BodySMedium color={labelColorInterested}>{peopleCount}</Text.BodySMedium>
         </Text.BodyS>
       </Button>
       {!isLite && <Divider style={styles.divider} />}

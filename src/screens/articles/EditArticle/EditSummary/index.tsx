@@ -7,47 +7,56 @@ import { TextArea } from '~/baseComponents/Input';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener } from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import { EditArticleProps } from '~/interfaces/IArticle';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
 import spacing from '~/theme/spacing';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 const EditArticleSummary: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
 
+  const { rootNavigation } = useRootNavigation();
+
   const actions = useEditArticleStore((state) => state.actions);
   const summary = useEditArticleStore((state) => state.data.summary) || '';
+  const isPublishing = useEditArticleStore((state) => state.isPublishing);
 
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {
-    handleSave, handleBack, enableButtonSave, loading,
+    handleBack, handleSave, enableButtonSave, enableButtonNext, loading,
   } = useEditArticle({ articleId });
 
-  const disabled = !enableButtonSave || loading;
-
-  useBackPressListener(handleBack);
+  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
 
   const onChangeText = (value) => {
     actions.setSummary(value);
   };
 
+  const goNextStep = () => {
+    rootNavigation.navigate(articleStack.editArticleCover, { articleId });
+  };
+
+  const goBack = () => {
+    rootNavigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Header
-        title={t('article:title_edit_description')}
-        buttonProps={{ disabled, loading }}
-        buttonText={t('common:btn_save')}
-        onPressButton={handleSave}
-        onPressBack={handleBack}
+        title={t('article:text_option_edit_description')}
+        buttonProps={{ disabled, loading, style: styles.btnNext }}
+        buttonText={t(isPublishing ? 'common:btn_next' : 'common:btn_save')}
+        onPressButton={isPublishing ? goNextStep : handleSave}
+        onPressBack={isPublishing ? goBack : handleBack}
       />
       <TextArea
         testID="edit_description"
         value={summary}
-        label={t('settings:text_description')}
         placeholder={t('common:text_input_description')}
         style={styles.textInputContainer}
         inputStyle={styles.textInput}
@@ -65,10 +74,13 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.neutral,
     },
     textInputContainer: {
-      paddingHorizontal: spacing.padding.extraLarge,
+      paddingHorizontal: spacing.padding.large,
     },
     textInput: {
       paddingVertical: 0,
+    },
+    btnNext: {
+      marginRight: spacing.margin.small,
     },
   });
 };

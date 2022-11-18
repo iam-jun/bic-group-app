@@ -279,7 +279,7 @@
     "title_pending_posts": "Bài đăng chờ duyệt",
     "title_group_settings": "Cài đặt Nhóm",
     "title_community_settings": "Cài đặt Cộng đồng",
-    "title_general_information": "Thông tin chung",
+    "title_edit_profile_info": "Chỉnh sửa thông tin chung",
     "title_profile_info": "Thông tin chung",
     "title_group_structure": "Cài đặt cấu trúc nhóm",
     "title_role_management": "Role Management",
@@ -288,7 +288,8 @@
     "title_post_settings": "Cài đặt bài viết",
     "title_module_settings": "Module Settings",
     "title_group_name": "Tên nhóm",
-    "title_group_description": "Mô tả về nhóm",
+    "title_edit_group_name": "Chỉnh sửa Tên nhóm",
+    "title_group_description": "Mô tả",
     "text_description_maximum_character": "Tối đa 255 ký tự",
     "title_group_type": "Group Type",
     "title_avatar": "Ảnh đại diện",
@@ -307,7 +308,13 @@
     "title_secret_subtitle_group": "Những người dùng đã đăng nhập không thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động sẽ không được hiển thị cho tất cả người dùng.",
     "title_open": "Mở",
     "title_open_subtitle_group": "Tất cả các thành viên trong cùng một cộng đồng có thể khám phá và tìm kiếm nhóm này trong ứng dụng. Nội dung và hoạt động đều được hiển thị cho tất cả các thành viên. Đối với tất cả người dùng đã đăng ký không thuộc cộng đồng, nội dung và hoạt động bên trong sẽ không hiển thị với họ.",
+    "title_privacy_note": "Tất cả thành viên và ban quản trị sẽ nhận được thông báo về sự thay đổi này.",
+    "text_secret_community_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ bị khóa và tất cả yêu cầu tham gia sẽ bị từ chối. Thành viên phải được mời mới được tham gia cộng đồng này.",
+    "text_secret_group_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ bị khóa và tất cả yêu cầu tham gia sẽ bị từ chối. Thành viên phải được mời mới được tham gia nhóm này.",
+    "text_private_community_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ được bật để chắc chắn rằng cộng đồng của bạn hoàn toàn riêng tư (Khuyến nghị)",
+    "text_private_group_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ được bật để chắc chắn rằng nhóm của bạn hoàn toàn riêng tư (Khuyến nghị)",
     "title_edit_description": "Chỉnh sửa Mô tả",
+    "title_edit_privacy": "Chỉnh sửa Quyền riêng tư",
     "title_logout_from_all_devices": "Đăng xuất khỏi tất cả thiết bị",
     "title_edit_basic_info": "Chỉnh sửa Thông tin cơ bản",
     "title_edit_name": "Sửa Họ tên",
@@ -368,7 +375,8 @@
     "privacy_secret": "Nhóm kín",
     "privacy_open": "Nhóm mở",
     "title_community_name": "Tên cộng đồng",
-    "title_community_description": "Mô tả về cộng đồng",
+    "title_edit_community_name": "Chỉnh sửa Tên cộng đồng",
+    "title_community_description": "Mô tả",
     "text_name_maximum_character": "Tối đa 64 ký tự",
     "title_edit_organization_name": "Chỉnh Sửa Tên",
     "text_input_edit_info_fullname_max_64": "Tối đa 64 ký tự",
@@ -429,7 +437,7 @@
       "thirty_days_ago": "30 ngày trước",
       "three_months_ago": "3 tháng trước",
       "from_to": "Từ ngày - Đến ngày",
-      "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nỗi dung chính xác"
+      "text_banner_search": "Kết quả tìm kiếm được lược bỏ đi định dạng chữ để có nội dung chính xác"
     },
     "notice_post_video_uploading": {
       "title": "Bài viết có video đang xử lý (count)",
@@ -464,17 +472,24 @@
     "title_edit_category": "Sửa Danh Mục",
     "title_edit_audience": "Sửa Đối Tượng",
     "title_edit_content": "Sửa Nội Dung",
+    "title_edit_series": "Sửa Series",
     "text_option_edit_title": "Tiêu Đề",
     "text_option_edit_description": "Mô Tả",
     "text_option_edit_cover": "Ảnh Bìa",
     "text_option_edit_category": "Danh Mục",
     "text_option_edit_audience": "Đối Tượng",
+    "text_option_edit_series": "Series",
     "text_option_edit_content": "Nội Dung",
     "text_change_cover": "Đổi ảnh bìa",
     "text_select_cover": "Chọn ảnh bìa",
     "text_selecting_categories": "Bài viết của bạn sẽ được thêm vào",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
-    "text_edit_article_success": "Cập nhật bài viết thành công"
+    "text_edit_article_success": "Cập nhật bài viết thành công",
+    "remove_audiences_contains_series_title": "Xoá đối tượng",
+    "remove_audiences_contains_series_content":"Các series sau sẽ bị xóa khỏi bài viết này: ${series}. Vẫn tiếp tục?",
+    "remove_series_title": "Xoá Series",
+    "remove_series_content": "Bạn không có quyền tạo bài viết tại series: ${series}. Vẫn tiếp tục?",
+    "content_delete_audiences": "Bạn chỉ có thể xóa đối tượng khỏi bài viết của mình ngoại trừ những đối tượng bên dưới. Bạn chắc chắn chứ?"
   },
   "post": {
     "news_feed": "News Feed",
@@ -673,6 +688,10 @@
     "article_menu": {
       "edit": "Chỉnh sửa bài viết",
       "copy_link": "Sao chép đường dẫn",
+      "delete": "Xóa bài viết"
+    },
+    "series_detail_article_menu": {
+      "reorder": "Sắp xếp lại",
       "delete": "Xóa bài viết"
     }
   },
@@ -984,6 +1003,7 @@
       "description_on_group": "Người dùng phải được phê duyệt mới được tham gia",
       "description_off_community": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
       "description_off_group": "Người dùng được tùy ý tham gia mà không cần phê duyệt",
+      "description_disabled": "Thiết lập này không khả dụng do đang trong quyền riêng tư Bí mật",
       "pop_up_on": {
         "title": "Mở thiết lập phê duyệt yêu cầu tham gia",
         "content_community": "Bạn phải phê duyệt yêu cầu thành viên. Bạn chắc chứ?",
@@ -1073,7 +1093,7 @@
     "flags": "Cờ"
   },
   "series": {
-    "title_create_series":"Tạo Loạt Bài Viết",
+    "title_create_series": "Tạo Loạt Bài Viết",
     "title_name": "Tên",
     "text_input_name": "Nhập tên",
     "text_update_cover": "Đổi ảnh bìa",

@@ -13,7 +13,6 @@ import UploadingImage from '~/beinComponents/UploadingImage';
 import { uploadTypes } from '~/configs/resourceConfig';
 
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener } from '~/hooks/navigation';
 import { IFilePicked } from '~/interfaces/common';
 import { EditArticleProps } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
@@ -23,6 +22,8 @@ import ImageUploader from '~/services/imageUploader';
 import dimension, { scaleSize } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 import { checkPermission, permissionTypes } from '~/utils/permission';
+import { useRootNavigation } from '~/hooks/navigation';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 const COVER_WIDTH = dimension.deviceWidth;
 const COVER_HEIGHT = scaleSize(200);
@@ -30,11 +31,14 @@ const COVER_HEIGHT = scaleSize(200);
 const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const articleId = route?.params?.articleId;
 
+  const { rootNavigation } = useRootNavigation();
+
   const [selectingCover, setSelectingCover] = useState<IFilePicked>();
   const [error, setError] = useState('');
 
   const actions = useEditArticleStore((state) => state.actions);
   const coverMedia: IArticleCover = useEditArticleStore((state) => state.data.coverMedia) || {};
+  const isPublishing = useEditArticleStore((state) => state.isPublishing);
 
   const { t } = useBaseHook();
   const dispatch = useDispatch();
@@ -42,12 +46,10 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
   const styles = createStyle(theme);
 
   const {
-    handleSave, handleBack, enableButtonSave, loading,
+    handleBack, handleSave, enableButtonSave, enableButtonNext, loading,
   } = useEditArticle({ articleId });
 
-  const disabled = !enableButtonSave || loading;
-
-  useBackPressListener(handleBack);
+  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
 
   const onPressSelect = () => {
     checkPermission(
@@ -109,14 +111,22 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
     );
   };
 
+  const goNextStep = () => {
+    rootNavigation.navigate(articleStack.editArticleCategory, { articleId });
+  };
+
+  const goBack = () => {
+    rootNavigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Header
-        title={t('article:title_edit_cover')}
-        buttonProps={{ disabled, loading }}
-        buttonText={t('common:btn_save')}
-        onPressButton={handleSave}
-        onPressBack={handleBack}
+        title={t('article:text_option_edit_cover')}
+        buttonProps={{ disabled, loading, style: styles.btnNext }}
+        buttonText={t(isPublishing ? 'common:btn_next' : 'common:btn_save')}
+        onPressButton={isPublishing ? goNextStep : handleSave}
+        onPressBack={isPublishing ? goBack : handleBack}
       />
       <View>
         <UploadingImage
@@ -182,6 +192,9 @@ const createStyle = (theme: ExtendedTheme) => {
     textError: {
       color: colors.red40,
       paddingVertical: spacing.padding.small,
+    },
+    btnNext: {
+      marginRight: spacing.margin.small,
     },
   });
 };

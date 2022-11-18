@@ -12,6 +12,7 @@ export enum PostType {
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
+  articles?: IPostArticles[];
   content?: string;
   highlight?: string;
   media?: IPostMedia;
@@ -45,6 +46,11 @@ export interface IPost {
 export interface IPostAudience {
   users?: IAudienceUser[];
   groups?: IAudienceGroup[];
+}
+
+export interface IPostArticles {
+  id?: string;
+  title?: string;
 }
 
 export interface IAudienceUser {

@@ -24,6 +24,7 @@ const groupStack = {
   generalInfo: 'general-info',
   editName: 'edit-name',
   editDescription: 'edit-description',
+  editPrivacy: 'edit-privacy',
   addMembers: 'add-members',
 
   // group structure

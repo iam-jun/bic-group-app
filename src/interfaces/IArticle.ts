@@ -68,12 +68,18 @@ export interface IEditArticleAudience {
   groupIds: string[];
 }
 
+export interface IEditArticleSeries {
+  id?: string;
+  title?: string;
+}
+
 export interface IEditArticleData {
+  id?: string;
   title?: string;
   content?: string;
   summary?: string;
   categories?: ICategory[];
-  series?: string[];
+  series?: IEditArticleSeries[];
   hashtags?: string[];
   audience?: IEditArticleAudience;
   coverMedia?: IArticleCover;
@@ -106,4 +112,9 @@ export interface EditArticleProps {
       isDraft?: boolean;
     };
   };
+}
+
+export interface IEditAritcleError {
+  ids: string[],
+  type: string,
 }

@@ -2,35 +2,23 @@ default_platform(:android)
 fastlane_require 'dotenv'
 
 platform :android do
-  lane :deploy_dev do
-    Dotenv.overload('../../.env.sample', '../../.env')
-
-    appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
-    commit = last_git_commit
-    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-
+  lane :build_staging do
+    Dotenv.overload('../../.env.sample', '../../.env.staging')
     gradle(task: "clean")
     gradle(
       task: "assemble",
       build_type: "Release",
-      flavor: "Development",
-      #properties: {
-      #  "versionCode" => buildNumber.strip,
-      #}
+      flavor: "Staging",
     )
+  end
 
-    diawi(
-      token: ENV['DIAWI_TOKEN'],
-      file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
-      timeout: 600,
+  lane :build_production do
+    gradle(task: "clean")
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Production",
     )
-    notice_to_bic("🟣🤖A lo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-                \n **BIC Group Dev Android**
-                \n Tải tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
-                '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
   end
 
   lane :deploy_staging do
@@ -52,36 +40,36 @@ platform :android do
       timeout: 600,
     )
     notice_to_bic("🟡🤖 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-                \n **BIC Group Staging Android**
-                \n Tải tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}",
-                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
-                '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+      \n **BIC Group Staging Android**
+      \n Tải tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+      '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
   end
 
-    lane :deploy_production do
-        Dotenv.overload('../../.env.sample', '../../.env.production')
-        appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
-        commit = last_git_commit
-        git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-        gradle(task: "clean")
-        gradle(
-          task: "assemble",
-          build_type: "Release",
-          flavor: "Production",
-        )
-        diawi(
-          token: ENV['DIAWI_TOKEN'],
-          file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
-          timeout: 600,
-        )
-        notice_to_bic("🟢🤖 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-            \n **BIC Group Production Android**
-            \n Tải tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n **Git Branch**: #{git_branch}
-            \n **Git Commit**: #{git_mess}",
-            ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
-            '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
-    end
+  lane :deploy_production do
+    Dotenv.overload('../../.env.sample', '../../.env.production')
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+    gradle(task: "clean")
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Production",
+    )
+    diawi(
+      token: ENV['DIAWI_TOKEN'],
+      file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
+      timeout: 600,
+    )
+    notice_to_bic("🟢🤖 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+      \n **BIC Group Production Android**
+      \n Tải tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+      '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+  end
 end

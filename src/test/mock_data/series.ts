@@ -171,7 +171,7 @@ export const listArticle = [
 ];
 
 export const article = {
-  id: '1',
+  id: '5723b74c-8500-4c97-9fae-94c172745f4a',
   title:
     'Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.',
   summary:
@@ -199,4 +199,89 @@ export const mockImageFile = {
   type: 'image/jpeg',
   uri: '/Users/quyenthu/Library/Developer/CoreSimulator/Devices/81CF0236-1C85-4C14-95F0-863957B0ABFD/data/Containers/Data/Application/BFC141B1-186D-40E4-82A6-45788C69FB2A/tmp/react-native-image-crop-picker/1BB19122-DB2B-4FFD-94AF-CE6B397814DA.jpg',
   width: 3000,
+};
+
+export const mockListSeriesOfArticle = [
+  {
+    id: 'b55cf275-d728-44a3-ba5e-cd17ab30cf6d',
+    title: 'Test comment + react',
+    audience: {
+      groups: [
+        {
+          is_community: true,
+          community_id: 'e4b06eda-94d6-42d0-8829-d5380bc8f95b',
+          id: 'e1cb33cf-ef6e-4d13-97d9-23ee95b7bf99',
+          icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/c015b7d3-7bf1-4b0e-9ca4-b73d3a7ff82e.jpg',
+          name: 'Community.của.Linh',
+          privacy: 'PUBLIC',
+          root_group_id: 'e1cb33cf-ef6e-4d13-97d9-23ee95b7bf99',
+        },
+        {
+          is_community: true,
+          community_id: 'e4b8bf37-a218-4f73-bdfd-60b6b329852b',
+          id: '8b103e63-0714-40bb-9f33-01a8a26fea77',
+          icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+          name: 'The Rock Crew',
+          privacy: 'PUBLIC',
+          root_group_id: '8b103e63-0714-40bb-9f33-01a8a26fea77',
+        },
+      ],
+    },
+  },
+  {
+    id: 'b55cf275-d728-44a3-ba5e-333333333',
+    title: 'Test series so longgggggggggggggggg kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
+    audience: {
+      groups: [
+        {
+          is_community: true,
+          community_id: 'e4b06eda-94d6-42d0-8829-d5380bc8f95b',
+          id: 'e1cb33cf-ef6e-4d13-97d9-23ee95b7bf99',
+          icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/c015b7d3-7bf1-4b0e-9ca4-b73d3a7ff82e.jpg',
+          name: 'Community.của.Linh',
+          privacy: 'PUBLIC',
+          root_group_id: 'e1cb33cf-ef6e-4d13-97d9-23ee95b7bf99',
+        },
+        {
+          is_community: true,
+          community_id: 'e4b8bf37-a218-4f73-bdfd-60b6b329852b',
+          id: '8b103e63-0714-40bb-9f33-01a8a26fea77',
+          icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+          name: 'The Rock',
+          privacy: 'PUBLIC',
+          root_group_id: '8b103e63-0714-40bb-9f33-01a8a26fea77',
+        },
+        {
+          is_community: true,
+          community_id: 'e4b06eda-94d6-42d0-8829-d5380bc8f95b222',
+          id: 'e1cb33cf-ef6e-4d13-97d9-23ee95b7bf99',
+          icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/c015b7d3-7bf1-4b0e-9ca4-b73d3a7ff82e.jpg',
+          name: 'Community.của.Linh',
+          privacy: 'PUBLIC',
+          root_group_id: 'e1cb33cf-ef6e-4d13-97d9-23ee95b7bf99',
+        },
+        {
+          is_community: true,
+          community_id: 'e4b8bf37-a218-4f73-bdfd-44444',
+          id: '8b103e63-0714-40bb-9f33-01a8a26fea77',
+          icon: 'https://bic-stg-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/static/group/default-avatar.png',
+          name: 'The Rock Creweeeuhwfhwehghekghkehgrhekjrhgkerhkghekrglejlrghkeljrglherklgjlrglejlgjrlgjlrjkglrj',
+          privacy: 'PUBLIC',
+          root_group_id: '8b103e63-0714-40bb-9f33-01a8a26fea77',
+        },
+      ],
+    },
+  },
+];
+
+export const selectedSeries = [
+  {
+    id: 'b55cf275-d728-44a3-ba5e-cd17ab30cf6d',
+    title: 'Test comment + react',
+  },
+];
+
+export const searchSeriesRequestParams = {
+  groupIds: ['e4b06eda-94d6-42d0-8829-d5380bc8f95b',
+    'e4b8bf37-a218-4f73-bdfd-60b6b329852b'],
 };

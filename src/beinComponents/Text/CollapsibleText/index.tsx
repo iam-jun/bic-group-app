@@ -127,12 +127,12 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   );
 
   const renderContent = () => (
-    <Text style={style}>
+    <View style={style}>
       <Text testID="collapsible_text.content" {...textProps}>
         {_content}
       </Text>
       {renderShortContent()}
-    </Text>
+    </View>
   );
 
   const WrapperComponent = copyEnabled

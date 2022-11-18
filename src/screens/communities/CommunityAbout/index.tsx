@@ -1,4 +1,7 @@
 import React from 'react';
+import { ScrollView } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
@@ -13,6 +16,8 @@ const CommunityAbout = (props: any) => {
   const communityId = params?.communityId;
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
+  const theme: ExtendedTheme = useTheme();
+
   const data = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const isMember = data?.joinStatus === GroupJoinStatus.MEMBER;
 
@@ -21,9 +26,11 @@ const CommunityAbout = (props: any) => {
   };
 
   return (
-    <ScreenWrapper isFullView>
+    <ScreenWrapper backgroundColor={theme.colors.gray5} isFullView>
       <Header title={`${t('settings:title_about')} ${data?.name}`} />
-      <AboutContent profileInfo={data as any} onPressMember={onPressTotalMember} />
+      <ScrollView>
+        <AboutContent profileInfo={data as any} onPressMember={onPressTotalMember} />
+      </ScrollView>
     </ScreenWrapper>
   );
 };

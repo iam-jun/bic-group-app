@@ -1,4 +1,27 @@
-git_url("git@bitbucket.org:anhthien-evol/bein-group-app-secret.git")
+git_url("git@bitbucket.org:beincomm/bic-mobile-app-secret.git")
 storage_mode("git")
-app_identifier(["com.evol.bein.group.development"])
-username("anhthien@tgm.vn")
+team_id("44S5N8GAPS")
+team_name("UFUTURE CORPORATION")
+username("namanh@tgm.vn")
+app_identifier([
+  "com.beincom.group.development",
+  "com.beincom.group.staging",
+  "com.beincom.group",
+  "com.beincom.chat.development",
+  "com.beincom.chat.development.Share",
+  "com.beincom.chat.development.NotificationService",
+  "com.beincom.chat.staging",
+  "com.beincom.chat.staging.Share",
+  "com.beincom.chat.staging.NotificationService",
+  "com.beincom.chat",
+  "com.beincom.chat.Share",
+  "com.beincom.chat.NotificationService",
+])
+# app_identifier([
+#   "com.evol.bein.chat.staging",
+#   "com.evol.bein.chat.staging.Share",
+#   "com.evol.bein.chat.staging.NotificationService",
+#   "com.evol.bein.chat",
+#   "com.evol.bein.chat.NotificationService",
+#   "com.evol.bein.chat.Share",
+# ])

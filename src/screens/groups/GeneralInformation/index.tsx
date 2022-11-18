@@ -1,34 +1,23 @@
 import i18next from 'i18next';
-import React, { useEffect, useRef } from 'react';
-import {
-  ScrollView, StyleSheet, TouchableOpacity, View,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import BottomSheet from '~/baseComponents/BottomSheet';
 import Header from '~/beinComponents/Header';
-import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
 import { uploadTypes } from '~/configs/resourceConfig';
-import {
-  groupPrivacyListDetail,
-  communityPrivacyListDetail,
-  GroupPrivacyType,
-} from '~/constants/privacyTypes';
 import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 import AvatarImage from './components/AvatarImage';
-import PrivacyItem from './components/PrivacyItem';
 import CoverImage from './components/CoverImage';
 import InfoView from './components/InfoView';
-import { alertAction, _openImagePicker } from './helper';
+import { _openImagePicker } from './helper';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
-import useCommunityController from '~/screens/communities/store';
+import Divider from '~/beinComponents/Divider';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -36,12 +25,12 @@ const GeneralInformation = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const styles = createStyles(theme);
+
   const dispatch = useDispatch();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const controller = useCommunityController((state) => state.actions);
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
-  const baseSheetRef: any = useRef();
   let avatar: string;
   let backgroundUrl: string;
   let canEditInfo: boolean;
@@ -49,7 +38,7 @@ const GeneralInformation = (props: any) => {
   let organizationDescription: string;
   let organizationPrivacy: any;
   let canEditPrivacy: boolean;
-  let total: number;
+  let isJoinApproval: boolean;
   if (type === 'group') {
     canEditInfo = hasPermissionsOnScopeWithId('groups', id, PERMISSION_KEY.GROUP.EDIT_GROUP_INFO);
     canEditPrivacy = hasPermissionsOnScopeWithId('groups', id, PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY);
@@ -59,7 +48,7 @@ const GeneralInformation = (props: any) => {
     organizationName = groupDetail?.name || '';
     organizationDescription = groupDetail?.description || '';
     organizationPrivacy = groupDetail?.privacy || '';
-    total = useKeySelector(groupsKeySelector.groupMemberRequests)?.total || 0;
+    isJoinApproval = groupDetail?.settings?.isJoinApproval;
   } else {
     const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[id]);
     avatar = communityDetail?.icon || '';
@@ -69,7 +58,7 @@ const GeneralInformation = (props: any) => {
     organizationDescription = communityDetail?.description || '';
     organizationPrivacy = communityDetail?.privacy || '';
     canEditPrivacy = hasPermissionsOnScopeWithId('communities', id, PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY);
-    total = useKeySelector(groupsKeySelector.communityMemberRequests)?.total || 0;
+    isJoinApproval = communityDetail?.settings?.isJoinApproval;
   }
 
   useEffect(
@@ -84,66 +73,6 @@ const GeneralInformation = (props: any) => {
 
   const getCommunityDetail = () => actions.getCommunity(id);
 
-  const openGroupPrivacyModal = () => baseSheetRef?.current?.open?.();
-
-  const editPrivacy = (item: any) => {
-    const data = { id, privacy: item.type };
-    const editFieldName = i18next.t('common:text_privacy');
-    if (type === 'group') {
-      dispatch(groupsActions.editGroupDetail({ data, editFieldName }));
-    } else {
-      controller.editCommunityDetail(data, editFieldName);
-    }
-  };
-
-  const approveAllGroupMemberRequests = () => {
-    if (type === 'group') {
-      dispatch(groupsActions.approveAllGroupMemberRequests({ groupId: id, total }));
-    } else {
-      dispatch(groupsActions.approveAllCommunityMemberRequests(
-        { communityId: id, total },
-      ));
-    }
-    editPrivacy({ type: GroupPrivacyType.PUBLIC });
-  };
-
-  const declineAllGroupMemberRequests = () => {
-    if (type === 'group') {
-      dispatch(groupsActions.declineAllGroupMemberRequests({ groupId: id, total }));
-    } else {
-      dispatch(groupsActions.declineAllCommunityMemberRequests({ communityId: id, total }));
-    }
-    editPrivacy({ type: GroupPrivacyType.SECRET });
-  };
-
-  const onPrivacyMenuPress = (item: any) => {
-    baseSheetRef.current?.close();
-
-    if (organizationPrivacy === GroupPrivacyType.PRIVATE && total > 0) {
-      if (item.type === GroupPrivacyType.PUBLIC) {
-        alertAction(
-          dispatch,
-          theme,
-          i18next.t('groups:update_privacy_modal:title'),
-          i18next.t('groups:update_privacy_modal:content:approve'),
-          approveAllGroupMemberRequests,
-        );
-      }
-
-      if (item.type === GroupPrivacyType.SECRET) {
-        alertAction(
-          dispatch,
-          theme,
-          i18next.t('groups:update_privacy_modal:title'),
-          i18next.t('groups:update_privacy_modal:content:decline'),
-          declineAllGroupMemberRequests,
-        );
-      }
-    } else {
-      editPrivacy(item);
-    }
-  };
-
   const onEditAvatar = () => _openImagePicker(
     dispatch, id, 'icon', uploadTypes.groupAvatar, type,
   );
@@ -156,29 +85,22 @@ const GeneralInformation = (props: any) => {
     type,
   );
 
-  const renderPrivacyItem = ({ item }: {item: any}) => (
-    <TouchableOpacity
-      testID={`general_information.privacy_item.${item.type}`}
-      onPress={() => onPrivacyMenuPress(item)}
-    >
-      <PrivacyItem item={item} type={type} />
-    </TouchableOpacity>
-  );
-
   return (
     <ScreenWrapper
       testID="general_information"
       style={styles.container}
       isFullView
     >
-      <Header title={i18next.t('settings:title_general_information')} />
-      <ScrollView>
+      <Header title={i18next.t('settings:title_edit_profile_info')} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Divider color={colors.gray5} size={spacing.padding.large} />
         <AvatarImage
           avatar={avatar}
           testID="general_information.avatar"
           onEditAvatar={onEditAvatar}
           canEditInfo={canEditInfo}
         />
+        <Divider color={colors.gray5} size={spacing.padding.large} />
         <CoverImage
           backgroundUrl={backgroundUrl}
           testID="general_information.cover"
@@ -187,33 +109,13 @@ const GeneralInformation = (props: any) => {
         />
         <InfoView
           id={id}
-          onPressPrivacy={openGroupPrivacyModal}
           type={type}
           canEditInfo={canEditInfo}
           canEditPrivacy={canEditPrivacy}
           name={organizationName}
           privacy={organizationPrivacy}
           description={organizationDescription}
-        />
-        <BottomSheet
-          modalizeRef={baseSheetRef}
-          ContentComponent={(
-            <View style={styles.contentBottomSheet}>
-              <Text.H5
-                color={colors.neutral80}
-                style={styles.privacyTypeText}
-                useI18n
-              >
-                settings:title_privacy_type
-              </Text.H5>
-              <ListView
-                data={
-                  type === 'group' ? groupPrivacyListDetail : communityPrivacyListDetail
-                }
-                renderItem={renderPrivacyItem}
-              />
-            </View>
-          )}
+          isJoinApproval={isJoinApproval}
         />
       </ScrollView>
     </ScreenWrapper>
@@ -222,17 +124,28 @@ const GeneralInformation = (props: any) => {
 
 export default GeneralInformation;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  contentBottomSheet: {
-    marginHorizontal: spacing.margin.base,
-    marginTop: spacing.margin.large,
-  },
-  privacyTypeText: {
-    marginLeft: spacing.margin.base,
-    marginBottom: spacing.margin.small,
-    fontSize: 18,
-  },
-});
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.gray5,
+    },
+    contentBottomSheet: {
+      paddingTop: spacing.padding.small,
+    },
+    privacyTypeText: {
+      marginBottom: spacing.margin.big,
+      marginHorizontal: spacing.margin.large,
+    },
+    listView: {
+      marginHorizontal: spacing.margin.large,
+    },
+    noteView: {
+      backgroundColor: colors.gray1,
+      marginTop: spacing.margin.big,
+      paddingHorizontal: spacing.margin.large,
+      paddingVertical: spacing.margin.base,
+    },
+  });
+};

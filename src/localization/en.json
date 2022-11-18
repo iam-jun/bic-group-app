@@ -314,7 +314,7 @@
     "title_reported_chats": "Reported Chats",
     "title_group_settings": "Group Settings",
     "title_community_settings": "Community Settings",
-    "title_general_information": "General Information",
+    "title_edit_profile_info": "Edit Profile Info",
     "title_profile_info": "Profile Info",
     "title_group_structure": "Group Structure Settings",
     "title_role_management": "Role Management",
@@ -323,11 +323,12 @@
     "title_post_settings": "Post Settings",
     "title_module_settings": "Module Settings",
     "title_group_name": "Group Name",
-    "title_group_description": "Group Description",
+    "title_edit_group_name": "Edit Group Name",
+    "title_group_description": "Description",
     "text_description_maximum_character": "Maximum 255 characters",
     "title_group_type": "Group Type",
     "title_avatar": "Avatar",
-    "title_cover": "Cover",
+    "title_cover": "Photo Cover",
     "title_edit": "Edit",
     "title_basic_info": "Basic Info",
     "title_privacy_type": "Privacy Type",
@@ -347,7 +348,13 @@
     "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users.",
     "title_open": "Open",
     "title_open_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
+    "title_privacy_note": "All members and admins will receive a notification that the privacy settings have changed.",
+    "text_secret_community_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the community.",
+    "text_secret_group_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the group.",
+    "text_private_community_banner_message": "According to the privacy, the join request setting is also turned on to make sure your community is completely private (Recommend)",
+    "text_private_group_banner_message": "According to the privacy, the join request setting is also turned on to make sure your group is completely private (Recommend)",
     "title_edit_description": "Edit Description",
+    "title_edit_privacy": "Edit Privacy",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
     "title_edit_name": "Edit Name",
@@ -409,7 +416,8 @@
     "privacy_secret": "Secret",
     "privacy_open": "Open",
     "title_community_name": "Community Name",
-    "title_community_description": "Community Description",
+    "title_edit_community_name": "Edit Community Name",
+    "title_community_description": "Description",
     "text_name_maximum_character": "Maximum 64 characters",
     "title_edit_organization_name": "Edit Name",
     "text_input_edit_info_fullname_max_64": "Maximum 64 characters",
@@ -505,17 +513,24 @@
     "title_edit_category": "Edit Topics",
     "title_edit_audience": "Edit Audience",
     "title_edit_content": "Edit Content",
+    "title_edit_series": "Edit Series",
     "text_option_edit_title": "Title",
     "text_option_edit_description": "Description",
     "text_option_edit_cover": "Cover",
     "text_option_edit_category": "Topics",
     "text_option_edit_audience": "Audience",
+    "text_option_edit_series": "Series",
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_select_cover": "Select cover",
     "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
-    "text_edit_article_success": "Article updated successfully"
+    "text_edit_article_success": "Article updated successfully",
+    "remove_audiences_contains_series_title": "Remove Audience",
+    "remove_audiences_contains_series_content":"The following series were removed from this article: ${series}. Process anyway?",
+    "remove_series_title": "Remove Series",
+    "remove_series_content": "You don't have create article permission at series: ${series}. Do you want to remove series?",
+    "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?"
   },
   "post": {
     "news_feed": "News Feed",
@@ -713,6 +728,10 @@
       "edit": "Edit Article",
       "copy_link": "Copy Link",
       "delete": "Delete Article"
+    },
+    "series_detail_article_menu": {
+      "reorder": "Reorder",
+      "delete": "Delete"
     }
   },
   "comment": {
@@ -1050,6 +1069,7 @@
       "description_on_group": "Members must ask for approval to join group",
       "description_off_community": "Members can join community without asking for approval",
       "description_off_group": "Members can join group without asking for approval",
+      "description_disabled": "The setting is not available because of the Secret privacy",
       "pop_up_on": {
         "title": "You are turning on the join request setting",
         "content_community": "You have to approve a join request to allow member to join your community. Are you sure to do this?",
@@ -1139,7 +1159,7 @@
     "flags": "Flags"
   },
   "series": {
-    "title_create_series":"Create Series",
+    "title_create_series": "Create Series",
     "title_name": "Name",
     "text_input_name": "Enter name",
     "text_update_cover": "Update cover",
@@ -1156,5 +1176,5 @@
     "text_edit_series_failed": "Series was failed to publish",
     "title_edit_audience_failed": "Audience Change?",
     "content_edit_audience_failed": "You don't have delete own post permission at group:"
-    }
+  }
 }

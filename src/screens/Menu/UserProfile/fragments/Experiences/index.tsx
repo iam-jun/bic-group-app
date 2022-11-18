@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
-import InfoSection from '../../components/InfoSection';
+import InfoCard from '~/components/InfoCard';
 import ItemExperience from '../../components/ItemExperience';
 import Divider from '~/beinComponents/Divider';
 import { spacing } from '~/theme';
@@ -44,31 +44,31 @@ const Experiences: FC<ExperiencesProps> = ({ isCurrentUser }) => {
   return (
     <>
       <Divider color={colors.gray5} size={spacing.padding.large} />
-      <View style={styles.infoContainer}>
-        <InfoSection
-          title="settings:title_experience"
-          rightTitle={BtnAddExperience}
-        >
-          {userWorkExperience.map((item: IUserWorkExperience, index) => (
-            <View key={`${item?.id} ${item?.company}`}>
-              <ItemExperience
-                item={item}
-                isCurrentUser={isCurrentUser}
-              />
-              {index !== userWorkExperience.length - 1 && (
+      <InfoCard
+        title="settings:title_experience"
+        rightTitle={BtnAddExperience}
+        style={styles.infoContainer}
+      >
+        {userWorkExperience.map((item: IUserWorkExperience, index) => (
+          <View key={`${item?.id} ${item?.company}`}>
+            <ItemExperience
+              item={item}
+              isCurrentUser={isCurrentUser}
+            />
+            {index !== userWorkExperience.length - 1 && (
               <Divider style={{ marginBottom: spacing.margin.large }} />
-              )}
-            </View>
-          ))}
-        </InfoSection>
-      </View>
+            )}
+          </View>
+        ))}
+      </InfoCard>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   infoContainer: {
-    padding: spacing.padding.large,
+    paddingHorizontal: spacing.padding.large,
+    paddingBottom: spacing.padding.large,
   },
 });
 

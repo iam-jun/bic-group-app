@@ -1,18 +1,15 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import {
-  Keyboard, StyleSheet, TextInput, View,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
+import { StyleSheet, TextInput, View } from 'react-native';
 import Header from '~/beinComponents/Header';
 import { createTextStyle } from '~/beinComponents/Text/textStyle';
 
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import ArticleWebview from '~/components/articles/ArticleWebview';
 import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
-import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
+import useEditArticleStore from '../store';
 
 export interface EditArticleContentProps {
   route?: {
@@ -25,7 +22,6 @@ const TITLE_MAX_LENGTH = 64;
 const EditArticleContent: FC<EditArticleContentProps> = ({ route }: EditArticleContentProps) => {
   const articleId = route?.params?.articleId;
 
-  const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -33,45 +29,32 @@ const EditArticleContent: FC<EditArticleContentProps> = ({ route }: EditArticleC
 
   const articleData = useEditArticle({ articleId });
   const {
-    loading, enableButtonSave, title, handleTitleChange, handleSave,
+    loading, enableButtonSave, enableButtonNext, title, handleTitleChange, handleSave, handleBack,
   } = articleData || {};
-
-  const onPressBack = () => {
-    if (enableButtonSave) {
-      Keyboard.dismiss();
-      dispatch(modalActions.showAlert({
-        title: t('discard_alert:title'),
-        content: t('discard_alert:content'),
-        cancelBtn: true,
-        cancelLabel: t('common:btn_discard'),
-        confirmLabel: t('common:btn_stay_here'),
-        onCancel: () => rootNavigation.goBack(),
-      }));
-      return;
-    }
-    rootNavigation.goBack();
-  };
-
-  useBackPressListener(onPressBack);
+  const isPublishing = useEditArticleStore((state) => state.isPublishing);
 
   const onChangeTitle = (value) => {
     handleTitleChange(value);
   };
 
+  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
+
   const onPressSave = () => {
     handleSave();
   };
 
-  const disabled = !enableButtonSave || loading;
+  const goBack = () => {
+    rootNavigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
       <Header
-        title={t('article:title_edit_content')}
-        buttonProps={{ disabled, loading }}
-        buttonText={t('common:btn_save')}
+        title={t('article:text_option_edit_content')}
+        buttonProps={{ disabled, loading, style: styles.btnPublish }}
+        buttonText={t(isPublishing ? 'common:btn_publish' : 'common:btn_save')}
         onPressButton={onPressSave}
-        onPressBack={onPressBack}
+        onPressBack={isPublishing ? goBack : handleBack}
       />
       <View style={styles.flex1}>
         <TextInput
@@ -109,6 +92,9 @@ const createStyle = (theme: ExtendedTheme) => {
       borderBottomWidth: 1,
       borderColor: colors.gray5,
       maxHeight: 80,
+    },
+    btnPublish: {
+      marginRight: spacing.margin.small,
     },
   });
 };

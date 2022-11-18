@@ -33,7 +33,7 @@ import {
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
-import { IParamGetSeriesDetail, IPostCreateSeries } from '~/interfaces/ISeries';
+import { IGetSeries, IParamGetSeriesDetail, IPostCreateSeries } from '~/interfaces/ISeries';
 
 const DEFAULT_LIMIT = 10;
 
@@ -340,6 +340,11 @@ export const streamApiConfig = {
     method: 'put',
     data,
   }),
+  searchSeries: (params?: IGetSeries): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series`,
+    params,
+  }),
   getDraftArticles: (params: IParamGetDraftArticles): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/draft`,
@@ -570,6 +575,7 @@ const streamApi = {
     streamApiConfig.editSeries, id, params,
   ),
   getTotalDraft: () => withHttpRequestPromise(streamApiConfig.getTotalDraft),
+  searchSeries: (params?: IGetSeries) => withHttpRequestPromise(streamApiConfig.searchSeries, params),
 };
 
 export default streamApi;

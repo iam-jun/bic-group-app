@@ -1,6 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useCallback, useEffect } from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import {
+  Keyboard, StyleSheet, View, FlatList,
+} from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
@@ -17,7 +19,9 @@ import modalActions from '~/storeRedux/modal/actions';
 import DeletedItem from '../../../components/series/DeletedItem';
 import { getSeriesMenu } from '../../../helpers/series';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
+import SeriesDetailArticleItem from './components/SeriesDetailArticleItem';
 import useSeriesStore, { ISeriesState } from '../store';
+import { spacing } from '~/theme';
 
 const SeriesDetail = ({ route }: any) => {
   const { params } = route || {};
@@ -32,7 +36,7 @@ const SeriesDetail = ({ route }: any) => {
   const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
   const {
-    actor, id, deleted, audience,
+    actor, id, deleted, audience, articles = [],
   } = series;
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
@@ -42,6 +46,7 @@ const SeriesDetail = ({ route }: any) => {
 
   const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
     = useMyPermissions();
+
   const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
     'groups',
     audience?.groups,
@@ -124,20 +129,31 @@ const SeriesDetail = ({ route }: any) => {
     );
   }
 
+  const _renderHeaderComponent = () => <SeriesDetailHeader series={series} />;
+
+  const _renderSeriesDetailArticleItem = ({ item, index }) => (
+    <SeriesDetailArticleItem
+      index={index + 1}
+      article={item}
+    />
+  );
+
+  const _keyExtractor = (item) => `artc-series-detail-${item?.id}`;
+
   return (
-    <View style={styles.container}>
+    <View style={styles.wrapper}>
       <Header
         rightIcon="menu"
         onRightPress={onRightPress}
       />
-
-      <SeriesDetailHeader series={series} />
-      {/* for the next sprint */}
-      {/* list SeriesDetailArticleItem */}
-      {/* <SeriesDetailArticleItem
-        index={1}
-        article={article_from_series}
-      /> */}
+      <FlatList
+        data={articles}
+        keyExtractor={_keyExtractor}
+        renderItem={_renderSeriesDetailArticleItem}
+        ListHeaderComponent={_renderHeaderComponent}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}
+      />
     </View>
   );
 };
@@ -146,9 +162,12 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
-    container: {
+    wrapper: {
       flex: 1,
       backgroundColor: colors.gray5,
+    },
+    container: {
+      paddingBottom: spacing.padding.extraLarge,
     },
   });
 };

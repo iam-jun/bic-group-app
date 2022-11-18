@@ -161,7 +161,9 @@ const PostToolbar: FC<PostToolbarProps> = ({
   };
 
   const openGallery = () => {
-    ImagePicker.openPickerMultiple().then((images) => {
+    ImagePicker.openPickerMultiple({
+      maxFiles: appConfig.postPhotoLimit,
+    }).then((images) => {
       const newImages: ICreatePostImage[] = [];
       images.forEach((item) => {
         newImages.push({ fileName: item.filename, file: item });
