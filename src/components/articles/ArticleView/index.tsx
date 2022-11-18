@@ -55,7 +55,7 @@ const ArticleView: FC<ArticleViewProps> = ({
   return (
     <View style={styles.container}>
       <ArticleHeader
-        articleId={id}
+        data={article}
         actor={actor}
         createdAt={createdAt}
         audience={audience}

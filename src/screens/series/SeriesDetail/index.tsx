@@ -1,13 +1,11 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useCallback, useEffect } from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
-import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
@@ -15,9 +13,9 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import modalActions from '~/storeRedux/modal/actions';
 import DeletedItem from '../../../components/series/DeletedItem';
-import { getSeriesMenu } from '../../../helpers/series';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
 import useSeriesStore, { ISeriesState } from '../store';
+import useSeriesMenu from '~/hooks/useSeriesMenu';
 
 const SeriesDetail = ({ route }: any) => {
   const { params } = route || {};
@@ -27,7 +25,6 @@ const SeriesDetail = ({ route }: any) => {
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
 
   const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
@@ -98,22 +95,7 @@ const SeriesDetail = ({ route }: any) => {
     actions.deleteSeries(id, handleError);
   };
 
-  const onRightPress = () => {
-    Keyboard.dismiss();
-    const data = getSeriesMenu({
-      reactionsCount: {},
-      isActor: actor?.id == userId,
-      dispatch,
-      seriesId: id,
-      navigaton: rootNavigation,
-      isFromDetail: true,
-      handleConfirmDelete,
-    });
-
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data } as BottomListProps),
-    );
-  };
+  const { showMenu } = useSeriesMenu(series, actor?.id == userId, true, handleConfirmDelete);
 
   if (deleted) {
     return (
@@ -128,7 +110,7 @@ const SeriesDetail = ({ route }: any) => {
     <View style={styles.container}>
       <Header
         rightIcon="menu"
-        onRightPress={onRightPress}
+        onRightPress={showMenu}
       />
 
       <SeriesDetailHeader series={series} />

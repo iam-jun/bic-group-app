@@ -150,7 +150,9 @@
     "text_optional": "tuỳ chọn",
     "articles": "Bài viết",
     "last_updated": "Cập nhật",
-    "audiences": "Đối tượng"
+    "audiences": "Đối tượng",
+    "text_save_fail": "Lưu thất bại.",
+    "text_unsave_fail": "Bỏ lưu thất bại."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -401,6 +403,7 @@
     "draft_post": "Bài nháp",
     "title_feed_attritube_all": "Tất cả",
     "title_feed_attritube_important": "Quan trọng",
+    "title_feed_attritube_saved": "Đã lưu",
     "title_feed_content_all": "Tất cả",
     "title_feed_content_posts": "Bài viết",
     "title_feed_content_articles": "Bài báo",
@@ -483,7 +486,16 @@
     "text_select_cover": "Chọn ảnh bìa",
     "text_selecting_categories": "Bài viết của bạn sẽ được thêm vào",
     "text_search_category_placeholder": "Tìm lựa chọn của bạn...",
-    "text_edit_article_success": "Cập nhật bài viết thành công"
+    "text_edit_article_success": "Cập nhật bài viết thành công",
+    "menu": {
+      "edit": "Chỉnh sửa bài viết",
+      "copy_link": "Sao chép đường dẫn",
+      "delete": "Xóa bài viết",
+      "save": "Lưu bài viết",
+      "unsave": "Bỏ lưu bài viết"
+    },
+    "text_saved": "Đã lưu bài viết",
+    "text_unsaved": "Đã bỏ lưu bài viết"
   },
   "post": {
     "news_feed": "News Feed",
@@ -586,6 +598,7 @@
     "post_menu_edit": "Sửa Bài Viết",
     "post_menu_copy": "Sao Chép Liên Kết",
     "post_menu_save": "Lưu Bài Viết",
+    "post_menu_unsave": "Bỏ lưu Bài Viết",
     "post_menu_view_reactions": "Xem Tương Tác",
     "post_menu_turn_off_noti": "Tắt thông báo cho bài viết này",
     "post_menu_history": "Xem Lịch Sử Chỉnh Sửa",
@@ -679,11 +692,8 @@
     },
     "text_important_warning_1": "Không thể cài đặt Bài viết quan trọng vì bạn không có quyền trong",
     "text_important_warning_2": ". Vui lòng xoá chúng hoặc liên hệ với quản trị viên của bạn.",
-    "article_menu": {
-      "edit": "Chỉnh sửa bài viết",
-      "copy_link": "Sao chép đường dẫn",
-      "delete": "Xóa bài viết"
-    }
+    "text_saved": "Đã lưu bài viết",
+    "text_unsaved": "Đã bỏ lưu bài viết"
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
@@ -1089,6 +1099,7 @@
     "text_update_cover": "Đổi ảnh bìa",
     "menu_text_edit_series": "Chỉnh sửa series",
     "menu_text_save_series": "Lưu series",
+    "menu_text_unsave_series": "Bỏ lưu series",
     "menu_text_delete_series": "Xoá series",
     "content_delete_series": "Bạn có muốn xóa series này không?",
     "text_delete_series_success": "Series đã được xoá",
@@ -1099,6 +1110,8 @@
     "text_edit_series_success": "Chỉnh sửa series thành công.",
     "text_edit_series_failed": "Đăng series thất bại",
     "title_edit_audience_failed": "Thay đổi đối tượng?",
-    "content_edit_audience_failed": "Bạn không có quyền xóa bài đăng của chính mình trong các nhóm:"
+    "content_edit_audience_failed": "Bạn không có quyền xóa bài đăng của chính mình trong các nhóm:",
+    "text_saved": "Đã lưu series",
+    "text_unsaved": "Đã bỏ lưu series"
   }
 }

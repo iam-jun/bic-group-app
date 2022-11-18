@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
-import { Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
-import { BottomListProps } from '~/components/BottomList';
 import { ContentHeader } from '~/components/ContentView';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
@@ -12,8 +10,8 @@ import { IAudienceGroup, IPost } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { AlertDeleteAudiences } from '~/components/posts';
 import modalActions from '~/storeRedux/modal/actions';
-import { getSeriesMenu } from '~/helpers/series';
 import useSeriesStore, { ISeriesState } from '~/screens/series/store';
+import useSeriesMenu from '~/hooks/useSeriesMenu';
 
 type SeriesHeaderProps = {
   series: IPost;
@@ -96,21 +94,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
     actions.deleteSeries(id, handleError);
   };
 
-  const onPressMenu = () => {
-    Keyboard.dismiss();
-    const data = getSeriesMenu({
-      reactionsCount: {},
-      isActor: actor?.id == userId,
-      dispatch,
-      seriesId: id,
-      navigaton: rootNavigation,
-      handleConfirmDelete,
-    });
-
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data } as BottomListProps),
-    );
-  };
+  const { showMenu } = useSeriesMenu(series, actor?.id == userId, false, handleConfirmDelete);
 
   return (
     <ContentHeader
@@ -118,7 +102,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
       disabled={disabled}
       audience={audience}
       onPressHeader={onPressHeader}
-      onPressMenu={onPressMenu}
+      onPressMenu={showMenu}
     />
   );
 };

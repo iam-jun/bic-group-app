@@ -180,6 +180,7 @@ import { faInputText } from '@fortawesome/pro-regular-svg-icons/faInputText';
 import { faChartTreeMap } from '@fortawesome/pro-regular-svg-icons/faChartTreeMap';
 import { faFlag } from '@fortawesome/pro-regular-svg-icons/faFlag';
 import { faFileInvoice as faFileInvoiceSolid } from '@fortawesome/pro-solid-svg-icons/faFileInvoice';
+import { faBookmarkSlash } from '@fortawesome/pro-regular-svg-icons/faBookmarkSlash';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -380,6 +381,7 @@ export const initFontAwesomeIcon = () => {
     faChartTreeMap,
     faFlag,
     faFileInvoiceSolid,
+    faBookmarkSlash,
   );
 };
 
@@ -456,6 +458,7 @@ export const fontAwesomeIcons = {
   TrashCanSolid: 'fa-solid fa-trash-can',
   Bookmark: 'fa-regular fa-bookmark',
   BookmarkSolid: 'fa-solid fa-bookmark',
+  BookmarkSlash: 'fa-regular fa-bookmark-slash',
   GaugeHigh: 'fa-regular fa-gauge-high',
   Gauge: 'fa-regular fa-gauge',
   Ellipsis: 'fa-regular fa-ellipsis',

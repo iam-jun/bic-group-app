@@ -13,6 +13,8 @@ import postActions from '~/storeRedux/post/actions';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
+import useCommonController from '~/screens/store';
+import { getPostMenus } from '~/helpers/post';
 
 const usePostMenu = (
   data: IPost,
@@ -23,9 +25,13 @@ const usePostMenu = (
   const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
 
+  const commonActions = useCommonController((state) => state.actions);
+
   if (!data) return null;
 
-  const { id: postId, isDraft, reactionsCount } = data;
+  const {
+    id: postId, isDraft, reactionsCount, isSaved, type,
+  } = data;
 
   const onPressEdit = () => {
     dispatch(modalActions.hideBottomList());
@@ -42,6 +48,15 @@ const usePostMenu = (
     rootNavigation?.navigate?.(
       homeStack.postSettings, { postId },
     );
+  };
+
+  const onPressSave = () => {
+    dispatch(modalActions.hideBottomList());
+    if (isSaved) {
+      commonActions.unsavePost(postId, type);
+    } else {
+      commonActions.savePost(postId, type);
+    }
   };
 
   const onPressCopyLink = () => {
@@ -106,6 +121,14 @@ const usePostMenu = (
     },
     {
       id: 3,
+      testID: 'post_view_menu.save_unsave',
+      leftIcon: isSaved ? 'BookmarkSlash' : 'Bookmark',
+      title: i18next.t(`post:post_menu_${isSaved ? 'unsave' : 'save'}`),
+      requireIsActor: false,
+      onPress: onPressSave,
+    },
+    {
+      id: 4,
       testID: 'post_view_menu.copy',
       leftIcon: 'LinkHorizontal',
       title: i18next.t('post:post_menu_copy'),
@@ -113,7 +136,7 @@ const usePostMenu = (
       onPress: onPressCopyLink,
     },
     {
-      id: 4,
+      id: 5,
       testID: 'post_view_menu.insights',
       leftIcon: 'iconReact',
       title: i18next.t('post:post_menu_view_reactions'),
@@ -121,7 +144,7 @@ const usePostMenu = (
       requireReactionCounts: true,
       onPress: onPressViewReactions,
     }, {
-      id: 5,
+      id: 6,
       testID: 'post_view_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('post:post_menu_delete'),
@@ -145,19 +168,3 @@ const usePostMenu = (
 };
 
 export default usePostMenu;
-
-const getPostMenus = (data: any[], isActor: boolean, reactionsCount: any) => {
-  const result = [];
-  data.forEach((item: any) => {
-    const requireNothing = !item.requireIsActor && !item?.requireReactionCounts;
-    const requireActor = item.requireIsActor && isActor;
-    const hasReaction = reactionsCount && Object.keys(reactionsCount)?.[0];
-    const requireReactionCounts = item?.requireReactionCounts && reactionsCount && hasReaction;
-
-    if (requireNothing || requireActor || requireReactionCounts) {
-      result.push({ ...item });
-    }
-  });
-
-  return result;
-};

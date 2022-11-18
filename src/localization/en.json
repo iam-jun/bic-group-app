@@ -182,7 +182,9 @@
     "text_optional": "optional",
     "articles": "Articles",
     "last_updated": "Last updated",
-    "audiences": "Audiences"
+    "audiences": "Audiences",
+    "text_save_fail": "Save fail.",
+    "text_unsave_fail": "Unsave fail."
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -442,6 +444,7 @@
     "draft_post": "Draft Posts",
     "title_feed_attritube_all": "All",
     "title_feed_attritube_important": "Important",
+    "title_feed_attritube_saved": "Saved",
     "title_feed_content_all": "All",
     "title_feed_content_posts": "Posts",
     "title_feed_content_articles": "Articles",
@@ -524,7 +527,16 @@
     "text_select_cover": "Select cover",
     "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
-    "text_edit_article_success": "Article updated successfully"
+    "text_edit_article_success": "Article updated successfully",
+    "menu": {
+      "edit": "Edit Article",
+      "copy_link": "Copy Link",
+      "delete": "Delete Article",
+      "save": "Save Article",
+      "unsave": "Unsave Article"
+    },
+    "text_saved": "Article saved.",
+    "text_unsaved": "Article unsaved."
   },
   "post": {
     "news_feed": "News Feed",
@@ -625,6 +637,7 @@
     "post_menu_edit": "Edit Post",
     "post_menu_copy": "Copy Link",
     "post_menu_save": "Save Post",
+    "post_menu_unsave": "Unsave Post",
     "post_menu_view_reactions": "View Reactions",
     "post_menu_turn_off_noti": "Turn off notification for this post",
     "post_menu_history": "View Edit History",
@@ -718,11 +731,8 @@
     },
     "text_important_warning_1": "Cannot set because you don't have this permission at",
     "text_important_warning_2": ". Please remove them or contact your admin",
-    "article_menu": {
-      "edit": "Edit Article",
-      "copy_link": "Copy Link",
-      "delete": "Delete Article"
-    }
+    "text_saved": "Post saved.",
+    "text_unsaved": "Post unsaved."
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -1155,6 +1165,7 @@
     "text_update_cover": "Update cover",
     "menu_text_edit_series": "Edit series",
     "menu_text_save_series": "Save Series",
+    "menu_text_unsave_series": "Unsave Series",
     "menu_text_delete_series": "Delete Series",
     "content_delete_series": "Do you want to delete this series?",
     "text_delete_series_success": "Series deleted",
@@ -1165,6 +1176,8 @@
     "text_edit_series_success": "Series updated.",
     "text_edit_series_failed": "Series was failed to publish",
     "title_edit_audience_failed": "Audience Change?",
-    "content_edit_audience_failed": "You don't have delete own post permission at group:"
+    "content_edit_audience_failed": "You don't have delete own post permission at group:",
+    "text_saved": "Series saved.",
+    "text_unsaved": "Series unsaved."
   }
 }
