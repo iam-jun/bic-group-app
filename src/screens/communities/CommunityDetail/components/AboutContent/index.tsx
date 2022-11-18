@@ -118,7 +118,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: colors.neutral5,
+      backgroundColor: colors.gray5,
     },
     container: {
       backgroundColor: colors.white,
