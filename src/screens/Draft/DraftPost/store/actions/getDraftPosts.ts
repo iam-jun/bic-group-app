@@ -1,5 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
+import usePostsStore from '~/store/entities/posts';
 import IDraftPostState from '../Interface';
 
 const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
@@ -37,6 +38,7 @@ const getDraftPosts = (set, get) => async (payload: IPayloadGetDraftPosts) => {
         state.loading = false;
         state.total = response?.total;
       }, 'getDraftPostsSuccess');
+      usePostsStore.getState().actions.addToPosts({ data: newPosts });
     } else {
       console.warn('\x1b[36m🐣️ action getDraftPosts cant load more\x1b[0m');
     }

@@ -83,7 +83,7 @@ const PostBody: FC<PostBodyProps> = ({
           useMarkdownIt
           limitMarkdownTypes
           mentions={mentions}
-          BottomRightComponent={renderBottomRightComponent()}
+          BottomRightComponent={!isDraft && renderBottomRightComponent()}
           onPressAudience={onPressMentionAudience}
           onToggleShowTextContent={onPressMarkSeenPost}
         />
@@ -114,7 +114,7 @@ const PostBody: FC<PostBodyProps> = ({
         mentions={mentions}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
-        BottomRightComponent={renderBottomRightComponent()}
+        BottomRightComponent={!isDraft && renderBottomRightComponent()}
       />
     );
   };
@@ -125,7 +125,7 @@ const PostBody: FC<PostBodyProps> = ({
   /* only show link previewer when there aren't any attachments */
   const showLinkPreviewer = hasNoAttachment && !!linkPreview;
 
-  const isShowVideoPlayer = !isDraft && videos?.[0]?.thumbnails?.length > 0;
+  const isShowVideoPlayer = videos?.[0]?.thumbnails?.length > 0;
 
   return (
     <View>
