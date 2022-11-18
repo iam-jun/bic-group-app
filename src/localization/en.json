@@ -723,6 +723,10 @@
       "edit": "Edit Article",
       "copy_link": "Copy Link",
       "delete": "Delete Article"
+    },
+    "series_detail_article_menu": {
+      "reorder": "Reorder",
+      "delete": "Delete"
     }
   },
   "comment": {

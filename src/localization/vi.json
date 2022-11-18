@@ -684,6 +684,10 @@
       "edit": "Chỉnh sửa bài viết",
       "copy_link": "Sao chép đường dẫn",
       "delete": "Xóa bài viết"
+    },
+    "series_detail_article_menu": {
+      "reorder": "Sắp xếp lại",
+      "delete": "Xóa bài viết"
     }
   },
   "comment": {
