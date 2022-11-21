@@ -185,6 +185,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <NewsfeedList
+        key={`${contentFilter}_${attributeFilter}`}
         data={homePosts}
         refreshing={refreshing}
         canLoadMore={canLoadMore}
