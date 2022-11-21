@@ -5,10 +5,10 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
 import Store from '~/storeRedux';
-import appActions from '~/storeRedux/app/actions';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import { ICommunity } from '~/interfaces/ICommunity';
+import showError from '~/store/helper/showError';
 
 const joinCommunity
   = (_set, _get) => async (communityId: string, communityName: string) => {
@@ -53,7 +53,7 @@ const joinCommunity
       Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
     } catch (error) {
       console.error('joinCommunity catch', error);
-      Store.store.dispatch(appActions.setShowError(error));
+      showError(error);
     }
   };
 
