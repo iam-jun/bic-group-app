@@ -64,6 +64,7 @@ export const streamApiConfig = {
       idGt: param?.idGt,
       idLt: param?.idLt,
       isImportant: param?.isImportant,
+      isSaved: param?.isSaved,
       type: param?.type,
     },
   }),
@@ -377,6 +378,16 @@ export const streamApiConfig = {
     ...defaultConfig,
     url: `${provider.url}posts/total-draft`,
   }),
+  postSavePost: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    method: 'post',
+    url: `${provider.url}posts/${id}/save`,
+  }),
+  postUnsavePost: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}posts/${id}/unsave`,
+    method: 'delete',
+  }),
 };
 
 const streamApi = {
@@ -584,6 +595,8 @@ const streamApi = {
   ),
   getTotalDraft: () => withHttpRequestPromise(streamApiConfig.getTotalDraft),
   searchSeries: (params?: IGetSeries) => withHttpRequestPromise(streamApiConfig.searchSeries, params),
+  postSavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postSavePost, id),
+  postUnsavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsavePost, id),
   reorderArticles: (id: string, data: IReorderArticles) => withHttpRequestPromise(
     streamApiConfig.reorderArticles, id, data,
   ),

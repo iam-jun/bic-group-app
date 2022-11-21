@@ -1,7 +1,7 @@
 import { IGetUserProfile, IUserProfile } from '~/interfaces/IAuth';
 import {
   ICommentData,
-  IOwnReaction, IPayloadReactToComment, IPayloadReactToPost, IPayloadUpdateReaction, IReactionCounts,
+  IOwnReaction, IPayloadReactToComment, IPayloadReactToPost, IPayloadUpdateReaction, IReactionCounts, PostType,
 } from '~/interfaces/IPost';
 import IBaseState from '~/store/interfaces/IBaseState';
 import {
@@ -14,6 +14,8 @@ import onUpdateReactionOfCommentById from './actions/onUpdateReactionOfCommentBy
 import onUpdateReactionOfPostById from './actions/onUpdateReactionOfPostById';
 import putReactionToComment from './actions/putReactionToComment';
 import putReactionToPost from './actions/putReactionToPost';
+import savePost from './actions/savePost';
+import unsavePost from './actions/unsavePost';
 import updateReactionBySocket from './actions/updateReactionBySocket';
 
 export interface ICommonController extends IBaseState {
@@ -34,8 +36,10 @@ export interface ICommonController extends IBaseState {
     )=>void;
     updateReactionBySocket: (payload: IPayloadUpdateReaction)=>void;
     getMyProfile: (payload: IGetUserProfile) => void;
-
     setMyProfile: (payload: IUserProfile) => void;
+
+    savePost: (id:string, type: PostType) => void;
+    unsavePost: (id:string, type: PostType) => void;
   }
 }
 
@@ -60,6 +64,8 @@ const commonController = (set, get) => ({
         state.myProfile = payload;
       }, 'setMyProfile');
     },
+    savePost: savePost(set, get),
+    unsavePost: unsavePost(set, get),
   },
 });
 

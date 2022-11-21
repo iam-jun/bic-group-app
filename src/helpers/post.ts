@@ -129,3 +129,19 @@ export const isEmptyPost = (post: IPost) => {
     && isEmpty(videos)
     && isEmpty(files);
 };
+
+export const getPostMenus = (data: any[], isActor: boolean, reactionsCount: any) => {
+  const result = [];
+  data.forEach((item: any) => {
+    const requireNothing = !item.requireIsActor && !item?.requireReactionCounts;
+    const requireActor = item.requireIsActor && isActor;
+    const hasReaction = reactionsCount && Object.keys(reactionsCount)?.[0];
+    const requireReactionCounts = item?.requireReactionCounts && reactionsCount && hasReaction;
+
+    if (requireNothing || requireActor || requireReactionCounts) {
+      result.push({ ...item });
+    }
+  });
+
+  return result;
+};

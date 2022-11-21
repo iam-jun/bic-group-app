@@ -3,6 +3,7 @@ import IBaseState from '~/store/interfaces/IBaseState';
 export enum AttributeFeed {
   ALL = 'ALL',
   IMPORTANT = 'IMPORTANT',
+  SAVED = 'SAVED',
 }
 
 export enum ContentFeed {

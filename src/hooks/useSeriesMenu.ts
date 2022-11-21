@@ -1,33 +1,38 @@
 import i18next from 'i18next';
 import Clipboard from '@react-native-clipboard/clipboard';
 
-import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
+import { useDispatch } from 'react-redux';
+import { Keyboard } from 'react-native';
+import modalActions from '~/storeRedux/modal/actions';
+import { IPost } from '~/interfaces/IPost';
+import { useRootNavigation } from './navigation';
+import { BottomListProps } from '~/components/BottomList';
+import useCommonController from '~/screens/store';
+import { getPostMenus } from '~/helpers/post';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { getLink, LINK_SERIRES } from '~/utils/link';
 import { Button } from '~/baseComponents';
-import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 
-interface Props {
-  reactionsCount: any,
+const useSeriesMenu = (
+  data: IPost,
   isActor: boolean,
-  dispatch:any,
-  seriesId: string,
-  navigaton: any,
-  isFromDetail?: boolean,
+  isFromDetail: boolean,
   handleConfirmDelete: ()=> void,
-}
+) => {
+  const { rootNavigation } = useRootNavigation();
+  const dispatch = useDispatch();
 
-export const getSeriesMenu = ({
-  reactionsCount,
-  isActor,
-  dispatch,
-  seriesId,
-  navigaton,
-  isFromDetail,
-  handleConfirmDelete,
-}: Props) => {
+  const commonActions = useCommonController((state) => state.actions);
+
+  if (!data) return null;
+
+  const {
+    id: seriesId, reactionsCount, isSaved, type,
+  } = data;
+
   const onPressEdit = () => {
     dispatch(modalActions.hideBottomList());
-    navigaton?.navigate?.(
+    rootNavigation?.navigate?.(
       seriesStack.createSeries, {
         seriesId,
         isFromDetail,
@@ -44,7 +49,7 @@ export const getSeriesMenu = ({
     Clipboard.setString(getLink(
       LINK_SERIRES, seriesId,
     ));
-    dispatch(showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
+    dispatch(modalActions.showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
   };
 
   const onPressDelete = () => {
@@ -62,6 +67,15 @@ export const getSeriesMenu = ({
         onConfirm: handleConfirmDelete,
       }),
     );
+  };
+
+  const onPressSave = () => {
+    dispatch(modalActions.hideBottomList());
+    if (isSaved) {
+      commonActions.unsavePost(seriesId, type);
+    } else {
+      commonActions.savePost(seriesId, type);
+    }
   };
 
   const defaultData = [
@@ -84,11 +98,10 @@ export const getSeriesMenu = ({
     {
       id: 3,
       testID: 'series_menu.save',
-      leftIcon: 'Bookmark',
-      title: i18next.t('series:menu_text_save_series'),
+      leftIcon: isSaved ? 'BookmarkSlash' : 'Bookmark',
+      title: i18next.t(`series:menu_text_${isSaved ? 'unsave' : 'save'}_series`),
       requireIsActor: false,
-      upcoming: true,
-      onPress: onPressUpcomingFeature,
+      onPress: onPressSave,
     },
     {
       id: 4,
@@ -108,13 +121,19 @@ export const getSeriesMenu = ({
       onPress: onPressDelete,
     },
   ];
-  const result = [];
-  defaultData.forEach((item: any) => {
-    if ((!item.requireIsActor && !item?.requireReactionCounts) || (item.requireIsActor && isActor)
-     || (item?.requireReactionCounts && !!reactionsCount && !!Object.keys(reactionsCount)?.[0])) {
-      result.push({ ...item });
-    }
-  });
 
-  return result;
+  const menus = getPostMenus(defaultData, isActor, reactionsCount);
+
+  const showMenu = () => {
+    Keyboard.dismiss();
+    dispatch(
+      modalActions.showBottomList({ isOpen: true, data: menus } as BottomListProps),
+    );
+  };
+
+  return {
+    showMenu,
+  };
 };
+
+export default useSeriesMenu;
