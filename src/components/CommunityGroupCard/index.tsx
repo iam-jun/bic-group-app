@@ -67,6 +67,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
         groupStack.groupDetail,
         {
           groupId: id,
+          communityId: community.id,
         },
       );
       return;
