@@ -2,8 +2,9 @@ import searchSeries from './actions/searchSeries';
 import getSeries from './actions/getSeries';
 import { createStore, resetStore } from '~/store/utils';
 import { IGetSeries } from '~/interfaces/ISeries';
+import IBaseState from '~/store/interfaces/IBaseState';
 
-export interface IEditArticleSeriesState {
+export interface IEditArticleSeriesState extends IBaseState {
   listSeries: {
     loading: boolean;
     items: any;

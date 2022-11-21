@@ -13,6 +13,7 @@ import Icon from '~/baseComponents/Icon';
 import { IPost, IPostAudience } from '~/interfaces/IPost';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import { ContentInterestedUserCount } from '~/components/ContentView';
 
 type SeriesDetailHeaderProps = {
   series: IPost;
@@ -120,14 +121,38 @@ const InfoSection = () => {
 
 const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
   const {
-    audience, title, summary, coverMedia,
+    id, audience, title, summary, coverMedia, articles, totalUsersSeen,
   } = series || {};
   const theme = useTheme();
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   return (
     <View style={styles.containerHeader}>
-      <Image source={coverMedia?.url} style={styles.img} />
+      <View>
+        <Image source={coverMedia?.url} style={styles.img} />
+        <View style={styles.mask} />
+        <View style={styles.insideView}>
+          <View style={styles.row}>
+            <Icon
+              icon="FileInvoiceSolid"
+              size={18}
+              tintColor={colors.white}
+            />
+            <ViewSpacing width={spacing.margin.base} />
+            <Text.BodyMMedium color={colors.white}>
+              { articles?.length }
+            </Text.BodyMMedium>
+          </View>
+          <ContentInterestedUserCount
+            isLite
+            labelColor={colors.white}
+            id={id}
+            interestedUserCount={totalUsersSeen}
+            style={styles.interestedUserCount}
+          />
+        </View>
+      </View>
       <View style={styles.container}>
         <AudiencesSection audience={audience} />
         <ViewSpacing height={spacing.margin.large} />
@@ -171,6 +196,29 @@ const createStyle = (theme: ExtendedTheme) => {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    mask: {
+      ...StyleSheet.absoluteFillObject,
+      height: 50,
+      marginTop: 117,
+      opacity: 0.4,
+      backgroundColor: colors.black,
+    },
+    insideView: {
+      ...StyleSheet.absoluteFillObject,
+      height: 50,
+      marginTop: 117,
+      paddingHorizontal: spacing.padding.large,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    interestedUserCount: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingHorizontal: 0,
+      margin: 0,
+      alignItems: 'flex-end',
     },
   });
 };

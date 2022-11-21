@@ -42,3 +42,7 @@ export interface IGetSeries {
   contentSearch?: string;
   groupIds?: string[];
 }
+
+export interface IReorderArticles {
+  articleIds: string[]
+}

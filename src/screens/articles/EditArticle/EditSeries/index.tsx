@@ -27,6 +27,7 @@ const EditArticleSeries: FC<EditArticleProps> = ({ route }: EditArticleProps) =>
   const { rootNavigation } = useRootNavigation();
 
   const serieActions = useEditArticleSeriesStore((state) => state.actions);
+  const resetSeries = useEditArticleSeriesStore((state) => state.reset);
   const selectedSeries = useEditArticleStore((state) => state.data.series);
   const editArticleActions = useEditArticleStore((state) => state.actions);
   const isPublishing = useEditArticleStore((state) => state.isPublishing);
@@ -47,13 +48,17 @@ const EditArticleSeries: FC<EditArticleProps> = ({ route }: EditArticleProps) =>
 
   useEffect(() => {
     serieActions.getSeries(false, { groupIds });
+  }, [groupIds]);
+
+  useEffect(() => () => {
+    resetSeries();
   }, []);
 
   const {
-    handleSave, handleBack, enableButtonSave, loading, enableButtonNext,
+    handleSave, handleBack, enableButtonSave, loading,
   } = useEditArticle({ articleId });
 
-  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
+  const disabled = (isPublishing ? false : !enableButtonSave) || loading;
 
   useBackPressListener(handleBack);
 

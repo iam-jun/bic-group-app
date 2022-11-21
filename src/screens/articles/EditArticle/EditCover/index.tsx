@@ -46,10 +46,10 @@ const EditArticleCover: FC<EditArticleProps> = ({ route }: EditArticleProps) => 
   const styles = createStyle(theme);
 
   const {
-    handleBack, handleSave, enableButtonSave, enableButtonNext, loading,
+    handleBack, handleSave, enableButtonSave, loading,
   } = useEditArticle({ articleId });
 
-  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
+  const disabled = (isPublishing ? false : !enableButtonSave) || loading;
 
   const onPressSelect = () => {
     checkPermission(

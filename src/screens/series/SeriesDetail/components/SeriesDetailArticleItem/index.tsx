@@ -4,34 +4,26 @@ import { View, StyleSheet } from 'react-native';
 import { IPost } from '~/interfaces/IPost';
 import { spacing } from '~/theme';
 import TitleArticle from './TitleArticle';
-import Text from '~/beinComponents/Text';
-import { formatDate } from '~/utils/formatData';
-import { useBaseHook } from '~/hooks';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ContentArticleItem from './ContentArticleItem';
 
 type SeriesDetailArticleItemProps = {
     article: IPost;
     index: number;
+    seriesId: string;
 }
 
-const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({ article, index }) => {
+const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({ article, index, seriesId }) => {
   const {
-    actor, coverMedia, summary, updatedAt,
-  } = article;
-  const { t } = useBaseHook();
+    actor, coverMedia, summary,
+  } = article || {};
   const theme = useTheme();
   const styles = createStyle(theme);
 
   return (
     <View style={styles.container}>
-      <TitleArticle index={index} article={article} />
-      <ViewSpacing height={spacing.margin.xSmall} />
-      <Text.BodyS>
-        {`${t('common:last_updated')}: `}
-        <Text.BodySMedium>{formatDate(updatedAt, 'DD/MM/YYYY')}</Text.BodySMedium>
-      </Text.BodyS>
-      <ViewSpacing height={spacing.margin.large} />
+      <TitleArticle index={index} article={article} seriesId={seriesId} />
+      <ViewSpacing height={spacing.margin.extraLarge} />
       <ContentArticleItem actor={actor} coverMedia={coverMedia} summary={summary} />
     </View>
   );
@@ -44,6 +36,8 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       padding: spacing.padding.large,
       backgroundColor: colors.white,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.gray1,
     },
   });
 };

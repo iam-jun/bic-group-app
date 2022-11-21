@@ -5,6 +5,8 @@ exports[`SeriesDetailArticleItem component render correctly 1`] = `
   style={
     Object {
       "backgroundColor": "#FFFFFF",
+      "borderBottomColor": "#F2F5F8",
+      "borderBottomWidth": 1,
       "padding": 16,
     }
   }
@@ -76,7 +78,9 @@ exports[`SeriesDetailArticleItem component render correctly 1`] = `
                 "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 20,
               },
-              Object {},
+              Object {
+                "color": "#181C32",
+              },
               undefined,
             ]
           }
@@ -197,47 +201,7 @@ exports[`SeriesDetailArticleItem component render correctly 1`] = `
   <View
     style={
       Object {
-        "height": 6,
-        "paddingHorizontal": undefined,
-        "paddingVertical": undefined,
-        "width": undefined,
-      }
-    }
-  />
-  <Text
-    style={
-      Array [
-        Object {
-          "color": "#212745",
-          "fontFamily": "BeVietnamPro-Light",
-          "fontSize": 13,
-        },
-        Object {},
-        undefined,
-      ]
-    }
-  >
-    Last updated: 
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 13,
-          },
-          Object {},
-          undefined,
-        ]
-      }
-    >
-      03/11/2022
-    </Text>
-  </Text>
-  <View
-    style={
-      Object {
-        "height": 16,
+        "height": 24,
         "paddingHorizontal": undefined,
         "paddingVertical": undefined,
         "width": undefined,
@@ -392,7 +356,7 @@ exports[`SeriesDetailArticleItem component render correctly 1`] = `
                     "fontSize": 11,
                   },
                   Object {
-                    "color": "#181C32",
+                    "color": "#282E53",
                   },
                   undefined,
                 ]
@@ -452,7 +416,9 @@ exports[`SeriesDetailArticleItem component render correctly 1`] = `
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
             },
-            Object {},
+            Object {
+              "color": "#353E6E",
+            },
             undefined,
           ]
         }

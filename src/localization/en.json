@@ -356,6 +356,7 @@
     "text_private_community_banner_message": "According to the privacy, the join request setting is also turned on to make sure your community is completely private (Recommend)",
     "text_private_group_banner_message": "According to the privacy, the join request setting is also turned on to make sure your group is completely private (Recommend)",
     "title_edit_description": "Edit Description",
+    "title_edit_privacy": "Edit Privacy",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
     "title_edit_name": "Edit Name",
@@ -536,7 +537,12 @@
       "unsave": "Unsave Article"
     },
     "text_saved": "Article saved.",
-    "text_unsaved": "Article unsaved."
+    "text_unsaved": "Article unsaved.",
+    "remove_audiences_contains_series_title": "Remove Audience",
+    "remove_audiences_contains_series_content":"The following series were removed from this article: ${series}. Process anyway?",
+    "remove_series_title": "Remove Series",
+    "remove_series_content": "You don't have create article permission at series: ${series}. Do you want to remove series?",
+    "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?"
   },
   "post": {
     "news_feed": "News Feed",
@@ -732,7 +738,16 @@
     "text_important_warning_1": "Cannot set because you don't have this permission at",
     "text_important_warning_2": ". Please remove them or contact your admin",
     "text_saved": "Post saved.",
-    "text_unsaved": "Post unsaved."
+    "text_unsaved": "Post unsaved.",
+    "article_menu": {
+      "edit": "Edit Article",
+      "copy_link": "Copy Link",
+      "delete": "Delete Article"
+    },
+    "series_detail_article_menu": {
+      "reorder": "Reorder",
+      "delete": "Delete"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -1178,6 +1193,11 @@
     "title_edit_audience_failed": "Audience Change?",
     "content_edit_audience_failed": "You don't have delete own post permission at group:",
     "text_saved": "Series saved.",
-    "text_unsaved": "Series unsaved."
+    "text_unsaved": "Series unsaved.",
+    "reorder_article": "Reorder Article",
+    "text_info_reorder": "Drag and drop to reorder the article",
+    "reorder_successful": "Reorder successful",
+    "notice_changing_the_order": "You are changing the order",
+    "notice_sure_to_do_this": "Are you sure to do this?"
   }
 }

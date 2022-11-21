@@ -16,10 +16,10 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { EditArticleProps } from '~/interfaces/IArticle';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useEditArticle from '~/screens/articles/EditArticle/hooks/useEditArticle';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
+import useArticlesStore, { IArticlesState } from '../ArticleDetail/store';
 import useEditArticleStore from './store';
 
 const editOptions = [
@@ -45,8 +45,11 @@ const EditArticle: FC<EditArticleProps> = ({ route }: EditArticleProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const draftActions = useDraftArticleStore((state) => state.actions);
+  const articleActions = useArticlesStore((state: IArticlesState) => state.actions);
 
-  useEditArticle({ articleId });
+  useEffect(() => {
+    if (!!articleId) articleActions.getArticleDetail(articleId);
+  }, []);
 
   useEffect(
     () => () => {

@@ -316,6 +316,7 @@
     "text_private_community_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ được bật để chắc chắn rằng cộng đồng của bạn hoàn toàn riêng tư (Khuyến nghị)",
     "text_private_group_banner_message": "Theo chế độ riêng tư, thiết lập yêu cầu tham gia sẽ được bật để chắc chắn rằng nhóm của bạn hoàn toàn riêng tư (Khuyến nghị)",
     "title_edit_description": "Chỉnh sửa Mô tả",
+    "title_edit_privacy": "Chỉnh sửa Quyền riêng tư",
     "title_logout_from_all_devices": "Đăng xuất khỏi tất cả thiết bị",
     "title_edit_basic_info": "Chỉnh sửa Thông tin cơ bản",
     "title_edit_name": "Sửa Họ tên",
@@ -495,7 +496,12 @@
       "unsave": "Bỏ lưu bài viết"
     },
     "text_saved": "Đã lưu bài viết",
-    "text_unsaved": "Đã bỏ lưu bài viết"
+    "text_unsaved": "Đã bỏ lưu bài viết",
+    "remove_audiences_contains_series_title": "Xoá đối tượng",
+    "remove_audiences_contains_series_content":"Các series sau sẽ bị xóa khỏi bài viết này: ${series}. Vẫn tiếp tục?",
+    "remove_series_title": "Xoá Series",
+    "remove_series_content": "Bạn không có quyền tạo bài viết tại series: ${series}. Vẫn tiếp tục?",
+    "content_delete_audiences": "Bạn chỉ có thể xóa đối tượng khỏi bài viết của mình ngoại trừ những đối tượng bên dưới. Bạn chắc chắn chứ?"
   },
   "post": {
     "news_feed": "News Feed",
@@ -693,7 +699,16 @@
     "text_important_warning_1": "Không thể cài đặt Bài viết quan trọng vì bạn không có quyền trong",
     "text_important_warning_2": ". Vui lòng xoá chúng hoặc liên hệ với quản trị viên của bạn.",
     "text_saved": "Đã lưu bài viết",
-    "text_unsaved": "Đã bỏ lưu bài viết"
+    "text_unsaved": "Đã bỏ lưu bài viết",
+    "article_menu": {
+      "edit": "Chỉnh sửa bài viết",
+      "copy_link": "Sao chép đường dẫn",
+      "delete": "Xóa bài viết"
+    },
+    "series_detail_article_menu": {
+      "reorder": "Sắp xếp lại",
+      "delete": "Xóa bài viết"
+    }
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
@@ -1112,6 +1127,11 @@
     "title_edit_audience_failed": "Thay đổi đối tượng?",
     "content_edit_audience_failed": "Bạn không có quyền xóa bài đăng của chính mình trong các nhóm:",
     "text_saved": "Đã lưu series",
-    "text_unsaved": "Đã bỏ lưu series"
+    "text_unsaved": "Đã bỏ lưu series",
+    "reorder_article": "Xắp Sếp Bài Báo",
+    "text_info_reorder": "Kéo và thả để sắp xếp bài báo",
+    "reorder_successful": "Sắp xếp thành công",
+    "notice_changing_the_order": "Bạn đang thay đổi thứ tự bài báo",
+    "notice_sure_to_do_this": "Bạn có muốn thực hiện sự thay đổi này không?"
   }
 }

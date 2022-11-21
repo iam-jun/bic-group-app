@@ -44,10 +44,10 @@ const EditArticleCategory: FC<EditArticleProps> = ({ route }: EditArticleProps) 
   const listData = searchKey ? searchItems : categoryItems;
 
   const {
-    handleBack, handleSave, enableButtonSave, enableButtonNext, loading,
+    handleBack, handleSave, enableButtonSave, validButtonNext, loading,
   } = useEditArticle({ articleId });
 
-  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
+  const disabled = (isPublishing ? !validButtonNext.isCategoriesValid : !enableButtonSave) || loading;
 
   useEffect(() => {
     if (isEmpty(categoryItems) && !loadingCategories) {

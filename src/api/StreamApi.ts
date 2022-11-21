@@ -33,7 +33,9 @@ import {
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
-import { IGetSeries, IParamGetSeriesDetail, IPostCreateSeries } from '~/interfaces/ISeries';
+import {
+  IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderArticles,
+} from '~/interfaces/ISeries';
 
 const DEFAULT_LIMIT = 10;
 
@@ -341,6 +343,12 @@ export const streamApiConfig = {
     method: 'put',
     data,
   }),
+  reorderArticles: (id: string, data: IReorderArticles): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/${id}/reorder`,
+    method: 'put',
+    data,
+  }),
   searchSeries: (params?: IGetSeries): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}series`,
@@ -589,6 +597,9 @@ const streamApi = {
   searchSeries: (params?: IGetSeries) => withHttpRequestPromise(streamApiConfig.searchSeries, params),
   postSavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postSavePost, id),
   postUnsavePost: (id: string) => withHttpRequestPromise(streamApiConfig.postUnsavePost, id),
+  reorderArticles: (id: string, data: IReorderArticles) => withHttpRequestPromise(
+    streamApiConfig.reorderArticles, id, data,
+  ),
 };
 
 export default streamApi;
