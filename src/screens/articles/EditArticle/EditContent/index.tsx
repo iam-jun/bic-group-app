@@ -29,7 +29,7 @@ const EditArticleContent: FC<EditArticleContentProps> = ({ route }: EditArticleC
 
   const articleData = useEditArticle({ articleId });
   const {
-    loading, enableButtonSave, enableButtonNext, title, handleTitleChange, handleSave, handleBack,
+    loading, enableButtonSave, validButtonNext, title, handleTitleChange, handleSave, handleBack,
   } = articleData || {};
   const isPublishing = useEditArticleStore((state) => state.isPublishing);
 
@@ -37,7 +37,7 @@ const EditArticleContent: FC<EditArticleContentProps> = ({ route }: EditArticleC
     handleTitleChange(value);
   };
 
-  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
+  const disabled = (isPublishing ? !validButtonNext.isContentValid : !enableButtonSave) || loading;
 
   const onPressSave = () => {
     handleSave();

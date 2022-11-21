@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <uses-permission android:name="${beinChatId}.READ_DATABASE"/>
+    <uses-permission android:name="${beinChatId}.WRITE_DATABASE"/>
+
     <permission
         android:name="@string/provider_read_permission"
         android:label="Read Database"

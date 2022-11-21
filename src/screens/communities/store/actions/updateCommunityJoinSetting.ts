@@ -1,8 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useCommunitiesStore from '~/store/entities/communities';
-import Store from '~/storeRedux';
-import appActions from '~/storeRedux/app/actions';
+import showError from '~/store/helper/showError';
 
 const updateCommunityJoinSetting = (_, _get) => async (
   id: string,
@@ -18,7 +17,7 @@ const updateCommunityJoinSetting = (_, _get) => async (
     );
   } catch (error) {
     console.error('updateCommunityJoinSetting error:', error);
-    Store.store.dispatch(appActions.setShowError(error));
+    showError(error);
   }
 };
 
