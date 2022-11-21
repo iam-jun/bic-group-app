@@ -55,10 +55,10 @@ const EditArticleSeries: FC<EditArticleProps> = ({ route }: EditArticleProps) =>
   }, []);
 
   const {
-    handleSave, handleBack, enableButtonSave, loading, enableButtonNext,
+    handleSave, handleBack, enableButtonSave, loading,
   } = useEditArticle({ articleId });
 
-  const disabled = (isPublishing ? !enableButtonNext : !enableButtonSave) || loading;
+  const disabled = (isPublishing ? false : !enableButtonSave) || loading;
 
   useBackPressListener(handleBack);
 

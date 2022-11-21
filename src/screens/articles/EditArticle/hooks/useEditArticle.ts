@@ -75,13 +75,17 @@ const useEditArticle = ({ articleId, needToPublish, handleSaveAudienceError }: I
       || isSeriesUpdated);
   };
 
-  const isEnableButtonNext = () => {
+  const getValidButtonNext = () => {
     const isTitleValid = !isEmpty(data.title);
     const isContentValid = !isEmpty(data.content);
     const isCategoriesValid = !isEmpty(data.categories);
     // isAudienceValid self check at src/screens/articles/EditArticle/EditAudience/index.tsx
 
-    return isTitleValid && isContentValid && isCategoriesValid;
+    return {
+      isTitleValid,
+      isContentValid,
+      isCategoriesValid,
+    };
   };
 
   const initEditStoreData = () => {
@@ -108,7 +112,7 @@ const useEditArticle = ({ articleId, needToPublish, handleSaveAudienceError }: I
   }, [article]);
 
   const enableButtonSave = isHasChange();
-  const enableButtonNext = isEnableButtonNext();
+  const validButtonNext = getValidButtonNext();
 
   const handleContentChange = (newContent: string) => {
     actions.setContent(newContent);
@@ -193,7 +197,7 @@ const useEditArticle = ({ articleId, needToPublish, handleSaveAudienceError }: I
   return {
     loading,
     enableButtonSave,
-    enableButtonNext,
+    validButtonNext,
     title: data.title,
     content: data.content,
     groupIds,

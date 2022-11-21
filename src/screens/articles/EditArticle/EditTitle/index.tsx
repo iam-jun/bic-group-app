@@ -32,13 +32,13 @@ const EditArticleTitle: FC<EditArticleProps> = ({
   const styles = createStyle(theme);
 
   const {
-    handleBack, handleSave, enableButtonSave, enableButtonNext, loading,
+    handleBack, handleSave, enableButtonSave, validButtonNext, loading,
   } = useEditArticle({
     articleId,
     needToPublish: isDraft,
   });
 
-  const disabled = (isDraft ? !enableButtonNext : !enableButtonSave) || loading;
+  const disabled = (isDraft ? !validButtonNext.isTitleValid : !enableButtonSave) || loading;
 
   useBackPressListener(handleBack);
 
