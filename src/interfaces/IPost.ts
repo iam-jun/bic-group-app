@@ -39,8 +39,9 @@ export interface IPost {
   titleHighlight?: string;
   summaryHighlight?: string;
   hashtags?: string[];
-  coverMedia?: IArticleCover
-  categories?: ICategory[]
+  coverMedia?: IArticleCover;
+  categories?: ICategory[];
+  isSaved?: boolean;
 }
 
 export interface IPostAudience {

@@ -55,7 +55,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
 
   const renderHeader = () => (
     <ArticleHeader
-      articleId={id}
+      data={data}
       actor={actor}
       createdAt={createdAt}
       audience={audience}

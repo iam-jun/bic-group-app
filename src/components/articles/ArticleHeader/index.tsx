@@ -1,32 +1,29 @@
 import React, { FC } from 'react';
-import { Keyboard } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { BottomListProps } from '~/components/BottomList';
 
 import { ContentHeader, ContentHeaderProps } from '~/components/ContentView';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
-import { getArticleViewMenu } from '~/helpers/article';
+import { IPost } from '~/interfaces/IPost';
+import useArticleMenu from '~/hooks/useArticleMenu';
 
 export interface ArticleHeaderProps extends ContentHeaderProps {
-  articleId: string
+  data: IPost;
 }
 
 const ArticleHeader: FC<ArticleHeaderProps> = ({
-  articleId,
+  data,
   actor,
   disabled = false,
   onPressHeader,
   ...props
 }) => {
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
   const userId = useUserIdAuth();
   const isCreator = actor?.id == userId;
 
   const _onPressHeader = () => {
+    const { id: articleId } = data;
     if (onPressHeader) {
       onPressHeader?.(articleId);
     } else {
@@ -34,13 +31,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
     }
   };
 
-  const onPressMenu = () => {
-    Keyboard.dismiss();
-    const data = getArticleViewMenu({ isActor: isCreator, articleId, navigation: rootNavigation });
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data } as BottomListProps),
-    );
-  };
+  const { showMenu } = useArticleMenu(data, isCreator);
 
   return (
     <ContentHeader
@@ -48,7 +39,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
       actor={actor}
       disabled={disabled}
       onPressHeader={_onPressHeader}
-      onPressMenu={onPressMenu}
+      onPressMenu={showMenu}
     />
   );
 };

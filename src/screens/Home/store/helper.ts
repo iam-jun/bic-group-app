@@ -10,7 +10,12 @@ export const getParamsContentFeed = (contentFilter: ContentFeed) => {
   }
 };
 
-export const getParamsAttributeFeed = (attributeFilter: AttributeFeed) => {
-  if (attributeFilter === AttributeFeed.ALL) return false;
-  return true;
+export const getParamsImportantAttributeFeed = (attributeFilter: AttributeFeed) => {
+  if (attributeFilter === AttributeFeed.IMPORTANT) return true;
+  return false;
+};
+
+export const getParamsSavedAttributeFeed = (attributeFilter: AttributeFeed) => {
+  if (attributeFilter === AttributeFeed.SAVED) return true;
+  return false;
 };

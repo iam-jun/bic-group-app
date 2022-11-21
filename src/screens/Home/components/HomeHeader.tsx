@@ -45,6 +45,7 @@ const HEADER_CONTENT_FEED_FILTER = [
 const HEADER_ATTRIBUTE_FEED_FILTER = [
   { id: AttributeFeed.ALL, text: 'home:title_feed_attritube_all' },
   { id: AttributeFeed.IMPORTANT, text: 'home:title_feed_attritube_important' },
+  { id: AttributeFeed.SAVED, text: 'home:title_feed_attritube_saved' },
 ];
 
 const HomeHeader: FC<HomeHeaderProps> = ({
