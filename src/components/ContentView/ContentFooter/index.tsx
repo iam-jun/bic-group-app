@@ -7,7 +7,7 @@ import Button, { ButtonProps } from '~/beinComponents/Button';
 import { IReactionCounts } from '~/interfaces/IPost';
 import { IconType } from '~/resources/icons';
 import dimension from '~/theme/dimension';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { spacing } from '~/theme';
 import { formatLargeNumber } from '~/utils/formatData';

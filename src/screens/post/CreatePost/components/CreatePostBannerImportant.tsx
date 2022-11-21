@@ -5,7 +5,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Icon from '~/baseComponents/Icon';
 import { spacing } from '~/theme';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { formatDate } from '~/utils/formatData';
 
 interface CreatePostBannerImportantProps {

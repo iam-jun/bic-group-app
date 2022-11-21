@@ -5,7 +5,7 @@ import {
 import { useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import { IPostAudience } from '~/interfaces/IPost';
 import { useBaseHook } from '~/hooks';

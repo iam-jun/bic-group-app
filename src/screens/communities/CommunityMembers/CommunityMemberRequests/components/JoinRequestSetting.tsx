@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { Toggle } from '~/baseComponents';
 import { spacing } from '~/theme';
 import Icon from '~/baseComponents/Icon';

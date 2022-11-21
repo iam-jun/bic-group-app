@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IconType } from '~/resources/icons';
 
 import ButtonWrapper, { ButtonWrapperProps } from './ButtonWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 
 export interface ButtonIconProps extends ButtonWrapperProps {

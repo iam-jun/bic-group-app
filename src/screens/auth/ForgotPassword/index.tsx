@@ -15,7 +15,7 @@ import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { forgotPasswordStages } from '~/constants/authConstants';
 
 import { useBaseHook } from '~/hooks';

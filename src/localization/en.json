@@ -539,7 +539,7 @@
     "text_saved": "Article saved.",
     "text_unsaved": "Article unsaved.",
     "remove_audiences_contains_series_title": "Remove Audience",
-    "remove_audiences_contains_series_content":"The following series were removed from this article: ${series}. Process anyway?",
+    "remove_audiences_contains_series_content": "The following series were removed from this article: ${series}. Process anyway?",
     "remove_series_title": "Remove Series",
     "remove_series_content": "You don't have create article permission at series: ${series}. Do you want to remove series?",
     "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?"
@@ -1174,7 +1174,11 @@
     "flags": "Flags"
   },
   "series": {
-    "title_create_series": "Create Series",
+    "title": {
+      "create": "Create Series",
+      "edit": "Edit Series"
+    },
+    "title_edit_series": "Create Series",
     "title_name": "Name",
     "text_input_name": "Enter name",
     "text_update_cover": "Update cover",

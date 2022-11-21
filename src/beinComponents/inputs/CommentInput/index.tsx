@@ -28,7 +28,7 @@ import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInpu
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import StickerView from '~/components/StickerView';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import i18next from 'i18next';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import NoNotificationFoundImg from '~/../assets/images/no_notification_found.svg';
 import spacing from '~/theme/spacing';

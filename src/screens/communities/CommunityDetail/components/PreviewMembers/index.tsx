@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Avatar from '~/baseComponents/Avatar';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import { IPreviewMember } from '~/interfaces/ICommunity';
 import spacing from '~/theme/spacing';

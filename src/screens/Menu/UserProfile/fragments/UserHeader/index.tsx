@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { useTheme } from '@react-navigation/native';
 import { spacing } from '~/theme';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import WorkInfo from '../../components/WorkInfo';
 
 interface Props {

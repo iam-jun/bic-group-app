@@ -4,8 +4,8 @@ import { TextInput } from 'react-native';
 import Animated, { useAnimatedProps } from 'react-native-reanimated';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { createTextStyle } from '~/beinComponents/Text/textStyle';
-import { TextVariant } from '~/beinComponents/Text/index';
+import { createTextStyle } from '~/baseComponents/Text/textStyle';
+import { TextVariant } from '~/baseComponents/Text/index';
 
 Animated.addWhitelistedNativeProps({ text: true });
 

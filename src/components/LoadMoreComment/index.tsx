@@ -13,7 +13,7 @@ import Animated, {
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
 import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import useLoadMoreCommentsController from './store';
 

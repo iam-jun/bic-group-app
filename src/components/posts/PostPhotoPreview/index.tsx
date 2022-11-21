@@ -6,7 +6,7 @@ import {
 
 import Button from '~/beinComponents/Button';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';

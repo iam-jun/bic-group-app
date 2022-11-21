@@ -11,7 +11,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Icon from '~/baseComponents/Icon';
 
-import Text, { TextProps } from '~/beinComponents/Text';
+import Text, { TextProps } from '~/baseComponents/Text';
 import { IconType } from '~/resources/icons';
 import { clearToastMessage } from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';

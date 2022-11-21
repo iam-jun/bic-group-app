@@ -8,7 +8,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import modalActions from '~/storeRedux/modal/actions';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 
 export interface CreatePostExitOptionsProps {

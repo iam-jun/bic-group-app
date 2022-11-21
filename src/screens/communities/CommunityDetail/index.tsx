@@ -34,7 +34,7 @@ import CommunityTabHeader from './components/CommunityTabHeader';
 import { getHeaderMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import NotFound from '~/screens/NotFound/components/NotFound';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import PlaceholderView from './components/PlaceholderView';

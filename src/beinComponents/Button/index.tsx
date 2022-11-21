@@ -5,7 +5,7 @@ import Primary from './ButtonPrimary';
 import Secondary from './ButtonSecondary';
 import Danger from './ButtonDanger';
 import Icon from './ButtonIcon';
-import { TextProps, TextVariant } from '~/beinComponents/Text';
+import { TextProps, TextVariant } from '~/baseComponents/Text';
 
 export interface ButtonProps extends ButtonWrapperProps {
   children?: React.ReactNode;

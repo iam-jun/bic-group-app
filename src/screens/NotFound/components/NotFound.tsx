@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, View } from 'react-native';
 import NoContent from '~/../assets/images/no_content.svg';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';

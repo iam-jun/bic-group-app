@@ -12,7 +12,7 @@ import homeActions from '~/storeRedux/home/actions';
 
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { scaleSize } from '~/theme/dimension';
 import FilterToolbar from '~/screens/Home/HomeSearch/FilterToolbar';
 import spacing from '~/theme/spacing';

@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { InteractionManager } from 'react-native';
 
-const useMounted = () => {
+const useMounted = (callback?: () => void) => {
   const [interactionsCompleted, setInteractionsCompleted] = useState(false);
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => setInteractionsCompleted(true));
+    InteractionManager.runAfterInteractions(() => {
+      setInteractionsCompleted(true);
+      callback?.();
+    });
   }, []);
 
   return interactionsCompleted;

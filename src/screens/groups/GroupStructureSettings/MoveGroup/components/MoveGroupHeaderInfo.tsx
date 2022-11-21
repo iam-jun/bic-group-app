@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Avatar from '~/baseComponents/Avatar';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
 import { getAllChildrenName } from '~/screens/groups/helper';

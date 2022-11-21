@@ -4,7 +4,7 @@ import { cleanup } from '@testing-library/react-native';
 import { View } from 'react-native';
 import { renderWithRedux, fireEvent } from '~/test/testUtils';
 import ListView from './ListView';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 afterEach(cleanup);
 

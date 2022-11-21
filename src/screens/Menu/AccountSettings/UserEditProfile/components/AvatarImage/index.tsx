@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import images from '~/resources/images';
 import Avatar from '~/baseComponents/Avatar';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import { scaleSize } from '~/theme/dimension';
 import { spacing } from '~/theme';

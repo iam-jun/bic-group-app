@@ -2,7 +2,7 @@ import React from 'react';
 import { Text as TextRN, TextProps as RNTextProps } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import { createTextStyle } from '~/beinComponents/Text/textStyle';
+import { createTextStyle } from '~/baseComponents/Text/textStyle';
 import { useBaseHook } from '~/hooks';
 
 export type TextVariant =

@@ -13,7 +13,7 @@ import { useNetInfo } from '@react-native-community/netinfo';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import SvgIcon, { SVGIconProps } from './SvgIcon';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Image from '~/beinComponents/Image';
 import icons, { IconType } from '~/resources/icons';
 

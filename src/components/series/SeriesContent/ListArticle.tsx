@@ -1,8 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
+import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
-import Text from '~/beinComponents/Text';
 import { spacing } from '~/theme';
 import { formatNumberWithZeroPrefix } from '~/utils/formatData';
 import { useRootNavigation } from '~/hooks/navigation';

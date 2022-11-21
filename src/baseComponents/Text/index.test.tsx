@@ -3,8 +3,8 @@ import { render, cleanup } from '@testing-library/react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { StyleSheet } from 'react-native';
-import { createTextStyle } from '~/beinComponents/Text/textStyle';
-import Text from '~/beinComponents/Text';
+import { createTextStyle } from '~/baseComponents/Text/textStyle';
+import Text from '~/baseComponents/Text';
 
 afterEach(cleanup);
 

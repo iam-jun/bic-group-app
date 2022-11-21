@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 const Channel = () => (
   <Placeholder

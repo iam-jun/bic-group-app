@@ -2,7 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { communityPrivacyListDetail } from '~/constants/privacyTypes';
 import { margin, padding } from '~/theme/spacing';
 import { Avatar, Button } from '~/baseComponents';

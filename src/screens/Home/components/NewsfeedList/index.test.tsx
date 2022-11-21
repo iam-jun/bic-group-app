@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { renderWithRedux, waitForUpdateRedux } from '~/test/testUtils';
 import MockedNavigator from '../../../../test/MockedNavigator';
 import { POST_DETAIL } from '~/test/mock_data/post';
-import Text from '../../../../beinComponents/Text';
+import Text from '../../../../baseComponents/Text';
 import NewsfeedList from './index';
 
 describe('NewsfeedList component', () => {

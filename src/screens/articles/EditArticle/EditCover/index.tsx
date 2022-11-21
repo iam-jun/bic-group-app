@@ -8,7 +8,7 @@ import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import Header from '~/beinComponents/Header';
 import ImagePicker from '~/beinComponents/ImagePicker';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import { uploadTypes } from '~/configs/resourceConfig';
 

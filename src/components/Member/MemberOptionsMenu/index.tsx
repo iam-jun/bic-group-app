@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { Button } from '~/baseComponents';
 import BottomSheet from '~/baseComponents/BottomSheet';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import useAuth from '~/hooks/auth';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';

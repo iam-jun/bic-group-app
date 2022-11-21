@@ -43,16 +43,6 @@ const groupsActions = {
     payload,
   }),
 
-  // group structure settings
-  putGroupStructureCollapseStatus: (payload: {
-    communityId: string;
-    groupId: string;
-    isCollapse: boolean;
-  }) => ({
-    type: groupsTypes.PUT_GROUP_STRUCTURE_COLLAPSE_STATUS,
-    payload,
-  }),
-
   clearGroupMembers: () => ({
     type: groupsTypes.CLEAR_GROUP_MEMBER,
   }),

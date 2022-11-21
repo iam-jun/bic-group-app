@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import PermissionItem from '~/screens/PermissionScheme/CreatePermissionScheme/components/PermissionItem';
 import { ICategory, IPermission, IRole } from '~/interfaces/IGroup';

@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { isEmpty } from 'lodash';
 import { useDispatch } from 'react-redux';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { IFilePicked } from '~/interfaces/common';
 import Icon from '~/baseComponents/Icon';

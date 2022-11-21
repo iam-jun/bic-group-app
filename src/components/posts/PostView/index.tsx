@@ -6,7 +6,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Image from '~/beinComponents/Image';
 import ReactionView from '~/beinComponents/ReactionView';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import {

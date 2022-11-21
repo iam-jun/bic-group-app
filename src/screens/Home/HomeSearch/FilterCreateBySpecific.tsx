@@ -22,7 +22,7 @@ import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';
 import { Avatar, Button } from '~/baseComponents';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface NFSFilterCreateBySpecificProps {

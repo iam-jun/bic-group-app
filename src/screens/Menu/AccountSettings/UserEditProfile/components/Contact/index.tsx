@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import Divider from '~/beinComponents/Divider';
 import SettingItem from '../../../EditBasicInfo/fragments/SettingItem';

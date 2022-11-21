@@ -47,13 +47,13 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
-  const data = useSeriesStore((state: ISeriesState) => state.data) || {};
+  const data = useSeriesStore((state: ISeriesState) => state.data || {});
   const loading = useSeriesStore((state: ISeriesState) => state.loading);
-  const dataGroups = useSeriesStore((state: ISeriesState) => state.groups) || [];
+  const dataGroups = useSeriesStore((state: ISeriesState) => state.groups || []);
 
   const audienceActions = useSelectAudienceStore((state: ISelectAudienceState) => state.actions);
 
-  const chosenAudienceGroups = useSelectAudienceStore((state: ISelectAudienceState) => state.selecting?.groups);
+  const chosenAudienceGroups = useSelectAudienceStore((state: ISelectAudienceState) => state.selectedAudiences?.groups);
   const names = getNames(
     data.audience?.groupIds, chosenAudienceGroups,
   );
@@ -67,7 +67,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
       const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(series.audience);
       actions.setData({ ...series, audience: audienceIds });
       actions.setAudienceGroups(series.audience.groups);
-      audienceActions.setSelectingGroups(newSelectingGroups);
+      audienceActions.setSelectedAudiences(newSelectingGroups);
     }
   }, [series]);
 

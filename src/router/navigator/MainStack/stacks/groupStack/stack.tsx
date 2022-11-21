@@ -9,7 +9,6 @@ const groupStack = {
   // community
   communities: 'communities',
   communityDetail: 'community-detail',
-  yourGroups: 'your-groups',
   communityAbout: 'community-about',
   discoverGroups: 'discover-groups',
   communityMembers: 'community-members',

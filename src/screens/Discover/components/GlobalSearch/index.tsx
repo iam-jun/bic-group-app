@@ -58,7 +58,7 @@ const GlobalSearch = ({
   };
 
   const onView = (item: any) => {
-    if (isGroup(item.level)) {
+    if (isGroup(item)) {
       rootNavigation.navigate(groupStack.groupDetail, { groupId: item.id, communityId: item.community?.id });
       return;
     }
@@ -67,7 +67,7 @@ const GlobalSearch = ({
   };
 
   const onJoin = (item: any) => {
-    if (isGroup(item.level)) {
+    if (isGroup(item)) {
       joinNewGroup(item.id);
       return;
     }
@@ -76,7 +76,7 @@ const GlobalSearch = ({
   };
 
   const onCancel = (item: any) => {
-    if (isGroup(item.level)) {
+    if (isGroup(item)) {
       cancelJoinGroup(item.id);
       return;
     }

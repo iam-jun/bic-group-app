@@ -14,7 +14,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import * as modalActions from '~/storeRedux/modal/actions';
 import { showHideToastMessage } from '~/storeRedux/modal/actions';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { quickReactions } from '~/configs/reactionConfig';
 import { getLink, LINK_COMMENT } from '~/utils/link';
 import spacing from '~/theme/spacing';

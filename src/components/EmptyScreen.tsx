@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import Icon from '~/baseComponents/Icon';
 import Image from '~/beinComponents/Image';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 

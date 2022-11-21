@@ -9,7 +9,7 @@ import Header from '~/beinComponents/Header';
 import Icon from '~/baseComponents/Icon';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import languages from '~/constants/languages';
 import { AppContext } from '~/contexts/AppContext';

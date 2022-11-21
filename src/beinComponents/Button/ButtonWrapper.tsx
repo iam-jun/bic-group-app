@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text, { TextProps, TextVariant } from '~/beinComponents/Text';
+import Text, { TextProps, TextVariant } from '~/baseComponents/Text';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';

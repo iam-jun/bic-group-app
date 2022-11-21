@@ -3,7 +3,7 @@ import React, { FC, useCallback } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { margin } from '~/theme/spacing';
 import ArticleHeader from '../ArticleHeader';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ArticleWebview from '../ArticleWebview';
 import Divider from '~/beinComponents/Divider';
 import HashTags from '../../../baseComponents/HashTags';

@@ -9,7 +9,6 @@ import NewFeature from '~/components/NewFeature';
 
 import Communities from '~/screens/communities/Communities';
 import CommunityDetail from '~/screens/communities/CommunityDetail';
-import YourGroups from '~/screens/groups/YourGroups';
 import CommunityAbout from '~/screens/communities/CommunityAbout';
 import DiscoverGroups from '~/screens/groups/DiscoverGroups';
 import CommunityMembers from '~/screens/communities/CommunityMembers';
@@ -36,7 +35,6 @@ const groupScreens = {
   // community
   communities: Communities,
   'community-detail': CommunityDetail,
-  'your-groups': YourGroups,
   'community-about': CommunityAbout,
   'discover-groups': DiscoverGroups,
   'community-members': CommunityMembers,

@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useBaseHook } from '~/hooks';
 import SettingItem from '../../../EditBasicInfo/fragments/SettingItem';
 import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import genders from '~/constants/genders';
 import { formatDate } from '~/utils/formatData';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';

@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
 import { useDispatch } from 'react-redux';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import Button from '~/beinComponents/Button';
 import * as validation from '~/constants/commonRegex';

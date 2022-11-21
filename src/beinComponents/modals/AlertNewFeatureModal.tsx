@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import * as actions from '~/storeRedux/modal/actions';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/baseComponents/Icon/SvgIcon';

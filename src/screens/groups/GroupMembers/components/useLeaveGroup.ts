@@ -3,7 +3,7 @@ import i18next from 'i18next';
 
 import modalActions from '~/storeRedux/modal/actions';
 import groupsActions from '../../../../storeRedux/groups/actions';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import { handleLeaveInnerGroups } from '../../helper';
 import { Button } from '~/baseComponents';

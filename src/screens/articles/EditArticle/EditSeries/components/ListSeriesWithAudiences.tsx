@@ -3,7 +3,7 @@ import {
   FlatList, View, StyleSheet,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import Checkbox from '~/baseComponents/Checkbox';
 import ViewSpacing from '~/beinComponents/ViewSpacing';

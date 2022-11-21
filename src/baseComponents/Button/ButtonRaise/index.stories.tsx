@@ -5,7 +5,7 @@ import ButtonRaise from '.';
 import { getStoryComponent } from '~/storybook';
 import { light } from '~/theme/theme';
 import { ButtonSize } from '~/baseComponents/Button/interface';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 const ButtonRaiseStory = {
   title: 'base/Button.Raise',

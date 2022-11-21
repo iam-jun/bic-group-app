@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import { useBaseHook } from '~/hooks';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -36,7 +36,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   return (
     <TouchableOpacity
       disabled={disabled}
-      style={[styles.container, { opacity: disabled ? 0.5 : 1 }]}
+      style={[styles.container, disabled && styles.disabled]}
       onPress={onPressSelectAudience}
       testID="create_post_chosen_audiences"
     >
@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textPostTo: {
+  },
+  disabled: {
+    opacity: 0.5,
   },
 });
 

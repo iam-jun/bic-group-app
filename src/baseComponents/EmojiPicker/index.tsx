@@ -16,7 +16,7 @@ import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import Emoji from '../Emoji';
 
 import EmojiPickerRow from './components/EmojiPickRow';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import useEmojiPickerStore from './store';
 import IEmojiPickerState from './store/Interface';

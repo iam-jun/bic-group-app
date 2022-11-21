@@ -10,7 +10,7 @@ import Image, { ImageProps } from '~/beinComponents/Image';
 import { IconType } from '~/resources/icons';
 import dimension from '~/theme/dimension';
 import spacing, { borderRadius } from '~/theme/spacing';
-import Text from '../../beinComponents/Text';
+import Text from '../Text';
 import {
   ACTION_CONTAINER_SIZES, ACTION_ICON_SIZES, AVATAR_STYLES, PRIVACY_ICON_SIZES, PRIVACY_ICON_VIEW_SIZES,
 } from './constants';

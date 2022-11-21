@@ -15,7 +15,7 @@ import { IChangePasswordError } from '~/interfaces/IAuth';
 import useAuth from '~/hooks/auth';
 import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';

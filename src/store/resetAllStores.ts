@@ -4,7 +4,6 @@ import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from './entities/posts';
 import useHomeStore from '~/screens/Home/store';
 import useMenuController from '~/screens/Menu/store';
-import useSelectPostAudienceStore from '~/screens/post/PostSelectAudience/store';
 import useChatStore from '~/store/chat';
 import useDraftPostStore from '../screens/Draft/DraftPost/store';
 import useGroupStructureStore from '~/screens/groups/GroupStructureSettings/store';
@@ -44,7 +43,6 @@ const stores = [
   useHomeStore,
   useMenuController,
   useSelectAudienceStore,
-  useSelectPostAudienceStore,
   useDraftPostStore,
   useChatStore,
   useCommunitiesStore,

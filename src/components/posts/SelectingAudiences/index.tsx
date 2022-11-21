@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Dimensions, ScrollView, StyleSheet, View,
 } from 'react-native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import Tag from '~/baseComponents/Tag';
 import { useBaseHook } from '~/hooks';

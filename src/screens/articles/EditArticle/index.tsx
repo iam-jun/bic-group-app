@@ -8,10 +8,9 @@ import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
+import Text from '~/baseComponents/Text';
+import { createTextStyle } from '~/baseComponents/Text/textStyle';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
-import Text from '~/beinComponents/Text';
-import { createTextStyle } from '~/beinComponents/Text/textStyle';
-
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { EditArticleProps } from '~/interfaces/IArticle';

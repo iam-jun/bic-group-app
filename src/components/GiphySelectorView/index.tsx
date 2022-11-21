@@ -26,6 +26,7 @@ const GiphyView: FC<GiphyViewProps> = ({
   }>) => {
     onSelected({
       id: e?.nativeEvent?.media?.id,
+      url: e?.nativeEvent?.media?.url,
     });
   };
 

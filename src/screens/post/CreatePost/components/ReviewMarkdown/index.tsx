@@ -5,7 +5,7 @@ import {
   ScrollView, StyleSheet, useWindowDimensions, View,
 } from 'react-native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import { Button } from '~/baseComponents';
 import Avatar from '~/baseComponents/Avatar';

@@ -2,7 +2,7 @@ import {
   StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import React from 'react';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 interface Props {
   style?: StyleProp<ViewStyle>;

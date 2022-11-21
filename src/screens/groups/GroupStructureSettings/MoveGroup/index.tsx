@@ -9,7 +9,7 @@ import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';
 import MoveGroupHeaderInfo from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveGroupHeaderInfo';
 import MoveGroupTargets from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveGroupTargets';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import groupApi from '~/api/GroupApi';
 import modalActions from '~/storeRedux/modal/actions';

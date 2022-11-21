@@ -3,7 +3,7 @@ import {
   View, StyleSheet, Dimensions, ScrollView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import Tag from '~/baseComponents/Tag';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
@@ -13,35 +13,37 @@ import { useBaseHook } from '~/hooks';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const TAG_MAX_WIDTH = SCREEN_WIDTH * 0.6;
 
-const SelectingAudiences = () => {
+const SelectedAudiences = () => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
 
   const actions = useSelectAudienceStore((state) => state.actions);
-  const selectingGroups = useSelectAudienceStore((state) => state.selecting.groups);
+  const selectingGroups = useSelectAudienceStore((state) => state.selectedAudiences.groups);
 
   const list = Object.values(selectingGroups);
 
   const onPressRemoveItem = (item: any) => {
-    actions.removeSelectingGroup(item);
+    actions.updateItemSelection(item, false);
   };
 
   const renderItem = (item, index) => {
     const { name } = item;
+    const isFirstItem = index === 0;
+    const isLastItem = index === (list?.length || 0) - 1;
+
     return (
       <Tag
         key={`tag_${item?.id || index}`}
         style={{
           marginTop: spacing.margin.small,
-          marginLeft: index === 0 ? spacing.margin.large : 0,
-          marginRight: index === ((list?.length || 0) - 1) ? spacing.margin.large : spacing.margin.small,
+          marginLeft: isFirstItem ? spacing.margin.large : 0,
+          marginRight: isLastItem ? spacing.margin.large : spacing.margin.small,
         }}
         textProps={{
           numberOfLines: 1,
           ellipsizeMode: 'middle',
-          style: { maxWidth: TAG_MAX_WIDTH, color: colors.blue50, marginLeft: spacing.margin.tiny },
+          style: styles.text,
         }}
         size="large"
         type="secondary"
@@ -81,7 +83,12 @@ const createStyle = (theme: ExtendedTheme) => {
       flexWrap: 'wrap',
       backgroundColor: colors.white,
     },
+    text: {
+      maxWidth: TAG_MAX_WIDTH,
+      color: colors.blue50,
+      marginLeft: spacing.margin.tiny,
+    },
   });
 };
 
-export default SelectingAudiences;
+export default SelectedAudiences;

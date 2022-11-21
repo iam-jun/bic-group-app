@@ -12,7 +12,7 @@ import modalKeySelector from '~/storeRedux/modal/keySelector';
 import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ModalHeader from '~/components/CommonModal/components/ModalHeader';
 
 const CommonModal = () => {

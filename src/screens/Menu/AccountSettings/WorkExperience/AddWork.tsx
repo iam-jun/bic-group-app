@@ -14,7 +14,7 @@ import { isEmpty } from 'lodash';
 import moment from 'moment';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';

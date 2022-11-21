@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import spacing, { borderRadius } from '~/theme/spacing';
 import Image from '~/beinComponents/Image';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import { formatDate } from '~/utils/formatData';
