@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import streamApi from '~/api/StreamApi';
 import { IReorderArticles } from '~/interfaces/ISeries';
 import usePostsStore from '~/store/entities/posts';
-import showError from '~/store/helper/showError';
 import { ISeriesState } from '..';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
@@ -45,7 +44,7 @@ export const reorderArticles = (set, _) => async (id: string, indexArticlesOrder
     }, 'reorderArticles success');
 
     const toastMessage: IToastMessage = {
-      content: i18next.t('series:reorder_successful'),
+      content: response?.meta?.message || i18next.t('series:reorder_successful'),
     };
     Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
 
@@ -54,6 +53,11 @@ export const reorderArticles = (set, _) => async (id: string, indexArticlesOrder
     set((state: ISeriesState) => {
       state.loading = false;
     }, 'reorderArticles error');
-    showError(e);
+
+    const toastMessage: IToastMessage = {
+      content: e?.meta?.message || i18next.t('series:reorder_failed'),
+      props: { type: 'error' },
+    };
+    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
   }
 };

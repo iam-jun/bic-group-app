@@ -1201,6 +1201,7 @@
     "reorder_article": "Reorder Article",
     "text_info_reorder": "Drag and drop to reorder the article",
     "reorder_successful": "Reorder successful",
+    "reorder_failed": "Reorder failed",
     "notice_changing_the_order": "You are changing the order",
     "notice_sure_to_do_this": "Are you sure to do this?"
   }
