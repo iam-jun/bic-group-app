@@ -6,7 +6,6 @@ import groupsSaga from '~/storeRedux/groups/saga';
 import postSaga from '~/storeRedux/post/saga';
 import homeSaga from '~/storeRedux/home/saga';
 import menuSaga from '~/storeRedux/menu/saga';
-import notifications from '~/storeRedux/notification/saga';
 import noInternetSaga from '~/storeRedux/network/saga';
 
 export default function* rootSagas() {
@@ -17,7 +16,6 @@ export default function* rootSagas() {
     groupsSaga(),
     postSaga(),
     homeSaga(),
-    notifications(),
     menuSaga(),
     noInternetSaga(),
   ]);

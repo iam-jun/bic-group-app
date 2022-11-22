@@ -3,10 +3,10 @@ import i18n from 'i18next';
 import { put } from 'redux-saga/effects';
 import { authErrors } from '~/constants/authConstants';
 import * as IAuth from '~/interfaces/IAuth';
-import notificationsActions from '~/storeRedux/notification/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import actions from '../actions';
 import { initPushTokenMessage } from '~/services/firebase';
+import useNotificationStore from '~/screens/Notification/store';
 
 export default function* signIn({
   payload,
@@ -25,7 +25,7 @@ export default function* signIn({
         console.error('error when delete push token before log in', e);
         return true;
       });
-    yield put(notificationsActions.savePushToken(''));
+    useNotificationStore.getState().actions.savePushToken('');
     const { email, password } = payload;
     // handle result in useAuthHub
     yield Auth.signIn(

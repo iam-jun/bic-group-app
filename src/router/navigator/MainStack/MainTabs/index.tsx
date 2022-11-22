@@ -8,12 +8,13 @@ import useChatSocket from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/storeRedux/groups/actions';
-import notificationsActions from '~/storeRedux/notification/actions';
 import { screens } from './screens';
 import { initPushTokenMessage } from '~/services/firebase';
 import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
 import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
 import useGiphyStore, { IGiphyState } from '~/store/giphy';
+import useNotificationStore from '~/screens/Notification/store';
+import INotificationsState from '~/screens/Notification/store/Interface';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -29,6 +30,7 @@ const MainTabs = () => {
   const userId = useUserIdAuth();
   const giphyAPIKey = useGiphyStore((state: IGiphyState) => state.apiKey);
   const giphyActions = useGiphyStore((state: IGiphyState) => state.actions);
+  const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
 
   useEffect(
     () => {
@@ -42,12 +44,11 @@ const MainTabs = () => {
       dispatch(groupsActions.getMyPermissions());
       giphyActions.getAPIKey();
       dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
-      dispatch(notificationsActions.registerPushToken());
+      notiActions.registerPushToken();
       initPushTokenMessage()
         .then((messaging) => {
           tokenRefreshSubscription = messaging()
-            .onTokenRefresh((token: string) => dispatch(notificationsActions
-              .registerPushToken({ token })));
+            .onTokenRefresh((token: string) => notiActions.registerPushToken({ token }));
         })
         .catch((e) => console.error(
           'error when delete push token at auth stack', e,
