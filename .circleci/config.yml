@@ -1,43 +1,20 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@1.0.3
-  gcp-cli: circleci/gcp-cli@2.2.0
+  android: circleci/android@2.0.3
 
 jobs:
   ios-stg:
     macos:
-      xcode: 13.4.1
-    environment:
-      FL_OUTPUT_DIR: ./fastlane/staging/
-      FASTLANE_LANE: deploy_staging_ci
+      xcode: 13.2.1
+    resource_class: medium #medium|large
     steps:
       - checkout
       - run:
-          name: Import environment variables from Contexts
+          name: Import environment variables from Doppler
           command: |
-            cat >.env.staging \<<EOL
-            APP_ENV=${APP_ENV}
-            SELF_DOMAIN=${SELF_DOMAIN}
-            BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
-            BEIN_NOTIFICATION_WS_PATH=${BEIN_NOTIFICATION_WS_PATH}
-            BEIN_API=${BEIN_API}
-            BEIN_RESOURCE=${BEIN_RESOURCE}
-            BEIN_AWS_PROJECT_REGION=${BEIN_AWS_PROJECT_REGION}
-            BEIN_AWS_COGNITO_REGION=${BEIN_AWS_COGNITO_REGION}
-            BEIN_AWS_USER_POOLS_ID=${BEIN_AWS_USER_POOLS_ID}
-            BEIN_AWS_USER_POOLS_WEB_CLIENT_ID=${BEIN_AWS_USER_POOLS_WEB_CLIENT_ID}
-            BEIN_CHAT_DEEPLINK=${BEIN_CHAT_DEEPLINK}
-            BEIN_CHAT_SOCKET=${BEIN_CHAT_SOCKET}
-            APP_VERSION=${APP_VERSION}
-            APP_GROUP_PACKAGE_NAME_IOS=${APP_GROUP_PACKAGE_NAME_IOS}
-            APP_GROUP_PACKAGE_NAME_ANDROID=${APP_GROUP_PACKAGE_NAME_ANDROID}
-            APP_CHAT_PACKAGE_NAME_ANDROID=${APP_CHAT_PACKAGE_NAME_ANDROID}
-            SCHEME_NAME_IOS=${SCHEME_NAME_IOS}
-            EOL
-      - run:
-          name: Decode the GoogleService-Info-Staging.plist from Contexts
-          command: echo $GOOGLE_SERVICES_iOS | base64 --decode > ios/Firebase/GoogleService-Info-Staging.plist
+            echo -e $STG_ENV > .env.staging
+            echo $STG_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Staging.plist
       - run:
           name: Install NPM
           command: npm install --legacy-peer-deps
@@ -50,50 +27,23 @@ jobs:
       - run:
           name: Install Pod
           command: cd ios && pod install
-      - add_ssh_keys:
-          fingerprints:
-            - "9d:69:e6:39:9b:39:b6:dd:9b:50:6c:6d:b8:fd:54:26"
-            - "c2:82:e5:3f:3b:bf:32:02:ab:0b:08:1d:ff:bc:ec:75"
-            - "00:1c:a5:d9:5b:4c:15:02:55:4a:bf:24:22:ea:2e:35"
       - run:
           name: Fastlane build and deploy TestFlight
-          command: cd ios && bundle exec fastlane $FASTLANE_LANE
+          command: cd ios && bundle exec fastlane $STG_FASTLANE_LANE_IOS
       - store_artifacts:
           path: output
 
   ios-pro:
     macos:
-      xcode: 13.4.1
-    environment:
-      FL_OUTPUT_DIR: ./fastlane/production/
-      FASTLANE_LANE: deploy_production_ci
+      xcode: 13.2.1
+    resource_class: medium #medium|large
     steps:
       - checkout
       - run:
-          name: Import environment variables from Contexts
+          name: Import environment variables from Doppler
           command: |
-            cat >.env.production \<<EOL
-            APP_ENV=${APP_ENV}
-            SELF_DOMAIN=${SELF_DOMAIN}
-            BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
-            BEIN_NOTIFICATION_WS_PATH=${BEIN_NOTIFICATION_WS_PATH}
-            BEIN_API=${BEIN_API}
-            BEIN_RESOURCE=${BEIN_RESOURCE}
-            BEIN_AWS_PROJECT_REGION=${BEIN_AWS_PROJECT_REGION}
-            BEIN_AWS_COGNITO_REGION=${BEIN_AWS_COGNITO_REGION}
-            BEIN_AWS_USER_POOLS_ID=${BEIN_AWS_USER_POOLS_ID}
-            BEIN_AWS_USER_POOLS_WEB_CLIENT_ID=${BEIN_AWS_USER_POOLS_WEB_CLIENT_ID}
-            BEIN_CHAT_DEEPLINK=${BEIN_CHAT_DEEPLINK}
-            BEIN_CHAT_SOCKET=${BEIN_CHAT_SOCKET}
-            APP_VERSION=${APP_VERSION}
-            APP_GROUP_PACKAGE_NAME_IOS=${APP_GROUP_PACKAGE_NAME_IOS}
-            APP_GROUP_PACKAGE_NAME_ANDROID=${APP_GROUP_PACKAGE_NAME_ANDROID}
-            APP_CHAT_PACKAGE_NAME_ANDROID=${APP_CHAT_PACKAGE_NAME_ANDROID}
-            SCHEME_NAME_IOS=${SCHEME_NAME_IOS}
-            EOL
-      - run:
-          name: Decode the GoogleService-Info-Production.plist from Contexts
-          command: echo $GOOGLE_SERVICES_iOS | base64 --decode > ios/Firebase/GoogleService-Info-Production.plist
+            echo -e $PRO_ENV > .env.production
+            echo $PRO_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Production.plist
       - run:
           name: Install NPM
           command: npm install --legacy-peer-deps
@@ -108,42 +58,32 @@ jobs:
           command: cd ios && pod install
       - run:
           name: Fastlane build and deploy TestFlight
-          command: cd ios && bundle exec fastlane $FASTLANE_LANE
+          command: cd ios && bundle exec fastlane $PRO_FASTLANE_LANE_IOS
       - store_artifacts:
           path: output
 
   android-stg:
     executor:
       name: android/android-machine
-    environment:
-      FASTLANE_LANE: deploy_staging
+      tag: 2022.03.1
     steps:
       - checkout
       - run:
-          name: Import environment variables from Contexts into .env.staging
+          name: Import environment variables from Doppler
           command: |
-            cat >.env.staging \<<EOL
-            APP_ENV=${APP_ENV}
-            SELF_DOMAIN=${SELF_DOMAIN}
-            BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
-            BEIN_NOTIFICATION_WS_PATH=${BEIN_NOTIFICATION_WS_PATH}
-            BEIN_API=${BEIN_API}
-            BEIN_RESOURCE=${BEIN_RESOURCE}
-            BEIN_AWS_PROJECT_REGION=${BEIN_AWS_PROJECT_REGION}
-            BEIN_AWS_COGNITO_REGION=${BEIN_AWS_COGNITO_REGION}
-            BEIN_AWS_USER_POOLS_ID=${BEIN_AWS_USER_POOLS_ID}
-            BEIN_AWS_USER_POOLS_WEB_CLIENT_ID=${BEIN_AWS_USER_POOLS_WEB_CLIENT_ID}
-            BEIN_CHAT_DEEPLINK=${BEIN_CHAT_DEEPLINK}
-            BEIN_CHAT_SOCKET=${BEIN_CHAT_SOCKET}
-            APP_VERSION=${APP_VERSION}
-            APP_GROUP_PACKAGE_NAME_IOS=${APP_GROUP_PACKAGE_NAME_IOS}
-            APP_GROUP_PACKAGE_NAME_ANDROID=${APP_GROUP_PACKAGE_NAME_ANDROID}
-            APP_CHAT_PACKAGE_NAME_ANDROID=${APP_CHAT_PACKAGE_NAME_ANDROID}
-            SCHEME_NAME_IOS=${SCHEME_NAME_IOS}
-            EOL
+            echo -e $STG_ENV > .env.staging
+            mkdir -p android/app/src/staging
+            echo $STG_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/staging/google-services.json
       - run:
-          name: Decode the google-services.json from Contexts
-          command: echo $GOOGLE_SERVICES_Android | base64 --decode > android/app/google-services.json
+          name: Pull Keystore from AWS S3 bucket
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            sudo unzip awscliv2.zip
+            sudo ./aws/install
+            aws --version
+            export AWS_ACCESS_KEY_ID=$STG_AWS_ACCESS_KEY_ID
+            export AWS_SECRET_ACCESS_KEY=$STG_AWS_SECRET_ACCESS_KEY
+            aws s3 cp s3://$STG_S3_BUCKET/group-app/staging.keystore android/app/
       - run:
           name: Install NPM
           command: npm install
@@ -152,42 +92,32 @@ jobs:
           command: cd android && bundle install
       - run:
           name: Fastlane build and deploy Diawi
-          command: cd android && bundle exec fastlane $FASTLANE_LANE
+          command: cd android && bundle exec fastlane $STG_FASTLANE_LANE_ANDROID
       - store_artifacts:
           path: app/build/outputs/apk/release/app-release-unsigned.apk
 
   android-pro:
     executor:
       name: android/android-machine
-    environment:
-      FASTLANE_LANE: deploy_production
+      tag: 2022.03.1
     steps:
       - checkout
       - run:
-          name: Import environment variables from Contexts into .env.production
+          name: Import environment variables from Doppler
           command: |
-            cat >.env.production \<<EOL
-            APP_ENV=${APP_ENV}
-            SELF_DOMAIN=${SELF_DOMAIN}
-            BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
-            BEIN_NOTIFICATION_WS_PATH=${BEIN_NOTIFICATION_WS_PATH}
-            BEIN_API=${BEIN_API}
-            BEIN_RESOURCE=${BEIN_RESOURCE}
-            BEIN_AWS_PROJECT_REGION=${BEIN_AWS_PROJECT_REGION}
-            BEIN_AWS_COGNITO_REGION=${BEIN_AWS_COGNITO_REGION}
-            BEIN_AWS_USER_POOLS_ID=${BEIN_AWS_USER_POOLS_ID}
-            BEIN_AWS_USER_POOLS_WEB_CLIENT_ID=${BEIN_AWS_USER_POOLS_WEB_CLIENT_ID}
-            BEIN_CHAT_DEEPLINK=${BEIN_CHAT_DEEPLINK}
-            BEIN_CHAT_SOCKET=${BEIN_CHAT_SOCKET}
-            APP_VERSION=${APP_VERSION}
-            APP_GROUP_PACKAGE_NAME_IOS=${APP_GROUP_PACKAGE_NAME_IOS}
-            APP_GROUP_PACKAGE_NAME_ANDROID=${APP_GROUP_PACKAGE_NAME_ANDROID}
-            APP_CHAT_PACKAGE_NAME_ANDROID=${APP_CHAT_PACKAGE_NAME_ANDROID}
-            SCHEME_NAME_IOS=${SCHEME_NAME_IOS}
-            EOL
+            echo -e $PRO_ENV > .env.production
+            mkdir -p a android/app/src/production
+            echo $PRO_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/production/google-services.json
       - run:
-          name: Decode the google-services.json from Contexts
-          command: echo $GOOGLE_SERVICES_Android | base64 --decode > android/app/google-services.json
+          name: Pull Keystore from AWS S3 bucket
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            sudo unzip awscliv2.zip
+            sudo ./aws/install
+            aws --version
+            export AWS_ACCESS_KEY_ID=$PRO_AWS_ACCESS_KEY_ID
+            export AWS_SECRET_ACCESS_KEY=$PRO_AWS_SECRET_ACCESS_KEY
+            aws s3 cp s3://$PRO_S3_BUCKET/group-app/production.keystore android/app/
       - run:
           name: Install NPM
           command: npm install
@@ -196,7 +126,7 @@ jobs:
           command: cd android && bundle install
       - run:
           name: Fastlane Build and Deploy to Diawi
-          command: cd android && bundle exec fastlane $FASTLANE_LANE
+          command: cd android && bundle exec fastlane $PRO_FASTLANE_LANE_ANDROID
       - store_artifacts:
           path: app/build/outputs/apk/release/app-release-unsigned.apk
 
@@ -212,19 +142,12 @@ workflows:
           filters:
             branches:
               only: /^staging.*$/
-          context:
-            - bein-group-stg
-            - bein-group-stg-ios
           requires:
             - iOS-Approval
-
       - android-stg:
           filters:
             branches:
               only: /^staging.*$/
-          context:
-            - bein-group-stg
-            - bein-group-stg-android
           requires:
             - Android-Approval
 
@@ -234,13 +157,7 @@ workflows:
           filters:
             branches:
               only: /^master.*$/
-          context:
-            - bein-group-pro
-            - bein-group-pro-ios
       - android-pro:
           filters:
             branches:
               only: /^master.*$/
-          context:
-            - bein-group-pro
-            - bein-group-pro-android
