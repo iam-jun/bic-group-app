@@ -79,12 +79,14 @@ const useEditArticle = ({ articleId, needToPublish, handleSaveAudienceError }: I
     const isTitleValid = !isEmpty(data.title);
     const isContentValid = !isEmpty(data.content);
     const isCategoriesValid = !isEmpty(data.categories);
+    const isCoverValid = !isEmpty(data.coverMedia);
     // isAudienceValid self check at src/screens/articles/EditArticle/EditAudience/index.tsx
 
     return {
       isTitleValid,
       isContentValid,
       isCategoriesValid,
+      isCoverValid,
     };
   };
 
