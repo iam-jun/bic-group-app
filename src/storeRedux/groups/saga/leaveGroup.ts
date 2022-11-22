@@ -31,7 +31,7 @@ export default function* leaveGroup({
     yield call(useDiscoverGroupsStore.getState().doSetGroupStatus, payload, GroupJoinStatus.VISITOR);
 
     if (privacy === GroupPrivacyType.SECRET) {
-      yield call(navigationReplace);
+      yield call(navigationPopToTop);
     } else {
       yield call(navigateToGroup, payload);
     }
@@ -48,8 +48,8 @@ export default function* leaveGroup({
   }
 }
 
-export function* navigationReplace() {
-  yield navigation.replace(groupStack.yourGroups);
+export function* navigationPopToTop() {
+  yield navigation.popToTop();
 }
 
 export function* navigateToGroup(groupId: string) {

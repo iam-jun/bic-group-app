@@ -1,30 +1,22 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import {
-  View,
   StyleSheet,
-  FlatList,
-  ActivityIndicator,
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import debounce from 'lodash/debounce';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isEmpty } from 'lodash';
 import { useBaseHook } from '~/hooks';
 
 import postActions from '~/storeRedux/post/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import SelectingAudiences from '~/components/posts/SelectingAudiences';
 
-import { IGroup } from '~/interfaces/IGroup';
-import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import { useRootNavigation } from '~/hooks/navigation';
-import { IUser } from '~/interfaces/IAuth';
-import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import modalActions from '~/storeRedux/modal/actions';
@@ -35,9 +27,9 @@ import {
 import { ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
-import SearchInput from '~/baseComponents/Input/SearchInput';
-import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
-import useSelectAudienceStore from './store';
+import useMounted from '~/hooks/mounted';
+import SelectAudience from '~/components/SelectAudience';
+import useSelectAudienceStore from '~/components/SelectAudience/store';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -47,117 +39,71 @@ export interface PostSelectAudienceProps {
 
 const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   route,
-}: PostSelectAudienceProps) => {
+}) => {
   const { isFirstStep, ...createPostParams } = route?.params || {};
-
-  const [lossInternet, setLossInternet] = useState(false);
-
-  const state = useKeySelector(postKeySelector.postSelectAudienceState);
-  const { selectingAudiences, selectingGroups } = state;
-
-  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
-  const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences);
-  const savedAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
-
-  const isEditAudience = !!initAudiences;
-
-  // check audience has been changed, currently check only group
-  // when allow select user as audience, this function should be updated
-  const isAudiencesHasChanged = checkChangeAudiences(
-    savedAudiences,
-    selectingAudiences,
-  );
-
-  const disableButtonSave = selectingAudiences?.length === 0 || !isAudiencesHasChanged;
 
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
 
   const insets = useSafeAreaInsets();
 
-  const createPostData = useKeySelector(postKeySelector.createPost.all);
-  const { chosenAudiences } = createPostData || {};
+  const allAudiences = useSelectAudienceStore((state) => state.selectedAudiences);
+  const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences);
+  const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
 
-  const {
-    tree, search, doGetAudienceTree, doGetAudienceSearch, reset: resetStore,
-  } = useSelectAudienceStore();
-  const { data: dataTree = [], loading: loadingTree } = tree || {};
-  const { data: dataSearch = [], loading: loadingSearch, key: searchKey } = search || {};
+  const isEditAudience = !isEmpty(initAudiences);
 
-  const listData: IGroup[] = (!!searchKey ? dataSearch : dataTree) || [];
-  const loading = !!searchKey ? loadingSearch : loadingTree;
+  const selectedAudiences = useMemo(() => getAllAudiences(allAudiences), [allAudiences]);
 
-  const updateSelectingAudiences = () => {
-    const newSelectingAudiences: (IUser | IGroup)[] = [];
-    Object.values(selectingGroups).forEach((group) => {
-      if (group) {
-        newSelectingAudiences.push(group as IGroup);
-      }
-    });
-    const p = { selectingAudiences: newSelectingAudiences };
-    dispatch(postActions.setPostSelectAudienceState(p));
+  // check audience has been changed, currently check only group
+  // when allow select user as audience, this function should be updated
+  const isAudiencesHasChanged = useMemo(
+    () => checkChangeAudiences(initAudiences, selectedAudiences),
+    [selectedAudiences],
+  );
+
+  const buttonSaveDisabled = isEmpty(selectedAudiences) || !isAudiencesHasChanged;
+
+  useMounted(() => {
+    if (isFirstStep) {
+      dispatch(postActions.clearCreatPostData());
+    }
+    const audiences = {};
+    initAudiences?.forEach((item) => { audiences[item?.id] = item; });
+
+    selectAudienceActions.setSelectedAudiences(audiences);
+  });
+
+  const showAlert = (title, content) => {
+    dispatch(modalActions.showAlert({
+      title,
+      content,
+      cancelBtn: true,
+      cancelLabel: t('common:btn_discard'),
+      confirmLabel: t('common:btn_stay_here'),
+      onCancel: () => rootNavigation.goBack(),
+    }));
   };
 
-  useEffect(
-    () => {
-      if (isFirstStep) {
-        dispatch(postActions.clearCreatPostData());
-        doGetAudienceTree();
-      } else {
-        // with old version, it will show last search result lists, but new flow has tree, so we need re-fetch
-        doGetAudienceTree();
-      }
-
-      return () => {
-        dispatch(postActions.setPostSelectAudienceState());
-        resetStore();
-      };
-    }, [],
-  );
-
-  useEffect(
-    () => {
-      if (isInternetReachable) {
-        if (lossInternet && listData.length === 0) {
-          setLossInternet(false);
-          onSearch('');
-        }
-      } else {
-        setLossInternet(true);
-      }
-    }, [isInternetReachable],
-  );
-
-  useEffect(
-    () => {
-      if (selectingAudiences?.length === 0) {
-        const newSelectingGroups: any = {};
-        chosenAudiences?.forEach?.((item: any) => {
-          newSelectingGroups[item.id] = item;
-        });
-
-        const p = {
-          selectingGroups: newSelectingGroups,
-        };
-        dispatch(postActions.setPostSelectAudienceState(p));
-      }
-    }, [chosenAudiences],
-  );
-
-  useEffect(
-    () => {
-      updateSelectingAudiences();
-    }, [selectingGroups],
-  );
+  const onPressBack = () => {
+    if (isFirstStep && isAudiencesHasChanged) {
+      showAlert(t('post:create_post:title_discard_audience'), t('post:create_post:text_discard_audience'));
+    } else if (isEditAudience && isAudiencesHasChanged) {
+      showAlert(t('discard_alert:title'), t('discard_alert:content'));
+    } else {
+      rootNavigation.goBack();
+    }
+  };
 
   const onPressSave = () => {
+    // [TO-DO] refactor useCreatePost later
+
     // first step in flow select audience before create post
     if (isFirstStep) {
-      dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
+      dispatch(postActions.setCreatePostChosenAudiences(selectedAudiences));
       const params: ICreatePostParams = {
         ...createPostParams,
         initAutoSaveDraft: true,
@@ -165,111 +111,22 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       rootNavigation.replace(
         homeStack.createPost, params as any,
       );
-    } else if (isEditAudience) {
-      if (isAudiencesHasChanged) {
-        dispatch(modalActions.showAlert({
-          title: t('post:create_post:title_audience_changed'),
-          content: t('post:create_post:text_discard_change_audience'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('post:create_post:btn_save_change'),
-          onConfirm: () => {
-            dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
-            rootNavigation.goBack();
-          },
-        }));
-      } else {
-        dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
-        rootNavigation.goBack();
-      }
+    } else if (isEditAudience && isAudiencesHasChanged) {
+      dispatch(modalActions.showAlert({
+        title: t('post:create_post:title_audience_changed'),
+        content: t('post:create_post:text_discard_change_audience'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('post:create_post:btn_save_change'),
+        onConfirm: () => {
+          dispatch(postActions.setCreatePostChosenAudiences(selectedAudiences));
+          rootNavigation.goBack();
+        },
+      }));
     } else {
-      dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
+      dispatch(postActions.setCreatePostChosenAudiences(selectedAudiences));
       rootNavigation.goBack();
     }
-  };
-
-  const onPressBack = () => {
-    if (isFirstStep) {
-      if (isAudiencesHasChanged) {
-        dispatch(modalActions.showAlert({
-          title: t('post:create_post:title_discard_audience'),
-          content: t('post:create_post:text_discard_audience'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('common:btn_stay_here'),
-          onCancel: () => rootNavigation.goBack(),
-        }));
-      } else {
-        rootNavigation.goBack();
-      }
-    } else if (isEditAudience || isFirstStep) {
-      if (isAudiencesHasChanged) {
-        dispatch(modalActions.showAlert({
-          title: t('discard_alert:title'),
-          content: t('discard_alert:content'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('common:btn_stay_here'),
-          onCancel: () => rootNavigation.goBack(),
-        }));
-      } else {
-        rootNavigation.goBack();
-      }
-    } else {
-      rootNavigation.goBack();
-    }
-  };
-
-  const onRemoveItem = (item: any) => {
-    const newSelectingGroups: any = { ...selectingGroups };
-    newSelectingGroups[item.id] = false;
-    const p = { selectingGroups: newSelectingGroups };
-    dispatch(postActions.setPostSelectAudienceState(p));
-  };
-
-  const onChangeCheckedGroups = (data: OnChangeCheckedGroupsData) => {
-    const p = { selectingGroups: { ...selectingGroups, ...data } };
-    dispatch(postActions.setPostSelectAudienceState(p));
-  };
-
-  const onSearch = debounce(
-    (searchText: string) => {
-      doGetAudienceSearch(searchText);
-    }, 500,
-  );
-
-  const onChangeTextSearch = (text: string) => {
-    onSearch(text);
-  };
-
-  const renderItem = ({ item }: any) => (
-    <FlatGroupItem
-      {...item}
-      groupItemTestID="post_select_audience.groups.item"
-      initShowTree={!searchKey}
-      checkboxDisabled={!searchKey && !item.isPostable} // api search return all groups user can post to
-      disableOnPressItem={!item.isPostable}
-      hidePath
-      groupStyle={{ paddingVertical: spacing.padding.small }}
-      showPrivacyAvatar
-      selectingData={selectingGroups}
-      onChangeCheckedGroups={onChangeCheckedGroups}
-    />
-  );
-
-  const renderListFooter = () => (
-    <View style={{ marginBottom: spacing.margin.large }}>
-      {loading && (
-        <ActivityIndicator size="large" color={colors.neutral5} />
-      )}
-    </View>
-  );
-
-  const renderEmpty = () => {
-    if (loading) {
-      return null;
-    }
-    return <NoSearchResultsFound />;
   };
 
   return (
@@ -277,7 +134,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         enabled
-        style={{ flex: 1 }}
+        style={styles.container}
         keyboardVerticalOffset={
           Platform.OS === 'ios' ? (insets?.bottom ? 90 : 60) : 0
         }
@@ -288,33 +145,13 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           buttonText="common:btn_next"
           buttonProps={{
             useI18n: true,
-            disabled: disableButtonSave,
+            disabled: buttonSaveDisabled,
             testID: 'select_audience.btn_done',
           }}
           onPressButton={onPressSave}
           onPressBack={onPressBack}
         />
-        <SearchInput
-          size="large"
-          style={styles.searchInput}
-          testID="post_select_audience.search"
-          onChangeText={onChangeTextSearch}
-          placeholder={t('post:search_audiences_placeholder')}
-        />
-        <SelectingAudiences
-          list={selectingAudiences}
-          onRemoveItem={onRemoveItem}
-        />
-        <FlatList
-          style={{ paddingHorizontal: spacing?.padding.large }}
-          data={listData}
-          keyExtractor={(
-            item, index,
-          ) => item?.id || `section_list_${item}_${index}`}
-          ListFooterComponent={renderListFooter}
-          ListEmptyComponent={renderEmpty}
-          renderItem={renderItem}
-        />
+        <SelectAudience />
       </KeyboardAvoidingView>
     </ScreenWrapper>
   );
@@ -323,7 +160,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {},
+    container: {
+      flex: 1,
+    },
     searchInput: {
       margin: spacing?.margin.large,
     },
@@ -341,3 +180,14 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 export default PostSelectAudience;
+
+const getAllAudiences = (selectedAudiences) => {
+  const groupAudiences = Object.keys(selectedAudiences.groups).map(
+    (key: string) => selectedAudiences.groups[key],
+  );
+  const userAudiences = Object.keys(selectedAudiences.users).map(
+    (key: string) => selectedAudiences.users[key],
+  );
+
+  return groupAudiences.concat(userAudiences);
+};

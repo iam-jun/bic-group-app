@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { getTextHighlight } from './helper';
 
 export type ArticleTextProps = {

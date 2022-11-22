@@ -4,7 +4,7 @@ import {
   StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle,
 } from 'react-native';
 import Icon, { IconProps } from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 
 import { IconType } from '~/resources/icons';

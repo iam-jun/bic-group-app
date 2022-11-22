@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import NewFeatureImg from '../../../assets/images/new_feeature_grey.svg';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';

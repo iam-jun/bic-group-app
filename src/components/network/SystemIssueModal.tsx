@@ -5,7 +5,7 @@ import {
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import SystemIssueImg from '../../../assets/images/SystemIssue.svg';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';

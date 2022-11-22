@@ -10,9 +10,13 @@ const JoinedCommunityPlaceholder = () => {
 
   return (
     <ScrollView style={styles.container} horizontal showsHorizontalScrollIndicator={false}>
-      {new Array(MAX_LENGTH).fill(0).map(
-        () => <Image source={images.img_thumbnail_default} style={styles.image} />,
-      )}
+      {new Array(MAX_LENGTH).fill(0).map((item, index) => (
+        <Image
+          key={`joined-community-placeholder-${index}`}
+          source={images.img_thumbnail_default}
+          style={styles.image}
+        />
+      ))}
     </ScrollView>
   );
 };

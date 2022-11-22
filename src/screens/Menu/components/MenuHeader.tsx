@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Avatar from '~/baseComponents/Avatar';

@@ -11,7 +11,7 @@ import MenuHeader from '~/screens/Menu/components/MenuHeader';
 import MenuDiscoverCommunity from '~/screens/Menu/components/MenuDiscoverCommunity';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import MenuShortcut from '~/screens/Menu/components/MenuShortcut';
 import MenuSettings from '~/screens/Menu/components/MenuSettings';
 import { useRootNavigation } from '~/hooks/navigation';

@@ -4,7 +4,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import Image from '~/beinComponents/Image';
 import ListView from '~/beinComponents/list/ListView';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import { useUserIdAuth } from '~/hooks/auth';

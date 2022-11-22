@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 const ReorderArticlesInfo = () => {
   const theme: ExtendedTheme = useTheme();

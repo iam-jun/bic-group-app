@@ -7,7 +7,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IArticleCover, IAudienceUser } from '~/interfaces/IPost';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { spacing } from '~/theme';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Image from '~/beinComponents/Image';
 import { borderRadius } from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';

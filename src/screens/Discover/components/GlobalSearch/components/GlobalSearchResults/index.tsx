@@ -9,7 +9,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';

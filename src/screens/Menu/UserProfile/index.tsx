@@ -54,7 +54,6 @@ const UserProfile = (props: any) => {
     latestWork,
   } = userProfileData || {};
 
-  const actions = useCommonController((state) => state.actions);
   const myProfileData = useCommonController((state) => state.myProfile);
   const { username: currentUsername, id } = myProfileData || {};
   const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
@@ -77,17 +76,6 @@ const UserProfile = (props: any) => {
   useEffect(() => {
     isFocused && userProfileActions.getUserProfile({ userId, params });
     userId && userProfileActions.getWorkExperience(userId);
-
-    const { avatar: _avatar, backgroundImgUrl: _bgIm } = myProfileData;
-    if (
-      userId?.toString?.() === currentUserId?.toString?.()
-      || userId?.toString?.() === currentUsername?.toString?.()
-    ) {
-      if (avatarState !== _avatar || _bgIm !== bgImgState) {
-        actions.getMyProfile({ userId, params });
-        homeActions.refreshHome();
-      }
-    }
 
     return () => reset();
   }, [isFocused, userId]);

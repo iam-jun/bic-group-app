@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import Header from '~/beinComponents/Header';
-import { createTextStyle } from '~/beinComponents/Text/textStyle';
+import { createTextStyle } from '~/baseComponents/Text/textStyle';
 
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';

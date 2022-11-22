@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import DescriptionSection from './DescriptionSection';
 import TitleSection from './TitleSection';

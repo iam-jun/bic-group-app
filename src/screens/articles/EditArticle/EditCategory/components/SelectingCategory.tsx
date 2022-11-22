@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Tag from '~/baseComponents/Tag';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import useEditArticleStore from '~/screens/articles/EditArticle/store';
 import spacing from '~/theme/spacing';

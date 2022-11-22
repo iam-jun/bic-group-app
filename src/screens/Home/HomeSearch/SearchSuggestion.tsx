@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import { useBaseHook } from '~/hooks';

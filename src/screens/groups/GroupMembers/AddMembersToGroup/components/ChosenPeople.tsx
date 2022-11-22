@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { IUser } from '~/interfaces/IAuth';
 import { spacing } from '~/theme';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import images from '~/resources/images';
 import { useBaseHook } from '~/hooks';

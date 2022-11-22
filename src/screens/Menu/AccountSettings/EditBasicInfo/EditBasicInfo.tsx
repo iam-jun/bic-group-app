@@ -25,7 +25,7 @@ import spacing from '~/theme/spacing';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { DateInput, TextInput } from '~/baseComponents/Input';
 import LanguageOptionMenu from './fragments/LanguageOptionMenu';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Gender from './fragments/Gender';
 import useCommonController from '~/screens/store';

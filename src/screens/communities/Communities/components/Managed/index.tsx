@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import CommunityGroupCard from '~/components/CommunityGroupCard';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/components/EmptyScreen';

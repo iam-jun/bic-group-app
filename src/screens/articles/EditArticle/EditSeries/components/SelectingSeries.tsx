@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import Tag from '~/baseComponents/Tag';
 import { IEditArticleSeries } from '~/interfaces/IArticle';

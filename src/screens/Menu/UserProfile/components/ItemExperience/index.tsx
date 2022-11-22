@@ -1,7 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import { spacing } from '~/theme';

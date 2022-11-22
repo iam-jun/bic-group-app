@@ -1108,7 +1108,10 @@
     "flags": "Cờ"
   },
   "series": {
-    "title_create_series": "Tạo Loạt Bài Viết",
+    "title": {
+      "create": "Tạo Loạt Bài Viết",
+      "edit": "Sửa Loạt Bài Viết"
+    },
     "title_name": "Tên",
     "text_input_name": "Nhập tên",
     "text_update_cover": "Đổi ảnh bìa",

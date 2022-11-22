@@ -11,11 +11,11 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useBaseHook } from '~/hooks';
-import Text, { TextProps } from '~/beinComponents/Text';
+import Text, { TextProps } from '~/baseComponents/Text';
 
 import MarkdownView from '~/beinComponents/MarkdownView';
 import Markdown from '~/beinComponents/Markdown';
-import CopyableView from '../../CopyableView';
+import CopyableView from '../../../beinComponents/CopyableView';
 import { escapeMarkDown } from '~/utils/formatData';
 import spacing from '~/theme/spacing';
 

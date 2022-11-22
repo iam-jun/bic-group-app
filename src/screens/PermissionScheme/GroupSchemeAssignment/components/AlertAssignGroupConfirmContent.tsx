@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 import i18n from 'i18next';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import Icon from '~/baseComponents/Icon';
 import Divider from '~/beinComponents/Divider';

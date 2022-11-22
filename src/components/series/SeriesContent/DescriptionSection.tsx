@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import {
   StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 
 type DescriptionSectionProps = {

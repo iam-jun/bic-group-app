@@ -11,7 +11,7 @@ import {
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { fontFamilies } from '~/theme/fonts';
-import Text, { TextProps } from '~/beinComponents/Text';
+import Text, { TextProps } from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import { getTextHelperColor } from '../helper';

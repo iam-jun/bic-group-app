@@ -6,7 +6,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import {
   CommunityPrivacyDetail, CommunityPrivacyType, GroupPrivacyDetail, GroupPrivacyType, IPrivacyItem,
 } from '~/constants/privacyTypes';

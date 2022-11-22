@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Avatar from '~/baseComponents/Avatar';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
 
 import spacing from '~/theme/spacing';

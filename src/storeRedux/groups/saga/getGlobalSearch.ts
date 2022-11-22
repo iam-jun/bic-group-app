@@ -29,7 +29,7 @@ export default function* getGlobalSearch({
 
     const results = response.data.map((item:any) => ({
       ...item,
-      id: isGroup(item.level) ? item.id : item.community.id,
+      id: isGroup(item) ? item.id : item.community.id,
     }));
     const newIds = results.map((item: ICommunity) => item.id);
     const newItems = mapItems(results);

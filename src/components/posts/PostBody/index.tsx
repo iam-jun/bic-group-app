@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import React, { FC, useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
 import PostPhotoPreview from '~/components/posts/PostPhotoPreview';
 import { uploadTypes } from '~/configs/resourceConfig';
 import { useRootNavigation } from '~/hooks/navigation';

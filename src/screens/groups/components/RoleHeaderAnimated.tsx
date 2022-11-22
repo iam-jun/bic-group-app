@@ -8,7 +8,7 @@ import Animated, {
   useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
-import TextAnimated from '~/beinComponents/Text/TextAnimated';
+import TextAnimated from '~/baseComponents/Text/TextAnimated';
 import { permissionRoleSectionHeaderHeight } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 

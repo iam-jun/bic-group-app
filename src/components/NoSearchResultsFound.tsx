@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Image from '~/beinComponents/Image';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
 import { spacing } from '~/theme';
 

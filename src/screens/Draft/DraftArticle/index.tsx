@@ -11,7 +11,7 @@ import { useKeySelector } from '~/hooks/selector';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import Image from '~/beinComponents/Image';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
 import dimension from '~/theme/dimension';
 import DraftArticleView from './components/DraftArticleView';

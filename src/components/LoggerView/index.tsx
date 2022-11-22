@@ -17,7 +17,7 @@ import { Button } from '~/baseComponents';
 import Checkbox from '~/baseComponents/Checkbox';
 import Markdown from '~/beinComponents/Markdown';
 import MarkdownView from '~/beinComponents/MarkdownView';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { getUserFromSharedPreferences } from '~/services/sharePreferences';
 import modalActions from '~/storeRedux/modal/actions';

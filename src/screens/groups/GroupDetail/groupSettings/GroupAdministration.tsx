@@ -12,7 +12,7 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';

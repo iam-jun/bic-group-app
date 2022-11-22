@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Checkbox from '~/baseComponents/Checkbox';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { ICategory } from '~/interfaces/IArticle';
 import spacing from '~/theme/spacing';
 

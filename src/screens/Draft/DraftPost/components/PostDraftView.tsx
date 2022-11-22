@@ -19,7 +19,7 @@ import {
 
 import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
 import ViewSpacing from '~/beinComponents/ViewSpacing';

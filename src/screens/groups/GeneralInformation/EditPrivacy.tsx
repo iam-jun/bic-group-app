@@ -6,7 +6,7 @@ import i18next from 'i18next';
 import { useDispatch } from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import PrivacyItem from './components/PrivacyItem';
 import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';

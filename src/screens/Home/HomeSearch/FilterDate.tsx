@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import moment from 'moment';
 import Button from '~/baseComponents/Button';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { AppContext } from '~/contexts/AppContext';
 import { useBaseHook } from '~/hooks';
 import modalActions from '~/storeRedux/modal/actions';

@@ -19,7 +19,7 @@ import Animated, {
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
 import useAuth from '~/hooks/auth';

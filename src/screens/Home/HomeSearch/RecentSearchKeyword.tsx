@@ -8,7 +8,7 @@ import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Button from '~/beinComponents/Button';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';

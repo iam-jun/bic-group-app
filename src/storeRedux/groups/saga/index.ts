@@ -42,7 +42,6 @@ import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
-import putGroupStructureCollapseStatus from '~/storeRedux/groups/saga/putGroupStructureCollapseStatus';
 import getMyPermissions from './getMyPermissions';
 import getJoinedAllGroups from './getJoinedAllGroups';
 import getManaged from './getManaged';
@@ -59,10 +58,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.GET_MY_PERMISSIONS, getMyPermissions,
-  );
-  yield takeLatest(
-    groupsTypes.PUT_GROUP_STRUCTURE_COLLAPSE_STATUS,
-    putGroupStructureCollapseStatus,
   );
   yield takeLatest(
     groupsTypes.GET_GROUP_DETAIL, getGroupDetail,

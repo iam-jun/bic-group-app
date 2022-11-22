@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { IMentionUser } from '~/interfaces/IPost';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import spacing from '~/theme/spacing';
 

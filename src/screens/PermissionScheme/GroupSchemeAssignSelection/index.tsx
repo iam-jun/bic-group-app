@@ -5,7 +5,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, { ZoomIn } from 'react-native-reanimated';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { IGroup } from '~/interfaces/IGroup';

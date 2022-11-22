@@ -52,30 +52,6 @@ export const groupPrivacyListDetail: IPrivacyItem[] = [
   },
 ];
 
-export const communityPrivacyListDetail: IPrivacyItem[] = [
-  {
-    type: CommunityPrivacyType.PUBLIC,
-    title: 'settings:title_public',
-    icon: 'iconPublic',
-    subtitle: 'settings:title_public_subtitle_community',
-    privacyTitle: 'settings:privacy_public',
-  },
-  {
-    type: CommunityPrivacyType.PRIVATE,
-    title: 'settings:title_private',
-    icon: 'iconPrivate',
-    subtitle: 'settings:title_private_subtitle_community',
-    privacyTitle: 'settings:privacy_private',
-  },
-  {
-    type: CommunityPrivacyType.SECRET,
-    title: 'settings:title_secret',
-    icon: 'iconSecret',
-    subtitle: 'settings:title_secret_subtitle_community',
-    privacyTitle: 'settings:privacy_secret',
-  },
-];
-
 export const GroupPrivacyDetail = {
   PUBLIC: {
     type: GroupPrivacyType.PUBLIC,
@@ -106,6 +82,30 @@ export const GroupPrivacyDetail = {
     privacyTitle: 'settings:privacy_open',
   },
 };
+
+export const communityPrivacyListDetail: IPrivacyItem[] = [
+  {
+    type: CommunityPrivacyType.PUBLIC,
+    title: 'settings:title_public',
+    icon: 'iconPublic',
+    subtitle: 'settings:title_public_subtitle_community',
+    privacyTitle: 'settings:privacy_public',
+  },
+  {
+    type: CommunityPrivacyType.PRIVATE,
+    title: 'settings:title_private',
+    icon: 'iconPrivate',
+    subtitle: 'settings:title_private_subtitle_community',
+    privacyTitle: 'settings:privacy_private',
+  },
+  {
+    type: CommunityPrivacyType.SECRET,
+    title: 'settings:title_secret',
+    icon: 'iconSecret',
+    subtitle: 'settings:title_secret_subtitle_community',
+    privacyTitle: 'settings:privacy_secret',
+  },
+];
 
 export const CommunityPrivacyDetail = {
   PUBLIC: {

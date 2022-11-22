@@ -10,7 +10,7 @@ import {
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { fontFamilies } from '~/theme/fonts';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Icon from '~/baseComponents/Icon';

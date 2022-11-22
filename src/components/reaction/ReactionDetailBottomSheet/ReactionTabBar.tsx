@@ -11,7 +11,7 @@ import NodeEmoji from 'node-emoji';
 import { blacklistReactions, ReactionType } from '~/constants/reactions';
 
 import Button from '~/beinComponents/Button';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { ANIMATED_EMOJI, STATIC_EMOJI } from '~/resources/emoji';
 import { spacing } from '~/theme';
 

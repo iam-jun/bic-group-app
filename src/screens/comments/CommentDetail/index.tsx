@@ -18,7 +18,7 @@ import { useKeySelector } from '~/hooks/selector';
 import APIErrorCode from '~/constants/apiErrorCode';
 import postKeySelector from '../../../storeRedux/post/keySelector';
 import spacing from '~/theme/spacing';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IRouteParams } from '~/interfaces/IRouter';
 

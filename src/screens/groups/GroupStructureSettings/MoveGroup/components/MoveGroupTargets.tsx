@@ -8,7 +8,7 @@ import Animated, {
   ZoomIn,
 } from 'react-native-reanimated';
 import { debounce } from 'lodash';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import { SearchInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';

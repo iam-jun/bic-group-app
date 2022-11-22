@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text, { TextProps } from '~/beinComponents/Text';
+import Text, { TextProps } from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import { AvatarProps } from '~/baseComponents/Avatar/AvatarComponent';
 import Icon, { IconProps } from '~/baseComponents/Icon';

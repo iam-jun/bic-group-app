@@ -7,7 +7,7 @@ import Divider from '~/beinComponents/Divider';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import useCommunityController from '~/screens/communities/store';
 import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';

@@ -8,7 +8,7 @@ import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 
 import { useRootNavigation } from '~/hooks/navigation';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';

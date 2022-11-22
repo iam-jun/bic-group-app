@@ -8,7 +8,7 @@ import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import spacing from '~/theme/spacing';
 

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';

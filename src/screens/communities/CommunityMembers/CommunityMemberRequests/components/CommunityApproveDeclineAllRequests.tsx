@@ -9,7 +9,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 
 const CommunityApproveDeclineAllRequests = ({ communityId }: {communityId: string}) => {

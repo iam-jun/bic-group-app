@@ -7,7 +7,7 @@ import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Image from '~/beinComponents/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';

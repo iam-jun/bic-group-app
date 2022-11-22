@@ -3,7 +3,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import { Platform as RNPlatform } from 'react-native';
-import leaveGroup, { navigateToGroup, navigationReplace } from './leaveGroup';
+import leaveGroup, { navigateToGroup, navigationPopToTop } from './leaveGroup';
 import groupsActions from '../actions';
 import groupApi from '../../../api/GroupApi';
 import * as modalActions from '../../modal/actions';
@@ -38,7 +38,7 @@ describe('Leave Group Saga', () => {
           data: { joinStatus: GroupJoinStatus.VISITOR },
         }),
       )
-      .call(navigationReplace)
+      .call(navigationPopToTop)
       .put(groupsActions.getGroupDetail({ groupId: action.payload }))
       .put(
         modalActions.showHideToastMessage({

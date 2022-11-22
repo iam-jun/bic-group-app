@@ -15,7 +15,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import items, { IListViewItem } from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import loadings from '~/beinComponents/list/loadings';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useKeySelector } from '~/hooks/selector';
 

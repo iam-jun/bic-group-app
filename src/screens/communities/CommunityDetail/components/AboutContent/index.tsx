@@ -2,8 +2,8 @@ import { View, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
-import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import Text from '~/baseComponents/Text';
+import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
 import { groupPrivacyListDetail, GroupPrivacyType } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';

@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/baseComponents/Icon';
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import { formatDate } from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';

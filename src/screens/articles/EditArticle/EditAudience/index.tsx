@@ -41,19 +41,18 @@ const EditArticleAudience: FC<EditArticleProps> = ({ route }: EditArticleProps) 
     () => getAudienceIdsFromAudienceObject(article.audience), [article.audience],
   );
 
-  const editArticleActions = useEditArticleStore((state) => state.actions);
   const isPublishing = useEditArticleStore((state) => state.isPublishing);
 
   const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
-  const selectingAudienceIds = useSelectAudienceStore((state) => state.selectingIds);
-  const selectingAudienceGroups = useSelectAudienceStore((state) => state.selecting.groups);
+  const selectedAudienceIds = useSelectAudienceStore((state) => state.selectedIds);
+  const selectingAudienceGroups = useSelectAudienceStore((state) => state.selectedAudiences.groups);
 
   // self check instead of use enableButtonNext from hook to avoid delay
-  const isAudienceValidForNext = !isEmpty(selectingAudienceIds?.groupIds) || !isEmpty(selectingAudienceIds?.userIds);
+  const isAudienceValidForNext = !isEmpty(selectedAudienceIds?.groupIds) || !isEmpty(selectedAudienceIds?.userIds);
 
   // self check instead of use enableButtonSave from hook to avoid delay
-  const isAudienceValidForSave = !isEqual(initAudienceIds, selectingAudienceIds)
-    && !(isEmpty(selectingAudienceIds?.groupIds) && isEmpty(selectingAudienceIds?.userIds));
+  const isAudienceValidForSave = !isEqual(initAudienceIds, selectedAudienceIds)
+    && !(isEmpty(selectedAudienceIds?.groupIds) && isEmpty(selectedAudienceIds?.userIds));
 
   const handleSaveError = (listIdAudiences: string[]) => {
     const audienceGroups = Object.values(selectingAudienceGroups);
@@ -86,15 +85,11 @@ const EditArticleAudience: FC<EditArticleProps> = ({ route }: EditArticleProps) 
   const disabled = (isPublishing ? !isAudienceValidForNext : !isAudienceValidForSave) || loading;
 
   useEffect(() => {
-    editArticleActions.setAudience(selectingAudienceIds);
-  }, [selectingAudienceIds]);
-
-  useEffect(() => {
     const newSelectingGroups = {};
     article.audience?.groups?.forEach((group) => {
       newSelectingGroups[group?.id] = group;
     });
-    selectAudienceActions.setSelectingGroups(newSelectingGroups);
+    selectAudienceActions.setSelectedAudiences(newSelectingGroups);
   }, [article.audience]);
 
   const goNextStep = () => {

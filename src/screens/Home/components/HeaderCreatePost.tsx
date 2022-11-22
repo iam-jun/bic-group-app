@@ -9,7 +9,7 @@ import {
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
 
 import Avatar from '~/baseComponents/Avatar';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';

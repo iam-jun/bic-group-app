@@ -5,7 +5,7 @@ import Collapsible from 'react-native-collapsible';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import UploadingFile, {
   UploadingFileProps,
 } from '~/beinComponents/UploadingFile';

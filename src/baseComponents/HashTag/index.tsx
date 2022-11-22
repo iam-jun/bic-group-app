@@ -4,7 +4,7 @@ import {
 import React, { FC } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { padding } from '~/theme/spacing';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 interface Props {
     name: string,

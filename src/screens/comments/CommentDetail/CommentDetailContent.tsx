@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlaceholder';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { IAudienceGroup, ICommentData } from '~/interfaces/IPost';

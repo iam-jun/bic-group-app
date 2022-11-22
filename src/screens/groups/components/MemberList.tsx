@@ -9,7 +9,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import MemberItem from './MemberItem';
 import { getMembersSection } from '~/storeRedux/groups/selectors';
 import appConfig from '~/configs/appConfig';

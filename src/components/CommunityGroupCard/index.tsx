@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Avatar, Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import Tag from '~/baseComponents/Tag';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
@@ -49,7 +49,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     privacy,
     joinStatus,
     description,
-    level,
     community,
   } = item || {};
   const privacyData: any
@@ -58,7 +57,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   const onView = () => {
-    if (isGroup(level)) {
+    if (isGroup(item)) {
       // in group detail we need some infomation from community detail,
       // so before navigate to group detail we need to fetch community detail
       // and clear community detail when go back from group detail
@@ -68,6 +67,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
         groupStack.groupDetail,
         {
           groupId: id,
+          communityId: community.id,
         },
       );
       return;
@@ -92,13 +92,13 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       return;
     }
     if (!!onJoin) {
-      onJoin(id, name, isGroup(level));
+      onJoin(id, name, isGroup(item));
     }
   };
 
   const handleCancel = () => {
     if (!!onCancel) {
-      onCancel(id, name, isGroup(level));
+      onCancel(id, name, isGroup(item));
     }
   };
 
@@ -111,7 +111,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
 
   return (
     <View testID={testID} style={[styles.container, elevations.e1]}>
-      {isGroup(level) && (
+      {isGroup(item) && (
         <Button onPress={onViewCommunity}>
           <Text.SubtitleS
             style={styles.textNameCommunityOnGroup}
@@ -160,7 +160,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
                 type="secondary"
                 size="small"
                 label={t(
-                  isGroup(level) ? 'common:text_group' : 'common:text_community',
+                  isGroup(item) ? 'common:text_group' : 'common:text_community',
                 )}
               />
             </View>

@@ -11,7 +11,7 @@ import ChosenAudiences from './components/ChosenAudiences';
 import CoverImage from './components/CoverImage';
 import { TextArea, TextInput } from '~/baseComponents/Input';
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import useSeriesCreation from '../hooks/useSeriesCreation';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import useSeriesStore, { ISeriesState } from '../store';
@@ -87,7 +87,7 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
     <ScreenWrapper isFullView testID="create_series_screen">
       <Header
         titleTextProps={{ useI18n: true }}
-        title="series:title_create_series"
+        title={`series:title:${seriesId ? 'edit' : 'create'}`}
         buttonText="common:btn_publish"
         buttonProps={{
           loading,

@@ -30,17 +30,17 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
   const seriesActions = useSeriesStore((state: ISeriesState) => state.actions);
   const { loading } = useSeriesStore((state: ISeriesState) => state);
 
-  const selectingAudienceIds = useSelectAudienceStore((state) => state.selectingIds);
-  const selectAudienceResetStore = useSelectAudienceStore((state) => state.reset);
+  const selectingAudienceIds = useSelectAudienceStore((state) => state.selectedIds);
+  const selectingAudienceGroups = useSelectAudienceStore((state) => state.selectedAudiences.groups);
   const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
-  const selectingAudienceGroups = useSelectAudienceStore((state) => state.selecting.groups);
+  const selectAudienceResetStore = useSelectAudienceStore((state) => state.reset);
 
   const setInitDataToSelectingAudiences = () => {
     const newSelectingGroups = {};
     initAudienceGroups?.forEach((group) => {
       newSelectingGroups[group?.id] = group;
     });
-    selectAudienceActions.setSelectingGroups(newSelectingGroups);
+    selectAudienceActions.setSelectedAudiences(newSelectingGroups);
   };
 
   useEffect(() => {

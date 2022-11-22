@@ -5,7 +5,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import SVGIcon from '~/baseComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import spacing from '~/theme/spacing';
 import NotFoundImg from '../../../assets/images/error_404.svg';
