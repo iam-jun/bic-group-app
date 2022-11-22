@@ -647,6 +647,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "BIC Group Development";
 				CLANG_ENABLE_MODULES = YES;
+				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -686,6 +687,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "BIC Group";
 				CLANG_ENABLE_MODULES = YES;
+				CODEPUSH_KEY = WFkCTIUyt86FxN7FgknQdT733kFM2ZhnCGDQ6;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -788,6 +790,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "BIC Group Staging";
 				CLANG_ENABLE_MODULES = YES;
+				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupDebugStaging.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -912,6 +915,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "BIC Group Staging";
 				CLANG_ENABLE_MODULES = YES;
+				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupReleaseStaging.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1033,6 +1037,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "BIC Group Development";
 				CLANG_ENABLE_MODULES = YES;
+				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_group.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
