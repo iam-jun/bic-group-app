@@ -1,6 +1,7 @@
 import { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { IEditArticleCategoryState } from '~/screens/articles/EditArticle/EditCategory/store';
 import { IEditArticleState } from '~/screens/articles/EditArticle/store';
+import { ICodePushState } from '~/store/codePush';
 import IPostsState from './entities/posts/Interface';
 import ICommentsState from '~/store/entities/comments/Interface';
 import IHomeState from '~/screens/Home/store/Interface';
@@ -104,4 +105,5 @@ export interface BicStore {
   communities: ICommunitiesState;
   removeCommunityMemberStore: IRemoveCommunityMemberState;
   giphy: IGiphyState;
+  codePush: ICodePushState;
 }

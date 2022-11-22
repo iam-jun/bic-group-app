@@ -1,5 +1,6 @@
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import useCommunityJoinedGroupTreeStore from '~/screens/groups/components/CommunityJoinedGroupTree/store';
+import useCodePushStore from '~/store/codePush';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from './entities/posts';
 import useHomeStore from '~/screens/Home/store';
@@ -76,6 +77,7 @@ const stores = [
   useGiphyStore,
   useSeriesStore,
   useEditArticleSeriesStore,
+  useCodePushStore,
 ];
 
 export const resetAllStores = () => {

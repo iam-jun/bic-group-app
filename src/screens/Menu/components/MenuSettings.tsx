@@ -6,6 +6,8 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
+import AppVersion from '~/screens/Menu/components/AppVersion';
+import CheckUpdate from '~/screens/Menu/components/CheckUpdate';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
@@ -75,13 +77,6 @@ const MenuSettings = () => {
     },
   ];
 
-  const onPressAppVersion = () => {
-    if (isProduction) {
-      return;
-    }
-    rootNavigation.navigate(menuStack.componentCollection);
-  };
-
   const renderItem = ({ icon, title, onPress }: any) => (
     <Button key={title + icon} style={styles.itemContainer} onPress={onPress}>
       <Icon tintColor={theme.colors.neutral20} icon={icon} />
@@ -93,8 +88,9 @@ const MenuSettings = () => {
     <View style={styles.container}>
       <View style={styles.row}>
         <Text.SubtitleM style={styles.textHeader} useI18n>menu:title_settings</Text.SubtitleM>
-        <Text.SubtitleXS onPress={onPressAppVersion}>{getEnv('APP_VERSION')}</Text.SubtitleXS>
+        <AppVersion />
       </View>
+      <CheckUpdate />
       {settingItems.map(renderItem)}
       <Button style={styles.itemContainer} onPress={onLogout}>
         <Icon tintColor={theme.colors.purple20} icon="ArrowRightFromBracket" />
