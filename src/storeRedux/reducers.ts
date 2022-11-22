@@ -6,7 +6,6 @@ import types from '~/storeRedux/auth/types';
 import groupsReducer from '~/storeRedux/groups/reducer';
 import homeReducer from '~/storeRedux/home/reducer';
 import menuReducer from '~/storeRedux/menu/reducer';
-import notificationsReducer from '~/storeRedux/notification/reducer';
 import postReducer from '~/storeRedux/post/reducer';
 
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
@@ -21,12 +20,6 @@ const authPersistConfig = {
   key: 'auth',
   storage: AsyncStorage,
   blacklist: ['loading'],
-};
-
-const notiPersistConfig = {
-  key: 'notifications',
-  storage: AsyncStorage,
-  whitelist: ['pushToken'],
 };
 
 const postPersistConfig = {
@@ -46,9 +39,6 @@ export const appReducer = combineReducers({
   ),
   groups: groupsReducer,
   home: homeReducer,
-  notifications: persistReducer(
-    notiPersistConfig, notificationsReducer,
-  ),
   menu: menuReducer,
   noInternet: noInternetReducer,
 });
@@ -73,7 +63,6 @@ const rootReducers = (
     AsyncStorage.multiRemove([
       'persist:root',
       'persist:auth',
-      'persist:notifications',
       'persist:post',
     ]).catch((e) => console.error(
       'error when logout', e,
