@@ -41,6 +41,7 @@ const InfoView = ({
   const { colors } = theme;
   const privacyScopeDetail = type === 'community' ? CommunityPrivacyDetail : GroupPrivacyDetail;
   const privacyItem: IPrivacyItem = privacyScopeDetail[privacy];
+  const { icon, title, subtitle } = privacyItem || {};
 
   const isPrivatePrivacy = privacy === CommunityPrivacyType.PRIVATE
   || privacy === GroupPrivacyType.PRIVATE;
@@ -72,14 +73,14 @@ const InfoView = ({
   const renderPrivacyView = () => (
     <>
       <View style={styles.privacyHeader}>
-        <Icon icon={privacyItem.icon} tintColor={colors.neutral20} />
+        <Icon icon={icon} tintColor={colors.neutral20} />
         <Text.BodyM color={colors.neutral60} style={styles.privacyText} useI18n>
-          {privacyItem.title}
+          {title}
         </Text.BodyM>
       </View>
 
       <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>
-        {privacyItem.subtitle}
+        {subtitle}
       </Text.BodyM>
 
       {isSecretPrivacy && (
