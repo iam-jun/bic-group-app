@@ -129,6 +129,10 @@ const useEditArticle = ({ articleId, needToPublish, handleSaveAudienceError }: I
     actions.setMentions(newMentions);
   };
 
+  const handleAudiencesChange = (newAudiences: IEditArticleAudience) => {
+    actions.setAudience(newAudiences);
+  };
+
   const prepareNewSeriesData = (seriesDenied: string[]) => {
     const newSeries = [];
     data.series.forEach((series: IEditArticleSeries) => {
@@ -207,6 +211,7 @@ const useEditArticle = ({ articleId, needToPublish, handleSaveAudienceError }: I
     handleContentChange,
     handleSave,
     handleBack,
+    handleAudiencesChange,
   };
 };
 
