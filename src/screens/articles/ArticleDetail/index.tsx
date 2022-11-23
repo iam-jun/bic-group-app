@@ -105,7 +105,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       ownReaction: ownerReactions,
       reactionsCount,
     };
-    commonController.putReactionToPost(payload);
+    commonController.reactToPost('put', payload);
     onPressMarkSeenPost();
   };
 
@@ -117,7 +117,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         ownReaction: ownerReactions,
         reactionsCount,
       };
-      commonController.deleteReactToPost(payload);
+      commonController.reactToPost('delete', payload);
     }
   };
 
