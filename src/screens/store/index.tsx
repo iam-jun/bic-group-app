@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { IGetUserProfile, IUserProfile } from '~/interfaces/IAuth';
 import {
   ICommentData,
@@ -22,6 +23,7 @@ export interface ICommonController extends IBaseState {
   myProfile: IUserProfile;
 
   actions: {
+    reactToPost: _.DebouncedFunc<(type: 'put' | 'delete', payload: IPayloadReactToPost) => void>;
     putReactionToPost?: (payload: IPayloadReactToPost) => void;
     onUpdateReactionOfPostById: (
         postId: string, ownReaction: IOwnReaction, reactionsCount: IReactionCounts,) => void;
@@ -50,6 +52,14 @@ const initialState = {
 const commonController = (set, get) => ({
   ...initialState,
   actions: {
+    reactToPost: _.throttle((type: 'put' | 'delete', payload: IPayloadReactToPost) => {
+      if (type === 'put') {
+        get().actions.putReactionToPost(payload);
+      }
+      if (type === 'delete') {
+        get().actions.deleteReactToPost(payload);
+      }
+    }, 500, { trailing: false }),
     putReactionToPost: putReactionToPost(set, get),
     onUpdateReactionOfPostById: onUpdateReactionOfPostById(set, get),
     deleteReactToPost: deleteReactToPost(set, get),

@@ -22,7 +22,7 @@ const useContentActions = ({ postId, ownerReactions, reactionsCount }) => {
       ownReaction: ownerReactions,
       reactionsCount,
     };
-    commonController.putReactionToPost(payload);
+    commonController.reactToPost('put', payload);
     onPressMarkSeenPost();
   };
 
@@ -33,7 +33,7 @@ const useContentActions = ({ postId, ownerReactions, reactionsCount }) => {
       ownReaction: ownerReactions,
       reactionsCount,
     };
-    commonController.deleteReactToPost(payload);
+    commonController.reactToPost('delete', payload);
   };
 
   const onLongPressReaction = (reactionType: ReactionType) => {

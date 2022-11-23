@@ -690,7 +690,7 @@
 				CODEPUSH_KEY = WFkCTIUyt86FxN7FgknQdT733kFM2ZhnCGDQ6;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
@@ -710,7 +710,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.beincom.group;
 				PRODUCT_NAME = bic_group;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.beincom.group";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.beincom.group";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.beincom.group";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -918,7 +918,7 @@
 				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_groupReleaseStaging.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
@@ -938,7 +938,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.beincom.group.staging;
 				PRODUCT_NAME = bic_group;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.beincom.group.staging";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.beincom.group.staging";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.beincom.group.staging";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1040,7 +1040,7 @@
 				CODEPUSH_KEY = 7dyJcdB8mq1olhp57D2oUN77kIVW7btaRsqbO;
 				CODE_SIGN_ENTITLEMENTS = bic_group/bic_group.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
@@ -1060,7 +1060,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.beincom.group.development;
 				PRODUCT_NAME = bic_group;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.beincom.group.development";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.beincom.group.development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.beincom.group.development";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
