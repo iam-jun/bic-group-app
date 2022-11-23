@@ -58,12 +58,12 @@ platform :ios do
       api_key_path: "./api_key_info.json",
     )
 
-    notice_to_bic("🟡🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+    notice_to_bic("🟡🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong @triduc
       \n **BIC Group Staging iOS**
       \n Tải tại: TestFlight.
       \n **Git Branch**: #{git_branch}
       \n **Git Commit**: #{git_mess}",
-      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
       '65864708-d4e6-4360-aa89-32fef3cd1b9a')
   end
 
@@ -109,20 +109,32 @@ platform :ios do
       api_key_path: "./api_key_info.json",
     )
 
-    notice_to_bic("🟢🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+    notice_to_bic("🟢🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong @triduc
       \n **BIC Group iOS**
       \n Tải tại: TestFlight.
       \n **Git Branch**: #{git_branch}
       \n **Git Commit**: #{git_mess}",
-      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
       '65864708-d4e6-4360-aa89-32fef3cd1b9a')
   end
 
   lane :deploy_staging_ci do
-    deploy_staging
-  end
+      app_store_connect_api_key(
+          key_id: "XJ428WDDS9",
+          issuer_id: "69a6de93-bcc0-47e3-e053-5b8c7c11a4d1",
+          key_content: "-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgZvH4Nl3l7LtF4BDP\nnSL4HNR1uD8M3pJKGIFR0maeCTCgCgYIKoZIzj0DAQehRANCAAQG2c/tJ3g2QAGy\nkFsV5sPhF/ILH6BttjT0/EDU5e23qrJaQME6ZnE7mnm+awoSynvZYfZ9uPb6yijw\nmN0V3uDM\n-----END PRIVATE KEY-----"
+        )
 
-  lane :deploy_production_ci do
-    deploy_production
+      deploy_staging
+    end
+
+    lane :deploy_production_ci do
+      app_store_connect_api_key(
+          key_id: "XJ428WDDS9",
+          issuer_id: "69a6de93-bcc0-47e3-e053-5b8c7c11a4d1",
+          key_content: "-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgZvH4Nl3l7LtF4BDP\nnSL4HNR1uD8M3pJKGIFR0maeCTCgCgYIKoZIzj0DAQehRANCAAQG2c/tJ3g2QAGy\nkFsV5sPhF/ILH6BttjT0/EDU5e23qrJaQME6ZnE7mnm+awoSynvZYfZ9uPb6yijw\nmN0V3uDM\n-----END PRIVATE KEY-----"
+        )
+
+      deploy_production
+    end
   end
-end
