@@ -10,7 +10,7 @@ import modalActions from '~/storeRedux/modal/actions';
 
 import useSeriesStore, { ISeriesState } from '../store';
 import useSelectAudienceStore, { ISelectAudienceState } from '~/components/SelectAudience/store';
-import { IArticleCover } from '~/interfaces/IPost';
+import { IArticleCover, IAudience } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
 import { IEditArticleAudience } from '~/interfaces/IArticle';
@@ -25,16 +25,15 @@ export interface IUseSeriesCreation {
 const isNonEmptyString = (str: string) => str?.trim?.()?.length > 0;
 
 const getNames = (
-  ids: string[], data: any,
+  chosenAudiences: IAudience[],
 ) => {
   let result = '';
-  if (ids?.length > 0 && !isEmpty(data)) {
-    const newNames = [];
-    ids.forEach((id: string) => {
-      const name = data?.[id]?.name || '';
-      newNames.push(name);
+  if (chosenAudiences?.length > 0) {
+    const newChosenAudiencesName = [];
+    chosenAudiences.forEach((item: IAudience) => {
+      newChosenAudiencesName.push(item?.name);
     });
-    result = newNames.join(', ');
+    result = newChosenAudiencesName.join(', ');
   }
   return result;
 };
@@ -53,10 +52,7 @@ const useSeriesCreation = ({ seriesId, isFromDetail, handleEditAudienceError }: 
 
   const audienceActions = useSelectAudienceStore((state: ISelectAudienceState) => state.actions);
 
-  const chosenAudienceGroups = useSelectAudienceStore((state: ISelectAudienceState) => state.selectedAudiences?.groups);
-  const names = getNames(
-    data.audience?.groupIds, chosenAudienceGroups,
-  );
+  const names = getNames(dataGroups);
 
   useEffect(() => {
     if (!isEmpty(series)) {
