@@ -2,7 +2,6 @@ git_url("git@bitbucket.org:beincomm/bic-mobile-app-secret.git")
 storage_mode("git")
 team_id("44S5N8GAPS")
 team_name("UFUTURE CORPORATION")
-username("namanh@tgm.vn")
 app_identifier([
   "com.beincom.group.development",
   "com.beincom.group.staging",
