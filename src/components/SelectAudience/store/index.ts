@@ -4,7 +4,6 @@ import { createStore, resetStore } from '~/store/utils';
 import getAudienceTree from './actions/getAudienceTree';
 import getAudienceSearch from './actions/getAudienceSearch';
 import { IUser } from '~/interfaces/IAuth';
-import { isGroup } from '~/helpers/groups';
 import { getAudienceIdsFromSelecting } from './helper';
 
 export interface ISelectAudienceState extends IBaseState {
@@ -75,7 +74,7 @@ const selectAudienceStore = (set, get) => ({
     updateItemSelection: (item: IGroup & IUser, isSelected: boolean) => {
       const isUser = item?.username;
       const field = isUser ? 'users' : 'groups';
-      const fieldIds = isGroup(item) ? 'userIds' : 'groupIds';
+      const fieldIds = isUser ? 'userIds' : 'groupIds';
 
       set((state: ISelectAudienceState) => {
         const isItemExisted = state.selectedAudiences[field]?.[item.id];
