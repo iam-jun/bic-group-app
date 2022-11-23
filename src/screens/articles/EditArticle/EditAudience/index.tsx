@@ -79,7 +79,7 @@ const EditArticleAudience: FC<EditArticleProps> = ({ route }: EditArticleProps) 
   };
 
   const {
-    handleBack, handleSave, loading,
+    handleBack, handleSave, loading, handleAudiencesChange,
   } = useEditArticle({ articleId, handleSaveAudienceError: handleSaveError });
 
   const disabled = (isPublishing ? !isAudienceValidForNext : !isAudienceValidForSave) || loading;
@@ -91,6 +91,12 @@ const EditArticleAudience: FC<EditArticleProps> = ({ route }: EditArticleProps) 
     });
     selectAudienceActions.setSelectedAudiences(newSelectingGroups);
   }, [article.audience]);
+
+  useEffect(() => {
+    if (isAudienceValidForSave) {
+      handleAudiencesChange(selectedAudienceIds);
+    }
+  }, [selectedAudienceIds]);
 
   const goNextStep = () => {
     rootNavigation.navigate(articleStack.editArticleSeries, { articleId });
