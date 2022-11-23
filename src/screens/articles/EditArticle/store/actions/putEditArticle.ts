@@ -93,7 +93,7 @@ const putEditArticle = (set, get) => async (
       });
     } else if (error?.meta?.errors?.groups_denied) {
       callbackError?.({
-        type: EditArticleErrorType.SERIES_DENIED,
+        type: EditArticleErrorType.GROUPS_DENIED,
         ids: error.meta.errors.groups_denied,
       });
     } else {
