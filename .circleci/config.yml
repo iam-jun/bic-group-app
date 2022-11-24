@@ -7,7 +7,7 @@ jobs:
   ios-stg:
     macos:
       xcode: 13.4.1
-    resource_class: large #medium|large
+    resource_class: medium #medium|large
     steps:
       - checkout
       - run:
@@ -35,10 +35,10 @@ jobs:
       - store_artifacts:
           path: output
 
-  ios-pro: 
+  ios-pro:
     macos:
       xcode: 13.4.1
-    resource_class: large #medium|large
+    resource_class: medium #medium|large
     steps:
       - checkout
       - run:
