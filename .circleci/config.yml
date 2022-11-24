@@ -78,6 +78,7 @@ jobs:
           name: Import environment variables from Doppler
           command: |
             echo -e $STG_ENV > .env.staging
+            echo APP_VERSION=${APP_VERSION} >> .env.staging
             mkdir -p android/app/src/staging
             echo $STG_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/staging/google-services.json
       - run:
@@ -112,6 +113,7 @@ jobs:
           name: Import environment variables from Doppler
           command: |
             echo -e $PRO_ENV > .env.production
+            echo APP_VERSION=${APP_VERSION} >> .env.production
             mkdir -p a android/app/src/production
             echo $PRO_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/production/google-services.json
       - run:
