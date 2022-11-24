@@ -55,7 +55,7 @@ platform :ios do
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
-      api_key_path: "./api_key_info.json",
+      api_key_path: "ios/fastlane/api_key_info.json",
     )
 
     notice_to_bic("🟡🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong @triduc
@@ -106,7 +106,7 @@ platform :ios do
       app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
       ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Production version #{ENV['APP_VERSION']}",
-      api_key_path: "./api_key_info.json",
+      api_key_path: "ios/fastlane/api_key_info.json",
     )
 
     notice_to_bic("🟢🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong @triduc
