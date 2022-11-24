@@ -6,7 +6,7 @@ orbs:
 jobs:
   ios-stg:
     macos:
-      xcode: 13.2.1
+      xcode: 13.4.1
     resource_class: medium #medium|large
     steps:
       - checkout
@@ -37,7 +37,7 @@ jobs:
 
   ios-pro:
     macos:
-      xcode: 13.2.1
+      xcode: 13.4.1
     resource_class: medium #medium|large
     steps:
       - checkout
