@@ -14,6 +14,7 @@ jobs:
           name: Import environment variables from Doppler
           command: |
             echo -e $STG_ENV > .env.staging
+            echo $APP_VERSION >> .env.staging
             echo -e $STG_FASTLANE_ENV > ios/fastlane/.env
             echo $API_KEY | base64 --decode >  ios/fastlane/api_key_info.json
             echo $STG_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Staging.plist
@@ -45,6 +46,7 @@ jobs:
           name: Import environment variables from Doppler
           command: |
             echo -e $PRO_ENV > .env.production
+            echo $APP_VERSION >> .env.production
             echo -e $PRO_FASTLANE_ENV > ios/fastlane/.env
             echo $API_KEY | base64 --decode >  ios/fastlane/api_key_info.json
             echo $PRO_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Production.plist
