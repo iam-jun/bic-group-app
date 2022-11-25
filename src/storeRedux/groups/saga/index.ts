@@ -23,11 +23,6 @@ import editGroupDetail from './editGroupDetail';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/storeRedux/commonSaga/showError';
-import getJoinedCommunities from './getJoinedCommunities';
-import getCommunityGroups from './getCommunityGroups';
-import getYourGroupsTree from '~/storeRedux/groups/saga/getYourGroupsTree';
-import getYourGroupsList from '~/storeRedux/groups/saga/getYourGroupsList';
-import getYourGroupsSearch from '~/storeRedux/groups/saga/getYourGroupsSearch';
 import getCommunityMembers from './getCommunityMembers';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupMembers from './getGroupMembers';
@@ -43,10 +38,6 @@ import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
 import getMyPermissions from './getMyPermissions';
-import getJoinedAllGroups from './getJoinedAllGroups';
-import getManaged from './getManaged';
-import getOwnerCommunity from './getOwnerCommunity';
-import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
@@ -115,21 +106,6 @@ export default function* groupsSaga() {
     declineAllGroupMemberRequests,
   );
   yield takeLatest(
-    groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch,
-  );
-  yield takeLatest(
-    groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree,
-  );
-  yield takeLatest(
-    groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList,
-  );
-  yield takeLatest(
-    groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities,
-  );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups,
-  );
-  yield takeLatest(
     groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers,
   );
   yield takeLatest(
@@ -156,10 +132,6 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
     declineAllCommunityMemberRequests,
   );
-  yield takeLatest(groupsTypes.GET_JOINED_ALL_GROUPS, getJoinedAllGroups);
-  yield takeLatest(groupsTypes.GET_MANAGED, getManaged);
-  yield takeLatest(groupsTypes.GET_OWNER_COMMUNITY, getOwnerCommunity);
-  yield takeLatest(groupsTypes.GET_MANAGED_COMMUNITY_AND_GROUP, getManagedCommunityAndGroup);
   yield takeLatest(
     groupsTypes.GET_GLOBAL_SEARCH, getGlobalSearch,
   );
