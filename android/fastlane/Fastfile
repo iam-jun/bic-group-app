@@ -27,6 +27,7 @@ platform :android do
     appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+    file_apk = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0]
 
     gradle(task: "clean")
     gradle(
@@ -36,7 +37,7 @@ platform :android do
     )
     diawi(
       token: ENV['DIAWI_TOKEN'],
-      file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
+      file: file_apk,
       timeout: 600,
     )
     notice_to_bic("🟡🤖 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong @triduc
@@ -46,6 +47,12 @@ platform :android do
       \n **Git Commit**: #{git_mess}",
       ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
       '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+    firebase_app_distribution(
+        app: "1:940869719860:android:9cc5d66088807f62823761",
+        android_artifact_path: file_apk,
+        release_notes: "BIC Group Staging: #{appVersionText}",
+        groups: "bicteam",
+    )
   end
 
   lane :deploy_production do
@@ -53,6 +60,8 @@ platform :android do
     appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+    file_apk = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0]
+
     gradle(task: "clean")
     gradle(
       task: "assemble",
@@ -61,7 +70,7 @@ platform :android do
     )
     diawi(
       token: ENV['DIAWI_TOKEN'],
-      file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
+      file: file_apk,
       timeout: 600,
     )
     notice_to_bic("🟢🤖 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong @triduc
@@ -71,5 +80,11 @@ platform :android do
       \n **Git Commit**: #{git_mess}",
       ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
       '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+    firebase_app_distribution(
+      app: "1:50839038070:android:0f9261acc3f73502fe9757",
+      android_artifact_path: file_apk,
+      release_notes: "BIC Group Production: #{appVersionText}",
+      groups: "bicteam",
+    )
   end
 end
