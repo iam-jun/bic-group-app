@@ -185,8 +185,8 @@ export interface IJoiningMember {
   groupId: string;
   createdAt: string;
   updatedAt: string;
-  isCanceled?: boolean;
   user: IJoiningUserInfo;
+  noticeMessage?: string;
 }
 
 export interface IJoiningUserInfo {

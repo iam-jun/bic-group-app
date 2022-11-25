@@ -42,17 +42,19 @@ export default function* approveSingleGroupMemberRequest({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
     yield put(groupsActions.getGroupDetail({ groupId })); // to update userCount
-  } catch (err: any) {
-    console.error('approveSingleGroupMemberRequest: ', err);
+  } catch (error: any) {
+    console.error('approveSingleGroupMemberRequest: ', error);
 
-    if (err?.code === approveDeclineCode.CANCELED) {
+    if (error?.code === approveDeclineCode.CANCELED
+    || error?.code === approveDeclineCode.APPROVED
+    || error?.code === approveDeclineCode.DECLINED) {
       yield put(groupsActions.editGroupMemberRequest({
         id: requestId,
-        data: { isCanceled: true },
+        data: { noticeMessage: error?.meta?.message },
       }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(showError, error);
   }
 }
