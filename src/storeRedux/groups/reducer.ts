@@ -367,50 +367,11 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
 
-    case groupsTypes.SET_YOUR_GROUPS_SEARCH:
-      return {
-        ...state,
-        yourGroupsSearch: {
-          ...state.yourGroupsSearch,
-          ...payload,
-        },
-      };
-    case groupsTypes.SET_YOUR_GROUPS_TREE:
-      return {
-        ...state,
-        yourGroupsTree: {
-          ...state.yourGroupsTree,
-          ...payload,
-        },
-      };
-    case groupsTypes.SET_YOUR_GROUPS_LIST:
-      return {
-        ...state,
-        yourGroupsList: {
-          ...state.yourGroupsList,
-          ...payload,
-        },
-      };
-    case groupsTypes.SET_JOINED_COMMUNITIES:
-      return {
-        ...state,
-        joinedCommunities: {
-          ...state.joinedCommunities,
-          ...payload,
-        },
-      };
-
     case groupsTypes.GET_COMMUNITY_GROUPS:
       return {
         ...state,
         loadingJoinedGroups: true,
         joinedGroups: groupInitState.joinedGroups,
-      };
-    case groupsTypes.SET_COMMUNITY_GROUPS:
-      return {
-        ...state,
-        loadingJoinedGroups: false,
-        joinedGroups: payload || [],
       };
     case groupsTypes.SET_COMMUNITY_MEMBERS: {
       return {
@@ -514,22 +475,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         globalSearch: groupInitState.globalSearch,
-      };
-    case groupsTypes.SET_JOINED_ALL_GROUPS:
-      return {
-        ...state,
-        joinedAllGroups: {
-          ...state.joinedAllGroups,
-          ...payload,
-        },
-      };
-    case groupsTypes.SET_MANAGED:
-      return {
-        ...state,
-        managed: {
-          ...state.managed,
-          ...payload,
-        },
       };
     default:
       return state;

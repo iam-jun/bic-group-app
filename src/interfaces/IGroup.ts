@@ -1,7 +1,6 @@
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
-import initialState from '~/storeRedux/initialState';
 
 export interface IRole {
   id?: string;
@@ -186,8 +185,8 @@ export interface IJoiningMember {
   groupId: string;
   createdAt: string;
   updatedAt: string;
-  isCanceled?: boolean;
   user: IJoiningUserInfo;
+  noticeMessage?: string;
 }
 
 export interface IJoiningUserInfo {
@@ -210,24 +209,6 @@ export interface IJoiningUserInfo {
   } | null;
 }
 
-export interface IGetYourGroupsSearch {
-  communityId: string;
-  key: string;
-}
-
-export interface IStateSearch {
-  showSearch?: boolean;
-  loading?: boolean;
-  key?: string;
-  list?: any[];
-}
-
-export interface IStateList {
-  loading?: boolean;
-  list?: any[];
-  canLoadMore?: boolean;
-}
-
 export interface IGetCommunityGroup {
   previewMembers?: boolean;
   key?: string;
@@ -242,28 +223,11 @@ export interface IPayloadGroupSchemeAssignments {
   currentAssignments?: any;
 }
 
-export interface IGetJoinedAllGroups {
-  isRefresh?: boolean;
-}
-
-export type SetJoinedAllGroupsPayload = Partial<
-  typeof initialState.groups.joinedAllGroups
->;
-
 export interface IParamsGetJoinedAllGroups {
   limit?: number;
   offset?: number;
 }
-export interface IGetManagedPayload {
-  isRefresh?: boolean;
-}
 
-export type SetManagedPayload = Partial<
-  typeof initialState.groups.managed
->;
-export interface IGetManagedCommunityAndGroupPayload {
-  isRefresh?: boolean;
-}
 export interface IParamsGetManagedCommunityAndGroup {
   limit?: number;
   offset?: number;

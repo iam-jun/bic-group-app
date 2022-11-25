@@ -46,17 +46,19 @@ export default function* approveSingleCommunityMemberRequest({
     yield put(modalActions.showHideToastMessage(toastMessage));
     // to update userCount
     actions.getCommunity(communityId);
-  } catch (err: any) {
-    console.error('approveSingleCommunityMemberRequest: ', err);
+  } catch (error: any) {
+    console.error('approveSingleCommunityMemberRequest: ', error);
 
-    if (err?.code === approveDeclineCode.CANCELED) {
+    if (error?.code === approveDeclineCode.CANCELED
+      || error?.code === approveDeclineCode.APPROVED
+      || error?.code === approveDeclineCode.DECLINED) {
       yield put(groupsActions.editCommunityMemberRequest({
         id: requestId,
-        data: { isCanceled: true },
+        data: { noticeMessage: error?.meta?.message },
       }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(showError, error);
   }
 }

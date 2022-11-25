@@ -41,17 +41,19 @@ export default function* declineSingleCommunityMemberRequest({
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-  } catch (err: any) {
-    console.error('declineSingleCommunityMemberRequest: ', err);
+  } catch (error: any) {
+    console.error('declineSingleCommunityMemberRequest: ', error);
 
-    if (err?.code === approveDeclineCode.CANCELED) {
+    if (error?.code === approveDeclineCode.CANCELED
+      || error?.code === approveDeclineCode.APPROVED
+      || error?.code === approveDeclineCode.DECLINED) {
       yield put(groupsActions.editCommunityMemberRequest({
         id: requestId,
-        data: { isCanceled: true },
+        data: { noticeMessage: error?.meta?.message },
       }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(showError, error);
   }
 }
