@@ -247,7 +247,7 @@ const groupsActions = {
     type: groupsTypes.RESET_COMMUNITY_MEMBERS,
   }),
   getCommunitySearchMembers: (payload: {
-    communityId: string;
+    groupId: string;
     params: IParamGetCommunityMembers;
   }) => ({
     type: groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,

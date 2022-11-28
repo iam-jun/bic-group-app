@@ -173,7 +173,7 @@ const CommunityMembers = ({ route }: any) => {
 
       <SearchMemberView
         isOpen={isOpen}
-        communityId={communityId}
+        community={community}
         onClose={onCloseModal}
         onPressMenu={onPressMenu}
         placeholder={t('groups:text_search_member')}

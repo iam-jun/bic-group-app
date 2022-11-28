@@ -44,6 +44,8 @@ const SearchMemberView = ({
   );
 
   const getGroupSearchMembers = (searchText: string) => {
+    if (!searchText?.trim?.()) return;
+
     dispatch(actions.getGroupSearchMembers({ groupId, params: { key: searchText } }));
   };
 
@@ -75,7 +77,7 @@ const SearchMemberView = ({
       onClose={onClose}
       onChangeText={onSearchMembers}
     >
-      {!!searchText && (
+      {!!searchText?.trim?.() && (
         <MemberSearchResult
           canManageMember={canManageMember}
           memberSearchData={groupSearchMembers}
