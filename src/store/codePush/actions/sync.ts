@@ -19,7 +19,7 @@ const sync = (set, _get) => async () => {
         status = 'Installing update...';
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
-        status = `No update for ${getEnv('VERSION_NAME')}️ 🌻`;
+        status = `No more update for ${getEnv('APP_VERSION')}️ 🌻`;
         break;
       case CodePush.SyncStatus.UPDATE_IGNORED:
         status = 'Update cancelled by user 😵';

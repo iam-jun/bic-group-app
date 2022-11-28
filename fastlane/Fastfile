@@ -1,8 +1,10 @@
 fastlane_require 'dotenv'
 
 platform :android do
-  lane :update_staging do
+  lane :update_staging do |options|
     Dotenv.overload('../.env.base', '../.env.staging')
+    disable_notice = options[:disable_notice]
+
     appcenter_codepush_release_react(
       api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
       app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
@@ -18,17 +20,21 @@ platform :android do
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
-    notice_to_bic("🟡🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
-      \n **BIC Group Staging Android**
-      \n Tải tại: In-app Update
-      \n **Git Branch**: #{git_branch}
-      \n **Git Commit**: #{git_mess}",
-      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-      '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+    if (disable_notice != 'true')
+      notice_to_bic("🟡🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+        \n **BIC Group Staging Android**
+        \n Tải tại: In-app Update
+        \n **Git Branch**: #{git_branch}
+        \n **Git Commit**: #{git_mess}",
+        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+        '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+    end
   end
 
-  lane :update_production do
+  lane :update_production do |options|
     Dotenv.overload('../.env.base', '../.env.production')
+    disable_notice = options[:disable_notice]
+
     appcenter_codepush_release_react(
       api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
       app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
@@ -44,13 +50,15 @@ platform :android do
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
-    notice_to_bic("🟢🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
-      \n **BIC Group Production Android**
-      \n Tải tại: In-app Update
-      \n **Git Branch**: #{git_branch}
-      \n **Git Commit**: #{git_mess}",
-      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-      '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+    if (disable_notice != 'true')
+      notice_to_bic("🟢🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+        \n **BIC Group Production Android**
+        \n Tải tại: In-app Update
+        \n **Git Branch**: #{git_branch}
+        \n **Git Commit**: #{git_mess}",
+        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+        '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+    end
   end
 
   lane :build_staging do
@@ -108,7 +116,7 @@ platform :android do
       ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
       '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
 
-    update_staging
+    update_staging({disable_notice => 'true'})
 
   end
 
@@ -146,7 +154,7 @@ platform :android do
       ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
       '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
 
-    update_production
+    update_production({disable_notice => 'true'})
 
   end
 end
@@ -163,8 +171,10 @@ platform :ios do
     match(type: "appstore", readonly: false, force: true)
   end
 
-  lane :update_staging do
+  lane :update_staging do |options|
     Dotenv.overload('../.env.base', '../.env.staging')
+    disable_notice = options[:disable_notice]
+
     appcenter_codepush_release_react(
       api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
       app_name: ENV["APPCENTER_APP_NAME_IOS"],
@@ -180,17 +190,21 @@ platform :ios do
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
-    notice_to_bic("🟡🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
-      \n **BIC Group Staging iOS**
-      \n Tải tại: In-app Update
-      \n **Git Branch**: #{git_branch}
-      \n **Git Commit**: #{git_mess}",
-      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-      '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+    if (disable_notice != 'true')
+      notice_to_bic("🟡🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+        \n **BIC Group Staging iOS**
+        \n Tải tại: In-app Update
+        \n **Git Branch**: #{git_branch}
+        \n **Git Commit**: #{git_mess}",
+        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+        '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+    end
   end
 
-  lane :update_production do
+  lane :update_production do |options|
     Dotenv.overload('../.env.base', '../.env.production')
+    disable_notice = options[:disable_notice]
+
     appcenter_codepush_release_react(
       api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
       app_name: ENV["APPCENTER_APP_NAME_IOS"],
@@ -206,13 +220,15 @@ platform :ios do
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
 
-    notice_to_bic("🟢🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
-      \n **BIC Group iOS**
-      \n Tải tại: In-app Update
-      \n **Git Branch**: #{git_branch}
-      \n **Git Commit**: #{git_mess}",
-      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-      '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+    if (disable_notice != 'true')
+      notice_to_bic("🟢🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+        \n **BIC Group iOS**
+        \n Tải tại: In-app Update
+        \n **Git Branch**: #{git_branch}
+        \n **Git Commit**: #{git_mess}",
+        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+        '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+    end
   end
 
   lane :deploy_staging do
@@ -266,7 +282,7 @@ platform :ios do
       ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
       '65864708-d4e6-4360-aa89-32fef3cd1b9a')
 
-    update_staging
+    update_staging({disable_notice => 'true'})
 
   end
 
@@ -321,7 +337,7 @@ platform :ios do
       ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
       '65864708-d4e6-4360-aa89-32fef3cd1b9a')
 
-    update_production
+    update_production({disable_notice => 'true'})
 
   end
 
