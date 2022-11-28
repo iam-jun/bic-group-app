@@ -180,7 +180,6 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
     tabContainer: {
       height: homeHeaderTabHeight,
       flexDirection: 'row',
-      paddingBottom: spacing.padding.small,
       borderBottomWidth: 1,
       borderBottomColor: colors.neutral2,
       marginHorizontal: spacing.margin.large,
@@ -198,7 +197,7 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
     },
     attributeContainer: {
       height: homeHeaderAttributeContainerHeight,
-      paddingHorizontal: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
     },
     attributeTab: {
       paddingHorizontal: spacing.padding.small,

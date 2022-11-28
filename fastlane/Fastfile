@@ -1,0 +1,338 @@
+fastlane_require 'dotenv'
+
+platform :android do
+  lane :update_staging do
+    Dotenv.overload('../.env.base', '../.env.staging')
+    appcenter_codepush_release_react(
+      api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+      app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+      deployment: "Staging",
+      target_version: ENV['VERSION_NAME'],
+      description: ENV['UPDATE_DESC'],
+      mandatory: false,
+      dry_run: false,
+    )
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    notice_to_bic("🟡🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+      \n **BIC Group Staging Android**
+      \n Tải tại: In-app Update
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+      '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+  end
+
+  lane :update_production do
+    Dotenv.overload('../.env.base', '../.env.production')
+    appcenter_codepush_release_react(
+      api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+      app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+      deployment: "Production",
+      target_version: ENV['VERSION_NAME'],
+      description: ENV['UPDATE_DESC'],
+      mandatory: false,
+      dry_run: false,
+    )
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    notice_to_bic("🟢🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+      \n **BIC Group Production Android**
+      \n Tải tại: In-app Update
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+      '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+  end
+
+  lane :build_staging do
+    Dotenv.overload('../.env.base', '../.env.staging')
+    gradle(task: "clean", project_dir: 'android/')
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Staging",
+      project_dir: 'android/',
+    )
+  end
+
+  lane :build_production do
+    gradle(task: "clean", project_dir: 'android/')
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Production",
+      project_dir: 'android/',
+    )
+  end
+
+  lane :deploy_staging do
+    Dotenv.overload('../.env.base', '../.env.staging')
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    gradle(task: "clean", project_dir: 'android/')
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Staging",
+      project_dir: 'android/',
+    )
+
+    file_apk = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0]
+
+    firebase_app_distribution(
+        app: "1:940869719860:android:9cc5d66088807f62823761",
+        android_artifact_path: file_apk,
+        release_notes: "BIC Group Staging: #{appVersionText}",
+        groups: "bicteam",
+    )
+
+    notice_to_bic("🟡🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+      \n **BIC Group Staging Android**
+      \n Tải tại: Firebase App Tester
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+      '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+
+    update_staging
+
+  end
+
+  lane :deploy_production do
+    Dotenv.overload('../.env.base', '../.env.production')
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    gradle(task: "clean", project_dir: 'android/')
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "Production",
+      project_dir: 'android/',
+    )
+
+    file_apk = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0]
+
+    firebase_app_distribution(
+      app: "1:50839038070:android:0f9261acc3f73502fe9757",
+      android_artifact_path: file_apk,
+      release_notes: "BIC Group Production: #{appVersionText}",
+      groups: "bicteam",
+    )
+
+    notice_to_bic("🟢🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+      \n **BIC Group Production Android**
+      \n Tải tại: Firebase App Tester
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+      '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+
+    update_production
+
+  end
+end
+
+########################################################################################################################
+platform :ios do
+  before_all do
+    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true'
+    setup_circle_ci
+  end
+
+  lane :sync_profile do
+    match(type: "development", readonly: false, force: true)
+    match(type: "appstore", readonly: false, force: true)
+  end
+
+  lane :update_staging do
+    Dotenv.overload('../.env.base', '../.env.staging')
+    appcenter_codepush_release_react(
+      api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
+      app_name: ENV["APPCENTER_APP_NAME_IOS"],
+      deployment: "Staging",
+      target_version: ENV['VERSION_NAME'],
+      description: ENV['UPDATE_DESC'],
+      mandatory: false,
+      dry_run: false,
+    )
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    notice_to_bic("🟡🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+      \n **BIC Group Staging iOS**
+      \n Tải tại: In-app Update
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+      '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+  end
+
+  lane :update_production do
+    Dotenv.overload('../.env.base', '../.env.production')
+    appcenter_codepush_release_react(
+      api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
+      app_name: ENV["APPCENTER_APP_NAME_IOS"],
+      deployment: "Production",
+      target_version: ENV['VERSION_NAME'],
+      description: ENV['UPDATE_DESC'],
+      mandatory: false,
+      dry_run: false,
+    )
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    notice_to_bic("🟢🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+      \n **BIC Group iOS**
+      \n Tải tại: In-app Update
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+      '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+  end
+
+  lane :deploy_staging do
+    Dotenv.overload('../.env.base', '../.env.staging')
+
+    match(
+      type: "appstore",
+      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
+      storage_mode: "git",
+      team_id: "44S5N8GAPS",
+      team_name: "UFUTURE CORPORATION",
+      readonly: false,
+      force: true,
+      verbose: true,
+    )
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    increment_build_number(
+      build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging") + 1,
+      xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
+    )
+
+    build_app(
+      workspace: "./ios/#{ENV['SCHEME_NAME']}.xcworkspace",
+      scheme: "#{ENV['SCHEME_NAME_IOS']}",
+      configuration: "ReleaseStaging",
+      output_directory:"./fastlane/staging/",
+      output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+      export_method: "app-store",
+      silent: true,
+      clean: true,
+    )
+
+    upload_to_testflight(
+      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}.staging",
+      ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
+      changelog: "Staging version #{ENV['APP_VERSION']}",
+      api_key_path: "./fastlane/api_key_info.json",
+    )
+
+    notice_to_bic("🟡🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+      \n **BIC Group Staging iOS**
+      \n Tải tại: TestFlight
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+      '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+
+    update_staging
+
+  end
+
+  lane :deploy_production do
+    Dotenv.overload('../.env.base', '../.env.production')
+
+    match(
+      type: "appstore",
+      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+      storage_mode: "git",
+      team_id: "44S5N8GAPS",
+      team_name: "UFUTURE CORPORATION",
+      readonly: false,
+      force: true,
+      verbose: true,
+    )
+
+    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    commit = last_git_commit
+    git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+
+    increment_build_number(
+      build_number: latest_testflight_build_number(app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}") + 1,
+      xcodeproj: "./ios/#{ENV['SCHEME_NAME']}.xcodeproj"
+    )
+
+    build_app(
+      workspace: "./ios/#{ENV['SCHEME_NAME']}.xcworkspace",
+      scheme: "#{ENV['SCHEME_NAME_IOS']}",
+      configuration: "Release",
+      output_directory:"./fastlane/production/",
+      output_name: "#{ENV['SCHEME_NAME_IOS']}.ipa",
+      export_method: "app-store",
+      silent: true,
+      clean: true,
+    )
+
+    upload_to_testflight(
+      app_identifier: "#{ENV['BUNDLE_IDENTIFIER']}",
+      ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
+      changelog: "Production version #{ENV['APP_VERSION']}",
+      api_key_path: "./fastlane/api_key_info.json",
+    )
+
+    notice_to_bic("🟢🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
+      \n **BIC Group iOS**
+      \n Tải tại: TestFlight
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}",
+      ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+      '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+
+    update_production
+
+  end
+
+  lane :deploy_staging_ci do
+    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
+    deploy_staging
+  end
+
+  lane :deploy_production_ci do
+    app_store_connect_api_key(key_id: ENV['APPLE_KEY_ID'],issuer_id: ENV['APPLE_ISSUER_ID'],key_content: ENV['APPLE_KEY_CONTENT'])
+    deploy_production
+  end
+
+end

@@ -112,16 +112,16 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           </Text.SubtitleM>
         </Button>
         <View style={styles.textToAudience}>
-          <Text.BodyM color={colors.neutral40} useI18n style={styles.textTo}>
+          <Text.BodyS color={colors.neutral40} useI18n style={styles.textTo}>
             post:to
-          </Text.BodyM>
-          <Text.SubtitleM
+          </Text.BodyS>
+          <Text.SubtitleS
             testID="content_header.audiences"
             color={colors.neutral80}
             onPress={onPressAudience}
           >
             {textAudiences}
-          </Text.SubtitleM>
+          </Text.SubtitleS>
         </View>
         <View style={styles.rowCenter}>
           <TimeView

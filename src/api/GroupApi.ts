@@ -11,7 +11,6 @@ import {
 } from '~/interfaces/IGroup';
 import {
   IParamGetCommunities,
-  IParamGetCommunityMembers,
   IParamGetDiscoverGroups,
   ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
@@ -471,17 +470,6 @@ export const groupsApiConfig = {
       ...data,
     },
   }),
-  getCommunityMembers: (
-    communityId: string,
-    params?: IParamGetCommunityMembers,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/members`,
-    params: {
-      ...params,
-      key: params?.key?.trim?.() ? params.key : undefined,
-    },
-  }),
   getDiscoverGroups: (
     communityId: string,
     params?: IParamGetDiscoverGroups,
@@ -887,14 +875,6 @@ const groupApi = {
     groupsApiConfig.editCommunityDetail,
     communityId,
     data,
-  ),
-  getCommunityMembers: (
-    communityId: string,
-    params?: IParamGetCommunityMembers,
-  ) => withHttpRequestPromise(
-    groupsApiConfig.getCommunityMembers,
-    communityId,
-    params,
   ),
   getDiscoverGroups: (communityId: string, params?: IParamGetDiscoverGroups) => withHttpRequestPromise(
     groupsApiConfig.getDiscoverGroups,

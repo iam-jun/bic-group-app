@@ -11,7 +11,6 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle, useSharedValue, withSpring, ZoomInEasyUp, ZoomOutEasyDown,
 } from 'react-native-reanimated';
-import Crashlytics from '@react-native-firebase/crashlytics';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
@@ -242,10 +241,6 @@ const LoggerView = () => {
     }
   }, [settings]);
 
-  const onPressCrash = useCallback(() => {
-    Crashlytics().crash();
-  }, []);
-
   const renderSettingItem = (type: string, label: string) => (
     <Checkbox
       style={styles.space16}
@@ -270,7 +265,6 @@ const LoggerView = () => {
               {renderSettingItem(LogType.API, 'API Request')}
               {/* {renderSettingItem(LogType.ZUSTAND, 'Zustand')} */}
               {renderSettingItem('auto-scroll', 'Auto scroll to top')}
-              <Button.Secondary onPress={onPressCrash}>Crash!!!</Button.Secondary>
             </View>
             <View style={styles.appInfo}>
               <Text.BadgeM>App ENV</Text.BadgeM>

@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
+### android update_staging
+
+```sh
+[bundle exec] fastlane android update_staging
+```
+
+
+
 ### android build_staging
 
 ```sh
@@ -43,6 +51,59 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ```sh
 [bundle exec] fastlane android deploy_production
+```
+
+
+
+----
+
+
+## iOS
+
+### ios sync_profile
+
+```sh
+[bundle exec] fastlane ios sync_profile
+```
+
+
+
+### ios update_staging
+
+```sh
+[bundle exec] fastlane ios update_staging
+```
+
+
+
+### ios deploy_staging
+
+```sh
+[bundle exec] fastlane ios deploy_staging
+```
+
+
+
+### ios deploy_production
+
+```sh
+[bundle exec] fastlane ios deploy_production
+```
+
+
+
+### ios deploy_staging_ci
+
+```sh
+[bundle exec] fastlane ios deploy_staging_ci
+```
+
+
+
+### ios deploy_production_ci
+
+```sh
+[bundle exec] fastlane ios deploy_production_ci
 ```
 
 
