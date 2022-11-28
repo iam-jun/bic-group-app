@@ -46,6 +46,7 @@ const CommunitySearchResults = ({
         groupStack.groupDetail,
         {
           groupId: id,
+          communityId: community.id,
         },
       );
       return;
