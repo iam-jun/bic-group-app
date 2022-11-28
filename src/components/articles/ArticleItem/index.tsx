@@ -11,10 +11,13 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
 import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
+import { Button } from '~/baseComponents';
 import { IPost } from '~/interfaces/IPost';
 import { formatLargeNumber } from '~/utils/formatData';
 import { ArticleSummary, ArticleTitle } from '../ArticleText';
 import { getTotalReactions } from '~/helpers/post';
+import { useRootNavigation } from '~/hooks/navigation';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -28,6 +31,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
+  const { rootNavigation } = useRootNavigation();
 
   const {
     id,
@@ -53,6 +57,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
     getTotalReactions(reactionsCount, 'user'),
   );
 
+  const goToArticleDetail = () => {
+    rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
+  };
+
   const renderHeader = () => (
     <ArticleHeader
       data={data}
@@ -63,15 +71,17 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderImageThumbnail = () => (
-    <Image
-      style={styles.cover}
-      source={coverMedia?.url || images.img_thumbnail_default}
-      defaultSource={images.img_thumbnail_default}
-    />
+    <Button onPress={goToArticleDetail}>
+      <Image
+        style={styles.cover}
+        source={coverMedia?.url || images.img_thumbnail_default}
+        defaultSource={images.img_thumbnail_default}
+      />
+    </Button>
   );
 
   const renderPreviewSummary = () => (
-    <View style={styles.contentContainer}>
+    <Button style={styles.contentContainer} onPress={goToArticleDetail}>
       <ArticleTitle text={titleHighlight || title} />
       {(!!summaryHighlight || !!summary) && (
         <>
@@ -79,7 +89,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
           <ArticleSummary text={summaryHighlight || summary} />
         </>
       )}
-    </View>
+    </Button>
   );
 
   const renderInterestedBy = () => (

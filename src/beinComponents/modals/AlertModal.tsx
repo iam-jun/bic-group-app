@@ -15,7 +15,6 @@ import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import Text from '~/baseComponents/Text';
 import * as actions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
-import Icon from '../../baseComponents/Icon';
 import TextInput from '../inputs/TextInput';
 import { useKeySelector } from '~/hooks/selector';
 import { Button } from '~/baseComponents';
@@ -110,14 +109,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
             {title}
           </Text.H4>
         )}
-        <View style={styles.closeButton}>
-          <Icon
-            icon="Xmark"
-            size={18}
-            tintColor={theme.colors.neutral80}
-            onPress={_onDismiss}
-          />
-        </View>
       </View>
     </>
   );
