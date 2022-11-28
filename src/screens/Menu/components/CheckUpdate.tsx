@@ -43,7 +43,7 @@ const CheckUpdate = () => {
           {'Update status: '}
         </Text.BodyMMedium>
         <Text.BodyM style={styles.textStatus}>
-          {status || 'Check now'}
+          {status || 'Check now 🚀'}
           {!!progressPercent && `${progressPercent}%`}
         </Text.BodyM>
       </View>

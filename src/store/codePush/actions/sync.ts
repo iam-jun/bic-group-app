@@ -1,5 +1,6 @@
 import CodePush from 'react-native-code-push';
 import { ICodePushState } from '~/store/codePush';
+import getEnv from '~/utils/env';
 
 const sync = (set, _get) => async () => {
   const onSyncStatusChanged = (syncStatus) => {
@@ -18,13 +19,13 @@ const sync = (set, _get) => async () => {
         status = 'Installing update...';
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
-        status = 'App up to date ❤️';
+        status = `No update for ${getEnv('VERSION_NAME')}️ 🌻`;
         break;
       case CodePush.SyncStatus.UPDATE_IGNORED:
-        status = 'Update cancelled by user...';
+        status = 'Update cancelled by user 😵';
         break;
       case CodePush.SyncStatus.UPDATE_INSTALLED:
-        status = 'Update installed and will be applied on restart...';
+        status = 'Update installed and will be applied on restart ♻️';
         break;
       case CodePush.SyncStatus.UNKNOWN_ERROR:
         status = 'An unknown error occurred 💔';

@@ -72,6 +72,7 @@ android/app/production/
 *.dSYM.zip
 .env.production
 .env.staging
+fastlane/.env
 GoogleService-Info-Production.plist
 GoogleService-Info-Staging.plist
 

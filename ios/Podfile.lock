@@ -41,9 +41,6 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.68.5)
   - Firebase/CoreOnly (8.4.0):
     - FirebaseCore (= 8.4.0)
-  - Firebase/Crashlytics (8.4.0):
-    - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 8.4.0)
   - Firebase/Messaging (8.4.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.4.0)
@@ -56,13 +53,6 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
     - nanopb (~> 2.30908.0)
-  - FirebaseCrashlytics (8.4.0):
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleDataTransport (~> 9.0)
-    - GoogleUtilities/Environment (~> 7.4)
-    - nanopb (~> 2.30908.0)
-    - PromisesObjC (< 3.0, >= 1.2)
   - FirebaseInstallations (8.15.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
@@ -555,10 +545,6 @@ PODS:
   - RNFBApp (12.4.0):
     - Firebase/CoreOnly (= 8.4.0)
     - React-Core
-  - RNFBCrashlytics (12.4.0):
-    - Firebase/Crashlytics (= 8.4.0)
-    - React-Core
-    - RNFBApp
   - RNFBMessaging (12.4.0):
     - Firebase/Messaging (= 8.4.0)
     - React-Core
@@ -612,9 +598,9 @@ PODS:
   - RNScreens (3.15.0):
     - React-Core
     - React-RCTImage
-  - RNSentry (4.8.0):
+  - RNSentry (4.9.0):
     - React-Core
-    - Sentry (= 7.29.0)
+    - Sentry/HybridSDK (= 7.31.2)
   - RNSVG (12.4.4):
     - React-Core
   - RNVectorIcons (8.1.0):
@@ -625,9 +611,7 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
-  - Sentry (7.29.0):
-    - Sentry/Core (= 7.29.0)
-  - Sentry/Core (7.29.0)
+  - Sentry/HybridSDK (7.31.2)
   - SocketRocket (0.6.0)
   - SSZipArchive (2.2.3)
   - TOCropViewController (2.6.1)
@@ -727,7 +711,6 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
-  - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -749,7 +732,6 @@ SPEC REPOS:
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
-    - FirebaseCrashlytics
     - FirebaseInstallations
     - FirebaseMessaging
     - Flipper
@@ -911,8 +893,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fast-image"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
-  RNFBCrashlytics:
-    :path: "../node_modules/@react-native-firebase/crashlytics"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNFlashList:
@@ -961,7 +941,6 @@ SPEC CHECKSUMS:
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseCore: 31f389c37ac1ea52454a53d3081f2d7019485a4a
   FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
-  FirebaseCrashlytics: c9eb562b2f6bd5ee5e880144fd5ef1bfe46c5dc5
   FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
   FirebaseMessaging: 78025c56654f05c7ebd6f7f87f9d4b12c5231207
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
@@ -1034,7 +1013,6 @@ SPEC CHECKSUMS:
   RNDeviceInfo: 98cc93d4b3b09b33e784b751f04d414065a61fd4
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBApp: 97b2da195d4606716b284a7c8a988dd8ed5cec41
-  RNFBCrashlytics: 347db4a99a802d41f58762bd9d4913d04970adf7
   RNFBMessaging: ee81245484ef7e835975d09c2cd4000dfa2ae5e7
   RNFlashList: 399bf6a0db68f594ad2c86aaff3ea39564f39f8a
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
@@ -1044,12 +1022,12 @@ SPEC CHECKSUMS:
   RNReactNativeSharedGroupPreferences: de0121a4224c267bc7e9fb16c398f3f087c8da81
   RNReanimated: 5c8c17e26787fd8984cd5accdc70fef2ca70aafd
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
-  RNSentry: db7fd7b66efda28885e4e904a8b5e7349aec61c1
+  RNSentry: 6503a8ec616947dbe98be828307c8f49e7686674
   RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
-  Sentry: 4272663eb0eda312024d795ca3f5a562a8ce5e18
+  Sentry: b15765d11769852fe78c9add942f7df60ed5dbf5
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
