@@ -69,7 +69,7 @@ const PostBody: FC<PostBodyProps> = ({
         style={styles.interestedUserCount}
       />
     );
-  }, []);
+  }, [isLite, postId, totalUsersSeen]);
 
   const renderContent = () => {
     if (isLite) {

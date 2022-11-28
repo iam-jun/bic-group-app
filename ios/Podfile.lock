@@ -426,7 +426,7 @@ PODS:
     - ReactCommon/turbomodule/core
   - react-native-slider (4.3.3):
     - React-Core
-  - react-native-webview (11.24.0):
+  - react-native-webview (11.25.0):
     - React-Core
   - React-perflogger (0.68.5)
   - React-RCTActionSheet (0.68.5):
@@ -990,7 +990,7 @@ SPEC CHECKSUMS:
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
   react-native-slider: 7d19220da2f2ae7cbb9aa80127cb73c597fa221f
-  react-native-webview: 6408bc328e65042d240d0ebd62baa76ffd23b1aa
+  react-native-webview: a71da846ed2e9085440e1d6659c04e285528834b
   React-perflogger: 0458a87ea9a7342079e7a31b0d32b3734fb8415f
   React-RCTActionSheet: 22538001ea2926dea001111dd2846c13a0730bc9
   React-RCTAnimation: 732ce66878d4aa151d56a0d142b1105aa12fd313
