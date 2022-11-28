@@ -6,7 +6,7 @@ orbs:
 jobs:
   ios-stg-update:
     macos:
-      xcode: 13.4.1
+      xcode: 14.0.0
     resource_class: medium #medium|large
     steps:
       - checkout
