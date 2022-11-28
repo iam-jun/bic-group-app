@@ -162,7 +162,6 @@ end
 ########################################################################################################################
 platform :ios do
   before_all do
-    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true'
     setup_circle_ci
   end
 
