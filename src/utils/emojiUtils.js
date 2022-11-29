@@ -131,11 +131,11 @@ export const formatTextWithEmoji = (text, emoji, cursorPosition) => {
   if (!cursorPosition) {
     cursorPosition = text.length;
   }
-  let firstStr = text.substring(0, cursorPosition.current);
+  let firstStr = text.substring(0, cursorPosition);
   if (!firstStr.endsWith(' ')) {
     firstStr += ' ';
   }
-  let lastStr = text.substring(cursorPosition.current, text.length);
+  let lastStr = text.substring(cursorPosition, text.length);
   if (!lastStr.startsWith(' ')) {
     lastStr = ` ${lastStr}`;
   }
