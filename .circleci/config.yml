@@ -307,23 +307,23 @@ workflows:
       - ios-pro-update-approval:
           filters:
             branches:
-              only: /^master.*$/
+              only: /^master.*$|^release.*$/
           type: approval
       - android-pro-update-approval:
           filters:
             branches:
-              only: /^master.*$/
+              only: /^master.*$|^release.*$/
           type: approval
       - ios-pro-update:
           filters:
             branches:
-              only: /^master.*$/
+              only: /^master.*$|^release.*$/
           requires:
             - ios-pro-update-approval
       - android-pro-update:
           filters:
             branches:
-              only: /^master.*$/
+              only: /^master.*$|^release.*$/
           requires:
             - android-pro-update-approval
 
