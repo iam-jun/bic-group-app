@@ -101,7 +101,7 @@ jobs:
           command: |
             echo -e $PRO_ENV > .env.production
             echo APP_VERSION=${PRO_APP_VERSION} >> .env.production
-            echo UPDATE_DESC=${PRO_UPDATE_DESC} >> .env.staging
+            echo UPDATE_DESC=${PRO_UPDATE_DESC} >> .env.production
             echo -e $PRO_FASTLANE_ENV > fastlane/.env
             echo $API_KEY | base64 --decode >  fastlane/api_key_info.json
             echo $PRO_GOOGLE_SERVICES_PLIST_IOS | base64 --decode > ios/Firebase/GoogleService-Info-Production.plist
@@ -229,7 +229,7 @@ jobs:
           command: |
             echo -e $PRO_ENV > .env.production
             echo APP_VERSION=${PRO_APP_VERSION} >> .env.production
-            echo UPDATE_DESC=${PRO_UPDATE_DESC} >> .env.staging
+            echo UPDATE_DESC=${PRO_UPDATE_DESC} >> .env.production
             echo -e $PRO_FASTLANE_ENV > fastlane/.env
             mkdir -p a android/app/src/production
             echo $PRO_GOOGLE_SERVICES_JSON_ANDROID | base64 --decode > android/app/src/production/google-services.json
