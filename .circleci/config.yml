@@ -330,22 +330,22 @@ workflows:
       - ios-approval:
           filters:
             branches:
-              only: /^master.*$/
+              only: /^master.*$|^release.*$/
           type: approval
       - android-approval:
           filters:
             branches:
-              only: /^master.*$/
+              only: /^master.*$|^release.*$/
           type: approval
       - ios-pro:
           filters:
             branches:
-              only: /^master.*$/
+              only: /^master.*$|^release.*$/
           requires:
             - ios-approval
       - android-pro:
           filters:
             branches:
-              only: /^master.*$/
+              only: /^master.*$|^release.*$/
           requires:
             - android-approval
