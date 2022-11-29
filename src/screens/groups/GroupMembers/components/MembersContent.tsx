@@ -15,7 +15,8 @@ const MembersContent = ({ groupId, onPressMenu }: MembersContentProps) => {
   const dispatch = useDispatch();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
-    'groups', groupId, [
+    groupId,
+    [
       PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
       PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
     ],

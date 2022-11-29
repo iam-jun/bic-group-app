@@ -32,7 +32,6 @@ const SearchMemberView = ({
   const [searchText, setSearchText] = useState(initSearch || '');
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
     [
       PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,

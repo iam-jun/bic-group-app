@@ -25,26 +25,23 @@ const CommunityAdmin = (props: any) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
-  const name = community?.name || '';
+  const { name = '', groupId } = community || {};
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
+    groupId,
     [
-      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
-      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
     ],
   );
   const canManageGroupStructure = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
+    groupId,
     PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
   );
   const canManageScheme = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
+    groupId,
+    PERMISSION_KEY.GROUP.CRUD_GROUP_OVERRIDE_SCHEME,
   );
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());

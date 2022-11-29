@@ -12,16 +12,15 @@ interface CommunityMemberListProps {
 }
 
 const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProps) => {
-  const { id: communityId, groupId } = community;
+  const { groupId } = community;
   const dispatch = useDispatch();
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
+    groupId,
     [
-      PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
-      PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE_IN_COMMUNITY,
+      PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
+      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
     ],
   );
 

@@ -40,8 +40,8 @@ const GeneralInformation = (props: any) => {
   let canEditPrivacy: boolean;
   let isJoinApproval: boolean;
   if (type === 'group') {
-    canEditInfo = hasPermissionsOnScopeWithId('groups', id, PERMISSION_KEY.GROUP.EDIT_GROUP_INFO);
-    canEditPrivacy = hasPermissionsOnScopeWithId('groups', id, PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY);
+    canEditInfo = hasPermissionsOnScopeWithId(id, PERMISSION_KEY.GROUP.EDIT_GROUP_INFO);
+    canEditPrivacy = hasPermissionsOnScopeWithId(id, PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY);
     const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
     avatar = groupDetail?.icon || '';
     backgroundUrl = groupDetail?.backgroundImgUrl || '';
@@ -53,11 +53,11 @@ const GeneralInformation = (props: any) => {
     const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[id]);
     avatar = communityDetail?.icon || '';
     backgroundUrl = communityDetail?.backgroundImgUrl || '';
-    canEditInfo = hasPermissionsOnScopeWithId('communities', id, PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO);
+    canEditInfo = hasPermissionsOnScopeWithId(communityDetail?.groupId, PERMISSION_KEY.GROUP.EDIT_GROUP_INFO);
     organizationName = communityDetail?.name || '';
     organizationDescription = communityDetail?.description || '';
     organizationPrivacy = communityDetail?.privacy || '';
-    canEditPrivacy = hasPermissionsOnScopeWithId('communities', id, PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY);
+    canEditPrivacy = hasPermissionsOnScopeWithId(communityDetail?.groupId, PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY);
     isJoinApproval = communityDetail?.settings?.isJoinApproval;
   }
 
