@@ -125,6 +125,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
   const [selectedGiphy, setSelectedGiphy] = useState<IGiphy>();
+  const [selectedEmoji, setSelectedEmoji] = useState<string>();
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
@@ -150,6 +151,17 @@ const CommentInput: React.FC<CommentInputProps> = ({
       }
     }
   }, [selectedGiphy]);
+
+  useEffect(() => {
+    emojiViewRef?.current?.hide?.();
+    if (selectedEmoji) {
+      const completeStr = formatTextWithEmoji(text, selectedEmoji, cursorPosition.current);
+      setText(completeStr);
+      onChangeText?.(completeStr);
+      setSelectedEmoji('');
+      _textInputRef.current.focus();
+    }
+  }, [selectedEmoji]);
 
   const _onPressSelectImage = () => {
     checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
@@ -185,16 +197,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onEmojiSelected = useCallback((emoji: string) => {
-    emojiViewRef?.current?.hide?.();
-
-    dispatch(modalActions.hideModal());
-    if (emoji) {
-      const completeStr = formatTextWithEmoji(text, emoji, cursorPosition);
-      setText(completeStr);
-      onChangeText?.(completeStr);
-      _textInputRef.current.focus();
-    }
-  }, [text, cursorPosition]);
+    setSelectedEmoji(emoji);
+  }, []);
 
   const onGiphySelected = useCallback((gif: IGiphy) => {
     giphyViewRef?.current?.hide?.();

@@ -180,7 +180,7 @@ const _StickerView = ({ stickerViewRef, onGiphySelected, onEmojiSelected }: Prop
           onClosed={onClosed}
           onCollapsed={onCollapsed}
         >
-          <View style={[styles.stickerView]}>
+          <View style={styles.stickerView}>
             <View style={styles.header}>
               <SearchInput
                 testID="sticker_view.search_input"
@@ -226,5 +226,5 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 const StickerView = React.memo(_StickerView);
-StickerView.whyDidYouRender = true;
+// StickerView.whyDidYouRender = true;
 export default StickerView;
