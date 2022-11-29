@@ -89,12 +89,15 @@ const CommunityDetail = (props: any) => {
   const searchViewRef = useRef(null);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId('communities', communityId, [
-    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
-    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
-    PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
-    PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
-  ]);
+  const canSetting = hasPermissionsOnScopeWithId(
+    groupId,
+    [
+      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
+      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+      PERMISSION_KEY.GROUP.CRUD_GROUP_OVERRIDE_SCHEME,
+      PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
+    ],
+  );
   const isPrivateCommunity = !isMember && privacy === CommunityPrivacyType.PRIVATE;
 
   const buttonShow = useSharedValue(0);

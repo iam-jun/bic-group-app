@@ -65,7 +65,6 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const { getListOfChosenAudiencesWithoutPermission, PERMISSION_KEY } = useMyPermissions();
   const listAudiencesWithoutPermission = getListOfChosenAudiencesWithoutPermission(
-    'groups',
     chosenAudiences,
     PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
   );

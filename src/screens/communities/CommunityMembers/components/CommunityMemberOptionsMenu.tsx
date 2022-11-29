@@ -33,14 +33,12 @@ const CommunityMemberOptionsMenu = ({
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canRemoveMember = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
+    groupId,
+    PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
   );
   const canAssignUnassignRole = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE_IN_COMMUNITY,
+    groupId,
+    PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
   );
 
   const onPressSetAdminRole = () => {

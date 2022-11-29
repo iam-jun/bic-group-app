@@ -47,7 +47,6 @@ const PostHeader: FC<PostHeaderProps> = ({
   const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
     = useMyPermissions();
   const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
-    'groups',
     audience?.groups,
     PERMISSION_KEY.GROUP.DELETE_OWN_POST,
   );

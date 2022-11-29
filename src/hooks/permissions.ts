@@ -19,6 +19,12 @@ export const useMyPermissions = () => {
     data = {},
   } = useKeySelector(groupsKeySelector.myPermissions);
 
+  /**
+   * we use scope `groups`
+   * scope `community` is used for admin panel on web only
+   */
+  const permissionData = data?.groups;
+
   const getMyPermissions = () => {
     if (token && userId && !loading) {
       dispatch(groupsActions.getMyPermissions());
@@ -46,44 +52,32 @@ export const useMyPermissions = () => {
   };
 
   const hasPermissionsOnScopeWithId = (
-    scope: 'communities' | 'groups',
     id: string,
     requiredPermissions: string | string[],
   ) => {
-    // CHECK IF CURRENT USER HAS SOME PERMISSION ON A SPECIFIC SCOPE
+    // CHECK IF CURRENT USER HAS SOME PERMISSION
 
-    const currentPermissions: string[] = data?.[scope]?.[id] || [];
+    const currentPermissions: string[] = permissionData?.[id] || [];
     return hasPermissions(
       requiredPermissions, currentPermissions,
     );
   };
 
-  // CHECK IF CURRENT USER HAS SOME PERMISSION ON EVERY SCOPE
-  const hasPermissionsOnEachScope = (
-    scope: 'communities' | 'groups',
-    audiences: any[],
-    requiredPermissions: string | string[],
-  ) => (audiences || []).every((audience) => hasPermissionsOnScopeWithId(
-    scope, audience.id, requiredPermissions,
-  ));
-
   // CHECK IF CURRENT USER HAS SOME PERMISSION ON AT LEAST 1 SCOPE
   const hasPermissionsOnAtLeastOneScope = (
-    scope: 'communities' | 'groups',
     audiences: any[],
     requiredPermissions: string | string[],
   ) => (audiences || []).some((audience) => hasPermissionsOnScopeWithId(
-    scope, audience.id, requiredPermissions,
+    audience.id, requiredPermissions,
   ));
 
   const getListOfChosenAudiencesWithoutPermission = (
-    scope: 'communities' | 'groups',
     audiences: any[],
     requiredPermissions: string | string[],
   // eslint-disable-next-line array-callback-return
   ) => (audiences || []).filter((audience) => {
     if (
-      !hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions)
+      !hasPermissionsOnScopeWithId(audience.id, requiredPermissions)
     ) {
       return audience;
     }
@@ -91,7 +85,6 @@ export const useMyPermissions = () => {
 
   return {
     hasPermissionsOnScopeWithId,
-    hasPermissionsOnEachScope,
     hasPermissionsOnAtLeastOneScope,
     PERMISSION_KEY,
     getListOfChosenAudiencesWithoutPermission,

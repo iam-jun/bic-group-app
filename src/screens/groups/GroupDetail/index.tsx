@@ -101,7 +101,7 @@ const GroupDetail = (props: any) => {
   const shouldShowPlaceholder = idCurrentGroupDetail !== groupId;
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId('groups', groupId, [
+  const canSetting = hasPermissionsOnScopeWithId(groupId, [
     PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
     PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
   ]);

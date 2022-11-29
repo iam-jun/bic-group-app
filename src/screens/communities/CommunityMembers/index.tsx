@@ -44,27 +44,25 @@ const CommunityMembers = ({ route }: any) => {
   const [selectedMember, setSelectedMember] = useState<ICommunityMembers>();
   const baseSheetRef: any = useRef();
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
-  );
-  const canEditJoinSetting = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_JOIN_SETTING,
-  );
-  const canAddMember = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
-  );
-
   const community = useCommunitiesStore(useCallback(
     (state) => state.data[communityId] || {} as ICommunity, [communityId],
   ));
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+
+  const { groupId } = community || {};
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
+    groupId,
+    PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+  );
+  const canEditJoinSetting = hasPermissionsOnScopeWithId(
+    groupId,
+    PERMISSION_KEY.GROUP.EDIT_GROUP_JOIN_SETTING,
+  );
+  const canAddMember = hasPermissionsOnScopeWithId(
+    groupId,
+    PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
+  );
 
   useEffect(() => {
     // In case there's no data available yet when navigating directly

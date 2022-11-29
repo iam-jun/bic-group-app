@@ -44,17 +44,14 @@ const _GroupMembers = ({ route }: any) => {
   const { offset } = useKeySelector(groupsKeySelector.groupMembers);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canAddMember = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
   );
   const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
     PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
   );
   const canEditJoinSetting = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
     PERMISSION_KEY.GROUP.EDIT_GROUP_JOIN_SETTING,
   );

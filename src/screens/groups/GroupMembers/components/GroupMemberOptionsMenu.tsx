@@ -32,12 +32,10 @@ const GroupMemberOptionsMenu = ({
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canRemoveMember = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
   );
   const canAssignUnassignRole = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
     PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
   );
