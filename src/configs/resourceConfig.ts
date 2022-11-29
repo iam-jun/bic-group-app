@@ -25,11 +25,11 @@ export const uploadEndpoints: any = {
   group_avatar: 'group/avatar/images/',
   group_cover: 'group/cover/images/',
 
-  post_image: 'post/images/',
+  post_image: 'post/',
   post_video: 'post/videos/',
   post_file: 'post/files/',
 
-  comment_image: 'comment/images/',
+  comment_image: 'comment/',
   comment_video: 'comment/videos/',
   comment_file: 'comment/files/',
 };
