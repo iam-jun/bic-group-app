@@ -4,7 +4,7 @@ exports[`AboutContent component should render correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "#E3E6F2",
+      "backgroundColor": "#EAEDF2",
       "flex": 1,
     }
   }
@@ -54,7 +54,7 @@ exports[`AboutContent component should render correctly 1`] = `
       >
         Description
       </Text>
-      <Text
+      <View
         accessibilityState={
           Object {
             "disabled": true,
@@ -69,17 +69,6 @@ exports[`AboutContent component should render correctly 1`] = `
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "color": "#212745",
-              "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
-            },
-            Object {},
-            undefined,
-          ]
-        }
       >
         <Text
           style={
@@ -102,7 +91,7 @@ exports[`AboutContent component should render correctly 1`] = `
         >
           Description
         </Text>
-      </Text>
+      </View>
     </View>
     <View
       accessibilityState={

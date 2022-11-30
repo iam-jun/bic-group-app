@@ -746,7 +746,7 @@
     },
     "series_detail_article_menu": {
       "reorder": "Reorder",
-      "delete": "Delete"
+      "delete": "Remove Article"
     }
   },
   "comment": {
@@ -1203,6 +1203,8 @@
     "reorder_successful": "Reorder successful",
     "reorder_failed": "Reorder failed",
     "notice_changing_the_order": "You are changing the order",
-    "notice_sure_to_do_this": "Are you sure to do this?"
+    "notice_sure_to_do_this": "Are you sure to do this?",
+    "text_remove_article": "Do you want to remove this article?",
+    "text_article_removed": "Article removed"
   }
 }

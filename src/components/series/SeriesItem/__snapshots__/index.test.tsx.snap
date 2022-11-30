@@ -206,7 +206,7 @@ exports[`SeriesItem component renders correctly 1`] = `
               Object {
                 "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {
                 "color": "#353E6E",
@@ -226,7 +226,7 @@ exports[`SeriesItem component renders correctly 1`] = `
               Object {
                 "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {
                 "color": "#181C32",
@@ -383,7 +383,9 @@ exports[`SeriesItem component renders correctly 1`] = `
   <View
     style={
       Object {
-        "padding": 16,
+        "paddingBottom": 6,
+        "paddingHorizontal": 16,
+        "paddingTop": 8,
       }
     }
   >
@@ -492,9 +494,7 @@ exports[`SeriesItem component renders correctly 1`] = `
                   },
                 ]
               }
-            >
-              0
-            </Text>
+            />
             <Text
               style={
                 Array [
@@ -584,6 +584,152 @@ exports[`SeriesItem component renders correctly 1`] = `
           </Text>
         </View>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "paddingBottom": 2,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "marginTop": 12,
+            "paddingVertical": 12,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "flex-end",
+              "paddingBottom": 6,
+              "paddingHorizontal": 16,
+              "paddingTop": 12,
+            },
+            Object {
+              "alignItems": "flex-end",
+              "margin": 0,
+              "paddingBottom": 0,
+              "paddingHorizontal": 0,
+              "paddingTop": 0,
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="content_interested_user_count.button"
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+            testID="content_interested_user_count.show_text"
+          >
+            Interested by 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
+                  },
+                  Object {
+                    "color": "#353E6E",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              1
+            </Text>
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View>
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+          },
+          null,
+          Object {
+            "paddingHorizontal": 12,
+          },
+        ]
+      }
+      testID="reaction_view"
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F1F2F8",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          Object {
+            "height": 36,
+            "marginTop": 4,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#BAC0DE",
+            },
+            undefined,
+          ]
+        }
+      >
+        React and comment of this post are not available
+      </Text>
     </View>
   </View>
 </View>
@@ -795,7 +941,7 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
               Object {
                 "color": "#212745",
                 "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {
                 "color": "#353E6E",
@@ -815,7 +961,7 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
               Object {
                 "color": "#212745",
                 "fontFamily": "BeVietnamPro-Medium",
-                "fontSize": 15,
+                "fontSize": 13,
               },
               Object {
                 "color": "#181C32",
@@ -972,7 +1118,9 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
   <View
     style={
       Object {
-        "padding": 16,
+        "paddingBottom": 6,
+        "paddingHorizontal": 16,
+        "paddingTop": 8,
       }
     }
   >
@@ -1081,9 +1229,7 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
                   },
                 ]
               }
-            >
-              0
-            </Text>
+            />
             <Text
               style={
                 Array [
@@ -1173,6 +1319,152 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
           </Text>
         </View>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "paddingBottom": 2,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "marginTop": 12,
+            "paddingVertical": 12,
+          },
+          false,
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "flex-end",
+              "paddingBottom": 6,
+              "paddingHorizontal": 16,
+              "paddingTop": 12,
+            },
+            Object {
+              "alignItems": "flex-end",
+              "margin": 0,
+              "paddingBottom": 0,
+              "paddingHorizontal": 0,
+              "paddingTop": 0,
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="content_interested_user_count.button"
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+            testID="content_interested_user_count.show_text"
+          >
+            Interested by 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
+                  },
+                  Object {
+                    "color": "#353E6E",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              1
+            </Text>
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View>
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+          },
+          null,
+          Object {
+            "paddingHorizontal": 12,
+          },
+        ]
+      }
+      testID="reaction_view"
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F1F2F8",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          Object {
+            "height": 36,
+            "marginTop": 4,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 13,
+            },
+            Object {
+              "color": "#BAC0DE",
+            },
+            undefined,
+          ]
+        }
+      >
+        React and comment of this post are not available
+      </Text>
     </View>
   </View>
 </View>

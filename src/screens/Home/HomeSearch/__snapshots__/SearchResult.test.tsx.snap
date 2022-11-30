@@ -1082,7 +1082,7 @@ exports[`SearchResult component should render list search result 1`] = `
                         Object {
                           "color": "#212745",
                           "fontFamily": "BeVietnamPro-Light",
-                          "fontSize": 15,
+                          "fontSize": 13,
                         },
                         Object {
                           "color": "#353E6E",
@@ -1102,7 +1102,7 @@ exports[`SearchResult component should render list search result 1`] = `
                         Object {
                           "color": "#212745",
                           "fontFamily": "BeVietnamPro-Medium",
-                          "fontSize": 15,
+                          "fontSize": 13,
                         },
                         Object {
                           "color": "#181C32",
@@ -1266,39 +1266,22 @@ exports[`SearchResult component should render list search result 1`] = `
                 }
               >
                 <View
-                  style={
+                  accessibilityState={
                     Object {
-                      "flexDirection": "row",
+                      "disabled": true,
                     }
                   }
-                  testID="post_view_content.lite_container"
-                >
-                  <View
-                    style={
-                      Object {
-                        "flex": 1,
-                      }
-                    }
-                  >
-                    <View
-                      accessibilityState={
-                        Object {
-                          "disabled": true,
-                        }
-                      }
-                      accessible={true}
-                      focusable={true}
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      testID="post_view_content"
-                    />
-                  </View>
-                </View>
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  testID="post_view_content"
+                />
               </View>
             </View>
             <View
@@ -1307,8 +1290,8 @@ exports[`SearchResult component should render list search result 1`] = `
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "space-between",
-                  "paddingBottom": 8,
                   "paddingHorizontal": 16,
+                  "paddingVertical": 8,
                 }
               }
               testID="post_view_footer_lite"
@@ -1334,7 +1317,7 @@ exports[`SearchResult component should render list search result 1`] = `
                     ]
                   }
                 >
-                  NaN React
+                  0 React
                 </Text>
                 <View
                   style={

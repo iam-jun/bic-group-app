@@ -46,3 +46,5 @@ export interface IGetSeries {
 export interface IReorderArticles {
   articleIds: string[]
 }
+
+export type IRemoveArticleInSeries = IReorderArticles;

@@ -34,7 +34,7 @@ import {
 import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
 import {
-  IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderArticles,
+  IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IRemoveArticleInSeries, IReorderArticles,
 } from '~/interfaces/ISeries';
 
 const DEFAULT_LIMIT = 10;
@@ -388,6 +388,12 @@ export const streamApiConfig = {
     url: `${provider.url}posts/${id}/unsave`,
     method: 'delete',
   }),
+  removeArticleFromSeriesDetail: (id: string, params: IRemoveArticleInSeries): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}series/${id}/remove-articles`,
+    method: 'delete',
+    data: { ...params },
+  }),
 };
 
 const streamApi = {
@@ -600,6 +606,17 @@ const streamApi = {
   reorderArticles: (id: string, data: IReorderArticles) => withHttpRequestPromise(
     streamApiConfig.reorderArticles, id, data,
   ),
+  removeArticleFromSeriesDetail: async (id: string, params: IRemoveArticleInSeries) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.removeArticleFromSeriesDetail(id, params));
+      if (response && response?.data) {
+        return Promise.resolve(true);
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
 };
 
 export default streamApi;

@@ -1135,6 +1135,8 @@
     "text_info_reorder": "Kéo và thả để sắp xếp bài báo",
     "reorder_successful": "Sắp xếp thành công",
     "notice_changing_the_order": "Bạn đang thay đổi thứ tự bài báo",
-    "notice_sure_to_do_this": "Bạn có muốn thực hiện sự thay đổi này không?"
+    "notice_sure_to_do_this": "Bạn có muốn thực hiện sự thay đổi này không?",
+    "text_remove_article": "Bạn muốnn xoá bài viết này?",
+    "text_article_removed": "Bài viết đã được xoá"
   }
 }
