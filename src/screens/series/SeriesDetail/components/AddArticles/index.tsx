@@ -96,6 +96,7 @@ const AddArticles = ({
         }}
         title={item?.title}
         subTitle={item?.summary}
+        style={styles.itemStyles}
         RightComponent={
      (
        <Icon
@@ -166,6 +167,9 @@ const createStyles = () => StyleSheet.create({
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  itemStyles: {
+    alignItems: 'flex-start',
   },
 });
 
