@@ -6,22 +6,22 @@ import { IPost } from '~/interfaces/IPost';
 import { spacing } from '~/theme';
 import { formatNumberWithZeroPrefix } from '~/utils/formatData';
 import { Button } from '~/baseComponents';
-import { useUserIdAuth } from '~/hooks/auth';
 import useSeriesDetailArticleItemMenu from './useSeriesDetailArticleItemMenu';
 
 type TitleArticleProps = {
     index: number;
     article: IPost;
     seriesId: string;
+    isActor: boolean;
 }
 
-const TitleArticle: FC<TitleArticleProps> = ({ index, article, seriesId }) => {
-  const { title, actor, id } = article || {};
+const TitleArticle: FC<TitleArticleProps> = ({
+  index, article, seriesId, isActor,
+}) => {
+  const { title, id } = article || {};
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
-  const userId = useUserIdAuth();
-  const isCreator = actor?.id == userId;
 
   const { showMenu } = useSeriesDetailArticleItemMenu(seriesId, id);
 
@@ -34,7 +34,7 @@ const TitleArticle: FC<TitleArticleProps> = ({ index, article, seriesId }) => {
           <Text.H3 numberOfLines={1} color={colors.neutral80}>{title}</Text.H3>
         </View>
       </View>
-      {isCreator
+      {isActor
       && (
       <Button.Raise
         icon="menu"

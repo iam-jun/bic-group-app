@@ -8,6 +8,7 @@ import TitleArticle from './TitleArticle';
 describe('SeriesDetailArticleItem component', () => {
   it('render correctly with role guess', () => {
     const wrapper = renderWithRedux(<TitleArticle
+      isActor
       index={1}
       article={mockArticle as IPost}
       seriesId={mockSeries.id}

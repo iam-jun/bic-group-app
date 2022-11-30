@@ -3,6 +3,7 @@ import {
 } from '~/interfaces/IPost';
 import { SortOder } from './common';
 import { IOrder } from './IHome';
+import { IGetSeries } from './ISeries';
 
 export interface IParamGetArticles {
   offset?: number;
@@ -118,3 +119,5 @@ export interface IEditAritcleError {
   ids: string[],
   type: string,
 }
+
+export type IGetSearchArticleInSeries = IGetSeries;

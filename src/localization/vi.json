@@ -506,6 +506,7 @@
     "remove_series_title": "Xoá Series",
     "remove_series_content": "Bạn không có quyền tạo bài viết tại series: ${series}. Vẫn tiếp tục?",
     "content_delete_audiences": "Bạn chỉ có thể xóa đối tượng khỏi bài viết của mình ngoại trừ những đối tượng bên dưới. Bạn chắc chắn chứ?",
+    "search_article_placeholder": "Tìm kiếm bài viết...",
     "modal_add_link": {
       "title": "Tạo liên kết",
       "text_placeholder": "Tiêu đề hiển thị",
@@ -920,7 +921,6 @@
     "title_group_manage": "Bạn quản lý",
     "text_view_mode": "Chế độ xem",
     "text_choose_view_mode": "Chọn chế độ xem",
-    "text_your_groups_search_input": "Vui lòng nhập từ khoá tìm kiến để xem kết quả",
     "text_your_groups_search_empty": "Xin lỗi, chúng tôi không tìm thấy bất kỳ nhóm nào liên quan đến từ khoá bạn tìm kiếm",
     "group_types": {
       "text_flat_list": "Danh sách",
@@ -1149,6 +1149,7 @@
     "reorder_successful": "Sắp xếp thành công",
     "notice_changing_the_order": "Bạn đang thay đổi thứ tự bài báo",
     "notice_sure_to_do_this": "Bạn có muốn thực hiện sự thay đổi này không?",
+    "text_add_articles_success": "Thêm thành công",
     "text_remove_article": "Bạn muốnn xoá bài viết này?",
     "text_article_removed": "Bài viết đã được xoá"
   }

@@ -107,7 +107,6 @@
     "text_help_center": "Help center is coming soon 🤗",
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
     "text_got_it": "Got it",
-    "text_no_recent_searches": "No recent searches!",
     "text_files": "Files",
     "avatar_changed": "Avatar changed",
     "cover_changed": "Cover changed",
@@ -547,6 +546,7 @@
     "remove_series_title": "Remove Series",
     "remove_series_content": "You don't have create article permission at series: ${series}. Do you want to remove series?",
     "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?",
+    "search_article_placeholder": "Search article...",
     "modal_add_link": {
       "title": "Create a link",
       "text_placeholder": "Text to display",
@@ -986,7 +986,6 @@
     "title_group_manage": "You manage",
     "text_view_mode": "View Mode",
     "text_choose_view_mode": "Choose view mode",
-    "text_your_groups_search_input": "Type search keyword to see the search results",
     "text_your_groups_search_empty": "Sorry, we couldn’t find anything related to your search.",
     "group_types": {
       "text_flat_list": "Flat view",
@@ -1217,6 +1216,7 @@
     "reorder_failed": "Reorder failed",
     "notice_changing_the_order": "You are changing the order",
     "notice_sure_to_do_this": "Are you sure to do this?",
+    "text_add_articles_success": "Add successful",
     "text_remove_article": "Do you want to remove this article?",
     "text_article_removed": "Article removed"
   }

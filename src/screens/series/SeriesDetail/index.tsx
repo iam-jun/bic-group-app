@@ -1,5 +1,5 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
@@ -18,6 +18,7 @@ import SeriesDetailArticleItem from './components/SeriesDetailArticleItem';
 import useSeriesStore, { ISeriesState } from '../store';
 import useSeriesMenu from '~/hooks/useSeriesMenu';
 import { spacing } from '~/theme';
+import AddArticles from './components/AddArticles';
 
 const SeriesDetail = ({ route }: any) => {
   const { params } = route || {};
@@ -28,6 +29,8 @@ const SeriesDetail = ({ route }: any) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
+
   const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
   const {
@@ -35,9 +38,19 @@ const SeriesDetail = ({ route }: any) => {
   } = series;
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
 
+  const isActor = actor?.id == userId;
+
   useEffect(() => {
     actions.getSeriesDetail(seriesId);
   }, []);
+
+  const onPressSearch = () => {
+    setIsOpenSearch(true);
+  };
+
+  const onCloseSearch = () => {
+    setIsOpenSearch(false);
+  };
 
   const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
     = useMyPermissions();
@@ -97,7 +110,7 @@ const SeriesDetail = ({ route }: any) => {
     actions.deleteSeries(id, handleError);
   };
 
-  const { showMenu } = useSeriesMenu(series, actor?.id == userId, true, handleConfirmDelete);
+  const { showMenu } = useSeriesMenu(series, isActor, true, handleConfirmDelete);
 
   if (deleted) {
     return (
@@ -115,6 +128,7 @@ const SeriesDetail = ({ route }: any) => {
       index={index + 1}
       article={item}
       seriesId={id}
+      isActor={isActor}
     />
   );
 
@@ -125,6 +139,8 @@ const SeriesDetail = ({ route }: any) => {
       <Header
         rightIcon="menu"
         onRightPress={showMenu}
+        icon={isActor ? 'Plus' : undefined}
+        onPressIcon={onPressSearch}
       />
       <FlatList
         data={articles}
@@ -134,6 +150,17 @@ const SeriesDetail = ({ route }: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
       />
+      {isActor
+      && (
+      <AddArticles
+        seriesId={id}
+        audience={audience}
+        articles={articles}
+        isOpen={isOpenSearch}
+        onClose={onCloseSearch}
+        placeholder={t('article:search_article_placeholder')}
+      />
+      )}
     </View>
   );
 };
