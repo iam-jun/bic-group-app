@@ -76,7 +76,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderPreviewSummary = () => (
-    <>
+    <View style={styles.contentContainer}>
       <ArticleTitle text={titleArticle} />
       {(!!summaryHighlight || !!summary) && (
         <>
@@ -84,7 +84,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
           <ArticleSummary text={summaryArticle} />
         </>
       )}
-    </>
+    </View>
   );
 
   const renderInterestedBy = () => (
