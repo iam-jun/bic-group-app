@@ -52,6 +52,8 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
     'post:button_comment',
   )}`;
+  const titleArticle = isLite && titleHighlight ? titleHighlight : title;
+  const summaryArticle = isLite && summaryHighlight ? summaryHighlight : summary;
 
   const numberOfReactions = formatLargeNumber(
     getTotalReactions(reactionsCount, 'user'),
@@ -82,11 +84,11 @@ const ArticleItem: FC<ArticleItemProps> = ({
 
   const renderPreviewSummary = () => (
     <Button style={styles.contentContainer} onPress={goToArticleDetail}>
-      <ArticleTitle text={titleHighlight || title} />
+      <ArticleTitle text={titleArticle} />
       {(!!summaryHighlight || !!summary) && (
         <>
           <ViewSpacing height={spacing.margin.small} />
-          <ArticleSummary text={summaryHighlight || summary} />
+          <ArticleSummary text={summaryArticle} />
         </>
       )}
     </Button>

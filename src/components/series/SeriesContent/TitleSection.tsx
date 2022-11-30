@@ -7,6 +7,7 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useBaseHook } from '~/hooks';
 import { formatDate } from '~/utils/formatData';
+import { getTextHighlight } from '~/components/articles/ArticleText/helper';
 
 type TitleSectionProps = {
   title: string;
@@ -49,11 +50,23 @@ const Thumbnail: FC<ThumbnailProps> = ({ numberOfArticles, img }) => {
 const Title: FC<TitleProps> = ({ title, time }) => {
   const { t } = useBaseHook();
   const theme = useTheme();
+  const { colors } = theme;
   const styles = createStyle(theme);
+
+  const lstText = getTextHighlight(title);
 
   return (
     <View style={styles.titleContainer}>
-      <Text.H4 numberOfLines={2}>{title}</Text.H4>
+      <Text.H4 numberOfLines={2}>
+        {lstText.map((item) => (
+          <Text.H4
+            key={`${item.id}`}
+            style={{ backgroundColor: item.isHighlight && colors.highlight }}
+          >
+            {item.text}
+          </Text.H4>
+        ))}
+      </Text.H4>
       <ViewSpacing height={spacing.margin.small} />
       <Text.BodyS>
         {`${t('common:last_updated')}: `}

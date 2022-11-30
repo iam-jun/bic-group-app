@@ -6,12 +6,14 @@ import DeletedItem from '../DeletedItem';
 import SeriesContent from '../SeriesContent';
 import SeriesHeader from '../SeriesHeader';
 import SeriesFooter from '../SeriesFooter';
+import SeriesFooterLite from '../SeriesFooterLite';
 
 type SeriesItemProps = {
     data: IPost;
+    isLite?: boolean;
 }
 
-const SeriesItem: FC<SeriesItemProps> = ({ data: series }) => {
+const SeriesItem: FC<SeriesItemProps> = ({ data: series, isLite }) => {
   const theme = useTheme();
   const styles = createStyle(theme);
 
@@ -27,8 +29,8 @@ const SeriesItem: FC<SeriesItemProps> = ({ data: series }) => {
         series={series}
         disabled={false}
       />
-      <SeriesContent series={series} />
-      <SeriesFooter series={series} />
+      <SeriesContent series={series} isLite={isLite} />
+      {isLite ? <SeriesFooterLite series={series} /> : <SeriesFooter series={series} />}
     </View>
   );
 };

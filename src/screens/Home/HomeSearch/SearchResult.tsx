@@ -21,6 +21,7 @@ import Icon from '~/baseComponents/Icon';
 import ArticleItem from '~/components/articles/ArticleItem';
 import { PostType } from '~/interfaces/IPost';
 import { PostView } from '~/components/posts';
+import SeriesItem from '~/components/series/SeriesItem';
 
 const SearchResult = () => {
   const dispatch = useDispatch();
@@ -100,9 +101,7 @@ const SearchResult = () => {
     }
 
     if (data?.type === PostType.SERIES) {
-      // Temporarily closed because BE not supported yet
-      return null;
-      // return <SeriesItem data={data} />;
+      return <SeriesItem data={data} isLite />;
     }
 
     return (

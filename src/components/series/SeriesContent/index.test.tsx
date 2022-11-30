@@ -25,4 +25,24 @@ describe('SeriesContent component', () => {
     const wrapper = renderWithRedux(<SeriesContent series={mockSeriesWithSummary} />);
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('given titleHighlight and isLite === true should render title with titleHighlight', () => {
+    const wrapper = renderWithRedux(<SeriesContent series={mockSeries} isLite />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('given titleHighlight and isLite === false should render title with title', () => {
+    const wrapper = renderWithRedux(<SeriesContent series={mockSeries} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('given summaryHighlight and isLite === true should render summary with summaryHighlight', () => {
+    const wrapper = renderWithRedux(<SeriesContent series={mockSeriesWithSummary} isLite />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('given summaryHighlight and isLite === false should render summary with summary', () => {
+    const wrapper = renderWithRedux(<SeriesContent series={mockSeriesWithSummary} />);
+    expect(wrapper).toMatchSnapshot();
+  });
 });

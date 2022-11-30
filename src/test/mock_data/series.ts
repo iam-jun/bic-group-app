@@ -3,6 +3,7 @@ export const mockSeries = {
   id: '5264f1b3-c8b8-428a-9fb8-7f075f03d0c8',
   lang: null,
   title: 'series 111',
+  titleHighlight: '==series== 111',
   summary: '',
   actor: {
     id: '6235bc91-2255-4f4b-bcfa-bebcd24e27ac',
@@ -71,6 +72,7 @@ export const mockSeriesWithSummary = {
   lang: null,
   title: 'series 111',
   summary: 'summary',
+  summaryHighlight: '==summary==',
   actor: {
     id: '6235bc91-2255-4f4b-bcfa-bebcd24e27ac',
     username: 'ngoclinh',
