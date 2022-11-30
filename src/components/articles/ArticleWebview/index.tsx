@@ -75,6 +75,11 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
     injectJavaScript(initScript);
   };
 
+  const _onInitializeEnd = () => {
+    _webViewRef.current?.requestFocus();
+    onInitializeEnd?.();
+  };
+
   const _onMessage = (event: any) => {
     const message = parseSafe(event?.nativeEvent?.data);
 
@@ -82,7 +87,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
       case EventType.ON_LOAD_END:
         return onLoadEnd();
       case EventType.ON_INITIALIZE_END:
-        return onInitializeEnd?.();
+        return _onInitializeEnd?.();
       case EventType.ON_SCROLL:
         return onScroll?.(message?.payload);
       default:
@@ -109,7 +114,6 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
         saveFormDataDisabled
         allowsFullscreenVideo
         hideKeyboardAccessoryView
-        keyboardDisplayRequiresUserAction
         androidHardwareAccelerationDisabled
         nestedScrollEnabled={false}
         // force open native video player for the best performance
