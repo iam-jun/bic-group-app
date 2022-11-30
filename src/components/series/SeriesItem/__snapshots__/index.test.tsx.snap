@@ -540,7 +540,23 @@ exports[`SeriesItem component renders correctly 1`] = `
               ]
             }
           >
-            series 111
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 17,
+                  },
+                  Object {},
+                  Object {
+                    "backgroundColor": false,
+                  },
+                ]
+              }
+            >
+              series 111
+            </Text>
           </Text>
           <View
             style={
@@ -1275,7 +1291,23 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
               ]
             }
           >
-            series 111
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 17,
+                  },
+                  Object {},
+                  Object {
+                    "backgroundColor": false,
+                  },
+                ]
+              }
+            >
+              series 111
+            </Text>
           </Text>
           <View
             style={

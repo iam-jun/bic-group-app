@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import spacing, { margin } from '~/theme/spacing';
-import { useBaseHook } from '~/hooks';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import { scaleCoverHeight } from '~/theme/dimension';
@@ -28,10 +27,9 @@ const ArticleItem: FC<ArticleItemProps> = ({
   data,
   isLite,
 }: ArticleItemProps) => {
-  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const { rootNavigation } = useRootNavigation();
 
   const {
     id,
@@ -49,17 +47,16 @@ const ArticleItem: FC<ArticleItemProps> = ({
     summaryHighlight,
     coverMedia,
   } = data || {};
-  const labelButtonComment = `${commentsCount ? `${commentsCount} ` : ''}${t(
-    'post:button_comment',
-  )}`;
+
+  const titleArticle = isLite && titleHighlight ? titleHighlight : title;
+  const summaryArticle = isLite && summaryHighlight ? summaryHighlight : summary;
 
   const numberOfReactions = formatLargeNumber(
     getTotalReactions(reactionsCount, 'user'),
   );
 
-  const goToArticleDetail = () => {
-    rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
-  };
+  const goToContentDetail = () => rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
+  const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
 
   const renderHeader = () => (
     <ArticleHeader
@@ -71,25 +68,23 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderImageThumbnail = () => (
-    <Button onPress={goToArticleDetail}>
-      <Image
-        style={styles.cover}
-        source={coverMedia?.url || images.img_thumbnail_default}
-        defaultSource={images.img_thumbnail_default}
-      />
-    </Button>
+    <Image
+      style={styles.cover}
+      source={coverMedia?.url}
+      defaultSource={images.img_thumbnail_default}
+    />
   );
 
   const renderPreviewSummary = () => (
-    <Button style={styles.contentContainer} onPress={goToArticleDetail}>
-      <ArticleTitle text={titleHighlight || title} />
+    <>
+      <ArticleTitle text={titleArticle} />
       {(!!summaryHighlight || !!summary) && (
         <>
           <ViewSpacing height={spacing.margin.small} />
-          <ArticleSummary text={summaryHighlight || summary} />
+          <ArticleSummary text={summaryArticle} />
         </>
       )}
-    </Button>
+    </>
   );
 
   const renderInterestedBy = () => (
@@ -101,9 +96,9 @@ const ArticleItem: FC<ArticleItemProps> = ({
       articleId={id}
       canReact={setting?.canReact}
       canComment={setting?.canComment}
+      commentsCount={commentsCount}
       reactionsCount={reactionsCount}
       ownerReactions={ownerReactions}
-      labelButtonComment={labelButtonComment}
     />
   );
 
@@ -115,6 +110,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
         reactionsCount={Number(numberOfReactions)}
         commentsCount={commentsCount}
         totalUsersSeen={totalUsersSeen}
+        onPressComment={goToDetail}
       />
     </>
   );
@@ -122,8 +118,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
   return (
     <View style={styles.container}>
       {renderHeader()}
-      {renderImageThumbnail()}
-      {renderPreviewSummary()}
+      <Button onPress={goToContentDetail}>
+        {renderImageThumbnail()}
+        {renderPreviewSummary()}
+      </Button>
       {isLite && renderLite()}
       {!isLite && renderInterestedBy()}
       {!isLite && renderFooter()}
@@ -131,6 +129,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 };
 
+const coverHeight = scaleCoverHeight();
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors, elevations } = theme;
   return StyleSheet.create({
@@ -141,7 +140,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     cover: {
       width: '100%',
-      height: scaleCoverHeight(),
+      height: coverHeight,
       marginTop: margin.base,
     },
     contentContainer: {

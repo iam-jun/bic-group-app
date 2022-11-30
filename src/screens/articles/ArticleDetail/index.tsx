@@ -8,19 +8,15 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import { useDispatch } from 'react-redux';
-import { useRootNavigation } from '~/hooks/navigation';
-import { IAudienceGroup, IMentionUser, IPayloadReactToPost } from '~/interfaces/IPost';
-import mainStack from '~/router/navigator/MainStack/stack';
+import { IAudienceGroup } from '~/interfaces/IPost';
 
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import { ArticlePlaceholder, ArticleView } from '~/components/articles';
 import CommentInputView from '~/screens/comments/components/CommentInputView';
-import { ReactionType } from '~/constants/reactions';
 import useMounted from '~/hooks/mounted';
 import { IRouteParams } from '~/interfaces/IRouter';
 import useArticlesStore, { IArticlesState } from './store';
-import useCommonController from '~/screens/store';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
@@ -35,7 +31,6 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const id = params?.articleId;
   const focusComment = params?.focusComment;
 
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
@@ -44,7 +39,6 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const commentInputRef = useRef<any>();
 
   const [refreshing, setRefreshing] = useState(false);
-  const [isLoaded, setLoaded] = useState(false);
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
 
   const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(id), [id]));
@@ -52,11 +46,8 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
   const actions = useArticlesStore((state: IArticlesState) => state.actions);
-  const commonController = useCommonController((state) => state.actions);
 
-  const {
-    audience, reactionsCount, setting, ownerReactions,
-  } = data;
+  const { audience, setting } = data;
 
   const {
     onLayout,
@@ -89,41 +80,6 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const onPressMarkSeenPost = useCallback(() => {
     dispatch(postActions.putMarkSeenPost({ postId: id }));
   }, [id]);
-
-  const onPressMentionAudience = useRef((user: IMentionUser) => {
-    if (audience) {
-      rootNavigation.navigate(
-        mainStack.userProfile, { userId: user.id },
-      );
-    }
-  }).current;
-
-  const onAddReaction = (reactionId: ReactionType) => {
-    const payload: IPayloadReactToPost = {
-      id,
-      reactionId,
-      ownReaction: ownerReactions,
-      reactionsCount,
-    };
-    commonController.reactToPost('put', payload);
-    onPressMarkSeenPost();
-  };
-
-  const onRemoveReaction = (reactionId: ReactionType) => {
-    if (id) {
-      const payload: IPayloadReactToPost = {
-        id,
-        reactionId,
-        ownReaction: ownerReactions,
-        reactionsCount,
-      };
-      commonController.reactToPost('delete', payload);
-    }
-  };
-
-  const onInitializeEnd = () => {
-    setLoaded(true);
-  };
 
   const renderCommentItem = (data: any) => (
     <CommentItem
@@ -174,30 +130,21 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     return <View style={styles.footer} />;
   };
 
-  const renderLoading = () => {
-    if (isLoaded) return null;
-
-    return (
-      <View style={styles.loadingContainer}>
-        <Header
-          title="article:title_article_detail"
-          titleTextProps={{ useI18n: true }}
-        />
-        <ArticlePlaceholder disableRandom />
-      </View>
-    );
-  };
+  const renderLoading = () => (
+    <View style={styles.loadingContainer}>
+      <Header
+        title="article:title:detail"
+        titleTextProps={{ useI18n: true }}
+      />
+      <ArticlePlaceholder disableRandom />
+    </View>
+  );
 
   const ListHeaderComponent = (
     <ArticleView
       id={id}
       article={data}
-      isLoaded={isLoaded}
       firstCommentId={firstCommentId}
-      onAddReaction={onAddReaction}
-      onRemoveReaction={onRemoveReaction}
-      onInitializeEnd={onInitializeEnd}
-      onPressMentionAudience={onPressMentionAudience}
     />
   );
 
@@ -226,7 +173,6 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   return (
     <View style={styles.container}>
-      {renderLoading()}
       <Header />
       <View style={styles.contentContainer}>
         <SectionList
@@ -244,7 +190,6 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
           ItemSeparatorComponent={renderSeparator}
           onScrollToIndexFailed={onScrollToIndexFailed}
         />
-
       </View>
       {renderCommentInput()}
     </View>

@@ -17,7 +17,7 @@ const deleteArticle = (_set, _get) => async (seriesId: string, articleId: string
       Store.store.dispatch(modalActions.showHideToastMessage({ content: 'series:text_article_removed' }));
     }
   } catch (error) {
-    console.log('\x1b[31m🐣️ deleteArticle error: \x1b[0m', error);
+    console.error('\x1b[31m🐣️ deleteArticle error: \x1b[0m', error);
     showError(error);
   }
 };

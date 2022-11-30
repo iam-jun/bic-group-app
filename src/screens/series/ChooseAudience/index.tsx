@@ -14,7 +14,7 @@ import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import modalActions from '~/storeRedux/modal/actions';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
+import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArticle/helper';
 import useSeriesStore, { ISeriesState } from '../store';
 
 const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {

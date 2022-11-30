@@ -72,13 +72,14 @@ const SlideUpModal: React.FC<SheetProps> = ({
     if (expandHeight) expand();
     else maximise();
 
-    onOpened();
+    onOpened?.();
   };
 
-  const hide = () => {
-    modalHeight.value = withSpring(0, springConfig);
+  const hide = (urgent?: boolean) => {
+    if (urgent) modalHeight.value = 0;
+    else modalHeight.value = withSpring(0, springConfig);
     position.value = 'minimised';
-    onClosed();
+    onClosed?.();
   };
 
   const expand = () => {

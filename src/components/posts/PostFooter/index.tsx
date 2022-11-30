@@ -11,7 +11,8 @@ import { useBaseHook } from '~/hooks';
 import { ContentFooterLite, ContentFooterLiteProps } from '~/components/ContentView';
 import { getTotalReactions } from '~/helpers/post';
 
-export interface PostFooterProps extends Partial<ContentFooterProps>, Partial< Omit<ContentFooterLiteProps, 'reactionsCount'>> {
+export interface PostFooterProps extends Partial<ContentFooterProps>,
+ Partial<Omit<Omit<ContentFooterLiteProps, 'reactionsCount'>, 'onPressComment'>> {
   postId: string;
   isLite?: boolean;
 }

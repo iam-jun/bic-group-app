@@ -427,7 +427,23 @@ exports[`SeriesDetailHeader component render with description view 1`] = `
           ]
         }
       >
-        summary
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
+              },
+              Object {},
+              Object {
+                "backgroundColor": false,
+              },
+            ]
+          }
+        >
+          summary
+        </Text>
       </Text>
     </View>
   </View>

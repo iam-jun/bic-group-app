@@ -1,6 +1,5 @@
 import { ISelectAudienceState } from '~/components/SelectAudience/store';
-import { IEditArticleCategoryState } from '~/screens/articles/EditArticle/EditCategory/store';
-import { IEditArticleState } from '~/screens/articles/EditArticle/store';
+import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import { ICodePushState } from '~/store/codePush';
 import IPostsState from './entities/posts/Interface';
 import ICommentsState from '~/store/entities/comments/Interface';
@@ -30,7 +29,8 @@ import { IGiphyState } from './giphy';
 import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
-import { IEditArticleSeriesState } from '~/screens/articles/EditArticle/EditSeries/store';
+import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
+import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 
 export interface BicStore {
   entities: {
@@ -50,10 +50,10 @@ export interface BicStore {
   articles: {
     articleController: IArticleController,
     EditArticle: {
-      editArticleStore: IEditArticleState,
+      editArticleStore: ICreateArticleState,
       EditArticleCategory: {
-        editArticleCategoryStore: IEditArticleCategoryState,
-        editArticleSeriesStore: IEditArticleSeriesState,
+        editArticleCategoryStore: ICreateArticleCategoryState,
+        editArticleSeriesStore: ICreateArticleSeriesState,
       }
     }
   };

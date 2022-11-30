@@ -1,7 +1,6 @@
 import IPostsState from './Interface';
 
 const postsSelector = {
-
   getPost: (id: string, defaultValue?: any) => (state: IPostsState) => state?.posts?.[id] || defaultValue,
   getActor: (id) => (state: IPostsState) => state?.posts?.[id]?.actor,
   getAudience: (id: string) => (state: IPostsState) => state?.posts?.[id]?.audience,

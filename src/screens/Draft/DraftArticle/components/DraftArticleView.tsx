@@ -103,7 +103,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
   };
 
   const onPressEdit = () => {
-    rootNavigation?.navigate(articleStack.editArticleTitle, { articleId: id, isDraft: true });
+    rootNavigation?.navigate(articleStack.createArticleTitle, { articleId: id, isDraft: true });
   };
 
   // use base ContentHeader to prevent user press event

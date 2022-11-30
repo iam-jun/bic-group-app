@@ -23,7 +23,7 @@ const ArticleText: FC<ArticleTextComponentProps> = ({ text, type }) => {
           key={`${item.id}`}
           variant={textVariant}
           color={colors.neutral80}
-          style={{ backgroundColor: item.isHighlight && '#f4ed78' }}
+          style={{ backgroundColor: item.isHighlight && colors.highlight }}
         >
           {item.text}
         </Text>

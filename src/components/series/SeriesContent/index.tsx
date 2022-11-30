@@ -18,9 +18,10 @@ const LIMIT_ARTICLE = 3;
 
 type SeriesContentProps = {
   series: IPost;
+  isLite?: boolean;
 };
 
-const SeriesContent: FC<SeriesContentProps> = ({ series }) => {
+const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
@@ -32,10 +33,14 @@ const SeriesContent: FC<SeriesContentProps> = ({ series }) => {
     summary,
     totalUsersSeen,
     articles,
+    titleHighlight,
+    summaryHighlight,
   } = series || {};
   const { rootNavigation } = useRootNavigation();
   const [articleShowAll, setArticleShowAll] = useState(false);
   const listArticle = articleShowAll ? articles : articles?.slice?.(0, LIMIT_ARTICLE);
+  const titleSection = isLite && titleHighlight ? titleHighlight : title;
+  const summarySection = isLite && summaryHighlight ? summaryHighlight : summary;
 
   const goToSeriesDetail = () => {
     rootNavigation.navigate(seriesStack.seriesDetail, { seriesId: id });
@@ -51,42 +56,48 @@ const SeriesContent: FC<SeriesContentProps> = ({ series }) => {
     />
   );
 
-  const renderRowOptions = () => (
-    <View style={[styles.default, articles?.length > LIMIT_ARTICLE && styles.row]}>
-      {articles?.length > LIMIT_ARTICLE && (
-      <Text.SubtitleM
-        testID="series_content.short_content"
-        onPress={onToggleShowArticle}
-        color={colors.neutral60}
-        useI18n
-      >
-        {articleShowAll
-          ? 'common:text_see_less'
-          : 'common:text_see_more'}
-      </Text.SubtitleM>
-      )}
-      <ContentInterestedUserCount
-        isLite
-        id={id}
-        interestedUserCount={totalUsersSeen}
-        style={styles.interestedUserCount}
-      />
-    </View>
-  );
+  const renderRowOptions = () => {
+    if (articles?.length <= LIMIT_ARTICLE && isLite) return null;
+
+    return (
+      <View style={[styles.default, articles?.length > LIMIT_ARTICLE && styles.row]}>
+        {articles?.length > LIMIT_ARTICLE && (
+        <Text.SubtitleM
+          testID="series_content.short_content"
+          onPress={onToggleShowArticle}
+          color={colors.neutral60}
+          useI18n
+        >
+          {articleShowAll
+            ? 'common:text_see_less'
+            : 'common:text_see_more'}
+        </Text.SubtitleM>
+        )}
+        {!isLite && (
+        <ContentInterestedUserCount
+          isLite
+          id={id}
+          interestedUserCount={totalUsersSeen}
+          style={styles.interestedUserCount}
+        />
+        )}
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
       <Button onPress={goToSeriesDetail}>
         <TitleSection
-          title={title}
+          title={titleSection}
           time={updatedAt}
           numberOfArticles={articles?.length}
           img={coverMedia?.url}
         />
       </Button>
-      <DescriptionSection description={summary} />
+      <DescriptionSection description={summarySection} />
       {renderListArticle()}
-      {renderRowOptions()}
+      {articles?.length > LIMIT_ARTICLE && renderRowOptions()}
     </View>
   );
 };

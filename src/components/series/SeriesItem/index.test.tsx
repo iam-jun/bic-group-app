@@ -42,4 +42,17 @@ describe('SeriesItem component', () => {
     const deleteComponent = wrapper.getByTestId('series.delete_item');
     expect(deleteComponent).toBeDefined();
   });
+
+  it('renders SeriesFooterLite when isLite === true', () => {
+    const { result } = renderHook(() => usePostsStore());
+
+    act(() => {
+      result.current.actions.addToPosts({ data: { ...mockSeries } });
+    });
+
+    const wrapper = renderWithRedux(<SeriesItem data={mockSeries} isLite />);
+    const footerLite = wrapper.getByTestId('post_view_footer_lite');
+
+    expect(footerLite).toBeDefined();
+  });
 });

@@ -125,6 +125,11 @@ export const streamApiConfig = {
       ...params,
     },
   }),
+  createArticle: () : HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles`,
+    method: 'post',
+  }),
   putEditArticle: (articleId: string, param: IParamPutEditArticle): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles/${articleId}`,
@@ -466,6 +471,7 @@ const streamApi = {
   },
   postCreateNewPost: (data: IPostCreatePost) => withHttpRequestPromise(streamApiConfig.postCreateNewPost, data),
   putReaction: (param: IParamPutReaction) => withHttpRequestPromise(streamApiConfig.putReaction, param),
+  createArticle: () => withHttpRequestPromise(streamApiConfig.createArticle),
   putEditArticle: (articleId: string, param: IParamPutEditArticle) => withHttpRequestPromise(
     streamApiConfig.putEditArticle, articleId, param,
   ),
