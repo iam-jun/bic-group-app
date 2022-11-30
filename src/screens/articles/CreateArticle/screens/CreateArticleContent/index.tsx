@@ -198,6 +198,7 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
           onChangeText={onChangeTitle}
         />
         <ArticleWebview
+          ref={ref}
           initScript={initScript}
           onMessage={onMessage}
         />
