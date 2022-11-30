@@ -24,6 +24,7 @@ export interface ContentFooterProps {
   hasReactPermission?: boolean;
 
   onAddReaction?: (key: string) => void;
+  onPressReaction?: () => void;
   onPressComment?: (id?: string) => void;
 }
 
@@ -37,6 +38,7 @@ const ContentFooter: FC<ContentFooterProps> = ({
   hasReactPermission = true,
   onAddReaction,
   onPressComment,
+  onPressReaction,
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -57,6 +59,8 @@ const ContentFooter: FC<ContentFooterProps> = ({
   };
 
   const onPressReact = () => {
+    if (onPressReaction) return onPressReaction();
+
     dispatch(modalActions.setShowReactionBottomSheet(
       { visible: true, callback: onEmojiSelected },
     ));

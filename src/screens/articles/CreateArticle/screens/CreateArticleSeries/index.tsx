@@ -10,7 +10,7 @@ import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps, IEditArticleSeries } from '~/interfaces/IArticle';
-import useEditArticle from '~/screens/articles/CreateArticle/hooks/useEditArticle';
+import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import spacing from '~/theme/spacing';
 import SelectingSeries from './components/SelectingSeries';
 import Divider from '~/beinComponents/Divider';
@@ -56,7 +56,7 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
 
   const {
     handleSave, handleBack, enableButtonSave, loading,
-  } = useEditArticle({ articleId });
+  } = useCreateArticle({ articleId });
 
   const disabled = (isPublishing ? false : !enableButtonSave) || loading;
 

@@ -1,4 +1,4 @@
-import { ArticleDetail, CreateArticle } from '~/screens/articles';
+import { ArticleDetail, CreateArticle, ArticleContentDetail } from '~/screens/articles';
 import {
   CreateArticleAudience,
   CreateArticleCategory,
@@ -11,6 +11,7 @@ import {
 
 const articleScreens = {
   'article-detail': ArticleDetail,
+  'article-content-detail': ArticleContentDetail,
   'create-article': CreateArticle,
   'create-article-content': CreateArticleContent,
   'create-article-title': CreateArticleTitle,

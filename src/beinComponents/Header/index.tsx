@@ -68,6 +68,8 @@ export interface HeaderProps {
   useAnimationTitle?: boolean;
   showStickyHeight?: number;
   stickyHeaderComponent?: React.ReactNode;
+  titleHeight?: number;
+  headerHeight?: number;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -105,13 +107,16 @@ const Header: React.FC<HeaderProps> = ({
   onRightPress,
   onPressChat,
   useAnimationTitle,
-  showStickyHeight,
+  showStickyHeight = 0,
   stickyHeaderComponent,
+  titleHeight = 25,
+  headerHeight = 210,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const inputRef = useRef<any>();
   const headerSearchRef = useRef<any>();
   const _headerRef = headerRef || useRef();
+  const height = headerHeight + titleHeight;
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -192,7 +197,7 @@ const Header: React.FC<HeaderProps> = ({
   const titleAnimated = useAnimationTitle
     ? useAnimatedStyle(() => ({
       opacity: interpolate(
-        scrollY.value, [0, 210, 235], [0, 0, 1],
+        scrollY.value, [0, headerHeight, height], [0, 0, 1],
       ),
     }))
     : {};
@@ -212,7 +217,8 @@ const Header: React.FC<HeaderProps> = ({
   }), [showStickyHeight]) : {};
 
   const setScrollY = (offsetY: number) => {
-    if (offsetY > showStickyHeight && offsetY < scrollY.value) {
+    const _height = headerHeight || showStickyHeight;
+    if (offsetY > _height && offsetY < scrollY.value) {
       // show sticky header when scrolling up
       stickyShow.value = withTiming(1);
     } else {

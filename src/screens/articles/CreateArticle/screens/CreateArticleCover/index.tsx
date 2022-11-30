@@ -16,7 +16,7 @@ import { IFilePicked } from '~/interfaces/common';
 import { CreateArticleProps } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useEditArticle from '~/screens/articles/CreateArticle/hooks/useEditArticle';
+import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import ImageUploader from '~/services/imageUploader';
 import dimension, { scaleSize } from '~/theme/dimension';
@@ -45,7 +45,7 @@ const CreateArticleCover: FC<CreateArticleProps> = ({ route }: CreateArticleProp
 
   const {
     handleBack, handleSave, enableButtonSave, loading, validButtonNext,
-  } = useEditArticle({ articleId });
+  } = useCreateArticle({ articleId });
 
   const disabled = (isPublishing ? !validButtonNext.isCoverValid : !enableButtonSave) || loading;
 

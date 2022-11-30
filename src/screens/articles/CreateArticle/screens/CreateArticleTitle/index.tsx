@@ -9,7 +9,7 @@ import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useEditArticle from '~/screens/articles/CreateArticle/hooks/useEditArticle';
+import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import spacing from '~/theme/spacing';
 
@@ -33,7 +33,7 @@ const CreateArticleTitle: FC<CreateArticleProps> = ({
 
   const {
     handleBack, handleSave, enableButtonSave, validButtonNext, loading,
-  } = useEditArticle({
+  } = useCreateArticle({
     articleId,
     needToPublish: isDraft,
   });

@@ -8,7 +8,7 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useEditArticle from '~/screens/articles/CreateArticle/hooks/useEditArticle';
+import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import spacing from '~/theme/spacing';
 
@@ -27,7 +27,7 @@ const CreateArticleSummary: FC<CreateArticleProps> = ({ route }: CreateArticlePr
 
   const {
     handleBack, handleSave, enableButtonSave, loading,
-  } = useEditArticle({ articleId });
+  } = useCreateArticle({ articleId });
 
   const disabled = (isPublishing ? false : !enableButtonSave) || loading;
 

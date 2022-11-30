@@ -11,7 +11,7 @@ import useSelectAudienceStore from '~/components/SelectAudience/store';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
-import useEditArticle from '~/screens/articles/CreateArticle/hooks/useEditArticle';
+import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
@@ -80,7 +80,7 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
 
   const {
     handleBack, handleSave, loading, handleAudiencesChange,
-  } = useEditArticle({ articleId, handleSaveAudienceError: handleSaveError });
+  } = useCreateArticle({ articleId, handleSaveAudienceError: handleSaveError });
 
   const disabled = (isPublishing ? !isAudienceValidForNext : !isAudienceValidForSave) || loading;
 
