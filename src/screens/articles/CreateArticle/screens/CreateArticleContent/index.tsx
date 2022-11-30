@@ -1,6 +1,6 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useRef } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
 import { createTextStyle } from '~/baseComponents/Text/textStyle';
@@ -35,7 +35,6 @@ export interface CreateArticleContentProps {
   };
 }
 
-const TITLE_MAX_LENGTH = 64;
 const EMPTY_CONTENT = [{ type: 'p', children: [{ text: '' }] }];
 
 const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateArticleContentProps) => {
@@ -49,8 +48,8 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
 
   const articleData = useCreateArticle({ articleId });
   const {
-    loading, enableButtonSave, validButtonNext, title, content, groupIds,
-    handleTitleChange, handleSave, handleBack, handleContentChange,
+    loading, enableButtonSave, validButtonNext, content, groupIds,
+    handleSave, handleBack, handleContentChange,
   } = articleData || {};
   const isPublishing = useCreateArticleStore((state) => state.isPublishing);
   const runSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
@@ -61,10 +60,6 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     payload: {
       contentState: parseSafe(content) || EMPTY_CONTENT,
     },
-  };
-
-  const onChangeTitle = (value) => {
-    handleTitleChange(value);
   };
 
   const disabled = (isPublishing ? !validButtonNext.isContentValid : !enableButtonSave) || loading;
@@ -187,16 +182,6 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
         onPressBack={isPublishing ? goBack : handleBack}
       />
       <View style={styles.flex1}>
-        <TextInput
-          multiline
-          value={title}
-          numberOfLines={2}
-          style={styles.inputTitle}
-          maxLength={TITLE_MAX_LENGTH}
-          selectionColor={theme.colors.gray50}
-          placeholderTextColor={theme.colors.neutral20}
-          onChangeText={onChangeTitle}
-        />
         <ArticleWebview
           ref={ref}
           initScript={initScript}
