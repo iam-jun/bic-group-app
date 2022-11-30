@@ -11,9 +11,12 @@ type SeriesDetailArticleItemProps = {
     article: IPost;
     index: number;
     seriesId: string;
+    isActor: boolean;
 }
 
-const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({ article, index, seriesId }) => {
+const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({
+  article, index, seriesId, isActor,
+}) => {
   const {
     actor, coverMedia, summary,
   } = article || {};
@@ -22,7 +25,7 @@ const SeriesDetailArticleItem: FC<SeriesDetailArticleItemProps> = ({ article, in
 
   return (
     <View style={styles.container}>
-      <TitleArticle index={index} article={article} seriesId={seriesId} />
+      <TitleArticle index={index} article={article} seriesId={seriesId} isActor={isActor} />
       <ViewSpacing height={spacing.margin.extraLarge} />
       <ContentArticleItem actor={actor} coverMedia={coverMedia} summary={summary} />
     </View>

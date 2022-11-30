@@ -1160,11 +1160,9 @@ Array [
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "height": "100%",
-                      },
-                    ]
+                    Object {
+                      "height": "100%",
+                    }
                   }
                 >
                   <View
@@ -1324,7 +1322,6 @@ Array [
                         onScrollBeginDrag={[Function]}
                         onScrollEndDrag={[Function]}
                         onScrollToIndexFailed={[Function]}
-                        removeClippedSubviews={true}
                         renderItem={[Function]}
                         scrollEventThrottle={50}
                         showsVerticalScrollIndicator={false}
@@ -1434,11 +1431,9 @@ Array [
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "height": "100%",
-                      },
-                    ]
+                    Object {
+                      "height": "100%",
+                    }
                   }
                 >
                   <View
@@ -1598,7 +1593,6 @@ Array [
                         onScrollBeginDrag={[Function]}
                         onScrollEndDrag={[Function]}
                         onScrollToIndexFailed={[Function]}
-                        removeClippedSubviews={true}
                         renderItem={[Function]}
                         scrollEventThrottle={50}
                         showsVerticalScrollIndicator={false}

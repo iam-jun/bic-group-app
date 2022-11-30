@@ -87,11 +87,9 @@ exports[`StickerView component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "height": "100%",
-                },
-              ]
+              Object {
+                "height": "100%",
+              }
             }
           >
             <View

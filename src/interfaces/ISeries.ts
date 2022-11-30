@@ -47,4 +47,5 @@ export interface IReorderArticles {
   articleIds: string[]
 }
 
+export type IAddArticleInSeries = IReorderArticles;
 export type IRemoveArticleInSeries = IReorderArticles;
