@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SeriesDetailArticleItem component render correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "marginRight": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 28,
+          },
+          Object {
+            "color": "#BAC0DE",
+          },
+          undefined,
+        ]
+      }
+    >
+      00
+    </Text>
+    <View
+      style={
+        Object {
+          "borderLeftColor": "#BAC0DE",
+          "borderLeftWidth": 1,
+          "height": 44,
+          "marginHorizontal": 8,
+          "transform": Array [
+            Object {
+              "rotate": "15deg",
+            },
+          ],
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 20,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            undefined,
+          ]
+        }
+      >
+        Article thứ 4 edited 
+      </Text>
+    </View>
+  </View>
+</View>
+`;

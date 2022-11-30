@@ -105,7 +105,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.large,
     },
     textTitle: { marginTop: spacing.margin.large },
-    textInputName: { marginBottom: spacing.margin.small, marginTop: 0 },
+    textInputName: { marginBottom: spacing.margin.small, marginTop: spacing.margin.small },
     textInput: {
       marginTop: spacing.margin.small,
       borderRadius: spacing.borderRadius.small,

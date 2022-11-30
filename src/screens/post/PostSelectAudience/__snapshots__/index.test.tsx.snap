@@ -10,7 +10,9 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
       Object {
         "flex": 1,
       },
-      Object {},
+      Object {
+        "flex": 1,
+      },
     ]
   }
 >
@@ -283,180 +285,163 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
     </View>
     <View
       style={
-        Array [
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#E3E6F2",
-            "borderRadius": 24,
-            "borderWidth": 1,
-            "justifyContent": "center",
-            "paddingLeft": 8,
-            "paddingRight": 12,
-          },
-          Object {
-            "margin": 16,
-          },
-          Object {
-            "height": 36,
-          },
-          false,
-        ]
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+        }
       }
-      testID="search_input"
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#E3E6F2",
+              "borderRadius": 24,
+              "borderWidth": 1,
+              "justifyContent": "center",
+              "paddingLeft": 8,
+              "paddingRight": 12,
+            },
+            Object {
+              "margin": 16,
+            },
+            Object {
+              "height": 36,
+            },
+            false,
+          ]
         }
+        testID="search_input"
       >
         <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={false}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "opacity": 1,
+              "alignItems": "center",
+              "flexDirection": "row",
             }
           }
         >
           <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "marginRight": 8,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
+              Object {
+                "opacity": 1,
+              }
             }
           >
             <View
               style={
                 Array [
-                  undefined,
-                  undefined,
-                  undefined,
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginRight": 8,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
                 ]
               }
             >
               <View
-                testID="search_input.icon"
-              />
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="search_input.icon"
+                />
+              </View>
             </View>
           </View>
-        </View>
-        <TextInput
-          autoComplete="off"
-          onBlur={[Function]}
-          onChangeText={[Function]}
-          onFocus={[Function]}
-          onSubmitEditing={[Function]}
-          placeholder="Search Audience..."
-          placeholderTextColor="#BAC0DE"
-          returnKeyType="search"
-          selectionColor="#767D93"
-          style={
-            Object {
-              "color": "#181C32",
-              "flex": 1,
-              "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 13,
-              "height": "100%",
+          <TextInput
+            autoComplete="off"
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onSubmitEditing={[Function]}
+            placeholder="Search Audience..."
+            placeholderTextColor="#BAC0DE"
+            returnKeyType="search"
+            selectionColor="#767D93"
+            style={
+              Object {
+                "color": "#181C32",
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+                "height": "100%",
+              }
             }
-          }
-          testID="search_input.input"
-          value=""
-        />
+            testID="search_input.input"
+            value=""
+          />
+        </View>
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "marginBottom": 16,
-        }
-      }
-      testID="selecting_audience.container"
-    >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#212745",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 15,
-            },
-            Object {},
-            Object {
-              "paddingHorizontal": 16,
-            },
-          ]
+          Object {
+            "marginBottom": 16,
+          }
         }
+        testID="selecting_audience.container"
       >
-        Chosen audience: 0
-      </Text>
-      <RCTScrollView
-        horizontal={true}
-      >
-        <View />
-      </RCTScrollView>
-    </View>
-    <RCTScrollView
-      ListEmptyComponent={[Function]}
-      ListFooterComponent={[Function]}
-      data={Array []}
-      getItem={[Function]}
-      getItemCount={[Function]}
-      keyExtractor={[Function]}
-      onContentSizeChange={[Function]}
-      onLayout={[Function]}
-      onMomentumScrollBegin={[Function]}
-      onMomentumScrollEnd={[Function]}
-      onScroll={[Function]}
-      onScrollBeginDrag={[Function]}
-      onScrollEndDrag={[Function]}
-      removeClippedSubviews={false}
-      renderItem={[Function]}
-      scrollEventThrottle={50}
-      stickyHeaderIndices={Array []}
-      style={
-        Object {
-          "paddingHorizontal": 16,
-        }
-      }
-      viewabilityConfigCallbackPairs={Array []}
-    >
-      <View>
-        <View
-          onLayout={[Function]}
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
+              },
+              Object {},
+              Object {
+                "paddingHorizontal": 16,
+              },
+            ]
+          }
         >
+          Chosen audience: 0
+        </Text>
+        <RCTScrollView
+          horizontal={true}
+        >
+          <View />
+        </RCTScrollView>
+      </View>
+      <RCTScrollView
+        ItemSeparatorComponent={[Function]}
+        ListEmptyComponent={null}
+        ListFooterComponent={
           <View
             style={
               Object {
@@ -464,14 +449,55 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
               }
             }
           >
-            <ActivityIndicator
+            <LoadingIndicator
               color="#E3E6F2"
               size="large"
             />
           </View>
+        }
+        data={Array []}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        keyExtractor={[Function]}
+        onContentSizeChange={[Function]}
+        onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        stickyHeaderIndices={Array []}
+        style={
+          Object {
+            "paddingHorizontal": 16,
+          }
+        }
+        viewabilityConfigCallbackPairs={Array []}
+      >
+        <View>
+          <View
+            onLayout={[Function]}
+          >
+            <View
+              style={
+                Object {
+                  "marginBottom": 16,
+                }
+              }
+            >
+              <ActivityIndicator
+                color="#E3E6F2"
+                size="large"
+                testID="loading_indicator"
+              />
+            </View>
+          </View>
         </View>
-      </View>
-    </RCTScrollView>
+      </RCTScrollView>
+    </View>
   </View>
 </View>
 `;

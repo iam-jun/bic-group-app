@@ -56,7 +56,7 @@ const ListArticle: FC<ListArticleProps> = ({ listArticle }) => {
       {listArticle?.map((item, index) => (
         <>
           <ArticleItem
-            key={`artc-series-${item.id}`}
+            key={`artc_series_${item.id}`}
             index={index + 1}
             article={item}
           />

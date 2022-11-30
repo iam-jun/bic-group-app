@@ -4,205 +4,267 @@ exports[`GroupInfoView component renders correctly 1`] = `
 <View
   style={
     Object {
-      "marginHorizontal": 4,
+      "marginVertical": 16,
     }
   }
 >
-  <View>
-    <View
-      accessibilityState={
-        Object {
-          "disabled": true,
-        }
+  <View
+    style={
+      Object {
+        "backgroundColor": "#FFFFFF",
       }
-      accessible={true}
-      collapsable={false}
-      focusable={false}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    }
+    testID="info_card"
+  >
+    <View
       style={
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "opacity": 1,
-          "paddingHorizontal": 12,
-          "paddingVertical": 12,
+          "justifyContent": "space-between",
+          "margin": 16,
         }
       }
-      testID="info_view.name"
     >
-      <View
+      <Text
         style={
-          Object {
-            "flex": 1,
-          }
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 17,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+        testID="info_card.title"
+      >
+        Community Name
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "paddingBottom": 16,
+          "paddingHorizontal": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#282E53",
+            },
+            undefined,
+          ]
         }
       >
-        <Text
-          numberOfLines={2}
-          style={
-            Array [
-              Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-        >
-          Community Name
-        </Text>
-        <Text
-          numberOfLines={2}
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-          testID="info_view.name.sub_title"
-        >
-          Name
-        </Text>
-      </View>
+        Name
+      </Text>
     </View>
   </View>
-  <View>
-    <View
-      accessibilityState={
+  <View
+    style={
+      Array [
         Object {
-          "disabled": true,
-        }
+          "alignSelf": "stretch",
+          "backgroundColor": "#EAEDF2",
+          "height": 16,
+          "marginHorizontal": 0,
+          "width": undefined,
+        },
+        Object {},
+      ]
+    }
+    testID="divider"
+  />
+  <View
+    style={
+      Object {
+        "backgroundColor": "#FFFFFF",
       }
-      accessible={true}
-      collapsable={false}
-      focusable={false}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    }
+    testID="info_card"
+  >
+    <View
       style={
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "opacity": 1,
-          "paddingHorizontal": 12,
-          "paddingVertical": 12,
+          "justifyContent": "space-between",
+          "margin": 16,
         }
       }
-      testID="info_view.description"
     >
-      <View
+      <Text
         style={
-          Object {
-            "flex": 1,
-          }
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 17,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+        testID="info_card.title"
+      >
+        Description
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "paddingBottom": 16,
+          "paddingHorizontal": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#282E53",
+            },
+            undefined,
+          ]
         }
       >
-        <Text
-          numberOfLines={2}
-          style={
-            Array [
-              Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-        >
-          Community Description
-        </Text>
-        <Text
-          numberOfLines={2}
-          style={
-            Array [
-              Object {
-                "color": "#212745",
-                "fontFamily": "BeVietnamPro-Light",
-                "fontSize": 15,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-          testID="info_view.description.sub_title"
-        >
-          Description
-        </Text>
-      </View>
+        Description
+      </Text>
     </View>
   </View>
-  <View>
-    <View
-      accessibilityState={
+  <View
+    style={
+      Array [
         Object {
-          "disabled": true,
-        }
+          "alignSelf": "stretch",
+          "backgroundColor": "#EAEDF2",
+          "height": 16,
+          "marginHorizontal": 0,
+          "width": undefined,
+        },
+        Object {},
+      ]
+    }
+    testID="divider"
+  />
+  <View
+    style={
+      Object {
+        "backgroundColor": "#FFFFFF",
       }
-      accessible={true}
-      collapsable={false}
-      focusable={false}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    }
+    testID="info_card"
+  >
+    <View
       style={
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "opacity": 1,
-          "paddingHorizontal": 12,
-          "paddingVertical": 12,
+          "justifyContent": "space-between",
+          "margin": 16,
         }
       }
-      testID="info_view.privacy"
     >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#181C32",
+              "fontFamily": "BeVietnamPro-SemiBold",
+              "fontSize": 17,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+        testID="info_card.title"
+      >
+        Privacy
+      </Text>
+    </View>
+    <View>
       <View
         style={
           Object {
-            "flex": 1,
+            "alignItems": "center",
+            "flexDirection": "row",
+            "marginHorizontal": 16,
           }
         }
       >
-        <Text
-          numberOfLines={2}
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "color": "#181C32",
-                "fontFamily": "BeVietnamPro-SemiBold",
-                "fontSize": 13,
-              },
-              Object {},
-              undefined,
-            ]
+            Object {
+              "opacity": 1,
+            }
           }
         >
-          Privacy
-        </Text>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
+          </View>
+        </View>
         <Text
-          numberOfLines={2}
           style={
             Array [
               Object {
@@ -210,12 +272,179 @@ exports[`GroupInfoView component renders correctly 1`] = `
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
-              Object {},
-              undefined,
+              Object {
+                "color": "#282E53",
+              },
+              Object {
+                "marginHorizontal": 8,
+              },
             ]
           }
         >
-          Privacy
+          Private
+        </Text>
+      </View>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#282E53",
+            },
+            Object {
+              "marginBottom": 16,
+              "marginHorizontal": 16,
+              "marginTop": 12,
+            },
+          ]
+        }
+      >
+        All registered users can discover and search in-app to find this community. The content & activities inside are not visible to all users.
+      </Text>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#F2F5F8",
+            "flexDirection": "row",
+            "marginBottom": 16,
+            "paddingHorizontal": 16,
+            "paddingVertical": 12,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="button_wrapper"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 2,
+                    "left": 2,
+                    "position": "absolute",
+                    "right": 2,
+                    "top": 2,
+                  },
+                  Object {
+                    "backgroundColor": "#EAEDF2",
+                  },
+                ]
+              }
+            />
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              Object {
+                "flex": 1,
+                "marginHorizontal": 8,
+              },
+            ]
+          }
+        >
+          According to the privacy, the join request setting is also turned on to make sure your community is completely private (Recommend)
         </Text>
       </View>
     </View>

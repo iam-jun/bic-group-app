@@ -1,17 +1,13 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
-import modalActions from '~/storeRedux/modal/actions';
 import { IPost } from '~/interfaces/IPost';
 import { spacing } from '~/theme';
 import { formatNumberWithZeroPrefix } from '~/utils/formatData';
 import { Button } from '~/baseComponents';
-import { getSeriesDetailArticleItemMenu } from '../../helper';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useRootNavigation } from '~/hooks/navigation';
-import { BottomListProps } from '~/components/BottomList';
+import useSeriesDetailArticleItemMenu from './useSeriesDetailArticleItemMenu';
 
 type TitleArticleProps = {
     index: number;
@@ -25,20 +21,9 @@ const TitleArticle: FC<TitleArticleProps> = ({ index, article, seriesId }) => {
   const { colors } = theme;
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
-  const { rootNavigation } = useRootNavigation();
   const isCreator = actor?.id == userId;
-  const dispatch = useDispatch();
 
-  const onPressMenu = () => {
-    const data = getSeriesDetailArticleItemMenu({
-      isActor: isCreator,
-      articleId: id,
-      navigation: rootNavigation,
-      seriesId,
-    });
-
-    dispatch(modalActions.showBottomList({ isOpen: true, data } as BottomListProps));
-  };
+  const { showMenu } = useSeriesDetailArticleItemMenu(seriesId, id);
 
   return (
     <View style={styles.container}>
@@ -49,12 +34,15 @@ const TitleArticle: FC<TitleArticleProps> = ({ index, article, seriesId }) => {
           <Text.H3 numberOfLines={1} color={colors.neutral80}>{title}</Text.H3>
         </View>
       </View>
+      {isCreator
+      && (
       <Button.Raise
         icon="menu"
         size="small"
         testID="content_header.menu"
-        onPress={onPressMenu}
+        onPress={showMenu}
       />
+      )}
     </View>
   );
 };

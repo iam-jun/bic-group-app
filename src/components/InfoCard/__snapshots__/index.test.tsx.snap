@@ -2,7 +2,12 @@
 
 exports[`InfoSection component renders correctly 1`] = `
 <View
-  testID="info_section"
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+    }
+  }
+  testID="info_card"
 >
   <View
     style={
@@ -10,7 +15,7 @@ exports[`InfoSection component renders correctly 1`] = `
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "space-between",
-        "marginBottom": 16,
+        "margin": 16,
       }
     }
   >
@@ -26,8 +31,9 @@ exports[`InfoSection component renders correctly 1`] = `
           undefined,
         ]
       }
-      testID="info_section.title"
+      testID="info_card.title"
     />
   </View>
+  <View />
 </View>
 `;

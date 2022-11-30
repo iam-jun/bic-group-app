@@ -331,6 +331,7 @@ exports[`CreateSeries component renders correctly if this is first step in creat
           style={
             Object {
               "backgroundColor": "#FFFFFF",
+              "flex": 1,
             }
           }
         >
@@ -482,8 +483,22 @@ exports[`CreateSeries component renders correctly if this is first step in creat
             </RCTScrollView>
           </View>
           <RCTScrollView
-            ListEmptyComponent={[Function]}
-            ListFooterComponent={[Function]}
+            ItemSeparatorComponent={[Function]}
+            ListEmptyComponent={null}
+            ListFooterComponent={
+              <View
+                style={
+                  Object {
+                    "marginBottom": 16,
+                  }
+                }
+              >
+                <LoadingIndicator
+                  color="#E3E6F2"
+                  size="large"
+                />
+              </View>
+            }
             data={Array []}
             getItem={[Function]}
             getItemCount={[Function]}
@@ -520,6 +535,7 @@ exports[`CreateSeries component renders correctly if this is first step in creat
                   <ActivityIndicator
                     color="#E3E6F2"
                     size="large"
+                    testID="loading_indicator"
                   />
                 </View>
               </View>

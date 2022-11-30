@@ -223,6 +223,7 @@ exports[`SeriesDetailHeader component render with description view 1`] = `
             }
             testID="content_interested_user_count.show_text"
           >
+            Interested by 
             <Text
               style={
                 Array [
@@ -266,7 +267,7 @@ exports[`SeriesDetailHeader component render with description view 1`] = `
           ]
         }
       >
-        undefined:
+        Audiences:
       </Text>
       <View
         style={
@@ -660,6 +661,7 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
             }
             testID="content_interested_user_count.show_text"
           >
+            Interested by 
             <Text
               style={
                 Array [
@@ -703,7 +705,7 @@ exports[`SeriesDetailHeader component render without description view 1`] = `
           ]
         }
       >
-        undefined:
+        Audiences:
       </Text>
       <View
         style={

@@ -23,80 +23,15 @@ exports[`SelectingSeries component render correctly 1`] = `
   >
     Your article will be added to
   </Text>
-  <View
-    style={
-      Object {
-        "alignItems": "flex-start",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-      }
-    }
+  <RCTScrollView
+    horizontal={true}
+    showsHorizontalScrollIndicator={false}
   >
-    <View
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F1F2F8",
-          "borderRadius": 100,
-          "flexDirection": "row",
-          "height": 32,
-          "justifyContent": "center",
-          "marginRight": 8,
-          "marginTop": 6,
-          "opacity": 1,
-          "paddingHorizontal": 4,
-          "paddingLeft": 4,
-          "paddingRight": 4,
-        }
-      }
-      testID="tag.item"
-    >
-      <Text
-        numberOfLines={1}
-        style={
-          Array [
-            Object {
-              "color": "#212745",
-              "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
-            },
-            Object {},
-            Object {
-              "color": "#282E53",
-            },
-          ]
-        }
-        testID="tag.label"
-      >
-        title string
-      </Text>
+    <View>
       <View
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 10,
-            "left": 10,
-            "right": 10,
-            "top": 10,
-          }
-        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -106,43 +41,106 @@ exports[`SelectingSeries component render correctly 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           Object {
+            "alignItems": "center",
+            "backgroundColor": "#F1F2F8",
+            "borderRadius": 100,
+            "flexDirection": "row",
+            "height": 32,
+            "justifyContent": "center",
+            "marginRight": 8,
+            "marginTop": 6,
             "opacity": 1,
+            "paddingHorizontal": 4,
+            "paddingLeft": 4,
+            "paddingRight": 4,
           }
         }
+        testID="tag.item"
       >
-        <View
+        <Text
+          numberOfLines={1}
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "flexDirection": "row",
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
+              Object {},
               Object {
-                "marginStart": 4,
-              },
-              Object {
-                "backgroundColor": undefined,
+                "color": "#282E53",
+                "flexShrink": 1,
               },
             ]
+          }
+          testID="tag.label"
+        >
+          title string
+        </Text>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
           }
         >
           <View
             style={
               Array [
-                undefined,
-                undefined,
-                undefined,
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                Object {
+                  "marginStart": 4,
+                },
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
           >
             <View
-              testID="tag.icon"
-            />
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View
+                testID="tag.icon"
+              />
+            </View>
           </View>
         </View>
       </View>
     </View>
-  </View>
+  </RCTScrollView>
 </View>
 `;
 
@@ -169,14 +167,11 @@ exports[`SelectingSeries component render correctly when data is empty 1`] = `
   >
     Your article will be added to
   </Text>
-  <View
-    style={
-      Object {
-        "alignItems": "flex-start",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-      }
-    }
-  />
+  <RCTScrollView
+    horizontal={true}
+    showsHorizontalScrollIndicator={false}
+  >
+    <View />
+  </RCTScrollView>
 </View>
 `;

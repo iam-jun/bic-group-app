@@ -191,7 +191,7 @@ exports[`SeriesContent component render correctly 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 15,
+              "fontSize": 13,
             },
             Object {
               "color": "#353E6E",
@@ -211,7 +211,7 @@ exports[`SeriesContent component render correctly 1`] = `
             Object {
               "color": "#212745",
               "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 15,
+              "fontSize": 13,
             },
             Object {
               "color": "#181C32",
