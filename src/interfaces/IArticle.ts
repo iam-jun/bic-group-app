@@ -105,10 +105,10 @@ export interface ICategory {
   updatedAt?: string,
 }
 
-export interface EditArticleProps {
+export interface CreateArticleProps {
   route?: {
     params?: {
-      articleId: string;
+      articleId?: string;
       isDraft?: boolean;
     };
   };

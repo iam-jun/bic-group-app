@@ -16,6 +16,7 @@ import { useBaseHook } from '~/hooks';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import streamApi from '~/api/StreamApi';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 
 export interface FloatingCreatePostProps {
   audience?: any;
@@ -47,6 +48,14 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
     );
   };
 
+  const onCreateArticle = () => {
+    dispatch(modalActions.hideBottomList());
+    rootNavigation.navigate(
+      articleStack.createArticle,
+      { isFirstStep: true },
+    );
+  };
+
   const onCreateSeries = () => {
     dispatch(modalActions.hideBottomList());
     rootNavigation.navigate(
@@ -71,12 +80,18 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
       onPress: onCreate,
     }, {
       id: 2,
+      testID: 'create_option.write_article',
+      title: t('home:create_content_options:write_article'),
+      onPress: onCreateArticle,
+    },
+    {
+      id: 3,
       testID: 'create_option.write_series',
       title: t('home:create_content_options:write_series'),
       onPress: onCreateSeries,
     },
     {
-      id: 3,
+      id: 4,
       testID: 'create_option.my_draft',
       title: t('home:create_content_options:my_draft'),
       badge: totalPost >= 100 ? '99+' : totalPost > 0 ? totalPost : '',

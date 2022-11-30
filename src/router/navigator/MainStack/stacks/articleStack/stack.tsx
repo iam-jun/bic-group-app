@@ -1,13 +1,13 @@
 const articleStack = {
-  editArticle: 'edit-article',
-  editArticleContent: 'edit-article-content',
-  editArticleTitle: 'edit-article-title',
-  editArticleSummary: 'edit-article-summary',
-  editArticleCategory: 'edit-article-category',
-  editArticleCover: 'edit-article-cover',
-  editArticleAudience: 'edit-article-audience',
   articleDetail: 'article-detail',
-  editArticleSeries: 'edit-article-series',
+  createArticle: 'create-article',
+  createArticleContent: 'create-article-content',
+  createArticleTitle: 'create-article-title',
+  createArticleSummary: 'create-article-summary',
+  createArticleCategory: 'create-article-category',
+  createArticleCover: 'create-article-cover',
+  createArticleAudience: 'create-article-audience',
+  createArticleSeries: 'create-article-series',
 };
 
 export default articleStack;

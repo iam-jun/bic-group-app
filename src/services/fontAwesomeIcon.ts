@@ -41,6 +41,7 @@ import { faCalendar } from '@fortawesome/pro-regular-svg-icons/faCalendar';
 import { faUserXmark } from '@fortawesome/pro-regular-svg-icons/faUserXmark';
 import { faSquareUser } from '@fortawesome/pro-regular-svg-icons/faSquareUser';
 import { faUserCheck } from '@fortawesome/pro-regular-svg-icons/faUserCheck';
+import { faText } from '@fortawesome/pro-regular-svg-icons/faText';
 import { faTextSize } from '@fortawesome/pro-regular-svg-icons/faTextSize';
 import { faSlidersUp } from '@fortawesome/pro-regular-svg-icons/faSlidersUp';
 import { faEnvelope } from '@fortawesome/pro-regular-svg-icons/faEnvelope';
@@ -181,6 +182,20 @@ import { faChartTreeMap } from '@fortawesome/pro-regular-svg-icons/faChartTreeMa
 import { faFlag } from '@fortawesome/pro-regular-svg-icons/faFlag';
 import { faFileInvoice as faFileInvoiceSolid } from '@fortawesome/pro-solid-svg-icons/faFileInvoice';
 import { faBookmarkSlash } from '@fortawesome/pro-regular-svg-icons/faBookmarkSlash';
+import { faBold } from '@fortawesome/pro-regular-svg-icons/faBold';
+import { faItalic } from '@fortawesome/pro-regular-svg-icons/faItalic';
+import { faUnderline } from '@fortawesome/pro-regular-svg-icons/faUnderline';
+import { faStrikethrough } from '@fortawesome/pro-regular-svg-icons/faStrikethrough';
+import { faH1 } from '@fortawesome/pro-regular-svg-icons/faH1';
+import { faH2 } from '@fortawesome/pro-regular-svg-icons/faH2';
+import { faH3 } from '@fortawesome/pro-regular-svg-icons/faH3';
+import { faListOl } from '@fortawesome/pro-regular-svg-icons/faListOl';
+import { faQuoteLeft } from '@fortawesome/pro-regular-svg-icons/faQuoteLeft';
+import { faAlignLeft } from '@fortawesome/pro-regular-svg-icons/faAlignLeft';
+import { faAlignRight } from '@fortawesome/pro-regular-svg-icons/faAlignRight';
+import { faAlignCenter } from '@fortawesome/pro-regular-svg-icons/faAlignCenter';
+import { faAlignJustify } from '@fortawesome/pro-regular-svg-icons/faAlignJustify';
+import { faAnglesLeft } from '@fortawesome/pro-regular-svg-icons/faAnglesLeft';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -243,6 +258,7 @@ export const initFontAwesomeIcon = () => {
     faUserXmark,
     faSquareUser,
     faUserCheck,
+    faText,
     faTextSize,
     faSlidersUp,
     faEnvelope,
@@ -382,6 +398,20 @@ export const initFontAwesomeIcon = () => {
     faFlag,
     faFileInvoiceSolid,
     faBookmarkSlash,
+    faBold,
+    faItalic,
+    faUnderline,
+    faStrikethrough,
+    faH1,
+    faH2,
+    faH3,
+    faListOl,
+    faQuoteLeft,
+    faAlignLeft,
+    faAlignRight,
+    faAlignCenter,
+    faAlignJustify,
+    faAnglesLeft,
   );
 };
 
@@ -428,6 +458,7 @@ export const fontAwesomeIcons = {
   UserXmark: 'fa-regular fa-user-xmark',
   SquareUser: 'fa-regular fa-square-user',
   UserCheck: 'fa-regular fa-user-check',
+  Text: 'fa-regular fa-text',
   TextSize: 'fa-regular fa-text-size',
   SlidersUp: 'fa-regular fa-sliders-up',
   Envelope: 'fa-regular fa-envelope',
@@ -568,6 +599,20 @@ export const fontAwesomeIcons = {
   ChartTreeMap: 'fa-regular fa-chart-tree-map',
   Flag: 'fa-regular fa-flag',
   FileInvoiceSolid: 'fa-solid fa-file-invoice',
+  Bold: 'fa-regular fa-bold',
+  Italic: 'fa-regular fa-italic',
+  Underline: 'fa-regular fa-underline',
+  Strikethrough: 'fa-regular fa-strikethrough',
+  H1: 'fa-regular fa-h1',
+  H2: 'fa-regular fa-h2',
+  H3: 'fa-regular fa-h3',
+  ListOl: 'fa-regular fa-list-ol',
+  QuoteLeft: 'fa-regular fa-quote-left',
+  AlignLeft: 'fa-regular fa-align-left',
+  AlignRight: 'fa-regular fa-align-right',
+  AlignCenter: 'fa-regular fa-align-center',
+  AlignJustify: 'fa-regular fa-align-justify',
+  AnglesLeft: 'fa-regular fa-angles-left',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

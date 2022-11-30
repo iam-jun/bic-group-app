@@ -30,7 +30,7 @@ export interface TextAreaProps extends RNTextInputProps {
 
 const TextArea : React.FC<TextAreaProps> = ({
   maxLength = 255,
-  value,
+  value = '',
   label,
   style,
   inputStyle,
@@ -46,7 +46,7 @@ const TextArea : React.FC<TextAreaProps> = ({
   const styles = themeStyles(
     theme,
   );
-  const [text, setText] = useState<string>(value || '');
+  const [text, setText] = useState<string>(value);
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   useEffect(

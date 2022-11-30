@@ -31,6 +31,7 @@ import spacing from '~/theme/spacing';
 import Button, { ButtonProps } from '~/baseComponents/Button';
 
 export interface HeaderProps {
+  useI18n?: boolean;
   headerRef?: any;
   children?: React.ReactNode;
   title?: string;
@@ -70,6 +71,7 @@ export interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
+  useI18n,
   headerRef,
   children,
   title,
@@ -113,7 +115,7 @@ const Header: React.FC<HeaderProps> = ({
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle(theme, disableInsetTop);
   const insets = useSafeAreaInsets();
 
   const scrollY = useSharedValue(0);
@@ -223,30 +225,14 @@ const Header: React.FC<HeaderProps> = ({
   const renderContent = () => (
     <Animated.View
       style={[
-        {
-          minHeight: 44,
-          paddingTop: disableInsetTop ? undefined : insets.top,
-          // overflow: 'hidden',
-          alignItems: 'flex-end',
-          flexDirection: 'row',
-          backgroundColor: colors.white,
-          paddingVertical: spacing.padding.tiny,
-        },
-        removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
+        styles.container,
+        removeBorderAndShadow && styles.bottomBorderAndShadow,
         style,
       ]}
       testID="header.content"
     >
       <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          backgroundColor: colors.white,
-          overflow: 'hidden',
-          alignItems: 'center',
-          paddingRight: spacing.padding.small,
-          paddingLeft: spacing.padding.small,
-        }}
+        style={styles.leftContainer}
       >
         {!hideBack && (
           <Icon
@@ -280,6 +266,7 @@ const Header: React.FC<HeaderProps> = ({
               <Text.H5
                 style={styles.title}
                 numberOfLines={1}
+                useI18n={useI18n}
                 {...titleTextProps}
                 testID="header.text"
               >
@@ -295,6 +282,7 @@ const Header: React.FC<HeaderProps> = ({
               <Text.BodyS
                 style={styles.subtitle}
                 numberOfLines={1}
+                useI18n={useI18n}
                 {...subTitleTextProps}
                 testID="header.subTitle"
               >
@@ -343,9 +331,8 @@ const Header: React.FC<HeaderProps> = ({
         {(!!buttonText || !!buttonProps) && onPressButton && (
           <Button.Primary
             testID="header.button"
-            style={{
-              marginRight: spacing.margin.tiny,
-            }}
+            style={styles.button}
+            useI18n={useI18n}
             onPress={_onPressButton}
             {...buttonProps}
           >
@@ -395,13 +382,34 @@ const Header: React.FC<HeaderProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { elevations } = theme;
+const createStyle = (theme: ExtendedTheme, disableInsetTop: boolean) => {
+  const { colors, elevations } = theme;
   const insets = useSafeAreaInsets();
   return StyleSheet.create({
+    container: {
+      minHeight: 44,
+      paddingTop: disableInsetTop ? undefined : insets.top,
+      // overflow: 'hidden',
+      alignItems: 'flex-end',
+      flexDirection: 'row',
+      backgroundColor: colors.white,
+      paddingVertical: spacing.padding.tiny,
+    },
+    leftContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: colors.white,
+      overflow: 'hidden',
+      alignItems: 'center',
+      paddingRight: spacing.padding.small,
+      paddingLeft: spacing.padding.small,
+    },
     header: { zIndex: 2 },
     bottomBorderAndShadow: {
       ...elevations.e2,
+    },
+    button: {
+      marginRight: spacing.margin.tiny,
     },
     iconBack: {
       height: 44,

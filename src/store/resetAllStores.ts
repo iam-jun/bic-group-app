@@ -16,8 +16,7 @@ import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
-import useEditArticleCategoryStore from '~/screens/articles/EditArticle/EditCategory/store';
-import useEditArticleStore from '~/screens/articles/EditArticle/store';
+import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '../screens/articles/ArticleDetail/store';
 import useArticleListStore from '~/screens/articles/ArticleList/store';
 import useUserInterestedPostStore from '~/components/posts/UserInterestedPost/store';
@@ -33,7 +32,8 @@ import useGiphyStore from './giphy';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import useArticleController from '~/screens/articles/store';
 import useSeriesStore from '~/screens/series/store';
-import useEditArticleSeriesStore from '~/screens/articles/EditArticle/EditSeries/store';
+import useCreateArticleCategoryStore from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
+import useCreateArticleSeriesStore from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 
 const stores = [
   // entities
@@ -62,8 +62,9 @@ const stores = [
   useDiscoverGroupsStore,
   useRemoveCommunityMemberStore,
   useRemoveGroupMemberStore,
-  useEditArticleStore,
-  useEditArticleCategoryStore,
+  useCreateArticleStore,
+  useCreateArticleCategoryStore,
+  useCreateArticleSeriesStore,
   useArticlesStore,
   useArticleListStore,
   useUserInterestedPostStore,
@@ -76,7 +77,6 @@ const stores = [
   useSearchJoinedCommunitiesStore,
   useGiphyStore,
   useSeriesStore,
-  useEditArticleSeriesStore,
   useCodePushStore,
 ];
 

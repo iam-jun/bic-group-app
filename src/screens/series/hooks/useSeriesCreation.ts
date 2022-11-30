@@ -12,7 +12,7 @@ import useSeriesStore, { ISeriesState } from '../store';
 import useSelectAudienceStore, { ISelectAudienceState } from '~/components/SelectAudience/store';
 import { IArticleCover, IAudience } from '~/interfaces/IPost';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
+import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArticle/helper';
 import { IEditArticleAudience } from '~/interfaces/IArticle';
 import { useRootNavigation } from '~/hooks/navigation';
 

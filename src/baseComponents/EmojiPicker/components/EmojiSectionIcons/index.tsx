@@ -2,16 +2,15 @@ import React, { useEffect } from 'react';
 import { useTheme, ExtendedTheme } from '@react-navigation/native';
 import { Platform, StyleSheet, View } from 'react-native';
 import Animated, {
-  FadeInUp, FadeOutDown, useAnimatedStyle, useSharedValue, withTiming,
+  FadeInUp, FadeOutDown,
 } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useKeyboard } from '@react-native-community/hooks';
 import { Portal } from 'react-native-portalize';
 import useEmojiPickerStore from '../../store';
 import IEmojiPickerState from '../../store/Interface';
 import Icon from '~/baseComponents/Icon';
 import { padding } from '~/theme/spacing';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import InsetBottomView from '~/baseComponents/InsetBottomView';
 
 interface Props {
   visible: boolean;
@@ -22,10 +21,6 @@ const CONTAINER_HEIGHT = 35;
 
 const EmojiSectionIcons = ({ visible, onPress }: Props) => {
   const theme: ExtendedTheme = useTheme();
-  const insets = useSafeAreaInsets();
-  const { keyboardShown } = useKeyboard();
-  const defaultPaddingBottom = insets.bottom;
-  const showValue = useSharedValue(defaultPaddingBottom);
 
   const styles = themeStyles(theme);
   const emojis = useEmojiPickerStore((state: IEmojiPickerState) => state.data);
@@ -36,27 +31,6 @@ const EmojiSectionIcons = ({ visible, onPress }: Props) => {
   useEffect(() => {
     if (!visible) actions.resetData();
   }, [visible]);
-
-  useEffect(() => {
-    if (keyboardShown) hide();
-    else show();
-  }, [keyboardShown]);
-
-  const bottomViewStyle = useAnimatedStyle(() => ({
-    height: showValue.value,
-  }));
-
-  const show = () => {
-    showValue.value = withTiming(
-      defaultPaddingBottom, undefined,
-    );
-  };
-
-  const hide = () => {
-    showValue.value = withTiming(
-      0, undefined,
-    );
-  };
 
   if (!visible || filteredData.length > 0) return null;
 
@@ -85,7 +59,7 @@ const EmojiSectionIcons = ({ visible, onPress }: Props) => {
             })}
           </View>
         </Animated.View>
-        <Animated.View style={bottomViewStyle} />
+        <InsetBottomView />
         {Platform.OS === 'ios' && <KeyboardSpacer />}
       </View>
     </Portal>

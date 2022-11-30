@@ -13,9 +13,9 @@ export const customBackHandlerRoutes = [
   'MainStack',
   'group-scheme-assignment',
   'create-permission-scheme',
-  articleStack.editArticleSummary,
-  articleStack.editArticleCategory,
-  articleStack.editArticleTitle,
+  articleStack.createArticleSummary,
+  articleStack.createArticleCategory,
+  articleStack.createArticleTitle,
 ];
 
 export const EVENT_NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';

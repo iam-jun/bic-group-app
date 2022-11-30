@@ -489,6 +489,7 @@
     },
     "create_content_options": {
       "write_post": "Write Post",
+      "write_article": "Write Article",
       "write_series": "Write Series",
       "my_draft": "My Draft"
     }
@@ -508,8 +509,11 @@
     "title_logout": "Log Out"
   },
   "article": {
-    "title_article_detail": "Article Detail",
-    "title_edit_article": "Edit Article",
+    "title": {
+      "detail": "Article Detail",
+      "edit": "Edit Article",
+      "create": "Create Article"
+    },
     "title_edit_title": "Edit Title",
     "title_edit_description": "Edit Description",
     "title_edit_cover": "Edit Cover",
@@ -542,7 +546,16 @@
     "remove_audiences_contains_series_content": "The following series were removed from this article: ${series}. Process anyway?",
     "remove_series_title": "Remove Series",
     "remove_series_content": "You don't have create article permission at series: ${series}. Do you want to remove series?",
-    "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?"
+    "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?",
+    "modal_add_link": {
+      "title": "Create a link",
+      "text_placeholder": "Text to display",
+      "link_placeholder": "Link to a web page"
+    },
+    "modal_add_video": {
+      "title": "Embed Video",
+      "link_placeholder": "Enter the URL of the embed:"
+    }
   },
   "post": {
     "news_feed": "News Feed",

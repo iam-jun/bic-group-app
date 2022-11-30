@@ -101,6 +101,7 @@ const CommonModal = () => {
       isOpen={isOpen}
       onClose={_onClose}
       ContentComponent={ContentComponent}
+      scrollViewProps={{ keyboardShouldPersistTaps: 'handled' }}
       {...props}
     />
   );

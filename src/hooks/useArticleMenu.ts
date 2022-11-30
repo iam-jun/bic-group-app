@@ -32,7 +32,7 @@ const useArticleMenu = (
 
   const onPressEdit = () => {
     dispatch(modalActions.hideBottomList());
-    rootNavigation.navigate(articleStack.editArticle, { articleId });
+    rootNavigation.navigate(articleStack.createArticle, { articleId });
   };
 
   const onPressSave = () => {

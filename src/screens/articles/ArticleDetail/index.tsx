@@ -180,7 +180,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     return (
       <View style={styles.loadingContainer}>
         <Header
-          title="article:title_article_detail"
+          title="article:title:detail"
           titleTextProps={{ useI18n: true }}
         />
         <ArticlePlaceholder disableRandom />

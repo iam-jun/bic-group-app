@@ -447,7 +447,8 @@
       "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
     },
     "create_content_options": {
-      "write_post": "Đăng Bài",
+      "write_post": "Viết Bài Đăng",
+      "write_article": "Viết Bài Viết",
       "write_series": "Đăng Series",
       "my_draft": "Bài Nháp"
     }
@@ -467,8 +468,11 @@
     "title_logout": "Đăng xuất"
   },
   "article": {
-    "title_article_detail": "Chi tiết bài viết",
-    "title_edit_article": "Sửa Bài Viết",
+    "title": {
+      "detail": "Chi Tiết Bài Viết",
+      "edit": "Sửa Bài Viết",
+      "create": "Tạo Bài Viết"
+    },
     "title_edit_title": "Sửa Tiêu Đề",
     "title_edit_description": "Sửa Mô Tả",
     "title_edit_cover": "Sửa Ảnh Bìa",
@@ -501,7 +505,16 @@
     "remove_audiences_contains_series_content": "Các series sau sẽ bị xóa khỏi bài viết này: ${series}. Vẫn tiếp tục?",
     "remove_series_title": "Xoá Series",
     "remove_series_content": "Bạn không có quyền tạo bài viết tại series: ${series}. Vẫn tiếp tục?",
-    "content_delete_audiences": "Bạn chỉ có thể xóa đối tượng khỏi bài viết của mình ngoại trừ những đối tượng bên dưới. Bạn chắc chắn chứ?"
+    "content_delete_audiences": "Bạn chỉ có thể xóa đối tượng khỏi bài viết của mình ngoại trừ những đối tượng bên dưới. Bạn chắc chắn chứ?",
+    "modal_add_link": {
+      "title": "Tạo liên kết",
+      "text_placeholder": "Tiêu đề hiển thị",
+      "link_placeholder": "Liên kết đến một trang web"
+    },
+    "modal_add_video": {
+      "title": "Nhúng video",
+      "link_placeholder": "Nhập URL của video:"
+    }
   },
   "post": {
     "news_feed": "News Feed",

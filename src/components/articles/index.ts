@@ -5,3 +5,4 @@ export { default as ArticlePlaceholder, ArticlePlaceholderProps } from './Articl
 export { default as ArticleReactions, ArticleReactionsProps } from './ArticleReactions';
 export { ArticleTitle, ArticleSummary, ArticleTextProps } from './ArticleText';
 export { default as ArticleView, ArticleViewProps } from './ArticleView';
+export { default as ArticArticleFormatToolBarleView, ArticleFormatToolBarProps } from './ArticleFormatToolBar';
