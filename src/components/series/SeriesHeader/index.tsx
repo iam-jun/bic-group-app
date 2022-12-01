@@ -32,7 +32,7 @@ const SeriesHeader: FC<SeriesHeaderProps> = ({ series, disabled }) => {
     = useMyPermissions();
   const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
     audience?.groups,
-    PERMISSION_KEY.GROUP.DELETE_OWN_POST,
+    PERMISSION_KEY.CRUD_POST_ARTICLE,
   );
 
   const goToSeriesDetail = () => {

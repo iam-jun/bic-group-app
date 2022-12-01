@@ -102,8 +102,8 @@ const GroupDetail = (props: any) => {
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(groupId, [
-    PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-    PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+    PERMISSION_KEY.EDIT_INFO,
+    PERMISSION_KEY.EDIT_PRIVACY,
   ]);
   const showPrivate
     = !isMember

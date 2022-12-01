@@ -32,8 +32,8 @@ const GroupAdministration = (props: any) => {
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
     groupId,
     [
-      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+      PERMISSION_KEY.EDIT_INFO,
+      PERMISSION_KEY.EDIT_PRIVACY,
     ],
   );
 

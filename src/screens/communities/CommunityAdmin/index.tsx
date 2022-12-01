@@ -31,17 +31,9 @@ const CommunityAdmin = (props: any) => {
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
     groupId,
     [
-      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+      PERMISSION_KEY.EDIT_INFO,
+      PERMISSION_KEY.EDIT_PRIVACY,
     ],
-  );
-  const canManageGroupStructure = hasPermissionsOnScopeWithId(
-    groupId,
-    PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
-  );
-  const canManageScheme = hasPermissionsOnScopeWithId(
-    groupId,
-    PERMISSION_KEY.GROUP.CRUD_GROUP_OVERRIDE_SCHEME,
   );
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
@@ -53,14 +45,6 @@ const CommunityAdmin = (props: any) => {
         type: 'community',
       },
     );
-  };
-
-  const onPressPermission = () => {
-    rootNavigation.navigate(groupStack.permissionScheme, { communityId });
-  };
-
-  const onPressGroupStructure = () => {
-    rootNavigation.navigate(groupStack.groupStructureSettings, { communityId });
   };
 
   const renderModerating = () => (
@@ -107,26 +91,6 @@ const CommunityAdmin = (props: any) => {
           iconProps={{ icon: 'Gear', tintColor: theme.colors.purple50 }}
           rightSubIcon="AngleRightSolid"
           onPress={onPressGeneralInfo}
-        />
-      )}
-      {!!canManageGroupStructure && (
-        <MenuItem
-          testID="community_admin.group_structure_settings"
-          title="settings:title_group_structure"
-          icon="CodeBranch"
-          iconProps={{ icon: 'CodeBranch', tintColor: theme.colors.purple50 }}
-          rightSubIcon="AngleRightSolid"
-          onPress={onPressGroupStructure}
-        />
-      )}
-      {!!canManageScheme && (
-        <MenuItem
-          testID="community_admin.permission_settings"
-          title="settings:title_permission_settings"
-          icon="FileLock"
-          iconProps={{ icon: 'FileLock', tintColor: theme.colors.purple50 }}
-          rightSubIcon="AngleRightSolid"
-          onPress={onPressPermission}
         />
       )}
       <MenuItem
