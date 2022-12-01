@@ -22,6 +22,7 @@ import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import InsetBottomView from '~/baseComponents/InsetBottomView';
+import { EMPTY_ARTICLE_CONTENT } from '~/constants/article';
 
 export enum EventType {
     ON_EDITOR_CHANGE = 'onEditorChange',
@@ -34,8 +35,6 @@ export interface CreateArticleContentProps {
     params?: {articleId: string};
   };
 }
-
-const EMPTY_CONTENT = [{ type: 'p', children: [{ text: '' }] }];
 
 const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateArticleContentProps) => {
   const articleId = route?.params?.articleId;
@@ -58,7 +57,7 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
   const initScript = {
     type: 'initEdit',
     payload: {
-      contentState: parseSafe(content) || EMPTY_CONTENT,
+      contentState: parseSafe(content) || EMPTY_ARTICLE_CONTENT,
     },
   };
 

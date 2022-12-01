@@ -78,14 +78,15 @@ const SelectAudience = () => {
 
   const shouldBeChecked = useCallback((child) => !!selectedAudiences?.[child.id], [selectedAudiences]);
 
+  const shouldCheckboxDisabled = useCallback((item) => !searchKey && !item.isPostable, [searchKey]);
+
   const renderItem = ({ item }) => {
-    const checkboxDisabled = !searchKey && !item.isPostable;
     const ItemComponent = !!searchKey ? GroupItem : GroupTreeItem;
 
     return (
       <ItemComponent
         item={item}
-        checkboxDisabled={checkboxDisabled}
+        shouldCheckboxDisabled={shouldCheckboxDisabled}
         shouldBeChecked={shouldBeChecked}
         onCheckboxPress={onCheckboxPress}
       />
