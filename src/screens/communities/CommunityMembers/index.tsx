@@ -53,15 +53,15 @@ const CommunityMembers = ({ route }: any) => {
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
     groupId,
-    PERMISSION_KEY.GROUP.APPROVE_REJECT_GROUP_JOINING_REQUESTS,
+    PERMISSION_KEY.APPROVE_REJECT_JOINING_REQUESTS,
   );
   const canEditJoinSetting = hasPermissionsOnScopeWithId(
     groupId,
-    PERMISSION_KEY.GROUP.EDIT_GROUP_JOIN_SETTING,
+    PERMISSION_KEY.EDIT_JOIN_SETTING,
   );
   const canAddMember = hasPermissionsOnScopeWithId(
     groupId,
-    PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
+    PERMISSION_KEY.ADD_MEMBER,
   );
 
   useEffect(() => {

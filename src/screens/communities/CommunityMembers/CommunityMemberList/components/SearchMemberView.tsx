@@ -36,8 +36,8 @@ const SearchMemberView = ({
   const canManageMember = hasPermissionsOnScopeWithId(
     groupId,
     [
-      PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
-      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
+      PERMISSION_KEY.REMOVE_MEMBER,
+      PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
     ],
   );
   const communitySearchMembers = useKeySelector(

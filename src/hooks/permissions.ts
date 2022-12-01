@@ -43,12 +43,12 @@ export const useMyPermissions = () => {
     requiredPermissions: string | string[],
     currentPermissions: string[],
   ) => {
-    let arr = requiredPermissions;
+    let requiredPermissionsArray = requiredPermissions;
     if (typeof requiredPermissions === 'string') {
-      arr = [requiredPermissions];
+      requiredPermissionsArray = [requiredPermissions];
     }
 
-    return [PERMISSION_KEY.FULL_PERMISSION, ...arr].some((per: string) => (currentPermissions || []).includes(per));
+    return [...requiredPermissionsArray].some((per: string) => (currentPermissions || []).includes(per));
   };
 
   const hasPermissionsOnScopeWithId = (

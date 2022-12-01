@@ -9,7 +9,6 @@ import { debounce } from 'lodash';
 
 import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBaseView';
 import appConfig from '~/configs/appConfig';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/baseComponents/Icon';
 import useAddArticlesStore, { IAddArticlesState } from './store';
 import { IPostArticles } from '~/interfaces/IPost';
@@ -17,6 +16,10 @@ import EmptyScreen from '~/components/EmptyScreen';
 import images from '~/resources/images';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArticle/helper';
+import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
+import Text from '~/baseComponents/Text';
+import spacing from '~/theme/spacing';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface AddArticlesViewProps extends SearchBaseViewProps {
   audience: any,
@@ -33,7 +36,7 @@ const AddArticles = ({
 }: AddArticlesViewProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyles();
+  const styles = createStyles(theme);
 
   const actions = useAddArticlesStore((state: IAddArticlesState) => state.actions);
   const data = useAddArticlesStore((state: IAddArticlesState) => state.items);
@@ -49,9 +52,12 @@ const AddArticles = ({
 
   useEffect(() => {
     actions.searchArticles({ groupIds: initAudienceIds.groupIds || [], contentSearch: '' });
+  }, []);
+
+  useEffect(() => {
     const selectingArticles = converArticlesFromArrayToObject(articles);
     actions.setSelectingArticles(selectingArticles);
-  }, []);
+  }, [articles]);
 
   useEffect(() => () => { reset(); }, []);
 
@@ -89,27 +95,21 @@ const AddArticles = ({
   const renderItem = ({ item }:any) => {
     const isAdded = !!currentSelectingArticles?.[item?.id];
     return (
-      <PrimaryItem
-        titleProps={{
-          variant: 'h4',
-          color: colors.neutral60,
-        }}
-        title={item?.title}
-        subTitle={item?.summary}
-        style={styles.itemStyles}
-        RightComponent={
-     (
-       <Icon
-         testID="article.icon"
-         buttonTestID="article.icon.button"
-         icon={isAdded ? 'Check' : 'Plus'}
-         size={20}
-         tintColor={colors.blue50}
-         onPress={() => { onPressAdd(isAdded, item); }}
-       />
-          )
-        }
-      />
+      <ButtonWrapper style={styles.itemStyles}>
+        <View style={styles.itemTitleView}>
+          {!!item?.title && <Text.H4 style={styles.itemTitle}>{item.title}</Text.H4>}
+          <ViewSpacing width={spacing.margin.small} />
+          <Icon
+            testID="article.icon"
+            buttonTestID="article.icon.button"
+            icon={isAdded ? 'Check' : 'Plus'}
+            size={20}
+            tintColor={colors.blue50}
+            onPress={() => { onPressAdd(isAdded, item); }}
+          />
+        </View>
+        {!!item?.summary && <Text.BodyM numberOfLines={2}>{item.summary}</Text.BodyM>}
+      </ButtonWrapper>
     );
   };
 
@@ -158,20 +158,33 @@ const AddArticles = ({
   );
 };
 
-const createStyles = () => StyleSheet.create({
-  text: {
-    marginTop: 33,
-    alignItems: 'center',
-  },
-  listFooter: {
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  itemStyles: {
-    alignItems: 'flex-start',
-  },
-});
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+  return StyleSheet.create({
+    text: {
+      marginTop: 33,
+      alignItems: 'center',
+    },
+    listFooter: {
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    itemStyles: {
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.base,
+    },
+    itemTitleView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    itemTitle: {
+      color: colors.neutral60,
+      flex: 1,
+    },
+  });
+};
 
 const converArticlesFromArrayToObject = (articles : IPostArticles[]) => {
   const result = {};

@@ -57,7 +57,7 @@ const SeriesDetail = ({ route }: any) => {
 
   const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
     audience?.groups,
-    PERMISSION_KEY.GROUP.DELETE_OWN_POST,
+    PERMISSION_KEY.CRUD_POST_ARTICLE,
   );
 
   const handleError = (listIdAudiences: string[]) => {

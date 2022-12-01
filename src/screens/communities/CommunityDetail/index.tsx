@@ -92,10 +92,8 @@ const CommunityDetail = (props: any) => {
   const canSetting = hasPermissionsOnScopeWithId(
     groupId,
     [
-      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
-      PERMISSION_KEY.GROUP.CRUD_GROUP_OVERRIDE_SCHEME,
-      PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
+      PERMISSION_KEY.EDIT_INFO,
+      PERMISSION_KEY.EDIT_PRIVACY,
     ],
   );
   const isPrivateCommunity = !isMember && privacy === CommunityPrivacyType.PRIVATE;

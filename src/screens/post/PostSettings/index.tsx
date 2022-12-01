@@ -66,7 +66,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const { getListOfChosenAudiencesWithoutPermission, PERMISSION_KEY } = useMyPermissions();
   const listAudiencesWithoutPermission = getListOfChosenAudiencesWithoutPermission(
     chosenAudiences,
-    PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
+    PERMISSION_KEY.EDIT_POST_SETTING,
   );
 
   useEffect(
