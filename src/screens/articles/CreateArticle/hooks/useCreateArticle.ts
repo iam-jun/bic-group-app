@@ -20,7 +20,7 @@ import { useBaseHook } from '~/hooks';
 
 import { rootNavigationRef } from '~/router/refs';
 import Button from '~/baseComponents/Button';
-import { EditArticleErrorType } from '~/constants/article';
+import { EditArticleErrorType, EMPTY_ARTICLE_CONTENT } from '~/constants/article';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -48,8 +48,10 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
 
   const { t } = useBaseHook();
 
+  const isEmptyContent = () => isEmpty(data.content) || data.content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
+
   const isHasChange = () => {
-    const isContentUpdated = article.content !== data.content && !isEmpty(data.content);
+    const isContentUpdated = article.content !== data.content && !isEmptyContent();
     const isSummaryUpdated = article.summary !== data.summary;
     const isTitleUpdated = article.title !== data.title && !isEmpty(data.title);
     const isCategoriesUpdated = !isEqual(article.categories, data.categories) && !isEmpty(data.categories);
@@ -65,7 +67,7 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
     //   isAudienceUpdated,
     //   isCoverMediaUpdated,
     // }, null, 2), '\x1b[0m');
-    return !isEmpty(data.content) // empty content lead to bug on edit content webview, always keep content not empty
+    return !isEmptyContent() // empty content lead to bug on edit content webview, always keep content not empty
       && (isTitleUpdated
       || isContentUpdated
       || isSummaryUpdated
@@ -77,7 +79,7 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
 
   const getValidButtonNext = () => {
     const isTitleValid = !isEmpty(data.title);
-    const isContentValid = !isEmpty(data.content);
+    const isContentValid = !isEmptyContent();
     const isCategoriesValid = !isEmpty(data.categories);
     const isCoverValid = !isEmpty(data.coverMedia);
     // isAudienceValid self check at src/screens/articles/EditArticle/EditAudience/index.tsx
