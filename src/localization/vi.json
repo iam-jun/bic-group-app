@@ -60,6 +60,8 @@
     "text_retry": "Thử lại",
     "text_done": "Xong",
     "text_uploading": "Đang tải...",
+    "text_download": "Tải về",
+    "text_downloaded": "Đã tải về!",
     "text_error_message": "Có gì đó sai sai",
     "text_success_message": "Thành công",
     "text_important_post": "Bài viết quan trọng",
@@ -111,6 +113,7 @@
         "step_4": "Bật quyền truy cập Ảnh"
       }
     },
+    "permission_add_photo_blocked": "Không thể lưu ảnh vào thư viện của bạn, vui lòng vào phần cài đặt và bật quyền lưu ảnh",
     "text_not_now": "Không phải bây giờ",
     "text_go_to_settings": "Đi tới Cài đặt",
     "text_help": "Trợ giúp",
@@ -152,7 +155,9 @@
     "last_updated": "Cập nhật",
     "audiences": "Đối tượng",
     "text_save_fail": "Lưu thất bại.",
-    "text_unsave_fail": "Bỏ lưu thất bại."
+    "text_unsave_fail": "Bỏ lưu thất bại.",
+    "copy_photo": "Sao chép ảnh",
+    "text_share": "Chia sẻ"
   },
   "auth": {
     "text_kickout_title": "Notice",
