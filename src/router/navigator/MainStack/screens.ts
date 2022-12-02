@@ -5,6 +5,7 @@ import notiScreens from '~/router/navigator/MainStack/stacks/notiStack/screens';
 import commonScreens from '~/router/navigator/commonStack/screens';
 import articleScreens from './stacks/articleStack/screens';
 import seriesScreens from './stacks/series/screens';
+import topicScreens from './stacks/topic/screens';
 
 const mainTabScreens: any = {
   ...groupScreens,
@@ -14,6 +15,7 @@ const mainTabScreens: any = {
   ...commonScreens,
   ...articleScreens,
   ...seriesScreens,
+  ...topicScreens,
 };
 
 export default mainTabScreens;

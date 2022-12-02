@@ -32,6 +32,7 @@ import useGiphyStore from './giphy';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import useArticleController from '~/screens/articles/store';
 import useSeriesStore from '~/screens/series/store';
+import useTopicStore from '~/screens/topic/store';
 import useAddArticlesStore from '~/screens/series/SeriesDetail/components/AddArticles/store';
 import useCreateArticleCategoryStore from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import useCreateArticleSeriesStore from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
@@ -57,6 +58,7 @@ const stores = [
   useNotificationStore,
   useDraftArticleStore,
   useArticleController,
+  useTopicStore,
 
   // others
   useChatStore,

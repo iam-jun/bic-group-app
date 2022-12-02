@@ -29,6 +29,7 @@ import { IGiphyState } from './giphy';
 import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
+import { ITopicState } from '~/screens/topic/store';
 import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 
@@ -99,6 +100,9 @@ export interface BicStore {
       draftPostStore: IDraftPostState;
     };
   }
+  topic: {
+    topicStore: ITopicState;
+  };
 
   // others
   chat: IChatState;

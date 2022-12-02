@@ -395,6 +395,20 @@ export const streamApiConfig = {
     url: `${provider.url}posts/${id}/unsave`,
     method: 'delete',
   }),
+  getTopicDetail: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}category/${id}`,
+    method: 'get',
+  }),
+  getArticleTopicDetail: (params: any): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles?category_ids[]=${params?.id}`,
+    params: {
+      offset: params?.offset || 0,
+      limit: params?.limit || 10,
+      isProcessing: params?.isProcessing || false,
+    },
+  }),
   searchArticleInSeries: (params: IGetSearchArticleInSeries): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}articles`,
@@ -627,6 +641,24 @@ const streamApi = {
   reorderArticles: (id: string, data: IReorderArticles) => withHttpRequestPromise(
     streamApiConfig.reorderArticles, id, data,
   ),
+  getTopicDetail: (id: string) => withHttpRequestPromise(streamApiConfig.getTopicDetail, id),
+  getArticleTopicDetail: async (params: any) => {
+    try {
+      const response: any = await makeHttpRequest(streamApiConfig.getArticleTopicDetail(params));
+
+      if (response && response?.data?.data) {
+        return Promise.resolve({
+          data: response?.data?.data?.list || [],
+          canLoadMore: (params?.offset || 0) + (params?.limit || DEFAULT_LIMIT)
+            <= response?.data?.data?.meta?.total,
+          total: response?.data?.data?.meta?.total,
+        });
+      }
+      return Promise.reject(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
   searchArticleInSeries: (params: IGetSearchArticleInSeries) => withHttpRequestPromise(
     streamApiConfig.searchArticleInSeries, params,
   ),
