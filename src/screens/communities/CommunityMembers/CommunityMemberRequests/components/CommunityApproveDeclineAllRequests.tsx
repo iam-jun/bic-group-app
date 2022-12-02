@@ -11,12 +11,14 @@ import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
+import { ICommunity } from '~/interfaces/ICommunity';
 
-const CommunityApproveDeclineAllRequests = ({ communityId }: {communityId: string}) => {
+const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunity}) => {
   const dispatch = useDispatch();
   const timeOutRef = useRef<any>();
   const { t } = useBaseHook();
 
+  const { id: communityId, groupId } = community || {};
   const { total } = useKeySelector(groupsKeySelector.communityMemberRequests);
 
   const alertAction = ({
@@ -70,7 +72,7 @@ const CommunityApproveDeclineAllRequests = ({ communityId }: {communityId: strin
 
     timeOutRef.current = setTimeout(
       () => {
-        dispatch(groupsActions.declineAllCommunityMemberRequests({ communityId, total }));
+        dispatch(groupsActions.declineAllCommunityMemberRequests({ groupId, total }));
       }, 5500,
     );
   };
@@ -97,7 +99,7 @@ const CommunityApproveDeclineAllRequests = ({ communityId }: {communityId: strin
   };
 
   const doApproveAll = () => {
-    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, total }));
+    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, groupId, total }));
   };
 
   return (

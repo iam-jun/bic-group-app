@@ -21,7 +21,7 @@ export default function* getGroupMembers({
 
     if (!isRefreshing && !canLoadMore) return;
 
-    const resp = yield call(
+    const response = yield call(
       groupApi.getGroupMembers, groupId, {
         limit: appConfig.recordsPerPage,
         offset: isRefreshing ? 0 : offset,
@@ -31,7 +31,7 @@ export default function* getGroupMembers({
 
     let newDataCount = 0;
     let newDataObj = {};
-    const members = resp.data;
+    const members = response.data;
     Object.keys(members)?.forEach?.((role: string) => {
       newDataCount += members[role]?.data?.length || 0;
       newDataObj = {
@@ -49,7 +49,7 @@ export default function* getGroupMembers({
 
     const newData = {
       loading: false,
-      canLoadMore: newDataCount === appConfig.recordsPerPage,
+      canLoadMore: !!response?.meta?.hasNextPage,
       offset: isRefreshing ? newDataCount : offset + newDataCount,
       ...newDataObj,
     };

@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
-import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';
 import useCommunitiesStore from '~/store/entities/communities';
 import showError from '~/store/helper/showError';
@@ -11,8 +11,6 @@ import modalActions from '~/storeRedux/modal/actions';
 const removeCommunityMember = () => async (
   { communityId, groupId, userId }: {communityId: string; groupId: string; userId: string},
 ) => {
-  const userCount = useCommunitiesStore.getState().data?.[communityId]?.userCount || 0;
-
   try {
     const response = await groupApi.removeGroupMembers(groupId, [userId]);
 
@@ -20,10 +18,7 @@ const removeCommunityMember = () => async (
     Store.store.dispatch(groupsActions.setCommunityMembers(newUpdatedData));
 
     // to update userCount
-    useCommunitiesStore.getState().actions.updateCommunity(
-      communityId,
-      { userCount: userCount - 1 } as ICommunity,
-    );
+    useCommunitiesStore.getState().actions.getCommunity(communityId);
 
     const toastMessage: IToastMessage = {
       content: response?.meta?.message || 'common:text_success_message',

@@ -19,12 +19,13 @@ const CommunityPendingUserItemWrapper = ({
   const { items } = communityMemberRequests;
 
   const requestItem = items[requestId];
-  const { user } = requestItem;
+  const { user, groupId } = requestItem;
   const { fullname: fullName } = user;
 
   const onPressApprove = () => {
     dispatch(groupsActions.approveSingleCommunityMemberRequest({
       communityId,
+      groupId,
       requestId,
       fullName,
     }));
@@ -32,7 +33,7 @@ const CommunityPendingUserItemWrapper = ({
 
   const onPressDecline = () => {
     dispatch(groupsActions.declineSingleCommunityMemberRequest({
-      communityId,
+      groupId,
       requestId,
       fullName,
     }));

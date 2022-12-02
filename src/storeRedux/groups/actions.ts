@@ -297,7 +297,7 @@ const groupsActions = {
     payload,
   }),
   getCommunityMemberRequests: (payload: {
-    communityId: string;
+    groupId: string;
     isRefreshing?: boolean;
     params?: any;
   }) => ({
@@ -319,6 +319,7 @@ const groupsActions = {
   }),
   approveSingleCommunityMemberRequest: (payload: {
     communityId: string;
+    groupId: string;
     requestId: string;
     fullName: string;
   }) => ({
@@ -326,7 +327,7 @@ const groupsActions = {
     payload,
   }),
   declineSingleCommunityMemberRequest: (payload: {
-    communityId: string;
+    groupId: string;
     requestId: string;
     fullName: string;
   }) => ({
@@ -335,15 +336,15 @@ const groupsActions = {
   }),
   approveAllCommunityMemberRequests: (payload: {
     communityId: string;
+    groupId: string;
     total: number;
   }) => ({
     type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
     payload,
   }),
   declineAllCommunityMemberRequests: (payload: {
-    communityId: string;
+    groupId: string;
     total: number;
-    callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
     payload,

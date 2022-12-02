@@ -10,12 +10,13 @@ import approveDeclineCode from '../../../constants/approveDeclineCode';
 
 describe('approveSingleCommunityMemberRequest saga', () => {
   const communityId = '1';
+  const groupId = '1a';
   const requestId = '2';
   const fullName = 'Test User Name';
   const action = {
     type: 'string',
     payload: {
-      communityId, requestId, fullName, callback: jest.fn(),
+      communityId, groupId, requestId, fullName, callback: jest.fn(),
     },
   };
 
@@ -34,7 +35,7 @@ describe('approveSingleCommunityMemberRequest saga', () => {
     .provide([
       [
         matchers.call.fn(
-          groupApi.approveSingleCommunityMemberRequest,
+          groupApi.approveSingleGroupMemberRequest,
         ),
         {},
       ],
@@ -63,7 +64,7 @@ describe('approveSingleCommunityMemberRequest saga', () => {
       .provide([
         [
           matchers.call.fn(
-            groupApi.approveSingleCommunityMemberRequest,
+            groupApi.approveSingleGroupMemberRequest,
           ),
           Promise.reject(error),
         ],
@@ -87,7 +88,7 @@ describe('approveSingleCommunityMemberRequest saga', () => {
       .provide([
         [
           matchers.call.fn(
-            groupApi.approveSingleCommunityMemberRequest,
+            groupApi.approveSingleGroupMemberRequest,
           ),
           Promise.reject(error),
         ],

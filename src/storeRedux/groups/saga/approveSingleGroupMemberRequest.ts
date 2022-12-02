@@ -38,6 +38,7 @@ export default function* approveSingleGroupMemberRequest({
     }));
 
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
