@@ -14,7 +14,7 @@ import { IAccountSettingsState } from '~/screens/Menu/AccountSettings/store';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
 import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
-import IRemoveCommunityMemberState from '~/screens/communities/CommunityMembers/store/Interface';
+import { IRemoveCommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import IRemoveGroupMemberState from '~/screens/groups/GroupMembers/store/Interface';
 import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
