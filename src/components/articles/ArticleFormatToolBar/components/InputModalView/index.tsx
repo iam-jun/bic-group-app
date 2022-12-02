@@ -26,7 +26,9 @@ const InputModalView: FC<Props> = ({ type, insertLink, insertVideoEmbed }) => {
 
   const onSave = () => {
     if (type === 'link') {
-      return insertLink(url, text);
+      insertLink(url, text);
+      dispatch(modalActions.hideModal());
+      return;
     }
 
     insertVideoEmbed(url);
