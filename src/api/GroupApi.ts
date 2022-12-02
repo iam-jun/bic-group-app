@@ -493,12 +493,6 @@ export const groupsApiConfig = {
     url: `${provider.url}communities/${communityId}/leave`,
     method: 'post',
   }),
-  removeCommunityMembers: (communityId: string, userIds: string[]): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/members`,
-    method: 'delete',
-    data: { userIds },
-  }),
   getCommunityMemberRequests: (
     communityId: string,
     params: any,
@@ -886,11 +880,6 @@ const groupApi = {
     groupsApiConfig.cancelJoinCommunity, communityId,
   ),
   leaveCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, communityId),
-  removeCommunityMembers: (communityId: string, userIds: string[]) => withHttpRequestPromise(
-    groupsApiConfig.removeCommunityMembers,
-    communityId,
-    userIds,
-  ),
   getCommunityMemberRequests: (communityId: string, params: any) => withHttpRequestPromise(
     groupsApiConfig.getCommunityMemberRequests,
     communityId,

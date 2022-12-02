@@ -1,4 +1,13 @@
+import { Linking, Platform } from 'react-native';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import i18next from 'i18next';
+import RNFetchBlob from 'rn-fetch-blob';
+import Clipboard from '@react-native-clipboard/clipboard';
 import { linkRegex } from '~/constants/commonRegex';
+import { IToastMessage } from '~/interfaces/common';
+import modalActions from '~/storeRedux/modal/actions';
+import Store from '~/storeRedux';
+import { checkPermission, permissionTypes } from './permission';
 
 export const generateAvatar = (
   name?: string, color?: string,
@@ -138,3 +147,102 @@ export const getWebDomain = (
 // export const convertReactKeyForRequest = (key?: string) => {
 //   return key ? decamelize(key) : '';
 // };
+
+export const downloadImageiOS = (photo: any) => {
+  const onPermissionGranted = () => {
+    CameraRoll.save(photo?.url, { type: 'photo' }).then(() => {
+      const toastMessage: IToastMessage = {
+        content: i18next.t('common:text_downloaded'),
+      };
+      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    });
+  };
+
+  const onPermissionRefused = () => {
+    Store.store.dispatch(modalActions.showAlert({
+      title: i18next.t('error:alert_title'),
+      content: i18next.t('common:permission_add_photo_blocked'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:text_go_to_settings'),
+      onConfirm: () => {
+        Linking.openSettings();
+      },
+    }));
+  };
+
+  const onCallback = (isGranted: boolean) => {
+    if (isGranted) {
+      onPermissionGranted();
+    } else {
+      onPermissionRefused();
+    }
+  };
+
+  checkPermission(permissionTypes.AddPhoto, Store.store.dispatch, onCallback, false);
+};
+
+export const downloadImageAndroid = (photo: any) => {
+  const onPermissionGranted = () => {
+    const path = `${RNFetchBlob.fs.dirs.PictureDir}/${photo?.name}`;
+    RNFetchBlob.config({
+      path,
+    }).fetch('GET', photo?.url).then(() => {
+      RNFetchBlob.fs.scanFile([{ path }]);
+      const toastMessage: IToastMessage = {
+        content: i18next.t('common:text_downloaded'),
+      };
+      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    });
+  };
+
+  const onPermissionRefused = () => {
+    Store.store.dispatch(modalActions.showAlert({
+      title: i18next.t('error:alert_title'),
+      content: i18next.t('common:permission_add_photo_blocked'),
+      cancelBtn: true,
+      confirmLabel: i18next.t('common:text_go_to_settings'),
+      onConfirm: () => {
+        Linking.openSettings();
+      },
+    }));
+  };
+
+  const onCallback = (isGranted: boolean) => {
+    if (isGranted) {
+      onPermissionGranted();
+    } else {
+      onPermissionRefused();
+    }
+  };
+
+  checkPermission(permissionTypes.AddPhoto, Store.store.dispatch, onCallback, false);
+};
+
+export const downloadImage = (photo: any) => {
+  if (!photo) return;
+
+  if (Platform.OS === 'ios') {
+    downloadImageiOS(photo);
+  } else {
+    downloadImageAndroid(photo);
+  }
+};
+
+export const copyImageFromUrl = (url: string) => {
+  if (!url) return;
+
+  let imagePath = null;
+  RNFetchBlob.config({
+    fileCache: true,
+  }).fetch('GET', url).then((res) => {
+    imagePath = res.path();
+    return res.readFile('base64');
+  }).then((base64Data) => {
+    RNFetchBlob.fs.unlink(imagePath);
+    Clipboard.setImage(base64Data);
+    const toastMessage: IToastMessage = {
+      content: i18next.t('common:copied'),
+    };
+    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+  });
+};

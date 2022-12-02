@@ -66,7 +66,7 @@ const CommunityMemberOptionsMenu = ({
   const onConfirmRemoveMember = () => {
     if (!selectedMember?.id) return;
 
-    deleteRemoveCommunityMember({ communityId, userId: selectedMember.id });
+    deleteRemoveCommunityMember({ communityId, groupId, userId: selectedMember.id });
   };
 
   const onPressRemoveMember = () => {

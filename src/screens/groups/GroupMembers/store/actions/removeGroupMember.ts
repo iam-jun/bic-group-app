@@ -1,6 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
 import { removeMemberFromMemberList } from '~/screens/communities/CommunityMembers/store/actions/removeCommunityMember';
+import showError from '~/store/helper/showError';
 import Store from '~/storeRedux';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
@@ -25,13 +26,7 @@ const removeGroupMember = () => async (
   } catch (error) {
     console.error('removeGroupMember error:', error);
 
-    // TODO: use showError helper once merged with BEIN-8192
-    Store.store.dispatch(modalActions.showHideToastMessage({
-      content: error?.meta?.errors?.[0]?.message
-        || error?.meta?.message
-        || 'common:text_error_message',
-      props: { type: 'error' },
-    }));
+    showError(error);
   }
 };
 

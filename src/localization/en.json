@@ -74,6 +74,7 @@
     "text_done": "Done",
     "text_uploading": "Uploading...",
     "text_download": "Download",
+    "text_downloaded": "Downloaded!",
     "text_input_description": "Input description...",
     "text_input_title": "Input title...",
     "text_send": "Send",
@@ -147,6 +148,7 @@
         "step_4": "Turn on Permission for Photos"
       }
     },
+    "permission_add_photo_blocked": "Cannot save photo to your library, please go to settings and enable the permission",
     "text_not_now": "Not now",
     "text_go_to_settings": "Go to Settings",
     "text_help": "Help",
@@ -183,7 +185,10 @@
     "last_updated": "Last updated",
     "audiences": "Audiences",
     "text_save_fail": "Save fail.",
-    "text_unsave_fail": "Unsave fail."
+    "text_unsave_fail": "Unsave fail.",
+    "copy_photo": "Copy Photo",
+    "copied": "Copied!",
+    "text_share": "Share"
   },
   "auth": {
     "text_kickout_title": "Notice",

@@ -10,15 +10,23 @@ import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
 import { IPayloadShowModal } from '~/interfaces/common';
 
 export enum permissionTypes {
-  photo = 'photo'
+  photo = 'photo',
+  AddPhoto = 'AddPhoto',
 }
 
 const PLATFORM_STORAGE_PERMISSIONS = {
   ios: PERMISSIONS.IOS.PHOTO_LIBRARY,
   android: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
 };
+
+const PLATFORM_ADD_PHOTO_PERMISSIONS = {
+  ios: PERMISSIONS.IOS.PHOTO_LIBRARY,
+  android: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+};
+
 const REQUEST_PERMISSION_TYPE = {
   photo: PLATFORM_STORAGE_PERMISSIONS,
+  AddPhoto: PLATFORM_ADD_PHOTO_PERMISSIONS,
 };
 
 const requestPermission = async (type: permissionTypes) => {
@@ -40,6 +48,7 @@ export const checkPermission = async (
   type: permissionTypes,
   dispatch: any,
   callback: (canOpenPicker: boolean) => void,
+  isShowAlertFailed = true,
 ) : Promise<boolean> => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -58,22 +67,25 @@ export const checkPermission = async (
         }
         return false;
       }
-      const payload: IPayloadShowModal = {
-        isOpen: true,
-        closeOutSide: false,
-        useAppBottomSheet: false,
-        ContentComponent: (
-          <PermissionsPopupContent
-            title={i18next.t('common:permission_photo_title')}
-            description={i18next.t('common:permission_photo_description')}
-            steps={photo_permission_steps}
-            goToSetting={() => {
-              dispatch(modalActions.hideModal());
-            }}
-          />
-        ),
-      };
-      dispatch(modalActions.showModal(payload));
+
+      if (isShowAlertFailed) {
+        const payload: IPayloadShowModal = {
+          isOpen: true,
+          closeOutSide: false,
+          useAppBottomSheet: false,
+          ContentComponent: (
+            <PermissionsPopupContent
+              title={i18next.t('common:permission_photo_title')}
+              description={i18next.t('common:permission_photo_description')}
+              steps={photo_permission_steps}
+              goToSetting={() => {
+                dispatch(modalActions.hideModal());
+              }}
+            />
+          ),
+        };
+        dispatch(modalActions.showModal(payload));
+      }
 
       callback(false);
     } else {
