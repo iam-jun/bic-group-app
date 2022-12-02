@@ -167,7 +167,7 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     if (visible) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      webViewRef?.current?.injectJavaScript?.('document.activeElement.blur()');
+      ref?.current?.injectJavaScript?.('document.activeElement.blur()');
     }
   };
 
