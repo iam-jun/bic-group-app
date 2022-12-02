@@ -35,7 +35,7 @@ export interface PostViewProps {
   pressNavigateToDetail?: boolean;
 
   onPress?: () => void;
-  onPressHeader?: (postId: string) => void;
+  onPressHeader?: () => void;
   onContentLayout?: () => void;
   onPressComment?: (postId: string) => void;
 }

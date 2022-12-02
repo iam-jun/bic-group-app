@@ -51,6 +51,7 @@ exports[`ButtonPrimary conponent renders correctly 1`] = `
           },
         ]
       }
+      testID="button_wrapper.text"
     >
       Button Primary
     </Text>

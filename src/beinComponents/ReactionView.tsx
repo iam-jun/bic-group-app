@@ -102,7 +102,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   const renderedReactions = renderReactions();
 
   return (
-    <>
+    <View testID="reaction_view">
       {!hasReactPermission && renderedReactions.length > 0 && <View style={styles.line} />}
       <View
         style={[
@@ -125,7 +125,7 @@ const ReactionView: FC<ReactionViewProps> = ({
             </Button>
         )}
       </View>
-    </>
+    </View>
   );
 };
 

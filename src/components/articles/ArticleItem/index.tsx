@@ -25,7 +25,7 @@ export interface ArticleItemProps {
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({
-  data,
+  data = {},
   isLite,
 }: ArticleItemProps) => {
   const { rootNavigation } = useRootNavigation();
@@ -94,7 +94,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const renderPreviewSummary = () => (
     <View style={styles.contentContainer}>
       <ArticleTitle text={titleArticle} />
-      {(!!summaryHighlight || !!summary) && (
+      {(!!summaryArticle) && (
         <>
           <ViewSpacing height={spacing.margin.small} />
           <ArticleSummary text={summaryArticle} />
@@ -104,7 +104,11 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderInterestedBy = () => (
-    <ContentInterestedUserCount id={id} interestedUserCount={totalUsersSeen} />
+    <ContentInterestedUserCount
+      id={id}
+      testIDPrefix="article_item"
+      interestedUserCount={totalUsersSeen}
+    />
   );
 
   const renderFooter = () => (
@@ -132,10 +136,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   return (
-    <View style={styles.container}>
+    <View testID="article_item" style={styles.container}>
       {renderImportant()}
       {renderHeader()}
-      <Button onPress={goToContentDetail}>
+      <Button testID="article_item.btn_content" onPress={goToContentDetail}>
         {renderImageThumbnail()}
         {renderPreviewSummary()}
       </Button>

@@ -319,75 +319,63 @@ exports[`AddArticles component renders correctly 1`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 8,
             }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          }
+          testID="button_wrapper"
+        >
+          <View
             style={
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 8,
+                "justifyContent": "space-between",
               }
             }
           >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 17,
+                  },
+                  Object {},
+                  Object {
+                    "color": "#282E53",
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+            </Text>
             <View
               style={
                 Object {
-                  "flex": 1,
+                  "height": undefined,
+                  "paddingHorizontal": undefined,
+                  "paddingVertical": undefined,
+                  "width": 8,
                 }
               }
-            >
-              <Text
-                numberOfLines={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 17,
-                    },
-                    Object {
-                      "color": "#282E53",
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
-              </Text>
-              <Text
-                numberOfLines={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {},
-                    undefined,
-                  ]
-                }
-              >
-                Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
-              </Text>
-            </View>
+            />
             <View
               accessibilityState={
                 Object {
@@ -449,81 +437,85 @@ exports[`AddArticles component renders correctly 1`] = `
               </View>
             </View>
           </View>
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+          </Text>
         </View>
       </View>
       <View
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 8,
             }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          }
+          testID="button_wrapper"
+        >
+          <View
             style={
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 8,
+                "justifyContent": "space-between",
               }
             }
           >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 17,
+                  },
+                  Object {},
+                  Object {
+                    "color": "#282E53",
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Be The First Line List Series.
+            </Text>
             <View
               style={
                 Object {
-                  "flex": 1,
+                  "height": undefined,
+                  "paddingHorizontal": undefined,
+                  "paddingVertical": undefined,
+                  "width": 8,
                 }
               }
-            >
-              <Text
-                numberOfLines={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 17,
-                    },
-                    Object {
-                      "color": "#282E53",
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                Be The First Line List Series.
-              </Text>
-              <Text
-                numberOfLines={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {},
-                    undefined,
-                  ]
-                }
-              >
-                Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
-              </Text>
-            </View>
+            />
             <View
               accessibilityState={
                 Object {
@@ -585,81 +577,85 @@ exports[`AddArticles component renders correctly 1`] = `
               </View>
             </View>
           </View>
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+          </Text>
         </View>
       </View>
       <View
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 8,
             }
-            accessible={true}
-            collapsable={false}
-            focusable={false}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          }
+          testID="button_wrapper"
+        >
+          <View
             style={
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "opacity": 1,
-                "paddingHorizontal": 12,
-                "paddingVertical": 8,
+                "justifyContent": "space-between",
               }
             }
           >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 17,
+                  },
+                  Object {},
+                  Object {
+                    "color": "#282E53",
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Be The First Line List Series.
+            </Text>
             <View
               style={
                 Object {
-                  "flex": 1,
+                  "height": undefined,
+                  "paddingHorizontal": undefined,
+                  "paddingVertical": undefined,
+                  "width": 8,
                 }
               }
-            >
-              <Text
-                numberOfLines={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#181C32",
-                      "fontFamily": "BeVietnamPro-SemiBold",
-                      "fontSize": 17,
-                    },
-                    Object {
-                      "color": "#282E53",
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                Be The First Line List Series.
-              </Text>
-              <Text
-                numberOfLines={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#212745",
-                      "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
-                    },
-                    Object {},
-                    undefined,
-                  ]
-                }
-              >
-                Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
-              </Text>
-            </View>
+            />
             <View
               accessibilityState={
                 Object {
@@ -721,6 +717,22 @@ exports[`AddArticles component renders correctly 1`] = `
               </View>
             </View>
           </View>
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+          </Text>
         </View>
       </View>
       <View

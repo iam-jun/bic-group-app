@@ -572,6 +572,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
             },
           ]
         }
+        testID="button_wrapper.text"
       >
         Submit
       </Text>

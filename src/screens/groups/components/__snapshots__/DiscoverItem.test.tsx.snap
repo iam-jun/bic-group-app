@@ -374,6 +374,7 @@ exports[`DiscoverItem component should render data correctly 1`] = `
               },
             ]
           }
+          testID="button_wrapper.text"
         >
           View
         </Text>

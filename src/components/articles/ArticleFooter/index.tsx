@@ -48,7 +48,7 @@ const ArticleFooter: FC<ArticleFooterProps> = ({
   const onPressReaction = reactionToDetail ? navigateToDetail : undefined;
 
   return (
-    <View>
+    <View testID="article_footer">
       {!hideReaction && (
         <ReactionView
           style={styles.reactions}
@@ -61,6 +61,7 @@ const ArticleFooter: FC<ArticleFooterProps> = ({
       )}
       <ContentFooter
         {...props}
+        btnReactTestID="article_footer.btn_react"
         reactionsCount={reactionsCount}
         labelButtonComment={labelButtonComment}
         onAddReaction={onAddReaction}

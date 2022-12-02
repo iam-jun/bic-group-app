@@ -15,21 +15,21 @@ import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 
 export interface ArticlePlaceholderProps {
+  testID?: string;
   style?: StyleProp<ViewStyle>;
   disableRandom?: boolean;
-  testID?: string;
 }
 
 const ArticlePlaceholder: FC<ArticlePlaceholderProps> = ({
   style,
   disableRandom,
-  testID = 'post_view_placeholder',
+  testID = 'article_placeholder',
 }: ArticlePlaceholderProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (
-    <View testID={testID} style={StyleSheet.flatten([styles.container, style])}>
+    <View testID={testID} style={[styles.container, style]}>
       <Placeholder
         Animation={ShineOverlay}
         Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}

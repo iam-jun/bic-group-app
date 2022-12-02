@@ -39,7 +39,7 @@ const PostHeader: FC<PostHeaderProps> = ({
 
   const _onPressHeader = () => {
     if (onPressHeader) {
-      onPressHeader?.(postId);
+      onPressHeader?.();
     } else {
       rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
     }

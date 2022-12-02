@@ -127,10 +127,10 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   };
 
   return (
-    <ScreenWrapper isFullView style={styles.container}>
+    <ScreenWrapper testID="article_content_detail" isFullView style={styles.container}>
       <Header
         headerRef={headerRef}
-        title="Article content detail"
+        title={title}
         useAnimationTitle
         headerHeight={HEADER_HEIGHT}
       />

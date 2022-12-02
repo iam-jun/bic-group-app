@@ -30,8 +30,8 @@ export interface ContentFooterProps {
 
 const ContentFooter: FC<ContentFooterProps> = ({
   labelButtonComment,
-  btnReactTestID,
-  btnCommentTestID,
+  btnReactTestID = 'content_footer.btn_react',
+  btnCommentTestID = 'content_footer.btn_comment',
   reactionsCount,
   canComment,
   canReact,
@@ -80,6 +80,7 @@ const ContentFooter: FC<ContentFooterProps> = ({
           tintColor: colors.neutral40,
         }}
         textProps={{
+          testID: `${buttonProps.testID}.text`,
           variant: 'bodyM',
           color: colors.neutral80,
         }}
@@ -118,7 +119,10 @@ const ContentFooter: FC<ContentFooterProps> = ({
   };
 
   const renderCannotReactView = () => (
-    <View style={[styles.emptyView, styles.disbaledReactComment]}>
+    <View
+      testID="content_footer.cannot_reaction_view"
+      style={[styles.emptyView, styles.disbaledReactComment]}
+    >
       <Text.BodyS color={theme.colors.neutral20} useI18n>
         post:text_cannot_comment_and_react
       </Text.BodyS>

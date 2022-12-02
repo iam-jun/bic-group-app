@@ -27,7 +27,7 @@ export interface ContentHeaderProps {
   audience?: IPostAudience;
   disabled?: boolean;
 
-  onPressHeader?: (id?: string) => void;
+  onPressHeader?: () => void;
   onPressMenu?: (e: any) => void;
   onPressShowAudiences?: () => void;
 }
@@ -89,7 +89,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
       testID="content_header"
       style={[styles.headerContainer, style]}
       disabled={disabled || !onPressHeader}
-      onPress={() => onPressHeader()}
+      onPress={onPressHeader}
       activeOpacity={1}
     >
       <Button

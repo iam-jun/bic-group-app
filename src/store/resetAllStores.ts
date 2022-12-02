@@ -18,7 +18,6 @@ import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMember
 import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '../screens/articles/ArticleDetail/store';
-import useArticleListStore from '~/screens/articles/ArticleList/store';
 import useUserInterestedPostStore from '~/components/posts/UserInterestedPost/store';
 import useDiscoverCommunitiesStore from '~/screens/Discover/components/DiscoverCommunities/store';
 import useTimelineStore from './timeline';
@@ -69,7 +68,6 @@ const stores = [
   useCreateArticleCategoryStore,
   useCreateArticleSeriesStore,
   useArticlesStore,
-  useArticleListStore,
   useUserInterestedPostStore,
   useDiscoverCommunitiesStore,
   useDiscoverCommunitiesSearchStore,
