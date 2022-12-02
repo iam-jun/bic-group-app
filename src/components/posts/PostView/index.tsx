@@ -62,7 +62,7 @@ const _PostView: FC<PostViewProps> = ({
 
   const {
     id: postId, actor, content, highlight, setting, deleted, markedReadPost,
-    ownerReactions, reactionsCount, totalUsersSeen,
+    ownerReactions, reactionsCount, totalUsersSeen, communities,
   } = data;
 
   const {
@@ -115,6 +115,7 @@ const _PostView: FC<PostViewProps> = ({
         isImportant={!!isImportant}
         expireTime={importantExpiredAt}
         markedReadPost={markedReadPost}
+        listCommunity={communities}
       />
       <View style={[styles.container]} onLayout={onContentLayout}>
         <PostHeader

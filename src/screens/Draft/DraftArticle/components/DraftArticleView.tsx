@@ -25,6 +25,7 @@ import { useBaseHook } from '~/hooks';
 import { Button } from '~/baseComponents';
 import useArticleController from '~/screens/articles/store';
 import { ArticleSummary, ArticleTitle } from '~/components/articles';
+import { PostImportant } from '~/components/posts';
 
 interface DraftViewProps {
   data: IPost;
@@ -54,7 +55,11 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
     content,
     categories,
     isProcessing,
+    setting,
+    communities,
   } = data || {};
+
+  const { isImportant, importantExpiredAt } = setting || {};
 
   const shouldDisableButtonPublish = isPublishing
     || !title
@@ -106,6 +111,15 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
     rootNavigation?.navigate(articleStack.createArticleTitle, { articleId: id, isDraft: true });
   };
 
+  const renderImportant = () => (
+    <PostImportant
+      isImportant={!!isImportant}
+      expireTime={importantExpiredAt}
+      markedReadPost={false}
+      listCommunity={communities}
+    />
+  );
+
   // use base ContentHeader to prevent user press event
   const renderHeader = () => (
     <ContentHeader
@@ -153,6 +167,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
 
   return (
     <View style={styles.container}>
+      {renderImportant()}
       {renderHeader()}
       {renderImageThumbnail()}
       {renderPreviewSummary()}

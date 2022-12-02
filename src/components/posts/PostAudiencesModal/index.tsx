@@ -13,9 +13,10 @@ import spacing from '~/theme/spacing';
 
 export interface PostAudiencesModalProps {
   data: IGroup[] | any;
+  onPressItemAudience?: any;
 }
 
-const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data }: PostAudiencesModalProps) => {
+const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data, onPressItemAudience }: PostAudiencesModalProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -35,11 +36,15 @@ const PostAudiencesModal: FC<PostAudiencesModalProps> = ({ data }: PostAudiences
 
   const onPressItem = (item: any) => {
     const { id, communityId, isCommunity } = item || {};
-    if (isCommunity && communityId) {
+
+    if (onPressItemAudience) {
+      onPressItemAudience?.(item);
+    } else if (isCommunity && communityId) {
       navigateToCommunity(communityId);
     } else {
       navigateToGroup(id, communityId);
     }
+
     onPressClose();
   };
 
