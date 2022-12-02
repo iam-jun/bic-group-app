@@ -1,6 +1,8 @@
 import { orderBy, isEmpty } from 'lodash';
 import { PixelRatio } from 'react-native';
-import { ICommentData, IPost, IPostAudience } from '~/interfaces/IPost';
+import {
+  ICommentData, IPost, IPostAudience, IPostCommunities,
+} from '~/interfaces/IPost';
 import { dimension } from '~/theme';
 import appConfig from '~/configs/appConfig';
 import { blacklistReactions } from '~/constants/reactions';
@@ -119,6 +121,28 @@ export const getAudiencesText = (
     audiencesText = `${audiencesText} +${remainingAudiences} ${t?.('post:other_places')}`;
   }
   return audiencesText;
+};
+
+export const getCommunitiesText = (communities?: IPostCommunities[], t?: any) => {
+  if (!communities || communities?.length === 0) return '';
+
+  const limitLength = 25;
+  const totalCommunities = communities?.length;
+  const firstCommunitiesName = communities?.[0]?.name;
+  const remainingCommunities = totalCommunities - 1;
+
+  let communitiesText = firstCommunitiesName || '';
+
+  if (communitiesText?.length > limitLength) {
+    communitiesText = `${communitiesText.substring(0, limitLength)}...`;
+  } else if (remainingCommunities > 0) {
+    communitiesText = `${communitiesText},...`;
+  }
+  if (remainingCommunities > 0) {
+    communitiesText = `${communitiesText} +${remainingCommunities} ${t?.('post:other_places')}`;
+  }
+
+  return communitiesText;
 };
 
 export const isEmptyPost = (post: IPost) => {

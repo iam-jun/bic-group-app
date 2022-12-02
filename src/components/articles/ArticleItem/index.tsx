@@ -7,6 +7,7 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import { scaleCoverHeight } from '~/theme/dimension';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import { PostImportant } from '~/components/posts';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
 import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
@@ -46,7 +47,13 @@ const ArticleItem: FC<ArticleItemProps> = ({
     titleHighlight,
     summaryHighlight,
     coverMedia,
+    markedReadPost,
+    communities,
   } = data || {};
+
+  const {
+    isImportant, importantExpiredAt,
+  } = setting || {};
 
   const titleArticle = isLite && titleHighlight ? titleHighlight : title;
   const summaryArticle = isLite && summaryHighlight ? summaryHighlight : summary;
@@ -57,6 +64,15 @@ const ArticleItem: FC<ArticleItemProps> = ({
 
   const goToContentDetail = () => rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
+
+  const renderImportant = () => (
+    <PostImportant
+      isImportant={!!isImportant}
+      expireTime={importantExpiredAt}
+      markedReadPost={markedReadPost}
+      listCommunity={communities}
+    />
+  );
 
   const renderHeader = () => (
     <ArticleHeader
@@ -117,6 +133,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
 
   return (
     <View style={styles.container}>
+      {renderImportant()}
       {renderHeader()}
       <Button onPress={goToContentDetail}>
         {renderImageThumbnail()}

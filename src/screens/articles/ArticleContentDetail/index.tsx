@@ -12,6 +12,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IMentionUser } from '~/interfaces/IPost';
 import { IRouteParams } from '~/interfaces/IRouter';
 import mainStack from '~/router/navigator/MainStack/stack';
+import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { parseSafe } from '~/utils/common';
@@ -92,8 +93,11 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   };
 
   const onPressTopics = (payload: any) => {
-    // [TO-DO] https://app.clickup.com/t/3649385/BEIN-9905
-    console.warn('Article content detail onPressTopics unhandled', payload);
+    if (!payload) return;
+
+    rootNavigation.replace(
+      topicStack.topicDetail, { topicId: payload?.id },
+    );
   };
 
   const onPressMentionAudience = useRef((payload: IMentionUser) => {

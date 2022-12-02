@@ -5,6 +5,7 @@ import notiStack from '~/router/navigator/MainStack/stacks/notiStack/stack';
 import commonStack from '~/router/navigator/commonStack/stack';
 import articleStack from './stacks/articleStack/stack';
 import seriesStack from './stacks/series/stack';
+import topicStack from './stacks/topic/stack';
 
 const mainTabStack = {
   ...groupStack,
@@ -14,6 +15,7 @@ const mainTabStack = {
   ...commonStack,
   ...articleStack,
   ...seriesStack,
+  ...topicStack,
 };
 
 export default mainTabStack;

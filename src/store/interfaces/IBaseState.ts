@@ -10,4 +10,6 @@ export interface IBaseListState<T> {
   hasNextPage: boolean;
 }
 
+export type InitStateType<T> = Omit<T, 'actions' | 'reset'>
+
 export default IBaseState;

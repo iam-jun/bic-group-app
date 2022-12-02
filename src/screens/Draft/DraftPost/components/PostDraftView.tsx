@@ -58,6 +58,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
     setting,
     isDraft,
     isProcessing,
+    communities,
   } = data || {};
 
   const { isImportant, importantExpiredAt } = setting || {};
@@ -178,6 +179,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
         isImportant={!!isImportant}
         expireTime={importantExpiredAt}
         markedReadPost={false}
+        listCommunity={communities}
       />
       <View style={[styles.container, style]}>
         <PostHeader data={data} />

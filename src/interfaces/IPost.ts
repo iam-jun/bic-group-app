@@ -13,6 +13,7 @@ export interface IPost {
   id?: string;
   audience?: IPostAudience;
   articles?: IPostArticles[];
+  communities?: IPostCommunities[];
   content?: string;
   highlight?: string;
   media?: IPostMedia;
@@ -52,6 +53,14 @@ export interface IPostAudience {
 export interface IPostArticles {
   id?: string;
   title?: string;
+}
+
+export interface IPostCommunities {
+  communityId?: string;
+  icon?: string;
+  id?: string;
+  name?: string;
+  privacy?: string;
 }
 
 export interface IAudienceUser {
