@@ -18,6 +18,7 @@ import spacing from '~/theme/spacing';
 import useLoadMoreCommentsController from './store';
 
 export interface LoadMoreCommentProps {
+  testID?: string
   style?: StyleProp<ViewStyle>;
   title: string;
   postId: string;
@@ -28,6 +29,7 @@ export interface LoadMoreCommentProps {
 }
 
 const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
+  testID = 'load_more_comment',
   style,
   title,
   postId,
@@ -101,8 +103,8 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   );
 
   return (
-    <View>
-      <View style={StyleSheet.flatten([styles.container, style])}>
+    <View testID={testID}>
+      <View style={[styles.container, style]}>
         <Icon
           icon="ArrowRotateRight"
           tintColor={colors.neutral40}

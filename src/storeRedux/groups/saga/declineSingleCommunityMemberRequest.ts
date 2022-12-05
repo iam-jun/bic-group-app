@@ -13,16 +13,18 @@ export default function* declineSingleCommunityMemberRequest({
 }: {
   type: string;
   payload: {
-    communityId: string;
+    groupId: string;
     requestId: string;
     fullName: string;
   };
 }) {
-  const { communityId, requestId, fullName } = payload;
+  const {
+    groupId, requestId, fullName,
+  } = payload;
   try {
     yield call(
-      groupApi.declineSingleCommunityMemberRequest,
-      communityId,
+      groupApi.declineSingleGroupMemberRequest,
+      groupId,
       requestId,
     );
 
@@ -38,6 +40,7 @@ export default function* declineSingleCommunityMemberRequest({
     }));
 
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));

@@ -73,7 +73,7 @@ describe('PostView Component', () => {
       <PostView isLite data={postData} />,
       store,
     );
-    const footerView = wrapper.queryByTestId('post_view_footer_lite');
+    const footerView = wrapper.queryByTestId('content_footer_lite');
     expect(footerView).toBeDefined();
     const contentView = wrapper.queryByTestId(
       'post_view_content.lite_container',

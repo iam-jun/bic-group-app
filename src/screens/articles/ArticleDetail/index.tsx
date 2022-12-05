@@ -131,7 +131,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   };
 
   const renderLoading = () => (
-    <View style={styles.loadingContainer}>
+    <View testID="article_detail.placeholder" style={styles.loadingContainer}>
       <Header
         title="article:title:detail"
         titleTextProps={{ useI18n: true }}
@@ -150,7 +150,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const RefrestControl = (
     <RefreshControl
-      testID="post_detail_content.refresh_control"
+      testID="article_detail.refresh_control"
       refreshing={refreshing}
       onRefresh={onRefresh}
     />
@@ -172,7 +172,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   if (!isMounted || !data) return renderLoading();
 
   return (
-    <View style={styles.container}>
+    <View testID="article_detail" style={styles.container}>
       <Header />
       <View style={styles.contentContainer}>
         <SectionList

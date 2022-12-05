@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import uuid from 'react-native-uuid';
 import i18next from 'i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import spacing from '~/theme/spacing';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
@@ -25,8 +26,9 @@ const ReorderArticles = ({ route }: any) => {
   const { params } = route || {};
   const { seriesId } = params || {};
 
+  const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
+  const styles = createStyle(theme, insets);
 
   const { rootNavigation } = useRootNavigation();
 
@@ -115,12 +117,13 @@ const ReorderArticles = ({ route }: any) => {
         itemWidth={ITEM_WIDTH}
         itemHeight={ITEM_HEIGHT}
         onChange={onChange}
+        style={styles.reorderListContainer}
       />
     </View>
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
+const createStyle = (theme: ExtendedTheme, insets: any) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
@@ -137,6 +140,10 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     btnSave: {
       marginRight: spacing.margin.small,
+    },
+    reorderListContainer: {
+      flex: 1,
+      paddingBottom: insets.bottom + spacing.padding.large,
     },
   });
 };

@@ -16,6 +16,7 @@ exports[`PostFooter component should render correctly 1`] = `
       },
     ]
   }
+  testID="content_footer.cannot_reaction_view"
 >
   <Text
     style={

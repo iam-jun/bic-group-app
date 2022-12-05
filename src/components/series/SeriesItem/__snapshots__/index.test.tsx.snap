@@ -608,111 +608,28 @@ exports[`SeriesItem component renders correctly 1`] = `
         }
       }
     />
+  </View>
+  <View>
     <View
-      style={
-        Array [
-          Object {
-            "marginTop": 12,
-            "paddingVertical": 12,
-          },
-          false,
-        ]
-      }
+      testID="reaction_view"
     >
       <View
         style={
           Array [
             Object {
-              "alignItems": "flex-end",
-              "paddingBottom": 6,
-              "paddingHorizontal": 16,
-              "paddingTop": 12,
+              "flex": 1,
+              "flexDirection": "row",
+              "flexWrap": "wrap",
             },
+            null,
             Object {
-              "alignItems": "flex-end",
-              "margin": 0,
-              "paddingBottom": 0,
-              "paddingHorizontal": 0,
-              "paddingTop": 0,
+              "paddingHorizontal": 12,
             },
           ]
         }
-      >
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="content_interested_user_count.button"
-        >
-          <Text
-            numberOfLines={1}
-            style={
-              Array [
-                Object {
-                  "color": "#212745",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 13,
-                },
-                Object {
-                  "color": "#353E6E",
-                },
-                undefined,
-              ]
-            }
-            testID="content_interested_user_count.show_text"
-          >
-            Interested by 
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "#212745",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
-                  },
-                  Object {
-                    "color": "#353E6E",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              1
-            </Text>
-          </Text>
-        </View>
-      </View>
+        testID="reaction_view"
+      />
     </View>
-  </View>
-  <View>
-    <View
-      style={
-        Array [
-          Object {
-            "flex": 1,
-            "flexDirection": "row",
-            "flexWrap": "wrap",
-          },
-          null,
-          Object {
-            "paddingHorizontal": 12,
-          },
-        ]
-      }
-      testID="reaction_view"
-    />
     <View
       style={
         Array [
@@ -728,6 +645,7 @@ exports[`SeriesItem component renders correctly 1`] = `
           },
         ]
       }
+      testID="content_footer.cannot_reaction_view"
     >
       <Text
         style={
@@ -1359,111 +1277,28 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
         }
       }
     />
+  </View>
+  <View>
     <View
-      style={
-        Array [
-          Object {
-            "marginTop": 12,
-            "paddingVertical": 12,
-          },
-          false,
-        ]
-      }
+      testID="reaction_view"
     >
       <View
         style={
           Array [
             Object {
-              "alignItems": "flex-end",
-              "paddingBottom": 6,
-              "paddingHorizontal": 16,
-              "paddingTop": 12,
+              "flex": 1,
+              "flexDirection": "row",
+              "flexWrap": "wrap",
             },
+            null,
             Object {
-              "alignItems": "flex-end",
-              "margin": 0,
-              "paddingBottom": 0,
-              "paddingHorizontal": 0,
-              "paddingTop": 0,
+              "paddingHorizontal": 12,
             },
           ]
         }
-      >
-        <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="content_interested_user_count.button"
-        >
-          <Text
-            numberOfLines={1}
-            style={
-              Array [
-                Object {
-                  "color": "#212745",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 13,
-                },
-                Object {
-                  "color": "#353E6E",
-                },
-                undefined,
-              ]
-            }
-            testID="content_interested_user_count.show_text"
-          >
-            Interested by 
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "#212745",
-                    "fontFamily": "BeVietnamPro-Medium",
-                    "fontSize": 13,
-                  },
-                  Object {
-                    "color": "#353E6E",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              1
-            </Text>
-          </Text>
-        </View>
-      </View>
+        testID="reaction_view"
+      />
     </View>
-  </View>
-  <View>
-    <View
-      style={
-        Array [
-          Object {
-            "flex": 1,
-            "flexDirection": "row",
-            "flexWrap": "wrap",
-          },
-          null,
-          Object {
-            "paddingHorizontal": 12,
-          },
-        ]
-      }
-      testID="reaction_view"
-    />
     <View
       style={
         Array [
@@ -1479,6 +1314,7 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
           },
         ]
       }
+      testID="content_footer.cannot_reaction_view"
     >
       <Text
         style={

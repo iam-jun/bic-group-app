@@ -1294,7 +1294,7 @@ exports[`SearchResult component should render list search result 1`] = `
                   "paddingVertical": 8,
                 }
               }
-              testID="post_view_footer_lite"
+              testID="content_footer_lite"
             >
               <View
                 style={
@@ -1341,6 +1341,7 @@ exports[`SearchResult component should render list search result 1`] = `
                       undefined,
                     ]
                   }
+                  testID="content_footer_lite.comment_text"
                 >
                   0 Comment
                 </Text>
@@ -1362,6 +1363,7 @@ exports[`SearchResult component should render list search result 1`] = `
                     },
                   ]
                 }
+                testID="content_interested_user_count"
               >
                 <View
                   accessible={true}

@@ -28,7 +28,7 @@ import { ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import useMounted from '~/hooks/mounted';
-import SelectAudience from '~/components/SelectAudience';
+import SelectAudience, { ContentType } from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 
 export interface PostSelectAudienceProps {
@@ -151,7 +151,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           onPressButton={onPressSave}
           onPressBack={onPressBack}
         />
-        <SelectAudience />
+        <SelectAudience contentType={ContentType.POST} />
       </KeyboardAvoidingView>
     </ScreenWrapper>
   );

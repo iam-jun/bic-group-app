@@ -9,27 +9,23 @@ import groupApi from '../../../api/GroupApi';
 
 describe('approveAllCommunityMemberRequests saga', () => {
   const communityId = '1';
-  const callback = jest.fn();
+  const groupId = '1a';
   const action = {
     type: 'test',
-    payload: { communityId, callback, total: 2 },
+    payload: { communityId, groupId, total: 2 },
   };
 
   it('should approve all member requests correctly with callback function', async () => expectSaga(approveAllCommunityMemberRequests, action)
     .put(groupsActions.resetCommunityMemberRequests())
     .provide([
       [
-        matchers.call.fn(groupApi.approveAllCommunityMemberRequests),
+        matchers.call.fn(groupApi.approveAllGroupMemberRequests),
         {},
       ],
     ])
     .put(
       modalActions.showHideToastMessage({
         content: `${i18next.t('groups:text_approved_all')}`,
-        props: {
-          buttonText: 'Member',
-          onButtonPress: callback,
-        },
       }),
     )
     .run()
@@ -40,13 +36,13 @@ describe('approveAllCommunityMemberRequests saga', () => {
   it('should approve all member requests correctly without callback function', async () => {
     const action = {
       type: 'test',
-      payload: { communityId, total: 2 },
+      payload: { communityId, groupId, total: 2 },
     };
     return expectSaga(approveAllCommunityMemberRequests, action)
       .put(groupsActions.resetCommunityMemberRequests())
       .provide([
         [
-          matchers.call.fn(groupApi.approveAllCommunityMemberRequests),
+          matchers.call.fn(groupApi.approveAllGroupMemberRequests),
           {},
         ],
       ])
@@ -67,7 +63,7 @@ describe('approveAllCommunityMemberRequests saga', () => {
       .put(groupsActions.resetCommunityMemberRequests())
       .provide([
         [
-          matchers.call.fn(groupApi.approveAllCommunityMemberRequests),
+          matchers.call.fn(groupApi.approveAllGroupMemberRequests),
           Promise.reject(error),
         ],
       ])

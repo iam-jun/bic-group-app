@@ -34,6 +34,7 @@ export default function* declineSingleGroupMemberRequest({
     }));
 
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));

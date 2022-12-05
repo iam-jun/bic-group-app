@@ -7,7 +7,7 @@ import { isEmpty, isEqual } from 'lodash';
 import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
-import SelectAudience from '~/components/SelectAudience';
+import SelectAudience, { ContentType } from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
@@ -129,7 +129,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
         onPressButton={handleSave}
         onPressBack={handleBack}
       />
-      <SelectAudience />
+      <SelectAudience contentType={ContentType.SERIES} />
     </View>
   );
 };

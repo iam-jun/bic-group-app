@@ -25,7 +25,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({
   const _onPressHeader = () => {
     const { id: articleId } = data;
     if (onPressHeader) {
-      onPressHeader?.(articleId);
+      onPressHeader?.();
     } else {
       rootNavigation.navigate(articleStack.articleDetail, { articleId });
     }

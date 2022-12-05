@@ -133,6 +133,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
         )}
         {typeof children === 'string' ? (
           <Text
+            testID="button_wrapper.text"
             variant={textVariant}
             style={styles.text}
             color={disabled ? colors.gray40 : undefined}

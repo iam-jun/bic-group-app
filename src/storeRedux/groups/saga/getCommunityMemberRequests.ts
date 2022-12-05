@@ -3,7 +3,7 @@ import appConfig from '~/configs/appConfig';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import { IJoiningMember } from '~/interfaces/IGroup';
 import showError from '~/storeRedux/commonSaga/showError';
-import groupApi from '../../../api/GroupApi';
+import groupApi from '~/api/GroupApi';
 import { mapItems } from '~/screens/groups/helper/mapper';
 import groupsActions from '../actions';
 
@@ -11,12 +11,12 @@ export default function* getCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; isRefreshing?: boolean; params?: any};
+  payload: {groupId: string; isRefreshing?: boolean; params?: any};
 }) {
   try {
     const { groups } = yield select();
 
-    const { communityId, isRefreshing, params } = payload;
+    const { groupId, isRefreshing, params } = payload;
     const { ids, items, canLoadMore } = groups.communityMemberRequests || {};
 
     yield put(groupsActions.setCommunityMemberRequests({
@@ -28,8 +28,8 @@ export default function* getCommunityMemberRequests({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const response = yield call(
-      groupApi.getCommunityMemberRequests,
-      communityId,
+      groupApi.getGroupMemberRequests,
+      groupId,
       {
         offset: isRefreshing ? 0 : ids.length,
         limit: appConfig.recordsPerPage,
@@ -44,7 +44,7 @@ export default function* getCommunityMemberRequests({
     const newData = {
       total: response?.meta?.total,
       loading: false,
-      canLoadMore: requestIds.length === appConfig.recordsPerPage,
+      canLoadMore: !!response?.meta?.hasNextPage,
       ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
       items: isRefreshing ? { ...requestItems } : { ...items, ...requestItems },
     };

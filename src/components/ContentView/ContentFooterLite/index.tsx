@@ -15,7 +15,7 @@ export interface ContentFooterLiteProps {
   commentsCount: number;
   totalUsersSeen: number;
 
-    onPressComment?: () => void;
+  onPressComment?: () => void;
 
 }
 
@@ -30,13 +30,13 @@ const ContentFooterLite: FC<ContentFooterLiteProps> = ({
   const { t } = useBaseHook();
 
   return (
-    <View testID="post_view_footer_lite" style={styles.container}>
+    <View testID="content_footer_lite" style={styles.container}>
       <View style={styles.row}>
         <Text.BodyS>
           {`${reactionsCount} ${t('post:button_react')}`}
         </Text.BodyS>
         <ViewSpacing width={spacing.margin.large} />
-        <Text.BodyS onPress={onPressComment}>
+        <Text.BodyS testID="content_footer_lite.comment_text" onPress={onPressComment}>
           {`${commentsCount} ${t(commentsCount > 1 ? 'post:label_comments' : 'post:label_comment')}`}
         </Text.BodyS>
       </View>

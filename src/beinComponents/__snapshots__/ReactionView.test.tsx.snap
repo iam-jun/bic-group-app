@@ -2,443 +2,447 @@
 
 exports[`ReactionView component renders correctly 1`] = `
 <View
-  style={
-    Array [
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-      },
-      Object {
-        "paddingBottom": 8,
-        "paddingTop": 8,
-      },
-      Object {},
-    ]
-  }
   testID="reaction_view"
 >
   <View
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        },
+        Object {
+          "paddingBottom": 8,
+          "paddingTop": 8,
+        },
+        Object {},
+      ]
     }
-    testID="reaction.button.grinning"
+    testID="reaction_view"
   >
     <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
           "alignItems": "center",
+          "backgroundColor": "#F1F2F8",
+          "borderColor": "#F1F2F8",
+          "borderRadius": 4,
+          "borderWidth": 1,
           "flexDirection": "row",
+          "height": 28,
           "justifyContent": "center",
+          "marginBottom": 4,
+          "marginHorizontal": 4,
+          "opacity": 1,
+          "paddingHorizontal": 6,
         }
       }
-      testID="reaction.children"
+      testID="reaction.button.grinning"
     >
-      <Text
-        adjustsFontSizeToFit={true}
-        allowFontScaling={true}
+      <View
         style={
-          Array [
-            undefined,
-            Object {
-              "color": "#000",
-              "fontSize": 13,
-              "fontWeight": "bold",
-            },
-          ]
-        }
-      >
-        😀
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning_face_with_star_eyes"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        adjustsFontSizeToFit={true}
-        allowFontScaling={true}
-        style={
-          Array [
-            undefined,
-            Object {
-              "color": "#000",
-              "fontSize": 13,
-              "fontWeight": "bold",
-            },
-          ]
-        }
-      >
-        🤩
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.kissing_smiling_eyes"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        adjustsFontSizeToFit={true}
-        allowFontScaling={true}
-        style={
-          Array [
-            undefined,
-            Object {
-              "color": "#000",
-              "fontSize": 13,
-              "fontWeight": "bold",
-            },
-          ]
-        }
-      >
-        😙
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F4EFFB",
-        "borderColor": "#7335C0",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.sweat_smile"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        adjustsFontSizeToFit={true}
-        allowFontScaling={true}
-        style={
-          Array [
-            undefined,
-            Object {
-              "color": "#000",
-              "fontSize": 13,
-              "fontWeight": "bold",
-            },
-          ]
-        }
-      >
-        😅
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#7335C0",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         2
-      </Text>
-    </View>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "borderColor": "#D1D4DB",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "justifyContent": "center",
-        "marginVertical": 2,
-        "opacity": 1,
-        "paddingHorizontal": 4,
-        "paddingVertical": 4,
-      }
-    }
-    testID="reaction_view.react"
-  >
-    <View
-      style={
-        Array [
           Object {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "center",
-          },
-          undefined,
-        ]
-      }
-      testID="button_wrapper.content"
-    >
-      <View
-        accessibilityState={
-          Object {
-            "disabled": true,
           }
         }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        hitSlop={
-          Object {
-            "bottom": 10,
-            "left": 10,
-            "right": 10,
-            "top": 10,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
+        testID="reaction.children"
       >
-        <View
+        <Text
+          adjustsFontSizeToFit={true}
+          allowFontScaling={true}
+          style={
+            Array [
+              undefined,
+              Object {
+                "color": "#000",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          😀
+        </Text>
+        <Text
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "flexDirection": "row",
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
               },
-              undefined,
               Object {
-                "backgroundColor": undefined,
+                "color": "#353E6E",
+              },
+              Object {
+                "marginLeft": 4,
               },
             ]
+          }
+          testID="reaction.children.text"
+        >
+           1
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#F1F2F8",
+          "borderColor": "#F1F2F8",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 28,
+          "justifyContent": "center",
+          "marginBottom": 4,
+          "marginHorizontal": 4,
+          "opacity": 1,
+          "paddingHorizontal": 6,
+        }
+      }
+      testID="reaction.button.grinning_face_with_star_eyes"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+        testID="reaction.children"
+      >
+        <Text
+          adjustsFontSizeToFit={true}
+          allowFontScaling={true}
+          style={
+            Array [
+              undefined,
+              Object {
+                "color": "#000",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          🤩
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              Object {
+                "marginLeft": 4,
+              },
+            ]
+          }
+          testID="reaction.children.text"
+        >
+           1
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#F1F2F8",
+          "borderColor": "#F1F2F8",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 28,
+          "justifyContent": "center",
+          "marginBottom": 4,
+          "marginHorizontal": 4,
+          "opacity": 1,
+          "paddingHorizontal": 6,
+        }
+      }
+      testID="reaction.button.kissing_smiling_eyes"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+        testID="reaction.children"
+      >
+        <Text
+          adjustsFontSizeToFit={true}
+          allowFontScaling={true}
+          style={
+            Array [
+              undefined,
+              Object {
+                "color": "#000",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          😙
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              Object {
+                "marginLeft": 4,
+              },
+            ]
+          }
+          testID="reaction.children.text"
+        >
+           1
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#F4EFFB",
+          "borderColor": "#7335C0",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 28,
+          "justifyContent": "center",
+          "marginBottom": 4,
+          "marginHorizontal": 4,
+          "opacity": 1,
+          "paddingHorizontal": 6,
+        }
+      }
+      testID="reaction.button.sweat_smile"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+        testID="reaction.children"
+      >
+        <Text
+          adjustsFontSizeToFit={true}
+          allowFontScaling={true}
+          style={
+            Array [
+              undefined,
+              Object {
+                "color": "#000",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          😅
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#7335C0",
+              },
+              Object {
+                "marginLeft": 4,
+              },
+            ]
+          }
+          testID="reaction.children.text"
+        >
+           2
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "#D1D4DB",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "marginVertical": 2,
+          "opacity": 1,
+          "paddingHorizontal": 4,
+          "paddingVertical": 4,
+        }
+      }
+      testID="reaction_view.react"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
+        }
+        testID="button_wrapper.content"
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
           }
         >
           <View
             style={
               Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
                 undefined,
-                undefined,
-                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
           >
-            <View />
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
           </View>
         </View>
       </View>
@@ -449,443 +453,447 @@ exports[`ReactionView component renders correctly 1`] = `
 
 exports[`ReactionView component renders correctly with props Reactions Order  1`] = `
 <View
-  style={
-    Array [
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-      },
-      Object {
-        "paddingBottom": 8,
-        "paddingTop": 8,
-      },
-      undefined,
-    ]
-  }
   testID="reaction_view"
 >
   <View
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        },
+        Object {
+          "paddingBottom": 8,
+          "paddingTop": 8,
+        },
+        undefined,
+      ]
     }
-    testID="reaction.button.grinning"
+    testID="reaction_view"
   >
     <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
           "alignItems": "center",
+          "backgroundColor": "#F1F2F8",
+          "borderColor": "#F1F2F8",
+          "borderRadius": 4,
+          "borderWidth": 1,
           "flexDirection": "row",
+          "height": 28,
           "justifyContent": "center",
+          "marginBottom": 4,
+          "marginHorizontal": 4,
+          "opacity": 1,
+          "paddingHorizontal": 6,
         }
       }
-      testID="reaction.children"
+      testID="reaction.button.grinning"
     >
-      <Text
-        adjustsFontSizeToFit={true}
-        allowFontScaling={true}
+      <View
         style={
-          Array [
-            undefined,
-            Object {
-              "color": "#000",
-              "fontSize": 13,
-              "fontWeight": "bold",
-            },
-          ]
-        }
-      >
-        😀
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning_face_with_star_eyes"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        adjustsFontSizeToFit={true}
-        allowFontScaling={true}
-        style={
-          Array [
-            undefined,
-            Object {
-              "color": "#000",
-              "fontSize": 13,
-              "fontWeight": "bold",
-            },
-          ]
-        }
-      >
-        🤩
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F1F2F8",
-        "borderColor": "#F1F2F8",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.kissing_smiling_eyes"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        adjustsFontSizeToFit={true}
-        allowFontScaling={true}
-        style={
-          Array [
-            undefined,
-            Object {
-              "color": "#000",
-              "fontSize": 13,
-              "fontWeight": "bold",
-            },
-          ]
-        }
-      >
-        😙
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#353E6E",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         1
-      </Text>
-    </View>
-  </View>
-  <View
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#F4EFFB",
-        "borderColor": "#7335C0",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "marginBottom": 4,
-        "marginHorizontal": 4,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.sweat_smile"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "center",
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        adjustsFontSizeToFit={true}
-        allowFontScaling={true}
-        style={
-          Array [
-            undefined,
-            Object {
-              "color": "#000",
-              "fontSize": 13,
-              "fontWeight": "bold",
-            },
-          ]
-        }
-      >
-        😅
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#353E6E",
-              "fontFamily": "BeVietnamPro-Medium",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#7335C0",
-            },
-            Object {
-              "marginLeft": 4,
-            },
-          ]
-        }
-        testID="reaction.children.text"
-      >
-         2
-      </Text>
-    </View>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "borderColor": "#D1D4DB",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "justifyContent": "center",
-        "marginVertical": 2,
-        "opacity": 1,
-        "paddingHorizontal": 4,
-        "paddingVertical": 4,
-      }
-    }
-    testID="reaction_view.react"
-  >
-    <View
-      style={
-        Array [
           Object {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "center",
-          },
-          undefined,
-        ]
-      }
-      testID="button_wrapper.content"
-    >
-      <View
-        accessibilityState={
-          Object {
-            "disabled": true,
           }
         }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        hitSlop={
-          Object {
-            "bottom": 10,
-            "left": 10,
-            "right": 10,
-            "top": 10,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
+        testID="reaction.children"
       >
-        <View
+        <Text
+          adjustsFontSizeToFit={true}
+          allowFontScaling={true}
+          style={
+            Array [
+              undefined,
+              Object {
+                "color": "#000",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          😀
+        </Text>
+        <Text
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "flexDirection": "row",
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
               },
-              undefined,
               Object {
-                "backgroundColor": undefined,
+                "color": "#353E6E",
+              },
+              Object {
+                "marginLeft": 4,
               },
             ]
+          }
+          testID="reaction.children.text"
+        >
+           1
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#F1F2F8",
+          "borderColor": "#F1F2F8",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 28,
+          "justifyContent": "center",
+          "marginBottom": 4,
+          "marginHorizontal": 4,
+          "opacity": 1,
+          "paddingHorizontal": 6,
+        }
+      }
+      testID="reaction.button.grinning_face_with_star_eyes"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+        testID="reaction.children"
+      >
+        <Text
+          adjustsFontSizeToFit={true}
+          allowFontScaling={true}
+          style={
+            Array [
+              undefined,
+              Object {
+                "color": "#000",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          🤩
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              Object {
+                "marginLeft": 4,
+              },
+            ]
+          }
+          testID="reaction.children.text"
+        >
+           1
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#F1F2F8",
+          "borderColor": "#F1F2F8",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 28,
+          "justifyContent": "center",
+          "marginBottom": 4,
+          "marginHorizontal": 4,
+          "opacity": 1,
+          "paddingHorizontal": 6,
+        }
+      }
+      testID="reaction.button.kissing_smiling_eyes"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+        testID="reaction.children"
+      >
+        <Text
+          adjustsFontSizeToFit={true}
+          allowFontScaling={true}
+          style={
+            Array [
+              undefined,
+              Object {
+                "color": "#000",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          😙
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              Object {
+                "marginLeft": 4,
+              },
+            ]
+          }
+          testID="reaction.children.text"
+        >
+           1
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#F4EFFB",
+          "borderColor": "#7335C0",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 28,
+          "justifyContent": "center",
+          "marginBottom": 4,
+          "marginHorizontal": 4,
+          "opacity": 1,
+          "paddingHorizontal": 6,
+        }
+      }
+      testID="reaction.button.sweat_smile"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+        testID="reaction.children"
+      >
+        <Text
+          adjustsFontSizeToFit={true}
+          allowFontScaling={true}
+          style={
+            Array [
+              undefined,
+              Object {
+                "color": "#000",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          😅
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#353E6E",
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#7335C0",
+              },
+              Object {
+                "marginLeft": 4,
+              },
+            ]
+          }
+          testID="reaction.children.text"
+        >
+           2
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "borderColor": "#D1D4DB",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "marginVertical": 2,
+          "opacity": 1,
+          "paddingHorizontal": 4,
+          "paddingVertical": 4,
+        }
+      }
+      testID="reaction_view.react"
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
+        }
+        testID="button_wrapper.content"
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
           }
         >
           <View
             style={
               Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
                 undefined,
-                undefined,
-                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
           >
-            <View />
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
           </View>
         </View>
       </View>
@@ -896,112 +904,116 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
 
 exports[`ReactionView component renders correctly with props Reactions Order empty  1`] = `
 <View
-  style={
-    Array [
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-      },
-      null,
-      Object {},
-    ]
-  }
   testID="reaction_view"
 >
   <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "borderColor": "#D1D4DB",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "justifyContent": "center",
-        "marginVertical": 2,
-        "opacity": 1,
-        "paddingHorizontal": 4,
-        "paddingVertical": 4,
-      }
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        },
+        null,
+        Object {},
+      ]
     }
-    testID="reaction_view.react"
+    testID="reaction_view"
   >
     <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
+        Object {
+          "alignItems": "center",
+          "borderColor": "#D1D4DB",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "marginVertical": 2,
+          "opacity": 1,
+          "paddingHorizontal": 4,
+          "paddingVertical": 4,
+        }
       }
-      testID="button_wrapper.content"
+      testID="reaction_view.react"
     >
       <View
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        hitSlop={
-          Object {
-            "bottom": 10,
-            "left": 10,
-            "right": 10,
-            "top": 10,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
+        testID="button_wrapper.content"
       >
         <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-              },
-              undefined,
-              Object {
-                "backgroundColor": undefined,
-              },
-            ]
+            Object {
+              "opacity": 1,
+            }
           }
         >
           <View
             style={
               Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
                 undefined,
-                undefined,
-                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
           >
-            <View />
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
           </View>
         </View>
       </View>
@@ -1012,129 +1024,137 @@ exports[`ReactionView component renders correctly with props Reactions Order emp
 
 exports[`ReactionView component renders correctly with props showSelectReactionWhenEmpty = false  1`] = `
 <View
-  style={
-    Array [
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-      },
-      null,
-      Object {},
-    ]
-  }
   testID="reaction_view"
-/>
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        },
+        null,
+        Object {},
+      ]
+    }
+    testID="reaction_view"
+  />
+</View>
 `;
 
 exports[`ReactionView component renders correctly with props showSelectReactionWhenEmpty 1`] = `
 <View
-  style={
-    Array [
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-      },
-      null,
-      Object {},
-    ]
-  }
   testID="reaction_view"
 >
   <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "borderColor": "#D1D4DB",
-        "borderRadius": 4,
-        "borderWidth": 1,
-        "justifyContent": "center",
-        "marginVertical": 2,
-        "opacity": 1,
-        "paddingHorizontal": 4,
-        "paddingVertical": 4,
-      }
+      Array [
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        },
+        null,
+        Object {},
+      ]
     }
-    testID="reaction_view.react"
+    testID="reaction_view"
   >
     <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
+        Object {
+          "alignItems": "center",
+          "borderColor": "#D1D4DB",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "marginVertical": 2,
+          "opacity": 1,
+          "paddingHorizontal": 4,
+          "paddingVertical": 4,
+        }
       }
-      testID="button_wrapper.content"
+      testID="reaction_view.react"
     >
       <View
-        accessibilityState={
-          Object {
-            "disabled": true,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={false}
-        hitSlop={
-          Object {
-            "bottom": 10,
-            "left": 10,
-            "right": 10,
-            "top": 10,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
+        testID="button_wrapper.content"
       >
         <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          hitSlop={
+            Object {
+              "bottom": 10,
+              "left": 10,
+              "right": 10,
+              "top": 10,
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-              },
-              undefined,
-              Object {
-                "backgroundColor": undefined,
-              },
-            ]
+            Object {
+              "opacity": 1,
+            }
           }
         >
           <View
             style={
               Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
                 undefined,
-                undefined,
-                undefined,
+                Object {
+                  "backgroundColor": undefined,
+                },
               ]
             }
           >
-            <View />
+            <View
+              style={
+                Array [
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <View />
+            </View>
           </View>
         </View>
       </View>

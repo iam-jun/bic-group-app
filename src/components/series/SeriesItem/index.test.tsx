@@ -51,7 +51,7 @@ describe('SeriesItem component', () => {
     });
 
     const wrapper = renderWithRedux(<SeriesItem data={mockSeries} isLite />);
-    const footerLite = wrapper.getByTestId('post_view_footer_lite');
+    const footerLite = wrapper.getByTestId('content_footer_lite');
 
     expect(footerLite).toBeDefined();
   });

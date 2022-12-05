@@ -25,11 +25,12 @@ const ArticleView: FC<ArticleViewProps> = ({
   const canLoadMoreComment = usePostsStore(useCallback(postsSelector.getCommentOnlyCount(id), []));
 
   return (
-    <View style={styles.container}>
+    <View testID="article_view" style={styles.container}>
       <ArticleItem data={article} />
       <Divider style={styles.divider} />
       {canLoadMoreComment && (
         <LoadMoreComment
+          testID="article_view.load_more_comment"
           title="post:text_load_more_comments"
           postId={id}
           idLessThan={firstCommentId}

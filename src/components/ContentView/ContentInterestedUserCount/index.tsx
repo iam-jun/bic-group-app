@@ -16,6 +16,7 @@ import Divider from '~/beinComponents/Divider';
 
 export interface ContentInterestedUserCountProps {
   id: string;
+  testIDPrefix?: string;
   style?: StyleProp<ViewStyle>;
   labelColor?: string;
   interestedUserCount?: number;
@@ -24,6 +25,7 @@ export interface ContentInterestedUserCountProps {
 
 const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
   id,
+  testIDPrefix,
   style,
   labelColor,
   interestedUserCount = 0,
@@ -35,6 +37,7 @@ const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
   const dispatch = useDispatch();
   const labelColorInterested = labelColor || colors.neutral40;
   const peopleCount = formatLargeNumber(interestedUserCount);
+  const testID = `${testIDPrefix ? `${testIDPrefix}.` : ''}content_interested_user_count`;
 
   const onPressInterestedBy = () => {
     dispatch(
@@ -48,16 +51,19 @@ const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
   };
 
   return (
-    <View style={[styles.container, style]}>
+    <View
+      testID={testID}
+      style={[styles.container, style]}
+    >
       <Button
         onPress={onPressInterestedBy}
         activeOpacity={1}
-        testID="content_interested_user_count.button"
+        testID={`${testID}.button`}
       >
         <Text.BodyS
           color={labelColorInterested}
           numberOfLines={1}
-          testID="content_interested_user_count.show_text"
+          testID={`${testID}.show_text`}
         >
           {t('post:label_seen_by')}
           <Text.BodySMedium color={labelColorInterested}>{peopleCount}</Text.BodySMedium>

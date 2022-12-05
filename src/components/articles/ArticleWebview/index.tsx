@@ -98,7 +98,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   if (!isMounted) return null;
 
   return (
-    <View style={styles.container}>
+    <View testID="article_webview" style={styles.container}>
       <WebView
         key="article-webview"
         ref={_webViewRef}

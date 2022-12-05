@@ -1082,13 +1082,6 @@ Array [
         }
         testID="sticker_view"
       >
-        <View
-          style={
-            Object {
-              "height": 0,
-            }
-          }
-        />
         <View>
           <View
             style={
@@ -1344,6 +1337,13 @@ Array [
             </View>
           </View>
         </View>
+        <View
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
       </View>
       <View
         style={
@@ -1353,13 +1353,6 @@ Array [
         }
         testID="sticker_view"
       >
-        <View
-          style={
-            Object {
-              "height": 0,
-            }
-          }
-        />
         <View>
           <View
             style={
@@ -1615,6 +1608,13 @@ Array [
             </View>
           </View>
         </View>
+        <View
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
       </View>
       <View
         collapsable={false}

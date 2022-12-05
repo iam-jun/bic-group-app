@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import { call, put } from 'redux-saga/effects';
-import { BaseToastProps } from '~/baseComponents/Toast/BaseToast';
 import { IToastMessage } from '~/interfaces/common';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
@@ -11,9 +10,9 @@ export default function* approveAllGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: string; total: number; callback?: () => void};
+  payload: {groupId: string; total: number;};
 }) {
-  const { groupId, total, callback } = payload;
+  const { groupId, total } = payload;
   try {
     yield put(groupsActions.resetGroupMemberRequests());
 
@@ -25,17 +24,9 @@ export default function* approveAllGroupMemberRequests({
     // to update userCount
     yield put(groupsActions.getGroupDetail({ groupId }));
 
-    let toastProps: BaseToastProps = {};
-    if (callback) {
-      toastProps = {
-        buttonText: 'Member',
-        onButtonPress: callback,
-      };
-    }
-
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
-      props: toastProps,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {

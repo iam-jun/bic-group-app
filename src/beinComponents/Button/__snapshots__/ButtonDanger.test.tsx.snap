@@ -50,6 +50,7 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
           },
         ]
       }
+      testID="button_wrapper.text"
     >
       Button Danger
     </Text>

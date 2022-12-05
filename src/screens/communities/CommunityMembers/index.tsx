@@ -105,7 +105,7 @@ const CommunityMembers = ({ route }: any) => {
     if (selectedIndex === 1) {
       return (
         <CommunityMemberRequests
-          communityId={communityId}
+          community={community}
           canAddMember={canAddMember}
           canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
           canEditJoinSetting={canEditJoinSetting}

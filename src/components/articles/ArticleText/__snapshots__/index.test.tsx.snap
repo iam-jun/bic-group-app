@@ -1,0 +1,219 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleItem Component renders correctly 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-SemiBold",
+        "fontSize": 20,
+      },
+      Object {
+        "color": "#181C32",
+      },
+      undefined,
+    ]
+  }
+  testID="article_text.title"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 20,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        false,
+      ]
+    }
+  >
+    
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 20,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        Object {
+          "backgroundColor": "#FDF773",
+        },
+      ]
+    }
+  >
+    title
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 20,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        false,
+      ]
+    }
+  >
+     
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 20,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        Object {
+          "backgroundColor": "#FDF773",
+        },
+      ]
+    }
+  >
+    highlight
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-SemiBold",
+          "fontSize": 20,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        false,
+      ]
+    }
+  >
+    
+  </Text>
+</Text>
+`;
+
+exports[`ArticleItem Component renders correctly 2`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "color": "#181C32",
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 15,
+      },
+      Object {
+        "color": "#181C32",
+      },
+      undefined,
+    ]
+  }
+  testID="article_text.summary"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        false,
+      ]
+    }
+  >
+    
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        Object {
+          "backgroundColor": "#FDF773",
+        },
+      ]
+    }
+  >
+    title
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        false,
+      ]
+    }
+  >
+     
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        Object {
+          "backgroundColor": "#FDF773",
+        },
+      ]
+    }
+  >
+    highlight
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#181C32",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#181C32",
+        },
+        false,
+      ]
+    }
+  >
+    
+  </Text>
+</Text>
+`;

@@ -17,6 +17,7 @@ export default function* declineAllGroupMemberRequests({
     yield call(groupApi.declineAllGroupMemberRequests, groupId);
 
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_all')}`.replace('{0}', total.toString()),
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
