@@ -19,7 +19,17 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useMounted from '~/hooks/mounted';
 import useGroupTreeStore from '../groups/store';
 
-const SelectAudience = () => {
+export enum ContentType {
+  POST = 'post',
+  ARTICLE = 'article',
+  SERIES = 'series',
+}
+
+interface SelectAudienceProps {
+  contentType: ContentType
+}
+
+const SelectAudience = ({ contentType }: SelectAudienceProps) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -52,7 +62,7 @@ const SelectAudience = () => {
 
   const onSearch = debounce(
     (searchText: string) => {
-      actions.getAudienceSearch(searchText);
+      actions.getAudienceSearch(searchText, contentType);
     }, 500,
   );
 
@@ -78,7 +88,13 @@ const SelectAudience = () => {
 
   const shouldBeChecked = useCallback((child) => !!selectedAudiences?.[child.id], [selectedAudiences]);
 
-  const shouldCheckboxDisabled = useCallback((item) => !searchKey && !item.isPostable, [searchKey]);
+  const shouldCheckboxDisabled = useCallback((item) => {
+    if (contentType !== ContentType.SERIES) {
+      return !searchKey && !item.canCreatePost;
+    }
+
+    return !searchKey && !item.canCreateSeries;
+  }, [searchKey, contentType]);
 
   const renderItem = ({ item }) => {
     const ItemComponent = !!searchKey ? GroupItem : GroupTreeItem;

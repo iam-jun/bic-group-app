@@ -1,3 +1,4 @@
+import { ContentType } from '~/components/SelectAudience';
 import { IGroup } from '~/interfaces/IGroup';
 import IBaseState from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
@@ -23,10 +24,11 @@ export interface ISelectAudienceState extends IBaseState {
     key: string,
     data: undefined,
     loading: boolean,
+    contentType: ContentType,
   };
   actions?: {
     getAudienceTree?: () => void;
-    getAudienceSearch?: (key: string) => void;
+    getAudienceSearch?: (key: string, contentType: ContentType) => void;
     setSelectedAudiences: (selectedAudiences) => void;
     updateItemSelection: (group: IGroup | IUser, isSelected: boolean) => void;
   };
@@ -49,6 +51,7 @@ const initState: ISelectAudienceState = {
     key: '',
     data: undefined,
     loading: true,
+    contentType: undefined,
   },
 };
 

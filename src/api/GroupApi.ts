@@ -20,6 +20,7 @@ import { IUserEdit } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { ISearchReq } from '~/interfaces/common';
+import { ContentType } from '~/components/SelectAudience';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
@@ -283,11 +284,14 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  getSearchAudiences: (params: {key: string, offset?: number, limit?: number}): HttpApiRequestConfig => ({
+  getSearchAudiences: (params: {
+    contentType: ContentType; key: string, offset?: number, limit?: number
+  }): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}post-audiences`,
     provider: apiProviders.bein,
     params: {
+      content: params?.contentType,
       key: params?.key,
       offset: params?.offset || 0,
       limit: params?.limit || 25,
@@ -752,7 +756,9 @@ const groupApi = {
       ...param,
     },
   ),
-  getSearchAudiences: (params: {key: string, offset?: number, limit?: number}) => withHttpRequestPromise(
+  getSearchAudiences: (params: {
+    contentType: ContentType; key: string, offset?: number, limit?: number
+  }) => withHttpRequestPromise(
     groupsApiConfig.getSearchAudiences, params,
   ),
   getAudienceTree: () => withHttpRequestPromise(groupsApiConfig.getAudienceTree),
