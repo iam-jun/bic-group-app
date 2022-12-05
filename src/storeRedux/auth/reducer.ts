@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { forgotPasswordStages } from '~/constants/authConstants';
 import { ActionTypes } from '~/utils';
 import types from './types';
 
@@ -8,10 +7,6 @@ export const authInitState = {
   feed: undefined,
   loading: false,
   signingInError: '',
-  forgotPasswordStage: forgotPasswordStages.INPUT_ID,
-  forgotPasswordError: { errBox: '', errRequest: '', errConfirm: '' },
-  changePasswordError: { errCurrentPassword: '', errBox: '' },
-  changePasswordLoading: false,
 };
 
 function authReducer(
@@ -34,31 +29,6 @@ function authReducer(
       return {
         ...state,
         signingInError: action.payload,
-      };
-    case types.SET_FORGOT_PASSWORD_LOADING:
-      return {
-        ...state,
-        forgotPasswordLoading: action.payload,
-      };
-    case types.SET_FORGOT_PASSWORD_STAGE:
-      return {
-        ...state,
-        forgotPasswordStage: action.payload,
-      };
-    case types.SET_FORGOT_PASSWORD_ERROR:
-      return {
-        ...state,
-        forgotPasswordError: { ...action.payload },
-      };
-    case types.SET_CHANGE_PASSWORD_ERROR:
-      return {
-        ...state,
-        changePasswordError: { ...action.payload },
-      };
-    case types.SET_CHANGE_PASSWORD_LOADING:
-      return {
-        ...state,
-        changePasswordLoading: action.payload,
       };
     case ActionTypes.RefreshTokenSuccessBein: {
       const user = state?.user as any;

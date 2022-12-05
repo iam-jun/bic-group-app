@@ -8,17 +8,15 @@ import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { useBaseHook } from '~/hooks';
-import authActions from '~/storeRedux/auth/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 
-import { IChangePasswordError } from '~/interfaces/IAuth';
-import useAuth from '~/hooks/auth';
 import spacing from '~/theme/spacing';
 import Button from '~/beinComponents/Button';
 import Text from '~/baseComponents/Text';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
+import useChangePasswordStore, { IChangePasswordState } from './store';
 
 const ChangePassword = () => {
   const { t } = useBaseHook();
@@ -26,37 +24,37 @@ const ChangePassword = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const { changePasswordError, changePasswordLoading } = useAuth();
-  const { errCurrentPassword }: IChangePasswordError = changePasswordError || {};
+  const actions = useChangePasswordStore((state: IChangePasswordState) => state.actions);
+  const errorText = useChangePasswordStore((state: IChangePasswordState) => state.errorText);
+  const loading = useChangePasswordStore((state: IChangePasswordState) => state.loading);
+
   const [disableSaveButton, setDisableSaveButton] = useState(true);
 
   useEffect(
     () => {
-      dispatch(authActions.setChangePasswordError({
-        errCurrentPassword: '',
-      }));
+      actions.setErrorText();
     }, [],
   );
 
   useEffect(
     () => {
       checkDisableSaveButton();
-    }, [changePasswordLoading],
+    }, [loading],
   );
 
   useEffect(
     () => {
-      if (errCurrentPassword) {
+      if (errorText) {
         setError(
           'password', {
             type: 'manual',
-            message: errCurrentPassword,
+            message: errorText,
           },
         );
       } else {
         clearErrors('password');
       }
-    }, [errCurrentPassword],
+    }, [errorText],
   );
   const useFormData = useForm();
   const {
@@ -124,7 +122,7 @@ const ChangePassword = () => {
       || !password
       || !newPassword
       || !confirmNewPassword
-      || changePasswordLoading;
+      || loading;
     setDisableSaveButton(result);
   };
 
@@ -140,7 +138,7 @@ const ChangePassword = () => {
 
     const oldPassword = getValues('password');
     const newPassword = getValues('confirmNewPassword');
-    dispatch(authActions.changePassword({ oldPassword, newPassword, global: false }));
+    actions.changePassword({ oldPassword, newPassword, global: false });
   };
 
   return (
@@ -191,7 +189,7 @@ const ChangePassword = () => {
               }
             },
           }}
-          loading={changePasswordLoading}
+          loading={loading}
           label={t('auth:input_label_new_password')}
           placeholder={t('auth:input_label_new_password')}
           validateValue={validateNewPassword}
@@ -205,19 +203,13 @@ const ChangePassword = () => {
           rules={{
             required: t('auth:text_err_password_blank'),
           }}
-          loading={changePasswordLoading}
+          loading={loading}
           label={t('auth:input_label_confirm_new_password')}
           placeholder={t('auth:input_label_confirm_new_password')}
           autoComplete="off"
           validateValue={validateConfirmNewPassword}
           onSubmitEditing={handleOnSaveChangePassword}
         />
-        {/* <PrimaryItem */}
-        {/*  title={t('settings:title_logout_from_all_devices')} */}
-        {/*  style={styles.logoutFromAllDevices} */}
-        {/*  isChecked={isCheckLogoutGlobal} */}
-        {/*  onPressCheckbox={handleOnCheckLogoutGlobal} */}
-        {/* /> */}
         <Button.Primary
           testID="change_password.save"
           style={styles.btnSave}
@@ -251,13 +243,6 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingTop: spacing.padding.large,
       paddingHorizontal: spacing.padding.base,
       alignContent: 'center',
-    },
-    // flashMessage: {
-    //   marginBottom: theme.spacing.margin.extraLarge,
-    // },
-    logoutFromAllDevices: {
-      marginVertical: spacing.margin.tiny,
-      height: 40,
     },
     btnSave: {
       marginTop: spacing.margin.tiny,

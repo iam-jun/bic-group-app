@@ -1,50 +1,48 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
 import Text from '~/baseComponents/Text';
 import Button from '~/beinComponents/Button';
-import actions from '~/storeRedux/auth/actions';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
-import useAuth from '~/hooks/auth';
 import { IObject } from '~/interfaces/common';
-import { IForgotPasswordError } from '~/interfaces/IAuth';
 
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import getEnv from '~/utils/env';
 import spacing from '~/theme/spacing';
 import { APP_ENV } from '~/configs/appConfig';
+import useForgotPasswordStore, { IForgotPasswordState } from '../../store';
 
 interface Props {
   useFormData: IObject<any>;
 }
 
-const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
-  const dispatch = useDispatch();
+const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
   const styles = themeStyles(theme);
 
-  const { forgotPasswordError, forgotPasswordLoading } = useAuth();
-  const { errConfirm }: IForgotPasswordError = forgotPasswordError || {};
+  const actions = useForgotPasswordStore((state: IForgotPasswordState) => state.actions);
+  const errorConfirm = useForgotPasswordStore((state: IForgotPasswordState) => state.errorConfirm);
+  const loadingConfirm = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingConfirm);
+  const loadingRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingRequest);
 
   useEffect(
     () => {
-      if (errConfirm) {
+      if (errorConfirm) {
         setError(
           'code', {
             type: 'manual',
-            message: errConfirm,
+            message: errorConfirm,
           },
         );
       } else {
         clearErrors('code');
       }
-    }, [errConfirm],
+    }, [errorConfirm],
   );
 
   const {
@@ -69,14 +67,14 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
       || !newPassword
       || !confirmPassword
       || !passwordMatched
-      || forgotPasswordLoading
+      || loadingConfirm
     );
   };
   const disableConfirm = checkDisableConfirm();
 
   const checkDisableRequest = () => {
     const email = getValues('email');
-    return forgotPasswordLoading || !email || !isEmpty(errors.email);
+    return loadingConfirm || !email || !isEmpty(errors.email);
   };
   const disableRequest = checkDisableRequest();
 
@@ -93,7 +91,7 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
       && newPassword === confirmPassword
       && !disableConfirm
     ) {
-      dispatch(actions.forgotPasswordConfirm({ email, code, password: newPassword }));
+      actions.confirmForgotPassword({ email, code, password: newPassword });
     }
   };
 
@@ -104,7 +102,7 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
         'code', '', { shouldValidate: false },
       );
       clearErrors('code');
-      dispatch(actions.forgotPasswordRequest(email));
+      actions.requestResetPassword(email);
     }
   };
 
@@ -131,7 +129,7 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
   const _email = getValues('email');
 
   return (
-    <View style={styles.container}>
+    <View testID="forgot_password.confirm_view" style={styles.container}>
       <View style={styles.inputSectionContainer}>
         <Text.H6>{t('auth:text_forgot_password_input_code_title')}</Text.H6>
         <Text.BodyS style={styles.desc}>
@@ -141,7 +139,7 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
           )}
         </Text.BodyS>
         <TextInputController
-          testID="inputCode"
+          testID="forgot_password.input_code"
           useFormData={useFormData}
           name="code"
           rules={{
@@ -162,14 +160,24 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
             onPress={onRequestForgotPassword}
             suppressHighlighting
             style={styles.highlightText}
+            testID="forgot_password.button_resend_code"
           >
             {t('auth:btn_resend_code')}
+            {loadingRequest
+             && (
+             <ActivityIndicator
+               testID="forgot_password.button_resend_code.loading"
+               color={theme.colors.neutral40}
+               style={styles.loading}
+               size={12}
+             />
+             )}
           </Text.BodySMedium>
         </Text.BodyS>
       </View>
       <View style={styles.inputSectionContainer}>
-        <Text.H6 style={styles.newPasswordTitle}>
-          {t('auth:text_forgot_password_input_pw_title')}
+        <Text.H6 useI18n style={styles.newPasswordTitle}>
+          auth:text_forgot_password_input_pw_title
         </Text.H6>
         <PasswordInputController
           useFormData={useFormData}
@@ -202,8 +210,8 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
               }
             },
           }}
-          loading={forgotPasswordLoading}
-          testID="inputNewPassword"
+          loading={loadingConfirm}
+          testID="forgot_password.input_new_password"
           placeholder={t('auth:input_label_new_password')}
           validateValue={validateNewPassword}
           textContentType="oneTimeCode"
@@ -215,20 +223,21 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
           rules={{
             required: t('auth:text_err_password_blank'),
           }}
-          loading={forgotPasswordLoading}
-          testID="inputConfirmPassword"
+          loading={loadingConfirm}
+          testID="forgot_password.input_confirm_password"
           placeholder={t('auth:input_label_confirm_new_password')}
           validateValue={validateConfirmPassword}
           textContentType="oneTimeCode"
         />
       </View>
       <Button.Primary
-        testID="btnChangePassword"
+        useI18n
+        testID="forgot_password.button_change_password"
         disabled={disableConfirm}
-        loading={forgotPasswordLoading}
+        loading={loadingConfirm}
         onPress={onConfirmForgotPassword}
       >
-        {t('auth:btn_submit')}
+        auth:btn_submit
       </Button.Primary>
     </View>
   );
@@ -254,7 +263,10 @@ const themeStyles = (theme: ExtendedTheme) => {
     highlightText: {
       color: colors.gray70,
     },
+    loading: {
+      marginLeft: spacing.margin.small,
+    },
   });
 };
 
-export default ForgotInputCodePw;
+export default CodeInputView;
