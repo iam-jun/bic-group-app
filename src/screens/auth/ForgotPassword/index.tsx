@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   StyleSheet,
-  useWindowDimensions,
   View,
   ScrollView,
   Platform,
@@ -10,53 +9,35 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-
 import Text from '~/baseComponents/Text';
 import { forgotPasswordStages } from '~/constants/authConstants';
-
-import { useBaseHook } from '~/hooks';
-import useAuth from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { IForgotPasswordError } from '~/interfaces/IAuth';
-import { rootNavigationRef } from '~/router/refs';
-import ForgotInputCodePw from '~/screens/auth/ForgotPassword/components/ForgotInputCodePw';
-import ForgotInputId from '~/screens/auth/ForgotPassword/components/ForgotInputId';
-import actions from '~/storeRedux/auth/actions';
-import { deviceDimensions } from '~/theme/dimension';
-
+import CodeInputView from '~/screens/auth/ForgotPassword/components/CodeInputView';
+import EmailInputView from '~/screens/auth/ForgotPassword/components/EmailInputView';
 import spacing from '~/theme/spacing';
+import useForgotPasswordStore, { IForgotPasswordState } from './store';
 
 const ForgotPassword = () => {
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const dimensions = useWindowDimensions();
-  const isPhone = dimensions.width < deviceDimensions.smallTablet;
-  const styles = themeStyles(theme, isPhone);
-
-  const { forgotPasswordStage, forgotPasswordError } = useAuth();
-  const { errBox }: IForgotPasswordError = forgotPasswordError || {};
+  const styles = themeStyles(theme);
 
   const useFormData = useForm();
+  const actions = useForgotPasswordStore((state: IForgotPasswordState) => state.actions);
+  const currentPasswordStage = useForgotPasswordStore((state: IForgotPasswordState) => state.screenCurrentStage);
+  const reset = useForgotPasswordStore((state: IForgotPasswordState) => state.reset);
 
   useEffect(() => {
-    dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
+    reset();
   }, []);
 
-  const imgMaxWidth = 500;
-  const imgPadding = 67;
-  let imgSize = dimensions.width - 2 * imgPadding;
-  if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
-
   const goBack = () => {
-    if (forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW) {
-      dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
+    if (currentPasswordStage === forgotPasswordStages.INPUT_CODE_PW) {
+      actions.setScreenCurrentStage(forgotPasswordStages.INPUT_ID);
     } else {
       rootNavigation.goBack();
     }
@@ -67,24 +48,25 @@ const ForgotPassword = () => {
       icon="iconBack"
       size={16}
       onPress={goBack}
-      testID="forgot_button.back"
+      testID="forgot_password.button_back"
       tintColor={theme.colors.neutral60}
     />
   );
 
   const renderComplete = () => (
-    <View style={styles.completeContainer}>
+    <View testID="forgot_password.complete_view" style={styles.completeContainer}>
       <View style={styles.textContainer}>
-        <Text.H6>{t('auth:text_forgot_password_complete_title')}</Text.H6>
-        <Text.BodyS style={styles.completeDescription}>
-          {t('auth:text_forgot_password_complete_desc')}
+        <Text.H6 useI18n>auth:text_forgot_password_complete_title</Text.H6>
+        <Text.BodyS useI18n style={styles.completeDescription}>
+          auth:text_forgot_password_complete_desc
         </Text.BodyS>
       </View>
       <Button.Primary
-        testID="btnComplete"
-        onPress={() => rootNavigationRef?.current?.goBack()}
+        testID="forgot_password.button_complete"
+        onPress={goBack}
+        useI18n
       >
-        {t('auth:btn_sign_in_now')}
+        auth:btn_sign_in_now
       </Button.Primary>
     </View>
   );
@@ -102,18 +84,17 @@ const ForgotPassword = () => {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="always"
         >
-          {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
+          {currentPasswordStage !== forgotPasswordStages.COMPLETE && (
             <View style={styles.headerContainer}>{renderBtnBack()}</View>
           )}
           <View style={styles.contentContainer}>
-            {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
-              <ForgotInputId useFormData={useFormData} />
+            {currentPasswordStage === forgotPasswordStages.INPUT_ID && (
+              <EmailInputView useFormData={useFormData} />
             )}
-            {!errBox
-              && forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
-                <ForgotInputCodePw useFormData={useFormData} />
+            { currentPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
+            <CodeInputView useFormData={useFormData} />
             )}
-            {forgotPasswordStage === forgotPasswordStages.COMPLETE
+            {currentPasswordStage === forgotPasswordStages.COMPLETE
               && renderComplete()}
           </View>
         </ScrollView>
@@ -122,14 +103,13 @@ const ForgotPassword = () => {
   );
 };
 
-const themeStyles = (theme: ExtendedTheme, isPhone: boolean) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
   const { colors } = theme;
   return StyleSheet.create({
     root: {
       flex: 1,
       alignContent: 'center',
-      alignItems: !isPhone ? 'center' : undefined,
       paddingTop: insets.top,
       paddingBottom: insets.bottom,
       paddingHorizontal: spacing.padding.big,
@@ -151,7 +131,6 @@ const themeStyles = (theme: ExtendedTheme, isPhone: boolean) => {
     },
     contentContainer: {
       flex: 1,
-      justifyContent: !isPhone ? 'center' : undefined,
     },
     completeContainer: {
       paddingTop: spacing.padding.big + spacing.padding.large,

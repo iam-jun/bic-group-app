@@ -5,6 +5,7 @@ import {
 import { useDispatch } from 'react-redux';
 
 import { Button } from '~/baseComponents';
+import { isPostExpired } from '~/helpers/post';
 import { useBaseHook } from '~/hooks';
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
@@ -37,15 +38,13 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   const dispatch = useDispatch();
   const styles = createStyle();
 
-  const now = new Date();
-  const expired = now.getTime() >= new Date(expireTime || '').getTime();
+  const isExpired = !!expireTime ? isPostExpired(expireTime) : !isImportant;
 
   if (
     !isImportant
     || isActor
     || (markedReadPost && !markReadSuccess)
-    || !expireTime
-    || expired
+    || isExpired
   ) {
     return null;
   }

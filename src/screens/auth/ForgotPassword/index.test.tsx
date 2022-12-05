@@ -4,189 +4,133 @@ import { cleanup } from '@testing-library/react-native';
 
 import React from 'react';
 
-import initialState from '~/storeRedux/initialState';
-
-import { createTestStore, fireEvent, renderWithRedux } from '~/test/testUtils';
+import {
+  fireEvent, renderHook, renderWithRedux, act,
+} from '~/test/testUtils';
 
 import ForgotPassword from '.';
-import { forgotPasswordStages } from '~/constants/authConstants';
-import actions from '../../../storeRedux/auth/actions';
-import types from '../../../storeRedux/auth/types';
 import * as navigationHook from '~/hooks/navigation';
+import useForgotPasswordStore from './store';
+import { forgotPasswordStages } from '~/constants/authConstants';
 
 afterEach(cleanup);
 
 describe('ForgotPassword screen', () => {
-  // let Keyboard: any;
-
-  // beforeEach(() => {
-  //   Keyboard = require('react-native').Keyboard;
-  // });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should show only ForgotInputId and custom back button when open screen', async () => {
-    const mockActionSetForgotPasswordStage = () => ({
-      type: types.SET_FORGOT_PASSWORD_STAGE,
-      payload: forgotPasswordStages.INPUT_ID,
-    });
+  it('should show only ForgotInputId component and custom back button when open screen', () => {
+    const wrapper = renderWithRedux(<ForgotPassword />);
 
-    jest
-      .spyOn(actions, 'setForgotPasswordStage')
-      .mockImplementation(mockActionSetForgotPasswordStage as any);
+    const requireEmailComponent = wrapper.getByTestId('forgot_password.require_email');
+    expect(requireEmailComponent).toBeDefined();
 
-    const forgotPasswordError = {
-      errBox: '',
-      errRequest: '',
-      errConfirm: '',
-    };
-    const storeData = { ...initialState };
+    const buttonBack = wrapper.getByTestId('forgot_password.button_back');
+    expect(buttonBack).toBeDefined();
 
-    storeData.auth.forgotPasswordStage = '';
-    // storeData.auth.forgotPasswordLoading = false;
-    storeData.auth.forgotPasswordError = forgotPasswordError as any;
-    const store = createTestStore(initialState);
-
-    const wrapper = renderWithRedux(<ForgotPassword />, store);
-
-    const inputEmail = wrapper.getByTestId('inputEmail');
-    expect(inputEmail).toBeDefined();
-
-    const btnBack = wrapper.getByTestId('forgot_button.back');
-    expect(btnBack).toBeDefined();
-
-    const btnComplete = wrapper.queryByTestId('btnComplete');
-    expect(btnComplete).toBeNull();
-
-    const inputCode = wrapper.queryByTestId('inputCode');
-    expect(inputCode).toBeNull();
+    const completeComponent = wrapper.queryByTestId('forgot_password.complete_view');
+    expect(completeComponent).toBeNull();
   });
 
-  it('should back to SignIn screen when click button back custom', async () => {
-    const mockActionSetForgotPasswordStage = () => ({
-      type: types.SET_FORGOT_PASSWORD_STAGE,
-      payload: forgotPasswordStages.INPUT_ID,
-    });
-
-    jest
-      .spyOn(actions, 'setForgotPasswordStage')
-      .mockImplementation(mockActionSetForgotPasswordStage as any);
-
+  it('should back to SignIn screen when click button back custom', () => {
     const goBack = jest.fn();
-
     const rootNavigation = { canGoBack: true, goBack };
 
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const forgotPasswordError = {
-      errBox: '',
-      errRequest: '',
-      errConfirm: '',
-    };
-    const storeData = { ...initialState };
+    const wrapper = renderWithRedux(<ForgotPassword />);
 
-    storeData.auth.forgotPasswordStage = '';
-    // storeData.auth.forgotPasswordLoading = false;
-    storeData.auth.forgotPasswordError = forgotPasswordError as any;
-    const store = createTestStore(initialState);
+    const requireEmailComponent = wrapper.getByTestId('forgot_password.require_email');
+    expect(requireEmailComponent).toBeDefined();
 
-    const wrapper = renderWithRedux(<ForgotPassword />, store);
+    const buttonBack = wrapper.getByTestId('forgot_password.button_back');
+    expect(buttonBack).toBeDefined();
 
-    const inputEmail = wrapper.getByTestId('inputEmail');
-    expect(inputEmail).toBeDefined();
+    const completeComponent = wrapper.queryByTestId('forgot_password.complete_view');
+    expect(completeComponent).toBeNull();
 
-    const btnBack = wrapper.getByTestId('forgot_button.back');
-    expect(btnBack).toBeDefined();
-
-    const btnComplete = wrapper.queryByTestId('btnComplete');
-    expect(btnComplete).toBeNull();
-
-    const inputCode = wrapper.queryByTestId('inputCode');
-    expect(inputCode).toBeNull();
-
-    fireEvent.press(btnBack);
+    fireEvent.press(buttonBack);
     expect(goBack).toBeCalled();
   });
 
-  it('should show only ForgotInputCodePw and custom back button when forgotPasswordStage = INPUT_CODE_PW', async () => {
-    const mockActionSetForgotPasswordStage = () => ({
-      type: types.SET_FORGOT_PASSWORD_STAGE,
-      payload: forgotPasswordStages.INPUT_CODE_PW,
+  it('should show only CodeInputView component and custom back button when forgotPasswordStage = INPUT_CODE_PW',
+    () => {
+      const { result } = renderHook(() => useForgotPasswordStore());
+
+      const wrapper = renderWithRedux(<ForgotPassword />);
+
+      act(() => {
+        result.current.actions.setScreenCurrentStage(forgotPasswordStages.INPUT_CODE_PW);
+      });
+
+      const confirmComponent = wrapper.queryByTestId('forgot_password.confirm_view');
+      expect(confirmComponent).toBeDefined();
+
+      const buttonBack = wrapper.getByTestId('forgot_password.button_back');
+      expect(buttonBack).toBeDefined();
+
+      const completeComponent = wrapper.queryByTestId('forgot_password.complete_view');
+      expect(completeComponent).toBeNull();
+
+      const requireEmailComponent = wrapper.queryByTestId('forgot_password.require_email');
+      expect(requireEmailComponent).toBeNull();
     });
 
-    jest
-      .spyOn(actions, 'setForgotPasswordStage')
-      .mockImplementation(mockActionSetForgotPasswordStage as any);
+  it('should show only complete screen and hide custom back button when forgotPasswordStage = COMPLETE',
+    () => {
+      const { result } = renderHook(() => useForgotPasswordStore());
 
-    const goBack = jest.fn();
+      const wrapper = renderWithRedux(<ForgotPassword />);
 
-    const rootNavigation = { canGoBack: true, goBack };
+      act(() => {
+        result.current.actions.setScreenCurrentStage(forgotPasswordStages.COMPLETE);
+      });
 
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
+      const requireEmailComponent = wrapper.queryByTestId('forgot_password.require_email');
+      expect(requireEmailComponent).toBeNull();
 
-    const forgotPasswordError = {
-      errBox: '',
-      errRequest: '',
-      errConfirm: '',
-    };
-    const storeData = { ...initialState };
+      const buttonBack = wrapper.queryByTestId('forgot_password.button_back');
+      expect(buttonBack).toBeNull();
 
-    storeData.auth.forgotPasswordStage = '';
-    // storeData.auth.forgotPasswordLoading = false;
-    storeData.auth.forgotPasswordError = forgotPasswordError as any;
-    const store = createTestStore(initialState);
+      const confirmComponent = wrapper.queryByTestId('forgot_password.confirm_view');
+      expect(confirmComponent).toBeNull();
 
-    const wrapper = renderWithRedux(<ForgotPassword />, store);
-
-    const inputEmail = wrapper.queryByTestId('inputEmail');
-    expect(inputEmail).toBeNull();
-
-    const btnBack = wrapper.getByTestId('forgot_button.back');
-    expect(btnBack).toBeDefined();
-
-    const btnComplete = wrapper.queryByTestId('btnComplete');
-    expect(btnComplete).toBeNull();
-
-    const inputCode = wrapper.queryByTestId('inputCode');
-    expect(inputCode).toBeDefined();
-  });
-
-  it('should show only complete screen and hide custom back button when forgotPasswordStage = COMPLETE', async () => {
-    const mockActionSetForgotPasswordStage = () => ({
-      type: types.SET_FORGOT_PASSWORD_STAGE,
-      payload: forgotPasswordStages.COMPLETE,
+      const completeComponent = wrapper.queryByTestId('forgot_password.complete_view');
+      expect(completeComponent).toBeDefined();
     });
 
-    jest
-      .spyOn(actions, 'setForgotPasswordStage')
-      .mockImplementation(mockActionSetForgotPasswordStage as any);
+  it('should goback when click button Sign in now',
+    () => {
+      const navigate = jest.fn();
+      const goBack = jest.fn();
+      const rootNavigation = { navigate, goBack };
+      jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => ({ rootNavigation } as any));
 
-    const forgotPasswordError = {
-      errBox: '',
-      errRequest: '',
-      errConfirm: '',
-    };
-    const storeData = { ...initialState };
+      const { result } = renderHook(() => useForgotPasswordStore());
 
-    storeData.auth.forgotPasswordStage = '';
-    // storeData.auth.forgotPasswordLoading = false;
-    storeData.auth.forgotPasswordError = forgotPasswordError as any;
-    const store = createTestStore(initialState);
+      const wrapper = renderWithRedux(<ForgotPassword />);
 
-    const wrapper = renderWithRedux(<ForgotPassword />, store);
+      act(() => {
+        result.current.actions.setScreenCurrentStage(forgotPasswordStages.COMPLETE);
+      });
 
-    const inputEmail = wrapper.queryByTestId('inputEmail');
-    expect(inputEmail).toBeNull();
+      const requireEmailComponent = wrapper.queryByTestId('forgot_password.require_email');
+      expect(requireEmailComponent).toBeNull();
 
-    const btnBack = wrapper.queryByTestId('forgot_button.back');
-    expect(btnBack).toBeNull();
+      const buttonBack = wrapper.queryByTestId('forgot_password.button_back');
+      expect(buttonBack).toBeNull();
 
-    const inputCode = wrapper.queryByTestId('inputCode');
-    expect(inputCode).toBeDefined();
+      const confirmComponent = wrapper.queryByTestId('forgot_password.confirm_view');
+      expect(confirmComponent).toBeNull();
 
-    const btnComplete = wrapper.queryByTestId('btnComplete');
-    expect(btnComplete).toBeDefined();
-  });
+      const completeComponent = wrapper.queryByTestId('forgot_password.complete_view');
+      expect(completeComponent).toBeDefined();
+
+      const buttonSignInNow = wrapper.queryByTestId('forgot_password.button_complete');
+      expect(buttonSignInNow).toBeDefined();
+      fireEvent.press(buttonSignInNow);
+
+      expect(goBack).toBeCalled();
+    });
 });

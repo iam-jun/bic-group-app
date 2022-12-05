@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { useController } from 'react-hook-form';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
-import { useDispatch } from 'react-redux';
 
 import Text from '~/baseComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
@@ -11,24 +10,22 @@ import Button from '~/beinComponents/Button';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
 import { IObject } from '~/interfaces/common';
-import actions from '~/storeRedux/auth/actions';
-import useAuth from '~/hooks/auth';
-import { IForgotPasswordError } from '~/interfaces/IAuth';
-
 import spacing from '~/theme/spacing';
+import useForgotPasswordStore, { IForgotPasswordState } from '../../store';
 
 interface Props {
   useFormData: IObject<any>;
 }
 
-const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
-  const dispatch = useDispatch();
+const EmailInputView: React.FC<Props> = ({ useFormData }) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
   const styles = themeStyles(theme);
 
-  const { forgotPasswordError, forgotPasswordLoading } = useAuth();
-  const { errRequest }: IForgotPasswordError = forgotPasswordError || {};
+  const actions = useForgotPasswordStore((state: IForgotPasswordState) => state.actions);
+  const errorRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.errorRequest);
+  const loadingRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingRequest);
+
   const refTextInput = useRef<any>();
 
   const {
@@ -58,23 +55,23 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
 
   useEffect(
     () => {
-      if (errRequest) {
+      if (errorRequest) {
         setError(
           'email', {
             type: 'manual',
-            message: errRequest,
+            message: errorRequest,
           },
         );
       } else {
         clearErrors('email');
       }
-    }, [errRequest],
+    }, [errorRequest],
   );
 
   const checkDisableRequest = () => {
     const email = getValues('email');
     return (
-      forgotPasswordLoading
+      loadingRequest
       || !email
       || !isEmpty(errors?.email)
       || !validation.emailRegex.test(email)
@@ -89,7 +86,7 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
         'code', '', { shouldValidate: false },
       );
       clearErrors('code');
-      dispatch(actions.forgotPasswordRequest(email));
+      actions.requestResetPassword(email);
     }
   };
 
@@ -98,25 +95,20 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* <Image */}
-      {/*  resizeMode="contain" */}
-      {/*  style={styles.logo} */}
-      {/*  source={images.logo_bein} */}
-      {/* /> */}
-      <Text.H6>{t('auth:text_forgot_password')}</Text.H6>
-      <Text.BodyS style={styles.desc}>
-        {t('auth:text_forgot_password_input_desc')}
+    <View testID="forgot_password.require_email" style={styles.container}>
+      <Text.H6 useI18n>auth:text_forgot_password</Text.H6>
+      <Text.BodyS useI18n style={styles.desc}>
+        auth:text_forgot_password_input_desc
       </Text.BodyS>
       <TextInput
         ref={refTextInput}
-        testID="inputEmail"
+        testID="forgot_password.input_email"
         placeholder={t('auth:input_label_email')}
         keyboardType="email-address"
         autoCapitalize="none"
         autoFocus
         value={value}
-        editable={!forgotPasswordLoading}
+        editable={!loadingRequest}
         error={errors?.email}
         onChangeText={(text) => {
           onChange(text);
@@ -128,13 +120,14 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
         onSubmitEditing={() => onRequestForgotPassword()}
       />
       <Button.Primary
-        testID="btnSend"
+        useI18n
+        testID="forgot_password.button_send"
         disabled={disableRequest}
-        loading={forgotPasswordLoading}
+        loading={loadingRequest}
         onPress={onRequestForgotPassword}
         style={styles.btnSendRecoverCode}
       >
-        {t('auth:btn_send_recover_code')}
+        auth:btn_send_recover_code
       </Button.Primary>
     </View>
   );
@@ -145,12 +138,6 @@ const themeStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       paddingTop: spacing.padding.big,
-    },
-    logo: {
-      alignSelf: 'center',
-      width: 64,
-      height: 64,
-      marginVertical: spacing.margin.big,
     },
     desc: {
       marginTop: spacing.margin.extraLarge,
@@ -163,4 +150,4 @@ const themeStyles = (theme: ExtendedTheme) => {
   });
 };
 
-export default ForgotInputId;
+export default EmailInputView;

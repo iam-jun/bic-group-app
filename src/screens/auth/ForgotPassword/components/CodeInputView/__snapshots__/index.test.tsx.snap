@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ForgotInputCodePw component renders correctly 1`] = `
+exports[`CodeInputView component renders correctly 1`] = `
 <View
   style={
     Object {
@@ -8,6 +8,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       "paddingTop": 32,
     }
   }
+  testID="forgot_password.confirm_view"
 >
   <View
     style={
@@ -47,7 +48,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         ]
       }
     >
-      Enter the 6-digit verification code sent to . If you don’t see the email in your inbox, please check your spam folder
+      Enter the 6-digit verification code sent to thuquyen@tgm.vn. If you don’t see the email in your inbox, please check your spam folder
     </Text>
     <View
       style={
@@ -132,7 +133,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
                     },
                   ]
                 }
-                testID="inputCode"
+                testID="forgot_password.input_code"
                 value=""
               />
             </View>
@@ -171,6 +172,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           ]
         }
         suppressHighlighting={true}
+        testID="forgot_password.button_resend_code"
       >
         Resend code
       </Text>
@@ -284,7 +286,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
                     },
                   ]
                 }
-                testID="inputNewPassword"
+                testID="forgot_password.input_new_password"
                 textContentType="oneTimeCode"
                 value=""
               />
@@ -442,7 +444,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
                     },
                   ]
                 }
-                testID="inputConfirmPassword"
+                testID="forgot_password.input_confirm_password"
                 textContentType="oneTimeCode"
                 value=""
               />
@@ -541,7 +543,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         "paddingVertical": 8,
       }
     }
-    testID="btnChangePassword"
+    testID="forgot_password.button_change_password"
   >
     <View
       style={
