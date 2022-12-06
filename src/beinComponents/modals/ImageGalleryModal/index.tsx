@@ -110,7 +110,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         icon="iconBack"
         onPress={onPressClose}
         size={28}
-        tintColor={colors.neutral80}
+        tintColor={colors.white}
         hitSlop={{
           top: 20,
           bottom: 20,
@@ -123,7 +123,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         icon="Ellipsis"
         onPress={onPressMenu}
         size={20}
-        tintColor={colors.neutral80}
+        tintColor={colors.white}
         hitSlop={{
           top: 20,
           bottom: 20,
