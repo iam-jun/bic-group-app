@@ -39,10 +39,12 @@ const GeneralInformation = (props: any) => {
   let organizationPrivacy: any;
   let canEditPrivacy: boolean;
   let isJoinApproval: boolean;
+  let rootGroupId: string;
   if (type === 'group') {
+    const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+    rootGroupId = id;
     canEditInfo = hasPermissionsOnScopeWithId(id, PERMISSION_KEY.EDIT_INFO);
     canEditPrivacy = hasPermissionsOnScopeWithId(id, PERMISSION_KEY.EDIT_PRIVACY);
-    const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
     avatar = groupDetail?.icon || '';
     backgroundUrl = groupDetail?.backgroundImgUrl || '';
     organizationName = groupDetail?.name || '';
@@ -51,13 +53,14 @@ const GeneralInformation = (props: any) => {
     isJoinApproval = groupDetail?.settings?.isJoinApproval;
   } else {
     const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[id]);
+    rootGroupId = communityDetail?.groupId;
+    canEditInfo = hasPermissionsOnScopeWithId(rootGroupId, PERMISSION_KEY.EDIT_INFO);
+    canEditPrivacy = hasPermissionsOnScopeWithId(rootGroupId, PERMISSION_KEY.EDIT_PRIVACY);
     avatar = communityDetail?.icon || '';
     backgroundUrl = communityDetail?.backgroundImgUrl || '';
-    canEditInfo = hasPermissionsOnScopeWithId(communityDetail?.groupId, PERMISSION_KEY.EDIT_INFO);
     organizationName = communityDetail?.name || '';
     organizationDescription = communityDetail?.description || '';
     organizationPrivacy = communityDetail?.privacy || '';
-    canEditPrivacy = hasPermissionsOnScopeWithId(communityDetail?.groupId, PERMISSION_KEY.EDIT_PRIVACY);
     isJoinApproval = communityDetail?.settings?.isJoinApproval;
   }
 
@@ -73,17 +76,23 @@ const GeneralInformation = (props: any) => {
 
   const getCommunityDetail = () => actions.getCommunity(id);
 
-  const onEditAvatar = () => _openImagePicker(
-    dispatch, id, 'icon', uploadTypes.groupAvatar, type,
-  );
-
-  const onEditCover = () => _openImagePicker(
+  const onEditAvatar = () => _openImagePicker({
     dispatch,
     id,
-    'backgroundImgUrl',
-    uploadTypes.groupCover,
-    type,
-  );
+    fieldName: 'icon',
+    uploadType: uploadTypes.groupAvatar,
+    destination: type,
+    rootGroupId,
+  });
+
+  const onEditCover = () => _openImagePicker({
+    dispatch,
+    id,
+    fieldName: 'backgroundImgUrl',
+    uploadType: uploadTypes.groupCover,
+    destination: type,
+    rootGroupId,
+  });
 
   return (
     <ScreenWrapper
@@ -116,6 +125,7 @@ const GeneralInformation = (props: any) => {
           privacy={organizationPrivacy}
           description={organizationDescription}
           isJoinApproval={isJoinApproval}
+          rootGroupId={rootGroupId}
         />
       </ScrollView>
     </ScreenWrapper>

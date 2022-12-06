@@ -20,6 +20,7 @@ const EditDescription = (props: any) => {
     type = 'group',
     id = '',
     description = '',
+    rootGroupId,
   } = props?.route?.params || {};
 
   const theme: ExtendedTheme = useTheme();
@@ -41,7 +42,7 @@ const EditDescription = (props: any) => {
   );
 
   const onSave = () => {
-    const data = { id, description: text?.trim() || null };
+    const data = { id, rootGroupId, description: text?.trim() || null };
     const editFieldName = i18next.t('common:text_description');
     const callback = onNavigateBack;
 

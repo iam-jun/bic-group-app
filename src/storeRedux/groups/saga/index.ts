@@ -132,7 +132,7 @@ export default function* groupsSaga() {
 function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
   try {
     const {
-      file, id, fieldName, uploadType, destination,
+      file, id, fieldName, uploadType, destination, rootGroupId,
     } = payload;
 
     const { actions } = useCommunityController.getState();
@@ -146,7 +146,7 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       uploadType,
     });
 
-    const editData = { id, [fieldName]: data.url };
+    const editData = { id, rootGroupId, [fieldName]: data.url };
     const editFieldName = fieldName === 'icon'
       ? i18next.t('common:text_avatar')
       : i18next.t('common:text_cover');

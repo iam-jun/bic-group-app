@@ -23,6 +23,7 @@ interface Props {
   canEditInfo: boolean;
   isJoinApproval: boolean;
   type: 'community' | 'group';
+  rootGroupId: string;
 }
 
 const InfoView = ({
@@ -34,6 +35,7 @@ const InfoView = ({
   canEditPrivacy,
   isJoinApproval,
   type,
+  rootGroupId,
 }: Props) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
@@ -52,20 +54,24 @@ const InfoView = ({
 
   const onPressEditDescription = () => {
     rootNavigation.navigate(
-      groupStack.editDescription, { id, description, type },
+      groupStack.editDescription, {
+        id, description, type, rootGroupId,
+      },
     );
   };
 
   const onPressEditName = () => {
     rootNavigation.navigate(
-      groupStack.editName, { id, name, type },
+      groupStack.editName, {
+        id, name, type, rootGroupId,
+      },
     );
   };
 
   const onPressEditPrivacy = () => {
     rootNavigation.navigate(
       groupStack.editPrivacy, {
-        id, privacy, type, isJoinApproval,
+        id, privacy, type, isJoinApproval, rootGroupId,
       },
     );
   };

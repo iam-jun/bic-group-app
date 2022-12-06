@@ -18,7 +18,7 @@ import { CheckBox } from '~/baseComponents';
 
 const EditPrivacy = (props: any) => {
   const {
-    type = 'group', id = '', privacy = '', isJoinApproval,
+    type = 'group', id = '', privacy = '', isJoinApproval, rootGroupId,
   } = props?.route?.params || {};
 
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const EditPrivacy = (props: any) => {
   const onNavigateBack = () => rootNavigation.goBack();
 
   const onPressSave = () => {
-    const data = { id, privacy: selectedPrivacy };
+    const data = { id, rootGroupId, privacy: selectedPrivacy };
     const editFieldName = i18next.t('common:text_privacy');
 
     if (type === 'group') {
@@ -51,7 +51,7 @@ const EditPrivacy = (props: any) => {
       dispatch(groupsActions.editGroupDetail({ data, editFieldName, callback: onNavigateBack }));
     } else {
       if (shouldSelectPrivatePrivacy) {
-        controller.updateCommunityJoinSetting(id, joinSettingState);
+        controller.updateCommunityJoinSetting(id, rootGroupId, joinSettingState);
       }
       controller.editCommunityDetail(data, editFieldName, onNavigateBack);
     }

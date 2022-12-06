@@ -1,20 +1,17 @@
 import groupApi from '~/api/GroupApi';
-import { ICommunity } from '~/interfaces/ICommunity';
 import useCommunitiesStore from '~/store/entities/communities';
 import showError from '~/store/helper/showError';
 
 const updateCommunityJoinSetting = (_, _get) => async (
-  id: string,
+  communityId: string,
+  groupId: string,
   isJoinApproval: boolean,
 ) => {
   try {
-    await groupApi.updateCommunityJoinSetting(id, isJoinApproval);
+    await groupApi.updateGroupJoinSetting(groupId, isJoinApproval);
 
     // to update isJoinApproval status
-    useCommunitiesStore.getState().actions.updateCommunity(
-      id,
-      { settings: { isJoinApproval } } as ICommunity,
-    );
+    useCommunitiesStore.getState().actions.getCommunity(communityId);
   } catch (error) {
     console.error('updateCommunityJoinSetting error:', error);
     showError(error);

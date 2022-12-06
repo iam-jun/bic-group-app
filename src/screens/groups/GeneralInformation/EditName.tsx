@@ -16,7 +16,9 @@ import spacing from '~/theme/spacing';
 import groupsActions from '../../../storeRedux/groups/actions';
 
 const EditName = (props: any) => {
-  const { type = 'group', id = '', name = '' } = props?.route?.params || {};
+  const {
+    type = 'group', id = '', name = '', rootGroupId,
+  } = props?.route?.params || {};
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -38,7 +40,7 @@ const EditName = (props: any) => {
   const onSave = () => {
     if (!text?.trim?.()) return;
 
-    const data = { id, name: text?.trim() || null };
+    const data = { id, rootGroupId, name: text?.trim() || null };
     const editFieldName = i18next.t('settings:Name');
     const callback = onNavigateBack;
     if (type === 'group') {
