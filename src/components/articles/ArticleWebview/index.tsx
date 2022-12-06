@@ -98,15 +98,17 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   if (!isMounted) return null;
 
   return (
-    <View testID="article_webview" style={styles.container}>
+    <View testID="article_webview" style={[styles.container, style]}>
       <WebView
         key="article-webview"
         ref={_webViewRef}
-        style={[styles.webview, style]}
+        style={styles.webview}
         source={{ uri: ARTICLE_EDITOR_URL }}
         bounces
         cacheEnabled
-        scrollEnabled
+        // avoid nested scroll
+        overScrollMode="never"
+        scrollEnabled={false}
         scalesPageToFit
         javaScriptEnabled
         domStorageEnabled
@@ -141,9 +143,9 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       flex: 1,
       backgroundColor: colors.white,
-
     },
     webview: {
+      flex: 1,
       width: '100%',
       height: '100%',
       opacity: 0.99,
