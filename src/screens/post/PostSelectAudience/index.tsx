@@ -51,7 +51,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const insets = useSafeAreaInsets();
 
   const allAudiences = useSelectAudienceStore((state) => state.selectedAudiences);
-  const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences);
+  const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences) || [];
   const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
 
   const isEditAudience = !isEmpty(initAudiences);
