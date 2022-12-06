@@ -118,6 +118,7 @@ export interface CreateArticleProps {
 export interface IEditAritcleError {
   ids: string[],
   type: string,
+  error: any; // error return from BE
 }
 
 export type IGetSearchArticleInSeries = IGetSeries;
