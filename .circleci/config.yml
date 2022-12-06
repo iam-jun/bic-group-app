@@ -286,8 +286,14 @@ workflows:
             - android-stg-update-approval
 
       - ios-approval:
+          filters:
+            branches:
+              only: /^staging.*$/
           type: approval
       - android-approval:
+          filters:
+            branches:
+              only: /^staging.*$/
           type: approval
       - ios-stg:
           filters:
