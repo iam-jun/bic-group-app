@@ -5,11 +5,9 @@ import { Button } from '~/baseComponents';
 import { ContentHeader, ContentHeaderProps } from '~/components/ContentView';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import usePostMenu from '~/hooks/usePostMenu';
 import { IAudienceGroup } from '~/interfaces/IPost';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import AlertDeleteAudiences from '../AlertDeleteAudiences';
@@ -26,7 +24,6 @@ const PostHeader: FC<PostHeaderProps> = ({
   onPressHeader,
   ...props
 }) => {
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const dispatch = useDispatch();
 
@@ -40,8 +37,6 @@ const PostHeader: FC<PostHeaderProps> = ({
   const _onPressHeader = () => {
     if (onPressHeader) {
       onPressHeader?.();
-    } else {
-      rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
     }
   };
   const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
