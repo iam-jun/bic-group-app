@@ -71,12 +71,3 @@ export interface ISetCommunitySearchMembers {
   canLoadMore?: boolean;
   data?: ICommunityMembers[];
 }
-
-export interface ICommunityDetailEdit {
-  id: string;
-  name?: string | null;
-  description?: string | null;
-  icon?: string;
-  backgroundImgUrl?: string;
-  privacy?: CommunityPrivacyType;
-}

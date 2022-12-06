@@ -60,7 +60,7 @@ const CommunityMemberRequests = ({
   };
 
   const onUpdateJoinSetting = (isJoinApproval: boolean) => {
-    controller.updateCommunityJoinSetting(communityId, isJoinApproval);
+    controller.updateCommunityJoinSetting(communityId, groupId, isJoinApproval);
   };
 
   const onPressApproveAll = () => {

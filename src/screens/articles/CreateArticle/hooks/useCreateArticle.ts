@@ -21,6 +21,7 @@ import { useBaseHook } from '~/hooks';
 import { rootNavigationRef } from '~/router/refs';
 import Button from '~/baseComponents/Button';
 import { EditArticleErrorType, EMPTY_ARTICLE_CONTENT } from '~/constants/article';
+import showError from '~/store/helper/showError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -144,7 +145,7 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
     return { ...data, series: newSeries };
   };
 
-  const handleSaveError = ({ type, ids }: IEditAritcleError) => {
+  const handleSaveError = ({ type, ids, error }: IEditAritcleError) => {
     if (type === EditArticleErrorType.SERIES_DENIED) {
       const listSeriesName = [];
       ids.forEach((id) => {
@@ -174,6 +175,9 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
         confirmBtnProps: { type: 'ghost' },
       }));
     } else {
+      Keyboard.dismiss();
+      // show toast message received from BE
+      if (!handleSaveAudienceError) return showError(error);
       handleSaveAudienceError?.(ids);
     }
   };

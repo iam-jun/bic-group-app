@@ -1,5 +1,5 @@
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
-import { ICommunityDetailEdit } from '~/interfaces/ICommunity';
+import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import {
   createStore,
 } from '~/store/utils';
@@ -16,9 +16,9 @@ interface ICommunityController {
     leaveCommunity?: (id: string, privacy: CommunityPrivacyType) => void;
     joinCommunity: (id: string, name: string) => void;
     cancelJoinCommunity: (id: string, name: string) => void;
-    updateCommunityJoinSetting: (id: string, isJoinApproval: boolean) => void;
+    updateCommunityJoinSetting: (communityId: string, groupId: string, isJoinApproval: boolean) => void;
     editCommunityDetail: (
-      data: ICommunityDetailEdit, editFieldName?: string, callback?: () => void
+      data: IGroupDetailEdit, editFieldName?: string, callback?: () => void
     ) => void;
     assignCommunityAdmin: (id: string, userIds: string[]) => void;
     revokeCommunityAdmin: (id: string, userId: string) => void;

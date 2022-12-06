@@ -20,8 +20,6 @@ import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
-import removeGroupAdmin from './removeGroupAdmin';
-import setGroupAdmin from './setGroupAdmin';
 import showError from '~/storeRedux/commonSaga/showError';
 import getCommunityMembers from './getCommunityMembers';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
@@ -77,12 +75,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.LEAVE_GROUP, leaveGroup,
-  );
-  yield takeLatest(
-    groupsTypes.SET_GROUP_ADMIN, setGroupAdmin,
-  );
-  yield takeLatest(
-    groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin,
   );
 
   yield takeLatest(
@@ -140,7 +132,7 @@ export default function* groupsSaga() {
 function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
   try {
     const {
-      file, id, fieldName, uploadType, destination,
+      file, id, fieldName, uploadType, destination, rootGroupId,
     } = payload;
 
     const { actions } = useCommunityController.getState();
@@ -154,7 +146,7 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       uploadType,
     });
 
-    const editData = { id, [fieldName]: data.url };
+    const editData = { id, rootGroupId, [fieldName]: data.url };
     const editFieldName = fieldName === 'icon'
       ? i18next.t('common:text_avatar')
       : i18next.t('common:text_cover');

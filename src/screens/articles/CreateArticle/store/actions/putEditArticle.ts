@@ -90,11 +90,13 @@ const putEditArticle = (set, get) => async (
       callbackError?.({
         type: EditArticleErrorType.SERIES_DENIED,
         ids: error.meta.errors.series_denied,
+        error,
       });
     } else if (error?.meta?.errors?.groups_denied) {
       callbackError?.({
         type: EditArticleErrorType.GROUPS_DENIED,
         ids: error.meta.errors.groups_denied,
+        error,
       });
     } else {
       showError(error);

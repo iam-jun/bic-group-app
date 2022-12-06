@@ -3,7 +3,9 @@ import React, {
   FC, useCallback, useRef, useState,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Animated, { SlideInLeft, SlideOutRight } from 'react-native-reanimated';
+import Animated, {
+  FadeInUp, SlideInLeft, SlideOutRight,
+} from 'react-native-reanimated';
 import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
 import Divider from '~/beinComponents/Divider';
@@ -128,7 +130,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
   };
 
   return (
-    <View>
+    <Animated.View entering={FadeInUp}>
       <View style={styles.container}>
         <Button style={styles.iconButton} onPress={onTextIconPress}>
           <Icon icon="Text" />
@@ -153,7 +155,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
         onGiphySelected={onGiphySelected}
         onVisibleChanged={onModalVisbleChanged}
       />
-    </View>
+    </Animated.View>
   );
 };
 

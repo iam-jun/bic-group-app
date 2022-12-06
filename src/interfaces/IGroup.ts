@@ -102,10 +102,9 @@ export interface IParsedGroup extends IGroup {
 
 export interface IGroupDetailEdit {
   id?: string;
-  parentId?: string;
+  rootGroupId?: string;
   name?: string;
   description?: string | null;
-  level?: number;
   icon?: string;
   backgroundImgUrl?: string;
   privacy?: GroupPrivacyType;
@@ -141,6 +140,7 @@ export interface IGroupImageUpload {
   file: IFilePicked;
   uploadType: IUploadType;
   destination: 'group' | 'community';
+  rootGroupId: string;
 }
 
 export interface IGroupGetJoinableMembers {

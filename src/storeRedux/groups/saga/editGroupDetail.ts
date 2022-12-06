@@ -20,13 +20,14 @@ export default function* editGroupDetail({
   try {
     const groupId = data.id;
     delete data.id; // edit data should not contain group's id
+    delete data.rootGroupId;
 
-    const resp = yield call(groupApi.editGroupDetail, groupId, data);
+    const response = yield call(groupApi.editGroupDetail, groupId, data);
 
     if (editFieldName) yield showToastEditSuccess(editFieldName);
 
-    yield put(groupsActions.setGroupDetail(resp?.data));
-    if (callback) callback();
+    yield put(groupsActions.setGroupDetail(response?.data));
+    callback?.();
   } catch (err) {
     console.error(
       '\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m',

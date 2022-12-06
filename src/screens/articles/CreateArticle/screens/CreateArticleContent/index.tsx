@@ -1,9 +1,10 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC, useRef } from 'react';
+import React, {
+  FC, useEffect, useRef, useState,
+} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
-import { createTextStyle } from '~/baseComponents/Text/textStyle';
 
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -52,7 +53,11 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
   } = articleData || {};
   const isPublishing = useCreateArticleStore((state) => state.isPublishing);
   const runSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
+  const resetMention = useMentionInputStore((state: IMentionInputState) => state.reset);
+
   const setFullContent = useMentionInputStore((state: IMentionInputState) => state.setFullContent);
+
+  const [initializeEnd, setInitializeEnd] = useState(false);
 
   const initScript = {
     type: 'initEdit',
@@ -63,6 +68,10 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
 
   const disabled = (isPublishing ? !validButtonNext.isContentValid : !enableButtonSave) || loading;
 
+  useEffect(() => () => {
+    resetMention();
+  }, []);
+
   const onPressSave = () => {
     handleSave();
   };
@@ -70,6 +79,8 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
   const goBack = () => {
     rootNavigation.goBack();
   };
+
+  const onInitializeEnd = () => setInitializeEnd(true);
 
   const injectJavaScript = (script: any) => {
     ref?.current?.injectJavaScript?.(script);
@@ -180,31 +191,33 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
         onPressButton={onPressSave}
         onPressBack={isPublishing ? goBack : handleBack}
       />
-      <View style={styles.flex1}>
+      <View style={styles.contentContainer}>
         <ArticleWebview
           ref={ref}
           initScript={initScript}
           onMessage={onMessage}
+          onInitializeEnd={onInitializeEnd}
         />
         <View style={styles.toolbarContainer}>
           <MentionBar
             groupIds={groupIds}
-            style={styles.mentionBar}
             onCompleteMention={onCompleteMention}
           />
-          <ArticleFormatToolBar
-            setAlign={setAlign}
-            toggleList={toggleList}
-            toggleMark={toggleMark}
-            insertLink={insertLink}
-            toggleQuote={toggleQuote}
-            insertImage={insertImage}
-            toggleHeading={toggleHeading}
-            insertVideoEmbed={insertVideoEmbed}
-            onModalVisbleChanged={onModalVisbleChanged}
-          />
-          <KeyboardSpacer iosOnly />
+          {initializeEnd && (
+            <ArticleFormatToolBar
+              setAlign={setAlign}
+              toggleList={toggleList}
+              toggleMark={toggleMark}
+              insertLink={insertLink}
+              toggleQuote={toggleQuote}
+              insertImage={insertImage}
+              toggleHeading={toggleHeading}
+              insertVideoEmbed={insertVideoEmbed}
+              onModalVisbleChanged={onModalVisbleChanged}
+            />
+          )}
           <InsetBottomView />
+          <KeyboardSpacer iosOnly />
         </View>
       </View>
     </View>
@@ -212,35 +225,20 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const textStyle = createTextStyle(theme);
-
   const { colors } = theme;
   return StyleSheet.create({
-    flex1: { flex: 1 },
     container: {
       flex: 1,
-      backgroundColor: colors.neutral,
     },
-    inputTitle: {
-      ...textStyle.bodyMMedium,
-      paddingVertical: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
-      borderBottomWidth: 1,
-      borderColor: colors.gray5,
-      maxHeight: 80,
+    contentContainer: {
+      flex: 1,
     },
     btnPublish: {
       marginRight: spacing.margin.small,
     },
     toolbarContainer: {
       width: '100%',
-      position: 'absolute',
-      zIndex: 3,
-      bottom: 0,
       backgroundColor: colors.white,
-    },
-    mentionBar: {
-      height: 50,
     },
   });
 };
