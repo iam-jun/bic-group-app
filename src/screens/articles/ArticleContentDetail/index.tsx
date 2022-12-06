@@ -8,6 +8,7 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
+import useMounted from '~/hooks/mounted';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IMentionUser } from '~/interfaces/IPost';
 import { IRouteParams } from '~/interfaces/IRouter';
@@ -16,6 +17,7 @@ import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { parseSafe } from '~/utils/common';
+import useArticlesStore from '../ArticleDetail/store';
 
 export enum EventType {
     ON_PRESS_ACTOR = 'onPressActor',
@@ -38,6 +40,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const headerRef = useRef<any>();
 
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
+  const actions = useArticlesStore((state) => state.actions);
+
   const {
     content, title, summary, coverMedia, createdAt, audience,
     series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions,
@@ -58,10 +62,16 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     },
   };
 
+  const isMounted = useMounted(() => actions.getArticleDetail(id));
+
+  /**
+   * API feed does not return series, so must await
+   * getArticleDetail response then init webview again
+   */
   useEffect(() => {
     // reload webview after content change
-    injectJavaScript(initScript);
-  }, [content]);
+    if (isMounted) injectJavaScript(initScript);
+  }, [series, content, isMounted]);
 
   const onScroll = (event: {offsetY: number}) => {
     const offsetY = event?.offsetY;
