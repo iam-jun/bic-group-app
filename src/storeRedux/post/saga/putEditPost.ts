@@ -40,7 +40,7 @@ export default function* putEditPost({
       const post = response?.data;
       usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
       yield put(modalActions.showHideToastMessage({
-        content: msgSuccess || 'post:text_edit_post_success',
+        content: response?.meta?.message || msgSuccess || 'post:text_edit_post_success',
       }));
       if (!disableNavigate) {
         yield call(
@@ -51,7 +51,7 @@ export default function* putEditPost({
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
     yield put(modalActions.showHideToastMessage({
-      content: msgError || 'post:text_edit_post_failed',
+      content: e?.meta?.message || msgError || 'post:text_edit_post_failed',
       props: {
         type: 'error',
         buttonText: i18n.t('common:text_retry'),
