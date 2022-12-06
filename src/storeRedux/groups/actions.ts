@@ -7,8 +7,6 @@ import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
   IGroupGetMembers,
-  IGroupSetAdmin,
-  IGroupRemoveAdmin,
   IJoiningMember,
   IGroupMembers,
 } from '~/interfaces/IGroup';
@@ -128,15 +126,6 @@ const groupsActions = {
   }),
   addMembers: (payload: IGroupAddMembers) => ({
     type: groupsTypes.ADD_MEMBERS,
-    payload,
-  }),
-
-  setGroupAdmin: (payload: IGroupSetAdmin) => ({
-    type: groupsTypes.SET_GROUP_ADMIN,
-    payload,
-  }),
-  removeGroupAdmin: (payload: IGroupRemoveAdmin) => ({
-    type: groupsTypes.REMOVE_GROUP_ADMIN,
     payload,
   }),
   leaveGroup: (payload: string) => ({
