@@ -2,7 +2,7 @@ import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import useCommunitiesStore from '~/store/entities/communities';
 import showError from '~/store/helper/showError';
 import groupApi from '~/api/GroupApi';
-import showToastEditSuccess from './showToastEditSuccess';
+import showToastEditSuccess from '~/store/entities/communities/actions/showToastEditSuccess';
 
 const editCommunityDetail = (_set, _get) => async (
   data: IGroupDetailEdit,

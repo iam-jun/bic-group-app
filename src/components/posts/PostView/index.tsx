@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { isEqual } from 'lodash';
 import Image from '~/beinComponents/Image';
 import ReactionView from '~/beinComponents/ReactionView';
 import Text from '~/baseComponents/Text';
@@ -125,7 +126,7 @@ const _PostView: FC<PostViewProps> = ({
           onPressHeader={onPressHeader}
         />
         <PostBody
-          postId={postId}
+          data={data}
           isLite={isLite}
           isEmptyPost={isEmpty}
           isPostDetail={isPostDetail}
@@ -195,6 +196,14 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-const PostView = memo(_PostView);
+function propsAreEqual(
+  prev: any, next: any,
+) {
+  return isEqual(
+    prev, next,
+  );
+}
+
+const PostView = memo(_PostView, propsAreEqual);
 PostView.whyDidYouRender = true;
 export default PostView;

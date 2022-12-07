@@ -39,10 +39,9 @@ import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getGroupLink, openUrl,
 } from '~/utils/link';
-import { checkLastAdmin } from '../helper';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
-import useLeaveGroup from '../GroupMembers/components/useLeaveGroup';
+import useLeaveGroup from './hooks/useLeaveGroup';
 import GroupTabHeader from './components/GroupTabHeader';
 import { useBaseHook } from '~/hooks';
 import GroupJoinCancelButton from './components/GroupJoinCancelButton';
@@ -191,23 +190,12 @@ const GroupDetail = (props: any) => {
   const alertLeaveGroup = useLeaveGroup({
     groupId,
     username: user?.username,
+    privacy,
   });
-
-  const navigateToMembers = () => {
-    dispatch(modalActions.clearToastMessage());
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
-  };
 
   const onPressLeave = () => {
     dispatch(modalActions.hideBottomList());
-
-    return checkLastAdmin(
-      groupId,
-      userId,
-      dispatch,
-      alertLeaveGroup,
-      navigateToMembers,
-    );
+    alertLeaveGroup();
   };
 
   const onGetInfoLayout = useCallback((e: any) => {

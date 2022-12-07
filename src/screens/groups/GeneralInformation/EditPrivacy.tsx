@@ -15,6 +15,7 @@ import groupsActions from '~/storeRedux/groups/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import Icon from '~/baseComponents/Icon';
 import { CheckBox } from '~/baseComponents';
+import useGroupController from '../store';
 
 const EditPrivacy = (props: any) => {
   const {
@@ -31,6 +32,7 @@ const EditPrivacy = (props: any) => {
   const isGroupScope = type === 'group';
   const privacyType = isGroupScope ? GroupPrivacyType : CommunityPrivacyType;
   const controller = useCommunityController((state) => state.actions);
+  const groupActions = useGroupController((state) => state.actions);
 
   const shouldSelectSecretPrivacy = selectedPrivacy === privacyType.SECRET;
   const shouldSelectPrivatePrivacy = selectedPrivacy === privacyType.PRIVATE;
@@ -48,7 +50,7 @@ const EditPrivacy = (props: any) => {
       if (shouldSelectPrivatePrivacy) {
         dispatch(groupsActions.updateGroupJoinSetting({ groupId: id, isJoinApproval: joinSettingState }));
       }
-      dispatch(groupsActions.editGroupDetail({ data, editFieldName, callback: onNavigateBack }));
+      groupActions.editGroupDetail(data, editFieldName, onNavigateBack);
     } else {
       if (shouldSelectPrivatePrivacy) {
         controller.updateCommunityJoinSetting(id, rootGroupId, joinSettingState);

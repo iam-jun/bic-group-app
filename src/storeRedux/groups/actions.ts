@@ -2,7 +2,6 @@ import groupsTypes from '~/storeRedux/groups/types';
 import {
   IGroup,
   IGroupDetail,
-  IGroupDetailEdit,
   IGroupImageUpload,
   IGroupAddMembers,
   IGroupGetJoinableMembers,
@@ -72,14 +71,6 @@ const groupsActions = {
     type: groupsTypes.SET_GROUP_DETAIL_ERROR,
     payload,
   }),
-  editGroupDetail: (payload: {
-    data: IGroupDetailEdit;
-    editFieldName?: string;
-    callback?: () => void;
-  }) => ({
-    type: groupsTypes.EDIT_GROUP_DETAIL,
-    payload,
-  }),
   selectJoinableUsers: (payload: IUser) => ({
     type: groupsTypes.SELECT_JOINABLE_USERS,
     payload,
@@ -126,10 +117,6 @@ const groupsActions = {
   }),
   addMembers: (payload: IGroupAddMembers) => ({
     type: groupsTypes.ADD_MEMBERS,
-    payload,
-  }),
-  leaveGroup: (payload: string) => ({
-    type: groupsTypes.LEAVE_GROUP,
     payload,
   }),
 
@@ -211,15 +198,6 @@ const groupsActions = {
   }),
 
   // community
-  getMyCommunities: (payload: {
-    isRefreshing?: boolean;
-    refreshNoLoading?: boolean;
-    params?: {managed: boolean; previewMembers: boolean};
-    callback?: () => void;
-  }) => ({
-    type: groupsTypes.GET_JOINED_COMMUNITIES,
-    payload,
-  }),
   getCommunityMembers: (payload: {
     groupId: string;
     isRefreshing?: boolean;

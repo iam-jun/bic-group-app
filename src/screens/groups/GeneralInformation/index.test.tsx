@@ -1,14 +1,13 @@
-import i18next from 'i18next';
 import React from 'react';
 import * as redux from 'react-redux';
 import { groupPrivacyListDetail, GroupPrivacyType } from '~/constants/privacyTypes';
-import groupsActions from '../../../storeRedux/groups/actions';
 import initialState from '~/storeRedux/initialState';
 import MockedNavigator from '~/test/MockedNavigator';
 import { groupDetailData } from '~/test/mock_data/group';
 import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
 import GeneralInformation from '.';
 import * as helper from './helper';
+import groupApi from '~/api/GroupApi';
 
 describe('GeneralInformation component', () => {
   const component = () => (
@@ -65,7 +64,7 @@ describe('GeneralInformation component', () => {
     // storeData.groups.groupDetail.total_pending_members = 0;
     const store = mockStore(storeData);
 
-    const spy = jest.spyOn(groupsActions, 'editGroupDetail');
+    const spy = jest.spyOn(groupApi, 'editGroupDetail');
     const rendered = renderWithRedux(
       <MockedNavigator component={component} />,
       store,
@@ -74,10 +73,7 @@ describe('GeneralInformation component', () => {
       `general_information.privacy_item.${groupPrivacyListDetail[1].type}`,
     );
     fireEvent.press(itemComponent);
-    expect(spy).toBeCalledWith({
-      data: { id: groupDetailData.group.id, privacy: groupPrivacyListDetail[1].type },
-      editFieldName: i18next.t('common:text_privacy'),
-    });
+    expect(spy).toBeCalled();
   });
 
   it('should call alert when change privacy to public', () => {

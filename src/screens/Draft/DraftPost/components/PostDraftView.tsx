@@ -33,6 +33,8 @@ export interface PostDraftViewProps {
   isPostDetail?: boolean;
 }
 
+const onDoNothing = () => true;
+
 const PostDraftView: FC<PostDraftViewProps> = ({
   data,
   style,
@@ -182,9 +184,12 @@ const PostDraftView: FC<PostDraftViewProps> = ({
         listCommunity={communities}
       />
       <View style={[styles.container, style]}>
-        <PostHeader data={data} />
+        <PostHeader
+          data={data}
+          onPressHeader={onDoNothing}
+        />
         <PostBody
-          postId={id || ''}
+          data={data}
           isPostDetail={isPostDetail}
         />
         <View style={styles.divider}>

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { isEqual } from 'lodash';
 import { useBaseHook } from '~/hooks';
 import Text, { TextProps } from '~/baseComponents/Text';
 
@@ -31,6 +32,7 @@ export interface CollapsibleTextProps extends TextProps {
   limitMarkdownTypes?: boolean;
   parentCommentId?: string;
   copyEnabled?: boolean;
+  mentions?: any;
   BottomRightComponent?: React.ReactNode | React.ReactElement;
 
   onPress?: () => void;
@@ -43,6 +45,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   testID,
   style,
   content,
+  mentions,
   limitLength = 120,
   shortLength = 120,
   toggleOnPress,
@@ -64,8 +67,12 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const [contentShowAll, setContentShowAll] = useState(false);
 
   const shortContent = useMemo(() => getShortContent(content, limitLength, shortLength), [content]);
-
   const _content = !shortContent ? content : contentShowAll ? content : shortContent;
+  const escapeMarkDownContent = useMemo(() => escapeMarkDown(content), [content]);
+
+  const textTestID = parentCommentId
+    ? 'collapsible_text.level_2.content'
+    : 'collapsible_text.level_1.content';
 
   const _onToggleShowTextContent = useCallback(() => {
     setContentShowAll(!contentShowAll);
@@ -99,7 +106,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     );
   };
 
-  const renderContentWithMarkdown = () => (
+  const renderContentWithMarkdown = useCallback(() => (
     <View style={style}>
       {useMarkdownIt ? (
         <MarkdownView
@@ -112,19 +119,16 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
       ) : (
         <Markdown
           {...textProps}
-          textTestID={
-            parentCommentId
-              ? 'collapsible_text.level_2.content'
-              : 'collapsible_text.level_1.content'
-          }
+          value={_content}
+          mentions={mentions}
+          textTestID={textTestID}
           limitMarkdownTypes={limitMarkdownTypes}
           onPressAudience={onPressAudience}
-          value={_content}
         />
       )}
       {renderShortContent()}
     </View>
-  );
+  ), [mentions, _content]);
 
   const renderContent = () => (
     <View style={style}>
@@ -138,13 +142,14 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const WrapperComponent = copyEnabled
     ? CopyableView
     : TouchableWithoutFeedback;
+  const disabled = !(onPress || (toggleOnPress && shortContent));
 
   return (
     <WrapperComponent
       testID={testID}
       activeOpacity={0.6}
-      content={escapeMarkDown(content)}
-      disabled={!(onPress || (toggleOnPress && shortContent))}
+      content={escapeMarkDownContent}
+      disabled={disabled}
       onPress={_onPress}
     >
       {useMarkdown ? renderContentWithMarkdown() : renderContent()}
@@ -161,7 +166,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const CollapsibleText = memo(_CollapsibleText);
+function propsAreEqual(
+  prev: any, next: any,
+) {
+  return isEqual(
+    prev, next,
+  );
+}
+
+const CollapsibleText = memo(_CollapsibleText, propsAreEqual);
 CollapsibleText.whyDidYouRender = true;
 export default CollapsibleText;
 

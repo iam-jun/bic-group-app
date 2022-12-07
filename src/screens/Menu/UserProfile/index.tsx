@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator, ScrollView, StyleSheet, View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
@@ -17,7 +16,6 @@ import Divider from '~/beinComponents/Divider';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useKeySelector } from '~/hooks/selector';
 import useHomeStore from '~/screens/Home/store';
-import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
@@ -65,7 +63,6 @@ const UserProfile = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
-  const dispatch = useDispatch();
 
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
@@ -113,7 +110,7 @@ const UserProfile = (props: any) => {
         );
         openUrl(link);
       } else {
-        dispatch(groupsActions.getMyCommunities({ callback: onPressChat }));
+        onPressChat();
       }
     };
 

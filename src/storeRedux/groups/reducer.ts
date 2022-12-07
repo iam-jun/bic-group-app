@@ -247,18 +247,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...payload,
         },
       };
-    case groupsTypes.EDIT_GROUP_DETAIL:
-      return {
-        ...state,
-        groupDetail: {
-          ...state.groupDetail,
-          group: {
-            ...state.groupDetail.group,
-            ...action.payload,
-          },
-        },
-      };
-
     case groupsTypes.SET_JOINABLE_USERS:
       return {
         ...state,

@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { ReactionType } from '~/constants/reactions';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
@@ -11,9 +12,9 @@ const useContentActions = ({ postId, ownerReactions, reactionsCount }) => {
 
   const commonController = useCommonController((state) => state.actions);
 
-  const onPressMarkSeenPost = () => {
+  const onPressMarkSeenPost = useCallback(() => {
     dispatch(postActions.putMarkSeenPost({ postId }));
-  };
+  }, [postId]);
 
   const onAddReaction = (reactionId: ReactionType) => {
     const payload: IPayloadReactToPost = {

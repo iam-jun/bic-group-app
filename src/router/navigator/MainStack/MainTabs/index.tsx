@@ -43,7 +43,6 @@ const MainTabs = () => {
       actions.buildEmojis();
       dispatch(groupsActions.getMyPermissions());
       giphyActions.getAPIKey();
-      dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
       notiActions.registerPushToken();
       initPushTokenMessage()
         .then((messaging) => {

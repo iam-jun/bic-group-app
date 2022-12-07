@@ -32,6 +32,7 @@ import { ISeriesState } from '~/screens/series/store';
 import { ITopicState } from '~/screens/topic/store';
 import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
+import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 
 export interface BicStore {
   entities: {
@@ -68,6 +69,7 @@ export interface BicStore {
       };
       groupStructure: IGroupStructureState;
       discoverGroups: IDiscoverGroupsState;
+      groupDetail: IGroupDetailState;
     };
     removeGroupMemberStore: IRemoveGroupMemberState;
     discoverCommunitiesStore: IDiscoverCommunitiesState;
