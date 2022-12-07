@@ -49,8 +49,8 @@ export interface CommentViewProps {
   groupIds: string;
   parentCommentId?: string;
   commentData: ICommentData;
-  onPressReply: (data: ICommentData) => void;
   contentBackgroundColor?: string;
+  onPressReply: (data: ICommentData) => void;
   onPressMarkSeenPost?: () => void;
 }
 
@@ -59,8 +59,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
   groupIds,
   parentCommentId,
   commentData,
-  onPressReply,
   contentBackgroundColor,
+  onPressReply,
   onPressMarkSeenPost,
 }: CommentViewProps) => {
   const { rootNavigation } = useRootNavigation();
@@ -360,7 +360,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   limitMarkdownTypes
                   shortLength={200}
                   limitLength={200}
-                  content={content || ''}
+                  content={content}
                   mentions={mentions}
                   parentCommentId={parentCommentId}
                   onPressAudience={onPressAudience}

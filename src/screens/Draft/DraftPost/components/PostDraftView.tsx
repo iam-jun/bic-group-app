@@ -189,7 +189,7 @@ const PostDraftView: FC<PostDraftViewProps> = ({
           onPressHeader={onDoNothing}
         />
         <PostBody
-          postId={id || ''}
+          data={data}
           isPostDetail={isPostDetail}
         />
         <View style={styles.divider}>

@@ -106,6 +106,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   onContentSizeChange,
   ...props
 }: CommentInputProps) => {
+  const testID = useTestID ? 'comment_input' : undefined;
   const [text, setText] = useState<string>(value || '');
 
   const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
@@ -270,6 +271,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       } else {
         handleUpload();
       }
+      setText('');
     }
   };
 
@@ -422,6 +424,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const disabledBtnSend = _loading || (!text.trim() && !hasMedia());
+  const isHideBtnSend = !loading && !text.trim() && !hasMedia();
 
   return (
     <View>
@@ -431,36 +434,36 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <Animated.View style={{ flex: 1, zIndex: 1, height: heightAnimated }}>
             <TextInput
               {...props}
-              testID={useTestID ? 'comment_input' : undefined}
-              onContentSizeChange={_onContentSizeChange}
+              multiline
+              testID={testID}
               ref={_textInputRef}
+              autoFocus={autoFocus}
+              editable={!_loading}
+              placeholder={placeholder}
               style={styles.textInput}
               selectionColor={colors.gray50}
-              multiline
-              autoFocus={autoFocus}
-              placeholder={placeholder}
               placeholderTextColor={colors.gray50}
-              editable={!_loading}
               onFocus={_onFocus}
+              onKeyPress={_onKeyPress}
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
-              onKeyPress={_onKeyPress}
+              onContentSizeChange={_onContentSizeChange}
             >
               {text}
             </TextInput>
           </Animated.View>
           <CommentInputFooter
             useTestID={useTestID}
+            loading={_loading}
+            disabledBtnSend={disabledBtnSend}
+            isHideBtnSend={isHideBtnSend}
+            isDisplayNone={text.trim().length !== 0}
             onPressIcon={onPressIcon}
             onPressFile={_onPressFile}
             onPressImage={_onPressSelectImage}
             onPressCamera={onPressCamera}
             onPressEmoji={onPressEmoji}
             onPressSend={_onPressSend}
-            loading={_loading}
-            disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
-            isHideBtnSend={!text.trim() && !hasMedia()}
-            isDisplayNone={text.trim().length !== 0}
           />
         </View>
         {renderSelectedMedia()}
@@ -477,7 +480,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
           onPressEmoji={onPressEmoji}
           onPressSend={_onPressSend}
         />
-
       </View>
       <StickerView
         stickerViewRef={emojiViewRef}

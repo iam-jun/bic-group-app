@@ -1,12 +1,14 @@
-import { isEmpty } from 'lodash';
-import React, { FC, useCallback, useRef } from 'react';
+import { isEmpty, isEqual } from 'lodash';
+import React, {
+  FC, memo, useCallback, useRef,
+} from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
 import PostPhotoPreview from '~/components/posts/PostPhotoPreview';
 import { uploadTypes } from '~/configs/resourceConfig';
 import { useRootNavigation } from '~/hooks/navigation';
-import { IMarkdownAudience } from '~/interfaces/IPost';
+import { IMarkdownAudience, IPost } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import CopyableView from '~/beinComponents/CopyableView';
 import Markdown from '~/beinComponents/Markdown';
@@ -15,22 +17,20 @@ import { ContentInterestedUserCount } from '~/components/ContentView';
 import FilesView from '~/components/FilesView';
 import LinkPreview from '~/components/LinkPreview';
 import appConfig from '~/configs/appConfig';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 import spacing from '~/theme/spacing';
 import { escapeMarkDown } from '~/utils/formatData';
 import PostVideoPlayer from '../PostVideoPlayer';
 
 export interface PostBodyProps {
-  postId: string;
+  data: IPost;
   isLite?: boolean;
   isEmptyPost?: boolean;
   isPostDetail: boolean;
   onPressMarkSeenPost?: () => void;
 }
 
-const PostBody: FC<PostBodyProps> = ({
-  postId,
+const _PostBody: FC<PostBodyProps> = ({
+  data,
   isLite,
   isEmptyPost,
   isPostDetail,
@@ -38,13 +38,9 @@ const PostBody: FC<PostBodyProps> = ({
 }: PostBodyProps) => {
   const { rootNavigation } = useRootNavigation();
 
-  const mentions = usePostsStore(useCallback(postsSelector.getMentions(postId), [postId]));
-  const isDraft = usePostsStore(useCallback(postsSelector.getIsDraft(postId), [postId]));
-  const media = usePostsStore(useCallback(postsSelector.getMedia(postId), [postId]));
-  const postContent = usePostsStore(useCallback(postsSelector.getContent(postId), [postId]));
-  const highlight = usePostsStore(useCallback(postsSelector.getHighlight(postId), [postId]));
-  const linkPreview = usePostsStore(useCallback(postsSelector.getLinkPreview(postId), [postId]));
-  const totalUsersSeen = usePostsStore(useCallback(postsSelector.getTotalUsersSeen(postId), [postId]));
+  const {
+    id: postId, mentions, isDraft, media, content: postContent, highlight, linkPreview, totalUsersSeen,
+  } = data;
 
   const { images, videos, files } = media || {};
 
@@ -59,7 +55,7 @@ const PostBody: FC<PostBodyProps> = ({
   }).current;
 
   const renderBottomRightComponent = useCallback(() => {
-    if (isLite) return null;
+    if (isDraft) return null;
 
     return (
       <ContentInterestedUserCount
@@ -69,7 +65,9 @@ const PostBody: FC<PostBodyProps> = ({
         style={styles.interestedUserCount}
       />
     );
-  }, [isLite, postId, totalUsersSeen]);
+  }, [isDraft, postId, totalUsersSeen]);
+
+  const BottomRightComponent = renderBottomRightComponent();
 
   const renderContent = () => {
     if (isLite) {
@@ -83,7 +81,6 @@ const PostBody: FC<PostBodyProps> = ({
           useMarkdownIt
           limitMarkdownTypes
           mentions={mentions}
-          BottomRightComponent={!isDraft && renderBottomRightComponent()}
           onPressAudience={onPressMentionAudience}
           onToggleShowTextContent={onPressMarkSeenPost}
         />
@@ -105,16 +102,16 @@ const PostBody: FC<PostBodyProps> = ({
     return (
       <CollapsibleText
         testID="post_view_content"
-        content={content}
-        limitLength={appConfig.limitPostContentLength}
-        shortLength={appConfig.shortPostContentLength}
         useMarkdown
         toggleOnPress
         copyEnabled
+        content={content}
         mentions={mentions}
+        shortLength={appConfig.shortPostContentLength}
+        limitLength={appConfig.limitPostContentLength}
+        BottomRightComponent={BottomRightComponent}
         onPressAudience={onPressMentionAudience}
         onToggleShowTextContent={onPressMarkSeenPost}
-        BottomRightComponent={!isDraft && renderBottomRightComponent()}
       />
     );
   };
@@ -184,4 +181,14 @@ const styles = StyleSheet.create({
   },
 });
 
+function propsAreEqual(
+  prev: any, next: any,
+) {
+  return isEqual(
+    prev, next,
+  );
+}
+
+const PostBody = memo(_PostBody, propsAreEqual);
+PostBody.whyDidYouRender = true;
 export default PostBody;
