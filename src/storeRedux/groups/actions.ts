@@ -2,7 +2,6 @@ import groupsTypes from '~/storeRedux/groups/types';
 import {
   IGroup,
   IGroupDetail,
-  IGroupDetailEdit,
   IGroupImageUpload,
   IGroupAddMembers,
   IGroupGetJoinableMembers,
@@ -70,14 +69,6 @@ const groupsActions = {
   }),
   setGroupDetailError: (payload: boolean) => ({
     type: groupsTypes.SET_GROUP_DETAIL_ERROR,
-    payload,
-  }),
-  editGroupDetail: (payload: {
-    data: IGroupDetailEdit;
-    editFieldName?: string;
-    callback?: () => void;
-  }) => ({
-    type: groupsTypes.EDIT_GROUP_DETAIL,
     payload,
   }),
   selectJoinableUsers: (payload: IUser) => ({

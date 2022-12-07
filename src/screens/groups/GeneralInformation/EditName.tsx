@@ -2,7 +2,6 @@ import { ExtendedTheme, useNavigation, useTheme } from '@react-navigation/native
 import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 
 import Header from '~/beinComponents/Header';
@@ -13,7 +12,7 @@ import dimension from '~/theme/dimension';
 import { fontFamilies } from '~/theme/fonts';
 
 import spacing from '~/theme/spacing';
-import groupsActions from '../../../storeRedux/groups/actions';
+import useGroupController from '../store';
 
 const EditName = (props: any) => {
   const {
@@ -22,10 +21,11 @@ const EditName = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const actions = useCommunityController((state) => state.actions);
+  const groupActions = useGroupController((state) => state.actions);
+
   const [text, setText] = useState<string>(name);
   const _onChangeText = (value: string) => {
     setText(value);
@@ -44,7 +44,7 @@ const EditName = (props: any) => {
     const editFieldName = i18next.t('settings:Name');
     const callback = onNavigateBack;
     if (type === 'group') {
-      dispatch(groupsActions.editGroupDetail({ data, editFieldName, callback }));
+      groupActions.editGroupDetail(data, editFieldName, callback);
     } else {
       actions.editCommunityDetail(data, editFieldName, callback);
     }

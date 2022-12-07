@@ -18,7 +18,6 @@ import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
 import getGroupDetail from './getGroupDetail';
-import editGroupDetail from './editGroupDetail';
 import showError from '~/storeRedux/commonSaga/showError';
 import getCommunityMembers from './getCommunityMembers';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
@@ -39,6 +38,7 @@ import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
+import useGroupController from '~/screens/groups/store';
 
 export default function* groupsSaga() {
   yield takeLatest(
@@ -55,9 +55,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
-  );
-  yield takeLatest(
-    groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail,
   );
   yield takeLatest(
     groupsTypes.UPLOAD_IMAGE, uploadImage,
@@ -148,10 +145,7 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       : i18next.t('common:text_cover');
 
     if (destination === 'group') {
-      yield put(groupsActions.editGroupDetail({
-        data: editData,
-        editFieldName,
-      }));
+      useGroupController.getState().actions.editGroupDetail(editData, editFieldName);
     } else {
       actions.editCommunityDetail(editData, editFieldName);
     }
