@@ -80,7 +80,7 @@ const CreateArticle: FC<CreateArticleProps> = ({ route }: CreateArticleProps) =>
       dispatch(modalActions.showAlertNewFeature());
       return;
     }
-    rootNavigation.navigate(item.screen, { articleId, isDraft: isCreateNewArticle });
+    rootNavigation.navigate(item.screen, { articleId });
   };
 
   const renderItem = ({ item }: any) => (
