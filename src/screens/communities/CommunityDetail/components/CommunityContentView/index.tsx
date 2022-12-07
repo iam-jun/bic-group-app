@@ -9,11 +9,14 @@ import spacing from '~/theme/spacing';
 import PrivateWelcome from '../PrivateWelcome';
 import { ICommunity } from '~/interfaces/ICommunity';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import Divider from '~/beinComponents/Divider';
 import InfoHeader from '~/screens/groups/components/InfoHeader';
 import CommunityTabHeader from '../CommunityTabHeader';
 import CommunityJoinCancelButton from '../CommunityJoinCancelButton';
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import ContentItem from '~/components/ContentItem';
+import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
+import { ContentFeed, AttributeFeed } from '~/interfaces/IFeed';
 
 interface CommunityContentViewProps {
   community: ICommunity;
@@ -26,7 +29,11 @@ interface CommunityContentViewProps {
   onButtonLayout: (e: any) => void;
 }
 
-const selector = (groupId: string) => (state: ITimelineState) => state.items[groupId];
+const selector = (
+  groupId: string,
+  contentFilter: ContentFeed,
+  attributeFilter: AttributeFeed,
+) => (state: ITimelineState) => state.timelines?.[groupId]?.data?.[contentFilter]?.[attributeFilter];
 
 const _CommunityContentView = ({
   community,
@@ -49,7 +56,15 @@ const _CommunityContentView = ({
   } = community;
 
   const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
-  const communityPost = useTimelineStore(useCallback(selector(groupId), [groupId]));
+  const { timelines } = useTimelineStore();
+  const { contentFilter, attributeFilter } = timelines?.[groupId] || {};
+  const communityPost = useTimelineStore(
+    useCallback(selector(groupId, contentFilter, attributeFilter), [
+      groupId,
+      contentFilter,
+      attributeFilter,
+    ]),
+  );
   const { ids: posts, loading, refreshing: isRefreshingPost } = communityPost || {};
 
   const isLoadingPosts = (!isMounted || (isEmpty(posts) && loading)) && !isRefreshingPost;
@@ -91,6 +106,14 @@ const _CommunityContentView = ({
     );
   }
 
+  const _onPressContentFilterTab = (item: any) => {
+    timelineActions.setContentFilter(groupId, item.id);
+  };
+
+  const _onPressAttributeFilterTab = (item: any) => {
+    timelineActions.setAttributeFilter(groupId, item.id);
+  };
+
   return (
     <Animated.FlatList
       testID="flatlist"
@@ -104,6 +127,14 @@ const _CommunityContentView = ({
         <View onLayout={onButtonLayout}>
           <InfoHeader infoDetail={community} />
           <CommunityTabHeader communityId={id} isMember={isMember} teamName={teamName} />
+          <Divider color={colors.gray5} size={spacing.padding.large} />
+          <FilterFeedButtonGroup
+            contentFilter={contentFilter}
+            attributeFilter={attributeFilter}
+            onPressContentFilterTab={_onPressContentFilterTab}
+            onPressAttributeFilterTab={_onPressAttributeFilterTab}
+          />
+          <Divider color={colors.gray5} size={spacing.padding.tiny} />
           <CommunityJoinCancelButton community={community} isMember={isMember} />
           {isLoadingPosts && renderLoading()}
         </View>

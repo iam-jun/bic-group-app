@@ -1,5 +1,5 @@
 import { PostType } from '~/interfaces/IPost';
-import { AttributeFeed, ContentFeed } from './Interface';
+import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 
 export const getParamsContentFeed = (contentFilter: ContentFeed) => {
   switch (contentFilter) {

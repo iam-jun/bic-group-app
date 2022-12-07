@@ -36,7 +36,7 @@ import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';
 import NoticePanel from '../NoticePanel';
-import { AttributeFeed, ContentFeed } from '../../store/Interface';
+import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import ContentItem from '~/components/ContentItem';
 
 export interface NewsfeedListProps {
