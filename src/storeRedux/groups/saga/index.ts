@@ -17,7 +17,6 @@ import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
-import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
 import showError from '~/storeRedux/commonSaga/showError';
@@ -72,9 +71,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.ADD_MEMBERS, addMembers,
-  );
-  yield takeLatest(
-    groupsTypes.LEAVE_GROUP, leaveGroup,
   );
 
   yield takeLatest(

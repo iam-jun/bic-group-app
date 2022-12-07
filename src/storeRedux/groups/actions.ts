@@ -128,10 +128,6 @@ const groupsActions = {
     type: groupsTypes.ADD_MEMBERS,
     payload,
   }),
-  leaveGroup: (payload: string) => ({
-    type: groupsTypes.LEAVE_GROUP,
-    payload,
-  }),
 
   setLoadingAvatar: (payload: boolean) => ({
     type: groupsTypes.SET_LOADING_AVATAR,
@@ -211,15 +207,6 @@ const groupsActions = {
   }),
 
   // community
-  getMyCommunities: (payload: {
-    isRefreshing?: boolean;
-    refreshNoLoading?: boolean;
-    params?: {managed: boolean; previewMembers: boolean};
-    callback?: () => void;
-  }) => ({
-    type: groupsTypes.GET_JOINED_COMMUNITIES,
-    payload,
-  }),
   getCommunityMembers: (payload: {
     groupId: string;
     isRefreshing?: boolean;

@@ -30,7 +30,6 @@ const groupsTypes = {
   ADD_MEMBERS: 'groups/ADD_MEMBERS',
   REMOVE_MEMBER: 'groups/REMOVE_MEMBER',
   CANCEL_JOIN_GROUP: 'group/CANCEL_JOIN_GROUP',
-  LEAVE_GROUP: 'group/LEAVE_GROUP',
 
   UPLOAD_IMAGE: 'groups/UPLOAD_IMAGE',
 

@@ -37,6 +37,7 @@ import useCreateArticleCategoryStore from '~/screens/articles/CreateArticle/scre
 import useCreateArticleSeriesStore from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword/store';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 
 const stores = [
   // entities
@@ -84,6 +85,7 @@ const stores = [
   useAddArticlesStore,
   useForgotPasswordStore,
   useChangePasswordStore,
+  useGroupDetailStore,
 ];
 
 export const resetAllStores = () => {

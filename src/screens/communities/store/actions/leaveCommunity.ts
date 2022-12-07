@@ -6,11 +6,12 @@ import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { CommunityPrivacyType } from '~/constants/privacyTypes';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import APIErrorCode from '~/constants/apiErrorCode';
 import useMenuController from '~/screens/Menu/store';
 import Store from '~/storeRedux';
 import useCommunitiesStore from '~/store/entities/communities';
 import useYourCommunitiesStore from '../../Communities/components/YourCommunities/store';
+import showError from '~/store/helper/showError';
+import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -33,8 +34,10 @@ const leaveCommunity = (_set, _get) => async (
       useCommunitiesStore.getState().actions.getCommunity(communityId);
     }
 
+    // refresh list in screen Managed
+    useManagedStore.getState().actions.getManaged(true);
+
     // refresh joined communities
-    Store.store.dispatch(groupsActions.getMyCommunities({ refreshNoLoading: true }));
     useMenuController.getState().actions.getJoinedCommunities();
     useYourCommunitiesStore.getState().actions.getYourCommunities(true);
 
@@ -45,22 +48,7 @@ const leaveCommunity = (_set, _get) => async (
     Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.error('leaveCommunity error:', err);
-
-    // TODO: use showError helper once merged with BEIN-8192
-
-    if (err.code === APIErrorCode.Group.REVOKE_ACCOUNT_OWNER) {
-      return Store.store.dispatch(modalActions.showHideToastMessage({
-        content: 'groups:error:owner_leave_community',
-        props: { type: 'error' },
-      }));
-    }
-
-    if (err.code === APIErrorCode.Group.LAST_ADMIN_LEAVE) {
-      return Store.store.dispatch(modalActions.showHideToastMessage({
-        content: 'groups:error:last_admin_inner_group_leave',
-        props: { type: 'error' },
-      }));
-    }
+    showError(err);
   }
 };
 
