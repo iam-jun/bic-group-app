@@ -1,0 +1,405 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "borderBottomColor": "#F1F2F8",
+        "borderBottomWidth": 1,
+        "flexDirection": "row",
+        "height": 44,
+        "marginHorizontal": 16,
+      }
+    }
+  >
+    <RCTScrollView
+      alwaysBounceHorizontal={false}
+      contentContainerStyle={
+        Array [
+          Object {
+            "flexDirection": "row",
+          },
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "row",
+          },
+        ]
+      }
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+    >
+      <View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F4EFFB",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "justifyContent": "center",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="tab-button-home:title_feed_content_all-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 11,
+                },
+                Object {},
+                Array [
+                  Object {},
+                  Object {
+                    "color": "#7335C0",
+                  },
+                ],
+              ]
+            }
+          />
+        </View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "justifyContent": "center",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="tab-button-home:title_feed_content_posts-notselected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 11,
+                },
+                Object {},
+                Array [
+                  Object {},
+                  Object {
+                    "color": "#353E6E",
+                  },
+                ],
+              ]
+            }
+          />
+        </View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "justifyContent": "center",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="tab-button-home:title_feed_content_articles-notselected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 11,
+                },
+                Object {},
+                Array [
+                  Object {},
+                  Object {
+                    "color": "#353E6E",
+                  },
+                ],
+              ]
+            }
+          />
+        </View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderRadius": 100,
+              "boxShadow": Object {
+                "elevation": 1,
+                "shadowColor": "rgba(0, 0, 0, 1)",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.08,
+                "shadowRadius": 1,
+              },
+              "justifyContent": "center",
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 6,
+            }
+          }
+          testID="tab-button-home:title_feed_content_series-notselected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 11,
+                },
+                Object {},
+                Array [
+                  Object {},
+                  Object {
+                    "color": "#353E6E",
+                  },
+                ],
+              ]
+            }
+          />
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 30,
+        "paddingHorizontal": 16,
+      }
+    }
+  >
+    <RCTScrollView
+      alwaysBounceHorizontal={false}
+      contentContainerStyle={
+        Array [
+          Object {
+            "flexDirection": "row",
+          },
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "row",
+          },
+        ]
+      }
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+    >
+      <View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderBottomColor": "#7335C0",
+              "borderBottomWidth": 0,
+              "justifyContent": "center",
+              "opacity": 1,
+              "padding": 12,
+              "paddingHorizontal": 8,
+              "paddingVertical": 0,
+            }
+          }
+          testID="tab-button-home:title_feed_attritube_all-selected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 11,
+                },
+                Object {
+                  "color": "#7335C0",
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderBottomColor": "#353E6E",
+              "borderBottomWidth": 0,
+              "justifyContent": "center",
+              "opacity": 1,
+              "padding": 12,
+              "paddingHorizontal": 8,
+              "paddingVertical": 0,
+            }
+          }
+          testID="tab-button-home:title_feed_attritube_important-notselected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 11,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "borderBottomColor": "#353E6E",
+              "borderBottomWidth": 0,
+              "justifyContent": "center",
+              "opacity": 1,
+              "padding": 12,
+              "paddingHorizontal": 8,
+              "paddingVertical": 0,
+            }
+          }
+          testID="tab-button-home:title_feed_attritube_saved-notselected"
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#353E6E",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 11,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;

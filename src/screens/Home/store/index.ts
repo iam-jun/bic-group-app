@@ -1,9 +1,6 @@
+import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import getDataFeed from '~/screens/Home/store/actions/getDataFeed';
-import IHomeState, {
-  AttributeFeed,
-  ContentFeed,
-  IHomeFeed,
-} from '~/screens/Home/store/Interface';
+import IHomeState, { IHomeFeed } from '~/screens/Home/store/Interface';
 import { createStore, resetStore } from '~/store/utils';
 
 const DEFAULT_DATA: IHomeFeed = {

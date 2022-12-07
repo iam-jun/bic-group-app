@@ -3,21 +3,25 @@ import { IPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import { IBaseListState } from '~/store/interfaces/IBaseState';
 import { ITimelineState } from '..';
+import {
+  getParamsSavedAttributeFeed,
+  getParamsContentFeed,
+  getParamsImportantAttributeFeed,
+} from '~/screens/Home/store/helper';
 
 const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
-  const { items } = get();
-  const currentPosts = items[id] || {};
+  const { timelines }: ITimelineState = get();
+  const { contentFilter, attributeFilter, data } = timelines[id] || {};
+  const currentPosts: IBaseListState<IPost> = data[contentFilter][attributeFilter];
   if (currentPosts.loading) return;
 
-  // for the 1st time items[id] can be undefined so we must assign object
-  if (!items[id]) {
-    set((state: ITimelineState) => { state.items[id] = {} as IBaseListState<IPost>; });
-  }
-
   set((state: ITimelineState) => {
-    state.items[id].loading = true;
-    state.items[id].refreshing = isRefresh;
-  }, `getPosts groupId: ${id}, isRefresh: ${isRefresh} `);
+    state.timelines[id].data[contentFilter][attributeFilter] = {
+      ...state.timelines[id].data[contentFilter][attributeFilter],
+      loading: true,
+      refreshing: isRefresh,
+    };
+  }, `getPosts community/group Id: ${id}, isRefresh: ${isRefresh} `);
 
   try {
     const offset = isRefresh ? 0 : currentPosts.ids?.length;
@@ -25,6 +29,9 @@ const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
       groupId: id,
       offset,
       limit: 10,
+      isImportant: getParamsImportantAttributeFeed(attributeFilter),
+      isSaved: getParamsSavedAttributeFeed(attributeFilter),
+      type: getParamsContentFeed(contentFilter),
     };
     const response = await groupApi.getGroupPosts(params);
     const result = response.data?.list || [];
@@ -34,17 +41,24 @@ const getPosts = (set, get) => async (id: string, isRefresh?: boolean) => {
     const currentIds = currentPosts.ids || [];
     const ids = isRefresh ? [] : currentIds;
     set((state: ITimelineState) => {
-      state.items[id].loading = false;
-      state.items[id].refreshing = false;
-      state.items[id].ids = ids.concat(newIds);
-      state.items[id].hasNextPage = response.data?.meta?.hasNextPage;
-    }, 'getPostsSuccess');
+      state.timelines[id].data[contentFilter][attributeFilter] = {
+        ...state.timelines[id].data[contentFilter][attributeFilter],
+        loading: false,
+        refreshing: false,
+        ids: ids.concat(newIds),
+        hasNextPage: response.data?.meta?.hasNextPage,
+      };
+    }, `getPostsSuccess community/group Id: ${id}`);
   } catch (error) {
     set((state: ITimelineState) => {
-      state.items[id].loading = false;
-      state.items[id].refreshing = false;
-      state.items[id].error = error;
-    }, 'getPostsError');
+      state.timelines[id].data[contentFilter][attributeFilter] = {
+        ...state.timelines[id].data[contentFilter][attributeFilter],
+        loading: false,
+        refreshing: false,
+        hasNextPage: false,
+        error,
+      };
+    }, `getPostsError community/group Id: ${id}`);
   }
 };
 

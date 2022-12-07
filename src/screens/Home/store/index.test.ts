@@ -2,7 +2,7 @@ import streamApi from '~/api/StreamApi';
 import { feedData, mockDataFeedResponse } from '~/test/mock_data/home';
 import { renderHook } from '~/test/testUtils';
 import useHomeStore from '.';
-import { AttributeFeed, ContentFeed } from './Interface';
+import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 
 describe('useHomeStore hook', () => {
   it('setContentFilter should set contentFilter', () => {

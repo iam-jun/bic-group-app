@@ -4,7 +4,7 @@ import Store from '~/storeRedux';
 import { IPayloadAddToAllPost, PostType } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import useHomeStore from '~/screens/Home/store';
-import { AttributeFeed, ContentFeed } from '~/screens/Home/store/Interface';
+import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 
 const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
   try {
