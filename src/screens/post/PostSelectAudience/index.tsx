@@ -24,7 +24,7 @@ import {
   checkChangeAudiences,
   ISelectAudienceParams,
 } from './SelectAudienceHelper';
-import { ICreatePostParams } from '~/interfaces/IPost';
+import { ICreatePostParams, IPostAudience } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import useMounted from '~/hooks/mounted';
@@ -84,8 +84,19 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       cancelBtn: true,
       cancelLabel: t('common:btn_discard'),
       confirmLabel: t('common:btn_stay_here'),
-      onCancel: () => rootNavigation.goBack(),
+      onCancel: rootNavigation.goBack,
     }));
+  };
+
+  const saveAudiences = () => {
+    dispatch(postActions.setCreatePostChosenAudiences(selectedAudiences));
+    /**
+       * Save new selected audiences to initAudiences
+       * to avoid user press CreatePostChosenAudiences
+       * and show empty audiences when creating post
+       */
+    // Temporary force selectedAudiences type until revamp
+    dispatch(postActions.setCreatePostInitAudiences(selectedAudiences as IPostAudience));
   };
 
   const onPressBack = () => {
@@ -103,7 +114,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 
     // first step in flow select audience before create post
     if (isFirstStep) {
-      dispatch(postActions.setCreatePostChosenAudiences(selectedAudiences));
+      saveAudiences();
       const params: ICreatePostParams = {
         ...createPostParams,
         initAutoSaveDraft: true,
@@ -119,7 +130,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         cancelLabel: t('common:btn_discard'),
         confirmLabel: t('post:create_post:btn_save_change'),
         onConfirm: () => {
-          dispatch(postActions.setCreatePostChosenAudiences(selectedAudiences));
+          saveAudiences();
           rootNavigation.goBack();
         },
       }));
