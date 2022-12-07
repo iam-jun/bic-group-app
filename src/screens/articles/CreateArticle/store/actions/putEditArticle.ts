@@ -50,6 +50,7 @@ const putEditArticle = (set, get) => async (
     if (get().isPublishing) {
       const goToArticleDetail = () => {
         navigation.replaceListScreenByNewScreen([
+          articleStack.createArticle,
           articleStack.createArticleTitle,
           articleStack.createArticleSummary,
           articleStack.createArticleCover,

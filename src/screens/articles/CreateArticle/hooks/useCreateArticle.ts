@@ -52,7 +52,7 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
   const isEmptyContent = () => isEmpty(data.content) || data.content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
 
   const isHasChange = () => {
-    const isContentUpdated = article.content !== data.content && !isEmptyContent();
+    // const isContentUpdated = article.content !== data.content && !isEmptyContent();
     const isSummaryUpdated = article.summary !== data.summary;
     const isTitleUpdated = article.title !== data.title && !isEmpty(data.title);
     const isCategoriesUpdated = !isEqual(article.categories, data.categories) && !isEmpty(data.categories);
@@ -68,9 +68,17 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
     //   isAudienceUpdated,
     //   isCoverMediaUpdated,
     // }, null, 2), '\x1b[0m');
-    return !isEmptyContent() // empty content lead to bug on edit content webview, always keep content not empty
-      && (isTitleUpdated
-      || isContentUpdated
+
+    // return !isEmptyContent() // empty content lead to bug on edit content webview, always keep content not empty
+    //   && (isTitleUpdated
+    //   || isContentUpdated
+    //   || isSummaryUpdated
+    //   || isCategoriesUpdated
+    //   // || isAudienceUpdated
+    //   || isCoverMediaUpdated
+    //   || isSeriesUpdated);
+
+    return (isTitleUpdated
       || isSummaryUpdated
       || isCategoriesUpdated
       // || isAudienceUpdated

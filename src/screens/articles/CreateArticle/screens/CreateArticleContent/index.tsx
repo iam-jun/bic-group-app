@@ -1,9 +1,9 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
-  FC, useEffect, useRef, useState,
+  FC, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { debounce } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';
@@ -24,6 +24,8 @@ import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Inter
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import InsetBottomView from '~/baseComponents/InsetBottomView';
 import { EMPTY_ARTICLE_CONTENT } from '~/constants/article';
+import postsSelector from '~/store/entities/posts/selectors';
+import usePostsStore from '~/store/entities/posts';
 
 export enum EventType {
     ON_EDITOR_CHANGE = 'onEditorChange',
@@ -46,9 +48,14 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
   const styles = createStyle(theme);
   const ref = useRef<ArticleWebviewRef>();
 
+  const actions = useCreateArticleStore((state) => state.actions);
+
+  const article = usePostsStore(useCallback(postsSelector.getPost(articleId, {}), [articleId]));
+  const { isDraft, content: articleContent } = article;
+
   const articleData = useCreateArticle({ articleId });
   const {
-    loading, enableButtonSave, validButtonNext, content, groupIds,
+    loading, validButtonNext, content, groupIds,
     handleSave, handleBack, handleContentChange,
   } = articleData || {};
   const isPublishing = useCreateArticleStore((state) => state.isPublishing);
@@ -66,13 +73,23 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     },
   };
 
-  const disabled = (isPublishing ? !validButtonNext.isContentValid : !enableButtonSave) || loading;
+  const isEmptyContent = () => isEmpty(content) || content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
+  const isContentUpdated = articleContent !== content && !isEmptyContent();
+  const disabled = (isPublishing ? !validButtonNext.isContentValid : !isContentUpdated) || loading;
 
   useEffect(() => () => {
     resetMention();
+    // for creating article, need to publish
+    if (isDraft && !isPublishing) {
+      actions.setIsPublishing(false);
+    }
   }, []);
 
   const onPressSave = () => {
+    // for creating article, need to publish
+    if (isDraft) {
+      actions.setIsPublishing(true);
+    }
     handleSave();
   };
 
@@ -187,7 +204,7 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
       <Header
         title={t('article:text_option_edit_content')}
         buttonProps={{ disabled, loading, style: styles.btnPublish }}
-        buttonText={t(isPublishing ? 'common:btn_publish' : 'common:btn_save')}
+        buttonText={t(isPublishing || isDraft ? 'common:btn_publish' : 'common:btn_save')}
         onPressButton={onPressSave}
         onPressBack={isPublishing ? goBack : handleBack}
       />
