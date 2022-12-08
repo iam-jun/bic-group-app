@@ -5,6 +5,7 @@ import showError from '~/store/helper/showError';
 import Store from '~/storeRedux';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
+import useGroupMemberStore from '..';
 
 const removeGroupMember = () => async (
   { groupId, userId }: {groupId: string; userId: string},
@@ -13,7 +14,11 @@ const removeGroupMember = () => async (
     const response = await groupApi.removeGroupMembers(groupId, [userId]);
 
     const newUpdatedData = removeMemberFromMemberList(userId, 'group');
-    Store.store.dispatch(groupsActions.setGroupMembers(newUpdatedData));
+
+    useGroupMemberStore
+      .getState()
+      .actions
+      .setGroupMembers(newUpdatedData);
 
     // to update userCount
     Store.store.dispatch(groupsActions.getGroupDetail({ groupId }));

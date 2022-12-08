@@ -16,6 +16,7 @@ import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatData';
+import useMemberSection from '~/hooks/useMemberSection';
 
 interface MemberListProps {
   type: 'group' | 'community';
@@ -36,7 +37,9 @@ const MemberList = ({
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  const memberSectionData = getMembersSection(type);
+  // Waiting refactor communityMembers to edit condition type ...
+  const memberSectionData = type === 'group' ? useMemberSection() : getMembersSection(type);
+
   const { loading, canLoadMore, sectionList } = memberSectionData;
 
   const renderEmpty = () => (!loading ? <NoSearchResultsFound /> : null);
