@@ -232,7 +232,7 @@ const Header: React.FC<HeaderProps> = ({
     <Animated.View
       style={[
         styles.container,
-        removeBorderAndShadow && styles.bottomBorderAndShadow,
+        !removeBorderAndShadow && styles.bottomBorderAndShadow,
         style,
       ]}
       testID="header.content"
