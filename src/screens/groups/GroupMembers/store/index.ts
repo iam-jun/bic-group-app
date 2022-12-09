@@ -19,7 +19,6 @@ export interface IGroupMemberState extends IBaseState {
 }
 
 const initialState = {
-  selectedUsers: [],
   groupMembers: {
     loading: true,
     canLoadMore: true,

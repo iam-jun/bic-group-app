@@ -25,7 +25,7 @@ const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
     if (!response || !response.data) {
       set((state: IGroupMemberState) => {
         state.groupMembers.loading = false;
-      }, 'getGroupMembers');
+      }, 'getGroupMembersFailed');
       return;
     }
 
@@ -56,12 +56,12 @@ const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
 
     set((state: IGroupMemberState) => {
       state.groupMembers = newData;
-    }, 'getGroupMembers');
+    }, 'getGroupMembersSuccess');
   } catch (e) {
     console.error('\x1b[31m🐣️ getGroupMembers error: ', e, '\x1b[0m');
     set((state: IGroupMemberState) => {
       state.groupMembers.loading = false;
-    }, 'getGroupMembers');
+    }, 'getGroupMembersFailed');
     showError(e);
   }
 };

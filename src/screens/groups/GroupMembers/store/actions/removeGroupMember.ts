@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
+import useRemoveMemberFromMemberList from '~/hooks/useRemoveMemberFromMemberList';
 import { IToastMessage } from '~/interfaces/common';
-import { removeMemberFromMemberList } from '~/screens/communities/CommunityMembers/store/actions/removeCommunityMember';
 import showError from '~/store/helper/showError';
 import Store from '~/storeRedux';
 import groupsActions from '~/storeRedux/groups/actions';
@@ -13,7 +13,7 @@ const removeGroupMember = () => async (
   try {
     const response = await groupApi.removeGroupMembers(groupId, [userId]);
 
-    const newUpdatedData = removeMemberFromMemberList(userId, 'group');
+    const newUpdatedData = useRemoveMemberFromMemberList(userId, 'group');
 
     useGroupMemberStore
       .getState()

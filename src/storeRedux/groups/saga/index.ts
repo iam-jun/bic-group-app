@@ -278,8 +278,6 @@ function* updateLoadingImageState(
 }
 
 export function* refreshGroupMembers(groupId: string) {
-  const { actions } = useGroupMemberStore.getState();
-  actions.clearGroupMembers();
-  actions.getGroupMembers({ groupId });
+  useGroupMemberStore.getState().actions.getGroupMembers({ groupId, isRefreshing: true });
   yield put(groupsActions.getGroupDetail({ groupId }));
 }

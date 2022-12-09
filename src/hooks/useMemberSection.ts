@@ -10,7 +10,7 @@ const useMemberSection = () => {
 
   const sectionList: any = [];
 
-  Object.values(members)?.map((roleData: any) => {
+  Object.values(members)?.forEach((roleData: any) => {
     const section: any = {};
     const { name, data, userCount } = roleData || {};
 
@@ -20,8 +20,6 @@ const useMemberSection = () => {
       section.userCount = userCount;
       sectionList.push(section);
     }
-
-    return true;
   });
 
   return {
