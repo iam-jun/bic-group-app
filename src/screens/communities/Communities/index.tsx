@@ -70,7 +70,7 @@ const Index = () => {
         removeBorderAndShadow
         title="tabs:communities"
         titleTextProps={{ useI18n: true, style: styles.textHeader }}
-        icon="iconSearch"
+        icon="search"
         onPressIcon={onPressSearch}
         buttonProps={{
           icon: 'CompassSolid',
