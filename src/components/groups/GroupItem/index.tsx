@@ -106,6 +106,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     container: {
       flex: 1,
       flexDirection: 'row',
+      alignItems: 'center',
     },
     textContainer: {
       flex: 1,
