@@ -22,6 +22,7 @@ import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupMemberRequests from './GroupMemberRequests';
 import { IconType } from '~/resources/icons';
+import useGroupMemberStore from './store';
 
 const _GroupMembers = ({ route }: any) => {
   const { groupId, targetIndex, isMemberCommunity } = route.params;
@@ -40,6 +41,7 @@ const _GroupMembers = ({ route }: any) => {
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
+  const actions = useGroupMemberStore((state) => state.actions);
 
   const { offset } = useKeySelector(groupsKeySelector.groupMembers);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
@@ -62,7 +64,7 @@ const _GroupMembers = ({ route }: any) => {
 
   const getMembers = () => {
     if (groupId) {
-      dispatch(groupsActions.getGroupMembers({ groupId }));
+      actions.getGroupMembers({ groupId });
     }
   };
 

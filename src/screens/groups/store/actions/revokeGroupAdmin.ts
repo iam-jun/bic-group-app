@@ -1,17 +1,18 @@
 import groupApi from '~/api/GroupApi';
-import groupsActions from '~/storeRedux/groups/actions';
 import Store from '~/storeRedux';
 import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import showError from '~/store/helper/showError';
+import useGroupMemberStore from '../../GroupMembers/store';
 
 const revokeGroupAdmin = (_set, _get) => async (groupId: string, userId: string) => {
   try {
     const response = await groupApi.removeGroupAdmin(groupId, userId);
 
-    Store.store.dispatch(
-      groupsActions.getGroupMembers({ groupId, isRefreshing: true }),
-    );
+    useGroupMemberStore
+      .getState()
+      .actions
+      .getGroupMembers({ groupId, isRefreshing: true });
 
     const toastMessage: IToastMessage = {
       content: response?.meta?.message || 'common:text_success_message',
