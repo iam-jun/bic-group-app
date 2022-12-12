@@ -181,6 +181,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     groupMemberRequests,
     communityMembers,
     communitySearchMembers,
+    groupMembers,
     groupSearchMembers,
     communityMemberRequests,
     globalSearch,
@@ -220,6 +221,19 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
 
+    case groupsTypes.CLEAR_GROUP_MEMBER:
+      return {
+        ...state,
+        groupMembers: groupInitState.groupMembers,
+      };
+    case groupsTypes.SET_GROUP_MEMBER:
+      return {
+        ...state,
+        groupMembers: {
+          ...groupMembers,
+          ...payload,
+        },
+      };
     case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
       return {
         ...state,

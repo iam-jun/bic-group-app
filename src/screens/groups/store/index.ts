@@ -6,7 +6,7 @@ import assignGroupAdmin from './actions/assignGroupAdmin';
 import editGroupDetail from './actions/editGroupDetail';
 import revokeGroupAdmin from './actions/revokeGroupAdmin';
 
-export interface IGroupController {
+interface IGroupController {
   actions: {
     assignGroupAdmin: (groupId: string, userIds: string[]) => void;
     revokeGroupAdmin: (groupId: string, userId: string) => void;

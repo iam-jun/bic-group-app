@@ -15,7 +15,7 @@ import useAccountSettingsStore from '~/screens/Menu/AccountSettings/store';
 import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
-import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
+import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '../screens/articles/ArticleDetail/store';
 import useUserInterestedPostStore from '~/components/posts/UserInterestedPost/store';
@@ -66,7 +66,7 @@ const stores = [
   useChatStore,
   useDiscoverGroupsStore,
   useRemoveCommunityMemberStore,
-  useGroupMemberStore,
+  useRemoveGroupMemberStore,
   useCreateArticleStore,
   useCreateArticleCategoryStore,
   useCreateArticleSeriesStore,
