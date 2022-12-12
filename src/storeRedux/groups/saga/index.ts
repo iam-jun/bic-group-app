@@ -21,6 +21,7 @@ import getGroupDetail from './getGroupDetail';
 import showError from '~/storeRedux/commonSaga/showError';
 import getCommunityMembers from './getCommunityMembers';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
+import getGroupMembers from './getGroupMembers';
 import getGroupSearchMembers from './getGroupSearchMembers';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
 import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
@@ -38,7 +39,6 @@ import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
 import useGroupController from '~/screens/groups/store';
-import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
 
 export default function* groupsSaga() {
   yield takeLatest(
@@ -49,6 +49,9 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.GET_GROUP_DETAIL, getGroupDetail,
+  );
+  yield takeLatest(
+    groupsTypes.GET_GROUP_MEMBER, getGroupMembers,
   );
   yield takeLatest(
     groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
@@ -278,6 +281,7 @@ function* updateLoadingImageState(
 }
 
 export function* refreshGroupMembers(groupId: string) {
-  useGroupMemberStore.getState().actions.getGroupMembers({ groupId, isRefreshing: true });
+  yield put(groupsActions.clearGroupMembers());
+  yield put(groupsActions.getGroupMembers({ groupId }));
   yield put(groupsActions.getGroupDetail({ groupId }));
 }

@@ -1,6 +1,7 @@
 import groupApi from '~/api/GroupApi';
-import useRemoveMemberFromMemberList from '~/hooks/useRemoveMemberFromMemberList';
 import { IToastMessage } from '~/interfaces/common';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
+import { IGroupMembers } from '~/interfaces/IGroup';
 import useCommunitiesStore from '~/store/entities/communities';
 import showError from '~/store/helper/showError';
 import Store from '~/storeRedux';
@@ -13,7 +14,7 @@ const removeCommunityMember = () => async (
   try {
     const response = await groupApi.removeGroupMembers(groupId, [userId]);
 
-    const newUpdatedData = useRemoveMemberFromMemberList(userId, 'community');
+    const newUpdatedData = removeMemberFromMemberList(userId, 'community');
     Store.store.dispatch(groupsActions.setCommunityMembers(newUpdatedData));
 
     // to update userCount
@@ -32,3 +33,41 @@ const removeCommunityMember = () => async (
 };
 
 export default removeCommunityMember;
+
+export const removeMemberFromMemberList = (userId: string, type: 'community' | 'group') => {
+  const { groups } = Store.store.getState();
+  const membersData = groups[`${type}Members`] || {};
+
+  let updatedData = {};
+  let offset = 0;
+
+  Object.keys(membersData).forEach(
+    (role: string) => {
+      const memberRoleData = membersData[role].data;
+      if (memberRoleData
+        && membersData[role].name
+        && membersData[role].userCount) {
+        const newData = memberRoleData.filter(
+          (item: ICommunityMembers | IGroupMembers) => item.id !== userId,
+        );
+
+        // need to update this for loading more data
+        offset += newData.length;
+
+        updatedData = {
+          ...updatedData,
+          [role]: {
+            ...membersData[role],
+            data: newData,
+            userCount: newData.length,
+          },
+        };
+      }
+    },
+  );
+
+  return {
+    ...updatedData,
+    offset,
+  };
+};

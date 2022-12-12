@@ -31,6 +31,18 @@ const groupsActions = {
     payload,
   }),
 
+  clearGroupMembers: () => ({
+    type: groupsTypes.CLEAR_GROUP_MEMBER,
+  }),
+  setGroupMembers: (payload: any) => ({
+    type: groupsTypes.SET_GROUP_MEMBER,
+    payload,
+  }),
+  getGroupMembers: (payload: IGroupGetMembers) => ({
+    type: groupsTypes.GET_GROUP_MEMBER,
+    payload,
+  }),
+
   getGroupSearchMembers: (payload: IGroupGetMembers) => ({
     type: groupsTypes.GET_GROUP_SEARCH_MEMBERS,
     payload,

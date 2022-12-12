@@ -15,7 +15,7 @@ import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/
 import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
 import { IRemoveCommunityMemberState } from '~/screens/communities/CommunityMembers/store';
-import { IGroupMemberState } from '~/screens/groups/GroupMembers/store';
+import IRemoveGroupMemberState from '~/screens/groups/GroupMembers/store/Interface';
 import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
 import { ICommunitiesState } from './entities/communities';
@@ -33,7 +33,6 @@ import { ITopicState } from '~/screens/topic/store';
 import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
-import { IGroupController } from '~/screens/groups/store';
 
 export interface BicStore {
   entities: {
@@ -64,20 +63,15 @@ export interface BicStore {
     seriesStore: ISeriesState,
   };
   groups: {
-    groupController: IGroupController;
     components: {
       CommunityJoinedGroupTree: {
         communityJoinedGroupTreeStore: ICommunityJoinedGroupTreeState;
       };
       groupStructure: IGroupStructureState;
       discoverGroups: IDiscoverGroupsState;
+      groupDetail: IGroupDetailState;
     };
-    GroupMembers: {
-      groupMemberStore: IGroupMemberState;
-    };
-    GroupDetail: {
-      groupDetailStore: IGroupDetailState;
-    };
+    removeGroupMemberStore: IRemoveGroupMemberState;
     discoverCommunitiesStore: IDiscoverCommunitiesState;
     discoverCommunitiesSearchStore: IDiscoverCommunitiesSearchState;
     managedStore: IManagedState;
