@@ -1,13 +1,11 @@
 import React, { FC, useMemo } from 'react';
 import {
   StyleSheet,
-  Platform,
-  KeyboardAvoidingView,
+  View,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { isEmpty } from 'lodash';
 import { useBaseHook } from '~/hooks';
 
@@ -30,6 +28,7 @@ import spacing from '~/theme/spacing';
 import useMounted from '~/hooks/mounted';
 import SelectAudience, { ContentType } from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -47,8 +46,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-
-  const insets = useSafeAreaInsets();
 
   const allAudiences = useSelectAudienceStore((state) => state.selectedAudiences);
   const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences) || [];
@@ -142,14 +139,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 
   return (
     <ScreenWrapper isFullView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        enabled
-        style={styles.container}
-        keyboardVerticalOffset={
-          Platform.OS === 'ios' ? (insets?.bottom ? 90 : 60) : 0
-        }
-      >
+      <View style={styles.container}>
         <Header
           title="post:title_post_to"
           titleTextProps={{ useI18n: true }}
@@ -163,7 +153,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           onPressBack={onPressBack}
         />
         <SelectAudience contentType={ContentType.POST} />
-      </KeyboardAvoidingView>
+      </View>
+      <KeyboardSpacer iosOnly />
     </ScreenWrapper>
   );
 };

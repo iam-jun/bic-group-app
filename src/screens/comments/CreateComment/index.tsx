@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 
 import { useBaseHook } from '~/hooks';
+import ImageUploader from '~/services/imageUploader';
 import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import * as modalActions from '~/storeRedux/modal/actions';
@@ -128,7 +129,9 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
     if (commentId && comment) {
       const images = [];
       if (selectedImg) {
+        const fileUploaded = ImageUploader.getInstance().getFile(selectedImg?.fileName);
         const imageData: IActivityDataImage = {
+          id: fileUploaded?.result?.id,
           name: selectedImg?.url || selectedImg?.fileName || '',
           origin_name: selectedImg?.fileName,
           width: selectedImg?.file?.width,
