@@ -39,11 +39,6 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
   }
 
   const renderContent = () => {
-    if (giphy) {
-      return (
-        <GifView giphy={giphy} />
-      );
-    }
     if (images && !isEmpty(images)) {
       return (
         <PostPhotoPreview
@@ -53,6 +48,11 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
           onLongPress={onLongPress}
           enableGalleryModal
         />
+      );
+    }
+    if (giphy) {
+      return (
+        <GifView giphy={giphy} />
       );
     }
     return null;

@@ -139,7 +139,12 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
         };
         images.push(imageData);
       }
-      const newData: ICommentData = { content, media: { images } };
+      const newData: ICommentData = {
+        content,
+        media: { images },
+        giphyId: '',
+        giphyUrl: '',
+      };
       const payload = {
         id: commentId,
         comment,
