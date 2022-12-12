@@ -28,7 +28,7 @@ platform :android do
         \n **Git Branch**: #{git_branch}
         \n **Git Commit**: #{git_mess}",
         ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-        '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+        'bicbotnotice2')
     end
   end
 
@@ -59,7 +59,7 @@ platform :android do
         \n **Git Branch**: #{git_branch}
         \n **Git Commit**: #{git_mess}",
         ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-        '05ba7d6d-70d6-4c19-b304-7adf8d0d5218')
+        'bicbotnotice2')
     end
   end
 
@@ -183,7 +183,7 @@ platform :ios do
         \n **Git Branch**: #{git_branch}
         \n **Git Commit**: #{git_mess}",
         ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-        '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+        'noticebot')
     end
   end
 
@@ -214,7 +214,7 @@ platform :ios do
         \n **Git Branch**: #{git_branch}
         \n **Git Commit**: #{git_mess}",
         ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-        '65864708-d4e6-4360-aa89-32fef3cd1b9a')
+        'noticebot')
     end
   end
 
