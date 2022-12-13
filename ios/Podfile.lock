@@ -420,6 +420,9 @@ PODS:
     - React-Core
   - react-native-pager-view (5.4.8):
     - React-Core
+  - react-native-paste-image-input (0.1.0):
+    - React-Core
+    - Swime (= 3.0.6)
   - react-native-restart (0.0.24):
     - React-Core
   - react-native-safe-area-context (4.3.1):
@@ -538,7 +541,7 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.17.9):
     - React-Core
-  - RNCClipboard (1.9.0):
+  - RNCClipboard (1.11.1):
     - React-Core
   - RNDateTimePicker (3.5.2):
     - React-Core
@@ -620,6 +623,7 @@ PODS:
   - Sentry/HybridSDK (7.31.2)
   - SocketRocket (0.6.0)
   - SSZipArchive (2.2.3)
+  - Swime (3.0.6)
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -693,6 +697,7 @@ DEPENDENCIES:
   - react-native-flipper (from `../node_modules/react-native-flipper`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
+  - react-native-paste-image-input (from `../node_modules/react-native-paste-image-input`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
@@ -768,6 +773,7 @@ SPEC REPOS:
     - Sentry
     - SocketRocket
     - SSZipArchive
+    - Swime
     - TOCropViewController
     - YogaKit
 
@@ -854,6 +860,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
+  react-native-paste-image-input:
+    :path: "../node_modules/react-native-paste-image-input"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
@@ -1004,6 +1012,7 @@ SPEC CHECKSUMS:
   react-native-flipper: cc9cdf47db2bbe0d9227eeec4f93e2290e55674b
   react-native-netinfo: 1c7676413ab265759c7b3da205efab163f5366ef
   react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
+  react-native-paste-image-input: e9ee848a663338b713d22bcdf9d6e53828fe57a4
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
   react-native-slider: 7d19220da2f2ae7cbb9aa80127cb73c597fa221f
@@ -1026,7 +1035,7 @@ SPEC CHECKSUMS:
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAWSCognito: b967f462350ac749f2ff36426f84cdbf5689f576
   RNCAsyncStorage: b2489b49e38c85e10ed45a888d13a2a4c7b32ea1
-  RNCClipboard: 99fc8ad669a376b756fbc8098ae2fd05c0ed0668
+  RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 98cc93d4b3b09b33e784b751f04d414065a61fd4
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
@@ -1048,6 +1057,7 @@ SPEC CHECKSUMS:
   Sentry: b15765d11769852fe78c9add942f7df60ed5dbf5
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
+  Swime: d7b2c277503b6cea317774aedc2dce05613f8b0b
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: c4d61225a466f250c35c1ee78d2d0b3d41fe661c
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
