@@ -56,12 +56,9 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
     />
   );
 
-  const renderRowOptions = () => {
-    if (articles?.length <= LIMIT_ARTICLE && isLite) return null;
-
-    return (
-      <View style={[styles.default, articles?.length > LIMIT_ARTICLE && styles.row]}>
-        {articles?.length > LIMIT_ARTICLE && (
+  const renderRowOptions = () => (
+    <View style={[styles.default, articles?.length > LIMIT_ARTICLE && styles.row, !!isLite && styles.rowLite]}>
+      {articles?.length > LIMIT_ARTICLE && (
         <Text.SubtitleM
           testID="series_content.short_content"
           onPress={onToggleShowArticle}
@@ -72,18 +69,15 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
             ? 'common:text_see_less'
             : 'common:text_see_more'}
         </Text.SubtitleM>
-        )}
-        {!isLite && (
-        <ContentInterestedUserCount
-          isLite
-          id={id}
-          interestedUserCount={totalUsersSeen}
-          style={styles.interestedUserCount}
-        />
-        )}
-      </View>
-    );
-  };
+      )}
+      <ContentInterestedUserCount
+        isLite
+        id={id}
+        interestedUserCount={totalUsersSeen}
+        style={styles.interestedUserCount}
+      />
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -97,7 +91,7 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
       </Button>
       <DescriptionSection description={summarySection} />
       {renderListArticle()}
-      {articles?.length > LIMIT_ARTICLE && renderRowOptions()}
+      {renderRowOptions()}
     </View>
   );
 };
@@ -123,6 +117,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     margin: 0,
     alignItems: 'flex-end',
+  },
+  rowLite: {
+    paddingVertical: 0,
   },
 });
 
