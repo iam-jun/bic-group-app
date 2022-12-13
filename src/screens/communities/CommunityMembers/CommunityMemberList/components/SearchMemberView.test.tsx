@@ -1,16 +1,17 @@
 import React from 'react';
+import { communityDetailData } from '~/test/mock_data/communities';
 import { renderWithRedux } from '~/test/testUtils';
 import SearchMemberView from './SearchMemberView';
 
 describe('SearchMemberView component', () => {
-  const communityId = '1';
+  const community = { ...communityDetailData };
   const isOpen = true;
   const onPressMenu = jest.fn();
 
   it('should render data list correctly', () => {
     const wrapper = renderWithRedux(
       <SearchMemberView
-        communityId={communityId}
+        community={community}
         isOpen={isOpen}
         initSearch="test"
         onPressMenu={onPressMenu}

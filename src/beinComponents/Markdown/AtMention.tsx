@@ -13,7 +13,7 @@ import IMentionInputState from '../inputs/MentionInput/store/Interface';
 import { useKeySelector } from '~/hooks/selector';
 
 interface Props {
-  mentions?: any[];
+  mentions?: any;
   mentionName: string;
   style?: StyleProp<TextStyle>;
   onPress?: (audience: IMarkdownAudience, e: any) => void;

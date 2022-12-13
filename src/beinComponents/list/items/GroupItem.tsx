@@ -8,7 +8,7 @@ import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
 import Icon from '~/baseComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/baseComponents/Checkbox';

@@ -44,27 +44,25 @@ const CommunityMembers = ({ route }: any) => {
   const [selectedMember, setSelectedMember] = useState<ICommunityMembers>();
   const baseSheetRef: any = useRef();
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_COMMUNITY_JOINING_REQUESTS,
-  );
-  const canEditJoinSetting = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_JOIN_SETTING,
-  );
-  const canAddMember = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
-  );
-
   const community = useCommunitiesStore(useCallback(
     (state) => state.data[communityId] || {} as ICommunity, [communityId],
   ));
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+
+  const { groupId } = community || {};
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
+    groupId,
+    PERMISSION_KEY.APPROVE_REJECT_JOINING_REQUESTS,
+  );
+  const canEditJoinSetting = hasPermissionsOnScopeWithId(
+    groupId,
+    PERMISSION_KEY.EDIT_JOIN_SETTING,
+  );
+  const canAddMember = hasPermissionsOnScopeWithId(
+    groupId,
+    PERMISSION_KEY.ADD_MEMBER,
+  );
 
   useEffect(() => {
     // In case there's no data available yet when navigating directly
@@ -107,7 +105,7 @@ const CommunityMembers = ({ route }: any) => {
     if (selectedIndex === 1) {
       return (
         <CommunityMemberRequests
-          communityId={communityId}
+          community={community}
           canAddMember={canAddMember}
           canApproveRejectJoiningRequests={canApproveRejectJoiningRequests}
           canEditJoinSetting={canEditJoinSetting}
@@ -173,7 +171,7 @@ const CommunityMembers = ({ route }: any) => {
 
       <SearchMemberView
         isOpen={isOpen}
-        communityId={communityId}
+        community={community}
         onClose={onCloseModal}
         onPressMenu={onPressMenu}
         placeholder={t('groups:text_search_member')}

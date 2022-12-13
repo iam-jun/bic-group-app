@@ -10,13 +10,14 @@ export default function* declineAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; total:number; callback?: () => void};
+  payload: {groupId: string; total:number;};
 }) {
-  const { communityId, total } = payload;
+  const { groupId, total } = payload;
   try {
-    yield call(groupApi.declineAllCommunityMemberRequests, communityId);
+    yield call(groupApi.declineAllGroupMemberRequests, groupId);
 
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_all')}`.replace('{0}', total.toString()),
     };
     yield put(modalActions.showHideToastMessage(toastMessage));

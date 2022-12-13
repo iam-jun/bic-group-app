@@ -5,6 +5,8 @@ import { IGroupMembers } from '~/interfaces/IGroup';
 import MemberList from '../../components/MemberList';
 import actions from '~/storeRedux/groups/actions';
 import { useMyPermissions } from '~/hooks/permissions';
+import { useKeySelector } from '~/hooks/selector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 interface GroupMemberListProps {
   groupId: string;
@@ -15,18 +17,17 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
   const dispatch = useDispatch();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
     [
-      PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
-      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
+      PERMISSION_KEY.REMOVE_MEMBER,
+      PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
     ],
   );
+  const { canLoadMore } = useKeySelector(groupsKeySelector.groupMembers);
 
   const getMembers = (isRefreshing?: boolean) => {
-    if (groupId) {
-      dispatch(actions.getGroupMembers({ groupId, isRefreshing }));
-    }
+    if (!groupId) return;
+    dispatch(actions.getGroupMembers({ groupId, isRefreshing }));
   };
 
   useEffect(
@@ -40,7 +41,7 @@ const GroupMemberList = ({ groupId, onPressMenu }: GroupMemberListProps) => {
   );
 
   const onLoadMore = () => {
-    getMembers();
+    canLoadMore && getMembers();
   };
 
   const onRefresh = () => {

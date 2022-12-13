@@ -3,6 +3,7 @@ import {
 } from '~/interfaces/IPost';
 import { SortOder } from './common';
 import { IOrder } from './IHome';
+import { IGetSeries } from './ISeries';
 
 export interface IParamGetArticles {
   offset?: number;
@@ -68,12 +69,18 @@ export interface IEditArticleAudience {
   groupIds: string[];
 }
 
+export interface IEditArticleSeries {
+  id?: string;
+  title?: string;
+}
+
 export interface IEditArticleData {
+  id?: string;
   title?: string;
   content?: string;
   summary?: string;
   categories?: ICategory[];
-  series?: string[];
+  series?: IEditArticleSeries[];
   hashtags?: string[];
   audience?: IEditArticleAudience;
   coverMedia?: IArticleCover;
@@ -99,11 +106,19 @@ export interface ICategory {
   updatedAt?: string,
 }
 
-export interface EditArticleProps {
+export interface CreateArticleProps {
   route?: {
     params?: {
-      articleId: string;
+      articleId?: string;
       isDraft?: boolean;
     };
   };
 }
+
+export interface IEditAritcleError {
+  ids: string[],
+  type: string,
+  error: any; // error return from BE
+}
+
+export type IGetSearchArticleInSeries = IGetSeries;

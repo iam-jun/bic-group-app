@@ -1,14 +1,10 @@
 import { debounce } from 'lodash';
 import React, { FC, useCallback, useEffect } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { SearchInput } from '~/baseComponents/Input';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
-import EmptyScreen from '~/components/EmptyScreen';
-import images from '~/resources/images';
 import JoinedGroupSearch from '~/screens/groups/components/CommunityJoinedGroupTree/JoinedGroupSearch';
 import useCommunityJoinedGroupTreeStore from './store';
 import modalActions from '~/storeRedux/modal/actions';
@@ -18,6 +14,7 @@ import { IGroup } from '~/interfaces/IGroup';
 import { useRootNavigation } from '~/hooks/navigation';
 import spacing from '~/theme/spacing';
 import { useBaseHook } from '~/hooks';
+import GroupList from '~/components/groups/GroupList';
 
 export interface CommunityJoinedGroupsProps {
   communityId?: string;
@@ -39,8 +36,7 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
   const resetStore = useCommunityJoinedGroupTreeStore((state) => state.reset);
   const actions = useCommunityJoinedGroupTreeStore((state) => state.actions);
   const loading = useCommunityJoinedGroupTreeStore((state) => state.loading);
-  const data = useCommunityJoinedGroupTreeStore((state) => state.data);
-  const joinedGroups: IGroup[] = data?.[id] || [];
+  const joinedGroups = useCommunityJoinedGroupTreeStore(useCallback((state) => state.data?.[id], [id]));
 
   useEffect(() => () => {
     resetStore();
@@ -67,36 +63,20 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
     }
   }, []);
 
+  const onToggle = debounce((group: IGroup, isCollapsed: boolean) => {
+    actions.updateCollapseStatus(
+      communityId,
+      group.id,
+      isCollapsed,
+    );
+  }, 200);
+
   const onChangeText = debounce((text: string) => {
     actions.setSearchKey(text);
     if (text) {
       actions.getJoinedGroupSearch(communityId, text);
     }
   }, 500);
-
-  const renderItem = ({ item }: any) => (
-    <FlatGroupItem
-      {...item}
-      showPrivacyAvatar
-      showInfo={false}
-      onPressGroup={onPressGroup}
-      groupStyle={styles.itemGroup}
-      style={styles.itemTreeGroup}
-    />
-  );
-
-  const renderEmpty = () => {
-    if (loading) {
-      return <LoadingIndicator />;
-    }
-    return (
-      <EmptyScreen
-        size={100}
-        source={images.img_empty_search_post}
-        description="error:no_group_found_title"
-      />
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -106,13 +86,18 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
         onChangeText={onChangeText}
       />
       <View style={styles.contentContainer}>
-        <FlatList
-          keyExtractor={(item) => `joined_group_${item?.id}`}
-          data={joinedGroups || []}
-          renderItem={renderItem}
-          ListEmptyComponent={renderEmpty}
+        <GroupList
+          mode="tree"
+          resetOnHide={false}
+          data={joinedGroups}
+          loading={loading}
+          onToggle={onToggle}
+          onPressItem={onPressGroup}
         />
-        <JoinedGroupSearch communityId={communityId} onPressItem={onPressGroup} />
+        <JoinedGroupSearch
+          communityId={communityId}
+          onPressItem={onPressGroup}
+        />
       </View>
     </View>
   );

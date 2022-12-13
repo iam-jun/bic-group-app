@@ -18,8 +18,8 @@ import Markdown, {
   MarkdownIt,
   regexPlugin,
 } from '~/beinComponents/MarkdownView/Markdown/index';
-import Text from '~/beinComponents/Text';
-import { createTextStyle } from '~/beinComponents/Text/textStyle';
+import Text from '~/baseComponents/Text';
+import { createTextStyle } from '~/baseComponents/Text/textStyle';
 import { audienceRegex } from '~/constants/commonRegex';
 import { IMarkdownAudience } from '~/interfaces/IPost';
 import { sizes } from '~/theme/dimension';

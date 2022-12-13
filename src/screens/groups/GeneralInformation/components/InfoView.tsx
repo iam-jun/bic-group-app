@@ -1,113 +1,180 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { titleCase } from '~/utils/common';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/baseComponents/Icon';
 import spacing from '~/theme/spacing';
+import Text from '~/baseComponents/Text';
+import {
+  CommunityPrivacyDetail, CommunityPrivacyType, GroupPrivacyDetail, GroupPrivacyType, IPrivacyItem,
+} from '~/constants/privacyTypes';
+import InfoCard from '~/components/InfoCard';
+import Divider from '~/beinComponents/Divider';
+import { CheckBox } from '~/baseComponents';
 
 interface Props {
   id: string;
-  onPressPrivacy?: () => void;
   name: string;
   description: string;
-  privacy: string;
+  privacy: CommunityPrivacyType | GroupPrivacyType;
   canEditPrivacy: boolean;
   canEditInfo: boolean;
+  isJoinApproval: boolean;
   type: 'community' | 'group';
+  rootGroupId: string;
 }
 
 const InfoView = ({
   id,
-  onPressPrivacy,
   name,
   description,
   privacy,
   canEditInfo,
   canEditPrivacy,
+  isJoinApproval,
   type,
+  rootGroupId,
 }: Props) => {
   const { rootNavigation } = useRootNavigation();
+  const theme: ExtendedTheme = useTheme();
+  const styles = createStyles(theme);
+  const { colors } = theme;
+  const privacyScopeDetail = type === 'community' ? CommunityPrivacyDetail : GroupPrivacyDetail;
+  const privacyItem: IPrivacyItem = privacyScopeDetail[privacy];
+  const { icon, title, subtitle } = privacyItem || {};
 
-  const editDescription = () => {
+  const isPrivatePrivacy = privacy === CommunityPrivacyType.PRIVATE
+  || privacy === GroupPrivacyType.PRIVATE;
+  const isSecretPrivacy = privacy === CommunityPrivacyType.SECRET
+    || privacy === GroupPrivacyType.SECRET;
+
+  const privateCheckboxType = isJoinApproval ? 'disabled-auto-selected' : 'disabled';
+
+  const onPressEditDescription = () => {
     rootNavigation.navigate(
       groupStack.editDescription, {
-        id,
-        description,
-        type,
+        id, description, type, rootGroupId,
       },
     );
   };
 
-  const editName = () => {
+  const onPressEditName = () => {
     rootNavigation.navigate(
       groupStack.editName, {
-        id,
-        name,
-        type,
+        id, name, type, rootGroupId,
       },
     );
   };
+
+  const onPressEditPrivacy = () => {
+    rootNavigation.navigate(
+      groupStack.editPrivacy, {
+        id, privacy, type, isJoinApproval, rootGroupId,
+      },
+    );
+  };
+
+  const renderPrivacyView = () => (
+    <>
+      <View style={styles.privacyHeader}>
+        <Icon icon={icon} tintColor={colors.neutral20} />
+        <Text.BodyM color={colors.neutral60} style={styles.privacyText} useI18n>
+          {title}
+        </Text.BodyM>
+      </View>
+
+      <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>
+        {subtitle}
+      </Text.BodyM>
+
+      {isSecretPrivacy && (
+        <View style={styles.privacyBannerView}>
+          <Icon icon="CircleInfo" tintColor={colors.neutral20} size={18} />
+          <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
+            {`settings:text_secret_${type}_banner_message`}
+          </Text.BodyS>
+        </View>
+      )}
+
+      {isPrivatePrivacy && (
+        <View style={styles.privacyBannerView}>
+          <CheckBox size="small" disabled={privateCheckboxType} />
+          <Text.BodyS style={styles.bannerText} color={colors.neutral40} useI18n>
+            {`settings:text_private_${type}_banner_message`}
+          </Text.BodyS>
+        </View>
+      )}
+    </>
+  );
 
   return (
     <View style={styles.container}>
-      <PrimaryItem
-        testID="info_view.name"
-        style={styles.item}
+      <InfoCard
         title={`settings:title_${type}_name`}
-        titleProps={{ useI18n: true }}
-        subTitle={name}
-        subTitleProps={{ testID: 'info_view.name.sub_title' }}
-        onPress={canEditInfo ? editName : undefined}
-        RightComponent={
-          canEditInfo && (
-            <Icon icon="AngleRightSolid" style={styles.rightIcon} />
-          )
-        }
-      />
+        onEdit={canEditInfo ? onPressEditName : undefined}
+        style={styles.infoCard}
+      >
+        <Text.BodyM color={colors.neutral60}>{name}</Text.BodyM>
+      </InfoCard>
+      <Divider color={colors.gray5} size={spacing.padding.large} />
 
-      <PrimaryItem
-        testID="info_view.description"
-        style={styles.item}
+      <InfoCard
         title={`settings:title_${type}_description`}
-        titleProps={{ useI18n: true }}
-        subTitle={description}
-        subTitleProps={{ testID: 'info_view.description.sub_title' }}
-        onPress={canEditInfo ? editDescription : undefined}
-        RightComponent={
-          canEditInfo && (
-            <Icon icon="AngleRightSolid" style={styles.rightIcon} />
-          )
-        }
-      />
+        onEdit={canEditInfo ? onPressEditDescription : undefined}
+        style={styles.infoCard}
+      >
+        <Text.BodyM color={colors.neutral60}>{description}</Text.BodyM>
+      </InfoCard>
+      <Divider color={colors.gray5} size={spacing.padding.large} />
 
-      <PrimaryItem
-        testID="info_view.privacy"
-        style={styles.item}
+      <InfoCard
         title="settings:title_privacy"
-        titleProps={{ useI18n: true }}
-        subTitle={titleCase(privacy) || ''}
-        onPress={canEditPrivacy ? onPressPrivacy : undefined}
-        RightComponent={
-          canEditPrivacy && <Icon icon="PenLine" style={styles.rightIcon} />
-        }
-      />
+        onEdit={canEditPrivacy ? onPressEditPrivacy : undefined}
+      >
+        {renderPrivacyView()}
+      </InfoCard>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: spacing.margin.tiny,
-  },
-  item: {
-    paddingVertical: spacing.padding.base,
-  },
-  rightIcon: {
-    marginLeft: spacing.margin.extraLarge,
-  },
-});
+const createStyles = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+
+  return StyleSheet.create({
+    container: {
+      marginVertical: spacing.margin.large,
+    },
+    infoCard: {
+      paddingHorizontal: spacing.padding.large,
+      paddingBottom: spacing.padding.large,
+    },
+    privacyHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginHorizontal: spacing.margin.large,
+    },
+    privacyText: {
+      marginHorizontal: spacing.margin.small,
+    },
+    descriptionPrivacyText: {
+      marginTop: spacing.margin.base,
+      marginHorizontal: spacing.margin.large,
+      marginBottom: spacing.margin.large,
+    },
+    privacyBannerView: {
+      flexDirection: 'row',
+      backgroundColor: colors.gray1,
+      marginBottom: spacing.margin.large,
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.base,
+    },
+    bannerText: {
+      flex: 1,
+      marginHorizontal: spacing.margin.small,
+    },
+  });
+};
 
 export default InfoView;

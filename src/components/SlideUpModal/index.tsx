@@ -1,8 +1,8 @@
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
   MutableRefObject, useImperativeHandle,
 } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import {
   PanGestureHandler,
 } from 'react-native-gesture-handler';
@@ -72,13 +72,14 @@ const SlideUpModal: React.FC<SheetProps> = ({
     if (expandHeight) expand();
     else maximise();
 
-    onOpened();
+    onOpened?.();
   };
 
-  const hide = () => {
-    modalHeight.value = withSpring(0, springConfig);
+  const hide = (urgent?: boolean) => {
+    if (urgent) modalHeight.value = 0;
+    else modalHeight.value = withSpring(0, springConfig);
     position.value = 'minimised';
-    onClosed();
+    onClosed?.();
   };
 
   const expand = () => {

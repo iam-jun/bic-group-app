@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator, ScrollView, StyleSheet, View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
@@ -17,12 +16,10 @@ import Divider from '~/beinComponents/Divider';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useKeySelector } from '~/hooks/selector';
 import useHomeStore from '~/screens/Home/store';
-import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import NoUserFound from '~/screens/Menu/components/NoUserFound';
 import spacing from '~/theme/spacing';
 import { formatDMLink, openUrl } from '~/utils/link';
-import menuActions from '../../../storeRedux/menu/actions';
 import { BasicInfo, Contact, Experiences } from './fragments';
 import CoverHeader from './fragments/CoverHeader';
 import UserHeader from './fragments/UserHeader';
@@ -35,9 +32,7 @@ const UserProfile = (props: any) => {
   const userProfileData = useUserProfileStore((state) => state.data);
   const loading = useUserProfileStore((state) => state.loading);
   const error = useUserProfileStore((state) => state.error);
-  const getUserProfile = useUserProfileStore(
-    (state) => state.actions.getUserProfile,
-  );
+  const userProfileActions = useUserProfileStore((state) => state.actions);
   const reset = useUserProfileStore((state) => state.reset);
 
   const {
@@ -57,7 +52,6 @@ const UserProfile = (props: any) => {
     latestWork,
   } = userProfileData || {};
 
-  const actions = useCommonController((state) => state.actions);
   const myProfileData = useCommonController((state) => state.myProfile);
   const { username: currentUsername, id } = myProfileData || {};
   const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
@@ -69,7 +63,6 @@ const UserProfile = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = themeStyles(theme);
-  const dispatch = useDispatch();
 
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
@@ -78,19 +71,8 @@ const UserProfile = (props: any) => {
   const homeActions = useHomeStore((state) => state.actions);
 
   useEffect(() => {
-    isFocused && getUserProfile({ userId, params });
-    userId && dispatch(menuActions.getUserWorkExperience(userId));
-
-    const { avatar: _avatar, backgroundImgUrl: _bgIm } = myProfileData;
-    if (
-      userId?.toString?.() === currentUserId?.toString?.()
-      || userId?.toString?.() === currentUsername?.toString?.()
-    ) {
-      if (avatarState !== _avatar || _bgIm !== bgImgState) {
-        actions.getMyProfile({ userId, params });
-        homeActions.refreshHome();
-      }
-    }
+    isFocused && userProfileActions.getUserProfile({ userId, params });
+    userId && userProfileActions.getWorkExperience(userId);
 
     return () => reset();
   }, [isFocused, userId]);
@@ -128,7 +110,7 @@ const UserProfile = (props: any) => {
         );
         openUrl(link);
       } else {
-        dispatch(groupsActions.getMyCommunities({ callback: onPressChat }));
+        onPressChat();
       }
     };
 
@@ -165,26 +147,22 @@ const UserProfile = (props: any) => {
             description={description}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
-          <View style={styles.infoContainer}>
-            <BasicInfo
-              fullname={fullname}
-              gender={gender}
-              birthday={birthday}
-              language={language}
-              relationship={relationshipStatus}
-              isCurrentUser={isCurrentUser}
-            />
-          </View>
+          <BasicInfo
+            fullname={fullname}
+            gender={gender}
+            birthday={birthday}
+            language={language}
+            relationship={relationshipStatus}
+            isCurrentUser={isCurrentUser}
+          />
           <Divider color={colors.gray5} size={spacing.padding.large} />
-          <View style={styles.infoContainer}>
-            <Contact
-              email={email}
-              phone={phone}
-              city={city}
-              countryCode={countryCode}
-              isCurrentUser={isCurrentUser}
-            />
-          </View>
+          <Contact
+            email={email}
+            phone={phone}
+            city={city}
+            countryCode={countryCode}
+            isCurrentUser={isCurrentUser}
+          />
           <Experiences isCurrentUser={isCurrentUser} />
         </ScrollView>
       )}
@@ -201,16 +179,8 @@ const themeStyles = (theme: ExtendedTheme) => {
     container: {
       backgroundColor: colors.white,
     },
-    infoContainer: {
-      padding: spacing.padding.large,
-    },
     loadingProfile: {
       marginTop: spacing.margin.extraLarge,
-    },
-    buttonEdit: {
-      marginHorizontal: spacing.margin.large,
-      borderWidth: 1,
-      borderColor: colors.purple50,
     },
   });
 };

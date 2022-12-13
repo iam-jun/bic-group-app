@@ -74,6 +74,7 @@
     "text_done": "Done",
     "text_uploading": "Uploading...",
     "text_download": "Download",
+    "text_downloaded": "Downloaded!",
     "text_input_description": "Input description...",
     "text_input_title": "Input title...",
     "text_send": "Send",
@@ -107,7 +108,6 @@
     "text_help_center": "Help center is coming soon 🤗",
     "text_popup_message": "Function has not been developed. Stay tuned for further releases 😀",
     "text_got_it": "Got it",
-    "text_no_recent_searches": "No recent searches!",
     "text_files": "Files",
     "avatar_changed": "Avatar changed",
     "cover_changed": "Cover changed",
@@ -148,6 +148,7 @@
         "step_4": "Turn on Permission for Photos"
       }
     },
+    "permission_add_photo_blocked": "Cannot save photo to your library, please go to settings and enable the permission",
     "text_not_now": "Not now",
     "text_go_to_settings": "Go to Settings",
     "text_help": "Help",
@@ -182,7 +183,12 @@
     "text_optional": "optional",
     "articles": "Articles",
     "last_updated": "Last updated",
-    "audiences": "Audiences"
+    "audiences": "Audiences",
+    "text_save_fail": "Save fail.",
+    "text_unsave_fail": "Unsave fail.",
+    "copy_photo": "Copy Photo",
+    "copied": "Copied!",
+    "text_share": "Share"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -314,7 +320,7 @@
     "title_reported_chats": "Reported Chats",
     "title_group_settings": "Group Settings",
     "title_community_settings": "Community Settings",
-    "title_general_information": "General Information",
+    "title_edit_profile_info": "Edit Profile Info",
     "title_profile_info": "Profile Info",
     "title_group_structure": "Group Structure Settings",
     "title_role_management": "Role Management",
@@ -323,11 +329,12 @@
     "title_post_settings": "Post Settings",
     "title_module_settings": "Module Settings",
     "title_group_name": "Group Name",
-    "title_group_description": "Group Description",
+    "title_edit_group_name": "Edit Group Name",
+    "title_group_description": "Description",
     "text_description_maximum_character": "Maximum 255 characters",
     "title_group_type": "Group Type",
     "title_avatar": "Avatar",
-    "title_cover": "Cover",
+    "title_cover": "Photo Cover",
     "title_edit": "Edit",
     "title_basic_info": "Basic Info",
     "title_privacy_type": "Privacy Type",
@@ -347,7 +354,13 @@
     "title_secret_subtitle_group": "All registered users cannot discover and search to find this group. The content & activities inside are not visible to all users.",
     "title_open": "Open",
     "title_open_subtitle_group": "All members in the same community can discover and search in-app to find this group. The content & activities inside are visible to all members. For all registered users who are not in the community, the content & activities inside are not visible to them.",
+    "title_privacy_note": "All members and admins will receive a notification that the privacy settings have changed.",
+    "text_secret_community_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the community.",
+    "text_secret_group_banner_message": "According to the privacy, the join request setting is disabled and all pending requests will be also declined. Member must be invited to join the group.",
+    "text_private_community_banner_message": "According to the privacy, the join request setting is also turned on to make sure your community is completely private (Recommend)",
+    "text_private_group_banner_message": "According to the privacy, the join request setting is also turned on to make sure your group is completely private (Recommend)",
     "title_edit_description": "Edit Description",
+    "title_edit_privacy": "Edit Privacy",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
     "title_edit_name": "Edit Name",
@@ -409,7 +422,8 @@
     "privacy_secret": "Secret",
     "privacy_open": "Open",
     "title_community_name": "Community Name",
-    "title_community_description": "Community Description",
+    "title_edit_community_name": "Edit Community Name",
+    "title_community_description": "Description",
     "text_name_maximum_character": "Maximum 64 characters",
     "title_edit_organization_name": "Edit Name",
     "text_input_edit_info_fullname_max_64": "Maximum 64 characters",
@@ -435,6 +449,7 @@
     "draft_post": "Draft Posts",
     "title_feed_attritube_all": "All",
     "title_feed_attritube_important": "Important",
+    "title_feed_attritube_saved": "Saved",
     "title_feed_content_all": "All",
     "title_feed_content_posts": "Posts",
     "title_feed_content_articles": "Articles",
@@ -478,6 +493,7 @@
     },
     "create_content_options": {
       "write_post": "Write Post",
+      "write_article": "Write Article",
       "write_series": "Write Series",
       "my_draft": "My Draft"
     }
@@ -497,25 +513,54 @@
     "title_logout": "Log Out"
   },
   "article": {
-    "title_article_detail": "Article Detail",
-    "title_edit_article": "Edit Article",
+    "title": {
+      "detail": "Article Detail",
+      "edit": "Edit Article",
+      "create": "Create Article"
+    },
     "title_edit_title": "Edit Title",
     "title_edit_description": "Edit Description",
     "title_edit_cover": "Edit Cover",
     "title_edit_category": "Edit Topics",
     "title_edit_audience": "Edit Audience",
     "title_edit_content": "Edit Content",
+    "title_edit_series": "Edit Series",
     "text_option_edit_title": "Title",
     "text_option_edit_description": "Description",
     "text_option_edit_cover": "Cover",
     "text_option_edit_category": "Topics",
     "text_option_edit_audience": "Audience",
+    "text_option_edit_series": "Series",
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_select_cover": "Select cover",
     "text_selecting_categories": "Your article will be added to",
     "text_search_category_placeholder": "Select your options...",
-    "text_edit_article_success": "Article updated successfully"
+    "text_edit_article_success": "Article updated successfully",
+    "menu": {
+      "edit": "Edit Article",
+      "copy_link": "Copy Link",
+      "delete": "Delete Article",
+      "save": "Save Article",
+      "unsave": "Unsave Article"
+    },
+    "text_saved": "Article saved.",
+    "text_unsaved": "Article unsaved.",
+    "remove_audiences_contains_series_title": "Remove Audience",
+    "remove_audiences_contains_series_content": "The following series were removed from this article: ${series}. Process anyway?",
+    "remove_series_title": "Remove Series",
+    "remove_series_content": "You don't have create article permission at series: ${series}. Do you want to remove series?",
+    "content_delete_audiences": "You can only remove audiences from your article excepting these audiences below. Are you sure do this?",
+    "search_article_placeholder": "Search article...",
+    "modal_add_link": {
+      "title": "Create a link",
+      "text_placeholder": "Text to display",
+      "link_placeholder": "Link to a web page"
+    },
+    "modal_add_video": {
+      "title": "Embed Video",
+      "link_placeholder": "Enter the URL of the embed:"
+    }
   },
   "post": {
     "news_feed": "News Feed",
@@ -616,6 +661,7 @@
     "post_menu_edit": "Edit Post",
     "post_menu_copy": "Copy Link",
     "post_menu_save": "Save Post",
+    "post_menu_unsave": "Unsave Post",
     "post_menu_view_reactions": "View Reactions",
     "post_menu_turn_off_noti": "Turn off notification for this post",
     "post_menu_history": "View Edit History",
@@ -709,10 +755,16 @@
     },
     "text_important_warning_1": "Cannot set because you don't have this permission at",
     "text_important_warning_2": ". Please remove them or contact your admin",
+    "text_saved": "Post saved.",
+    "text_unsaved": "Post unsaved.",
     "article_menu": {
       "edit": "Edit Article",
       "copy_link": "Copy Link",
       "delete": "Delete Article"
+    },
+    "series_detail_article_menu": {
+      "reorder": "Reorder",
+      "delete": "Remove Article"
     }
   },
   "comment": {
@@ -939,7 +991,6 @@
     "title_group_manage": "You manage",
     "text_view_mode": "View Mode",
     "text_choose_view_mode": "Choose view mode",
-    "text_your_groups_search_input": "Type search keyword to see the search results",
     "text_your_groups_search_empty": "Sorry, we couldn’t find anything related to your search.",
     "group_types": {
       "text_flat_list": "Flat view",
@@ -980,19 +1031,19 @@
       "title_system_scheme": "System Scheme",
       "title_community_scheme": "General Scheme",
       "title_group_scheme": "Group Scheme",
-      "title_group_scheme_assignment": "Assign",
-      "title_group_scheme_assign_selection": "Select scheme",
+      "title_group_scheme_assignment": "Assign Permission Set",
+      "title_group_scheme_assign_selection": "Select Permission",
       "title_create_community_scheme": "Create general scheme",
-      "title_edit_community_scheme": "Edit general scheme",
-      "title_edit_group_scheme": "Edit group scheme",
+      "title_edit_community_scheme": "Edit General Permission Set",
+      "title_edit_group_scheme": "Edit Group Permission Set",
       "title_edit_roles": "Edit roles",
-      "title_scheme_name": "Scheme name:",
-      "title_scheme_description": "Scheme description:",
+      "title_scheme_name": "Permission Set Name",
+      "title_scheme_description": "Description",
       "text_desc_system_scheme": "Use system default permission scheme. If there is no custom scheme applied, this option is auto-enabled.",
       "text_desc_community_scheme": "The custom scheme to apply to community and all inner groups by default.",
       "text_desc_group_scheme": "The specific custom scheme to apply to a particular inner group.",
-      "text_create_scheme_name": "Enter scheme name",
-      "text_create_scheme_desc": "Write your description here (maximum 255 characters)",
+      "text_create_scheme_name": "Write name here (maximum 64 characters)",
+      "text_create_scheme_desc": "Write description here",
       "btn_view_permission": "View",
       "btn_apply": "Apply",
       "btn_keep_selecting": "Keep selecting",
@@ -1006,8 +1057,8 @@
       "text_desc_apply_system_scheme": "You must delete custom scheme",
       "text_title_delete_community_scheme": "Delete this scheme",
       "text_desc_delete_community_scheme": "This action cannot be undone. Are you sure to do this?",
-      "text_title_assign_group_confirm": "Assign scheme to group",
-      "text_desc_assign_group_confirm": "Are you sure you want to assign new scheme?",
+      "text_title_assign_group_confirm": "Assign Permission Set",
+      "text_desc_assign_group_confirm": "You are assigning new permission sets to these groups. Are you sure?",
       "text_create_scheme_success": "Create scheme successfully",
       "text_update_scheme_success": "Updated scheme successfully",
       "text_update_group_scheme_success": "Updated group scheme successfully",
@@ -1050,6 +1101,7 @@
       "description_on_group": "Members must ask for approval to join group",
       "description_off_community": "Members can join community without asking for approval",
       "description_off_group": "Members can join group without asking for approval",
+      "description_disabled": "The setting is not available because of the Secret privacy",
       "pop_up_on": {
         "title": "You are turning on the join request setting",
         "content_community": "You have to approve a join request to allow member to join your community. Are you sure to do this?",
@@ -1139,12 +1191,17 @@
     "flags": "Flags"
   },
   "series": {
-    "title_create_series":"Create Series",
+    "title": {
+      "create": "Create Series",
+      "edit": "Edit Series"
+    },
+    "title_edit_series": "Create Series",
     "title_name": "Name",
     "text_input_name": "Enter name",
     "text_update_cover": "Update cover",
     "menu_text_edit_series": "Edit series",
     "menu_text_save_series": "Save Series",
+    "menu_text_unsave_series": "Unsave Series",
     "menu_text_delete_series": "Delete Series",
     "content_delete_series": "Do you want to delete this series?",
     "text_delete_series_success": "Series deleted",
@@ -1155,6 +1212,17 @@
     "text_edit_series_success": "Series updated.",
     "text_edit_series_failed": "Series was failed to publish",
     "title_edit_audience_failed": "Audience Change?",
-    "content_edit_audience_failed": "You don't have delete own post permission at group:"
-    }
+    "content_edit_audience_failed": "You don't have delete own post permission at group:",
+    "text_saved": "Series saved.",
+    "text_unsaved": "Series unsaved.",
+    "reorder_article": "Reorder Article",
+    "text_info_reorder": "Drag and drop to reorder the article",
+    "reorder_successful": "Reorder successful",
+    "reorder_failed": "Reorder failed",
+    "notice_changing_the_order": "You are changing the order",
+    "notice_sure_to_do_this": "Are you sure to do this?",
+    "text_add_articles_success": "Add successful",
+    "text_remove_article": "Do you want to remove this article?",
+    "text_article_removed": "Article removed"
+  }
 }

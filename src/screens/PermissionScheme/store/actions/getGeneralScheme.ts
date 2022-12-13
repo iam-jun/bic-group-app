@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
+import APIErrorCode from '~/constants/apiErrorCode';
 import { sortFixedRoles } from '~/screens/groups/helper';
 import showError from '~/store/helper/showError';
 import IPermissionSchemeState from '../Interface';
@@ -31,7 +31,7 @@ const getGeneralScheme = (set) => async (communityId: string) => {
       state.generalScheme.loading = false;
     }, 'getGeneralSchemeError');
 
-    if (error?.code !== API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND) {
+    if (error?.code !== APIErrorCode.Group.SCHEME_NOT_FOUND) {
       showError(error);
     }
   }

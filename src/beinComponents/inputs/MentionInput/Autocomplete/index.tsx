@@ -10,7 +10,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import { useKeyboardStatus } from '~/hooks/keyboard';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import AtMention from './AtMention';
 import spacing from '~/theme/spacing';
 import useMentionInputStore from '../store';

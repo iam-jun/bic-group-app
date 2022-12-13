@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.evol.bein.group">
+    package="com.beincom.group">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="${beinChatId}.READ_DATABASE" />
+    <uses-permission android:name="${beinChatId}.WRITE_DATABASE" />
 
     <permission
         android:name="@string/provider_read_permission"
@@ -60,7 +65,7 @@
             android:exported="true"
             android:readPermission="@string/provider_read_permission"
             android:writePermission="@string/provider_write_permission"
-            />
+        />
     </application>
     <queries>
         <intent>
@@ -69,4 +74,3 @@
         </intent>
     </queries>
 </manifest>
-

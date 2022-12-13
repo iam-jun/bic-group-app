@@ -7,15 +7,15 @@ import { isEmpty, isEqual } from 'lodash';
 import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
-import SelectAudience from '~/components/SelectAudience';
+import SelectAudience, { ContentType } from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 import { useBaseHook } from '~/hooks';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import useSeriesStore, { ISeriesState } from '../store';
 import modalActions from '~/storeRedux/modal/actions';
 import { CreationSeriesProps } from '~/interfaces/ISeries';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import { getAudienceIdsFromAudienceObject } from '~/screens/articles/EditArticle/helper';
+import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArticle/helper';
+import useSeriesStore, { ISeriesState } from '../store';
 
 const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
   const { isFirstStep, isEditAudience, initAudienceGroups = [] } = route?.params || {};
@@ -30,17 +30,17 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
   const seriesActions = useSeriesStore((state: ISeriesState) => state.actions);
   const { loading } = useSeriesStore((state: ISeriesState) => state);
 
-  const selectingAudienceIds = useSelectAudienceStore((state) => state.selectingIds);
-  const selectAudienceResetStore = useSelectAudienceStore((state) => state.reset);
+  const selectingAudienceIds = useSelectAudienceStore((state) => state.selectedIds);
+  const selectingAudienceGroups = useSelectAudienceStore((state) => state.selectedAudiences.groups);
   const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
-  const selectingAudienceGroups = useSelectAudienceStore((state) => state.selecting.groups);
+  const selectAudienceResetStore = useSelectAudienceStore((state) => state.reset);
 
   const setInitDataToSelectingAudiences = () => {
     const newSelectingGroups = {};
     initAudienceGroups?.forEach((group) => {
       newSelectingGroups[group?.id] = group;
     });
-    selectAudienceActions.setSelectingGroups(newSelectingGroups);
+    selectAudienceActions.setSelectedAudiences(newSelectingGroups);
   };
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const ChooseSeriesAudience = ({ route }: CreationSeriesProps) => {
         onPressButton={handleSave}
         onPressBack={handleBack}
       />
-      <SelectAudience />
+      <SelectAudience contentType={ContentType.SERIES} />
     </View>
   );
 };

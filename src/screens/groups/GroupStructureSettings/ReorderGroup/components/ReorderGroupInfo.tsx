@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';

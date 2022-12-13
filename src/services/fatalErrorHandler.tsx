@@ -10,7 +10,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { captureExceptionWithSentry } from '~/services/sentry';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 const initFatalErrorHandler = () => {
   /**

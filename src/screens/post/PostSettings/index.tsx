@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Toggle from '~/baseComponents/Toggle';
 
 import { useRootNavigation } from '~/hooks/navigation';
@@ -28,7 +28,7 @@ import postKeySelector from '../../../storeRedux/post/keySelector';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import images from '~/resources/images';
-import { checkExpiration } from '../helper/postUtils';
+import { isPostExpired } from '~/helpers/post';
 import Icon from '~/baseComponents/Icon';
 import { formatDate } from '~/utils/formatData';
 import { timeSuggest } from '~/constants/importantTimeSuggest';
@@ -65,9 +65,8 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const { getListOfChosenAudiencesWithoutPermission, PERMISSION_KEY } = useMyPermissions();
   const listAudiencesWithoutPermission = getListOfChosenAudiencesWithoutPermission(
-    'groups',
     chosenAudiences,
-    PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
+    PERMISSION_KEY.EDIT_POST_SETTING,
   );
 
   useEffect(
@@ -237,7 +236,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
 
   const renderImportant = () => {
     const { active, expiresTime } = sImportant || {};
-    const isExpired = checkExpiration(expiresTime);
+    const isExpired = isPostExpired(expiresTime);
 
     return (
       <View style={styles.content}>

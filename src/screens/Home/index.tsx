@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 
 import { useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import NewsfeedList from '~/components/NewsfeedList';
+import NewsfeedList from '~/screens/Home/components/NewsfeedList';
 import { useBaseHook } from '~/hooks';
 import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
@@ -185,6 +185,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <NewsfeedList
+        key={`${contentFilter}_${attributeFilter}`}
         data={homePosts}
         refreshing={refreshing}
         canLoadMore={canLoadMore}

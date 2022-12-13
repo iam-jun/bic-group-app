@@ -2,7 +2,7 @@ import streamApi from '~/api/StreamApi';
 import { IParamGetFeed } from '~/interfaces/IHome';
 import { IPayloadAddToAllPost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
-import { getParamsAttributeFeed, getParamsContentFeed } from '../helper';
+import { getParamsSavedAttributeFeed, getParamsContentFeed, getParamsImportantAttributeFeed } from '../helper';
 import IHomeState from '../Interface';
 
 const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
@@ -19,7 +19,8 @@ const getDataFeed = (set, get) => async (isRefresh?: boolean) => {
   const offset = isRefresh ? 0 : currentList.length || 0;
   const requestParams: IParamGetFeed = {
     offset,
-    isImportant: getParamsAttributeFeed(attributeFilter),
+    isImportant: getParamsImportantAttributeFeed(attributeFilter),
+    isSaved: getParamsSavedAttributeFeed(attributeFilter),
     type: getParamsContentFeed(contentFilter),
   };
 

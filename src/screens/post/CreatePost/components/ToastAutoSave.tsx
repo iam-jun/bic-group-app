@@ -5,7 +5,7 @@ import React, { useImperativeHandle, useRef } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Icon from '~/baseComponents/Icon';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { isAndroidAnimated } from '../helper';
 import spacing from '~/theme/spacing';
 

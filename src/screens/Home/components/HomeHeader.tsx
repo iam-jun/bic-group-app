@@ -23,10 +23,9 @@ import SvgIcon from '~/baseComponents/Icon/SvgIcon';
 import BicHomeLogo from '../../../../assets/images/bic_home_logo.svg';
 import spacing from '~/theme/spacing';
 import HomeHeaderButton from '~/screens/Home/components/HomeHeaderButton';
-import { homeHeaderAttributeContainerHeight, homeHeaderLogoHeight, homeHeaderTabHeight } from '~/theme/dimension';
-import Tab from '~/baseComponents/Tab';
+import { homeHeaderLogoHeight } from '~/theme/dimension';
 import useHomeStore from '~/screens/Home/store';
-import { AttributeFeed, ContentFeed } from '../store/Interface';
+import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 
 export interface HomeHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -34,18 +33,6 @@ export interface HomeHeaderProps {
   onPressSearch?: () => void;
   onPressChat?: () => void;
 }
-
-const HEADER_CONTENT_FEED_FILTER = [
-  { id: ContentFeed.ALL, text: 'home:title_feed_content_all' },
-  { id: ContentFeed.POST, text: 'home:title_feed_content_posts' },
-  { id: ContentFeed.ARTICLE, text: 'home:title_feed_content_articles' },
-  { id: ContentFeed.SERIES, text: 'home:title_feed_content_series' },
-];
-
-const HEADER_ATTRIBUTE_FEED_FILTER = [
-  { id: AttributeFeed.ALL, text: 'home:title_feed_attritube_all' },
-  { id: AttributeFeed.IMPORTANT, text: 'home:title_feed_attritube_important' },
-];
 
 const HomeHeader: FC<HomeHeaderProps> = ({
   style,
@@ -101,11 +88,11 @@ const HomeHeader: FC<HomeHeaderProps> = ({
     };
   }, []);
 
-  const onPressContentFilterTab = (item: any) => {
+  const _onPressContentFilterTab = (item: any) => {
     actions.setContentFilter(item.id);
   };
 
-  const onPressAttributeFilterTab = (item: any) => {
+  const _onPressAttributeFilterTab = (item: any) => {
     actions.setAttributeFilter(item.id);
   };
 
@@ -118,31 +105,12 @@ const HomeHeader: FC<HomeHeaderProps> = ({
             <SvgIcon source={BicHomeLogo} width={145} height={28} />
           </View>
         </Animated.View>
-        <View style={styles.tabContainer}>
-          <Tab
-            style={styles.tabs}
-            buttonProps={{ size: 'small', type: 'primary', useI18n: true }}
-            data={HEADER_CONTENT_FEED_FILTER}
-            type="pill"
-            onPressTab={onPressContentFilterTab}
-            activeIndex={HEADER_CONTENT_FEED_FILTER.findIndex(
-              (item) => item.id === contentFilter,
-            )}
-          />
-        </View>
-        <View style={styles.attributeContainer}>
-          <Tab
-            style={styles.tabs}
-            buttonProps={{
-              size: 'small', type: 'primary', useI18n: true, style: styles.attributeTab,
-            }}
-            data={HEADER_ATTRIBUTE_FEED_FILTER}
-            onPressTab={onPressAttributeFilterTab}
-            activeIndex={HEADER_ATTRIBUTE_FEED_FILTER.findIndex(
-              (item) => item.id === attributeFilter,
-            )}
-          />
-        </View>
+        <FilterFeedButtonGroup
+          contentFilter={contentFilter}
+          attributeFilter={attributeFilter}
+          onPressContentFilterTab={_onPressContentFilterTab}
+          onPressAttributeFilterTab={_onPressAttributeFilterTab}
+        />
         <HomeHeaderButton
           onPressSearch={onPressSearch}
           onPressChat={onPressChat}
@@ -176,35 +144,10 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       height: homeHeaderLogoHeight,
       justifyContent: 'center',
     },
-    tabContainer: {
-      height: homeHeaderTabHeight,
-      flexDirection: 'row',
-      paddingBottom: spacing.padding.small,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.neutral2,
-      marginHorizontal: spacing.margin.large,
-    },
-    tabs: {
-      flex: 1,
-      alignItems: 'center',
-      flexDirection: 'row',
-    },
-    tabButton: { marginRight: spacing.margin.small },
     headerButtonContainer: {
       position: 'absolute',
       right: spacing.margin.large,
       top: 2,
-    },
-    attributeContainer: {
-      height: homeHeaderAttributeContainerHeight,
-      paddingHorizontal: spacing.padding.small,
-    },
-    attributeTab: {
-      paddingHorizontal: spacing.padding.small,
-      paddingVertical: 0,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderBottomWidth: 0,
     },
   });
 };

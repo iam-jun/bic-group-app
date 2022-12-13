@@ -1,16 +1,5 @@
+import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import IBaseState from '~/store/interfaces/IBaseState';
-
-export enum AttributeFeed {
-  ALL = 'ALL',
-  IMPORTANT = 'IMPORTANT',
-}
-
-export enum ContentFeed {
-  ALL = 'ALL',
-  POST = 'POST',
-  ARTICLE = 'ARTICLE',
-  SERIES = 'SERIES',
-}
 
 export interface IHomeFeed {
   isLoading: boolean;

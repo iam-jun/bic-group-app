@@ -10,7 +10,7 @@ import { cloneDeep } from 'lodash';
 import { useBaseHook } from '~/hooks';
 import InputSchemeInfo from '~/screens/PermissionScheme/CreatePermissionScheme/components/InputSchemeInfo';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import {
   getMemberRoleIndex,
   getNewSchemeFromSystemScheme,

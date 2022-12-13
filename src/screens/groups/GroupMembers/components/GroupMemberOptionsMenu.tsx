@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
 import modalActions from '~/storeRedux/modal/actions';
-import groupsActions from '../../../../storeRedux/groups/actions';
 import { useBaseHook } from '~/hooks';
 import { useMyPermissions } from '~/hooks/permissions';
 import useRemoveGroupMemberStore from '../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
+import useGroupController from '../../store';
 
 interface GroupMemberOptionsMenuProps {
   groupId: string;
@@ -26,30 +26,28 @@ const GroupMemberOptionsMenu = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
+  const actions = useGroupController((state) => state.actions);
   const deleteRemoveGroupMember = useRemoveGroupMemberStore(
     (state) => state.actions.deleteRemoveGroupMember,
   );
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canRemoveMember = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
-    PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
+    PERMISSION_KEY.REMOVE_MEMBER,
   );
   const canAssignUnassignRole = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
-    PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
+    PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
   );
 
   const onPressSetAdminRole = () => {
     if (!selectedMember?.id) return;
-
-    dispatch(groupsActions.setGroupAdmin({ groupId, userIds: [selectedMember.id] }));
+    actions.assignGroupAdmin(groupId, [selectedMember.id]);
   };
 
   const onConfirmRemoveAdminRole = () => {
-    dispatch(groupsActions.removeGroupAdmin({ groupId, userId: selectedMember.id }));
+    actions.revokeGroupAdmin(groupId, selectedMember.id);
   };
 
   const onPressRevokeAdminRole = () => {

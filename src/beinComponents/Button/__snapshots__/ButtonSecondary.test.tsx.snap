@@ -50,6 +50,7 @@ exports[`ButtonSecondary conponent renders correctly 1`] = `
           },
         ]
       }
+      testID="button_wrapper.text"
     >
       Button Secondary
     </Text>

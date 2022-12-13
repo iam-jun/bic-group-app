@@ -47,10 +47,16 @@ export const saveUserToSharedPreferences = async (payload: any) => {
   );
 };
 
-export const getUserFromSharedPreferences = () => loadFromSharedStorage(
-  getEnv(`APP_GROUP_PACKAGE_NAME_${Platform.OS.toUpperCase()}`),
-  'pref_user_info',
-);
+export const getUserFromSharedPreferences = () => {
+  /**
+   * Only get authen session from chat on android
+   * because limitation of SharedProvider can only save when app installed
+   */
+  const appChatPackageName = getEnv('APP_CHAT_PACKAGE_NAME_ANDROID');
+  const packageName = Platform.OS === 'ios' ? getEnv('APP_GROUP_PACKAGE_NAME_IOS') : appChatPackageName;
+
+  return loadFromSharedStorage(packageName, 'pref_user_info');
+};
 
 export const updateUserFromSharedPreferences = async (payload: any) => {
   const user = await getUserFromSharedPreferences();

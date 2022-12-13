@@ -4,19 +4,19 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { cloneDeep, debounce, isEmpty } from 'lodash';
 import { useDispatch } from 'react-redux';
-import Animated, { FadeIn, LightSpeedInLeft } from 'react-native-reanimated';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
-import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import { IGroup } from '~/interfaces/IGroup';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import modalActions from '~/storeRedux/modal/actions';
 import AlertAssignGroupConfirmContent from '~/screens/PermissionScheme/GroupSchemeAssignment/components/AlertAssignGroupConfirmContent';
 import spacing from '~/theme/spacing';
 import usePermissionSchemeStore from '../store';
+import { GroupTreeItem } from '~/components/groups';
+import useGroupTreeStore from '~/components/groups/store';
 
  interface Props {
   route?: {
@@ -31,7 +31,6 @@ const GroupSchemeAssignment = ({ route }: Props) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
 
   const communityId = route?.params?.communityId;
@@ -46,6 +45,8 @@ const GroupSchemeAssignment = ({ route }: Props) => {
   } = usePermissionSchemeStore((state) => state.assignGroupScheme.assigning) || {};
 
   const actions = usePermissionSchemeStore((state) => state.actions);
+
+  const resetGroupTree = useGroupTreeStore((state) => state.reset);
 
   const onPressBack = () => {
     if (!isEmpty(dataAssigning)) {
@@ -78,6 +79,7 @@ const GroupSchemeAssignment = ({ route }: Props) => {
         actions.getGroupSchemeAssignments({ communityId });
       }
       return () => {
+        resetGroupTree();
         actions.resetToInitState('assignGroupScheme');
       };
     }, [],
@@ -158,21 +160,15 @@ const GroupSchemeAssignment = ({ route }: Props) => {
             <Text.H5 style={styles.textHeader} useI18n>
               communities:permission:text_list_group
             </Text.H5>
-            <Animated.View style={styles.contentContainer} entering={FadeIn}>
-              <FlatGroupItem
-                style={{ backgroundColor: colors.white }}
-                {...currentAssignments}
-                onPressGroup={onPressGroup}
-                disableHorizontal
-                showInfo={false}
-                onPressMenu={onPressGroup}
-                iconVariant="tiny"
-                nameLines={1}
-                menuIcon="AngleRight"
-                entering={LightSpeedInLeft}
-                renderExtraInfo={renderItemExtraInfo}
-              />
-            </Animated.View>
+            <GroupTreeItem
+              style={styles.item}
+              item={currentAssignments}
+              menuIcon="AngleRight"
+              nameLines={1}
+              onPress={onPressGroup}
+              onMenuPress={onPressGroup}
+              renderItemExtraInfo={renderItemExtraInfo}
+            />
           </ScrollView>
         )
       ) : (
@@ -193,6 +189,10 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     textHeader: {
       margin: spacing.margin.large,
+    },
+    item: {
+      backgroundColor: colors.white,
+      paddingHorizontal: spacing.margin.base,
     },
     contentContainer: {
       paddingHorizontal: spacing.margin.base,

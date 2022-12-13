@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { formatDateTime } from '~/beinComponents/TimeView/helper';
 
 import { AppContext } from '~/contexts/AppContext';

@@ -9,7 +9,7 @@ import { openSettings } from 'react-native-permissions';
 import { useBaseHook } from '~/hooks';
 
 import Button from '~/beinComponents/Button';
-import Text, { TextProps } from '~/beinComponents/Text';
+import Text, { TextProps } from '~/baseComponents/Text';
 import PrimaryItem, {
   PrimaryItemProps,
 } from '~/beinComponents/list/items/PrimaryItem';

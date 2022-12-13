@@ -107,6 +107,8 @@ declare module '@react-navigation/native' {
       turquoise50: string;
       turquoise60: string;
 
+      highlight: string;
+
       transparent: string;
       transparent1: string;
     };

@@ -24,6 +24,7 @@ const appConfig = {
   commentLimit: 10,
   limitPostContentLength: 400,
   shortPostContentLength: 400,
+  articlesInSeriesLimit: 20,
   superUsers: [
     'namanh@evolgroup.vn',
     'dieplamminhthu@evolgroup.vn',

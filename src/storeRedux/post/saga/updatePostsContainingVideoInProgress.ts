@@ -6,7 +6,7 @@ import usePostsStore from '~/store/entities/posts';
 import postActions from '~/storeRedux/post/actions';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import useHomeStore from '~/screens/Home/store';
-import { AttributeFeed, ContentFeed } from '~/screens/Home/store/Interface';
+import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 
 function* updatePostsContainingVideoInProgress({
   payload,

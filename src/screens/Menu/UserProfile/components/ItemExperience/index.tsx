@@ -1,8 +1,7 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import { spacing } from '~/theme';
@@ -12,9 +11,10 @@ import InfoItem from '../InfoItem';
 import EditButton from '../../components/EditButton';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import DeleteButton from '../DeleteButton';
-import menuActions from '~/storeRedux/menu/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import useMenuController from '~/screens/Menu/store';
+import useUserProfileStore from '../../store';
 
 type ItemExperienceProps = {
   item: IUserWorkExperience;
@@ -35,21 +35,21 @@ const ItemExperience: FC<ItemExperienceProps> = ({
     location,
     description,
   } = item;
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const { rootNavigation } = useRootNavigation();
 
+  const menuControllerActions = useMenuController((state) => state.actions);
+  const userProfileActions = useUserProfileStore((state) => state.actions);
+
   const editItemExperience = () => {
-    dispatch(menuActions.setSelectedWorkItem(item));
+    menuControllerActions.setSelectedWorkItem(item);
     rootNavigation.navigate(mainStack.addWork);
   };
 
   const deleteItemExperience = () => {
-    dispatch(menuActions.deleteWorkExperience(
-      id,
-    ));
+    userProfileActions.deleteWorkExperience(id);
   };
 
   return (

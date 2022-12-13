@@ -1,23 +1,23 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { Avatar, Button } from '~/baseComponents';
+import Icon from '~/baseComponents/Icon';
+import Tag from '~/baseComponents/Tag';
+import Text from '~/baseComponents/Text';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
-import { spacing } from '~/theme';
-import Text from '~/beinComponents/Text';
-import Icon from '~/baseComponents/Icon';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
+import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { Avatar, Button } from '~/baseComponents';
-import { formatLargeNumber } from '~/utils/formatData';
-import { useBaseHook } from '~/hooks';
-import { isGroup } from '~/screens/groups/helper';
-import modalActions from '~/storeRedux/modal/actions';
+import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
-import Tag from '~/baseComponents/Tag';
+import modalActions from '~/storeRedux/modal/actions';
+import { spacing } from '~/theme';
+import { formatLargeNumber } from '~/utils/formatData';
+import ButtonCommunityGroupCard from './ButtonCommunityGroupCard';
 
 type CommunityGroupCardProps = {
   item: any;
@@ -49,7 +49,6 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     privacy,
     joinStatus,
     description,
-    level,
     community,
   } = item || {};
   const privacyData: any
@@ -58,7 +57,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   const onView = () => {
-    if (isGroup(level)) {
+    if (isGroup(item)) {
       // in group detail we need some infomation from community detail,
       // so before navigate to group detail we need to fetch community detail
       // and clear community detail when go back from group detail
@@ -68,6 +67,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
         groupStack.groupDetail,
         {
           groupId: id,
+          communityId: community.id,
         },
       );
       return;
@@ -92,13 +92,13 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
       return;
     }
     if (!!onJoin) {
-      onJoin(id, name, isGroup(level));
+      onJoin(id, name, isGroup(item));
     }
   };
 
   const handleCancel = () => {
     if (!!onCancel) {
-      onCancel(id, name, isGroup(level));
+      onCancel(id, name, isGroup(item));
     }
   };
 
@@ -111,7 +111,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
 
   return (
     <View testID={testID} style={[styles.container, elevations.e1]}>
-      {isGroup(level) && (
+      {isGroup(item) && (
         <Button onPress={onViewCommunity}>
           <Text.SubtitleS
             style={styles.textNameCommunityOnGroup}
@@ -160,7 +160,7 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
                 type="secondary"
                 size="small"
                 label={t(
-                  isGroup(level) ? 'common:text_group' : 'common:text_community',
+                  isGroup(item) ? 'common:text_group' : 'common:text_community',
                 )}
               />
             </View>

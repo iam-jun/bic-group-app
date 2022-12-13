@@ -1,7 +1,8 @@
+import _ from 'lodash';
 import { IGetUserProfile, IUserProfile } from '~/interfaces/IAuth';
 import {
   ICommentData,
-  IOwnReaction, IPayloadReactToComment, IPayloadReactToPost, IPayloadUpdateReaction, IReactionCounts,
+  IOwnReaction, IPayloadReactToComment, IPayloadReactToPost, IPayloadUpdateReaction, IReactionCounts, PostType,
 } from '~/interfaces/IPost';
 import IBaseState from '~/store/interfaces/IBaseState';
 import {
@@ -14,28 +15,33 @@ import onUpdateReactionOfCommentById from './actions/onUpdateReactionOfCommentBy
 import onUpdateReactionOfPostById from './actions/onUpdateReactionOfPostById';
 import putReactionToComment from './actions/putReactionToComment';
 import putReactionToPost from './actions/putReactionToPost';
+import savePost from './actions/savePost';
+import unsavePost from './actions/unsavePost';
 import updateReactionBySocket from './actions/updateReactionBySocket';
 
 export interface ICommonController extends IBaseState {
   myProfile: IUserProfile;
 
   actions: {
+    reactToPost: _.DebouncedFunc<(type: 'put' | 'delete', payload: IPayloadReactToPost) => void>;
     putReactionToPost?: (payload: IPayloadReactToPost) => void;
     onUpdateReactionOfPostById: (
-        postId: string, ownReaction: IOwnReaction, reactionCounts: IReactionCounts,) => void;
+        postId: string, ownReaction: IOwnReaction, reactionsCount: IReactionCounts,) => void;
     deleteReactToPost: (payload: IPayloadReactToPost) => void;
     putReactionToComment: (payload: IPayloadReactToComment) => void;
     deleteReactToComment: (payload: IPayloadReactToComment) =>void;
     onUpdateReactionOfCommentById: (
         commentId: string,
         ownReaction: IOwnReaction,
-        reactionCounts: IReactionCounts,
+        reactionsCount: IReactionCounts,
         defaultComment?: ICommentData,
     )=>void;
     updateReactionBySocket: (payload: IPayloadUpdateReaction)=>void;
     getMyProfile: (payload: IGetUserProfile) => void;
-
     setMyProfile: (payload: IUserProfile) => void;
+
+    savePost: (id:string, type: PostType) => void;
+    unsavePost: (id:string, type: PostType) => void;
   }
 }
 
@@ -46,6 +52,14 @@ const initialState = {
 const commonController = (set, get) => ({
   ...initialState,
   actions: {
+    reactToPost: _.throttle((type: 'put' | 'delete', payload: IPayloadReactToPost) => {
+      if (type === 'put') {
+        get().actions.putReactionToPost(payload);
+      }
+      if (type === 'delete') {
+        get().actions.deleteReactToPost(payload);
+      }
+    }, 500, { trailing: false }),
     putReactionToPost: putReactionToPost(set, get),
     onUpdateReactionOfPostById: onUpdateReactionOfPostById(set, get),
     deleteReactToPost: deleteReactToPost(set, get),
@@ -60,6 +74,8 @@ const commonController = (set, get) => ({
         state.myProfile = payload;
       }, 'setMyProfile');
     },
+    savePost: savePost(set, get),
+    unsavePost: unsavePost(set, get),
   },
 });
 

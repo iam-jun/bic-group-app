@@ -4,7 +4,7 @@ import {
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Image from '~/beinComponents/Image';
 import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
 import { spacing } from '~/theme';

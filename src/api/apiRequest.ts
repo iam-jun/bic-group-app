@@ -14,7 +14,7 @@ import {
   HttpApiResponseFormat,
 } from '~/api/apiConfig';
 import { notificationApiConfig } from '~/api/NotificationApi';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
+import APIErrorCode from '~/constants/apiErrorCode';
 import { uuidRegex } from '~/constants/commonRegex';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
 import { EVENT_LOGGER_TAG } from '~/components/LoggerView';
@@ -223,7 +223,7 @@ const handleResponseError = async (error: AxiosError): Promise<HttpApiResponseFo
 
   if (error.response) {
     const responseTokenExpired = error.response.status === 401
-      || error.response?.data?.code === API_ERROR_CODE.AUTH.TOKEN_EXPIRED;
+      || error.response?.data?.code === APIErrorCode.Auth.TOKEN_EXPIRED;
     // @ts-ignore
     if (responseTokenExpired && error.config.useRetry) {
       return handleRetry(error);
@@ -364,7 +364,7 @@ const makeRemovePushTokenRequest = async () => {
 const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
   try {
     const response: any = await makeHttpRequest(isEmpty(args) ? fn() : fn(...args));
-    const isSuccess = response?.data?.data || response?.data?.code === API_ERROR_CODE.COMMON.SUCCESS;
+    const isSuccess = response?.data?.data || response?.data?.code === APIErrorCode.Common.SUCCESS;
     if (isSuccess) {
       return Promise.resolve(response?.data);
     }

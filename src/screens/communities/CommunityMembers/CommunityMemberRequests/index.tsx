@@ -8,11 +8,11 @@ import groupsActions from '~/storeRedux/groups/actions';
 import MemberRequestList from '~/screens/groups/components/MemberRequestList';
 import CommunityApproveDeclineAllRequests from './components/CommunityApproveDeclineAllRequests';
 import JoinRequestSetting from './components/JoinRequestSetting';
-import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useCommunityController from '../../store';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 interface CommunityMemberRequestsProps {
-  communityId: string
+  community: ICommunity;
   canAddMember: boolean;
   canApproveRejectJoiningRequests: boolean;
   canEditJoinSetting: boolean;
@@ -20,7 +20,7 @@ interface CommunityMemberRequestsProps {
 }
 
 const CommunityMemberRequests = ({
-  communityId,
+  community,
   canAddMember,
   canApproveRejectJoiningRequests,
   canEditJoinSetting,
@@ -28,20 +28,15 @@ const CommunityMemberRequests = ({
 }: CommunityMemberRequestsProps) => {
   const dispatch = useDispatch();
   const controller = useCommunityController((state) => state.actions);
-  const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
-  const data = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
 
   const { canLoadMore, ids, total } = useKeySelector(groupsKeySelector.communityMemberRequests);
-  const { id, settings } = data || {};
+  const {
+    id: communityId, settings, privacy, groupId,
+  } = community || {};
   const { isJoinApproval } = settings || {};
 
   useEffect(
     () => {
-      if (!id || id !== communityId) {
-        // get data if navigation from notification screen
-        getCommunityDetail();
-      }
-
       if (canApproveRejectJoiningRequests) {
         getData();
 
@@ -52,12 +47,8 @@ const CommunityMemberRequests = ({
     }, [communityId, canApproveRejectJoiningRequests],
   );
 
-  const getCommunityDetail = () => {
-    actions.getCommunity(communityId);
-  };
-
   const getData = (isRefreshing?: boolean) => {
-    dispatch(groupsActions.getCommunityMemberRequests({ communityId, isRefreshing }));
+    dispatch(groupsActions.getCommunityMemberRequests({ groupId, isRefreshing }));
   };
 
   const onLoadMore = () => {
@@ -69,11 +60,11 @@ const CommunityMemberRequests = ({
   };
 
   const onUpdateJoinSetting = (isJoinApproval: boolean) => {
-    controller.updateCommunityJoinSetting(communityId, isJoinApproval);
+    controller.updateCommunityJoinSetting(communityId, groupId, isJoinApproval);
   };
 
   const onPressApproveAll = () => {
-    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, total }));
+    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, groupId, total }));
   };
 
   return (
@@ -82,6 +73,7 @@ const CommunityMemberRequests = ({
         <JoinRequestSetting
           type="community"
           total={total}
+          privacy={privacy}
           isJoinApproval={isJoinApproval}
           onUpdateJoinSetting={onUpdateJoinSetting}
           onPressApproveAll={onPressApproveAll}
@@ -99,7 +91,7 @@ const CommunityMemberRequests = ({
             id={communityId}
           />
 
-          {ids.length > 1 && <CommunityApproveDeclineAllRequests communityId={communityId} />}
+          {ids.length > 1 && <CommunityApproveDeclineAllRequests community={community} />}
         </>
       )}
     </View>

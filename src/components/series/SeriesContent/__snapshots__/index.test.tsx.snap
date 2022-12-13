@@ -1,0 +1,1584 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SeriesContent component given summaryHighlight and isLite === false should render summary with summary 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 6,
+      "paddingHorizontal": 16,
+      "paddingTop": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="button_wrapper"
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F4EFFB",
+          "borderRadius": 8,
+          "flexDirection": "row",
+          "height": 90,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 8,
+                "height": 90,
+                "width": 90,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={null}
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "borderRadius": 8,
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0.45,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          />
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          >
+            Articles
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "justifyContent": "space-between",
+            "marginHorizontal": 8,
+            "marginVertical": 8,
+          }
+        }
+      >
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 17,
+                },
+                Object {},
+                Object {
+                  "backgroundColor": false,
+                },
+              ]
+            }
+          >
+            series 111
+          </Text>
+        </Text>
+        <View
+          style={
+            Object {
+              "height": 8,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
+            }
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Last updated: 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="series_detail_header.description"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#353E6E",
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "backgroundColor": false,
+            },
+          ]
+        }
+      >
+        summary
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "paddingBottom": 2,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`SeriesContent component given summaryHighlight and isLite === true should render summary with summaryHighlight 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 6,
+      "paddingHorizontal": 16,
+      "paddingTop": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="button_wrapper"
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F4EFFB",
+          "borderRadius": 8,
+          "flexDirection": "row",
+          "height": 90,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 8,
+                "height": 90,
+                "width": 90,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={null}
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "borderRadius": 8,
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0.45,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          />
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          >
+            Articles
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "justifyContent": "space-between",
+            "marginHorizontal": 8,
+            "marginVertical": 8,
+          }
+        }
+      >
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 17,
+                },
+                Object {},
+                Object {
+                  "backgroundColor": false,
+                },
+              ]
+            }
+          >
+            series 111
+          </Text>
+        </Text>
+        <View
+          style={
+            Object {
+              "height": 8,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
+            }
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Last updated: 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="series_detail_header.description"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#353E6E",
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "backgroundColor": false,
+            },
+          ]
+        }
+      >
+        
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "backgroundColor": "#FDF773",
+            },
+          ]
+        }
+      >
+        summary
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "backgroundColor": false,
+            },
+          ]
+        }
+      >
+        
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "paddingBottom": 2,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`SeriesContent component given titleHighlight and isLite === false should render title with title 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 6,
+      "paddingHorizontal": 16,
+      "paddingTop": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="button_wrapper"
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F4EFFB",
+          "borderRadius": 8,
+          "flexDirection": "row",
+          "height": 90,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 8,
+                "height": 90,
+                "width": 90,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={
+              Object {
+                "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "borderRadius": 8,
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0.45,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          />
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          >
+            Articles
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "justifyContent": "space-between",
+            "marginHorizontal": 8,
+            "marginVertical": 8,
+          }
+        }
+      >
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 17,
+                },
+                Object {},
+                Object {
+                  "backgroundColor": false,
+                },
+              ]
+            }
+          >
+            series 111
+          </Text>
+        </Text>
+        <View
+          style={
+            Object {
+              "height": 8,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
+            }
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Last updated: 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            01/11/2022
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "paddingBottom": 2,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`SeriesContent component given titleHighlight and isLite === true should render title with titleHighlight 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 6,
+      "paddingHorizontal": 16,
+      "paddingTop": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="button_wrapper"
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F4EFFB",
+          "borderRadius": 8,
+          "flexDirection": "row",
+          "height": 90,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 8,
+                "height": 90,
+                "width": 90,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={
+              Object {
+                "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "borderRadius": 8,
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0.45,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          />
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          >
+            Articles
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "justifyContent": "space-between",
+            "marginHorizontal": 8,
+            "marginVertical": 8,
+          }
+        }
+      >
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 17,
+                },
+                Object {},
+                Object {
+                  "backgroundColor": false,
+                },
+              ]
+            }
+          >
+            
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 17,
+                },
+                Object {},
+                Object {
+                  "backgroundColor": "#FDF773",
+                },
+              ]
+            }
+          >
+            series
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 17,
+                },
+                Object {},
+                Object {
+                  "backgroundColor": false,
+                },
+              ]
+            }
+          >
+             111
+          </Text>
+        </Text>
+        <View
+          style={
+            Object {
+              "height": 8,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
+            }
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Last updated: 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            01/11/2022
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "paddingBottom": 2,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`SeriesContent component render with description view 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 6,
+      "paddingHorizontal": 16,
+      "paddingTop": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="button_wrapper"
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F4EFFB",
+          "borderRadius": 8,
+          "flexDirection": "row",
+          "height": 90,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 8,
+                "height": 90,
+                "width": 90,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={null}
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "borderRadius": 8,
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0.45,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          />
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          >
+            Articles
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "justifyContent": "space-between",
+            "marginHorizontal": 8,
+            "marginVertical": 8,
+          }
+        }
+      >
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 17,
+                },
+                Object {},
+                Object {
+                  "backgroundColor": false,
+                },
+              ]
+            }
+          >
+            series 111
+          </Text>
+        </Text>
+        <View
+          style={
+            Object {
+              "height": 8,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
+            }
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Last updated: 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 8,
+        },
+        undefined,
+      ]
+    }
+    testID="series_detail_header.description"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#353E6E",
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "backgroundColor": false,
+            },
+          ]
+        }
+      >
+        summary
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "paddingBottom": 2,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`SeriesContent component render without description view 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 6,
+      "paddingHorizontal": 16,
+      "paddingTop": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="button_wrapper"
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F4EFFB",
+          "borderRadius": 8,
+          "flexDirection": "row",
+          "height": 90,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 8,
+                "height": 90,
+                "width": 90,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="cover"
+            source={
+              Object {
+                "uri": "https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/f6bd62ee-ccec-4526-9b99-376861ad9426.jpeg",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "borderRadius": 8,
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0.45,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          />
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 28,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "fontSize": 18,
+                },
+              ]
+            }
+          >
+            Articles
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "justifyContent": "space-between",
+            "marginHorizontal": 8,
+            "marginVertical": 8,
+          }
+        }
+      >
+        <Text
+          numberOfLines={2}
+          style={
+            Array [
+              Object {
+                "color": "#181C32",
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 17,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#181C32",
+                  "fontFamily": "BeVietnamPro-SemiBold",
+                  "fontSize": 17,
+                },
+                Object {},
+                Object {
+                  "backgroundColor": false,
+                },
+              ]
+            }
+          >
+            series 111
+          </Text>
+        </Text>
+        <View
+          style={
+            Object {
+              "height": 8,
+              "paddingHorizontal": undefined,
+              "paddingVertical": undefined,
+              "width": undefined,
+            }
+          }
+        />
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+        >
+          Last updated: 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            01/11/2022
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "paddingBottom": 2,
+      }
+    }
+  />
+</View>
+`;

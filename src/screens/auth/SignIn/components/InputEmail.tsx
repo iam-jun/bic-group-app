@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';

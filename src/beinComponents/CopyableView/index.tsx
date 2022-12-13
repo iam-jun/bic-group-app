@@ -14,7 +14,7 @@ import { showHideToastMessage } from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
 import ButtonWrapper from '../Button/ButtonWrapper';
-import Text from '../Text';
+import Text from '../../baseComponents/Text';
 
 interface Props {
   content: string;

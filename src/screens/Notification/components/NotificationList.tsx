@@ -12,7 +12,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Divider from '~/beinComponents/Divider';
 import NotificationItem from '~/beinComponents/list/items/NotificationItem';
 import ListView from '~/beinComponents/list/ListView';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useTabPressListener } from '~/hooks/navigation';
 import { ITabTypes } from '~/interfaces/IRouter';
 import i18n from '~/localization';

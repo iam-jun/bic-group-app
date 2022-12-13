@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { put, call, select } from 'redux-saga/effects';
 
-import { AxiosResponse } from 'axios';
 import actions from '~/storeRedux/groups/actions';
 import groupApi from '~/api/GroupApi';
 import { IParamGetCommunityMembers } from '~/interfaces/ICommunity';
@@ -12,19 +11,19 @@ export default function* getCommunitySearchMembers({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; params: IParamGetCommunityMembers};
+  payload: {groupId: string; params: IParamGetCommunityMembers};
 }) {
   try {
     const { groups } = yield select();
     const { canLoadMore, data } = groups.communitySearchMembers;
     yield put(actions.setCommunitySearchMembers({ loading: data.length === 0 }));
 
-    const { communityId, params } = payload;
+    const { groupId, params } = payload;
 
     if (!canLoadMore) return;
 
-    const resp: AxiosResponse = yield call(
-      groupApi.getCommunityMembers, communityId, {
+    const resp = yield call(
+      groupApi.getGroupMembers, groupId, {
         limit: appConfig.recordsPerPage,
         offset: data.length,
         ...params,

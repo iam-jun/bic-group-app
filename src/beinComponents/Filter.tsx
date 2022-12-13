@@ -22,7 +22,7 @@ import Animated, {
 
 import spacing from '~/theme/spacing';
 import Icon from '../baseComponents/Icon';
-import Text from './Text';
+import Text from '../baseComponents/Text';
 
 const { width: screenWidth } = Dimensions.get('window');
 export interface FilterProps {

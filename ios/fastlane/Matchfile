@@ -1,4 +1,0 @@
-git_url("git@bitbucket.org:anhthien-evol/bein-group-app-secret.git")
-storage_mode("git")
-app_identifier(["com.evol.bein.group.development"])
-username("anhthien@tgm.vn")

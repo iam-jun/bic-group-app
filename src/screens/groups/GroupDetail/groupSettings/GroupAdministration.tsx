@@ -12,7 +12,7 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
@@ -30,9 +30,10 @@ const GroupAdministration = (props: any) => {
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
-    'groups', groupId, [
-      PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-      PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+    groupId,
+    [
+      PERMISSION_KEY.EDIT_INFO,
+      PERMISSION_KEY.EDIT_PRIVACY,
     ],
   );
 

@@ -1,0 +1,1105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddArticles component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "height": "100%",
+        "position": "absolute",
+        "width": "100%",
+        "zIndex": 99,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "#F2F5F8",
+          "borderBottomWidth": 1,
+          "elevation": 1,
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingHorizontal": 12,
+          "paddingTop": 0,
+          "shadowColor": "rgba(0, 0, 0, 1)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.08,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": 60,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 20,
+            "left": 20,
+            "right": 20,
+            "top": 20,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="search_base_view.back_button"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "padding": 8,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#E3E6F2",
+              "borderRadius": 24,
+              "borderWidth": 1,
+              "justifyContent": "center",
+              "paddingLeft": 8,
+              "paddingRight": 12,
+            },
+            Object {
+              "color": "#181C32",
+              "flex": 1,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+              "height": "100%",
+            },
+            Object {
+              "height": 32,
+            },
+            false,
+          ]
+        }
+        testID="search_input"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginRight": 8,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="search_input.icon"
+                />
+              </View>
+            </View>
+          </View>
+          <TextInput
+            autoComplete="off"
+            autoFocus={true}
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onSubmitEditing={[Function]}
+            placeholder="placeholder"
+            placeholderTextColor="#BAC0DE"
+            returnKeyType="search"
+            selectionColor="#767D93"
+            style={
+              Object {
+                "color": "#181C32",
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+                "height": "100%",
+              }
+            }
+            testID="search_input.input"
+            value=""
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+  <RCTScrollView
+    ListEmptyComponent={[Function]}
+    ListFooterComponent={[Function]}
+    data={
+      Array [
+        Object {
+          "actor": Object {
+            "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e69febe3-5962-41f9-9258-3a8579f3b0ab",
+            "email": "bicnoticebot2@mailinator.com",
+            "fullname": "Wall-E",
+            "id": "05ba7d6d-70d6-4c19-b304-7adf8d0d5218",
+            "username": "bicbotnotice2",
+          },
+          "coverMedia": Object {
+            "url": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/91fae044-2182-47eb-97fb-c9e0bb6e5e6a.webp",
+          },
+          "id": "1",
+          "summary": "Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.",
+          "title": "Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.",
+          "updatedAt": "2022-11-03T07:36:28.870Z",
+        },
+        Object {
+          "actor": Object {
+            "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e69febe3-5962-41f9-9258-3a8579f3b0ab",
+            "email": "bicnoticebot2@mailinator.com",
+            "fullname": "Wall-E",
+            "id": "05ba7d6d-70d6-4c19-b304-7adf8d0d5218",
+            "username": "bicbotnotice2",
+          },
+          "coverMedia": Object {
+            "url": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/91fae044-2182-47eb-97fb-c9e0bb6e5e6a.webp",
+          },
+          "id": "2",
+          "summary": "Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.",
+          "title": "Be The First Line List Series.",
+          "updatedAt": "2022-11-03T07:36:28.870Z",
+        },
+        Object {
+          "actor": Object {
+            "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e69febe3-5962-41f9-9258-3a8579f3b0ab",
+            "email": "bicnoticebot2@mailinator.com",
+            "fullname": "Wall-E",
+            "id": "05ba7d6d-70d6-4c19-b304-7adf8d0d5218",
+            "username": "bicbotnotice2",
+          },
+          "coverMedia": Object {
+            "url": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/91fae044-2182-47eb-97fb-c9e0bb6e5e6a.webp",
+          },
+          "id": "3",
+          "summary": "Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.",
+          "title": "Be The First Line List Series.",
+          "updatedAt": "2022-11-03T07:36:28.870Z",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    initialNumToRender={20}
+    keyExtractor={[Function]}
+    keyboardShouldPersistTaps="handled"
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onEndReachedThreshold={0.1}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    showsVerticalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    testID="flatlist"
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 8,
+            }
+          }
+          testID="button_wrapper"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 17,
+                  },
+                  Object {},
+                  Object {
+                    "color": "#282E53",
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+            </Text>
+            <View
+              style={
+                Object {
+                  "height": undefined,
+                  "paddingHorizontal": undefined,
+                  "paddingVertical": undefined,
+                  "width": 8,
+                }
+              }
+            />
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID="article.icon.button"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    testID="article.icon"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+          </Text>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 8,
+            }
+          }
+          testID="button_wrapper"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 17,
+                  },
+                  Object {},
+                  Object {
+                    "color": "#282E53",
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Be The First Line List Series.
+            </Text>
+            <View
+              style={
+                Object {
+                  "height": undefined,
+                  "paddingHorizontal": undefined,
+                  "paddingVertical": undefined,
+                  "width": 8,
+                }
+              }
+            />
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID="article.icon.button"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    testID="article.icon"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+          </Text>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 8,
+            }
+          }
+          testID="button_wrapper"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-SemiBold",
+                    "fontSize": 17,
+                  },
+                  Object {},
+                  Object {
+                    "color": "#282E53",
+                    "flex": 1,
+                  },
+                ]
+              }
+            >
+              Be The First Line List Series.
+            </Text>
+            <View
+              style={
+                Object {
+                  "height": undefined,
+                  "paddingHorizontal": undefined,
+                  "paddingVertical": undefined,
+                  "width": 8,
+                }
+              }
+            />
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID="article.icon.button"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    testID="article.icon"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 15,
+                },
+                Object {},
+                undefined,
+              ]
+            }
+          >
+            Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "height": 0,
+          }
+        }
+      />
+      <View
+        onLayout={[Function]}
+      />
+    </View>
+  </RCTScrollView>
+  <View
+    collapsable={false}
+    style={
+      Object {
+        "height": 0,
+        "width": "100%",
+      }
+    }
+  />
+</View>
+`;
+
+exports[`AddArticles component renders correctly with empty data 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "height": "100%",
+        "position": "absolute",
+        "width": "100%",
+        "zIndex": 99,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "#F2F5F8",
+          "borderBottomWidth": 1,
+          "elevation": 1,
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingHorizontal": 12,
+          "paddingTop": 0,
+          "shadowColor": "rgba(0, 0, 0, 1)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.08,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": 60,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 20,
+            "left": 20,
+            "right": 20,
+            "top": 20,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="search_base_view.back_button"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "padding": 8,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#E3E6F2",
+              "borderRadius": 24,
+              "borderWidth": 1,
+              "justifyContent": "center",
+              "paddingLeft": 8,
+              "paddingRight": 12,
+            },
+            Object {
+              "color": "#181C32",
+              "flex": 1,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+              "height": "100%",
+            },
+            Object {
+              "height": 32,
+            },
+            false,
+          ]
+        }
+        testID="search_input"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginRight": 8,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  testID="search_input.icon"
+                />
+              </View>
+            </View>
+          </View>
+          <TextInput
+            autoComplete="off"
+            autoFocus={true}
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onSubmitEditing={[Function]}
+            placeholder="placeholder"
+            placeholderTextColor="#BAC0DE"
+            returnKeyType="search"
+            selectionColor="#767D93"
+            style={
+              Object {
+                "color": "#181C32",
+                "flex": 1,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+                "height": "100%",
+              }
+            }
+            testID="search_input.input"
+            value=""
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+  <RCTScrollView
+    ListEmptyComponent={[Function]}
+    ListFooterComponent={[Function]}
+    data={Array []}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    initialNumToRender={20}
+    keyExtractor={[Function]}
+    keyboardShouldPersistTaps="handled"
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onEndReachedThreshold={0.1}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    showsVerticalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    testID="flatlist"
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "marginTop": 30,
+            "paddingHorizontal": 24,
+          }
+        }
+        testID="empty_screen"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "aspectRatio": 1,
+                "width": 150,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            resizeMode="contain"
+            source={
+              Object {
+                "testUri": "../../../assets/images/img_empty_search_post.png",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          />
+        </View>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              Object {
+                "marginVertical": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Sorry, we couldn’t find anything related to your search.
+        </Text>
+      </View>
+      <View
+        onLayout={[Function]}
+      />
+    </View>
+  </RCTScrollView>
+  <View
+    collapsable={false}
+    style={
+      Object {
+        "height": 0,
+        "width": "100%",
+      }
+    }
+  />
+</View>
+`;

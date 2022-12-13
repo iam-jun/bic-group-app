@@ -8,7 +8,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ButtonApproveDeclineAllRequests from '~/screens/groups/components/ButtonApproveDeclineAllRequests';
 import { spacing } from '~/theme';
 

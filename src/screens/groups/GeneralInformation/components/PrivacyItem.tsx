@@ -1,51 +1,72 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/baseComponents/Icon';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
-import useCommunitiesStore from '~/store/entities/communities';
+import { IconType } from '~/resources/icons';
+import { Button } from '~/baseComponents';
+import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
 
 interface Props {
-  item: any;
-  type: 'group' | 'community';
+  value: GroupPrivacyType | CommunityPrivacyType;
+  icon: IconType;
+  title: string;
+  subtitle: string
+  selectedPrivacy: string;
+  onPress: (key: string) => void;
 }
 
-const PrivacyItem = ({ item, type }: Props) => {
-  const currentCommunityId = useCommunitiesStore((state) => state.currentCommunityId);
-  const community = useCommunitiesStore((state) => state.data[currentCommunityId]);
-  const group = useKeySelector(groupsKeySelector.groupDetail.group);
-  const data = type === 'group' ? group : community;
-
-  const { privacy } = data || {};
+const PrivacyItem = ({
+  value, icon, title, subtitle, selectedPrivacy, onPress,
+}: Props) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
+  const isSelected = selectedPrivacy === value;
+
+  const _onPress = () => {
+    onPress?.(value);
+  };
 
   return (
-    <PrimaryItem
-      testID={`general_information.privacy.${item.type}`.toLowerCase()}
-      title={item.title}
-      titleProps={{ variant: 'h5', useI18n: true }}
-      subTitle={item.subtitle}
-      subTitleProps={{ variant: 'bodyS', numberOfLines: 0, useI18n: true }}
-      LeftComponent={
-        <Icon style={styles.bottomSheetLeftIcon} icon={item.icon} />
-      }
-      RightComponent={
-        privacy === item.type ? (
-          <Icon icon="Check" size={24} tintColor={colors.purple60} />
-        ) : undefined
-      }
-    />
+    <Button style={styles.container} onPress={_onPress}>
+      <View style={styles.privacyHeader}>
+        <View style={styles.privacy}>
+          <Icon icon={icon} tintColor={colors.neutral20} />
+          <Text.BodyM color={colors.neutral60} style={styles.privacyText} useI18n>
+            {title}
+          </Text.BodyM>
+        </View>
+
+        {isSelected && <Icon icon="Check" tintColor={colors.blue50} />}
+      </View>
+
+      <Text.BodyM style={styles.descriptionPrivacyText} color={colors.neutral60} useI18n>
+        {subtitle}
+      </Text.BodyM>
+    </Button>
   );
 };
 
 const styles = StyleSheet.create({
-  bottomSheetLeftIcon: {
-    marginRight: spacing.margin.large,
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.base,
+  },
+  privacyHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  privacy: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  privacyText: {
+    marginHorizontal: spacing.margin.small,
+  },
+  descriptionPrivacyText: {
+    marginTop: spacing.margin.base,
   },
 });
 

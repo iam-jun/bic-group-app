@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/baseComponents/Icon';
 import Avatar from '~/baseComponents/Avatar';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import images from '~/resources/images';
 import dimension, { scaleCoverHeight } from '~/theme/dimension';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';

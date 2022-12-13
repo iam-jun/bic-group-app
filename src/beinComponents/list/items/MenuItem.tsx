@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import { NotificationsBadgeComponentProps } from '~/beinComponents/Badge/NotificationsBadge/NotificationsBadgeComponent';
 import Icon, { IconProps } from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useKeySelector } from '~/hooks/selector';
 
 import spacing from '~/theme/spacing';

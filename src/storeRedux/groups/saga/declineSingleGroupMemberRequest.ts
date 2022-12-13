@@ -34,20 +34,23 @@ export default function* declineSingleGroupMemberRequest({
     }));
 
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-  } catch (err: any) {
-    console.error('declineSingleGroupMemberRequest: ', err);
+  } catch (error: any) {
+    console.error('declineSingleGroupMemberRequest: ', error);
 
-    if (err?.code === approveDeclineCode.CANCELED) {
+    if (error?.code === approveDeclineCode.CANCELED
+    || error?.code === approveDeclineCode.APPROVED
+    || error?.code === approveDeclineCode.DECLINED) {
       yield put(groupsActions.editGroupMemberRequest({
         id: requestId,
-        data: { isCanceled: true },
+        data: { noticeMessage: error?.meta?.message },
       }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(showError, error);
   }
 }

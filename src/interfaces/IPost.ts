@@ -3,7 +3,7 @@ import { ReactionType } from '~/constants/reactions';
 import { ICategory } from '~/interfaces/IArticle';
 import { IGiphy } from './IGiphy';
 
-export enum POST_TYPE {
+export enum PostType {
   POST = 'POST',
   ARTICLE = 'ARTICLE',
   SERIES = 'SERIES',
@@ -12,6 +12,8 @@ export enum POST_TYPE {
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
+  articles?: IPostArticles[];
+  communities?: IPostCommunities[];
   content?: string;
   highlight?: string;
   media?: IPostMedia;
@@ -32,19 +34,33 @@ export interface IPost {
   deleted?: boolean;
   markedReadSuccess?: boolean;
   linkPreview?: ILinkPreview;
-  type?: keyof typeof POST_TYPE;
+  type?: PostType;
   title?: string;
   summary?: string;
   titleHighlight?: string;
   summaryHighlight?: string;
   hashtags?: string[];
-  coverMedia?: IArticleCover
-  categories?: ICategory[]
+  coverMedia?: IArticleCover;
+  categories?: ICategory[];
+  isSaved?: boolean;
 }
 
 export interface IPostAudience {
   users?: IAudienceUser[];
   groups?: IAudienceGroup[];
+}
+
+export interface IPostArticles {
+  id?: string;
+  title?: string;
+}
+
+export interface IPostCommunities {
+  communityId?: string;
+  icon?: string;
+  id?: string;
+  name?: string;
+  privacy?: string;
 }
 
 export interface IAudienceUser {
@@ -378,7 +394,7 @@ export interface IPayloadReactToPost {
   id: string;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
-  reactionCounts: IReactionCounts;
+  reactionsCount: IReactionCounts;
 }
 
 export interface IPayloadReactToComment {

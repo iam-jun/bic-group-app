@@ -3,16 +3,18 @@ import React, { useEffect, useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { Toggle } from '~/baseComponents';
 import { spacing } from '~/theme';
 import Icon from '~/baseComponents/Icon';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
+import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
 
 interface JoinRequestSettingProps {
   type: 'community' | 'group';
   total: number;
+  privacy: CommunityPrivacyType | GroupPrivacyType;
   isJoinApproval?: boolean;
   onUpdateJoinSetting: (isJoinApproval: boolean) => void;
   onPressApproveAll: () => void;
@@ -21,6 +23,7 @@ interface JoinRequestSettingProps {
 const JoinRequestSetting = ({
   type,
   total,
+  privacy,
   isJoinApproval,
   onUpdateJoinSetting,
   onPressApproveAll,
@@ -30,6 +33,13 @@ const JoinRequestSetting = ({
   const [isChecked, setIsChecked] = useState(isJoinApproval || false);
   const dispatch = useDispatch();
   const { t } = useBaseHook();
+
+  const isSecretPrivacy = privacy === CommunityPrivacyType.SECRET
+  || privacy === GroupPrivacyType.SECRET;
+
+  const settingDescription = isSecretPrivacy
+    ? 'communities:join_request_setting:description_disabled'
+    : `communities:join_request_setting:description_${isChecked ? 'on' : 'off'}_${type}`;
 
   useEffect(() => {
     setIsChecked(isJoinApproval);
@@ -113,7 +123,9 @@ const JoinRequestSetting = ({
     <View style={styles.container}>
       <View style={styles.line1}>
         <Text.BodyMMedium useI18n>communities:join_request_setting:title</Text.BodyMMedium>
-        <Toggle disableBuiltInState isChecked={isChecked} onValueChanged={onPressToggle} />
+        {!isSecretPrivacy && (
+          <Toggle disableBuiltInState isChecked={isChecked} onValueChanged={onPressToggle} />
+        )}
       </View>
 
       <View style={styles.line2}>
@@ -123,9 +135,7 @@ const JoinRequestSetting = ({
           color={theme.colors.neutral40}
           useI18n
         >
-          {isChecked
-            ? `communities:join_request_setting:description_on_${type}`
-            : `communities:join_request_setting:description_off_${type}` }
+          {settingDescription}
         </Text.BodyS>
       </View>
     </View>
@@ -153,6 +163,7 @@ const createStyles = (theme: ExtendedTheme) => {
       marginTop: spacing.margin.tiny,
     },
     descriptionText: {
+      flex: 1,
       marginLeft: spacing.margin.small,
     },
   });

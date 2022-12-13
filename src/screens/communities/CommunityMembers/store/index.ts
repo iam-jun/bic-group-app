@@ -1,6 +1,12 @@
 import { createStore } from '~/store/utils';
 import removeCommunityMember from './actions/removeCommunityMember';
-import IRemoveCommunityMemberState from './Interface';
+import IBaseState from '~/store/interfaces/IBaseState';
+
+export interface IRemoveCommunityMemberState extends IBaseState {
+  actions: {
+    deleteRemoveCommunityMember: (payload: {communityId: string; groupId: string; userId: string}) => void;
+  }
+}
 
 const removeCommunityMemberStore = () => ({
   actions: {

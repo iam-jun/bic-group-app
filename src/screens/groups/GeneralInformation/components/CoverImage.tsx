@@ -1,15 +1,14 @@
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 import { scaleCoverHeight } from '~/theme/dimension';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Image from '~/beinComponents/Image';
-import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
+import InfoCard from '~/components/InfoCard';
 
 interface Props {
   testID?: string;
@@ -26,41 +25,17 @@ const CoverImage = ({
 
   onEditCover,
 }: Props) => {
-  const [coverHeight, setCoverHeight] = useState<number>(210);
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
-  const styles = themeStyles(
-    theme, coverHeight,
-  );
+  const styles = themeStyles(theme);
   const loadingCover = useKeySelector(groupsKeySelector.loadingCover);
 
-  const onCoverLayout = (e: any) => {
-    if (!e?.nativeEvent?.layout?.width) return;
-    const coverWidth = e.nativeEvent.layout.width;
-    const coverHeight = scaleCoverHeight(coverWidth);
-    setCoverHeight(coverHeight);
-  };
-  const textColor = !loadingCover ? colors.purple60 : colors.gray40;
-
   return (
-    <View testID={testID}>
-      <View style={styles.coverHeader}>
-        <Text.H5 color={colors.neutral80} useI18n>
-          settings:title_cover
-        </Text.H5>
-        {!!canEditInfo && (
-          <ButtonWrapper
-            testID="cover.button_edit"
-            onPress={onEditCover}
-            disabled={loadingCover}
-          >
-            <Text.H6 testID="cover.text_edit" color={textColor} useI18n>
-              settings:title_edit
-            </Text.H6>
-          </ButtonWrapper>
-        )}
-      </View>
-      <View onLayout={onCoverLayout}>
+    <InfoCard
+      testID={testID}
+      title="settings:title_cover"
+      onEdit={canEditInfo ? onEditCover : undefined}
+    >
+      <View>
         {!loadingCover ? (
           <Image
             testID="cover.image"
@@ -76,21 +51,20 @@ const CoverImage = ({
           </View>
         )}
       </View>
-    </View>
+    </InfoCard>
+
   );
 };
 
-const themeStyles = (
-  theme: ExtendedTheme, coverHeight: number,
-) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
     coverHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+      alignItems: 'center',
       marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
     },
     imageLoading: {
       backgroundColor: colors.gray20,
@@ -98,7 +72,7 @@ const themeStyles = (
     },
     cover: {
       width: '100%',
-      height: coverHeight,
+      height: scaleCoverHeight(),
     },
     basicInfoList: {
       marginHorizontal: spacing.margin.tiny,

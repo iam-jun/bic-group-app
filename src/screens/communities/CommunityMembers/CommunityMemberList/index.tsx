@@ -5,6 +5,8 @@ import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberList from '~/screens/groups/components/MemberList';
 import actions from '~/storeRedux/groups/actions';
 import { useMyPermissions } from '~/hooks/permissions';
+import { useKeySelector } from '~/hooks/selector';
+import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 interface CommunityMemberListProps {
   community: ICommunity;
@@ -12,16 +14,16 @@ interface CommunityMemberListProps {
 }
 
 const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProps) => {
-  const { id: communityId, groupId } = community;
+  const { groupId } = community;
   const dispatch = useDispatch();
+  const { canLoadMore } = useKeySelector(groupsKeySelector.communityMembers);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
+    groupId,
     [
-      PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
-      PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE_IN_COMMUNITY,
+      PERMISSION_KEY.REMOVE_MEMBER,
+      PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
     ],
   );
 
@@ -45,7 +47,7 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
   };
 
   const onLoadMore = () => {
-    getCommunityMembers();
+    canLoadMore && getCommunityMembers();
   };
 
   const onRefresh = () => {

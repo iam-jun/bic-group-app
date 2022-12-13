@@ -9,7 +9,6 @@ const groupStack = {
   // community
   communities: 'communities',
   communityDetail: 'community-detail',
-  yourGroups: 'your-groups',
   communityAbout: 'community-about',
   discoverGroups: 'discover-groups',
   communityMembers: 'community-members',
@@ -24,6 +23,7 @@ const groupStack = {
   generalInfo: 'general-info',
   editName: 'edit-name',
   editDescription: 'edit-description',
+  editPrivacy: 'edit-privacy',
   addMembers: 'add-members',
 
   // group structure

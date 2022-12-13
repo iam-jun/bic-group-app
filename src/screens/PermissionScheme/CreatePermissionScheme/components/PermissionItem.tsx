@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { IPermission, IRole } from '~/interfaces/IGroup';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';

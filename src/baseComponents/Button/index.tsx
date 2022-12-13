@@ -6,7 +6,7 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ButtonWrapper, { ButtonWrapperProps } from './ButtonWrapper';
 import ButtonRaise from './ButtonRaise';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { getButtonColors } from './helper';
 import { ButtonSize, ButtonType, ButtonVariant } from './interface';
 import {

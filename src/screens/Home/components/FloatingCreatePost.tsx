@@ -7,15 +7,16 @@ import { useRootNavigation } from '~/hooks/navigation';
 
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
-import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import { ISelectAudienceParams } from '~/screens/post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
-import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import streamApi from '~/api/StreamApi';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import BottomListItem from '~/components/BottomList/BottomListItem';
+import MyDraft from './MyDraft';
+import Button from '~/baseComponents/Button';
 
 export interface FloatingCreatePostProps {
   audience?: any;
@@ -34,7 +35,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   const { t } = useBaseHook();
 
   const onCreate = () => {
-    dispatch(modalActions.hideBottomList());
+    dispatch(modalActions.hideModal());
     const params: ISelectAudienceParams = {
       createFromGroupId,
       isFirstStep: true,
@@ -47,44 +48,48 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
     );
   };
 
+  const onCreateArticle = () => {
+    dispatch(modalActions.hideModal());
+
+    rootNavigation.navigate(
+      articleStack.createArticle,
+      { isFirstStep: true },
+    );
+  };
+
   const onCreateSeries = () => {
-    dispatch(modalActions.hideBottomList());
+    dispatch(modalActions.hideModal());
+
     rootNavigation.navigate(
       seriesStack.seriesSelectAudience,
       { isFirstStep: true },
     );
   };
 
-  const goToDraftPost = () => {
-    dispatch(modalActions.hideBottomList());
-    rootNavigation.navigate(
-      menuStack.draft,
-    );
-  };
-
-  const onPress = async () => {
-    const { data: totalPost = 0 } = await streamApi.getTotalDraft() || {};
-    const data = [{
-      id: 1,
-      testID: 'create_option.write_post',
-      title: t('home:create_content_options:write_post'),
-      onPress: onCreate,
-    }, {
-      id: 2,
-      testID: 'create_option.write_series',
-      title: t('home:create_content_options:write_series'),
-      onPress: onCreateSeries,
-    },
-    {
-      id: 3,
-      testID: 'create_option.my_draft',
-      title: t('home:create_content_options:my_draft'),
-      badge: totalPost >= 100 ? '99+' : totalPost > 0 ? totalPost : '',
-      style: styles.myDraft,
-      onPress: goToDraftPost,
-    }];
+  const onPress = () => {
     dispatch(
-      modalActions.showBottomList({ isOpen: true, data } as any),
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <View>
+            <BottomListItem
+              testID="create_option.write_post"
+              title={t('home:create_content_options:write_post')}
+              onPress={onCreate}
+            />
+            <BottomListItem
+              testID="create_option.write_article"
+              title={t('home:create_content_options:write_article')}
+              onPress={onCreateArticle}
+            />
+            <BottomListItem
+              testID="create_option.write_series"
+              title={t('home:create_content_options:write_series')}
+              onPress={onCreateSeries}
+            />
+            <MyDraft />
+          </View>),
+      }),
     );
   };
 

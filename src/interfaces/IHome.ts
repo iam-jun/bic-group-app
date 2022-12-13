@@ -1,4 +1,4 @@
-import { POST_TYPE } from './IPost';
+import { PostType } from './IPost';
 
 export interface IPayloadSetNewsfeedSearch {
   isShow?: boolean;
@@ -42,7 +42,8 @@ export interface IParamGetFeed {
   idGt?: number;
   idLt?: number;
   isImportant?: boolean;
-  type?: POST_TYPE | undefined;
+  isSaved?: boolean;
+  type?: PostType | undefined;
 }
 
 export interface IParamGetSearchPost {

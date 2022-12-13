@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import ArticleText from '~/screens/articles/components/ArticleText/';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import {
@@ -17,7 +16,7 @@ import Divider from '~/beinComponents/Divider';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import DraftFooter from '../../components/DraftFooter';
-import ContentHeader from '~/components/ContentView/components/ContentHeader';
+import { ContentHeader } from '~/components/ContentView';
 import { IPayloadPublishDraftArticle } from '~/interfaces/IArticle';
 import { useUserIdAuth } from '~/hooks/auth';
 import useDraftArticleStore from '../store';
@@ -25,6 +24,8 @@ import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import { Button } from '~/baseComponents';
 import useArticleController from '~/screens/articles/store';
+import { ArticleSummary, ArticleTitle } from '~/components/articles';
+import { PostImportant } from '~/components/posts';
 
 interface DraftViewProps {
   data: IPost;
@@ -54,7 +55,11 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
     content,
     categories,
     isProcessing,
+    setting,
+    communities,
   } = data || {};
+
+  const { isImportant, importantExpiredAt } = setting || {};
 
   const shouldDisableButtonPublish = isPublishing
     || !title
@@ -103,13 +108,23 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
   };
 
   const onPressEdit = () => {
-    rootNavigation?.navigate(articleStack.editArticle, { articleId: id, isDraft: true });
+    rootNavigation?.navigate(articleStack.createArticleTitle, { articleId: id, isDraft: true });
   };
 
+  const renderImportant = () => (
+    <PostImportant
+      isImportant={!!isImportant}
+      expireTime={importantExpiredAt}
+      markedReadPost={false}
+      listCommunity={communities}
+    />
+  );
+
+  // use base ContentHeader to prevent user press event
   const renderHeader = () => (
     <ContentHeader
       actor={actor}
-      time={createdAt}
+      createdAt={createdAt}
       audience={audience}
     />
   );
@@ -124,11 +139,11 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
 
   const renderPreviewSummary = () => (
     <View style={styles.contentContainer}>
-      <ArticleText type="title" text={title} />
+      <ArticleTitle text={title} />
       {!!summary && (
         <>
           <ViewSpacing height={spacing.margin.small} />
-          <ArticleText type="summary" text={summary} />
+          <ArticleSummary text={summary} />
         </>
       )}
     </View>
@@ -152,6 +167,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
 
   return (
     <View style={styles.container}>
+      {renderImportant()}
       {renderHeader()}
       {renderImageThumbnail()}
       {renderPreviewSummary()}

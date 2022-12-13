@@ -14,7 +14,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import appConfig from '~/configs/appConfig';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
 import useUserProfileStore from '~/screens/Menu/UserProfile/store';

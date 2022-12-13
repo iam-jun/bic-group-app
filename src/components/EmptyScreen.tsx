@@ -1,11 +1,11 @@
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
 import Icon from '~/baseComponents/Icon';
-import { IconType } from '~/resources/icons';
 import Image from '~/beinComponents/Image';
+import Text from '~/baseComponents/Text';
+import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 
 interface EmptyScreenProps {

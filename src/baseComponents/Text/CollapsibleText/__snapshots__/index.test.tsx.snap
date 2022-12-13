@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Collapsible Text component renders correctly 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="collapsible_text.content"
+  >
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard d...
+  </Text>
+  <View
+    style={
+      Object {
+        "alignContent": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <Text
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#282E53",
+          },
+          undefined,
+        ]
+      }
+      testID="collapsible_text.short_content"
+    >
+      See more
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Collapsible Text component renders correctly testID 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="collapsible_text"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="collapsible_text.content"
+  >
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard d...
+  </Text>
+  <View
+    style={
+      Object {
+        "alignContent": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <Text
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
+          },
+          Object {
+            "color": "#282E53",
+          },
+          undefined,
+        ]
+      }
+      testID="collapsible_text.short_content"
+    >
+      See more
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Collapsible Text component renders correctly with markdown 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <View
+    style={
+      Array [
+        Array [
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+          },
+        ],
+        Object {
+          "marginBottom": 12,
+        },
+      ]
+    }
+  >
+    <Text>
+      <Text
+        style={
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-Light",
+          }
+        }
+        testID="text_mention"
+      >
+        @vantest1
+      </Text>
+    </Text>
+  </View>
+</View>
+`;

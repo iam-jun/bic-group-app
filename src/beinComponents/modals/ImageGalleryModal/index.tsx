@@ -5,8 +5,8 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Share,
   Platform,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
@@ -16,11 +16,14 @@ import { debounce } from 'lodash';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from '~/baseComponents/Icon';
 import { ImageGalleryModalProps } from '~/beinComponents/modals/ImageGalleryModal/IImageGalleryModalProps';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
+import ImageGalleryMenu from './ImageGalleryMenu';
+import AlertModal from '../AlertModal';
+import Toast from '~/baseComponents/Toast';
 
 const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   visible,
@@ -34,13 +37,12 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const pagerRef = useRef<any>();
   const footerListRef = useRef<any>();
+  const modalizeRef = useRef<any>(null);
 
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(
-    theme, insets,
-  );
+  const styles = createStyle(theme, insets);
 
   const imageUrls = getImageUrls(source);
 
@@ -52,20 +54,13 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     }
   };
 
-  const onPressShare = () => {
-    try {
-      Share.share({
-        message: imageUrls?.[activeIndex]?.url,
-        url: imageUrls?.[activeIndex]?.url,
-      }).then((result) => {
-        // eslint-disable-next-line no-console
-        console.log(
-          '\x1b[35m🐣️ Gallery share result: ', result, '\x1b[0m',
-        );
-      });
-    } catch (error: any) {
-      console.error(error.message);
-    }
+  const onPressMenu = () => {
+    modalizeRef.current?.openModal?.();
+  };
+
+  // for Android
+  const closeModal = () => {
+    modalizeRef.current?.closeModal?.();
   };
 
   const setActiveIndex = debounce(
@@ -103,9 +98,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     }
   };
 
-  const getItemFooterLayout = (
-    data: any, index: number,
-  ) => ({
+  const getItemFooterLayout = (data: any, index: number) => ({
     length: 48,
     offset: 48 * index,
     index,
@@ -117,19 +110,25 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         icon="iconBack"
         onPress={onPressClose}
         size={28}
-        tintColor={colors.neutral80}
+        tintColor={colors.white}
         hitSlop={{
-          top: 20, bottom: 20, left: 20, right: 20,
+          top: 20,
+          bottom: 20,
+          left: 20,
+          right: 20,
         }}
       />
       <View style={{ flex: 1 }} />
       <Icon
-        icon="ShareNodes"
-        onPress={onPressShare}
+        icon="Ellipsis"
+        onPress={onPressMenu}
         size={20}
-        tintColor={colors.neutral80}
+        tintColor={colors.white}
         hitSlop={{
-          top: 20, bottom: 20, left: 20, right: 20,
+          top: 20,
+          bottom: 20,
+          left: 20,
+          right: 20,
         }}
       />
     </View>
@@ -144,7 +143,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
             borderWidth: index === activeIndex ? 1 : 0,
             marginLeft: index === 0 ? 20 : 0,
             marginRight:
-                index === (imageUrls?.length || 0) - 1 ? 20 : spacing.margin.tiny,
+              index === (imageUrls?.length || 0) - 1 ? 20 : spacing.margin.tiny,
           },
         ]}
         source={item?.url}
@@ -156,9 +155,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     let fileName = imageUrls?.[activeIndex]?.name?.toUpperCase?.();
     if (!fileName && alwaysShowFileName) {
       fileName = imageUrls?.[activeIndex]?.url
-        ?.replace?.(
-          /(.+)\/(.+)$/, '$2',
-        )
+        ?.replace?.(/(.+)\/(.+)$/, '$2')
         ?.toUpperCase?.();
     }
 
@@ -180,21 +177,18 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
           renderItem={renderFooterItem}
           showsHorizontalScrollIndicator={false}
           onScrollToIndexFailed={onScrollToIndexFailed}
-          keyExtractor={(
-            item, index,
-          ) => `footer_item_${index}_${item?.url}`}
+          keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
         />
       </View>
     );
   };
 
-  const renderScreen = (
-    item: any, index: number,
-  ) => (
+  const renderScreen = (item: any, index: number) => (
     <TouchableOpacity
       key={`${index}`}
       activeOpacity={0.8}
       onPress={() => setIsFocus(true)}
+      onLongPress={onPressMenu}
     >
       <Image
         style={styles.screenImage}
@@ -247,29 +241,37 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   return (
     <Modal visible={visible} transparent onRequestClose={onRequestClose}>
       {visible && (
-        <View style={styles.container}>
-          {renderHeader()}
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <PagerView
-              ref={pagerRef}
-              style={{ flex: 1 }}
-              initialPage={initIndex}
-              onPageSelected={onPageSelected}
-            >
-              {imageUrls.map(renderScreen)}
-            </PagerView>
-            {renderControlButton()}
+        <TouchableWithoutFeedback onPress={closeModal}>
+          <View style={styles.container}>
+            {renderHeader()}
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <PagerView
+                ref={pagerRef}
+                style={{ flex: 1 }}
+                initialPage={initIndex}
+                onPageSelected={onPageSelected}
+              >
+                {imageUrls.map(renderScreen)}
+              </PagerView>
+              {renderControlButton()}
+            </View>
+            {renderFooter()}
+            {isFocus && renderFocusScreen()}
+            <ImageGalleryMenu
+              photo={imageUrls[activeIndex]}
+              ref={modalizeRef}
+            />
+            <AlertModal />
+            <Toast />
           </View>
-          {renderFooter()}
-          {isFocus && renderFocusScreen()}
-        </View>
+        </TouchableWithoutFeedback>
       )}
     </Modal>
   );
 };
 
 const getImageUrls = (source: any) => {
-  const result: {url: string; name: string}[] = [];
+  const result: { url: string; name: string }[] = [];
   if (source?.length > 0) {
     source?.forEach?.((item: any) => {
       result.push({ url: item?.uri || item, name: item?.name });
@@ -280,9 +282,7 @@ const getImageUrls = (source: any) => {
   return result;
 };
 
-const createStyle = (
-  theme: ExtendedTheme, insets: EdgeInsets,
-) => {
+const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

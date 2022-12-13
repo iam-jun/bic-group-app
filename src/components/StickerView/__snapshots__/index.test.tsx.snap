@@ -9,13 +9,6 @@ exports[`StickerView component renders correctly 1`] = `
   }
   testID="sticker_view"
 >
-  <View
-    style={
-      Object {
-        "height": 0,
-      }
-    }
-  />
   <View>
     <View
       style={
@@ -87,11 +80,9 @@ exports[`StickerView component renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "height": "100%",
-                },
-              ]
+              Object {
+                "height": "100%",
+              }
             }
           >
             <View
@@ -221,5 +212,12 @@ exports[`StickerView component renders correctly 1`] = `
       </View>
     </View>
   </View>
+  <View
+    style={
+      Object {
+        "height": 0,
+      }
+    }
+  />
 </View>
 `;

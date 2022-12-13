@@ -7,20 +7,21 @@ import { useDispatch } from 'react-redux';
 
 import { useKeySelector } from '~/hooks/selector';
 import { IPayloadGetSearchPosts } from '~/interfaces/IHome';
-import { POST_TYPE } from '~/interfaces/IPost';
 import homeKeySelector from '~/storeRedux/home/keySelector';
 import homeActions from '~/storeRedux/home/actions';
 
-import PostView from '~/screens/post/components/PostView';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { scaleSize } from '~/theme/dimension';
 import FilterToolbar from '~/screens/Home/HomeSearch/FilterToolbar';
 import spacing from '~/theme/spacing';
-import ArticleItem from '~/screens/articles/components/ArticleItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Icon from '~/baseComponents/Icon';
+import ArticleItem from '~/components/articles/ArticleItem';
+import { PostType } from '~/interfaces/IPost';
+import { PostView } from '~/components/posts';
+import SeriesItem from '~/components/series/SeriesItem';
 
 const SearchResult = () => {
   const dispatch = useDispatch();
@@ -40,16 +41,10 @@ const SearchResult = () => {
   );
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
 
-  const renderItem = ({ item }: any) => (item.type === POST_TYPE.ARTICLE ? (
-    <ArticleItem id={item.id} isLite postData={item} />
-  ) : (
-    <PostView
-      postId={item?.id}
-      isLite
-      pressNavigateToDetail
-      postData={item}
-    />
-  ));
+  useEffect(() => {
+    getData();
+  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId]);
+
   const getData = (isLoadMore = false) => {
     if (searchText) {
       const payload: IPayloadGetSearchPosts = {
@@ -63,10 +58,6 @@ const SearchResult = () => {
       dispatch(homeActions.getSearchPosts(payload));
     }
   };
-
-  useEffect(() => {
-    getData();
-  }, [searchText, filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId]);
 
   const onEndReached = () => {
     getData(true);
@@ -104,22 +95,36 @@ const SearchResult = () => {
 
   const renderSpacing = () => <ViewSpacing height={spacing.margin.large} />;
 
-  const renderBannerNotice = () => (
-    <View style={styles.bannerView}>
-      <Icon icon="CircleInfo" size={18} tintColor={colors.neutral20} />
-      <Text.BodyS color={colors.neutral40} style={styles.bannerText} useI18n>
-        home:newsfeed_search:text_banner_search
-      </Text.BodyS>
-    </View>
-  );
+  const renderItem = ({ item: data }: any) => {
+    if (data?.type === PostType.ARTICLE) {
+      return <ArticleItem isLite data={data} />;
+    }
+
+    if (data?.type === PostType.SERIES) {
+      return <SeriesItem data={data} isLite />;
+    }
+
+    return (
+      <PostView
+        isLite
+        data={data}
+        pressNavigateToDetail
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>
       <FilterToolbar />
-      {renderBannerNotice()}
+      <View style={styles.bannerView}>
+        <Icon icon="CircleInfo" size={18} tintColor={colors.neutral20} />
+        <Text.BodyS color={colors.neutral40} style={styles.bannerText} useI18n>
+          home:newsfeed_search:text_banner_search
+        </Text.BodyS>
+      </View>
       <FlatList
         style={styles.flex1}
-        data={searchResults || []}
+        data={searchResults}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderFooter}

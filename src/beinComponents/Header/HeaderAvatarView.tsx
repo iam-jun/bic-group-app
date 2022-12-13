@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Avatar from '~/baseComponents/Avatar';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';

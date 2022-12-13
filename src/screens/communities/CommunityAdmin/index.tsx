@@ -8,7 +8,7 @@ import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 
 import { useRootNavigation } from '~/hooks/navigation';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -25,26 +25,15 @@ const CommunityAdmin = (props: any) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
-  const name = community?.name || '';
+  const { name = '', groupId } = community || {};
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canEditProfileInfo = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
+    groupId,
     [
-      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
-      PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
+      PERMISSION_KEY.EDIT_INFO,
+      PERMISSION_KEY.EDIT_PRIVACY,
     ],
-  );
-  const canManageGroupStructure = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
-  );
-  const canManageScheme = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
-    PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
   );
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
@@ -56,14 +45,6 @@ const CommunityAdmin = (props: any) => {
         type: 'community',
       },
     );
-  };
-
-  const onPressPermission = () => {
-    rootNavigation.navigate(groupStack.permissionScheme, { communityId });
-  };
-
-  const onPressGroupStructure = () => {
-    rootNavigation.navigate(groupStack.groupStructureSettings, { communityId });
   };
 
   const renderModerating = () => (
@@ -110,26 +91,6 @@ const CommunityAdmin = (props: any) => {
           iconProps={{ icon: 'Gear', tintColor: theme.colors.purple50 }}
           rightSubIcon="AngleRightSolid"
           onPress={onPressGeneralInfo}
-        />
-      )}
-      {!!canManageGroupStructure && (
-        <MenuItem
-          testID="community_admin.group_structure_settings"
-          title="settings:title_group_structure"
-          icon="CodeBranch"
-          iconProps={{ icon: 'CodeBranch', tintColor: theme.colors.purple50 }}
-          rightSubIcon="AngleRightSolid"
-          onPress={onPressGroupStructure}
-        />
-      )}
-      {!!canManageScheme && (
-        <MenuItem
-          testID="community_admin.permission_settings"
-          title="settings:title_permission_settings"
-          icon="FileLock"
-          iconProps={{ icon: 'FileLock', tintColor: theme.colors.purple50 }}
-          rightSubIcon="AngleRightSolid"
-          onPress={onPressPermission}
         />
       )}
       <MenuItem

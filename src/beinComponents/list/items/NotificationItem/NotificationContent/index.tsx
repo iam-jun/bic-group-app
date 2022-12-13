@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import TimeView from '~/beinComponents/TimeView';
 import spacing from '~/theme/spacing';

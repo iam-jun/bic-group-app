@@ -137,7 +137,6 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      flex: 1,
       borderTopWidth: 1,
       borderColor: colors.gray40,
       backgroundColor: colors.white,

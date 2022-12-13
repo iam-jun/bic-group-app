@@ -5,7 +5,7 @@ import React, {
   useCallback, useEffect, useImperativeHandle, useRef,
 } from 'react';
 import {
-  Keyboard, Platform, StyleSheet, View,
+  Keyboard, Platform, StyleSheet, TextInput, View,
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -14,30 +14,35 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Portal } from 'react-native-portalize';
-import { AppConfig } from '~/configs';
-import { dimension } from '~/theme';
-import spacing from '~/theme/spacing';
-import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
 import EmojiPicker from '~/baseComponents/EmojiPicker';
+import EmojiSectionIcons from '~/baseComponents/EmojiPicker/components/EmojiSectionIcons';
 import useEmojiPickerStore from '~/baseComponents/EmojiPicker/store';
 import IEmojiPickerState from '~/baseComponents/EmojiPicker/store/Interface';
 import { SearchInput } from '~/baseComponents/Input';
+import { AppConfig } from '~/configs';
 import { useBaseHook } from '~/hooks';
-import GiphyView from '../GiphyView';
 import { IGiphy } from '~/interfaces/IGiphy';
+import { dimension } from '~/theme';
+import spacing from '~/theme/spacing';
+import GiphyView from '../GiphySelectorView';
 import SlideUpModal from '../SlideUpModal';
 
 export interface Props {
   stickerViewRef: any;
+  fullscreen?: boolean;
+  hideOnBlur?: boolean;
   onGiphySelected?: (media: IGiphy) => void;
   onEmojiSelected?: (emoji: string) => void;
-
+  onVisibleChanged?: (visible: boolean) => void;
 }
 
-const _StickerView = ({ stickerViewRef, onGiphySelected, onEmojiSelected }: Props) => {
+const _StickerView = ({
+  stickerViewRef, fullscreen, hideOnBlur, onGiphySelected, onEmojiSelected, onVisibleChanged,
+}: Props) => {
   const { t } = useBaseHook();
   const INITIAL_KEYBOARD_HEIGHT = 336;
   const modalizeRef = useRef<any>();
+  const searchInputRef = useRef<TextInput>();
 
   const [type, setType] = React.useState('emoji');
   const [visible, setVisible] = React.useState(false);
@@ -55,29 +60,43 @@ const _StickerView = ({ stickerViewRef, onGiphySelected, onEmojiSelected }: Prop
 
   const keyboard = useKeyboard();
 
-  useEffect(
-    () => {
-      if (keyboard?.keyboardHeight
+  useEffect(() => onVisibleChanged?.(visible), [visible]);
+
+  useEffect(() => {
+    const shoultInitialize = keyboard?.keyboardHeight
       && keyboardHeight !== keyboard?.keyboardHeight
-      && keyboard?.keyboardHeight > INITIAL_KEYBOARD_HEIGHT
-      ) {
-        setKeyboardHeight(keyboard?.keyboardHeight);
-      }
-    }, [keyboard?.keyboardHeight],
-  );
+      && keyboard?.keyboardHeight > INITIAL_KEYBOARD_HEIGHT;
+
+    if (shoultInitialize) {
+      setKeyboardHeight(keyboard?.keyboardHeight);
+    }
+  }, [keyboard?.keyboardHeight]);
+
+  useEffect(() => {
+    const isSearchInputFocused = searchInputRef.current?.isFocused();
+
+    if (hideOnBlur && keyboard?.keyboardShown && !isSearchInputFocused) {
+      hide(true);
+    }
+  }, [keyboard?.keyboardShown]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     height: height.value,
   }));
 
-  const show = (type:'gif'|'emoji') => {
+  const show = (type:'gif'|'emoji', autofocus?: boolean) => {
     setType(type);
     modalizeRef.current?.show();
-    Keyboard.dismiss();
+    if (autofocus) {
+      searchInputRef.current?.focus();
+    } else {
+      Keyboard.dismiss();
+    }
   };
 
-  const hide = () => {
-    modalizeRef.current?.hide();
+  const hide = (urgent?: boolean) => {
+    if (urgent) height.value = 0;
+    modalizeRef.current?.hide(urgent);
   };
 
   const onChangeText = debounce(
@@ -163,13 +182,12 @@ const _StickerView = ({ stickerViewRef, onGiphySelected, onEmojiSelected }: Prop
     );
   }
 
-  const expandHeight = Platform.OS === 'ios' ? keyboardHeight : undefined;
-  const maxHeight = Platform.OS === 'android' ? keyboardHeight : undefined;
-  const topOffset = Platform.OS === 'ios' ? dimension.headerHeight : undefined;
+  const expandHeight = Platform.OS === 'ios' && !fullscreen ? keyboardHeight : undefined;
+  const maxHeight = Platform.OS === 'android' && !fullscreen ? keyboardHeight : undefined;
+  const topOffset = Platform.OS === 'ios' && !fullscreen ? dimension.headerHeight : undefined;
 
   return (
     <View testID="sticker_view" style={styles.container}>
-      <Animated.View style={animatedStyle} />
       <Portal>
         <SlideUpModal
           sheetRef={modalizeRef}
@@ -180,10 +198,11 @@ const _StickerView = ({ stickerViewRef, onGiphySelected, onEmojiSelected }: Prop
           onClosed={onClosed}
           onCollapsed={onCollapsed}
         >
-          <View style={[styles.stickerView]}>
+          <View style={styles.stickerView}>
             <View style={styles.header}>
               <SearchInput
                 testID="sticker_view.search_input"
+                inputRef={searchInputRef}
                 placeholder={t(`sticker:search_${type}`)}
                 value={searchQuery}
                 onChangeText={onChangeText}
@@ -195,6 +214,7 @@ const _StickerView = ({ stickerViewRef, onGiphySelected, onEmojiSelected }: Prop
           </View>
         </SlideUpModal>
       </Portal>
+      <Animated.View style={animatedStyle} />
     </View>
   );
 };
@@ -226,5 +246,5 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 const StickerView = React.memo(_StickerView);
-StickerView.whyDidYouRender = true;
+// StickerView.whyDidYouRender = true;
 export default StickerView;

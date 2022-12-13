@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { IconType } from '~/resources/icons';
 
 import { formatFullTime } from '~/beinComponents/TimeView/helper';
@@ -31,7 +31,7 @@ const PendingUserItem = ({
   const { t } = useBaseHook();
   const { language } = useContext(AppContext);
 
-  const { user, updatedAt, isCanceled } = requestItem || {};
+  const { user, updatedAt, noticeMessage } = requestItem || {};
   const {
     avatar, fullname, email, countryCode, phone, latestWork, city,
   } = user || {};
@@ -54,6 +54,42 @@ const PendingUserItem = ({
       </View>
     )
   );
+
+  const renderFooter = () => {
+    if (!noticeMessage) {
+      return (
+        <View style={styles.buttons}>
+          <Button.Neutral
+            testID="pending_user_item.btn_decline"
+            type="ghost"
+            size="medium"
+            style={styles.buttonDecline}
+            onPress={onPressDecline}
+            useI18n
+          >
+            common:btn_decline
+          </Button.Neutral>
+          <Button.Primary
+            testID="pending_user_item.btn_approve"
+            type="ghost"
+            size="medium"
+            style={styles.buttonApprove}
+            onPress={onPressApprove}
+            useI18n
+          >
+            common:btn_approve
+          </Button.Primary>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.hintMessage}>
+        <Icon style={styles.marginRight} icon="CircleInfo" size={16} tintColor={colors.neutral20} />
+        <Text.BodyS color={colors.neutral40}>{noticeMessage}</Text.BodyS>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -97,35 +133,7 @@ const PendingUserItem = ({
         </View>
       </View>
 
-      {isCanceled ? (
-        <View style={styles.hintMessage}>
-          <Icon style={{ marginRight: 4 }} icon="CircleInfo" size={18} />
-          <Text.BodyS useI18n>groups:text_request_been_canceled</Text.BodyS>
-        </View>
-      ) : (
-        <View style={styles.buttons}>
-          <Button.Neutral
-            testID="pending_user_item.btn_decline"
-            type="ghost"
-            size="medium"
-            style={styles.buttonDecline}
-            onPress={onPressDecline}
-            useI18n
-          >
-            common:btn_decline
-          </Button.Neutral>
-          <Button.Primary
-            testID="pending_user_item.btn_approve"
-            type="ghost"
-            size="medium"
-            style={styles.buttonApprove}
-            onPress={onPressApprove}
-            useI18n
-          >
-            common:btn_approve
-          </Button.Primary>
-        </View>
-      )}
+      {renderFooter()}
     </View>
   );
 };
@@ -172,6 +180,9 @@ const createStyles = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       marginVertical: spacing.margin.tiny,
+    },
+    marginRight: {
+      marginRight: spacing.margin.tiny,
     },
   });
 };

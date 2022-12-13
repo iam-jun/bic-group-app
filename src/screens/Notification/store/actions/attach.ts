@@ -5,36 +5,26 @@ const attach = (set, get) => (payload: any) => {
 
   const { notificationFlag, id } = payload || {};
   const newNotificationData: any = { ...data };
+  let tabMentionData = newNotificationData.tabMention.data;
+  let tabImportantData = newNotificationData.tabImportant.data;
   if (notificationFlag === 'IMPORTANT') {
-    newNotificationData.tabImportant.data = [
-      id,
-      ...newNotificationData.tabImportant.data,
-    ];
+    tabImportantData = [id, ...newNotificationData.tabImportant.data];
   } else if (notificationFlag === 'MENTION') {
-    newNotificationData.tabMention.data = [
-      id,
-      ...newNotificationData.tabMention.data,
-    ];
+    tabMentionData = [id, ...newNotificationData.tabMention.data];
   }
-  newNotificationData.tabAll.data = [
-    id,
-    ...newNotificationData.tabAll.data,
-  ];
-  newNotificationData.tabUnread.data = [
-    id,
-    ...newNotificationData.tabUnread.data,
-  ];
 
   const newNotifications: any = { ...data.notificationList };
   newNotifications[id] = { ...payload };
+  const tabAllData = [id, ...newNotificationData.tabAll.data];
+  const tabUnreadData = [id, ...newNotificationData.tabUnread.data];
 
   set((state: INotificationsState) => {
     state.notificationList = { ...newNotifications };
     state.unseenNumber += 1;
-    state.tabAll.data = newNotificationData.tabAll.data;
-    state.tabImportant.data = newNotificationData.tabImportant.data;
-    state.tabMention.data = newNotificationData.tabMention.data;
-    state.tabUnread.data = newNotificationData.tabUnread.data;
+    state.tabAll.data = tabAllData;
+    state.tabImportant.data = tabImportantData;
+    state.tabMention.data = tabMentionData;
+    state.tabUnread.data = tabUnreadData;
   }, 'attachNotification');
 };
 

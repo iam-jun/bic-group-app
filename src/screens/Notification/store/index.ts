@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createStore, resetStore } from '~/store/utils';
 import attach from './actions/attach';
 import detach from './actions/detach';
@@ -7,6 +8,7 @@ import markAsRead from './actions/markAsRead';
 import markAsReadAll from './actions/markAsReadAll';
 import markAsSeenAll from './actions/markAsSeenAll';
 import markAsUnRead from './actions/markAsUnRead';
+import registerPushToken from './actions/registerPushToken';
 import update from './actions/update';
 import INotificationsState from './Interface';
 
@@ -42,6 +44,7 @@ const initState: INotificationsState = {
 
 const notificationStore = (set, get) => ({
   ...initState,
+  pushToken: get()?.pushToken || '',
 
   actions: {
     getTabData: getNotifications(set, get),
@@ -54,11 +57,25 @@ const notificationStore = (set, get) => ({
     attach: attach(set, get),
     update: update(set, get),
     detach: detach(set, get),
+
+    savePushToken: (token: string) => {
+      set((state: INotificationsState) => {
+        state.pushToken = token;
+      }, 'setPushToken');
+    },
+    registerPushToken: registerPushToken(set, get),
   },
 
   reset: () => resetStore(initState, set),
 });
 
-const useNotificationStore = createStore<INotificationsState>(notificationStore);
+const useNotificationStore = createStore<INotificationsState>(notificationStore,
+  {
+    persist: {
+      name: 'NotiStorage',
+      getStorage: () => AsyncStorage,
+      partialize: (state) => ({ pushToken: state.pushToken }),
+    },
+  });
 
 export default useNotificationStore;

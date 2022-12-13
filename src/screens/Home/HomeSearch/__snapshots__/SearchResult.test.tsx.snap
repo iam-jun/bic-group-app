@@ -97,7 +97,7 @@ exports[`SearchResult component should render empty search result 1`] = `
                 ]
               }
             >
-              Date Post
+              Date posted
             </Text>
           </View>
           <View
@@ -481,7 +481,7 @@ exports[`SearchResult component should render list search result 1`] = `
                 ]
               }
             >
-              Date Post
+              Date posted
             </Text>
           </View>
           <View
@@ -876,7 +876,6 @@ exports[`SearchResult component should render list search result 1`] = `
             </View>
           </View>
           <View
-            onLayout={[Function]}
             style={
               Array [
                 Object {
@@ -1083,7 +1082,7 @@ exports[`SearchResult component should render list search result 1`] = `
                         Object {
                           "color": "#212745",
                           "fontFamily": "BeVietnamPro-Light",
-                          "fontSize": 15,
+                          "fontSize": 13,
                         },
                         Object {
                           "color": "#353E6E",
@@ -1103,7 +1102,7 @@ exports[`SearchResult component should render list search result 1`] = `
                         Object {
                           "color": "#212745",
                           "fontFamily": "BeVietnamPro-Medium",
-                          "fontSize": 15,
+                          "fontSize": 13,
                         },
                         Object {
                           "color": "#181C32",
@@ -1267,110 +1266,22 @@ exports[`SearchResult component should render list search result 1`] = `
                 }
               >
                 <View
-                  style={
+                  accessibilityState={
                     Object {
-                      "flexDirection": "row",
+                      "disabled": true,
                     }
                   }
-                  testID="post_view_content.lite_container"
-                >
-                  <View
-                    style={
-                      Object {
-                        "flex": 1,
-                      }
-                    }
-                  >
-                    <View
-                      accessibilityState={
-                        Object {
-                          "disabled": true,
-                        }
-                      }
-                      accessible={true}
-                      focusable={true}
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      testID="post_view_content"
-                    >
-                      <View>
-                        <View
-                          style={Object {}}
-                        >
-                          <View
-                            style={
-                              Object {
-                                "alignItems": "flex-start",
-                                "flexDirection": "row",
-                                "flexWrap": "wrap",
-                                "justifyContent": "flex-start",
-                                "marginBottom": 2,
-                                "marginTop": 2,
-                                "width": "100%",
-                              }
-                            }
-                          >
-                            <Text
-                              style={Object {}}
-                            >
-                              <Text
-                                style={
-                                  Array [
-                                    Object {
-                                      "color": "#212745",
-                                      "fontFamily": "BeVietnamPro-Light",
-                                      "fontSize": 15,
-                                    },
-                                    Object {},
-                                    Object {
-                                      "backgroundColor": "#F6EF79",
-                                      "borderRadius": 6,
-                                      "overflow": "hidden",
-                                    },
-                                  ]
-                                }
-                              >
-                                <Text
-                                  style={
-                                    Array [
-                                      Object {
-                                        "color": "#212745",
-                                        "fontFamily": "BeVietnamPro-Light",
-                                        "fontSize": 15,
-                                      },
-                                      Object {},
-                                    ]
-                                  }
-                                >
-                                  Important
-                                </Text>
-                              </Text>
-                              <Text
-                                style={
-                                  Array [
-                                    Object {
-                                      "color": "#212745",
-                                      "fontFamily": "BeVietnamPro-Light",
-                                      "fontSize": 15,
-                                    },
-                                    Object {},
-                                  ]
-                                }
-                              >
-                                 post
-                              </Text>
-                            </Text>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </View>
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  testID="post_view_content"
+                />
               </View>
             </View>
             <View
@@ -1379,11 +1290,11 @@ exports[`SearchResult component should render list search result 1`] = `
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "space-between",
-                  "paddingBottom": 8,
                   "paddingHorizontal": 16,
+                  "paddingVertical": 8,
                 }
               }
-              testID="post_view_footer_lite"
+              testID="content_footer_lite"
             >
               <View
                 style={
@@ -1430,6 +1341,7 @@ exports[`SearchResult component should render list search result 1`] = `
                       undefined,
                     ]
                   }
+                  testID="content_footer_lite.comment_text"
                 >
                   0 Comment
                 </Text>
@@ -1451,6 +1363,7 @@ exports[`SearchResult component should render list search result 1`] = `
                     },
                   ]
                 }
+                testID="content_interested_user_count"
               >
                 <View
                   accessible={true}
@@ -1629,7 +1542,7 @@ exports[`SearchResult component should render loading search result 1`] = `
                 ]
               }
             >
-              Date Post
+              Date posted
             </Text>
           </View>
           <View

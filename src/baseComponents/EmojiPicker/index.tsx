@@ -16,7 +16,7 @@ import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import Emoji from '../Emoji';
 
 import EmojiPickerRow from './components/EmojiPickRow';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import useEmojiPickerStore from './store';
 import IEmojiPickerState from './store/Interface';
@@ -122,7 +122,10 @@ const _EmojiPicker = ({
           onMomentumScrollEnd={onMomentumScrollEnd}
           onScroll={onScroll}
           onScrollToIndexFailed={handleScrollToSectionFailed}
-          removeClippedSubviews
+          /**
+           * removeClippedSubviews = true cause can not scroll on first 2 sections on iOS
+           */
+          // removeClippedSubviews
           renderItem={renderItem}
           renderSectionHeader={renderSectionHeader}
           sections={emojis}
@@ -288,5 +291,5 @@ export const getStyleSheetFromTheme = ((theme) => {
 });
 
 const EmojiPicker = React.memo(_EmojiPicker);
-EmojiPicker.whyDidYouRender = true;
+// EmojiPicker.whyDidYouRender = true;
 export default EmojiPicker;

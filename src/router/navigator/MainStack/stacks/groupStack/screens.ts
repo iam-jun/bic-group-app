@@ -9,7 +9,6 @@ import NewFeature from '~/components/NewFeature';
 
 import Communities from '~/screens/communities/Communities';
 import CommunityDetail from '~/screens/communities/CommunityDetail';
-import YourGroups from '~/screens/groups/YourGroups';
 import CommunityAbout from '~/screens/communities/CommunityAbout';
 import DiscoverGroups from '~/screens/groups/DiscoverGroups';
 import CommunityMembers from '~/screens/communities/CommunityMembers';
@@ -23,6 +22,7 @@ import ReorderGroup from '~/screens/groups/GroupStructureSettings/ReorderGroup';
 import EditName from '~/screens/groups/GeneralInformation/EditName';
 import GroupSchemeAssignment from '~/screens/PermissionScheme/GroupSchemeAssignment';
 import GroupSchemeAssignSelection from '~/screens/PermissionScheme/GroupSchemeAssignSelection';
+import EditPrivacy from '~/screens/groups/GeneralInformation/EditPrivacy';
 
 const groupScreens = {
   // permission scheme
@@ -35,7 +35,6 @@ const groupScreens = {
   // community
   communities: Communities,
   'community-detail': CommunityDetail,
-  'your-groups': YourGroups,
   'community-about': CommunityAbout,
   'discover-groups': DiscoverGroups,
   'community-members': CommunityMembers,
@@ -50,6 +49,7 @@ const groupScreens = {
   'general-info': GeneralInformation,
   'edit-name': EditName,
   'edit-description': EditDescription,
+  'edit-privacy': EditPrivacy,
   'add-members': AddMembersToGroup,
 
   // group structure

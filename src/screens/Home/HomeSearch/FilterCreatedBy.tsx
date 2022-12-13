@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import Button from '~/baseComponents/Button';
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { ISelectedFilterUser } from '~/interfaces/IHome';

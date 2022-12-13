@@ -1,23 +1,24 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { useCallback, useEffect } from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
-import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import { IAudienceGroup } from '~/interfaces/IPost';
-import AlertDeleteAudiencesConfirmContent from '~/screens/post/components/AlertDeleteAudiencesConfirmContent';
+import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import modalActions from '~/storeRedux/modal/actions';
-import DeletedItem from '../components/DeletedItem';
-import { getSeriesMenu } from '../helper';
-import useSeriesStore, { ISeriesState } from '../store';
+import DeletedItem from '../../../components/series/DeletedItem';
 import SeriesDetailHeader from './components/SeriesDetailHeader';
+import SeriesDetailArticleItem from './components/SeriesDetailArticleItem';
+import useSeriesStore, { ISeriesState } from '../store';
+import useSeriesMenu from '~/hooks/useSeriesMenu';
+import { spacing } from '~/theme';
+import AddArticles from './components/AddArticles';
 
 const SeriesDetail = ({ route }: any) => {
   const { params } = route || {};
@@ -27,25 +28,36 @@ const SeriesDetail = ({ route }: any) => {
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const { rootNavigation } = useRootNavigation();
+
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
 
   const series = usePostsStore(useCallback(postsSelector.getPost(seriesId, {}), [seriesId]));
 
   const {
-    actor, id, deleted, audience,
+    actor, id, deleted, audience, articles = [],
   } = series;
   const actions = useSeriesStore((state: ISeriesState) => state.actions);
+
+  const isActor = actor?.id == userId;
 
   useEffect(() => {
     actions.getSeriesDetail(seriesId);
   }, []);
 
+  const onPressSearch = () => {
+    setIsOpenSearch(true);
+  };
+
+  const onCloseSearch = () => {
+    setIsOpenSearch(false);
+  };
+
   const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
     = useMyPermissions();
+
   const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
-    'groups',
     audience?.groups,
-    PERMISSION_KEY.GROUP.DELETE_OWN_POST,
+    PERMISSION_KEY.CRUD_POST_ARTICLE,
   );
 
   const handleError = (listIdAudiences: string[]) => {
@@ -98,22 +110,7 @@ const SeriesDetail = ({ route }: any) => {
     actions.deleteSeries(id, handleError);
   };
 
-  const onRightPress = () => {
-    Keyboard.dismiss();
-    const data = getSeriesMenu({
-      reactionsCount: {},
-      isActor: actor?.id == userId,
-      dispatch,
-      seriesId: id,
-      navigaton: rootNavigation,
-      isFromDetail: true,
-      handleConfirmDelete,
-    });
-
-    dispatch(
-      modalActions.showBottomList({ isOpen: true, data } as BottomListProps),
-    );
-  };
+  const { showMenu } = useSeriesMenu(series, isActor, true, handleConfirmDelete);
 
   if (deleted) {
     return (
@@ -124,20 +121,46 @@ const SeriesDetail = ({ route }: any) => {
     );
   }
 
+  const _renderHeaderComponent = () => <SeriesDetailHeader series={series} />;
+
+  const _renderSeriesDetailArticleItem = ({ item, index }) => (
+    <SeriesDetailArticleItem
+      index={index + 1}
+      article={item}
+      seriesId={id}
+      isActor={isActor}
+    />
+  );
+
+  const _keyExtractor = (item) => `artc-series-detail-${item?.id}`;
+
   return (
-    <View style={styles.container}>
+    <View style={styles.wrapper}>
       <Header
         rightIcon="menu"
-        onRightPress={onRightPress}
+        onRightPress={showMenu}
+        icon={isActor ? 'Plus' : undefined}
+        onPressIcon={onPressSearch}
       />
-
-      <SeriesDetailHeader series={series} />
-      {/* for the next sprint */}
-      {/* list SeriesDetailArticleItem */}
-      {/* <SeriesDetailArticleItem
-        index={1}
-        article={article_from_series}
-      /> */}
+      <FlatList
+        data={articles}
+        keyExtractor={_keyExtractor}
+        renderItem={_renderSeriesDetailArticleItem}
+        ListHeaderComponent={_renderHeaderComponent}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}
+      />
+      {isActor
+      && (
+      <AddArticles
+        seriesId={id}
+        audience={audience}
+        articles={articles}
+        isOpen={isOpenSearch}
+        onClose={onCloseSearch}
+        placeholder={t('article:search_article_placeholder')}
+      />
+      )}
     </View>
   );
 };
@@ -146,9 +169,12 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
-    container: {
+    wrapper: {
       flex: 1,
       backgroundColor: colors.gray5,
+    },
+    container: {
+      paddingBottom: spacing.padding.extraLarge,
     },
   });
 };

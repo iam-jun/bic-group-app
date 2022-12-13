@@ -1,6 +1,5 @@
 import { put, call, select } from 'redux-saga/effects';
 
-import { AxiosResponse } from 'axios';
 import actions from '~/storeRedux/groups/actions';
 import groupApi from '~/api/GroupApi';
 import { IParamGetCommunityMembers } from '~/interfaces/ICommunity';
@@ -29,7 +28,7 @@ export default function* getCommunityMembers({
 
     if (!isRefreshing && !canLoadMore) return;
 
-    const resp:AxiosResponse = yield call(
+    const response = yield call(
       groupApi.getGroupMembers, groupId, {
         limit: appConfig.recordsPerPage,
         offset: isRefreshing ? 0 : offset,
@@ -40,7 +39,7 @@ export default function* getCommunityMembers({
     let newDataCount = 0;
     let newDataObj = {};
 
-    const members = resp.data;
+    const members = response.data;
     Object.keys(members)?.forEach?.((role: string) => {
       const roles = members[role] || {};
       newDataCount += roles.data?.length || 0;
@@ -59,7 +58,7 @@ export default function* getCommunityMembers({
 
     const newData = {
       loading: false,
-      canLoadMore: newDataCount === appConfig.recordsPerPage,
+      canLoadMore: !!response?.meta?.hasNextPage,
       offset: isRefreshing ? newDataCount : offset + newDataCount,
       ...newDataObj,
     };

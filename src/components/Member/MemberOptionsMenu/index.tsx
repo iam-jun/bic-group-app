@@ -1,14 +1,14 @@
-import { StyleSheet, View } from 'react-native';
-import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import useAuth from '~/hooks/auth';
+import { Button } from '~/baseComponents';
 import BottomSheet from '~/baseComponents/BottomSheet';
+import Text from '~/baseComponents/Text';
+import useAuth from '~/hooks/auth';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';
-import { Button } from '~/baseComponents';
-import Text from '~/beinComponents/Text';
 import modalActions from '~/storeRedux/modal/actions';
 import { spacing } from '~/theme';
 

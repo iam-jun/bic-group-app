@@ -19,6 +19,13 @@ import colors from '~/theme/theme';
 
 jest.mock('zustand');
 
+jest.mock('rn-fetch-blob', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  DocumentDir: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  polyfill: () => {},
+}));
+
 configure({ adapter: new Adapter() });
 
 global.__reanimatedWorkletInit = jest.fn();

@@ -11,9 +11,7 @@ import {
 } from '~/interfaces/IGroup';
 import {
   IParamGetCommunities,
-  IParamGetCommunityMembers,
   IParamGetDiscoverGroups,
-  ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
 import { withHttpRequestPromise } from '~/api/apiRequest';
 import appConfig from '~/configs/appConfig';
@@ -21,6 +19,7 @@ import { IUserEdit } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { ISearchReq } from '~/interfaces/common';
+import { ContentType } from '~/components/SelectAudience';
 
 const provider = apiProviders.bein;
 const defaultConfig = {
@@ -30,30 +29,6 @@ const defaultConfig = {
 };
 
 export const groupsApiConfig = {
-  assignCommunityAdmin: (
-    communityId: string,
-    userIds: string[],
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/assign-admin`,
-    method: 'put',
-    data: { userIds },
-  }),
-  revokeCommunityAdmin: (
-    communityId: string,
-    userIds: string[],
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/revoke-admin`,
-    method: 'put',
-    data: { userIds },
-  }),
-  updateCommunityJoinSetting: (communityId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/settings`,
-    method: 'put',
-    data: { isJoinApproval },
-  }),
   updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}groups/${groupId}/settings`,
@@ -284,11 +259,14 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  getSearchAudiences: (params: {key: string, offset?: number, limit?: number}): HttpApiRequestConfig => ({
+  getSearchAudiences: (params: {
+    contentType: ContentType; key: string, offset?: number, limit?: number
+  }): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}post-audiences`,
     provider: apiProviders.bein,
     params: {
+      content: params?.contentType,
       key: params?.key,
       offset: params?.offset || 0,
       limit: params?.limit || 25,
@@ -460,28 +438,6 @@ export const groupsApiConfig = {
     url: `${provider.url}communities/${communityId}`,
     params: { previewMembers: true },
   }),
-  editCommunityDetail: (
-    communityId: string,
-    data: ICommunityDetailEdit,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}`,
-    method: 'put',
-    data: {
-      ...data,
-    },
-  }),
-  getCommunityMembers: (
-    communityId: string,
-    params?: IParamGetCommunityMembers,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/members`,
-    params: {
-      ...params,
-      key: params?.key?.trim?.() ? params.key : undefined,
-    },
-  }),
   getDiscoverGroups: (
     communityId: string,
     params?: IParamGetDiscoverGroups,
@@ -504,54 +460,6 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}communities/${communityId}/leave`,
     method: 'post',
-  }),
-  removeCommunityMembers: (communityId: string, userIds: string[]): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/members`,
-    method: 'delete',
-    data: { userIds },
-  }),
-  getCommunityMemberRequests: (
-    communityId: string,
-    params: any,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/joining-requests`,
-    params: {
-      ...params,
-      sort: 'updated_at:desc',
-      key: params?.key?.trim?.() ? params.key : undefined,
-    },
-  }),
-  approveSingleCommunityMemberRequest: (
-    communityId: string,
-    requestId: string,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/joining-requests/${requestId}/approve`,
-    method: 'put',
-  }),
-  declineSingleCommunityMemberRequest: (
-    communityId: string,
-    requestId: string,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/joining-requests/${requestId}/decline`,
-    method: 'put',
-  }),
-  approveAllCommunityMemberRequests: (
-    communityId: string,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/joining-requests/approve`,
-    method: 'put',
-  }),
-  declineAllCommunityMemberRequests: (
-    communityId: string,
-  ): HttpApiRequestConfig => ({
-    ...defaultConfig,
-    url: `${provider.url}communities/${communityId}/joining-requests/decline`,
-    method: 'put',
   }),
   getCommunities: (params?: IParamGetCommunities): HttpApiRequestConfig => ({
     ...defaultConfig,
@@ -600,15 +508,6 @@ export const groupsApiConfig = {
 };
 
 const groupApi = {
-  assignCommunityAdmin: (communityId: string, userIds: string[]) => withHttpRequestPromise(
-    groupsApiConfig.assignCommunityAdmin, communityId, userIds,
-  ),
-  revokeCommunityAdmin: (communityId: string, userIds: string[]) => withHttpRequestPromise(
-    groupsApiConfig.revokeCommunityAdmin, communityId, userIds,
-  ),
-  updateCommunityJoinSetting: (communityId: string, isJoinApproval: boolean) => withHttpRequestPromise(
-    groupsApiConfig.updateCommunityJoinSetting, communityId, isJoinApproval,
-  ),
   updateGroupJoinSetting: (groupId: string, isJoinApproval: boolean) => withHttpRequestPromise(
     groupsApiConfig.updateGroupJoinSetting, groupId, isJoinApproval,
   ),
@@ -812,7 +711,9 @@ const groupApi = {
       ...param,
     },
   ),
-  getSearchAudiences: (params: {key: string, offset?: number, limit?: number}) => withHttpRequestPromise(
+  getSearchAudiences: (params: {
+    contentType: ContentType; key: string, offset?: number, limit?: number
+  }) => withHttpRequestPromise(
     groupsApiConfig.getSearchAudiences, params,
   ),
   getAudienceTree: () => withHttpRequestPromise(groupsApiConfig.getAudienceTree),
@@ -883,19 +784,6 @@ const groupApi = {
     groupsApiConfig.getCommunityGroups, id, params,
   ),
   getCommunityDetail: (communityId: string) => withHttpRequestPromise(groupsApiConfig.getCommunityDetail, communityId),
-  editCommunityDetail: (communityId: string, data: ICommunityDetailEdit) => withHttpRequestPromise(
-    groupsApiConfig.editCommunityDetail,
-    communityId,
-    data,
-  ),
-  getCommunityMembers: (
-    communityId: string,
-    params?: IParamGetCommunityMembers,
-  ) => withHttpRequestPromise(
-    groupsApiConfig.getCommunityMembers,
-    communityId,
-    params,
-  ),
   getDiscoverGroups: (communityId: string, params?: IParamGetDiscoverGroups) => withHttpRequestPromise(
     groupsApiConfig.getDiscoverGroups,
     communityId,
@@ -906,40 +794,6 @@ const groupApi = {
     groupsApiConfig.cancelJoinCommunity, communityId,
   ),
   leaveCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.leaveCommunity, communityId),
-  removeCommunityMembers: (communityId: string, userIds: string[]) => withHttpRequestPromise(
-    groupsApiConfig.removeCommunityMembers,
-    communityId,
-    userIds,
-  ),
-  getCommunityMemberRequests: (communityId: string, params: any) => withHttpRequestPromise(
-    groupsApiConfig.getCommunityMemberRequests,
-    communityId,
-    params,
-  ),
-  approveSingleCommunityMemberRequest: (
-    communityId: string,
-    requestId: string,
-  ) => withHttpRequestPromise(
-    groupsApiConfig.approveSingleCommunityMemberRequest,
-    communityId,
-    requestId,
-  ),
-  declineSingleCommunityMemberRequest: (
-    communityId: string,
-    requestId: string,
-  ) => withHttpRequestPromise(
-    groupsApiConfig.declineSingleCommunityMemberRequest,
-    communityId,
-    requestId,
-  ),
-  approveAllCommunityMemberRequests: (communityId: string) => withHttpRequestPromise(
-    groupsApiConfig.approveAllCommunityMemberRequests,
-    communityId,
-  ),
-  declineAllCommunityMemberRequests: (communityId: string) => withHttpRequestPromise(
-    groupsApiConfig.declineAllCommunityMemberRequests,
-    communityId,
-  ),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
   searchGlobal: (params?: ISearchReq) => withHttpRequestPromise(groupsApiConfig.searchGlobal, params),
   checkMembersCommunityStructureMovePreview: (

@@ -8,12 +8,12 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import CommunityItem from '~/screens/groups/components/CommunityItem';
 import spacing from '~/theme/spacing';
 import { useRootNavigation } from '~/hooks/navigation';
 import useSearchJoinedCommunitiesStore from './store';
-import { isGroup } from '~/screens/groups/helper';
+import { isGroup } from '~/helpers/groups';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
@@ -35,9 +35,9 @@ const CommunitySearchResults = ({
 
   const onPressCommunity = (communityId: string) => {
     const item = items[communityId];
-    const { level, id, community } = item;
+    const { id, community } = item;
 
-    if (isGroup(level)) {
+    if (isGroup(item)) {
       // in group detail we need some infomation from community detail,
       // so before navigate to group detail we need to fetch community detail
       actions.getCommunity(community.id);
@@ -46,6 +46,7 @@ const CommunitySearchResults = ({
         groupStack.groupDetail,
         {
           groupId: id,
+          communityId: community.id,
         },
       );
       return;

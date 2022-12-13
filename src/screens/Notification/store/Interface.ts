@@ -10,6 +10,7 @@ export interface INotificationTab {
   }
 
 interface INotificationsState extends IBaseState, IFetchingState{
+  pushToken?: string,
   loading?: boolean,
   unseenNumber?: number,
   notificationList: any,
@@ -29,6 +30,9 @@ interface INotificationsState extends IBaseState, IFetchingState{
     attach?: (payload: any)=> void;
     update?: (payload: any)=>void;
     detach?: (payload: any)=>void;
+
+    savePushToken?: (token: string) => void;
+    registerPushToken?: (payload?: any) => void;
 
   }
 

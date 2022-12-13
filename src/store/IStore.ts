@@ -1,6 +1,6 @@
 import { ISelectAudienceState } from '~/components/SelectAudience/store';
-import { IEditArticleCategoryState } from '~/screens/articles/EditArticle/EditCategory/store';
-import { IEditArticleState } from '~/screens/articles/EditArticle/store';
+import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
+import { ICodePushState } from '~/store/codePush';
 import IPostsState from './entities/posts/Interface';
 import ICommentsState from '~/store/entities/comments/Interface';
 import IHomeState from '~/screens/Home/store/Interface';
@@ -9,13 +9,14 @@ import IJoinedCommunitiesState from '~/screens/Menu/store/Interface';
 import ICommunityJoinedGroupTreeState from '~/screens/groups/components/CommunityJoinedGroupTree/store/Interface';
 import IDraftPostState from '~/screens/Draft/DraftPost/store/Interface';
 import IReactionDetailState from '~/components/reaction/ReactionDetailBottomSheet/store/Interface';
-import IUserProfileState from '~/screens/Menu/UserProfile/store/Interface';
+import { IUserProfileState } from '~/screens/Menu/UserProfile/store';
+import { IAccountSettingsState } from '~/screens/Menu/AccountSettings/store';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
 import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
-import IRemoveCommunityMemberState from '~/screens/communities/CommunityMembers/store/Interface';
+import { IRemoveCommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import IRemoveGroupMemberState from '~/screens/groups/GroupMembers/store/Interface';
-import IUserInterestedPostState from '~/screens/post/components/UserInterestedPost/store/Interface';
+import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
 import { ICommunitiesState } from './entities/communities';
 import { IDiscoverCommunitiesSearchState } from '~/screens/Discover/components/SearchDiscoverCommunity/store/Interface';
@@ -28,6 +29,10 @@ import { IGiphyState } from './giphy';
 import { IDraftArticleState } from '~/screens/Draft/DraftArticle/store';
 import { IArticleController } from '~/screens/articles/store';
 import { ISeriesState } from '~/screens/series/store';
+import { ITopicState } from '~/screens/topic/store';
+import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
+import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
+import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 
 export interface BicStore {
   entities: {
@@ -47,9 +52,10 @@ export interface BicStore {
   articles: {
     articleController: IArticleController,
     EditArticle: {
-      editArticleStore: IEditArticleState,
+      editArticleStore: ICreateArticleState,
       EditArticleCategory: {
-        editArticleCategoryStore: IEditArticleCategoryState
+        editArticleCategoryStore: ICreateArticleCategoryState,
+        editArticleSeriesStore: ICreateArticleSeriesState,
       }
     }
   };
@@ -63,6 +69,7 @@ export interface BicStore {
       };
       groupStructure: IGroupStructureState;
       discoverGroups: IDiscoverGroupsState;
+      groupDetail: IGroupDetailState;
     };
     removeGroupMemberStore: IRemoveGroupMemberState;
     discoverCommunitiesStore: IDiscoverCommunitiesState;
@@ -78,6 +85,7 @@ export interface BicStore {
   Menu: {
     joinedCommunitiesStore: IJoinedCommunitiesState;
     userProfileStore: IUserProfileState;
+    accountSettingsStore: IAccountSettingsState;
   };
   PermissionScheme: {
     permissionSchemeStore: IPermissionSchemeState;
@@ -94,10 +102,14 @@ export interface BicStore {
       draftPostStore: IDraftPostState;
     };
   }
+  topic: {
+    topicStore: ITopicState;
+  };
 
   // others
   chat: IChatState;
   communities: ICommunitiesState;
   removeCommunityMemberStore: IRemoveCommunityMemberState;
   giphy: IGiphyState;
+  codePush: ICodePushState;
 }

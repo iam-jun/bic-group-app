@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import RoleItem from '~/screens/PermissionScheme/CreatePermissionScheme/components/RoleItem';
 import { IPermission, IRole } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';

@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { communityPrivacyListDetail } from '~/constants/privacyTypes';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';

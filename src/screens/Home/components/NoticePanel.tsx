@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/baseComponents/Icon';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 
 import { useBaseHook } from '~/hooks';
 import postActions from '~/storeRedux/post/actions';

@@ -1,11 +1,11 @@
 import { call, put, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
 import { ICommunity } from '~/interfaces/ICommunity';
-import { isGroup } from '~/screens/groups/helper';
 import showError from '~/storeRedux/commonSaga/showError';
 import groupApi from '../../../api/GroupApi';
 import { mapItems } from '~/screens/groups/helper/mapper';
 import groupsActions from '../actions';
+import { isGroup } from '~/helpers/groups';
 
 export default function* getGlobalSearch({
   payload,
@@ -29,7 +29,7 @@ export default function* getGlobalSearch({
 
     const results = response.data.map((item:any) => ({
       ...item,
-      id: isGroup(item.level) ? item.id : item.community.id,
+      id: isGroup(item) ? item.id : item.community.id,
     }));
     const newIds = results.map((item: ICommunity) => item.id);
     const newItems = mapItems(results);

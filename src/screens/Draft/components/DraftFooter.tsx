@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { Button } from '~/baseComponents';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';

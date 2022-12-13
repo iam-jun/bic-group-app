@@ -1082,13 +1082,6 @@ Array [
         }
         testID="sticker_view"
       >
-        <View
-          style={
-            Object {
-              "height": 0,
-            }
-          }
-        />
         <View>
           <View
             style={
@@ -1160,11 +1153,9 @@ Array [
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "height": "100%",
-                      },
-                    ]
+                    Object {
+                      "height": "100%",
+                    }
                   }
                 >
                   <View
@@ -1324,7 +1315,6 @@ Array [
                         onScrollBeginDrag={[Function]}
                         onScrollEndDrag={[Function]}
                         onScrollToIndexFailed={[Function]}
-                        removeClippedSubviews={true}
                         renderItem={[Function]}
                         scrollEventThrottle={50}
                         showsVerticalScrollIndicator={false}
@@ -1347,6 +1337,13 @@ Array [
             </View>
           </View>
         </View>
+        <View
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
       </View>
       <View
         style={
@@ -1356,13 +1353,6 @@ Array [
         }
         testID="sticker_view"
       >
-        <View
-          style={
-            Object {
-              "height": 0,
-            }
-          }
-        />
         <View>
           <View
             style={
@@ -1434,11 +1424,9 @@ Array [
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "height": "100%",
-                      },
-                    ]
+                    Object {
+                      "height": "100%",
+                    }
                   }
                 >
                   <View
@@ -1598,7 +1586,6 @@ Array [
                         onScrollBeginDrag={[Function]}
                         onScrollEndDrag={[Function]}
                         onScrollToIndexFailed={[Function]}
-                        removeClippedSubviews={true}
                         renderItem={[Function]}
                         scrollEventThrottle={50}
                         showsVerticalScrollIndicator={false}
@@ -1621,6 +1608,13 @@ Array [
             </View>
           </View>
         </View>
+        <View
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
       </View>
       <View
         collapsable={false}

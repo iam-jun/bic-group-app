@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>297061761843-u9fkq0i21ogdvgcrq56858clmr0qmuk8.apps.googleusercontent.com</string>
+	<string>297061761843-67ok8nanfdag23lhcbnjkeupdan7qqtt.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.297061761843-u9fkq0i21ogdvgcrq56858clmr0qmuk8</string>
+	<string>com.googleusercontent.apps.297061761843-67ok8nanfdag23lhcbnjkeupdan7qqtt</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>297061761843-hb0cnv70961rvlcgklql192rrvne1rsq.apps.googleusercontent.com</string>
+	<string>297061761843-aeu5etsut95jpb4ac71pukanm7qhc5ii.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAqlFcQavc87oD7XYEYFmypNoPQPH211Y8</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.evol.bein.group.development</string>
+	<string>com.beincom.group.development</string>
 	<key>PROJECT_ID</key>
 	<string>bein-group-development</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:297061761843:ios:7db39d7b14e9206a583446</string>
+	<string>1:297061761843:ios:d3a2e77bdaffd9f8583446</string>
+	<key>DATABASE_URL</key>
+	<string>https://bein-group-development-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
 </plist>

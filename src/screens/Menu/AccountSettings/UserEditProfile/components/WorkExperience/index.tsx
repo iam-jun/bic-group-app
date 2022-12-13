@@ -1,22 +1,20 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/baseComponents/Icon';
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { IUserWorkExperience } from '~/interfaces/IAuth';
 import { formatDate } from '~/utils/formatData';
 import Divider from '~/beinComponents/Divider';
 import Button from '~/beinComponents/Button';
 import { spacing } from '~/theme';
-import menuActions from '~/storeRedux/menu/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import { useKeySelector } from '~/hooks/selector';
-import menuKeySelector from '~/storeRedux/menu/keySelector';
+import useMenuController from '~/screens/Menu/store';
+import useAccountSettingsStore from '../../../store';
 
 const WorkExperience = () => {
   const { t } = useBaseHook();
@@ -24,16 +22,17 @@ const WorkExperience = () => {
   const { colors } = theme;
   const styles = createStyles();
   const { rootNavigation } = useRootNavigation();
-  const dispatch = useDispatch();
-  const myWorkExperience = useKeySelector(menuKeySelector.myWorkExperience);
+
+  const menuControllerActions = useMenuController((state) => state.actions);
+  const myWorkExperience = useAccountSettingsStore((state) => state.myWorkExperience);
 
   const selectWorkItem = (item: IUserWorkExperience) => {
-    dispatch(menuActions.setSelectedWorkItem(item));
+    menuControllerActions.setSelectedWorkItem(item);
     rootNavigation.navigate(mainStack.addWork);
   };
 
   const goToAddWork = () => {
-    dispatch(menuActions.setSelectedWorkItem(null));
+    menuControllerActions.setSelectedWorkItem(null);
     rootNavigation.navigate(mainStack.addWork);
   };
 

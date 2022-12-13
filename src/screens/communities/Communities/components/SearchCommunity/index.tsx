@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
 
 import SearchBaseView, { SearchBaseViewProps } from '~/beinComponents/SearchBaseView';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import appConfig from '~/configs/appConfig';
 import CommunitySearchResults from './CommunitySearchResults';
 import useSearchJoinedCommunitiesStore from './store';

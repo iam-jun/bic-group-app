@@ -28,7 +28,7 @@ import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInpu
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import StickerView from '~/components/StickerView';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import { useBaseHook } from '~/hooks';
 import { IFilePicked } from '~/interfaces/common';
@@ -106,6 +106,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   onContentSizeChange,
   ...props
 }: CommentInputProps) => {
+  const testID = useTestID ? 'comment_input' : undefined;
   const [text, setText] = useState<string>(value || '');
 
   const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
@@ -125,6 +126,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
   const [selectedGiphy, setSelectedGiphy] = useState<IGiphy>();
+  const [selectedEmoji, setSelectedEmoji] = useState<string>();
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
@@ -150,6 +152,17 @@ const CommentInput: React.FC<CommentInputProps> = ({
       }
     }
   }, [selectedGiphy]);
+
+  useEffect(() => {
+    emojiViewRef?.current?.hide?.();
+    if (selectedEmoji) {
+      const completeStr = formatTextWithEmoji(text, selectedEmoji, cursorPosition.current);
+      setText(completeStr);
+      onChangeText?.(completeStr);
+      setSelectedEmoji('');
+      _textInputRef.current.focus();
+    }
+  }, [selectedEmoji]);
 
   const _onPressSelectImage = () => {
     checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
@@ -185,16 +198,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onEmojiSelected = useCallback((emoji: string) => {
-    emojiViewRef?.current?.hide?.();
-
-    dispatch(modalActions.hideModal());
-    if (emoji) {
-      const completeStr = formatTextWithEmoji(text, emoji, cursorPosition);
-      setText(completeStr);
-      onChangeText?.(completeStr);
-      _textInputRef.current.focus();
-    }
-  }, [text, cursorPosition]);
+    setSelectedEmoji(emoji);
+  }, []);
 
   const onGiphySelected = useCallback((gif: IGiphy) => {
     giphyViewRef?.current?.hide?.();
@@ -266,6 +271,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       } else {
         handleUpload();
       }
+      setText('');
     }
   };
 
@@ -418,6 +424,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const disabledBtnSend = _loading || (!text.trim() && !hasMedia());
+  const isHideBtnSend = !loading && !text.trim() && !hasMedia();
 
   return (
     <View>
@@ -427,36 +434,36 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <Animated.View style={{ flex: 1, zIndex: 1, height: heightAnimated }}>
             <TextInput
               {...props}
-              testID={useTestID ? 'comment_input' : undefined}
-              onContentSizeChange={_onContentSizeChange}
+              multiline
+              testID={testID}
               ref={_textInputRef}
+              autoFocus={autoFocus}
+              editable={!_loading}
+              placeholder={placeholder}
               style={styles.textInput}
               selectionColor={colors.gray50}
-              multiline
-              autoFocus={autoFocus}
-              placeholder={placeholder}
               placeholderTextColor={colors.gray50}
-              editable={!_loading}
               onFocus={_onFocus}
+              onKeyPress={_onKeyPress}
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
-              onKeyPress={_onKeyPress}
+              onContentSizeChange={_onContentSizeChange}
             >
               {text}
             </TextInput>
           </Animated.View>
           <CommentInputFooter
             useTestID={useTestID}
+            loading={_loading}
+            disabledBtnSend={disabledBtnSend}
+            isHideBtnSend={isHideBtnSend}
+            isDisplayNone={text.trim().length !== 0}
             onPressIcon={onPressIcon}
             onPressFile={_onPressFile}
             onPressImage={_onPressSelectImage}
             onPressCamera={onPressCamera}
             onPressEmoji={onPressEmoji}
             onPressSend={_onPressSend}
-            loading={_loading}
-            disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
-            isHideBtnSend={!text.trim() && !hasMedia()}
-            isDisplayNone={text.trim().length !== 0}
           />
         </View>
         {renderSelectedMedia()}
@@ -473,7 +480,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
           onPressEmoji={onPressEmoji}
           onPressSend={_onPressSend}
         />
-
       </View>
       <StickerView
         stickerViewRef={emojiViewRef}

@@ -1,12 +1,12 @@
 import { IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import showError from '~/store/helper/showError';
-import streamApi from '../../../api/StreamApi';
+import streamApi from '~/api/StreamApi';
 
 const deleteReactToPost
   = (_set, get) => async (payload: IPayloadReactToPost) => {
     const {
-      id, reactionId, reactionCounts, ownReaction,
+      id, reactionId, reactionsCount, ownReaction,
     } = payload;
     const { actions } = get();
     const post1 = usePostsStore.getState()?.posts?.[id] || {};
@@ -30,7 +30,7 @@ const deleteReactToPost
         }
       }
     } catch (e) {
-      actions.onUpdateReactionOfPostById(id, ownReaction, reactionCounts); // rollback
+      actions.onUpdateReactionOfPostById(id, ownReaction, reactionsCount); // rollback
       showError(e);
     }
   };
@@ -39,7 +39,7 @@ const deleteReactToPost
 //   id: string,
 //   reactionId: string,
 //   ownerReaction: IOwnReaction,
-//   reactionCounts: IReactionCounts,
+//   reactionsCount: IReactionCounts,
 // ): any {
 //   const newOwnReaction1: IOwnReaction = [...ownerReaction];
 
@@ -53,7 +53,7 @@ const deleteReactToPost
 //   }
 
 //   yield onUpdateReactionOfPostById(id, newOwnReaction1, {
-//     ...reactionCounts,
+//     ...reactionsCount,
 //   });
 // }
 

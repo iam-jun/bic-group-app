@@ -16,7 +16,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
-import ContentView from './components/ContentView';
+import ContentView from './components/CommunityContentView';
 import CommunityJoinCancelButton from './components/CommunityJoinCancelButton';
 import {
   formatChannelLink,
@@ -34,7 +34,7 @@ import CommunityTabHeader from './components/CommunityTabHeader';
 import { getHeaderMenu } from './helper';
 import { BottomListProps } from '~/components/BottomList';
 import { useBaseHook } from '~/hooks';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import NotFound from '~/screens/NotFound/components/NotFound';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import PlaceholderView from './components/PlaceholderView';
@@ -46,6 +46,7 @@ import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import useCommunityController from '../store';
 import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
+import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -83,18 +84,27 @@ const CommunityDetail = (props: any) => {
 
   // posts
   const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
-  const communityPost = useTimelineStore(useCallback((state: ITimelineState) => state.items[groupId], [groupId]));
+  const { timelines } = useTimelineStore();
+  const { contentFilter, attributeFilter } = timelines?.[groupId] || {};
+  const communityPost = useTimelineStore(
+    useCallback((state: ITimelineState) => state.timelines?.[groupId]?.data?.[contentFilter]?.[attributeFilter], [
+      groupId,
+      contentFilter,
+      attributeFilter,
+    ]),
+  );
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const searchViewRef = useRef(null);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId('communities', communityId, [
-    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_INFO,
-    PERMISSION_KEY.COMMUNITY.EDIT_COMMUNITY_PRIVACY,
-    PERMISSION_KEY.COMMUNITY.ORDER_MOVE_GROUP_STRUCTURE,
-    PERMISSION_KEY.COMMUNITY.CRUD_COMMUNITY_OVERRIDE_SCHEME,
-  ]);
+  const canSetting = hasPermissionsOnScopeWithId(
+    groupId,
+    [
+      PERMISSION_KEY.EDIT_INFO,
+      PERMISSION_KEY.EDIT_PRIVACY,
+    ],
+  );
   const isPrivateCommunity = !isMember && privacy === CommunityPrivacyType.PRIVATE;
 
   const buttonShow = useSharedValue(0);
@@ -117,7 +127,7 @@ const CommunityDetail = (props: any) => {
     // By default, the community is treated as the root group
     // So, we should get posts of community by groupId instead of communityId
     timelineActions.getPosts(groupId, isRefresh);
-  }, [groupId, isMember, privacy, isLoadingCommunity, community]);
+  }, [groupId, isMember, privacy, isLoadingCommunity, community, contentFilter, attributeFilter]);
 
   useEffect(() => {
     // only update currentCommunityId when navigating to the community profile
@@ -131,22 +141,21 @@ const CommunityDetail = (props: any) => {
   }, [isMounted, communityId]);
 
   useEffect(() => {
-    if (isEmpty(communityPost?.ids)) {
-      initTimeline();
+    if (isEmpty(timelines[groupId]) && isEmpty(communityPost?.ids)) {
+      // for the 1st time timelines[groupId] can be undefined so we must init Data
+      if (groupId) timelineActions.initDataTimeline(groupId);
+      getPosts();
     }
   },
   [community]);
 
   useEffect(() => {
-    initTimeline();
-  }, []);
-
-  const initTimeline = () => {
-    // clear timeline whenever going to community detail
-    if (groupId) timelineActions.resetTimeline(groupId);
-
     getPosts();
-  };
+  }, [contentFilter, attributeFilter]);
+
+  useEffect(() => () => {
+    if (groupId) timelineActions.resetTimeline(groupId);
+  }, [groupId]);
 
   const onRefresh = useCallback((isGetPost: boolean) => {
     /**
@@ -157,7 +166,7 @@ const CommunityDetail = (props: any) => {
       timelineActions.getPosts(groupId, true);
     }
     getCommunityDetail();
-  }, [groupId]);
+  }, [groupId, contentFilter, attributeFilter]);
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideBottomList());
@@ -289,9 +298,31 @@ const CommunityDetail = (props: any) => {
     return <NotFound onGoBack={onGoBackOnNotFound} />;
   }
 
+  const _onPressContentFilterTab = (item: any) => {
+    timelineActions.setContentFilter(groupId, item.id);
+  };
+
+  const _onPressAttributeFilterTab = (item: any) => {
+    timelineActions.setAttributeFilter(groupId, item.id);
+  };
+
   const headerComponent = isPrivateCommunity
     ? null
-    : <CommunityTabHeader communityId={communityId} isMember={isMember} teamName={community?.teamName} />;
+    : (
+      <>
+        <CommunityTabHeader
+          communityId={communityId}
+          isMember={isMember}
+          teamName={community?.teamName}
+        />
+        <FilterFeedButtonGroup
+          contentFilter={contentFilter}
+          attributeFilter={attributeFilter}
+          onPressContentFilterTab={_onPressContentFilterTab}
+          onPressAttributeFilterTab={_onPressAttributeFilterTab}
+        />
+      </>
+    );
 
   return (
     <View style={styles.screenContainer}>

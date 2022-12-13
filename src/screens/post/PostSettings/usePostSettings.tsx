@@ -14,7 +14,7 @@ import postsSelector from '~/store/entities/posts/selectors';
 import postKeySelector from '~/storeRedux/post/keySelector';
 import postActions from '~/storeRedux/post/actions';
 import { useRootNavigation } from '~/hooks/navigation';
-import { checkExpiration } from '../helper/postUtils';
+import { isPostExpired } from '~/helpers/post';
 import { EXPIRES_ON_TYPE, timeSuggest } from '~/constants/importantTimeSuggest';
 
 const MAX_DAYS = 7;
@@ -252,7 +252,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       handlePutUpdateSettings();
       return 'putUpdateSettings';
     }
-    const isExpired = checkExpiration(sImportant?.expiresTime) || sImportant.neverExpires;
+    const isExpired = isPostExpired(sImportant?.expiresTime) || sImportant.neverExpires;
 
     const dataDefault = [
       !isExpired,

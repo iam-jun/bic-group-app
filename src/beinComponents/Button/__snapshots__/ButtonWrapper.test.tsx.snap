@@ -288,6 +288,7 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
           },
         ]
       }
+      testID="button_wrapper.text"
     />
   </View>
 </View>

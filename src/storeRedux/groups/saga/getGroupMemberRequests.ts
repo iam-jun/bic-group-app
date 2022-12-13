@@ -45,7 +45,7 @@ export default function* getGroupMemberRequests({
     yield put(groupsActions.setGroupMemberRequests({
       total: response?.meta?.total,
       loading: false,
-      canLoadMore: requestIds.length === appConfig.recordsPerPage,
+      canLoadMore: !!response?.meta?.hasNextPage,
       ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
       items: isRefreshing ? { ...requestItems } : { ...items, ...requestItems },
     }));

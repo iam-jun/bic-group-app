@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Animated from 'react-native-reanimated';
 import { isEmpty } from 'lodash';
-import PostItem from '~/beinComponents/list/items/PostItem';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
@@ -17,6 +16,9 @@ import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import useMounted from '~/hooks/mounted';
 import { ICommunity } from '~/interfaces/ICommunity';
+import ContentItem from '~/components/ContentItem';
+import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
+import Divider from '~/beinComponents/Divider';
 
 interface GroupContentProps {
   community: ICommunity;
@@ -43,7 +45,15 @@ const GroupContent = ({
   const isMemberCommunity = community?.joinStatus === GroupJoinStatus.MEMBER;
 
   const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
-  const groupPost = useTimelineStore((state: ITimelineState) => state.items[groupId]);
+  const { timelines } = useTimelineStore();
+  const { contentFilter, attributeFilter } = timelines?.[groupId] || {};
+  const groupPost = useTimelineStore(
+    useCallback((state: ITimelineState) => state.timelines?.[groupId]?.data?.[contentFilter]?.[attributeFilter], [
+      groupId,
+      contentFilter,
+      attributeFilter,
+    ]),
+  );
   const { ids: posts, loading, refreshing: isRefreshingPost } = groupPost || {};
   const isLoadingPosts = (!isMounted || loading) && !isRefreshingPost;
 
@@ -55,9 +65,17 @@ const GroupContent = ({
     }
   };
 
+  const _onPressContentFilterTab = (item: any) => {
+    timelineActions.setContentFilter(groupId, item.id);
+  };
+
+  const _onPressAttributeFilterTab = (item: any) => {
+    timelineActions.setAttributeFilter(groupId, item.id);
+  };
+
   const renderItem = ({ item }: any) => (
-    <PostItem
-      postId={item}
+    <ContentItem
+      id={item}
       hasReactPermission={isMember}
       testID="group_content.post.item"
     />
@@ -79,6 +97,13 @@ const GroupContent = ({
         isMember={isMember}
         communityId={communityId}
         teamName={teamName}
+      />
+      <Divider color={colors.gray5} size={spacing.padding.large} />
+      <FilterFeedButtonGroup
+        contentFilter={contentFilter}
+        attributeFilter={attributeFilter}
+        onPressContentFilterTab={_onPressContentFilterTab}
+        onPressAttributeFilterTab={_onPressAttributeFilterTab}
       />
       <GroupJoinCancelButton />
       {isLoadingPosts && renderLoading()}

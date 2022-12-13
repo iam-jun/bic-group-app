@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 
 interface Props {

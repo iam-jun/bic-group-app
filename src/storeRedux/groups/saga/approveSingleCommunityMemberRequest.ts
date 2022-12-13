@@ -5,7 +5,7 @@ import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
-import groupApi from '../../../api/GroupApi';
+import groupApi from '~/api/GroupApi';
 import groupsActions from '../actions';
 
 export default function* approveSingleCommunityMemberRequest({
@@ -14,18 +14,19 @@ export default function* approveSingleCommunityMemberRequest({
   type: string;
   payload: {
     communityId: string;
+    groupId: string;
     requestId: string;
     fullName: string;
   };
 }) {
   const {
-    communityId, requestId, fullName,
+    communityId, groupId, requestId, fullName,
   } = payload;
   try {
     const { actions } = useCommunitiesStore.getState();
     yield call(
-      groupApi.approveSingleCommunityMemberRequest,
-      communityId,
+      groupApi.approveSingleGroupMemberRequest,
+      groupId,
       requestId,
     );
 
@@ -41,22 +42,25 @@ export default function* approveSingleCommunityMemberRequest({
     }));
 
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
     // to update userCount
     actions.getCommunity(communityId);
-  } catch (err: any) {
-    console.error('approveSingleCommunityMemberRequest: ', err);
+  } catch (error: any) {
+    console.error('approveSingleCommunityMemberRequest: ', error);
 
-    if (err?.code === approveDeclineCode.CANCELED) {
+    if (error?.code === approveDeclineCode.CANCELED
+      || error?.code === approveDeclineCode.APPROVED
+      || error?.code === approveDeclineCode.DECLINED) {
       yield put(groupsActions.editCommunityMemberRequest({
         id: requestId,
-        data: { isCanceled: true },
+        data: { noticeMessage: error?.meta?.message },
       }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(showError, error);
   }
 }

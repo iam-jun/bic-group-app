@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Image from '~/beinComponents/Image';
 import spacing from '~/theme/spacing';
 import { openUrl } from '~/utils/link';

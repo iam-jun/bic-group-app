@@ -39,10 +39,9 @@ import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getGroupLink, openUrl,
 } from '~/utils/link';
-import { checkLastAdmin } from '../helper';
 import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
-import useLeaveGroup from '../GroupMembers/components/useLeaveGroup';
+import useLeaveGroup from './hooks/useLeaveGroup';
 import GroupTabHeader from './components/GroupTabHeader';
 import { useBaseHook } from '~/hooks';
 import GroupJoinCancelButton from './components/GroupJoinCancelButton';
@@ -54,6 +53,7 @@ import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communi
 import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
+import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -101,17 +101,26 @@ const GroupDetail = (props: any) => {
   const shouldShowPlaceholder = idCurrentGroupDetail !== groupId;
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId('groups', groupId, [
-    PERMISSION_KEY.GROUP.EDIT_GROUP_INFO,
-    PERMISSION_KEY.GROUP.EDIT_GROUP_PRIVACY,
+  const canSetting = hasPermissionsOnScopeWithId(groupId, [
+    PERMISSION_KEY.EDIT_INFO,
+    PERMISSION_KEY.EDIT_PRIVACY,
   ]);
   const showPrivate
     = !isMember
     && (privacy === GroupPrivacyType.PRIVATE
       || (!isMemberCommunity && privacy === GroupPrivacyType.OPEN));
 
+  // post
   const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
-  const groupPost = useTimelineStore((state: ITimelineState) => state.items[groupId]);
+  const { timelines } = useTimelineStore();
+  const { contentFilter, attributeFilter } = timelines?.[groupId] || {};
+  const groupPost = useTimelineStore(
+    useCallback((state: ITimelineState) => state.timelines?.[groupId]?.data?.[contentFilter]?.[attributeFilter], [
+      groupId,
+      contentFilter,
+      attributeFilter,
+    ]),
+  );
 
   const buttonShow = useSharedValue(0);
   const containerPaddingBottom = useSharedValue(0);
@@ -147,9 +156,8 @@ const GroupDetail = (props: any) => {
     }
 
     // dispatch(groupsActions.clearGroupPosts());
-    timelineActions.resetTimeline(groupId);
     timelineActions.getPosts(groupId);
-  }, [groupId, isMember, privacy, loadingGroupDetail, groupInfo]);
+  }, [groupId, isMember, privacy, loadingGroupDetail, groupInfo, contentFilter, attributeFilter]);
 
   useEffect(() => {
     // Avoid empty object
@@ -160,8 +168,20 @@ const GroupDetail = (props: any) => {
   }, [groupId]);
 
   useEffect(() => {
-    if (isEmpty(groupPost?.ids)) { getGroupPosts(); }
+    if (isEmpty(timelines[groupId]) && isEmpty(groupPost?.ids)) {
+      // for the 1st time timelines[groupId] can be undefined so we must init Data
+      if (groupId) timelineActions.initDataTimeline(groupId);
+      getGroupPosts();
+    }
   }, [groupInfo]);
+
+  useEffect(() => {
+    getGroupPosts();
+  }, [contentFilter, attributeFilter]);
+
+  useEffect(() => () => {
+    if (groupId) timelineActions.resetTimeline(groupId);
+  }, [groupId]);
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideBottomList());
@@ -191,23 +211,12 @@ const GroupDetail = (props: any) => {
   const alertLeaveGroup = useLeaveGroup({
     groupId,
     username: user?.username,
+    privacy,
   });
-
-  const navigateToMembers = () => {
-    dispatch(modalActions.clearToastMessage());
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
-  };
 
   const onPressLeave = () => {
     dispatch(modalActions.hideBottomList());
-
-    return checkLastAdmin(
-      groupId,
-      userId,
-      dispatch,
-      alertLeaveGroup,
-      navigateToMembers,
-    );
+    alertLeaveGroup();
   };
 
   const onGetInfoLayout = useCallback((e: any) => {
@@ -285,6 +294,14 @@ const GroupDetail = (props: any) => {
     dispatch(homeActions.setNewsfeedSearch({ isShow: true, searchViewRef }));
   };
 
+  const _onPressContentFilterTab = (item: any) => {
+    timelineActions.setContentFilter(groupId, item.id);
+  };
+
+  const _onPressAttributeFilterTab = (item: any) => {
+    timelineActions.setAttributeFilter(groupId, item.id);
+  };
+
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group
 
@@ -336,13 +353,21 @@ const GroupDetail = (props: any) => {
           showStickyHeight={groupInfoHeight}
           stickyHeaderComponent={
             !showPrivate && (
-              <GroupTabHeader
-                groupId={groupId}
-                isMemberCommunity={isMemberCommunity}
-                isMember={isMember}
-                communityId={communityId}
-                teamName={groupInfo.teamName}
-              />
+              <>
+                <GroupTabHeader
+                  groupId={groupId}
+                  isMemberCommunity={isMemberCommunity}
+                  isMember={isMember}
+                  communityId={communityId}
+                  teamName={groupInfo.teamName}
+                />
+                <FilterFeedButtonGroup
+                  contentFilter={contentFilter}
+                  attributeFilter={attributeFilter}
+                  onPressContentFilterTab={_onPressContentFilterTab}
+                  onPressAttributeFilterTab={_onPressAttributeFilterTab}
+                />
+              </>
             )
           }
           onPressBack={onGoBack}

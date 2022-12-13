@@ -2,6 +2,11 @@
 
 exports[`Contact component renders correctly 1`] = `
 <View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+    }
+  }
   testID="user_profile.contact"
 >
   <View
@@ -10,7 +15,7 @@ exports[`Contact component renders correctly 1`] = `
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "space-between",
-        "marginBottom": 16,
+        "margin": 16,
       }
     }
   >
@@ -26,7 +31,7 @@ exports[`Contact component renders correctly 1`] = `
           undefined,
         ]
       }
-      testID="info_section.title"
+      testID="info_card.title"
     >
       Contact
     </Text>
@@ -136,149 +141,163 @@ exports[`Contact component renders correctly 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
-          "paddingBottom": 16,
-        },
-        undefined,
-      ]
+      Object {
+        "paddingBottom": 16,
+        "paddingHorizontal": 16,
+      }
     }
-    testID="info_item"
   >
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
-          },
-          Object {
-            "color": "#353E6E",
+            "paddingBottom": 16,
           },
           undefined,
         ]
       }
-      testID="info_item.title"
+      testID="info_item"
     >
-      Email
-    </Text>
-    <Text
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+        testID="info_item.title"
+      >
+        Email
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "marginTop": 4,
+            },
+          ]
+        }
+        testID="info_item.value"
+      />
+    </View>
+    <View
       style={
         Array [
           Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 15,
-          },
-          Object {},
-          Object {
-            "marginTop": 4,
-          },
-        ]
-      }
-      testID="info_item.value"
-    />
-  </View>
-  <View
-    style={
-      Array [
-        Object {
-          "paddingBottom": 16,
-        },
-        undefined,
-      ]
-    }
-    testID="info_item"
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
-          },
-          Object {
-            "color": "#353E6E",
+            "paddingBottom": 16,
           },
           undefined,
         ]
       }
-      testID="info_item.title"
+      testID="info_item"
     >
-      Phone number
-    </Text>
-    <Text
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+        testID="info_item.title"
+      >
+        Phone number
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "marginTop": 4,
+            },
+          ]
+        }
+        testID="info_item.value"
+      />
+    </View>
+    <View
       style={
         Array [
           Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 15,
+            "paddingBottom": 16,
           },
-          Object {},
           Object {
-            "marginTop": 4,
+            "paddingBottom": 0,
           },
         ]
       }
-      testID="info_item.value"
-    />
-  </View>
-  <View
-    style={
-      Array [
-        Object {
-          "paddingBottom": 16,
-        },
-        Object {
-          "paddingBottom": 0,
-        },
-      ]
-    }
-    testID="info_item"
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          undefined,
-        ]
-      }
-      testID="info_item.title"
+      testID="info_item"
     >
-      Location
-    </Text>
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 15,
-          },
-          Object {},
-          Object {
-            "marginTop": 4,
-          },
-        ]
-      }
-      testID="info_item.value"
-    />
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+        testID="info_item.title"
+      >
+        Location
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "marginTop": 4,
+            },
+          ]
+        }
+        testID="info_item.value"
+      />
+    </View>
   </View>
 </View>
 `;
 
 exports[`Contact component renders location Not set 1`] = `
 <View
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+    }
+  }
   testID="user_profile.contact"
 >
   <View
@@ -287,7 +306,7 @@ exports[`Contact component renders location Not set 1`] = `
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "space-between",
-        "marginBottom": 16,
+        "margin": 16,
       }
     }
   >
@@ -303,7 +322,7 @@ exports[`Contact component renders location Not set 1`] = `
           undefined,
         ]
       }
-      testID="info_section.title"
+      testID="info_card.title"
     >
       Contact
     </Text>
@@ -413,145 +432,154 @@ exports[`Contact component renders location Not set 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
-          "paddingBottom": 16,
-        },
-        undefined,
-      ]
+      Object {
+        "paddingBottom": 16,
+        "paddingHorizontal": 16,
+      }
     }
-    testID="info_item"
   >
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
-          },
-          Object {
-            "color": "#353E6E",
+            "paddingBottom": 16,
           },
           undefined,
         ]
       }
-      testID="info_item.title"
+      testID="info_item"
     >
-      Email
-    </Text>
-    <Text
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+        testID="info_item.title"
+      >
+        Email
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "marginTop": 4,
+            },
+          ]
+        }
+        testID="info_item.value"
+      />
+    </View>
+    <View
       style={
         Array [
           Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 15,
-          },
-          Object {},
-          Object {
-            "marginTop": 4,
-          },
-        ]
-      }
-      testID="info_item.value"
-    />
-  </View>
-  <View
-    style={
-      Array [
-        Object {
-          "paddingBottom": 16,
-        },
-        undefined,
-      ]
-    }
-    testID="info_item"
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
-          },
-          Object {
-            "color": "#353E6E",
+            "paddingBottom": 16,
           },
           undefined,
         ]
       }
-      testID="info_item.title"
+      testID="info_item"
     >
-      Phone number
-    </Text>
-    <Text
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+        testID="info_item.title"
+      >
+        Phone number
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "marginTop": 4,
+            },
+          ]
+        }
+        testID="info_item.value"
+      />
+    </View>
+    <View
       style={
         Array [
           Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 15,
+            "paddingBottom": 16,
           },
-          Object {},
           Object {
-            "marginTop": 4,
+            "paddingBottom": 0,
           },
         ]
       }
-      testID="info_item.value"
-    />
-  </View>
-  <View
-    style={
-      Array [
-        Object {
-          "paddingBottom": 16,
-        },
-        Object {
-          "paddingBottom": 0,
-        },
-      ]
-    }
-    testID="info_item"
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Light",
-            "fontSize": 15,
-          },
-          Object {
-            "color": "#353E6E",
-          },
-          undefined,
-        ]
-      }
-      testID="info_item.title"
+      testID="info_item"
     >
-      Location
-    </Text>
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#212745",
-            "fontFamily": "BeVietnamPro-Medium",
-            "fontSize": 15,
-          },
-          Object {},
-          Object {
-            "marginTop": 4,
-          },
-        ]
-      }
-      testID="info_item.value"
-    >
-      Not set
-    </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
+            },
+            Object {
+              "color": "#353E6E",
+            },
+            undefined,
+          ]
+        }
+        testID="info_item.title"
+      >
+        Location
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
+            },
+            Object {},
+            Object {
+              "marginTop": 4,
+            },
+          ]
+        }
+        testID="info_item.value"
+      >
+        Not set
+      </Text>
+    </View>
   </View>
 </View>
 `;

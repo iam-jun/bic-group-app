@@ -1,13 +1,15 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import genders from '~/constants/genders';
 import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import { useRootNavigation } from '~/hooks/navigation';
 import { formatDate } from '~/utils/formatData';
 import { InfoItem } from '../../components';
 import EditButton from '../../components/EditButton';
-import InfoSection from '../../components/InfoSection';
+import InfoCard from '~/components/InfoCard';
 import { getLanguages } from '../../helper';
 import mainStack from '~/router/navigator/MainStack/stack';
+import { spacing } from '~/theme';
 
 interface Props {
   fullname: string;
@@ -41,10 +43,11 @@ const BasicInfo = ({
   );
 
   return (
-    <InfoSection
+    <InfoCard
       testID="user_profile.basic_info"
       title="settings:title_basic_info"
       rightTitle={BtnEditInfo}
+      style={styles.container}
     >
       <InfoItem title="settings:title_name" value={fullname} />
       <InfoItem title="settings:title_gender" value={genders[gender]} />
@@ -58,8 +61,15 @@ const BasicInfo = ({
         value={RELATIONSHIP_STATUS[relationship]}
         style={{ paddingBottom: 0 }}
       />
-    </InfoSection>
+    </InfoCard>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingBottom: spacing.padding.large,
+  },
+});
 
 export default BasicInfo;

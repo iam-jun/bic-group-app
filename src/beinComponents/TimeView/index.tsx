@@ -7,7 +7,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import moment from 'moment';
 import 'moment/locale/vi';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { AppContext } from '~/contexts/AppContext';
 import { formatDateTime, formatFullTime, formatShortTime } from './helper';
 

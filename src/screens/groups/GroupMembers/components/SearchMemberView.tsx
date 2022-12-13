@@ -32,11 +32,10 @@ const SearchMemberView = ({
   const [searchText, setSearchText] = useState(initSearch || '');
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
-    'groups',
     groupId,
     [
-      PERMISSION_KEY.GROUP.ADD_REMOVE_GROUP_MEMBER,
-      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE_IN_GROUP,
+      PERMISSION_KEY.REMOVE_MEMBER,
+      PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
     ],
   );
   const groupSearchMembers = useKeySelector(
@@ -44,6 +43,8 @@ const SearchMemberView = ({
   );
 
   const getGroupSearchMembers = (searchText: string) => {
+    if (!searchText?.trim?.()) return;
+
     dispatch(actions.getGroupSearchMembers({ groupId, params: { key: searchText } }));
   };
 
@@ -75,7 +76,7 @@ const SearchMemberView = ({
       onClose={onClose}
       onChangeText={onSearchMembers}
     >
-      {!!searchText && (
+      {!!searchText?.trim?.() && (
         <MemberSearchResult
           canManageMember={canManageMember}
           memberSearchData={groupSearchMembers}

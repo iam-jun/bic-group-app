@@ -1,16 +1,16 @@
 import React, {
-  useRef, useState, useEffect, useCallback,
+  useCallback, useEffect, useRef, useState,
 } from 'react';
 import { Dimensions } from 'react-native';
 
 import { useDispatch } from 'react-redux';
 import BottomSheet from '~/baseComponents/BottomSheet';
-import { useKeySelector } from '~/hooks/selector';
-import { clearReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
-import ReactionTabBar from '~/components/reaction/ReactionDetailBottomSheet/ReactionTabBar';
 import ReactionDetailTab from '~/components/reaction/ReactionDetailBottomSheet/ReactionDetailTab';
+import ReactionTabBar from '~/components/reaction/ReactionDetailBottomSheet/ReactionTabBar';
 import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
 import mainStack from '~/router/navigator/MainStack/stack';
+import { clearReactionDetailBottomSheet } from '~/storeRedux/modal/actions';
 import modalKeySelector from '~/storeRedux/modal/keySelector';
 
 const screenHeight = Dimensions.get('window').height;
@@ -25,16 +25,16 @@ const ReactionDetailBottomSheet = () => {
 
   const data = useKeySelector(modalKeySelector.reactionDetailBottomSheet);
   const {
-    isOpen, reactionCounts, initReaction, getDataParam,
+    isOpen, reactionsCount, initReaction, getDataParam,
   } = data || {};
 
   useEffect(
     () => {
     // reset
-      if (!reactionCounts) {
+      if (!reactionsCount) {
         setSelectingReaction(undefined);
       }
-    }, [reactionCounts],
+    }, [reactionsCount],
   );
 
   const _onClose = () => {
@@ -75,7 +75,7 @@ const ReactionDetailBottomSheet = () => {
       disableScrollIfPossible={false}
       HeaderComponent={(
         <ReactionTabBar
-          reactionCounts={reactionCounts}
+          reactionsCount={reactionsCount}
           initReaction={initReaction}
           onChangeTab={onChangeTab}
         />

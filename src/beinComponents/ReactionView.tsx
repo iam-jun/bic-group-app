@@ -18,12 +18,12 @@ export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
   ownerReactions: IOwnReaction;
   reactionsCount: IReactionCounts;
+  hasReactPermission?: boolean;
   showSelectReactionWhenEmpty?: boolean;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
   onPressSelectReaction?: (event: any) => void;
   onLongPressReaction?: (reactionType: ReactionType) => void;
-  hasReactPermission?: boolean;
 }
 
 const ReactionView: FC<ReactionViewProps> = ({
@@ -102,7 +102,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   const renderedReactions = renderReactions();
 
   return (
-    <>
+    <View testID="reaction_view">
       {!hasReactPermission && renderedReactions.length > 0 && <View style={styles.line} />}
       <View
         style={[
@@ -125,7 +125,7 @@ const ReactionView: FC<ReactionViewProps> = ({
             </Button>
         )}
       </View>
-    </>
+    </View>
   );
 };
 

@@ -26,3 +26,26 @@ export interface CreationSeriesProps {
 }
 
 export type IParamGetSeriesDetail= IParamGetArticleDetail;
+
+export interface IGetSeries {
+  order?: 'ASC' | 'DESC';
+  offset?: number;
+  limit?: number;
+  idGte?: string;
+  idLte?: string;
+  idGt?: string;
+  idLt?: string;
+  createdAtGt?: string;
+  createdAtLt?: string;
+  createdAtGte?: string;
+  createdAtLte?: string;
+  contentSearch?: string;
+  groupIds?: string[];
+}
+
+export interface IReorderArticles {
+  articleIds: string[]
+}
+
+export type IAddArticleInSeries = IReorderArticles;
+export type IRemoveArticleInSeries = IReorderArticles;

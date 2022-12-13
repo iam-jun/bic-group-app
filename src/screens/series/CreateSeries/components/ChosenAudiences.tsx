@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 import ButtonWrapper from '~/baseComponents/Button/ButtonWrapper';
@@ -29,7 +29,12 @@ const ChosenAudiences = ({ audiences, disabled, onPressAudiences }: Props) => {
         {`${t('post:post_to')} `}
         <Text.BodyMMedium color={theme.colors.neutral60}>{audiences?.count || 0}</Text.BodyMMedium>
         {': '}
-        <Text.BodyMMedium color={theme.colors.neutral80} testID="create_post_chosen_audiences.names">{audiences?.names || ''}</Text.BodyMMedium>
+        <Text.BodyMMedium
+          color={theme.colors.neutral80}
+          testID="create_post_chosen_audiences.names"
+        >
+          {audiences?.names || ''}
+        </Text.BodyMMedium>
       </Text.BodyM>
     </ButtonWrapper>
   );

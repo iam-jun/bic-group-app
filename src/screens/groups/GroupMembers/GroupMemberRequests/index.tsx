@@ -26,7 +26,7 @@ const GroupMemberRequests = ({
 }: GroupMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
-  const { id, settings } = useKeySelector(groupsKeySelector.groupDetail.group);
+  const { id, settings, privacy } = useKeySelector(groupsKeySelector.groupDetail.group);
   const { isJoinApproval } = settings || {};
 
   useEffect(
@@ -72,6 +72,7 @@ const GroupMemberRequests = ({
         <JoinRequestSetting
           type="group"
           total={total}
+          privacy={privacy}
           isJoinApproval={isJoinApproval}
           onUpdateJoinSetting={onUpdateJoinSetting}
           onPressApproveAll={onPressApproveAll}

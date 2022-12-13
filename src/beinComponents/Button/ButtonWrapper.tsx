@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text, { TextProps, TextVariant } from '~/beinComponents/Text';
+import Text, { TextProps, TextVariant } from '~/baseComponents/Text';
 import Icon, { IconProps } from '~/baseComponents/Icon';
 import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
@@ -133,6 +133,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
         )}
         {typeof children === 'string' ? (
           <Text
+            testID="button_wrapper.text"
             variant={textVariant}
             style={styles.text}
             color={disabled ? colors.gray40 : undefined}

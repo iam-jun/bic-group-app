@@ -1,21 +1,20 @@
 import groupApi from '~/api/GroupApi';
-import Store from '~/storeRedux';
-import appActions from '~/storeRedux/app/actions';
+import useCommunitiesStore from '~/store/entities/communities';
+import showError from '~/store/helper/showError';
 
-const updateCommunityJoinSetting = (_, get) => async (
-  id: string,
+const updateCommunityJoinSetting = (_, _get) => async (
+  communityId: string,
+  groupId: string,
   isJoinApproval: boolean,
 ) => {
-  const { actions } = get();
-
   try {
-    await groupApi.updateCommunityJoinSetting(id, isJoinApproval);
+    await groupApi.updateGroupJoinSetting(groupId, isJoinApproval);
 
     // to update isJoinApproval status
-    actions.getCommunity(id);
+    useCommunitiesStore.getState().actions.getCommunity(communityId);
   } catch (error) {
     console.error('updateCommunityJoinSetting error:', error);
-    Store.store.dispatch(appActions.setShowError(error));
+    showError(error);
   }
 };
 

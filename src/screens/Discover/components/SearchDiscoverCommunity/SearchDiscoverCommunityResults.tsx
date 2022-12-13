@@ -9,7 +9,7 @@ import React, { FC } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import spacing from '~/theme/spacing';
 import SearchDiscoverCommunityItem from './SearchDiscoverCommunityItem';
 import { useRootNavigation } from '~/hooks/navigation';

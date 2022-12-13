@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import * as React from 'react';
 import { cleanup, waitFor } from '@testing-library/react-native';
+import * as React from 'react';
 
-import { fireEvent, renderWithRedux, configureStore } from '../../../test/testUtils';
-import ReactionDetailBottomSheet from './index';
 import initialState from '../../../storeRedux/initialState';
+import { configureStore, fireEvent, renderWithRedux } from '../../../test/testUtils';
+import ReactionDetailBottomSheet from './index';
 
 afterEach(cleanup);
 

@@ -6,7 +6,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
 
 import { useDispatch } from 'react-redux';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
 import modalActions from '~/storeRedux/modal/actions';

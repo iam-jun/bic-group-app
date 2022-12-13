@@ -17,17 +17,8 @@ import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
-import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
-import editGroupDetail from './editGroupDetail';
-import removeGroupAdmin from './removeGroupAdmin';
-import setGroupAdmin from './setGroupAdmin';
 import showError from '~/storeRedux/commonSaga/showError';
-import getJoinedCommunities from './getJoinedCommunities';
-import getCommunityGroups from './getCommunityGroups';
-import getYourGroupsTree from '~/storeRedux/groups/saga/getYourGroupsTree';
-import getYourGroupsList from '~/storeRedux/groups/saga/getYourGroupsList';
-import getYourGroupsSearch from '~/storeRedux/groups/saga/getYourGroupsSearch';
 import getCommunityMembers from './getCommunityMembers';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupMembers from './getGroupMembers';
@@ -42,16 +33,12 @@ import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
-import putGroupStructureCollapseStatus from '~/storeRedux/groups/saga/putGroupStructureCollapseStatus';
 import getMyPermissions from './getMyPermissions';
-import getJoinedAllGroups from './getJoinedAllGroups';
-import getManaged from './getManaged';
-import getOwnerCommunity from './getOwnerCommunity';
-import getManagedCommunityAndGroup from './getManagedCommunityAndGroup';
 import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
+import useGroupController from '~/screens/groups/store';
 
 export default function* groupsSaga() {
   yield takeLatest(
@@ -61,10 +48,6 @@ export default function* groupsSaga() {
     groupsTypes.GET_MY_PERMISSIONS, getMyPermissions,
   );
   yield takeLatest(
-    groupsTypes.PUT_GROUP_STRUCTURE_COLLAPSE_STATUS,
-    putGroupStructureCollapseStatus,
-  );
-  yield takeLatest(
     groupsTypes.GET_GROUP_DETAIL, getGroupDetail,
   );
   yield takeLatest(
@@ -72,9 +55,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
-  );
-  yield takeLatest(
-    groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail,
   );
   yield takeLatest(
     groupsTypes.UPLOAD_IMAGE, uploadImage,
@@ -88,15 +68,6 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.ADD_MEMBERS, addMembers,
-  );
-  yield takeLatest(
-    groupsTypes.LEAVE_GROUP, leaveGroup,
-  );
-  yield takeLatest(
-    groupsTypes.SET_GROUP_ADMIN, setGroupAdmin,
-  );
-  yield takeLatest(
-    groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin,
   );
 
   yield takeLatest(
@@ -118,21 +89,6 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
     declineAllGroupMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch,
-  );
-  yield takeLatest(
-    groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree,
-  );
-  yield takeLatest(
-    groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList,
-  );
-  yield takeLatest(
-    groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities,
-  );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups,
   );
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers,
@@ -161,10 +117,6 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
     declineAllCommunityMemberRequests,
   );
-  yield takeLatest(groupsTypes.GET_JOINED_ALL_GROUPS, getJoinedAllGroups);
-  yield takeLatest(groupsTypes.GET_MANAGED, getManaged);
-  yield takeLatest(groupsTypes.GET_OWNER_COMMUNITY, getOwnerCommunity);
-  yield takeLatest(groupsTypes.GET_MANAGED_COMMUNITY_AND_GROUP, getManagedCommunityAndGroup);
   yield takeLatest(
     groupsTypes.GET_GLOBAL_SEARCH, getGlobalSearch,
   );
@@ -173,7 +125,7 @@ export default function* groupsSaga() {
 function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
   try {
     const {
-      file, id, fieldName, uploadType, destination,
+      file, id, fieldName, uploadType, destination, rootGroupId,
     } = payload;
 
     const { actions } = useCommunityController.getState();
@@ -187,16 +139,13 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
       uploadType,
     });
 
-    const editData = { id, [fieldName]: data.url };
+    const editData = { id, rootGroupId, [fieldName]: data.url };
     const editFieldName = fieldName === 'icon'
       ? i18next.t('common:text_avatar')
       : i18next.t('common:text_cover');
 
     if (destination === 'group') {
-      yield put(groupsActions.editGroupDetail({
-        data: editData,
-        editFieldName,
-      }));
+      useGroupController.getState().actions.editGroupDetail(editData, editFieldName);
     } else {
       actions.editCommunityDetail(editData, editFieldName);
     }

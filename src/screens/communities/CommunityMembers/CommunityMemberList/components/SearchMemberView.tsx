@@ -7,12 +7,12 @@ import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import { ICommunityMembers } from '~/interfaces/ICommunity';
+import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberSearchResult from '../../../../groups/components/MemberSearchResult';
 import { useMyPermissions } from '~/hooks/permissions';
 
 interface SearchMemberViewProps {
-  communityId: string;
+  community: ICommunity;
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;
@@ -21,7 +21,7 @@ interface SearchMemberViewProps {
 }
 
 const SearchMemberView = ({
-  communityId,
+  community,
   isOpen,
   placeholder,
   initSearch,
@@ -30,13 +30,14 @@ const SearchMemberView = ({
 }: SearchMemberViewProps) => {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState(initSearch || '');
+
+  const { groupId } = community;
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
-    'communities',
-    communityId,
+    groupId,
     [
-      PERMISSION_KEY.COMMUNITY.ADD_REMOVE_COMMUNITY_MEMBER,
-      PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE_IN_COMMUNITY,
+      PERMISSION_KEY.REMOVE_MEMBER,
+      PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
     ],
   );
   const communitySearchMembers = useKeySelector(
@@ -44,8 +45,10 @@ const SearchMemberView = ({
   );
 
   const getCommunitySearchMembers = (searchText: string) => {
+    if (!searchText?.trim?.()) return;
+
     dispatch(actions.getCommunitySearchMembers({
-      communityId,
+      groupId,
       params: { key: searchText },
     }));
   };
@@ -78,7 +81,7 @@ const SearchMemberView = ({
       onClose={onClose}
       onChangeText={onSearchMember}
     >
-      {!!searchText && (
+      {!!searchText?.trim?.() && (
         <MemberSearchResult
           canManageMember={canManageMember}
           memberSearchData={communitySearchMembers}

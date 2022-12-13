@@ -38,7 +38,7 @@ const publishDraftArticle = (_set, get) => async (payload: IPayloadPublishDraftA
       Store.store.dispatch(modalActions.showHideToastMessage({
         content: 'post:draft:text_processing_publish',
       }));
-      navigation.goBack();
+      // navigation.goBack();
       Store.store.dispatch(postActions.getAllPostContainingVideoInProgress());
     } else if (replaceWithDetail) {
       navigation.replace(

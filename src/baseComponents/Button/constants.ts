@@ -1,4 +1,4 @@
-import { TextVariant } from '~/beinComponents/Text';
+import { TextVariant } from '~/baseComponents/Text';
 import { IObject } from '~/interfaces/common';
 
 export const BUTTON_SIZES = {

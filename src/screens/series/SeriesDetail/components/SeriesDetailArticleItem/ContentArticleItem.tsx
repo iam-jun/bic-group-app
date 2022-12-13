@@ -7,7 +7,7 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IArticleCover, IAudienceUser } from '~/interfaces/IPost';
 import mainTabStack from '~/router/navigator/MainStack/stack';
 import { spacing } from '~/theme';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import Image from '~/beinComponents/Image';
 import { borderRadius } from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -23,7 +23,7 @@ const ContentArticleItem: FC<ContentArticleItemProps> = ({
   coverMedia,
   summary,
 }) => {
-  const { avatar, fullname } = actor;
+  const { avatar, fullname } = actor || {};
   const { url } = coverMedia || {};
   const theme = useTheme();
   const { colors } = theme;
@@ -48,7 +48,7 @@ const ContentArticleItem: FC<ContentArticleItemProps> = ({
             <Avatar.Small isRounded source={avatar} />
             <ViewSpacing width={spacing.margin.small} />
             <View style={{ flex: 1 }}>
-              <Text.BodyXSMedium color={colors.neutral80} numberOfLines={1}>
+              <Text.BodyXSMedium color={colors.neutral60} numberOfLines={1}>
                 {fullname}
               </Text.BodyXSMedium>
             </View>
@@ -58,7 +58,7 @@ const ContentArticleItem: FC<ContentArticleItemProps> = ({
       </View>
       {!!summary && (
         <View style={styles.summaryView}>
-          <Text.ParagraphM>{summary}</Text.ParagraphM>
+          <Text.ParagraphM color={colors.neutral40}>{summary}</Text.ParagraphM>
         </View>
       )}
     </View>

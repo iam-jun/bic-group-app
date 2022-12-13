@@ -1,6 +1,6 @@
 export interface IGiphy {
   id: string;
-  type: string;
+  type?: string;
   url?: string;
   width?: string;
   height?: string;

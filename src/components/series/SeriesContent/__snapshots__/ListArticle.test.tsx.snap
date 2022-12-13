@@ -1,0 +1,291 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListArticle component render correctly 1`] = `
+<View
+  style={
+    Object {
+      "paddingBottom": 2,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "opacity": 1,
+        "paddingBottom": 10,
+        "paddingTop": 26,
+      }
+    }
+    testID="list_article.article_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
+          },
+          Object {
+            "color": "#BAC0DE",
+          },
+          undefined,
+        ]
+      }
+    >
+      01
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          Object {
+            "color": "#BAC0DE",
+            "marginHorizontal": 8,
+          },
+        ]
+      }
+    >
+      /
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        numberOfLines={2}
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            undefined,
+          ]
+        }
+      >
+        Be The First Line List Series. Be The First Line List Series. Be The First Line List Series.
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "borderColor": "#E3E6F2",
+        "borderStyle": "dashed",
+        "borderWidth": 0.5,
+      }
+    }
+  />
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "opacity": 1,
+        "paddingBottom": 10,
+        "paddingTop": 26,
+      }
+    }
+    testID="list_article.article_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
+          },
+          Object {
+            "color": "#BAC0DE",
+          },
+          undefined,
+        ]
+      }
+    >
+      02
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          Object {
+            "color": "#BAC0DE",
+            "marginHorizontal": 8,
+          },
+        ]
+      }
+    >
+      /
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        numberOfLines={2}
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            undefined,
+          ]
+        }
+      >
+        Be The First Line List Series.
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "borderColor": "#E3E6F2",
+        "borderStyle": "dashed",
+        "borderWidth": 0.5,
+      }
+    }
+  />
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "opacity": 1,
+        "paddingBottom": 10,
+        "paddingTop": 26,
+      }
+    }
+    testID="list_article.article_item"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#181C32",
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
+          },
+          Object {
+            "color": "#BAC0DE",
+          },
+          undefined,
+        ]
+      }
+    >
+      03
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 15,
+          },
+          Object {},
+          Object {
+            "color": "#BAC0DE",
+            "marginHorizontal": 8,
+          },
+        ]
+      }
+    >
+      /
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        numberOfLines={2}
+        style={
+          Array [
+            Object {
+              "color": "#353E6E",
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#181C32",
+            },
+            undefined,
+          ]
+        }
+      >
+        Be The First Line List Series.
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "borderColor": "#E3E6F2",
+        "borderStyle": "dashed",
+        "borderWidth": 0.5,
+      }
+    }
+  />
+</View>
+`;

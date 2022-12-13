@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
@@ -105,7 +105,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingHorizontal: spacing.padding.large,
     },
     textTitle: { marginTop: spacing.margin.large },
-    textInputName: { marginBottom: spacing.margin.small, marginTop: 0 },
+    textInputName: { marginBottom: spacing.margin.small, marginTop: spacing.margin.small },
     textInput: {
       marginTop: spacing.margin.small,
       borderRadius: spacing.borderRadius.small,

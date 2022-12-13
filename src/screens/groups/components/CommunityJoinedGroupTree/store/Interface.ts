@@ -12,6 +12,7 @@ interface ICommunityJoinedGroupTreeState extends IBaseState {
     setSearchKey: (key: string) => void,
     getJoinedGroupTree: (communityId: string) => void,
     getJoinedGroupSearch: (communityId: string, key: string, isLoadMore?: boolean) => void,
+    updateCollapseStatus: (communityId: string, key: string, isCollapsed: boolean) => void
   }
 }
 

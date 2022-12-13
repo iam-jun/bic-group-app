@@ -11,9 +11,13 @@ export default function* approveAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: string; total: number; callback?: () => void};
+  payload: {
+    communityId: string;
+    groupId: string;
+    total: number;
+  };
 }) {
-  const { communityId, total } = payload;
+  const { communityId, groupId, total } = payload;
   try {
     const { actions } = useCommunitiesStore.getState();
 
@@ -22,12 +26,13 @@ export default function* approveAllCommunityMemberRequests({
     // to show Empty screen component
     yield put(groupsActions.setCommunityMemberRequests({ loading: false }));
 
-    yield call(groupApi.approveAllCommunityMemberRequests, communityId);
+    yield call(groupApi.approveAllGroupMemberRequests, groupId);
 
     // to update userCount
     actions.getCommunity(communityId);
 
     const toastMessage: IToastMessage = {
+      // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_all')}`.replace('{0}', total.toString()),
     };
     yield put(modalActions.showHideToastMessage(toastMessage));

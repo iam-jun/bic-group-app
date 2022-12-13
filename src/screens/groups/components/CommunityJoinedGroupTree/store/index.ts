@@ -2,6 +2,7 @@ import getJoinedGroupSearch from './actions/getJoinedGroupSearch';
 import getJoinedGroupTree from './actions/getJoinedGroupTree';
 import { createStore, resetStore } from '~/store/utils';
 import ICommunityJoinedGroupTreeState from './Interface';
+import updateCollapseStatus from './actions/updateCollapseStatus';
 
 const initialState = {
   data: {},
@@ -26,6 +27,7 @@ const communityJoinedGroupTreeStore = (set, get) => ({
 
     getJoinedGroupTree: getJoinedGroupTree(set, get),
     getJoinedGroupSearch: getJoinedGroupSearch(set, get),
+    updateCollapseStatus: updateCollapseStatus(set, get),
   },
   reset: () => resetStore(initialState, set),
 });

@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Text from '~/beinComponents/Text';
+import Text from '~/baseComponents/Text';
 import ButtonDiscoverItemAction from './ButtonDiscoverItemAction';
 import { groupPrivacyListDetail } from '~/constants/privacyTypes';
 import Icon from '~/baseComponents/Icon';
