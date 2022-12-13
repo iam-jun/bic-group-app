@@ -24,10 +24,10 @@ export interface IFilePicked {
   name: string;
   filename: string;
   type: string;
-  mime: string;
+  mime?: string;
   size: number;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   uri: string;
   [x: string]: any;
 }

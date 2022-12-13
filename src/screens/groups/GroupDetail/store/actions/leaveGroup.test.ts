@@ -9,7 +9,7 @@ import useGroupDetailStore from '../index';
 
 describe('leaveGroup', () => {
   const groupId = 'de605abc-15d4-4828-9494-aaedd9565850';
-  const privacy = GroupPrivacyType.PUBLIC;
+  const privacy = GroupPrivacyType.OPEN;
   const status = GroupJoinStatus.VISITOR;
 
   it('should leave group success:', () => {

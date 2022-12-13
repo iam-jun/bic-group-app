@@ -4,7 +4,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
 import CollapsibleText from '~/baseComponents/Text/CollapsibleText';
-import { groupPrivacyListDetail, GroupPrivacyType } from '~/constants/privacyTypes';
+import { GroupPrivacyDetail, GroupPrivacyType } from '~/constants/privacyTypes';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { formatLargeNumber } from '~/utils/formatData';
@@ -37,9 +37,8 @@ const AboutContent: FC<AboutContentProps> = ({ profileInfo, showPrivate, onPress
   const {
     description, userCount, privacy, members,
   } = profileInfo;
-  const privacyData
-    = groupPrivacyListDetail.find((item) => item?.type === privacy) || {};
-  const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
+  const privacyData = GroupPrivacyDetail[privacy] || {};
+  const { icon: iconPrivacy, privacyTitle }: any = privacyData;
 
   const renderDescription = () => {
     if (!description) return null;

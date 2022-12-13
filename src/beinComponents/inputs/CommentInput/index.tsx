@@ -13,13 +13,13 @@ import {
   NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
-  TextInput,
   TextInputSelectionChangeEventData,
   View,
   ViewStyle,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
+import PasteInput from 'react-native-paste-image-input';
 import Button from '~/beinComponents/Button';
 import Icon from '~/baseComponents/Icon';
 import Image from '~/beinComponents/Image';
@@ -350,6 +350,17 @@ const CommentInput: React.FC<CommentInputProps> = ({
     onKeyPress?.(e);
   };
 
+  // only support for iOS
+  const onPasteImage = (_, files) => {
+    setSelectedImage({
+      name: files[0].fileName,
+      filename: files[0].fileName,
+      type: files[0].type,
+      size: files[0].fileSize,
+      uri: files[0].uri,
+    });
+  };
+
   const renderSelectedMedia = () => {
     if (selectedGiphy) {
       if (!text) return null;
@@ -432,7 +443,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
         {HeaderComponent}
         <View style={styles.container}>
           <Animated.View style={{ flex: 1, zIndex: 1, height: heightAnimated }}>
-            <TextInput
+            <PasteInput
               {...props}
               multiline
               testID={testID}
@@ -448,9 +459,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
               onContentSizeChange={_onContentSizeChange}
-            >
-              {text}
-            </TextInput>
+              onPaste={onPasteImage}
+              value={text}
+            />
           </Animated.View>
           <CommentInputFooter
             useTestID={useTestID}

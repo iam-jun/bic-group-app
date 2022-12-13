@@ -21,7 +21,7 @@ export default {
       },
     },
     privacyIcon: {
-      options: ['iconPublic', 'iconPrivate', 'iconSecret', 'iconOpen'],
+      options: ['iconOpen', 'iconPrivate', 'iconSecret', 'iconClosed'],
       control: {
         type: 'select',
       },
@@ -73,5 +73,5 @@ export const Privacy = StoryComponent.bind({});
 Privacy.args = {
   variant: 'large',
   source: images.img_user_avatar_default,
-  privacyIcon: 'iconPublic',
+  privacyIcon: 'iconOpen',
 };

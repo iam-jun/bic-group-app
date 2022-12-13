@@ -25,7 +25,7 @@ const ArticleItem: FC<ArticleItemProps> = ({ index, article }) => {
   const { title } = article;
 
   const goToArticleDetail = () => {
-    rootNavigation.navigate(articleStack.articleDetail, { articleId: article?.id, focusComment: true });
+    rootNavigation.navigate(articleStack.articleContentDetail, { articleId: article?.id });
   };
 
   return (

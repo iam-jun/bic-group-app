@@ -25,7 +25,7 @@ export default function* getGroupDetail({
     const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
     const privacy = groups?.groupDetail?.group?.privacy;
-    const isPublic = privacy === GroupPrivacyType.PUBLIC;
+    const isPublic = privacy === GroupPrivacyType.OPEN;
 
     if (!isMember && !isPublic) yield put(groupsActions.setLoadingPage(false));
   } catch (e) {
