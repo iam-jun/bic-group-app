@@ -119,7 +119,7 @@ const CommunityDetail = (props: any) => {
     /* Avoid getting group posts of the nonexisting group,
       which will lead to endless fetching group posts in
       httpApiRequest > makeGetStreamRequest */
-    const privilegeToFetchPost = isMember || privacy === CommunityPrivacyType.PUBLIC;
+    const privilegeToFetchPost = isMember || privacy === CommunityPrivacyType.OPEN;
 
     if (isLoadingCommunity || isEmpty(community) || !privilegeToFetchPost) {
       return;

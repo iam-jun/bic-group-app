@@ -5,7 +5,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
-import { communityPrivacyListDetail } from '~/constants/privacyTypes';
+import { CommunityPrivacyDetail } from '~/constants/privacyTypes';
 import { ICommunity } from '~/interfaces/ICommunity';
 import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
@@ -29,8 +29,8 @@ const CommunityItem = ({
   const {
     id, name, icon, userCount, privacy,
   } = item || {};
-  const privacyData = communityPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
+  const privacyData = CommunityPrivacyDetail[privacy] || {};
+  const { icon: privacyIcon, title: privacyTitle }: any = privacyData;
 
   const renderContentComponent = () => (
     <View style={styles.groupInfo}>

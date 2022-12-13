@@ -9,7 +9,7 @@ import { IGroup } from '~/interfaces/IGroup';
 import { getAllChildrenName } from '~/screens/groups/helper';
 import MoveLine from '~/screens/groups/GroupStructureSettings/MoveGroup/components/MoveLine';
 import spacing from '~/theme/spacing';
-import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface MoveGroupHeaderInfoProps {
@@ -24,8 +24,8 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
   const styles = createStyle();
 
   const { privacy, icon, name } = group || {};
-  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon }: any = privacyData || {};
+  const privacyData = GroupPrivacyDetail[privacy] || {};
+  const { icon: privacyIcon }: any = privacyData;
 
   const childrenGroups = getAllChildrenName(group);
 

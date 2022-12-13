@@ -14,7 +14,7 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/baseComponents/Checkbox';
 import { generateUniqueId } from '~/utils/generator';
 import { useKeySelector } from '~/hooks/selector';
-import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { AvatarType } from '~/baseComponents/Avatar/AvatarComponent';
 import { IconType } from '~/resources/icons';
@@ -85,8 +85,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     return null;
   }
 
-  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon }: any = privacyData || {};
+  const privacyData = GroupPrivacyDetail[privacy] || {};
+  const { icon: privacyIcon }: any = privacyData;
 
   const _onPressItem = () => {
     if (onPressItem) {

@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
-import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
@@ -20,8 +20,8 @@ const ReorderGroupInfo: FC<ReorderGroupInfoProps> = ({
   const styles = createStyle(theme);
 
   const { privacy, icon, name } = group || {};
-  const privacyData = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon }: any = privacyData || {};
+  const privacyData = GroupPrivacyDetail[privacy] || {};
+  const { icon: privacyIcon }: any = privacyData;
 
   const renderTitleInfo = () => (
     <View style={styles.title}>

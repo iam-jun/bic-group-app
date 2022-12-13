@@ -83,13 +83,24 @@ const EditPrivacy = (props: any) => {
   const renderPrivacyList = () => (
     <ScrollView style={styles.privacyContainer} showsVerticalScrollIndicator={false}>
       <PrivacyItem
-        value={privacyType.PUBLIC}
-        icon="iconPublic"
-        title="settings:title_public"
-        subtitle={`settings:title_public_subtitle_${type}`}
+        value={privacyType.OPEN}
+        icon="iconOpen"
+        title="settings:title_open"
+        subtitle={`settings:title_open_subtitle_${type}`}
         selectedPrivacy={selectedPrivacy}
         onPress={onSelectPrivacy}
       />
+
+      {isGroupScope && (
+        <PrivacyItem
+          value={GroupPrivacyType.CLOSED}
+          icon="iconClosed"
+          title="settings:title_closed"
+          subtitle="settings:title_closed_subtitle_group"
+          selectedPrivacy={selectedPrivacy}
+          onPress={onSelectPrivacy}
+        />
+      )}
 
       <PrivacyItem
         value={privacyType.PRIVATE}
@@ -123,17 +134,6 @@ const EditPrivacy = (props: any) => {
             {`settings:text_secret_${type}_banner_message`}
           </Text.BodyS>
         </View>
-      )}
-
-      {isGroupScope && (
-        <PrivacyItem
-          value={GroupPrivacyType.OPEN}
-          icon="iconOpen"
-          title="settings:title_open"
-          subtitle={`settings:title_open_subtitle_${type}`}
-          selectedPrivacy={selectedPrivacy}
-          onPress={onSelectPrivacy}
-        />
       )}
     </ScrollView>
   );

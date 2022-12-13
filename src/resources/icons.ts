@@ -104,8 +104,8 @@ const icons = {
   iconExpand: fontAwesomeIcons.UpRightAndDownLeftFromCenter,
 
   // PRIVACY
-  iconPublic: fontAwesomeIcons.GlobeSolid,
-  iconOpen: fontAwesomeIcons.EyeSolid,
+  iconOpen: fontAwesomeIcons.GlobeSolid,
+  iconClosed: fontAwesomeIcons.EyeSolid,
   iconSecret: fontAwesomeIcons.ShieldHalvedSolid,
   iconPrivate: fontAwesomeIcons.LockKeyholeSolid,
 

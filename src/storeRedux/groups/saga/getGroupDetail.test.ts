@@ -17,7 +17,7 @@ describe('Get group detail saga', () => {
       group: {
         id: '1',
         name: 'test',
-        privacy: GroupPrivacyType.PUBLIC,
+        privacy: GroupPrivacyType.OPEN,
       },
       joinStatus: 2,
     },

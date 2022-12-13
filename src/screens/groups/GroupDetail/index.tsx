@@ -108,7 +108,7 @@ const GroupDetail = (props: any) => {
   const showPrivate
     = !isMember
     && (privacy === GroupPrivacyType.PRIVATE
-      || (!isMemberCommunity && privacy === GroupPrivacyType.OPEN));
+      || (!isMemberCommunity && privacy === GroupPrivacyType.CLOSED));
 
   // post
   const timelineActions = useTimelineStore((state: ITimelineState) => state.actions);
@@ -148,8 +148,8 @@ const GroupDetail = (props: any) => {
     httpApiRequest > makeGetStreamRequest */
     const privilegeToFetchPost
       = isMember
-      || privacy === GroupPrivacyType.PUBLIC
-      || privacy === GroupPrivacyType.OPEN;
+      || privacy === GroupPrivacyType.OPEN
+      || privacy === GroupPrivacyType.CLOSED;
 
     if (loadingGroupDetail || isEmpty(groupInfo) || !privilegeToFetchPost) {
       return;

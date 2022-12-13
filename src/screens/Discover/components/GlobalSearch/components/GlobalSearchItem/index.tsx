@@ -3,7 +3,7 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/baseComponents/Text';
-import { communityPrivacyListDetail } from '~/constants/privacyTypes';
+import { CommunityPrivacyDetail } from '~/constants/privacyTypes';
 import { margin, padding } from '~/theme/spacing';
 import { Avatar, Button } from '~/baseComponents';
 import ButtonCommunityGroupCard from '~/components/CommunityGroupCard/ButtonCommunityGroupCard';
@@ -27,8 +27,8 @@ const GlobalSearchItem = ({
   const {
     name, icon, privacy, joinStatus,
   } = item || {};
-  const privacyData = communityPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon }: any = privacyData || {};
+  const privacyData = CommunityPrivacyDetail[privacy] || {};
+  const { icon: privacyIcon }: any = privacyData;
   const itemType = isGroup(item) ? 'common:text_group' : 'common:text_community';
 
   const _onView = () => onView(item);

@@ -8,7 +8,7 @@ import Tag from '~/baseComponents/Tag';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import { groupPrivacyListDetail } from '~/constants/privacyTypes';
+import { GroupPrivacyDetail } from '~/constants/privacyTypes';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
@@ -51,9 +51,8 @@ const CommunityGroupCard: FC<CommunityGroupCardProps> = ({
     description,
     community,
   } = item || {};
-  const privacyData: any
-    = groupPrivacyListDetail.find((i) => i?.type === privacy) || {};
-  const { icon: privacyIcon, title: privacyTitle } = privacyData || {};
+  const privacyData: any = GroupPrivacyDetail[privacy] || {};
+  const { icon: privacyIcon, title: privacyTitle } = privacyData;
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   const onView = () => {
