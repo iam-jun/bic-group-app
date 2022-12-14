@@ -56,7 +56,7 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     buttonView: {
       backgroundColor: colors.white,
-      paddingTop: spacing.padding.xSmall,
+      paddingTop: spacing.padding.tiny,
       paddingBottom: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
     },

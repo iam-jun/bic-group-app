@@ -127,6 +127,7 @@ const _CommunityContentView = ({
         <View onLayout={onButtonLayout}>
           <InfoHeader infoDetail={community} />
           <CommunityTabHeader communityId={id} isMember={isMember} teamName={teamName} />
+          <CommunityJoinCancelButton community={community} isMember={isMember} />
           <Divider color={colors.gray5} size={spacing.padding.large} />
           <FilterFeedButtonGroup
             contentFilter={contentFilter}
@@ -135,7 +136,6 @@ const _CommunityContentView = ({
             onPressAttributeFilterTab={_onPressAttributeFilterTab}
           />
           <Divider color={colors.gray5} size={spacing.padding.tiny} />
-          <CommunityJoinCancelButton community={community} isMember={isMember} />
           {isLoadingPosts && renderLoading()}
         </View>
       )}

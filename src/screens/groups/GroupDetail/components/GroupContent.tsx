@@ -98,6 +98,7 @@ const GroupContent = ({
         communityId={communityId}
         teamName={teamName}
       />
+      <GroupJoinCancelButton />
       <Divider color={colors.gray5} size={spacing.padding.large} />
       <FilterFeedButtonGroup
         contentFilter={contentFilter}
@@ -105,7 +106,7 @@ const GroupContent = ({
         onPressContentFilterTab={_onPressContentFilterTab}
         onPressAttributeFilterTab={_onPressAttributeFilterTab}
       />
-      <GroupJoinCancelButton />
+      <Divider color={colors.neutral5} size={spacing.padding.tiny} />
       {isLoadingPosts && renderLoading()}
     </View>
   );
