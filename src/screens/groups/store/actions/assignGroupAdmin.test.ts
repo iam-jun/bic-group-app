@@ -1,5 +1,4 @@
 import groupApi from '~/api/GroupApi';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupController from '../index';
@@ -18,7 +17,9 @@ describe('assignGroupAdmin', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyGroupActions = jest.spyOn(groupsActions, 'getGroupMembers');
+    const spyGroupActions = jest
+      .spyOn(groupApi, 'getGroupMembers')
+      .mockImplementation(() => Promise.resolve(response) as any);
 
     const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
 

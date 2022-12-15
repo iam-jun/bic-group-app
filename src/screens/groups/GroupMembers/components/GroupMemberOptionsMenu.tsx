@@ -6,7 +6,7 @@ import { IGroupMembers } from '~/interfaces/IGroup';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import { useMyPermissions } from '~/hooks/permissions';
-import useRemoveGroupMemberStore from '../store';
+import useGroupMemberStore from '../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 import useGroupController from '../../store';
 
@@ -27,7 +27,7 @@ const GroupMemberOptionsMenu = ({
   const { t } = useBaseHook();
 
   const actions = useGroupController((state) => state.actions);
-  const deleteRemoveGroupMember = useRemoveGroupMemberStore(
+  const deleteRemoveGroupMember = useGroupMemberStore(
     (state) => state.actions.deleteRemoveGroupMember,
   );
 
