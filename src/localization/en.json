@@ -811,7 +811,8 @@
       "btn_channel": "Channel",
       "btn_about": "About",
       "btn_members": "Members",
-      "btn_files": "Files"
+      "btn_files": "Files",
+      "btn_tags": "Tags"
     },
     "text_members_one": "member",
     "text_members_other": "members",
@@ -1224,5 +1225,15 @@
     "text_add_articles_success": "Add successful",
     "text_remove_article": "Do you want to remove this article?",
     "text_article_removed": "Article removed"
+  },
+  "tags": {
+    "create_tag": "Create Tag",
+    "input_tag": "Input tag",
+    "input_tag_require_max_length": "Maximum 32 characters",
+    "create": "Create",
+    "do_you_want_to_delete_this_tag": "Do you want to delete this tag ?",
+    "delete_tag_confirm": "Delete Tag",
+    "title_header_list_tags": "Tags",
+    "empty_list_tags": "No result"
   }
 }

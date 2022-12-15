@@ -34,6 +34,7 @@ import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/scre
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IGroupController } from '~/screens/groups/store';
+import { ITagsState } from './entities/tags';
 
 export interface BicStore {
   entities: {
@@ -118,4 +119,5 @@ export interface BicStore {
   removeCommunityMemberStore: IRemoveCommunityMemberState;
   giphy: IGiphyState;
   codePush: ICodePushState;
+  tags: ITagsState;
 }
