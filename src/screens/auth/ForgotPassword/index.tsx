@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Button from '~/beinComponents/Button';
+import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
@@ -56,17 +56,18 @@ const ForgotPassword = () => {
   const renderComplete = () => (
     <View testID="forgot_password.complete_view" style={styles.completeContainer}>
       <View style={styles.textContainer}>
-        <Text.H6 useI18n>auth:text_forgot_password_complete_title</Text.H6>
-        <Text.BodyS useI18n style={styles.completeDescription}>
+        <Text.H3 useI18n>auth:text_forgot_password_complete_title</Text.H3>
+        <Text.BodyM useI18n style={styles.completeDescription}>
           auth:text_forgot_password_complete_desc
-        </Text.BodyS>
+        </Text.BodyM>
       </View>
       <Button.Primary
         testID="forgot_password.button_complete"
         onPress={goBack}
         useI18n
+        size="large"
       >
-        auth:btn_sign_in_now
+        auth:btn_sign_in
       </Button.Primary>
     </View>
   );
@@ -117,7 +118,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     container: {
       flex: 1,
-      paddingBottom: spacing.padding.big,
       alignContent: 'center',
       width: '100%',
       maxWidth: 375,
@@ -136,7 +136,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingTop: spacing.padding.big + spacing.padding.large,
     },
     completeDescription: {
-      marginTop: spacing.margin.extraLarge,
+      marginTop: spacing.margin.large,
     },
     textContainer: {
       marginTop: spacing.margin.large,

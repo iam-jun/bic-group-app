@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import React from 'react';
+import {
+  ActivityIndicator, StyleSheet, View,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
 
 import Text from '~/baseComponents/Text';
-import Button from '~/beinComponents/Button';
-import * as validation from '~/constants/commonRegex';
+import { Button } from '~/baseComponents';
 import { useBaseHook } from '~/hooks';
 import { IObject } from '~/interfaces/common';
 
-import TextInputController from '~/beinComponents/inputs/TextInputController';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
-import getEnv from '~/utils/env';
 import spacing from '~/theme/spacing';
-import { APP_ENV } from '~/configs/appConfig';
 import useForgotPasswordStore, { IForgotPasswordState } from '../../store';
+import FormCheckPw from './components/FormCheckPw';
+import CodeInput from './components/CodeInput';
+import * as validation from '~/constants/commonRegex';
 
 interface Props {
   useFormData: IObject<any>;
@@ -26,24 +27,8 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   const styles = themeStyles(theme);
 
   const actions = useForgotPasswordStore((state: IForgotPasswordState) => state.actions);
-  const errorConfirm = useForgotPasswordStore((state: IForgotPasswordState) => state.errorConfirm);
   const loadingConfirm = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingConfirm);
   const loadingRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.loadingRequest);
-
-  useEffect(
-    () => {
-      if (errorConfirm) {
-        setError(
-          'code', {
-            type: 'manual',
-            message: errorConfirm,
-          },
-        );
-      } else {
-        clearErrors('code');
-      }
-    }, [errorConfirm],
-  );
 
   const {
     getValues,
@@ -59,13 +44,20 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
     const email = getValues('email');
     const newPassword = getValues('newPassword');
     const confirmPassword = getValues('confirmPassword');
+    const passwordCheck
+      = validation.limitCharacterRegex.test(newPassword)
+      && validation.uppercaseLetterRegex.test(newPassword)
+      && validation.digitsRegex.test(newPassword)
+      && validation.specialCharacterRegex.test(newPassword);
     const passwordMatched = newPassword === confirmPassword;
+
     return (
       !isEmpty(errors)
       || !email
       || !code
       || !newPassword
       || !confirmPassword
+      || !passwordCheck
       || !passwordMatched
       || loadingConfirm
     );
@@ -102,16 +94,9 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
         'code', '', { shouldValidate: false },
       );
       clearErrors('code');
+      actions.setErrorConfirm();
       actions.requestResetPassword(email);
     }
-  };
-
-  const validateCode = async () => {
-    await trigger('code');
-  };
-
-  const validateNewPassword = async () => {
-    await trigger('newPassword');
   };
 
   const validateConfirmPassword = async () => {
@@ -131,29 +116,16 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
   return (
     <View testID="forgot_password.confirm_view" style={styles.container}>
       <View style={styles.inputSectionContainer}>
-        <Text.H6>{t('auth:text_forgot_password_input_code_title')}</Text.H6>
-        <Text.BodyS style={styles.desc}>
+        <Text.H3>{t('auth:text_forgot_password_input_code_title')}</Text.H3>
+        <Text.BodyM style={styles.desc}>
           {t('auth:text_forgot_password_input_code_desc')?.replace?.(
             '(email)',
             _email,
           )}
-        </Text.BodyS>
-        <TextInputController
-          testID="forgot_password.input_code"
-          useFormData={useFormData}
-          name="code"
-          rules={{
-            required: t('auth:text_err_code'),
-            pattern: {
-              value: validation.codeRegex,
-              message: t('auth:text_err_code'),
-            },
-          }}
-          validateValue={validateCode}
-          placeholder={t('auth:input_label_code')}
-          keyboardType="numeric"
-        />
-        <Text.BodyS>
+        </Text.BodyM>
+        <CodeInput useFormData={useFormData} />
+        <Text.BodySMedium style={styles.textExpiring}>{t('auth:text_expiring_time_code')}</Text.BodySMedium>
+        <Text.BodyS style={styles.textRequestNewCode}>
           {t('auth:text_request_new_code')}
           {' '}
           <Text.BodySMedium
@@ -163,60 +135,32 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
             testID="forgot_password.button_resend_code"
           >
             {t('auth:btn_resend_code')}
-            {loadingRequest
-             && (
-             <ActivityIndicator
-               testID="forgot_password.button_resend_code.loading"
-               color={theme.colors.neutral40}
-               style={styles.loading}
-               size={12}
-             />
-             )}
+            {loadingRequest && (
+              <Text.BodySMedium>
+                {' '}
+                <ActivityIndicator
+                  testID="forgot_password.button_resend_code.loading"
+                  color={theme.colors.neutral40}
+                  style={styles.loading}
+                  size={12}
+                />
+              </Text.BodySMedium>
+            )}
           </Text.BodySMedium>
         </Text.BodyS>
       </View>
       <View style={styles.inputSectionContainer}>
-        <Text.H6 useI18n style={styles.newPasswordTitle}>
+        <Text.H3 useI18n style={styles.newPasswordTitle}>
           auth:text_forgot_password_input_pw_title
-        </Text.H6>
-        <PasswordInputController
-          useFormData={useFormData}
-          name="newPassword"
-          rules={{
-            required: t('auth:text_err_password_blank'),
-            maxLength: {
-              value: 20,
-              message: t('auth:text_err_password_characters'),
-            },
-            minLength: {
-              value: 8,
-              message: t('auth:text_err_password_characters'),
-            },
-            validate: () => {
-              if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
-                const value = getValues('newPassword');
-                if (!/(?=.*?[A-Z])/.test(value)) {
-                  return t('auth:text_err_password_required_upper_case');
-                }
-                if (!/(?=.*?[a-z])/.test(value)) {
-                  return t('auth:text_err_password_required_lower_case');
-                }
-                if (!/(?=.*?[0-9])/.test(value)) {
-                  return t('auth:text_err_password_required_number');
-                }
-                if (!/(?=.*?[^\w\s])/.test(value)) {
-                  return t('auth:text_err_password_required_symbols');
-                }
-              }
-            },
-          }}
-          loading={loadingConfirm}
-          testID="forgot_password.input_new_password"
-          placeholder={t('auth:input_label_new_password')}
-          validateValue={validateNewPassword}
-          textContentType="oneTimeCode"
-        />
+        </Text.H3>
+        <Text.LabelM useI18n style={styles.labelNewPw}>
+          auth:input_label_new_password
+        </Text.LabelM>
+        <FormCheckPw useFormData={useFormData} loadingConfirm={loadingConfirm} />
 
+        <Text.LabelM useI18n style={styles.labelConfirmNewPw}>
+          auth:input_label_confirm_new_password
+        </Text.LabelM>
         <PasswordInputController
           useFormData={useFormData}
           name="confirmPassword"
@@ -236,9 +180,11 @@ const CodeInputView: React.FC<Props> = ({ useFormData }) => {
         disabled={disableConfirm}
         loading={loadingConfirm}
         onPress={onConfirmForgotPassword}
+        size="large"
       >
         auth:btn_submit
       </Button.Primary>
+      <View style={styles.emptySpace} />
     </View>
   );
 };
@@ -251,20 +197,39 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingTop: spacing.padding.big,
     },
     inputSectionContainer: {
-      marginBottom: spacing.margin.base,
+      marginBottom: spacing.margin.big,
     },
     desc: {
-      marginBottom: spacing.margin.base,
-      marginTop: spacing.margin.tiny,
+      marginBottom: spacing.margin.large,
+      marginTop: spacing.margin.large,
     },
     newPasswordTitle: {
-      marginBottom: spacing.margin.small,
+      marginBottom: spacing.margin.large,
     },
     highlightText: {
-      color: colors.gray70,
+      color: colors.blue50,
     },
     loading: {
       marginLeft: spacing.margin.small,
+    },
+    labelNewPw: {
+      marginBottom: 4,
+    },
+    labelConfirmNewPw: {
+      marginTop: 12,
+      marginBottom: 4,
+    },
+    textExpiring: {
+      textAlign: 'center',
+      marginTop: 8,
+    },
+    textRequestNewCode: {
+      color: colors.neutral30,
+      textAlign: 'center',
+      marginTop: 8,
+    },
+    emptySpace: {
+      paddingBottom: spacing.padding.big,
     },
   });
 };

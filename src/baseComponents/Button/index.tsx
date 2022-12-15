@@ -118,13 +118,13 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   wrapper: {
-    borderRadius: borderRadius.base,
+    borderRadius: borderRadius.large,
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: borderRadius.base,
+    borderRadius: borderRadius.large,
     paddingVertical: padding.tiny,
   },
   icon: {

@@ -15,7 +15,7 @@ import useAccountSettingsStore from '~/screens/Menu/AccountSettings/store';
 import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import useRemoveCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
-import useRemoveGroupMemberStore from '~/screens/groups/GroupMembers/store';
+import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '../screens/articles/ArticleDetail/store';
 import useUserInterestedPostStore from '~/components/posts/UserInterestedPost/store';
@@ -38,6 +38,8 @@ import useCreateArticleSeriesStore from '~/screens/articles/CreateArticle/screen
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import useTagsStore from './entities/tags';
+import useTagsControllerStore from '~/screens/tags/store';
 
 const stores = [
   // entities
@@ -66,7 +68,7 @@ const stores = [
   useChatStore,
   useDiscoverGroupsStore,
   useRemoveCommunityMemberStore,
-  useRemoveGroupMemberStore,
+  useGroupMemberStore,
   useCreateArticleStore,
   useCreateArticleCategoryStore,
   useCreateArticleSeriesStore,
@@ -86,6 +88,8 @@ const stores = [
   useForgotPasswordStore,
   useChangePasswordStore,
   useGroupDetailStore,
+  useTagsStore,
+  useTagsControllerStore,
 ];
 
 export const resetAllStores = () => {

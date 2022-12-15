@@ -154,3 +154,10 @@ export interface ICityResponseItem {
   isoCode: string;
   countryCode: string;
 }
+
+export interface IFormCheckPw {
+  isLimitCharacter: boolean;
+  isUppercaseLetter: boolean;
+  isDigits: boolean;
+  isSpecialCharacter: boolean;
+}

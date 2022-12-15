@@ -16,6 +16,7 @@ interface TabButtonHeaderProps {
   onPressDiscover?: () => void;
   onPressAbout?: () => void;
   onPressMembers?: () => void;
+  onPressTags?: () => void;
 }
 
 const TabButtonHeader = ({
@@ -25,18 +26,26 @@ const TabButtonHeader = ({
   onPressDiscover,
   onPressAbout,
   onPressMembers,
+  onPressTags,
 }: TabButtonHeaderProps) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const onPressYourGroups = () => {
-    dispatch(modalActions.showModal({
-      isOpen: true,
-      isFullScreen: true,
-      titleFullScreen: 'groups:group_content:btn_your_groups',
-      ContentComponent: (<CommunityJoinedGroupTree communityId={communityId} teamName={teamName} />),
-    }));
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        isFullScreen: true,
+        titleFullScreen: 'groups:group_content:btn_your_groups',
+        ContentComponent: (
+          <CommunityJoinedGroupTree
+            communityId={communityId}
+            teamName={teamName}
+          />
+        ),
+      }),
+    );
   };
 
   return (
@@ -49,7 +58,12 @@ const TabButtonHeader = ({
     >
       {onPressAbout && (
         <>
-          <PillTabButton useI18n testID="tab_button_header.about_btn" size="medium" onPress={onPressAbout}>
+          <PillTabButton
+            useI18n
+            testID="tab_button_header.about_btn"
+            size="medium"
+            onPress={onPressAbout}
+          >
             groups:group_content:btn_about
           </PillTabButton>
           <ViewSpacing width={spacing.margin.small} />
@@ -57,7 +71,12 @@ const TabButtonHeader = ({
       )}
       {isMember && (
         <>
-          <PillTabButton useI18n testID="tab_button_header.your_groups" size="medium" onPress={onPressYourGroups}>
+          <PillTabButton
+            useI18n
+            testID="tab_button_header.your_groups"
+            size="medium"
+            onPress={onPressYourGroups}
+          >
             groups:group_content:btn_your_groups
           </PillTabButton>
           <ViewSpacing width={spacing.margin.small} />
@@ -65,15 +84,38 @@ const TabButtonHeader = ({
       )}
       {onPressDiscover && (
         <>
-          <PillTabButton useI18n testID="tab_button_header.discover_btn" size="medium" onPress={onPressDiscover}>
+          <PillTabButton
+            useI18n
+            testID="tab_button_header.discover_btn"
+            size="medium"
+            onPress={onPressDiscover}
+          >
             groups:group_content:btn_browse
           </PillTabButton>
           <ViewSpacing width={spacing.margin.small} />
         </>
       )}
       {onPressMembers && (
-        <PillTabButton useI18n testID="tab_button_header.members_btn" size="medium" onPress={onPressMembers}>
-          groups:group_content:btn_members
+        <>
+          <PillTabButton
+            useI18n
+            testID="tab_button_header.members_btn"
+            size="medium"
+            onPress={onPressMembers}
+          >
+            groups:group_content:btn_members
+          </PillTabButton>
+          <ViewSpacing width={spacing.margin.small} />
+        </>
+      )}
+      {onPressTags && (
+        <PillTabButton
+          useI18n
+          testID="tab_button_header.tags_btn"
+          size="medium"
+          onPress={onPressTags}
+        >
+          groups:group_content:btn_tags
         </PillTabButton>
       )}
     </ScrollView>
