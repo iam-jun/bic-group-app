@@ -5,6 +5,10 @@ export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(
 //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,20}$/;
 export const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
 export const codeRegex = /^[0-9]{1,6}$/;
+export const limitCharacterRegex = /^.{8,20}$/;
+export const uppercaseLetterRegex = /(?=.*?[A-Z])/;
+export const digitsRegex = /(?=.*?[0-9])/;
+export const specialCharacterRegex = /(?=.*?[^\w\s])/;
 
 /**
  * mentionRegex

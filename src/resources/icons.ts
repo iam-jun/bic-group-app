@@ -102,6 +102,7 @@ const icons = {
   search: fontAwesomeIcons.MagnifyingGlass,
   iconCheckCircle: fontAwesomeIcons.CircleCheck,
   iconExpand: fontAwesomeIcons.UpRightAndDownLeftFromCenter,
+  iconCircleExclamation: fontAwesomeIcons.CircleExclamation,
 
   // PRIVACY
   iconOpen: fontAwesomeIcons.GlobeSolid,

@@ -15,6 +15,7 @@ export interface IForgotPasswordState extends IBaseState {
   actions: {
     setScreenCurrentStage: (stage: string) => void;
     setErrorRequest: (error?: string) => void;
+    setErrorConfirm: (error?: string) => void;
     requestResetPassword: (email: string) => void;
     confirmForgotPassword: (payload: IForgotPasswordConfirm) => void;
   }
@@ -40,6 +41,11 @@ const useForgotPassword = (set, get) => ({
       set((state: IForgotPasswordState) => {
         state.errorRequest = error || initialState.errorRequest;
       }, 'setErrorRequest');
+    },
+    setErrorConfirm: (error?: string) => {
+      set((state: IForgotPasswordState) => {
+        state.errorConfirm = error || initialState.errorConfirm;
+      }, 'setErrorConfirm');
     },
     requestResetPassword: requestResetPassword(set, get),
     confirmForgotPassword: confirmForgotPassword(set, get),

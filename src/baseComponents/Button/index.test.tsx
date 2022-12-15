@@ -62,12 +62,8 @@ describe('Button component', () => {
     const rendered = renderWithRedux(
       <Button.Primary
         testID="button"
-        style={{ padding: 10 }}
       />,
     );
-    const { getByTestId } = rendered;
-    const btnComponent = getByTestId('button');
-    expect(btnComponent.props?.style?.padding).toBe(10);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 

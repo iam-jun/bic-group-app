@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useController } from 'react-hook-form';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
 
 import Text from '~/baseComponents/Text';
-import TextInput from '~/beinComponents/inputs/TextInput';
-import Button from '~/beinComponents/Button';
+import TextInputController from '~/beinComponents/inputs/TextInputController';
+import { Button } from '~/baseComponents';
 import * as validation from '~/constants/commonRegex';
 import { useBaseHook } from '~/hooks';
 import { IObject } from '~/interfaces/common';
@@ -21,6 +20,7 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
   const styles = themeStyles(theme);
+  const { colors } = theme;
 
   const actions = useForgotPasswordStore((state: IForgotPasswordState) => state.actions);
   const errorRequest = useForgotPasswordStore((state: IForgotPasswordState) => state.errorRequest);
@@ -29,7 +29,6 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
   const refTextInput = useRef<any>();
 
   const {
-    control,
     getValues,
     setError,
     clearErrors,
@@ -37,15 +36,6 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
     formState: { errors },
     trigger,
   } = useFormData;
-
-  const {
-    field: { onChange, value },
-  } = useController({
-    control,
-    name: 'email',
-    rules: {},
-    defaultValue: '',
-  });
 
   useEffect(
     () => {
@@ -85,7 +75,13 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
       setValue(
         'code', '', { shouldValidate: false },
       );
-      clearErrors('code');
+      setValue(
+        'newPassword', '', { shouldValidate: false },
+      );
+      setValue(
+        'confirmPassword', '', { shouldValidate: false },
+      );
+      clearErrors(['code', 'newPassword', 'confirmPassword']);
       actions.requestResetPassword(email);
     }
   };
@@ -96,28 +92,25 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
 
   return (
     <View testID="forgot_password.require_email" style={styles.container}>
-      <Text.H6 useI18n>auth:text_forgot_password</Text.H6>
+      <Text.H3 useI18n>auth:text_forgot_password</Text.H3>
       <Text.BodyS useI18n style={styles.desc}>
         auth:text_forgot_password_input_desc
       </Text.BodyS>
-      <TextInput
-        ref={refTextInput}
+      <TextInputController
+        useFormData={useFormData}
+        name="email"
         testID="forgot_password.input_email"
         placeholder={t('auth:input_label_email')}
+        placeholderTextColor={colors.neutral20}
         keyboardType="email-address"
         autoCapitalize="none"
         autoFocus
-        value={value}
         editable={!loadingRequest}
-        error={errors?.email}
-        onChangeText={(text) => {
-          onChange(text);
-          validateEmail();
-        }}
-        helperType={errors?.email?.message ? 'error' : undefined}
-        helperContent={errors?.email?.message}
-        style={{ marginTop: 0, marginBottom: spacing.margin.small }}
-        onSubmitEditing={() => onRequestForgotPassword()}
+        style={styles.inputEmailContainer}
+        onSubmitEditing={onRequestForgotPassword}
+        validateValue={validateEmail}
+        textColor={colors.neutral60}
+        ref={refTextInput}
       />
       <Button.Primary
         useI18n
@@ -126,6 +119,7 @@ const EmailInputView: React.FC<Props> = ({ useFormData }) => {
         loading={loadingRequest}
         onPress={onRequestForgotPassword}
         style={styles.btnSendRecoverCode}
+        size="large"
       >
         auth:btn_send_recover_code
       </Button.Primary>
@@ -140,12 +134,15 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingTop: spacing.padding.big,
     },
     desc: {
-      marginTop: spacing.margin.extraLarge,
+      marginTop: spacing.margin.large,
       marginBottom: spacing.margin.large,
       color: colors.neutral80,
     },
     btnSendRecoverCode: {
-      marginTop: spacing.margin.large,
+      marginTop: spacing.margin.big,
+    },
+    inputEmailContainer: {
+      marginVertical: 0,
     },
   });
 };
