@@ -74,6 +74,13 @@ export interface IEditArticleSeries {
   title?: string;
 }
 
+export interface IEditArticleTags {
+  id?: string;
+      name?: string;
+    slug?: string;
+    total?: number;
+}
+
 export interface IEditArticleData {
   id?: string;
   title?: string;
@@ -93,6 +100,7 @@ export interface IEditArticleData {
   };
   mentions?: any;
   linkPreview?: ILinkPreview;
+  tags?: IEditArticleTags[];
 }
 
 export interface ICategory {
@@ -122,3 +130,6 @@ export interface IEditAritcleError {
 }
 
 export type IGetSearchArticleInSeries = IGetSeries;
+export interface IGetSearchTags extends IGetSeries{
+  name?: string;
+}

@@ -9,16 +9,17 @@ import Text from '~/baseComponents/Text';
 import { ICategory } from '~/interfaces/IArticle';
 import spacing from '~/theme/spacing';
 
-export interface CategoryItemProps {
+export interface ArticleSelectingInfoProps {
   data: any;
   isChecked?: boolean;
-  onRemoveCategory?: (category: ICategory) => void;
-  onAddCategory?: (category: ICategory) => void;
+  disabled?: boolean;
+  onRemoveItem?: (category: ICategory) => void;
+  onAddItem?: (category: ICategory) => void;
 }
 
-const CategoryItem: FC<CategoryItemProps> = ({
-  data, isChecked, onRemoveCategory, onAddCategory,
-}: CategoryItemProps) => {
+const ArticleSelectingInfo: FC<ArticleSelectingInfoProps> = ({
+  data, isChecked, disabled = false, onRemoveItem, onAddItem,
+}: ArticleSelectingInfoProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
@@ -26,16 +27,21 @@ const CategoryItem: FC<CategoryItemProps> = ({
 
   const onChange = (isChecked) => {
     if (isChecked) {
-      onAddCategory?.(data);
+      onAddItem?.(data);
     } else {
-      onRemoveCategory?.(data);
+      onRemoveItem?.(data);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.textName}>{name}</Text>
-      <Checkbox isChecked={isChecked} onPress={onChange} />
+    <View testID="aritcles.slecting_info_item" style={styles.container}>
+      <Text testID="aritcles.slecting_info_item.text" style={styles.textName}>{name}</Text>
+      <Checkbox
+        testID="aritcles.slecting_info_item.checkbox"
+        isChecked={isChecked}
+        disabled={disabled ? 'disabled' : undefined}
+        onPress={onChange}
+      />
     </View>
   );
 };
@@ -51,4 +57,4 @@ const createStyle = (_theme: ExtendedTheme) => StyleSheet.create({
   },
 });
 
-export default CategoryItem;
+export default ArticleSelectingInfo;

@@ -26,6 +26,7 @@ import {
 import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import {
   IGetSearchArticleInSeries,
+  IGetSearchTags,
   IParamGetArticleDetail,
   IParamGetArticles,
   IParamGetCategories,
@@ -429,6 +430,11 @@ export const streamApiConfig = {
     method: 'delete',
     data: { ...params },
   }),
+  searchTagsInAudiences: (params?: IGetSearchTags): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags`,
+    params,
+  }),
   getTags: (params: IParamGetCommunityTags): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}tags`,
@@ -709,6 +715,9 @@ const streamApi = {
       return Promise.reject(e);
     }
   },
+  searchTagsInAudiences: (params?: IGetSearchTags) => withHttpRequestPromise(
+    streamApiConfig.searchTagsInAudiences, params,
+  ),
   getTags: (params: IParamGetCommunityTags) => withHttpRequestPromise(
     streamApiConfig.getTags, params,
   ),

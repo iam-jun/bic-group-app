@@ -520,7 +520,8 @@
     "modal_add_video": {
       "title": "Nhúng video",
       "link_placeholder": "Nhập URL của video:"
-    }
+    },
+	  "tags_maximum_message_info": "Chỉ có thể chọn tối đa 5 tags"
   },
   "post": {
     "news_feed": "News Feed",

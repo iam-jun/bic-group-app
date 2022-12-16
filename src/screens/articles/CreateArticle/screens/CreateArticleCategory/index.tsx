@@ -6,6 +6,8 @@ import { SearchInput } from '~/baseComponents/Input';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import ArticleSelectingInfo from '~/components/articles/ArticleSelectingInfo';
+import ArticleSelectingListInfo from '~/components/articles/ArticleSelectingListInfo';
 
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
@@ -14,8 +16,6 @@ import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import spacing from '~/theme/spacing';
-import CategoryItem from './components/CategoryItem';
-import SelectingCategory from './components/SelectingCategory';
 import useCreateArticleCategoryStore from './store';
 
 const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
@@ -72,11 +72,11 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
   const renderItem = ({ item }) => {
     const isChecked = selectedCategories.findIndex((selected) => selected.id === item.id) > -1;
     return (
-      <CategoryItem
+      <ArticleSelectingInfo
         data={item}
         isChecked={isChecked}
-        onAddCategory={onAddCategory}
-        onRemoveCategory={onRemoveCategory}
+        onAddItem={onAddCategory}
+        onRemoveItem={onRemoveCategory}
       />
     );
   };
@@ -105,7 +105,11 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
         placeholder={t('article:text_search_category_placeholder')}
         onChangeText={onChangeText}
       />
-      <SelectingCategory />
+      <ArticleSelectingListInfo
+        type="category"
+        data={selectedCategories}
+        onRemoveItem={onRemoveCategory}
+      />
       <Divider />
       <FlatList
         data={listData || []}

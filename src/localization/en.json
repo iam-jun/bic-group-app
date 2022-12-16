@@ -531,6 +531,7 @@
     "text_option_edit_category": "Topics",
     "text_option_edit_audience": "Audience",
     "text_option_edit_series": "Series",
+    "text_option_edit_tags": "Tags",
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_select_cover": "Select cover",
@@ -560,7 +561,8 @@
     "modal_add_video": {
       "title": "Embed Video",
       "link_placeholder": "Enter the URL of the embed:"
-    }
+    },
+    "tags_maximum_message_info": "Maxium input 5 Tags"
   },
   "post": {
     "news_feed": "News Feed",

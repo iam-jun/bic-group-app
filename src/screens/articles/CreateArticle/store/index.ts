@@ -1,5 +1,11 @@
 import {
-  ICategory, IEditAritcleError, IEditArticleAudience, IEditArticleData, IEditArticleSeries, IPayloadPutEditArticle,
+  ICategory,
+  IEditAritcleError,
+  IEditArticleAudience,
+  IEditArticleData,
+  IEditArticleSeries,
+  IEditArticleTags,
+  IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
 import putEditArticle from '~/screens/articles/CreateArticle/store/actions/putEditArticle';
@@ -26,6 +32,9 @@ export interface ICreateArticleState extends IBaseState {
     setSeries: (series?: IEditArticleSeries[]) => void;
     addSeries: (series: IEditArticleSeries) => void;
     removeSeries: (series: IEditArticleSeries) => void;
+    setTags: (tags?: IEditArticleTags[]) => void;
+    addTag: (tag: IEditArticleTags) => void;
+    removeTag: (tag: IEditArticleTags) => void;
     putEditArticle: (
       params: IPayloadPutEditArticle,
       callbackError: (data: IEditAritcleError) => void,
@@ -43,6 +52,7 @@ const initialState = {
     summary: '',
     categories: [],
     series: [],
+    tags: [],
     hashtags: [],
     audience: {
       userIds: [],
@@ -151,6 +161,30 @@ const useCreateArticle = (set, get) => ({
         state.data.series = newSelecting;
       }, 'removeSeries');
     },
+    setTags: (tags?: IEditArticleTags[]) => {
+      set((state: ICreateArticleState) => {
+        state.data.tags = tags || [];
+      }, 'setTags');
+    },
+    addTag: (tag: IEditArticleTags) => {
+      const selecting = get().data.tags || [];
+      const isAdded = selecting.findIndex((item) => item?.id === tag?.id) > -1;
+      if (!isAdded) {
+        const newSelecting = [...selecting];
+        newSelecting.push(tag);
+        set((state) => {
+          state.data.tags = newSelecting;
+        }, 'addTag');
+      }
+    },
+    removeTag: (tag: IEditArticleTags) => {
+      const selecting = get().data.tags || [];
+      const newSelecting = selecting.filter((item) => item?.id !== tag?.id);
+      set((state) => {
+        state.data.tags = newSelecting;
+      }, 'removeTags');
+    },
+
     putEditArticle: putEditArticle(set, get),
     createArticle: createArticle(set, get),
   },

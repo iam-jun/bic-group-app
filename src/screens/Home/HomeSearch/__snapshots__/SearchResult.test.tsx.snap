@@ -1281,7 +1281,78 @@ exports[`SearchResult component should render list search result 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   testID="post_view_content"
-                />
+                >
+                  <View>
+                    <View
+                      style={Object {}}
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "flex-start",
+                            "flexDirection": "row",
+                            "flexWrap": "wrap",
+                            "justifyContent": "flex-start",
+                            "marginBottom": 2,
+                            "marginTop": 2,
+                            "width": "100%",
+                          }
+                        }
+                      >
+                        <Text
+                          style={Object {}}
+                        >
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 15,
+                                },
+                                Object {},
+                                Object {
+                                  "backgroundColor": "#F6EF79",
+                                  "borderRadius": 6,
+                                  "overflow": "hidden",
+                                },
+                              ]
+                            }
+                          >
+                            <Text
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#212745",
+                                    "fontFamily": "BeVietnamPro-Light",
+                                    "fontSize": 15,
+                                  },
+                                  Object {},
+                                ]
+                              }
+                            >
+                              Important
+                            </Text>
+                          </Text>
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#212745",
+                                  "fontFamily": "BeVietnamPro-Light",
+                                  "fontSize": 15,
+                                },
+                                Object {},
+                              ]
+                            }
+                          >
+                             post
+                          </Text>
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
               </View>
             </View>
             <View

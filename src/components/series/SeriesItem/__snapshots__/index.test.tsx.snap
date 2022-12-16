@@ -608,62 +608,94 @@ exports[`SeriesItem component renders correctly 1`] = `
         }
       }
     />
-  </View>
-  <View>
     <View
-      testID="reaction_view"
+      style={
+        Array [
+          Object {
+            "marginTop": 12,
+            "paddingVertical": 12,
+          },
+          false,
+          false,
+        ]
+      }
     >
       <View
         style={
           Array [
             Object {
-              "flex": 1,
-              "flexDirection": "row",
-              "flexWrap": "wrap",
+              "alignItems": "flex-end",
+              "paddingBottom": 6,
+              "paddingHorizontal": 16,
+              "paddingTop": 12,
             },
-            null,
             Object {
-              "paddingHorizontal": 12,
+              "alignItems": "flex-end",
+              "margin": 0,
+              "paddingBottom": 0,
+              "paddingHorizontal": 0,
+              "paddingTop": 0,
             },
           ]
         }
-        testID="reaction_view"
-      />
-    </View>
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#F1F2F8",
-            "flex": 1,
-            "justifyContent": "center",
-          },
-          Object {
-            "height": 36,
-            "marginTop": 4,
-          },
-        ]
-      }
-      testID="content_footer.cannot_reaction_view"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#212745",
-              "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#BAC0DE",
-            },
-            undefined,
-          ]
-        }
+        testID="content_interested_user_count"
       >
-        React and comment of this post are not available
-      </Text>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="content_interested_user_count.button"
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+            testID="content_interested_user_count.show_text"
+          >
+            Interested by 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
+                  },
+                  Object {
+                    "color": "#353E6E",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              1
+            </Text>
+          </Text>
+        </View>
+      </View>
     </View>
   </View>
 </View>
@@ -1277,62 +1309,94 @@ exports[`SeriesItem component renders delete item when series deleted 1`] = `
         }
       }
     />
-  </View>
-  <View>
     <View
-      testID="reaction_view"
+      style={
+        Array [
+          Object {
+            "marginTop": 12,
+            "paddingVertical": 12,
+          },
+          false,
+          false,
+        ]
+      }
     >
       <View
         style={
           Array [
             Object {
-              "flex": 1,
-              "flexDirection": "row",
-              "flexWrap": "wrap",
+              "alignItems": "flex-end",
+              "paddingBottom": 6,
+              "paddingHorizontal": 16,
+              "paddingTop": 12,
             },
-            null,
             Object {
-              "paddingHorizontal": 12,
+              "alignItems": "flex-end",
+              "margin": 0,
+              "paddingBottom": 0,
+              "paddingHorizontal": 0,
+              "paddingTop": 0,
             },
           ]
         }
-        testID="reaction_view"
-      />
-    </View>
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#F1F2F8",
-            "flex": 1,
-            "justifyContent": "center",
-          },
-          Object {
-            "height": 36,
-            "marginTop": 4,
-          },
-        ]
-      }
-      testID="content_footer.cannot_reaction_view"
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#212745",
-              "fontFamily": "BeVietnamPro-Light",
-              "fontSize": 13,
-            },
-            Object {
-              "color": "#BAC0DE",
-            },
-            undefined,
-          ]
-        }
+        testID="content_interested_user_count"
       >
-        React and comment of this post are not available
-      </Text>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="content_interested_user_count.button"
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+            testID="content_interested_user_count.show_text"
+          >
+            Interested by 
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#212745",
+                    "fontFamily": "BeVietnamPro-Medium",
+                    "fontSize": 13,
+                  },
+                  Object {
+                    "color": "#353E6E",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              1
+            </Text>
+          </Text>
+        </View>
+      </View>
     </View>
   </View>
 </View>
