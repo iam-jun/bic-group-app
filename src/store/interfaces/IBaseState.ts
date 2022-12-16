@@ -1,4 +1,4 @@
-interface IBaseState {
+export interface IBaseState {
   reset?: () => void;
 }
 

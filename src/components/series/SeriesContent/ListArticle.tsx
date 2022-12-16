@@ -54,14 +54,14 @@ const ListArticle: FC<ListArticleProps> = ({ listArticle }) => {
   return (
     <View style={styles.container}>
       {listArticle?.map((item, index) => (
-        <>
+        <React.Fragment key={`artc_series_fragment_${item.id}`}>
           <ArticleItem
             key={`artc_series_${item.id}`}
             index={index + 1}
             article={item}
           />
           <View style={styles.separator} />
-        </>
+        </React.Fragment>
       ))}
     </View>
   );

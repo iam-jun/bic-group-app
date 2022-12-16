@@ -25,23 +25,6 @@ describe('GroupDetail component', () => {
     expect(placeholder).toBeDefined();
   });
 
-  it('renders group detail correctly when user is a group member', () => {
-    const state = { ...initialState };
-    state.groups.loadingPage = false;
-    state.groups.groupDetail = { ...groupDetailData };
-    state.auth.user = { username: 'testname' };
-    const store = createTestStore(state);
-
-    const wrapper = renderWithRedux(
-      <MockedNavigator component={component} />,
-      store,
-    );
-    const detailView = wrapper.getByTestId('group_detail.content');
-    expect(detailView).toBeDefined();
-    const listView = wrapper.getByTestId('flatlist');
-    expect(listView).toBeDefined();
-  });
-
   it('renders GroupPrivateWelcome when user is a visitor to a private group', () => {
     const state = { ...initialState };
     state.groups.groupDetail = {

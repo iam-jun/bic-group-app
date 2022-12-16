@@ -11,12 +11,10 @@ import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
 import Toast from '~/baseComponents/Toast';
 import { AppConfig } from '~/configs';
-import { IUserResponse } from '~/interfaces/IAuth';
 import InternetConnectionStatus from '~/components/network/InternetConnectionStatus';
 import SystemIssueModal from '~/components/network/SystemIssueModal';
 import noInternetActions from '~/storeRedux/network/actions';
 import { makeRemovePushTokenRequest } from '~/api/apiRequest';
-import Store from '~/storeRedux';
 import { isNavigationRefReady } from './helper';
 
 import { rootNavigationRef } from './refs';
@@ -27,7 +25,7 @@ import { registerNavigationContainerWithSentry } from '~/services/sentry';
 import AuthStack from '~/router/navigator/AuthStack';
 import MainStack from '~/router/navigator/MainStack';
 import useNavigationLinkingConfig from '~/hooks/navigationLinking';
-import { useAuthKickOut } from '~/hooks/auth';
+import { useAuthValidateSession, useUserIdAuth } from '~/hooks/auth';
 import VideoPlayerWebView from '~/components/VideoPlayerWebView';
 
 const Stack = createNativeStackNavigator();
@@ -36,9 +34,9 @@ const RootNavigator = (): React.ReactElement => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  useAuthKickOut();
+  useAuthValidateSession();
 
-  const user: IUserResponse | boolean = Store.getCurrentUser();
+  const userId = useUserIdAuth();
 
   const linkingConfig = useNavigationLinkingConfig();
 
@@ -48,7 +46,7 @@ const RootNavigator = (): React.ReactElement => {
       dispatch(noInternetActions.setSystemIssue(false));
 
       const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
-      if (!user) {
+      if (!userId) {
         makeRemovePushTokenRequest();
       }
 
@@ -83,7 +81,7 @@ const RootNavigator = (): React.ReactElement => {
         <Host>
           <Stack.Navigator
             initialRouteName={
-              (user ? rootSwitch.mainStack : rootSwitch.authStack) as any
+              (userId ? rootSwitch.mainStack : rootSwitch.authStack) as any
             }
           >
             <Stack.Screen

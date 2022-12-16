@@ -1,3 +1,4 @@
+import { Hub } from 'aws-amplify';
 import { isEmpty } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -22,10 +23,8 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/baseComponents/Text';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
-import useAuth from '~/hooks/auth';
-import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 import * as modalActions from '~/storeRedux/modal/actions';
-import actions from '../../../storeRedux/auth/actions';
 import {
   getUserFromSharedPreferences,
   isAppInstalled,
@@ -39,12 +38,15 @@ import InputPassword from './components/InputPassword';
 import LogoImage from './components/LogoImage';
 
 const SignIn = () => {
-  useAuthAmplifyHub();
   const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
-  const { loading, signingInError } = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
   const [authSessions, setAuthSessions] = useState<any>(null);
+
+  const signInState = useAuthController((state: IAuthState) => state.signIn);
+  const authActions = useAuthController((state: IAuthState) => state.actions);
+  const loading = signInState?.loading;
+  const signingInError = signInState?.error;
 
   const inputPasswordRef = useRef<any>();
 
@@ -66,8 +68,8 @@ const SignIn = () => {
     () => {
       checkAuthSessions();
       // avoid taking old loading state from store
-      dispatch(actions.setLoading(false));
-      dispatch(actions.setSigningInError(''));
+      authActions.setSignInLoading(false);
+      authActions.setSignInError('');
       checkDisableSignIn();
       setDisableSignIn(true);
 
@@ -76,8 +78,10 @@ const SignIn = () => {
         checkAuthSessions,
       );
 
+      Hub.listen('auth', authActions.handleAuthEvent);
       return () => {
         appStateChangeEvent.remove();
+        Hub.remove('auth', authActions.handleAuthEvent);
       };
     }, [],
   );
@@ -159,7 +163,7 @@ const SignIn = () => {
 
     const email = getValues('email');
     const password = getValues('password');
-    dispatch(actions.signIn({ email, password }));
+    authActions.signIn({ email, password });
   };
 
   const validateInputs = async () => {

@@ -1,26 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import _ from 'lodash';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
-import { IUserResponse } from '~/interfaces/IAuth';
 
 import ReactotronConfig from '~/ReactotronConfig';
 import rootReducer from './reducers';
 
-// import Flatted from 'flatted'
-// import immutableTransform from 'redux-persist-transform-immutable';
-// import createTransform from 'redux-persist/es/createTransform'
-
-// export const transformCircular = createTransform(
-//   (inboundState, key) => Flatted.stringify(inboundState),
-//   (outboundState, key) => Flatted.parse(outboundState),
-// )
-
 const persistConfig = {
   key: 'root',
-  // transforms: [immutableTransform()],
-  // transforms: [transformCircular],
   storage: AsyncStorage,
   blacklist: [
     'modal',
@@ -62,26 +49,10 @@ const store = createStore(
 );
 const persistor = persistStore(store);
 
-const getCurrentUser = (): IUserResponse | boolean => {
-  const state = store.getState();
-  return _.get(
-    state, 'auth.user', false,
-  );
-};
-
-const getCurrentAuth = (): unknown | boolean => {
-  const state = store.getState();
-  return _.get(
-    state, 'auth', false,
-  );
-};
-
 const storeRedux = {
   sagaMiddleware,
   store,
   persistor,
-  getCurrentUser,
-  getCurrentAuth,
 };
 
 export default storeRedux;

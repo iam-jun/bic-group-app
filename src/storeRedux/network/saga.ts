@@ -2,9 +2,9 @@ import {
   put, select, takeEvery, takeLatest,
 } from 'redux-saga/effects';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
+import useAuthController from '~/screens/auth/store';
 
 import actions from './actions';
-import authActions from '~/storeRedux/auth/actions';
 import types from './types';
 import { timeOut } from '~/utils/common';
 
@@ -87,5 +87,5 @@ function* hideSystemIssueAndLogout() {
   if (!isShownAlready) return;
 
   yield put(actions.setSystemIssue(false));
-  yield put(authActions.signOut());
+  useAuthController.getState()?.actions?.signOut?.();
 }

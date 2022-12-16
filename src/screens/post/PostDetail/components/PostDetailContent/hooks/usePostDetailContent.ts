@@ -10,7 +10,6 @@ import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import { IUserResponse } from '~/interfaces/IAuth';
 import { IAudienceGroup, IPayloadGetPostDetail } from '~/interfaces/IPost';
 import { rootSwitch } from '~/router/stack';
 import { defaultList, getSectionData } from '~/helpers/post';
@@ -18,7 +17,6 @@ import useCommentsStore from '~/store/entities/comments';
 import commentsSelector from '~/store/entities/comments/selectors';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
@@ -30,7 +28,6 @@ const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) 
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
 
   const internetReachableRef = useRef(true);
@@ -123,10 +120,10 @@ const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) 
   );
 
   useEffect(() => {
-    if (!user) {
+    if (!userId) {
       rootNavigation.replace(rootSwitch.authStack);
     }
-  }, [isFocused, user]);
+  }, [isFocused, userId]);
 
   useEffect(() => {
     internetReachableRef.current = isInternetReachable;
