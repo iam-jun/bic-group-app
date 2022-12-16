@@ -10,15 +10,19 @@ import useTagItemMenu from '../useTagItemMenu';
 type TagItemProps = {
     item: ITag;
     isMember: boolean;
+    communityId: string;
 }
 
-const TagItem: FC<TagItemProps> = ({ item, isMember }) => {
-  const { name } = item;
+const TagItem: FC<TagItemProps> = ({ item, isMember, communityId }) => {
+  const { name, totalUsed } = item;
+
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle();
 
-  const { showMenu } = useTagItemMenu(item);
+  const canAction = totalUsed === 0;
+
+  const { showMenu } = useTagItemMenu(communityId, item);
 
   const onPressMenu = () => {
     showMenu();
@@ -29,7 +33,7 @@ const TagItem: FC<TagItemProps> = ({ item, isMember }) => {
       <View style={styles.flex}>
         <Text.BodyM numberOfLines={1}>{name}</Text.BodyM>
       </View>
-      {isMember && (
+      {isMember && canAction && (
       <Icon
         icon="Ellipsis"
         onPress={onPressMenu}

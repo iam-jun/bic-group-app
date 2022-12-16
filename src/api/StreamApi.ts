@@ -38,7 +38,7 @@ import {
   IAddArticleInSeries,
   IGetSeries, IParamGetSeriesDetail, IPostCreateSeries, IReorderArticles, IRemoveArticleInSeries,
 } from '~/interfaces/ISeries';
-import { CreateTag, IParamGetCommunityTags } from '~/interfaces/ITag';
+import { CreateTag, EditTag, IParamGetCommunityTags } from '~/interfaces/ITag';
 
 const DEFAULT_LIMIT = 10;
 
@@ -442,6 +442,17 @@ export const streamApiConfig = {
     method: 'post',
     data: { ...tag },
   }),
+  editTag: (tag: EditTag): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags/${tag.id}`,
+    method: 'put',
+    data: { name: tag.name },
+  }),
+  deleteTag: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags/${id}`,
+    method: 'delete',
+  }),
 };
 
 const streamApi = {
@@ -703,6 +714,12 @@ const streamApi = {
   ),
   addTag: (tag: CreateTag) => withHttpRequestPromise(
     streamApiConfig.addTag, tag,
+  ),
+  editTag: (tag: EditTag) => withHttpRequestPromise(
+    streamApiConfig.editTag, tag,
+  ),
+  deleteTag: (id: string) => withHttpRequestPromise(
+    streamApiConfig.deleteTag, id,
   ),
 };
 

@@ -39,7 +39,7 @@ const CreateTag: FC<CreateTagProps> = ({ communityId }) => {
       groupId,
       name: tag.trim(),
     };
-    actions.addTag(communityId, newTag);
+    actions.createTag(communityId, newTag);
     setTag('');
   };
 

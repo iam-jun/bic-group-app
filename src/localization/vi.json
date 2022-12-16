@@ -1174,6 +1174,8 @@
     "do_you_want_to_delete_this_tag": "Bạn muốn xoá thẻ này ?",
     "delete_tag_confirm": "Xoá thẻ",
     "title_header_list_tags": "Danh sách thẻ",
-    "empty_list_tags": "Không có kết quả"
+    "empty_list_tags": "Không có kết quả",
+    "edit_tag": "Sửa thẻ",
+    "do_you_want_to_change_this_tag": "Bạn có muốn thay đổi thẻ này không?"
   }
 }
