@@ -15,3 +15,5 @@ export interface IParamGetCommunityTags {
 }
 
 export type CreateTag = Partial<Omit<ITag, 'id'>>
+
+export type EditTag = Partial<ITag>

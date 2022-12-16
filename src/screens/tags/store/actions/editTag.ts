@@ -1,12 +1,16 @@
 import streamApi from '~/api/StreamApi';
 import { IToastMessage } from '~/interfaces/common';
-import { CreateTag } from '~/interfaces/ITag';
+import { EditTag } from '~/interfaces/ITag';
 import useTagsStore from '~/store/entities/tags';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
 import { ITagsController } from '..';
+import Store from '~/storeRedux';
+import modalActions from '~/storeRedux/modal/actions';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
 
-const addTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
+const navigation = withNavigation(rootNavigationRef);
+
+export const editTag = (set, get) => async (tag: EditTag) => {
   try {
     const { loading }: ITagsController = get();
 
@@ -16,10 +20,10 @@ const addTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
       (state: ITagsController) => {
         state.loading = true;
       },
-      'addTagLoading',
+      'editTagLoading',
     );
 
-    const response = await streamApi.addTag(tag);
+    const response = await streamApi.editTag(tag);
 
     if (!response.data) {
       throw new Error('incorrect response');
@@ -31,23 +35,23 @@ const addTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
 
     set(
       (state: ITagsController) => {
-        state.communityTags[idCommunity].ids.push(data.id);
         state.loading = false;
       },
-      'addTagSuccess',
+      'editTagSuccess',
     );
 
     const toastMessage: IToastMessage = {
       content: meta?.message,
     };
     Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    navigation.goBack();
   } catch (e) {
-    console.error('addTag error', e);
+    console.error('editTag error', e);
     set(
       (state: ITagsController) => {
         state.loading = false;
       },
-      'addTagFailed',
+      'editTagFailed',
     );
 
     const toastMessage: IToastMessage = {
@@ -58,4 +62,4 @@ const addTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
   }
 };
 
-export default addTag;
+export default editTag;

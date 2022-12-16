@@ -7,6 +7,7 @@ import Store from '~/storeRedux';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import { ITag } from '~/interfaces/ITag';
+import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import useTagsControllerStore from '../store';
 
 const useTagItemMenu = (communityId: string,
@@ -32,7 +33,7 @@ const useTagItemMenu = (communityId: string,
 
   const onPressEdit = () => {
     Store.store.dispatch(modalActions.hideBottomList());
-    // rootNavigation.navigate(seriesStack.reorderArticles, { tag });
+    rootNavigation.navigate(tagsStack.editTag, { tag });
   };
 
   const defaultData = [

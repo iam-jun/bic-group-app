@@ -14,10 +14,13 @@ type TagItemProps = {
 }
 
 const TagItem: FC<TagItemProps> = ({ item, isMember, communityId }) => {
-  const { name } = item;
+  const { name, totalUsed } = item;
+
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle();
+
+  const canAction = totalUsed === 0;
 
   const { showMenu } = useTagItemMenu(communityId, item);
 
@@ -30,7 +33,7 @@ const TagItem: FC<TagItemProps> = ({ item, isMember, communityId }) => {
       <View style={styles.flex}>
         <Text.BodyM numberOfLines={1}>{name}</Text.BodyM>
       </View>
-      {isMember && (
+      {isMember && canAction && (
       <Icon
         icon="Ellipsis"
         onPress={onPressMenu}
