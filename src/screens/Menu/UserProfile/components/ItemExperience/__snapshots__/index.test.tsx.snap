@@ -86,7 +86,7 @@ exports[`ItemExperience component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 6,
+              "borderRadius": 8,
             },
             Array [
               undefined,
@@ -100,7 +100,7 @@ exports[`ItemExperience component renders correctly 1`] = `
             Array [
               Object {
                 "alignItems": "center",
-                "borderRadius": 6,
+                "borderRadius": 8,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "paddingVertical": 4,
@@ -199,7 +199,7 @@ exports[`ItemExperience component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 6,
+              "borderRadius": 8,
             },
             Array [
               undefined,
@@ -213,7 +213,7 @@ exports[`ItemExperience component renders correctly 1`] = `
             Array [
               Object {
                 "alignItems": "center",
-                "borderRadius": 6,
+                "borderRadius": 8,
                 "flexDirection": "row",
                 "justifyContent": "center",
                 "paddingVertical": 4,

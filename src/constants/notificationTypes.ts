@@ -221,7 +221,7 @@ export const NOTIFICATION_TYPE = {
   CONTENT_REPORT_TO_USER: 'content.report.to_user',
 
   /**
-   * Aggregate notifications when multiple users report to the same content 
+   * Aggregate notifications when multiple users report to the same content
    */
   CONTENT_REPORT_TO_USER_AGGREGATED: 'content.report.to_user.aggregated',
 };

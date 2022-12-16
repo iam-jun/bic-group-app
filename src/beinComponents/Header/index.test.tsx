@@ -36,13 +36,6 @@ const TestComponent = ({ onChange }: {onChange?: (refs?: any) => void}) => {
   );
 };
 
-jest.mock('~/hooks/windowSize', () => jest.fn(() => ({
-  width: 2048,
-  height: 1334,
-  scale: 1,
-  fontScale: 1,
-})));
-
 let storeData: any;
 beforeEach(() => {
   storeData = { ...initialState };
