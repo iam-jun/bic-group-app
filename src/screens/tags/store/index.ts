@@ -2,6 +2,7 @@ import { CreateTag } from '~/interfaces/ITag';
 import IBaseState, { IBaseListState, InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import addTag from './actions/addTag';
+import deleteTag from './actions/deleteTag';
 import { getCommunityTags } from './actions/getCommunityTags';
 
 export interface ITagsController extends IBaseState {
@@ -12,6 +13,7 @@ export interface ITagsController extends IBaseState {
   actions: {
     getCommunityTags: (idCommunity: string, isRefreshing?: boolean) => void;
     addTag: (idCommunity: string, tag: CreateTag) => void;
+    deleteTag: (idCommunity: string, idTag: string) => void;
   };
 }
 
@@ -25,6 +27,7 @@ const tagsControllerStore = (set, get): ITagsController => ({
   actions: {
     getCommunityTags: getCommunityTags(set, get),
     addTag: addTag(set, get),
+    deleteTag: deleteTag(set, get),
   },
   reset: () => resetStore(initState, set),
 });

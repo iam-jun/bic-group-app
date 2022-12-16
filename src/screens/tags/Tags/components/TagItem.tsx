@@ -10,15 +10,16 @@ import useTagItemMenu from '../useTagItemMenu';
 type TagItemProps = {
     item: ITag;
     isMember: boolean;
+    communityId: string;
 }
 
-const TagItem: FC<TagItemProps> = ({ item, isMember }) => {
+const TagItem: FC<TagItemProps> = ({ item, isMember, communityId }) => {
   const { name } = item;
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle();
 
-  const { showMenu } = useTagItemMenu(item);
+  const { showMenu } = useTagItemMenu(communityId, item);
 
   const onPressMenu = () => {
     showMenu();

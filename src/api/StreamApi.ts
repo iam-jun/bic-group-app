@@ -442,6 +442,11 @@ export const streamApiConfig = {
     method: 'post',
     data: { ...tag },
   }),
+  deleteTag: (id: string): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}tags/${id}`,
+    method: 'delete',
+  }),
 };
 
 const streamApi = {
@@ -703,6 +708,9 @@ const streamApi = {
   ),
   addTag: (tag: CreateTag) => withHttpRequestPromise(
     streamApiConfig.addTag, tag,
+  ),
+  deleteTag: (id: string) => withHttpRequestPromise(
+    streamApiConfig.deleteTag, id,
   ),
 };
 

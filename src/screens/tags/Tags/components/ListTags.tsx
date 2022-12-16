@@ -51,7 +51,7 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
   const tags = useTagsStore((state) => state.tags);
 
   const renderItem: ListRenderItem<string> = ({ item }) => (
-    <TagItem isMember={isMember} item={tags[item]} />
+    <TagItem isMember={isMember} item={tags[item]} communityId={communityId} />
   );
 
   const keyExtractor = (item: string) => `tag-${item}`;

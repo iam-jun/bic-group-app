@@ -7,12 +7,13 @@ import Store from '~/storeRedux';
 import { useRootNavigation } from '~/hooks/navigation';
 import { Button } from '~/baseComponents';
 import { ITag } from '~/interfaces/ITag';
+import useTagsControllerStore from '../store';
 
-const useTagItemMenu = (
-  tag: ITag,
-) => {
+const useTagItemMenu = (communityId: string,
+  tag: ITag) => {
   const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
+  const actions = useTagsControllerStore((state) => state.actions);
 
   const onPressDelete = () => {
     Store.store.dispatch(modalActions.hideBottomList());
@@ -23,7 +24,7 @@ const useTagItemMenu = (
       confirmLabel: i18next.t('common:btn_delete'),
       ConfirmBtnComponent: Button.Danger,
       onConfirm: () => {
-        // do something
+        actions.deleteTag(communityId, tag.id);
       },
       confirmBtnProps: { type: 'ghost' },
     }));
