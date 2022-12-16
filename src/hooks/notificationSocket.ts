@@ -6,11 +6,13 @@ import {
   notificationActions,
   notificationEvent,
 } from '~/constants/notifications';
+import useAuthController from '~/screens/auth/store';
+import { getAuthToken } from '~/screens/auth/store/selectors';
 import postActions from '~/storeRedux/post/actions';
 import { parseSafe } from '~/utils/common';
 import getEnv from '~/utils/env';
 import { getMsgPackParser } from '~/utils/socket';
-import { useAuthToken, useUserIdAuth } from './auth';
+import { useUserIdAuth } from './auth';
 import ConvertHelper from '~/utils/convertHelper';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import useCommonController from '~/screens/store';
@@ -19,7 +21,7 @@ import useNotificationStore from '~/screens/Notification/store';
 
 const useNotificationSocket = () => {
   const dispatch = useDispatch();
-  const token = useAuthToken();
+  const token = useAuthController(getAuthToken);
   const userId = useUserIdAuth();
   const commonController = useCommonController((state) => state.actions);
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);

@@ -27,6 +27,7 @@ const options = [
   { title: 'article:text_option_edit_category', screen: articleStack.createArticleCategory },
   { title: 'article:text_option_edit_audience', screen: articleStack.createArticleAudience },
   { title: 'article:text_option_edit_series', screen: articleStack.createArticleSeries },
+  { title: 'article:text_option_edit_tags', screen: articleStack.createArticleTags },
   { title: 'article:text_option_edit_content', screen: articleStack.createArticleContent },
 ];
 

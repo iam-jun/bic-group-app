@@ -26,12 +26,13 @@ import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePl
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import useAuth, { useUserIdAuth } from '~/hooks/auth';
+import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import { useKeySelector } from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { rootSwitch } from '~/router/stack';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 import GroupContent from '~/screens/groups/GroupDetail/components/GroupContent';
 import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
@@ -64,7 +65,7 @@ const GroupDetail = (props: any) => {
   const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
 
-  const { user } = useAuth();
+  const user = useAuthController(useCallback((state: IAuthState) => state.authUser, []));
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);

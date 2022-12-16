@@ -8,6 +8,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { BottomListItemProps } from '~/components/BottomList/BottomListItem';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { useRootNavigation } from '~/hooks/navigation';
+import commonStack from '~/router/navigator/commonStack/stack';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
@@ -255,6 +256,12 @@ const Notification = () => {
                   },
                 );
               }
+              break;
+            }
+            case NOTIFICATION_TYPE.CONTENT_HIDE_TO_USER:
+            case NOTIFICATION_TYPE.CONTENT_REPORT_TO_USER:
+            case NOTIFICATION_TYPE.CONTENT_REPORT_TO_USER_AGGREGATED: {
+              rootNavigation.navigate(commonStack.unsupportFeature);
               break;
             }
             default:

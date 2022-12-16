@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/baseComponents/Text';
@@ -7,7 +7,7 @@ import Text from '~/baseComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/baseComponents/Icon';
 import images from '~/resources/images';
-import useAuth from '~/hooks/auth';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 import { formatDMLink, openUrl } from '~/utils/link';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
@@ -27,7 +27,7 @@ const MemberItem = ({
 }: MemberItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const { user } = useAuth();
+  const user = useAuthController(useCallback((state: IAuthState) => state.authUser, []));
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);

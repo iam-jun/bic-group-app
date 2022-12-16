@@ -1,0 +1,423 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleSelectingInfo Component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+  testID="aritcles.slecting_info_item"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {},
+        Object {
+          "flex": 1,
+        },
+      ]
+    }
+    testID="aritcles.slecting_info_item.text"
+  >
+    Name
+  </Text>
+  <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="aritcles.slecting_info_item.checkbox"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "bottom": 2,
+              "left": 2,
+              "position": "absolute",
+              "right": 2,
+              "top": 2,
+            },
+            undefined,
+          ]
+        }
+      />
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ArticleSelectingInfo Component renders correctly with prop disabled = true 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+  testID="aritcles.slecting_info_item"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {},
+        Object {
+          "flex": 1,
+        },
+      ]
+    }
+    testID="aritcles.slecting_info_item.text"
+  >
+    Name
+  </Text>
+  <View
+    accessibilityState={
+      Object {
+        "disabled": true,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="aritcles.slecting_info_item.checkbox"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "bottom": 2,
+              "left": 2,
+              "position": "absolute",
+              "right": 2,
+              "top": 2,
+            },
+            Object {
+              "backgroundColor": "#EAEDF2",
+            },
+          ]
+        }
+      />
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ArticleSelectingInfo Component renders correctly with prop isChecked = true 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+  testID="aritcles.slecting_info_item"
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {},
+        Object {
+          "flex": 1,
+        },
+      ]
+    }
+    testID="aritcles.slecting_info_item.text"
+  >
+    Name
+  </Text>
+  <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="aritcles.slecting_info_item.checkbox"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "bottom": 2,
+              "left": 2,
+              "position": "absolute",
+              "right": 2,
+              "top": 2,
+            },
+            undefined,
+          ]
+        }
+      />
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

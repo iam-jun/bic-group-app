@@ -178,35 +178,51 @@ Array [
               }
             }
           >
-            <TextInput
+            <PasteInput
+              accessible={true}
+              autoCapitalize="sentences"
               autoFocus={false}
               editable={true}
+              focusable={false}
               keyboardType="default"
+              mostRecentEventCount={0}
               multiline={true}
+              onBlur={[Function]}
+              onChange={[Function]}
               onChangeText={[Function]}
+              onClick={[Function]}
               onContentSizeChange={[Function]}
               onFocus={[Function]}
               onKeyPress={[Function]}
+              onPaste={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onScroll={[Function]}
               onSelectionChange={[Function]}
+              onStartShouldSetResponder={[Function]}
               placeholder="placeholder"
               placeholderTextColor="#767D93"
               selectionColor="#767D93"
               style={
-                Object {
-                  "color": "#181C32",
-                  "fontFamily": "BeVietnamPro-Light",
-                  "fontSize": 15,
-                  "lineHeight": 22,
-                  "paddingBottom": 8,
-                  "paddingHorizontal": 16,
-                  "paddingTop": 8,
-                  "width": "100%",
-                }
+                Array [
+                  Object {
+                    "color": "#181C32",
+                    "fontFamily": "BeVietnamPro-Light",
+                    "fontSize": 15,
+                    "lineHeight": 22,
+                    "paddingBottom": 8,
+                    "paddingHorizontal": 16,
+                    "paddingTop": 8,
+                    "width": "100%",
+                  },
+                ]
               }
               testID="comment_input"
-            >
-              value
-            </TextInput>
+              value="value"
+            />
           </View>
           <View
             style={

@@ -128,6 +128,13 @@
     "btn_decline": "Decline",
     "btn_approve_all": "Approve All",
     "btn_decline_all": "Decline All",
+    "btn_submit": "Submit",
+    "btn_report_content": "Reported Content",
+		"text_report_sent": "Your report was sent",
+    "text_report_content": "Report Content to Community Admin",
+    "text_post_reported": "Post reported",
+    "text_article_reported": "Article reported",
+    "text_comment_reported": "Comment reported",
     "text_request_one": "Request",
     "text_request_other": "Requests",
     "text_admin": "Admin",
@@ -188,7 +195,9 @@
     "text_unsave_fail": "Unsave fail.",
     "copy_photo": "Copy Photo",
     "copied": "Copied!",
-    "text_share": "Share"
+    "text_share": "Share",
+    "btn_go_back": "Back",
+    "text_unsupport_feature": "We are supporting this feature on mobile. Please see the detail on web version"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -531,6 +540,7 @@
     "text_option_edit_category": "Topics",
     "text_option_edit_audience": "Audience",
     "text_option_edit_series": "Series",
+    "text_option_edit_tags": "Tags",
     "text_option_edit_content": "Content",
     "text_change_cover": "Change cover",
     "text_select_cover": "Select cover",
@@ -560,7 +570,8 @@
     "modal_add_video": {
       "title": "Embed Video",
       "link_placeholder": "Enter the URL of the embed:"
-    }
+    },
+    "tags_maximum_message_info": "Maxium input 5 Tags"
   },
   "post": {
     "news_feed": "News Feed",

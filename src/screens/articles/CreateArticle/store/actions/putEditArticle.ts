@@ -27,8 +27,11 @@ const putEditArticle = (set, get) => async (
   try {
     const categories = data?.categories?.map?.((category) => category?.id);
     const series = data?.series?.map?.((item) => item?.id);
+    const tags = data?.tags?.map?.((item) => item?.id);
 
-    const params = { ...data, categories, series } as any;
+    const params = {
+      ...data, categories, series, tags,
+    } as any;
     delete params.id;
 
     const response = await streamApi.putEditArticle(articleId, params);

@@ -21,6 +21,7 @@ const postsSelector = {
   getMarkedReadSuccess: (id: string) => (state: IPostsState) => state?.posts?.[id]?.markedReadSuccess,
   getTotalUsersSeen: (id: string) => (state: IPostsState) => state?.posts?.[id]?.totalUsersSeen,
   getLinkPreview: (id: string) => (state: IPostsState) => state?.posts?.[id]?.linkPreview,
+  getReported: (id: string) => (state: IPostsState) => state?.posts?.[id]?.reported,
 };
 
 export default postsSelector;

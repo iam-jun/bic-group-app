@@ -1,14 +1,14 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '~/baseComponents';
 import BottomSheet from '~/baseComponents/BottomSheet';
 import Text from '~/baseComponents/Text';
-import useAuth from '~/hooks/auth';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 import modalActions from '~/storeRedux/modal/actions';
 import { spacing } from '~/theme';
 
@@ -43,7 +43,7 @@ const MemberOptionsMenu = ({
   const { colors } = theme;
   const dispatch = useDispatch();
   const styles = createStyles();
-  const { user } = useAuth();
+  const user = useAuthController(useCallback((state: IAuthState) => state.authUser, []));
   const isMe = selectedMember?.username === user?.username;
 
   const onPressMenuOption = (type: MemberOptions) => {

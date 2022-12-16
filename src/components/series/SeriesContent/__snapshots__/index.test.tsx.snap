@@ -270,6 +270,95 @@ exports[`SeriesContent component given summaryHighlight and isLite === false sho
       }
     }
   />
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 12,
+          "paddingVertical": 12,
+        },
+        false,
+        false,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "paddingBottom": 6,
+            "paddingHorizontal": 16,
+            "paddingTop": 12,
+          },
+          Object {
+            "alignItems": "flex-end",
+            "margin": 0,
+            "paddingBottom": 0,
+            "paddingHorizontal": 0,
+            "paddingTop": 0,
+          },
+        ]
+      }
+      testID="content_interested_user_count"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="content_interested_user_count.button"
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              undefined,
+            ]
+          }
+          testID="content_interested_user_count.show_text"
+        >
+          Interested by 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            0
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -577,6 +666,97 @@ exports[`SeriesContent component given summaryHighlight and isLite === true shou
       }
     }
   />
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 12,
+          "paddingVertical": 12,
+        },
+        false,
+        Object {
+          "paddingVertical": 0,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "paddingBottom": 6,
+            "paddingHorizontal": 16,
+            "paddingTop": 12,
+          },
+          Object {
+            "alignItems": "flex-end",
+            "margin": 0,
+            "paddingBottom": 0,
+            "paddingHorizontal": 0,
+            "paddingTop": 0,
+          },
+        ]
+      }
+      testID="content_interested_user_count"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="content_interested_user_count.button"
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              undefined,
+            ]
+          }
+          testID="content_interested_user_count.show_text"
+        >
+          Interested by 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            0
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -809,6 +989,95 @@ exports[`SeriesContent component given titleHighlight and isLite === false shoul
       }
     }
   />
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 12,
+          "paddingVertical": 12,
+        },
+        false,
+        false,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "paddingBottom": 6,
+            "paddingHorizontal": 16,
+            "paddingTop": 12,
+          },
+          Object {
+            "alignItems": "flex-end",
+            "margin": 0,
+            "paddingBottom": 0,
+            "paddingHorizontal": 0,
+            "paddingTop": 0,
+          },
+        ]
+      }
+      testID="content_interested_user_count"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="content_interested_user_count.button"
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              undefined,
+            ]
+          }
+          testID="content_interested_user_count.show_text"
+        >
+          Interested by 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            1
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -1075,6 +1344,97 @@ exports[`SeriesContent component given titleHighlight and isLite === true should
       }
     }
   />
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 12,
+          "paddingVertical": 12,
+        },
+        false,
+        Object {
+          "paddingVertical": 0,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "paddingBottom": 6,
+            "paddingHorizontal": 16,
+            "paddingTop": 12,
+          },
+          Object {
+            "alignItems": "flex-end",
+            "margin": 0,
+            "paddingBottom": 0,
+            "paddingHorizontal": 0,
+            "paddingTop": 0,
+          },
+        ]
+      }
+      testID="content_interested_user_count"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="content_interested_user_count.button"
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              undefined,
+            ]
+          }
+          testID="content_interested_user_count.show_text"
+        >
+          Interested by 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            1
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -1348,6 +1708,95 @@ exports[`SeriesContent component render with description view 1`] = `
       }
     }
   />
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 12,
+          "paddingVertical": 12,
+        },
+        false,
+        false,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "paddingBottom": 6,
+            "paddingHorizontal": 16,
+            "paddingTop": 12,
+          },
+          Object {
+            "alignItems": "flex-end",
+            "margin": 0,
+            "paddingBottom": 0,
+            "paddingHorizontal": 0,
+            "paddingTop": 0,
+          },
+        ]
+      }
+      testID="content_interested_user_count"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="content_interested_user_count.button"
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              undefined,
+            ]
+          }
+          testID="content_interested_user_count.show_text"
+        >
+          Interested by 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            0
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -1580,5 +2029,94 @@ exports[`SeriesContent component render without description view 1`] = `
       }
     }
   />
+  <View
+    style={
+      Array [
+        Object {
+          "marginTop": 12,
+          "paddingVertical": 12,
+        },
+        false,
+        false,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "paddingBottom": 6,
+            "paddingHorizontal": 16,
+            "paddingTop": 12,
+          },
+          Object {
+            "alignItems": "flex-end",
+            "margin": 0,
+            "paddingBottom": 0,
+            "paddingHorizontal": 0,
+            "paddingTop": 0,
+          },
+        ]
+      }
+      testID="content_interested_user_count"
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="content_interested_user_count.button"
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#212745",
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
+              },
+              Object {
+                "color": "#353E6E",
+              },
+              undefined,
+            ]
+          }
+          testID="content_interested_user_count.show_text"
+        >
+          Interested by 
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
+                  "fontSize": 13,
+                },
+                Object {
+                  "color": "#353E6E",
+                },
+                undefined,
+              ]
+            }
+          >
+            1
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
 </View>
 `;

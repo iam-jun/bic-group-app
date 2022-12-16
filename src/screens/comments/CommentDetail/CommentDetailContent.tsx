@@ -278,6 +278,7 @@ const CommentDetailContent = (props: any) => {
         commentData={item}
         commentParent={newCommentData}
         groupIds={groupIds}
+        audience={audience}
         index={index}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />
@@ -323,6 +324,7 @@ const CommentDetailContent = (props: any) => {
             headerTitle={headerTitle}
             commentData={newCommentData}
             groupIds={groupIds}
+            audience={audience}
             id={id}
             onPress={goToPostDetail}
             onPressMarkSeenPost={onPressMarkSeenPost}
@@ -360,6 +362,7 @@ const CommentLevel1 = ({
   id,
   commentData,
   groupIds,
+  audience,
   onPressMarkSeenPost,
   color,
 }: any) => {
@@ -377,6 +380,7 @@ const CommentLevel1 = ({
         postId={id}
         commentData={commentData}
         groupIds={groupIds}
+        audience={audience}
         index={0}
         onPressMarkSeenPost={onPressMarkSeenPost}
       />

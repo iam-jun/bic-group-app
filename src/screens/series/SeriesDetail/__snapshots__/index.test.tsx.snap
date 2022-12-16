@@ -28,7 +28,16 @@ exports[`SeriesDetail component renders correctly 1`] = `
             "paddingTop": 0,
             "paddingVertical": 4,
           },
-          false,
+          Object {
+            "elevation": 2,
+            "shadowColor": "rgba(0, 0, 0, 1)",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.12,
+            "shadowRadius": 1.5,
+          },
           undefined,
         ]
       }
@@ -782,7 +791,16 @@ exports[`SeriesDetail component renders delete item when series deleted 1`] = `
             "paddingTop": 0,
             "paddingVertical": 4,
           },
-          false,
+          Object {
+            "elevation": 2,
+            "shadowColor": "rgba(0, 0, 0, 1)",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.12,
+            "shadowRadius": 1.5,
+          },
           undefined,
         ]
       }

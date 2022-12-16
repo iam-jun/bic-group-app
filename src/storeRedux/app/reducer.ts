@@ -1,7 +1,6 @@
 import types from './constants';
 
 export const appInitState = {
-  configs: {},
   linkPreviews: {},
   rootScreenName: '',
   drawerVisible: false,
@@ -18,16 +17,8 @@ function reducer(
   state = appInitState, action: any = {},
 ) {
   const { type, payload } = action;
-  const { configs } = state;
 
   switch (type) {
-    case types.SET_CONFIGS:
-      return {
-        ...state,
-        configs: {
-          ...configs,
-        },
-      };
     case types.SET_LINK_PREVIEW:
       return {
         ...state,

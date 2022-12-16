@@ -5,11 +5,11 @@ import { cleanup, waitFor } from '@testing-library/react-native';
 import React from 'react';
 
 import i18next from 'i18next';
+import useAuthController, { IAuthState } from '~/screens/auth/store';
 import initialState from '~/storeRedux/initialState';
 
 import {
   configureStore,
-  createTestStore,
   fireEvent,
   renderWithRedux,
 } from '~/test/testUtils';
@@ -31,9 +31,12 @@ describe('EditDescription screen', () => {
     jest.clearAllMocks();
     storeData = { ...initialState };
     storeData.menu.myProfile = {} as any;
-    storeData.auth.user = {} as any;
     storeData.menu.showUserNotFound = false;
     storeData.menu.loadingUserProfile = false;
+    useAuthController.setState((state:IAuthState) => {
+      state.authUser = {} as any;
+      return state;
+    });
   });
 
   afterEach(() => {
@@ -109,11 +112,11 @@ describe('EditDescription screen', () => {
     };
     Keyboard.dismiss = jest.fn();
 
-    const storeData = { ...initialState };
-    storeData.auth.user = user as any;
-    const store = createTestStore(storeData);
-
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+    useAuthController.setState((state:IAuthState) => {
+      state.authUser = user as any;
+      return state;
+    });
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
     const component = wrapper.getByTestId('edit_basic_info.language');
     expect(component).toBeDefined();
@@ -148,11 +151,12 @@ describe('EditDescription screen', () => {
       },
     };
 
-    const storeData = { ...initialState };
-    storeData.auth.user = user as any;
-    const store = createTestStore(storeData);
+    useAuthController.setState((state:IAuthState) => {
+      state.authUser = user as any;
+      return state;
+    });
 
-    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+    const wrapper = renderWithRedux(<EditBasicInfo />);
 
     const buttonSave = wrapper.getByTestId('edit_basic_info.save');
     expect(buttonSave?.props?.accessibilityState?.disabled).toBeTruthy();

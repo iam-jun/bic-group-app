@@ -505,6 +505,10 @@ export const groupsApiConfig = {
     url: `${provider.url}me/groups/manage`,
     params,
   }),
+  getReportReasons: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}manage/communities/reports/reasons`,
+  }),
 };
 
 const groupApi = {
@@ -813,6 +817,7 @@ const groupApi = {
   getManagedCommunityAndGroup: (params: IParamsGetManagedCommunityAndGroup) => withHttpRequestPromise(
     groupsApiConfig.getManagedCommunityAndGroup, params,
   ),
+  getReportReasons: () => withHttpRequestPromise(groupsApiConfig.getReportReasons),
 };
 
 export default groupApi;

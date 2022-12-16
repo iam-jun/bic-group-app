@@ -17,16 +17,10 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
   }
 >
   <View
-    onLayout={[Function]}
     style={
-      Array [
-        Object {
-          "flex": 1,
-        },
-        Object {
-          "paddingBottom": 0,
-        },
-      ]
+      Object {
+        "flex": 1,
+      }
     }
   >
     <View
@@ -48,7 +42,16 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
               "paddingTop": 0,
               "paddingVertical": 4,
             },
-            false,
+            Object {
+              "elevation": 2,
+              "shadowColor": "rgba(0, 0, 0, 1)",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.12,
+              "shadowRadius": 1.5,
+            },
             undefined,
           ]
         }
@@ -490,5 +493,14 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
       </RCTScrollView>
     </View>
   </View>
+  <View
+    collapsable={false}
+    style={
+      Object {
+        "height": 0,
+        "width": "100%",
+      }
+    }
+  />
 </View>
 `;

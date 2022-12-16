@@ -11,7 +11,7 @@ import { PostImportant } from '~/components/posts';
 import ArticleHeader from '../ArticleHeader';
 import ArticleFooter from '../ArticleFooter';
 import { ContentFooterLite, ContentInterestedUserCount } from '~/components/ContentView';
-import { Button } from '~/baseComponents';
+import { Button, PlaceHolderRemoveContent } from '~/baseComponents';
 import { IPost } from '~/interfaces/IPost';
 import { formatLargeNumber } from '~/utils/formatData';
 import { ArticleSummary, ArticleTitle } from '../ArticleText';
@@ -49,6 +49,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     coverMedia,
     markedReadPost,
     communities,
+    reported,
   } = data || {};
 
   const {
@@ -134,6 +135,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
       />
     </>
   );
+
+  if (reported) {
+    return (<PlaceHolderRemoveContent label="common:text_article_reported" />);
+  }
 
   return (
     <View testID="article_item" style={styles.container}>

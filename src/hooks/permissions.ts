@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { PERMISSION_KEY } from '~/constants/permissionScheme';
+import useAuthController from '~/screens/auth/store';
+import { getAuthToken } from '~/screens/auth/store/selectors';
 
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import { useAuthToken, useUserIdAuth } from './auth';
+import { useUserIdAuth } from './auth';
 import { useKeySelector } from './selector';
 
 const EXPIRED_TIME = 1000 * 60 * 10; // 10 mins
 
 export const useMyPermissions = () => {
   const dispatch = useDispatch();
-  const token = useAuthToken();
+  const token = useAuthController(getAuthToken);
   const userId = useUserIdAuth();
   const {
     loading,

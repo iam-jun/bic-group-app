@@ -5,6 +5,8 @@ import {
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
+import useAuthController from '~/screens/auth/store';
+import { getActions } from '~/store/selectors';
 import MenuSidebarItem from './MenuSidebarItem';
 import Divider from '~/beinComponents/Divider';
 
@@ -13,7 +15,6 @@ import { useRootNavigation } from '~/hooks/navigation';
 import images from '~/resources/images';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useBaseHook } from '~/hooks';
-import authActions from '~/storeRedux/auth/actions';
 import * as modalActions from '~/storeRedux/modal/actions';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
@@ -37,6 +38,8 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme || {};
   const styles = themeStyles(theme);
+
+  const authActions = useAuthController(getActions);
 
   const Container = Platform.OS === 'ios' ? View : ScrollView;
   // ScrollView not work with GestureHandler on iOS, in future if menu setting add more item, should test UI
@@ -64,9 +67,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
           cancelBtn: true,
           onConfirm: () => {
             // waiting for close alert success before clear data
-            setTimeout(
-              () => dispatch(authActions.signOut()), 100,
-            );
+            setTimeout(authActions.signOut, 100);
           },
           confirmLabel: t('auth:text_sign_out'),
         };

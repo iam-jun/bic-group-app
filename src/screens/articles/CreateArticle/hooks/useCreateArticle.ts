@@ -60,6 +60,7 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
     // && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
     const isCoverMediaUpdated = (article.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
     const isSeriesUpdated = !isEqual(article?.series, data.series);
+    const isTagsUpdated = !isEqual(article?.tags, data.tags);
     // console.log('\x1b[35m🐣️ useEditArticle isHasChange ', JSON.stringify({
     //   isTitleUpdated,
     //   isContentUpdated,
@@ -83,7 +84,8 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
       || isCategoriesUpdated
       // || isAudienceUpdated
       || isCoverMediaUpdated
-      || isSeriesUpdated);
+      || isSeriesUpdated
+      || isTagsUpdated);
   };
 
   const getValidButtonNext = () => {
@@ -103,11 +105,11 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
 
   const initEditStoreData = () => {
     const {
-      id, title, content, audience: audienceObject, mentions, summary, categories, coverMedia, series,
+      id, title, content, audience: audienceObject, mentions, summary, categories, coverMedia, series, tags,
     } = article;
     const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(audienceObject);
     const data: IEditArticleData = {
-      id, title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia, series,
+      id, title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia, series, tags,
     };
     actions.setData(data);
     actions.setIsPublishing(needToPublish);

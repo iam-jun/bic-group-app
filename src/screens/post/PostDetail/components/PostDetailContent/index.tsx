@@ -53,7 +53,7 @@ const _PostDetailContent = (props) => {
 
   const {
     refreshing, isEmptyContent, actor, setting, deleted, createdAt,
-    commentLeft, groupIds, comments, sectionData, onRefresh, onPressMarkSeenPost,
+    commentLeft, groupIds, comments, sectionData, audience, onRefresh, onPressMarkSeenPost,
   } = usePostDetailContent({ postId, notificationId, HeaderImageComponent });
 
   const commentInputRef = useRef<any>();
@@ -125,6 +125,7 @@ const _PostDetailContent = (props) => {
         postId={postId}
         commentData={comment}
         groupIds={groupIds}
+        audience={audience}
         index={index}
         isReplyingComment={false}
         onPressReply={onPressReplySectionHeader}
@@ -143,6 +144,7 @@ const _PostDetailContent = (props) => {
         section={section}
         commentData={item}
         groupIds={groupIds}
+        audience={audience}
         isReplyingComment={false}
         commentParent={section?.comment}
         onPressReply={onPressReplyCommentItem}

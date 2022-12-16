@@ -11,9 +11,11 @@ import { useDispatch } from 'react-redux';
 
 import { useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import useAuthController from '~/screens/auth/store';
+import { getAuthToken } from '~/screens/auth/store/selectors';
 import NewsfeedList from '~/screens/Home/components/NewsfeedList';
 import { useBaseHook } from '~/hooks';
-import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
+import { useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useRootNavigation, useTabPressListener } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ITabTypes } from '~/interfaces/IRouter';
@@ -43,7 +45,7 @@ const Home = () => {
 
   const commonActions = useCommonController((state) => state.actions);
 
-  const token = useAuthToken();
+  const token = useAuthController(getAuthToken);
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);

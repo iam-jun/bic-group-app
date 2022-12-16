@@ -6,8 +6,10 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
 import Text from '~/baseComponents/Text';
+import useAuthController from '~/screens/auth/store';
 import AppVersion from '~/screens/Menu/components/AppVersion';
 import CheckUpdate from '~/screens/Menu/components/CheckUpdate';
+import { getActions } from '~/store/selectors';
 import spacing from '~/theme/spacing';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
@@ -16,7 +18,6 @@ import appActions from '~/storeRedux/app/actions';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
-import authActions from '~/storeRedux/auth/actions';
 import getEnv from '~/utils/env';
 import { APP_ENV } from '~/configs/appConfig';
 import { useKeySelector } from '~/hooks/selector';
@@ -29,6 +30,9 @@ const MenuSettings = () => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
+
+  const authActions = useAuthController(getActions) || {};
+
   const isProduction = getEnv('APP_ENV') === APP_ENV.PRODUCTION;
   const debuggerVisible = useKeySelector('app.debuggerVisible');
   const myProfile = useCommonController((state) => state.myProfile);
@@ -39,7 +43,7 @@ const MenuSettings = () => {
       content: 'Do you want to Log Out?',
       iconName: 'ArrowRightFromArc',
       cancelBtn: true,
-      onConfirm: () => dispatch(authActions.signOut()),
+      onConfirm: authActions.signOut,
       confirmLabel: t('auth:text_sign_out'),
     };
     dispatch(modalActions.showAlert(alertPayload));

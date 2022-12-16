@@ -5,7 +5,7 @@ import {
   RefreshControl, SectionList, StyleSheet, View,
 } from 'react-native';
 
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { IAudienceGroup } from '~/interfaces/IPost';
@@ -25,11 +25,14 @@ import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 import usePostDetailContentHandler from '~/screens/post/PostDetail/components/PostDetailContent/hooks/usePostDetailContentHandler';
 import { getSectionData } from '~/helpers/post';
+import { useRootNavigation } from '~/hooks/navigation';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
   const id = params?.articleId;
   const focusComment = params?.focusComment;
+  const isFocused = useIsFocused();
+  const { rootNavigation } = useRootNavigation();
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -47,7 +50,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
 
   const actions = useArticlesStore((state: IArticlesState) => state.actions);
 
-  const { audience, setting } = data;
+  const { audience, setting, reported } = data || {};
 
   const {
     onLayout,
@@ -72,6 +75,14 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     if (isMounted) { actions.getArticleDetail(id); }
   }, [isMounted]);
 
+  useEffect(() => {
+    if (reported && isFocused) {
+      setTimeout(() => {
+        rootNavigation.goBack();
+      }, 200);
+    }
+  }, [reported, isFocused]);
+
   const onRefresh = () => {
     setRefreshing(false);
     actions.getArticleDetail(id);
@@ -89,6 +100,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       isReplyingComment={false}
       commentData={data?.item}
       groupIds={data?.groupIds}
+      audience={audience}
       commentParent={data?.section?.comment}
       onPressReply={onPressReplyCommentItem}
       onPressMarkSeenPost={onPressMarkSeenPost}
@@ -109,6 +121,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         postId={id}
         index={data?.index}
         groupIds={groupIds}
+        audience={audience}
         isReplyingComment={false}
         commentData={data?.comment}
         onPressReply={onPressReplySectionHeader}

@@ -128,6 +128,13 @@
     "btn_decline": "Từ chối",
     "btn_approve_all": "Phê duyệt tất cả",
     "btn_decline_all": "Từ chối tất cả",
+	"btn_submit": "Gửi",
+	"btn_report_content": "Báo cáo nội dung",
+	"text_report_content": "Báo cáo nội dung tới Quản trị viên",
+	"text_report_sent": "Báo cáo của bạn đã được gửi",
+	"text_post_reported": "Bài viết đã được báo cáo",
+	"text_article_reported": "Bài báo đã được báo cáo",
+  "text_comment_reported": "Bình luận đã được báo cáo",
     "all": "Tất cả",
     "in": "trong",
     "text_refresh": "Tải lại",
@@ -157,7 +164,9 @@
     "text_save_fail": "Lưu thất bại.",
     "text_unsave_fail": "Bỏ lưu thất bại.",
     "copy_photo": "Sao chép ảnh",
-    "text_share": "Chia sẻ"
+    "text_share": "Chia sẻ",
+    "btn_go_back": "Quay về",
+    "text_unsupport_feature": "Chúng tôi đang xây dựng tính năng này trên thiết bị di động. Vui lòng xem chi tiết trên phiên bản web"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -520,7 +529,8 @@
     "modal_add_video": {
       "title": "Nhúng video",
       "link_placeholder": "Nhập URL của video:"
-    }
+    },
+	  "tags_maximum_message_info": "Chỉ có thể chọn tối đa 5 tags"
   },
   "post": {
     "news_feed": "News Feed",

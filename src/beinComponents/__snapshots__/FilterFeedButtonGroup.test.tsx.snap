@@ -88,7 +88,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 ],
               ]
             }
-          />
+          >
+            All
+          </Text>
         </View>
         <View
           accessible={true}
@@ -140,7 +142,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 ],
               ]
             }
-          />
+          >
+            Posts
+          </Text>
         </View>
         <View
           accessible={true}
@@ -192,7 +196,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 ],
               ]
             }
-          />
+          >
+            Articles
+          </Text>
         </View>
         <View
           accessible={true}
@@ -244,7 +250,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 ],
               ]
             }
-          />
+          >
+            Series
+          </Text>
         </View>
       </View>
     </RCTScrollView>
@@ -314,7 +322,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 undefined,
               ]
             }
-          />
+          >
+            All
+          </Text>
         </View>
         <View
           accessible={true}
@@ -355,7 +365,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 undefined,
               ]
             }
-          />
+          >
+            Important
+          </Text>
         </View>
         <View
           accessible={true}
@@ -396,7 +408,9 @@ exports[`FilterFeedButtonGroup component renders FilterFeedButtonGroup correctly
                 undefined,
               ]
             }
-          />
+          >
+            Saved
+          </Text>
         </View>
       </View>
     </RCTScrollView>

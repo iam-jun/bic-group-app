@@ -1,4 +1,5 @@
 import useSelectAudienceStore from '~/components/SelectAudience/store';
+import useAuthController from '~/screens/auth/store';
 import useCommunityJoinedGroupTreeStore from '~/screens/groups/components/CommunityJoinedGroupTree/store';
 import useCodePushStore from '~/store/codePush';
 import useCommentsStore from '~/store/entities/comments';
@@ -40,6 +41,10 @@ import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useTagsStore from './entities/tags';
 import useTagsControllerStore from '~/screens/tags/store';
+
+export const excludedStore = [
+  useAuthController,
+];
 
 const stores = [
   // entities
@@ -94,7 +99,14 @@ const stores = [
 
 export const resetAllStores = () => {
   try {
-    stores.forEach((store: any) => store.getState().reset?.());
+    stores.forEach((store: any) => {
+      const functionReset = store?.getState?.().reset;
+      if (functionReset) {
+        functionReset();
+      } else {
+        console.error('\x1b[35m🐣️ resetAllStores a store error ', store?.name, '\x1b[0m');
+      }
+    });
   } catch (e) {
     console.error('\x1b[35m🐣️ resetAllStores resetAllStores Error', e, '\x1b[0m');
   }

@@ -322,7 +322,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           )}
           ListFooterComponent={renderFooter}
           ItemSeparatorComponent={() => <ViewSpacing height={8} />}
-          style={styles.mainColor}
           contentContainerStyle={styles.mainColor}
         />
       ) : (

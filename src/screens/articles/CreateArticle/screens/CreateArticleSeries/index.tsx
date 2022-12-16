@@ -12,7 +12,6 @@ import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps, IEditArticleSeries } from '~/interfaces/IArticle';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import spacing from '~/theme/spacing';
-import SelectingSeries from './components/SelectingSeries';
 import Divider from '~/beinComponents/Divider';
 import ListSeriesWithAudiences from './components/ListSeriesWithAudiences';
 import useCreateArticleSeriesStore from './store';
@@ -20,6 +19,7 @@ import useCreateArticleStore from '../../store';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import appConfig from '~/configs/appConfig';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import ArticleSelectingListInfo from '~/components/articles/ArticleSelectingListInfo';
 
 const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
@@ -90,7 +90,7 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
   };
 
   const goNextStep = () => {
-    rootNavigation.navigate(articleStack.createArticleContent, { articleId });
+    rootNavigation.navigate(articleStack.createArticleTags, { articleId });
   };
 
   const goBack = () => {
@@ -113,7 +113,18 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
         onChangeText={onChangeTextSearch}
         placeholder={t('article:text_search_category_placeholder')}
       />
-      <SelectingSeries data={selectedSeries} onRemoveItem={onRemoveSeries} />
+      <ArticleSelectingListInfo
+        data={selectedSeries}
+        type="series"
+        tagProps={{
+          type: 'neutral',
+          textProps: {
+            numberOfLines: 1,
+            style: styles.tagTextStyle,
+          },
+        }}
+        onRemoveItem={onRemoveSeries}
+      />
       <Divider style={styles.divider} />
       <ListSeriesWithAudiences
         data={listData}
@@ -140,6 +151,11 @@ const createStyle = (theme: ExtendedTheme) => {
     divider: {
       backgroundColor: colors.neutral5,
       marginTop: spacing.margin.small,
+    },
+    tagTextStyle: {
+      color: colors.neutral60,
+      flexShrink: 1,
+      paddingLeft: spacing.margin.tiny,
     },
   });
 };
