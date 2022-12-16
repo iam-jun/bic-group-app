@@ -164,7 +164,9 @@
     "text_save_fail": "Lưu thất bại.",
     "text_unsave_fail": "Bỏ lưu thất bại.",
     "copy_photo": "Sao chép ảnh",
-    "text_share": "Chia sẻ"
+    "text_share": "Chia sẻ",
+    "btn_go_back": "Quay về",
+    "text_unsupport_feature": "Chúng tôi đang xây dựng tính năng này trên thiết bị di động. Vui lòng xem chi tiết trên phiên bản web"
   },
   "auth": {
     "text_kickout_title": "Notice",

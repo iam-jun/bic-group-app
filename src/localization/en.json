@@ -195,7 +195,9 @@
     "text_unsave_fail": "Unsave fail.",
     "copy_photo": "Copy Photo",
     "copied": "Copied!",
-    "text_share": "Share"
+    "text_share": "Share",
+    "btn_go_back": "Back",
+    "text_unsupport_feature": "We are supporting this feature on mobile. Please see the detail on web version"
   },
   "auth": {
     "text_kickout_title": "Notice",

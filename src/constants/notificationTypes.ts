@@ -208,4 +208,20 @@ export const NOTIFICATION_TYPE = {
    * When admin changed the community/group privacy
    */
   GROUP_CHANGED_PRIVACY_TO_GROUP: 'group.changed_privacy.to_group',
+
+  /**
+   * Creator will receive a notification about his content was hidden
+   * when a community admin decides to hide it from a community
+   */
+  CONTENT_HIDE_TO_USER: 'content.hide.to_user',
+
+  /**
+   * Com admin receives an in-app notification once a member has made a report
+   */
+  CONTENT_REPORT_TO_USER: 'content.report.to_user',
+
+  /**
+   * Aggregate notifications when multiple users report to the same content 
+   */
+  CONTENT_REPORT_TO_USER_AGGREGATED: 'content.report.to_user.aggregated',
 };
