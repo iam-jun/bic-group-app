@@ -43,6 +43,7 @@ export interface IPost {
   coverMedia?: IArticleCover;
   categories?: ICategory[];
   isSaved?: boolean;
+  reported?: boolean;
 }
 
 export interface IPostAudience {
@@ -76,6 +77,7 @@ export interface IAudienceGroup {
   name?: string;
   icon?: string;
   child?: number[];
+  rootGroupId?: string;
 }
 
 export interface IMarkdownAudience {
@@ -157,6 +159,7 @@ export interface ICommentData {
   giphyId?: string;
   giphyUrl?: string;
   edited?: boolean;
+  reported?: boolean;
 }
 
 export interface ICreatePostImage {

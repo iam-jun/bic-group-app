@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import { useBaseHook } from '~/hooks';
-import { ICommentData } from '~/interfaces/IPost';
+import { ICommentData, IPostAudience } from '~/interfaces/IPost';
 import CommentView from '~/screens/comments/components/CommentView';
 import LoadMoreComment from '~/components/LoadMoreComment';
 import postActions from '~/storeRedux/post/actions';
@@ -15,6 +15,7 @@ export interface CommentItemProps {
   index?: number;
   section?: any;
   groupIds: string;
+  audience: IPostAudience;
   commentData: ICommentData;
   commentParent?: ICommentData;
   contentBackgroundColor?: string;
@@ -28,6 +29,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   postId,
   index,
   groupIds,
+  audience,
   section,
   commentData,
   commentParent,
@@ -78,6 +80,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
       <CommentView
         postId={postId}
         groupIds={groupIds}
+        audience={audience}
         parentCommentId={commentParent?.id}
         commentData={commentData}
         onPressReply={_onPressReply}

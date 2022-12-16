@@ -5,15 +5,12 @@ import React, {
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { isEqual } from 'lodash';
-import Image from '~/beinComponents/Image';
 import ReactionView from '~/beinComponents/ReactionView';
-import Text from '~/baseComponents/Text';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import {
   IPost,
 } from '~/interfaces/IPost';
-import resourceImages from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import {
   ButtonMarkAsRead, PostBody, PostFooter, PostHeader, PostImportant,
@@ -23,6 +20,7 @@ import { ContentInterestedUserCount } from '~/components/ContentView';
 import appConfig from '~/configs/appConfig';
 import useContentActions from '~/hooks/useContentActions';
 import { isEmptyPost } from '~/helpers/post';
+import { PlaceHolderRemoveContent } from '~/baseComponents';
 
 export interface PostViewProps {
   style?: any;
@@ -63,7 +61,7 @@ const _PostView: FC<PostViewProps> = ({
 
   const {
     id: postId, actor, content, highlight, setting, deleted, markedReadPost,
-    ownerReactions, reactionsCount, totalUsersSeen, communities,
+    ownerReactions, reactionsCount, totalUsersSeen, communities, reported,
   } = data;
 
   const {
@@ -90,14 +88,11 @@ const _PostView: FC<PostViewProps> = ({
   };
 
   if (deleted) {
-    return (
-      <View style={[styles.deletedContainer, style]}>
-        <Image style={styles.imageDelete} source={resourceImages.img_delete} />
-        <Text.H6 testID="post_view.label_deleted" useI18n>
-          post:label_post_deleted
-        </Text.H6>
-      </View>
-    );
+    return (<PlaceHolderRemoveContent label="post:label_post_deleted" />);
+  }
+
+  if (reported) {
+    return (<PlaceHolderRemoveContent label="common:text_post_reported" />);
   }
 
   const shouldShowInterested = highlight?.length < appConfig.shortPostContentLength
@@ -180,13 +175,6 @@ const createStyle = (theme: ExtendedTheme) => {
     reactions: {
       paddingHorizontal: spacing.padding.base,
     },
-    deletedContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: spacing.padding.large,
-      backgroundColor: colors.white,
-    },
-    imageDelete: { width: 35, height: 35, marginRight: spacing.margin.large },
     seenCountsViewAtBottom: {
       alignItems: 'center',
       paddingTop: 0,

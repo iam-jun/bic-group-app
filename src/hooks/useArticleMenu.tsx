@@ -1,3 +1,4 @@
+import React from 'react';
 import i18next from 'i18next';
 
 import { useDispatch } from 'react-redux';
@@ -6,9 +7,11 @@ import modalActions from '~/storeRedux/modal/actions';
 import { IPost } from '~/interfaces/IPost';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
+import ReportContent from '~/components/ReportContent';
 import useCommonController from '~/screens/store';
-import { getPostMenus } from '~/helpers/post';
+import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import { TargetType, ReportTo } from '~/interfaces/IReport';
 
 const useArticleMenu = (
   data: IPost,
@@ -22,7 +25,7 @@ const useArticleMenu = (
   if (!data) return null;
 
   const {
-    id: articleId, reactionsCount, isSaved, type,
+    id: articleId, reactionsCount, isSaved, type, audience,
   } = data;
 
   const onPress = () => {
@@ -42,6 +45,23 @@ const useArticleMenu = (
     } else {
       commonActions.savePost(articleId, type);
     }
+  };
+
+  const onPressReport = () => {
+    const rootGroupIds = getRootGroupids(audience);
+
+    dispatch(modalActions.hideBottomList());
+
+    // in this sprint default reportTo is COMMUNITY
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: <ReportContent
+        targetId={articleId}
+        targetType={TargetType.ARTICLE}
+        groupIds={rootGroupIds}
+        reportTo={ReportTo.COMMUNITY}
+      />,
+    }));
   };
 
   const defaultData = [
@@ -76,6 +96,15 @@ const useArticleMenu = (
       title: i18next.t('article:menu:delete'),
       requireIsActor: true,
       onPress,
+    },
+    {
+      id: 5,
+      testID: 'article_view_menu.report',
+      leftIcon: 'Flag',
+      title: i18next.t('common:btn_report_content'),
+      requireIsActor: false,
+      notShowForActor: isActor,
+      onPress: onPressReport,
     },
   ];
 

@@ -43,6 +43,7 @@ const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) 
   const audience = usePostsStore(useCallback(postsSelector.getAudience(postId), [postId]));
   const commentLeft = usePostsStore(useCallback(postsSelector.getCommentOnlyCount(postId), [postId]));
   const setting = usePostsStore(useCallback(postsSelector.getSetting(postId), [postId]));
+  const reported = usePostsStore(useCallback(postsSelector.getReported(postId), [postId]));
 
   const comments = useCommentsStore(useCallback(commentsSelector.getCommentsByParentId(postId), [postId]));
   const commentError = useKeySelector(postKeySelector.commentErrorCode);
@@ -148,6 +149,14 @@ const usePostDetailContent = ({ postId, notificationId, HeaderImageComponent }) 
       } else showNotice();
     }
   }, [deleted, isFocused]);
+
+  useEffect(() => {
+    if (reported && isFocused) {
+      setTimeout(() => {
+        rootNavigation.goBack();
+      }, 200);
+    }
+  }, [reported, isFocused]);
 
   const getPostDetail = (
     callbackLoading?: (loading: boolean, success: boolean) => void,

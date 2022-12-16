@@ -30,6 +30,7 @@ import {
   IMarkdownAudience,
   IPayloadDeleteComment,
   IPayloadReactToComment,
+  IPostAudience,
 } from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import useCommonController from '~/screens/store';
@@ -43,10 +44,12 @@ import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 import useCommentInputStore from '../CommentInputView/store';
 import useDeleteCommentController from './store';
+import { PlaceHolderRemoveContent } from '~/baseComponents';
 
 export interface CommentViewProps {
   postId: string;
   groupIds: string;
+  audience: IPostAudience;
   parentCommentId?: string;
   commentData: ICommentData;
   contentBackgroundColor?: string;
@@ -57,6 +60,7 @@ export interface CommentViewProps {
 const _CommentView: React.FC<CommentViewProps> = ({
   postId,
   groupIds,
+  audience,
   parentCommentId,
   commentData,
   contentBackgroundColor,
@@ -94,6 +98,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
     updatedAt,
     edited,
     mentions,
+    reported,
   } = _commentData;
   const giphy
     = _commentData.giphy
@@ -234,6 +239,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
             groupIds={groupIds}
             postId={postId}
             isActor={isActor}
+            audience={audience}
             onPressMoreReaction={onPressReact}
             onAddReaction={onAddReaction}
             onPressReply={_onPressReply}
@@ -321,6 +327,12 @@ const _CommentView: React.FC<CommentViewProps> = ({
     </Button>
   </View>
   );
+
+  if (reported) {
+    return (
+      <PlaceHolderRemoveContent label="common:text_comment_reported" />
+    );
+  }
 
   return (
     <View>

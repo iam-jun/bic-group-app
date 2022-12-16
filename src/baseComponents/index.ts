@@ -8,3 +8,4 @@ export { default as Radio } from './Radio';
 export { default as Toggle } from './Toggle';
 export { default as VideoPlayer } from './VideoPlayer';
 export { default as BottomSelectionList } from './BottomSheet';
+export { default as PlaceHolderRemoveContent } from './PlaceHolderRemoveContent';

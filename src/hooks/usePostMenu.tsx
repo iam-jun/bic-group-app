@@ -1,3 +1,4 @@
+import React from 'react';
 import i18next from 'i18next';
 import { isEmpty } from 'lodash';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -13,8 +14,10 @@ import postActions from '~/storeRedux/post/actions';
 import { Button } from '~/baseComponents';
 import { useRootNavigation } from './navigation';
 import { BottomListProps } from '~/components/BottomList';
+import ReportContent from '~/components/ReportContent';
 import useCommonController from '~/screens/store';
-import { getPostMenus } from '~/helpers/post';
+import { getPostMenus, getRootGroupids } from '~/helpers/post';
+import { TargetType, ReportTo } from '~/interfaces/IReport';
 
 const usePostMenu = (
   data: IPost,
@@ -30,7 +33,7 @@ const usePostMenu = (
   if (!data) return null;
 
   const {
-    id: postId, isDraft, reactionsCount, isSaved, type,
+    id: postId, isDraft, reactionsCount, isSaved, type, audience,
   } = data;
 
   const onPressEdit = () => {
@@ -103,6 +106,23 @@ const usePostMenu = (
     );
   };
 
+  const onPressReport = () => {
+    const rootGroupIds = getRootGroupids(audience);
+
+    dispatch(modalActions.hideBottomList());
+
+    // in this sprint default reportTo is COMMUNITY
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: <ReportContent
+        targetId={postId}
+        targetType={TargetType.POST}
+        groupIds={rootGroupIds}
+        reportTo={ReportTo.COMMUNITY}
+      />,
+    }));
+  };
+
   const defaultData = [
     {
       id: 1,
@@ -150,6 +170,15 @@ const usePostMenu = (
       title: i18next.t('post:post_menu_delete'),
       requireIsActor: true,
       onPress: onPressDelete,
+    },
+    {
+      id: 7,
+      testID: 'post_view_menu.report',
+      leftIcon: 'Flag',
+      title: i18next.t('common:btn_report_content'),
+      requireIsActor: false,
+      notShowForActor: isActor,
+      onPress: onPressReport,
     },
   ];
 
