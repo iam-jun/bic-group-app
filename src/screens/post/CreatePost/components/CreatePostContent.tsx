@@ -33,6 +33,8 @@ import dimension from '~/theme/dimension';
 import PostSelectImage from './PostSelectImage';
 import PostVideoPlayer from '~/components/posts/PostVideoPlayer';
 import LinkPreview from '~/components/LinkPreview';
+import useUploadImage from '../hooks/useUploadImage';
+import { getImagePastedFromClipboard } from '~/utils/common';
 
 interface Props {
   groupIds: any[];
@@ -75,6 +77,8 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   const refRNText = useRef<any>();
   const heightAnimated = useRef(new Animated.Value(CONTENT_MIN_HEIGHT)).current;
   const toastRef = useRef<any>();
+
+  const { handleImage } = useUploadImage();
 
   const strGroupIds = groupIds.join(',');
 
@@ -151,6 +155,23 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
     );
   };
 
+  // only support for iOS
+  const onPasteImage = (_, files) => {
+    const img = getImagePastedFromClipboard(files);
+    if (img) {
+      const imgPasted = {
+        name: img.fileName,
+        filename: img.fileName,
+        type: img.type,
+        size: img.fileSize,
+        uri: img.uri,
+      };
+      const imgs = [imgPasted];
+
+      handleImage(imgs);
+    }
+  };
+
   const onLayoutCloneText = (e: any) => {
     const height = e?.nativeEvent?.layout?.height || MIN_INPUT_HEIGHT;
     setInputHeight(height);
@@ -198,6 +219,7 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
                 onChangeText,
                 inputRef: refTextInput,
                 scrollEnabled: false,
+                onPasteImage,
               }}
               disabled={loading}
             />

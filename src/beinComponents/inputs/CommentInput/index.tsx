@@ -41,6 +41,7 @@ import spacing from '~/theme/spacing';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { formatTextWithEmoji } from '~/utils/emojiUtils';
 import { IGiphy } from '~/interfaces/IGiphy';
+import { getImagePastedFromClipboard } from '~/utils/common';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -352,13 +353,16 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   // only support for iOS
   const onPasteImage = (_, files) => {
-    setSelectedImage({
-      name: files[0].fileName,
-      filename: files[0].fileName,
-      type: files[0].type,
-      size: files[0].fileSize,
-      uri: files[0].uri,
-    });
+    const img = getImagePastedFromClipboard(files);
+    if (img) {
+      setSelectedImage({
+        name: img.fileName,
+        filename: img.fileName,
+        type: img.type,
+        size: img.fileSize,
+        uri: img.uri,
+      });
+    }
   };
 
   const renderSelectedMedia = () => {

@@ -3,6 +3,7 @@ import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import i18next from 'i18next';
 import RNFetchBlob from 'rn-fetch-blob';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { PastedFile } from 'react-native-paste-image-input';
 import { linkRegex } from '~/constants/commonRegex';
 import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
@@ -245,4 +246,18 @@ export const copyImageFromUrl = (url: string) => {
     };
     Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
   });
+};
+
+export const getImagePastedFromClipboard = (files) => {
+  const imgs = files.filter((file) => !file.error);
+  if (imgs && imgs.length > 0) {
+    const img: PastedFile = {
+      fileName: imgs[0].fileName,
+      type: imgs[0].type,
+      fileSize: imgs[0].fileSize,
+      uri: imgs[0].uri,
+    };
+    return img;
+  }
+  return null;
 };
