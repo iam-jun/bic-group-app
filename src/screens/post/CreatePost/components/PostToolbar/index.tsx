@@ -18,10 +18,8 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import Text from '~/baseComponents/Text';
 import appConfig from '~/configs/appConfig';
-import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import { ICreatePostImage } from '~/interfaces/IPost';
-import { showHideToastMessage } from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import postKeySelector from '~/storeRedux/post/keySelector';
 
@@ -33,6 +31,7 @@ import spacing from '~/theme/spacing';
 import { getChatDomain, openUrl } from '~/utils/link';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { clearExistingFiles, validateFilesPicker } from '../../helper';
+import useUploadImage from '../../hooks/useUploadImage';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
@@ -62,7 +61,6 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const animated = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
-  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const styles = createStyle(theme);
@@ -74,6 +72,8 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const { totalFiles, totalSize } = getTotalFileSize();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const { handleImage } = useUploadImage();
 
   const openModal = throttle(
     (e?: any) => {
@@ -146,34 +146,11 @@ const PostToolbar: FC<PostToolbarProps> = ({
       });
   };
 
-  const checkCurrentImages = (currentImage: ICreatePostImage[]) => {
-    const errorContent = t('post:error_reach_upload_photo_limit').replace(
-      '%LIMIT%', appConfig.postPhotoLimit,
-    );
-    dispatch(showHideToastMessage({
-      content: errorContent,
-      props: { type: 'error' },
-    }));
-    return currentImage.slice(
-      0,
-      appConfig.postPhotoLimit,
-    );
-  };
-
   const openGallery = () => {
     ImagePicker.openPickerMultiple({
       maxFiles: appConfig.postPhotoLimit,
     }).then((images) => {
-      const newImages: ICreatePostImage[] = [];
-      images.forEach((item) => {
-        newImages.push({ fileName: item.filename, file: item });
-      });
-      let newCurrentImages = [...selectedImagesDraft, ...newImages];
-      if (newCurrentImages.length > appConfig.postPhotoLimit) {
-        newCurrentImages = checkCurrentImages(newCurrentImages);
-      }
-      dispatch(postActions.setCreatePostImagesDraft(newCurrentImages));
-      dispatch(postActions.setCreatePostImages(newCurrentImages));
+      handleImage(images);
     });
   };
 

@@ -54,7 +54,7 @@ const _PostBody: FC<PostBodyProps> = ({
     }
   }).current;
 
-  const renderBottomRightComponent = useCallback(() => {
+  const BottomRightComponent = useCallback(() => {
     if (isDraft) return null;
 
     return (
@@ -66,8 +66,6 @@ const _PostBody: FC<PostBodyProps> = ({
       />
     );
   }, [isDraft, postId, totalUsersSeen]);
-
-  const BottomRightComponent = renderBottomRightComponent();
 
   const renderContent = () => {
     if (isLite) {

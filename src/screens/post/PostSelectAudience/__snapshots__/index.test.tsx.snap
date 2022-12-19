@@ -209,7 +209,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             style={
               Array [
                 Object {
-                  "borderRadius": 6,
+                  "borderRadius": 8,
                 },
                 Object {
                   "marginRight": 4,
@@ -223,7 +223,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                 Array [
                   Object {
                     "alignItems": "center",
-                    "borderRadius": 6,
+                    "borderRadius": 8,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "paddingVertical": 4,

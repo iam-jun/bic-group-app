@@ -41,6 +41,7 @@ const getStories = () => {
     require("../src/baseComponents/Input/SearchInput/index.stories.tsx"),
     require("../src/baseComponents/Input/TextArea/index.stories.tsx"),
     require("../src/baseComponents/Input/TextInput/index.stories.tsx"),
+    require("../src/baseComponents/PlaceHolderRemoveContent/index.stories.tsx"),
     require("../src/baseComponents/Radio/index.stories.tsx"),
     require("../src/baseComponents/Reaction/index.stories.tsx"),
     require("../src/baseComponents/Tab/index.stories.tsx"),

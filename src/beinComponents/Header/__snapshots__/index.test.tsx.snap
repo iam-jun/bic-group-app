@@ -13,26 +13,22 @@ exports[`Header component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -46,7 +42,6 @@ exports[`Header component renders correctly 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -93,10 +88,10 @@ exports[`Header component renders correctly 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -124,9 +119,8 @@ exports[`Header component renders correctly 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -176,26 +170,22 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -209,7 +199,6 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -256,10 +245,10 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -287,9 +276,8 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -335,15 +323,12 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -359,74 +344,7 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -459,26 +377,22 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -492,7 +406,6 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -539,10 +452,10 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -570,9 +483,8 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -618,15 +530,12 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -642,74 +551,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -718,7 +560,6 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           Object {
             "alignItems": "center",
             "backgroundColor": "#FFFFFF",
-            "bottom": 0,
             "flexDirection": "row",
             "height": 60,
             "left": 0,
@@ -815,9 +656,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                   "width": "undefined%",
                 },
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "borderRadius": 100,
-                  "height": 40,
+                  "height": 32,
                   "overflow": "hidden",
                 },
               ]
@@ -825,15 +664,27 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           >
             <View
               style={
-                Object {
-                  "backgroundColor": undefined,
-                  "borderRadius": 20,
-                  "flex": 1,
-                  "height": 40,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 16,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderColor": "#E3E6F2",
+                    "borderRadius": 24,
+                    "borderWidth": 1,
+                    "justifyContent": "center",
+                    "paddingLeft": 8,
+                    "paddingRight": 12,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                    "flex": 1,
+                  },
+                  Object {
+                    "height": 32,
+                  },
+                  false,
+                ]
               }
+              testID="search_input"
             >
               <View
                 style={
@@ -898,18 +749,21 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="search_input.icon"
+                      />
                     </View>
                   </View>
                 </View>
                 <TextInput
                   autoComplete="off"
                   autoFocus={true}
+                  onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
                   placeholder="Search for groups or people..."
-                  placeholderTextColor="#767D93"
+                  placeholderTextColor="#BAC0DE"
                   returnKeyType="search"
                   selectionColor="#767D93"
                   style={
@@ -917,11 +771,11 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                       "color": "#181C32",
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 13,
                       "height": "100%",
                     }
                   }
-                  testID="header.search.input"
+                  testID="search_input.input"
                   value=""
                 />
               </View>
@@ -929,600 +783,6 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           </View>
         </View>
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "backgroundColor": "#FFFFFF",
-          "height": 0,
-          "position": "absolute",
-          "top": 0,
-          "width": "100%",
-        }
-      }
-    />
-  </View>
-</View>
-`;
-
-exports[`Header component renders correctly with props avatar 1`] = `
-<View
-  style={
-    Object {
-      "zIndex": 2,
-    }
-  }
-  testID="header"
->
-  <View
-    style={
-      Array [
-        Object {
-          "height": undefined,
-        },
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "flexDirection": "row",
-          "overflow": "hidden",
-          "paddingTop": 0,
-        },
-        Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
-          "elevation": 2,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        },
-        undefined,
-      ]
-    }
-    testID="header.content"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
-          "flex": 1,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingLeft": 8,
-          "paddingRight": 8,
-        }
-      }
-    >
-      <View
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 20,
-            "left": 20,
-            "right": 20,
-            "top": 20,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="header.back.button"
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-              },
-              Object {
-                "alignItems": "center",
-                "height": 48,
-                "justifyContent": "center",
-                "padding": 12,
-                "width": 48,
-              },
-              Object {
-                "backgroundColor": undefined,
-              },
-            ]
-          }
-        >
-          <View
-            style={
-              Array [
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
-          >
-            <View
-              testID="header.back"
-            />
-          </View>
-        </View>
-      </View>
-      <View
-        style={Object {}}
-      >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={false}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="header.avatar"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#F1F1F9",
-                  "borderRadius": 4,
-                  "height": 24,
-                  "justifyContent": "center",
-                  "padding": 1,
-                  "width": 24,
-                },
-                Object {
-                  "height": 40,
-                  "width": 40,
-                },
-              ]
-            }
-            testID="avatar_group"
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "borderRadius": 4,
-                    "height": 40,
-                    "width": 40,
-                  },
-                  undefined,
-                ]
-              }
-              testID="avatar"
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
-                    Object {},
-                  ]
-                }
-                testID="avatar_container"
-              >
-                <View
-                  onLayout={[Function]}
-                  style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "position": "relative",
-                    }
-                  }
-                >
-                  <View
-                    collapsable={false}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "opacity": 1,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#f9f9f9",
-                          "borderRadius": 4,
-                          "height": 40,
-                          "justifyContent": "center",
-                          "width": 40,
-                        }
-                      }
-                      testID="Image__placeholder"
-                    />
-                  </View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "overflow": "hidden",
-                        },
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                      ]
-                    }
-                  >
-                    <FastImageView
-                      onFastImageError={[Function]}
-                      onFastImageLoadEnd={[Function]}
-                      resizeMode="cover"
-                      source={
-                        Object {
-                          "testUri": "../../../assets/images/bein_logo.png",
-                        }
-                      }
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                      testID="avatar.image"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 4,
-            },
-            Object {},
-          ]
-        }
-      />
-    </View>
-    <View
-      style={
-        Object {
-          "backgroundColor": "#FFFFFF",
-          "height": 0,
-          "position": "absolute",
-          "top": 0,
-          "width": "100%",
-        }
-      }
-    />
-  </View>
-</View>
-`;
-
-exports[`Header component renders correctly with props avatar props 1`] = `
-<View
-  style={
-    Object {
-      "zIndex": 2,
-    }
-  }
-  testID="header"
->
-  <View
-    style={
-      Array [
-        Object {
-          "height": undefined,
-        },
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "flexDirection": "row",
-          "overflow": "hidden",
-          "paddingTop": 0,
-        },
-        Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
-          "elevation": 2,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        },
-        undefined,
-      ]
-    }
-    testID="header.content"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
-          "flex": 1,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingLeft": 8,
-          "paddingRight": 8,
-        }
-      }
-    >
-      <View
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 20,
-            "left": 20,
-            "right": 20,
-            "top": 20,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="header.back.button"
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-              },
-              Object {
-                "alignItems": "center",
-                "height": 48,
-                "justifyContent": "center",
-                "padding": 12,
-                "width": 48,
-              },
-              Object {
-                "backgroundColor": undefined,
-              },
-            ]
-          }
-        >
-          <View
-            style={
-              Array [
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
-          >
-            <View
-              testID="header.back"
-            />
-          </View>
-        </View>
-      </View>
-      <View
-        style={Object {}}
-      >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={false}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="header.avatar"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#F1F1F9",
-                  "borderRadius": 4,
-                  "height": 24,
-                  "justifyContent": "center",
-                  "padding": 1,
-                  "width": 24,
-                },
-                Object {
-                  "borderColor": "#FF9800",
-                  "borderWidth": 1,
-                },
-              ]
-            }
-            testID="avatar_group"
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "borderRadius": 4,
-                    "height": 40,
-                    "width": 40,
-                  },
-                  undefined,
-                ]
-              }
-              testID="avatar"
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
-                    Object {},
-                  ]
-                }
-                testID="avatar_container"
-              >
-                <View
-                  onLayout={[Function]}
-                  style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "position": "relative",
-                    }
-                  }
-                >
-                  <View
-                    collapsable={false}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "opacity": 1,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#f9f9f9",
-                          "borderRadius": 4,
-                          "height": 40,
-                          "justifyContent": "center",
-                          "width": 40,
-                        }
-                      }
-                      testID="Image__placeholder"
-                    />
-                  </View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "overflow": "hidden",
-                        },
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                      ]
-                    }
-                  >
-                    <FastImageView
-                      onFastImageError={[Function]}
-                      onFastImageLoadEnd={[Function]}
-                      resizeMode="cover"
-                      source={
-                        Object {
-                          "testUri": "../../../assets/images/bein_logo.png",
-                        }
-                      }
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                      testID="avatar.image"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 4,
-            },
-            Object {},
-          ]
-        }
-      />
     </View>
     <View
       style={
@@ -1552,26 +812,22 @@ exports[`Header component renders correctly with props button props 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -1585,7 +841,6 @@ exports[`Header component renders correctly with props button props 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -1632,10 +887,10 @@ exports[`Header component renders correctly with props button props 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -1663,9 +918,8 @@ exports[`Header component renders correctly with props button props 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -1682,12 +936,14 @@ exports[`Header component renders correctly with props button props 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#F2F2F2",
-            "borderRadius": 4,
-            "padding": 8,
-          }
+          Array [
+            Object {
+              "borderRadius": 8,
+            },
+            Object {
+              "backgroundColor": "#F2F2F2",
+            },
+          ]
         }
         testID="header.button"
       >
@@ -1696,31 +952,41 @@ exports[`Header component renders correctly with props button props 1`] = `
             Array [
               Object {
                 "alignItems": "center",
+                "borderRadius": 8,
                 "flexDirection": "row",
                 "justifyContent": "center",
+                "paddingVertical": 4,
               },
               undefined,
+              Object {
+                "backgroundColor": "#7335C0",
+                "height": 36,
+                "paddingHorizontal": 12,
+              },
             ]
           }
-          testID="button_wrapper.content"
+          testID="button.content"
         >
           <Text
             style={
               Array [
                 Object {
-                  "color": "#353E6E",
-                  "fontFamily": "BeVietnamPro-Light",
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
                 Object {
-                  "color": "#7335C0",
+                  "color": "#FFFFFF",
                 },
-                Object {
-                  "textAlign": "center",
-                },
+                Array [
+                  Object {
+                    "textAlign": "center",
+                  },
+                  undefined,
+                ],
               ]
             }
-            testID="header.button.text"
+            testID="button.text"
           >
             Text Button
           </Text>
@@ -1755,26 +1021,22 @@ exports[`Header component renders correctly with props button text 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -1788,7 +1050,6 @@ exports[`Header component renders correctly with props button text 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -1835,10 +1096,10 @@ exports[`Header component renders correctly with props button text 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -1866,9 +1127,8 @@ exports[`Header component renders correctly with props button text 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -1885,16 +1145,14 @@ exports[`Header component renders correctly with props button text 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#7335C0",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "height": 40,
-            "marginRight": 4,
-            "padding": 8,
-          }
+          Array [
+            Object {
+              "borderRadius": 8,
+            },
+            Object {
+              "marginRight": 4,
+            },
+          ]
         }
         testID="header.button"
       >
@@ -1903,31 +1161,41 @@ exports[`Header component renders correctly with props button text 1`] = `
             Array [
               Object {
                 "alignItems": "center",
+                "borderRadius": 8,
                 "flexDirection": "row",
                 "justifyContent": "center",
+                "paddingVertical": 4,
               },
               undefined,
+              Object {
+                "backgroundColor": "#7335C0",
+                "height": 36,
+                "paddingHorizontal": 12,
+              },
             ]
           }
-          testID="button_wrapper.content"
+          testID="button.content"
         >
           <Text
             style={
               Array [
                 Object {
-                  "color": "#353E6E",
-                  "fontFamily": "BeVietnamPro-Light",
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
                 Object {
-                  "color": "#7335C0",
+                  "color": "#FFFFFF",
                 },
-                Object {
-                  "textAlign": "center",
-                },
+                Array [
+                  Object {
+                    "textAlign": "center",
+                  },
+                  undefined,
+                ],
               ]
             }
-            testID="header.button.text"
+            testID="button.text"
           >
             Text Button
           </Text>
@@ -1962,26 +1230,22 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": undefined,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -1995,7 +1259,6 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -2042,10 +1305,10 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -2073,9 +1336,8 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -2117,26 +1379,22 @@ exports[`Header component renders correctly with props header ref 1`] = `
       style={
         Array [
           Object {
-            "height": undefined,
-          },
-          Object {
             "alignItems": "flex-end",
             "backgroundColor": "#FFFFFF",
             "flexDirection": "row",
-            "overflow": "hidden",
+            "minHeight": 44,
             "paddingTop": 0,
+            "paddingVertical": 4,
           },
           Object {
-            "borderBottomWidth": 0.5,
-            "borderColor": "#E3E6F2",
             "elevation": 2,
-            "shadowColor": "#000",
+            "shadowColor": "rgba(0, 0, 0, 1)",
             "shadowOffset": Object {
-              "height": 1,
+              "height": 2,
               "width": 0,
             },
-            "shadowOpacity": 0.1,
-            "shadowRadius": 1,
+            "shadowOpacity": 0.12,
+            "shadowRadius": 1.5,
           },
           undefined,
         ]
@@ -2150,7 +1408,6 @@ exports[`Header component renders correctly with props header ref 1`] = `
             "backgroundColor": "#FFFFFF",
             "flex": 1,
             "flexDirection": "row",
-            "height": 60,
             "overflow": "hidden",
             "paddingLeft": 8,
             "paddingRight": 8,
@@ -2197,10 +1454,10 @@ exports[`Header component renders correctly with props header ref 1`] = `
                 },
                 Object {
                   "alignItems": "center",
-                  "height": 48,
+                  "height": 44,
                   "justifyContent": "center",
                   "padding": 12,
-                  "width": 48,
+                  "width": 44,
                 },
                 Object {
                   "backgroundColor": undefined,
@@ -2228,9 +1485,8 @@ exports[`Header component renders correctly with props header ref 1`] = `
             Array [
               Object {
                 "flex": 1,
-                "height": "100%",
                 "justifyContent": "center",
-                "marginLeft": 4,
+                "paddingVertical": 8,
               },
               Object {},
             ]
@@ -2295,26 +1551,22 @@ exports[`Header component renders correctly with props hide back 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -2328,7 +1580,6 @@ exports[`Header component renders correctly with props hide back 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -2340,9 +1591,8 @@ exports[`Header component renders correctly with props hide back 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -2377,26 +1627,22 @@ exports[`Header component renders correctly with props icon 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -2410,7 +1656,6 @@ exports[`Header component renders correctly with props icon 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -2457,10 +1702,10 @@ exports[`Header component renders correctly with props icon 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -2488,9 +1733,8 @@ exports[`Header component renders correctly with props icon 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -2536,15 +1780,12 @@ exports[`Header component renders correctly with props icon 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -2593,26 +1834,22 @@ exports[`Header component renders correctly with props left icon 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -2626,7 +1863,6 @@ exports[`Header component renders correctly with props left icon 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -2673,10 +1909,10 @@ exports[`Header component renders correctly with props left icon 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -2738,12 +1974,9 @@ exports[`Header component renders correctly with props left icon 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
                 "backgroundColor": undefined,
@@ -2771,9 +2004,8 @@ exports[`Header component renders correctly with props left icon 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -3024,26 +2256,22 @@ exports[`Header component renders correctly with props on focus search 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -3057,7 +2285,6 @@ exports[`Header component renders correctly with props on focus search 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -3104,10 +2331,10 @@ exports[`Header component renders correctly with props on focus search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -3135,9 +2362,8 @@ exports[`Header component renders correctly with props on focus search 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -3183,15 +2409,12 @@ exports[`Header component renders correctly with props on focus search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -3207,74 +2430,7 @@ exports[`Header component renders correctly with props on focus search 1`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -3307,26 +2463,22 @@ exports[`Header component renders correctly with props on focus search 2`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -3340,7 +2492,6 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -3387,10 +2538,10 @@ exports[`Header component renders correctly with props on focus search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -3418,9 +2569,8 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -3466,15 +2616,12 @@ exports[`Header component renders correctly with props on focus search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -3490,74 +2637,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -3566,7 +2646,6 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           Object {
             "alignItems": "center",
             "backgroundColor": "#FFFFFF",
-            "bottom": 0,
             "flexDirection": "row",
             "height": 60,
             "left": 0,
@@ -3663,9 +2742,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                   "width": "undefined%",
                 },
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "borderRadius": 100,
-                  "height": 40,
+                  "height": 32,
                   "overflow": "hidden",
                 },
               ]
@@ -3673,15 +2750,27 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           >
             <View
               style={
-                Object {
-                  "backgroundColor": undefined,
-                  "borderRadius": 20,
-                  "flex": 1,
-                  "height": 40,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 16,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderColor": "#E3E6F2",
+                    "borderRadius": 24,
+                    "borderWidth": 1,
+                    "justifyContent": "center",
+                    "paddingLeft": 8,
+                    "paddingRight": 12,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                    "flex": 1,
+                  },
+                  Object {
+                    "height": 32,
+                  },
+                  false,
+                ]
               }
+              testID="search_input"
             >
               <View
                 style={
@@ -3746,18 +2835,21 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="search_input.icon"
+                      />
                     </View>
                   </View>
                 </View>
                 <TextInput
                   autoComplete="off"
                   autoFocus={false}
+                  onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
                   placeholder="Search for groups or people..."
-                  placeholderTextColor="#767D93"
+                  placeholderTextColor="#BAC0DE"
                   returnKeyType="search"
                   selectionColor="#767D93"
                   style={
@@ -3765,11 +2857,11 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                       "color": "#181C32",
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 13,
                       "height": "100%",
                     }
                   }
-                  testID="header.search.input"
+                  testID="search_input.input"
                   value=""
                 />
               </View>
@@ -3806,26 +2898,22 @@ exports[`Header component renders correctly with props on press button 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -3839,7 +2927,6 @@ exports[`Header component renders correctly with props on press button 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -3886,10 +2973,10 @@ exports[`Header component renders correctly with props on press button 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -3917,9 +3004,8 @@ exports[`Header component renders correctly with props on press button 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -3936,16 +3022,14 @@ exports[`Header component renders correctly with props on press button 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#7335C0",
-            "borderRadius": 4,
-            "borderWidth": 1,
-            "height": 40,
-            "marginRight": 4,
-            "padding": 8,
-          }
+          Array [
+            Object {
+              "borderRadius": 8,
+            },
+            Object {
+              "marginRight": 4,
+            },
+          ]
         }
         testID="header.button"
       >
@@ -3954,31 +3038,41 @@ exports[`Header component renders correctly with props on press button 1`] = `
             Array [
               Object {
                 "alignItems": "center",
+                "borderRadius": 8,
                 "flexDirection": "row",
                 "justifyContent": "center",
+                "paddingVertical": 4,
               },
               undefined,
+              Object {
+                "backgroundColor": "#7335C0",
+                "height": 36,
+                "paddingHorizontal": 12,
+              },
             ]
           }
-          testID="button_wrapper.content"
+          testID="button.content"
         >
           <Text
             style={
               Array [
                 Object {
-                  "color": "#353E6E",
-                  "fontFamily": "BeVietnamPro-Light",
+                  "color": "#212745",
+                  "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
                 Object {
-                  "color": "#7335C0",
+                  "color": "#FFFFFF",
                 },
-                Object {
-                  "textAlign": "center",
-                },
+                Array [
+                  Object {
+                    "textAlign": "center",
+                  },
+                  undefined,
+                ],
               ]
             }
-            testID="header.button.text"
+            testID="button.text"
           >
             Text Button
           </Text>
@@ -4013,26 +3107,22 @@ exports[`Header component renders correctly with props on press chat 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -4046,7 +3136,6 @@ exports[`Header component renders correctly with props on press chat 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -4093,10 +3182,10 @@ exports[`Header component renders correctly with props on press chat 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -4124,9 +3213,8 @@ exports[`Header component renders correctly with props on press chat 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -4226,70 +3314,33 @@ exports[`Header component renders correctly with props on press chat 1`] = `
                   testID="icon_chat.icon"
                 >
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "height": 28,
+                          "width": 28,
+                        },
+                      ]
                     }
                   >
-                    <View
-                      collapsable={false}
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      resizeMode="cover"
+                      size={28}
+                      source={null}
                       style={
                         Object {
                           "bottom": 0,
                           "left": 0,
-                          "opacity": 1,
                           "position": "absolute",
                           "right": 0,
                           "top": 0,
                         }
                       }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "height": 24,
-                            "justifyContent": "center",
-                            "width": 24,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 24,
-                            "width": 24,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        size={24}
-                        source={null}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      />
-                    </View>
+                    />
                   </View>
                 </View>
               </View>
@@ -4326,26 +3377,22 @@ exports[`Header component renders correctly with props on press header 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -4359,7 +3406,6 @@ exports[`Header component renders correctly with props on press header 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -4406,10 +3452,10 @@ exports[`Header component renders correctly with props on press header 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -4433,162 +3479,12 @@ exports[`Header component renders correctly with props on press header 1`] = `
         </View>
       </View>
       <View
-        style={Object {}}
-      >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="header.avatar"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#F1F1F9",
-                  "borderRadius": 4,
-                  "height": 24,
-                  "justifyContent": "center",
-                  "padding": 1,
-                  "width": 24,
-                },
-                Object {
-                  "height": 40,
-                  "width": 40,
-                },
-              ]
-            }
-            testID="avatar_group"
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "borderRadius": 4,
-                    "height": 40,
-                    "width": 40,
-                  },
-                  undefined,
-                ]
-              }
-              testID="avatar"
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "borderRadius": 4,
-                      "height": 40,
-                      "width": 40,
-                    },
-                    Object {},
-                  ]
-                }
-                testID="avatar_container"
-              >
-                <View
-                  onLayout={[Function]}
-                  style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "position": "relative",
-                    }
-                  }
-                >
-                  <View
-                    collapsable={false}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "opacity": 1,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#f9f9f9",
-                          "borderRadius": 4,
-                          "height": 40,
-                          "justifyContent": "center",
-                          "width": 40,
-                        }
-                      }
-                      testID="Image__placeholder"
-                    />
-                  </View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "overflow": "hidden",
-                        },
-                        Object {
-                          "borderRadius": 4,
-                          "height": 40,
-                          "width": 40,
-                        },
-                      ]
-                    }
-                  >
-                    <FastImageView
-                      onFastImageError={[Function]}
-                      onFastImageLoadEnd={[Function]}
-                      resizeMode="cover"
-                      source={
-                        Object {
-                          "testUri": "../../../assets/images/bein_logo.png",
-                        }
-                      }
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                      testID="avatar.image"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
         style={
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -4623,26 +3519,22 @@ exports[`Header component renders correctly with props on press icon 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -4656,7 +3548,6 @@ exports[`Header component renders correctly with props on press icon 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -4703,10 +3594,10 @@ exports[`Header component renders correctly with props on press icon 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -4734,9 +3625,8 @@ exports[`Header component renders correctly with props on press icon 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -4782,15 +3672,12 @@ exports[`Header component renders correctly with props on press icon 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -5295,26 +4182,22 @@ exports[`Header component renders correctly with props on show search 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -5328,7 +4211,6 @@ exports[`Header component renders correctly with props on show search 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -5375,10 +4257,10 @@ exports[`Header component renders correctly with props on show search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -5406,9 +4288,8 @@ exports[`Header component renders correctly with props on show search 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -5454,15 +4335,12 @@ exports[`Header component renders correctly with props on show search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -5478,74 +4356,7 @@ exports[`Header component renders correctly with props on show search 1`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -5578,26 +4389,22 @@ exports[`Header component renders correctly with props on show search 2`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -5611,7 +4418,6 @@ exports[`Header component renders correctly with props on show search 2`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -5658,10 +4464,10 @@ exports[`Header component renders correctly with props on show search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -5689,9 +4495,8 @@ exports[`Header component renders correctly with props on show search 2`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -5737,15 +4542,12 @@ exports[`Header component renders correctly with props on show search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -5761,74 +4563,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -5837,7 +4572,6 @@ exports[`Header component renders correctly with props on show search 2`] = `
           Object {
             "alignItems": "center",
             "backgroundColor": "#FFFFFF",
-            "bottom": 0,
             "flexDirection": "row",
             "height": 60,
             "left": 0,
@@ -5934,9 +4668,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
                   "width": "undefined%",
                 },
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "borderRadius": 100,
-                  "height": 40,
+                  "height": 32,
                   "overflow": "hidden",
                 },
               ]
@@ -5944,15 +4676,27 @@ exports[`Header component renders correctly with props on show search 2`] = `
           >
             <View
               style={
-                Object {
-                  "backgroundColor": undefined,
-                  "borderRadius": 20,
-                  "flex": 1,
-                  "height": 40,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 16,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderColor": "#E3E6F2",
+                    "borderRadius": 24,
+                    "borderWidth": 1,
+                    "justifyContent": "center",
+                    "paddingLeft": 8,
+                    "paddingRight": 12,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                    "flex": 1,
+                  },
+                  Object {
+                    "height": 32,
+                  },
+                  false,
+                ]
               }
+              testID="search_input"
             >
               <View
                 style={
@@ -6017,18 +4761,21 @@ exports[`Header component renders correctly with props on show search 2`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="search_input.icon"
+                      />
                     </View>
                   </View>
                 </View>
                 <TextInput
                   autoComplete="off"
                   autoFocus={false}
+                  onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
                   placeholder="Search for groups or people..."
-                  placeholderTextColor="#767D93"
+                  placeholderTextColor="#BAC0DE"
                   returnKeyType="search"
                   selectionColor="#767D93"
                   style={
@@ -6036,11 +4783,11 @@ exports[`Header component renders correctly with props on show search 2`] = `
                       "color": "#181C32",
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 13,
                       "height": "100%",
                     }
                   }
-                  testID="header.search.input"
+                  testID="search_input.input"
                   value=""
                 />
               </View>
@@ -6077,26 +4824,22 @@ exports[`Header component renders correctly with props on submit search 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -6110,7 +4853,6 @@ exports[`Header component renders correctly with props on submit search 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -6157,10 +4899,10 @@ exports[`Header component renders correctly with props on submit search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -6188,9 +4930,8 @@ exports[`Header component renders correctly with props on submit search 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -6236,15 +4977,12 @@ exports[`Header component renders correctly with props on submit search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -6260,74 +4998,7 @@ exports[`Header component renders correctly with props on submit search 1`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -6360,26 +5031,22 @@ exports[`Header component renders correctly with props on submit search 2`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -6393,7 +5060,6 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -6440,10 +5106,10 @@ exports[`Header component renders correctly with props on submit search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -6471,9 +5137,8 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -6519,15 +5184,12 @@ exports[`Header component renders correctly with props on submit search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -6543,74 +5205,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -6619,7 +5214,6 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           Object {
             "alignItems": "center",
             "backgroundColor": "#FFFFFF",
-            "bottom": 0,
             "flexDirection": "row",
             "height": 60,
             "left": 0,
@@ -6716,9 +5310,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                   "width": "undefined%",
                 },
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "borderRadius": 100,
-                  "height": 40,
+                  "height": 32,
                   "overflow": "hidden",
                 },
               ]
@@ -6726,15 +5318,27 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           >
             <View
               style={
-                Object {
-                  "backgroundColor": undefined,
-                  "borderRadius": 20,
-                  "flex": 1,
-                  "height": 40,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 16,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderColor": "#E3E6F2",
+                    "borderRadius": 24,
+                    "borderWidth": 1,
+                    "justifyContent": "center",
+                    "paddingLeft": 8,
+                    "paddingRight": 12,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                    "flex": 1,
+                  },
+                  Object {
+                    "height": 32,
+                  },
+                  false,
+                ]
               }
+              testID="search_input"
             >
               <View
                 style={
@@ -6799,18 +5403,21 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="search_input.icon"
+                      />
                     </View>
                   </View>
                 </View>
                 <TextInput
                   autoComplete="off"
                   autoFocus={false}
+                  onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
                   placeholder="Search for groups or people..."
-                  placeholderTextColor="#767D93"
+                  placeholderTextColor="#BAC0DE"
                   returnKeyType="search"
                   selectionColor="#767D93"
                   style={
@@ -6818,11 +5425,11 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                       "color": "#181C32",
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 13,
                       "height": "100%",
                     }
                   }
-                  testID="header.search.input"
+                  testID="search_input.input"
                   value=""
                 />
               </View>
@@ -6859,26 +5466,22 @@ exports[`Header component renders correctly with props on text search 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -6892,7 +5495,6 @@ exports[`Header component renders correctly with props on text search 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -6939,10 +5541,10 @@ exports[`Header component renders correctly with props on text search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -6970,9 +5572,8 @@ exports[`Header component renders correctly with props on text search 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -7018,15 +5619,12 @@ exports[`Header component renders correctly with props on text search 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -7042,74 +5640,7 @@ exports[`Header component renders correctly with props on text search 1`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -7142,26 +5673,22 @@ exports[`Header component renders correctly with props on text search 2`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -7175,7 +5702,6 @@ exports[`Header component renders correctly with props on text search 2`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -7222,10 +5748,10 @@ exports[`Header component renders correctly with props on text search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -7253,9 +5779,8 @@ exports[`Header component renders correctly with props on text search 2`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -7301,15 +5826,12 @@ exports[`Header component renders correctly with props on text search 2`] = `
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -7325,74 +5847,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -7401,7 +5856,6 @@ exports[`Header component renders correctly with props on text search 2`] = `
           Object {
             "alignItems": "center",
             "backgroundColor": "#FFFFFF",
-            "bottom": 0,
             "flexDirection": "row",
             "height": 60,
             "left": 0,
@@ -7498,9 +5952,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
                   "width": "undefined%",
                 },
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "borderRadius": 100,
-                  "height": 40,
+                  "height": 32,
                   "overflow": "hidden",
                 },
               ]
@@ -7508,15 +5960,27 @@ exports[`Header component renders correctly with props on text search 2`] = `
           >
             <View
               style={
-                Object {
-                  "backgroundColor": undefined,
-                  "borderRadius": 20,
-                  "flex": 1,
-                  "height": 40,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 16,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderColor": "#E3E6F2",
+                    "borderRadius": 24,
+                    "borderWidth": 1,
+                    "justifyContent": "center",
+                    "paddingLeft": 8,
+                    "paddingRight": 12,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                    "flex": 1,
+                  },
+                  Object {
+                    "height": 32,
+                  },
+                  false,
+                ]
               }
+              testID="search_input"
             >
               <View
                 style={
@@ -7581,18 +6045,21 @@ exports[`Header component renders correctly with props on text search 2`] = `
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="search_input.icon"
+                      />
                     </View>
                   </View>
                 </View>
                 <TextInput
                   autoComplete="off"
                   autoFocus={false}
+                  onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
                   placeholder="Search for groups or people..."
-                  placeholderTextColor="#767D93"
+                  placeholderTextColor="#BAC0DE"
                   returnKeyType="search"
                   selectionColor="#767D93"
                   style={
@@ -7600,11 +6067,11 @@ exports[`Header component renders correctly with props on text search 2`] = `
                       "color": "#181C32",
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 13,
                       "height": "100%",
                     }
                   }
-                  testID="header.search.input"
+                  testID="search_input.input"
                   value=""
                 />
               </View>
@@ -7641,16 +6108,14 @@ exports[`Header component renders correctly with props remove border and shadow 
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
-        Object {},
+        false,
         undefined,
       ]
     }
@@ -7663,7 +6128,6 @@ exports[`Header component renders correctly with props remove border and shadow 
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -7710,10 +6174,10 @@ exports[`Header component renders correctly with props remove border and shadow 
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -7741,9 +6205,8 @@ exports[`Header component renders correctly with props remove border and shadow 
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -7994,26 +6457,22 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -8027,7 +6486,6 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -8074,10 +6532,10 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -8105,9 +6563,8 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -8153,15 +6610,12 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -8177,74 +6631,7 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -8277,26 +6664,22 @@ exports[`Header component renders correctly with props search input test ID 1`] 
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -8310,7 +6693,6 @@ exports[`Header component renders correctly with props search input test ID 1`] 
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -8357,10 +6739,10 @@ exports[`Header component renders correctly with props search input test ID 1`] 
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -8388,9 +6770,8 @@ exports[`Header component renders correctly with props search input test ID 1`] 
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -8436,15 +6817,12 @@ exports[`Header component renders correctly with props search input test ID 1`] 
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -8460,74 +6838,7 @@ exports[`Header component renders correctly with props search input test ID 1`] 
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -8560,26 +6871,22 @@ exports[`Header component renders correctly with props search input test ID 2`] 
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -8593,7 +6900,6 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -8640,10 +6946,10 @@ exports[`Header component renders correctly with props search input test ID 2`] 
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -8671,9 +6977,8 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -8719,15 +7024,12 @@ exports[`Header component renders correctly with props search input test ID 2`] 
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -8743,74 +7045,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -8819,7 +7054,6 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           Object {
             "alignItems": "center",
             "backgroundColor": "#FFFFFF",
-            "bottom": 0,
             "flexDirection": "row",
             "height": 60,
             "left": 0,
@@ -8916,9 +7150,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                   "width": "undefined%",
                 },
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "borderRadius": 100,
-                  "height": 40,
+                  "height": 32,
                   "overflow": "hidden",
                 },
               ]
@@ -8926,15 +7158,27 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           >
             <View
               style={
-                Object {
-                  "backgroundColor": undefined,
-                  "borderRadius": 20,
-                  "flex": 1,
-                  "height": 40,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 16,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderColor": "#E3E6F2",
+                    "borderRadius": 24,
+                    "borderWidth": 1,
+                    "justifyContent": "center",
+                    "paddingLeft": 8,
+                    "paddingRight": 12,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                    "flex": 1,
+                  },
+                  Object {
+                    "height": 32,
+                  },
+                  false,
+                ]
               }
+              testID="search_input"
             >
               <View
                 style={
@@ -8999,18 +7243,21 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="search_input.icon"
+                      />
                     </View>
                   </View>
                 </View>
                 <TextInput
                   autoComplete="off"
                   autoFocus={false}
+                  onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
                   placeholder="Search for groups or people..."
-                  placeholderTextColor="#767D93"
+                  placeholderTextColor="#BAC0DE"
                   returnKeyType="search"
                   selectionColor="#767D93"
                   style={
@@ -9018,11 +7265,11 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                       "color": "#181C32",
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 13,
                       "height": "100%",
                     }
                   }
-                  testID="header.search.input"
+                  testID="search_input.input"
                   value=""
                 />
               </View>
@@ -9059,26 +7306,22 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -9092,7 +7335,6 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -9139,10 +7381,10 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -9170,9 +7412,8 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -9218,15 +7459,12 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -9242,74 +7480,7 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -9342,26 +7513,22 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -9375,7 +7542,6 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -9422,10 +7588,10 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -9453,9 +7619,8 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -9501,15 +7666,12 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
               },
               Object {
                 "alignItems": "center",
-                "borderRadius": 20,
-                "height": 40,
                 "justifyContent": "center",
                 "marginRight": 4,
-                "padding": 8,
-                "width": 40,
+                "padding": 4,
               },
               Object {
-                "backgroundColor": "#F8F9FF",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -9525,74 +7687,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           >
             <View
               testID="header.searchIcon"
-            >
-              <View
-                onLayout={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
-                }
-              >
-                <View
-                  collapsable={false}
-                  style={
-                    Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 24,
-                        "justifyContent": "center",
-                        "width": 24,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={24}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -9601,7 +7696,6 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           Object {
             "alignItems": "center",
             "backgroundColor": "#FFFFFF",
-            "bottom": 0,
             "flexDirection": "row",
             "height": 60,
             "left": 0,
@@ -9698,9 +7792,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                   "width": "undefined%",
                 },
                 Object {
-                  "backgroundColor": "#E3E6F2",
-                  "borderRadius": 100,
-                  "height": 40,
+                  "height": 32,
                   "overflow": "hidden",
                 },
               ]
@@ -9708,15 +7800,27 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           >
             <View
               style={
-                Object {
-                  "backgroundColor": undefined,
-                  "borderRadius": 20,
-                  "flex": 1,
-                  "height": 40,
-                  "justifyContent": "center",
-                  "paddingHorizontal": 16,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderColor": "#E3E6F2",
+                    "borderRadius": 24,
+                    "borderWidth": 1,
+                    "justifyContent": "center",
+                    "paddingLeft": 8,
+                    "paddingRight": 12,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                    "flex": 1,
+                  },
+                  Object {
+                    "height": 32,
+                  },
+                  false,
+                ]
               }
+              testID="search_input"
             >
               <View
                 style={
@@ -9781,18 +7885,21 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                         ]
                       }
                     >
-                      <View />
+                      <View
+                        testID="search_input.icon"
+                      />
                     </View>
                   </View>
                 </View>
                 <TextInput
                   autoComplete="off"
                   autoFocus={false}
+                  onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
                   onSubmitEditing={[Function]}
                   placeholder="Search Placeholder"
-                  placeholderTextColor="#767D93"
+                  placeholderTextColor="#BAC0DE"
                   returnKeyType="search"
                   selectionColor="#767D93"
                   style={
@@ -9800,11 +7907,11 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                       "color": "#181C32",
                       "flex": 1,
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 13,
                       "height": "100%",
                     }
                   }
-                  testID="header.search.input"
+                  testID="search_input.input"
                   value=""
                 />
               </View>
@@ -9812,156 +7919,6 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           </View>
         </View>
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "backgroundColor": "#FFFFFF",
-          "height": 0,
-          "position": "absolute",
-          "top": 0,
-          "width": "100%",
-        }
-      }
-    />
-  </View>
-</View>
-`;
-
-exports[`Header component renders correctly with props style 1`] = `
-<View
-  style={
-    Object {
-      "zIndex": 2,
-    }
-  }
-  testID="header"
->
-  <View
-    style={
-      Array [
-        Object {
-          "height": undefined,
-        },
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "flexDirection": "row",
-          "overflow": "hidden",
-          "paddingTop": 0,
-        },
-        Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
-          "elevation": 2,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        },
-        Object {
-          "backgroundColor": "#F2F2F2",
-        },
-      ]
-    }
-    testID="header.content"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
-          "flex": 1,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingLeft": 8,
-          "paddingRight": 8,
-        }
-      }
-    >
-      <View
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        hitSlop={
-          Object {
-            "bottom": 20,
-            "left": 20,
-            "right": 20,
-            "top": 20,
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-        testID="header.back.button"
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-              },
-              Object {
-                "alignItems": "center",
-                "height": 48,
-                "justifyContent": "center",
-                "padding": 12,
-                "width": 48,
-              },
-              Object {
-                "backgroundColor": undefined,
-              },
-            ]
-          }
-        >
-          <View
-            style={
-              Array [
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
-          >
-            <View
-              testID="header.back"
-            />
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 4,
-            },
-            Object {},
-          ]
-        }
-      />
     </View>
     <View
       style={
@@ -9991,26 +7948,22 @@ exports[`Header component renders correctly with props sub title 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -10024,7 +7977,6 @@ exports[`Header component renders correctly with props sub title 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -10071,10 +8023,10 @@ exports[`Header component renders correctly with props sub title 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -10102,9 +8054,8 @@ exports[`Header component renders correctly with props sub title 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -10133,15 +8084,18 @@ exports[`Header component renders correctly with props sub title 1`] = `
           }
         >
           <Text
+            numberOfLines={1}
             style={
               Array [
                 Object {
-                  "color": "#181C32",
+                  "color": "#212745",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
                 Object {},
-                Object {},
+                Object {
+                  "marginRight": 8,
+                },
               ]
             }
             testID="header.subTitle"
@@ -10179,26 +8133,22 @@ exports[`Header component renders correctly with props sub title props 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -10212,7 +8162,6 @@ exports[`Header component renders correctly with props sub title props 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -10259,10 +8208,10 @@ exports[`Header component renders correctly with props sub title props 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -10290,9 +8239,8 @@ exports[`Header component renders correctly with props sub title props 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -10321,17 +8269,20 @@ exports[`Header component renders correctly with props sub title props 1`] = `
           }
         >
           <Text
+            numberOfLines={1}
             style={
               Array [
                 Object {
-                  "color": "#181C32",
+                  "color": "#212745",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
                 Object {
                   "color": "#421187",
                 },
-                Object {},
+                Object {
+                  "marginRight": 8,
+                },
               ]
             }
             testID="header.subTitle"
@@ -10369,26 +8320,22 @@ exports[`Header component renders correctly with props title 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -10402,7 +8349,6 @@ exports[`Header component renders correctly with props title 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -10449,10 +8395,10 @@ exports[`Header component renders correctly with props title 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -10480,9 +8426,8 @@ exports[`Header component renders correctly with props title 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -10520,7 +8465,9 @@ exports[`Header component renders correctly with props title 1`] = `
                   "fontSize": 15,
                 },
                 Object {},
-                Object {},
+                Object {
+                  "marginRight": 8,
+                },
               ]
             }
             testID="header.text"
@@ -10558,26 +8505,22 @@ exports[`Header component renders correctly with props title props 1`] = `
     style={
       Array [
         Object {
-          "height": undefined,
-        },
-        Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
           "flexDirection": "row",
-          "overflow": "hidden",
+          "minHeight": 44,
           "paddingTop": 0,
+          "paddingVertical": 4,
         },
         Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#E3E6F2",
           "elevation": 2,
-          "shadowColor": "#000",
+          "shadowColor": "rgba(0, 0, 0, 1)",
           "shadowOffset": Object {
-            "height": 1,
+            "height": 2,
             "width": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
+          "shadowOpacity": 0.12,
+          "shadowRadius": 1.5,
         },
         undefined,
       ]
@@ -10591,7 +8534,6 @@ exports[`Header component renders correctly with props title props 1`] = `
           "backgroundColor": "#FFFFFF",
           "flex": 1,
           "flexDirection": "row",
-          "height": 60,
           "overflow": "hidden",
           "paddingLeft": 8,
           "paddingRight": 8,
@@ -10638,10 +8580,10 @@ exports[`Header component renders correctly with props title props 1`] = `
               },
               Object {
                 "alignItems": "center",
-                "height": 48,
+                "height": 44,
                 "justifyContent": "center",
                 "padding": 12,
-                "width": 48,
+                "width": 44,
               },
               Object {
                 "backgroundColor": undefined,
@@ -10669,9 +8611,8 @@ exports[`Header component renders correctly with props title props 1`] = `
           Array [
             Object {
               "flex": 1,
-              "height": "100%",
               "justifyContent": "center",
-              "marginLeft": 4,
+              "paddingVertical": 8,
             },
             Object {},
           ]
@@ -10711,7 +8652,9 @@ exports[`Header component renders correctly with props title props 1`] = `
                 Object {
                   "color": "#421187",
                 },
-                Object {},
+                Object {
+                  "marginRight": 8,
+                },
               ]
             }
             testID="header.text"

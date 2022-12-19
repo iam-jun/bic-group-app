@@ -555,7 +555,7 @@ Array [
                 style={
                   Array [
                     Object {
-                      "borderRadius": 6,
+                      "borderRadius": 8,
                     },
                     undefined,
                   ]
@@ -567,7 +567,7 @@ Array [
                     Array [
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 6,
+                        "borderRadius": 8,
                         "flexDirection": "row",
                         "justifyContent": "center",
                         "paddingVertical": 4,
@@ -988,7 +988,7 @@ Array [
               style={
                 Array [
                   Object {
-                    "borderRadius": 6,
+                    "borderRadius": 8,
                   },
                   undefined,
                 ]
@@ -1000,7 +1000,7 @@ Array [
                   Array [
                     Object {
                       "alignItems": "center",
-                      "borderRadius": 6,
+                      "borderRadius": 8,
                       "flexDirection": "row",
                       "justifyContent": "center",
                       "paddingVertical": 4,

@@ -358,7 +358,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
       style={
         Array [
           Object {
-            "borderRadius": 6,
+            "borderRadius": 8,
           },
           Object {
             "flex": 1,
@@ -373,7 +373,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "borderRadius": 6,
+              "borderRadius": 8,
               "flexDirection": "row",
               "justifyContent": "center",
               "paddingVertical": 4,
@@ -426,7 +426,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
       style={
         Array [
           Object {
-            "borderRadius": 6,
+            "borderRadius": 8,
           },
           Object {
             "flex": 1,
@@ -440,7 +440,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "borderRadius": 6,
+              "borderRadius": 8,
               "flexDirection": "row",
               "justifyContent": "center",
               "paddingVertical": 4,

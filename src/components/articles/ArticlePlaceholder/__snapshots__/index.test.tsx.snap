@@ -74,7 +74,7 @@ exports[`ArticlePlaceholder Component renders correctly 1`] = `
                 "borderRadius": 3,
                 "height": 12,
                 "marginBottom": 12,
-                "width": "52%",
+                "width": "32%",
               },
               Object {
                 "marginBottom": 8,
@@ -98,7 +98,7 @@ exports[`ArticlePlaceholder Component renders correctly 1`] = `
                 "borderRadius": 3,
                 "height": 12,
                 "marginBottom": 12,
-                "width": "78%",
+                "width": "68%",
               },
               Object {
                 "marginBottom": 8,
@@ -257,7 +257,31 @@ exports[`ArticlePlaceholder Component renders correctly 1`] = `
                 "borderRadius": 3,
                 "height": 12,
                 "marginBottom": 12,
-                "width": "75%",
+                "width": "100%",
+              },
+              Object {
+                "marginBottom": 8,
+              },
+              Object {
+                "overflow": "hidden",
+              },
+            ]
+          }
+        >
+          <View
+            collapsable={false}
+            style={Object {}}
+          />
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "#efefef",
+                "borderRadius": 3,
+                "height": 12,
+                "marginBottom": 12,
+                "width": "56%",
               },
               Object {
                 "marginBottom": 0,
@@ -478,7 +502,7 @@ exports[`ArticlePlaceholder Component renders correctly 1`] = `
                 "borderRadius": 3,
                 "height": 12,
                 "marginBottom": 12,
-                "width": "74%",
+                "width": "43%",
               },
               Object {
                 "marginBottom": 0,

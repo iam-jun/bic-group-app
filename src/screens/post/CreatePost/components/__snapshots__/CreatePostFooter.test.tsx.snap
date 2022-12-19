@@ -470,7 +470,7 @@ exports[`CreatePostFooter component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "borderRadius": 6,
+                  "borderRadius": 8,
                 },
                 Object {
                   "marginRight": 4,
@@ -484,7 +484,7 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 Array [
                   Object {
                     "alignItems": "center",
-                    "borderRadius": 6,
+                    "borderRadius": 8,
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "paddingVertical": 4,

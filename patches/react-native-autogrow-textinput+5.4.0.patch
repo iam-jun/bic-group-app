@@ -1,0 +1,21 @@
+diff --git a/node_modules/react-native-autogrow-textinput/src/AutoGrowingTextInput.js b/node_modules/react-native-autogrow-textinput/src/AutoGrowingTextInput.js
+index 68531dc..fc9be73 100644
+--- a/node_modules/react-native-autogrow-textinput/src/AutoGrowingTextInput.js
++++ b/node_modules/react-native-autogrow-textinput/src/AutoGrowingTextInput.js
+@@ -1,6 +1,7 @@
+ import React, {Component} from 'react';
+ import ReactNative, {TextInput, Platform, NativeModules} from 'react-native';
+ import PropTypes from 'prop-types';
++import PasteInput from 'react-native-paste-image-input';
+ 
+ const ANDROID_PLATFORM = (Platform.OS === 'android');
+ 
+@@ -45,7 +46,7 @@ export default class AutoGrowingTextInput extends Component {
+ 
+   render() {
+     return (
+-      <TextInput
++      <PasteInput
+         multiline
+         {...this.props} {...this.style}
+         style={[this.props.style, {height: 'auto'}]}

@@ -268,7 +268,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                 style={
                   Array [
                     Object {
-                      "borderRadius": 6,
+                      "borderRadius": 8,
                     },
                     Object {
                       "borderWidth": 0,
@@ -282,7 +282,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                     Array [
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 6,
+                        "borderRadius": 8,
                         "flexDirection": "row",
                         "justifyContent": "center",
                         "paddingVertical": 4,
@@ -1029,7 +1029,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       style={
                         Array [
                           Object {
-                            "borderRadius": 6,
+                            "borderRadius": 8,
                           },
                           Object {
                             "marginRight": 4,
@@ -1043,7 +1043,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           Array [
                             Object {
                               "alignItems": "center",
-                              "borderRadius": 6,
+                              "borderRadius": 8,
                               "flexDirection": "row",
                               "justifyContent": "center",
                               "paddingVertical": 4,
