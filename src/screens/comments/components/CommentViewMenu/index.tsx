@@ -135,7 +135,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
           dataComment={dataComment}
         />,
       }));
-    }, 200);
+    }, 350);
   };
 
   const renderReactItem = (
