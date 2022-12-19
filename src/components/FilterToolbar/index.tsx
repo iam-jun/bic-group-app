@@ -5,14 +5,12 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import PillTabButton from '~/baseComponents/Tab/PillTabButton';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import { useKeySelector } from '~/hooks/selector';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
-import FilterCreatedBy from '~/screens/Home/HomeSearch/FilterCreatedBy';
-import FilterDate from '~/screens/Home/HomeSearch/FilterDate';
-import homeActions from '~/storeRedux/home/actions';
-import homeKeySelector from '~/storeRedux/home/keySelector';
+import FilterCreatedBy from './FilterCreatedBy';
+import FilterDate from './FilterDate';
 import * as modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
+import useFilterToolbarStore from './store';
 
 const FilterToolbar = () => {
   const scrollRef = useRef<any>();
@@ -20,8 +18,9 @@ const FilterToolbar = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const filterCreatedBy = useKeySelector(homeKeySelector.newsfeedSearchFilterCreatedBy);
-  const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
+  const actions = useFilterToolbarStore((state) => state.actions);
+  const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
+  const filterDate = useFilterToolbarStore((state) => state.datePosted);
   const { startDate, endDate } = filterDate || {};
 
   const showModal = (ContentComponent: any, props: any = {}) => {
@@ -49,7 +48,7 @@ const FilterToolbar = () => {
   const onSelectDate = (
     startDate?: string, endDate?: string,
   ) => {
-    dispatch(homeActions.setNewsfeedSearchFilter({ date: { startDate, endDate } }));
+    actions.setFilterDatePosted({ startDate, endDate });
   };
 
   const onPressFilterDate = () => {
@@ -63,7 +62,7 @@ const FilterToolbar = () => {
   };
 
   const onSelectCreatedBy = (selected?: ISelectedFilterUser) => {
-    dispatch(homeActions.setNewsfeedSearchFilter({ createdBy: selected }));
+    actions.setFilterCreateBy(selected);
   };
 
   return (

@@ -3,23 +3,13 @@ import {
   IParamGetRecentSearchKeywords,
   IPayloadGetSearchPosts,
   IPayloadSetNewsfeedSearch,
-  IPayloadSetNewsfeedSearchFilter,
   IPayloadSetNewsfeedSearchRecentKeywords,
-  IPayloadSetNewsfeedSearchUsers,
   IRecentSearchTarget,
 } from '~/interfaces/IHome';
 
 const homeActions = {
   setNewsfeedSearch: (payload: IPayloadSetNewsfeedSearch) => ({
     type: homeTypes.SET_NEWSFEED_SEARCH,
-    payload,
-  }),
-  setNewsfeedSearchFilter: (payload: IPayloadSetNewsfeedSearchFilter) => ({
-    type: homeTypes.SET_NEWSFEED_SEARCH_FILTER,
-    payload,
-  }),
-  setNewsfeedSearchUsers: (payload: IPayloadSetNewsfeedSearchUsers) => ({
-    type: homeTypes.SET_NEWSFEED_SEARCH_USERS,
     payload,
   }),
   setNewsfeedSearchRecentKeywords: (payload: IPayloadSetNewsfeedSearchRecentKeywords) => ({
@@ -33,10 +23,6 @@ const homeActions = {
   // FOR SAGA:
   getSearchPosts: (payload?: IPayloadGetSearchPosts) => ({
     type: homeTypes.GET_SEARCH_POSTS,
-    payload,
-  }),
-  getSearchUsers: (payload?: string) => ({
-    type: homeTypes.GET_SEARCH_POSTS_USERS,
     payload,
   }),
   getRecentSearchKeywords: (payload?: IParamGetRecentSearchKeywords) => ({

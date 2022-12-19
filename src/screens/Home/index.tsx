@@ -30,6 +30,7 @@ import getEnv from '~/utils/env';
 import HomeHeader from '~/screens/Home/components/HomeHeader';
 import useHomeStore from '~/screens/Home/store';
 import useCommonController from '../store';
+import useFilterToolbarStore from '~/components/FilterToolbar/store';
 
 const Home = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -44,11 +45,11 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
+  const resetFilter = useFilterToolbarStore((state) => state.reset);
 
   const token = useAuthController(getAuthToken);
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
-  const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
 
   const {
     contentFilter, attributeFilter, feed, actions,
@@ -95,7 +96,7 @@ const Home = () => {
         headerRef?.current?.hideSearch?.();
       }
 
-      if (tabName !== 'home' && isShow) {
+      if (tabName !== 'home' && isShowSearch) {
         /**
          * The issue happens when a user opens search content modal on newsfeed,
          * then move to tab `Communities` without closing it, and goes to community profile,
@@ -105,9 +106,10 @@ const Home = () => {
          * moving to another screen.
          */
         dispatch(homeActions.clearAllNewsfeedSearch());
+        resetFilter();
       }
     },
-    [listRef, isShow],
+    [listRef, isShowSearch],
   );
 
   useEffect(
@@ -147,6 +149,7 @@ const Home = () => {
   const handleBackPress = () => {
     if (isShowSearch) {
       dispatch(homeActions.clearAllNewsfeedSearch());
+      resetFilter();
     } else if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {

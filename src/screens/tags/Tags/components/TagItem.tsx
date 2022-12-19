@@ -6,19 +6,26 @@ import Text from '~/baseComponents/Text';
 import { ITag } from '~/interfaces/ITag';
 import spacing from '~/theme/spacing';
 import useTagItemMenu from '../useTagItemMenu';
+import { Button } from '~/baseComponents';
+import { useRootNavigation } from '~/hooks/navigation';
+import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 
 type TagItemProps = {
     item: ITag;
     isMember: boolean;
     communityId: string;
+    communityName: string;
 }
 
-const TagItem: FC<TagItemProps> = ({ item, isMember, communityId }) => {
+const TagItem: FC<TagItemProps> = ({
+  item, isMember, communityId, communityName,
+}) => {
   const { name, totalUsed } = item;
 
   const theme = useTheme();
   const { colors } = theme;
   const styles = createStyle();
+  const { rootNavigation } = useRootNavigation();
 
   const canAction = totalUsed === 0;
 
@@ -28,8 +35,13 @@ const TagItem: FC<TagItemProps> = ({ item, isMember, communityId }) => {
     showMenu();
   };
 
+  const goToTagsDetail = () => {
+    isMember
+    && rootNavigation.navigate(tagsStack.tagDetail, { tagData: item, communityName });
+  };
+
   return (
-    <View style={styles.row}>
+    <Button style={styles.row} onPress={goToTagsDetail}>
       <View style={styles.flex}>
         <Text.BodyM numberOfLines={1}>{name}</Text.BodyM>
       </View>
@@ -47,7 +59,7 @@ const TagItem: FC<TagItemProps> = ({ item, isMember, communityId }) => {
         }}
       />
       )}
-    </View>
+    </Button>
   );
 };
 
