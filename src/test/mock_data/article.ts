@@ -1,3 +1,5 @@
+import { mockTagsInArticle } from './tags';
+
 export const mockArticle = {
   owner_reactions: [
 
@@ -115,5 +117,5 @@ export const mockArticle = {
     thumbnails: null,
     createdAt: '2022-11-14T08:39:17.784Z',
   },
-  tags: [],
+  tags: mockTagsInArticle,
 };

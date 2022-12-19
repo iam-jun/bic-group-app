@@ -2,6 +2,7 @@ import { IFilePicked } from '~/interfaces/common';
 import { ReactionType } from '~/constants/reactions';
 import { ICategory } from '~/interfaces/IArticle';
 import { IGiphy } from './IGiphy';
+import { ITag } from './ITag';
 
 export enum PostType {
   POST = 'POST',
@@ -43,6 +44,7 @@ export interface IPost {
   coverMedia?: IArticleCover;
   categories?: ICategory[];
   isSaved?: boolean;
+  tags?: ITag[];
   reported?: boolean;
 }
 

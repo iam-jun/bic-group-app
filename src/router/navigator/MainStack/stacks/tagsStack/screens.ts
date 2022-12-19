@@ -1,7 +1,8 @@
-import { EditTag, Tags } from '~/screens/tags';
+import { TagDetail, Tags, EditTag } from '~/screens/tags';
 
 const tagsScreens = {
   tags: Tags,
+  'tag-detail': TagDetail,
   'edit-tag': EditTag,
 };
 

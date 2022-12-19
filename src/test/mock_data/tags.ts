@@ -46,3 +46,24 @@ export const mockGetTagsInArticle = [
 ];
 
 export const searchTagsRequestParams = searchSeriesRequestParams;
+
+export const mockTagsInArticle = [
+  {
+    groupId: 'b01fb58e-9299-4a0e-a55f-9839293fb42a',
+    id: '21a08db3-92d2-4758-a64c-d22e2ba01f33',
+    name: 'tag 1',
+    slug: 'tag 1',
+    totalUsed: 11,
+    createdBy: '7b63852c-5249-499a-a32b-6bdaa2761fc2',
+    updatedBy: '7b63852c-5249-499a-a32b-6bdaa2761fc2',
+  },
+  {
+    groupId: 'b01fb58e-9299-4a0e-a55f-9839293fb42a',
+    id: 'f8614f2a-c746-493e-a861-60029ec75f8c',
+    name: 'tag 2',
+    slug: 'tag 2',
+    totalUsed: 6,
+    createdBy: '7b63852c-5249-499a-a32b-6bdaa2761fc2',
+    updatedBy: '7b63852c-5249-499a-a32b-6bdaa2761fc2',
+  },
+];

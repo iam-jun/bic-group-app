@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TagsView component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "marginTop": 8,
+        "maxWidth": 718,
+        "paddingRight": 8,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#E3E6F2",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 24,
+          "justifyContent": "center",
+          "marginRight": 0,
+          "opacity": 1,
+          "paddingLeft": 4,
+          "paddingRight": 8,
+        }
+      }
+      testID="tag_item_21a08db3-92d2-4758-a64c-d22e2ba01f33.button_navigate"
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 11,
+            },
+            Object {},
+            Object {
+              "color": "#7335C0",
+              "paddingLeft": 4,
+            },
+          ]
+        }
+        testID="tag.label"
+      >
+        tag 1
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginTop": 8,
+        "maxWidth": 718,
+        "paddingRight": 8,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#E3E6F2",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "height": 24,
+          "justifyContent": "center",
+          "marginRight": 0,
+          "opacity": 1,
+          "paddingLeft": 4,
+          "paddingRight": 8,
+        }
+      }
+      testID="tag_item_f8614f2a-c746-493e-a861-60029ec75f8c.button_navigate"
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#212745",
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 11,
+            },
+            Object {},
+            Object {
+              "color": "#7335C0",
+              "paddingLeft": 4,
+            },
+          ]
+        }
+        testID="tag.label"
+      >
+        tag 2
+      </Text>
+    </View>
+  </View>
+</View>
+`;

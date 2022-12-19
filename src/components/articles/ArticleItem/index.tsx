@@ -18,6 +18,10 @@ import { ArticleSummary, ArticleTitle } from '../ArticleText';
 import { getTotalReactions } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import TagsView from '~/components/TagsView';
+import useCommunitiesStore from '~/store/entities/communities';
+import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
+import { ITag } from '~/interfaces/ITag';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -49,6 +53,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
     coverMedia,
     markedReadPost,
     communities,
+    tags,
     reported,
   } = data || {};
 
@@ -65,6 +70,10 @@ const ArticleItem: FC<ArticleItemProps> = ({
 
   const goToContentDetail = () => rootNavigation.navigate(articleStack.articleContentDetail, { articleId: id });
   const goToDetail = () => rootNavigation.navigate(articleStack.articleDetail, { articleId: id, focusComment: true });
+  const goToTagDetail = (tagData: ITag) => {
+    const communityId = useCommunitiesStore.getState().currentCommunityId;
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData, communityId });
+  };
 
   const renderImportant = () => (
     <PostImportant
@@ -100,6 +109,9 @@ const ArticleItem: FC<ArticleItemProps> = ({
           <ViewSpacing height={spacing.margin.small} />
           <ArticleSummary text={summaryArticle} />
         </>
+      )}
+      {tags.length > 0 && (
+        <TagsView data={tags} onPressTag={goToTagDetail} />
       )}
     </View>
   );
