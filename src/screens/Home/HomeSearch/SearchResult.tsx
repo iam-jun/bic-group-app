@@ -14,7 +14,6 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import Text from '~/baseComponents/Text';
 import { scaleSize } from '~/theme/dimension';
-import FilterToolbar from '~/screens/Home/HomeSearch/FilterToolbar';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Icon from '~/baseComponents/Icon';
@@ -22,6 +21,8 @@ import ArticleItem from '~/components/articles/ArticleItem';
 import { PostType } from '~/interfaces/IPost';
 import { PostView } from '~/components/posts';
 import SeriesItem from '~/components/series/SeriesItem';
+import FilterToolbar from '~/components/FilterToolbar';
+import useFilterToolbarStore from '~/components/FilterToolbar/store';
 
 const SearchResult = () => {
   const dispatch = useDispatch();
@@ -36,10 +37,9 @@ const SearchResult = () => {
     totalResult,
     groupId,
   } = useKeySelector(homeKeySelector.newsfeedSearchState) || {};
-  const filterCreatedBy = useKeySelector(
-    homeKeySelector.newsfeedSearchFilterCreatedBy,
-  );
-  const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
+
+  const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
+  const filterDate = useFilterToolbarStore((state) => state.datePosted);
 
   useEffect(() => {
     getData();

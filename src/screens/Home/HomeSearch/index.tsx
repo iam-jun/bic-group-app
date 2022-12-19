@@ -11,6 +11,7 @@ import SearchResult from '~/screens/Home/HomeSearch/SearchResult';
 import { useBaseHook } from '~/hooks';
 import { IPayloadSetNewsfeedSearch } from '~/interfaces/IHome';
 import spacing from '~/theme/spacing';
+import useFilterToolbarStore from '~/components/FilterToolbar/store';
 
 interface HomeSearchProps {
   style?: StyleProp<ViewStyle>;
@@ -23,6 +24,7 @@ const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
 
   const dispatch = useDispatch();
   const { t } = useBaseHook();
+  const resetFilter = useFilterToolbarStore((state) => state.reset);
 
   const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
   const isSuggestion = useKeySelector(
@@ -69,6 +71,7 @@ const HomeSearch = ({ style, searchViewRef, groupId }: HomeSearchProps) => {
   }
 
   const onClose = () => {
+    resetFilter();
     dispatch(homeActions.clearAllNewsfeedSearch());
   };
 

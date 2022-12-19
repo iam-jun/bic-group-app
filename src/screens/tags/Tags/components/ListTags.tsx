@@ -44,14 +44,20 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
     ids, refreshing, loading, hasNextPage,
   } = communityTags || {};
 
-  const { joinStatus } = community;
+  const { joinStatus, name } = community;
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
   const tags = useTagsStore((state) => state.tags);
+  console.log('communityName', name);
 
   const renderItem: ListRenderItem<string> = ({ item }) => (
-    <TagItem isMember={isMember} item={tags[item]} communityId={communityId} />
+    <TagItem
+      isMember={isMember}
+      item={tags[item]}
+      communityId={communityId}
+      communityName={name}
+    />
   );
 
   const keyExtractor = (item: string) => `tag-${item}`;

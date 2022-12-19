@@ -6,9 +6,6 @@ const homeKeySelector = {
     searchText: 'home.newsfeedSearch.searchText',
     searchViewRef: 'home.newsfeedSearch.searchViewRef',
   },
-  newsfeedSearchFilterCreatedBy: 'home.newsfeedSearchFilter.createdBy',
-  newsfeedSearchFilterDate: 'home.newsfeedSearchFilter.date',
-  newsfeedSearchUsers: 'home.newsfeedSearchUsers',
   newsfeedSearchRecentKeyword: 'home.newsfeedSearchRecentKeyword',
 };
 

@@ -9,7 +9,7 @@ import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
-import FilterCreateBySpecific from '~/screens/Home/HomeSearch/FilterCreateBySpecific';
+import FilterCreateBySpecific from '~/components/FilterToolbar/FilterCreateBySpecific';
 import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';

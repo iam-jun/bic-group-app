@@ -140,6 +140,12 @@ const CommunityDetail = (props: any) => {
     }
   }, [isMounted, communityId]);
 
+  useEffect(() => () => {
+    useCommunitiesStore.setState({
+      currentCommunityId: '',
+    });
+  }, []);
+
   useEffect(() => {
     if (isEmpty(timelines[groupId]) && isEmpty(communityPost?.ids)) {
       // for the 1st time timelines[groupId] can be undefined so we must init Data

@@ -13,15 +13,14 @@ import { useBaseHook } from '~/hooks';
 import modalActions from '~/storeRedux/modal/actions';
 
 import spacing from '~/theme/spacing';
-import {
-  endOfToday,
-  getDefaultEndDate, getDefaultStartDate, getTimeAgo, isDiffBetweenTwoDates,
-} from './helper';
 import Icon from '~/baseComponents/Icon';
 import Tag from '~/baseComponents/Tag';
 import { formatDateWithSameDayLabel } from '~/beinComponents/TimeView/helper';
 import { DateInput } from '~/baseComponents/Input';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {
+  endOfToday, getDefaultEndDate, getDefaultStartDate, getTimeAgo, isDiffBetweenTwoDates,
+} from './helper';
 
 export interface NFSFilterDateProps {
   startDate?: string;

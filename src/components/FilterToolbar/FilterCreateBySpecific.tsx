@@ -8,13 +8,9 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { debounce } from 'lodash';
-import { useDispatch } from 'react-redux';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useKeySelector } from '~/hooks/selector';
-import homeKeySelector from '~/storeRedux/home/keySelector';
 import { useBaseHook } from '~/hooks';
-import homeActions from '~/storeRedux/home/actions';
 import { ISelectedFilterUser } from '~/interfaces/IHome';
 
 import SearchInput from '~/baseComponents/Input/SearchInput';
@@ -24,6 +20,8 @@ import Icon from '~/baseComponents/Icon';
 import { Avatar, Button } from '~/baseComponents';
 import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import useFilterToolbarStore from './store';
+import appConfig from '~/configs/appConfig';
 
 export interface NFSFilterCreateBySpecificProps {
   onSelect?: (selected?: ISelectedFilterUser) => void;
@@ -34,23 +32,28 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   onSelect,
   onBack,
 }: NFSFilterCreateBySpecificProps) => {
-  const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles();
 
-  const { data, canLoadMore } = useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
+  const actions = useFilterToolbarStore((state) => state.actions);
+  const listUser = useFilterToolbarStore((state) => state.listUser);
+  const searchData = useFilterToolbarStore((state) => state.search);
+  const { items: userItems, hasNextPage: listUserCanLoadMore } = listUser;
+  const { key: searchKey, items: searchItems, hasNextPage: searchUserCanLoadMore } = searchData || {};
+
+  const listData = searchKey ? searchItems : userItems;
 
   useEffect(
     () => {
-      dispatch(homeActions.getSearchUsers(''));
+      actions.getPostUsers();
     }, [],
   );
 
   const onChangeText = debounce(
     (text: string) => {
-      dispatch(homeActions.getSearchUsers(text));
-    }, 200,
+      actions.searchPostUsers(text);
+    }, appConfig.searchTriggerTime,
   );
 
   const onPressUser = (user: any) => {
@@ -72,13 +75,15 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   );
 
   const onEndReached = () => {
-    if (canLoadMore) {
-      dispatch(homeActions.getSearchUsers());
+    if (!!searchKey) {
+      actions.searchPostUsers(searchKey, true);
+    } else {
+      actions.getPostUsers(true);
     }
   };
 
   const renderFooter = () => {
-    if (canLoadMore) {
+    if (listUserCanLoadMore || searchUserCanLoadMore) {
       return (
         <ActivityIndicator
           style={{ marginVertical: spacing.margin.base }}
@@ -108,7 +113,7 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
         />
       </View>
       <FlatList
-        data={data || []}
+        data={listData || []}
         renderItem={renderItem}
         keyExtractor={(item) => `newsfeed_search_user_${item?.id}`}
         keyboardShouldPersistTaps="always"
