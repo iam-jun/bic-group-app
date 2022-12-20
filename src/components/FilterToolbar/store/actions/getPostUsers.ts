@@ -14,7 +14,7 @@ const getPostUsers = (set, get) => async (isLoadMore?: boolean) => {
     }
 
     const { home } = Store.store.getState() || {};
-    const { groupId } = home;
+    const { groupId } = home?.newsfeedSearch || {};
 
     set((state: IFilterToolbarState) => {
       state.listUser.loading = true;
@@ -38,6 +38,9 @@ const getPostUsers = (set, get) => async (isLoadMore?: boolean) => {
       state.listUser.hasNextPage = hasNextPage;
     }, 'getPostUserSuccess');
   } catch (e) {
+    set((state: IFilterToolbarState) => {
+      state.listUser.loading = false;
+    }, 'getPostUserFailed');
     console.error(
       '\x1b[31m🐣️ saga getPostUsers error: ', e, '\x1b[0m',
     );

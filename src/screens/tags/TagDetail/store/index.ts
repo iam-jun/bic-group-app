@@ -19,7 +19,7 @@ export interface ITagDetailState extends IBaseState, IFetchingState {
 const initialState: InitStateType<ITagDetailState> = {
   articles: [],
   hasNextPage: true,
-  loading: false,
+  loading: true,
   refreshing: false,
 };
 

@@ -3,6 +3,7 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { debounce } from 'lodash';
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import FilterToolbar from '~/components/FilterToolbar';
 import useFilterToolbarStore from '~/components/FilterToolbar/store';
@@ -14,29 +15,47 @@ import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import appConfig from '~/configs/appConfig';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import homeActions from '~/storeRedux/home/actions';
 
 const TagDetail: React.FC<any> = ({ route }) => {
   const { params } = route || {};
-  const { tagData, communityId } = params || {};
-  const { name: tagName } = tagData || {};
+  const { tagData, communityId = '' } = params || {};
+  const { name: tagName, id: tagId } = tagData || {};
 
   const theme = useTheme();
   const styles = createStyle(theme);
+  const dispatch = useDispatch();
 
   const filterCreatedBy = useFilterToolbarStore((state) => state.createdBy);
   const filterDate = useFilterToolbarStore((state) => state.datePosted);
+  const resetFilter = useFilterToolbarStore((state) => state.reset);
+
   const tagActions = useTagDetailStore((state) => state.actions);
+  const loading = useTagDetailStore((state) => state.loading);
+  const hasNextPage = useTagDetailStore((state) => state.hasNextPage);
   const resetTag = useTagDetailStore((state) => state.reset);
   const articles = useTagDetailStore((state) => state.articles);
 
-  const community = communityId && useCommunitiesStore((state) => state.data[communityId]);
-  const { name: communityName, groupId } = community || {};
+  const community = useCommunitiesStore((state) => state.data[communityId]);
+  const { groupId, name: communityName } = community || {};
 
   useEffect(() => {
     getData();
-  }, [filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId]);
+    dispatch(
+      homeActions.setNewsfeedSearch({
+        groupId,
+      }),
+    );
+  }, [filterCreatedBy, filterDate?.startDate, filterDate?.endDate, groupId, tagId]);
 
-  useEffect(() => () => { resetTag(); }, []);
+  useEffect(() => () => {
+    resetTag();
+    resetFilter();
+    dispatch(
+      homeActions.clearAllNewsfeedSearch(),
+    );
+  }, [tagId]);
 
   const getData = (isLoadMore = false) => {
     const payload: IPayloadGetSearchPosts = {
@@ -58,12 +77,17 @@ const TagDetail: React.FC<any> = ({ route }) => {
     <ContentItem id={item?.id} testID="page_content.post.item" />
   );
 
-  const renderFooter = () => (
-    <ViewSpacing height={spacing.margin.large} />
-  );
+  const renderFooter = () => {
+    if (hasNextPage && !loading) {
+      return <LoadingIndicator style={{ margin: spacing.margin.small }} />;
+    }
+    return <ViewSpacing height={spacing.margin.large} />;
+  };
 
-  const renderEmpty = () => <NoSearchResultsFound />;
-
+  const renderEmpty = () => {
+    if (loading) return <LoadingIndicator style={{ margin: spacing.margin.small }} />;
+    return <NoSearchResultsFound />;
+  };
   const renderItemSeparator = () => <ViewSpacing height={spacing.margin.large} />;
 
   return (
@@ -75,8 +99,9 @@ const TagDetail: React.FC<any> = ({ route }) => {
       />
       <FilterToolbar />
       <FlatList
-        style={styles.listContainer}
         data={articles}
+        showsVerticalScrollIndicator={false}
+        style={styles.listContainer}
         renderItem={renderItem}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={renderEmpty}

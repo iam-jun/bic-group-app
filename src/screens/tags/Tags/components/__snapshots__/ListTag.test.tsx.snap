@@ -78,6 +78,7 @@ exports[`ListTag component render correctly with default state 1`] = `
     removeClippedSubviews={false}
     renderItem={[Function]}
     scrollEventThrottle={50}
+    showsVerticalScrollIndicator={false}
     stickyHeaderIndices={Array []}
     viewabilityConfigCallbackPairs={Array []}
   >
@@ -88,14 +89,26 @@ exports[`ListTag component render correctly with default state 1`] = `
         style={null}
       >
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
+              "opacity": 1,
               "paddingVertical": 12,
             }
           }
+          testID="button_wrapper"
         >
           <View
             style={
@@ -129,14 +142,26 @@ exports[`ListTag component render correctly with default state 1`] = `
         style={null}
       >
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
+              "opacity": 1,
               "paddingVertical": 12,
             }
           }
+          testID="button_wrapper"
         >
           <View
             style={
@@ -170,14 +195,26 @@ exports[`ListTag component render correctly with default state 1`] = `
         style={null}
       >
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
+              "opacity": 1,
               "paddingVertical": 12,
             }
           }
+          testID="button_wrapper"
         >
           <View
             style={
@@ -211,14 +248,26 @@ exports[`ListTag component render correctly with default state 1`] = `
         style={null}
       >
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
+              "opacity": 1,
               "paddingVertical": 12,
             }
           }
+          testID="button_wrapper"
         >
           <View
             style={
@@ -252,14 +301,26 @@ exports[`ListTag component render correctly with default state 1`] = `
         style={null}
       >
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
+              "opacity": 1,
               "paddingVertical": 12,
             }
           }
+          testID="button_wrapper"
         >
           <View
             style={
@@ -293,14 +354,26 @@ exports[`ListTag component render correctly with default state 1`] = `
         style={null}
       >
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
+              "opacity": 1,
               "paddingVertical": 12,
             }
           }
+          testID="button_wrapper"
         >
           <View
             style={
@@ -334,14 +407,26 @@ exports[`ListTag component render correctly with default state 1`] = `
         style={null}
       >
         <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "space-between",
+              "opacity": 1,
               "paddingVertical": 12,
             }
           }
+          testID="button_wrapper"
         >
           <View
             style={

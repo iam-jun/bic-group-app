@@ -22,7 +22,7 @@ const searchPostUsers = (set, get) => async (contentSearch: string, isLoadMore?:
     }
 
     const { home } = Store.store.getState() || {};
-    const { groupId } = home;
+    const { groupId } = home?.newsfeedSearch || {};
 
     set((state: IFilterToolbarState) => {
       state.search.key = contentSearch;

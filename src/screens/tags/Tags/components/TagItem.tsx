@@ -14,11 +14,10 @@ type TagItemProps = {
     item: ITag;
     isMember: boolean;
     communityId: string;
-    communityName: string;
 }
 
 const TagItem: FC<TagItemProps> = ({
-  item, isMember, communityId, communityName,
+  item, isMember, communityId,
 }) => {
   const { name, totalUsed } = item;
 
@@ -37,7 +36,7 @@ const TagItem: FC<TagItemProps> = ({
 
   const goToTagsDetail = () => {
     isMember
-    && rootNavigation.navigate(tagsStack.tagDetail, { tagData: item, communityName });
+    && rootNavigation.navigate(tagsStack.tagDetail, { tagData: item, communityId });
   };
 
   return (

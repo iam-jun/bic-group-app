@@ -1,4 +1,4 @@
-import { isArray } from 'lodash';
+import { isArray, isEmpty } from 'lodash';
 import { ICommentData, IPayloadAddToAllPost, IPost } from '~/interfaces/IPost';
 import { sortComments } from '~/helpers/post';
 import useCommentsStore from '~/store/entities/comments';
@@ -30,6 +30,15 @@ const addToPosts = (_set, get) => (payload: IPayloadAddToAllPost) => {
         });
         newCommentsByParentId[item.id] = newPostCommentsId;
       }
+
+      // In timeline, BE can't get series because heavy query
+      // in case go to article detail => press audience, open community timeline => back to article detail
+      // series will be lost, so we have to keep series from previous data if new data is undefined
+      const isPreviousDataHasSeries = !isEmpty(newPosts[item.id]?.series);
+      if (isPreviousDataHasSeries && item.series === undefined) {
+        item.series = newPosts[item.id]?.series;
+      }
+
       newPosts[item.id] = item;
     }
   });
