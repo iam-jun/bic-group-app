@@ -13,7 +13,9 @@ import { useRootNavigation } from '~/hooks/navigation';
 import { IMentionUser } from '~/interfaces/IPost';
 import { IRouteParams } from '~/interfaces/IRouter';
 import mainStack from '~/router/navigator/MainStack/stack';
+import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
+import useCommunitiesStore from '~/store/entities/communities';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { parseSafe } from '~/utils/common';
@@ -24,7 +26,8 @@ export enum EventType {
     ON_PRESS_MENTION = 'onPressMention',
     ON_PRESS_SERIES = 'onPressSeries',
     ON_PRESS_AUDIENCE = 'onPressAudience',
-    ON_PRESS_TOPIC = 'onPressTopic'
+    ON_PRESS_TOPIC = 'onPressTopic',
+    ON_PRESS_TAG = 'onPressTag',
 }
 
 const HEADER_HEIGHT = 244;
@@ -44,7 +47,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
 
   const {
     content, title, summary, coverMedia, createdAt, audience,
-    series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions,
+    series, categories, actor, setting, reactionsCount, commentsCount, ownerReactions, tags,
   } = data;
 
   const initScript = {
@@ -59,6 +62,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
       categories,
       contentState: parseSafe(content),
       actor,
+      tags,
     },
   };
 
@@ -110,6 +114,13 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     );
   };
 
+  const onPressTags = (payload: any) => {
+    if (!payload) return;
+
+    const communityId = useCommunitiesStore.getState().currentCommunityId;
+    rootNavigation.navigate(tagsStack.tagDetail, { tagData: payload, communityId });
+  };
+
   const onPressMentionAudience = useRef((payload: IMentionUser) => {
     if (!payload) return;
 
@@ -131,6 +142,8 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
         return onPressAudiences(payload);
       case EventType.ON_PRESS_TOPIC:
         return onPressTopics(payload);
+      case EventType.ON_PRESS_TAG:
+        return onPressTags(payload);
       default:
         return console.warn('Article webview onMessage unhandled', message);
     }
