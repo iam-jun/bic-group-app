@@ -33,6 +33,7 @@ import { ITopicState } from '~/screens/topic/store';
 import { ICreateArticleSeriesState } from '~/screens/articles/CreateArticle/screens/CreateArticleSeries/store';
 import { ICreateArticleCategoryState } from '~/screens/articles/CreateArticle/screens/CreateArticleCategory/store';
 import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
+import { IMyPermissionsState } from './permissions';
 import { IGroupController } from '~/screens/groups/store';
 import { ITagsState } from './entities/tags';
 
@@ -119,5 +120,6 @@ export interface BicStore {
   removeCommunityMemberStore: IRemoveCommunityMemberState;
   giphy: IGiphyState;
   codePush: ICodePushState;
+  myPermissions: IMyPermissionsState;
   tags: ITagsState;
 }

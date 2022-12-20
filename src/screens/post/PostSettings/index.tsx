@@ -22,7 +22,6 @@ import useCreatePost from '~/screens/post/CreatePost/hooks/useCreatePost';
 import { IPostSettingsParams } from '~/interfaces/IPost';
 import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '../../../storeRedux/post/keySelector';
 import BottomSheet from '~/baseComponents/BottomSheet';
@@ -35,6 +34,8 @@ import { timeSuggest } from '~/constants/importantTimeSuggest';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { DateInput } from '~/baseComponents/Input';
 import { Button } from '~/baseComponents';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 
 export interface PostSettingsProps {
   route?: {
@@ -63,10 +64,11 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
   }
 
-  const { getListOfChosenAudiencesWithoutPermission, PERMISSION_KEY } = useMyPermissions();
-  const listAudiencesWithoutPermission = getListOfChosenAudiencesWithoutPermission(
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
+
+  const listAudiencesWithoutPermission = getAudienceListWithNoPermission(
     chosenAudiences,
-    PERMISSION_KEY.EDIT_POST_SETTING,
+    PermissionKey.EDIT_POST_SETTING,
   );
 
   useEffect(

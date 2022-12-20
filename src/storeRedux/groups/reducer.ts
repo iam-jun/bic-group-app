@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash';
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
@@ -10,11 +9,6 @@ import {
 import { IObject } from '~/interfaces/common';
 
 export const groupInitState = {
-  myPermissions: {
-    loading: false,
-    data: {},
-    timeGetMyPermissions: null,
-  },
   permissionScheme: {
     assignGroupScheme: {
       assignments: {
@@ -187,15 +181,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   } = state;
 
   switch (type) {
-    case groupsTypes.SET_MY_PERMISSIONS:
-      return {
-        ...state,
-        myPermissions: {
-          ...cloneDeep(state.myPermissions),
-          ...payload,
-        },
-      };
-
     // Group Structure Settings
     case groupsTypes.SET_GROUP_DETAIL_ERROR:
       return {

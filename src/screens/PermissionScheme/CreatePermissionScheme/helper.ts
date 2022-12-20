@@ -1,5 +1,5 @@
 import { IPermission, IRole, IScheme } from '~/interfaces/IGroup';
-import { ROLE_TYPE } from '~/constants/permissionScheme';
+import { RoleType } from '~/constants/permissionScheme';
 
 export const getNewSchemeFromSystemScheme = (systemScheme: IScheme) => {
   let memberRoleIndex = 0;
@@ -7,7 +7,7 @@ export const getNewSchemeFromSystemScheme = (systemScheme: IScheme) => {
   const roles = systemScheme.roles?.map((
     role: IRole, i: number,
   ) => {
-    if (role?.type === ROLE_TYPE.MEMBER) {
+    if (role?.type === RoleType.MEMBER) {
       memberRoleIndex = i;
     }
     return roleKeys.reduce(
@@ -49,7 +49,7 @@ export const getNewSchemeRolesOnUpdatePermission = (
         // in community & group section
         if (!item.permissions?.includes?.(newKey)
           && !(
-            item?.type === ROLE_TYPE.GROUP_ADMIN
+            item?.type === RoleType.GROUP_ADMIN
             && permission?.scope === 'COMMUNITY'
           ) // group admin doesn't have permissions of community scope
         ) {
@@ -81,7 +81,7 @@ export const getMemberRoleIndex = (schemeData: IScheme) => {
   schemeData.roles?.forEach((
     role: IRole, i: number,
   ) => {
-    if (role?.type === ROLE_TYPE.MEMBER) {
+    if (role?.type === RoleType.MEMBER) {
       memberRoleIndex = i;
     }
   });

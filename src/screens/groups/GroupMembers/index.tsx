@@ -15,7 +15,6 @@ import Header, { HeaderProps } from '~/beinComponents/Header';
 import MemberOptionsMenu from './components/GroupMemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
 import GroupMemberList from './GroupMemberList';
 import Tab from '~/baseComponents/Tab';
 import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
@@ -23,6 +22,8 @@ import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupMemberRequests from './GroupMemberRequests';
 import { IconType } from '~/resources/icons';
 import useGroupMemberStore from './store';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 
 const _GroupMembers = ({ route }: any) => {
   const { groupId, targetIndex, isMemberCommunity } = route.params;
@@ -44,18 +45,18 @@ const _GroupMembers = ({ route }: any) => {
   const actions = useGroupMemberStore((state) => state.actions);
 
   const { offset } = useKeySelector(groupsKeySelector.groupMembers);
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canAddMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canAddMember = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.ADD_MEMBER,
+    PermissionKey.ADD_MEMBER,
   );
-  const canApproveRejectJoiningRequests = hasPermissionsOnScopeWithId(
+  const canApproveRejectJoiningRequests = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.APPROVE_REJECT_JOINING_REQUESTS,
+    PermissionKey.APPROVE_REJECT_JOINING_REQUESTS,
   );
-  const canEditJoinSetting = hasPermissionsOnScopeWithId(
+  const canEditJoinSetting = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.EDIT_JOIN_SETTING,
+    PermissionKey.EDIT_JOIN_SETTING,
   );
 
   const getGroupProfile = () => {
@@ -63,9 +64,8 @@ const _GroupMembers = ({ route }: any) => {
   };
 
   const getMembers = () => {
-    if (groupId) {
-      actions.getGroupMembers({ groupId });
-    }
+    if (!groupId) return;
+    actions.getGroupMembers({ groupId });
   };
 
   useEffect(

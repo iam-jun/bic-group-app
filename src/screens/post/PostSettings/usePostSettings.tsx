@@ -103,7 +103,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   };
 
   const handleToggleImportant = () => {
-    if (!!listAudiencesWithoutPermission?.length && listAudiencesWithoutPermission.length > 0) {
+    if (listAudiencesWithoutPermission?.length > 0) {
       const newImportant = { ...sImportant };
       newImportant.active = !sImportant.active;
       setImportant(newImportant);

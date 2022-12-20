@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberList from '~/screens/groups/components/MemberList';
 import actions from '~/storeRedux/groups/actions';
-import { useMyPermissions } from '~/hooks/permissions';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
@@ -18,12 +19,12 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
   const dispatch = useDispatch();
   const { canLoadMore } = useKeySelector(groupsKeySelector.communityMembers);
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canManageMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canManageMember = shouldHavePermission(
     groupId,
     [
-      PERMISSION_KEY.REMOVE_MEMBER,
-      PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
+      PermissionKey.REMOVE_MEMBER,
+      PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
 

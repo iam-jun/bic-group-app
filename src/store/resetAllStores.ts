@@ -39,6 +39,7 @@ import useCreateArticleSeriesStore from '~/screens/articles/CreateArticle/screen
 import useForgotPasswordStore from '~/screens/auth/ForgotPassword/store';
 import useChangePasswordStore from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import useMyPermissionsStore from './permissions';
 import useTagsStore from './entities/tags';
 import useTagsControllerStore from '~/screens/tags/store';
 
@@ -93,6 +94,7 @@ const stores = [
   useForgotPasswordStore,
   useChangePasswordStore,
   useGroupDetailStore,
+  useMyPermissionsStore,
   useTagsStore,
   useTagsControllerStore,
 ];

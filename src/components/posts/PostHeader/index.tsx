@@ -6,7 +6,8 @@ import { ContentHeader, ContentHeaderProps } from '~/components/ContentView';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useMyPermissions } from '~/hooks/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 import usePostMenu from '~/hooks/usePostMenu';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
@@ -37,6 +38,12 @@ const PostHeader: FC<PostHeaderProps> = ({
   const userId = useUserIdAuth();
   const isActor = actor?.id === userId;
 
+  const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
+  const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(
+    audience?.groups,
+    PermissionKey.CRUD_POST_ARTICLE,
+  );
+
   const _onPressHeader = () => {
     if (onPressHeader) {
       onPressHeader?.();
@@ -44,12 +51,6 @@ const PostHeader: FC<PostHeaderProps> = ({
       rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
     }
   };
-  const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
-    = useMyPermissions();
-  const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
-    audience?.groups,
-    PERMISSION_KEY.CRUD_POST_ARTICLE,
-  );
 
   const handleDeletePostError = (listIdAudiences: string[]) => {
     if (listIdAudiences?.length <= 0 || audience?.groups?.length <= 0) {

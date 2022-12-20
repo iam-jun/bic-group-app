@@ -9,7 +9,8 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberSearchResult from '../../../../groups/components/MemberSearchResult';
-import { useMyPermissions } from '~/hooks/permissions';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
 
 interface SearchMemberViewProps {
   community: ICommunity;
@@ -32,12 +33,12 @@ const SearchMemberView = ({
   const [searchText, setSearchText] = useState(initSearch || '');
 
   const { groupId } = community;
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canManageMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canManageMember = shouldHavePermission(
     groupId,
     [
-      PERMISSION_KEY.REMOVE_MEMBER,
-      PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
+      PermissionKey.REMOVE_MEMBER,
+      PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
   const communitySearchMembers = useKeySelector(

@@ -6,7 +6,6 @@ import { Button } from '~/baseComponents';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useMyPermissions } from '~/hooks/permissions';
 import { IAudienceGroup } from '~/interfaces/IPost';
 import AlertDeleteAudiencesConfirmContent from '~/components/posts/AlertDeleteAudiences';
 import usePostsStore from '~/store/entities/posts';
@@ -19,6 +18,8 @@ import useSeriesStore, { ISeriesState } from '../store';
 import useSeriesMenu from '~/hooks/useSeriesMenu';
 import { spacing } from '~/theme';
 import AddArticles from './components/AddArticles';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 
 const SeriesDetail = ({ route }: any) => {
   const { params } = route || {};
@@ -52,12 +53,11 @@ const SeriesDetail = ({ route }: any) => {
     setIsOpenSearch(false);
   };
 
-  const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY }
-    = useMyPermissions();
+  const { shouldHavePermissionOnSomeAudience } = useMyPermissionsStore((state) => state.actions);
 
-  const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
+  const canDeleteOwnPost = shouldHavePermissionOnSomeAudience(
     audience?.groups,
-    PERMISSION_KEY.CRUD_POST_ARTICLE,
+    PermissionKey.CRUD_POST_ARTICLE,
   );
 
   const handleError = (listIdAudiences: string[]) => {

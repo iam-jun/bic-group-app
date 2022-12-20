@@ -5,10 +5,11 @@ import { IGroupMembers } from '~/interfaces/IGroup';
 
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import { useMyPermissions } from '~/hooks/permissions';
+import useMyPermissionsStore from '~/store/permissions';
 import useGroupMemberStore from '../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 import useGroupController from '../../store';
+import { PermissionKey } from '~/constants/permissionScheme';
 
 interface GroupMemberOptionsMenuProps {
   groupId: string;
@@ -31,14 +32,14 @@ const GroupMemberOptionsMenu = ({
     (state) => state.actions.deleteRemoveGroupMember,
   );
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canRemoveMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canRemoveMember = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.REMOVE_MEMBER,
+    PermissionKey.REMOVE_MEMBER,
   );
-  const canAssignUnassignRole = hasPermissionsOnScopeWithId(
+  const canAssignUnassignRole = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
+    PermissionKey.ASSIGN_UNASSIGN_ROLE,
   );
 
   const onPressSetAdminRole = () => {

@@ -12,8 +12,8 @@ import { LogType } from '~/components/LoggerView/Interface';
 import APIErrorCode from '~/constants/apiErrorCode';
 import useAuthController from '~/screens/auth/store';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
+import useMyPermissionsStore from '~/store/permissions';
 import Store from '~/storeRedux';
-import groupsActions from '~/storeRedux/groups/actions';
 import noInternetActions from '~/storeRedux/network/actions';
 import { timeOut } from '~/utils/common';
 
@@ -46,7 +46,7 @@ export const handleResponseError = async (axiosError: AxiosError): Promise<HttpA
       return prepareRefreshTokenAndRetry(axiosError);
     }
     if (shouldRefreshPermission(axiosError)) {
-      Store.store.dispatch(groupsActions.getMyPermissions());
+      useMyPermissionsStore.getState().actions.getMyPermissions();
     }
     return axiosError.response.data;
   }

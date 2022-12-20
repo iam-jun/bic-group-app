@@ -1,3 +1,32 @@
+export const postAudience = [
+  {
+    communityId: '5d29da0f-80b7-4359-8a32-aa8a219c7b8b',
+    icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/c9129c7d-e106-43c8-a5c9-ed8273890127.jpg',
+    id: '0b69fb1e-51b4-4e3b-ad38-7afec387203c',
+    isCommunity: true,
+    name: 'Uchiha Clan',
+    privacy: 'OPEN',
+    rootGroupId: '0b69fb1e-51b4-4e3b-ad38-7afec387203c',
+  },
+  {
+    communityId: 'e32a2676-0fbe-4900-a00d-e2825329b24e',
+    icon: 'https://bic-dev-entity-attribute-s3-bucket.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/ecbd854d-6c08-47f7-a934-9dcce516948f',
+    id: 'f67e9053-8490-4264-9fbb-47bd53a7fa5c',
+    isCommunity: true,
+    name: 'Community của Tèo 5',
+    privacy: 'PRIVATE',
+    rootGroupId: 'f67e9053-8490-4264-9fbb-47bd53a7fa5c',
+  },
+  {
+    communityId: '15337361-1577-4b7b-a31d-990df06aa446',
+    icon: null,
+    id: '0f5c4bb8-323b-41ee-8aed-b064fecf492b',
+    name: 'Bein Community',
+    privacy: 'OPEN',
+    rootGroupId: '35b5fb8f-6f7a-4ac2-90bb-18199096c429',
+  },
+];
+
 export const audiencesTree = [
   {
     id: 'eba85417-ec3e-49b4-89b4-c5393baecaaf',

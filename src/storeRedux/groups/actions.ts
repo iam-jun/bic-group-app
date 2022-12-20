@@ -23,14 +23,6 @@ const groupsActions = {
     payload,
   }),
 
-  getMyPermissions: () => ({
-    type: groupsTypes.GET_MY_PERMISSIONS,
-  }),
-  setMyPermissions: (payload: any) => ({
-    type: groupsTypes.SET_MY_PERMISSIONS,
-    payload,
-  }),
-
   getGroupSearchMembers: (payload: IGroupGetMembers) => ({
     type: groupsTypes.GET_GROUP_SEARCH_MEMBERS,
     payload,

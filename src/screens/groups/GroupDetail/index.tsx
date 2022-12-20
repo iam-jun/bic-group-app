@@ -28,7 +28,7 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
-import { useMyPermissions } from '~/hooks/permissions';
+import useMyPermissionsStore from '~/store/permissions';
 import { useKeySelector } from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { rootSwitch } from '~/router/stack';
@@ -55,6 +55,7 @@ import useTimelineStore, { ITimelineState } from '~/store/timeline';
 import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
+import { PermissionKey } from '~/constants/permissionScheme';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -101,10 +102,10 @@ const GroupDetail = (props: any) => {
 
   const shouldShowPlaceholder = idCurrentGroupDetail !== groupId;
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId(groupId, [
-    PERMISSION_KEY.EDIT_INFO,
-    PERMISSION_KEY.EDIT_PRIVACY,
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canSetting = shouldHavePermission(groupId, [
+    PermissionKey.EDIT_INFO,
+    PermissionKey.EDIT_PRIVACY,
   ]);
   const showPrivate
     = !isMember
