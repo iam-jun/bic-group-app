@@ -45,6 +45,7 @@ export interface IPost {
   categories?: ICategory[];
   isSaved?: boolean;
   tags?: ITag[];
+  series?: any[];
   reported?: boolean;
 }
 
