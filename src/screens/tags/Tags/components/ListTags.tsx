@@ -49,7 +49,6 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
   const tags = useTagsStore((state) => state.tags);
-  console.log('communityName', name);
 
   const renderItem: ListRenderItem<string> = ({ item }) => (
     <TagItem
@@ -108,6 +107,7 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
         </Text.H4>
       </View>
       <FlatList
+        contentContainerStyle={styles.lstContentContainer}
         data={ids}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
@@ -142,13 +142,13 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       flex: 1,
       backgroundColor: colors.white,
-      paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.small,
     },
     viewHeaderListTags: {
       paddingBottom: spacing.padding.tiny,
       borderBottomColor: colors.neutral5,
       borderBottomWidth: 1,
+      marginHorizontal: spacing.padding.large,
     },
     listFooter: {
       height: 50,
@@ -158,6 +158,9 @@ const createStyle = (theme: ExtendedTheme) => {
     emptyList: {
       paddingVertical: spacing.padding.large,
       alignItems: 'center',
+    },
+    lstContentContainer: {
+      paddingHorizontal: spacing.padding.large,
     },
   });
 };

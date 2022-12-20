@@ -47,6 +47,7 @@ const TagItem: FC<TagItemProps> = ({
       </View>
       {isMember && canAction && (
       <Icon
+        testID="tag_menu"
         icon="Ellipsis"
         onPress={onPressMenu}
         size={20}

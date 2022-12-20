@@ -1,6 +1,8 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import {
+  View, StyleSheet, Platform, KeyboardAvoidingView,
+} from 'react-native';
 import Header from '~/beinComponents/Header';
 import { ICommunity } from '~/interfaces/ICommunity';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
@@ -41,12 +43,15 @@ const Tags: FC<TagsProps> = (props) => {
   const theme = useTheme();
   const styles = createStyle(theme);
 
+  const titleHeader = type === 'community' ? nameCommunity : nameGroup;
+
   return (
-    <View style={styles.container}>
-      <Header
-        title={type === 'community' ? nameCommunity : nameGroup}
-      />
-      {
+    <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <View style={styles.container}>
+        <Header
+          title={titleHeader}
+        />
+        {
         isMember && (
         <>
           <ViewSpacing height={spacing.padding.large} />
@@ -54,9 +59,10 @@ const Tags: FC<TagsProps> = (props) => {
         </>
         )
       }
-      <ViewSpacing height={spacing.padding.large} />
-      <ListTags communityId={idCommunity} />
-    </View>
+        <ViewSpacing height={spacing.padding.large} />
+        <ListTags communityId={idCommunity} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -64,6 +70,9 @@ const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
 
   return StyleSheet.create({
+    keyboardAvoidingView: {
+      flex: 1,
+    },
     container: {
       flex: 1,
       backgroundColor: colors.gray5,
