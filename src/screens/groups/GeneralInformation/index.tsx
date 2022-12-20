@@ -15,9 +15,10 @@ import CoverImage from './components/CoverImage';
 import InfoView from './components/InfoView';
 import { _openImagePicker } from './helper';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
+import useMyPermissionsStore from '~/store/permissions';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import Divider from '~/beinComponents/Divider';
+import { PermissionKey } from '~/constants/permissionScheme';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -28,7 +29,7 @@ const GeneralInformation = (props: any) => {
   const styles = createStyles(theme);
 
   const dispatch = useDispatch();
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   let avatar: string;
@@ -43,8 +44,8 @@ const GeneralInformation = (props: any) => {
   if (type === 'group') {
     const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
     rootGroupId = id;
-    canEditInfo = hasPermissionsOnScopeWithId(id, PERMISSION_KEY.EDIT_INFO);
-    canEditPrivacy = hasPermissionsOnScopeWithId(id, PERMISSION_KEY.EDIT_PRIVACY);
+    canEditInfo = shouldHavePermission(id, PermissionKey.EDIT_INFO);
+    canEditPrivacy = shouldHavePermission(id, PermissionKey.EDIT_PRIVACY);
     avatar = groupDetail?.icon || '';
     backgroundUrl = groupDetail?.backgroundImgUrl || '';
     organizationName = groupDetail?.name || '';
@@ -54,8 +55,8 @@ const GeneralInformation = (props: any) => {
   } else {
     const communityDetail = useCommunitiesStore((state: ICommunitiesState) => state.data[id]);
     rootGroupId = communityDetail?.groupId;
-    canEditInfo = hasPermissionsOnScopeWithId(rootGroupId, PERMISSION_KEY.EDIT_INFO);
-    canEditPrivacy = hasPermissionsOnScopeWithId(rootGroupId, PERMISSION_KEY.EDIT_PRIVACY);
+    canEditInfo = shouldHavePermission(rootGroupId, PermissionKey.EDIT_INFO);
+    canEditPrivacy = shouldHavePermission(rootGroupId, PermissionKey.EDIT_PRIVACY);
     avatar = communityDetail?.icon || '';
     backgroundUrl = communityDetail?.backgroundImgUrl || '';
     organizationName = communityDetail?.name || '';

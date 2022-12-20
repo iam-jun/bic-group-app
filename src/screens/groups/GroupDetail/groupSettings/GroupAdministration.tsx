@@ -16,7 +16,8 @@ import Text from '~/baseComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
 
 const GroupAdministration = (props: any) => {
   const { params } = props.route;
@@ -28,12 +29,12 @@ const GroupAdministration = (props: any) => {
   const { rootNavigation } = useRootNavigation();
   const { name } = useKeySelector(groupsKeySelector.groupDetail.group);
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canEditProfileInfo = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canEditProfileInfo = shouldHavePermission(
     groupId,
     [
-      PERMISSION_KEY.EDIT_INFO,
-      PERMISSION_KEY.EDIT_PRIVACY,
+      PermissionKey.EDIT_INFO,
+      PermissionKey.EDIT_PRIVACY,
     ],
   );
 

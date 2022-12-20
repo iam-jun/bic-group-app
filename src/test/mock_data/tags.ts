@@ -1,3 +1,4 @@
+import { ITag } from '~/interfaces/ITag';
 import { searchSeriesRequestParams } from './series';
 
 export const mockGetTagsInArticle = [
@@ -46,6 +47,72 @@ export const mockGetTagsInArticle = [
 ];
 
 export const searchTagsRequestParams = searchSeriesRequestParams;
+
+export const mockTags: ITag[] = [
+  {
+    id: '1',
+    name: 'tag 1',
+    slug: 'tag-1',
+    totalUsed: 12,
+    groupId: '1',
+    createdBy: '',
+    updatedBy: '',
+  },
+  {
+    id: '2',
+    name: 'tag 2',
+    slug: 'tag-2',
+    totalUsed: 0,
+    groupId: '1',
+    createdBy: '',
+    updatedBy: '',
+  },
+  {
+    id: '3',
+    name: 'tag 3',
+    slug: 'tag-3',
+    totalUsed: 12,
+    groupId: '1',
+    createdBy: '',
+    updatedBy: '',
+  },
+  {
+    id: '4',
+    name: 'tag 4',
+    slug: 'tag-4',
+    totalUsed: 12,
+    groupId: '1',
+    createdBy: '',
+    updatedBy: '',
+  },
+  {
+    id: '5',
+    name: 'tag 5',
+    slug: 'tag-5',
+    totalUsed: 12,
+    groupId: '1',
+    createdBy: '',
+    updatedBy: '',
+  },
+  {
+    id: '6',
+    name: 'tag 6',
+    slug: 'tag-6',
+    totalUsed: 12,
+    groupId: '1',
+    createdBy: '',
+    updatedBy: '',
+  },
+  {
+    id: '7',
+    name: 'tag 7',
+    slug: 'tag-7',
+    totalUsed: 12,
+    groupId: '1',
+    createdBy: '',
+    updatedBy: '',
+  },
+];
 
 export const mockTagsInArticle = [
   {

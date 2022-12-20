@@ -2,12 +2,13 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
-import { useMyPermissions } from '~/hooks/permissions';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import useRemoveCommunityMemberStore from '../store';
 import useCommunityController from '../../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 
 interface CommunityMemberOptionsMenuProps {
   community: ICommunity;
@@ -31,14 +32,14 @@ const CommunityMemberOptionsMenu = ({
   );
   const actions = useCommunityController((state) => state.actions);
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canRemoveMember = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canRemoveMember = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.REMOVE_MEMBER,
+    PermissionKey.REMOVE_MEMBER,
   );
-  const canAssignUnassignRole = hasPermissionsOnScopeWithId(
+  const canAssignUnassignRole = shouldHavePermission(
     groupId,
-    PERMISSION_KEY.ASSIGN_UNASSIGN_ROLE,
+    PermissionKey.ASSIGN_UNASSIGN_ROLE,
   );
 
   const onPressSetAdminRole = () => {

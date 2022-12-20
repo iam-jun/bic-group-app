@@ -13,8 +13,9 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/storeRedux/modal/actions';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
-import { useMyPermissions } from '~/hooks/permissions';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
+import { PermissionKey } from '~/constants/permissionScheme';
+import useMyPermissionsStore from '~/store/permissions';
 
 const CommunityAdmin = (props: any) => {
   const { params } = props.route;
@@ -27,12 +28,12 @@ const CommunityAdmin = (props: any) => {
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const { name = '', groupId } = community || {};
 
-  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canEditProfileInfo = hasPermissionsOnScopeWithId(
+  const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const canEditProfileInfo = shouldHavePermission(
     groupId,
     [
-      PERMISSION_KEY.EDIT_INFO,
-      PERMISSION_KEY.EDIT_PRIVACY,
+      PermissionKey.EDIT_INFO,
+      PermissionKey.EDIT_PRIVACY,
     ],
   );
 

@@ -30,7 +30,6 @@ const groupsKeySelector = {
   communityMemberRequests: 'groups.communityMemberRequests',
   communitySearch: 'groups.communitySearch',
   globalSearch: 'groups.globalSearch',
-  myPermissions: 'groups.myPermissions',
   joinedAllGroups: 'groups.joinedAllGroups',
   managed: 'groups.managed',
 };
