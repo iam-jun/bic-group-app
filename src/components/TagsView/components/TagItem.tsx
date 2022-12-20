@@ -1,4 +1,3 @@
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Tag from '~/baseComponents/Tag';
@@ -11,9 +10,10 @@ export type Props = {
   onPressTag: (tagData: ITag) => void;
 };
 
+const SPACING_HITSLOP = spacing.margin.small / 2;
+
 const TagItem: FC<Props> = ({ data, maxWidthOfTag, onPressTag }) => {
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, maxWidthOfTag);
+  const styles = createStyles(maxWidthOfTag);
 
   const onActionPress = () => {
     onPressTag(data);
@@ -22,8 +22,17 @@ const TagItem: FC<Props> = ({ data, maxWidthOfTag, onPressTag }) => {
   return (
     <View style={styles.container}>
       <Tag
+        type="tags"
         style={styles.tag}
         textProps={{ numberOfLines: 1 }}
+        buttonProps={{
+          hitSlop: {
+            top: SPACING_HITSLOP,
+            bottom: SPACING_HITSLOP,
+            left: SPACING_HITSLOP,
+            right: SPACING_HITSLOP,
+          },
+        }}
         label={data.name}
         onActionPress={onActionPress}
         testID={`tag_item_${data.id}.button_navigate`}
@@ -32,23 +41,15 @@ const TagItem: FC<Props> = ({ data, maxWidthOfTag, onPressTag }) => {
   );
 };
 
-const createStyles = (theme: ExtendedTheme, maxWidthOfTag: number) => {
-  const { colors } = theme;
-
-  return StyleSheet.create({
-    container: {
-      paddingRight: spacing.margin.small,
-      marginTop: spacing.margin.small,
-      maxWidth: maxWidthOfTag,
-    },
-    tag: {
-      borderRadius: spacing.borderRadius.small,
-      marginRight: 0,
-      backgroundColor: colors.white,
-      borderWidth: 1,
-      borderColor: colors.neutral5,
-    },
-  });
-};
+const createStyles = (maxWidthOfTag: number) => StyleSheet.create({
+  container: {
+    paddingRight: spacing.margin.small,
+    marginTop: spacing.margin.small,
+    maxWidth: maxWidthOfTag,
+  },
+  tag: {
+    marginRight: 0,
+  },
+});
 
 export default TagItem;

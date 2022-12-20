@@ -13,7 +13,7 @@ describe('TagItem component', () => {
       resultUseTagsStore.current.actions.addTags(mockTags);
     });
 
-    const wrapper = renderWithRedux(<TagItem isMember item={resultUseTagsStore.current.tags['2']} communityId="1" communityName="" />);
+    const wrapper = renderWithRedux(<TagItem isMember item={resultUseTagsStore.current.tags['2']} communityId="1" />);
     const tagMenu = wrapper.queryByTestId('tag_menu');
     expect(tagMenu).toBeDefined();
   });
@@ -25,7 +25,7 @@ describe('TagItem component', () => {
       resultUseTagsStore.current.actions.addTags(mockTags);
     });
 
-    const wrapper = renderWithRedux(<TagItem isMember item={resultUseTagsStore.current.tags['1']} communityId="1" communityName="" />);
+    const wrapper = renderWithRedux(<TagItem isMember item={resultUseTagsStore.current.tags['1']} communityId="1" />);
     const tagMenu = wrapper.queryByTestId('tag_menu');
     expect(tagMenu).toBeNull();
   });
@@ -37,7 +37,7 @@ describe('TagItem component', () => {
       resultUseTagsStore.current.actions.addTags(mockTags);
     });
 
-    const wrapper = renderWithRedux(<TagItem isMember={false} item={resultUseTagsStore.current.tags['1']} communityId="1" communityName="" />);
+    const wrapper = renderWithRedux(<TagItem isMember={false} item={resultUseTagsStore.current.tags['1']} communityId="1" />);
     const tagMenu = wrapper.queryByTestId('tag_menu');
     expect(tagMenu).toBeNull();
   });

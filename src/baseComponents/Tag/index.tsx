@@ -9,9 +9,9 @@ import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import Avatar from '~/baseComponents/Avatar';
 import Icon from '../Icon';
-import Button from '../Button';
+import Button, { ButtonProps } from '../Button';
 
-export type TagType = 'primary' | 'secondary' | 'neutral';
+export type TagType = 'primary' | 'secondary' | 'neutral' | 'tags';
 export type TagSize = 'small' | 'medium' | 'large';
 
 export interface TagProps {
@@ -25,6 +25,7 @@ export interface TagProps {
   onPressIcon?: () => void;
   style?: StyleProp<ViewStyle>;
   textProps?: TextProps;
+  buttonProps?: ButtonProps;
   testID?: string;
 }
 
@@ -39,6 +40,7 @@ const Tag: React.FC<TagProps> = ({
   onPressIcon,
   style,
   textProps,
+  buttonProps,
   testID,
 }: TagProps) => {
   const theme: ExtendedTheme = useTheme();
@@ -67,6 +69,7 @@ const Tag: React.FC<TagProps> = ({
         !!icon ? styles.buttonIcon : styles.buttonWithoutIcon,
       ]}
       onPress={() => { onActionPress?.(); }}
+      {...buttonProps}
     >
       {!!avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
       {!!label
@@ -124,10 +127,17 @@ const createStyles = (
       containerBackgroundColor: colors.neutral2,
       textColor: colors.gray80,
     },
+    tags: {
+      containerBackgroundColor: colors.white,
+      textColor: colors.neutral40,
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+      borderColor: colors.neutral5,
+    },
   };
 
   const { containerHeight } = tagSizes[size];
-  const { containerBackgroundColor, textColor } = tagTypes[type];
+  const { containerBackgroundColor, textColor, ...restOfStyle } = tagTypes[type];
 
   return StyleSheet.create({
     container: {
@@ -139,6 +149,7 @@ const createStyles = (
       height: containerHeight,
       marginRight: spacing.margin.small,
       paddingLeft: spacing.padding.tiny,
+      ...restOfStyle,
     },
     labelText: {
       color: textColor,

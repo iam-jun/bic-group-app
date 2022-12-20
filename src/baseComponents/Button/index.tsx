@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   ActivityIndicator,
+  Insets,
   StyleProp, StyleSheet, TouchableHighlight, View, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -26,6 +27,7 @@ export interface ButtonProps extends ButtonWrapperProps {
   useI18n?: boolean;
   icon?: IconType;
   iconSize?: number;
+  hitSlop?: Insets;
 }
 
 export const ButtonComponent: React.FC<ButtonProps> = ({

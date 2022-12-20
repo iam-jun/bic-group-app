@@ -22,6 +22,8 @@ import Text from '~/baseComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import useFilterToolbarStore from './store';
 import appConfig from '~/configs/appConfig';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import NoSearchResultsFound from '../NoSearchResultsFound';
 
 export interface NFSFilterCreateBySpecificProps {
   onSelect?: (selected?: ISelectedFilterUser) => void;
@@ -39,8 +41,10 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   const actions = useFilterToolbarStore((state) => state.actions);
   const listUser = useFilterToolbarStore((state) => state.listUser);
   const searchData = useFilterToolbarStore((state) => state.search);
-  const { items: userItems, hasNextPage: listUserCanLoadMore } = listUser;
-  const { key: searchKey, items: searchItems, hasNextPage: searchUserCanLoadMore } = searchData || {};
+  const { items: userItems, hasNextPage: listUserCanLoadMore, loading: listUserLoading } = listUser;
+  const {
+    key: searchKey, items: searchItems, hasNextPage: searchUserCanLoadMore, loading: searchUserLoading,
+  } = searchData || {};
 
   const listData = searchKey ? searchItems : userItems;
 
@@ -83,7 +87,9 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   };
 
   const renderFooter = () => {
-    if (listUserCanLoadMore || searchUserCanLoadMore) {
+    const isLoading = listUserLoading || searchUserLoading;
+    const isHasNextPage = listUserCanLoadMore || searchUserCanLoadMore;
+    if (!isLoading && isHasNextPage) {
       return (
         <ActivityIndicator
           style={{ marginVertical: spacing.margin.base }}
@@ -92,6 +98,13 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
       );
     }
     return null;
+  };
+
+  const renderEmpty = () => {
+    if (listUserLoading || searchUserLoading) {
+      return <LoadingIndicator style={{ margin: spacing.margin.small }} />;
+    }
+    return <NoSearchResultsFound />;
   };
 
   return (
@@ -114,10 +127,12 @@ const FilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
       </View>
       <FlatList
         data={listData || []}
+        showsVerticalScrollIndicator={false}
         renderItem={renderItem}
         keyExtractor={(item) => `newsfeed_search_user_${item?.id}`}
         keyboardShouldPersistTaps="always"
         ListFooterComponent={renderFooter}
+        ListEmptyComponent={renderEmpty}
         onEndReached={onEndReached}
       />
     </TouchableOpacity>

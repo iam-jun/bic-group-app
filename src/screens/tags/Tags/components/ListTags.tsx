@@ -44,7 +44,7 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
     ids, refreshing, loading, hasNextPage,
   } = communityTags || {};
 
-  const { joinStatus, name } = community;
+  const { joinStatus } = community;
 
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
 
@@ -55,7 +55,6 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
       isMember={isMember}
       item={tags[item]}
       communityId={communityId}
-      communityName={name}
     />
   );
 
@@ -109,6 +108,7 @@ const ListTags: FC<ListTagsProps> = ({ communityId }) => {
       <FlatList
         contentContainerStyle={styles.lstContentContainer}
         data={ids}
+        showsVerticalScrollIndicator={false}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         refreshControl={(
