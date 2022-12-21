@@ -430,7 +430,6 @@ export interface IPayloadUpdateCommentsById {
   id: string;
   commentIds: string[];
   isMerge?: boolean;
-  isReplace?: boolean;
   commentId?: string;
 }
 

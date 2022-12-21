@@ -15,7 +15,9 @@ const reportContent = () => async (payload: IPayloadReportContent) => {
     reportTo,
     reasonType,
     reason,
+    dataComment,
   } = payload || {};
+  const { parentCommentId } = dataComment || {};
 
   try {
     await StreamApi.reportContent({
@@ -35,7 +37,7 @@ const reportContent = () => async (payload: IPayloadReportContent) => {
 
       case TargetType.COMMENT:
       case TargetType.CHILD_COMMENT:
-        hideCommnent(targetId);
+        hideCommnent(targetId, parentCommentId);
         break;
 
       default:
@@ -60,13 +62,28 @@ const hideContent = (id: string) => {
   usePostsStore.getState().actions.addToPosts({ data: removePost } as IPayloadAddToAllPost);
 };
 
-const hideCommnent = (commentId: string) => {
+const hideCommnent = (commentId: string, parentCommentId?: string) => {
   const allComments = useCommentsStore.getState().comments || {};
   const comment: ICommentData = allComments?.[commentId] || {};
-  const newCmt = {
-    ...comment,
-    reported: true,
-  };
+  let newCmt = {};
+
+  if (parentCommentId) {
+    newCmt = {
+      ...comment,
+      reported: true,
+    };
+  } else {
+    newCmt = {
+      ...comment,
+      totalReply: 0,
+      child: {
+        meta: {},
+        list: [],
+      },
+      reported: true,
+    };
+  }
+
   useCommentsStore.getState().actions.addToComments(newCmt);
 };
 

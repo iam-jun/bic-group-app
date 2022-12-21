@@ -76,6 +76,25 @@ exports[`NotificationContent component renders correctly 1`] = `
     </View>
   </View>
   <Text
+    numberOfLines={2}
+    style={
+      Array [
+        Object {
+          "color": "#212745",
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 15,
+        },
+        Object {
+          "color": "#282E53",
+        },
+        undefined,
+      ]
+    }
+    testID="notification_content.content"
+  >
+    Test noti
+  </Text>
+  <Text
     style={
       Array [
         Object {
@@ -93,7 +112,7 @@ exports[`NotificationContent component renders correctly 1`] = `
     }
     testID="notification_item.time_view"
   >
-    
+    31w
   </Text>
 </View>
 `;

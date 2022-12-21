@@ -546,6 +546,14 @@ exports[`ArticleItem Component renders correctly 1`] = `
             accessible={true}
             collapsable={false}
             focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 4,
+                "left": 4,
+                "right": 4,
+                "top": 4,
+              }
+            }
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -582,7 +590,7 @@ exports[`ArticleItem Component renders correctly 1`] = `
                   },
                   Object {},
                   Object {
-                    "color": "#7335C0",
+                    "color": "#353E6E",
                     "paddingLeft": 4,
                   },
                 ]
@@ -606,6 +614,14 @@ exports[`ArticleItem Component renders correctly 1`] = `
             accessible={true}
             collapsable={false}
             focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 4,
+                "left": 4,
+                "right": 4,
+                "top": 4,
+              }
+            }
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -642,7 +658,7 @@ exports[`ArticleItem Component renders correctly 1`] = `
                   },
                   Object {},
                   Object {
-                    "color": "#7335C0",
+                    "color": "#353E6E",
                     "paddingLeft": 4,
                   },
                 ]

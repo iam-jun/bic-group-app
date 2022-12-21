@@ -1,6 +1,8 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, {
+  useState, useEffect, FC, useCallback,
+} from 'react';
 import { StyleSheet } from 'react-native';
-import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -8,6 +10,8 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
+import useCommentsStore from '~/store/entities/comments';
+import commentsSelector from '~/store/entities/comments/selectors';
 import CommentDetailContent from './CommentDetailContent';
 import EmptyScreen from '~/components/EmptyScreen';
 import Button from '~/beinComponents/Button';
@@ -24,9 +28,10 @@ import { IRouteParams } from '~/interfaces/IRouter';
 
 const CommentDetail: FC<IRouteParams> = (props) => {
   const params = props?.route?.params;
-  const { postId } = params || {};
+  const { postId, commentId } = params || {};
 
   const { rootNavigation, goHome } = useRootNavigation();
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
@@ -37,6 +42,16 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   const actor = usePostsStore(postsSelector.getActor(postId));
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
+  const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
+  const { reported } = comment || {};
+
+  useEffect(() => {
+    if (reported && isFocused) {
+      setTimeout(() => {
+        onBack();
+      }, 200);
+    }
+  }, [reported, isFocused]);
 
   const backToNewsFeed = () => {
     goHome();

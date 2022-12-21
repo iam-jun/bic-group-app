@@ -238,6 +238,7 @@ exports[`Tags screen render correctly with default state 1`] = `
         removeClippedSubviews={false}
         renderItem={[Function]}
         scrollEventThrottle={50}
+        showsVerticalScrollIndicator={false}
         stickyHeaderIndices={Array []}
         viewabilityConfigCallbackPairs={Array []}
       >

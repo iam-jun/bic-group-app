@@ -1780,9 +1780,8 @@ Array [
           "current": undefined,
         }
       }
-    >
-      value
-    </TextInput>
+      value="value"
+    />
   </View>,
   <View
     style={
