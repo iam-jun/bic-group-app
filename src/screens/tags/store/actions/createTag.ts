@@ -31,7 +31,20 @@ const createTag = (set, get) => async (idCommunity: string, tag: CreateTag) => {
 
     set(
       (state: ITagsController) => {
-        state.communityTags[idCommunity].ids.push(data.id);
+        const initCommunityTags = {
+          ids: [],
+          loading: false,
+          refreshing: false,
+          hasNextPage: true,
+        };
+
+        let currentCommunityTags = state.communityTags[idCommunity];
+        if (!currentCommunityTags) {
+          currentCommunityTags = initCommunityTags;
+        }
+        currentCommunityTags.ids.push(data.id);
+
+        state.communityTags[idCommunity] = currentCommunityTags;
         state.loading = false;
       },
       'addTagSuccess',

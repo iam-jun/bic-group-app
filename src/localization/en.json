@@ -1247,6 +1247,7 @@
     "title_header_list_tags": "Tags",
     "empty_list_tags": "No result",
     "edit_tag": "Edit Tag",
-    "do_you_want_to_change_this_tag": "Do you want to change this tag?"
+    "do_you_want_to_change_this_tag": "Do you want to change this tag?",
+    "message_notice": "The tag will be automatically converted to lowercase after created or updated."
   }
 }

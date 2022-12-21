@@ -11,6 +11,7 @@ import { useBaseHook } from '~/hooks';
 import Header from '~/beinComponents/Header';
 import TextInput from '~/baseComponents/Input/TextInput';
 import Text from '~/baseComponents/Text';
+import { borderRadius } from '~/theme/spacing';
 
 type EditTagProps = {
     route: {
@@ -30,7 +31,7 @@ const EditTag: FC<EditTagProps> = (props) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const [nameTagState, setNameTagState] = useState(name || '');
+  const [nameTagState, setNameTagState] = useState(name?.toLowerCase() || '');
 
   const loading = useTagsControllerStore((state) => state.loading);
   const actions = useTagsControllerStore((state) => state.actions);
@@ -38,7 +39,7 @@ const EditTag: FC<EditTagProps> = (props) => {
   const handleSave = () => {
     const tagUpdate: EditTagType = {
       id,
-      name: nameTagState.trim(),
+      name: nameTagState.trim().toLowerCase(),
     };
     actions.editTag(tagUpdate);
     Keyboard.dismiss();
@@ -76,8 +77,16 @@ const EditTag: FC<EditTagProps> = (props) => {
   };
 
   const onChangeText = (text: string) => {
-    setNameTagState(text.toLowerCase());
+    setNameTagState(text);
   };
+
+  const messageNotice = () => (
+    <View style={styles.viewMessageNotice}>
+      <Text.BodyXS color={colors.neutral20} style={styles.textMessageNotice} useI18n>
+        tags:message_notice
+      </Text.BodyXS>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -99,6 +108,7 @@ const EditTag: FC<EditTagProps> = (props) => {
           autoCapitalize="none"
         />
         <Text.BodyS color={colors.neutral40} useI18n>tags:input_tag_require_max_length</Text.BodyS>
+        {messageNotice()}
       </View>
     </View>
   );
@@ -122,6 +132,17 @@ const createStyle = (theme: ExtendedTheme) => {
     },
     content: {
       padding: spacing.padding.large,
+    },
+    viewMessageNotice: {
+      padding: spacing.padding.small,
+      borderRadius: borderRadius.small,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.neutral1,
+      marginTop: spacing.margin.small,
+    },
+    textMessageNotice: {
+      textAlign: 'center',
     },
   });
 };
