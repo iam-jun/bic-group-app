@@ -222,7 +222,7 @@ exports[`UnsupportFeature component render correctly 1`] = `
         ]
       }
     >
-      We are supporting this feature on mobile. Please see the detail on web version
+      We are not supporting this feature on mobile. Please see the detail on web version
     </Text>
   </View>
 </View>

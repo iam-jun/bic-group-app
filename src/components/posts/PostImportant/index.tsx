@@ -42,7 +42,7 @@ const PostImportant: FC<PostImportantProps> = ({
   const { colors } = theme || {};
   const isExpired = isPostExpired(expireTime);
 
-  if (isLite) {
+  if (isLite && isImportant) {
     return (
       <View
         testID="post_view.important_status_lite"

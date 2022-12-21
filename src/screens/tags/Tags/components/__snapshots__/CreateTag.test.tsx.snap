@@ -151,6 +151,38 @@ exports[`CreateTag component render correctly with default state 1`] = `
   <View
     style={
       Object {
+        "alignItems": "center",
+        "backgroundColor": "#F8F9FF",
+        "borderRadius": 4,
+        "justifyContent": "center",
+        "marginTop": 8,
+        "padding": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#212745",
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 11,
+          },
+          Object {
+            "color": "#BAC0DE",
+          },
+          Object {
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      The tag will be automatically converted to lowercase after created or updated.
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
         "borderTopColor": "#E3E6F2",
         "borderTopWidth": 1,
         "marginTop": 16,

@@ -13,6 +13,7 @@ import useCommunitiesStore, {
   ICommunitiesState,
 } from '~/store/entities/communities';
 import { spacing } from '~/theme';
+import { borderRadius } from '~/theme/spacing';
 import useTagsControllerStore from '../../store';
 
 type CreateTagProps = {
@@ -42,20 +43,24 @@ const CreateTag: FC<CreateTagProps> = ({ communityId }) => {
   const createTag = () => {
     const newTag: CreateTagType = {
       groupId,
-      name: tag.trim(),
+      name: tag.trim().toLowerCase(),
     };
     actions.createTag(communityId, newTag);
     setTag('');
     Keyboard.dismiss();
   };
 
-  const onChangeText = async (text: string) => {
-    // when set text toLowerCase, lagging and duplicate characters on Android
-    // this is a temporarily solution
-    // https://github.com/facebook/react-native/issues/11068
-    await setTag('');
-    await setTag(text.toLowerCase());
+  const onChangeText = (text: string) => {
+    setTag(text);
   };
+
+  const messageNotice = () => (
+    <View style={styles.viewMessageNotice}>
+      <Text.BodyXS color={colors.neutral20} style={styles.textMessageNotice} useI18n>
+        tags:message_notice
+      </Text.BodyXS>
+    </View>
+  );
 
   const isDisabledBtnCreateTag = tag.trim().length === 0;
 
@@ -76,6 +81,7 @@ const CreateTag: FC<CreateTagProps> = ({ communityId }) => {
       <Text.BodyS color={colors.neutral40} useI18n>
         tags:input_tag_require_max_length
       </Text.BodyS>
+      {messageNotice()}
       <View style={styles.btnContainer}>
         <Button.Primary
           testID="create_tag_btn"
@@ -104,6 +110,17 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.small,
       borderTopColor: colors.neutral5,
       borderTopWidth: 1,
+    },
+    viewMessageNotice: {
+      padding: spacing.padding.small,
+      borderRadius: borderRadius.small,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.neutral1,
+      marginTop: spacing.margin.small,
+    },
+    textMessageNotice: {
+      textAlign: 'center',
     },
   });
 };

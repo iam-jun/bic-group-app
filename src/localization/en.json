@@ -130,7 +130,7 @@
     "btn_decline_all": "Decline All",
     "btn_submit": "Submit",
     "btn_report_content": "Report Content",
-		"text_report_sent": "Your report was sent",
+    "text_report_sent": "Your report was sent",
     "text_report_content": "Report Content to Community Admin",
     "text_post_reported": "Post reported",
     "text_article_reported": "Article reported",
@@ -197,7 +197,7 @@
     "copied": "Copied!",
     "text_share": "Share",
     "btn_go_back": "Back",
-    "text_unsupport_feature": "We are supporting this feature on mobile. Please see the detail on web version"
+    "text_unsupport_feature": "We are not supporting this feature on mobile. Please see the detail on web version"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -1247,6 +1247,7 @@
     "title_header_list_tags": "Tags",
     "empty_list_tags": "No result",
     "edit_tag": "Edit Tag",
-    "do_you_want_to_change_this_tag": "Do you want to change this tag?"
+    "do_you_want_to_change_this_tag": "Do you want to change this tag?",
+    "message_notice": "The tag will be automatically converted to lowercase after created or updated."
   }
 }

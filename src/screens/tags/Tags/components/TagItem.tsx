@@ -42,7 +42,7 @@ const TagItem: FC<TagItemProps> = ({
   return (
     <Button style={styles.row} onPress={goToTagsDetail}>
       <View style={styles.flex}>
-        <Text.BodyM numberOfLines={1}>{name}</Text.BodyM>
+        <Text.BodyM numberOfLines={1}>{name.toLowerCase()}</Text.BodyM>
       </View>
       {isMember && canAction && (
       <Icon
