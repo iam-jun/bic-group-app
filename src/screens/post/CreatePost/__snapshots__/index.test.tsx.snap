@@ -483,6 +483,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       onChangeText={[Function]}
                       onContentSizeChange={[Function]}
                       onKeyPress={[Function]}
+                      onPaste={[Function]}
                       onSelectionChange={[Function]}
                       onSubmitEditing={[Function]}
                       placeholder="Write your post here..."
@@ -506,9 +507,8 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           "current": undefined,
                         }
                       }
-                    >
-                      
-                    </TextInput>
+                      value=""
+                    />
                   </View>
                   <View
                     onLayout={[Function]}

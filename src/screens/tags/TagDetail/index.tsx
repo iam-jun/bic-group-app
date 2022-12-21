@@ -74,7 +74,7 @@ const TagDetail: React.FC<any> = ({ route }) => {
   }, appConfig.searchTriggerTime);
 
   const renderItem = ({ item }: any) => (
-    <ContentItem id={item?.id} testID="page_content.post.item" />
+    <ContentItem id={item?.id} testID="tag_detail.article" />
   );
 
   const renderFooter = () => {
