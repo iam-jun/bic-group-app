@@ -10,7 +10,7 @@ describe('removeGroupMember', () => {
 
   it('should remove group member success:', () => {
     const response = {
-      code: 'OK',
+      code: 'api.ok',
       data: true,
       meta: {
         message: 'Removed member from Batrider successfully',
