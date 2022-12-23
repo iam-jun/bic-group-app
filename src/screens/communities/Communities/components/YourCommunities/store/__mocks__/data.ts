@@ -1,5 +1,5 @@
 export const responseDiscoverCommunity = {
-  code: 'OK',
+  code: 'api.ok',
   meta: {
     message: 'Success',
     total: 77,

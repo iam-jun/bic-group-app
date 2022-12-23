@@ -9,7 +9,7 @@ describe('getGroupMembers', () => {
 
   it('should get group members success:', () => {
     const response = {
-      code: 'OK',
+      code: 'api.ok',
       data: memberData,
       meta: {
         hasNextPage: false, limit: 25, message: 'Success', offset: 0, total: 7,

@@ -1,5 +1,5 @@
 export const responseYourGroups = {
-  code: 'OK',
+  code: 'api.ok',
   meta: {
     message: 'Success',
     total: 7,

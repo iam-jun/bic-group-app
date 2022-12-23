@@ -5,7 +5,7 @@ import useMyPermissionsStore, { IMyPermissionsState } from '../index';
 describe('getMyPermissions', () => {
   it('should call api and get data successfully', () => {
     const response = {
-      code: 'OK',
+      code: 'api.ok',
       data: {
         communities: {},
         groups: {},
@@ -37,7 +37,7 @@ describe('getMyPermissions', () => {
 
   it('should not call api when loading', () => {
     const response = {
-      code: 'OK',
+      code: 'api.ok',
       data: {
         communities: {},
         groups: {},

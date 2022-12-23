@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 
 import { useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import useAuthController from '~/screens/auth/store';
 import { getAuthToken } from '~/screens/auth/store/selectors';
 import NewsfeedList from '~/screens/Home/components/NewsfeedList';

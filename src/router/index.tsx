@@ -27,6 +27,7 @@ import MainStack from '~/router/navigator/MainStack';
 import useNavigationLinkingConfig from '~/hooks/navigationLinking';
 import { useAuthValidateSession, useUserIdAuth } from '~/hooks/auth';
 import VideoPlayerWebView from '~/components/VideoPlayerWebView';
+import ForceUpdateView from '~/components/ForceUpdateView';
 
 const Stack = createNativeStackNavigator();
 
@@ -102,6 +103,7 @@ const RootNavigator = (): React.ReactElement => {
           <Toast />
           <InternetConnectionStatus />
           <VideoPlayerWebView />
+          <ForceUpdateView />
         </Host>
       </NavigationContainer>
     </View>

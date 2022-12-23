@@ -1,5 +1,5 @@
 const Common = {
-  SUCCESS: 'OK',
+  SUCCESS: 'api.ok',
   SYSTEM_ISSUE: 0,
 };
 
