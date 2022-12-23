@@ -1,61 +1,62 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import { Button } from '~/baseComponents';
 import Icon from '~/baseComponents/Icon';
 import Text from '~/baseComponents/Text';
 
-import { useBaseHook } from '~/hooks';
-import postActions from '~/storeRedux/post/actions';
 import spacing from '~/theme/spacing';
 import Divider from '~/beinComponents/Divider';
-import { useKeySelector } from '~/hooks/selector';
-import postKeySelector from '~/storeRedux/post/keySelector';
 
-const NoticePanel = () => {
+interface NoticePanelProps {
+  title: string;
+  description: string;
+  buttonText?: string;
+  onButtonPress?: () => void;
+  onClose: () => void;
+}
+
+const NoticePanel = ({
+  title, description, buttonText, onButtonPress, onClose,
+}: NoticePanelProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const { t } = useBaseHook();
-  const dispatch = useDispatch();
-
-  const total = useKeySelector(postKeySelector.allPostContainingVideoInProgress);
-  const onPress = () => {
-    dispatch(postActions.setAllPostContainingVideoInProgress({
-      total: 0,
-    }));
-  };
-
-  if (!total) return null;
-
-  const title = t('home:notice_post_video_uploading:title').replace(
-    '(count)',
-    total > 1 ? `(${total})` : '',
-  );
 
   return (
     <>
       <Divider color={theme.colors.gray5} size={spacing.margin.large} />
       <View style={styles.container}>
         <View style={styles.content}>
-          <Text.BodySMedium testID="notice_panel.title">{title}</Text.BodySMedium>
-          <Text.BodyS useI18n style={styles.description}>
-            home:notice_post_video_uploading:description
+          <Text.BodySMedium testID="notice_panel.title" useI18n>
+            {title}
+          </Text.BodySMedium>
+          <Text.BodyS style={styles.description} useI18n>
+            {description}
           </Text.BodyS>
         </View>
-        <ButtonWrapper
+        {!!buttonText && onButtonPress && (
+          <Button.Primary
+            testID="notice_panel.button_update"
+            style={styles.closeButton}
+            onPress={onButtonPress}
+            useI18n
+          >
+            {buttonText}
+          </Button.Primary>
+        )}
+        <Button
           testID="notice_panel.button_close"
           style={styles.closeButton}
           activeOpacity={0.9}
-          onPress={onPress}
+          onPress={onClose}
         >
           <Icon
             size={16}
             tintColor={theme.colors.neutral80}
             icon="iconClose"
           />
-        </ButtonWrapper>
+        </Button>
       </View>
     </>
   );

@@ -1188,5 +1188,17 @@
     "edit_tag": "Sửa thẻ",
     "do_you_want_to_change_this_tag": "Bạn có muốn thay đổi thẻ này không?",
     "message_notice": "Thẻ sẽ được tự động chuyển thành chữ thường sau khi tạo hoặc chỉnh sửa"
+  },
+  "notice": {
+    "force_update": {
+      "title": "Đã có phiên bản mới",
+      "description": "Đã có phiên bản mới. Hãy cập nhật để có trải nghiệm tốt nhất.",
+      "confirm": "Cập nhật"
+    },
+    "new_version": {
+      "title": "Đã có phiên bản mới",
+      "description": "Đã có phiên bản mới. Hãy cập nhật để có trải nghiệm tốt nhất.",
+      "confirm": "Cập nhật"
+    }
   }
 }

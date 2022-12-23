@@ -35,9 +35,10 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import Button from '~/baseComponents/Button';
 import { useBaseHook } from '~/hooks';
-import NoticePanel from '../NoticePanel';
+import VideoProcessingNotice from '../VideoProcessingNotice';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
 import ContentItem from '~/components/ContentItem';
+import NewUpdateNotice from '../NewUpdateNotice';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -346,7 +347,8 @@ const NewsfeedListHeader = ({
   return (
     <View style={styles.headerContainer}>
       {!!HeaderComponent && HeaderComponent}
-      {isNewsfeed ? <NoticePanel /> : null}
+      <NewUpdateNotice />
+      {isNewsfeed ? <VideoProcessingNotice /> : null}
       <View style={styles.headerDivider} />
     </View>
   );

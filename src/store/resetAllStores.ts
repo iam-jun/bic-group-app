@@ -42,6 +42,7 @@ import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useMyPermissionsStore from './permissions';
 import useTagsStore from './entities/tags';
 import useTagsControllerStore from '~/screens/tags/store';
+import useRemoteConfigStore from './remoteConfig';
 
 export const excludedStore = [
   useAuthController,
@@ -97,6 +98,7 @@ const stores = [
   useMyPermissionsStore,
   useTagsStore,
   useTagsControllerStore,
+  useRemoteConfigStore,
 ];
 
 export const resetAllStores = () => {

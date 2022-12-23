@@ -14,6 +14,7 @@ import initFatalErrorHandler from '~/services/fatalErrorHandler';
 import { initFirebaseMessaging } from '~/services/firebase';
 import { initAmplify } from '~/services/amplify';
 import { initSentry, wrapWithSentry } from '~/services/sentry';
+import useRemoteConfigStore from '~/store/remoteConfig';
 
 LogBox.ignoreLogs([
   'EventEmitter.removeListener',
@@ -28,10 +29,12 @@ initFatalErrorHandler();
 
 const App = () => {
   const codePushActions = useCodePushStore((state) => state.actions);
+  const remoteConfigActions = useRemoteConfigStore((state) => state.actions);
 
   useEffect(() => {
     initAmplify();
     initFirebaseMessaging();
+    remoteConfigActions.getRemoteConfig();
     codePushActions?.getUpdateMetaData?.();
   }, []);
 

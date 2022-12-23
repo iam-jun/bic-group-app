@@ -36,6 +36,7 @@ import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
 import { IGroupController } from '~/screens/groups/store';
 import { ITagsState } from './entities/tags';
+import { IRemoteConfigState } from './remoteConfig';
 
 export interface BicStore {
   entities: {
@@ -122,4 +123,5 @@ export interface BicStore {
   codePush: ICodePushState;
   myPermissions: IMyPermissionsState;
   tags: ITagsState;
+  remoteConfig: IRemoteConfigState;
 }

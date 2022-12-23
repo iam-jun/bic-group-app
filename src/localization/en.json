@@ -1249,5 +1249,17 @@
     "edit_tag": "Edit Tag",
     "do_you_want_to_change_this_tag": "Do you want to change this tag?",
     "message_notice": "The tag will be automatically converted to lowercase after created or updated."
+  },
+  "notice": {
+    "force_update": {
+      "title": "We’re better than ever",
+      "description": "New version is available. Please update to get the best experience.",
+      "confirm": "Update"
+    },
+    "new_version": {
+      "title": "New version available",
+      "description": "New version is available. Please update to get the best experience.",
+      "confirm": "Update"
+    }
   }
 }

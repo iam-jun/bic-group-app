@@ -2,7 +2,7 @@ import * as React from 'react';
 import { cleanup, fireEvent } from '@testing-library/react-native';
 import i18next from 'i18next';
 
-import NoticePanel from './NoticePanel';
+import VideoProcessingNotice from './VideoProcessingNotice';
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import initialState from '../../../storeRedux/initialState';
 import {
@@ -21,7 +21,7 @@ describe('NoticePanel component', () => {
       data: LIST_POST_CONTAINING_VIDEO_PROCESS_1,
     };
     const store = createTestStore(state) as any;
-    const rendered = renderWithRedux(<NoticePanel />, store).toJSON();
+    const rendered = renderWithRedux(<VideoProcessingNotice />, store).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
@@ -32,7 +32,7 @@ describe('NoticePanel component', () => {
       data: LIST_POST_CONTAINING_VIDEO_PROCESS_2,
     };
     const store = createTestStore(state) as any;
-    const rendered = renderWithRedux(<NoticePanel />, store);
+    const rendered = renderWithRedux(<VideoProcessingNotice />, store);
 
     const titleComponent = rendered.getByTestId('notice_panel.title');
     expect(titleComponent).toBeDefined();
@@ -55,7 +55,7 @@ describe('NoticePanel component', () => {
       data: LIST_POST_CONTAINING_VIDEO_PROCESS_2,
     };
     const store = createTestStore(state) as any;
-    const rendered = renderWithRedux(<NoticePanel />, store);
+    const rendered = renderWithRedux(<VideoProcessingNotice />, store);
 
     const buttonCloseComponent = rendered.getByTestId(
       'notice_panel.button_close',
