@@ -18,11 +18,6 @@ import {
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
-  updateGroupJoinSetting: (payload: {groupId: string; isJoinApproval: boolean}) => ({
-    type: groupsTypes.UPDATE_GROUP_JOIN_SETTING,
-    payload,
-  }),
-
   getGroupSearchMembers: (payload: IGroupGetMembers) => ({
     type: groupsTypes.GET_GROUP_SEARCH_MEMBERS,
     payload,

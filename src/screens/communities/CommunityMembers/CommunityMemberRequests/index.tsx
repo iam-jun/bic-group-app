@@ -37,13 +37,13 @@ const CommunityMemberRequests = ({
 
   useEffect(
     () => {
-      if (canApproveRejectJoiningRequests) {
-        getData();
+      if (!canApproveRejectJoiningRequests) return;
 
-        return () => {
-          dispatch(groupsActions.resetCommunityMemberRequests());
-        };
-      }
+      getData();
+
+      return () => {
+        dispatch(groupsActions.resetCommunityMemberRequests());
+      };
     }, [communityId, canApproveRejectJoiningRequests],
   );
 
@@ -52,7 +52,8 @@ const CommunityMemberRequests = ({
   };
 
   const onLoadMore = () => {
-    canLoadMore && getData();
+    if (!canLoadMore) return;
+    getData();
   };
 
   const onRefresh = () => {

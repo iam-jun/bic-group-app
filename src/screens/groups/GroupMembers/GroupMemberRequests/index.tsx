@@ -8,6 +8,7 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import MemberRequestList from '../../components/MemberRequestList';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
 import JoinRequestSetting from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/JoinRequestSetting';
+import useGroupMemberStore from '../store';
 
 interface GroupMemberRequestsProps {
   groupId: string;
@@ -28,6 +29,7 @@ const GroupMemberRequests = ({
   const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
   const { id, settings, privacy } = useKeySelector(groupsKeySelector.groupDetail.group);
   const { isJoinApproval } = settings || {};
+  const actions = useGroupMemberStore((state) => state.actions);
 
   useEffect(
     () => {
@@ -36,14 +38,13 @@ const GroupMemberRequests = ({
         dispatch(groupsActions.getGroupDetail({ groupId }));
       }
 
-      if (canApproveRejectJoiningRequests) {
-        getData();
+      if (!canApproveRejectJoiningRequests) return;
 
-        return () => {
-          dispatch(groupsActions.resetGroupMemberRequests());
-        };
-      }
-    }, [groupId, canApproveRejectJoiningRequests],
+      getData();
+      return () => {
+        dispatch(groupsActions.resetGroupMemberRequests());
+      };
+    }, [id, groupId, canApproveRejectJoiningRequests],
   );
 
   const getData = (isRefreshing?: boolean) => {
@@ -51,7 +52,8 @@ const GroupMemberRequests = ({
   };
 
   const onLoadMore = () => {
-    canLoadMore && getData();
+    if (!canLoadMore) return;
+    getData();
   };
 
   const onRefresh = () => {
@@ -59,7 +61,7 @@ const GroupMemberRequests = ({
   };
 
   const onUpdateJoinSetting = (isJoinApproval: boolean) => {
-    dispatch(groupsActions.updateGroupJoinSetting({ groupId, isJoinApproval }));
+    actions.updateGroupJoinSetting({ groupId, isJoinApproval });
   };
 
   const onPressApproveAll = () => {

@@ -32,7 +32,6 @@ import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
-import updateGroupJoinSetting from './updateGroupJoinSetting';
 import getGlobalSearch from './getGlobalSearch';
 import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
@@ -40,9 +39,6 @@ import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
 
 export default function* groupsSaga() {
-  yield takeLatest(
-    groupsTypes.UPDATE_GROUP_JOIN_SETTING, updateGroupJoinSetting,
-  );
   yield takeLatest(
     groupsTypes.GET_GROUP_DETAIL, getGroupDetail,
   );

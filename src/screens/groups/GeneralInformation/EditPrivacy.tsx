@@ -1,9 +1,8 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-
 import i18next from 'i18next';
-import { useDispatch } from 'react-redux';
+
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/baseComponents/Text';
@@ -11,18 +10,17 @@ import { spacing } from '~/theme';
 import PrivacyItem from './components/PrivacyItem';
 import { CommunityPrivacyType, GroupPrivacyType } from '~/constants/privacyTypes';
 import useCommunityController from '~/screens/communities/store';
-import groupsActions from '~/storeRedux/groups/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import Icon from '~/baseComponents/Icon';
 import { CheckBox } from '~/baseComponents';
 import useGroupController from '../store';
+import useGroupMemberStore from '../GroupMembers/store';
 
 const EditPrivacy = (props: any) => {
   const {
     type = 'group', id = '', privacy = '', isJoinApproval, rootGroupId,
   } = props?.route?.params || {};
 
-  const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const { colors } = theme;
@@ -33,6 +31,7 @@ const EditPrivacy = (props: any) => {
   const privacyType = isGroupScope ? GroupPrivacyType : CommunityPrivacyType;
   const controller = useCommunityController((state) => state.actions);
   const groupActions = useGroupController((state) => state.actions);
+  const actions = useGroupMemberStore((state) => state.actions);
 
   const shouldSelectSecretPrivacy = selectedPrivacy === privacyType.SECRET;
   const shouldSelectPrivatePrivacy = selectedPrivacy === privacyType.PRIVATE;
@@ -48,7 +47,7 @@ const EditPrivacy = (props: any) => {
 
     if (type === 'group') {
       if (shouldSelectPrivatePrivacy) {
-        dispatch(groupsActions.updateGroupJoinSetting({ groupId: id, isJoinApproval: joinSettingState }));
+        actions.updateGroupJoinSetting({ groupId: id, isJoinApproval: joinSettingState });
       }
       groupActions.editGroupDetail(data, editFieldName, onNavigateBack);
     } else {
