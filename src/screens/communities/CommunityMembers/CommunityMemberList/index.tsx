@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberList from '~/screens/groups/components/MemberList';
-import actions from '~/storeRedux/groups/actions';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
+import useCommunityMemberStore from '../store';
 
 interface CommunityMemberListProps {
   community: ICommunity;
@@ -16,8 +13,9 @@ interface CommunityMemberListProps {
 
 const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProps) => {
   const { groupId } = community;
-  const dispatch = useDispatch();
-  const { canLoadMore } = useKeySelector(groupsKeySelector.communityMembers);
+  const actions = useCommunityMemberStore((state) => state.actions);
+  const resetStore = useCommunityMemberStore((state) => state.reset);
+  const canLoadMore = useCommunityMemberStore((state) => state.communityMembers.canLoadMore);
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canManageMember = shouldHavePermission(
@@ -40,11 +38,11 @@ const CommunityMemberList = ({ community, onPressMenu }: CommunityMemberListProp
 
   const getCommunityMembers = (isRefreshing?: boolean) => {
     if (!groupId) return;
-    dispatch(actions.getCommunityMembers({ groupId, isRefreshing }));
+    actions.getCommunityMembers(groupId, isRefreshing);
   };
 
   const resetCommunityMembers = () => {
-    dispatch(actions.resetCommunityMembers());
+    resetStore();
   };
 
   const onLoadMore = () => {

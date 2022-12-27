@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Divider from '~/beinComponents/Divider';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import { padding } from '~/theme/spacing';
+import spacing, { padding } from '~/theme/spacing';
 import LoadMoreComment from '~/components/LoadMoreComment';
 import { PostView } from '~/components/posts';
 
@@ -31,7 +32,9 @@ const PostDetailContentHeader = ({
         btnReactTestID="post_detail_content.btn_react"
         btnCommentTestID="post_detail_content.btn_comment"
       />
-      <Divider />
+      <View style={styles.dividerContainer}>
+        <Divider style={styles.divider} />
+      </View>
       {commentLeft && (
         <LoadMoreComment
           title="post:text_load_more_comments"
@@ -42,5 +45,14 @@ const PostDetailContentHeader = ({
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  dividerContainer: {
+    backgroundColor: '#fff',
+  },
+  divider: {
+    marginHorizontal: spacing.margin.large,
+  },
+});
 
 export default PostDetailContentHeader;

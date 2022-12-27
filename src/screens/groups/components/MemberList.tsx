@@ -11,7 +11,6 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import Text from '~/baseComponents/Text';
 import MemberItem from './MemberItem';
-import { getMembersSection } from '~/storeRedux/groups/selectors';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
@@ -37,8 +36,7 @@ const MemberList = ({
   const { colors } = theme;
   const styles = createStyles(theme);
 
-  // Waiting refactor communityMembers to edit condition type ...
-  const memberSectionData = type === 'group' ? useMemberSection() : getMembersSection(type);
+  const memberSectionData = useMemberSection(type);
 
   const { loading, canLoadMore, sectionList } = memberSectionData;
 

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
-import useRemoveCommunityMemberStore from '../store';
+import useCommunityMemberStore from '../store';
 import useCommunityController from '../../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 import { PermissionKey } from '~/constants/permissionScheme';
@@ -27,8 +27,8 @@ const CommunityMemberOptionsMenu = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
-  const deleteRemoveCommunityMember = useRemoveCommunityMemberStore(
-    (state) => state.actions.deleteRemoveCommunityMember,
+  const removeCommunityMember = useCommunityMemberStore(
+    (state) => state.actions.removeCommunityMember,
   );
   const actions = useCommunityController((state) => state.actions);
 
@@ -66,8 +66,7 @@ const CommunityMemberOptionsMenu = ({
 
   const onConfirmRemoveMember = () => {
     if (!selectedMember?.id) return;
-
-    deleteRemoveCommunityMember({ communityId, groupId, userId: selectedMember.id });
+    removeCommunityMember({ communityId, groupId, userId: selectedMember.id });
   };
 
   const onPressRemoveMember = () => {

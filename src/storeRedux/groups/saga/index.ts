@@ -19,8 +19,6 @@ import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
 import getGroupDetail from './getGroupDetail';
 import showError from '~/storeRedux/commonSaga/showError';
-import getCommunityMembers from './getCommunityMembers';
-import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupSearchMembers from './getGroupSearchMembers';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
 import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
@@ -78,13 +76,6 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
     declineAllGroupMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers,
-  );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,
-    getCommunitySearchMembers,
   );
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,

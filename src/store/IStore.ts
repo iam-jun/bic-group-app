@@ -14,7 +14,6 @@ import { IAccountSettingsState } from '~/screens/Menu/AccountSettings/store';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
 import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
-import { IRemoveCommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import { IGroupMemberState } from '~/screens/groups/GroupMembers/store';
 import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
@@ -36,6 +35,7 @@ import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
 import { IGroupController } from '~/screens/groups/store';
 import { ITagsState } from './entities/tags';
+import { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import { IRemoteConfigState } from './remoteConfig';
 
 export interface BicStore {
@@ -88,6 +88,10 @@ export interface BicStore {
     yourGroupsStore: IYourGroupsState;
     searchJoinedCommunitiesStore: ISearchJoinedCommunitiesState;
   };
+  communities: {
+    community: ICommunitiesState,
+    communityMember: ICommunityMemberState,
+  }
   Home: {
     homeStore: IHomeState;
   };
@@ -117,8 +121,6 @@ export interface BicStore {
 
   // others
   chat: IChatState;
-  communities: ICommunitiesState;
-  removeCommunityMemberStore: IRemoveCommunityMemberState;
   giphy: IGiphyState;
   codePush: ICodePushState;
   myPermissions: IMyPermissionsState;

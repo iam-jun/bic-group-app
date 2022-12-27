@@ -1,12 +1,15 @@
+import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useGroupMemberStore, {
   IGroupMemberState,
 } from '~/screens/groups/GroupMembers/store';
 
-const useMemberSection = () => {
-  // Waiting refactor communityMembers to make condition type ...
-  const members = useGroupMemberStore(
-    (state: IGroupMemberState) => state.groupMembers,
-  );
+const useMemberSection = (type: 'group' | 'community') => {
+  let members:any = {};
+  if (type === 'group') {
+    members = useGroupMemberStore(
+      (state: IGroupMemberState) => state.groupMembers,
+    );
+  } else members = useCommunityMemberStore((state) => state.communityMembers);
 
   const sectionList: any = [];
 
