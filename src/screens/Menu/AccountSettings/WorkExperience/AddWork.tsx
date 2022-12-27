@@ -17,7 +17,6 @@ import Header from '~/beinComponents/Header';
 import Text from '~/baseComponents/Text';
 
 import { useRootNavigation } from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
 import { ILocation } from '~/interfaces/common';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
@@ -125,8 +124,6 @@ const AddWork = () => {
     Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
-    } else {
-      rootNavigation.replace(mainStack.userEdit);
     }
   };
 

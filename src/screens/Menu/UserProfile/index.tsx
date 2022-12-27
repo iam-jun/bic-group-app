@@ -37,7 +37,6 @@ const UserProfile = (props: any) => {
 
   const {
     fullname,
-    description,
     avatar,
     backgroundImgUrl,
     username,
@@ -144,7 +143,6 @@ const UserProfile = (props: any) => {
             fullname={fullname}
             username={username}
             latestWork={latestWork}
-            description={description}
           />
           <Divider color={colors.gray5} size={spacing.padding.large} />
           <BasicInfo
