@@ -61,11 +61,7 @@ export const getUserFromSharedPreferences = () => {
 export const updateUserFromSharedPreferences = async (payload: any) => {
   const user = await getUserFromSharedPreferences();
 
-  await saveDataToSharedStorage(
-    getEnv(`APP_GROUP_PACKAGE_NAME_${Platform.OS.toUpperCase()}`),
-    'pref_user_info',
-    { ...user, ...payload },
-  );
+  await saveUserToSharedPreferences({ ...user, ...payload });
 };
 
 export const isAppInstalled = () => Linking.canOpenURL(chatSchemes.PREFIX_DEEPLINK);

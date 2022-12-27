@@ -40,10 +40,6 @@ const useSeriesMenu = (
     );
   };
 
-  const onPressUpcomingFeature = () => {
-    dispatch(modalActions.hideBottomList());
-  };
-
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
     Clipboard.setString(getLink(
@@ -105,15 +101,6 @@ const useSeriesMenu = (
     },
     {
       id: 4,
-      testID: 'series_menu.insights',
-      leftIcon: 'iconReact',
-      title: i18next.t('post:post_menu_view_reactions'),
-      requireIsActor: false,
-      // requireReactionCounts: true,
-      upcoming: true,
-      onPress: onPressUpcomingFeature,
-    }, {
-      id: 5,
       testID: 'series_menu.delete',
       leftIcon: 'TrashCan',
       title: i18next.t('series:menu_text_delete_series'),

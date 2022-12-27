@@ -173,13 +173,12 @@ const GroupDetail = (props: any) => {
     if (isEmpty(timelines[groupId]) && isEmpty(groupPost?.ids)) {
       // for the 1st time timelines[groupId] can be undefined so we must init Data
       if (groupId) timelineActions.initDataTimeline(groupId);
-      getGroupPosts();
     }
   }, [groupInfo]);
 
   useEffect(() => {
     getGroupPosts();
-  }, [contentFilter, attributeFilter]);
+  }, [contentFilter, attributeFilter, groupInfo]);
 
   useEffect(() => () => {
     if (groupId) timelineActions.resetTimeline(groupId);

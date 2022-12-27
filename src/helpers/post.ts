@@ -163,6 +163,8 @@ export const getPostMenus = (data: any[], isActor: boolean, reactionsCount: any)
     const requireReactionCounts = item?.requireReactionCounts && reactionsCount && hasReaction;
     const notShowForActor = item?.notShowForActor;
 
+    if (item.shouldBeHidden) return;
+
     if ((requireNothing || requireActor || requireReactionCounts) && !notShowForActor) {
       result.push({ ...item });
     }

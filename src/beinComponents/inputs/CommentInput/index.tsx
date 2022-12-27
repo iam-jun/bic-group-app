@@ -168,7 +168,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _onPressSelectImage = () => {
     checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
       if (canOpenPicker) {
-        ImagePicker.openPickerSingle().then((file) => {
+        ImagePicker.openPickerSingle({ mediaType: 'photo' }).then((file) => {
           if (!file) return;
           setSelectedGiphy(undefined);
           if (!isHandleUpload) {

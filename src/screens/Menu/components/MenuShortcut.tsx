@@ -14,6 +14,8 @@ import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/storeRedux/modal/actions';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import seriesStack from '~/router/navigator/MainStack/stacks/series/stack';
 
 const MenuShortcut = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,14 @@ const MenuShortcut = () => {
     rootNavigation.navigate(
       homeStack.postSelectAudience, { isFirstStep: true },
     );
+  };
+
+  const onPressWriteArticle = () => {
+    rootNavigation.navigate(articleStack.createArticle, { isFirstStep: true });
+  };
+
+  const onPressWriteSeries = () => {
+    rootNavigation.navigate(seriesStack.seriesSelectAudience, { isFirstStep: true });
   };
 
   const onPressDraft = () => {
@@ -51,11 +61,15 @@ const MenuShortcut = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: 'row' }}>
-        {renderButton('PenLineSolid', t('menu:title_create_post'), onPressCreatePost)}
+      <View style={styles.directionRow}>
+        {renderButton('PenLineSolid', t('menu:title_write_post'), onPressCreatePost)}
+        {renderButton('FilePenSolid', t('menu:title_write_article'), onPressWriteArticle)}
+      </View>
+      <View style={styles.directionRow}>
+        {renderButton('AlbumCollectionSolid', t('menu:title_write_series'), onPressWriteSeries)}
         {renderButton('FloppyDiskPenSolid', t('menu:title_draft'), onPressDraft)}
       </View>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={styles.directionRow}>
         {renderButton('BookmarkSolid', t('menu:title_saved_items'), onPressSavedItems)}
         {renderButton('PhotoFilmSolid', t('menu:title_media'), onPressMedia)}
       </View>
@@ -82,6 +96,9 @@ const createStyle = (theme: ExtendedTheme) => {
     buttonText: {
       color: colors.neutral40,
       marginTop: spacing.margin.small,
+    },
+    directionRow: {
+      flexDirection: 'row',
     },
   });
 };

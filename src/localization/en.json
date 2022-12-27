@@ -510,8 +510,10 @@
   "menu": {
     "title_discover": "Discover",
     "title_your_community": "Your community",
-    "title_create_post": "Create a Post",
-    "title_draft": "Draft",
+    "title_write_post": "Write Post",
+    "title_write_article": "Write Article",
+    "title_write_series": "Write Series",
+    "title_draft": "My Draft",
     "title_saved_items": "Saved Items",
     "title_media": "Media",
     "title_settings": "Settings",
@@ -766,6 +768,11 @@
     },
     "text_important_warning_1": "Cannot set because you don't have this permission at",
     "text_important_warning_2": ". Please remove them or contact your admin",
+    "post_setting_permissions_alert": {
+      "title": "Alert",
+      "description_1": "You don't have this permission at ",
+      "description_2": ". Please remove them or contact your admin."
+    },
     "text_saved": "Post saved.",
     "text_unsaved": "Post unsaved.",
     "article_menu": {
