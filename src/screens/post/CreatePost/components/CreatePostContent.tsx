@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import { isEmpty } from 'lodash';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import UploadingFile from '~/beinComponents/UploadingFile';
@@ -156,8 +157,21 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   };
 
   // only support for iOS
-  const onPasteImage = (_, files) => {
-    const img = getImagePastedFromClipboard(files);
+  const onPasteImage = (_, images) => {
+    if (!isEmpty(video) || !isEmpty(files)) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: t('upload:text_upload_error', {
+            file_type: t('file_type:image'),
+          }),
+          props: { type: 'error' },
+        }),
+      );
+      return;
+    }
+
+    const img = getImagePastedFromClipboard(images);
+
     if (img) {
       const imgPasted = {
         name: img.fileName,
