@@ -88,12 +88,13 @@ const useChatSocket = () => {
           chatSocketClient.close(true);
           return;
         }
-        if (isTokenExpired()) {
+        const isTokenExpired = checkTokenExpired(tokenExpRef.current);
+        if (isTokenExpired) {
           chatSocketClient.close(true); // close to disable retry
           refreshToken();
         }
       });
-    }, [userId],
+    }, [userId, myProfile?.chatUserId],
   );
 
   useEffect(
@@ -124,12 +125,12 @@ const useChatSocket = () => {
     }, [tokenExp],
   );
 
-  const isTokenExpired = () => {
-    const nowMs = new Date().getTime() / 1000;
-    return (tokenExpRef.current || 0) - nowMs < 0;
-  };
-
   return {};
 };
 
 export default useChatSocket;
+
+const checkTokenExpired = (tokenExp: number) => {
+  const nowMs = new Date().getTime() / 1000;
+  return (tokenExp || 0) - nowMs < 0;
+};

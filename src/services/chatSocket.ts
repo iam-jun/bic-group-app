@@ -66,6 +66,8 @@ class WebSocketClient {
   }
 
   initialize(token: string | null, opts = {}) {
+      this.token = token;
+
     if (this.connectionTimeout) {
       clearTimeout(this.connectionTimeout);
     }
@@ -129,7 +131,9 @@ class WebSocketClient {
       if (reliableWebSockets) {
         // Add connection id, and last_sequence_number to the query param.
         // We cannot also send it as part of the auth_challenge, because the session cookie is already sent with the request.
-        url = `${connectionUrl}?connection_id=${this.connectionId}&sequence_number=${this.serverSequence}`;
+        url = `${connectionUrl}?connection_id=${this.connectionId}&sequence_number=${this.serverSequence}&access_token=${this.token}`;
+      } else {
+        url += `?access_token=${this.token}`;
       }
 
       if (this.connectFailCount === 0) {
@@ -142,7 +146,6 @@ class WebSocketClient {
         ...(additionalOptions || {}),
       });
       this.connectionUrl = connectionUrl;
-      this.token = token;
 
       this.conn!.onopen = () => {
         // No need to reset sequence number here.
@@ -150,11 +153,11 @@ class WebSocketClient {
           this.serverSequence = 0;
         }
 
-        if (token) {
-          // we check for the platform as a workaround until we fix on the server that further authentications
-          // are ignored
-          this.sendMessage('authentication_challenge', { token });
-        }
+        // if (token) {
+        //   // we check for the platform as a workaround until we fix on the server that further authentications
+        //   // are ignored
+        //   this.sendMessage('authentication_challenge', { token });
+        // }
 
         if (this.connectFailCount > 0) {
           console.log('websocket re-established connection'); // eslint-disable-line no-console
@@ -242,6 +245,9 @@ class WebSocketClient {
         if (msg.seq_reply) {
           if (msg.error) {
             console.warn(msg); // eslint-disable-line no-console
+            if(msg.error?.status_code === 401 && this.closeCallback){
+              this.closeCallback(this.connectFailCount);
+            }
           }
         } else if (this.eventCallback) {
           if (reliableWebSockets) {
