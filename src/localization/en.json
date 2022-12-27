@@ -766,6 +766,11 @@
     },
     "text_important_warning_1": "Cannot set because you don't have this permission at",
     "text_important_warning_2": ". Please remove them or contact your admin",
+    "post_setting_permissions_alert": {
+      "title": "Alert",
+      "description_1": "You don't have this permission at ",
+      "description_2": ". Please remove them or contact your admin."
+    },
     "text_saved": "Post saved.",
     "text_unsaved": "Post unsaved.",
     "article_menu": {

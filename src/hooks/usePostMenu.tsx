@@ -18,6 +18,8 @@ import ReportContent from '~/components/ReportContent';
 import useCommonController from '~/screens/store';
 import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
 
 const usePostMenu = (
   data: IPost,
@@ -35,6 +37,14 @@ const usePostMenu = (
   const {
     id: postId, isDraft, reactionsCount, isSaved, type, audience,
   } = data;
+
+  const groupAudience = audience.groups || [];
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
+
+  const audienceListWithNoPermission = getAudienceListWithNoPermission(
+    groupAudience,
+    PermissionKey.EDIT_POST_SETTING,
+  );
 
   const onPressEdit = () => {
     dispatch(modalActions.hideBottomList());
@@ -137,6 +147,7 @@ const usePostMenu = (
       leftIcon: 'Sliders',
       title: i18next.t('post:post_menu_edit_settings'),
       requireIsActor: true,
+      shouldBeHidden: audienceListWithNoPermission.length > 0,
       onPress: onPressEditSettings,
     },
     {

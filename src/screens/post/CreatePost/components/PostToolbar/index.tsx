@@ -41,9 +41,10 @@ export interface PostToolbarProps {
   imageDisabled?: boolean;
   videoDisabled?: boolean;
   fileDisabled?: boolean;
+  isSetting?:boolean;
+  settingDisabled?: boolean;
   onPressBack?: () => void;
   onPressSetting: ()=> void;
-  isSetting?:boolean;
 }
 
 const PostToolbar: FC<PostToolbarProps> = ({
@@ -54,6 +55,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
   videoDisabled,
   fileDisabled,
   isSetting,
+  settingDisabled,
   onPressBack,
   onPressSetting,
   ...props
@@ -62,7 +64,6 @@ const PostToolbar: FC<PostToolbarProps> = ({
 
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const { colors } = theme;
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
 
@@ -74,6 +75,8 @@ const PostToolbar: FC<PostToolbarProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const { handleImage } = useUploadImage();
+
+  const iconSettingColor = getPostSettingIconColor({ settingDisabled, isSetting, theme });
 
   const openModal = throttle(
     (e?: any) => {
@@ -218,7 +221,8 @@ const PostToolbar: FC<PostToolbarProps> = ({
           size="medium"
           testID="header.menuIcon.button"
           icon="Sliders"
-          color={isSetting ? colors.purple50 : colors.neutral40}
+          disabled={settingDisabled}
+          color={iconSettingColor}
           onPress={onPressSetting}
         />
       </View>
@@ -292,3 +296,15 @@ const createStyle = (theme: ExtendedTheme) => {
 };
 
 export default PostToolbar;
+
+const getPostSettingIconColor = ({
+  settingDisabled, isSetting, theme,
+}: {
+  settingDisabled: boolean, isSetting: boolean; theme: ExtendedTheme
+}) => {
+  if (settingDisabled) return theme.colors.neutral20;
+
+  if (isSetting) return theme.colors.purple50;
+
+  return theme.colors.neutral40;
+};

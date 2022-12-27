@@ -25,6 +25,11 @@ import useDraftPostStore from '../../Draft/DraftPost/store';
 import useCommentInputStore from '../../comments/components/CommentInputView/store';
 import ICommentInputState from '../../comments/components/CommentInputView/store/Interface';
 import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
+import useMyPermissionsStore from '~/store/permissions';
+import { PermissionKey } from '~/constants/permissionScheme';
+import { useBaseHook } from '~/hooks';
+import modalActions from '~/storeRedux/modal/actions';
+import Text from '~/baseComponents/Text';
 
 export interface CreatePostProps {
   route?: {
@@ -40,6 +45,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const actions = useCommentInputStore((state: ICommentInputState) => state.actions);
 
   const dispatch = useDispatch();
+  const { t } = useBaseHook();
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
@@ -82,6 +88,14 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
       groupIds.push(selected.id);
     }
   });
+
+  const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
+
+  const audienceListWithNoPermission = getAudienceListWithNoPermission(
+    chosenAudiences,
+    PermissionKey.EDIT_POST_SETTING,
+  );
+  const shouldDisablePostSettings = audienceListWithNoPermission.length === chosenAudiences.length;
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.isDraft);
@@ -164,6 +178,24 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   };
 
   const onPressSettings = () => {
+    if (audienceListWithNoPermission.length > 0) {
+      const audienceListNames = audienceListWithNoPermission.map((audience) => audience.name).join(', ');
+      const alertPayload = {
+        title: t('post:post_setting_permissions_alert:title'),
+        children: (
+          <Text.BodyM style={styles.childrenText}>
+            {t('post:post_setting_permissions_alert:description_1')}
+            <Text.BodyMMedium>{audienceListNames}</Text.BodyMMedium>
+            {t('post:post_setting_permissions_alert:description_2')}
+          </Text.BodyM>
+        ),
+        onConfirm: null,
+        cancelBtn: true,
+      };
+      dispatch(modalActions.showAlert(alertPayload));
+      return;
+    }
+
     rootNavigation.navigate(homeStack.postSettings);
   };
 
@@ -204,6 +236,7 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
           fileDisabled={fileDisabled}
           onPressSetting={onPressSettings}
           isSetting={count > 0}
+          settingDisabled={shouldDisablePostSettings}
         />
       </View>
     </ScreenWrapper>
@@ -232,6 +265,11 @@ const themeStyles = (theme: ExtendedTheme) => {
     headerStyle: {
       borderBottomColor: colors.neutral5,
       borderBottomWidth: 1,
+    },
+    childrenText: {
+      paddingTop: spacing.padding.tiny,
+      paddingBottom: spacing.padding.base,
+      paddingHorizontal: spacing.padding.large,
     },
   });
 };

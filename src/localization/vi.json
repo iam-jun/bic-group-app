@@ -727,6 +727,11 @@
     },
     "text_important_warning_1": "Không thể cài đặt Bài viết quan trọng vì bạn không có quyền trong",
     "text_important_warning_2": ". Vui lòng xoá chúng hoặc liên hệ với quản trị viên của bạn.",
+    "post_setting_permissions_alert": {
+      "title": "Chú ý",
+      "description_1": "Bạn không có quyền này ở ",
+      "description_2": ". Vui lòng xoá chúng hoặc liên hệ với quản trị viên của bạn."
+    },
     "text_saved": "Đã lưu bài viết",
     "text_unsaved": "Đã bỏ lưu bài viết",
     "article_menu": {
