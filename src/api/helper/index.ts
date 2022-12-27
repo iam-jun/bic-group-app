@@ -198,7 +198,10 @@ export const refreshTokenThenExecuteQueueRetry = async (oldBeinToken: string): P
     useAuthController.getState()?.actions?.setRefreshedToken(refreshedToken);
 
     // For sharing data between Group and Chat
-    await updateUserFromSharedPreferences({ token: idToken, exp });
+    const currentSession = {
+      accessToken: newToken, refreshToken, idToken, expiration: exp,
+    };
+    await updateUserFromSharedPreferences({ currentSession });
   } catch (e) {
     handleRefreshTokenFailed();
     return;

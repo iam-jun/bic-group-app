@@ -41,13 +41,19 @@ const handleAuthEvent = (set, get) => async (data: HubCapsule) => {
       const sessionData: IObject<any> = await getUserFromSharedPreferences();
       const activeSessions = sessionData?.activeSessions || {};
 
+      const currentSession = {
+        refreshToken: signInUserSession?.refreshToken?.token,
+        accessToken: signInUserSession?.accessToken?.jwtToken,
+        idToken: signInUserSession?.idToken?.jwtToken,
+        expiration: signInUserSession?.idToken?.payload?.exp,
+      };
+
       // saveUserToSharedPreferences
       const payload = {
-        username: userResponse.username,
+        currentSession,
+        name: userResponse.name,
         email: userResponse.email,
-        name,
-        token: userResponse.signInUserSession.idToken?.jwtToken,
-        exp: userResponse.signInUserSession.idToken?.payload?.exp,
+        username: userResponse.username,
         activeSessions: { ...activeSessions, community: new Date().toDateString() },
       };
       await saveUserToSharedPreferences(payload);
