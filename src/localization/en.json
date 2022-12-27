@@ -510,8 +510,10 @@
   "menu": {
     "title_discover": "Discover",
     "title_your_community": "Your community",
-    "title_create_post": "Create a Post",
-    "title_draft": "Draft",
+    "title_write_post": "Write Post",
+    "title_write_article": "Write Article",
+    "title_write_series": "Write Series",
+    "title_draft": "My Draft",
     "title_saved_items": "Saved Items",
     "title_media": "Media",
     "title_settings": "Settings",

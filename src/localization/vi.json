@@ -470,7 +470,9 @@
   "menu": {
     "title_discover": "Khám phá",
     "title_your_community": "Cộng đồng của bạn",
-    "title_create_post": "Đăng bài",
+    "title_write_post": "Tạo bài Đăng",
+    "title_write_article": "Tạo bài Viết",
+    "title_write_series": "Tạo Loạt bài",
     "title_draft": "Nháp",
     "title_saved_items": "Đã lưu",
     "title_media": "Media",
