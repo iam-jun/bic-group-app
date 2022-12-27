@@ -151,6 +151,7 @@ const PostToolbar: FC<PostToolbarProps> = ({
 
   const openGallery = () => {
     ImagePicker.openPickerMultiple({
+      mediaType: 'photo',
       maxFiles: appConfig.postPhotoLimit,
     }).then((images) => {
       handleImage(images);
