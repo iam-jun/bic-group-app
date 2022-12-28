@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 
@@ -8,6 +8,7 @@ import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import { dimension, spacing } from '~/theme';
 import BaseToast from './BaseToast';
+import { useKeyboardStatus } from '~/hooks/keyboard';
 
 const Toast = () => {
   const { content, props, duration }: IToastMessage = useKeySelector('modal.toastMessage') || {};
@@ -16,9 +17,10 @@ const Toast = () => {
   } = props || {};
   const durationInSeconds = duration / 1000;
   const [countDown, setCountDown] = useState(durationInSeconds);
+  const { height: keyboardHeight } = useKeyboardStatus();
 
   const dispatch = useDispatch();
-  const styles = createStyle();
+  const styles = createStyle(keyboardHeight);
 
   useEffect(() => {
     setCountDown(durationInSeconds);
@@ -67,13 +69,14 @@ const Toast = () => {
   );
 };
 
-const createStyle = () => {
+const createStyle = (keyboardHeight: number) => {
   const insets = useSafeAreaInsets();
-
+  let toastBottom = dimension.bottomBarHeight + insets.bottom + spacing.margin.extraLarge;
+  if (keyboardHeight) toastBottom = insets.bottom + spacing.margin.extraLarge + (Platform.OS === 'ios' ? keyboardHeight : 0);
   return StyleSheet.create({
     toast: {
       position: 'absolute',
-      bottom: dimension.bottomBarHeight + insets.bottom + spacing.margin.extraLarge,
+      bottom: toastBottom,
     },
   });
 };
