@@ -21,7 +21,7 @@ import { MEMBER_TABS } from '~/screens/communities/CommunityMembers';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupMemberRequests from './GroupMemberRequests';
 import { IconType } from '~/resources/icons';
-import useGroupMemberStore from './store';
+import useGroupMemberStore, { IGroupMemberState } from './store';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
 
@@ -44,7 +44,9 @@ const _GroupMembers = ({ route }: any) => {
   const baseSheetRef: any = useRef();
   const actions = useGroupMemberStore((state) => state.actions);
 
-  const { offset } = useKeySelector(groupsKeySelector.groupMembers);
+  const { offset } = useGroupMemberStore(
+    (state: IGroupMemberState) => state.groupMembers,
+  );
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canAddMember = shouldHavePermission(
     groupId,

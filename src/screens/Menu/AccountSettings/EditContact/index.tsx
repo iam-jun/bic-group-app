@@ -13,7 +13,6 @@ import { useBaseHook } from '~/hooks';
 import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../../storeRedux/menu/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
 import Button from '~/beinComponents/Button';
 import TitleComponent from '../fragments/TitleComponent';
 import EditPhoneNumber from './fragments/EditPhoneNumber';
@@ -68,8 +67,6 @@ const EditContact = () => {
     Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
-    } else {
-      rootNavigation.replace(mainStack.userEdit);
     }
   };
 

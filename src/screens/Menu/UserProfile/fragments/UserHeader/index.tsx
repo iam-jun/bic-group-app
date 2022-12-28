@@ -12,11 +12,10 @@ interface Props {
     titlePosition: string;
     company: string;
   };
-  description?: string;
 }
 
 const UserHeader = ({
-  fullname, username, latestWork, description,
+  fullname, username, latestWork,
 }:Props) => {
   const { colors } = useTheme();
 
@@ -33,9 +32,6 @@ const UserHeader = ({
         </Text.BodyS>
       )}
       <WorkInfo style={styles.subtitle} latestWork={latestWork} />
-      {!!description && (
-        <Text testID="user_profile.description" style={styles.subtitle}>{description}</Text>
-      )}
     </View>
   );
 };

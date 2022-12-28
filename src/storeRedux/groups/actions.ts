@@ -11,18 +11,9 @@ import {
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
 import { IObject } from '~/interfaces/common';
-import {
-  IParamGetCommunityMembers,
-  ISetMembers,
-  ISetCommunitySearchMembers, IParamGetDiscoverGroups,
-} from '~/interfaces/ICommunity';
+import { IParamGetDiscoverGroups } from '~/interfaces/ICommunity';
 
 const groupsActions = {
-  updateGroupJoinSetting: (payload: {groupId: string; isJoinApproval: boolean}) => ({
-    type: groupsTypes.UPDATE_GROUP_JOIN_SETTING,
-    payload,
-  }),
-
   getGroupSearchMembers: (payload: IGroupGetMembers) => ({
     type: groupsTypes.GET_GROUP_SEARCH_MEMBERS,
     payload,
@@ -178,34 +169,14 @@ const groupsActions = {
   }),
 
   // community
-  getCommunityMembers: (payload: {
-    groupId: string;
+  getMyCommunities: (payload: {
     isRefreshing?: boolean;
-    params?: IParamGetCommunityMembers;
+    refreshNoLoading?: boolean;
+    params?: {managed: boolean; previewMembers: boolean};
+    callback?: () => void;
   }) => ({
-    type: groupsTypes.GET_COMMUNITY_MEMBERS,
+    type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
-  }),
-  setCommunityMembers: (payload: ISetMembers) => ({
-    type: groupsTypes.SET_COMMUNITY_MEMBERS,
-    payload,
-  }),
-  resetCommunityMembers: () => ({
-    type: groupsTypes.RESET_COMMUNITY_MEMBERS,
-  }),
-  getCommunitySearchMembers: (payload: {
-    groupId: string;
-    params: IParamGetCommunityMembers;
-  }) => ({
-    type: groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,
-    payload,
-  }),
-  setCommunitySearchMembers: (payload: ISetCommunitySearchMembers) => ({
-    type: groupsTypes.SET_COMMUNITY_SEARCH_MEMBERS,
-    payload,
-  }),
-  resetCommunitySearchMembers: () => ({
-    type: groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS,
   }),
   getDiscoverGroups: (payload: {
     communityId: string;

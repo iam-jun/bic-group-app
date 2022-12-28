@@ -5,6 +5,7 @@ interface IEmojiPickerState extends IBaseState {
   filteredData: any[],
   currentSectionIndex: number;
   actions: {
+    addToRecently: (emoji: string) => void;
     buildEmojis: () => void;
     search: (term: string) => void,
     resetData: () => void;

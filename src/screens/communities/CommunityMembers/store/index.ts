@@ -1,19 +1,55 @@
-import { createStore } from '~/store/utils';
+import { createStore, resetStore } from '~/store/utils';
 import removeCommunityMember from './actions/removeCommunityMember';
-import IBaseState from '~/store/interfaces/IBaseState';
+import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
+import getCommunityMembers from './actions/getCommunityMembers';
+import searchCommunityMembers from './actions/searchCommunityMembers';
+import { ISearchCommunityMembers, IRemoveCommunityMember } from '~/interfaces/ICommunity';
 
-export interface IRemoveCommunityMemberState extends IBaseState {
-  actions: {
-    deleteRemoveCommunityMember: (payload: {communityId: string; groupId: string; userId: string}) => void;
+export interface ICommunityMemberState extends IBaseState {
+  communityMembers: {
+    loading: boolean;
+    canLoadMore: boolean;
+    offset: number;
+  };
+
+  search: {
+    data: any[];
+    loading: boolean;
+    canLoadMore: boolean;
   }
+
+  actions: {
+    getCommunityMembers: (groupId: string, isRefreshing?: boolean) => void;
+    searchCommunityMembers: (params: ISearchCommunityMembers)=>void;
+    removeCommunityMember: (params: IRemoveCommunityMember) => void;
+  };
+  reset: () => void;
 }
 
-const removeCommunityMemberStore = () => ({
-  actions: {
-    deleteRemoveCommunityMember: removeCommunityMember(),
+const initialState: InitStateType<ICommunityMemberState> = {
+  communityMembers: {
+    loading: true,
+    canLoadMore: true,
+    offset: 0,
   },
+  search: {
+    data: [],
+    loading: true,
+    canLoadMore: true,
+  },
+};
+
+const communityMemberStore = (set, get) => ({
+  ...initialState,
+  actions: {
+    getCommunityMembers: getCommunityMembers(set, get),
+    searchCommunityMembers: searchCommunityMembers(set, get),
+    removeCommunityMember: removeCommunityMember(set, get),
+  },
+  reset: () => resetStore(initialState, set),
+
 });
 
-const useRemoveCommunityMemberStore = createStore<IRemoveCommunityMemberState>(removeCommunityMemberStore);
+const useCommunityMemberStore = createStore<ICommunityMemberState>(communityMemberStore);
 
-export default useRemoveCommunityMemberStore;
+export default useCommunityMemberStore;

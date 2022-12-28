@@ -1,22 +1,26 @@
 import groupApi from '~/api/GroupApi';
 import useRemoveMemberFromMemberList from '~/hooks/useRemoveMemberFromMemberList';
+import { IRemoveCommunityMember } from '~/interfaces/ICommunity';
 import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
 import showError from '~/store/helper/showError';
 import Store from '~/storeRedux';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 
-const removeCommunityMember = () => async (
-  { communityId, groupId, userId }: {communityId: string; groupId: string; userId: string},
+const removeCommunityMember = (set, get) => async (
+  { communityId, groupId, userId }: IRemoveCommunityMember,
 ) => {
   try {
     const response = await groupApi.removeGroupMembers(groupId, [userId]);
 
-    const { groups } = Store.store.getState();
-    const { communityMembers } = groups;
+    const { communityMembers } = get();
     const newUpdatedData = useRemoveMemberFromMemberList(userId, communityMembers);
-    Store.store.dispatch(groupsActions.setCommunityMembers(newUpdatedData));
+    set((state) => {
+      state.communityMembers = {
+        ...state.communityMembers,
+        ...newUpdatedData,
+      };
+    }, 'setCommunityMembers');
 
     // to update userCount
     useCommunitiesStore.getState().actions.getCommunity(communityId);

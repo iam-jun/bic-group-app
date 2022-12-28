@@ -1,4 +1,3 @@
-import { ICommunityMembers } from '~/interfaces/ICommunity';
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
 import {
@@ -63,11 +62,6 @@ export const groupInitState = {
     group: {},
   } as IGroupDetail,
   loadingGroupMember: false,
-  groupMembers: {
-    loading: true,
-    canLoadMore: true,
-    offset: 0, // current fetched data count
-  },
   groupSearchMembers: {
     loading: false,
     canLoadMore: true,
@@ -128,17 +122,6 @@ export const groupInitState = {
   },
   isGettingInfoDetailError: false,
   isGettingInfoDetail: false,
-  communityMembers: {
-    loading: true,
-    canLoadMore: true,
-    offset: 0, // current fetched data count
-    // community_admin: {}, community_member: {}
-  },
-  communitySearchMembers: {
-    loading: false,
-    canLoadMore: true,
-    data: [] as ICommunityMembers[],
-  },
   communityMemberRequests: {
     total: 0,
     loading: true,
@@ -173,8 +156,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   const {
     selectedUsers,
     groupMemberRequests,
-    communityMembers,
-    communitySearchMembers,
     groupSearchMembers,
     communityMemberRequests,
     globalSearch,
@@ -332,35 +313,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         loadingJoinedGroups: true,
         joinedGroups: groupInitState.joinedGroups,
       };
-    case groupsTypes.SET_COMMUNITY_MEMBERS: {
-      return {
-        ...state,
-        communityMembers: {
-          ...communityMembers,
-          ...payload,
-        },
-      };
-    }
-    case groupsTypes.RESET_COMMUNITY_MEMBERS:
-      return {
-        ...state,
-        communityMembers: groupInitState.communityMembers,
-      };
 
-    case groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS:
-      return {
-        ...state,
-        communitySearchMembers: groupInitState.communitySearchMembers,
-      };
-    case groupsTypes.SET_COMMUNITY_SEARCH_MEMBERS: {
-      return {
-        ...state,
-        communitySearchMembers: {
-          ...communitySearchMembers,
-          ...payload,
-        },
-      };
-    }
     case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
       return {
         ...state,

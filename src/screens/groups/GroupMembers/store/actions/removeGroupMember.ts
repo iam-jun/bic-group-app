@@ -15,7 +15,10 @@ const removeGroupMember = (set, get) => async (
     const { groupMembers } = get() || {};
     const newUpdatedData = useRemoveMemberFromMemberList(userId, groupMembers);
     set((state) => {
-      state.groupMembers = newUpdatedData;
+      state.groupMembers = {
+        ...state.groupMembers,
+        ...newUpdatedData,
+      };
     }, 'setGroupMembers');
 
     // to update userCount

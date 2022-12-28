@@ -38,7 +38,7 @@ const usePostMenu = (
     id: postId, isDraft, reactionsCount, isSaved, type, audience,
   } = data;
 
-  const groupAudience = audience.groups || [];
+  const groupAudience = audience?.groups || [];
   const { getAudienceListWithNoPermission } = useMyPermissionsStore((state) => state.actions);
 
   const audienceListWithNoPermission = getAudienceListWithNoPermission(

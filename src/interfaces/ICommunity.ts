@@ -33,12 +33,6 @@ export interface IPreviewMember {
   avatar: string;
 }
 
-export interface IParamGetCommunityMembers {
-  key?: string;
-  offset?: number;
-  limit?: number;
-}
-
 export interface ICommunityMembers extends IPreviewMember {
   roles: {name: string};
   chatUserId: string;
@@ -70,4 +64,16 @@ export interface ISetCommunitySearchMembers {
   loading?: boolean;
   canLoadMore?: boolean;
   data?: ICommunityMembers[];
+}
+
+export interface IRemoveCommunityMember {
+  communityId: string,
+  groupId: string,
+  userId: string,
+}
+
+export interface ISearchCommunityMembers {
+  key: string,
+  groupId: string,
+  isLoadMore?: boolean,
 }

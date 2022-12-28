@@ -1,16 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { debounce } from 'lodash';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
-import actions from '~/storeRedux/groups/actions';
 import appConfig from '~/configs/appConfig';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberSearchResult from '../../../../groups/components/MemberSearchResult';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
+import useCommunityMemberStore from '../../store';
 
 interface SearchMemberViewProps {
   community: ICommunity;
@@ -29,7 +26,9 @@ const SearchMemberView = ({
   onClose,
   onPressMenu,
 }: SearchMemberViewProps) => {
-  const dispatch = useDispatch();
+  const actions = useCommunityMemberStore((state) => state.actions);
+  const communitySearchMembers = useCommunityMemberStore((state) => state.search);
+
   const [searchText, setSearchText] = useState(initSearch || '');
 
   const { groupId } = community;
@@ -41,25 +40,17 @@ const SearchMemberView = ({
       PermissionKey.ASSIGN_UNASSIGN_ROLE,
     ],
   );
-  const communitySearchMembers = useKeySelector(
-    groupsKeySelector.communitySearchMembers,
-  );
 
-  const getCommunitySearchMembers = (searchText: string) => {
+  const getCommunitySearchMembers = (searchText: string, isLoadMore?:boolean) => {
     if (!searchText?.trim?.()) return;
-
-    dispatch(actions.getCommunitySearchMembers({
-      groupId,
-      params: { key: searchText },
-    }));
+    actions.searchCommunityMembers({ key: searchText, groupId, isLoadMore });
   };
 
   const onLoadMore = () => {
-    getCommunitySearchMembers(searchText);
+    getCommunitySearchMembers(searchText, true);
   };
 
   const searchMember = (searchQuery: string) => {
-    dispatch(actions.resetCommunitySearchMembers());
     setSearchText(searchQuery);
     getCommunitySearchMembers(searchQuery);
   };
