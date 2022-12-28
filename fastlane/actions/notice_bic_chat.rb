@@ -1,6 +1,6 @@
 module Fastlane
   module Actions
-    class NoticeToBicAction < Action
+    class NoticeBicChatAction < Action
       def self.run(params)
         UI.message "Send request notice to BIC Chat"
 
