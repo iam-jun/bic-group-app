@@ -1,4 +1,5 @@
 import Fuse from 'fuse.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   resetStore,
   createStore,
@@ -12,6 +13,7 @@ import IEmojiPickerState from './Interface';
 const initialState = {
   data: [],
   filteredData: [],
+  recentlyData: [],
   fuse: null,
   currentSectionIndex: 0,
 };
@@ -19,12 +21,27 @@ const initialState = {
 const emojiPickerStore = (set, get) => ({
   ...initialState,
   actions: {
+    addToRecently: (emoji: string) => {
+      const { actions } = get();
+
+      set((state) => {
+        const { recentlyData } = state;
+        const newData = recentlyData.filter((item) => item !== emoji);
+
+        if (newData.length > 6) newData.shift();
+
+        state.recentlyData = [emoji, ...newData];
+      });
+
+      actions.buildEmojis();
+    },
     setCurrentSectionIndex: (index: number) => {
       set((state) => {
         state.currentSectionIndex = index;
       });
     },
     buildEmojis: async () => {
+      const { recentlyData } = get();
       const emojis = selectEmojisByName();
       const options = {
         shouldSort: false,
@@ -36,7 +53,7 @@ const emojiPickerStore = (set, get) => ({
       const list = emojis.length ? emojis : [];
       const fuse = new Fuse(list, options);
 
-      const emojisBySection = selectEmojisBySection();
+      const emojisBySection = selectEmojisBySection(recentlyData);
       const renderableEmojis = getRenderableEmojis(emojisBySection, dimension.deviceWidth);
       set((state) => {
         state.data = renderableEmojis;
@@ -60,6 +77,12 @@ const emojiPickerStore = (set, get) => ({
   reset: () => resetStore(initialState, set),
 });
 
-const useEmojiPickerStore = createStore<IEmojiPickerState>(emojiPickerStore);
+const useEmojiPickerStore = createStore<IEmojiPickerState>(emojiPickerStore, {
+  persist: {
+    name: 'EmojiStorage',
+    getStorage: () => AsyncStorage,
+    partialize: (state) => ({ recentlyData: state.recentlyData }),
+  },
+});
 
 export default useEmojiPickerStore;

@@ -95,10 +95,9 @@ export const selectEmojisByName = () => {
   return Array.from(emoticons);
 };
 
-export const selectEmojisBySection = () => {
+export const selectEmojisBySection = (recentEmojis = []) => {
   const skinTone = 'default';
   const customEmojiItems = Object.keys(custom_emojis).map((key) => custom_emojis[key]);
-  const recentEmojis = [];
 
   const recentItems = recentEmojis.map((emoji) => ({ name: emoji }));
   const filteredCategories = CategoryNames.filter((category) => category !== 'recent' || recentItems.length > 0);

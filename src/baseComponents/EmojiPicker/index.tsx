@@ -71,8 +71,14 @@ const _EmojiPicker = ({
     scrollToSection(index);
   };
 
+  const _onEmojiPress = (emoji: string) => {
+    onEmojiPress?.(emoji);
+
+    actions.addToRecently(emoji);
+  };
+
   const onSearchEmojiPress = (emoji: string) => {
-    onEmojiPress(emoji);
+    _onEmojiPress(emoji);
     actions.resetData();
   };
 
@@ -83,7 +89,7 @@ const _EmojiPicker = ({
         emojiGutter={EMOJI_GUTTER}
         emojiSize={EMOJI_SIZE}
         items={item.items}
-        onEmojiPress={onEmojiPress}
+        onEmojiPress={_onEmojiPress}
       />
     </View>
   );
