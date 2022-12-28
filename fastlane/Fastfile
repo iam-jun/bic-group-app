@@ -4,63 +4,87 @@ platform :android do
   lane :update_staging do |options|
     Dotenv.overload('../.env.base', '../.env.staging')
     disable_notice = options[:disable_notice]
+
+    app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
+    title = "🟡🤖 BIC Group Staging Android"
+    version_text = "**#{app_version} #{update_desc}**"
     download_destination = options[:download_destination] || 'In-app Update'
-
-    appcenter_codepush_release_react(
-      api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
-      app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-      deployment: "Staging",
-      target_version: ENV['VERSION_NAME'],
-      description: ENV['UPDATE_DESC'],
-      mandatory: false,
-      dry_run: false,
-    )
-
-    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-    commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+    message = "Build successful"
+    color = "#9E6FD8"
+    code = ""
 
-    if (disable_notice != 'true')
-      notice_to_bic("🟡🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
-        \n **BIC Group Staging Android**
-        \n Tải tại: #{download_destination}
-        \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}",
-        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-        'bicbotnotice2')
+    begin
+      appcenter_codepush_release_react(
+        api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+        app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+        deployment: "Staging",
+        target_version: ENV['VERSION_NAME'],
+        description: ENV['UPDATE_DESC'],
+        mandatory: false,
+        dry_run: false,
+      )
+
+      if (disable_notice != 'true')
+        notice_to_bic("🟡🤖 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
+                \n **BIC Group Staging Android**
+                \n Tải tại: #{download_destination}
+                \n **Git Branch**: #{git_branch}
+                \n **Git Commit**: #{git_mess}",
+                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+                'bicbotnotice2')
+        notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
+      end
+    rescue => error
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
     end
+
   end
 
   lane :update_production do |options|
     Dotenv.overload('../.env.base', '../.env.production')
     disable_notice = options[:disable_notice]
+
+    app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
+    title = "🟢🤖 BIC Group Production Android"
+    version_text = "**#{app_version} #{update_desc}**"
     download_destination = options[:download_destination] || 'In-app Update'
-
-    appcenter_codepush_release_react(
-      api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
-      app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
-      deployment: "Production",
-      target_version: ENV['VERSION_NAME'],
-      description: ENV['UPDATE_DESC'],
-      mandatory: false,
-      dry_run: false,
-    )
-
-    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-    commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+    message = "Build successful"
+    color = "#9E6FD8"
+    code = ""
 
-    if (disable_notice != 'true')
-      notice_to_bic("🟢🤖 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
-        \n **BIC Group Production Android**
-        \n Tải tại: #{download_destination}
-        \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}",
-        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-        'bicbotnotice2')
+    begin
+      appcenter_codepush_release_react(
+        api_token: ENV["CODE_PUSH_ACCESS_KEY_ANDROID"],
+        app_name: ENV["APPCENTER_APP_NAME_ANDROID"],
+        deployment: "Production",
+        target_version: ENV['VERSION_NAME'],
+        description: ENV['UPDATE_DESC'],
+        mandatory: false,
+        dry_run: false,
+      )
+
+      if (disable_notice != 'true')
+        notice_to_bic("🟢🤖 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
+                \n **BIC Group Production Android**
+                \n Tải tại: #{download_destination}
+                \n **Git Branch**: #{git_branch}
+                \n **Git Commit**: #{git_mess}",
+                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+                'bicbotnotice2')
+        notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
+      end
+    rescue => error
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
     end
+
   end
 
   lane :build_staging do
@@ -159,63 +183,87 @@ platform :ios do
   lane :update_staging do |options|
     Dotenv.overload('../.env.base', '../.env.staging')
     disable_notice = options[:disable_notice]
+
+    app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
+    title = "🟡🍎 BIC Group Staging iOS"
+    version_text = "**#{app_version} #{update_desc}**"
     download_destination = options[:download_destination] || 'In-app Update'
-
-    appcenter_codepush_release_react(
-      api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
-      app_name: ENV["APPCENTER_APP_NAME_IOS"],
-      deployment: "Staging",
-      target_version: ENV['VERSION_NAME'],
-      description: ENV['UPDATE_DESC'],
-      mandatory: false,
-      dry_run: false,
-    )
-
-    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-    commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+    message = "Build successful"
+    color = "#9E6FD8"
+    code = ""
 
-    if (disable_notice != 'true')
-      notice_to_bic("🟡🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
-        \n **BIC Group Staging iOS**
-        \n Tải tại: #{download_destination}
-        \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}",
-        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-        'noticebot')
+    begin
+      appcenter_codepush_release_react(
+        api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
+        app_name: ENV["APPCENTER_APP_NAME_IOS"],
+        deployment: "Staging",
+        target_version: ENV['VERSION_NAME'],
+        description: ENV['UPDATE_DESC'],
+        mandatory: false,
+        dry_run: false,
+      )
+
+      if (disable_notice != 'true')
+        notice_to_bic("🟡🍎 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
+                \n **BIC Group Staging iOS**
+                \n Tải tại: #{download_destination}
+                \n **Git Branch**: #{git_branch}
+                \n **Git Commit**: #{git_mess}",
+                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+                'noticebot')
+        notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
+      end
+    rescue => error
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
     end
+
   end
 
   lane :update_production do |options|
     Dotenv.overload('../.env.base', '../.env.production')
     disable_notice = options[:disable_notice]
+
+    app_version = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
+    update_desc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
+
+    webhook = ENV['NOTICE_WEBHOOK'].length > 0 ? ENV['NOTICE_WEBHOOK'] : ""
+    title = "🟢🍎 BIC Group Production iOS"
+    version_text = "**#{app_version} #{update_desc}**"
     download_destination = options[:download_destination] || 'In-app Update'
-
-    appcenter_codepush_release_react(
-      api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
-      app_name: ENV["APPCENTER_APP_NAME_IOS"],
-      deployment: "Production",
-      target_version: ENV['VERSION_NAME'],
-      description: ENV['UPDATE_DESC'],
-      mandatory: false,
-      dry_run: false,
-    )
-
-    appVersionText = ENV['APP_VERSION'].length > 0 ? ENV['APP_VERSION'] : "???"
-    updateDesc = ENV['UPDATE_DESC'].length > 0 ? ENV['UPDATE_DESC'] : ""
-    commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+    message = "Build successful"
+    color = "#9E6FD8"
+    code = ""
 
-    if (disable_notice != 'true')
-      notice_to_bic("🟢🍎 Alo alo có build **#{appVersionText} #{updateDesc}** @ngoclinh @trankimmai @ngoccuong @triduc
-        \n **BIC Group iOS**
-        \n Tải tại: #{download_destination}
-        \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}",
-        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
-        'noticebot')
+    begin
+      appcenter_codepush_release_react(
+        api_token: ENV["CODE_PUSH_ACCESS_KEY_IOS"],
+        app_name: ENV["APPCENTER_APP_NAME_IOS"],
+        deployment: "Production",
+        target_version: ENV['VERSION_NAME'],
+        description: ENV['UPDATE_DESC'],
+        mandatory: false,
+        dry_run: false,
+      )
+
+      if (disable_notice != 'true')
+        notice_to_bic("🟢🍎 Alo alo có build **#{app_version} #{update_desc}** @ngoclinh @trankimmai @ngoccuong @triduc
+                \n **BIC Group iOS**
+                \n Tải tại: #{download_destination}
+                \n **Git Branch**: #{git_branch}
+                \n **Git Commit**: #{git_mess}",
+                ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d','ce9616ad-3fe5-4180-b657-480661e09541'],
+                'noticebot')
+        notice_bic_chat(webhook, title, version_text, download_destination, git_branch, git_mess, message, color)
+      end
+    rescue => error
+      notice_bic_chat(webhook, title, version_text, "Failed!", git_branch, git_mess, error, "#F64E60")
     end
+
   end
 
   lane :deploy_staging do
