@@ -3,15 +3,13 @@ import { useDispatch } from 'react-redux';
 import { StyleSheet } from 'react-native';
 
 import ButtonApproveDeclineAllRequests from '~/screens/groups/components/ButtonApproveDeclineAllRequests';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import { IToastMessage } from '~/interfaces/common';
 import { useBaseHook } from '~/hooks';
 import Text from '~/baseComponents/Text';
 import { spacing } from '~/theme';
 import { ICommunity } from '~/interfaces/ICommunity';
+import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 
 const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunity}) => {
   const dispatch = useDispatch();
@@ -19,7 +17,8 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
   const { t } = useBaseHook();
 
   const { id: communityId, groupId } = community || {};
-  const { total } = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const { total } = useCommunityMemberStore((state) => state.communityMemberRequests);
+  const communityMemberActions = useCommunityMemberStore((state) => state.actions);
 
   const alertAction = ({
     title,
@@ -56,12 +55,12 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
   };
 
   const doDeclineAll = () => {
-    dispatch(groupsActions.storeUndoCommunityMemberRequests());
-    dispatch(groupsActions.resetCommunityMemberRequests());
-    dispatch(groupsActions.setCommunityMemberRequests({ loading: false })); // to show Empty screen component
+    communityMemberActions.storeUndoCommunityMemberRequests();
+    communityMemberActions.resetCommunityMemberRequests();
+    communityMemberActions.setCommunityMemberRequests({ loading: false }); // to show Empty screen component
 
     const toastMessage: IToastMessage = {
-      content: `${t('groups:text_declining_all')}`.replace('{0}', total),
+      content: `${t('groups:text_declining_all')}`.replace('{0}', String(total)),
       props: {
         buttonText: t('common:text_undo'),
         onButtonPress: onPressUndo,
@@ -72,7 +71,7 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
 
     timeOutRef.current = setTimeout(
       () => {
-        dispatch(groupsActions.declineAllCommunityMemberRequests({ groupId, total }));
+        communityMemberActions.declineAllCommunityMemberRequests({ groupId, total });
       }, 5500,
     );
   };
@@ -80,7 +79,7 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
   const onPressUndo = () => {
     timeOutRef?.current && clearTimeout(timeOutRef?.current);
     dispatch(modalActions.clearToastMessage());
-    dispatch(groupsActions.undoDeclinedCommunityMemberRequests());
+    communityMemberActions.undoDeclinedCommunityMemberRequests();
   };
 
   const onPressApproveAll = () => {
@@ -99,7 +98,7 @@ const CommunityApproveDeclineAllRequests = ({ community }: {community: ICommunit
   };
 
   const doApproveAll = () => {
-    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, groupId, total }));
+    communityMemberActions.approveAllCommunityMemberRequests({ communityId, groupId, total });
   };
 
   return (

@@ -19,11 +19,6 @@ import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
 import showError from '~/storeRedux/commonSaga/showError';
 import getGroupSearchMembers from './getGroupSearchMembers';
-import getCommunityMemberRequests from './getCommunityMemberRequests';
-import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
-import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
-import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
-import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
@@ -74,26 +69,6 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
     declineAllGroupMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
-    getCommunityMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
-    approveSingleCommunityMemberRequest,
-  );
-  yield takeLatest(
-    groupsTypes.DECLINE_SINGLE_COMMUNITY_MEMBER_REQUEST,
-    declineSingleCommunityMemberRequest,
-  );
-  yield takeLatest(
-    groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
-    approveAllCommunityMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
-    declineAllCommunityMemberRequests,
   );
   yield takeLatest(
     groupsTypes.GET_GLOBAL_SEARCH, getGlobalSearch,

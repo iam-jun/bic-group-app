@@ -12,7 +12,6 @@ const groupsKeySelector = {
   groupMemberRequests: 'groups.groupMemberRequests',
   joinedCommunities: 'groups.joinedCommunities',
   loadingCommunities: 'groups.communities.loading',
-  communityMemberRequests: 'groups.communityMemberRequests',
   communitySearch: 'groups.communitySearch',
   globalSearch: 'groups.globalSearch',
   joinedAllGroups: 'groups.joinedAllGroups',
