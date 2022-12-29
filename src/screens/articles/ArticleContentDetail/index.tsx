@@ -2,7 +2,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
   FC, useCallback, useEffect, useRef, useState,
 } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
@@ -96,6 +96,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     listImage.forEach((item) => {
       result.push({
         uri: item.url,
+        name: item?.name || `${item?.id}.png`,
       });
     });
 
@@ -132,14 +133,12 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
         reactionsCount={reactionsCount}
         ownerReactions={ownerReactions}
       />
-      <View>
-        <ImageGalleryModal
-          visible={galleryVisible}
-          source={listImage}
-          initIndex={initIndex}
-          onPressClose={() => setGalleryVisible(false)}
-        />
-      </View>
+      <ImageGalleryModal
+        visible={galleryVisible}
+        source={listImage}
+        initIndex={initIndex}
+        onPressClose={() => setGalleryVisible(false)}
+      />
     </ScreenWrapper>
   );
 };
