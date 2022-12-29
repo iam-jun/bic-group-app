@@ -1,4 +1,4 @@
-import { IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
+import { IPayloadReactToPost, IReaction, TargetType } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import showError from '~/store/helper/showError';
 import streamApi from '~/api/StreamApi';
@@ -20,7 +20,7 @@ const deleteReactToPost
         removeReactionLocal(get)(id, reactionId, true);
         const response = await streamApi.deleteReaction({
           reactionId: rId,
-          target: 'POST',
+          target: TargetType.POST,
           targetId: id,
           reactionName: reactionId,
         });

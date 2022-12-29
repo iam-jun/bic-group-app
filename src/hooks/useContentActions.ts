@@ -2,12 +2,24 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { ReactionType } from '~/constants/reactions';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
-import { IPayloadReactToPost } from '~/interfaces/IPost';
+import {
+  IOwnReaction, IPayloadReactToPost, IReactionCounts, TargetType,
+} from '~/interfaces/IPost';
 import useCommonController from '~/screens/store';
 import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 
-const useContentActions = ({ postId, ownerReactions, reactionsCount }) => {
+export interface Props {
+  postId: string;
+  ownerReactions: IOwnReaction;
+  reactionsCount: IReactionCounts;
+  targetType?: TargetType;
+}
+
+const useContentActions = (props: Props) => {
+  const {
+    postId, ownerReactions, reactionsCount, targetType,
+  } = props;
   const dispatch = useDispatch();
 
   const commonController = useCommonController((state) => state.actions);
@@ -17,24 +29,24 @@ const useContentActions = ({ postId, ownerReactions, reactionsCount }) => {
   }, [postId]);
 
   const onAddReaction = (reactionId: ReactionType) => {
-    const payload: IPayloadReactToPost = {
+    const data: IPayloadReactToPost = {
       id: postId,
       reactionId,
       ownReaction: ownerReactions,
       reactionsCount,
     };
-    commonController.reactToPost('put', payload);
+    commonController.reactToPost({ type: 'put', data, targetType });
     onPressMarkSeenPost();
   };
 
   const onRemoveReaction = (reactionId: ReactionType) => {
-    const payload: IPayloadReactToPost = {
+    const data: IPayloadReactToPost = {
       id: postId,
       reactionId,
       ownReaction: ownerReactions,
       reactionsCount,
     };
-    commonController.reactToPost('delete', payload);
+    commonController.reactToPost({ type: 'delete', data });
   };
 
   const onLongPressReaction = (reactionType: ReactionType) => {
