@@ -1,40 +1,26 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
-  FC, useCallback, useEffect, useRef,
+  FC, useCallback, useEffect, useRef, useState,
 } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '~/beinComponents/Header';
+import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticleFooter } from '~/components/articles';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
 import useMounted from '~/hooks/mounted';
-import { useRootNavigation } from '~/hooks/navigation';
-import { IMentionUser } from '~/interfaces/IPost';
 import { IRouteParams } from '~/interfaces/IRouter';
-import mainStack from '~/router/navigator/MainStack/stack';
-import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
-import topicStack from '~/router/navigator/MainStack/stacks/topic/stack';
-import useCommunitiesStore from '~/store/entities/communities';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import { parseSafe } from '~/utils/common';
 import useArticlesStore from '../ArticleDetail/store';
-
-export enum EventType {
-    ON_PRESS_ACTOR = 'onPressActor',
-    ON_PRESS_MENTION = 'onPressMention',
-    ON_PRESS_SERIES = 'onPressSeries',
-    ON_PRESS_AUDIENCE = 'onPressAudience',
-    ON_PRESS_TOPIC = 'onPressTopic',
-    ON_PRESS_TAG = 'onPressTag',
-}
+import { handleMessage } from './helper';
 
 const HEADER_HEIGHT = 244;
 
 const ArticleContentDetail: FC<IRouteParams> = (props) => {
   const id = props?.route?.params?.articleId;
-  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
@@ -44,6 +30,10 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
 
   const data = usePostsStore(useCallback(postsSelector.getPost(id, {}), [id]));
   const actions = useArticlesStore((state) => state.actions);
+
+  const [galleryVisible, setGalleryVisible] = useState(false);
+  const [listImage, setListImage] = useState([]);
+  const [initIndex, setInitIndex] = useState(0);
 
   const {
     content, title, summary, coverMedia, createdAt, audience,
@@ -77,6 +67,10 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     if (isMounted) injectJavaScript(initScript);
   }, [series, content, isMounted]);
 
+  useEffect(() => {
+    getImageUrls();
+  }, []);
+
   const onScroll = (event: {offsetY: number}) => {
     const offsetY = event?.offsetY;
 
@@ -87,66 +81,31 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     ref?.current?.injectJavaScript?.(script);
   };
 
-  const onPressAudiences = (payload: any) => {
-    if (!payload) return;
+  const getImageUrls = () => {
+    const contentParse = content ? JSON.parse(content) : [];
+    let listImage = [];
 
-    const { id, communityId, isCommunity } = payload || {};
-    if (isCommunity && communityId) {
-      rootNavigation.navigate(mainStack.communityDetail, { communityId });
+    if (contentParse.length > 0) {
+      const listImageContent = contentParse?.filter((item: any) => item.type === 'img');
+      listImage = [{ ...coverMedia }].concat(listImageContent);
     } else {
-      rootNavigation.navigate(mainStack.groupDetail, { groupId: id, communityId });
+      listImage = [{ ...coverMedia }];
     }
+
+    const result: any = [];
+    listImage.forEach((item) => {
+      result.push({
+        uri: item.url,
+      });
+    });
+
+    setListImage(result);
   };
-
-  const onPressSeries = (payload: any) => {
-    if (!payload) return;
-
-    rootNavigation.navigate(
-      mainStack.seriesDetail, { seriesId: payload.id },
-    );
-  };
-
-  const onPressTopics = (payload: any) => {
-    if (!payload) return;
-
-    rootNavigation.replace(
-      topicStack.topicDetail, { topicId: payload?.id },
-    );
-  };
-
-  const onPressTags = (payload: any) => {
-    if (!payload) return;
-
-    const communityId = useCommunitiesStore.getState().currentCommunityId;
-    rootNavigation.navigate(tagsStack.tagDetail, { tagData: payload, communityId });
-  };
-
-  const onPressMentionAudience = useRef((payload: IMentionUser) => {
-    if (!payload) return;
-
-    rootNavigation.navigate(
-      mainStack.userProfile, { userId: payload.id },
-    );
-  }).current;
 
   const onMessage = (message: any) => {
-    const payload = message?.payload;
-
-    switch (message?.type) {
-      case EventType.ON_PRESS_ACTOR:
-      case EventType.ON_PRESS_MENTION:
-        return onPressMentionAudience(payload);
-      case EventType.ON_PRESS_SERIES:
-        return onPressSeries(payload);
-      case EventType.ON_PRESS_AUDIENCE:
-        return onPressAudiences(payload);
-      case EventType.ON_PRESS_TOPIC:
-        return onPressTopics(payload);
-      case EventType.ON_PRESS_TAG:
-        return onPressTags(payload);
-      default:
-        return console.warn('Article webview onMessage unhandled', message);
-    }
+    handleMessage({
+      message, listImage, setInitIndex, setGalleryVisible,
+    });
   };
 
   return (
@@ -173,6 +132,14 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
         reactionsCount={reactionsCount}
         ownerReactions={ownerReactions}
       />
+      <View>
+        <ImageGalleryModal
+          visible={galleryVisible}
+          source={listImage}
+          initIndex={initIndex}
+          onPressClose={() => setGalleryVisible(false)}
+        />
+      </View>
     </ScreenWrapper>
   );
 };

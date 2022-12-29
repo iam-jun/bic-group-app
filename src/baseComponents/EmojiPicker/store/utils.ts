@@ -48,7 +48,7 @@ export const getRenderableEmojis = (emojis: any[], deviceWidth: number) => {
   return nextEmojis;
 };
 
-const getNumberOfColumns = (deviceWidth) => {
+export const getNumberOfColumns = (deviceWidth) => {
   // [TO-DO] handle horizontal orientation
   // const shorten = dimension.isPhoneWithInsets && props.isLandscape ? 4 : 2;
   const shorten = 2;

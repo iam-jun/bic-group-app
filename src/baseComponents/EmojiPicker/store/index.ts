@@ -5,6 +5,7 @@ import {
   createStore,
 } from '~/store/utils';
 import {
+  getNumberOfColumns,
   getRenderableEmojis, searchEmojis, selectEmojisByName, selectEmojisBySection,
 } from './utils';
 import { dimension } from '~/theme';
@@ -23,12 +24,13 @@ const emojiPickerStore = (set, get) => ({
   actions: {
     addToRecently: (emoji: string) => {
       const { actions } = get();
+      const numberOfColumns = getNumberOfColumns(dimension.deviceWidth);
 
       set((state) => {
         const { recentlyData } = state;
         const newData = recentlyData.filter((item) => item !== emoji);
 
-        if (newData.length > 6) newData.shift();
+        if (newData.length >= numberOfColumns) newData.pop();
 
         state.recentlyData = [emoji, ...newData];
       });
