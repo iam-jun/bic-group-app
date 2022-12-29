@@ -28,10 +28,10 @@ import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import { useRootNavigation } from '~/hooks/navigation';
 import APIErrorCode from '~/constants/apiErrorCode';
 import LoadMoreComment from '~/components/LoadMoreComment';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 import useCommentDetailController from './store';
 import Divider from '~/beinComponents/Divider';
+import { getTitle, replacePostDetail } from './helper';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -60,6 +60,7 @@ const CommentDetailContent = (props: any) => {
   const id = postId;
 
   const actor = usePostsStore(postsSelector.getActor(id));
+  const type = usePostsStore(postsSelector.getType(postId));
   const audience = usePostsStore(postsSelector.getAudience(id));
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
@@ -78,7 +79,7 @@ const CommentDetailContent = (props: any) => {
 
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
 
-  const headerTitle = t('post:title_comment_detail_of', {
+  const headerTitle = t(getTitle(type), {
     name: actor?.fullname || '',
   });
 
@@ -104,7 +105,7 @@ const CommentDetailContent = (props: any) => {
           props: { type: 'error' },
         }),
       );
-      rootNavigation.replace(homeStack.postDetail, { post_id: postId });
+      replacePostDetail(type, postId);
     }
     if (copyCommentError === APIErrorCode.Post.POST_DELETED && !!notiId) {
       dispatch(postActions.deletePostLocal(id));
@@ -193,9 +194,7 @@ const CommentDetailContent = (props: any) => {
   };
 
   const goToPostDetail = () => {
-    rootNavigation.replace(homeStack.postDetail, {
-      post_id: postId,
-    });
+    replacePostDetail(type, postId);
   };
 
   const showNotice = (type = 'deleted_comment') => {

@@ -224,4 +224,39 @@ export const NOTIFICATION_TYPE = {
    * Aggregate notifications when multiple users report to the same content
    */
   CONTENT_REPORT_TO_USER_AGGREGATED: 'content.report.to_user.aggregated',
+
+  /**
+   * When a new article is added to a series by an article creator in a group that user is a member of that group
+   */
+  ADD_ARTICLE_TO_USER: 'add.article.to_user',
+
+  /**
+   * When a new article is created by someone in a group that user is also a member of that group (Single Group)
+   */
+  POST_ARTICLE_TO_USER_IN_ONE_GROUP: 'post.article.to_user.in_one_group',
+
+  /**
+   * When a new article is created by someone in a group that user is also a member of that group (Multiple Group)
+   */
+  POST_ARTICLE_TO_USER_IN_MULTIPLE_GROUPS: 'post.article.to_user.in_multiple_groups',
+
+  /**
+   * When a new series is created by someone in a group that user is a member of that group (Single Group)
+   */
+  POST_SERIES_TO_USER_IN_ONE_GROUP: 'post.series.to_user.in_one_group',
+
+  /**
+   * When a new series is created by someone in a group that user is a member of that group (Multiple Group)
+   */
+  POST_SERIES_TO_USER_IN_MULTIPLE_GROUPS: 'post.series.to_user.in_multiple_groups',
+
+  /**
+   * Com admin receives an in-app notification once a member has made a report
+   */
+  REPORT_USER_TO_USER: 'report.user.to_user',
+
+  /**
+   * Aggregate notifications when multiple users reported the same content
+   */
+  REPORT_USER_TO_USER_AGGREGATED: 'report.user.to_user.aggregated',
 };

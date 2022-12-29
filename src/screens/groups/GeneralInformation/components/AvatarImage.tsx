@@ -3,11 +3,10 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Image from '~/beinComponents/Image';
 
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
 import InfoCard from '~/components/InfoCard';
+import useGeneralInformationStore from '../store';
 
 interface Props {
   testID?: string;
@@ -20,7 +19,7 @@ interface Props {
 const AvatarImage = ({
   testID, avatar, canEditInfo, onEditAvatar,
 }: Props) => {
-  const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
+  const loadingAvatar = useGeneralInformationStore((state) => state.loadingAvatar);
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);

@@ -2,7 +2,6 @@ import groupApi from '~/api/GroupApi';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupDetailStore from '../index';
@@ -28,7 +27,9 @@ describe('leaveGroup', () => {
       () => ({ doSetGroupStatus } as any),
     );
 
-    const spyGetGroupDetail = jest.spyOn(groupsActions, 'getGroupDetail');
+    const spyApiGetGroupDetail = jest
+      .spyOn(groupApi, 'getGroupDetail')
+      .mockImplementation(() => Promise.resolve(response) as any);
 
     const spyApiGetJoinedAllGroups = jest
       .spyOn(groupApi, 'getJoinedAllGroups')
@@ -58,7 +59,7 @@ describe('leaveGroup', () => {
     });
 
     expect(doSetGroupStatus).toBeCalledWith(groupId, status);
-    expect(spyGetGroupDetail).toBeCalledWith({ groupId });
+    expect(spyApiGetGroupDetail).toBeCalledWith(groupId);
     expect(spyApiGetJoinedAllGroups).toBeCalled();
     expect(spyApiGetManagedCommunityAndGroup).toBeCalled();
     expect(spyApiGetOwnerCommunity).toBeCalled();

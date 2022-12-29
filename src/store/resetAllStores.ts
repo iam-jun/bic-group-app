@@ -15,6 +15,7 @@ import useUserProfileStore from '~/screens/Menu/UserProfile/store';
 import useAccountSettingsStore from '~/screens/Menu/AccountSettings/store';
 import usePermissionSchemeStore from '~/screens/PermissionScheme/store';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
+import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '../screens/articles/ArticleDetail/store';
@@ -41,7 +42,7 @@ import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useMyPermissionsStore from './permissions';
 import useTagsStore from './entities/tags';
 import useTagsControllerStore from '~/screens/tags/store';
-import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
+import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
 import useRemoteConfigStore from './remoteConfig';
 
 export const excludedStore = [
@@ -74,6 +75,7 @@ const stores = [
   // others
   useChatStore,
   useDiscoverGroupsStore,
+  useCommunityMemberStore,
   useGroupMemberStore,
   useCreateArticleStore,
   useCreateArticleCategoryStore,
@@ -97,7 +99,7 @@ const stores = [
   useMyPermissionsStore,
   useTagsStore,
   useTagsControllerStore,
-  useCommunityMemberStore,
+  useGeneralInformationStore,
   useRemoteConfigStore,
 ];
 

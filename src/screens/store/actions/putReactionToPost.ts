@@ -1,10 +1,13 @@
-import { IOwnReaction, IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
+import {
+  IOwnReaction, IPayloadReactToPost, IReaction, TargetType,
+} from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import showError from '~/store/helper/showError';
 import streamApi from '../../../api/StreamApi';
 
 const putReactionToPost = (_set, get) => async (
   payload: IPayloadReactToPost,
+  targetType: TargetType,
 ) => {
   const {
     id, reactionId, ownReaction, reactionsCount,
@@ -51,7 +54,7 @@ const putReactionToPost = (_set, get) => async (
       const response = await
       streamApi.putReaction({
         reactionName: reactionId,
-        target: 'POST',
+        target: targetType,
         targetId: id,
       });
 

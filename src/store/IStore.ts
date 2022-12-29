@@ -14,6 +14,7 @@ import { IAccountSettingsState } from '~/screens/Menu/AccountSettings/store';
 import IGroupStructureState from '~/screens/groups/GroupStructureSettings/store/Interface';
 import IPermissionSchemeState from '~/screens/PermissionScheme/store/Interface';
 import IDiscoverGroupsState from '~/screens/groups/DiscoverGroups/store/Interface';
+import { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import { IGroupMemberState } from '~/screens/groups/GroupMembers/store';
 import IUserInterestedPostState from '~/components/posts/UserInterestedPost/store/Interface';
 import { IDiscoverCommunitiesState } from '~/screens/Discover/components/DiscoverCommunities/store/Interface';
@@ -35,13 +36,14 @@ import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
 import { IGroupController } from '~/screens/groups/store';
 import { ITagsState } from './entities/tags';
-import { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
+import { IGeneralInformationState } from '~/screens/groups/GeneralInformation/store';
 import { IRemoteConfigState } from './remoteConfig';
 
 export interface BicStore {
   entities: {
     posts: IPostsState;
     comments: ICommentsState;
+    communities: ICommunitiesState;
   };
   // components
   SelectAudience: {
@@ -68,6 +70,9 @@ export interface BicStore {
   };
   groups: {
     groupController: IGroupController;
+    GeneralInformation: {
+      generalInformationStore: IGeneralInformationState;
+    };
     components: {
       CommunityJoinedGroupTree: {
         communityJoinedGroupTreeStore: ICommunityJoinedGroupTreeState;
@@ -81,16 +86,25 @@ export interface BicStore {
     GroupDetail: {
       groupDetailStore: IGroupDetailState;
     };
-    discoverCommunitiesStore: IDiscoverCommunitiesState;
-    discoverCommunitiesSearchStore: IDiscoverCommunitiesSearchState;
     managedStore: IManagedState;
     yourCommunitiesStore: IYourCommunitiesState;
     yourGroupsStore: IYourGroupsState;
     searchJoinedCommunitiesStore: ISearchJoinedCommunitiesState;
   };
+  Discover: {
+    components: {
+      DiscoverCommunities: {
+        discoverCommunitiesStore: IDiscoverCommunitiesState
+      }
+      SearchDiscoverCommunity: {
+        discoverCommunitiesSearchStore: IDiscoverCommunitiesSearchState;
+      }
+    }
+  };
   communities: {
-    community: ICommunitiesState,
-    communityMember: ICommunityMemberState,
+    communityMember: {
+      communityMemberStore: ICommunityMemberState,
+    },
   }
   Home: {
     homeStore: IHomeState;

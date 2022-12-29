@@ -1,5 +1,4 @@
 import groupApi from '~/api/GroupApi';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupMemberStore from '../index';
@@ -19,7 +18,9 @@ describe('removeGroupMember', () => {
 
     const spy = jest.spyOn(groupApi, 'removeGroupMembers').mockImplementation(() => Promise.resolve(response) as any);
 
-    const spyGetGroupDetail = jest.spyOn(groupsActions, 'getGroupDetail');
+    const spyApiGetGroupDetail = jest
+      .spyOn(groupApi, 'getGroupDetail')
+      .mockImplementation(() => Promise.resolve(response) as any);
 
     const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
 
@@ -33,7 +34,7 @@ describe('removeGroupMember', () => {
       jest.runAllTimers();
     });
 
-    expect(spyGetGroupDetail).toBeCalledWith({ groupId });
+    expect(spyApiGetGroupDetail).toBeCalledWith(groupId);
     expect(spyModalActions).toBeCalledWith({
       content: response.meta.message,
       props: { type: 'success' },

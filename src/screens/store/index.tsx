@@ -2,7 +2,13 @@ import _ from 'lodash';
 import { IGetUserProfile, IUserProfile } from '~/interfaces/IAuth';
 import {
   ICommentData,
-  IOwnReaction, IPayloadReactToComment, IPayloadReactToPost, IPayloadUpdateReaction, IReactionCounts, PostType,
+  IOwnReaction,
+  IPayloadReactToComment,
+  IPayloadReactToPost,
+  IPayloadUpdateReaction,
+  IReactionCounts,
+  PostType,
+  TargetType,
 } from '~/interfaces/IPost';
 import IBaseState from '~/store/interfaces/IBaseState';
 import {
@@ -23,7 +29,9 @@ export interface ICommonController extends IBaseState {
   myProfile: IUserProfile;
 
   actions: {
-    reactToPost: _.DebouncedFunc<(type: 'put' | 'delete', payload: IPayloadReactToPost) => void>;
+    reactToPost: _.DebouncedFunc<
+      (payload: { type: 'put' | 'delete'; data: IPayloadReactToPost; targetType?: TargetType }) => void
+    >;
     putReactionToPost?: (payload: IPayloadReactToPost) => void;
     onUpdateReactionOfPostById: (
         postId: string, ownReaction: IOwnReaction, reactionsCount: IReactionCounts,) => void;
@@ -52,14 +60,19 @@ const initialState = {
 const commonController = (set, get) => ({
   ...initialState,
   actions: {
-    reactToPost: _.throttle((type: 'put' | 'delete', payload: IPayloadReactToPost) => {
-      if (type === 'put') {
-        get().actions.putReactionToPost(payload);
-      }
-      if (type === 'delete') {
-        get().actions.deleteReactToPost(payload);
-      }
-    }, 500, { trailing: false }),
+    reactToPost: _.throttle(
+      (payload: { type: 'put' | 'delete'; data: IPayloadReactToPost; targetType?: TargetType }) => {
+        const { type, data, targetType } = payload;
+        if (type === 'put') {
+          get().actions.putReactionToPost(data, targetType);
+        }
+        if (type === 'delete') {
+          get().actions.deleteReactToPost(data);
+        }
+      },
+      500,
+      { trailing: false },
+    ),
     putReactionToPost: putReactionToPost(set, get),
     onUpdateReactionOfPostById: onUpdateReactionOfPostById(set, get),
     deleteReactToPost: deleteReactToPost(set, get),

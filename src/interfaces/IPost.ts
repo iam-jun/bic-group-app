@@ -10,6 +10,14 @@ export enum PostType {
   SERIES = 'SERIES',
 }
 
+export enum TargetType {
+  POST = 'POST',
+  ARTICLE = 'ARTICLE',
+  COMMENT = 'COMMENT',
+  COMMENT_ARTICLE = 'COMMENT.ARTICLE',
+  COMMENT_POST = 'COMMENT.POST',
+}
+
 export interface IPost {
   id?: string;
   audience?: IPostAudience;
@@ -379,7 +387,7 @@ export interface IMentionUser {
 export interface IParamGetReactionDetail {
   reactionName: ReactionType;
   targetId: string;
-  target: 'POST' | 'COMMENT';
+  target: TargetType;
   limit?: number;
   order?: 'ASC' | 'DESC';
   latestId?: string;
@@ -415,12 +423,12 @@ export interface IPayloadReactToComment {
 
 export interface IParamPutReaction {
   reactionName: string;
-  target: 'POST' | 'COMMENT';
+  target: TargetType;
   targetId: string;
 }
 
 export interface IParamDeleteReaction {
-  target: 'POST' | 'COMMENT';
+  target: TargetType;
   reactionId: string;
   targetId: string;
   reactionName: string;

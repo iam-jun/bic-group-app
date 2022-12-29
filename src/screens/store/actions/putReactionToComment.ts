@@ -4,6 +4,7 @@ import {
   IOwnReaction,
   IPayloadReactToComment,
   IReaction,
+  TargetType,
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import showError from '~/store/helper/showError';
@@ -66,7 +67,7 @@ const putReactionToComment = (_set, get) => async (payload: IPayloadReactToComme
       const response = await
       streamApi.putReaction({
         reactionName: reactionId,
-        target: 'COMMENT',
+        target: TargetType.COMMENT,
         targetId: id,
       });
 

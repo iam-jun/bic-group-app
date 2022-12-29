@@ -1,6 +1,5 @@
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
@@ -11,6 +10,7 @@ import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
 import showError from '~/store/helper/showError';
 import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
+import useGroupDetailStore from '../index';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -26,7 +26,7 @@ const leaveGroup = () => async (groupId: string, privacy: GroupPrivacyType) => {
     if (privacy === GroupPrivacyType.SECRET) {
       navigationPopToTop();
     } else {
-      Store.store.dispatch(groupsActions.getGroupDetail({ groupId }));
+      useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
     }
 
     // refresh list in screen Your Groups & Managed

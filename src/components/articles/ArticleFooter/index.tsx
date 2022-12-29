@@ -5,6 +5,7 @@ import ContentFooter, { ContentFooterProps } from '~/components/ContentView/Cont
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import useContentActions from '~/hooks/useContentActions';
+import { TargetType } from '~/interfaces/IPost';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { padding } from '~/theme/spacing';
 import { ArticleReactionsProps } from '../ArticleReactions';
@@ -27,11 +28,12 @@ const ArticleFooter: FC<ArticleFooterProps> = ({
     'post:button_comment',
   )}`;
 
-  const {
-    onAddReaction,
-    onRemoveReaction,
-    onLongPressReaction,
-  } = useContentActions({ postId: articleId, ownerReactions, reactionsCount });
+  const { onAddReaction, onRemoveReaction, onLongPressReaction } = useContentActions({
+    postId: articleId,
+    ownerReactions,
+    reactionsCount,
+    targetType: TargetType.ARTICLE,
+  });
 
   const navigateToDetail = (focusComment?: boolean) => {
     rootNavigation.navigate(articleStack.articleDetail, { articleId, focusComment });

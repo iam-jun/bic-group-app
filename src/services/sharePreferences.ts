@@ -15,7 +15,7 @@ export const saveDataToSharedStorage = async (
   } catch (errorCode) {
     // errorCode 0 = There is no suite with that name
     console.error(
-      'saveDataToSharedStorage', errorCode,
+      'saveDataToSharedStorage error', errorCode,
     );
   }
 };
@@ -59,7 +59,8 @@ export const getUserFromSharedPreferences = () => {
 };
 
 export const updateUserFromSharedPreferences = async (payload: any) => {
-  const user = await getUserFromSharedPreferences();
+  // get own user information
+  const user = await loadFromSharedStorage(getEnv(`APP_GROUP_PACKAGE_NAME_${Platform.OS.toUpperCase()}`), 'pref_user_info');
 
   await saveUserToSharedPreferences({ ...user, ...payload });
 };

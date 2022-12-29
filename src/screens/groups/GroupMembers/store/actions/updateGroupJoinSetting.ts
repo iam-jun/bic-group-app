@@ -1,7 +1,6 @@
 import groupApi from '~/api/GroupApi';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showError from '~/store/helper/showError';
-import storeRedux from '~/storeRedux';
-import groupsActions from '~/storeRedux/groups/actions';
 
 const updateGroupJoinSetting = (_set, _get) => async (
   { groupId, isJoinApproval }: {groupId: string; isJoinApproval: boolean},
@@ -9,7 +8,7 @@ const updateGroupJoinSetting = (_set, _get) => async (
   try {
     await groupApi.updateGroupJoinSetting(groupId, isJoinApproval);
     // to update isJoinApproval status
-    storeRedux.store.dispatch(groupsActions.getGroupDetail({ groupId }));
+    useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
   } catch (error) {
     console.error('updateGroupJoinSetting error:', error);
     showError(error);

@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
-import groupsActions from '~/storeRedux/groups/actions';
 import MemberRequestList from '~/screens/groups/components/MemberRequestList';
 import CommunityApproveDeclineAllRequests from './components/CommunityApproveDeclineAllRequests';
 import JoinRequestSetting from './components/JoinRequestSetting';
 import useCommunityController from '../../store';
 import { ICommunity } from '~/interfaces/ICommunity';
+import useCommunityMemberStore from '../store';
 
 interface CommunityMemberRequestsProps {
   community: ICommunity;
@@ -26,10 +23,10 @@ const CommunityMemberRequests = ({
   canEditJoinSetting,
   onPressAdd,
 }: CommunityMemberRequestsProps) => {
-  const dispatch = useDispatch();
   const controller = useCommunityController((state) => state.actions);
 
-  const { canLoadMore, ids, total } = useKeySelector(groupsKeySelector.communityMemberRequests);
+  const { communityMemberRequests, actions: communityMemberActions } = useCommunityMemberStore();
+  const { canLoadMore, ids, total } = communityMemberRequests || {};
   const {
     id: communityId, settings, privacy, groupId,
   } = community || {};
@@ -42,13 +39,13 @@ const CommunityMemberRequests = ({
       getData();
 
       return () => {
-        dispatch(groupsActions.resetCommunityMemberRequests());
+        communityMemberActions.resetCommunityMemberRequests();
       };
     }, [communityId, canApproveRejectJoiningRequests],
   );
 
   const getData = (isRefreshing?: boolean) => {
-    dispatch(groupsActions.getCommunityMemberRequests({ groupId, isRefreshing }));
+    communityMemberActions.getCommunityMemberRequests({ groupId, isRefreshing });
   };
 
   const onLoadMore = () => {
@@ -65,7 +62,7 @@ const CommunityMemberRequests = ({
   };
 
   const onPressApproveAll = () => {
-    dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId, groupId, total }));
+    communityMemberActions.approveAllCommunityMemberRequests({ communityId, groupId, total });
   };
 
   return (

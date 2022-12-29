@@ -12,6 +12,11 @@ import { isEmpty, isNumber } from 'lodash';
 import { IObject } from '~/interfaces/common';
 import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import { parseSafe } from '~/utils/common';
+import seriesStack from './navigator/MainStack/stacks/series/stack';
+import articleStack from './navigator/MainStack/stacks/articleStack/stack';
+import { TargetType } from '~/interfaces/IPost';
+import homeStack from './navigator/MainStack/stacks/homeStack/stack';
+import menuStack from './navigator/MainStack/stacks/menuStack/stack';
 
 export const isNavigationRefReady: any = React.createRef();
 
@@ -148,6 +153,7 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
   if (!isEmpty(newData)) {
     const {
       type,
+      target,
       postId = 0,
       commentId = 0,
       childCommentId = null,
@@ -167,13 +173,20 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
         case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
+          if (target === TargetType.ARTICLE) {
+            return {
+              screen: articleStack.articleDetail,
+              params: { articleId: postId },
+            };
+          }
           return {
-            screen: 'post-detail',
+            screen: homeStack.postDetail,
             params: { post_id: postId },
           };
+
         case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
           return {
-            screen: 'draft-post',
+            screen: menuStack.draft,
             params: {},
           };
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
@@ -182,8 +195,14 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
         case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST_AGGREGATED:
         case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
         case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
+          if (target === TargetType.COMMENT_ARTICLE) {
+            return {
+              screen: articleStack.articleDetail,
+              params: { articleId: postId, focusComment: true },
+            };
+          }
           return {
-            screen: 'post-detail',
+            screen: homeStack.postDetail,
             params: { post_id: postId, focus_comment: true },
           };
 
@@ -262,9 +281,26 @@ export const getScreenAndParams = (data: string|undefined):{screen: string; para
               id: !!communityId ? communityId : groupId || '',
             },
           };
+        case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_ONE_GROUP:
+        case NOTIFICATION_TYPE.POST_SERIES_TO_USER_IN_MULTIPLE_GROUPS:
+        case NOTIFICATION_TYPE.ADD_ARTICLE_TO_USER:
+          return {
+            screen: seriesStack.seriesDetail,
+            params: {
+              seriesId: postId,
+            },
+          };
+        case NOTIFICATION_TYPE.POST_ARTICLE_TO_USER_IN_ONE_GROUP:
+        case NOTIFICATION_TYPE.POST_ARTICLE_TO_USER_IN_MULTIPLE_GROUPS:
+          return {
+            screen: articleStack.articleDetail,
+            params: {
+              articleId: postId,
+            },
+          };
         default:
           console.warn(`Notification type ${type} have not implemented yet`);
-          return { screen: 'post-detail', params: { post_id: postId } };
+          return { screen: homeStack.postDetail, params: { post_id: postId } };
       }
     }
   }

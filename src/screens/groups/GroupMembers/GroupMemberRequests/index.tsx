@@ -8,6 +8,7 @@ import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import MemberRequestList from '../../components/MemberRequestList';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
 import JoinRequestSetting from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/JoinRequestSetting';
+import useGroupDetailStore, { IGroupDetailState } from '../../GroupDetail/store';
 import useGroupMemberStore from '../store';
 
 interface GroupMemberRequestsProps {
@@ -27,7 +28,12 @@ const GroupMemberRequests = ({
 }: GroupMemberRequestsProps) => {
   const dispatch = useDispatch();
   const { ids, canLoadMore, total } = useKeySelector(groupsKeySelector.groupMemberRequests);
-  const { id, settings, privacy } = useKeySelector(groupsKeySelector.groupDetail.group);
+  const {
+    groupDetail: {
+      group: { id, settings, privacy },
+    },
+    actions: { getGroupDetail },
+  } = useGroupDetailStore((state: IGroupDetailState) => state);
   const { isJoinApproval } = settings || {};
   const actions = useGroupMemberStore((state) => state.actions);
 
@@ -35,7 +41,7 @@ const GroupMemberRequests = ({
     () => {
       if (!id || id !== groupId) {
         // get data if navigation from notification screen
-        dispatch(groupsActions.getGroupDetail({ groupId }));
+        getGroupDetail({ groupId });
       }
 
       if (!canApproveRejectJoiningRequests) return;

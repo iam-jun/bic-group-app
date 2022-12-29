@@ -9,7 +9,7 @@ import ReactionView from '~/beinComponents/ReactionView';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import {
-  IPost,
+  IPost, TargetType,
 } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import {
@@ -73,11 +73,13 @@ const _PostView: FC<PostViewProps> = ({
   const userId = useUserIdAuth();
 
   const {
-    onAddReaction,
-    onRemoveReaction,
-    onLongPressReaction,
-    onPressMarkSeenPost,
-  } = useContentActions({ postId, ownerReactions, reactionsCount });
+    onAddReaction, onRemoveReaction, onLongPressReaction, onPressMarkSeenPost,
+  } = useContentActions({
+    postId,
+    ownerReactions,
+    reactionsCount,
+    targetType: TargetType.POST,
+  });
 
   const _onPress = () => {
     if (pressNavigateToDetail) {

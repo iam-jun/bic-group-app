@@ -29,18 +29,15 @@ import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import useMyPermissionsStore from '~/store/permissions';
-import { useKeySelector } from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { rootSwitch } from '~/router/stack';
 import useAuthController, { IAuthState } from '~/screens/auth/store';
 import GroupContent from '~/screens/groups/GroupDetail/components/GroupContent';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import spacing from '~/theme/spacing';
 import {
   formatChannelLink, getGroupLink, openUrl,
 } from '~/utils/link';
-import groupsKeySelector from '../../../storeRedux/groups/keySelector';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
 import useLeaveGroup from './hooks/useLeaveGroup';
 import GroupTabHeader from './components/GroupTabHeader';
@@ -56,6 +53,7 @@ import homeActions from '~/storeRedux/home/actions';
 import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
+import useGroupDetailStore from './store';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -70,11 +68,16 @@ const GroupDetail = (props: any) => {
   const userId = useUserIdAuth();
   const dispatch = useDispatch();
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
+  const {
+    isLoadingGroupDetailError,
+    loadingGroupDetail,
+    groupDetail: { group: groupInfo, joinStatus },
+    actions: { getGroupDetail },
+  } = useGroupDetailStore((state) => state);
 
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
 
-  const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { name, privacy, id: idCurrentGroupDetail } = groupInfo;
   const currentCommunityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
   const communityId = paramCommunityId || currentCommunityId;
@@ -83,15 +86,8 @@ const GroupDetail = (props: any) => {
   );
   const { name: communityName, joinStatus: joinStatusCommunity }
     = communityDetail || {};
-  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const isMember = joinStatus === GroupJoinStatus.MEMBER;
   const isMemberCommunity = joinStatusCommunity === GroupJoinStatus.MEMBER;
-  const isLoadingGroupDetailError = useKeySelector(
-    groupsKeySelector.isLoadingGroupDetailError,
-  );
-  const loadingGroupDetail = useKeySelector(
-    groupsKeySelector.loadingGroupDetail,
-  );
 
   // Temporarily comment this snippet code
   // Because old data will show up before being replaced by new data
@@ -135,15 +131,6 @@ const GroupDetail = (props: any) => {
     }
   });
 
-  const getGroupDetail = () => {
-    dispatch(
-      groupsActions.getGroupDetail({
-        groupId,
-        loadingPage: true,
-      }),
-    );
-  };
-
   const getGroupPosts = useCallback(() => {
     /* Avoid getting group posts of the nonexisting group,
     which will lead to endless fetching group posts in
@@ -166,7 +153,7 @@ const GroupDetail = (props: any) => {
     if (!communityDetail?.id) {
       actions.getCommunity(communityId);
     }
-    getGroupDetail();
+    getGroupDetail({ groupId });
   }, [groupId]);
 
   useEffect(() => {
@@ -282,13 +269,13 @@ const GroupDetail = (props: any) => {
   };
 
   const onPressChat = () => {
-    const link = formatChannelLink(groupInfo.teamName || groupInfo.team_name, groupInfo.slug);
+    const link = formatChannelLink(groupInfo.teamName, groupInfo.slug);
     openUrl(link);
   };
 
   const onGoBackOnNotFound = () => {
     // clear all state
-    dispatch(groupsActions.setGroupDetail(null));
+    useGroupDetailStore.getState().actions.setGroupDetail(null);
   };
 
   const onPressSearch = () => {
