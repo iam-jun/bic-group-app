@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet, TouchableOpacity, View, Linking,
+} from 'react-native';
 import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
@@ -23,6 +25,9 @@ import appActions from '~/storeRedux/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
 import { accountSettingsMenu } from '~/screens/Menu/AccountSettings/constants';
+import getEnv from '~/utils/env';
+
+const POLICY_URL = `https://${getEnv('SELF_DOMAIN')}/policy`;
 
 const GeneralSettings = () => {
   const theme: ExtendedTheme = useTheme();
@@ -55,6 +60,10 @@ const GeneralSettings = () => {
         baseSheetRef?.current?.open?.(
           e?.pageX, e?.pageY,
         );
+        return;
+
+      case 'privacy':
+        Linking.openURL(POLICY_URL);
         return;
 
       default:
