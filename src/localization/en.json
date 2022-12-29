@@ -702,7 +702,8 @@
     "text_update_post_setting_success": "Post Settings updated",
     "text_update_post_setting_failed": "Post Settings was failed to update",
     "text_comment_from": "This is comment from ",
-    "title_comment_detail_of": "{{name}}'s post",
+    "title_comment_detail_of_post": "{{name}}'s post",
+    "title_comment_detail_of_article": "{{name}}'s article",
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",

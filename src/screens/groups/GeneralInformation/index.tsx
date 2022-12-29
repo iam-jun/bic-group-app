@@ -6,9 +6,6 @@ import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { uploadTypes } from '~/configs/resourceConfig';
-import { useKeySelector } from '~/hooks/selector';
-import groupsActions from '~/storeRedux/groups/actions';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 import AvatarImage from './components/AvatarImage';
 import CoverImage from './components/CoverImage';
@@ -19,6 +16,7 @@ import useMyPermissionsStore from '~/store/permissions';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import Divider from '~/beinComponents/Divider';
 import { PermissionKey } from '~/constants/permissionScheme';
+import useGroupDetailStore, { IGroupDetailState } from '../GroupDetail/store';
 
 const GeneralInformation = (props: any) => {
   const { params } = props.route;
@@ -30,6 +28,7 @@ const GeneralInformation = (props: any) => {
 
   const dispatch = useDispatch();
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
+  const { getGroupDetail } = useGroupDetailStore((state) => state.actions);
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
 
   let avatar: string;
@@ -42,7 +41,7 @@ const GeneralInformation = (props: any) => {
   let isJoinApproval: boolean;
   let rootGroupId: string;
   if (type === 'group') {
-    const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+    const groupDetail = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail.group);
     rootGroupId = id;
     canEditInfo = shouldHavePermission(id, PermissionKey.EDIT_INFO);
     canEditPrivacy = shouldHavePermission(id, PermissionKey.EDIT_PRIVACY);
@@ -68,7 +67,7 @@ const GeneralInformation = (props: any) => {
   useEffect(
     () => {
       if (type === 'group') {
-        dispatch(groupsActions.getGroupDetail({ groupId: id }));
+        getGroupDetail({ groupId: id });
       } else {
         getCommunityDetail();
       }

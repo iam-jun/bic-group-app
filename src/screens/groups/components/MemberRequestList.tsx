@@ -16,6 +16,7 @@ import GroupPendingUserItemWrapper from '~/screens/groups/GroupMembers/GroupMemb
 import CommunityPendingUserItemWrapper from '~/screens/communities/CommunityMembers/CommunityMemberRequests/components/CommunityPendingUserItemWrapper';
 import spacing from '~/theme/spacing';
 import { Button } from '~/baseComponents';
+import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 
 interface MemberRequestListProps {
   id?: string;
@@ -38,7 +39,9 @@ const MemberRequestList = ({
 
   const {
     loading, ids, canLoadMore,
-  } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
+  } = type === 'group'
+    ? useKeySelector(groupsKeySelector[`${type}MemberRequests`])
+    : useCommunityMemberStore((state) => state.communityMemberRequests);
 
   const onPressAddMemmbers = () => {
     onPressAdd?.();

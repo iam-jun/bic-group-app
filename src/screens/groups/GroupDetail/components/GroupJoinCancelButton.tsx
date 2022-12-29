@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '../../../../storeRedux/groups/keySelector';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import JoinCancelButton from '../../components/JoinCancelButton';
 import modalActions from '~/storeRedux/modal/actions';
@@ -11,6 +9,7 @@ import { useBaseHook } from '~/hooks';
 import useCommunitiesStore, { ICommunitiesState } from '~/store/entities/communities';
 import useDiscoverGroupsStore from '../../DiscoverGroups/store';
 import IDiscoverGroupsState from '../../DiscoverGroups/store/Interface';
+import useGroupDetailStore, { IGroupDetailState } from '../store';
 
 interface GroupJoinCancelButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -19,12 +18,11 @@ interface GroupJoinCancelButtonProps {
 const GroupJoinCancelButton = ({ style }: GroupJoinCancelButtonProps) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
-  const infoDetail = useKeySelector(groupsKeySelector.groupDetail.group);
+  const { group: infoDetail, joinStatus } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail);
   const {
     privacy,
     id: groupId,
   } = infoDetail;
-  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const communityId = useCommunitiesStore((state: ICommunitiesState) => state.currentCommunityId);
   const community = useCommunitiesStore((state: ICommunitiesState) => state.data[communityId]);
   const joinStatusCommunity = community?.joinStatus;

@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import useRemoveMemberFromMemberList from '~/hooks/useRemoveMemberFromMemberList';
+import { removeMemberFromMemberList } from '~/helpers/common';
 import { IRemoveCommunityMember } from '~/interfaces/ICommunity';
 import { IToastMessage } from '~/interfaces/common';
 import useCommunitiesStore from '~/store/entities/communities';
@@ -14,7 +14,7 @@ const removeCommunityMember = (set, get) => async (
     const response = await groupApi.removeGroupMembers(groupId, [userId]);
 
     const { communityMembers } = get();
-    const newUpdatedData = useRemoveMemberFromMemberList(userId, communityMembers);
+    const newUpdatedData = removeMemberFromMemberList(userId, communityMembers);
     set((state) => {
       state.communityMembers = {
         ...state.communityMembers,

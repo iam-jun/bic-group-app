@@ -89,6 +89,9 @@ export interface IGroup {
   collapsed?: boolean;
   path?: string;
   treeData?: IGroup;
+  settings?: {
+    isJoinApproval?: boolean;
+  };
 }
 
 export interface IParsedGroup extends IGroup {

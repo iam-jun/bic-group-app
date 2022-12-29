@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import { call, put } from 'redux-saga/effects';
 import { IToastMessage } from '~/interfaces/common';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import showError from '~/storeRedux/commonSaga/showError';
 import modalActions from '~/storeRedux/modal/actions';
 import groupApi from '../../../api/GroupApi';
@@ -22,7 +23,7 @@ export default function* approveAllGroupMemberRequests({
     yield call(groupApi.approveAllGroupMemberRequests, groupId);
 
     // to update userCount
-    yield put(groupsActions.getGroupDetail({ groupId }));
+    useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 
     const toastMessage: IToastMessage = {
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE

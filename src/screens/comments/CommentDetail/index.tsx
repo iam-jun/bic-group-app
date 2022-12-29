@@ -16,7 +16,6 @@ import CommentDetailContent from './CommentDetailContent';
 import EmptyScreen from '~/components/EmptyScreen';
 import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '../../../storeRedux/post/actions';
 import { useKeySelector } from '~/hooks/selector';
 import APIErrorCode from '~/constants/apiErrorCode';
@@ -25,6 +24,7 @@ import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
 import { useBaseHook } from '~/hooks';
 import { IRouteParams } from '~/interfaces/IRouter';
+import { getTitle, replacePostDetail } from './helper';
 
 const CommentDetail: FC<IRouteParams> = (props) => {
   const params = props?.route?.params;
@@ -40,6 +40,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   const styles = createStyle(theme);
 
   const actor = usePostsStore(postsSelector.getActor(postId));
+  const type = usePostsStore(postsSelector.getType(postId));
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
   const comment = useCommentsStore(useCallback(commentsSelector.getComment(commentId), [commentId]));
@@ -58,12 +59,10 @@ const CommentDetail: FC<IRouteParams> = (props) => {
   };
 
   const goToPostDetail = () => {
-    rootNavigation.replace(homeStack.postDetail, {
-      post_id: postId || 0,
-    });
+    replacePostDetail(type, postId);
   };
 
-  const headerTitle = t('post:title_comment_detail_of', {
+  const headerTitle = t(getTitle(type), {
     name: actor?.fullname || '',
   });
 
@@ -90,9 +89,7 @@ const CommentDetail: FC<IRouteParams> = (props) => {
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
-      rootNavigation.replace(homeStack.postDetail, {
-        post_id: props?.route?.params?.postId || 0,
-      });
+      replacePostDetail(type, postId);
     }
   };
 

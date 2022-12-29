@@ -110,7 +110,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
           <ArticleSummary text={summaryArticle} />
         </>
       )}
-      {tags.length > 0 && (
+      {tags?.length > 0 && (
         <TagsView data={tags} onPressTag={goToTagDetail} />
       )}
     </View>

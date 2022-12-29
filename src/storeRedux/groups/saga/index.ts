@@ -17,14 +17,8 @@ import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
-import getGroupDetail from './getGroupDetail';
 import showError from '~/storeRedux/commonSaga/showError';
 import getGroupSearchMembers from './getGroupSearchMembers';
-import getCommunityMemberRequests from './getCommunityMemberRequests';
-import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
-import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
-import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
-import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
@@ -35,11 +29,10 @@ import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
 import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
 
 export default function* groupsSaga() {
-  yield takeLatest(
-    groupsTypes.GET_GROUP_DETAIL, getGroupDetail,
-  );
   yield takeLatest(
     groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
   );
@@ -76,26 +69,6 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
     declineAllGroupMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
-    getCommunityMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
-    approveSingleCommunityMemberRequest,
-  );
-  yield takeLatest(
-    groupsTypes.DECLINE_SINGLE_COMMUNITY_MEMBER_REQUEST,
-    declineSingleCommunityMemberRequest,
-  );
-  yield takeLatest(
-    groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
-    approveAllCommunityMemberRequests,
-  );
-  yield takeLatest(
-    groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
-    declineAllCommunityMemberRequests,
   );
   yield takeLatest(
     groupsTypes.GET_GLOBAL_SEARCH, getGlobalSearch,
@@ -208,7 +181,7 @@ function* mergeExtraJoinableUsers() {
 
   if (!loading && canLoadMore) {
     // continue to load more data in advance if possible
-    const { id: groupId } = groups?.groupDetail?.group || {};
+    const { id: groupId } = useGroupDetailStore.getState().groupDetail.group;
     if (groupId) {
       yield put(groupsActions.getJoinableUsers({ groupId, params }));
     }
@@ -249,18 +222,19 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
   }
 }
 
-function* updateLoadingImageState(
+function updateLoadingImageState(
   fieldName: 'icon' | 'backgroundImgUrl',
   value: boolean,
 ) {
+  const { setLoadingAvatar, setLoadingCover } = useGeneralInformationStore.getState().actions;
   if (fieldName === 'icon') {
-    yield put(groupsActions.setLoadingAvatar(value));
+    setLoadingAvatar(value);
   } else {
-    yield put(groupsActions.setLoadingCover(value));
+    setLoadingCover(value);
   }
 }
 
-export function* refreshGroupMembers(groupId: string) {
+export function refreshGroupMembers(groupId: string) {
   useGroupMemberStore.getState().actions.getGroupMembers({ groupId, isRefreshing: true });
-  yield put(groupsActions.getGroupDetail({ groupId }));
+  useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 }

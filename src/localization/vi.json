@@ -663,7 +663,8 @@
     "text_update_post_setting_success": "Đã cập nhật Cài đặt bài viết",
     "text_update_post_setting_failed": "Cập nhật Cài đặt bài viết thất bại",
     "text_comment_from": "Đây là bình luận từ ",
-    "title_comment_detail_of": "bài đăng của {{name}}",
+    "title_comment_detail_of_post": "bài đăng của {{name}}",
+    "title_comment_detail_of_article": "bài viết của {{name}}",
     "newsfeed": {
       "title_empty_no_post": "Nơi đây cô đơn quá...",
       "text_empty_no_post": "Tham gia cộng đồng để nhận thông tin mới",

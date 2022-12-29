@@ -1,9 +1,11 @@
 import React from 'react';
+import { act } from 'react-test-renderer';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import initialState from '~/storeRedux/initialState';
 import { configureStore, fireEvent, renderWithRedux } from '~/test/testUtils';
+import useGeneralInformationStore from '../store';
 import GroupInfoView from './InfoView';
 
 describe('GroupInfoView component', () => {
@@ -55,10 +57,17 @@ describe('GroupInfoView component', () => {
   });
 
   it('should call navigate to editGroupDescripton when edit button press', () => {
-    storeData.groups.loadingCover = false;
-    const store = mockStore(storeData);
+    jest.useFakeTimers();
+    act(() => {
+      useGeneralInformationStore.setState({
+        loadingCover: false,
+      });
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
 
-    const rendered = renderWithRedux(<GroupInfoView {...baseProps} canEditInfo type="group" />, store);
+    const rendered = renderWithRedux(<GroupInfoView {...baseProps} canEditInfo type="group" />);
     const component = rendered.getByTestId('info_view.description');
 
     fireEvent.press(component);
@@ -71,8 +80,15 @@ describe('GroupInfoView component', () => {
   });
 
   it('should call onPressPrivacy when privacy button press', () => {
-    storeData.groups.loadingCover = false;
-    const store = mockStore(storeData);
+    jest.useFakeTimers();
+    act(() => {
+      useGeneralInformationStore.setState({
+        loadingCover: false,
+      });
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
 
     const onPressPrivacy = jest.fn();
 
@@ -82,7 +98,7 @@ describe('GroupInfoView component', () => {
       canEditPrivacy: true,
     };
 
-    const rendered = renderWithRedux(<GroupInfoView {...props} type="community" />, store);
+    const rendered = renderWithRedux(<GroupInfoView {...props} type="community" />);
     const component = rendered.getByTestId('info_view.privacy');
 
     fireEvent.press(component);

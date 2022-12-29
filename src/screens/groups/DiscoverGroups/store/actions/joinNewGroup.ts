@@ -5,7 +5,7 @@ import IDiscoverGroupsState from '../Interface';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
-import groupsActions from '~/storeRedux/groups/actions';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 
 const joinNewGroup = (set, get) => async (groupId: string) => {
   try {
@@ -25,7 +25,7 @@ const joinNewGroup = (set, get) => async (groupId: string) => {
     set((state:IDiscoverGroupsState) => {
       state.items[groupId] = { ...currentItem };
     }, 'joinNewGroupSuccess');
-    Store.store.dispatch(groupsActions.getGroupDetail({ groupId }));
+    useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 
     if (hasRequested) {
       const toastMessage: IToastMessage = {

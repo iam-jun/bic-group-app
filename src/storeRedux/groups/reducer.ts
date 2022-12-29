@@ -1,7 +1,6 @@
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
 import {
-  IGroupDetail,
   IGroupMembers,
   IJoiningMember,
 } from '~/interfaces/IGroup';
@@ -45,23 +44,6 @@ export const groupInitState = {
     loading: true,
     list: [],
   },
-  yourGroupsList: {
-    loading: true,
-    list: [],
-  },
-  yourGroupsSearch: {
-    showSearch: false,
-    loading: false,
-    key: '',
-    list: [],
-  },
-  loadingPage: false,
-  isLoadingGroupDetailError: false,
-  loadingGroupDetail: false,
-  groupDetail: {
-    group: {},
-  } as IGroupDetail,
-  loadingGroupMember: false,
   groupSearchMembers: {
     loading: false,
     canLoadMore: true,
@@ -74,9 +56,6 @@ export const groupInitState = {
     canLoadMore: true,
   },
   selectedUsers: [] as IUser[],
-
-  loadingAvatar: false,
-  loadingCover: false,
 
   groupMemberRequests: {
     total: 0,
@@ -122,21 +101,6 @@ export const groupInitState = {
   },
   isGettingInfoDetailError: false,
   isGettingInfoDetail: false,
-  communityMemberRequests: {
-    total: 0,
-    loading: true,
-    canLoadMore: true,
-    ids: [] as string[],
-    items: {} as IObject<IJoiningMember>,
-  },
-  // temporarily stores data for `undo` action
-  undoCommunityMemberRequests: {
-    total: 0,
-    loading: null,
-    canLoadMore: null,
-    ids: [],
-    items: {} as IObject<IJoiningMember>,
-  },
   globalSearch: {
     loading: false,
     canLoadMore: true,
@@ -157,35 +121,10 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     selectedUsers,
     groupMemberRequests,
     groupSearchMembers,
-    communityMemberRequests,
     globalSearch,
   } = state;
 
   switch (type) {
-    // Group Structure Settings
-    case groupsTypes.SET_GROUP_DETAIL_ERROR:
-      return {
-        ...state,
-        isLoadingGroupDetailError: payload,
-      };
-    case groupsTypes.GET_GROUP_DETAIL:
-      return {
-        ...state,
-        loadingGroupDetail: true,
-      };
-    case groupsTypes.SET_GROUP_DETAIL:
-      return {
-        ...state,
-        loadingCover: false,
-        loadingAvatar: false,
-        loadingGroupDetail: false,
-        isLoadingGroupDetailError: false,
-        groupDetail: {
-          group: {}, // init state
-          ...action.payload,
-        },
-      };
-
     case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
       return {
         ...state,
@@ -244,22 +183,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         users: groupInitState.users,
-      };
-
-    case groupsTypes.SET_LOADING_AVATAR:
-      return {
-        ...state,
-        loadingAvatar: payload,
-      };
-    case groupsTypes.SET_LOADING_COVER:
-      return {
-        ...state,
-        loadingCover: payload,
-      };
-    case groupsTypes.SET_LOADING_PAGE:
-      return {
-        ...state,
-        loadingPage: payload,
       };
 
     // PENDING MEMBER REQUESTS
@@ -330,50 +253,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
               },
             }
             : globalSearch,
-      };
-
-    case groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        communityMemberRequests: {
-          ...communityMemberRequests,
-          ...payload,
-        },
-      };
-    case groupsTypes.RESET_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        communityMemberRequests: groupInitState.communityMemberRequests,
-      };
-    case groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        undoCommunityMemberRequests: { ...communityMemberRequests },
-      };
-    case groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        communityMemberRequests: { ...state.undoCommunityMemberRequests },
-        undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
-      };
-    case groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS:
-      return {
-        ...state,
-        undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
-      };
-    case groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST:
-      return {
-        ...state,
-        communityMemberRequests: {
-          ...communityMemberRequests,
-          items: {
-            ...communityMemberRequests.items,
-            [payload.id]: {
-              ...communityMemberRequests.items[payload.id],
-              ...payload.data,
-            },
-          },
-        },
       };
     case groupsTypes.SET_GLOBAL_SEARCH:
       return {

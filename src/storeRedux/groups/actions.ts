@@ -1,7 +1,6 @@
 import groupsTypes from '~/storeRedux/groups/types';
 import {
   IGroup,
-  IGroupDetail,
   IGroupImageUpload,
   IGroupAddMembers,
   IGroupGetJoinableMembers,
@@ -30,18 +29,6 @@ const groupsActions = {
     type: groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS,
   }),
 
-  getGroupDetail: (payload: {groupId: string; loadingPage?: boolean}) => ({
-    type: groupsTypes.GET_GROUP_DETAIL,
-    payload,
-  }),
-  setGroupDetail: (payload: IGroupDetail | null) => ({
-    type: groupsTypes.SET_GROUP_DETAIL,
-    payload,
-  }),
-  setGroupDetailError: (payload: boolean) => ({
-    type: groupsTypes.SET_GROUP_DETAIL_ERROR,
-    payload,
-  }),
   selectJoinableUsers: (payload: IUser) => ({
     type: groupsTypes.SELECT_JOINABLE_USERS,
     payload,
@@ -88,19 +75,6 @@ const groupsActions = {
   }),
   addMembers: (payload: IGroupAddMembers) => ({
     type: groupsTypes.ADD_MEMBERS,
-    payload,
-  }),
-
-  setLoadingAvatar: (payload: boolean) => ({
-    type: groupsTypes.SET_LOADING_AVATAR,
-    payload,
-  }),
-  setLoadingCover: (payload: boolean) => ({
-    type: groupsTypes.SET_LOADING_COVER,
-    payload,
-  }),
-  setLoadingPage: (payload: boolean) => ({
-    type: groupsTypes.SET_LOADING_PAGE,
     payload,
   }),
 
@@ -212,69 +186,6 @@ const groupsActions = {
   }),
   editDiscoverCommunityItem: (payload: {id: string; data: any}) => ({
     type: groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM,
-    payload,
-  }),
-  getCommunityMemberRequests: (payload: {
-    groupId: string;
-    isRefreshing?: boolean;
-    params?: any;
-  }) => ({
-    type: groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
-    payload,
-  }),
-  setCommunityMemberRequests: (payload: {
-    total?: number;
-    loading?: boolean;
-    canLoadMore?: boolean;
-    ids?: string[];
-    items?: IObject<IJoiningMember>;
-  }) => ({
-    type: groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS,
-    payload,
-  }),
-  resetCommunityMemberRequests: () => ({
-    type: groupsTypes.RESET_COMMUNITY_MEMBER_REQUESTS,
-  }),
-  approveSingleCommunityMemberRequest: (payload: {
-    communityId: string;
-    groupId: string;
-    requestId: string;
-    fullName: string;
-  }) => ({
-    type: groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
-    payload,
-  }),
-  declineSingleCommunityMemberRequest: (payload: {
-    groupId: string;
-    requestId: string;
-    fullName: string;
-  }) => ({
-    type: groupsTypes.DECLINE_SINGLE_COMMUNITY_MEMBER_REQUEST,
-    payload,
-  }),
-  approveAllCommunityMemberRequests: (payload: {
-    communityId: string;
-    groupId: string;
-    total: number;
-  }) => ({
-    type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
-    payload,
-  }),
-  declineAllCommunityMemberRequests: (payload: {
-    groupId: string;
-    total: number;
-  }) => ({
-    type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
-    payload,
-  }),
-  storeUndoCommunityMemberRequests: () => ({
-    type: groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS,
-  }),
-  undoDeclinedCommunityMemberRequests: () => ({
-    type: groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS,
-  }),
-  editCommunityMemberRequest: (payload: {id: string; data: any}) => ({
-    type: groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST,
     payload,
   }),
   getGlobalSearch: (payload: string) => ({

@@ -1,45 +1,59 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import initialState from '~/storeRedux/initialState';
-import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
+import { act } from 'react-test-renderer';
+import { fireEvent, renderWithRedux } from '~/test/testUtils';
 import colors from '~/theme/theme';
+import useGeneralInformationStore from '../store';
 import AvatarImage from './AvatarImage';
 
 describe('AvatarImage component', () => {
+  afterEach(() => {
+    jest.runOnlyPendingTimers(); // you must add this
+    jest.useRealTimers(); // you must add this
+  });
+
   const baseProps = {
     avatar: '',
     canEditInfo: false,
     onEditAvatar: jest.fn(),
   };
 
-  const mockStore = configureStore([]);
-
-  const storeData = { ...initialState };
-
   it('renders correctly', () => {
-    const store = mockStore(storeData);
     const rendered = renderWithRedux(
       <AvatarImage {...baseProps} />,
-      store,
     ).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
   it('should show loading', () => {
-    storeData.groups.loadingAvatar = true;
-    const store = mockStore(storeData);
+    jest.useFakeTimers();
+    act(() => {
+      useGeneralInformationStore.setState({
+        loadingAvatar: true,
+      });
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
 
-    const rendered = renderWithRedux(<AvatarImage {...baseProps} />, store);
+    const rendered = renderWithRedux(<AvatarImage {...baseProps} />);
 
     const loadingComponent = rendered.getByTestId('avatar.loading');
     expect(loadingComponent).not.toBeNull();
   });
 
   it('should show avatar', () => {
-    storeData.groups.loadingAvatar = false;
-    const store = mockStore(storeData);
+    jest.useFakeTimers();
+    act(() => {
+      useGeneralInformationStore.setState({
+        loadingAvatar: false,
+      });
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
 
-    const rendered = renderWithRedux(<AvatarImage {...baseProps} />, store);
+    const rendered = renderWithRedux(<AvatarImage {...baseProps} />);
 
     const imageComponent = rendered.getByTestId('avatar.image');
     const loadingComponent = rendered.queryByTestId('avatar.loading');
@@ -48,10 +62,17 @@ describe('AvatarImage component', () => {
   });
 
   it('should disable button when loading', () => {
-    storeData.groups.loadingAvatar = true;
-    const store = mockStore(storeData);
+    jest.useFakeTimers();
+    act(() => {
+      useGeneralInformationStore.setState({
+        loadingAvatar: true,
+      });
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
 
-    const rendered = renderWithRedux(<AvatarImage {...baseProps} canEditInfo />, store);
+    const rendered = renderWithRedux(<AvatarImage {...baseProps} canEditInfo />);
 
     const buttonComponent = rendered.getByTestId('avatar.button_edit');
     const textComponent = rendered.getByTestId('avatar.text_edit');
@@ -61,14 +82,20 @@ describe('AvatarImage component', () => {
   });
 
   it('should call onEditAvatar when edit button press', () => {
-    storeData.groups.loadingAvatar = false;
-    const store = mockStore(storeData);
+    jest.useFakeTimers();
+    act(() => {
+      useGeneralInformationStore.setState({
+        loadingAvatar: false,
+      });
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
 
     const onEditAvatar = jest.fn();
 
     const rendered = renderWithRedux(
       <AvatarImage avatar="" onEditAvatar={onEditAvatar} canEditInfo />,
-      store,
     );
 
     const buttonComponent = rendered.getByTestId('avatar.button_edit');

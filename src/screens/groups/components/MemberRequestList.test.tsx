@@ -1,5 +1,5 @@
 import React from 'react';
-
+import useCommunityMemberStore, { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import { createTestStore, renderWithRedux } from '~/test/testUtils';
 import initialState from '~/storeRedux/initialState';
 import MemberRequestList from './MemberRequestList';
@@ -27,15 +27,15 @@ describe('MemberRequestList', () => {
   });
 
   it('should NOT render empty screen when loading = true', () => {
-    const state = { ...initialState };
-    state.groups.communityMemberRequests = {
-      total: 0,
-      loading: true,
-      canLoadMore: true,
-      ids: [],
-      items: {},
-    };
-    const store = createTestStore(state);
+    useCommunityMemberStore.setState((state: ICommunityMemberState) => {
+      state.communityMemberRequests.total = 0;
+      state.communityMemberRequests.loading = true;
+      state.communityMemberRequests.canLoadMore = true;
+      state.communityMemberRequests.ids = [];
+      state.communityMemberRequests.items = {};
+      return state;
+    });
+
     const wrapper = renderWithRedux(
       <MemberRequestList
         type="community"
@@ -43,7 +43,6 @@ describe('MemberRequestList', () => {
         onRefresh={onRefresh}
         onPressAdd={onPressAdd}
       />,
-      store,
     );
     const emptyScreen = wrapper.queryByTestId('empty_screen');
     expect(emptyScreen).toBeNull();
@@ -67,43 +66,18 @@ describe('MemberRequestList', () => {
     expect(textRequest).toBeNull();
   });
 
-  it('should render request title correctly', () => {
-    const state = { ...initialState };
-    state.groups.communityMemberRequests = {
-      total: 3,
-      loading: false,
-      canLoadMore: true,
-      ids: [],
-      items: {},
-    };
-    const store = createTestStore(state);
-    const wrapper = renderWithRedux(
-      <MemberRequestList
-        type="community"
-        onLoadMore={onLoadMore}
-        onRefresh={onRefresh}
-        onPressAdd={onPressAdd}
-      />,
-      store,
-    );
-    const textRequest = wrapper.getByTestId(
-      'member_request_list.request_title',
-    );
-    expect(textRequest.props.children).toBe('3 Requests');
-  });
-
   it('should render loading more correctly', () => {
-    const state = { ...initialState };
-    state.groups.communityMemberRequests = {
-      total: 1,
-      loading: false,
-      canLoadMore: true,
-      ids: ['1'],
-      items: {
+    useCommunityMemberStore.setState((state: ICommunityMemberState) => {
+      state.communityMemberRequests.total = 1;
+      state.communityMemberRequests.loading = false;
+      state.communityMemberRequests.canLoadMore = true;
+      state.communityMemberRequests.ids = ['1'];
+      state.communityMemberRequests.items = {
         1: memberRequestDetail,
-      },
-    };
-    const store = createTestStore(state);
+      };
+      return state;
+    });
+
     const wrapper = renderWithRedux(
       <MemberRequestList
         id={communityDetailData.id}
@@ -112,7 +86,6 @@ describe('MemberRequestList', () => {
         onRefresh={onRefresh}
         onPressAdd={onPressAdd}
       />,
-      store,
     );
     const loadingIndicator = wrapper.getByTestId(
       'member_request_list.loading_more_indicator',
@@ -121,15 +94,17 @@ describe('MemberRequestList', () => {
   });
 
   it('should render data correctly', () => {
-    const state = { ...initialState };
-    state.groups.communityMemberRequests = {
-      total: 1,
-      loading: false,
-      canLoadMore: false,
-      ids: [memberRequestDetail.id],
-      items: { [memberRequestDetail.id]: { ...memberRequestDetail } },
-    };
-    const store = createTestStore(state);
+    useCommunityMemberStore.setState((state: ICommunityMemberState) => {
+      state.communityMemberRequests.total = 1;
+      state.communityMemberRequests.loading = false;
+      state.communityMemberRequests.canLoadMore = false;
+      state.communityMemberRequests.ids = [memberRequestDetail.id];
+      state.communityMemberRequests.items = {
+        [memberRequestDetail.id]: { ...memberRequestDetail },
+      };
+      return state;
+    });
+
     const wrapper = renderWithRedux(
       <MemberRequestList
         id={communityDetailData.id}
@@ -138,7 +113,6 @@ describe('MemberRequestList', () => {
         onRefresh={onRefresh}
         onPressAdd={onPressAdd}
       />,
-      store,
     );
     expect(wrapper).toMatchSnapshot();
   });

@@ -17,7 +17,7 @@ import PreviewMembers from '../PreviewMembers';
 
 type AboutContentProps = {
   profileInfo: {
-    description: string;
+    description?: string;
     userCount?: number;
     privacy?: GroupPrivacyType;
     members?: IPreviewMember[]
