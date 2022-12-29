@@ -6,7 +6,7 @@ import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
 import postActions from '~/storeRedux/post/actions';
 import APIErrorCode from '~/constants/apiErrorCode';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import Store from '~/storeRedux';
 import { sortComments } from '~/helpers/post';
 
@@ -45,7 +45,7 @@ const getCommentDetail = (_set, _get) => async (payload: IPayloadGetCommentsById
     ) {
       Store.store.dispatch(postActions.setCommentErrorCode(e.code));
     } else {
-      showError(e);
+      showToastError(e);
     }
     callbackLoading?.(false);
   }

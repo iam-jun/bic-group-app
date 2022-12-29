@@ -1,8 +1,8 @@
 import groupApi from '~/api/GroupApi';
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import showToastEditSuccess from '~/store/entities/communities/actions/showToastEditSuccess';
-import showError from '~/store/helper/showError';
 import useGroupDetailStore from '../../GroupDetail/store';
+import showToastError from '~/store/helper/showToastError';
 
 const editGroupDetail = (_set, _get) => async (
   data: IGroupDetailEdit,
@@ -24,7 +24,7 @@ const editGroupDetail = (_set, _get) => async (
     console.error(
       '\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m',
     );
-    showError(err);
+    showToastError(err);
   }
 };
 

@@ -1,10 +1,9 @@
 import i18next from 'i18next';
-import modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
 import groupApi from '~/api/GroupApi';
 import approveDeclineCode from '~/constants/approveDeclineCode';
-import Store from '~/storeRedux';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 import { IPayloadDeclineSingleCommunityMemberRequest } from '~/interfaces/ICommunity';
 import { ICommunityMemberState } from '../index';
 
@@ -33,7 +32,7 @@ const declineSingleCommunityMemberRequest = (get) => async (
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
   } catch (e) {
     console.error('declineSingleCommunityMemberRequest: ', e);
 
@@ -49,7 +48,7 @@ const declineSingleCommunityMemberRequest = (get) => async (
       return;
     }
 
-    showError(e);
+    showToastError(e);
   }
 };
 

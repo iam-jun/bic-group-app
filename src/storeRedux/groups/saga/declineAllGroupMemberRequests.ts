@@ -1,10 +1,10 @@
 import i18next from 'i18next';
-import { call, put } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
 import { IToastMessage } from '~/interfaces/common';
-import showError from '~/storeRedux/commonSaga/showError';
-import modalActions from '~/storeRedux/modal/actions';
+import showToastError from '~/store/helper/showToastError';
 import groupApi from '~/api/GroupApi';
+import useModalStore from '~/store/modal';
 
 export default function* declineAllGroupMemberRequests({
   payload,
@@ -20,10 +20,10 @@ export default function* declineAllGroupMemberRequests({
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_all')}`.replace('{0}', total.toString()),
     };
-    yield put(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
   } catch (err: any) {
     console.error('declineAllGroupMemberRequests: ', err);
 
-    yield call(showError, err);
+    showToastError(err);
   }
 }

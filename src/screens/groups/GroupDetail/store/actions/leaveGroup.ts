@@ -1,16 +1,16 @@
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
-import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { GroupPrivacyType } from '~/constants/privacyTypes';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
-import Store from '~/storeRedux';
 import useDiscoverGroupsStore from '~/screens/groups/DiscoverGroups/store';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
 import useManagedStore from '~/screens/communities/Communities/components/Managed/store';
 import useGroupDetailStore from '../index';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const rootNavigation = withNavigation(rootNavigationRef);
 
@@ -35,12 +35,12 @@ const leaveGroup = () => async (groupId: string, privacy: GroupPrivacyType) => {
 
     const toastMessage: IToastMessage = {
       content: 'groups:modal_confirm_leave_group:success_message',
-      props: { type: 'success' },
+      type: ToastType.SUCCESS,
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
   } catch (err) {
     console.error('leaveGroup:', err);
-    showError(err);
+    showToastError(err);
   }
 };
 

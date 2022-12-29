@@ -54,6 +54,7 @@ import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useGroupDetailStore from './store';
+import useModalStore from '~/store/modal';
 
 const GroupDetail = (props: any) => {
   const { params } = props.route;
@@ -74,6 +75,7 @@ const GroupDetail = (props: any) => {
     groupDetail: { group: groupInfo, joinStatus },
     actions: { getGroupDetail },
   } = useGroupDetailStore((state) => state);
+  const { showToast } = useModalStore((state) => state.actions);
 
   const headerRef = useRef<any>();
   const [groupInfoHeight, setGroupInfoHeight] = useState(300);
@@ -179,11 +181,7 @@ const GroupDetail = (props: any) => {
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
     Clipboard.setString(getGroupLink({ communityId: communityDetail?.id, groupId }));
-    dispatch(
-      modalActions.showHideToastMessage({
-        content: 'common:text_link_copied_to_clipboard',
-      }),
-    );
+    showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressShare = () => {

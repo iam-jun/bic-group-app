@@ -1,11 +1,11 @@
 import appConfig from '~/configs/appConfig';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import { IJoiningMember } from '~/interfaces/IGroup';
-import showError from '~/store/helper/showError';
 import groupApi from '~/api/GroupApi';
 import { mapItems } from '~/screens/groups/helper/mapper';
 import { IPayloadGetCommunityMemberRequests } from '~/interfaces/ICommunity';
 import { ICommunityMemberState } from '../index';
+import showToastError from '~/store/helper/showToastError';
 
 const getCommunityMemberRequests = (get) => async (payload: IPayloadGetCommunityMemberRequests) => {
   const { communityMemberRequests, actions }: ICommunityMemberState = get();
@@ -41,7 +41,7 @@ const getCommunityMemberRequests = (get) => async (payload: IPayloadGetCommunity
 
     actions.setCommunityMemberRequests(newData);
   } catch (e) {
-    showError(e);
+    showToastError(e);
     actions.setCommunityMemberRequests({
       loading: false,
     });

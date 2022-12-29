@@ -5,9 +5,12 @@ import usePostsStore from '~/store/entities/posts';
 import postActions from '~/storeRedux/post/actions';
 import streamApi from '~/api/StreamApi';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions from '~/storeRedux/modal/actions';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
+import showToastSuccess from '~/store/helper/showToastSuccess';
+import useModalStore from '~/store/modal';
+import { IToastMessage } from '~/interfaces/common';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -39,9 +42,7 @@ export default function* putEditPost({
     if (response?.data) {
       const post = response?.data;
       usePostsStore.getState().actions.addToPosts({ data: post } as IPayloadAddToAllPost);
-      yield put(modalActions.showHideToastMessage({
-        content: response?.meta?.message || msgSuccess || 'post:text_edit_post_success',
-      }));
+      showToastSuccess(response, msgSuccess || 'post:text_edit_post_success');
       if (!disableNavigate) {
         yield call(
           navigate, replaceWithDetail, post?.id,
@@ -50,14 +51,13 @@ export default function* putEditPost({
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
-    yield put(modalActions.showHideToastMessage({
+    const toast: IToastMessage = {
       content: e?.meta?.message || msgError || 'post:text_edit_post_failed',
-      props: {
-        type: 'error',
-        buttonText: i18n.t('common:text_retry'),
-        onButtonPress: onRetry,
-      },
-    }));
+      type: ToastType.ERROR,
+      buttonText: i18n.t('common:text_retry'),
+      onButtonPress: onRetry,
+    };
+    useModalStore.getState().actions.showToast(toast);
   }
 }
 

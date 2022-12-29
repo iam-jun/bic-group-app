@@ -38,7 +38,7 @@ export interface IconProps extends SVGIconProps {
   labelColor?: string;
   labelStyle?: StyleProp<TextStyle>;
   hitSlop?: {top?: number; bottom?: number; left?: number; right?: number};
-  ingoreInternet?: boolean;
+  ignoreInternet?: boolean;
   onPress?: (e: any) => void;
 }
 
@@ -56,7 +56,7 @@ const Icon: React.FC<IconProps> = ({
   backgroundColor,
   isButton,
   isLoading,
-  ingoreInternet,
+  ignoreInternet,
   disabled,
   hitSlop = {
     top: 10, left: 10, bottom: 10, right: 10,
@@ -111,7 +111,7 @@ const Icon: React.FC<IconProps> = ({
     _tintColor = undefined;
   }
 
-  const disableByInternet = !ingoreInternet && noInternet;
+  const disableByInternet = !ignoreInternet && noInternet;
   const disabledButton = disableByInternet || disabled || !onPress;
 
   return (

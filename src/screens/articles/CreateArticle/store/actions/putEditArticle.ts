@@ -1,15 +1,12 @@
-import i18next from 'i18next';
 import streamApi from '~/api/StreamApi';
-import { IToastMessage } from '~/interfaces/common';
 import { IEditAritcleError, IPayloadPutEditArticle } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
-import showError from '~/store/helper/showError';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
 import { EditArticleErrorType } from '~/constants/article';
+import showToastError from '~/store/helper/showToastError';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -36,7 +33,7 @@ const putEditArticle = (set, _) => async (
     const response = await streamApi.putEditArticle(articleId, params);
 
     if (!response?.data) {
-      showError(response);
+      showToastError(response);
       set((state: ICreateArticleState) => {
         state.loading = false;
       }, 'putEditArticleError');
@@ -50,10 +47,7 @@ const putEditArticle = (set, _) => async (
     }, 'putEditArticleSuccess');
 
     if (isShowToast) {
-      const toastMessage: IToastMessage = {
-        content: response?.meta?.message || i18next.t('article:text_edit_article_success'),
-      };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      showToastSuccess(response, 'article:text_edit_article_success');
     }
     if (isNavigateBack) {
       navigation.goBack();
@@ -75,7 +69,7 @@ const putEditArticle = (set, _) => async (
         error,
       });
     } else {
-      showError(error);
+      showToastError(error);
     }
   }
 };

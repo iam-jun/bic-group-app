@@ -3,9 +3,8 @@ import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
 import { IPayloadDeclineAllCommunityMemberRequests } from '~/interfaces/ICommunity';
 import { ICommunityMemberState } from '../index';
-import modalActions from '~/storeRedux/modal/actions';
-import showError from '~/store/helper/showError';
-import Store from '~/storeRedux';
+import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 
 const declineAllCommunityMemberRequests = (get) => async (
   payload: IPayloadDeclineAllCommunityMemberRequests,
@@ -23,10 +22,10 @@ const declineAllCommunityMemberRequests = (get) => async (
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_all')}`.replace('{0}', total.toString()),
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
   } catch (e) {
     console.error('declineAllCommunityMemberRequests: ', e);
-    showError(e);
+    showToastError(e);
   }
 };
 

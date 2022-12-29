@@ -1,7 +1,7 @@
 import streamApi from '~/api/StreamApi';
 import appConfig from '~/configs/appConfig';
 import { IGetSearchArticleInSeries } from '~/interfaces/IArticle';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IAddArticlesState } from '..';
 
 const searchArticles = (set, get) => async (params: IGetSearchArticleInSeries, isLoadMore?: boolean) => {
@@ -34,7 +34,7 @@ const searchArticles = (set, get) => async (params: IGetSearchArticleInSeries, i
       state.loading = false;
     }, 'searchArticleInSeriesFailed');
     console.error('\x1b[35m🐣️ searchArticleInSeries error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

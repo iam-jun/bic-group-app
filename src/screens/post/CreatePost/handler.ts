@@ -2,6 +2,7 @@ import { ExtendedTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 import { Keyboard } from 'react-native';
 import FileUploader from '~/services/fileUploader';
+import useModalStore from '~/store/modal';
 import modalActions from '~/storeRedux/modal/actions';
 
 import useDraftPostStore from '../../Draft/DraftPost/store';
@@ -47,13 +48,11 @@ export const handleBack = (
       return;
     }
     useDraftPostStore.getState().actions.getDraftPosts({ isRefresh: true });
-    dispatch(modalActions.showHideToastMessage({
+    useModalStore.getState().actions.showToast({
       content: 'post:saved_to_draft',
-      props: {
-        buttonText: isNewsfeed ? i18next.t('home:draft_post') : '',
-        onButtonPress: onPressDraftPost,
-      },
-    }));
+      buttonText: isNewsfeed ? i18next.t('home:draft_post') : '',
+      onButtonPress: onPressDraftPost,
+    });
   }
   rootNavigation.goBack();
 };

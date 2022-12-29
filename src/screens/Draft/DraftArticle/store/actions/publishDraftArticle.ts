@@ -2,15 +2,15 @@ import Store from '~/storeRedux';
 import streamApi from '~/api/StreamApi';
 import { IPayloadPublishDraftArticle } from '~/interfaces/IArticle';
 import { IPayloadAddToAllPost, IPayloadGetDraftPosts, IPost } from '~/interfaces/IPost';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
 import usePostsStore from '~/store/entities/posts';
-import modalActions from '~/storeRedux/modal/actions';
 import postActions from '~/storeRedux/post/actions';
 import useHomeStore from '~/screens/Home/store';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { IDraftArticleState } from '..';
+import useModalStore from '~/store/modal';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -34,7 +34,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
         state.isPublishing = false;
       }, 'publishDraftArticle error');
       onError?.();
-      showError(response);
+      showToastError(response);
       return;
     }
 
@@ -46,9 +46,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
     usePostsStore.getState().actions.addToPosts({ data: contentData } as IPayloadAddToAllPost);
 
     if (response.data?.isProcessing) {
-      Store.store.dispatch(modalActions.showHideToastMessage({
-        content: 'post:draft:text_processing_publish',
-      }));
+      useModalStore.getState().actions.showToast({ content: 'post:draft:text_processing_publish' });
       // navigation.goBack();
       Store.store.dispatch(postActions.getAllPostContainingVideoInProgress());
     } else if (replaceWithDetail) {
@@ -68,7 +66,7 @@ const publishDraftArticle = (set, get) => async (payload: IPayloadPublishDraftAr
       state.isPublishing = false;
     }, 'publishDraftArticle error');
     onError?.();
-    showError(error);
+    showToastError(error);
   }
 };
 

@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { sortFixedRoles } from '~/screens/groups/helper';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
 
 const getSystemScheme = (set) => async () => {
@@ -30,7 +30,7 @@ const getSystemScheme = (set) => async () => {
       state.systemScheme.loading = false;
     }, 'getSystemSchemeError');
 
-    showError(error);
+    showToastError(error);
   }
 };
 

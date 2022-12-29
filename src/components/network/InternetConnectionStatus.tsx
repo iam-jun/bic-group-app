@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { useKeySelector } from '~/hooks/selector';
 import dimension from '~/theme/dimension';
-import BaseToast, { BaseToastProps } from '~/baseComponents/Toast/BaseToast';
+import BaseToast, { BaseToastProps, ToastType } from '~/baseComponents/Toast/BaseToast';
 import { spacing } from '~/theme';
 import noInternetActions from '~/storeRedux/network/actions';
 
@@ -55,11 +55,11 @@ const InternetConnectionStatus = () => {
   if (!showToast) return null;
 
   const toastProps: BaseToastProps = isInternetReachable ? {
-    type: 'success',
+    type: ToastType.SUCCESS,
     content: 'internet_connection:online',
     icon: 'WifiSolid',
   } : {
-    type: 'neutral',
+    type: ToastType.NEUTRAL,
     content: 'internet_connection:offline',
     icon: 'WifiSlashSolid',
     buttonText: 'common:text_refresh',
@@ -68,9 +68,8 @@ const InternetConnectionStatus = () => {
 
   return (
     <BaseToast
-      useI18n
       style={styles.toast}
-      onPressClose={hideToast}
+      onClose={hideToast}
       {...toastProps}
     />
   );

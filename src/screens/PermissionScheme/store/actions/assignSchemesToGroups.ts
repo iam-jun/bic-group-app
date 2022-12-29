@@ -1,10 +1,9 @@
-import Store from '~/storeRedux';
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
 import { IPayloadGroupSchemeAssignments } from '~/interfaces/IGroup';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 const assignSchemesToGroups = (set, get) => async (payload: IPayloadGroupSchemeAssignments) => {
   const { communityId, data, currentAssignments } = payload || {};
@@ -35,7 +34,7 @@ const assignSchemesToGroups = (set, get) => async (payload: IPayloadGroupSchemeA
       const toastMessage: IToastMessage = {
         content: response.meta?.message || 'Success',
       };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      useModalStore.getState().actions.showToast(toastMessage);
     } else {
       actions.setGroupSchemeAssigning({
         loading: false,
@@ -43,7 +42,7 @@ const assignSchemesToGroups = (set, get) => async (payload: IPayloadGroupSchemeA
         currentAssignments,
       });
 
-      showError(response);
+      showToastError(response);
     }
   } catch (error) {
     console.error('assignSchemesToGroups error:', error);
@@ -54,7 +53,7 @@ const assignSchemesToGroups = (set, get) => async (payload: IPayloadGroupSchemeA
       currentAssignments,
     });
 
-    showError(error);
+    showToastError(error);
   }
 };
 

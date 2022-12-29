@@ -3,8 +3,8 @@ import { call, put, select } from 'redux-saga/effects';
 
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import { IToastMessage } from '~/interfaces/common';
-import showError from '~/storeRedux/commonSaga/showError';
-import modalActions from '~/storeRedux/modal/actions';
+import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 import groupApi from '../../../api/GroupApi';
 import groupsActions from '../actions';
 
@@ -37,7 +37,7 @@ export default function* declineSingleGroupMemberRequest({
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
     };
-    yield put(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
   } catch (error: any) {
     console.error('declineSingleGroupMemberRequest: ', error);
 
@@ -51,6 +51,6 @@ export default function* declineSingleGroupMemberRequest({
       return;
     }
 
-    yield call(showError, error);
+    showToastError(error);
   }
 }

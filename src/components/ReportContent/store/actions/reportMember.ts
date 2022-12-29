@@ -1,8 +1,7 @@
 import GroupApi from '~/api/GroupApi';
-import Store from '~/storeRedux';
-import modalActions from '~/storeRedux/modal/actions';
-import showError from '~/store/helper/showError';
 import { IPayloadReportMember } from '~/interfaces/IReport';
+import useModalStore from '~/store/modal';
+import showToastError from '~/store/helper/showToastError';
 
 const reportMember = () => async (payload: IPayloadReportMember) => {
   const { targetId: userId, communityId, reason } = payload || {};
@@ -13,12 +12,10 @@ const reportMember = () => async (payload: IPayloadReportMember) => {
       reason,
     });
 
-    Store.store.dispatch(
-      modalActions.showHideToastMessage({ content: 'common:text_report_sent' }),
-    );
+    useModalStore.getState().actions.showToast({ content: 'common:text_report_sent' });
   } catch (e) {
     console.error('\x1b[31m🐣️ action reportMember error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

@@ -1,10 +1,9 @@
 import { cloneDeep } from 'lodash';
 import notificationApi from '~/api/NotificationApi';
 
-import * as modalActions from '~/storeRedux/modal/actions';
 import INotificationsState from '../Interface';
-import Store from '~/storeRedux';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 
 const markAsReadAll = (set, get) => (tabId: string) => {
   try {
@@ -29,14 +28,14 @@ const markAsReadAll = (set, get) => (tabId: string) => {
       state.notificationList = { ...state.notificationList, ...notifications };
     }, 'markAsReadAllNotificationSuccess');
 
-    Store.store.dispatch(modalActions.showHideToastMessage({
+    useModalStore.getState().actions.showToast({
       content: 'notification:mark_all_as_read_success',
-    }));
+    });
   } catch (err) {
     console.error(
       '\x1b[33m', 'notification markAsReadAll error', err, '\x1b[0m',
     );
-    showError(err);
+    showToastError(err);
   }
 };
 

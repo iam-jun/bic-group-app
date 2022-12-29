@@ -1,7 +1,7 @@
 import groupApi from '~/api/GroupApi';
 import appConfig from '~/configs/appConfig';
 import { IGroupGetMembers } from '~/interfaces/IGroup';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { IGroupMemberState } from '..';
 
 const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
@@ -62,7 +62,7 @@ const getGroupMembers = (set, get) => async (payload: IGroupGetMembers) => {
     set((state: IGroupMemberState) => {
       state.groupMembers.loading = false;
     }, 'getGroupMembersFailed');
-    showError(e);
+    showToastError(e);
   }
 };
 

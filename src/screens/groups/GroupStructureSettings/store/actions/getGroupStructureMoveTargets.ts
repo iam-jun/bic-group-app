@@ -1,6 +1,6 @@
 import groupApi from '~/api/GroupApi';
 import { IPayloadGetGroupStructureMoveTargets } from '~/interfaces/IGroup';
-import showError from '~/storeRedux/commonSaga/showError';
+import showToastError from '~/store/helper/showToastError';
 import IGroupStructureState from '../Interface';
 
 const getGroupStructureMoveTargets = (set, get) => async (payload: IPayloadGetGroupStructureMoveTargets) => {
@@ -28,7 +28,7 @@ const getGroupStructureMoveTargets = (set, get) => async (payload: IPayloadGetGr
       state.move.movingGroup = movingGroup;
     }, 'getGroupStructureMoveTargetsError');
     console.error('\x1b[31m🐣️ action getGroupStructureMoveTargets error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

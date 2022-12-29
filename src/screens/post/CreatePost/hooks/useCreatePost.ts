@@ -10,7 +10,6 @@ import {
 } from '~/screens/post/CreatePost/helper';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import modalActions from '~/storeRedux/modal/actions';
 import {
   IAudience,
   ICreatePostParams,
@@ -34,6 +33,8 @@ import IDraftPostState from '../../../Draft/DraftPost/store/Interface';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import useLinkPreview from './useLinkPreview';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -50,6 +51,7 @@ export type handlePressPostResultType =
 const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   const dispatch = useDispatch();
   const { t } = useBaseHook();
+  const { showToast } = useModalStore((state) => state.actions);
 
   const {
     postId,
@@ -479,12 +481,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
       if (invalidData || !isAutoSave || imageError || videoError || fileError) {
         if (imageError) {
-          dispatch(
-            modalActions.showHideToastMessage({
-              content: imageError,
-              props: { type: 'error' },
-            }),
-          );
+          showToast({
+            content: imageError,
+            type: ToastType.ERROR,
+          });
         }
         return;
       }
@@ -557,12 +557,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     const { imageError } = validateImages(selectingImages, t);
 
     if (imageError) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: imageError,
-          props: { type: 'error' },
-        }),
-      );
+      showToast({
+        content: imageError,
+        type: ToastType.ERROR,
+      });
       return 'attachmentError';
     }
 

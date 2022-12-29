@@ -9,6 +9,7 @@ import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import Store from '~/storeRedux';
 import { checkPermission, permissionTypes } from './permission';
+import useModalStore from '~/store/modal';
 
 export const generateAvatar = (
   name?: string, color?: string,
@@ -155,7 +156,7 @@ export const downloadImageiOS = (photo: any) => {
       const toastMessage: IToastMessage = {
         content: i18next.t('common:text_downloaded'),
       };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      useModalStore.getState().actions.showToast(toastMessage);
     });
   };
 
@@ -192,7 +193,7 @@ export const downloadImageAndroid = (photo: any) => {
       const toastMessage: IToastMessage = {
         content: i18next.t('common:text_downloaded'),
       };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      useModalStore.getState().actions.showToast(toastMessage);
     });
   };
 
@@ -244,7 +245,7 @@ export const copyImageFromUrl = (url: string) => {
     const toastMessage: IToastMessage = {
       content: i18next.t('common:copied'),
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
   });
 };
 

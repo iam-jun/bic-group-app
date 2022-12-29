@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import IPermissionSchemeState from '../Interface';
 
 const getPermissionCategories = (set) => async (scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => {
@@ -28,7 +28,7 @@ const getPermissionCategories = (set) => async (scope?: 'SYSTEM' | 'COMMUNITY' |
       state.categories.loading = false;
     }, 'getPermissionCategoriesError');
 
-    showError(error);
+    showToastError(error);
   }
 };
 

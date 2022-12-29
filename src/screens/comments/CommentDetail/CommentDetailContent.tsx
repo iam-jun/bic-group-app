@@ -32,6 +32,8 @@ import spacing from '~/theme/spacing';
 import useCommentDetailController from './store';
 import Divider from '~/beinComponents/Divider';
 import { getTitle, replacePostDetail } from './helper';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -48,6 +50,7 @@ const CommentDetailContent = (props: any) => {
   const { rootNavigation, goHome } = useRootNavigation();
 
   const commentDetailController = useCommentDetailController((state) => state.actions);
+  const { showToast } = useModalStore((state) => state.actions);
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
@@ -99,19 +102,15 @@ const CommentDetailContent = (props: any) => {
       && !postDetailLoadingState
     ) {
       setIsEmpty(true);
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: 'post:text_comment_was_deleted',
-          props: { type: 'error' },
-        }),
-      );
+      showToast({
+        content: 'post:text_comment_was_deleted',
+        type: ToastType.ERROR,
+      });
       replacePostDetail(type, postId);
     }
     if (copyCommentError === APIErrorCode.Post.POST_DELETED && !!notiId) {
       dispatch(postActions.deletePostLocal(id));
-      dispatch(
-        modalActions.showHideToastMessage({ content: 'post:error_post_detail_deleted' }),
-      );
+      showToast({ content: 'post:error_post_detail_deleted' });
       rootNavigation.popToTop();
     }
     if (!postDetailLoadingState && !copyCommentError) {
@@ -141,12 +140,10 @@ const CommentDetailContent = (props: any) => {
       && !isEmpty
       && !copyCommentError
     ) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: 'error:not_found_desc',
-          props: { type: 'error' },
-        }),
-      );
+      showToast({
+        content: 'error:not_found_desc',
+        type: ToastType.ERROR,
+      });
       goHome();
     }
   }, [notFoundComment, loading, isEmpty, copyCommentError]);

@@ -3,11 +3,10 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import { IToastMessage } from '~/interfaces/common';
 import { IPayloadApproveSingleCommunityMemberRequest } from '~/interfaces/ICommunity';
 import useCommunitiesStore from '~/store/entities/communities';
-import showError from '~/store/helper/showError';
-import modalActions from '~/storeRedux/modal/actions';
+import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 import groupApi from '~/api/GroupApi';
 import { ICommunityMemberState } from '../index';
-import Store from '~/storeRedux';
 
 const approveSingleCommunityMemberRequest = (get) => async (
   payload: IPayloadApproveSingleCommunityMemberRequest,
@@ -37,7 +36,7 @@ const approveSingleCommunityMemberRequest = (get) => async (
       // TO BE REPLACED SOON, SHOULD USE MESSAGE FROM BE
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
     // to update userCount
     communitiesActions.getCommunity(communityId);
   } catch (e) {
@@ -55,7 +54,7 @@ const approveSingleCommunityMemberRequest = (get) => async (
       return;
     }
 
-    showError(e);
+    showToastError(e);
   }
 };
 

@@ -1,14 +1,13 @@
 import groupApi from '~/api/GroupApi';
 import APIErrorCode from '~/constants/apiErrorCode';
-import Store from '~/storeRedux';
 import { IPayloadPutGroupStructureMoveToTarget } from '~/interfaces/IGroup';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { timeOut } from '~/utils/common';
 import IGroupStructureState from '../Interface';
-import modalActions from '~/storeRedux/modal/actions';
 import { IToastMessage } from '~/interfaces/common';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -43,12 +42,12 @@ const putGroupStructureMoveToTarget = (set, get) => async (payload: IPayloadPutG
       const toastMessage: IToastMessage = {
         content: 'communities:group_structure:text_move_success',
       };
-      Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+      useModalStore.getState().actions.showToast(toastMessage);
     } else {
       set((state: IGroupStructureState) => {
         state.move.loading = false;
       }, 'putGroupStructureMoveToTargetError');
-      showError(response);
+      showToastError(response);
     }
   } catch (e) {
     set((state: IGroupStructureState) => {
@@ -57,7 +56,7 @@ const putGroupStructureMoveToTarget = (set, get) => async (payload: IPayloadPutG
       state.move.movingGroup = movingGroup;
     }, 'putGroupStructureMoveToTargetError');
     console.error('\x1b[31m🐣️ action putGroupStructureMoveToTarget error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

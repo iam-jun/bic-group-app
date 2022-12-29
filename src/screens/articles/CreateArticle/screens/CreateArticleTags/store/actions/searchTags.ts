@@ -1,6 +1,6 @@
 import streamApi from '~/api/StreamApi';
 import { IGetSearchTags } from '~/interfaces/IArticle';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import { ICreateArticleTagsState } from '..';
 
 const searchTags = (set, _get) => async (params: IGetSearchTags) => {
@@ -20,7 +20,7 @@ const searchTags = (set, _get) => async (params: IGetSearchTags) => {
       state.search.loading = false;
     }, 'searchTagsFailed');
     console.error('\x1b[35m🐣️ searchTags error: ', e, '\x1b[0m');
-    showError(e);
+    showToastError(e);
   }
 };
 

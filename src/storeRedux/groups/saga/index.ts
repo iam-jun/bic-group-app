@@ -11,13 +11,11 @@ import {
 import groupApi from '~/api/GroupApi';
 import groupsActions from '~/storeRedux/groups/actions';
 import groupsTypes from '~/storeRedux/groups/types';
-import * as modalActions from '~/storeRedux/modal/actions';
 import { IResponseData, IToastMessage } from '~/interfaces/common';
 import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
-import showError from '~/storeRedux/commonSaga/showError';
 import getGroupSearchMembers from './getGroupSearchMembers';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
@@ -31,6 +29,9 @@ import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
 import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import showToastError from '~/store/helper/showToastError';
 
 export default function* groupsSaga() {
   yield takeLatest(
@@ -112,7 +113,7 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
     yield updateLoadingImageState(
       payload.fieldName, false,
     );
-    yield showError(err);
+    showToastError(err);
   }
 }
 
@@ -162,7 +163,7 @@ function* getJoinableUsers({
     }
   } catch (error) {
     console.error('getJoinableUsers error:', error);
-    yield call(showError, error);
+    showToastError(error);
   }
 }
 
@@ -213,12 +214,12 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
 
     const toastMessage: IToastMessage = {
       content: i18next.t('common:message_add_member_success_group'),
-      props: { type: 'success' },
+      type: ToastType.SUCCESS,
     };
-    yield put(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
   } catch (error) {
     console.error('addMembers error:', error);
-    yield call(showError, error);
+    showToastError(error);
   }
 }
 

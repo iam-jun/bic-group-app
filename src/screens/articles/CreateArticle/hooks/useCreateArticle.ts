@@ -32,9 +32,10 @@ import {
   EditArticleErrorType,
   EMPTY_ARTICLE_CONTENT,
 } from '~/constants/article';
-import showError from '~/store/helper/showError';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
+import showToastError from '~/store/helper/showToastError';
+import useModalStore from '~/store/modal';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -54,6 +55,8 @@ const useCreateArticle = ({
   const data = useCreateArticleStore((state) => state.data, shallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
   const isDraft = useCreateArticleStore((state) => state.isDraft);
+
+  const { showToast } = useModalStore((state) => state.actions);
 
   const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
 
@@ -228,7 +231,7 @@ const useCreateArticle = ({
     } else {
       Keyboard.dismiss();
       // show toast message received from BE
-      if (!handleSaveAudienceError) return showError(error);
+      if (!handleSaveAudienceError) return showToastError(error);
       handleSaveAudienceError?.(ids);
     }
   };
@@ -296,11 +299,9 @@ const useCreateArticle = ({
     const payload: IPayloadPublishDraftArticle = {
       draftArticleId: data.id,
       onSuccess: () => {
-        Store.store.dispatch(
-          modalActions.showHideToastMessage({
-            content: 'post:draft:text_draft_article_published',
-          }),
-        );
+        showToast({
+          content: 'post:draft:text_draft_article_published',
+        });
         goToArticleDetail();
       },
       onError: () => {

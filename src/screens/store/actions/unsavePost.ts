@@ -1,12 +1,12 @@
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
 import { IPayloadAddToAllPost, PostType } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import useHomeStore from '~/screens/Home/store';
 import { AttributeFeed, ContentFeed } from '~/interfaces/IFeed';
+import useModalStore from '~/store/modal';
 
 const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
+  const { showToast } = useModalStore.getState().actions;
   try {
     await streamApi.postUnsavePost(id);
     const post = usePostsStore.getState()?.posts?.[id] || {};
@@ -32,10 +32,10 @@ const unsavePost = (_set, _get) => async (id: string, type: PostType) => {
         break;
     }
 
-    Store.store.dispatch(modalActions.showHideToastMessage({ content: `${type.toLowerCase()}:text_unsaved` }));
+    showToast({ content: `${type.toLowerCase()}:text_unsaved` });
   } catch (error) {
     console.error('unsavePost error:', error);
-    Store.store.dispatch(modalActions.showHideToastMessage({ content: 'common:text_unsave_fail' }));
+    showToast({ content: 'common:text_unsave_fail' });
   }
 };
 

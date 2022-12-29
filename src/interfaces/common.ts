@@ -38,9 +38,7 @@ export interface IResponseData {
   meta: any;
 }
 
-export interface IToastMessage {
-  content: string;
-  props?: BaseToastProps;
+export interface IToastMessage extends BaseToastProps {
   duration?: number;
 }
 

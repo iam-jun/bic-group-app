@@ -6,7 +6,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
-import modalActions, { showHideToastMessage } from '~/storeRedux/modal/actions';
+import modalActions from '~/storeRedux/modal/actions';
 import { getLink, LINK_POST } from '~/utils/link';
 import { IPost, IReaction } from '~/interfaces/IPost';
 import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
@@ -20,6 +20,7 @@ import { getPostMenus, getRootGroupids } from '~/helpers/post';
 import { TargetType, ReportTo } from '~/interfaces/IReport';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
+import useModalStore from '~/store/modal';
 
 const usePostMenu = (
   data: IPost,
@@ -31,6 +32,7 @@ const usePostMenu = (
   const dispatch = useDispatch();
 
   const commonActions = useCommonController((state) => state.actions);
+  const { showToast } = useModalStore((state) => state.actions);
 
   if (!data) return null;
 
@@ -77,7 +79,7 @@ const usePostMenu = (
     Clipboard.setString(getLink(
       LINK_POST, postId,
     ));
-    dispatch(showHideToastMessage({ content: 'common:text_link_copied_to_clipboard' }));
+    showToast({ content: 'common:text_link_copied_to_clipboard' });
   };
 
   const onPressViewReactions = () => {

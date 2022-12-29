@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash';
 import streamApi from '~/api/StreamApi';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import { IToastMessage } from '~/interfaces/common';
 import {
   ICommentData,
@@ -8,8 +9,7 @@ import {
 } from '~/interfaces/IPost';
 import useCommentsStore from '~/store/entities/comments';
 import usePostsStore from '~/store/entities/posts';
-import Store from '~/storeRedux';
-import * as modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 const deleteComment = (_set, _get) => async (
   payload: IPayloadDeleteComment,
@@ -77,12 +77,12 @@ const deleteComment = (_set, _get) => async (
     const toastMessage: IToastMessage = {
       content: 'post:comment:text_delete_comment_success',
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
   } catch (e) {
-    Store.store.dispatch(modalActions.showHideToastMessage({
+    useModalStore.getState().actions.showToast({
       content: 'post:comment:text_delete_comment_error',
-      props: { type: 'error' },
-    }));
+      type: ToastType.ERROR,
+    });
   }
 };
 

@@ -48,6 +48,7 @@ import ContentSearch from '~/screens/Home/HomeSearch';
 import FilterFeedButtonGroup from '~/beinComponents/FilterFeedButtonGroup';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
+import useModalStore from '~/store/modal';
 
 const CommunityDetail = (props: any) => {
   const { params } = props.route;
@@ -64,6 +65,7 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme, insets);
   const { t } = useBaseHook();
   const isMounted = useMounted();
+  const { showToast } = useModalStore((state) => state.actions);
 
   // community detail
   const actions = useCommunitiesStore((state: ICommunitiesState) => state.actions);
@@ -183,9 +185,7 @@ const CommunityDetail = (props: any) => {
   const onPressCopyLink = () => {
     dispatch(modalActions.hideBottomList());
     Clipboard.setString(getLink(LINK_COMMUNITY, communityId));
-    dispatch(
-      modalActions.showHideToastMessage({ content: 'common:text_copied' }),
-    );
+    showToast({ content: 'common:text_copied' });
   };
 
   const onConfirmLeaveCommunity = async () => {

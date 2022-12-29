@@ -1,10 +1,10 @@
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
-import Store from '~/storeRedux';
 import { IPayloadAddToAllPost, PostType } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
+import useModalStore from '~/store/modal';
 
 const savePost = (_set, _get) => async (id: string, type: PostType) => {
+  const { showToast } = useModalStore.getState().actions;
   try {
     await streamApi.postSavePost(id);
     const post = usePostsStore.getState()?.posts?.[id] || {};
@@ -13,10 +13,10 @@ const savePost = (_set, _get) => async (id: string, type: PostType) => {
       isSaved: true,
     };
     usePostsStore.getState().actions.addToPosts({ data: newPost } as IPayloadAddToAllPost);
-    Store.store.dispatch(modalActions.showHideToastMessage({ content: `${type.toLowerCase()}:text_saved` }));
+    showToast({ content: `${type.toLowerCase()}:text_saved` });
   } catch (error) {
     console.error('savePost error:', error);
-    Store.store.dispatch(modalActions.showHideToastMessage({ content: 'common:text_save_fail' }));
+    showToast({ content: 'common:text_save_fail' });
   }
 };
 

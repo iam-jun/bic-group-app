@@ -63,7 +63,7 @@ const ArticleFormatToolBar: FC<ArticleFormatToolBarProps> = ({
       mediaType: 'photo',
     });
 
-    uploadImage({ file: image, dispatch, onSuccess: (file: IGetFile) => insertImage(file?.url) });
+    uploadImage({ file: image, onSuccess: (file: IGetFile) => insertImage(file?.url) });
   };
 
   const openGiphy = () => {

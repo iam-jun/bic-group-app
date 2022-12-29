@@ -113,16 +113,6 @@ function commonReducer(
         },
       };
 
-    case actions.SET_TOAST_MESSAGE:
-      return {
-        ...state,
-        toastMessage: payload,
-      };
-    case actions.CLEAR_TOAST_MESSAGE:
-      return {
-        ...state,
-        toastMessage: modalInitState.toastMessage,
-      };
     case actions.FOCUS_SEARCH_INPUT:
       return {
         ...state,

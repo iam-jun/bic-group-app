@@ -1,13 +1,14 @@
 import i18next from 'i18next';
 import { IUserEdit } from '~/interfaces/IAuth';
 import groupApi from '~/api/GroupApi';
-import showError from '~/store/helper/showError';
+import showToastError from '~/store/helper/showToastError';
 import Store from '~/storeRedux';
 import menuActions from '~/storeRedux/menu/actions';
 import { IToastMessage } from '~/interfaces/common';
-import modalActions from '~/storeRedux/modal/actions';
 import useCommonController from '~/screens/store';
 import { mapProfile } from '~/storeRedux/menu/helper';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 const editMyProfile = (_set) => async ({
   data,
@@ -40,9 +41,9 @@ const editMyProfile = (_set) => async ({
 
     const toastMessage: IToastMessage = {
       content: toastContent,
-      props: { type: 'success' },
+      type: ToastType.SUCCESS,
     };
-    Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    useModalStore.getState().actions.showToast(toastMessage);
 
     if (callback) callback();
   } catch (error) {
@@ -59,7 +60,7 @@ const editMyProfile = (_set) => async ({
         break;
 
       default:
-        showError(error);
+        showToastError(error);
     }
   }
 };
