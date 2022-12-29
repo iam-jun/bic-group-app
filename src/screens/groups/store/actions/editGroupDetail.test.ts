@@ -1,8 +1,8 @@
 import i18next from 'i18next';
 import groupApi from '~/api/GroupApi';
-import groupsActions from '~/storeRedux/groups/actions';
 import modalActions from '~/storeRedux/modal/actions';
 import { act, renderHook } from '~/test/testUtils';
+import useGroupDetailStore from '../../GroupDetail/store';
 import useGroupController from '../index';
 
 describe('editGroupDetail', () => {
@@ -21,7 +21,13 @@ describe('editGroupDetail', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyGroupActions = jest.spyOn(groupsActions, 'setGroupDetail');
+    const setGroupDetail = jest.fn();
+    const actions = {
+      setGroupDetail,
+    };
+    jest.spyOn(useGroupDetailStore, 'getState').mockImplementation(
+      () => ({ actions } as any),
+    );
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupController((state) => state));
@@ -35,7 +41,7 @@ describe('editGroupDetail', () => {
       jest.runAllTimers();
     });
 
-    expect(spyGroupActions).toBeCalled();
+    expect(setGroupDetail).toBeCalled();
   });
 
   it('should edit group detail success with editFieldName:', () => {
@@ -49,7 +55,13 @@ describe('editGroupDetail', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyGroupActions = jest.spyOn(groupsActions, 'setGroupDetail');
+    const setGroupDetail = jest.fn();
+    const actions = {
+      setGroupDetail,
+    };
+    jest.spyOn(useGroupDetailStore, 'getState').mockImplementation(
+      () => ({ actions } as any),
+    );
 
     const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
 
@@ -68,7 +80,7 @@ describe('editGroupDetail', () => {
     const toastContent = `${editFieldName} ${i18next.t('common:text_updated_successfully')}`;
 
     expect(spyModalActions).toBeCalledWith({ content: toastContent });
-    expect(spyGroupActions).toBeCalled();
+    expect(setGroupDetail).toBeCalled();
   });
 
   it('should edit group detail success and props callback is called:', () => {
@@ -82,7 +94,13 @@ describe('editGroupDetail', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyGroupActions = jest.spyOn(groupsActions, 'setGroupDetail');
+    const setGroupDetail = jest.fn();
+    const actions = {
+      setGroupDetail,
+    };
+    jest.spyOn(useGroupDetailStore, 'getState').mockImplementation(
+      () => ({ actions } as any),
+    );
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupController((state) => state));
@@ -96,7 +114,7 @@ describe('editGroupDetail', () => {
       jest.runAllTimers();
     });
 
-    expect(spyGroupActions).toBeCalled();
+    expect(setGroupDetail).toBeCalled();
     expect(callback).toBeCalled();
   });
 

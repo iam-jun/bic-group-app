@@ -10,9 +10,8 @@ import CreateTag from './components/CreateTag';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import { spacing } from '~/theme';
 import ListTags from './components/ListTags';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
+import useGroupDetailStore, { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 
 type TagsProps = {
     route: {
@@ -27,7 +26,7 @@ const Tags: FC<TagsProps> = (props) => {
   const { params } = props.route || {};
   const { id, type } = params || {};
 
-  const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
+  const { group: groupInfo } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail);
   const { name: nameGroup, communityId } = groupInfo;
 
   const community = useCommunitiesStore(useCallback((

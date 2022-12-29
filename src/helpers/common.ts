@@ -1,7 +1,7 @@
 import { ICommunityMembers } from '~/interfaces/ICommunity';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
-const useRemoveMemberFromMemberList = (userId: string, membersData: object) => {
+export const removeMemberFromMemberList = (userId: string, membersData: object) => {
   let updatedData = {};
   let offset = 0;
 
@@ -30,5 +30,3 @@ const useRemoveMemberFromMemberList = (userId: string, membersData: object) => {
     offset,
   };
 };
-
-export default useRemoveMemberFromMemberList;

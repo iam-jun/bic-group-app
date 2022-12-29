@@ -7,8 +7,6 @@ import * as modalActions from '~/storeRedux/modal/actions';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IconType } from '~/resources/icons';
 import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -18,6 +16,7 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
 import useMyPermissionsStore from '~/store/permissions';
 import { PermissionKey } from '~/constants/permissionScheme';
+import useGroupDetailStore, { IGroupDetailState } from '../store';
 
 const GroupAdministration = (props: any) => {
   const { params } = props.route;
@@ -27,7 +26,7 @@ const GroupAdministration = (props: any) => {
   const styles = themeStyles();
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
-  const { name } = useKeySelector(groupsKeySelector.groupDetail.group);
+  const { name } = useGroupDetailStore((state: IGroupDetailState) => state.groupDetail.group);
 
   const { shouldHavePermission } = useMyPermissionsStore((state) => state.actions);
   const canEditProfileInfo = shouldHavePermission(

@@ -3,12 +3,11 @@ import React from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import { scaleCoverHeight } from '~/theme/dimension';
-import { useKeySelector } from '~/hooks/selector';
-import groupsKeySelector from '~/storeRedux/groups/keySelector';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import spacing from '~/theme/spacing';
 import InfoCard from '~/components/InfoCard';
+import useGeneralInformationStore from '../store';
 
 interface Props {
   testID?: string;
@@ -27,7 +26,7 @@ const CoverImage = ({
 }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const loadingCover = useKeySelector(groupsKeySelector.loadingCover);
+  const loadingCover = useGeneralInformationStore((state) => state.loadingCover);
 
   return (
     <InfoCard

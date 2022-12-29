@@ -1,7 +1,6 @@
 import groupsTypes from '~/storeRedux/groups/types';
 import { IUser } from '~/interfaces/IAuth';
 import {
-  IGroupDetail,
   IGroupMembers,
   IJoiningMember,
 } from '~/interfaces/IGroup';
@@ -45,23 +44,6 @@ export const groupInitState = {
     loading: true,
     list: [],
   },
-  yourGroupsList: {
-    loading: true,
-    list: [],
-  },
-  yourGroupsSearch: {
-    showSearch: false,
-    loading: false,
-    key: '',
-    list: [],
-  },
-  loadingPage: false,
-  isLoadingGroupDetailError: false,
-  loadingGroupDetail: false,
-  groupDetail: {
-    group: {},
-  } as IGroupDetail,
-  loadingGroupMember: false,
   groupSearchMembers: {
     loading: false,
     canLoadMore: true,
@@ -74,9 +56,6 @@ export const groupInitState = {
     canLoadMore: true,
   },
   selectedUsers: [] as IUser[],
-
-  loadingAvatar: false,
-  loadingCover: false,
 
   groupMemberRequests: {
     total: 0,
@@ -162,30 +141,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   } = state;
 
   switch (type) {
-    // Group Structure Settings
-    case groupsTypes.SET_GROUP_DETAIL_ERROR:
-      return {
-        ...state,
-        isLoadingGroupDetailError: payload,
-      };
-    case groupsTypes.GET_GROUP_DETAIL:
-      return {
-        ...state,
-        loadingGroupDetail: true,
-      };
-    case groupsTypes.SET_GROUP_DETAIL:
-      return {
-        ...state,
-        loadingCover: false,
-        loadingAvatar: false,
-        loadingGroupDetail: false,
-        isLoadingGroupDetailError: false,
-        groupDetail: {
-          group: {}, // init state
-          ...action.payload,
-        },
-      };
-
     case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
       return {
         ...state,
@@ -244,22 +199,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         users: groupInitState.users,
-      };
-
-    case groupsTypes.SET_LOADING_AVATAR:
-      return {
-        ...state,
-        loadingAvatar: payload,
-      };
-    case groupsTypes.SET_LOADING_COVER:
-      return {
-        ...state,
-        loadingCover: payload,
-      };
-    case groupsTypes.SET_LOADING_PAGE:
-      return {
-        ...state,
-        loadingPage: payload,
       };
 
     // PENDING MEMBER REQUESTS

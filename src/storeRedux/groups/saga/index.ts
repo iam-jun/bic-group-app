@@ -17,7 +17,6 @@ import { mapData } from '~/screens/groups/helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 
-import getGroupDetail from './getGroupDetail';
 import showError from '~/storeRedux/commonSaga/showError';
 import getGroupSearchMembers from './getGroupSearchMembers';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
@@ -35,11 +34,10 @@ import { IUser } from '~/interfaces/IAuth';
 import useCommunityController from '~/screens/communities/store';
 import useGroupController from '~/screens/groups/store';
 import useGroupMemberStore from '~/screens/groups/GroupMembers/store';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
+import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
 
 export default function* groupsSaga() {
-  yield takeLatest(
-    groupsTypes.GET_GROUP_DETAIL, getGroupDetail,
-  );
   yield takeLatest(
     groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
   );
@@ -208,7 +206,7 @@ function* mergeExtraJoinableUsers() {
 
   if (!loading && canLoadMore) {
     // continue to load more data in advance if possible
-    const { id: groupId } = groups?.groupDetail?.group || {};
+    const { id: groupId } = useGroupDetailStore.getState().groupDetail.group;
     if (groupId) {
       yield put(groupsActions.getJoinableUsers({ groupId, params }));
     }
@@ -249,18 +247,19 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
   }
 }
 
-function* updateLoadingImageState(
+function updateLoadingImageState(
   fieldName: 'icon' | 'backgroundImgUrl',
   value: boolean,
 ) {
+  const { setLoadingAvatar, setLoadingCover } = useGeneralInformationStore.getState().actions;
   if (fieldName === 'icon') {
-    yield put(groupsActions.setLoadingAvatar(value));
+    setLoadingAvatar(value);
   } else {
-    yield put(groupsActions.setLoadingCover(value));
+    setLoadingCover(value);
   }
 }
 
-export function* refreshGroupMembers(groupId: string) {
+export function refreshGroupMembers(groupId: string) {
   useGroupMemberStore.getState().actions.getGroupMembers({ groupId, isRefreshing: true });
-  yield put(groupsActions.getGroupDetail({ groupId }));
+  useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 }

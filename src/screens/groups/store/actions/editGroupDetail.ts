@@ -2,8 +2,7 @@ import groupApi from '~/api/GroupApi';
 import { IGroupDetailEdit } from '~/interfaces/IGroup';
 import showToastEditSuccess from '~/store/entities/communities/actions/showToastEditSuccess';
 import showError from '~/store/helper/showError';
-import Store from '~/storeRedux';
-import groupsActions from '~/storeRedux/groups/actions';
+import useGroupDetailStore from '../../GroupDetail/store';
 
 const editGroupDetail = (_set, _get) => async (
   data: IGroupDetailEdit,
@@ -19,7 +18,7 @@ const editGroupDetail = (_set, _get) => async (
 
     if (editFieldName) showToastEditSuccess(editFieldName);
 
-    Store.store.dispatch(groupsActions.setGroupDetail(response?.data));
+    useGroupDetailStore.getState().actions.setGroupDetail(response?.data);
     callback?.();
   } catch (err) {
     console.error(

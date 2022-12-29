@@ -13,7 +13,6 @@ describe('CommunityDetail', () => {
 
   it('renders Placeholder  correctly', () => {
     const state = { ...initialState };
-    state.groups.loadingPage = true;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -28,8 +27,6 @@ describe('CommunityDetail', () => {
 
   it('should render PrivateWelcome page for guest', () => {
     const state = { ...initialState };
-    state.groups.loadingPage = false;
-
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -42,7 +39,6 @@ describe('CommunityDetail', () => {
 
   it('should render PageContent page correctly when user is a member', () => {
     const state = { ...initialState };
-    state.groups.loadingPage = false;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
@@ -57,7 +53,6 @@ describe('CommunityDetail', () => {
 
   it('should render PageContent page correctly when user is not a member for OPEN/PUBLIC privacy type', () => {
     const state = { ...initialState };
-    state.groups.loadingPage = false;
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(

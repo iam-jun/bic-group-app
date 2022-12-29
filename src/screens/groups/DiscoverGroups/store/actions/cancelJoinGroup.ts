@@ -2,12 +2,12 @@ import i18next from 'i18next';
 import GroupJoinStatus from '~/constants/GroupJoinStatus';
 import IDiscoverGroupsState from '../Interface';
 import Store from '~/storeRedux';
-import groupsActions from '~/storeRedux/groups/actions';
 import groupApi from '~/api/GroupApi';
 import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/storeRedux/modal/actions';
 import showError from '~/store/helper/showError';
 import approveDeclineCode from '~/constants/approveDeclineCode';
+import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 
 const cancelJoinGroup = (set, get) => async (groupId: string) => {
   try {
@@ -18,7 +18,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
     const groupName = currentState.items[groupId]?.name;
 
     await groupApi.cancelJoinGroup(groupId);
-    Store.store.dispatch(groupsActions.getGroupDetail({ groupId }));
+    useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 
     // Change button join status for Discover groups screen
     set((state:IDiscoverGroupsState) => {
@@ -37,7 +37,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
     console.error('cancelJoinGroup error', error);
 
     if (error?.code === approveDeclineCode.APPROVED) {
-      Store.store.dispatch(groupsActions.getGroupDetail({ groupId }));
+      useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 
       // Change button join status for Discover groups screen
       set((state:IDiscoverGroupsState) => {
@@ -52,7 +52,7 @@ const cancelJoinGroup = (set, get) => async (groupId: string) => {
     }
 
     if (error?.code === approveDeclineCode.DECLINED) {
-      Store.store.dispatch(groupsActions.getGroupDetail({ groupId }));
+      useGroupDetailStore.getState().actions.getGroupDetail({ groupId });
 
       // Change button join status for Discover groups screen
       set((state:IDiscoverGroupsState) => {

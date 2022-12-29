@@ -41,6 +41,7 @@ import useGroupDetailStore from '~/screens/groups/GroupDetail/store';
 import useMyPermissionsStore from './permissions';
 import useTagsStore from './entities/tags';
 import useTagsControllerStore from '~/screens/tags/store';
+import useGeneralInformationStore from '~/screens/groups/GeneralInformation/store';
 import useCommunityMemberStore from '~/screens/communities/CommunityMembers/store';
 import useRemoteConfigStore from './remoteConfig';
 
@@ -97,6 +98,7 @@ const stores = [
   useMyPermissionsStore,
   useTagsStore,
   useTagsControllerStore,
+  useGeneralInformationStore,
   useCommunityMemberStore,
   useRemoteConfigStore,
 ];

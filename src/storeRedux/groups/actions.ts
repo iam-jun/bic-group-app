@@ -1,7 +1,6 @@
 import groupsTypes from '~/storeRedux/groups/types';
 import {
   IGroup,
-  IGroupDetail,
   IGroupImageUpload,
   IGroupAddMembers,
   IGroupGetJoinableMembers,
@@ -30,18 +29,6 @@ const groupsActions = {
     type: groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS,
   }),
 
-  getGroupDetail: (payload: {groupId: string; loadingPage?: boolean}) => ({
-    type: groupsTypes.GET_GROUP_DETAIL,
-    payload,
-  }),
-  setGroupDetail: (payload: IGroupDetail | null) => ({
-    type: groupsTypes.SET_GROUP_DETAIL,
-    payload,
-  }),
-  setGroupDetailError: (payload: boolean) => ({
-    type: groupsTypes.SET_GROUP_DETAIL_ERROR,
-    payload,
-  }),
   selectJoinableUsers: (payload: IUser) => ({
     type: groupsTypes.SELECT_JOINABLE_USERS,
     payload,
@@ -88,19 +75,6 @@ const groupsActions = {
   }),
   addMembers: (payload: IGroupAddMembers) => ({
     type: groupsTypes.ADD_MEMBERS,
-    payload,
-  }),
-
-  setLoadingAvatar: (payload: boolean) => ({
-    type: groupsTypes.SET_LOADING_AVATAR,
-    payload,
-  }),
-  setLoadingCover: (payload: boolean) => ({
-    type: groupsTypes.SET_LOADING_COVER,
-    payload,
-  }),
-  setLoadingPage: (payload: boolean) => ({
-    type: groupsTypes.SET_LOADING_PAGE,
     payload,
   }),
 

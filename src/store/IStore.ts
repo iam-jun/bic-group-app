@@ -35,6 +35,7 @@ import { IGroupDetailState } from '~/screens/groups/GroupDetail/store';
 import { IMyPermissionsState } from './permissions';
 import { IGroupController } from '~/screens/groups/store';
 import { ITagsState } from './entities/tags';
+import { IGeneralInformationState } from '~/screens/groups/GeneralInformation/store';
 import { ICommunityMemberState } from '~/screens/communities/CommunityMembers/store';
 import { IRemoteConfigState } from './remoteConfig';
 
@@ -42,6 +43,7 @@ export interface BicStore {
   entities: {
     posts: IPostsState;
     comments: ICommentsState;
+    communities: ICommunitiesState;
   };
   // components
   SelectAudience: {
@@ -68,6 +70,9 @@ export interface BicStore {
   };
   groups: {
     groupController: IGroupController;
+    GeneralInformation: {
+      generalInformationStore: IGeneralInformationState;
+    };
     components: {
       CommunityJoinedGroupTree: {
         communityJoinedGroupTreeStore: ICommunityJoinedGroupTreeState;
@@ -81,16 +86,25 @@ export interface BicStore {
     GroupDetail: {
       groupDetailStore: IGroupDetailState;
     };
-    discoverCommunitiesStore: IDiscoverCommunitiesState;
-    discoverCommunitiesSearchStore: IDiscoverCommunitiesSearchState;
     managedStore: IManagedState;
     yourCommunitiesStore: IYourCommunitiesState;
     yourGroupsStore: IYourGroupsState;
     searchJoinedCommunitiesStore: ISearchJoinedCommunitiesState;
   };
+  Discover: {
+    components: {
+      DiscoverCommunities: {
+        discoverCommunitiesStore: IDiscoverCommunitiesState
+      }
+      SearchDiscoverCommunity: {
+        discoverCommunitiesSearchStore: IDiscoverCommunitiesSearchState;
+      }
+    }
+  };
   communities: {
-    community: ICommunitiesState,
-    communityMember: ICommunityMemberState,
+    communityMember: {
+      communityMemberStore: ICommunityMemberState,
+    },
   }
   Home: {
     homeStore: IHomeState;
