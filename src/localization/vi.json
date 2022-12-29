@@ -222,6 +222,7 @@
     "text_err_confirm_new_password_not_matched": "Mật khẩu mới không trùng khớp.",
     "text_err_limit_exceeded": "Tài khoản bị tạm khoá trong 2 giờ do gửi quá nhiều yêu cầu. Vui lòng thử lại sau.",
     "text_err_wrong_code": "Điền sai mã xác thực? ",
+    "text_err_expired_code": "Mã xác thực đã hết hạn!",
     "text_err_missing_token": "Có gì đó không đúng đã xảy ra.",
     "text_err_wrong_current_password": "Mật khẩu hiện tại không đúng",
     "text_request_new_code": "Chưa nhận được mã,",
