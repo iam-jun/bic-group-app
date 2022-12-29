@@ -252,6 +252,7 @@
     "text_err_confirm_new_password_not_matched": "Your new password is not matched.",
     "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting too many time. Please try again later.",
     "text_err_wrong_code": "Invalid code",
+    "text_err_expired_code": "Code is expired!",
     "text_err_missing_token": "Oops, something went wrong. ",
     "text_err_wrong_current_password": "Wrong current password",
     "text_expiring_time_code": "Expiring in 60m",

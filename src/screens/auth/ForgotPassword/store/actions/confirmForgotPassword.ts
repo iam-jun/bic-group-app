@@ -29,6 +29,12 @@ const confirmForgotPassword = (set, _get) => async (payload: IForgotPasswordConf
           state.loadingConfirm = false;
         }, 'confirmForgotPasswordFailCode');
         break;
+      case authErrors.EXPIRED_CODE_EXCEPTION:
+        set((state: IForgotPasswordState) => {
+          state.errorConfirm = i18n.t('auth:text_err_expired_code');
+          state.loadingConfirm = false;
+        }, 'confirmForgotPasswordFailCode');
+        break;
       case authErrors.LIMIT_EXCEEDED_EXCEPTION:
         showError({ meta: { message: i18n.t('auth:text_err_limit_exceeded') } });
         set((state: IForgotPasswordState) => {
