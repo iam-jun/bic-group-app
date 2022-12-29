@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   View,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -36,6 +37,9 @@ import { Button } from '~/baseComponents';
 import InputEmail from './components/InputEmail';
 import InputPassword from './components/InputPassword';
 import LogoImage from './components/LogoImage';
+import getEnv from '~/utils/env';
+import { APP_ENV } from '~/configs/appConfig';
+import { AppConfig } from '~/configs';
 
 const SignIn = () => {
   const { rootNavigation } = useRootNavigation();
@@ -196,12 +200,28 @@ const SignIn = () => {
     ),
   }));
 
+  // for debugging, only supper users who logged in chat app can see
+  const showAuthen = () => {
+    const isProduction = getEnv('APP_ENV') === APP_ENV.PRODUCTION;
+
+    if (isProduction && !AppConfig.superUsers.includes(authSessions?.email)) {
+      return;
+    }
+
+    const json = JSON.stringify(authSessions, null, 2);
+
+    Alert.alert(
+      'Authentication',
+      json,
+    );
+  };
+
   const renderLogoImage = () => (
     <LogoImage />
   );
 
   const renderDescription = () => (
-    <Text.H3 testID="sign_in.title" color={colors.neutral80} style={styles.title} useI18n>
+    <Text.H3 testID="sign_in.title" color={colors.neutral80} style={styles.title} useI18n onPress={showAuthen}>
       auth:text_sign_in_welcome_back
     </Text.H3>
   );
