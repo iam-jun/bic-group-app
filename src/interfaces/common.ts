@@ -40,6 +40,7 @@ export interface IResponseData {
 
 export interface IToastMessage extends BaseToastProps {
   duration?: number;
+  timeout?: NodeJS.Timeout;
 }
 
 export interface IPayloadShowModal {

@@ -17,11 +17,9 @@ export const generateAvatar = (
   name?.toUpperCase() || ''
 }&background=${color || '4c95ff'}&color=fff&size=128`;
 
-export function timeOut(ms?: number) {
+export function timeOut(ms = 100) {
   // eslint-disable-next-line no-promise-executor-return
-  return new Promise((resolve) => setTimeout(
-    resolve, ms || 100,
-  ));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export function titleCase(str: string | undefined) {
