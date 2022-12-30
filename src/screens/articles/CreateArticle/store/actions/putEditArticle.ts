@@ -1,8 +1,7 @@
 import i18next from 'i18next';
-import uuid from 'react-native-uuid';
 import streamApi from '~/api/StreamApi';
 import { IToastMessage } from '~/interfaces/common';
-import { IEditAritcleError, IPayloadPublishDraftArticle, IPayloadPutEditArticle } from '~/interfaces/IArticle';
+import { IEditAritcleError, IPayloadPutEditArticle } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
@@ -10,17 +9,17 @@ import useArticlesStore from '~/screens/articles/ArticleDetail/store';
 import showError from '~/store/helper/showError';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
-import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
-import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import { EditArticleErrorType } from '~/constants/article';
 
 const navigation = withNavigation(rootNavigationRef);
 
-const putEditArticle = (set, get) => async (
+const putEditArticle = (set, _) => async (
   params: IPayloadPutEditArticle,
   callbackError?: (data: IEditAritcleError) => void,
 ) => {
-  const { articleId, data } = params || {};
+  const {
+    articleId, data, isNavigateBack = true, isShowToast = true,
+  } = params || {};
   set((state: ICreateArticleState) => {
     state.loading = true;
   }, 'putEditArticle');
@@ -50,40 +49,13 @@ const putEditArticle = (set, get) => async (
       state.loading = false;
     }, 'putEditArticleSuccess');
 
-    if (get().isPublishing) {
-      const goToArticleDetail = () => {
-        navigation.replaceListScreenByNewScreen([
-          articleStack.createArticle,
-          articleStack.createArticleTitle,
-          articleStack.createArticleSummary,
-          articleStack.createArticleCover,
-          articleStack.createArticleCategory,
-          articleStack.createArticleAudience,
-          articleStack.createArticleSeries,
-          articleStack.createArticleContent,
-        ], {
-          key: `${articleStack.articleDetail}-${uuid.v4()}`,
-          name: articleStack.articleDetail,
-          params: { articleId },
-        });
-      };
-
-      const payload: IPayloadPublishDraftArticle = {
-        draftArticleId: articleId,
-        onSuccess: () => {
-          Store.store.dispatch(modalActions.showHideToastMessage({ content: 'post:draft:text_draft_article_published' }));
-          goToArticleDetail();
-        },
-        onError: () => {
-          // do something
-        },
-      };
-      useDraftArticleStore.getState().actions.publishDraftArticle(payload);
-    } else {
+    if (isShowToast) {
       const toastMessage: IToastMessage = {
         content: response?.meta?.message || i18next.t('article:text_edit_article_success'),
       };
       Store.store.dispatch(modalActions.showHideToastMessage(toastMessage));
+    }
+    if (isNavigateBack) {
       navigation.goBack();
     }
   } catch (error) {

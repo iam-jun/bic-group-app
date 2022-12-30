@@ -13,9 +13,7 @@ import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import appConfig from '~/configs/appConfig';
 
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
-import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import usePostsStore from '~/store/entities/posts';
@@ -28,8 +26,6 @@ const MAXIMUM_TAGS = 5;
 const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
 
-  const { rootNavigation } = useRootNavigation();
-
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -38,7 +34,6 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
 
   const selectedTags = useCreateArticleStore((state) => state.data?.tags) || [];
   const editArticleActions = useCreateArticleStore((state) => state.actions);
-  const isPublishing = useCreateArticleStore((state) => state.isPublishing);
 
   const communityIds = useCreateArticleTagsStore((state) => state.communityIds) || [];
   const tagsActions = useCreateArticleTagsStore((state) => state.actions);
@@ -56,7 +51,7 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
   } = useCreateArticle({ articleId });
 
   const isValidTags = enableButtonSave && selectedTags?.length <= MAXIMUM_TAGS;
-  const disabled = (isPublishing ? false : !isValidTags) || loading;
+  const disabled = !isValidTags || loading;
 
   useEffect(() => {
     if (article.audience?.groups?.length > 0) {
@@ -70,8 +65,6 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
       const newCommunityIds = uniq(ids);
       tagsActions.setCommunityIds(newCommunityIds);
       tagsActions.getTags(false, { groupIds: newCommunityIds });
-    } else if (isPublishing && communityIds?.length > 0) {
-      tagsActions.getTags(false, { groupIds: communityIds });
     } else {
       tagsActions.setListTagLoading(false);
     }
@@ -114,14 +107,6 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
 
   const renderFooter = () => <View style={styles.footer} />;
 
-  const goNextStep = () => {
-    rootNavigation.navigate(articleStack.createArticleContent, { articleId });
-  };
-
-  const goBack = () => {
-    rootNavigation.goBack();
-  };
-
   const renderEmpty = () => {
     if (loadingTags || loadingSearchTags) {
       return <LoadingIndicator style={styles.loading} />;
@@ -133,10 +118,10 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
     <View style={styles.container}>
       <Header
         title={t('article:text_option_edit_tags')}
-        buttonProps={{ disabled, loading, style: styles.btnNext }}
-        buttonText={t(isPublishing ? 'common:btn_next' : 'common:btn_save')}
-        onPressButton={isPublishing ? goNextStep : handleSave}
-        onPressBack={isPublishing ? goBack : handleBack}
+        buttonProps={{ disabled, loading, style: styles.btnSave }}
+        buttonText={t('common:btn_save')}
+        onPressButton={handleSave}
+        onPressBack={handleBack}
       />
       <SearchInput
         style={styles.searchInput}
@@ -188,7 +173,7 @@ const createStyle = (theme: ExtendedTheme) => {
     footer: {
       marginBottom: spacing.margin.base,
     },
-    btnNext: {
+    btnSave: {
       marginRight: spacing.margin.small,
     },
     tagTextStyle: {

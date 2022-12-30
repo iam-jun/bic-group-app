@@ -9,7 +9,7 @@ const createArticle = (set, _get) => async () => {
 
     if (data) {
       set((state) => {
-        state.data = data;
+        state.data.id = data.id;
       }, 'createArticle');
 
       usePostsStore.getState().actions.addToPosts({ data });

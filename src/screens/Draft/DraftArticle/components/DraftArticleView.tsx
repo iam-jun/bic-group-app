@@ -108,7 +108,7 @@ const DraftArticleView = ({ data }: DraftViewProps) => {
   };
 
   const onPressEdit = () => {
-    rootNavigation?.navigate(articleStack.createArticleTitle, { articleId: id, isDraft: true });
+    rootNavigation?.navigate(articleStack.createArticle, { articleId: id, isFromDraftScreen: true });
   };
 
   const renderImportant = () => (

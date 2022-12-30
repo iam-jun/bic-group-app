@@ -146,7 +146,7 @@ const CreateSeries = ({ route }: CreationSeriesProps) => {
             testID="create_series.description"
             value={summary}
             maxLength={255}
-            placeholder={t('common:text_input_description')}
+            placeholder={t('common:text_input_summary')}
             style={styles.summary}
             inputStyle={styles.textInput}
             onChangeText={handleSummaryChange}

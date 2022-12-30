@@ -10,7 +10,7 @@ import { isAndroidAnimated } from '../helper';
 import spacing from '~/theme/spacing';
 
 interface Props {
-  viewRef: any;
+  viewRef?: any;
   visible: boolean;
 }
 

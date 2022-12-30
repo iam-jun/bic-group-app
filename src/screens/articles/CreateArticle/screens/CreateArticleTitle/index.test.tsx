@@ -6,9 +6,10 @@ import usePostsStore from '~/store/entities/posts';
 import { mockArticle } from '~/test/mock_data/article';
 import { IPost } from '~/interfaces/IPost';
 import MockedNavigator from '~/test/MockedNavigator';
+import useCreateArticleStore from '../../store';
 
-describe('EditTitle screen', () => {
-  it('should not enable button next if title is empty', () => {
+describe('CreateArticleTitle screen', () => {
+  it('should not enable button save if title is empty', () => {
     const article = { ...mockArticle };
     article.title = '';
 
@@ -20,7 +21,7 @@ describe('EditTitle screen', () => {
       <MockedNavigator
         component={() => (
           <EditTitle
-            route={{ params: { articleId: article.id, isDraft: true } }}
+            route={{ params: { articleId: article.id } }}
           />
         )}
       />,
@@ -28,14 +29,14 @@ describe('EditTitle screen', () => {
 
     const btnText = wrapper.getByTestId('button.text');
     expect(btnText).toBeDefined();
-    expect(btnText.props?.children).toBe('Next');
+    expect(btnText.props?.children).toBe('Save');
 
     const btnNext = wrapper.getByTestId('button.content');
     expect(btnNext).toBeDefined();
     expect(btnNext.props?.style?.[2]?.backgroundColor).toBe('#F4EFFB');
   });
 
-  it('should enable button next if title is not empty', () => {
+  it('should enable button save if title is not empty & changed', () => {
     act(() => {
       usePostsStore.getState().actions.addToPosts({ data: mockArticle as IPost });
     });
@@ -44,11 +45,15 @@ describe('EditTitle screen', () => {
       <MockedNavigator
         component={() => (
           <EditTitle
-            route={{ params: { articleId: mockArticle.id, isDraft: true } }}
+            route={{ params: { articleId: mockArticle.id } }}
           />
         )}
       />,
     );
+
+    act(() => {
+      useCreateArticleStore.getState().actions.setTitle('changed');
+    });
 
     const btnNext = wrapper.getByTestId('button.content');
 

@@ -9,14 +9,14 @@ import {
 } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
 import putEditArticle from '~/screens/articles/CreateArticle/store/actions/putEditArticle';
-import IBaseState from '~/store/interfaces/IBaseState';
+import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createArticle from './actions/createArticle';
 
 export interface ICreateArticleState extends IBaseState {
   loading: boolean;
   data: IEditArticleData;
-  isPublishing: boolean;
+  isDraft: boolean;
   actions: {
     setData: (data: IEditArticleData) => void;
     setTitle: (title: string) => void;
@@ -28,7 +28,7 @@ export interface ICreateArticleState extends IBaseState {
     setCategories: (categories?: ICategory[]) => void;
     addCategory: (category: ICategory) => void;
     removeCategory: (category: ICategory) => void;
-    setIsPublishing: (isPublishing: boolean) => void;
+    setIsDraft: (setIsDraft: boolean) => void;
     setSeries: (series?: IEditArticleSeries[]) => void;
     addSeries: (series: IEditArticleSeries) => void;
     removeSeries: (series: IEditArticleSeries) => void;
@@ -43,7 +43,7 @@ export interface ICreateArticleState extends IBaseState {
   };
 }
 
-const initialState = {
+const initialState: InitStateType<ICreateArticleState> = {
   loading: false,
   data: {
     id: '',
@@ -58,7 +58,7 @@ const initialState = {
       userIds: [],
       groupIds: [],
     },
-    media: {},
+    coverMedia: {},
     setting: {
       canShare: true,
       canReact: true,
@@ -68,7 +68,7 @@ const initialState = {
     },
     mentions: {},
   },
-  isPublishing: false,
+  isDraft: false,
 };
 
 const useCreateArticle = (set, get) => ({
@@ -133,10 +133,10 @@ const useCreateArticle = (set, get) => ({
         state.data.categories = newSelecting;
       }, 'removeCategory');
     },
-    setIsPublishing: (isPublishing: boolean) => {
+    setIsDraft: (isDraft: boolean) => {
       set((state: ICreateArticleState) => {
-        state.isPublishing = isPublishing;
-      }, 'setIsPublishing');
+        state.isDraft = isDraft;
+      }, 'setIsDraft');
     },
     setSeries: (series?: IEditArticleSeries[]) => {
       set((state: ICreateArticleState) => {
@@ -184,7 +184,6 @@ const useCreateArticle = (set, get) => ({
         state.data.tags = newSelecting;
       }, 'removeTags');
     },
-
     putEditArticle: putEditArticle(set, get),
     createArticle: createArticle(set, get),
   },

@@ -1,5 +1,7 @@
 import {
-  IArticleCover, ILinkPreview, IParamGetDraftPosts,
+  IArticleCover,
+  ILinkPreview,
+  IParamGetDraftPosts,
 } from '~/interfaces/IPost';
 import { SortOder } from './common';
 import { IOrder } from './IHome';
@@ -14,14 +16,14 @@ export interface IParamGetArticles {
   idLte?: number;
   idGt?: number;
   idLt?: number;
-  createdAtGt?: string,
-  createdAtLt?: string,
-  createdAtGte?: string,
-  createdAtLte?: string,
-  categories?: string[],
-  series?: string[],
-  groupId?: string[],
-  orderField?: []
+  createdAtGt?: string;
+  createdAtLt?: string;
+  createdAtGte?: string;
+  createdAtLte?: string;
+  categories?: string[];
+  series?: string[];
+  groupId?: string[];
+  orderField?: [];
 }
 
 export interface IParamGetArticleDetail {
@@ -33,7 +35,7 @@ export interface IParamGetArticleDetail {
   withComment?: boolean;
 }
 
-export type IParamGetDraftArticles = IParamGetDraftPosts
+export type IParamGetDraftArticles = IParamGetDraftPosts;
 
 export interface IPayloadPublishDraftArticle {
   draftArticleId: string;
@@ -51,14 +53,17 @@ export interface IPayloadDeleteArticle {
 export interface IPayloadPutEditArticle {
   articleId: string;
   data: IEditArticleData;
+  isNavigateBack?: boolean;
+  isShowToast?: boolean;
 }
 
-export interface IParamPutEditArticle extends Omit<IEditArticleData, 'categories'> {
+export interface IParamPutEditArticle
+  extends Omit<IEditArticleData, 'categories'> {
   categories: string[];
 }
 
 export interface IParamGetCategories {
-  order?: 'ASC' | 'DESC',
+  order?: 'ASC' | 'DESC';
   limit?: number;
   offset?: number;
   name?: string;
@@ -76,9 +81,9 @@ export interface IEditArticleSeries {
 
 export interface IEditArticleTags {
   id?: string;
-      name?: string;
-    slug?: string;
-    total?: number;
+  name?: string;
+  slug?: string;
+  total?: number;
 }
 
 export interface IEditArticleData {
@@ -92,11 +97,11 @@ export interface IEditArticleData {
   audience?: IEditArticleAudience;
   coverMedia?: IArticleCover;
   setting?: {
-    canShare: boolean,
-    canReact: boolean,
-    canComment: boolean,
-    isImportant: boolean,
-    importantExpiredAt: string
+    canShare: boolean;
+    canReact: boolean;
+    canComment: boolean;
+    isImportant: boolean;
+    importantExpiredAt: string;
   };
   mentions?: any;
   linkPreview?: ILinkPreview;
@@ -104,32 +109,32 @@ export interface IEditArticleData {
 }
 
 export interface ICategory {
-  id: string,
-  name: string,
-  parentId?: string,
-  level?: number,
-  slug?: string,
-  createdBy?: string,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string;
+  name: string;
+  parentId?: string;
+  level?: number;
+  slug?: string;
+  createdBy?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface CreateArticleProps {
   route?: {
     params?: {
       articleId?: string;
-      isDraft?: boolean;
+      isFromDraftScreen?: boolean;
     };
   };
 }
 
 export interface IEditAritcleError {
-  ids: string[],
-  type: string,
+  ids: string[];
+  type: string;
   error: any; // error return from BE
 }
 
 export type IGetSearchArticleInSeries = IGetSeries;
-export interface IGetSearchTags extends IGetSeries{
+export interface IGetSearchTags extends IGetSeries {
   name?: string;
 }
