@@ -75,7 +75,7 @@
     "text_uploading": "Uploading...",
     "text_download": "Download",
     "text_downloaded": "Downloaded!",
-    "text_input_description": "Input description...",
+    "text_input_summary": "Input description...",
     "text_input_title": "Input title...",
     "text_send": "Send",
     "label_confirm_send_file": "Send this file?",
@@ -197,7 +197,8 @@
     "copied": "Copied!",
     "text_share": "Share",
     "btn_go_back": "Back",
-    "text_unsupport_feature": "We are not supporting this feature on mobile. Please see the detail on web version"
+    "text_unsupport_feature": "We are not supporting this feature on mobile. Please see the detail on web version",
+    "text_select_file": "Select File"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -538,10 +539,10 @@
     "title_edit_content": "Edit Content",
     "title_edit_series": "Edit Series",
     "text_option_edit_title": "Title",
-    "text_option_edit_description": "Description",
+    "text_option_edit_summary": "Description",
     "text_option_edit_cover": "Cover",
     "text_option_edit_category": "Topics",
-    "text_option_edit_audience": "Audience",
+    "text_option_edit_audience": "Audiences",
     "text_option_edit_series": "Series",
     "text_option_edit_tags": "Tags",
     "text_option_edit_content": "Content",
@@ -574,7 +575,16 @@
       "title": "Embed Video",
       "link_placeholder": "Enter the URL of the embed:"
     },
-    "tags_maximum_message_info": "Maxium input 5 Tags"
+    "tags_maximum_message_info": "Maxium input 5 Tags",
+    "text_add_title": "Add title",
+    "text_title_require_max_length": "Maximum 64 characters",
+    "text_description_require_max_length": "Maximum 255 characters",
+    "text_add_summary": "Add description",
+    "text_add_category": "Add topic",
+    "text_add_audience": "Add audience",
+    "text_add_series": "Add series",
+    "text_add_tag": "Add tag",
+    "text_add_content": "Add content"
   },
   "post": {
     "news_feed": "News Feed",
@@ -855,7 +865,8 @@
     "member_menu": {
       "label_set_as_admin": "Set Admin Role",
       "label_revoke_admin_role": "Revoke Admin Role",
-      "label_remove_member": "Remove Member"
+      "label_remove_member": "Remove Member",
+      "label_report_member": "Report This Member"
     },
     "private_group_welcome_message": {
       "title": "This group is private.",

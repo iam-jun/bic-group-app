@@ -3,15 +3,13 @@ import React, {
   FC, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { debounce, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
 import ArticleWebview, { ArticleWebviewRef } from '~/components/articles/ArticleWebview';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import spacing from '~/theme/spacing';
-import useCreateArticleStore from '../../store';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import ArticleFormatToolBar from '~/components/articles/ArticleFormatToolBar';
 import {
@@ -26,6 +24,7 @@ import InsetBottomView from '~/baseComponents/InsetBottomView';
 import { EMPTY_ARTICLE_CONTENT } from '~/constants/article';
 import postsSelector from '~/store/entities/posts/selectors';
 import usePostsStore from '~/store/entities/posts';
+import ToastAutoSave from '~/screens/post/CreatePost/components/ToastAutoSave';
 
 export enum EventType {
     ON_EDITOR_CHANGE = 'onEditorChange',
@@ -42,23 +41,20 @@ export interface CreateArticleContentProps {
 const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateArticleContentProps) => {
   const articleId = route?.params?.articleId;
 
-  const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const ref = useRef<ArticleWebviewRef>();
 
-  const actions = useCreateArticleStore((state) => state.actions);
-
   const article = usePostsStore(useCallback(postsSelector.getPost(articleId, {}), [articleId]));
-  const { isDraft, content: articleContent } = article;
+  const { content: articleContent } = article;
 
   const articleData = useCreateArticle({ articleId });
   const {
-    loading, validButtonNext, content, groupIds,
-    handleSave, handleBack, handleContentChange,
+    loading, content, groupIds,
+    handleSave, handleBack, handleContentChange, isShowToastAutoSave,
   } = articleData || {};
-  const isPublishing = useCreateArticleStore((state) => state.isPublishing);
+
   const runSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
   const resetMention = useMentionInputStore((state: IMentionInputState) => state.reset);
 
@@ -75,26 +71,14 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
 
   const isEmptyContent = () => isEmpty(content) || content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
   const isContentUpdated = articleContent !== content && !isEmptyContent();
-  const disabled = (isPublishing ? !validButtonNext.isContentValid : !isContentUpdated) || loading;
+  const disabled = !isContentUpdated || loading;
 
   useEffect(() => () => {
     resetMention();
-    // for creating article, need to publish
-    if (isDraft && !isPublishing) {
-      actions.setIsPublishing(false);
-    }
   }, []);
 
   const onPressSave = () => {
-    // for creating article, need to publish
-    if (isDraft) {
-      actions.setIsPublishing(true);
-    }
     handleSave();
-  };
-
-  const goBack = () => {
-    rootNavigation.goBack();
   };
 
   const onInitializeEnd = () => setInitializeEnd(true);
@@ -159,13 +143,17 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     injectJavaScript({ type: 'toggleHeading', payload: type });
   };
 
-  const onChangeContent = debounce((value) => {
+  const onChangeContent = (value) => {
     handleContentChange(value);
-  }, 500);
+  };
 
   const onChangeText = (payload: any) => {
-    setFullContent(payload?.rawContent);
-    onChangeContent?.(JSON.stringify(payload?.contentState));
+    const { rawContent, contentState } = payload || {};
+
+    if (rawContent && rawContent.trim().length !== 0) {
+      setFullContent(rawContent);
+      onChangeContent?.(JSON.stringify(contentState));
+    }
   };
 
   const onMention = (payload: any) => {
@@ -203,10 +191,10 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     <View style={styles.container}>
       <Header
         title={t('article:text_option_edit_content')}
-        buttonProps={{ disabled, loading, style: styles.btnPublish }}
-        buttonText={t(isPublishing || isDraft ? 'common:btn_publish' : 'common:btn_save')}
+        buttonProps={{ disabled, loading, style: styles.btnSave }}
+        buttonText={t('common:btn_save')}
         onPressButton={onPressSave}
-        onPressBack={isPublishing ? goBack : handleBack}
+        onPressBack={handleBack}
       />
       <View style={styles.contentContainer}>
         <ArticleWebview
@@ -216,6 +204,7 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
           onInitializeEnd={onInitializeEnd}
         />
         <View style={styles.toolbarContainer}>
+          <ToastAutoSave visible={isShowToastAutoSave} />
           <MentionBar
             groupIds={groupIds}
             onCompleteMention={onCompleteMention}
@@ -250,7 +239,7 @@ const createStyle = (theme: ExtendedTheme) => {
     contentContainer: {
       flex: 1,
     },
-    btnPublish: {
+    btnSave: {
       marginRight: spacing.margin.small,
     },
     toolbarContainer: {

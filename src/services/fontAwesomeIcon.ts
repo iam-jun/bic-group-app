@@ -55,6 +55,7 @@ import { faImageLandscape } from '@fortawesome/pro-regular-svg-icons/faImageLand
 import { faImages } from '@fortawesome/pro-regular-svg-icons/faImages';
 import { faPenLine } from '@fortawesome/pro-regular-svg-icons/faPenLine';
 import { faPenLine as faPenLineSolid } from '@fortawesome/pro-solid-svg-icons/faPenLine';
+import { faPen } from '@fortawesome/pro-regular-svg-icons/faPen';
 import { faPaperclip } from '@fortawesome/pro-regular-svg-icons/faPaperclip';
 import { faBell } from '@fortawesome/pro-regular-svg-icons/faBell';
 import { faBell as faBellSolid } from '@fortawesome/pro-solid-svg-icons/faBell';
@@ -275,6 +276,7 @@ export const initFontAwesomeIcon = () => {
     faImages,
     faPenLine,
     faPenLineSolid,
+    faPen,
     faPaperclip,
     faBell,
     faBellSolid,
@@ -478,6 +480,7 @@ export const fontAwesomeIcons = {
   Images: 'fa-regular fa-images',
   PenLine: 'fa-regular fa-pen-line',
   PenLineSolid: 'fa-solid fa-pen-line',
+  Pen: 'fa-regular fa-pen',
   Paperclip: 'fa-regular fa-paperclip',
   Bell: 'fa-regular fa-bell',
   BellSolid: 'fa-solid fa-bell',

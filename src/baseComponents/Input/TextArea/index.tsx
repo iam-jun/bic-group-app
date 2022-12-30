@@ -26,9 +26,11 @@ export interface TextAreaProps extends RNTextInputProps {
   onFocus?: () => void;
   onBlur?: () => void;
   onChangeText?: ((text: string) => void) | undefined;
+  showCountLength?: boolean;
 }
 
 const TextArea : React.FC<TextAreaProps> = ({
+  showCountLength = true,
   maxLength = 255,
   value = '',
   label,
@@ -94,9 +96,13 @@ const TextArea : React.FC<TextAreaProps> = ({
           {...props}
         />
       </View>
-      <Text.BodyXS color={colors.neutral20} style={styles.countNumber}>
-        {`${text?.trim?.()?.length}/${maxLength}`}
-      </Text.BodyXS>
+      {
+        showCountLength && (
+        <Text.BodyXS color={colors.neutral20} style={styles.countNumber}>
+          {`${text?.trim?.()?.length}/${maxLength}`}
+        </Text.BodyXS>
+        )
+      }
     </View>
   );
 };

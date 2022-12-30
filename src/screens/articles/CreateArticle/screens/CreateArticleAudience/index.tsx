@@ -9,13 +9,10 @@ import SelectAudience, { ContentType } from '~/components/SelectAudience';
 import useSelectAudienceStore from '~/components/SelectAudience/store';
 
 import { useBaseHook } from '~/hooks';
-import { useRootNavigation } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
-import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
-import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import { spacing } from '~/theme';
 import { getAudienceIdsFromAudienceObject } from '../../helper';
 import { AlertDeleteAudiences } from '~/components/posts';
@@ -35,20 +32,13 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
   const articleId = route?.params?.articleId;
   const article = usePostsStore(postsSelector.getPost(articleId));
 
-  const { rootNavigation } = useRootNavigation();
-
   const initAudienceIds = useMemo(
     () => getAudienceIdsFromAudienceObject(article.audience), [article.audience],
   );
 
-  const isPublishing = useCreateArticleStore((state) => state.isPublishing);
-
   const selectAudienceActions = useSelectAudienceStore((state) => state.actions);
   const selectedAudienceIds = useSelectAudienceStore((state) => state.selectedIds);
   const selectingAudienceGroups = useSelectAudienceStore((state) => state.selectedAudiences.groups);
-
-  // self check instead of use enableButtonNext from hook to avoid delay
-  const isAudienceValidForNext = !isEmpty(selectedAudienceIds?.groupIds) || !isEmpty(selectedAudienceIds?.userIds);
 
   // self check instead of use enableButtonSave from hook to avoid delay
   const isAudienceValidForSave = !isEqual(initAudienceIds, selectedAudienceIds)
@@ -82,7 +72,7 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
     handleBack, handleSave, loading, handleAudiencesChange,
   } = useCreateArticle({ articleId, handleSaveAudienceError: handleSaveError });
 
-  const disabled = (isPublishing ? !isAudienceValidForNext : !isAudienceValidForSave) || loading;
+  const disabled = !isAudienceValidForSave || loading;
 
   useEffect(() => {
     const newSelectingGroups = {};
@@ -98,14 +88,6 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
     }
   }, [selectedAudienceIds]);
 
-  const goNextStep = () => {
-    rootNavigation.navigate(articleStack.createArticleSeries, { articleId });
-  };
-
-  const goBack = () => {
-    rootNavigation.goBack();
-  };
-
   const onBack = () => {
     handleBack(!disabled);
   };
@@ -114,10 +96,10 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
     <View style={styles.container}>
       <Header
         title={t('article:text_option_edit_audience')}
-        buttonProps={{ disabled, loading, style: styles.btnNext }}
-        buttonText={t(isPublishing ? 'common:btn_next' : 'common:btn_save')}
-        onPressButton={isPublishing ? goNextStep : handleSave}
-        onPressBack={isPublishing ? goBack : onBack}
+        buttonProps={{ disabled, loading, style: styles.btnSave }}
+        buttonText={t('common:btn_save')}
+        onPressButton={handleSave}
+        onPressBack={onBack}
       />
       <SelectAudience contentType={ContentType.ARTICLE} />
     </View>
@@ -131,7 +113,7 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.neutral,
     },
-    btnNext: {
+    btnSave: {
       marginRight: spacing.margin.small,
     },
   });

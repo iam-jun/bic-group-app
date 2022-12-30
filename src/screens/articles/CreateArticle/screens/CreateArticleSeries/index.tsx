@@ -8,7 +8,7 @@ import { SearchInput } from '~/baseComponents/Input';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
+import { useBackPressListener } from '~/hooks/navigation';
 import { CreateArticleProps, IEditArticleSeries } from '~/interfaces/IArticle';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import spacing from '~/theme/spacing';
@@ -18,19 +18,15 @@ import useCreateArticleSeriesStore from './store';
 import useCreateArticleStore from '../../store';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import appConfig from '~/configs/appConfig';
-import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import ArticleSelectingListInfo from '~/components/articles/ArticleSelectingListInfo';
 
 const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
 
-  const { rootNavigation } = useRootNavigation();
-
   const serieActions = useCreateArticleSeriesStore((state) => state.actions);
   const resetSeries = useCreateArticleSeriesStore((state) => state.reset);
   const selectedSeries = useCreateArticleStore((state) => state.data.series);
   const editArticleActions = useCreateArticleStore((state) => state.actions);
-  const isPublishing = useCreateArticleStore((state) => state.isPublishing);
 
   const seriesData = useCreateArticleSeriesStore((state) => state.listSeries);
   const groupIds = useCreateArticleStore((state) => state.data.audience.groupIds);
@@ -58,7 +54,7 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
     handleSave, handleBack, enableButtonSave, loading,
   } = useCreateArticle({ articleId });
 
-  const disabled = (isPublishing ? false : !enableButtonSave) || loading;
+  const disabled = !enableButtonSave || loading;
 
   useBackPressListener(handleBack);
 
@@ -89,22 +85,14 @@ const CreateArticleSeries: FC<CreateArticleProps> = ({ route }: CreateArticlePro
     onSearch(text);
   };
 
-  const goNextStep = () => {
-    rootNavigation.navigate(articleStack.createArticleTags, { articleId });
-  };
-
-  const goBack = () => {
-    rootNavigation.goBack();
-  };
-
   return (
     <View style={styles.container}>
       <Header
         title={t('article:text_option_edit_series')}
-        buttonProps={{ disabled, loading }}
-        buttonText={t(isPublishing ? 'common:btn_next' : 'common:btn_save')}
-        onPressButton={isPublishing ? goNextStep : handleSave}
-        onPressBack={isPublishing ? goBack : handleBack}
+        buttonProps={{ disabled, loading, style: styles.btnSave }}
+        buttonText={t('common:btn_save')}
+        onPressButton={handleSave}
+        onPressBack={handleBack}
       />
       <SearchInput
         size="large"
@@ -156,6 +144,9 @@ const createStyle = (theme: ExtendedTheme) => {
       color: colors.neutral60,
       flexShrink: 1,
       paddingLeft: spacing.margin.tiny,
+    },
+    btnSave: {
+      marginRight: spacing.margin.small,
     },
   });
 };

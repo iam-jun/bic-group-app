@@ -9,6 +9,8 @@ import useCommunityController from '../../store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 import { PermissionKey } from '~/constants/permissionScheme';
 import useMyPermissionsStore from '~/store/permissions';
+import ReportContent from '~/components/ReportContent';
+import { TargetType } from '~/interfaces/IReport';
 
 interface CommunityMemberOptionsMenuProps {
   community: ICommunity;
@@ -79,6 +81,23 @@ const CommunityMemberOptionsMenu = ({
     }));
   };
 
+  const onPressReportMember = () => {
+    if (!selectedMember?.id) return;
+
+    const dataReportMember = {
+      communityId,
+    };
+
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: <ReportContent
+        targetId={selectedMember?.id}
+        targetType={TargetType.MEMBER}
+        dataReportMember={dataReportMember}
+      />,
+    }));
+  };
+
   return (
     <MemberOptionsMenu
       modalizeRef={modalizeRef}
@@ -89,6 +108,7 @@ const CommunityMemberOptionsMenu = ({
       onPressSetAdminRole={onPressSetAdminRole}
       onPressRevokeAdminRole={onPressRevokeAdminRole}
       onPressRemoveMember={onPressRemoveMember}
+      onPressReportMember={onPressReportMember}
     />
   );
 };

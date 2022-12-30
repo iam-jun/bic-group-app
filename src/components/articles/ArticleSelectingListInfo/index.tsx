@@ -83,7 +83,7 @@ const ArticleSelectingListInfo: React.FC<ArticleSelectingListInfoProps> = ({
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {data.map?.(renderItem)}
+        {data?.map?.(renderItem)}
       </ScrollView>
     </View>
   );

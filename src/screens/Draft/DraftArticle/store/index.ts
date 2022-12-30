@@ -12,6 +12,7 @@ export interface IDraftArticleState extends IBaseState, IFetchingState {
   loading: boolean,
   refreshing: boolean,
   total: number,
+  isPublishing: boolean;
 
   actions?:{
     getDraftArticles?: (payload: IPayloadGetDraftPosts) => void;
@@ -25,6 +26,7 @@ const initialState: IDraftArticleState = {
   loading: false,
   refreshing: false,
   total: 0,
+  isPublishing: false,
 };
 
 const draftArticleStore = (set, get) => ({

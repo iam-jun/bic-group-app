@@ -52,6 +52,20 @@ const MemberItem = ({
     openUrl(link);
   };
 
+  const renderButtonMenu = () => {
+    if (!canManageMember && isMe) return null;
+
+    return (
+      <Button.Raise
+        style={styles.iconMenu}
+        icon="menu"
+        size="small"
+        testID="member_item.icon_option.button"
+        onPress={() => onPressMenu(item)}
+      />
+    );
+  };
+
   return (
     <PrimaryItem
       showAvatar
@@ -81,15 +95,7 @@ const MemberItem = ({
               buttonTestID="member_item.icon_chat.button"
             />
           )}
-          {canManageMember && (
-            <Button.Raise
-              style={styles.iconMenu}
-              icon="menu"
-              size="small"
-              testID="member_item.icon_option.button"
-              onPress={() => onPressMenu(item)}
-            />
-          )}
+          {renderButtonMenu()}
         </>
       )}
     />

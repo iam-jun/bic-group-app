@@ -1,44 +1,38 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TextArea } from '~/baseComponents/Input';
+import { TextInput } from '~/baseComponents/Input';
 import Header from '~/beinComponents/Header';
 
-import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import { useBaseHook } from '~/hooks';
-import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
+import { useBackPressListener } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
-import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import spacing from '~/theme/spacing';
+import Text from '~/baseComponents/Text';
 
 const CreateArticleTitle: FC<CreateArticleProps> = ({
   route,
 }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
-  const isDraft = route?.params?.isDraft;
-
-  const { rootNavigation } = useRootNavigation();
 
   const actions = useCreateArticleStore((state) => state.actions);
   const title = useCreateArticleStore((state) => state.data.title) || '';
 
-  const resetEditArticleStore = useCreateArticleStore((state) => state.reset);
-  const resetMentionInputStore = useMentionInputStore((state) => state.reset);
-
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const {
-    handleBack, handleSave, enableButtonSave, validButtonNext, loading,
-  } = useCreateArticle({
-    articleId,
-    needToPublish: isDraft,
-  });
+    handleBack, handleSave, enableButtonSave, loading,
+  }
+    = useCreateArticle({
+      articleId,
+    });
 
-  const disabled = (isDraft ? !validButtonNext.isTitleValid : !enableButtonSave) || loading;
+  const disabled = !enableButtonSave || loading;
 
   useBackPressListener(handleBack);
 
@@ -46,37 +40,30 @@ const CreateArticleTitle: FC<CreateArticleProps> = ({
     actions.setTitle(value);
   };
 
-  const goNextStep = () => {
-    rootNavigation.navigate(articleStack.createArticleSummary, { articleId });
-  };
-
-  useEffect(
-    () => () => {
-      resetEditArticleStore();
-      resetMentionInputStore();
-    },
-    [],
-  );
-
   return (
     <View style={styles.container}>
       <Header
         useI18n
         title="article:text_option_edit_title"
-        buttonProps={{ disabled, loading, style: styles.btnNext }}
-        buttonText={isDraft ? 'common:btn_next' : 'common:btn_save'}
-        onPressButton={isDraft ? goNextStep : handleSave}
+        buttonProps={{ disabled, loading, style: styles.btnSave }}
+        buttonText="common:btn_save"
+        onPressButton={handleSave}
         onPressBack={handleBack}
+        removeBorderAndShadow
+        style={styles.header}
       />
-      <TextArea
-        testID="edit_title"
-        value={title}
-        maxLength={64}
-        placeholder={t('common:text_input_title')}
-        style={styles.textInputContainer}
-        inputStyle={styles.textInput}
-        onChangeText={onChangeText}
-      />
+      <View style={styles.content}>
+        <TextInput
+          testID="edit_title"
+          value={title}
+          maxLength={64}
+          placeholder={t('common:text_input_title')}
+          onChangeText={onChangeText}
+        />
+        <Text.BodyS color={colors.neutral40} useI18n>
+          article:text_title_require_max_length
+        </Text.BodyS>
+      </View>
     </View>
   );
 };
@@ -84,18 +71,19 @@ const CreateArticleTitle: FC<CreateArticleProps> = ({
 const createStyle = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
+    header: {
+      borderBottomWidth: 1,
+      borderBottomColor: colors.neutral5,
+    },
     container: {
       flex: 1,
       backgroundColor: colors.neutral,
     },
-    textInputContainer: {
-      paddingHorizontal: spacing.padding.large,
-    },
-    textInput: {
-      paddingVertical: 0,
-    },
-    btnNext: {
+    btnSave: {
       marginRight: spacing.margin.small,
+    },
+    content: {
+      padding: spacing.padding.large,
     },
   });
 };

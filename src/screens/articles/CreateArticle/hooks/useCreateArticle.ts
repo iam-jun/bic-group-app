@@ -1,11 +1,20 @@
+/* eslint-disable no-template-curly-in-string */
 import { isEmpty, isEqual } from 'lodash';
-import { useEffect, useMemo } from 'react';
+import {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 import { Keyboard } from 'react-native';
 
+import shallow from 'zustand/shallow';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import {
-  IEditAritcleError, IEditArticleAudience, IEditArticleData, IEditArticleSeries, IPayloadPutEditArticle,
+  IEditAritcleError,
+  IEditArticleAudience,
+  IEditArticleData,
+  IEditArticleSeries,
+  IPayloadPublishDraftArticle,
+  IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
 import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArticle/helper';
@@ -15,119 +24,143 @@ import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import Store from '~/storeRedux';
 import modalActions from '~/storeRedux/modal/actions';
-import useArticlesStore from '../../ArticleDetail/store';
 import { useBaseHook } from '~/hooks';
 
 import { rootNavigationRef } from '~/router/refs';
 import Button from '~/baseComponents/Button';
-import { EditArticleErrorType, EMPTY_ARTICLE_CONTENT } from '~/constants/article';
+import {
+  EditArticleErrorType,
+  EMPTY_ARTICLE_CONTENT,
+} from '~/constants/article';
 import showError from '~/store/helper/showError';
+import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
+import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export interface IUseEditArticle {
   articleId: string;
-  needToPublish?: boolean;
   handleSaveAudienceError?: (listIdAudiences: string[]) => void;
 }
 
-const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }: IUseEditArticle) => {
+const useCreateArticle = ({
+  articleId,
+  handleSaveAudienceError,
+}: IUseEditArticle) => {
   const article = usePostsStore(postsSelector.getPost(articleId, {}));
 
-  const articleActions = useArticlesStore((state) => state.actions);
   const actions = useCreateArticleStore((state) => state.actions);
 
-  const data = useCreateArticleStore((state) => state.data) || {};
+  const data = useCreateArticleStore((state) => state.data, shallow) || {};
   const loading = useCreateArticleStore((state) => state.loading);
-  const isPublishing = useCreateArticleStore((state) => state.isPublishing);
+  const isDraft = useCreateArticleStore((state) => state.isDraft);
+
+  const [isShowToastAutoSave, setShowToastAutoSave] = useState<boolean>(false);
+
+  const refStopTyping = useRef(null);
+  const refTypingConstantly = useRef(null);
 
   const tempMentions = useMentionInputStore(
     (state: IMentionInputState) => state.tempSelected,
   );
 
-  const groupIds = useMemo(() => data.audience?.groupIds?.join?.(','), [data.audience]);
+  const groupIds = useMemo(
+    () => data.audience?.groupIds?.join?.(','),
+    [data.audience],
+  );
 
   const { t } = useBaseHook();
 
-  const isEmptyContent = () => isEmpty(data.content) || data.content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
+  const isEmptyContent = () => isEmpty(data.content)
+    || data.content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
+  const isContentUpdated
+    = article.content !== data.content && !isEmptyContent();
 
   const isHasChange = () => {
+    // self check at src/screens/articles/CreateArticle/screens/CreateArticleContent/index.tsx
     // const isContentUpdated = article.content !== data.content && !isEmptyContent();
     const isSummaryUpdated = article.summary !== data.summary;
-    const isTitleUpdated = article.title !== data.title && !isEmpty(data.title);
-    const isCategoriesUpdated = !isEqual(article.categories, data.categories) && !isEmpty(data.categories);
+    const isTitleUpdated = article.title !== data.title && !isEmpty(data.title.trim());
+    const isCategoriesUpdated
+      = !isEqual(article.categories, data.categories)
+      && !isEmpty(data.categories);
+    // self check at src/screens/articles/CreateArticle/screens/CreateArticleAudience/index.tsx
     // const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience)
     // && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
-    const isCoverMediaUpdated = (article.coverMedia?.id !== data.coverMedia?.id) && !isEmpty(data.coverMedia);
+    const isCoverMediaUpdated
+      = article.coverMedia?.id !== data.coverMedia?.id
+      && !isEmpty(data.coverMedia);
     const isSeriesUpdated = !isEqual(article?.series, data.series);
     const isTagsUpdated = !isEqual(article?.tags, data.tags);
-    // console.log('\x1b[35m🐣️ useEditArticle isHasChange ', JSON.stringify({
-    //   isTitleUpdated,
-    //   isContentUpdated,
-    //   isSummaryUpdated,
-    //   isCategoriesUpdated,
-    //   isAudienceUpdated,
-    //   isCoverMediaUpdated,
-    // }, null, 2), '\x1b[0m');
 
-    // return !isEmptyContent() // empty content lead to bug on edit content webview, always keep content not empty
-    //   && (isTitleUpdated
-    //   || isContentUpdated
-    //   || isSummaryUpdated
-    //   || isCategoriesUpdated
-    //   // || isAudienceUpdated
-    //   || isCoverMediaUpdated
-    //   || isSeriesUpdated);
-
-    return (isTitleUpdated
+    return (
+      isTitleUpdated
       || isSummaryUpdated
       || isCategoriesUpdated
-      // || isAudienceUpdated
       || isCoverMediaUpdated
       || isSeriesUpdated
-      || isTagsUpdated);
+      || isTagsUpdated
+    );
   };
 
-  const getValidButtonNext = () => {
+  const getValidButtonPublish = () => {
     const isTitleValid = !isEmpty(data.title);
     const isContentValid = !isEmptyContent();
     const isCategoriesValid = !isEmpty(data.categories);
     const isCoverValid = !isEmpty(data.coverMedia);
-    // isAudienceValid self check at src/screens/articles/EditArticle/EditAudience/index.tsx
+    const isAudienceValid = !(
+      isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds)
+    );
 
-    return {
-      isTitleValid,
-      isContentValid,
-      isCategoriesValid,
-      isCoverValid,
-    };
+    return (
+      isTitleValid
+      && isContentValid
+      && isCategoriesValid
+      && isCoverValid
+      && isAudienceValid
+    );
   };
 
   const initEditStoreData = () => {
     const {
-      id, title, content, audience: audienceObject, mentions, summary, categories, coverMedia, series, tags,
+      id,
+      title,
+      content,
+      audience: audienceObject,
+      mentions,
+      summary,
+      categories,
+      coverMedia,
+      series,
+      tags,
+      isDraft,
     } = article;
-    const audienceIds: IEditArticleAudience = getAudienceIdsFromAudienceObject(audienceObject);
+    const audienceIds: IEditArticleAudience
+      = getAudienceIdsFromAudienceObject(audienceObject);
     const data: IEditArticleData = {
-      id, title, content: content || '', audience: audienceIds, mentions, summary, categories, coverMedia, series, tags,
+      id,
+      title,
+      content: content || '',
+      audience: audienceIds,
+      mentions,
+      summary,
+      categories,
+      coverMedia,
+      series,
+      tags,
     };
     actions.setData(data);
-    actions.setIsPublishing(needToPublish);
+    actions.setIsDraft(isDraft);
   };
 
   useEffect(() => {
-    if (!article) articleActions.getArticleDetail(articleId);
-  }, []);
-
-  useEffect(() => {
-    // for editing draft article, dont init data again
-    if (article && !isPublishing) {
+    if (!isEmpty(article)) {
       initEditStoreData();
     }
   }, [article]);
 
   const enableButtonSave = isHasChange();
-  const validButtonNext = getValidButtonNext();
+  const validButtonPublish = getValidButtonPublish();
 
   const handleContentChange = (newContent: string) => {
     actions.setContent(newContent);
@@ -167,23 +200,31 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
       const text = listSeriesName.join(', ');
 
       const content = !!handleSaveAudienceError
-      // eslint-disable-next-line no-template-curly-in-string
-        ? t('article:remove_audiences_contains_series_content').replace('${series}', text)
-      // eslint-disable-next-line no-template-curly-in-string
+        ? t('article:remove_audiences_contains_series_content').replace(
+          '${series}',
+          text,
+        )
         : t('article:remove_series_content').replace('${series}', text);
 
-      Store.store.dispatch(modalActions.showAlert({
-        title: !!handleSaveAudienceError ? t('article:remove_audiences_contains_series_title') : t('article:remove_series_title'),
-        content,
-        cancelBtn: true,
-        confirmLabel: t('communities:permission:btn_continue'),
-        ConfirmBtnComponent: Button.Danger,
-        onConfirm: () => actions.putEditArticle(
-          { articleId, data: prepareNewSeriesData(ids) } as IPayloadPutEditArticle,
-          (data: IEditAritcleError) => handleSaveError(data),
-        ),
-        confirmBtnProps: { type: 'ghost' },
-      }));
+      Store.store.dispatch(
+        modalActions.showAlert({
+          title: !!handleSaveAudienceError
+            ? t('article:remove_audiences_contains_series_title')
+            : t('article:remove_series_title'),
+          content,
+          cancelBtn: true,
+          confirmLabel: t('communities:permission:btn_continue'),
+          ConfirmBtnComponent: Button.Danger,
+          onConfirm: () => actions.putEditArticle(
+              {
+                articleId,
+                data: prepareNewSeriesData(ids),
+              } as IPayloadPutEditArticle,
+              (data: IEditAritcleError) => handleSaveError(data),
+          ),
+          confirmBtnProps: { type: 'ghost' },
+        }),
+      );
     } else {
       Keyboard.dismiss();
       // show toast message received from BE
@@ -192,26 +233,99 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
     }
   };
 
-  const handleSave = () => {
+  const showToastAutoSave = () => {
+    setShowToastAutoSave(true);
+    setTimeout(() => {
+      setShowToastAutoSave(false);
+    }, 2000);
+  };
+
+  const debouceStopTyping = () => {
+    clearTimeout(refStopTyping.current);
+    refStopTyping.current = setTimeout(() => {
+      clearTimeout(refTypingConstantly.current);
+      refTypingConstantly.current = null;
+      handleSave(false, false);
+      showToastAutoSave();
+    }, 500);
+  };
+
+  const debouceTypingConstantly = () => {
+    if (!refTypingConstantly.current) {
+      refTypingConstantly.current = setTimeout(() => {
+        handleSave(false, false);
+        refTypingConstantly.current = null;
+        showToastAutoSave();
+      }, 5000);
+    }
+  };
+
+  useEffect(() => {
+    // only auto save for draft article
+    if (isDraft && isContentUpdated) {
+      debouceStopTyping();
+      debouceTypingConstantly();
+    }
+  }, [data.content]);
+
+  const handleSave = (isNavigateBack?: boolean, isShowToast?: boolean) => {
     updateMentions();
+    // get data directly from store instead of hook
+    // because in case we set store and immediately call handleSave
+    // useCreateArticle hook is still not updated at that time
+    // so handleSave will hold the old data instead of the new data
+    const dataUpdate = useCreateArticleStore.getState().data;
     actions.putEditArticle(
-      { articleId, data } as IPayloadPutEditArticle,
+      {
+        articleId,
+        data: dataUpdate,
+        isNavigateBack,
+        isShowToast,
+      } as IPayloadPutEditArticle,
       (data: IEditAritcleError) => handleSaveError(data),
     );
   };
 
+  const handlePublish = () => {
+    if (!validButtonPublish) return;
+
+    const goToArticleDetail = () => {
+      navigation.replace(articleStack.articleDetail, { articleId: data.id });
+    };
+
+    const payload: IPayloadPublishDraftArticle = {
+      draftArticleId: data.id,
+      onSuccess: () => {
+        Store.store.dispatch(
+          modalActions.showHideToastMessage({
+            content: 'post:draft:text_draft_article_published',
+          }),
+        );
+        goToArticleDetail();
+      },
+      onError: () => {
+        // do something
+      },
+    };
+    useDraftArticleStore.getState().actions.publishDraftArticle(payload);
+  };
+
   const handleBack = (showAlert = false) => {
-    // console.log('handleBack', showAlert);
     if (enableButtonSave || showAlert) {
       Keyboard.dismiss();
-      Store.store.dispatch(modalActions.showAlert({
-        title: t('discard_alert:title'),
-        content: t('discard_alert:content'),
-        cancelBtn: true,
-        cancelLabel: t('common:btn_discard'),
-        confirmLabel: t('common:btn_stay_here'),
-        onCancel: () => navigation.goBack(),
-      }));
+      Store.store.dispatch(
+        modalActions.showAlert({
+          title: t('discard_alert:title'),
+          content: t('discard_alert:content'),
+          cancelBtn: true,
+          cancelLabel: t('common:btn_discard'),
+          confirmLabel: t('common:btn_stay_here'),
+          onCancel: () => {
+            initEditStoreData();
+            navigation.goBack();
+          },
+        }),
+      );
       return;
     }
     navigation.goBack();
@@ -219,8 +333,9 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
 
   return {
     loading,
+    isShowToastAutoSave,
     enableButtonSave,
-    validButtonNext,
+    validButtonPublish,
     title: data.title,
     content: data.content,
     groupIds,
@@ -229,6 +344,7 @@ const useCreateArticle = ({ articleId, needToPublish, handleSaveAudienceError }:
     handleSave,
     handleBack,
     handleAudiencesChange,
+    handlePublish,
   };
 };
 

@@ -69,7 +69,7 @@
     "text_search_no_results": "Xin lỗi, chúng tôi không tìm thấy bất cứ thứ gì liên quan đến tìm kiếm của bạn",
     "text_see_more": "Xem thêm",
     "text_see_less": "Thu gọn",
-    "text_input_description": "Điền mô tả...",
+    "text_input_summary": "Điền mô tả...",
     "text_input_title": "Điền tên...",
     "text_send": "Gửi",
     "text_chosen": "Đang Chọn",
@@ -166,7 +166,8 @@
     "copy_photo": "Sao chép ảnh",
     "text_share": "Chia sẻ",
     "btn_go_back": "Quay về",
-    "text_unsupport_feature": "Chúng tôi chưa hỗ trợ tính năng này trên thiết bị di động. Vui lòng xem chi tiết trên phiên bản web"
+    "text_unsupport_feature": "Chúng tôi chưa hỗ trợ tính năng này trên thiết bị di động. Vui lòng xem chi tiết trên phiên bản web",
+    "text_select_file": "Chọn file"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -498,11 +499,12 @@
     "title_edit_content": "Sửa Nội Dung",
     "title_edit_series": "Sửa Series",
     "text_option_edit_title": "Tiêu Đề",
-    "text_option_edit_description": "Mô Tả",
+    "text_option_edit_summary": "Mô Tả",
     "text_option_edit_cover": "Ảnh Bìa",
     "text_option_edit_category": "Danh Mục",
     "text_option_edit_audience": "Đối Tượng",
     "text_option_edit_series": "Series",
+    "text_option_edit_tags": "Thẻ",
     "text_option_edit_content": "Nội Dung",
     "text_change_cover": "Đổi ảnh bìa",
     "text_select_cover": "Chọn ảnh bìa",
@@ -533,7 +535,16 @@
       "title": "Nhúng video",
       "link_placeholder": "Nhập URL của video:"
     },
-    "tags_maximum_message_info": "Chỉ có thể chọn tối đa 5 tags"
+    "tags_maximum_message_info": "Chỉ có thể chọn tối đa 5 tags",
+    "text_add_title": "Thêm tiêu đề",
+    "text_title_require_max_length": "Tối đa 64 ký tự",
+    "text_description_require_max_length": "Tối đa 255 ký tự",
+    "text_add_summary": "Thêm mô tả",
+    "text_add_category": "Thêm danh mục",
+    "text_add_audience": "Thêm đối tượng",
+    "text_add_series": "Thêm series",
+    "text_add_tag": "Thêm thẻ",
+    "text_add_content": "Thêm nội dung"
   },
   "post": {
     "news_feed": "News Feed",
@@ -816,7 +827,8 @@
     "member_menu": {
       "label_set_as_admin": "Bổ nhiệm làm quản trị viên",
       "label_revoke_admin_role": "Thu hồi vai trò quản trị viên",
-      "label_remove_member": "Xóa thành viên"
+      "label_remove_member": "Xóa thành viên",
+      "label_report_member": "Báo cáo thành viên"
     },
     "private_group_welcome_message": {
       "title": "Đây là nhóm kín.",
