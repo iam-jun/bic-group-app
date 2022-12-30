@@ -19,6 +19,7 @@ import { IUserEdit } from '~/interfaces/IAuth';
 import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import { ISearchReq } from '~/interfaces/common';
+import { IParamsReportMember } from '~/interfaces/IReport';
 import { ContentType } from '~/components/SelectAudience';
 
 const provider = apiProviders.bein;
@@ -509,6 +510,19 @@ export const groupsApiConfig = {
     ...defaultConfig,
     url: `${provider.url}manage/communities/reports/reasons`,
   }),
+  getMemberReportReasons: (): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}member-report-reasons`,
+  }),
+  reportMember: (
+    communityId: string,
+    params: IParamsReportMember,
+  ): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}communities/${communityId}/member-reports`,
+    method: 'post',
+    data: { ...params },
+  }),
 };
 
 const groupApi = {
@@ -818,6 +832,15 @@ const groupApi = {
     groupsApiConfig.getManagedCommunityAndGroup, params,
   ),
   getReportReasons: () => withHttpRequestPromise(groupsApiConfig.getReportReasons),
+  getMemberReportReasons: () => withHttpRequestPromise(groupsApiConfig.getMemberReportReasons),
+  reportMember: (
+    communityId: string,
+    params: IParamsReportMember,
+  ) => withHttpRequestPromise(
+    groupsApiConfig.reportMember,
+    communityId,
+    params,
+  ),
 };
 
 export default groupApi;

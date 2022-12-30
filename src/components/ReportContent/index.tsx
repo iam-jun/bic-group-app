@@ -11,7 +11,9 @@ import Text from '~/baseComponents/Text';
 import Icon from '~/baseComponents/Icon';
 import Button from '~/beinComponents/Button';
 import ReportReasons from './ReportReasons';
-import { TargetType, ReportTo, IPayloadReportContent } from '~/interfaces/IReport';
+import {
+  TargetType, ReportTo, IPayloadReportContent, IPayloadReportMember,
+} from '~/interfaces/IReport';
 import useReportContentStore from './store';
 
 const screenHeight = Dimensions.get('window').height;
@@ -19,12 +21,15 @@ const modalHeight = 0.35 * screenHeight;
 
 interface IReportContentProps {
   targetId: string;
-  groupIds: string[];
+  groupIds?: string[];
   targetType: TargetType;
-  reportTo: ReportTo;
+  reportTo?: ReportTo;
   dataComment?: {
     parentCommentId?: string;
     postId?: string;
+  };
+  dataReportMember?: {
+    communityId?: string;
   };
 }
 
@@ -32,15 +37,20 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const { colors } = theme;
-  const { targetId } = props || {};
+  const { targetId, targetType, dataReportMember } = props || {};
 
   const [reasonState, setReasonState] = useState<any>(null);
   const reportContentActions = useReportContentStore((state) => state.actions);
-  const { loading, data } = useReportContentStore((state) => state.reportReasons);
+  const { reportReasons, memberReportReasons } = useReportContentStore((state) => state);
+  const headerTitle = targetType === TargetType.MEMBER
+    ? 'groups:member_menu:label_report_member' : 'common:text_report_content';
 
   useEffect(() => {
-    if (!data || data?.length === 0) {
+    if (!reportReasons.data || reportReasons.data?.length === 0) {
       reportContentActions.getReportReasons();
+    }
+    if (!memberReportReasons.data || memberReportReasons.data?.length === 0) {
+      reportContentActions.getMemberReportReasons();
     }
   }, []);
 
@@ -50,13 +60,24 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
   };
 
   const onSubmit = () => {
-    const payload = {
-      ...props,
-      reasonType: reasonState?.id,
-      reason: reasonState?.value,
-    } as IPayloadReportContent;
+    if (targetType === TargetType.MEMBER) {
+      const payload = {
+        targetId,
+        communityId: dataReportMember?.communityId,
+        reason: reasonState?.id,
+      } as IPayloadReportMember;
 
-    reportContentActions.reportContent(payload);
+      reportContentActions.reportMember(payload);
+    } else {
+      const payload = {
+        ...props,
+        reasonType: reasonState?.id,
+        reason: reasonState?.value,
+      } as IPayloadReportContent;
+
+      reportContentActions.reportContent(payload);
+    }
+
     onClose();
   };
 
@@ -73,14 +94,14 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
           useI18n
           color={colors.neutral80}
         >
-          common:text_report_content
+          { headerTitle }
         </Text.H4>
       </View>
     </View>
   );
 
   const renderContentComponent = () => {
-    if (loading) {
+    if (reportReasons.loading) {
       return (
         <View style={styles.boxLoading}>
           <ActivityIndicator size="small" color={colors.gray30} />
@@ -92,6 +113,7 @@ const ReportContent: React.FC<IReportContentProps> = (props) => {
       <>
         <ReportReasons
           reasonState={reasonState}
+          targetType={targetType}
           setReasonState={setReasonState}
         />
         <Button.Primary

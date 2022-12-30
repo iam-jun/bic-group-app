@@ -865,7 +865,8 @@
     "member_menu": {
       "label_set_as_admin": "Set Admin Role",
       "label_revoke_admin_role": "Revoke Admin Role",
-      "label_remove_member": "Remove Member"
+      "label_remove_member": "Remove Member",
+      "label_report_member": "Report This Member"
     },
     "private_group_welcome_message": {
       "title": "This group is private.",

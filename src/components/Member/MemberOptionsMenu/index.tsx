@@ -21,12 +21,14 @@ interface MemberOptionsMenuProps {
   onPressSetAdminRole: () => void;
   onPressRevokeAdminRole: () => void;
   onPressRemoveMember: () => void;
+  onPressReportMember: () => void;
 }
 
 enum MemberOptions {
   SET_ADMIN_ROLE = 'set-admin',
   REVOKE_ADMIN_ROLE = 'revoke-admin',
-  REMOVE_MEMBER = 'remove-member'
+  REMOVE_MEMBER = 'remove-member',
+  REPORT_MEMBER = 'report-member',
 }
 
 const MemberOptionsMenu = ({
@@ -38,6 +40,7 @@ const MemberOptionsMenu = ({
   onPressSetAdminRole,
   onPressRevokeAdminRole,
   onPressRemoveMember,
+  onPressReportMember,
 }: MemberOptionsMenuProps) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -59,6 +62,10 @@ const MemberOptionsMenu = ({
 
       case MemberOptions.REMOVE_MEMBER:
         onPressRemoveMember();
+        break;
+
+      case MemberOptions.REPORT_MEMBER:
+        onPressReportMember();
         break;
 
       default:
@@ -115,6 +122,16 @@ const MemberOptionsMenu = ({
     return null;
   };
 
+  const renderReportMemberOption = () => {
+    if (isMe) return null;
+
+    return renderItem({
+      testID: 'member_options_menu.report_member',
+      content: 'groups:member_menu:label_report_member',
+      onPress: () => onPressMenuOption(MemberOptions.REPORT_MEMBER),
+    });
+  };
+
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
@@ -124,6 +141,7 @@ const MemberOptionsMenu = ({
           {renderRevokeAdminRoleOption()}
           {renderSetAdminRoleOption()}
           {renderRemoveMemberOption()}
+          {renderReportMemberOption()}
         </View>
       )}
     />

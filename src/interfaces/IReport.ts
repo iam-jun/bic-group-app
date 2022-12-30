@@ -13,6 +13,7 @@ export enum TargetType {
   ARTICLE = 'ARTICLE',
   COMMENT = 'COMMENT',
   CHILD_COMMENT = 'CHILD_COMMENT',
+  MEMBER = 'MEMBER',
 }
 
 export enum ReportTo {
@@ -43,4 +44,15 @@ export interface IParamsReportContent {
   reasonType: string;
   reason: string;
   attachment?: string;
+}
+
+export interface IPayloadReportMember {
+  targetId: string;
+  communityId: string;
+  reason: string;
+}
+
+export interface IParamsReportMember {
+  userId: string;
+  reason: string;
 }

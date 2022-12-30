@@ -4,21 +4,24 @@ import { StyleSheet, ScrollView } from 'react-native';
 import { Radio } from '~/baseComponents';
 import { spacing } from '~/theme';
 import useReportContentStore from './store';
-import { IReason } from '~/interfaces/IReport';
+import { IReason, TargetType } from '~/interfaces/IReport';
 
 interface ReportReasonsProps {
   reasonState: IReason;
+  targetType: TargetType;
   setReasonState: (item: IReason) => void;
 }
 
 const ReportReasons: React.FC<ReportReasonsProps> = ({
   reasonState,
+  targetType,
   setReasonState,
 }) => {
-  const { data } = useReportContentStore((state) => state.reportReasons);
+  const { reportReasons, memberReportReasons } = useReportContentStore((state) => state);
+  const reasons = targetType === TargetType.MEMBER ? memberReportReasons.data : reportReasons.data;
 
   const renderReasons = () => (
-    data?.map((item) => (
+    reasons?.map((item) => (
       <Radio
         key={`report_content${item.id}`}
         useI18n
