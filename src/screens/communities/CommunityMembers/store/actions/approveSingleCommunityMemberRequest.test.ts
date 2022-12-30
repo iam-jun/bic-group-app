@@ -3,7 +3,8 @@ import { act, renderHook } from '~/test/testUtils';
 import groupApi from '~/api/GroupApi';
 import useCommunityMemberStore from '../index';
 import { IPayloadApproveSingleCommunityMemberRequest } from '~/interfaces/ICommunity';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 
 describe('approveSingleCommunityMemberRequest', () => {
   afterEach(() => {
@@ -23,7 +24,9 @@ describe('approveSingleCommunityMemberRequest', () => {
     const spy = jest.spyOn(groupApi, 'approveSingleGroupMemberRequest').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -43,11 +46,9 @@ describe('approveSingleCommunityMemberRequest', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'common:text_error_message',
-      props: {
-        type: 'error',
-      },
+      type: ToastType.ERROR,
     });
   });
 
@@ -83,7 +84,9 @@ describe('approveSingleCommunityMemberRequest', () => {
     const spy = jest.spyOn(groupApi, 'approveSingleGroupMemberRequest').mockImplementation(
       () => Promise.resolve(response) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -98,7 +101,7 @@ describe('approveSingleCommunityMemberRequest', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: `${i18next.t('groups:text_approved_user')} ${payload.fullName}`,
     });
   });

@@ -1,5 +1,6 @@
 import groupApi from '~/api/GroupApi';
-import modalActions from '~/storeRedux/modal/actions';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
+import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useGroupController from '../index';
 
@@ -21,7 +22,9 @@ describe('revokeGroupAdmin', () => {
       .spyOn(groupApi, 'getGroupMembers')
       .mockImplementation(() => Promise.resolve(response) as any);
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupController((state) => state));
@@ -36,7 +39,10 @@ describe('revokeGroupAdmin', () => {
     });
 
     expect(spyGroupActions).toBeCalled();
-    expect(spyModalActions).toBeCalledWith({ content: 'common:text_success_message', props: { type: 'success' } });
+    expect(showToast).toBeCalledWith({
+      content: 'common:text_success_message',
+      type: ToastType.SUCCESS,
+    });
   });
 
   it('should set group admin throw error', () => {
@@ -44,7 +50,9 @@ describe('revokeGroupAdmin', () => {
     const spy = jest.spyOn(groupApi, 'removeGroupAdmin').mockImplementation(
       () => Promise.reject(error) as any,
     );
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useGroupController((state) => state));
@@ -64,9 +72,9 @@ describe('revokeGroupAdmin', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: 'common:text_error_message',
-      props: { type: 'error' },
+      type: ToastType.ERROR,
     });
   });
 });

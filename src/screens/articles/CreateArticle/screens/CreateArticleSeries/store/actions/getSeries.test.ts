@@ -1,8 +1,8 @@
 import streamApi from '~/api/StreamApi';
-import modalActions from '~/storeRedux/modal/actions';
 import { mockListSeriesOfArticle, searchSeriesRequestParams } from '~/test/mock_data/series';
 import { act, renderHook } from '~/test/testUtils';
 import useCreateArticleSeriesStore, { ICreateArticleSeriesState } from '../index';
+import useModalStore from '~/store/modal';
 
 describe('getSeries in article', () => {
   it('should do nothing if isLoadMore but hasNextPage = false', () => {
@@ -102,8 +102,9 @@ describe('getSeries in article', () => {
     const spyApiGetSeriesByAudiences = jest.spyOn(streamApi, 'searchSeries').mockImplementation(
       () => Promise.reject(error) as any,
     );
-
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCreateArticleSeriesStore((state) => state));
@@ -125,7 +126,7 @@ describe('getSeries in article', () => {
     });
 
     expect(result.current.listSeries.loading).toBe(false);
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 
   afterEach(() => {

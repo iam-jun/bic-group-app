@@ -2,7 +2,7 @@ import { POST_DETAIL } from '~/test/mock_data/post';
 import streamApi from '~/api/StreamApi';
 import { renderHook, act } from '~/test/testUtils';
 import useArticleController from '../index';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 
 describe('deleteArticle', () => {
   const id = '1';
@@ -56,7 +56,9 @@ describe('deleteArticle', () => {
       () => Promise.resolve(response) as any,
     );
 
-    const spyShowHideToastMessage = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -70,7 +72,7 @@ describe('deleteArticle', () => {
     });
 
     expect(spyDeleteArticle).not.toBeCalled();
-    expect(spyShowHideToastMessage).not.toBeCalled();
+    expect(showToast).not.toBeCalled();
   });
 
   it('should call API and throws error', () => {
@@ -80,7 +82,9 @@ describe('deleteArticle', () => {
       () => Promise.reject(error) as any,
     );
 
-    const spyShowHideToastMessage = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
 
@@ -99,7 +103,7 @@ describe('deleteArticle', () => {
       jest.runAllTimers();
     });
 
-    expect(spyShowHideToastMessage).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 
   it('should call API to delete draft article success but no data is return', () => {

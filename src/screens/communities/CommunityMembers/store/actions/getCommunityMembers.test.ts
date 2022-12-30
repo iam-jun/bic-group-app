@@ -1,5 +1,5 @@
 import groupApi from '~/api/GroupApi';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { memberData } from '~/test/mock_data/group';
 import { act, renderHook } from '~/test/testUtils';
 import useCommunityMemberStore from '../index';
@@ -39,10 +39,9 @@ describe('getCommunityMembers', () => {
 
     const spy = jest.spyOn(groupApi, 'getGroupMembers').mockImplementation(() => Promise.reject(error) as any);
 
-    const spyModalActions = jest.spyOn(
-      modalActions,
-      'showHideToastMessage',
-    );
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useCommunityMemberStore((state) => state));
@@ -61,6 +60,6 @@ describe('getCommunityMembers', () => {
     });
 
     expect(result.current.communityMembers.loading).toBe(false);
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
   });
 });

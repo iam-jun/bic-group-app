@@ -1,7 +1,8 @@
 import { Auth } from 'aws-amplify';
+import { ToastType } from '~/baseComponents/Toast/BaseToast';
 import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
 import i18n from '~/localization';
-import modalActions from '~/storeRedux/modal/actions';
+import useModalStore from '~/store/modal';
 import { act, renderHook } from '~/test/testUtils';
 import useForgotPasswordStore from '../index';
 
@@ -48,7 +49,9 @@ describe('requestResetPassword', () => {
       () => Promise.reject(error),
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useForgotPasswordStore((state) => state));
@@ -68,7 +71,7 @@ describe('requestResetPassword', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalled();
+    expect(showToast).toBeCalled();
     expect(result.current.errorRequest).toBe('');
     expect(result.current.loadingRequest).toBeFalsy();
   });
@@ -79,7 +82,9 @@ describe('requestResetPassword', () => {
       () => Promise.reject(error),
     );
 
-    const spyModalActions = jest.spyOn(modalActions, 'showHideToastMessage');
+    const showToast = jest.fn();
+    const actions = { showToast };
+    jest.spyOn(useModalStore, 'getState').mockImplementation(() => ({ actions } as any));
 
     jest.useFakeTimers();
     const { result } = renderHook(() => useForgotPasswordStore((state) => state));
@@ -99,9 +104,9 @@ describe('requestResetPassword', () => {
       jest.runAllTimers();
     });
 
-    expect(spyModalActions).toBeCalledWith({
+    expect(showToast).toBeCalledWith({
       content: i18n.t('auth:text_err_limit_exceeded'),
-      props: { type: 'error' },
+      type: ToastType.ERROR,
     });
     expect(result.current.errorRequest).toBe('');
     expect(result.current.loadingRequest).toBeFalsy();
