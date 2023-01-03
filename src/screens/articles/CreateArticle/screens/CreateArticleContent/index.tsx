@@ -73,12 +73,10 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     },
   };
 
-  // this variable is used for edit article
-  // draft article is auto save, so no need to use this variable
   const isChanged = articleContent !== content;
   const isContentUpdated = !isDraft && isChanged && !isEmptyContent(content);
-  const disabledSaveForEditArticle = !isContentUpdated || loading;
-  const disabledSaveForEditDraftArticle = isEmptyContent(content) || loading;
+  const disabledSaveForEditArticle = !initializeEnd || !isContentUpdated || loading;
+  const disabledSaveForEditDraftArticle = !initializeEnd || isEmptyContent(content) || loading;
   const disabled = isDraft ? disabledSaveForEditDraftArticle : disabledSaveForEditArticle;
 
   useEffect(() => () => {
@@ -163,7 +161,6 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
 
   const onChangeText = (payload: any) => {
     const { rawContent, contentState } = payload || {};
-
     setFullContent(rawContent);
     onChangeContent?.(JSON.stringify(contentState));
   };

@@ -1,6 +1,6 @@
 import { isEmpty, isEqual } from 'lodash';
 import React, {
-  FC, memo, useCallback, useRef,
+  FC, memo, useMemo, useRef,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -54,7 +54,7 @@ const _PostBody: FC<PostBodyProps> = ({
     }
   }).current;
 
-  const BottomRightComponent = useCallback(() => {
+  const BottomRightComponent = useMemo(() => {
     if (isDraft) return null;
 
     return (
