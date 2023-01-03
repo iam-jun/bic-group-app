@@ -72,12 +72,15 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
 
   const _onPressEdit = () => {
     dispatch(modalActions.hideModal());
-    rootNavigation.navigate(
-      homeStack.createComment, {
-        commentId,
-        groupIds,
-      },
-    );
+    // Wait to hide modal success
+    setTimeout(() => {
+      rootNavigation.navigate(
+        homeStack.editComment, {
+          commentId,
+          groupIds,
+        },
+      );
+    }, 200);
   };
 
   const _onPress = () => {

@@ -1,7 +1,7 @@
 const homeStack = {
   postDetail: 'post-detail',
   createPost: 'create-post',
-  createComment: 'create-comment',
+  editComment: 'edit-comment',
   postSelectAudience: 'post-select-audience',
   draftPost: 'draft-post',
   userProfile: 'user-profile',
