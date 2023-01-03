@@ -99,7 +99,6 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
       rootNavigation.navigate(
         groupStack.groupDetail, {
           groupId: id,
-          initial: true,
         },
       );
     }

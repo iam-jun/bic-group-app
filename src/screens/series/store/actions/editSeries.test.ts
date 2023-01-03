@@ -114,7 +114,7 @@ describe('editSeries', () => {
       data: 'undefined',
       meta: {
         errors: {
-          groups_denied: [
+          groupsDenied: [
             'eba85417-ec3e-49b4-89b4-c5393baecaaf',
           ],
         },

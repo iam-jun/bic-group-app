@@ -16,7 +16,7 @@ interface ICommentInputState extends IBaseState{
   })=>void;
     createComment?: (payload: IPayloadCreateComment) => void;
     retryAddComment?: (payload: IReaction) => void;
-  }
+  };
 
   reset?: () => void;
 }

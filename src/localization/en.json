@@ -78,6 +78,8 @@
     "text_input_summary": "Input description...",
     "text_input_title": "Input title...",
     "text_send": "Send",
+    "text_tags": "Tags",
+    "text_series": "Series",
     "label_confirm_send_file": "Send this file?",
     "label_confirm_send_image": "Send this photo?",
     "label_confirm_send_video": "Send this video?",
@@ -574,6 +576,11 @@
     "modal_add_video": {
       "title": "Embed Video",
       "link_placeholder": "Enter the URL of the embed:"
+    },
+    "modal_invalid_series_tags": {
+      "title": "Remove Audience",
+      "content_header": "The following information will be removed when removed audiences:",
+      "content_confirm": "Are you sure you want to remove audience?"
     },
     "tags_maximum_message_info": "Maxium input 5 Tags",
     "text_add_title": "Add title",

@@ -31,8 +31,8 @@ export default function* deletePost({
       useModalStore.getState().actions.showToast({ content: 'post:delete_post_complete' });
     }
   } catch (e: any) {
-    if (e?.meta?.errors?.groups_denied) {
-      callbackError?.(e.meta.errors.groups_denied);
+    if (e?.meta?.errors?.groupsDenied) {
+      callbackError?.(e.meta.errors.groupsDenied);
     } else showToastError(e);
   }
 }

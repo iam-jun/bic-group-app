@@ -1,19 +1,18 @@
 import streamApi from '~/api/StreamApi';
-import { IEditAritcleError, IPayloadPutEditArticle } from '~/interfaces/IArticle';
+import { IPayloadPutEditArticle } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
 import { ICreateArticleState } from '~/screens/articles/CreateArticle/store';
 import useArticlesStore from '~/screens/articles/ArticleDetail/store';
-import { EditArticleErrorType } from '~/constants/article';
 import showToastError from '~/store/helper/showToastError';
 import showToastSuccess from '~/store/helper/showToastSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
-const putEditArticle = (set, _get) => async (
-  params: IPayloadPutEditArticle,
-  callbackError?: (data: IEditAritcleError) => void,
-) => {
+const putEditArticle = (set, get) => async (params: IPayloadPutEditArticle) => {
+  const state: ICreateArticleState = get();
+  const createArticleActions = state?.actions;
+
   const {
     articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true,
   } = params || {};
@@ -59,21 +58,7 @@ const putEditArticle = (set, _get) => async (
     set((state: ICreateArticleState) => {
       state.loading = false;
     }, 'putEditArticleError');
-    if (error?.meta?.errors?.series_denied) {
-      callbackError?.({
-        type: EditArticleErrorType.SERIES_DENIED,
-        ids: error.meta.errors.series_denied,
-        error,
-      });
-    } else if (error?.meta?.errors?.groups_denied) {
-      callbackError?.({
-        type: EditArticleErrorType.GROUPS_DENIED,
-        ids: error.meta.errors.groups_denied,
-        error,
-      });
-    } else {
-      showToastError(error);
-    }
+    createArticleActions?.handleSaveError(error);
   }
 };
 

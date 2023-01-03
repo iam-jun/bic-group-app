@@ -116,7 +116,7 @@ describe('deleteSeries', () => {
       data: 'undefined',
       meta: {
         errors: {
-          groups_denied: [
+          groupsDenied: [
             'eba85417-ec3e-49b4-89b4-c5393baecaaf',
           ],
         },
@@ -152,7 +152,7 @@ describe('deleteSeries', () => {
       jest.runAllTimers();
     });
 
-    expect(callbackError).toBeCalledWith(error.meta.errors.groups_denied);
+    expect(callbackError).toBeCalledWith(error.meta.errors.groupsDenied);
   });
 
   afterEach(() => {

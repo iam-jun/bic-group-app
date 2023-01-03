@@ -19,8 +19,8 @@ const deleteSeries = (_set, _get) => async (id: string, callbackError: any) => {
       useModalStore.getState().actions.showToast({ content: 'series:text_delete_series_success' });
     }
   } catch (error) {
-    if (error?.meta?.errors?.groups_denied) {
-      callbackError?.(error.meta.errors.groups_denied);
+    if (error?.meta?.errors?.groupsDenied) {
+      callbackError?.(error.meta.errors.groupsDenied);
     } else showToastError(error);
     console.error('delete series error', error);
   }

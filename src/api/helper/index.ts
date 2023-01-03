@@ -10,12 +10,14 @@ import { makeHttpRequest } from '~/api/apiRequest';
 import { EVENT_LOGGER_TAG } from '~/components/LoggerView';
 import { LogType } from '~/components/LoggerView/Interface';
 import APIErrorCode from '~/constants/apiErrorCode';
+import { uuidRegex } from '~/constants/commonRegex';
 import useAuthController from '~/screens/auth/store';
 import { updateUserFromSharedPreferences } from '~/services/sharePreferences';
 import useMyPermissionsStore from '~/store/permissions';
 import Store from '~/storeRedux';
 import noInternetActions from '~/storeRedux/network/actions';
 import { timeOut } from '~/utils/common';
+import ConvertHelper from '~/utils/convertHelper';
 
 interface UnauthorizedReq {
   (refreshTokenSuccess: boolean): Promise<void>;
@@ -48,7 +50,10 @@ export const handleResponseError = async (axiosError: AxiosError): Promise<HttpA
     if (shouldRefreshPermission(axiosError)) {
       useMyPermissionsStore.getState().actions.getMyPermissions();
     }
-    return axiosError.response.data;
+    return ConvertHelper.camelizeKeys(axiosError.response.data, {
+      excludeValueOfKey: ['reactions_count'],
+      excludeKey: [uuidRegex],
+    });
   }
   if (isRequestNotHasResponse(axiosError)) {
     if (isRequestNotCancelled(axiosError)) {

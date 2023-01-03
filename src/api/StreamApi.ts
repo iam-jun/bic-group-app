@@ -32,6 +32,7 @@ import {
   IParamGetCategories,
   IParamGetDraftArticles,
   IParamPutEditArticle,
+  IParamsValidateSeriesTags,
 } from '~/interfaces/IArticle';
 import appConfig from '~/configs/appConfig';
 import { IGetGiphyTrendingParams, IGetSearchGiphyParams } from '~/interfaces/IGiphy';
@@ -442,6 +443,12 @@ export const streamApiConfig = {
     url: `${provider.url}tags`,
     params,
   }),
+  validateSeriesTagsOfArticle: (params: IParamsValidateSeriesTags): HttpApiRequestConfig => ({
+    ...defaultConfig,
+    url: `${provider.url}articles/validate-series-tags`,
+    method: 'post',
+    data: { ...params },
+  }),
   getTags: (params: IParamGetCommunityTags): HttpApiRequestConfig => ({
     ...defaultConfig,
     url: `${provider.url}tags`,
@@ -725,6 +732,9 @@ const streamApi = {
   reportContent: (params: IParamsReportContent) => withHttpRequestPromise(streamApiConfig.reportContent, params),
   searchTagsInAudiences: (params?: IGetSearchTags) => withHttpRequestPromise(
     streamApiConfig.searchTagsInAudiences, params,
+  ),
+  validateSeriesTagsOfArticle: (params: IParamsValidateSeriesTags) => withHttpRequestPromise(
+    streamApiConfig.validateSeriesTagsOfArticle, params,
   ),
   getTags: (params: IParamGetCommunityTags) => withHttpRequestPromise(
     streamApiConfig.getTags, params,

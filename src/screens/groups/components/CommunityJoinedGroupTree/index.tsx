@@ -57,7 +57,7 @@ const CommunityJoinedGroupTree: FC<CommunityJoinedGroupsProps> = (
       rootNavigation.navigate(
         groupStack.groupDetail, {
           groupId: group.id,
-          initial: true,
+          communityId: group?.communityId || communityId,
         },
       );
     }
