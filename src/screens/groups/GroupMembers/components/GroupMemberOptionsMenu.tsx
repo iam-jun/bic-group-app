@@ -7,12 +7,12 @@ import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 import useMyPermissionsStore from '~/store/permissions';
 import useGroupMemberStore from '../store';
-import useYourGroupsStore from '~/screens/communities/Communities/components/YourGroups/store';
 import MemberOptionsMenu from '~/components/Member/MemberOptionsMenu';
 import useGroupController from '../../store';
 import { PermissionKey } from '~/constants/permissionScheme';
 import ReportContent from '~/components/ReportContent';
 import { TargetType } from '~/interfaces/IReport';
+import useGroupDetailStore from '../../GroupDetail/store';
 
 interface GroupMemberOptionsMenuProps {
   groupId: string;
@@ -30,8 +30,7 @@ const GroupMemberOptionsMenu = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
-  const { items } = useYourGroupsStore();
-  const { community } = items[groupId] || {};
+  const { communityId } = useGroupDetailStore((state) => state.groupDetail.group);
 
   const actions = useGroupController((state) => state.actions);
   const deleteRemoveGroupMember = useGroupMemberStore(
@@ -89,7 +88,7 @@ const GroupMemberOptionsMenu = ({
     if (!selectedMember?.id) return;
 
     const dataReportMember = {
-      communityId: community?.id,
+      communityId,
     };
 
     dispatch(modalActions.showModal({
