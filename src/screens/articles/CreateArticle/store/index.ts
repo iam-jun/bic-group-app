@@ -1,14 +1,15 @@
 import {
   ICategory,
-  IEditAritcleError,
   IEditArticleAudience,
   IEditArticleData,
   IEditArticleSeries,
-  IEditArticleTags,
+  IEditArticleTags, IParamsValidateSeriesTags,
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { IArticleCover } from '~/interfaces/IPost';
-import putEditArticle from '~/screens/articles/CreateArticle/store/actions/putEditArticle';
+import handleSaveError from './actions/handleSaveError';
+import putEditArticle from './actions/putEditArticle';
+import validateSeriesTags from './actions/validateSeriesTags';
 import IBaseState, { InitStateType } from '~/store/interfaces/IBaseState';
 import { createStore, resetStore } from '~/store/utils';
 import createArticle from './actions/createArticle';
@@ -18,6 +19,7 @@ export interface ICreateArticleState extends IBaseState {
   data: IEditArticleData;
   isDraft: boolean;
   actions: {
+    setLoading: (isLoading: boolean) => void;
     setData: (data: IEditArticleData) => void;
     setTitle: (title: string) => void;
     setContent: (content: string) => void;
@@ -35,11 +37,14 @@ export interface ICreateArticleState extends IBaseState {
     setTags: (tags?: IEditArticleTags[]) => void;
     addTag: (tag: IEditArticleTags) => void;
     removeTag: (tag: IEditArticleTags) => void;
-    putEditArticle: (
-      params: IPayloadPutEditArticle,
-      callbackError: (data: IEditAritcleError) => void,
-      ) => void;
+    putEditArticle: (params: IPayloadPutEditArticle) => void;
     createArticle: () => void;
+    validateSeriesTags: (
+      data: IParamsValidateSeriesTags,
+      onSuccess: (response) => void,
+      onError: (error) => void
+    ) => void;
+    handleSaveError: (error: any, onNext?: () => void) => void;
   };
 }
 
@@ -75,6 +80,11 @@ const useCreateArticle = (set, get) => ({
   ...initialState,
 
   actions: {
+    setLoading: (isLoading: boolean) => {
+      set((state: ICreateArticleState) => {
+        state.loading = isLoading;
+      }, 'setLoading');
+    },
     setData: (data?: IEditArticleData) => {
       set((state: ICreateArticleState) => {
         state.data = data || initialState.data as IEditArticleData;
@@ -186,6 +196,8 @@ const useCreateArticle = (set, get) => ({
     },
     putEditArticle: putEditArticle(set, get),
     createArticle: createArticle(set, get),
+    validateSeriesTags: validateSeriesTags(set, get),
+    handleSaveError: handleSaveError(set, get),
   },
   reset: () => resetStore(initialState, set),
 });

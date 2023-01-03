@@ -40,8 +40,8 @@ const editSeries = (set, get) => async (
     set((state: ISeriesState) => {
       state.loading = false;
     }, 'editSeriesError');
-    if (error?.meta?.errors?.groups_denied) {
-      callbackError?.(error.meta.errors.groups_denied);
+    if (error?.meta?.errors?.groupsDenied) {
+      callbackError?.(error.meta.errors.groupsDenied);
     } else {
       Store.store.dispatch(modalActions.showHideToastMessage({
         content: 'series:text_edit_series_failed',

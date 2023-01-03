@@ -1,4 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
 import { isEmpty, isEqual } from 'lodash';
 import {
   useEffect, useMemo, useRef, useState,
@@ -9,10 +8,9 @@ import shallow from 'zustand/shallow';
 import useMentionInputStore from '~/beinComponents/inputs/MentionInput/store';
 import IMentionInputState from '~/beinComponents/inputs/MentionInput/store/Interface';
 import {
-  IEditAritcleError,
   IEditArticleAudience,
   IEditArticleData,
-  IEditArticleSeries,
+  IParamsValidateSeriesTags,
   IPayloadPublishDraftArticle,
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
@@ -27,11 +25,6 @@ import modalActions from '~/storeRedux/modal/actions';
 import { useBaseHook } from '~/hooks';
 
 import { rootNavigationRef } from '~/router/refs';
-import Button from '~/baseComponents/Button';
-import {
-  EditArticleErrorType,
-} from '~/constants/article';
-import showError from '~/store/helper/showError';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 
@@ -51,7 +44,6 @@ export interface IUseEditArticle {
 
 const useCreateArticle = ({
   articleId,
-  handleSaveAudienceError,
 }: IUseEditArticle) => {
   const article = usePostsStore(postsSelector.getPost(articleId, {}));
 
@@ -210,60 +202,6 @@ const useCreateArticle = ({
     actions.setAudience(newAudiences);
   };
 
-  const prepareNewSeriesData = (seriesDenied: string[]) => {
-    const newSeries = [];
-    data.series.forEach((series: IEditArticleSeries) => {
-      const isDenied = seriesDenied.findIndex((id) => series?.id === id) > -1;
-      if (!isDenied) newSeries.push(series);
-    });
-    return { ...data, series: newSeries };
-  };
-
-  const handleSaveError = ({ type, ids, error }: IEditAritcleError) => {
-    if (type === EditArticleErrorType.SERIES_DENIED) {
-      const listSeriesName = [];
-      ids.forEach((id) => {
-        const seriesData = data.series.find(
-          (series: IEditArticleSeries) => series?.id === id,
-        );
-        listSeriesName.push(seriesData.title);
-      });
-      const text = listSeriesName.join(', ');
-
-      const content = !!handleSaveAudienceError
-        ? t('article:remove_audiences_contains_series_content').replace(
-          '${series}',
-          text,
-        )
-        : t('article:remove_series_content').replace('${series}', text);
-
-      Store.store.dispatch(
-        modalActions.showAlert({
-          title: !!handleSaveAudienceError
-            ? t('article:remove_audiences_contains_series_title')
-            : t('article:remove_series_title'),
-          content,
-          cancelBtn: true,
-          confirmLabel: t('communities:permission:btn_continue'),
-          ConfirmBtnComponent: Button.Danger,
-          onConfirm: () => actions.putEditArticle(
-              {
-                articleId,
-                data: prepareNewSeriesData(ids),
-              } as IPayloadPutEditArticle,
-              (data: IEditAritcleError) => handleSaveError(data),
-          ),
-          confirmBtnProps: { type: 'ghost' },
-        }),
-      );
-    } else {
-      Keyboard.dismiss();
-      // show toast message received from BE
-      if (!handleSaveAudienceError) return showError(error);
-      handleSaveAudienceError?.(ids);
-    }
-  };
-
   const showToastAutoSave = () => {
     setShowToastAutoSave(true);
     setTimeout(() => {
@@ -300,23 +238,40 @@ const useCreateArticle = ({
   }, [data.content]);
 
   const handleSave = (options?: IHandleSaveOptions) => {
-    const { isNavigateBack = true, isShowLoading = true, isShowToast = true } = options || {};
+    const {
+      isNavigateBack = true, isShowLoading = true, isShowToast = true, shouldValidateSeriesTags,
+    } = options || {};
     updateMentions();
+
     // get data directly from store instead of hook
     // because in case we set store and immediately call handleSave
     // useCreateArticle hook is still not updated at that time
     // so handleSave will hold the old data instead of the new data
     const dataUpdate = useCreateArticleStore.getState().data;
-    actions.putEditArticle(
-      {
-        articleId,
-        data: dataUpdate,
-        isNavigateBack,
-        isShowToast,
-        isShowLoading,
-      } as IPayloadPutEditArticle,
-      (data: IEditAritcleError) => handleSaveError(data),
-    );
+    const putEditArticleParams = {
+      articleId,
+      data: dataUpdate,
+      isNavigateBack,
+      isShowToast,
+      isShowLoading,
+    } as IPayloadPutEditArticle;
+
+    if (shouldValidateSeriesTags) {
+      actions.setLoading(true);
+      const validateParams: IParamsValidateSeriesTags = {
+        groups: dataUpdate?.audience?.groupIds || [],
+        series: dataUpdate?.series?.map?.((item) => item.id) || [],
+        tags: dataUpdate?.tags?.map?.((item) => item.id) || [],
+      };
+      const onSuccess = () => actions.putEditArticle(putEditArticleParams);
+      const onError = (error) => {
+        actions.setLoading(false);
+        actions.handleSaveError(error, () => handleSave(options));
+      };
+      actions.validateSeriesTags(validateParams, onSuccess, onError);
+    } else {
+      actions.putEditArticle(putEditArticleParams);
+    }
   };
 
   const handlePublish = () => {

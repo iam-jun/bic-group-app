@@ -158,7 +158,7 @@ const createComment = (_set, get) => async (payload: IPayloadCreateComment) => {
 
       Store.store.dispatch(modalActions.showHideToastMessage({ content: 'post:text_comment_deleted' }));
     } else if (e?.code === APIErrorCode.Post.POST_DELETED
-      || e?.code === APIErrorCode.Post.POST_CANNOT_COMMENT_OR_REACT) {
+      || e?.code === APIErrorCode.Post.VALIDATION_ERROR) {
       if (e?.code === APIErrorCode.Post.POST_DELETED) {
         Store.store.dispatch(postActions.setCommentErrorCode(APIErrorCode.Post.POST_DELETED));
       }
