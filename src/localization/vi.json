@@ -72,6 +72,8 @@
     "text_input_summary": "Điền mô tả...",
     "text_input_title": "Điền tên...",
     "text_send": "Gửi",
+    "text_tags": "Thẻ",
+    "text_series": "Loạt bài",
     "text_chosen": "Đang Chọn",
     "error": {
       "file": {
@@ -534,6 +536,11 @@
     "modal_add_video": {
       "title": "Nhúng video",
       "link_placeholder": "Nhập URL của video:"
+    },
+    "modal_invalid_series_tags": {
+      "title": "Xoá đối tượng",
+      "content_header": "Các thông tin dưới đây sẽ bị xoá khi đối tượng bài viết bị xoá:",
+      "content_confirm": "Bạn có chắc muốn xoá?"
     },
     "tags_maximum_message_info": "Chỉ có thể chọn tối đa 5 tags",
     "text_add_title": "Thêm tiêu đề",

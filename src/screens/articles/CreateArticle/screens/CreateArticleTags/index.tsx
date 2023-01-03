@@ -148,7 +148,7 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
       <FlatList
         data={listData || []}
         renderItem={renderItem}
-        keyExtractor={(item) => `tags_item_${item?.name || item?.id}`}
+        keyExtractor={(item) => `tags_item_${item?.id || item?.name}`}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.1}
         initialNumToRender={20}

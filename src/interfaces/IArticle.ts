@@ -139,3 +139,9 @@ export type IGetSearchArticleInSeries = IGetSeries;
 export interface IGetSearchTags extends IGetSeries {
   name?: string;
 }
+
+export interface IParamsValidateSeriesTags {
+  groups: string[],
+  series: string [],
+  tags: string[]
+}
