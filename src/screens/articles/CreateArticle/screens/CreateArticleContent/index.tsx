@@ -78,7 +78,7 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
   const isChanged = articleContent !== content;
   const isContentUpdated = !isDraft && isChanged && !isEmptyContent(content);
   const disabledSaveForEditArticle = !isContentUpdated || loading;
-  const disabledSaveForEditDraftArticle = !isChanged || loading;
+  const disabledSaveForEditDraftArticle = isEmptyContent(content) || loading;
   const disabled = isDraft ? disabledSaveForEditDraftArticle : disabledSaveForEditArticle;
 
   useEffect(() => () => {
