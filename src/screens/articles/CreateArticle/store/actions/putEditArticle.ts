@@ -13,16 +13,19 @@ import { EditArticleErrorType } from '~/constants/article';
 
 const navigation = withNavigation(rootNavigationRef);
 
-const putEditArticle = (set, _) => async (
+const putEditArticle = (set, _get) => async (
   params: IPayloadPutEditArticle,
   callbackError?: (data: IEditAritcleError) => void,
 ) => {
   const {
-    articleId, data, isNavigateBack = true, isShowToast = true,
+    articleId, data, isNavigateBack = true, isShowToast = true, isShowLoading = true,
   } = params || {};
-  set((state: ICreateArticleState) => {
-    state.loading = true;
-  }, 'putEditArticle');
+  if (isShowLoading) {
+    set((state: ICreateArticleState) => {
+      state.loading = true;
+    }, 'putEditArticle');
+  }
+
   try {
     const categories = data?.categories?.map?.((category) => category?.id);
     const series = data?.series?.map?.((item) => item?.id);

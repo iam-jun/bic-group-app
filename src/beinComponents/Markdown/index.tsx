@@ -151,7 +151,7 @@ const createStyles = (theme: ExtendedTheme) => {
       mention: {
         fontFamily: fontFamilies.BeVietnamProLight,
         fontSize: sizes.mdParagraph,
-        color: colors.purple50,
+        color: colors.blue50,
       },
       mention_highlight: {
         backgroundColor: '#ffd470',

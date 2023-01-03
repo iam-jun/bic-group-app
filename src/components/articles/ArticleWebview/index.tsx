@@ -100,6 +100,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   return (
     <View testID="article_webview" style={[styles.container, style]}>
       <WebView
+        testID="webview"
         key="article-webview"
         ref={_webViewRef}
         style={styles.webview}

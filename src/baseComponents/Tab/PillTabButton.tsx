@@ -80,15 +80,15 @@ const createStyles = (theme: ExtendedTheme) => {
     // size padding
     largePadding: {
       paddingVertical: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
+      paddingHorizontal: spacing.padding.base,
     },
     mediumPadding: {
-      paddingVertical: spacing.padding.small,
-      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.xSmall,
+      paddingHorizontal: spacing.padding.base,
     },
     smallPadding: {
       paddingVertical: spacing.padding.xSmall,
-      paddingHorizontal: spacing.padding.base,
+      paddingHorizontal: spacing.padding.small,
     },
 
     // text color

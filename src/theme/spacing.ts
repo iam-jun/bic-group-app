@@ -30,6 +30,7 @@ export const padding = {
 
 // Margin
 export const margin = {
+  xTiny: 2,
   tiny: 4,
   xSmall: 6,
   small: 8,

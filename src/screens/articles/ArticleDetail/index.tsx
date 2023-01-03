@@ -12,6 +12,7 @@ import { IAudienceGroup } from '~/interfaces/IPost';
 
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { ArticlePlaceholder, ArticleView } from '~/components/articles';
 import CommentInputView from '~/screens/comments/components/CommentInputView';
 import useMounted from '~/hooks/mounted';
@@ -35,6 +36,7 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { rootNavigation } = useRootNavigation();
 
   const theme: ExtendedTheme = useTheme();
+  const { colors } = theme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
 
@@ -185,7 +187,11 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   if (!isMounted || !data) return renderLoading();
 
   return (
-    <View testID="article_detail" style={styles.container}>
+    <ScreenWrapper
+      testID="article_detail"
+      backgroundColor={colors.neutral5}
+      isFullView
+    >
       <Header />
       <View style={styles.contentContainer}>
         <SectionList
@@ -205,17 +211,13 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
         />
       </View>
       {renderCommentInput()}
-    </View>
+    </ScreenWrapper>
   );
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.neutral,
-    },
     contentContainer: {
       flex: 1,
     },
