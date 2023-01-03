@@ -92,7 +92,7 @@ const _CommunityContentView = ({
     return <ViewSpacing height={spacing.margin.base} />;
   };
 
-  const renderItemSeparator = () => <ViewSpacing height={spacing.margin.base} />;
+  const renderItemSeparator = () => <ViewSpacing height={spacing.margin.large} />;
 
   if (isPrivateCommunity) {
     return (

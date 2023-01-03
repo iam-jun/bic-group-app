@@ -3,10 +3,12 @@ import React, { FC, useCallback } from 'react';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { margin } from '~/theme/spacing';
 import Divider from '~/beinComponents/Divider';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '~/components/LoadMoreComment';
 import usePostsStore from '~/store/entities/posts';
 import postsSelector from '~/store/entities/posts/selectors';
 import ArticleItem from '../ArticleItem';
+import { spacing } from '~/theme';
 
 export interface ArticleViewProps {
     id: string;
@@ -26,6 +28,7 @@ const ArticleView: FC<ArticleViewProps> = ({
 
   return (
     <View testID="article_view" style={styles.container}>
+      <ViewSpacing height={spacing.margin.large} />
       <ArticleItem data={article} />
       <Divider style={styles.divider} />
       {canLoadMoreComment && (
@@ -44,7 +47,7 @@ const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.neutral,
+      backgroundColor: colors.neutral5,
     },
     body: {
       marginVertical: margin.small,

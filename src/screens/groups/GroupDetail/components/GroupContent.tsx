@@ -121,7 +121,7 @@ const GroupContent = ({
     return <ViewSpacing height={spacing.margin.base} />;
   };
 
-  const renderItemSeparator = () => <ViewSpacing height={spacing.margin.base} />;
+  const renderItemSeparator = () => <ViewSpacing height={spacing.margin.large} />;
 
   return (
     <Animated.FlatList
