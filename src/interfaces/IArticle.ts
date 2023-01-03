@@ -55,6 +55,7 @@ export interface IPayloadPutEditArticle {
   data: IEditArticleData;
   isNavigateBack?: boolean;
   isShowToast?: boolean;
+  isShowLoading?: boolean;
 }
 
 export interface IParamPutEditArticle

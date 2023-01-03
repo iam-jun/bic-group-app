@@ -62,7 +62,7 @@ const CreateArticleCover: FC<CreateArticleCoverProps> = ({ articleId }) => {
     if (file?.result?.id && file?.result?.url) {
       actions.setCover(file.result as IArticleCover);
       setUploadingImage(false);
-      handleSave(false);
+      handleSave({ isNavigateBack: false });
     } else {
       console.error('\x1b[36m🐣️ index onUploadSuccess invalid result\x1b[0m');
     }

@@ -10,6 +10,7 @@ import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateAr
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import spacing from '~/theme/spacing';
 import Text from '~/baseComponents/Text';
+import { useBackPressListener } from '~/hooks/navigation';
 
 const CreateArticleSummary: FC<CreateArticleProps> = ({ route }: CreateArticleProps) => {
   const articleId = route?.params?.articleId;
@@ -27,6 +28,8 @@ const CreateArticleSummary: FC<CreateArticleProps> = ({ route }: CreateArticlePr
   } = useCreateArticle({ articleId });
 
   const disabled = !enableButtonSave || loading;
+
+  useBackPressListener(handleBack);
 
   const onChangeText = (value) => {
     actions.setSummary(value);

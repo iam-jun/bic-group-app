@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
-import { isEmpty } from 'lodash';
 import { useBaseHook } from '~/hooks';
 import useCreateArticleStore from '../../store';
 import PreviewSection from '../../components/PreviewSection';
-import { EMPTY_ARTICLE_CONTENT } from '~/constants/article';
+import { isEmptyContent } from '../../helper';
 
 type ContentSectionProps = {
   onPress: () => void;
@@ -15,10 +14,8 @@ const ContentSection: FC<ContentSectionProps> = ({ onPress }) => {
 
   const content = useCreateArticleStore((state) => state.data.content);
 
-  const isEmptyContent = isEmpty(content) || content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
-
   const renderContent = () => {
-    if (isEmptyContent) return null;
+    if (isEmptyContent(content)) return null;
     return <View />;
   };
 

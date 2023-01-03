@@ -3,7 +3,6 @@ import React, {
   FC, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { isEmpty } from 'lodash';
 import Header from '~/beinComponents/Header';
 
 import { useBaseHook } from '~/hooks';
@@ -25,6 +24,9 @@ import { EMPTY_ARTICLE_CONTENT } from '~/constants/article';
 import postsSelector from '~/store/entities/posts/selectors';
 import usePostsStore from '~/store/entities/posts';
 import ToastAutoSave from '~/screens/post/CreatePost/components/ToastAutoSave';
+import { useBackPressListener } from '~/hooks/navigation';
+import { isEmptyContent } from '../../helper';
+import useCreateArticleStore from '../../store';
 
 export enum EventType {
     ON_EDITOR_CHANGE = 'onEditorChange',
@@ -55,6 +57,8 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     handleSave, handleBack, handleContentChange, isShowToastAutoSave,
   } = articleData || {};
 
+  const isDraft = useCreateArticleStore((state) => state.isDraft);
+
   const runSearch = useMentionInputStore((state: IMentionInputState) => state.doRunSearch);
   const resetMention = useMentionInputStore((state: IMentionInputState) => state.reset);
 
@@ -69,9 +73,13 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
     },
   };
 
-  const isEmptyContent = () => isEmpty(content) || content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
-  const isContentUpdated = articleContent !== content && !isEmptyContent();
-  const disabled = !isContentUpdated || loading;
+  // this variable is used for edit article
+  // draft article is auto save, so no need to use this variable
+  const isChanged = articleContent !== content;
+  const isContentUpdated = !isDraft && isChanged && !isEmptyContent(content);
+  const disabledSaveForEditArticle = !isContentUpdated || loading;
+  const disabledSaveForEditDraftArticle = !isChanged || loading;
+  const disabled = isDraft ? disabledSaveForEditDraftArticle : disabledSaveForEditArticle;
 
   useEffect(() => () => {
     resetMention();
@@ -80,6 +88,12 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
   const onPressSave = () => {
     handleSave();
   };
+
+  const onBack = () => {
+    handleBack(isChanged);
+  };
+
+  useBackPressListener(onBack);
 
   const onInitializeEnd = () => setInitializeEnd(true);
 
@@ -150,10 +164,8 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
   const onChangeText = (payload: any) => {
     const { rawContent, contentState } = payload || {};
 
-    if (rawContent && rawContent.trim().length !== 0) {
-      setFullContent(rawContent);
-      onChangeContent?.(JSON.stringify(contentState));
-    }
+    setFullContent(rawContent);
+    onChangeContent?.(JSON.stringify(contentState));
   };
 
   const onMention = (payload: any) => {
@@ -194,7 +206,7 @@ const CreateArticleContent: FC<CreateArticleContentProps> = ({ route }: CreateAr
         buttonProps={{ disabled, loading, style: styles.btnSave }}
         buttonText={t('common:btn_save')}
         onPressButton={onPressSave}
-        onPressBack={handleBack}
+        onPressBack={onBack}
       />
       <View style={styles.contentContainer}>
         <ArticleWebview
