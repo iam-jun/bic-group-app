@@ -17,7 +17,7 @@ import {
   IPayloadPutEditArticle,
 } from '~/interfaces/IArticle';
 import { withNavigation } from '~/router/helper';
-import { getAudienceIdsFromAudienceObject } from '~/screens/articles/CreateArticle/helper';
+import { getAudienceIdsFromAudienceObject, isEmptyContent } from '~/screens/articles/CreateArticle/helper';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
 import { getMentionsFromContent } from '~/helpers/post';
 import usePostsStore from '~/store/entities/posts';
@@ -30,12 +30,18 @@ import { rootNavigationRef } from '~/router/refs';
 import Button from '~/baseComponents/Button';
 import {
   EditArticleErrorType,
-  EMPTY_ARTICLE_CONTENT,
 } from '~/constants/article';
 import articleStack from '~/router/navigator/MainStack/stacks/articleStack/stack';
 import useDraftArticleStore from '~/screens/Draft/DraftArticle/store';
 import showToastError from '~/store/helper/showToastError';
 import useModalStore from '~/store/modal';
+
+interface IHandleSaveOptions {
+  isShowLoading?: boolean;
+  isNavigateBack?: boolean;
+  isShowToast?: boolean;
+  shouldValidateSeriesTags?: boolean;
+}
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -74,16 +80,40 @@ const useCreateArticle = ({
 
   const { t } = useBaseHook();
 
-  const isEmptyContent = () => isEmpty(data.content)
-    || data.content === JSON.stringify(EMPTY_ARTICLE_CONTENT);
-  const isContentUpdated
-    = article.content !== data.content && !isEmptyContent();
+  // auto save for draft article, so no need to check if content is empty
+  const isDraftContentUpdated
+    = article.content !== data.content;
 
   const isHasChange = () => {
     // self check at src/screens/articles/CreateArticle/screens/CreateArticleContent/index.tsx
     // const isContentUpdated = article.content !== data.content && !isEmptyContent();
     const isSummaryUpdated = article.summary !== data.summary;
-    const isTitleUpdated = article.title !== data.title && !isEmpty(data.title.trim());
+    const isTitleUpdated = article.title !== data.title;
+    const isCategoriesUpdated
+      = !isEqual(article.categories, data.categories);
+    // self check at src/screens/articles/CreateArticle/screens/CreateArticleAudience/index.tsx
+    // const isAudienceUpdated = !isEqual(getAudienceIdsFromAudienceObject(article.audience), data.audience)
+    // && !(isEmpty(data.audience?.groupIds) && isEmpty(data.audience?.userIds));
+    const isCoverMediaUpdated
+      = article.coverMedia?.id !== data.coverMedia?.id;
+    const isSeriesUpdated = !isEqual(article?.series, data.series);
+    const isTagsUpdated = !isEqual(article?.tags, data.tags);
+
+    return (
+      isTitleUpdated
+      || isSummaryUpdated
+      || isCategoriesUpdated
+      || isCoverMediaUpdated
+      || isSeriesUpdated
+      || isTagsUpdated
+    );
+  };
+
+  const isValidForSave = () => {
+    // self check at src/screens/articles/CreateArticle/screens/CreateArticleContent/index.tsx
+    // const isContentUpdated = article.content !== data.content && !isEmptyContent();
+    const isSummaryUpdated = article.summary !== data.summary;
+    const isTitleUpdated = article.title !== data.title && !isEmpty(data.title?.trim());
     const isCategoriesUpdated
       = !isEqual(article.categories, data.categories)
       && !isEmpty(data.categories);
@@ -108,7 +138,7 @@ const useCreateArticle = ({
 
   const getValidButtonPublish = () => {
     const isTitleValid = !isEmpty(data.title);
-    const isContentValid = !isEmptyContent();
+    const isContentValid = !isEmptyContent(data.content);
     const isCategoriesValid = !isEmpty(data.categories);
     const isCoverValid = !isEmpty(data.coverMedia);
     const isAudienceValid = !(
@@ -143,7 +173,7 @@ const useCreateArticle = ({
     const data: IEditArticleData = {
       id,
       title,
-      content: content || '',
+      content,
       audience: audienceIds,
       mentions,
       summary,
@@ -162,8 +192,9 @@ const useCreateArticle = ({
     }
   }, [article]);
 
-  const enableButtonSave = isHasChange();
+  const enableButtonSave = isValidForSave();
   const validButtonPublish = getValidButtonPublish();
+  const isChanged = isHasChange();
 
   const handleContentChange = (newContent: string) => {
     actions.setContent(newContent);
@@ -243,20 +274,20 @@ const useCreateArticle = ({
     }, 2000);
   };
 
-  const debouceStopTyping = () => {
+  const debounceStopTyping = () => {
     clearTimeout(refStopTyping.current);
     refStopTyping.current = setTimeout(() => {
       clearTimeout(refTypingConstantly.current);
       refTypingConstantly.current = null;
-      handleSave(false, false);
+      handleSave({ isNavigateBack: false, isShowLoading: false, isShowToast: false });
       showToastAutoSave();
     }, 500);
   };
 
-  const debouceTypingConstantly = () => {
+  const debounceTypingConstantly = () => {
     if (!refTypingConstantly.current) {
       refTypingConstantly.current = setTimeout(() => {
-        handleSave(false, false);
+        handleSave({ isNavigateBack: false, isShowLoading: false, isShowToast: false });
         refTypingConstantly.current = null;
         showToastAutoSave();
       }, 5000);
@@ -265,13 +296,14 @@ const useCreateArticle = ({
 
   useEffect(() => {
     // only auto save for draft article
-    if (isDraft && isContentUpdated) {
-      debouceStopTyping();
-      debouceTypingConstantly();
+    if (isDraft && isDraftContentUpdated) {
+      debounceStopTyping();
+      debounceTypingConstantly();
     }
   }, [data.content]);
 
-  const handleSave = (isNavigateBack?: boolean, isShowToast?: boolean) => {
+  const handleSave = (options?: IHandleSaveOptions) => {
+    const { isNavigateBack = true, isShowLoading = true, isShowToast = true } = options || {};
     updateMentions();
     // get data directly from store instead of hook
     // because in case we set store and immediately call handleSave
@@ -284,6 +316,7 @@ const useCreateArticle = ({
         data: dataUpdate,
         isNavigateBack,
         isShowToast,
+        isShowLoading,
       } as IPayloadPutEditArticle,
       (data: IEditAritcleError) => handleSaveError(data),
     );
@@ -312,7 +345,7 @@ const useCreateArticle = ({
   };
 
   const handleBack = (showAlert = false) => {
-    if (enableButtonSave || showAlert) {
+    if (isChanged || showAlert) {
       Keyboard.dismiss();
       Store.store.dispatch(
         modalActions.showAlert({

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, renderWithRedux } from '~/test/testUtils';
+import { act, fireEvent, renderWithRedux } from '~/test/testUtils';
 import EditArticleContent from '.';
 import { mockArticle } from '~/test/mock_data/article';
 import MockedNavigator from '~/test/MockedNavigator';
@@ -62,5 +62,47 @@ describe('CreateArticleContent screen', () => {
     const btnNext = wrapper.getAllByTestId('button.content');
     expect(btnNext[0]).toBeDefined();
     expect(btnNext[0].props?.style?.[2]?.backgroundColor).toBe('#7335C0');
+  });
+
+  it('should trigger onInitializeEnd', () => {
+    act(() => {
+      usePostsStore.getState().actions.addToPosts({ data: mockArticle as IPost });
+    });
+
+    const wrapper = renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <EditArticleContent
+            route={{ params: { articleId: mockArticle.id } }}
+          />
+        )}
+      />,
+    );
+
+    const webview = wrapper.getByTestId('webview');
+
+    fireEvent(webview, 'message', {
+      nativeEvent: { data: '{"type":"onInitializeEnd"}' },
+    });
+
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render correctly', () => {
+    act(() => {
+      usePostsStore.getState().actions.addToPosts({ data: mockArticle as IPost });
+    });
+
+    const wrapper = renderWithRedux(
+      <MockedNavigator
+        component={() => (
+          <EditArticleContent
+            route={{ params: { articleId: mockArticle.id } }}
+          />
+        )}
+      />,
+    );
+
+    expect(wrapper).toMatchSnapshot();
   });
 });

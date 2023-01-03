@@ -19,6 +19,7 @@ import { AlertDeleteAudiences } from '~/components/posts';
 import modalActions from '~/storeRedux/modal/actions';
 import Store from '~/storeRedux';
 import { IAudienceGroup } from '~/interfaces/IPost';
+import { useBackPressListener } from '~/hooks/navigation';
 
 export interface EditArticleAudienceProps {
   style?: StyleProp<ViewStyle>;
@@ -43,6 +44,7 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
   // self check instead of use enableButtonSave from hook to avoid delay
   const isAudienceValidForSave = !isEqual(initAudienceIds, selectedAudienceIds)
     && !(isEmpty(selectedAudienceIds?.groupIds) && isEmpty(selectedAudienceIds?.userIds));
+  const isChanged = !isEqual(initAudienceIds, selectedAudienceIds);
 
   const handleSaveError = (listIdAudiences: string[]) => {
     const audienceGroups = Object.values(selectingAudienceGroups);
@@ -74,6 +76,8 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
 
   const disabled = !isAudienceValidForSave || loading;
 
+  useBackPressListener(handleBack);
+
   useEffect(() => {
     const newSelectingGroups = {};
     article.audience?.groups?.forEach((group) => {
@@ -89,7 +93,7 @@ const CreateArticleAudience: FC<CreateArticleProps> = ({ route }: CreateArticleP
   }, [selectedAudienceIds]);
 
   const onBack = () => {
-    handleBack(!disabled);
+    handleBack(isChanged);
   };
 
   return (

@@ -10,6 +10,7 @@ import ArticleSelectingInfo from '~/components/articles/ArticleSelectingInfo';
 import ArticleSelectingListInfo from '~/components/articles/ArticleSelectingListInfo';
 
 import { useBaseHook } from '~/hooks';
+import { useBackPressListener } from '~/hooks/navigation';
 import { CreateArticleProps, ICategory } from '~/interfaces/IArticle';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
@@ -41,6 +42,8 @@ const CreateArticleCategory: FC<CreateArticleProps> = ({ route }: CreateArticleP
   } = useCreateArticle({ articleId });
 
   const disabled = !enableButtonSave || loading;
+
+  useBackPressListener(handleBack);
 
   useEffect(() => {
     if (isEmpty(categoryItems) && !loadingCategories) {

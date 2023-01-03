@@ -4,12 +4,11 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { Button } from '~/baseComponents';
 import { isPostExpired } from '~/helpers/post';
 import { useBaseHook } from '~/hooks';
 import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
-import usePostsStore from '~/store/entities/posts';
-import postsSelector from '~/store/entities/posts/selectors';
 import postActions from '~/storeRedux/post/actions';
 import { spacing } from '~/theme';
 
@@ -32,18 +31,17 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 }: ButtonMarkAsReadProps) => {
   const [loading, setLoading] = useState(false);
 
-  const markReadSuccess = usePostsStore(postsSelector.getMarkedReadSuccess(postId));
-
   const { t } = useBaseHook();
   const dispatch = useDispatch();
-  const styles = createStyle();
+  const theme: ExtendedTheme = useTheme();
+  const styles = createStyle(theme);
 
   const isExpired = !!expireTime ? isPostExpired(expireTime) : !isImportant;
 
   if (
     !isImportant
     || isActor
-    || (markedReadPost && !markReadSuccess)
+    || markedReadPost
     || isExpired
   ) {
     return null;
@@ -64,38 +62,37 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 
   return (
     <View
-      testID="button_mark_as_read.container"
       style={[styles.container, style]}
+      testID="button_mark_as_read.container"
     >
-      {markedReadPost ? (
-        <Button.Neutral
-          testID="button_mark_as_read.button"
-          type="ghost"
-          size="large"
-          disabled
-          icon="CircleCheckSolid"
-        >
-          {t('post:marked_as_read')}
-        </Button.Neutral>
-      ) : (
+      <View style={styles.boxBtn}>
         <Button.Primary
           testID="button_mark_as_read.button"
           loading={loading}
           type="ghost"
-          size="large"
+          size="small"
           onPress={onPressMarkAsRead}
         >
           {t('post:mark_as_read')}
         </Button.Primary>
-      )}
+      </View>
     </View>
   );
 };
 
-const createStyle = () => StyleSheet.create({
-  container: {
-    marginTop: spacing.margin.small,
-  },
-});
+const createStyle = (theme: ExtendedTheme) => {
+  const { colors } = theme;
+
+  return StyleSheet.create({
+    container: {
+      paddingHorizontal: spacing.padding.large,
+    },
+    boxBtn: {
+      borderTopWidth: 1,
+      borderTopColor: colors.neutral5,
+      paddingVertical: spacing.padding.base,
+    },
+  });
+};
 
 export default ButtonMarkAsRead;

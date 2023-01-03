@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useKeyboardStatus } from '~/hooks/keyboard';
+import { sizes } from '~/theme/dimension';
 
 import Autocomplete from './Autocomplete';
 import {
@@ -183,7 +184,7 @@ const _MentionInput = ({
           keyboardType={keyboardType}
           textInputRef={inputRef}
           editable={!disabled}
-          style={[textInputStyle, disabled ? { color: colors.gray50 } : {}]}
+          style={[textInputStyle, disabled ? { color: colors.gray50 } : {}, styles.textInputDefault]}
           onContentSizeChange={_onContentSizeChange}
           onSelectionChange={onSelectionChange}
           onKeyPress={_onKeyPress}
@@ -216,6 +217,9 @@ const createStyles = () => StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 0,
     borderWidth: 0,
+  },
+  textInputDefault: {
+    fontSize: sizes.mdParagraph,
   },
 });
 

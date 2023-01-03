@@ -42,7 +42,7 @@ const ContentFooter: FC<ContentFooterProps> = ({
 }) => {
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme);
+  const styles = createStyle();
   const { t } = useBaseHook();
   const dispatch = useDispatch();
 
@@ -76,13 +76,13 @@ const ContentFooter: FC<ContentFooterProps> = ({
         leftIcon={icon}
         leftIconProps={{
           icon,
-          size: 20,
+          size: 18,
           tintColor: colors.neutral40,
         }}
         textProps={{
           testID: `${buttonProps.testID}.text`,
           variant: 'bodyM',
-          color: colors.neutral80,
+          color: colors.neutral60,
         }}
         style={styles.buttonReact}
       />
@@ -141,34 +141,33 @@ const ContentFooter: FC<ContentFooterProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  const { colors } = theme;
-  return StyleSheet.create({
-    reactButtons: {
-      flexDirection: 'row',
-      height: dimension.commentBarHeight,
-      alignItems: 'center',
-    },
-    disbaledReactComment: {
-      height: 36,
-      marginTop: spacing.margin.tiny,
-    },
-    buttonReactContainer: {
-      flex: 1,
-      height: 'auto',
-    },
-    buttonReact: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    emptyView: {
-      backgroundColor: colors.neutral2,
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  reactButtons: {
+    flexDirection: 'row',
+    height: dimension.commentBarHeight,
+    alignItems: 'center',
+    paddingHorizontal: spacing.padding.large,
+    marginBottom: spacing.margin.small,
+  },
+  disbaledReactComment: {
+    height: 28,
+    marginTop: spacing.margin.xTiny,
+    marginBottom: spacing.margin.small,
+  },
+  buttonReactContainer: {
+    flex: 1,
+    height: 'auto',
+  },
+  buttonReact: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default ContentFooter;

@@ -532,6 +532,7 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
       alignItems: 'center',
     },
     textInput: {
+      flex: 1,
       width: '100%',
       lineHeight: 22,
       paddingTop: spacing.padding.small,

@@ -203,7 +203,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const renderItem = ({ item }: any) => (
     <ContentItem
       id={item}
-      style={styles.itemStyle}
       testID="newsfeed_list.post.item"
       btnReactTestID="newsfeed_list.post.btn_react"
       btnCommentTestID="newsfeed_list.post.btn_comment"
@@ -322,7 +321,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
             />
           )}
           ListFooterComponent={renderFooter}
-          ItemSeparatorComponent={() => <ViewSpacing height={8} />}
+          ItemSeparatorComponent={() => <ViewSpacing height={spacing.margin.large} />}
           contentContainerStyle={styles.mainColor}
         />
       ) : (
@@ -400,9 +399,6 @@ const createStyle = (theme: ExtendedTheme, insets: any) => {
       paddingTop: 34,
       paddingHorizontal: spacing.padding.large,
       alignItems: 'center',
-    },
-    itemStyle: {
-      marginBottom: spacing.margin.small,
     },
     textEmpty: {
       marginTop: spacing.margin.small,

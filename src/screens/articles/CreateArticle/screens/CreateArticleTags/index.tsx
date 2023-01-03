@@ -13,6 +13,7 @@ import NoSearchResultsFound from '~/components/NoSearchResultsFound';
 import appConfig from '~/configs/appConfig';
 
 import { useBaseHook } from '~/hooks';
+import { useBackPressListener } from '~/hooks/navigation';
 import { CreateArticleProps } from '~/interfaces/IArticle';
 import useCreateArticle from '~/screens/articles/CreateArticle/hooks/useCreateArticle';
 import useCreateArticleStore from '~/screens/articles/CreateArticle/store';
@@ -52,6 +53,8 @@ const CreateArticleTags: FC<CreateArticleProps> = ({ route }: CreateArticleProps
 
   const isValidTags = enableButtonSave && selectedTags?.length <= MAXIMUM_TAGS;
   const disabled = !isValidTags || loading;
+
+  useBackPressListener(handleBack);
 
   useEffect(() => {
     if (article.audience?.groups?.length > 0) {
