@@ -7,15 +7,13 @@ afterEach(cleanup);
 describe('CommentToolbar component', () => {
   it('renders correctly', () => {
     const onSelectImage = jest.fn();
-    const onSelectFile = jest.fn();
     const onSelectGif = jest.fn();
-    const onSelectVideo = jest.fn();
+    const onSelectEmoij = jest.fn();
     const rendered = renderWithRedux(
       <CommentToolbar
         onSelectImage={onSelectImage}
-        onSelectFile={onSelectFile}
         onSelectGif={onSelectGif}
-        onSelectVideo={onSelectVideo}
+        onSelectEmoij={onSelectEmoij}
       />,
     );
     expect(rendered).toMatchSnapshot();
@@ -37,17 +35,6 @@ describe('CommentToolbar component', () => {
     expect(onSelect).toBeCalled();
   });
 
-  it('should call prop onSelectFile', () => {
-    const onSelect = jest.fn();
-    const { getByTestId } = renderWithRedux(
-      <CommentToolbar onSelectFile={onSelect} />,
-    );
-    const btn = getByTestId('comment_toolbar.btn_file');
-    expect(btn).toBeDefined();
-    fireEvent.press(btn);
-    expect(onSelect).toBeCalled();
-  });
-
   it('should call prop onSelectGif', () => {
     const onSelect = jest.fn();
     const { getByTestId } = renderWithRedux(
@@ -59,12 +46,12 @@ describe('CommentToolbar component', () => {
     expect(onSelect).toBeCalled();
   });
 
-  it('should call prop onSelectVideo', () => {
+  it('should call prop onSelectEmoij', () => {
     const onSelect = jest.fn();
     const { getByTestId } = renderWithRedux(
-      <CommentToolbar onSelectVideo={onSelect} />,
+      <CommentToolbar onSelectEmoij={onSelect} />,
     );
-    const btn = getByTestId('comment_toolbar.btn_video');
+    const btn = getByTestId('comment_toolbar.btn_icon');
     expect(btn).toBeDefined();
     fireEvent.press(btn);
     expect(onSelect).toBeCalled();

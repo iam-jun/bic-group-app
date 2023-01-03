@@ -1,5 +1,5 @@
 import {
-  createStore,
+  createStore, resetStore,
 } from '~/store/utils';
 import createComment from './actions/createComment';
 import retryAddComment from './actions/retryAddComment';
@@ -32,6 +32,7 @@ const commentInputStore = (set, get) => ({
     createComment: createComment(set, get),
     retryAddComment: retryAddComment(set, get),
   },
+  reset: () => resetStore(initState, set),
 });
 
 const useCommentInputStore = createStore<ICommentInputState>(commentInputStore);

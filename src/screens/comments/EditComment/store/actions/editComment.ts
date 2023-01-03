@@ -29,12 +29,11 @@ const editComment = (_set, _get) => async (payload: IPayloadPutEditComment) => {
     );
     data.mentions = { ...comment?.mentions, ...newMentions };
 
-    await streamApi.putEditComment(
+    const response = await streamApi.putEditComment(
       id, data,
     );
 
-    const newComment = { ...comment, ...data, edited: true };
-    newComment.updatedAt = new Date().toISOString();
+    const newComment = response.data;
     useCommentsStore.getState().actions.addToComments(newComment);
 
     Store.store.dispatch(modalActions.showHideToastMessage({ content: 'post:edit_comment_success' }));
