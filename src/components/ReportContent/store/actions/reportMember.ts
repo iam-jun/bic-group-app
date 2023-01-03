@@ -8,13 +8,13 @@ const reportMember = () => async (payload: IPayloadReportMember) => {
   const { targetId: userId, communityId, reason } = payload || {};
 
   try {
-    await GroupApi.reportMember(communityId, {
+    const response = await GroupApi.reportMember(communityId, {
       userId,
       reason,
     });
 
     Store.store.dispatch(
-      modalActions.showHideToastMessage({ content: 'common:text_report_sent' }),
+      modalActions.showHideToastMessage({ content: response?.meta?.message }),
     );
   } catch (e) {
     console.error('\x1b[31m🐣️ action reportMember error: ', e, '\x1b[0m');
