@@ -76,7 +76,7 @@ const ArticleWebview: FC<ArticleWebviewProps> = ({
   };
 
   const _onInitializeEnd = () => {
-    _webViewRef.current?.requestFocus();
+    // _webViewRef.current?.requestFocus();
     onInitializeEnd?.();
   };
 
