@@ -172,10 +172,16 @@ const EditComment: FC<EditCommentProps> = ({ route }: EditCommentProps) => {
     if (!giphy) return null;
     return (
       <View>
-        <Button style={styles.icRemove} onPress={handleRemoveGiphy}>
+        <Button
+          style={styles.icRemove}
+          onPress={handleRemoveGiphy}
+          hitSlop={{
+            top: 10, bottom: 10, right: 10, left: 10,
+          }}
+        >
           <Icon size={12} icon="iconCloseSmall" />
         </Button>
-        <GifView giphy={giphy as any} />
+        <GifView style={styles.gifView} giphy={giphy as any} />
       </View>
     );
   };
@@ -315,6 +321,9 @@ const createStyle = (theme: ExtendedTheme) => {
       shadowRadius: 4.65,
       elevation: 8,
       zIndex: 2,
+    },
+    gifView: {
+      zIndex: 1,
     },
   });
 };
