@@ -2,6 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 import i18next from 'i18next';
 import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -22,6 +23,7 @@ import { MEMBER_TAB_TYPES } from '../communities/constants';
 import ScrollableTabBar from './components/ScrollableTabBar';
 import useNotificationStore from './store';
 import INotificationsState from './store/Interface';
+import spacing from '~/theme/spacing';
 
 const Notification = () => {
   const notiActions = useNotificationStore((state: INotificationsState) => state.actions);
@@ -320,7 +322,7 @@ const Notification = () => {
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <Header
         title="tabs:notification"
-        titleTextProps={{ useI18n: true }}
+        titleTextProps={{ useI18n: true, style: styles.textHeader }}
         removeBorderAndShadow
         hideBack
         onPressMenu={onPressMenu}
@@ -335,5 +337,11 @@ const Notification = () => {
     </ScreenWrapper>
   );
 };
+
+const styles = StyleSheet.create({
+  textHeader: {
+    marginLeft: spacing.margin.small,
+  },
+});
 
 export default Notification;

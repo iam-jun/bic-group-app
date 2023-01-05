@@ -22,6 +22,7 @@ import TagsView from '~/components/TagsView';
 import useCommunitiesStore from '~/store/entities/communities';
 import tagsStack from '~/router/navigator/MainStack/stacks/tagsStack/stack';
 import { ITag } from '~/interfaces/ITag';
+import Divider from '~/beinComponents/Divider';
 
 export interface ArticleItemProps {
   data: IPost;
@@ -117,11 +118,14 @@ const ArticleItem: FC<ArticleItemProps> = ({
   );
 
   const renderInterestedBy = () => (
-    <ContentInterestedUserCount
-      id={id}
-      testIDPrefix="article_item"
-      interestedUserCount={totalUsersSeen}
-    />
+    <>
+      <ContentInterestedUserCount
+        id={id}
+        testIDPrefix="article_item"
+        interestedUserCount={totalUsersSeen}
+      />
+      <Divider style={styles.divider} />
+    </>
   );
 
   const renderFooter = () => (
@@ -190,6 +194,11 @@ const themeStyles = (theme: ExtendedTheme) => {
       paddingHorizontal: 0,
       paddingBottom: 0,
       paddingTop: 0,
+    },
+    divider: {
+      marginTop: spacing.margin.base,
+      marginBottom: spacing.margin.small,
+      marginHorizontal: spacing.margin.large,
     },
   });
 };

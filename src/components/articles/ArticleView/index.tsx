@@ -27,10 +27,12 @@ const ArticleView: FC<ArticleViewProps> = ({
   const canLoadMoreComment = usePostsStore(useCallback(postsSelector.getCommentOnlyCount(id), []));
 
   return (
-    <View testID="article_view" style={styles.container}>
+    <>
       <ViewSpacing height={spacing.margin.large} />
       <ArticleItem data={article} />
-      <Divider style={styles.divider} />
+      <View style={styles.boxDivider}>
+        <Divider style={styles.divider} />
+      </View>
       {canLoadMoreComment && (
         <LoadMoreComment
           testID="article_view.load_more_comment"
@@ -39,25 +41,14 @@ const ArticleView: FC<ArticleViewProps> = ({
           idLessThan={firstCommentId}
         />
       )}
-    </View>
+    </>
   );
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
   const { colors } = theme;
   return StyleSheet.create({
-    container: {
-      backgroundColor: colors.neutral5,
-    },
-    body: {
-      marginVertical: margin.small,
-    },
-    title: {
-      marginVertical: margin.base,
-      marginHorizontal: margin.large,
-    },
-    footer: {
-      height: margin.base,
+    boxDivider: {
       backgroundColor: colors.white,
     },
     divider: {

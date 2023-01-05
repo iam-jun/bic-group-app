@@ -71,7 +71,6 @@ const SeriesContent: FC<SeriesContentProps> = ({ series, isLite }) => {
         </Text.SubtitleM>
       )}
       <ContentInterestedUserCount
-        isLite
         id={id}
         interestedUserCount={totalUsersSeen}
         style={styles.interestedUserCount}

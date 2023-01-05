@@ -145,7 +145,6 @@ const SeriesDetailHeader: FC<SeriesDetailHeaderProps> = ({ series }) => {
             </Text.BodyMMedium>
           </View>
           <ContentInterestedUserCount
-            isLite
             labelColor={colors.white}
             id={id}
             interestedUserCount={totalUsersSeen}

@@ -139,10 +139,10 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
       || sectionData.length === 0
       || sectionData[0].type === 'empty'
     ) {
-      return null;
+      return <View style={styles.footer} />;
     }
 
-    return <View style={styles.footer} />;
+    return null;
   };
 
   const renderLoading = () => (

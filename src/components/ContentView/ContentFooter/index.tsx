@@ -151,7 +151,6 @@ const createStyle = () => StyleSheet.create({
   },
   disbaledReactComment: {
     height: 28,
-    marginTop: spacing.margin.xTiny,
     marginBottom: spacing.margin.small,
   },
   buttonReactContainer: {

@@ -1,14 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ArticleView Component renders correctly 1`] = `
-<View
-  style={
-    Object {
-      "backgroundColor": "#FFFFFF",
+Array [
+  <View
+    style={
+      Object {
+        "height": 16,
+        "paddingHorizontal": undefined,
+        "paddingVertical": undefined,
+        "width": undefined,
+      }
     }
-  }
-  testID="article_view"
->
+  />,
   <View
     style={
       Object {
@@ -273,7 +276,7 @@ exports[`ArticleView Component renders correctly 1`] = `
             }
             testID="time_view"
           >
-            Nov 14 at 03:39 PM
+            Nov 14, 2022
           </Text>
         </View>
       </View>
@@ -749,24 +752,26 @@ exports[`ArticleView Component renders correctly 1`] = `
           </Text>
         </Text>
       </View>
-      <View
-        style={
-          Array [
-            Object {
-              "alignSelf": "stretch",
-              "backgroundColor": "#E3E6F2",
-              "height": 1,
-              "marginHorizontal": 0,
-              "width": undefined,
-            },
-            Object {
-              "marginTop": 12,
-            },
-          ]
-        }
-        testID="divider"
-      />
     </View>
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "stretch",
+            "backgroundColor": "#E3E6F2",
+            "height": 1,
+            "marginHorizontal": 0,
+            "width": undefined,
+          },
+          Object {
+            "marginBottom": 8,
+            "marginHorizontal": 16,
+            "marginTop": 12,
+          },
+        ]
+      }
+      testID="divider"
+    />
     <View
       testID="article_footer"
     >
@@ -902,6 +907,8 @@ exports[`ArticleView Component renders correctly 1`] = `
               "alignItems": "center",
               "flexDirection": "row",
               "height": 44,
+              "marginBottom": 8,
+              "paddingHorizontal": 16,
             },
             false,
           ]
@@ -1016,10 +1023,10 @@ exports[`ArticleView Component renders correctly 1`] = `
                     Object {
                       "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                     },
                     Object {
-                      "color": "#181C32",
+                      "color": "#282E53",
                     },
                     Object {
                       "textAlign": "center",
@@ -1147,10 +1154,10 @@ exports[`ArticleView Component renders correctly 1`] = `
                     Object {
                       "color": "#212745",
                       "fontFamily": "BeVietnamPro-Light",
-                      "fontSize": 15,
+                      "fontSize": 14,
                     },
                     Object {
-                      "color": "#181C32",
+                      "color": "#282E53",
                     },
                     Object {
                       "textAlign": "center",
@@ -1166,23 +1173,31 @@ exports[`ArticleView Component renders correctly 1`] = `
         </View>
       </View>
     </View>
-  </View>
+  </View>,
   <View
     style={
-      Array [
-        Object {
-          "alignSelf": "stretch",
-          "backgroundColor": "#E3E6F2",
-          "height": 1,
-          "marginHorizontal": 0,
-          "width": undefined,
-        },
-        Object {
-          "marginHorizontal": 16,
-        },
-      ]
+      Object {
+        "backgroundColor": "#FFFFFF",
+      }
     }
-    testID="divider"
-  />
-</View>
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "stretch",
+            "backgroundColor": "#E3E6F2",
+            "height": 1,
+            "marginHorizontal": 0,
+            "width": undefined,
+          },
+          Object {
+            "marginHorizontal": 16,
+          },
+        ]
+      }
+      testID="divider"
+    />
+  </View>,
+]
 `;

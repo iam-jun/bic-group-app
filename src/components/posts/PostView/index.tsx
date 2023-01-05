@@ -21,6 +21,7 @@ import appConfig from '~/configs/appConfig';
 import useContentActions from '~/hooks/useContentActions';
 import { isEmptyPost } from '~/helpers/post';
 import { PlaceHolderRemoveContent } from '~/baseComponents';
+import Divider from '~/beinComponents/Divider';
 
 export interface PostViewProps {
   style?: any;
@@ -132,6 +133,7 @@ const _PostView: FC<PostViewProps> = ({
         {!isLite && shouldShowInterested && (
           <ContentInterestedUserCount id={postId} interestedUserCount={totalUsersSeen} />
         )}
+        {!isLite && (<Divider style={styles.divider} />)}
         {!isLite && !!canReact && (
           <ReactionView
             style={styles.reactions}
@@ -182,6 +184,10 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingTop: 0,
       paddingBottom: 0,
       paddingHorizontal: 0,
+    },
+    divider: {
+      marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.small,
     },
   });
 };
