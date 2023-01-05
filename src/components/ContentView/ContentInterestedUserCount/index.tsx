@@ -12,7 +12,6 @@ import { formatLargeNumber } from '~/utils/formatData';
 import { Button } from '~/baseComponents';
 import modalActions from '~/storeRedux/modal/actions';
 import UserInterestedPost from '~/components/posts/UserInterestedPost';
-import Divider from '~/beinComponents/Divider';
 
 export interface ContentInterestedUserCountProps {
   id: string;
@@ -20,7 +19,6 @@ export interface ContentInterestedUserCountProps {
   style?: StyleProp<ViewStyle>;
   labelColor?: string;
   interestedUserCount?: number;
-  isLite?: boolean;
 }
 
 const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
@@ -29,7 +27,6 @@ const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
   style,
   labelColor,
   interestedUserCount = 0,
-  isLite,
 }) => {
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
@@ -69,7 +66,6 @@ const ContentInterestedUserCount: FC<ContentInterestedUserCountProps> = ({
           <Text.BodySMedium color={labelColorInterested}>{peopleCount}</Text.BodySMedium>
         </Text.BodyS>
       </Button>
-      {!isLite && <Divider style={styles.divider} />}
     </View>
   );
 };
@@ -80,9 +76,6 @@ const styles = StyleSheet.create({
     paddingTop: spacing.padding.base,
     paddingBottom: spacing.padding.xSmall,
     paddingHorizontal: spacing.padding.large,
-  },
-  divider: {
-    marginTop: spacing.margin.base,
   },
 });
 
