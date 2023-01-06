@@ -8,6 +8,8 @@ import getArticleDetail from './actions/getArticleDetail';
 
 export interface IArticlesState extends IBaseState {
   requestings: IObject<boolean>;
+  errors: IObject<boolean>;
+
   actions: {
     getArticleDetail: (id: string) => void,
   }
@@ -15,6 +17,7 @@ export interface IArticlesState extends IBaseState {
 
 const initialState = {
   requestings: {},
+  errors: {},
 };
 
 const articlesStore = (set, get) => ({

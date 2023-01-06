@@ -176,6 +176,7 @@
     "content_not_available": "This content is not available",
     "dont_have_permission_to_access": "You don’t have permission to access this page.",
     "btn_go_back_to_home": "Go back to Home",
+    "btn_back_to_home": "Back to Home",
     "text_upcoming": "Upcoming",
     "text_expires_on": "Expires on ",
     "text_never_expire": "This post will never expire.",
@@ -200,7 +201,11 @@
     "text_share": "Share",
     "btn_go_back": "Back",
     "text_unsupport_feature": "We are not supporting this feature on mobile. Please see the detail on web version",
-    "text_select_file": "Select File"
+    "text_select_file": "Select File",
+    "content_unavailable": {
+      "title": "This content isn’t available right now",
+      "content": "When this happens, it’s usually because the owner only shared it with a small group of people, changed who can see it or it’s been deleted."
+    }
   },
   "auth": {
     "text_kickout_title": "Notice",
