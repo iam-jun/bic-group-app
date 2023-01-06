@@ -83,10 +83,10 @@ const FilesView = ({
           </Collapsible>
 
           <ButtonWrapper onPress={toggleCollapse}>
-            <Icon icon={collapsed ? 'CirclePlus' : 'CircleMinus'} size={18} tintColor={theme.colors.neutral40} style={styles.iconPlus} />
-            <Text.LinkM style={styles.collapsibleText}>
+            <Icon icon={collapsed ? 'CirclePlus' : 'CircleMinus'} size={14} tintColor={theme.colors.neutral40} style={styles.iconPlus} />
+            <Text.BodyM style={styles.collapsibleText}>
               {t(`common:${collapsed ? 'text_show_more' : 'text_show_less'}`)}
-            </Text.LinkM>
+            </Text.BodyM>
           </ButtonWrapper>
         </View>
       )}

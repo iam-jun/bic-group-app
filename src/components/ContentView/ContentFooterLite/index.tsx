@@ -41,7 +41,6 @@ const ContentFooterLite: FC<ContentFooterLiteProps> = ({
         </Text.BodyS>
       </View>
       <ContentInterestedUserCount
-        isLite
         id={id}
         interestedUserCount={totalUsersSeen}
         style={styles.seenCountsViewAtBottom}

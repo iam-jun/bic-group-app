@@ -205,11 +205,7 @@ const FilterComponent: React.FC<FilterProps> = ({
       <PanGestureHandler onGestureEvent={panGestureEvent}>
         <Animated.View style={[scrollViewContainerStyle]}>
           <View
-            style={[
-              {
-                flexDirection: 'row',
-              },
-            ]}
+            style={styles.row}
           >
             {data?.map?.(renderItem)}
             <Animated.View
@@ -264,6 +260,10 @@ const createStyle = (theme: ExtendedTheme) => {
     iconLeftStyle: { marginRight: spacing.margin.base },
     icon: {
       marginRight: spacing.margin.small,
+    },
+    row: {
+      flexDirection: 'row',
+      paddingLeft: spacing.padding.small,
     },
   });
 };

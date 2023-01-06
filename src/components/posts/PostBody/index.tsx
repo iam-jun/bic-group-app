@@ -59,7 +59,6 @@ const _PostBody: FC<PostBodyProps> = ({
 
     return (
       <ContentInterestedUserCount
-        isLite
         id={postId}
         interestedUserCount={totalUsersSeen}
         style={styles.interestedUserCount}
