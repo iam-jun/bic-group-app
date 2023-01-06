@@ -96,7 +96,6 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     listImage.forEach((item) => {
       result.push({
         uri: item.url,
-        name: item?.name || `${item?.id}.png`,
       });
     });
 
