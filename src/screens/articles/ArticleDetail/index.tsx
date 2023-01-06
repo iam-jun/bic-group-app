@@ -27,6 +27,7 @@ import spacing from '~/theme/spacing';
 import usePostDetailContentHandler from '~/screens/post/PostDetail/components/PostDetailContent/hooks/usePostDetailContentHandler';
 import { getSectionData } from '~/helpers/post';
 import { useRootNavigation } from '~/hooks/navigation';
+import ContentUnavailable from '~/components/ContentUnavailable';
 
 const _ArticleDetail: FC<IRouteParams> = (props) => {
   const { params } = props.route;
@@ -50,7 +51,8 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
   const firstCommentId = comments[0]?.id || '';
   const sectionData = useMemo(() => getSectionData(comments), [comments]);
 
-  const actions = useArticlesStore((state: IArticlesState) => state.actions);
+  const { actions, errors } = useArticlesStore((state: IArticlesState) => state);
+  const isFetchError = errors[id];
 
   const { audience, setting, reported } = data || {};
 
@@ -184,8 +186,11 @@ const _ArticleDetail: FC<IRouteParams> = (props) => {
     );
   };
 
-  if (!isMounted || !data) return renderLoading();
+  if (!isMounted || !data || (isEmpty(data) && !isFetchError)) return renderLoading();
 
+  if (isFetchError) {
+    return <ContentUnavailable />;
+  }
   return (
     <ScreenWrapper
       testID="article_detail"

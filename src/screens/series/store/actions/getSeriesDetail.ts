@@ -16,12 +16,14 @@ const getSeriesDetail = (set, get) => async (id: string) => {
 
     set((state) => {
       delete state.requestings[id];
+      state.errors[id] = false;
     }, 'getSeriesDetailSuccess');
 
     usePostsStore.getState().actions.addToPosts({ data, handleComment: true });
   } catch (error) {
     set((state: ISeriesState) => {
       delete state.requestings[id];
+      state.errors[id] = true;
     }, 'getSeriesDetailError');
     console.error('getSeriesDetailError', error);
   }
