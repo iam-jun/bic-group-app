@@ -31,6 +31,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   onPressClose,
   initIndex = 0,
   alwaysShowFileName,
+  isShowImgName = true,
 }: ImageGalleryModalProps) => {
   const [activeIndex, _setActiveIndex] = useState(initIndex);
   const [isFocus, setIsFocus] = useState(false);
@@ -162,7 +163,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     return (
       <View style={styles.footerContainer}>
         <View style={styles.fileNameContainer}>
-          {!!fileName && (
+          {(!!fileName && isShowImgName) && (
             <Text.H6 color={colors.white} numberOfLines={1}>
               {fileName}
             </Text.H6>
