@@ -96,6 +96,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
     listImage.forEach((item) => {
       result.push({
         uri: item.url,
+        name: item?.name || `${item?.id}.png`,
       });
     });
 
@@ -137,6 +138,7 @@ const ArticleContentDetail: FC<IRouteParams> = (props) => {
         source={listImage}
         initIndex={initIndex}
         onPressClose={() => setGalleryVisible(false)}
+        isShowImgName={false}
       />
     </ScreenWrapper>
   );
