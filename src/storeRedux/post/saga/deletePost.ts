@@ -2,7 +2,7 @@ import { IPayloadAddToAllPost, IPayloadDeletePost } from '~/interfaces/IPost';
 import usePostsStore from '~/store/entities/posts';
 import streamApi from '../../../api/StreamApi';
 import { timeOut } from '~/utils/common';
-import showToast from '~/store/helper/showToast';
+import showToastSuccess from '~/store/helper/showToastSuccess';
 import showToastError from '~/store/helper/showToastError';
 
 export default function* deletePost({
@@ -28,7 +28,7 @@ export default function* deletePost({
 
       yield timeOut(500);
 
-      showToast({ content: 'post:delete_post_complete' });
+      showToastSuccess(response);
     }
   } catch (e: any) {
     if (e?.meta?.errors?.groupsDenied) {
